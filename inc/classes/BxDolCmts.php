@@ -1262,87 +1262,41 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!$this->isRemoveAllowed($aCmt))
             return array('msg' => $aCmt['cmt_author_id'] == $iPerformerId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied'));
 
-        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
-        if($this->_oQuery->removeComment($iObjId, $iCmtId, $aCmt['cmt_parent_id'])) {
-            $this->_triggerComment();
+        $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
+        if(!$this->_oQuery->removeComment($iObjId, $iCmtId, $iCmtPrntId)) 
+            return array('msg' => _t('_cmt_err_cannot_perform_action'));
 
-            $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
+        $this->_triggerComment();
 
-            $aImages = $this->_oQuery->getFiles($this->_aSystem['system_id'], $iCmtId);
-            foreach($aImages as $aImage)
-                $oStorage->deleteFile($aImage['image_id']);
+        $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
-            $this->_oQuery->deleteImages($this->_aSystem['system_id'], $iCmtId);
+        $aImages = $this->_oQuery->getFiles($this->_aSystem['system_id'], $iCmtId);
+        foreach($aImages as $aImage)
+            $oStorage->deleteFile($aImage['image_id']);
 
-            $this->isRemoveAllowed($aCmt, true);
+        $this->_oQuery->deleteImages($this->_aSystem['system_id'], $iCmtId);
 
-            $this->deleteMetaInfo ($iCmtId);
+        $this->isRemoveAllowed($aCmt, true);
 
-            bx_audit(
-               $this->getId(), 
-               $this->_aSystem['module'], 
-               '_sys_audit_action_delete_comment',  
-               $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-            );
+        $this->deleteMetaInfo($iCmtId);
 
-            bx_alert($this->_sSystem, 'commentRemoved', $iObjId, $iPerformerId, array(
-                'object_author_id' => $iObjAthrId,
+        $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
+        bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_delete_comment', $aAuditParams);
 
-                'comment_id' => $iCmtId, 
-                'comment_uniq_id' => $iCmtUniqId,
-                'comment_author_id' => $aCmt['cmt_author_id'],
+        $aAlertParams = $this->_prepareAlertParams($aCmt);
+        bx_alert($this->_sSystem, 'commentRemoved', $iObjId, $iPerformerId, $aAlertParams);
+        bx_alert('comment', 'deleted', $iCmtId, $iPerformerId, $aAlertParams);
 
-                'privacy_view' => $iObjAthrPrivacyView,
-            ));
-
-            bx_alert('comment', 'deleted', $iCmtId, $iPerformerId, array(
-                'object_system' => $this->_sSystem, 
-                'object_id' => $iObjId, 
-                'object_author_id' => $iObjAthrId,
-
-                'comment_uniq_id' => $iCmtUniqId,
-                'comment_author_id' => $aCmt['cmt_author_id'],
-                    
-                'privacy_view' => $iObjAthrPrivacyView,
-            ));
-
-            if(!empty($aCmt['cmt_parent_id'])) {
-                $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
-                $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
-                if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
-                    $iCmtPrntUniqId = $this->getCommentUniqId($iCmtPrntId);
-
-                    bx_alert($this->_sSystem, 'replyRemoved', $iCmtPrntId, $iPerformerId, array(
-                        'object_id' => $iObjId, 
-                        'object_author_id' => $iObjAthrId,
-
-                        'parent_uniq_id' => $iCmtPrntUniqId,
-                        'parent_author_id' => $aCmtPrnt['cmt_author_id'],
-                        
-                        'comment_id' => $iCmtId, 
-                        'comment_author_id' => $aCmt['cmt_author_id'],
-
-                        'privacy_view' => $iObjAthrPrivacyView,
-                    ));
-
-                    bx_alert('reply', 'deleted', $iCmtId, $iPerformerId, array(
-                        'object_system' => $this->_sSystem, 
-                        'object_id' => $iObjId, 
-                        'object_author_id' => $iObjAthrId,
-
-                        'parent_id' => $iCmtPrntId,
-                        'parent_uniq_id' => $iCmtPrntUniqId,
-                        'parent_author_id' => $aCmtPrnt['cmt_author_id'],
-
-                        'comment_author_id' => $aCmt['cmt_author_id'], 
-
-                        'privacy_view' => $iObjAthrPrivacyView,
-                    ));
-                }
+        if(!empty($iCmtPrntId)) {
+            $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
+            if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
+                $aAlertParamsReply = $this->_prepareAlertParamsReply($aCmt, $aCmtPrnt);
+                bx_alert($this->_sSystem, 'replyRemoved', $iCmtPrntId, $iPerformerId, $aAlertParamsReply);
+                bx_alert('reply', 'deleted', $iCmtId, $iPerformerId, $aAlertParamsReply);
             }
-            return array('id' => $iCmtId);
         }
-        return array('msg' => _t('_cmt_err_cannot_perform_action'));
+
+        return array('id' => $iCmtId);
     }
 
     public function add($aValues)
@@ -1369,81 +1323,27 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function onPostAfter($iCmtId)
     {
         $iObjId = (int)$this->getId();
-        $iObjAthrId = $this->getObjectAuthorId($iObjId);
-        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
 
         $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
         if(empty($aCmt) || !is_array($aCmt))
             return false;
 
-        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
         $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
         $iPerformerId = (int)$aCmt['cmt_author_id'];
-        bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, array(
-            'object_author_id' => $iObjAthrId,
 
-            'comment_id' => $iCmtId, 
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text'],
+        $aAlertParams = $this->_prepareAlertParams($aCmt);
+        bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, $aAlertParams);
+        bx_alert('comment', 'added', $iCmtId, $iPerformerId, $aAlertParams);
 
-            'privacy_view' => $iObjAthrPrivacyView,
-        ));
-
-        bx_audit(
-            $this->getId(), 
-            $this->_aSystem['module'], 
-            '_sys_audit_action_add_comment',  
-            $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-        );
-
-        bx_alert('comment', 'added', $iCmtId, $iPerformerId, array(
-            'object_system' => $this->_sSystem, 
-            'object_id' => $iObjId, 
-            'object_author_id' => $iObjAthrId,
-
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text'],
-
-            'privacy_view' => $iObjAthrPrivacyView,
-        ));
+        $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
+        bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_add_comment', $aAuditParams);
 
         if(!empty($iCmtPrntId)) {
             $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
             if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
-                $iCmtPrntUniqId = $this->getCommentUniqId($iCmtPrntId);
-
-                bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, array(
-                    'object_id' => $iObjId, 
-                    'object_author_id' => $iObjAthrId,
-
-                    'parent_uniq_id' => $iCmtPrntUniqId,
-                    'parent_author_id' => $aCmtPrnt['cmt_author_id'],
-
-                    'comment_id' => $iCmtId,
-                    'comment_uniq_id' => $iCmtUniqId,
-                    'comment_author_id' => $aCmt['cmt_author_id'], 
-                    'comment_text' => $aCmt['cmt_text'],
-
-                    'privacy_view' => $iObjAthrPrivacyView,
-                ));
-
-                bx_alert('comment', 'replied', $iCmtId, $iPerformerId, array(
-                    'object_system' => $this->_sSystem, 
-                    'object_id' => $iObjId, 
-                    'object_author_id' => $iObjAthrId,
-
-                    'parent_id' => $iCmtPrntId,
-                    'parent_uniq_id' => $iCmtPrntUniqId,
-                    'parent_author_id' => $aCmtPrnt['cmt_author_id'],
-
-                    'comment_uniq_id' => $iCmtUniqId,
-                    'comment_author_id' => $aCmt['cmt_author_id'],  
-                    'comment_text' => $aCmt['cmt_text'],
-
-                    'privacy_view' => $iObjAthrPrivacyView,
-                ));
+                $aAlertParamsReply = $this->_prepareAlertParamsReply($aCmt, $aCmtPrnt);
+                bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, $aAlertParamsReply);
+                bx_alert('comment', 'replied', $iCmtId, $iPerformerId, $aAlertParamsReply);
             }
         }
 
@@ -1452,45 +1352,19 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function onEditAfter($iCmtId)
     {
-        $iObjId = (int)$this->getId();
-    	$iObjAthrId = $this->getObjectAuthorId($iObjId);
-        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
-
     	$aCmt = $this->getCommentRow($iCmtId);
         if(empty($aCmt) || !is_array($aCmt))
             return false;
 
-        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
+        $iObjId = (int)$this->getId();
         $iPerformerId = $this->_getAuthorId();
-        bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, array(
-            'object_author_id' => $iObjAthrId,
 
-            'comment_id' => $iCmtId, 
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text'],
+        $aAlertParams = $this->_prepareAlertParams($aCmt);
+        bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, $aAlertParams);
+        bx_alert('comment', 'edited', $iCmtId, $iPerformerId, $aAlertParams);
 
-            'privacy_view' => $iObjAthrPrivacyView,
-        ));
-
-        bx_audit(
-            $this->getId(), 
-            $this->_aSystem['module'], 
-            '_sys_audit_action_edit_comment',  
-            $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-        );
-
-        bx_alert('comment', 'edited', $iCmtId, $iPerformerId, array(
-            'object_system' => $this->_sSystem, 
-            'object_id' => $iObjId, 
-            'object_author_id' => $iObjAthrId,
-
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'],
-            'comment_text' => $aCmt['cmt_text'],
-
-            'privacy_view' => $iObjAthrPrivacyView,
-        ));
+        $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
+        bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_edit_comment', $aAuditParams);
 
         return array('id' => $iCmtId, 'content' => $this->_getContent($aCmt));
     }
@@ -1740,7 +1614,60 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aDp['dynamic_mode'] = isset($aDp['dynamic_mode']) ? (bool)$aDp['dynamic_mode'] : false;
         $aDp['show_empty'] = isset($aDp['show_empty']) ? (bool)$aDp['show_empty'] : false;
     }
-    
+
+    protected function _prepareAlertParams($aCmt)
+    {
+        $iObjId = (int)$this->getId();
+        $iObjAthrId = $this->getObjectAuthorId($iObjId);
+        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
+
+        $iCmtId = (int)$aCmt['cmt_id'];
+        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
+
+        return array(
+            'object_system' => $this->_sSystem, 
+            'object_id' => $iObjId, 
+            'object_author_id' => $iObjAthrId,
+
+            'comment_id' => $iCmtId, 
+            'comment_uniq_id' => $iCmtUniqId,
+            'comment_author_id' => $aCmt['cmt_author_id'], 
+            'comment_text' => $aCmt['cmt_text'],
+
+            'privacy_view' => $iObjAthrPrivacyView,
+        );
+    }
+
+    protected function _prepareAlertParamsReply($aCmt, $aCmtPrnt)
+    {
+        $iObjId = (int)$this->getId();
+        $iObjAthrId = $this->getObjectAuthorId($iObjId);
+        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
+
+        $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
+        $iCmtPrntUniqId = $this->getCommentUniqId($iCmtPrntId);
+
+        $iCmtId = (int)$aCmt['cmt_id'];
+        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
+
+        return array(
+            'object_system' => $this->_sSystem, 
+            'object_id' => $iObjId, 
+            'object_author_id' => $iObjAthrId,
+
+            'parent_id' => $iCmtPrntId,
+            'parent_uniq_id' => $iCmtPrntUniqId,
+            'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+
+            'comment_id' => $iCmtId,
+            'comment_uniq_id' => $iCmtUniqId,
+            'comment_author_id' => $aCmt['cmt_author_id'],  
+            'comment_text' => $aCmt['cmt_text'],
+
+            'privacy_view' => $iObjAthrPrivacyView,
+        );
+    }
+
     protected function _prepareAuditParams($iId, $aData)
     {
         $sModule = $this->_aSystem['module'];

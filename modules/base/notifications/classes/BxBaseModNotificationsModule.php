@@ -9,6 +9,18 @@
  * @{
  */
 
+/**
+ * SLTMODE - Silent mode:
+ * It is needed for alert sending module to tell that the alert should be ignored 
+ * with Notifications module completely or partially. Available values: 
+ * 1. disabled (value = 0) - all notifications are available;
+ * 2. absolute (value = 1) - alert isn't registered which means that there is no notifications at all;
+ * 
+ * @see BxBaseModNotificationsResponse::response - 'silent_mode' parameter in Alerts Extras array.
+ */
+define('BX_BASE_MOD_NTFS_SLTMODE_DISABLED', 0);
+define('BX_BASE_MOD_NTFS_SLTMODE_ABSOLUTE', 1);
+
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT', 'insert');
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE', 'update');
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE', 'delete');
@@ -157,12 +169,20 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
 
     public function isAllowedView($aEvent, $bPerform = false)
     {
-		return true;
+        return true;
     }
 
     public function getOwnerId()
     {
     	return $this->_iOwnerId;
+    }
+
+    public function getSilentMode($aExtras)
+    {
+        if(isset($aExtras['silent_mode']))
+            return (int)$aExtras['silent_mode'];
+
+        return BX_BASE_MOD_NTFS_SLTMODE_DISABLED;
     }
 
     /*
