@@ -33,8 +33,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         if(empty($aHandler) || !is_array($aHandler))
             return;
 
-        $iSilentMode = $this->_getSilentMode($oAlert->aExtras);
-        if($iSilentMode == BX_NTFS_SLTMODE_ABSOLUTE)
+        $iSilentMode = $this->_oModule->getSilentMode($oAlert->aExtras);
+        if(in_array($iSilentMode, array(BX_BASE_MOD_NTFS_SLTMODE_ABSOLUTE, BX_NTFS_SLTMODE_ABSOLUTE)))
             return;
 
         switch($aHandler['type']) {
@@ -236,22 +236,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     {
         $aResult = array();
 
-        $iSilentMode = $this->_getSilentMode($aExtras);
-        if($iSilentMode != BX_NTFS_SLTMODE_DISABLED)
+        $iSilentMode = $this->_oModule->getSilentMode($aExtras);
+        if($iSilentMode != BX_BASE_MOD_NTFS_SLTMODE_DISABLED)
             $aResult['silent_mode'] = $iSilentMode;
 
         if(!empty($aAdd) && is_array($aAdd))
             $aResult = array_merge($aResult, $aAdd);
 
         return !empty($aResult) && is_array($aResult) ? serialize($aResult) : '';
-    }
-
-    protected function _getSilentMode($aExtras)
-    {
-        if(isset($aExtras['silent_mode']))
-            return (int)$aExtras['silent_mode'];
-
-        return BX_NTFS_SLTMODE_DISABLED;
     }
 }
 

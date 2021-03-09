@@ -23,7 +23,6 @@ bx_import('BxBaseModNotificationsModule');
  * 
  * @see BxBaseModNotificationsModule and BxTimelineResponse::response - 'silent_mode' parameter in Alerts Extras array.
  */
-define('BX_TIMELINE_SLTMODE_DISABLED', 0);
 define('BX_TIMELINE_SLTMODE_ABSOLUTE', 21);
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');

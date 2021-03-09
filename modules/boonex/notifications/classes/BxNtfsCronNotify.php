@@ -51,8 +51,9 @@ class BxNtfsCronNotify extends BxDolCron
         $aDeliveryTypes = array();
 
         $iId = (int)$aEvent['id'];
-        $iSilentMode = $this->_getSilentMode($aEvent['content']);
+        $iSilentMode = $this->_oModule->getSilentMode($aEvent['content']);
         switch($iSilentMode) {
+            case BX_BASE_MOD_NTFS_SLTMODE_ABSOLUTE:
             case BX_NTFS_SLTMODE_ABSOLUTE:
             case BX_NTFS_SLTMODE_SITE:
                 return;
@@ -164,14 +165,6 @@ class BxNtfsCronNotify extends BxDolCron
                         break;
                 }
         }
-    }
-
-    protected function _getSilentMode($aContent)
-    {
-        if(isset($aContent['silent_mode']))
-            return (int)$aContent['silent_mode'];
-
-        return BX_NTFS_SLTMODE_DISABLED;
     }
 
     protected function _addRecipient($iUser, $sSettingType, &$aRecipients)

@@ -40,8 +40,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         if(empty($aHandler) || !is_array($aHandler))
             return;
 
-        $iSilentMode = $this->_getSilentMode($oAlert->aExtras);
-        if(in_array($iSilentMode, array(BX_TIMELINE_SLTMODE_ABSOLUTE)))
+        $iSilentMode = $this->_oModule->getSilentMode($oAlert->aExtras);
+        if(in_array($iSilentMode, array(BX_BASE_MOD_NTFS_SLTMODE_ABSOLUTE, BX_TIMELINE_SLTMODE_ABSOLUTE)))
             return;
 
         switch($aHandler['type']) {
@@ -202,14 +202,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
     protected function _processProfileSuspend($oAlert)
     {
         $this->_clearCache();
-    }
-
-    protected function _getSilentMode($aExtras)
-    {
-        if(isset($aExtras['silent_mode']))
-            return (int)$aExtras['silent_mode'];
-
-        return BX_TIMELINE_SLTMODE_DISABLED;
     }
 
     protected function _clearCache()

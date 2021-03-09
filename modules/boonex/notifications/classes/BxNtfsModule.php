@@ -30,19 +30,19 @@ define('BX_NTFS_STYPE_OTHER', 'other');
  * SLTMODE - Silent mode:
  * It is needed for alert sending module to tell that the alert should be ignored 
  * with Notifications module completely or partially. Available values: 
- * 1. disabled (value = 0) - all notifications are available;
- * 2. absolute (value = 1) - alert isn't registered which means that there is no notifications at all;
- * 3. on-site only (value = 2) - alert is registered. It means that on-site notification is available while the others are disabled.
- * 4. on-site + email (value = 3) - alert is registered (on-site) and notification via 'email' is enabled.
- * 5. on-site + push (value = 4) - alert is registered (on-site) and notification via 'push' is enabled.
+ * 1. disabled (global, value = 0) - all notifications are available;
+ * 2. absolute (global, value = 1) - alert isn't registered which means that there is no notifications at all;
+ * 3. absolute (for Notifications only, value = 11) - the same as global absolute.
+ * 3. on-site only (value = 12) - alert is registered. It means that on-site notification is available while the others are disabled.
+ * 4. on-site + email (value = 13) - alert is registered (on-site) and notification via 'email' is enabled.
+ * 5. on-site + push (value = 14) - alert is registered (on-site) and notification via 'push' is enabled.
  * 
  * @see BxNtfsResponse::response - 'silent_mode' parameter in Alerts Extras array.
  */
-define('BX_NTFS_SLTMODE_DISABLED', 0);
-define('BX_NTFS_SLTMODE_ABSOLUTE', 1);
-define('BX_NTFS_SLTMODE_SITE', 2);
-define('BX_NTFS_SLTMODE_SITE_EMAIL', 3);
-define('BX_NTFS_SLTMODE_SITE_PUSH', 4);
+define('BX_NTFS_SLTMODE_ABSOLUTE', 11);
+define('BX_NTFS_SLTMODE_SITE', 12);
+define('BX_NTFS_SLTMODE_SITE_EMAIL', 13);
+define('BX_NTFS_SLTMODE_SITE_PUSH', 14);
 
 class BxNtfsModule extends BxBaseModNotificationsModule
 {
