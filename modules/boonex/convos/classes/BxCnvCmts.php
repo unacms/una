@@ -114,139 +114,20 @@ class BxCnvCmts extends BxTemplCmts
         return $oForm;
     }
 
-    public function onPostAfter($iCmtId)
+    protected function _prepareAlertParams($aCmt)
     {
-        $iObjId = (int)$this->getId();
-        $iObjAthrId = $this->getObjectAuthorId($iObjId);
-        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
+        $aParams = parent::_prepareAlertParams($aCmt);
+        $aParams['silent_mode'] = $this->_iSilentMode;
 
-        $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
-        if(empty($aCmt) || !is_array($aCmt))
-            return false;
-
-        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
-        $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
-        $iPerformerId = (int)$aCmt['cmt_author_id'];
-        bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, array(
-            'object_author_id' => $iObjAthrId,
-
-            'comment_id' => $iCmtId, 
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text'],
-
-            'privacy_view' => $iObjAthrPrivacyView,
-            'silent_mode' => $this->_iSilentMode
-        ));
-
-        bx_audit(
-            $this->getId(), 
-            $this->_aSystem['module'], 
-            '_sys_audit_action_add_comment',  
-            $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-        );
-
-        bx_alert('comment', 'added', $iCmtId, $iPerformerId, array(
-            'object_system' => $this->_sSystem, 
-            'object_id' => $iObjId, 
-            'object_author_id' => $iObjAthrId,
-
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text'],
-
-            'privacy_view' => $iObjAthrPrivacyView,
-            'silent_mode' => $this->_iSilentMode
-        ));
-
-        if(!empty($iCmtPrntId)) {
-            $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
-            if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
-                $iCmtPrntUniqId = $this->getCommentUniqId($iCmtPrntId);
-
-                bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, array(
-                    'object_id' => $iObjId, 
-                    'object_author_id' => $iObjAthrId,
-
-                    'parent_uniq_id' => $iCmtPrntUniqId,
-                    'parent_author_id' => $aCmtPrnt['cmt_author_id'],
-
-                    'comment_id' => $iCmtId,
-                    'comment_uniq_id' => $iCmtUniqId,
-                    'comment_author_id' => $aCmt['cmt_author_id'], 
-                    'comment_text' => $aCmt['cmt_text'],
-
-                    'privacy_view' => $iObjAthrPrivacyView,
-                    'silent_mode' => $this->_iSilentMode
-                ));
-
-                bx_alert('comment', 'replied', $iCmtId, $iPerformerId, array(
-                    'object_system' => $this->_sSystem, 
-                    'object_id' => $iObjId, 
-                    'object_author_id' => $iObjAthrId,
-
-                    'parent_id' => $iCmtPrntId,
-                    'parent_uniq_id' => $iCmtPrntUniqId,
-                    'parent_author_id' => $aCmtPrnt['cmt_author_id'],
-
-                    'comment_uniq_id' => $iCmtUniqId,
-                    'comment_author_id' => $aCmt['cmt_author_id'],  
-                    'comment_text' => $aCmt['cmt_text'],
-
-                    'privacy_view' => $iObjAthrPrivacyView,
-                    'silent_mode' => $this->_iSilentMode
-                ));
-            }
-        }
-
-        return array('id' => $iCmtId, 'parent_id' => $iCmtPrntId);
+        return $aParams;
     }
 
-    public function onEditAfter($iCmtId)
+    protected function _prepareAlertParamsReply($aCmt, $aCmtPrnt)
     {
-        $iObjId = (int)$this->getId();
-    	$iObjAthrId = $this->getObjectAuthorId($iObjId);
-        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
+        $aParams = parent::_prepareAlertParamsReply($aCmt, $aCmtPrnt);
+        $aParams['silent_mode'] = $this->_iSilentMode;
 
-    	$aCmt = $this->getCommentRow($iCmtId);
-        if(empty($aCmt) || !is_array($aCmt))
-            return false;
-
-        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
-        $iPerformerId = $this->_getAuthorId();
-        bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, array(
-            'object_author_id' => $iObjAthrId,
-
-            'comment_id' => $iCmtId, 
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text'],
-
-            'privacy_view' => $iObjAthrPrivacyView,
-            'silent_mode' => $this->_iSilentMode
-        ));
-
-        bx_audit(
-            $this->getId(), 
-            $this->_aSystem['module'], 
-            '_sys_audit_action_edit_comment',  
-            $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-        );
-
-        bx_alert('comment', 'edited', $iCmtId, $iPerformerId, array(
-            'object_system' => $this->_sSystem, 
-            'object_id' => $iObjId, 
-            'object_author_id' => $iObjAthrId,
-
-            'comment_uniq_id' => $iCmtUniqId,
-            'comment_author_id' => $aCmt['cmt_author_id'],
-            'comment_text' => $aCmt['cmt_text'],
-
-            'privacy_view' => $iObjAthrPrivacyView,
-            'silent_mode' => $this->_iSilentMode
-        ));
-
-        return array('id' => $iCmtId, 'content' => $this->_getContent($aCmt));
+        return $aParams;
     }
 }
 
