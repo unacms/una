@@ -15,6 +15,24 @@ class BxAccntSearchResult extends BxBaseModGeneralSearchResult
     {
         parent::__construct($sMode, $aParams);
 
+        $aConfirmed = array();
+        $aUnConfirmed = array();
+        $sCnfnType = getParam('sys_account_confirmation_type');
+        switch($sCnfnType) {
+            case 'email':
+                $aConfirmed = array('value' => '', 'field' => 'email_confirmed', 'operator' => '=');
+                $aUnConfirmed = array('value' => '', 'field' => 'email_confirmed', 'operator' => '<>');
+                break;
+            case 'phone':
+                $aConfirmed = array('value' => '', 'field' => 'phone_confirmed', 'operator' => '=');
+                $aUnConfirmed = array('value' => '', 'field' => 'phone_confirmed', 'operator' => '<>');
+                break;
+            case 'email_and_phone':
+                $aConfirmed = array('value' => '', 'field' => 'phone_confirmed` * `email_confirmed', 'operator' => '=');
+                $aUnConfirmed = array('value' => '', 'field' => 'phone_confirmed` * `email_confirmed', 'operator' => '<>');
+                break;
+        }
+        
         $this->aCurrent =  array(
             'name' => 'bx_accounts',
             'module_name' => 'bx_accounts',
@@ -25,8 +43,9 @@ class BxAccntSearchResult extends BxBaseModGeneralSearchResult
             'ownFields' => array(),
             'searchFields' => array('name', 'email'),
             'restriction' => array(
-                'confirmed' => array('value' => '', 'field' => 'email_confirmed', 'operator' => '='),
-        		'unconfirmed' => array('value' => '', 'field' => 'email_confirmed', 'operator' => '<>'),
+                'confirmed' => $aConfirmed,
+        		'unconfirmed' => $aUnConfirmed,
+                'non_robot' => array('value' => '', 'field' => 'name', 'operator' => '<>'),
             ),
             'join' => array (),
             'paginate' => array('perPage' => 20, 'start' => 0),
