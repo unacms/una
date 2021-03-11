@@ -138,7 +138,7 @@ BxTimelineView.prototype.init = function(bForceInit)
     }
 
     //--- Init Flickity
-    this.initFlickity();
+    this.initFlickity(this.oView);
 };
 
 BxTimelineView.prototype.initView = function() 
