@@ -52,7 +52,8 @@ class BxAccntModule extends BxBaseModGeneralModule
         $iNumTotal = $o->getNum();
         
         $o->fillFilters(array(
-			'unconfirmed' => 1
+			'unconfirmed' => 1,
+            'non_robot' => 'Robot'
         ));
       
         return array('counter1_value' => $o->getNum(),'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
