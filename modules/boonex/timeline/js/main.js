@@ -158,7 +158,7 @@ BxTimelineMain.prototype.initFlickityImages = function(oParent) {
     });
 
     oCarousel.find(sItem + ' img').each(function() {
-        oParent.load(function() {
+        $(this).load(function() {
             oCarousel.flickity('resize');
         });
     });
@@ -179,11 +179,11 @@ BxTimelineMain.prototype.initFlickityVideos = function(oParent) {
         pageDots: false
     });
 
-   oCarousel.find(sItem + ' video').each(function() {
-       this.addEventListener('loadedmetadata', function() {
-           oCarousel.flickity('resize');
-       }, true);
-   });
+    oCarousel.find(sItem + ' video').each(function() {
+        this.addEventListener('loadedmetadata', function() {
+            oCarousel.flickity('resize');
+        }, true);
+    });
 };
 
 BxTimelineMain.prototype.initFlickityAttachments = function(oParent) {
@@ -202,33 +202,33 @@ BxTimelineMain.prototype.initFlickityAttachments = function(oParent) {
     });
 
     oCarousel.find(sItem + ' img').each(function() {
-        oParent.load(function() {
+        $(this).load(function() {
             oCarousel.flickity('resize');
         });
     });
 
-   oCarousel.find(sItem + ' video').each(function() {
-       this.addEventListener('loadedmetadata', function() {
-           oCarousel.flickity('resize');
-       }, true);
-   });
+    oCarousel.find(sItem + ' video').each(function() {
+        this.addEventListener('loadedmetadata', function() {
+            oCarousel.flickity('resize');
+        }, true);
+    });
 };
 
-BxTimelineMain.prototype.initFlickity = function() {
+BxTimelineMain.prototype.initFlickity = function(oView) {
     var $this = this;
 
     //--- init Flickity for images (may be used in header section)
-    $('.' + this.sClassItem + ' .' + this.sClassItemImages + '.' + this.sSP + '-ii-gallery').each(function() {
+    oView.find('.' + this.sClassItem + ' .' + this.sClassItemImages + '.' + this.sSP + '-ii-gallery').each(function() {
         $this.initFlickityImages($(this));
     });
 
     //--- init Flickity for videos (may be used in header section)
-    $('.' + this.sClassItem + ' .' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery').each(function() {
+    oView.find('.' + this.sClassItem + ' .' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery').each(function() {
         $this.initFlickityVideos($(this));
     });
 
     //--- init Flickity for attachments (images and video in attachments seation)
-    $('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery').each(function() {
+    oView.find('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery').each(function() {
         $this.initFlickityAttachments($(this));
     });
 };
