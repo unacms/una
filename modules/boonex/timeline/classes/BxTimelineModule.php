@@ -1675,6 +1675,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockMuted($iProfileId = 0)
     {
+        if(!isLogged())
+            return MsgBox(_t('_Access denied'));
+
         if($iProfileId == 0)
             $iProfileId = $this->_iProfileId;
 
@@ -1685,7 +1688,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oGrid->setProfile($iProfileId);
         return $oGrid->getCode();
     }
-    
+
     public function serviceGetTimelineRepostAllowedView($aEvent)
     {
         return isset($aEvent['content']['allowed_view']) ? $aEvent['content']['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
