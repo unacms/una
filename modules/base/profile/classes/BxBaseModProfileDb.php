@@ -62,20 +62,22 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 			'status' => BX_PROFILE_STATUS_ACTIVE
 		);
 
+        $sSelect = "`c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` ";
+        $sJoin = "INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` =  `p`.`account_id`)";
+        
         $sWhere = '';
         foreach ($this->_oConfig->CNF['FIELDS_QUICK_SEARCH'] as $sField) {
         	$aBindings[$sField] = $sTerm . '%';
 
             $sWhere .= " OR `c`.`$sField` LIKE :" . $sField;
         }
+        $sWhere = "`p`.`status` = :status AND (0 $sWhere) ";
 
         $sOrderBy = $this->prepareAsString(" ORDER BY `a`.`logged` DESC LIMIT ?", (int)$iLimit);
 
-        $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` 
-            INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) 
-            INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` =  `p`.`account_id`)
-            WHERE `p`.`status` = :status AND (0 $sWhere)" . $sOrderBy;
-        return $this->getAll($sQuery, $aBindings);
+        bx_alert('profile', 'search_by_term', 0, 0, array('module' => $this->_oConfig->getName(), 'table' => $this->_oConfig->CNF['TABLE_ENTRIES'], 'select' => &$sSelect,  'join' => &$sJoin, 'where' => &$sWhere, 'order_by' => &$sOrderBy));
+        
+        return $this->getAll("SELECT " . $sSelect . " FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` " . $sJoin . " WHERE " . $sWhere . $sOrderBy, $aBindings);
     }
 
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
