@@ -21,6 +21,15 @@ class BxDolCmtsNotes extends BxTemplCmts
     {
         return BX_DOL_PG_HIDDEN;
     }
+
+    /**
+     * TODO: Remove this method when 'TriggerFieldComments' fields will be cleaned or updated 
+     * in all modules which have Notes.
+     */
+    protected function _triggerComment()
+    {
+        return false;
+    }
 }
 
 /** @} */
