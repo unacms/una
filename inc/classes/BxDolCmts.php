@@ -1790,7 +1790,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _triggerComment()
     {
-        if(!$this->_aSystem['trigger_table'])
+        if(!$this->_aSystem['trigger_table'] || !$this->_aSystem['trigger_field_id'] || !$this->_aSystem['trigger_field_comments'])
             return false;
 
         $iId = $this->getId();
