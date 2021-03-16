@@ -21,11 +21,36 @@ class BxAdsMenuViewActions extends BxBaseModTextMenuViewActions
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function getCode ()
+    {
+        $sCode = parent::getCode();
+
+        if(!empty($this->_oMenuActions))
+            $sCode .= $this->_oMenuActions->getJsCode();
+
+    	return $sCode;
+    }
+
     protected function _getMenuItemInterested($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
-    
+
+    protected function _getMenuItemAddToCart($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
+    protected function _getMenuItemMakeOffer($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
+    protected function _getMenuItemViewOffers($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
     protected function _getMenuItemEditAd($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
@@ -35,6 +60,7 @@ class BxAdsMenuViewActions extends BxBaseModTextMenuViewActions
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
+
     protected function _getMenuItemReview($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

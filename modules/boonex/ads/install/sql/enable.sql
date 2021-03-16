@@ -10,15 +10,21 @@ VALUES (@iTypeId, 'bx_ads', '_bx_ads', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_ads_summary_chars', '700', @iCategId, '_bx_ads_option_summary_chars', 'digit', '', '', '', 1),
-('bx_ads_plain_summary_chars', '240', @iCategId, '_bx_ads_option_plain_summary_chars', 'digit', '', '', '', 2),
-('bx_ads_per_page_browse', '12', @iCategId, '_bx_ads_option_per_page_browse', 'digit', '', '', '', 10),
-('bx_ads_per_page_profile', '6', @iCategId, '_bx_ads_option_per_page_profile', 'digit', '', '', '', 12),
-('bx_ads_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
-('bx_ads_rss_num', '10', @iCategId, '_bx_ads_option_rss_num', 'digit', '', '', '', 20),
+('bx_ads_enable_auto_approve', 'on', @iCategId, '_bx_ads_option_enable_auto_approve', 'checkbox', '', '', '', 0),
+('bx_ads_enable_auction', '', @iCategId, '_bx_ads_option_enable_auction', 'checkbox', '', '', '', 2),
+('bx_ads_internal_interested_notification', '', @iCategId, '_bx_ads_option_internal_interested_notification', 'checkbox', '', '', '', 3),
+
+('bx_ads_summary_chars', '700', @iCategId, '_bx_ads_option_summary_chars', 'digit', '', '', '', 10),
+('bx_ads_plain_summary_chars', '240', @iCategId, '_bx_ads_option_plain_summary_chars', 'digit', '', '', '', 12),
+
+('bx_ads_per_page_browse', '12', @iCategId, '_bx_ads_option_per_page_browse', 'digit', '', '', '', 20),
+('bx_ads_per_page_profile', '6', @iCategId, '_bx_ads_option_per_page_profile', 'digit', '', '', '', 22),
+('bx_ads_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 24),
+('bx_ads_rss_num', '10', @iCategId, '_bx_ads_option_rss_num', 'digit', '', '', '', 28),
+
 ('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40),
-('bx_ads_internal_interested_notification', '', @iCategId, '_bx_ads_option_internal_interested_notification', 'checkbox', '', '', '', 50);
+
+('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40);
 
 
 -- PAGE: create entry
@@ -55,12 +61,13 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_ads_view_entry', 2, 'bx_ads', '', '_bx_ads_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:18:"entity_attachments";}', 0, 0, 1, 30),
 ('bx_ads_view_entry', 2, 'bx_ads', '', '_bx_ads_page_block_title_entry_reviews', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:14:"entity_reviews";}', 0, 0, 1, 50),
 ('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
-('bx_ads_view_entry', 3, 'bx_ads', '_bx_ads_page_block_title_sys_entry_context', '_bx_ads_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 1),
-('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 10),
-('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_reviews_rating', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"entity_reviews_rating";}', 0, 0, 1, 20),
-('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:6:"bx_ads";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 30),
-('bx_ads_view_entry', 2, 'bx_ads', '', '_bx_ads_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:12:"entity_polls";}', 0, 0, 1, 40),
-('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 50),
+('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_offer_accepted', 13, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"entity_offer_accepted";s:6:"params";a:1:{i:0;s:4:"{id}";}}', 0, 0, 1, 10),
+('bx_ads_view_entry', 3, 'bx_ads', '_bx_ads_page_block_title_sys_entry_context', '_bx_ads_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 20),
+('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 30),
+('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_reviews_rating', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"entity_reviews_rating";}', 0, 0, 1, 40),
+('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:6:"bx_ads";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 50),
+('bx_ads_view_entry', 2, 'bx_ads', '', '_bx_ads_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:12:"entity_polls";}', 0, 0, 1, 60),
+('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 70),
 ('bx_ads_view_entry', 4, 'bx_ads', '', '_bx_ads_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0),
 ('bx_ads_view_entry', 4, 'bx_ads', '', '_bx_ads_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0);
 
@@ -120,7 +127,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_ads_home', 2, 'bx_ads', '', '_bx_ads_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:6:"bx_ads";i:1;s:6:"bx_ads";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0),
 ('bx_ads_home', 2, 'bx_ads', '', '_bx_ads_page_block_title_categories', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:15:"categories_list";s:6:"params";a:1:{i:0;a:1:{s:10:"show_empty";b:1;}}}', 0, 1, 1, 1);
 
-
 -- PAGE: search for entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_ads_search', '_bx_ads_page_title_sys_entries_search', '_bx_ads_page_title_entries_search', 'bx_ads', 5, 2147483647, 1, 'ads-search', 'page.php?i=ads-search', '', '', '', 0, 1, 0, 'BxAdsPageBrowse', 'modules/boonex/ads/classes/BxAdsPageBrowse.php');
@@ -144,6 +150,36 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_ads_administration', 1, 'bx_ads', '_bx_ads_page_block_title_system_manage_administration', '_bx_ads_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:12:"manage_tools";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 1, 0);
+
+-- PAGE: manage own licenses
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_licenses', '_bx_ads_page_title_sys_licenses', '_bx_ads_page_title_licenses', 'bx_ads', 5, 2147483647, 1, 'ads-licenses', '', '', '', '', 0, 1, 0, 'BxAdsPageLicenses', 'modules/boonex/ads/classes/BxAdsPageLicenses.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_ads_licenses', 1, 'bx_ads', '', '_bx_ads_page_block_title_licenses_note', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:19:"block_licenses_note";}', 0, 0, 1, 0),
+('bx_ads_licenses', 1, 'bx_ads', '', '_bx_ads_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:14:"block_licenses";}', 0, 0, 1, 1);
+
+-- PAGE: manage all licenses
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_licenses_administration', '_bx_ads_page_title_sys_licenses_administration', '_bx_ads_page_title_licenses_administration', 'bx_ads', 5, 192, 1, 'ads-licenses-administration', '', '', '', '', 0, 1, 0, 'BxAdsPageLicenses', 'modules/boonex/ads/classes/BxAdsPageLicenses.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_ads_licenses_administration', 1, 'bx_ads', '', '_bx_ads_page_block_title_licenses_administration', 11, 192, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:29:"block_licenses_administration";}', 0, 0, 1, 0);
+
+-- PAGE: view offers for entry
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_offers', '_bx_ads_page_title_sys_offers', '_bx_ads_page_title_offers', 'bx_ads', 5, 2147483647, 1, 'view-ad-offers', '', '', '', '', 0, 1, 0, 'BxAdsPageOffers', 'modules/boonex/ads/classes/BxAdsPageOffers.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_ads_offers', 1, 'bx_ads', '', '_bx_ads_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:17:"entity_breadcrumb";s:6:"params";a:1:{i:0;s:4:"{id}";}}', 0, 0, 1, 1),
+('bx_ads_offers', 1, 'bx_ads', '', '_bx_ads_page_block_title_offers', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:13:"entity_offers";s:6:"params";a:1:{i:0;s:4:"{id}";}}', 0, 0, 1, 2);
+
+-- PAGE: view all offers
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_offers_all', '_bx_ads_page_title_sys_offers_all', '_bx_ads_page_title_offers_all', 'bx_ads', 5, 2147483647, 1, 'ads-offers', '', '', '', '', 0, 1, 0, '', '');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_ads_offers_all', 1, 'bx_ads', '', '_bx_ads_page_block_title_offers_all', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:6:"offers";}', 0, 0, 1, 1);
 
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -209,6 +245,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_ads_view', 'bx_ads', 'interested', '_bx_ads_menu_item_title_system_interested_entry', '_bx_ads_menu_item_title_interested_entry', 'javascript:void(0)', 'javascript:{js_object}.interested(this, {content_id})', '', 'map-marker', '', 2147483646, 1, 0, 10),
+('bx_ads_view', 'bx_ads', 'add-to-cart', '_bx_ads_menu_item_title_system_add_to_cart', '{add_to_cart_title}', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 15),
+('bx_ads_view', 'bx_ads', 'make-offer', '_bx_ads_menu_item_title_system_make_offer', '_bx_ads_menu_item_title_make_offer', 'javascript:void(0);', 'javascript:{js_object}.makeOffer(this, {content_id})', '', 'hand-holding-usd', '', 2147483647, 1, 0, 16),
+('bx_ads_view', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '_bx_ads_menu_item_title_view_offers', 'page.php?i=view-ad-offers&id={content_id}', '', '', '', '', 2147483647, 1, 0, 17),
 ('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
 ('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
@@ -221,6 +260,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_ads_view_actions', 'bx_ads', 'interested', '_bx_ads_menu_item_title_system_interested_entry', '', '', '', '', '', '', '', 0, 2147483646, 1, 0, 10),
+('bx_ads_view_actions', 'bx_ads', 'add-to-cart', '_bx_ads_menu_item_title_system_add_to_cart', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 15),
+('bx_ads_view_actions', 'bx_ads', 'make-offer', '_bx_ads_menu_item_title_system_make_offer', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 16),
+('bx_ads_view_actions', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 17),
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_ads_view_actions', 'bx_ads', 'review', '_bx_ads_menu_item_title_system_review_entry', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 190),
@@ -290,6 +332,22 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_snippet_meta', 'bx_ads', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
 ('bx_ads_snippet_meta', 'bx_ads', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 7);
 
+-- MENU: licenses submenu
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_licenses_submenu', '_bx_ads_menu_title_licenses_submenu', 'bx_ads_licenses_submenu', 'bx_ads', 6, 0, 1, '', '');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_ads_licenses_submenu', 'bx_ads', '_bx_ads_menu_set_title_licenses_submenu', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_ads_licenses_submenu', 'bx_ads', 'ads-licenses-administration', '_bx_ads_menu_item_title_system_ads_licenses_administration', '_bx_ads_menu_item_title_ads_licenses_administration', 'page.php?i=ads-licenses-administration', '', '_self', '', '', '', 192, 1, 0, 1, 1),
+('bx_ads_licenses_submenu', 'bx_ads', 'ads-licenses', '_bx_ads_menu_item_title_system_ads_licenses', '_bx_ads_menu_item_title_ads_licenses', 'page.php?i=ads-licenses', '', '_self', '', '', '', 2147483646, 1, 0, 1, 2);
+
+-- MENU: notifications menu in account popup
+SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `active` = 1 AND `order` < 9999 ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
+('sys_account_notifications', 'bx_ads', 'notifications-ads-offers', '_bx_ads_menu_item_title_system_offers_all', '_bx_ads_menu_item_title_offers_all', 'page.php?i=ads-offers&profile_id={member_id}', '', '', 'ad col-green2', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:16:"get_offers_count";s:6:"params";a:1:{i:0;s:8:"awaiting";}}', '', 2147483646, '', 1, 0, @iNotifMenuOrder + 1);
+
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -308,7 +366,12 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_ads', 'ads-administration', '_bx_ads_menu_item_title_system_admt_ads', '_bx_ads_menu_item_title_admt_ads', 'page.php?i=ads-administration', '', '_self', 'folder-open', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_ads', 'ads-administration', '_bx_ads_menu_item_title_system_admt_ads', '_bx_ads_menu_item_title_admt_ads', 'page.php?i=ads-administration', '', '_self', 'ad col-green2', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+
+-- MENU: account dashboard
+SET @iDashboardMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_account_dashboard', 'bx_ads', 'dashboard-ads-licenses', '_bx_ads_menu_item_title_system_licenses', '_bx_ads_menu_item_title_licenses', 'page.php?i=ads-licenses', '', '', 'ad col-green2', '', '', 2147483646, 1, 0, 1, @iDashboardMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
@@ -425,11 +488,13 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_ads_administration', 'added', '_bx_ads_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_ads_administration', 'author', '_bx_ads_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_ads_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_ads_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_ads_common', 'switcher', '_bx_ads_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_ads_common', 'title', '_bx_ads_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_ads_common', 'added', '_bx_ads_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_ads_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_ads_common', 'added', '_bx_ads_grid_column_title_adm_added', '15%', 0, '25', '', 4),
+('bx_ads_common', 'status_admin', '_bx_ads_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_ads_common', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_ads_administration', 'bulk', 'delete', '_bx_ads_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -437,10 +502,58 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_ads_administration', 'single', 'delete', '_bx_ads_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_ads_administration', 'single', 'settings', '_bx_ads_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_ads_administration', 'single', 'audit_content', '_bx_ads_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
+
 ('bx_ads_common', 'bulk', 'delete', '_bx_ads_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_ads_common', 'single', 'edit', '_bx_ads_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_ads_common', 'single', 'delete', '_bx_ads_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_ads_common', 'single', 'settings', '_bx_ads_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+
+-- GRIDS: licenses
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_ads_licenses_administration', 'Sql', 'SELECT `tl`.`id` AS `id`, `tl`.`profile_id` AS `profile_id`, `tl`.`entry_id` AS `entry_id`, `te`.`title` AS `entry`, `tl`.`count` AS `count`, `tl`.`order` AS `transaction`, `tl`.`license` AS `license`, `tl`.`added` AS `added` FROM `bx_ads_licenses` AS `tl` LEFT JOIN `bx_ads_entries` AS `te` ON `tl`.`entry_id`=`te`.`id` WHERE 1 ', 'bx_ads_licenses', 'id', 'added', '', '', 20, NULL, 'start', '', 'te`.`title,tl`.`order,tl`.`license', '', 'like', '', '', 192, 'BxAdsGridLicensesAdministration', 'modules/boonex/ads/classes/BxAdsGridLicensesAdministration.php'),
+('bx_ads_licenses', 'Sql', 'SELECT `tl`.`id` AS `id`, `tl`.`profile_id` AS `profile_id`, `tl`.`entry_id` AS `entry_id`, `te`.`title` AS `entry`, `tl`.`count` AS `count`, `tl`.`order` AS `transaction`, `tl`.`license` AS `license`, `tl`.`added` AS `added` FROM `bx_ads_licenses` AS `tl` LEFT JOIN `bx_ads_entries` AS `te` ON `tl`.`entry_id`=`te`.`id` WHERE 1 ', 'bx_ads_licenses', 'id', 'added', '', '', 20, NULL, 'start', '', 'te`.`title,tl`.`order,tl`.`license', '', 'like', '', '', 2147483647, 'BxAdsGridLicenses', 'modules/boonex/ads/classes/BxAdsGridLicenses.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_ads_licenses_administration', 'profile_id', '_bx_ads_grid_column_title_lcs_profile_id', '20%', 0, '0', '', 1),
+('bx_ads_licenses_administration', 'entry', '_bx_ads_grid_column_title_lcs_entry', '20%', 0, '0', '', 2),
+('bx_ads_licenses_administration', 'count', '_bx_ads_grid_column_title_lcs_count', '5%', 0, '0', '', 3),
+('bx_ads_licenses_administration', 'transaction', '_bx_ads_grid_column_title_lcs_transaction', '20%', 0, '32', '', 4),
+('bx_ads_licenses_administration', 'license', '_bx_ads_grid_column_title_lcs_license', '15%', 0, '8', '', 5),
+('bx_ads_licenses_administration', 'added', '_bx_ads_grid_column_title_lcs_added', '10%', 1, '25', '', 6),
+('bx_ads_licenses_administration', 'actions', '', '10%', 0, '0', '', 7),
+
+('bx_ads_licenses', 'entry', '_bx_ads_grid_column_title_lcs_entry', '25%', 0, '0', '', 1),
+('bx_ads_licenses', 'count', '_bx_ads_grid_column_title_lcs_count', '5%', 0, '0', '', 2),
+('bx_ads_licenses', 'transaction', '_bx_ads_grid_column_title_lcs_transaction', '25%', 0, '32', '', 3),
+('bx_ads_licenses', 'license', '_bx_ads_grid_column_title_lcs_license', '15%', 0, '8', '', 4),
+('bx_ads_licenses', 'added', '_bx_ads_grid_column_title_lcs_added', '20%', 1, '25', '', 5),
+('bx_ads_licenses', 'actions', '', '10%', 0, '0', '', 6);
+
+-- GRIDS: offers
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `show_total_count`, `override_class_name`, `override_class_file`) VALUES
+('bx_ads_offers', 'Sql', 'SELECT * FROM `bx_ads_offers` WHERE 1 ', 'bx_ads_offers', 'id', 'added', '', '', 20, NULL, 'start', '', 'message', '', 'like', '', '', 2147483647, 1, 'BxAdsGridOffers', 'modules/boonex/ads/classes/BxAdsGridOffers.php'),
+('bx_ads_offers_all', 'Sql', 'SELECT `to`.*, SUM(IF(`to`.`status`=''awaiting'', 1, 0)) AS `offers_awating`, COUNT(`to`.`id`) AS `offers_total`, `te`.`title` AS `content_title` FROM `bx_ads_offers` AS `to` LEFT JOIN `bx_ads_entries` AS `te` ON `to`.`content_id`=`te`.`id` WHERE 1 ', 'bx_ads_offers', 'id', 'added', '', '', 20, NULL, 'start', '', '', '', 'like', '', '', 2147483647, 0, 'BxAdsGridOffersAll', 'modules/boonex/ads/classes/BxAdsGridOffersAll.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_ads_offers', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
+('bx_ads_offers', 'author_id', '_bx_ads_grid_column_title_ofr_author_id', '20%', 0, 0, '', 2),
+('bx_ads_offers', 'amount', '_bx_ads_grid_column_title_ofr_amount', '14%', 0, 0, '', 3),
+('bx_ads_offers', 'quantity', '_bx_ads_grid_column_title_ofr_quantity', '5%', 0, 0, '', 4),
+('bx_ads_offers', 'message', '_bx_ads_grid_column_title_ofr_message', '24%', 0, '32', '', 5),
+('bx_ads_offers', 'added', '_bx_ads_grid_column_title_ofr_added', '10%', 0, 0, '', 6),
+('bx_ads_offers', 'status', '_bx_ads_grid_column_title_ofr_status', '5%', 0, 8, '', 7),
+('bx_ads_offers', 'actions', '', '20%', 0, '', '', 8),
+
+('bx_ads_offers_all', 'content_id', '_bx_ads_grid_column_title_ofrs_content_id', '60%', 0, 0, '', 1),
+('bx_ads_offers_all', 'offers_awating', '_bx_ads_grid_column_title_ofrs_offers_awating', '10%', 0, 0, '', 2),
+('bx_ads_offers_all', 'offers_total', '_bx_ads_grid_column_title_ofrs_offers_total', '10%', 0, 0, '', 3),
+('bx_ads_offers_all', 'actions', '', '20%', 0, '', '', 4);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_ads_offers', 'single', 'accept', '_bx_ads_grid_action_title_ofr_accept', 'check', 1, 1, 1),
+('bx_ads_offers', 'single', 'decline', '_bx_ads_grid_action_title_ofr_decline', 'times', 1, 1, 2),
+
+('bx_ads_offers_all', 'single', 'view', '_bx_ads_grid_action_title_ofr_view', 'share-square', 1, 0, 1);
 
 -- GRIDS: categories manager
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -477,6 +590,11 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_ads_files_html5', 1, 'BxAdsUploaderHTML5Attach', 'modules/boonex/ads/classes/BxAdsUploaderHTML5Attach.php');
 
 
+-- LIVE UPDATES
+INSERT INTO `sys_objects_live_updates`(`name`, `frequency`, `service_call`, `active`) VALUES
+('bx_ads', 1, 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:16:"get_live_updates";s:6:"params";a:4:{i:0;s:8:"awaiting";i:1;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:2;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:24:"notifications-ads-offers";}i:3;s:7:"{count}";}}', 1);
+
+
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_ads', 'BxAdsAlertsResponse', 'modules/boonex/ads/classes/BxAdsAlertsResponse.php', '');
@@ -497,4 +615,8 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
-('bx_ads', '_bx_ads_et_txt_name_interested', 'bx_ads_interested', '_bx_ads_et_txt_subject_interested', '_bx_ads_et_txt_body_interested');
+('bx_ads', '_bx_ads_et_txt_name_interested', 'bx_ads_interested', '_bx_ads_et_txt_subject_interested', '_bx_ads_et_txt_body_interested'),
+('bx_ads', '_bx_ads_et_txt_name_purchased', 'bx_ads_purchased', '_bx_ads_et_txt_subject_purchased', '_bx_ads_et_txt_body_purchased'),
+('bx_ads', '_bx_ads_et_txt_name_offer_added', 'bx_ads_offer_added', '_bx_ads_et_txt_subject_offer_added', '_bx_ads_et_txt_body_offer_added'),
+('bx_ads', '_bx_ads_et_txt_name_offer_accepted', 'bx_ads_offer_accepted', '_bx_ads_et_txt_subject_offer_accepted', '_bx_ads_et_txt_body_offer_accepted'),
+('bx_ads', '_bx_ads_et_txt_name_offer_declined', 'bx_ads_offer_declined', '_bx_ads_et_txt_subject_offer_declined', '_bx_ads_et_txt_body_offer_declined');

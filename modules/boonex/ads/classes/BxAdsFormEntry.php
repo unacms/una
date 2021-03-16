@@ -26,6 +26,23 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         $this->_initCategoryFields();
 
+        if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
+            $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
+
+            $aMask = array('mask' => "javascript:%s.checkName('%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
+            if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && bx_get('id') !== false) {
+                $aMask['mask'] = "javascript:%s.checkName('%s', '%s', %d);";
+                $aMask[] = (int)bx_get('id');
+            }
+
+            $sOnBlur = call_user_func_array('sprintf', array_values($aMask)); 
+        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = $sOnBlur;
+        	$this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = $sOnBlur;
+        }
+
+        if(isset($CNF['FIELD_AUCTION']) && isset($this->aInputs[$CNF['FIELD_AUCTION']]) && !$this->_oModule->_oConfig->isAuction())
+            unset($this->aInputs[$CNF['FIELD_AUCTION']]);
+
     	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
                 $this->aInputs[$CNF['FIELD_COVER']]['storage_object'] = $CNF['OBJECT_STORAGE'];
@@ -84,8 +101,16 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
     function getCode($bDynamicMode = false)
     {
-        $sInclude = $this->_oModule->_oTemplate->addJs(array('entry.js'), $bDynamicMode);
-        return ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode($bDynamicMode);
+        $sJs = $this->_oModule->_oTemplate->addJs(array('form.js'), $bDynamicMode);
+
+        $sCode = '';
+        if($bDynamicMode)
+            $sCode .= $sJs;
+
+        $sCode .= $this->_oModule->_oTemplate->getJsCode('form');
+        $sCode .= parent::getCode($bDynamicMode);
+
+        return $sCode;
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -113,6 +138,9 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_oModule->_isModerator() && getParam($CNF['PARAM_AUTO_APPROVE']) != 'on')
+            $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_ADS_STATUS_PENDING;
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
@@ -163,6 +191,11 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     protected function genCustomViewRowValuePrice(&$aInput)
     {
         return isset($aInput['value']) && $aInput['value'] !== '' ? getParam('currency_sign') . bx_process_output($aInput['value']) : null;
+    }
+
+    protected function genCustomViewRowValueQuantity(&$aInput)
+    {
+        return (int)$aInput['value'] > 0 ? (int)$aInput['value'] : 0;
     }
 
     protected function _getCoverGhostTmplVars($aContentInfo = array())

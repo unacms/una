@@ -306,6 +306,48 @@ class BxAdsDb extends BxBaseModTextDb
         return (int)$this->lastId();
     }
 
+    public function registerLicense($iProfileId, $iEntryId, $iCount, $sOrder, $sLicense)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $aQueryParams = array(
+            'profile_id' => $iProfileId,
+            'entry_id' => $iEntryId,
+            'count' => $iCount,
+            'order' => $sOrder,
+            'license' => $sLicense
+        );
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()") > 0;
+    }
+
+    public function unregisterLicense($iProfileId, $iEntryId, $sOrder, $sLicense)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$sWhereClause = "`profile_id`=:profile_id AND `entry_id`=:entry_id AND `order`=:order AND `license`=:license";
+    	$aWhereBindings = array(
+            'profile_id' => $iProfileId,
+            'entry_id' => $iEntryId,
+            'order' => $sOrder,
+            'license' => $sLicense
+    	);
+    	
+        //--- Move to deleted licenses table with 'refund' as reason.   
+    	$sQuery = "INSERT IGNORE INTO `" . $CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'refund' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+            $this->query($sQuery, $aWhereBindings);
+
+    	$sQuery = "DELETE FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+        return $this->query($sQuery, $aWhereBindings) !== false;
+    }
+
+    public function updateLicense($aSet, $aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->query("UPDATE `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -333,6 +375,85 @@ class BxAdsDb extends BxBaseModTextDb
         }
 
         parent::_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
+    }
+
+    public function getOffersBy($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "`to`.*";
+
+        if(!empty($aParams['type']))
+            switch($aParams['type']) {
+                case 'id':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1]['id'] = (int)$aParams['id'];
+
+                    $sWhereClause = " AND `to`.`id`=:id";
+                    break;
+
+                case 'content_author_id':
+                    $aMethod['params'][1]['author_id'] = (int)$aParams['author_id'];
+
+                    $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `to`.`content_id`=`te`.`id`";
+                    $sWhereClause = " AND `te`.`author`=:author_id";
+
+                    if(!empty($aParams['status'])) {
+                        $aMethod['params'][1]['status'] = $aParams['status'];
+
+                        $sWhereClause .= " AND `to`.`status`=:status";
+                    }
+
+                    if(isset($aParams['count']) && $aParams['count'] === true) {
+                        $aMethod['name'] = 'getOne';
+
+                        $sSelectClause = "COUNT(`to`.`id`)";
+                    }
+                    break;
+
+                case 'content_and_author_ids':
+                    if(!isset($aParams['all']) || $aParams['all'] !== true)
+                        $aMethod['name'] = 'getRow';
+
+                    $aMethod['params'][1]['content_id'] = (int)$aParams['content_id'];
+                    $aMethod['params'][1]['author_id'] = (int)$aParams['author_id'];
+
+                    $sWhereClause = " AND `to`.`content_id`=:content_id AND `to`.`author_id`=:author_id";
+
+                    if(!empty($aParams['status'])) {
+                        $aMethod['params'][1]['status'] = $aParams['status'];
+
+                        $sWhereClause .= " AND `to`.`status`=:status";
+                    }
+
+                    $sOrderClause = "`to`.`added` DESC";
+                    break;    
+            }
+
+        if(!empty($sGroupClause))
+            $sGroupClause = ' GROUP BY ' . $sGroupClause;
+    
+        if(!empty($sOrderClause))
+            $sOrderClause = ' ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = ' LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_OFFERS'] . "` AS `to` " . $sJoinClause . " WHERE 1 " . $sWhereClause . $sGroupClause . $sOrderClause . $sLimitClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function updateOffer($aSet, $aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aSet[$CNF['FIELD_OFR_CHANGED']]))
+            $aSet[$CNF['FIELD_OFR_CHANGED']] = time();
+
+        return (int)$this->query("UPDATE `" . $CNF['TABLE_OFFERS'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
     }
 }
 

@@ -23,6 +23,28 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $this->aMethodsToCallAddJsCss[] = 'categories';
     }
 
+    public function entryOfferAccepted($iUserId, $aContent, $aOffer)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sJsCode = $sJsMethod = '';
+        $aJs = BxDolPayments::getInstance()->getAddToCartJs($aContent[$CNF['FIELD_AUTHOR']], $this->MODULE, $aContent[$CNF['FIELD_ID']], $aOffer[$CNF['FIELD_OFR_QUANTITY']], true);
+        if(!empty($aJs) && is_array($aJs))
+            list($sJsCode, $sJsMethod) = $aJs;
+
+        return $this->parseHtmlByName('entry-offer-accepted.html', array(
+            'amount' => _t_format_currency($aOffer['amount']),
+            'quantity' => _t('_bx_ads_txt_n_items', $aOffer['quantity']),
+            'bx_if:show_pay' => array(
+                'condition' => !empty($sJsMethod),
+                'content' => array(
+                    'js_method' => $sJsMethod,
+                )
+            ),
+            'js_code' => $sJsCode
+        ));
+    }
+
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -53,6 +75,19 @@ class BxAdsTemplate extends BxBaseModTextTemplate
             $sResult = MsgBox(_t('_Empty'));
 
         return $sResult;
+    }
+
+    public function getEntryLink($aEntry)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->getLink('entry-link', array(
+            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array(
+                'id' => $aEntry[$CNF['FIELD_ID']]
+            )),
+            'title' => bx_html_attribute($aEntry[$CNF['FIELD_TITLE']]),
+            'content' => $aEntry[$CNF['FIELD_TITLE']]
+        ));
     }
 
     /**

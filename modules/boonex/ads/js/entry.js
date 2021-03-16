@@ -15,6 +15,7 @@ function BxAdsEntry(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
+    this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
 BxAdsEntry.prototype.interested = function(oElement, iContentId) {
@@ -38,32 +39,29 @@ BxAdsEntry.prototype.interested = function(oElement, iContentId) {
     );
 };
 
-BxAdsEntry.prototype.onChangeCategory = function(oElement) {
+BxAdsEntry.prototype.makeOffer = function(oElement, iContentId) {
     var $this = this;
     var oParams = this._getDefaultData();
-    oParams['category'] = $(oElement).val();
+    oParams['id'] = iContentId;
 
-    this.loadingInBlock(oElement, true);
+    if(oElement)
+        this.loadingInButton(oElement, true);
 
     jQuery.get (
-        this._sActionsUrl + 'get_category_form',
+        this._sActionsUrl + 'make_offer',
         oParams,
         function(oData) {
             if(oElement)
-                $this.loadingInBlock(oElement, false);
+                $this.loadingInButton(oElement, false);
 
-            if(!oData || !oData.content && oData.content.length == 0) 
-                return;
-
-            var oContent = $(oData.content);
-            var sFormId = oContent.filter('form').attr('id');
-            if(!sFormId)
-                return;
-
-            $('form#' + sFormId).replaceWith(oContent);
+            processJsonData(oData);
         },
         'json'
     );
+};
+
+BxAdsEntry.prototype.onMakeOffer = function(oData) {
+    
 };
 
 BxAdsEntry.prototype.loadingInButton = function(e, bShow) {
@@ -75,11 +73,6 @@ BxAdsEntry.prototype.loadingInButton = function(e, bShow) {
 
 BxAdsEntry.prototype.loadingInBox = function(e, bShow) {
     var oParent = $(e).length ? $(e).parents('.bx-base-text-poll:first') : $('body'); 
-    bx_loading(oParent, bShow);
-};
-
-BxAdsEntry.prototype.loadingInBlock = function(e, bShow) {
-    var oParent = $(e).length ? $(e).parents('.bx-db-container:first') : $('body'); 
     bx_loading(oParent, bShow);
 };
 

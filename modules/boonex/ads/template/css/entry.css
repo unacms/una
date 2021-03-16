@@ -1,0 +1,9 @@
+/*--- Offer Accepted block ---*/
+.bx-ads-entry-offer-accepted {
+    position: relative;
+}
+
+.bx-ads-eoa .bx-btn {
+    display: inline-block;
+    float: none;
+}

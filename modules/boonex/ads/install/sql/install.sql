@@ -6,10 +6,14 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `changed` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `price` float NOT NULL,
+  `auction` tinyint(4) NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL default '1',
   `year` int(11) NOT NULL,
   `text` mediumtext NOT NULL,
+  `notes_purchased` text NOT NULL,
   `labels` text NOT NULL,
   `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
@@ -28,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
 );
@@ -152,6 +156,37 @@ CREATE TABLE IF NOT EXISTS `bx_ads_interested_track` (
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `interested` (`entry_id`, `profile_id`)
+);
+
+-- TABLE: licenses
+CREATE TABLE IF NOT EXISTS `bx_ads_licenses` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL default '0',
+  `entry_id` int(11) unsigned NOT NULL default '0',
+  `count` int(11) unsigned NOT NULL default '0',
+  `order` varchar(32) NOT NULL default '',
+  `license` varchar(32) NOT NULL default '',
+  `added` int(11) unsigned NOT NULL default '0',
+  `new` tinyint(1) NOT NULL default '1',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`entry_id`, `profile_id`),
+  KEY `license` (`license`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_ads_licenses_deleted` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL default '0',
+  `entry_id` int(11) unsigned NOT NULL default '0',
+  `count` int(11) unsigned NOT NULL default '0',
+  `order` varchar(32) NOT NULL default '',
+  `license` varchar(32) NOT NULL default '',
+  `added` int(11) unsigned NOT NULL default '0',
+  `new` tinyint(1) NOT NULL default '1',
+  `reason` varchar(16) NOT NULL default '',
+  `deleted` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`entry_id`,`profile_id`),
+  KEY `license` (`license`)
 );
 
 -- TABLE: storages & transcoders
@@ -453,6 +488,21 @@ CREATE TABLE IF NOT EXISTS `bx_ads_polls_answers_votes_track` (
   KEY `vote` (`object_id`, `author_nip`)
 );
 
+-- TABLE: offers
+CREATE TABLE IF NOT EXISTS `bx_ads_offers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `added` int(11) NOT NULL default '0',
+  `changed` int(11) NOT NULL default '0',
+  `amount` float NOT NULL default '0',
+  `quantity` int(11) NOT NULL default '0',
+  `message` text NOT NULL,
+  `status` enum('accepted','awaiting','declined') NOT NULL DEFAULT 'awaiting',
+  PRIMARY KEY (`id`)
+);
+
+
 -- STORAGES & TRANSCODERS
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
@@ -575,11 +625,15 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_ads', 'bx_ads', 'polls', '', '', 0, 'custom', '_bx_ads_form_entry_input_sys_polls', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'text', '', '', 0, 'textarea', '_bx_ads_form_entry_input_sys_text', '_bx_ads_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_ads', 'bx_ads', 'title', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_title', '_bx_ads_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_title_err', 'Xss', '', 1, 0),
+('bx_ads', 'bx_ads', 'name', '1', '', 0, 'text', '_bx_ads_form_entry_input_sys_name', '_bx_ads_form_entry_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_name_err', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'price', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_price', '_bx_ads_form_entry_input_price', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_ads', 'bx_ads', 'auction', 1, '', 0, 'checkbox', '_bx_ads_form_entry_input_sys_auction', '_bx_ads_form_entry_input_auction', '_bx_ads_form_entry_input_auction_info', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_ads', 'bx_ads', 'quantity', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_quantity', '_bx_ads_form_entry_input_quantity', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_quantity_err', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'year', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_year', '_bx_ads_form_entry_input_year', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'category', '', '', 0, 'hidden', '_bx_ads_form_entry_input_sys_category', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_ads', 'bx_ads', 'category_view', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_category_view', '_bx_ads_form_entry_input_category_view', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', '', '', 1, 0),
-('bx_ads', 'bx_ads', 'category_select', '', '', 0, 'select', '_bx_ads_form_entry_input_sys_category_select', '_bx_ads_form_entry_input_category_select', '', 1, 0, 0, 'a:1:{s:8:"onchange";s:35:"oBxAdsEntry.onChangeCategory(this);";}', '', '', '', '', '', '', '', 0, 0),
+('bx_ads', 'bx_ads', 'category_select', '', '', 0, 'select', '_bx_ads_form_entry_input_sys_category_select', '_bx_ads_form_entry_input_category_select', '', 1, 0, 0, 'a:1:{s:8:"onchange";s:34:"oBxAdsForm.onChangeCategory(this);";}', '', '', '', '', '', '', '', 0, 0),
+('bx_ads', 'bx_ads', 'notes_purchased', '', '', 0, 'textarea', '_bx_ads_form_entry_input_sys_notes_purchased', '_bx_ads_form_entry_input_notes_purchased', '_bx_ads_form_entry_input_notes_purchased_inf', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_ads', 'bx_ads', 'added', '', '', 0, 'datetime', '_bx_ads_form_entry_input_sys_date_added', '_bx_ads_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'changed', '', '', 0, 'datetime', '_bx_ads_form_entry_input_sys_date_changed', '_bx_ads_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'attachments', '', '', 0, 'custom', '_bx_ads_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -594,31 +648,39 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_ads_entry_price_add', 'category', 2147483647, 1, 1),
 ('bx_ads_entry_price_add', 'category_view', 2147483647, 1, 2),
 ('bx_ads_entry_price_add', 'title', 2147483647, 1, 3),
-('bx_ads_entry_price_add', 'price', 2147483647, 1, 4),
-('bx_ads_entry_price_add', 'text', 2147483647, 1, 5),
-('bx_ads_entry_price_add', 'attachments', 2147483647, 1, 6),
-('bx_ads_entry_price_add', 'pictures', 2147483647, 1, 7),
-('bx_ads_entry_price_add', 'videos', 2147483647, 1, 8),
-('bx_ads_entry_price_add', 'files', 2147483647, 1, 9),
-('bx_ads_entry_price_add', 'polls', 2147483647, 1, 10),
-('bx_ads_entry_price_add', 'covers', 2147483647, 1, 11),
-('bx_ads_entry_price_add', 'allow_view_to', 2147483647, 1, 12),
-('bx_ads_entry_price_add', 'location', 2147483647, 1, 13),
-('bx_ads_entry_price_add', 'do_submit', 2147483647, 1, 14),
+('bx_ads_entry_price_add', 'name', 2147483647, 1, 4),
+('bx_ads_entry_price_add', 'price', 2147483647, 1, 5),
+('bx_ads_entry_price_add', 'auction', 2147483647, 1, 6),
+('bx_ads_entry_price_add', 'quantity', 2147483647, 1, 7),
+('bx_ads_entry_price_add', 'text', 2147483647, 1, 8),
+('bx_ads_entry_price_add', 'attachments', 2147483647, 1, 9),
+('bx_ads_entry_price_add', 'pictures', 2147483647, 1, 10),
+('bx_ads_entry_price_add', 'videos', 2147483647, 1, 11),
+('bx_ads_entry_price_add', 'files', 2147483647, 1, 12),
+('bx_ads_entry_price_add', 'polls', 2147483647, 1, 13),
+('bx_ads_entry_price_add', 'covers', 2147483647, 1, 14),
+('bx_ads_entry_price_add', 'allow_view_to', 2147483647, 1, 15),
+('bx_ads_entry_price_add', 'notes_purchased', 2147483647, 1, 16),
+('bx_ads_entry_price_add', 'location', 2147483647, 1, 17),
+('bx_ads_entry_price_add', 'do_submit', 2147483647, 1, 18),
 
 ('bx_ads_entry_price_edit', 'category_view', 2147483647, 1, 1),
 ('bx_ads_entry_price_edit', 'title', 2147483647, 1, 2),
-('bx_ads_entry_price_edit', 'price', 2147483647, 1, 3),
-('bx_ads_entry_price_edit', 'text', 2147483647, 1, 4),
-('bx_ads_entry_price_edit', 'attachments', 2147483647, 1, 5),
-('bx_ads_entry_price_edit', 'pictures', 2147483647, 1, 6),
-('bx_ads_entry_price_edit', 'videos', 2147483647, 1, 7),
-('bx_ads_entry_price_edit', 'files', 2147483647, 1, 8),
-('bx_ads_entry_price_edit', 'polls', 2147483647, 1, 9),
-('bx_ads_entry_price_edit', 'covers', 2147483647, 1, 10),
-('bx_ads_entry_price_edit', 'allow_view_to', 2147483647, 1, 11),
-('bx_ads_entry_price_edit', 'location', 2147483647, 1, 12),
-('bx_ads_entry_price_edit', 'do_submit', 2147483647, 1, 13),
+('bx_ads_entry_price_edit', 'name', 2147483647, 1, 3),
+('bx_ads_entry_price_edit', 'price', 2147483647, 1, 4),
+('bx_ads_entry_price_edit', 'auction', 2147483647, 1, 5),
+('bx_ads_entry_price_edit', 'quantity', 2147483647, 1, 6),
+('bx_ads_entry_price_edit', 'text', 2147483647, 1, 7),
+('bx_ads_entry_price_edit', 'attachments', 2147483647, 1, 8),
+('bx_ads_entry_price_edit', 'pictures', 2147483647, 1, 9),
+('bx_ads_entry_price_edit', 'videos', 2147483647, 1, 10),
+('bx_ads_entry_price_edit', 'files', 2147483647, 1, 11),
+('bx_ads_entry_price_edit', 'polls', 2147483647, 1, 12),
+('bx_ads_entry_price_edit', 'covers', 2147483647, 1, 13),
+('bx_ads_entry_price_edit', 'allow_view_to', 2147483647, 1, 14),
+('bx_ads_entry_price_edit', 'notes_purchased', 2147483647, 1, 15),
+('bx_ads_entry_price_edit', 'location', 2147483647, 1, 16),
+('bx_ads_entry_price_edit', 'do_submit', 2147483647, 1, 17),
 
 ('bx_ads_entry_price_view', 'category_view', 2147483647, 1, 1),
 ('bx_ads_entry_price_view', 'price', 2147483647, 1, 2),
@@ -628,39 +690,48 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_ads_entry_price_year_add', 'category', 2147483647, 1, 1),
 ('bx_ads_entry_price_year_add', 'category_view', 2147483647, 1, 2),
 ('bx_ads_entry_price_year_add', 'title', 2147483647, 1, 3),
-('bx_ads_entry_price_year_add', 'price', 2147483647, 1, 4),
-('bx_ads_entry_price_year_add', 'year', 2147483647, 1, 5),
-('bx_ads_entry_price_year_add', 'text', 2147483647, 1, 6),
-('bx_ads_entry_price_year_add', 'attachments', 2147483647, 1, 7),
-('bx_ads_entry_price_year_add', 'pictures', 2147483647, 1, 8),
-('bx_ads_entry_price_year_add', 'videos', 2147483647, 1, 9),
-('bx_ads_entry_price_year_add', 'files', 2147483647, 1, 10),
-('bx_ads_entry_price_year_add', 'polls', 2147483647, 1, 11),
-('bx_ads_entry_price_year_add', 'covers', 2147483647, 1, 12),
-('bx_ads_entry_price_year_add', 'allow_view_to', 2147483647, 1, 13),
-('bx_ads_entry_price_year_add', 'location', 2147483647, 1, 14),
-('bx_ads_entry_price_year_add', 'do_submit', 2147483647, 1, 15),
+('bx_ads_entry_price_year_add', 'name', 2147483647, 1, 4),
+('bx_ads_entry_price_year_add', 'price', 2147483647, 1, 5),
+('bx_ads_entry_price_year_add', 'auction', 2147483647, 1, 6),
+('bx_ads_entry_price_year_add', 'quantity', 2147483647, 1, 7),
+('bx_ads_entry_price_year_add', 'year', 2147483647, 1, 8),
+('bx_ads_entry_price_year_add', 'text', 2147483647, 1, 9),
+('bx_ads_entry_price_year_add', 'attachments', 2147483647, 1, 10),
+('bx_ads_entry_price_year_add', 'pictures', 2147483647, 1, 11),
+('bx_ads_entry_price_year_add', 'videos', 2147483647, 1, 12),
+('bx_ads_entry_price_year_add', 'files', 2147483647, 1, 13),
+('bx_ads_entry_price_year_add', 'polls', 2147483647, 1, 14),
+('bx_ads_entry_price_year_add', 'covers', 2147483647, 1, 15),
+('bx_ads_entry_price_year_add', 'allow_view_to', 2147483647, 1, 16),
+('bx_ads_entry_price_year_add', 'notes_purchased', 2147483647, 1, 17),
+('bx_ads_entry_price_year_add', 'location', 2147483647, 1, 18),
+('bx_ads_entry_price_year_add', 'do_submit', 2147483647, 1, 19),
 
 ('bx_ads_entry_price_year_edit', 'category_view', 2147483647, 1, 1),
 ('bx_ads_entry_price_year_edit', 'title', 2147483647, 1, 2),
-('bx_ads_entry_price_year_edit', 'price', 2147483647, 1, 3),
-('bx_ads_entry_price_year_edit', 'year', 2147483647, 1, 4),
-('bx_ads_entry_price_year_edit', 'text', 2147483647, 1, 5),
-('bx_ads_entry_price_year_edit', 'attachments', 2147483647, 1, 6),
-('bx_ads_entry_price_year_edit', 'pictures', 2147483647, 1, 7),
-('bx_ads_entry_price_year_edit', 'videos', 2147483647, 1, 8),
-('bx_ads_entry_price_year_edit', 'files', 2147483647, 1, 9),
-('bx_ads_entry_price_year_edit', 'polls', 2147483647, 1, 10),
-('bx_ads_entry_price_year_edit', 'covers', 2147483647, 1, 11),
-('bx_ads_entry_price_year_edit', 'allow_view_to', 2147483647, 1, 12),
-('bx_ads_entry_price_year_edit', 'location', 2147483647, 1, 13),
-('bx_ads_entry_price_year_edit', 'do_submit', 2147483647, 1, 14),
+('bx_ads_entry_price_year_edit', 'name', 2147483647, 1, 3),
+('bx_ads_entry_price_year_edit', 'price', 2147483647, 1, 4),
+('bx_ads_entry_price_year_edit', 'auction', 2147483647, 1, 5),
+('bx_ads_entry_price_year_edit', 'quantity', 2147483647, 1, 6),
+('bx_ads_entry_price_year_edit', 'year', 2147483647, 1, 7),
+('bx_ads_entry_price_year_edit', 'text', 2147483647, 1, 8),
+('bx_ads_entry_price_year_edit', 'attachments', 2147483647, 1, 9),
+('bx_ads_entry_price_year_edit', 'pictures', 2147483647, 1, 10),
+('bx_ads_entry_price_year_edit', 'videos', 2147483647, 1, 11),
+('bx_ads_entry_price_year_edit', 'files', 2147483647, 1, 12),
+('bx_ads_entry_price_year_edit', 'polls', 2147483647, 1, 13),
+('bx_ads_entry_price_year_edit', 'covers', 2147483647, 1, 14),
+('bx_ads_entry_price_year_edit', 'allow_view_to', 2147483647, 1, 15),
+('bx_ads_entry_price_year_edit', 'notes_purchased', 2147483647, 1, 16),
+('bx_ads_entry_price_year_edit', 'location', 2147483647, 1, 17),
+('bx_ads_entry_price_year_edit', 'do_submit', 2147483647, 1, 18),
 
 ('bx_ads_entry_price_year_view', 'category_view', 2147483647, 1, 1),
 ('bx_ads_entry_price_year_view', 'price', 2147483647, 1, 2),
-('bx_ads_entry_price_year_view', 'year', 2147483647, 1, 3),
-('bx_ads_entry_price_year_view', 'added', 2147483647, 1, 4),
-('bx_ads_entry_price_year_view', 'changed', 2147483647, 1, 5);
+('bx_ads_entry_price_year_view', 'quantity', 2147483647, 1, 3),
+('bx_ads_entry_price_year_view', 'year', 2147483647, 1, 4),
+('bx_ads_entry_price_year_view', 'added', 2147483647, 1, 5),
+('bx_ads_entry_price_year_view', 'changed', 2147483647, 1, 6);
 
 -- FORMS: poll
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
@@ -682,6 +753,29 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_ads_poll_add', 'controls', 2147483647, 1, 3),
 ('bx_ads_poll_add', 'do_submit', 2147483647, 1, 4),
 ('bx_ads_poll_add', 'do_cancel', 2147483647, 1, 5);
+
+-- FORMS: offer
+INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_ads_offer', 'bx_ads', '_bx_ads_form_offer', '', '', 'do_submit', 'bx_ads_offers', 'id', '', '', '', 0, 1, 'BxAdsFormOffer', 'modules/boonex/ads/classes/BxAdsFormOffer.php');
+
+INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('bx_ads_offer_add', 'bx_ads', 'bx_ads_offer', '_bx_ads_form_offer_display_add', 0);
+
+INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+('bx_ads_offer', 'bx_ads', 'amount', '', '', 0, 'text', '_bx_ads_form_offer_input_sys_amount', '_bx_ads_form_offer_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_offer_input_amount_err', 'Xss', '', 1, 0),
+('bx_ads_offer', 'bx_ads', 'quantity', '1', '', 0, 'text', '_bx_ads_form_offer_input_sys_quantity', '_bx_ads_form_offer_input_quantity', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_offer_input_quantity_err', 'Xss', '', 1, 0),
+('bx_ads_offer', 'bx_ads', 'message', '', '', 0, 'textarea', '_bx_ads_form_offer_input_sys_message', '_bx_ads_form_offer_input_message', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_ads_offer', 'bx_ads', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_ads_offer', 'bx_ads', 'do_submit', '_bx_ads_form_offer_input_do_submit', '', 0, 'submit', '_bx_ads_form_offer_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_ads_offer', 'bx_ads', 'do_cancel', '_bx_ads_form_offer_input_do_cancel', '', 0, 'button', '_bx_ads_form_offer_input_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+
+INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_ads_offer_add', 'amount', 2147483647, 1, 1),
+('bx_ads_offer_add', 'quantity', 2147483647, 1, 2),
+('bx_ads_offer_add', 'message', 2147483647, 1, 3),
+('bx_ads_offer_add', 'controls', 2147483647, 1, 4),
+('bx_ads_offer_add', 'do_submit', 2147483647, 1, 5),
+('bx_ads_offer_add', 'do_cancel', 2147483647, 1, 6);
 
 
 -- COMMENTS

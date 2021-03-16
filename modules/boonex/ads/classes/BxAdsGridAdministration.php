@@ -16,6 +16,10 @@ class BxAdsGridAdministration extends BxBaseModTextGridAdministration
     	$this->MODULE = 'bx_ads';
 
         parent::__construct ($aOptions, $oTemplate);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_aFilter1Values[BX_ADS_STATUS_PENDING] = $CNF['T']['filter_item_' . BX_ADS_STATUS_PENDING];
     }
 }
 

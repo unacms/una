@@ -13,6 +13,12 @@ bx_import('BxDolInformer');
 
 class BxAdsConfig extends BxBaseModTextConfig
 {
+    protected $_oDb;
+
+    protected $_aCurrency;
+
+    protected $_bAuction;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -33,6 +39,9 @@ class BxAdsConfig extends BxBaseModTextConfig
             'TABLE_CATEGORIES' => $aModule['db_prefix'] . 'categories',
             'TABLE_CATEGORIES_TYPES' => $aModule['db_prefix'] . 'categories_types',
             'TABLE_INTERESTED_TRACK' => $aModule['db_prefix'] . 'interested_track',
+            'TABLE_LICENSES' => $aModule['db_prefix'] . 'licenses',
+            'TABLE_LICENSES_DELETED' => $aModule['db_prefix'] . 'licenses_deleted',
+            'TABLE_OFFERS' => $aModule['db_prefix'] . 'offers',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -40,13 +49,17 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_TITLE' => 'title',
+            'FIELD_NAME' => 'name',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'ad-text',
             'FIELD_CATEGORY' => 'category',
             'FIELD_CATEGORY_VIEW' => 'category_view',
             'FIELD_CATEGORY_SELECT' => 'category_select',
             'FIELD_PRICE' => 'price',
+            'FIELD_AUCTION' => 'auction',
+            'FIELD_QUANTITY' => 'quantity',
             'FIELD_YEAR' => 'year',
+            'FIELD_NOTES_PURCHASED' => 'notes_purchased',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
@@ -66,8 +79,18 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
 
+            'FIELD_OFR_ID' => 'id',
+            'FIELD_OFR_CONTENT' => 'content_id',
+            'FIELD_OFR_AUTHOR' => 'author_id',
+            'FIELD_OFR_ADDED' => 'added',
+            'FIELD_OFR_CHANGED' => 'changed',
+            'FIELD_OFR_AMOUNT' => 'amount',
+            'FIELD_OFR_QUANTITY' => 'quantity',
+            'FIELD_OFR_STATUS' => 'status',
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-ad',
+            'URI_VIEW_ENTRY_OFFERS' => 'view-ad-offers',
             'URI_AUTHOR_ENTRIES' => 'ads-author',
             'URI_ENTRIES_BY_CONTEXT' => 'ads-context',
             'URI_ADD_ENTRY' => 'create-ad',
@@ -80,10 +103,13 @@ class BxAdsConfig extends BxBaseModTextConfig
             'URL_CATEGORIES' => 'page.php?i=ads-categories',
             'URL_MANAGE_COMMON' => 'page.php?i=ads-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=ads-administration',
+            'URL_LICENSES_COMMON' => 'page.php?i=ads-licenses',
+            'URL_LICENSES_ADMINISTRATION' => 'page.php?i=ads-licenses-administration',
 
             'GET_PARAM_CATEGORY' => 'category',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_ads_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_ads_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_ads_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_ads_rss_num',
@@ -92,6 +118,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_LIFETIME' => 'bx_ads_lifetime',
             'PARAM_USE_IIN' => 'bx_ads_internal_interested_notification',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
+            'PARAM_USE_AUCTION' => 'bx_ads_enable_auction',
 
             // objects
             'OBJECT_STORAGE' => 'bx_ads_covers',
@@ -135,6 +162,8 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_ads_entry_delete',
             'OBJECT_FORM_POLL' => 'bx_ads_poll',
             'OBJECT_FORM_POLL_DISPLAY_ADD' => 'bx_ads_poll_add',
+            'OBJECT_FORM_OFFER' => 'bx_ads_offer',
+            'OBJECT_FORM_OFFER_DISPLAY_ADD' => 'bx_ads_offer_add',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => 'bx_ads_entry_attachments', // attachments menu in create/edit forms
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_ads_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_ads_view_actions', // all actions menu on view entry page
@@ -144,9 +173,14 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'ads-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_SNIPPET_META' => 'bx_ads_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_ads_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_MENU_LICENSES' => 'bx_ads_licenses_submenu',
             'OBJECT_GRID_CATEGORIES' => 'bx_ads_categories',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_ads_administration',
             'OBJECT_GRID_COMMON' => 'bx_ads_common',
+            'OBJECT_GRID_LICENSES_ADMINISTRATION' => 'bx_ads_licenses_administration',
+            'OBJECT_GRID_LICENSES' => 'bx_ads_licenses',
+            'OBJECT_GRID_OFFERS' => 'bx_ads_offers',
+            'OBJECT_GRID_OFFERS_ALL' => 'bx_ads_offers_all',
             'OBJECT_UPLOADERS' => array('bx_ads_simple', 'bx_ads_html5'),
 
             // menu items which visibility depends on custom visibility checking
@@ -170,6 +204,10 @@ class BxAdsConfig extends BxBaseModTextConfig
 
             // email templates
             'ETEMPLATE_INTERESTED' => 'bx_ads_interested',
+            'ETEMPLATE_PURCHASED' => 'bx_ads_purchased',
+            'ETEMPLATE_OFFER_ADDED' => 'bx_ads_offer_added',
+            'ETEMPLATE_OFFER_ACCEPTED' => 'bx_ads_offer_accepted',
+            'ETEMPLATE_OFFER_DECLINED' => 'bx_ads_offer_declined',
 
             // some language keys
             'T' => array (
@@ -186,6 +224,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             	'grid_txt_account_manager' => '_bx_ads_grid_txt_account_manager',
                 'filter_item_active' => '_bx_ads_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_ads_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_ads_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_ads_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_ads_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_ads_menu_item_title_manage_all',
@@ -209,13 +248,15 @@ class BxAdsConfig extends BxBaseModTextConfig
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'manage_tools' => 'BxAdsManageTools',
             'studio' => 'BxAdsStudio',
-            'entry' => 'BxAdsEntry'
+            'entry' => 'BxAdsEntry',
+            'form' => 'BxAdsForm',
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
             'manage_tools' => 'oBxAdsManageTools',
             'studio' => 'oBxAdsStudio',
-            'entry' => 'oBxAdsEntry'
+            'entry' => 'oBxAdsEntry',
+            'form' => 'oBxAdsForm',
         ));
 
         $this->_aGridObjects = array(
@@ -224,7 +265,40 @@ class BxAdsConfig extends BxBaseModTextConfig
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
 
+        $sPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array(
+            'offer_popup' =>  $sPrefix . '-offer-popup',
+        );
+
+        $oPayments = BxDolPayments::getInstance();
+        $this->_aCurrency = array(
+            'code' => $oPayments->getOption('default_currency_code'),
+            'sign' => $oPayments->getOption('default_currency_sign')
+        );
+
         $this->_bAttachmentsInTimeline = true;
+    }
+
+    public function init(&$oDb)
+    {
+        $this->_oDb = &$oDb;
+        
+        $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
+    }
+
+    public function isAuction()
+    {
+        return $this->_bAuction;
+    }
+
+    public function getCurrency()
+    {
+    	return $this->_aCurrency;
+    }
+
+    public function getEntryName($sName)
+    {
+        return uriGenerate($sName, $this->CNF['TABLE_ENTRIES'], $this->CNF['FIELD_NAME']);
     }
 }
 

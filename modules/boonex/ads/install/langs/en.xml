@@ -4,6 +4,7 @@
     <string name="_bx_ads_cmts"><![CDATA[Ads' Comments]]></string>
     <string name="_bx_ads_reactions"><![CDATA[Ads' Reactions]]></string>
 
+    <string name="_bx_ads_option_enable_auto_approve"><![CDATA[Auto approve an ad after creation]]></string>
     <string name="_bx_ads_option_summary_chars"><![CDATA[Number of characters in auto-cropped ad summary]]></string>
     <string name="_bx_ads_option_plain_summary_chars"><![CDATA[Number of characters in plain ad description when ad hasn't thumb]]></string>
     <string name="_bx_ads_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -12,6 +13,7 @@
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Deactivate automatically after (in days)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Use internal notification about Interested action]]></string>
+    <string name="_bx_ads_option_enable_auction"><![CDATA[Enable Auction mode]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Category]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Add Category]]></string>
@@ -62,8 +64,17 @@
     <string name="_bx_ads_form_entry_input_sys_title"><![CDATA[Title]]></string>
     <string name="_bx_ads_form_entry_input_title"><![CDATA[Title]]></string>
     <string name="_bx_ads_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+    <string name="_bx_ads_form_entry_input_sys_name"><![CDATA[Name]]></string>
+    <string name="_bx_ads_form_entry_input_name"><![CDATA[Name]]></string>
+    <string name="_bx_ads_form_entry_input_name_err"><![CDATA[Name should be unique and is needed for internal usage. Please, fill in this field]]></string>
     <string name="_bx_ads_form_entry_input_sys_price"><![CDATA[Price]]></string>
     <string name="_bx_ads_form_entry_input_price"><![CDATA[Price]]></string>
+    <string name="_bx_ads_form_entry_input_sys_auction"><![CDATA[Auction]]></string>
+    <string name="_bx_ads_form_entry_input_auction"><![CDATA[Use auction]]></string>
+    <string name="_bx_ads_form_entry_input_auction_info"><![CDATA[Allow buyers not only to pay a defined price but to make offers too.]]></string>
+    <string name="_bx_ads_form_entry_input_sys_quantity"><![CDATA[Quantity]]></string>
+    <string name="_bx_ads_form_entry_input_quantity"><![CDATA[Quantity]]></string>
+    <string name="_bx_ads_form_entry_input_quantity_err"><![CDATA[Quantity is essential. Please, fill in this field]]></string>
     <string name="_bx_ads_form_entry_input_sys_year"><![CDATA[Year]]></string>
     <string name="_bx_ads_form_entry_input_year"><![CDATA[Year]]></string>
     <string name="_bx_ads_form_entry_input_sys_category"><![CDATA[Category]]></string>
@@ -74,6 +85,9 @@
     <string name="_bx_ads_form_entry_input_sys_text"><![CDATA[Text]]></string>
     <string name="_bx_ads_form_entry_input_text"><![CDATA[Text]]></string>
     <string name="_bx_ads_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+    <string name="_bx_ads_form_entry_input_sys_notes_purchased"><![CDATA[After purchase notes]]></string>
+    <string name="_bx_ads_form_entry_input_notes_purchased"><![CDATA[After purchase notes]]></string>
+    <string name="_bx_ads_form_entry_input_notes_purchased_inf"><![CDATA[Will be attached to email message which is sent to buyer after purchase.]]></string>
     <string name="_bx_ads_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
     <string name="_bx_ads_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this ad]]></string>
     <string name="_bx_ads_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
@@ -109,6 +123,21 @@
     <string name="_bx_ads_form_poll_input_sys_do_submit"><![CDATA[Add]]></string>
     <string name="_bx_ads_form_poll_input_do_submit"><![CDATA[Add]]></string>
     <string name="_bx_ads_form_poll_input_do_cancel"><![CDATA[Close]]></string>
+    
+    <string name="_bx_ads_form_offer"><![CDATA[Offer]]></string>
+    <string name="_bx_ads_form_offer_display_add"><![CDATA[Add Offer]]></string>
+    <string name="_bx_ads_form_offer_input_sys_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_ads_form_offer_input_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_ads_form_offer_input_amount_err"><![CDATA[Amount is essential. Please, fill in this field.]]></string>
+    <string name="_bx_ads_form_offer_input_sys_quantity"><![CDATA[Quantity]]></string>
+    <string name="_bx_ads_form_offer_input_quantity"><![CDATA[Quantity]]></string>
+    <string name="_bx_ads_form_offer_input_quantity_err"><![CDATA[Quantity is essential. Please, fill in this field.]]></string>
+    <string name="_bx_ads_form_offer_input_sys_message"><![CDATA[Message]]></string>
+    <string name="_bx_ads_form_offer_input_message"><![CDATA[Message]]></string>
+    <string name="_bx_ads_form_offer_input_sys_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_ads_form_offer_input_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_ads_form_offer_input_sys_do_cancel"><![CDATA[Add]]></string>
+    <string name="_bx_ads_form_offer_input_do_cancel"><![CDATA[Close]]></string>
 
     <string name="_bx_ads_acl_action_create_entry"><![CDATA[Create Ad]]></string>
     <string name="_bx_ads_acl_action_delete_entry"><![CDATA[Delete Ad]]></string>
@@ -201,12 +230,27 @@
     <string name="_bx_ads_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Ads]]></string>
     <string name="_bx_ads_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Ads (Showcase View)]]></string>
     <string name="_bx_ads_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Ads]]></string>
+    <string name="_bx_ads_page_block_title_entry_offer_accepted"><![CDATA[Offer]]></string>
     <string name="_bx_ads_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_ads_page_block_title_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_ads_page_title_sys_entries_categories"><![CDATA[Ads Categories]]></string>
     <string name="_bx_ads_page_title_entries_categories"><![CDATA[Ads Categories]]></string>
     <string name="_bx_ads_page_block_title_entries_by_category"><![CDATA[Ads]]></string>
     <string name="_bx_ads_page_block_title_entries_by_category_mask"><![CDATA[Ads in: {0}]]></string>
+    <string name="_bx_ads_page_title_sys_licenses_administration"><![CDATA[Licenses]]></string>
+    <string name="_bx_ads_page_title_licenses_administration"><![CDATA[Licenses]]></string>
+    <string name="_bx_ads_page_block_title_licenses_administration"><![CDATA[Licenses]]></string>
+    <string name="_bx_ads_page_title_sys_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_ads_page_title_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_ads_page_block_title_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_ads_page_block_title_licenses_note"><![CDATA[Note]]></string>
+    <string name="_bx_ads_page_block_content_licenses_note"><![CDATA[The licenses are for reference only.]]></string>
+    <string name="_bx_ads_page_title_sys_offers"><![CDATA[Offers]]></string>
+    <string name="_bx_ads_page_title_offers"><![CDATA[Offers]]></string>
+    <string name="_bx_ads_page_block_title_offers"><![CDATA[Offers]]></string>
+    <string name="_bx_ads_page_title_sys_offers_all"><![CDATA[All Offers]]></string>
+    <string name="_bx_ads_page_title_offers_all"><![CDATA[All Offers]]></string>
+    <string name="_bx_ads_page_block_title_offers_all"><![CDATA[All Offers]]></string>
 
     <string name="_bx_ads_menu_title_entry_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_ads_menu_set_title_entry_attachments"><![CDATA[Form Attachments]]></string>
@@ -235,6 +279,12 @@
     <string name="_bx_ads_menu_item_title_create_entry"><![CDATA[Ad]]></string>
     <string name="_bx_ads_menu_item_title_system_interested_entry"><![CDATA[Interested]]></string>
     <string name="_bx_ads_menu_item_title_interested_entry"><![CDATA[I'm interested]]></string>
+    <string name="_bx_ads_menu_item_title_system_add_to_cart"><![CDATA[Add to Cart]]></string>
+    <string name="_bx_ads_menu_item_title_add_to_cart"><![CDATA[Buy for {0}{1}]]></string>
+    <string name="_bx_ads_menu_item_title_system_make_offer"><![CDATA[Make offer]]></string>
+    <string name="_bx_ads_menu_item_title_make_offer"><![CDATA[Make offer]]></string>
+    <string name="_bx_ads_menu_item_title_system_view_offers"><![CDATA[Оffers]]></string>
+    <string name="_bx_ads_menu_item_title_view_offers"><![CDATA[Оffers]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
@@ -277,6 +327,16 @@
     <string name="_bx_ads_menu_item_title_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_ads_menu_item_title_system_sm_price"><![CDATA[Price]]></string>
     <string name="_bx_ads_menu_item_title_sm_price"><![CDATA[Price]]></string>
+    <string name="_bx_ads_menu_title_licenses_submenu"><![CDATA[Licenses Submenu]]></string>
+    <string name="_bx_ads_menu_set_title_licenses_submenu"><![CDATA[Licenses Submenu]]></string>
+    <string name="_bx_ads_menu_item_title_system_ads_licenses_administration"><![CDATA[All Licenses]]></string>
+    <string name="_bx_ads_menu_item_title_ads_licenses_administration"><![CDATA[All Licenses]]></string>
+    <string name="_bx_ads_menu_item_title_system_ads_licenses"><![CDATA[My Licenses]]></string>
+    <string name="_bx_ads_menu_item_title_ads_licenses"><![CDATA[My Licenses]]></string>
+    <string name="_bx_ads_menu_item_title_system_licenses"><![CDATA[Ads Licenses]]></string>
+    <string name="_bx_ads_menu_item_title_licenses"><![CDATA[Ads Licenses]]></string>
+    <string name="_bx_ads_menu_item_title_system_offers_all"><![CDATA[Ads Offers]]></string>
+    <string name="_bx_ads_menu_item_title_offers_all"><![CDATA[Offers]]></string>
 
     <string name="_bx_ads_grid_column_title_icon"><![CDATA[Icon]]></string>
     <string name="_bx_ads_grid_column_title_title"><![CDATA[Title]]></string>
@@ -294,6 +354,7 @@
     <string name="_bx_ads_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_ads_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
     <string name="_bx_ads_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_ads_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_ads_grid_column_title_adm_added"><![CDATA[Added]]></string>
@@ -302,8 +363,30 @@
     <string name="_bx_ads_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_ads_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_ads_grid_action_title_adm_audit_content"><![CDATA[Audit]]></string>
+    <string name="_bx_ads_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_ads_grid_action_err_delete"><![CDATA[Cannot delete the selected ad(s).]]></string>
     <string name="_bx_ads_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+
+    <string name="_bx_ads_grid_column_title_lcs_profile_id"><![CDATA[Owner]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_transaction"><![CDATA[Order]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_entry"><![CDATA[Ad]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_count"><![CDATA[Qt.]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_license"><![CDATA[License]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_added"><![CDATA[Date]]></string>
+
+    <string name="_bx_ads_grid_column_title_ofr_author_id"><![CDATA[Offerer]]></string>
+    <string name="_bx_ads_grid_column_title_ofr_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_ads_grid_column_title_ofr_quantity"><![CDATA[Quantity]]></string>
+    <string name="_bx_ads_grid_column_title_ofr_message"><![CDATA[Message]]></string>
+    <string name="_bx_ads_grid_column_title_ofr_added"><![CDATA[Added]]></string>
+    <string name="_bx_ads_grid_column_title_ofr_status"><![CDATA[Status]]></string>
+    <string name="_bx_ads_grid_action_title_ofr_accept"><![CDATA[Accept the offer]]></string>
+    <string name="_bx_ads_grid_action_title_ofr_decline"><![CDATA[Decline the offer]]></string>
+
+    <string name="_bx_ads_grid_column_title_ofrs_content_id"><![CDATA[Ad]]></string>
+    <string name="_bx_ads_grid_column_title_ofrs_offers_awating"><![CDATA[Awating]]></string>
+    <string name="_bx_ads_grid_column_title_ofrs_offers_total"><![CDATA[Total]]></string>
+    <string name="_bx_ads_grid_action_title_ofr_view"><![CDATA[View offers]]></string>
 
     <string name="_bx_ads_chart_growth"><![CDATA[Ads: Growth]]></string>
     <string name="_bx_ads_chart_growth_speed"><![CDATA[Ads: Growth Speed]]></string>
@@ -369,6 +452,35 @@
 <p><b><a href="{viewer_url}">{viewer_name}</a></b> is interested in your ad <b><a href="{ad_url}">{ad_name}</a></b>.</p>
 {email_footer}]]></string>
 
+    <string name="_bx_ads_et_txt_name_purchased"><![CDATA[Ad purchased.]]></string>
+    <string name="_bx_ads_et_txt_subject_purchased"><![CDATA[You've purchased {entry_name} ad.]]></string>
+    <string name="_bx_ads_et_txt_body_purchased"><![CDATA[{email_header}
+<p>Hello, {client_name}.</p>
+<p>You've purchased <a href="{entry_url}">{entry_name}</a> ad ({count} item(s)) from <a href="{vendor_url}">{vendor_name}</a>.<br />Your license is <b>{license}</b>.</p>
+<p>{notes}</p>
+{email_footer}]]></string>
+
+    <string name="_bx_ads_et_txt_name_offer_added"><![CDATA[New offer was added.]]></string>
+    <string name="_bx_ads_et_txt_subject_offer_added"><![CDATA[{viewer_name} added an offer for your ad.]]></string>
+    <string name="_bx_ads_et_txt_body_offer_added"><![CDATA[{email_header}
+<p>Hello, {profile_name}.</p>
+<p><b><a href="{viewer_url}">{viewer_name}</a></b> added an offer for your ad <b><a href="{ad_url}">{ad_name}</a></b>.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_ads_et_txt_name_offer_accepted"><![CDATA[The offer was accepted.]]></string>
+    <string name="_bx_ads_et_txt_subject_offer_accepted"><![CDATA[Your offer for {ad_name} ad was accepted.]]></string>
+    <string name="_bx_ads_et_txt_body_offer_accepted"><![CDATA[{email_header}
+<p>Hello, {offerer_name}.</p>
+<p>Your offer for <b><a href="{ad_url}">{ad_name}</a></b> ad was accepted.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_ads_et_txt_name_offer_declined"><![CDATA[The offer was declined.]]></string>
+    <string name="_bx_ads_et_txt_subject_offer_declined"><![CDATA[Your offer for {ad_name} ad was declined.]]></string>
+    <string name="_bx_ads_et_txt_body_offer_declined"><![CDATA[{email_header}
+<p>Hello, {offerer_name}.</p>
+<p>Your offer for <b><a href="{ad_url}">{ad_name}</a></b> ad was declined.</p>
+{email_footer}]]></string>
+
     <string name="_bx_ads_txt_all_entries_in"><![CDATA[<a href="{0}">All Ads in {1} ({2})</a>]]></string>
     <string name="_bx_ads_txt_all_entries_by"><![CDATA[{0} ads]]></string>
     <string name="_bx_ads_txt_sample_single"><![CDATA[ad]]></string>
@@ -385,8 +497,21 @@
     <string name="_bx_ads_txt_processing_awaiting"><![CDATA[Ad will be published as soon as video is converted]]></string>
     <string name="_bx_ads_txt_processing_failed"><![CDATA[Ad isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_ads_txt_free"><![CDATA[Free]]></string>
+    <string name="_bx_ads_txt_purchased_note"><![CDATA[Contact <a href="{0}">{1}</a> if you have any questions or need support.]]></string>
+    <string name="_bx_ads_txt_offer_status_awaiting"><![CDATA[Awaiting]]></string>
+    <string name="_bx_ads_txt_offer_status_accepted"><![CDATA[Accepted]]></string>
+    <string name="_bx_ads_txt_offer_status_declined"><![CDATA[Declined]]></string>
+    <string name="_bx_ads_txt_your_offer"><![CDATA[Your offer]]></string>
+    <string name="_bx_ads_txt_accepted"><![CDATA[was accepted]]></string>
+    <string name="_bx_ads_txt_n_items"><![CDATA[{0} item(s)]]></string>
+    <string name="_bx_ads_txt_pay"><![CDATA[Pay]]></string>
 
+    <string name="_bx_ads_txt_msg_status_hidden"><![CDATA[This ad was hidden.]]></string>
+    <string name="_bx_ads_txt_msg_status_pending"><![CDATA[This ad is pending approval.]]></string>
     <string name="_bx_ads_txt_msg_author_notified"><![CDATA[Advertiser was notified, that you're interested in his ad. Please wait.]]></string>
+    <string name="_bx_ads_txt_msg_offer_added"><![CDATA[Your offer was added. Advertiser will be notified about it. Please wait.]]></string>
+    <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[You already made an offer. Please wait for the results.]]></string>
+    <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Your offer was already accepted.]]></string>
     <string name="_bx_ads_txt_err_your_own"><![CDATA[You cannot do the action because it's your own ad.]]></string>
     <string name="_bx_ads_txt_err_duplicate"><![CDATA[You already performed the action.]]></string>
     <string name="_bx_ads_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
