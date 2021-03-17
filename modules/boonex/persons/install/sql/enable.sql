@@ -393,6 +393,9 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_persons', 'edit any entry', NULL, '_bx_persons_acl_action_edit_any_profile', '', 1, 3);
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_persons', 'delete any entry', NULL, '_bx_persons_acl_action_delete_any_profile', '', 1, 3);
+SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
 
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
@@ -437,7 +440,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
-(@iAdministrator, @iIdActionProfileEditAny);
+(@iAdministrator, @iIdActionProfileEditAny),
+
+-- any profile delete
+(@iAdministrator, @iIdActionProfileDeleteAny);
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
@@ -482,7 +488,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_persons_administration', 'bulk', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', '', 0, 0, 1),
 ('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_persons_administration', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
-('bx_persons_administration', 'bulk', 'clear_reports', '_bx_forum_grid_action_title_adm_clear_reports', '', 0, 1, 4),
+('bx_persons_administration', 'bulk', 'clear_reports', '_bx_persons_grid_action_title_adm_clear_reports', '', 0, 1, 4),
 ('bx_persons_administration', 'single', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', 'certificate', 1, 0, 1),
 ('bx_persons_administration', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_persons_administration', 'single', 'audit_content', '_bx_persons_grid_action_title_adm_audit_content', 'search', 1, 0, 3),

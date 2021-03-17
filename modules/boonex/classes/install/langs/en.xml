@@ -94,6 +94,7 @@
     <string name="_bx_classes_acl_action_view_entry"><![CDATA[View Class]]></string>
     <string name="_bx_classes_acl_action_set_thumb"><![CDATA[Set Class Header Image]]></string>
     <string name="_bx_classes_acl_action_edit_any_entry"><![CDATA[Edit Any Class]]></string>
+	<string name="_bx_classes_acl_action_delete_any_entry"><![CDATA[Delete Any Class]]></string>
 
     <string name="_bx_classes_page_title_sys_create_entry"><![CDATA[New Class]]></string>
     <string name="_bx_classes_page_title_create_entry"><![CDATA[New Class]]></string>

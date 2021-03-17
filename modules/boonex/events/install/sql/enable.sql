@@ -444,6 +444,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_events', 'delete any entry', NULL, '_bx_events_acl_action_delete_any_profile', '', 1, 3);
+SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_events', 'delete invites', NULL, '_bx_events_acl_action_delete_invites', '', 1, 3);
 SET @iIdActionProfileDeleteInvites = LAST_INSERT_ID();
 
@@ -490,6 +494,9 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
 (@iAdministrator, @iIdActionProfileEditAny),
+
+-- any profile delete
+(@iAdministrator, @iIdActionProfileDeleteAny),
 
 -- any invites edit
 (@iModerator, @iIdActionProfileDeleteInvites),

@@ -52,6 +52,7 @@
     <string name="_bx_courses_acl_action_delete_profile"><![CDATA[Delete Course]]></string>
     <string name="_bx_courses_acl_action_view_profile"><![CDATA[View Course]]></string>
     <string name="_bx_courses_acl_action_edit_any_profile"><![CDATA[Edit Any Course]]></string>
+	<string name="_bx_courses_acl_action_delete_any_profile"><![CDATA[Delete Any Course]]></string>
     <string name="_bx_courses_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
     <string name="_bx_courses_page_title_sys_joined_entries"><![CDATA[Profile Courses]]></string>

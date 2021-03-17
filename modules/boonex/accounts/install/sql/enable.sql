@@ -40,6 +40,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 (@sName, 'edit any entry', NULL, '_bx_accnt_acl_action_edit_any_account', '', 1, 3);
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+(@sName, 'delete any entry', NULL, '_bx_accnt_acl_action_delete_any_account', '', 1, 3);
+SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -54,7 +58,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- edit any entry 
 (@iModerator, @iIdActionProfileEditAny),
-(@iAdministrator, @iIdActionProfileEditAny);
+(@iAdministrator, @iIdActionProfileEditAny),
+
+-- delete any entry 
+(@iAdministrator, @iIdActionProfileDeleteAny);
 
 
 -- GRIDS: administration

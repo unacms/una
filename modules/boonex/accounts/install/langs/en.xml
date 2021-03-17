@@ -44,6 +44,7 @@
     <string name="_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption"><![CDATA[unconfirmed]]></string>
 
     <string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Edit Any Account]]></string>
+    <string name="_bx_accnt_acl_action_delete_any_account"><![CDATA[Delete Any Account]]></string>
 
     <string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
     <string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter2"><![CDATA[All]]></string>
