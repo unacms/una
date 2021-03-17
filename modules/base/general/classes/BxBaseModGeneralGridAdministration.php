@@ -110,7 +110,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-		if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)
+		if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && !$this->_oModule->_isAdministrator())
 			return '';
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);

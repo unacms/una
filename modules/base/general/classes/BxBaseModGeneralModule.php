@@ -1289,6 +1289,7 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+    
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
@@ -2193,7 +2194,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
     {
         // moderator always has access
-        if ($this->_isModerator($isPerformAction))
+        if ($this->_isAdministrator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -2246,12 +2247,35 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
+    public function checkAllowedDeleteAnyEntry ($isPerformAction = false)
+    {
+    	return $this->checkAllowedDeleteAnyEntryForProfile($isPerformAction, $this->_iProfileId);
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
     public function checkAllowedEditAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
     {
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
     	$aCheck = checkActionModule($iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
+    	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+    		return CHECK_ACTION_RESULT_ALLOWED;
+
+    	return _t('_sys_txt_access_denied');
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedDeleteAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+    	$aCheck = checkActionModule($iProfileId, 'delete any entry', $this->getName(), $isPerformAction);
     	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
     		return CHECK_ACTION_RESULT_ALLOWED;
 
@@ -2589,6 +2613,16 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _isModeratorForProfile($isPerformAction = false, $iProfileId = false)
     {
         return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntryForProfile ($isPerformAction, $iProfileId);
+    }
+    
+    public function _isAdministrator ($isPerformAction = false)
+    {
+        return $this->_isAdministratorForProfile($isPerformAction, $this->_iProfileId);
+    }
+
+    public function _isAdministratorForProfile($isPerformAction = false, $iProfileId = false)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedDeleteAnyEntryForProfile ($isPerformAction, $iProfileId);
     }
 
     public function _prepareAuditParams($aContentInfo, $bIsSaveData = true, $aOverrideAuditParams  = array())
