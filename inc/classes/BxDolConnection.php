@@ -395,13 +395,13 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Get connected content IDs for specified type
      * @param $iInitiator initiator of the connection
-     * @param $sType type of content
+     * @param $mixedType type of content or an array of types
      * @param $isMutual get mutual connections only
      * @return array of available connections
      */
-    public function getConnectedContentByType ($iInitiator, $sType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    public function getConnectedContentByType ($iInitiator, $mixedType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
-        return $this->_oQuery->getConnectedContentByType($iInitiator, $sType, $isMutual, $iStart, $iLimit, $iOrder);
+        return $this->_oQuery->getConnectedContentByType($iInitiator, $mixedType, $isMutual, $iStart, $iLimit, $iOrder);
     }
 
     /**
@@ -413,6 +413,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function getConnectedInitiators ($iContent, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
         return $this->_oQuery->getConnectedInitiators($iContent, $isMutual, $iStart, $iLimit, $iOrder);
+    }
+
+    /**
+     * Get connected initiators IDs
+     * @param $iContent content of the connection
+     * @param $mixedType type of content or an array of types
+     * @param $isMutual get mutual connections only
+     * @return array of available connections
+     */
+    public function getConnectedInitiatorsByType ($iContent, $mixedType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        return $this->_oQuery->getConnectedInitiatorsByType($iContent, $mixedType, $isMutual, $iStart, $iLimit, $iOrder);
     }
 
     /**

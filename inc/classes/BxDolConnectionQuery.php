@@ -156,14 +156,15 @@ class BxDolConnectionQuery extends BxDolDb
         ));
     }
     
-    public function getConnectedContentByType ($iInitiator, $sType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    public function getConnectedContentByType ($iInitiator, $mixedType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
+        $mixedType = is_array($mixedType) ? $mixedType : array($mixedType);
+
         $sWhere = " AND `c`.`initiator` = :initiator";
-        $sQuery = $this->_getConnectionsQuery($sWhere, 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`type` = :type', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
-       
+        $sQuery = $this->_getConnectionsQuery($sWhere, 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`type` IN (' . $this->implode_escape($mixedType) . ')', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
+
         return $this->getColumn($sQuery, array(
-        	'initiator' => $iInitiator,
-            'type' => $sType
+            'initiator' => $iInitiator,
         ));
     }
 
@@ -173,7 +174,19 @@ class BxDolConnectionQuery extends BxDolDb
         $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
 
         return $this->getColumn($sQuery, array(
-        	'content' => $iContent
+            'content' => $iContent
+        ));
+    }
+
+    public function getConnectedInitiatorsByType ($iContent, $mixedType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        $mixedType = is_array($mixedType) ? $mixedType : array($mixedType);
+
+        $sWhere = " AND `c`.`content` = :content";
+        $sQuery = $this->_getConnectionsQuery($sWhere, 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`initiator` AND `p`.`type` IN (' . $this->implode_escape($mixedType) . ')', '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        return $this->getColumn($sQuery, array(
+            'content' => $iContent,
         ));
     }
 
