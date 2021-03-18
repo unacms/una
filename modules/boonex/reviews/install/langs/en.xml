@@ -87,6 +87,7 @@
     <string name="_bx_reviews_acl_action_view_entry"><![CDATA[View Review]]></string>
     <string name="_bx_reviews_acl_action_set_thumb"><![CDATA[Set Review Header Image]]></string>
     <string name="_bx_reviews_acl_action_edit_any_entry"><![CDATA[Edit Any Review]]></string>
+	<string name="_bx_reviews_acl_action_delete_any_entry"><![CDATA[Delete Any Review]]></string>
 
     <string name="_bx_reviews_page_title_sys_create_entry"><![CDATA[New Review]]></string>
     <string name="_bx_reviews_page_title_create_entry"><![CDATA[New Review]]></string>

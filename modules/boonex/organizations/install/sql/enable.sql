@@ -460,6 +460,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_organizations', 'edit any entry', NULL, '_bx_orgs_acl_action_edit_any_profile', '', 1, 3);
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_organizations', 'delete any entry', NULL, '_bx_orgs_acl_action_delete_any_profile', '', 1, 3);
+SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -502,7 +506,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
-(@iAdministrator, @iIdActionProfileEditAny);
+(@iAdministrator, @iIdActionProfileEditAny),
+
+-- any profile delete
+(@iAdministrator, @iIdActionProfileDeleteAny);
 
 
 -- METATAGS

@@ -337,6 +337,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_photos', 'edit any entry', NULL, '_bx_photos_acl_action_edit_any_entry', '', 1, 3);
 SET @iIdActionEntryEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_photos', 'delete any entry', NULL, '_bx_photos_acl_action_delete_any_entry', '', 1, 3);
+SET @iIdActionEntryDeleteAny = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -379,7 +383,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),
-(@iAdministrator, @iIdActionEntryEditAny);
+(@iAdministrator, @iIdActionEntryEditAny),
+
+-- delete any entry
+(@iAdministrator, @iIdActionEntryDeleteAny);
 
 
 -- SEARCH

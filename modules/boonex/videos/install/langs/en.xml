@@ -62,6 +62,7 @@
 	<string name="_bx_videos_acl_action_view_entry"><![CDATA[View Video]]></string>
 	<string name="_bx_videos_acl_action_set_thumb"><![CDATA[Set Video Thumbnail]]></string>
 	<string name="_bx_videos_acl_action_edit_any_entry"><![CDATA[Edit Any Video]]></string>
+	<string name="_bx_videos_acl_action_delete_any_entry"><![CDATA[Delete Any Video]]></string>
 
 	<string name="_bx_videos_page_title_sys_create_entry"><![CDATA[New Video]]></string>
 	<string name="_bx_videos_page_title_create_entry"><![CDATA[New Video]]></string>

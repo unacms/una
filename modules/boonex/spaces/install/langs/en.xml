@@ -55,6 +55,7 @@
     <string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Delete Space]]></string>
     <string name="_bx_spaces_acl_action_view_profile"><![CDATA[View Space]]></string>
     <string name="_bx_spaces_acl_action_edit_any_profile"><![CDATA[Edit Any Space]]></string>
+	<string name="_bx_spaces_acl_action_delete_any_profile"><![CDATA[Delete Any Space]]></string>
     <string name="_bx_spaces_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 	
 	<string name="_bx_spaces_page_title_sys_joined_entries"><![CDATA[Profile Spaces]]></string>

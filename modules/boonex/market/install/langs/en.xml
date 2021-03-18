@@ -121,6 +121,7 @@
 	<string name="_bx_market_acl_action_set_subentries"><![CDATA[Set Product Subproducts]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Set Product Thumbnail]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Edit Any Product]]></string>
+	<string name="_bx_market_acl_action_delete_any_entry"><![CDATA[Delete Any Product]]></string>
 
 	<string name="_bx_market_privacy_group_customers"><![CDATA[Customers]]></string>
 

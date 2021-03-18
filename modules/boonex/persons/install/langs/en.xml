@@ -87,6 +87,7 @@
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Delete Person's Profile]]></string>
 	<string name="_bx_persons_acl_action_view_profile"><![CDATA[View Person's Profile]]></string>
 	<string name="_bx_persons_acl_action_edit_any_profile"><![CDATA[Edit Any Person's Profile]]></string>
+	<string name="_bx_persons_acl_action_delete_any_profile"><![CDATA[Delete Any Person's Profile]]></string>
 
 	<string name="_bx_persons_page_title_sys_create_profile"><![CDATA[Create a Profile - Person]]></string>
 	<string name="_bx_persons_page_title_create_profile"><![CDATA[Create a Profile - Person]]></string>

@@ -285,6 +285,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_channels', 'delete any entry', NULL, '_bx_channels_acl_action_delete_any_profile', '', 1, 3);
+SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_channels', 'create channel auto', NULL, '_bx_channels_acl_action_create_channel_auto', '', 1, 1);
 SET @iIdActionCreateChannelAuto = LAST_INSERT_ID();
 
@@ -316,6 +320,9 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
 (@iAdministrator, @iIdActionProfileEditAny),
+
+-- any profile delete
+(@iAdministrator, @iIdActionProfileDeleteAny),
 
 -- create channel auto
 (@iAccount, @iIdActionCreateChannelAuto),

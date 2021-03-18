@@ -476,6 +476,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryEditAny = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+(@sName, 'delete any entry', NULL, '_bx_forum_acl_action_delete_any_entry', '', 1, 3);
+SET @iIdActionEntryDeleteAny = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 (@sName, 'stick any entry', NULL, '_bx_forum_acl_action_stick_any_entry', '', 1, 3);
 SET @iIdActionEntryStickAny = LAST_INSERT_ID();
 
@@ -530,6 +534,9 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),
 (@iAdministrator, @iIdActionEntryEditAny),
+
+-- delete any entry
+(@iAdministrator, @iIdActionEntryDeleteAny),
 
 -- stick any entry
 (@iModerator, @iIdActionEntryStickAny),

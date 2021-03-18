@@ -60,6 +60,7 @@
 	<string name="_bx_photos_acl_action_view_entry"><![CDATA[View Photo]]></string>
 	<string name="_bx_photos_acl_action_set_thumb"><![CDATA[Set Photo Thumbnail]]></string>
 	<string name="_bx_photos_acl_action_edit_any_entry"><![CDATA[Edit Any Photo]]></string>
+	<string name="_bx_photos_acl_action_delete_any_entry"><![CDATA[Delete Any Photo]]></string>
 
 	<string name="_bx_photos_page_title_sys_create_entry"><![CDATA[Upload Photos]]></string>
 	<string name="_bx_photos_page_title_create_entry"><![CDATA[Upload Photos]]></string>

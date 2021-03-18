@@ -59,6 +59,7 @@
 	<string name="_bx_files_acl_action_delete_entry"><![CDATA[Delete File]]></string>
 	<string name="_bx_files_acl_action_view_entry"><![CDATA[View File]]></string>
 	<string name="_bx_files_acl_action_edit_any_entry"><![CDATA[Edit Any File]]></string>
+	<string name="_bx_files_acl_action_delete_any_entry"><![CDATA[Delete Any File]]></string>
 
 	<string name="_bx_files_page_title_sys_create_entry"><![CDATA[Upload Files]]></string>
 	<string name="_bx_files_page_title_create_entry"><![CDATA[Upload Files]]></string>

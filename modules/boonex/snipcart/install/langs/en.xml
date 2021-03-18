@@ -75,6 +75,7 @@
 	<string name="_bx_snipcart_acl_action_view_entry"><![CDATA[View Goods]]></string>
 	<string name="_bx_snipcart_acl_action_set_thumb"><![CDATA[Set Goods Thumbnail]]></string>
 	<string name="_bx_snipcart_acl_action_edit_any_entry"><![CDATA[Edit Any Goods]]></string>
+	<string name="_bx_snipcart_acl_action_delete_any_entry"><![CDATA[Delete Any Goods]]></string>
 
 	<string name="_bx_snipcart_page_title_sys_create_entry"><![CDATA[New Goods]]></string>
 	<string name="_bx_snipcart_page_title_create_entry"><![CDATA[New Item]]></string>
