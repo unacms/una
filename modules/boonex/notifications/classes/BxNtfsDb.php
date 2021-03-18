@@ -235,9 +235,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         return array($sJoinClause, $sWhereClause);
     }
 
-    public function getEventsToProcess()
+    public function getEventsToProcess($iLimit = 0)
     {
-        $aEvents = $this->getAll("SELECT * FROM `" . $this->_sTable . "` WHERE `id`>:id ORDER BY `id` ASC", array('id' => $this->_oConfig->getProcessedEvent()));
+        $aEvents = $this->getAll("SELECT * FROM `" . $this->_sTable . "` WHERE `id`>:id ORDER BY `id` ASC" . ($iLimit != 0 ? ' LIMIT ' . $iLimit : ''), array(
+            'id' => $this->_oConfig->getProcessedEvent()
+        ));
 
         if(!empty($aEvents) && is_array($aEvents)) {
             $aEventEnd = end($aEvents);
@@ -336,6 +338,14 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         $this->query("DELETE FROM `{$this->_sTable}` WHERE `date` < :date", array('date' => time() - $iClearIntervalInDays * 86400));
         $this->query("DELETE FROM `{$this->_sTableEvt2Usr}` WHERE `event_id` NOT IN (SELECT `id` FROM `{$this->_sTable}`)");
     }   
+
+    public function filterProfileIdsByModule($aIds, $mixedModule)
+    {
+        if(!is_array($mixedModule))
+            $mixedModule = array($mixedModule);
+
+        return $this->getColumn("SELECT `id` FROM `sys_profiles` WHERE `id` IN (" . $this->implode_escape($aIds) . ") AND `type` IN (" . $this->implode_escape($mixedModule) . ")");
+    }
 }
 
 /** @} */

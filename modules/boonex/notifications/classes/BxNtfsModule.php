@@ -442,13 +442,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return $mixedResult;
     }
 
-    public function sendNotificationEmail($oProfile, $aNotification)
+    public function sendNotificationEmail($iProfile, $aNotification)
     {
-        if(!$oProfile)
-            return false;
-
-        $oAccount = $oProfile->getAccountObject();
-        if(!$oAccount)
+        if(!$iProfile)
             return false;
 
         $aSettings = &$aNotification['settings'];
@@ -459,9 +455,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             $aTemplateMarkers = array_merge($aTemplateMarkers, $aSettings['markers']);              
 
         $aTemplate = null;
-        bx_alert($this->_aModule['name'], 'before_parse_email_template', 0, 0, array('profile_id' => $oProfile->id(), 'account_id' => $oAccount->id(), 'template' => $sTemplate, 'markers' => $aTemplateMarkers, 'notification' => $aNotification, 'override_result' => &$aTemplate));
-        if (is_null($aTemplate))
-            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sTemplate, $aTemplateMarkers, $oAccount->id(), $oProfile->id());
+        bx_alert($this->_aModule['name'], 'before_parse_email_template', 0, 0, array('profile_id' => $iProfile, 'template' => $sTemplate, 'markers' => $aTemplateMarkers, 'notification' => $aNotification, 'override_result' => &$aTemplate));
+        if(is_null($aTemplate))
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sTemplate, $aTemplateMarkers, 0, $iProfile);
         if(!$aTemplate)
             return false;
 
@@ -469,13 +465,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return sendMail($oAccount->getEmail(), $sSubject, $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY, 'html', false, array(), true);
     }
 
-    public function sendNotificationPush($oProfile, $aNotification)
+    public function sendNotificationPush($iProfile, $aNotification)
     {
-        if(!$oProfile)
-            return false;
-
-        $oAccount = $oProfile->getAccountObject();
-        if(!$oAccount)
+        if(!$iProfile)
             return false;
 
         $aContent = &$aNotification['content'];
@@ -483,9 +475,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
         
-        bx_alert($this->_aModule['name'], 'before_send_notification_push', 0, 0, array('profile_id' => $oProfile->id(), 'account_id' => $oAccount->id(), 'content' => &$aContent, 'setting' => &$aSettings, 'subject' => &$sSubject));
+        bx_alert($this->_aModule['name'], 'before_send_notification_push', 0, 0, array('profile_id' => $iProfile, 'content' => &$aContent, 'setting' => &$aSettings, 'subject' => &$sSubject));
    
-        return BxDolPush::getInstance()->send($oProfile->id(), array(
+        return BxDolPush::getInstance()->send($iProfile, array(
             'contents' => array(
                 'en' => $aContent['message']
             ),

@@ -115,18 +115,15 @@ class BxNtfsCronNotify extends BxDolCron
         $bDeliveryTimeout = $this->_oModule->_oConfig->getDeliveryTimeout() > 0;
 
         //--- Check recipients and send notifications.
+        list($aModulesProfiles) = $this->_oModule->_oConfig->getProfileBasedModules();
+        $aRecipientsId = $this->_oModule->_oDb->filterProfileIdsByModule(array_keys($aRecipients), $aModulesProfiles);
+        $aRecipients = array_intersect_key($aRecipients, array_flip($aRecipientsId));
+
         $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->getObject('privacy_view'));
         $oPrivacyExt = $this->_oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
         foreach($aRecipients as $iRecipient => $aSettingTypes) {
             $iIdRead = $this->_oModule->_oDb->getLastRead($iRecipient);
             if($iIdRead >= $iId)
-                continue;
-
-            $oProfile = BxDolProfile::getInstance($iRecipient);
-            if(!$oProfile)
-                continue;
-
-            if(!bx_srv($oProfile->getModule(), 'act_as_profile'))
                 continue;
 
             if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iRecipient)) 
@@ -161,7 +158,7 @@ class BxNtfsCronNotify extends BxDolCron
                     )) !== false)
                         break;
 
-                    if($this->_oModule->{$aDeliveryType['method_send']}($oProfile, $mixedNotification) !== false)
+                    if($this->_oModule->{$aDeliveryType['method_send']}($iRecipient, $mixedNotification) !== false)
                         break;
                 }
         }
