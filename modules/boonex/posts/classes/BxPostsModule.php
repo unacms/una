@@ -48,9 +48,9 @@ class BxPostsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo && $aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
             return false;
-
+        
         return parent::serviceCheckAllowedCommentsPost($iContentId, $sObjectComments);
     }
 	
@@ -58,7 +58,7 @@ class BxPostsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo && $aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
             return false;
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
