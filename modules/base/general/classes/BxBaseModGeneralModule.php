@@ -1289,6 +1289,41 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_reports entity_reports
+     * 
+     * @code bx_srv('bx_posts', 'entity_reports', [...]); @endcode
+     * 
+     * Get content reports
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityReports
+     */
+    /** 
+     * @ref bx_base_general-entity_reports "entity_reports"
+     */
+    public function serviceEntityReports ($iContentId = 0)
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        list($iContentId, $aContentInfo) = $mixedContent;
+        
+        if($iContentId === false)
+            return false;
+        
+        $CNF = &$this->_oConfig->CNF;
+        
+        if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
+            return false;
+
+        if(!(BxDolAcl::getInstance()->isMemberLevelInSet(192) || bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']]))
+            return false;
+
+        $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId, true);
+        return $oReport->getReportedByWithComments($CNF['OBJECT_NOTES']);
+    }
     
     /**
      * @page service Service Calls
@@ -1994,11 +2029,19 @@ class BxBaseModGeneralModule extends BxDolModule
     
     public function serviceCheckAllowedCommentsView($iContentId, $sObjectComments) 
     {
+        //negative id used in comments for reports
+        if ($iContentId < 0)
+            return CHECK_ACTION_RESULT_ALLOWED;
+        
         return $this->serviceCheckAllowedWithContent('comments_view', $iContentId);
     }
     
     public function serviceCheckAllowedCommentsPost($iContentId, $sObjectComments) 
     {
+        //negative id used in comments for reports
+        if ($iContentId < 0)
+            return CHECK_ACTION_RESULT_ALLOWED;
+        
         return $this->serviceCheckAllowedWithContent('comments_post', $iContentId);
     }
 
