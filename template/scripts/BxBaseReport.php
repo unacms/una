@@ -158,6 +158,48 @@ class BxBaseReport extends BxDolReport
             'script' => $this->getJsScript($bDynamicMode)
         ));
     }
+    
+    public function getReportedByWithComments($sObjectNotes)
+    {
+        $aTmplReports = array();
+        $aTypes = BxDolForm::getDataItems('sys_report_types');
+
+        $aReports = $this->_oQuery->getPerformedBy($this->getId());
+        foreach($aReports as $aReport) {
+            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($aReport['author_id']);
+
+            $sText = bx_process_output($aReport['text'], BX_DATA_TEXT_MULTILINE);
+            
+            $oCmtsNotes = BxDolCmts::getObjectInstance($sObjectNotes, -$aReport['id'], true, $this->_oTemplate);
+            $aCmtsNotes = $oCmtsNotes->getCommentsBlock(array(), array('in_designbox' => false));
+            $iCmtsNotesCount = $oCmtsNotes->getCommentsCount();
+           
+            $aTmplReports[] = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'user_name' => $sUserName,
+                'id' => $aReport['id'],
+                'user_url' => $sUserUrl,
+            	'type' => $aTypes[$aReport['type']],
+                'comments_count' => _t('_report_comments_count', $iCmtsNotesCount),
+                'comments' => $aCmtsNotes['content'],
+                'date' => bx_time_js($aReport['date']),
+            	'bx_if:show_text' => array(
+                    'condition' => strlen($sText) > 0,
+                    'content' => array(
+                        'text' => $sText
+                    )
+            	)
+            );
+        }
+
+        if(empty($aTmplReports))
+            $aTmplReports = MsgBox(_t('_Empty'));
+
+        return $this->_oTemplate->parseHtmlByName('report_by_list_with_comments.html', array(
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_repeat:list' => $aTmplReports
+        ));
+    }
 
     protected function _getDoReport($aParams = array())
     {

@@ -29,6 +29,36 @@ div.bx-report-bi-info {
 div.bx-report-bi-info p {
     margin: 0px; 
 }
+/*--- Reported By List with comments---*/
+div.bx-report-by-list-comments div.bx-report-bi-info-list {
+    display:flex;
+    justify-content:space-between;
+}
+div.bx-report-by-list-comments .bx-report-bii-comments{
+    position:relative;
+    padding-left:1rem;
+}
+div.bx-report-by-list-comments div.bx-report-bi-date {
+    width:15%;
+}
+div.bx-report-by-list-comments div.bx-report-bii-type {
+    width:20%;
+}
+div.bx-report-by-list-comments div.bx-report-bii-author {
+    width:35%;
+}
+div.bx-report-by-list-comments div.bx-report-bii-comments {
+    width:20%;
+}
+div.bx-report-by-list-comments  .bx-report-comments{
+    display:none;
+}
+div.bx-report-by-list-comments .bx-report-by-item{
+    border-bottom: 1px solid #d0d0d0;
+}
+div.bx-report-by-list-comments .bx-report-by-item:last-child {
+    border-bottom: none;
+}
 
 /*--- Report Element Styles ---*/
 div.bx-report div.bx-report-element-holder,

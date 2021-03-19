@@ -28,6 +28,12 @@ class BxDolReportQuery extends BxDolObjectQuery
 		$aResult['fields'] = ", `{$this->_sTable}`.`count` as `report_count` ";
         return $aResult;
     }
+    
+    public function getDataById($iId)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `{$this->_sTableTrack}` WHERE `id` = ?", $iId);
+        return $this->getRow($sQuery);
+    }
 
     public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
@@ -35,7 +41,7 @@ class BxDolReportQuery extends BxDolObjectQuery
         if(!empty($iPerPage))
             $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
 
-        $sQuery = $this->prepare("SELECT `author_id`, `type`, `text` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC" . $sLimitClause, $iObjectId);
+        $sQuery = $this->prepare("SELECT `author_id`, `type`, `text`, `id`, `date` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC" . $sLimitClause, $iObjectId);
         return $this->getAll($sQuery);
     }
 
@@ -95,6 +101,16 @@ class BxDolReportQuery extends BxDolObjectQuery
 
         return false;
     }
+    
+    public function changeStatusReport($iId, $iStatus, $iProfileId)
+    {
+        if ($iStatus != BX_DOL_REPORT_STASUS_IN_PROCESS)
+            $sQuery = $this->prepare("UPDATE `{$this->_sTableTrack}` SET `status` = ? WHERE `id` = ?", $iStatus, $iId);
+        else
+            $sQuery = $this->prepare("UPDATE `{$this->_sTableTrack}` SET `status` = ?, `checked_by` = ? WHERE `id` = ?", $iStatus, $iProfileId, $iId);
+        $this->query($sQuery);
+    }
+    
 }
 
 /** @} */

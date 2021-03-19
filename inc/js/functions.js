@@ -735,6 +735,22 @@ function bx_get_notes(oSource,  sModule, iContentId, oOptions, oVars) {
     $(window).dolPopupAjax(oOptions);
 }
 
+function bx_get_report_comments(oSource, sModule, iContentId, oOptions, oVars) {
+    var oOptions = oOptions || {};
+    var oVars = oVars || {};
+
+    var oOptions = $.extend({}, $.fn.dolPopupDefaultOptions, {
+        id: sModule + '_report_comment_' + iContentId,
+        url: bx_append_url_params('modules/?r=' + sModule + '/report_comment/', $.extend({ content_id: iContentId }, oVars)),
+        closeOnOuterClick: false,
+        removeOnClose: true,
+        onBeforeShow: function (oPopup) {
+            $(oPopup).find('.bx-popup-close-wrapper').removeClass('bx-def-media-desktop-hide bx-def-media-tablet-hide');
+        }
+    }, oOptions);
+
+    $(window).dolPopupAjax(oOptions);
+}
 
 function validateLoginForm(eForm) {
     return true;

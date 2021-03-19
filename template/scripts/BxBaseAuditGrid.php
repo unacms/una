@@ -42,41 +42,26 @@ class BxBaseAuditGrid extends BxDolAuditGrid
         return parent::_getCellDefault(_t($aRow['action_lang_key'], $aRow['action_lang_key_params']), $sKey, $aField, $aRow);
     }
     
-    protected function _getCellContent ($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellContentId ($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = '';
-        if ($aRow['content_id'] > 0 && $aRow['content_info_object'] != ''){
-            $oContentInfo = BxDolContentInfo::getObjectInstance($aRow['content_info_object']);
-            if ($oContentInfo){
-    	        $sTitle = bx_process_output($oContentInfo->getContentTitle($aRow['content_id']));
-                if ($sTitle != ''){
-                    $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
-                        'href' => $oContentInfo->getContentLink($aRow['content_id']),
-                        'title' =>  $sTitle,
-                        'content' =>  $sTitle,
-                        'class' => 'bx-def-font-grayed'
-                    ));
-                }
+        if ($aRow['content_id'] > 0){
+            $iAuthorProfileId = BxDolRequest::serviceExists($aRow['content_module'], 'get_author') ? BxDolService::call($aRow['content_module'], 'get_author', array($aRow['content_id'])) : '';
+            $oProfile = BxDolProfile::getInstance($iAuthorProfileId);
+            if ($oProfile){
+                $mixedValue = BxDolTemplate::getInstance()->parseLink($oProfile->getUrl(), $oProfile->getDisplayName());
             }
-        }
-        if ($mixedValue == ''){
-            $mixedValue = bx_process_output($aRow['content_title']);
+            
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
     
-    protected function _getCellContext ($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellContextProfileId ($mixedValue, $sKey, $aField, $aRow)
     {
         if ($aRow['context_profile_id'] > 0){
     	    $oProfile = BxDolProfile::getInstance($aRow['context_profile_id']);
             if ($oProfile){
-    	        $sProfile = $oProfile->getDisplayName();
-                $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
-                    'href' => $oProfile->getUrl(),
-                    'title' => $sProfile,
-                    'content' => $sProfile,
-                    'class' => 'bx-def-font-grayed'
-                ));
+                $mixedValue = BxDolTemplate::getInstance()->parseLink($oProfile->getUrl(), $oProfile->getDisplayName());
             }
             else{
                 $mixedValue = $aRow['context_profile_title'];
@@ -88,7 +73,7 @@ class BxBaseAuditGrid extends BxDolAuditGrid
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
     
-    protected function _getCellModule ($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellContentModule ($mixedValue, $sKey, $aField, $aRow)
     {
         $oModule = bxDolModule::getInstance($aRow['content_module']);
         if($oModule && $oModule instanceof iBxDolContentInfoService){
@@ -101,18 +86,29 @@ class BxBaseAuditGrid extends BxDolAuditGrid
     }
     
     
-    protected function _getCellProfile ($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellProfileId ($mixedValue, $sKey, $aField, $aRow)
     {
         if ($aRow['profile_id'] > 0){
     	    $oProfile = BxDolProfile::getInstance($aRow['profile_id']);
             if ($oProfile){
-    	        $sProfile = $oProfile->getDisplayName();
-                $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
-                    'href' => $oProfile->getUrl(),
-                    'title' => $sProfile,
-                    'content' => $sProfile,
-                    'class' => 'bx-def-font-grayed'
-                ));
+    	        $mixedValue = BxDolTemplate::getInstance()->parseLink($oProfile->getUrl(), $oProfile->getDisplayName());
+            }
+            else{
+                $mixedValue = $aRow['profile_title'];
+            }
+        }
+        else{
+            $mixedValue = '';
+        }
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellAuthorId ($mixedValue, $sKey, $aField, $aRow)
+    {
+        if ($aRow['profile_id'] > 0){
+    	    $oProfile = BxDolProfile::getInstance($aRow['profile_id']);
+            if ($oProfile){
+    	        $mixedValue = BxDolTemplate::getInstance()->parseLink($oProfile->getUrl(), $oProfile->getDisplayName());
             }
             else{
                 $mixedValue = $aRow['profile_title'];
@@ -127,8 +123,13 @@ class BxBaseAuditGrid extends BxDolAuditGrid
     function _getFilterControls()
     {
         parent::_getFilterControls();
-
-        return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values);
+        return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . 
+            $this->_getFilterSelectOne($this->_sFilterProfileName, $this->_sFilterProfileValue, $this->_aFilterProfileValues) . 
+            $this->_getFilterSelectOne($this->_sFilterActionName, $this->_sFilterActionValue, $this->_aFilterActionValues) .
+            $this->_getFilterDatePicker($this->_sFilterFromDateName, $this->_sFilterFromDateValue) .
+            $this->_getFilterLabel('-') .
+            $this->_getFilterDatePicker($this->_sFilterToDateName, $this->_sFilterToDateValue) .
+            $this->_getFilterButton();
     }
     
     protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
@@ -144,7 +145,7 @@ class BxBaseAuditGrid extends BxDolAuditGrid
             'name' => $sFilterName,
             'attrs' => array(
                 'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
-                'onChange' => 'javascript:' . $this->sJsObject . '.onChangeFilter(this)'
+               // 'onChange' => 'javascript:' . $this->sJsObject . '.onChangeFilter(this)'
             ),
             'value' => $sFilterValue,
             'values' => $aFilterValues
@@ -153,6 +154,55 @@ class BxBaseAuditGrid extends BxDolAuditGrid
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputModules);
     }
+    
+    protected function _getFilterLabel($sFilterValue)
+    {
+        $aInputModules = array(
+            'type' => 'value',
+            'value' => $sFilterValue,
+            'tr_attrs' => array('class' => 'bx-grid-controls-filter-label'),
+        );
+
+        $oForm = new BxTemplFormView(array());
+        return $oForm->genRow($aInputModules, true);
+    }
+    
+    protected function _getFilterDatePicker($sFilterName, $sFilterValue)
+    {
+        if(empty($sFilterName))
+            return '';
+        
+        $aInputModules = array(
+            'type' => 'datepicker',
+            'name' => $sFilterName,
+            'attrs' => array(
+                'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
+            ),
+            'tr_attrs' => array('class' => 'bx-grid-controls-filter-datepicker'),
+            'value' => $sFilterValue,
+        );
+
+        $oForm = new BxTemplFormView(array());
+        return $oForm->genRow($aInputModules, true);
+    }
+    
+    protected function _getFilterButton()
+    {
+        $aInputModules = array(
+            'type' => 'button',
+            'name' => 'button',
+            'attrs' => array(
+                'id' => 'bx-grid-button-' . $this->_sObject,
+                'onClick' => 'javascript:' . $this->sJsObject . '.onChangeFilter(this)',
+            ),
+            'tr_attrs' => array('class' => 'bx-grid-controls-filter-button'),
+            'value' => _t('_Search'),
+        );
+
+        $oForm = new BxTemplFormView(array());
+        return $oForm->genRow($aInputModules, true);
+    }
+    
 }
 
 /** @} */
