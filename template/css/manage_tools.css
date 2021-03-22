@@ -1,0 +1,32 @@
+/*--- General ---*/
+div.bx-grid-header div.bx-form-element-wrapper {
+    position: relative;
+    float: left;
+    width: 165px;
+}
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-datepicker{
+    width: auto;
+}
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-label{
+    width: auto;
+}
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-label .bx-form-input-wrapper{
+    height:2.5rem;
+    line-height:2.4rem;
+}
+
+/*--- Administration tools ---*/
+div.bx-grid-header div.bx-form-element-wrapper {
+    margin-right: 0.5rem;
+}
+div.bx-grid-header div.bx-form-element-wrapper:last-child {
+    margin-right: 0;
+}
+Div.bx-grid-header div#bx-form-element-search,
+div.bx-grid-header-controls-filter > .bx-form-element-wrapper {
+    margin-top: 0px !important;
+}
+
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-button{
+    margin-top:0.25rem !important;
+}

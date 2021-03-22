@@ -25,6 +25,7 @@ class BxBaseAuditServices extends BxDol
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js'));
+        $oTemplate->addCss(array('manage_tools.css'));
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
         return array(
             'content' =>  $oGrid->getCode()

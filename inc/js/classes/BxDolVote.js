@@ -70,7 +70,6 @@ BxDolVote.prototype.onVote = function(oLink, oData, onComplete)
         return;
 
     var oCounter = this._getCounter(oLink);
-    console.log(oCounter);
     if(oCounter && oCounter.length > 0) {
         oCounter.html(oData.countf);
 

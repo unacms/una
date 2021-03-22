@@ -22,8 +22,21 @@ function BxDolAuditManageTools(oOptions) {
 
 BxDolAuditManageTools.prototype.onChangeFilter = function (oFilter) {
     var $this = this;
+    
     var oFilter1 = $('#bx-grid-module-' + this._sObjNameGrid);
     var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';
+
+    var oFilterProfile = $('#bx-grid-profile-' + this._sObjNameGrid);
+    var sValueFilterProfile = oFilterProfile.length > 0 ? oFilterProfile.val() : '';
+
+    var oFilterAction = $('#bx-grid-action-' + this._sObjNameGrid);
+    var sValueFilterAction = oFilterAction.length > 0 ? oFilterAction.val() : '';
+
+    var oFilteFromDate = $('#bx-grid-from_date-' + this._sObjNameGrid);
+    var sValueFilterFromDate = oFilteFromDate.length > 0 ? oFilteFromDate.val() : '';
+
+    var oFilteToDate = $('#bx-grid-to_date-' + this._sObjNameGrid);
+    var sValueFilterToDate = oFilteToDate.length > 0 ? oFilteToDate.val() : '';
 
     var oSearch = $('#bx-grid-search-' + this._sObjNameGrid);
     var sValueSearch = oSearch.length > 0 ? oSearch.val() : '';
@@ -32,7 +45,7 @@ BxDolAuditManageTools.prototype.onChangeFilter = function (oFilter) {
 
     clearTimeout($this._iSearchTimeoutId);
     $this._iSearchTimeoutId = setTimeout(function () {
-        glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider + sValueSearch, true);
+        glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider + sValueFilterProfile + $this._sParamsDivider + sValueFilterAction + $this._sParamsDivider + sValueFilterFromDate + $this._sParamsDivider + sValueFilterToDate + $this._sParamsDivider + sValueSearch, true);
     }, 500);
 };
 /** @} */

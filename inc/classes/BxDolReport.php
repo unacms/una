@@ -13,6 +13,9 @@ define('BX_DOL_REPORT_USAGE_BLOCK', 'block');
 define('BX_DOL_REPORT_USAGE_INLINE', 'inline');
 define('BX_DOL_REPORT_USAGE_DEFAULT', BX_DOL_REPORT_USAGE_BLOCK);
 
+define('BX_DOL_REPORT_STASUS_NEW', 0);
+define('BX_DOL_REPORT_STASUS_IN_PROCESS', 1);
+define('BX_DOL_REPORT_STASUS_PROCESSED', 2);
 /**
  * Report any content
  *
@@ -195,7 +198,7 @@ class BxDolReport extends BxDolObject
         $aReport = $this->_oQuery->getReport($this->getId());
         return $aReport['count'];
     }
-
+    
     /**
      * Actions functions
      */
@@ -242,6 +245,20 @@ class BxDolReport extends BxDolObject
             return true;
 
         return $this->checkAction('report_view', $isPerformAction);
+    }
+    
+    public function changeStatusReport($iStatus, $iAuthorId, $sCmtText)
+    {
+        $iId = $this->getId();
+        $aReport = $this->_oQuery->getDataById($iId);
+        if(!empty($this->_sObjectCmts) && ($oCmts = BxDolCmts::getObjectInstance($this->_sObjectCmts, $aReport['object_id']))) {
+            $oCmts->add(array(
+                'cmt_author_id' => $iAuthorId,
+                'cmt_parent_id' => 0,
+                'cmt_text' => $sCmtText
+            ));
+        }
+        $this->_oQuery->changeStatusReport($iId, $iStatus, $iAuthorId);
     }
 
     public function msgErrAllowedReportView()

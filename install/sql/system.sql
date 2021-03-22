@@ -4061,6 +4061,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_set_badges', '_sys_menu_title_set_badges', '', 'system', 6, 0, 1, 'BxTemplMenuSetBadges', ''),
 ('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 23, 0, 1, 'BxTemplMenuSocialSharing', ''),
 ('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 15, 0, 1, 'BxTemplMenuCreatePost', ''),
+('sys_dashboard_content', '_sys_menu_title_dashboard_content_manage', 'sys_dashboard_content_manage', 'system', 15, 0, 1, 'BxTemplMenuDashboardContentManage', ''),
+('sys_dashboard_reports', '_sys_menu_title_dashboard_reports_manage', 'sys_dashboard_reports_manage', 'system', 15, 0, 1, 'BxTemplMenuDashboardReportsManage', ''),
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', ''),
 ('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
 ('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', ''),
@@ -4086,6 +4088,8 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_toolbar_member', 'system', '_sys_menu_set_title_toolbar_member', 0),
 ('sys_account_notifications', 'system', '_sys_menu_set_title_account_notifications', 0),
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
+('sys_dashboard_content_manage', 'system', '_sys_menu_set_title_dashboard_content_manage', 0),
+('sys_dashboard_reports_manage', 'system', '_sys_menu_set_title_dashboard_reports_manage', 0),
 ('sys_add_profile_links', 'system', '_sys_menu_set_title_add_profile', 0),
 ('sys_account_dashboard', 'system', '_sys_menu_set_title_account_dashboard', 0),
 ('sys_account_dashboard_manage_tools', 'system', '_sys_menu_set_title_account_dashboard_manage_tools', 0),
@@ -4193,7 +4197,10 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_dashboard', 'system', 'dashboard', '_sys_menu_item_title_system_account_dashboard', '_sys_menu_item_title_account_dashboard', 'page.php?i=dashboard', '', '', 'tachometer-alt', '', '', 2147483646, 1, 1, 1),
 ('sys_account_dashboard', 'system', 'dashboard-subscriptions', '_sys_menu_item_title_system_subscriptions', '_sys_menu_item_title_subscriptions', 'subscriptions.php', '', '', 'credit-card col-blue3', '', '', 2147483646, 1, 1, 2),
 ('sys_account_dashboard', 'system', 'dashboard-orders', '_sys_menu_item_title_system_orders', '_sys_menu_item_title_orders', 'orders.php', '', '', 'cart-arrow-down col-green3', '', '', 2147483646, 1, 1, 3),
-('sys_account_dashboard', 'system', 'dashboard-invoices', '_sys_menu_item_title_system_invoices', '_sys_menu_item_title_invoices', 'invoices.php', '', '', 'file-invoice col-green3', '', '', 2147483646, 1, 1, 4);
+('sys_account_dashboard', 'system', 'dashboard-invoices', '_sys_menu_item_title_system_invoices', '_sys_menu_item_title_invoices', 'invoices.php', '', '', 'file-invoice col-green3', '', '', 2147483646, 1, 1, 4),
+('sys_account_dashboard', 'system', 'dashboard-content', '_sys_menu_item_title_system_account_dashboard_content', '_sys_menu_item_title_account_dashboard_content', 'page.php?i=dashboard-content', '', '', 'copy', '', '', 2147483646, 1, 1, 5),
+('sys_account_dashboard', 'system', 'dashboard-reports', '_sys_menu_item_title_system_account_dashboard_reports', '_sys_menu_item_title_account_dashboard_reports', 'page.php?i=dashboard-reports', '', '', 'exclamation-circle', '', '', 2147483646, 1, 1, 6),
+('sys_account_dashboard', 'system', 'dashboard-audit', '_sys_menu_item_title_system_account_dashboard_audit', '_sys_menu_item_title_account_dashboard_audit', 'page.php?i=dashboard-audit', '', '', 'history', '', '', 2147483646, 1, 1, 7);
 
 -- comment manage menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -4316,9 +4323,11 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 1000, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', ''),
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
 
-('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplAuditGrid', ''),
+('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', 'content_module,profile_id,content_id,context_profile_id,added', 'action_lang_key', 'BxTemplAuditGrid', ''),
 
-('sys_badges_administration', 'Sql', 'SELECT * FROM `sys_badges` WHERE 1 ', 'sys_badges', 'id', 'added', '', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 'BxTemplStudioBadgesGrid', '');
+('sys_badges_administration', 'Sql', 'SELECT * FROM `sys_badges` WHERE 1 ', 'sys_badges', 'id', 'added', '', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 'BxTemplStudioBadgesGrid', ''),
+
+('sys_reports_administration', 'Sql', 'WHERE 1 ', '', 'id', 'date', '', '', 20, NULL, 'start', '', 'text,type', '', 'like', '', '', 'BxTemplReportsGrid', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `object` varchar(64) NOT NULL,
@@ -4457,18 +4466,31 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_categories', 'actions', '', '20%', 0, 0, '', 7),
 
 ('sys_audit_administration', 'added', '_adm_form_txt_audit_added', '15%', 1, 25, '', 1),
-('sys_audit_administration', 'profile', '_adm_form_txt_audit_profile', '15%', 1, 25, '', 2),
-('sys_audit_administration', 'content', '_adm_form_txt_audit_content', '25%', 1, 25, '', 3),
-('sys_audit_administration', 'module', '_adm_form_txt_audit_module', '15%', 1, 25, '', 4),
-('sys_audit_administration', 'context', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 5),
-('sys_audit_administration', 'action', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 6),
+('sys_audit_administration', 'profile_id', '_adm_form_txt_audit_profile', '15%', 1, 25, '', 2),
+('sys_audit_administration', 'content_id', '_adm_form_txt_audit_content', '20%', 1, 25, '', 3),
+('sys_audit_administration', 'author_id', '_adm_form_txt_audit_author_content', '10%', 1, 25, '', 4),
+('sys_audit_administration', 'content_module', '_adm_form_txt_audit_module', '10%', 1, 25, '', 5),
+('sys_audit_administration', 'context_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
+('sys_audit_administration', 'action_lang_key', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 7),
 
 ('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
 ('sys_badges_administration', 'view', '_adm_form_txt_badges_view', '15%', 1, 0, '', 2),
 ('sys_badges_administration', 'module', '_adm_form_txt_badges_module', '15%', 1, 25, '', 3),
 ('sys_badges_administration', 'text', '_adm_pgt_txt_badges_text', '28%', 1, 35, '', 4),
 ('sys_badges_administration', 'icon', '_adm_pgt_txt_badges_icon', '20%', 1, 0, '', 5),
-('sys_badges_administration', 'actions', '', '20%', 0, 0, '', 6);
+('sys_badges_administration', 'actions', '', '20%', 0, 0, '', 6),
+
+('sys_reports_administration', 'object', '_adm_form_txt_reports_object', '10%', 1, 25, '', 1),
+('sys_reports_administration', 'author', '_adm_form_txt_reports_author', '10%', 1, 25, '', 2),
+('sys_reports_administration', 'type', '_adm_form_txt_reports_type', '10%', 1, 25, '', 3),
+('sys_reports_administration', 'text', '_adm_form_txt_reports_text', '10%', 1, 25, '', 4),
+('sys_reports_administration', 'date', '_adm_form_txt_reports_date', '10%', 1, 25, '', 5),
+('sys_reports_administration', 'status', '_adm_form_txt_reports_status', '10%', 1, 25, '', 6),
+('sys_reports_administration', 'checked_by', '_adm_form_txt_reports_checked_by', '10%', 1, 25, '', 7),
+('sys_reports_administration', 'notes', '_adm_form_txt_reports_notes', '10%', 1, 25, '', 8),
+('sys_reports_administration', 'comments', '_adm_form_txt_reports_comments', '10%', 1, 25, '', 8),
+('sys_reports_administration', 'actions', '', '10%', 0, '', '', 9);
+
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
@@ -4552,6 +4574,11 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_badges_administration', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_badges_administration', 'single', 'delete_icon', '', '', 1, 3),
 ('sys_badges_administration', 'independent', 'add', '_adm_form_btn_badges_add', '', 0, 1);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`, `icon_only`) VALUES
+('sys_reports_administration', 'single', 'check_in', '_adm_form_btn_reports_check_in', 'check-square', 0, 1, 1),
+('sys_reports_administration', 'single', 'check_out', '_adm_form_btn_reports_check_out', 'square', 0, 2, 1);
+
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_studio_roles', 'independent', 'add', '_adm_rl_btn_role_add', '', 0, 0, 1),
@@ -4891,6 +4918,9 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_updates', 'updates', '_sys_page_title_sys_updates', '_sys_page_title_updates', 'system', 1, 5, 'sys_homepage_submenu', 2147483647, 1, 'page.php?i=updates', '', '', '', 0, 1, 0, 'BxTemplPageHome', '', 0),
 ('sys_trends', 'trends', '_sys_page_title_sys_trends', '_sys_page_title_trends', 'system', 1, 5, 'sys_homepage_submenu', 2147483647, 1, 'page.php?i=trends', '', '', '', 0, 1, 0, 'BxTemplPageHome', '', 0),
 ('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
+('sys_dashboard_content', 'dashboard-content', '_sys_page_title_system_dashboard_content', '_sys_page_title_dashboard_content', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard-content', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
+('sys_dashboard_reports', 'dashboard-reports', '_sys_page_title_system_dashboard_reports', '_sys_page_title_dashboard_reports', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard-reports', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
+('sys_dashboard_audit', 'dashboard-audit', '_sys_page_title_system_dashboard_audit', '_sys_page_title_dashboard_audit', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard-audit', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
 ('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', '', 0),
@@ -5061,6 +5091,12 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('sys_dashboard', 3, 'system', '', '_sys_page_block_title_profile_membership', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"profile_membership";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 0, 0),
 
 ('sys_dashboard', 1, 'system', '', '_sys_page_block_title_manage_tools', 11, 0, 0, 192, 'menu', 'sys_account_dashboard_manage_tools', 0, 1, 1, 3),
+
+('sys_dashboard_content', 1, 'system', '', '_sys_page_block_title_dashboard_content', 11, 1, 0, 192, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"manage_content";s:6:"params";a:0:{}s:5:"class";s:21:"TemplServiceDashboard";}', 0, 1, 1, 1),
+
+('sys_dashboard_audit', 1, 'system', '', '_sys_page_block_title_dashboard_audit', 11, 0, 0, 192, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:12:"manage_audit";s:6:"params";a:0:{}s:5:"class";s:21:"TemplServiceDashboard";}', 0, 1, 1, 1),
+
+('sys_dashboard_reports', 1, 'system', '', '_sys_page_block_title_dashboard_reports', 11, 1, 0, 192, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"manage_reports";s:6:"params";a:0:{}s:5:"class";s:21:"TemplServiceDashboard";}', 0, 1, 1, 1),
 
 ('sys_dashboard', 3, 'system', '', '_sys_page_block_title_chart_growth', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"get_chart_growth";s:6:"params";a:0:{}s:5:"class";s:18:"TemplChartServices";}', 0, 1, 1, 0),
 

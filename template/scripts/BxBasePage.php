@@ -480,9 +480,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _addJsCss()
     {
-        $this->_oTemplate->addJs('BxDolPage.js');
-		if ($this->_bStickyColumns)
-        	$this->_oTemplate->addCss('page_sticky.css');
+        $this->_oTemplate->addJs(array('BxDolPage.js', 'theia-sticky-sidebar/ResizeSensor.min.js', 'theia-sticky-sidebar/theia-sticky-sidebar.min.js'));
         $this->_oTemplate->addCss('page_layouts.css');
     }
 

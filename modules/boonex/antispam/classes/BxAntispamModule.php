@@ -89,7 +89,7 @@ class BxAntispamModule extends BxDolModule
         if ($this->serviceIsIpWhitelisted($sIp))
             return false;
 
-        if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)
+        if (version_compare(phpversion(), '7.4.0', '<') && function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)
             $sContent = stripslashes($sContent);
         
         $bRet = false;

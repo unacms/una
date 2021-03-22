@@ -980,6 +980,14 @@ BLAH;
 
         switch ($aInput['type']) {
 
+            case 'datepicker':
+                if (!isset($aInput['attrs']))
+                    $aInput['attrs'] = array();
+                $aInput['attrs']['autosuggestion'] = 'off'; 
+                
+                $sInput = $this->genInputStandard($aInput);
+            break;
+                
             // standard inputs (and non-standard, interpreted as standard)
             case 'text':
             case 'datepicker':

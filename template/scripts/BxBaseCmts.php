@@ -40,7 +40,7 @@ class BxBaseCmts extends BxDolCmts
         $this->_sTmplNameItemContent = 'comment_content.html';
 
         $this->_sJsObjClass = 'BxDolCmts';
-        $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
+        $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . '_' .str_replace('-', 'n', $iId);
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
 
         $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sSystem) . '-' . $iId;
