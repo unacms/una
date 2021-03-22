@@ -3029,11 +3029,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Sign up]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Dashboard]]></string>
-  <string name="_sys_page_title_system_dashboard_content"><![CDATA[Content]]></string>
+  <string name="_sys_page_title_system_dashboard_content"><![CDATA[Dashboard - Content]]></string>
   <string name="_sys_page_title_dashboard_content"><![CDATA[Content]]></string>
-  <string name="_sys_page_title_system_dashboard_reports"><![CDATA[Reports]]></string>
+  <string name="_sys_page_title_system_dashboard_reports"><![CDATA[Dashboard - Reports]]></string>
   <string name="_sys_page_title_dashboard_reports"><![CDATA[Reports]]></string>
-  <string name="_sys_page_title_system_dashboard_audit"><![CDATA[Audit]]></string>
+  <string name="_sys_page_title_system_dashboard_audit"><![CDATA[Dashboard - Audit]]></string>
   <string name="_sys_page_title_dashboard_audit"><![CDATA[Audit]]></string>
 	<string name="_sys_page_title_system_forgot_password"><![CDATA[Forgot Password]]></string>
   <string name="_sys_page_title_system_search_keyword"><![CDATA[Search by Keyword]]></string>

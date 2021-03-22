@@ -85,8 +85,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
         $oTemplate = BxDolStudioTemplate::getInstance();
         $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js', 'jquery.form.min.js', 'jquery-ui/jquery-ui.custom.min.js' , 'jquery-ui/jquery.ui.sortable.min.js'));
-        //$oForm = new BxTemplStudioFormView(array());
-        $oTemplate->addCss('grid.css');
+        $oTemplate->addCss(array('grid.css', 'manage_tools.css'));
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
