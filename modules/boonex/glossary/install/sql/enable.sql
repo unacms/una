@@ -63,7 +63,9 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_glossary_view_entry', 4, 'bx_glossary', '', '_bx_glossary_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 1),
 ('bx_glossary_view_entry', 4, 'bx_glossary', '', '_bx_glossary_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 2),
 ('bx_glossary_view_entry', 4, 'bx_glossary', '', '_bx_glossary_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 0, 3),
-('bx_glossary_view_entry', 4, 'bx_glossary', '', '_bx_glossary_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 4);
+('bx_glossary_view_entry', 4, 'bx_glossary', '', '_bx_glossary_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 4),
+('bx_glossary_view_entry', 2, 'bx_glossary', '', '_bx_glossary_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
+
 
 
 -- PAGE: view entry comments
@@ -247,6 +249,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_glossary_view_actions', 'bx_glossary', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 250),
 ('bx_glossary_view_actions', 'bx_glossary', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 260),
 ('bx_glossary_view_actions', 'bx_glossary', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 270),
+('bx_glossary_view_actions', 'bx_glossary', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', '/page/dashboard-audit?module=bx_glossary&content_id={content_id}', '', '', 'history', '', '', 0, 192, '', 1, 0, 290),
 ('bx_glossary_view_actions', 'bx_glossary', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 300),
 ('bx_glossary_view_actions', 'bx_glossary', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 320),
 ('bx_glossary_view_actions', 'bx_glossary', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 330),

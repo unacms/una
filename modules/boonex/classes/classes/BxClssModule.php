@@ -245,7 +245,7 @@ class BxClssModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (1 == $aContentInfo[$CNF['FIELD_CMTS_SETTINGS']])
+        if ($aContentInfo && 1 == $aContentInfo[$CNF['FIELD_CMTS_SETTINGS']])
             return false;
 
         return parent::serviceCheckAllowedCommentsPost($iContentId, $sObjectComments);

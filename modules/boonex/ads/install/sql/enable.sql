@@ -69,7 +69,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_ads_view_entry', 2, 'bx_ads', '', '_bx_ads_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:12:"entity_polls";}', 0, 0, 1, 60),
 ('bx_ads_view_entry', 3, 'bx_ads', '', '_bx_ads_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 70),
 ('bx_ads_view_entry', 4, 'bx_ads', '', '_bx_ads_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0),
-('bx_ads_view_entry', 4, 'bx_ads', '', '_bx_ads_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0);
+('bx_ads_view_entry', 4, 'bx_ads', '', '_bx_ads_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0),
+('bx_ads_view_entry', 2, 'bx_ads', '', '_bx_ads_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:6:\"bx_ads\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
 
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 

@@ -108,6 +108,7 @@
 	<string name="_bx_groups_page_title_sys_group_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_title_group_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
+	<string name="_bx_groups_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_groups_page_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Group Info]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
