@@ -492,7 +492,8 @@ BxDolUploaderCrop.prototype = BxDolUploaderSimple.prototype;
 function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, options) {
     this._camera = null;
     this._blob = null;
-    this._recorder = null
+    this._recorder = null;
+    this._camera_type = 'user';
 
     this._audio_bitrate = undefined !== options.audio_bitrate ? parseInt(options.audio_bitrate) : 128000;
     this._video_bitrate = undefined !== options.video_bitrate ? parseInt(options.video_bitrate) : 1000000;
@@ -520,15 +521,33 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
         $('#' + this._sFormContainerId + ' .bx-uploader-record-video-controls').hide();
     }
 
+    this.switchCamera = function () {
+        this._camera_type = this._camera_type == 'user' ? 'environment' : 'user';
+
+        this.releaseCamera();
+        this.onShowPopup();
+    }
+
     this.onShowPopup = function () {
         var $this = this;
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
+
+        navigator.mediaDevices.getUserMedia({ audio: true, video: {facingMode: this._camera_type} }).then(function(camera) {
             $this._camera = camera;
             $this.showCameraCapture();
 
             $('#' + $this._sFormContainerId + ' .bx-uploader-recording-start').show();
             $('#' + $this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
             $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').show();
+
+            navigator.mediaDevices.enumerateDevices().then(function(mediaDevices){
+                let constraints = navigator.mediaDevices.getSupportedConstraints();
+                if ($this.getDevicesNum(mediaDevices) > 1 && typeof constraints.facingMode != 'undefined' && constraints.facingMode) {
+                    $('#' + $this._sFormContainerId + ' .bx-record-camera-switch').show();
+                } else {
+                    $('#' + $this._sFormContainerId + ' .bx-record-camera-switch').hide();
+                }
+            });
+
         }).catch(function(error) {
             $this._showError(_t('_sys_uploader_camera_capture_failed'));
         });
@@ -553,6 +572,7 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
             return;
         }
 
+        $("#" + this._sFormContainerId + " .bx-btn.bx-btn-primary:not(.bx-crop-upload)").hide();
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-start').hide();
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-stop').show();
 
@@ -573,6 +593,7 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
             $this._recorder.destroy();
             $this._recorder = null;
 
+            $("#" + $this._sFormContainerId + " .bx-btn.bx-btn-primary:not(.bx-crop-upload)").show();
             if (bSubmitWhenReady)
                 $this.submitRecording($('#' + $this._sFormContainerId + ' form').get(0));
         });
@@ -644,6 +665,14 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
                 }
             });
         }
+    }
+
+    this.getDevicesNum = function(mediaDevices) {
+        let count = 0;
+        mediaDevices.forEach(mediaDevice => {
+            if (mediaDevice.kind === 'videoinput') count++;
+        });
+        return count;
     }
 }
 
