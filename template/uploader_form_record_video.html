@@ -1,5 +1,4 @@
 <div id="__form_container_id__" class="bx-uploader-form-cont bx-popup-width">
-
     <form enctype="multipart/form-data" method="POST" action="<bx_url_root />storage_uploader.php" onsubmit="__uploader_instance_name__.submitRecording(this); return false;">
 
         <div class="bx-uploader-loading">
@@ -12,6 +11,9 @@
             <div class="bx-def-padding-sec-bottom" id="__errors_container_id__"></div>
 
             <div class="bx-record-video-preview">
+                <div class="bx-record-camera-switch bx-def-font">
+                    <a href="#" onclick="__uploader_instance_name__.switchCamera();return false;" title="<bx_text:_sys_uploader_record_video_switch_camera />"><i class="sys-icon sys-colored sync-alt"> Switch camera</i></a>
+                </div>
                 <video autoplay style="width: 100%;" id="bx-upoloader-camera-capture"></video>
                 <video autoplay controls style="width: 100%;" id="bx-upoloader-recording-preview"></video>
                 <div class="bx-record-video-preview-filesize"></div>
