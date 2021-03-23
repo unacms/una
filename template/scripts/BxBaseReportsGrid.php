@@ -94,7 +94,7 @@ class BxBaseReportsGrid extends BxTemplGrid
 		$aIdsAffected = array ();
 		foreach($aIds as $iId) {
 			$oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iId, true);
-            $oReport->changeStatusReport($iStatus,  bx_get_logged_profile_id(), _t($sCmtsText));
+            $oReport->changeStatusReport($iStatus, bx_get_logged_profile_id(), _t($sCmtsText));
 			$aIdsAffected[] = $iId;
 			$iAffected++;
 		}
@@ -209,8 +209,12 @@ class BxBaseReportsGrid extends BxTemplGrid
     
     protected function _getActionCheckOut($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        if ($aRow["checked_by"] != bx_get_logged_profile_id())
+            return '';
+        
         if($aRow["status"] != BX_DOL_REPORT_STASUS_IN_PROCESS)
             return '';
+        
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
     

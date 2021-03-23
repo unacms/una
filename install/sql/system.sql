@@ -4576,8 +4576,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_badges_administration', 'independent', 'add', '_adm_form_btn_badges_add', '', 0, 1);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`, `icon_only`) VALUES
-('sys_reports_administration', 'single', 'check_in', '_adm_form_btn_reports_check_in', 'check-square', 0, 1, 1),
-('sys_reports_administration', 'single', 'check_out', '_adm_form_btn_reports_check_out', 'square', 0, 2, 1);
+('sys_reports_administration', 'single', 'check_in', '_adm_form_btn_reports_check_in', 'lock-open', 0, 1, 1),
+('sys_reports_administration', 'single', 'check_out', '_adm_form_btn_reports_check_out', 'lock', 0, 2, 1);
 
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
