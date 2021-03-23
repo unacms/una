@@ -12,8 +12,7 @@ VALUES (@iTypeId, @sName, '_bx_donations', 10);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_donations_show_title', '', @iCategId, '_bx_donations_option_show_title', 'checkbox', '', '', '', 1),
-('bx_donations_recurring_reserve', '2', @iCategId, '_bx_donations_option_recurring_reserve', 'digit', '', '', '', 10);
+('bx_donations_show_title', '', @iCategId, '_bx_donations_option_show_title', 'checkbox', '', '', '', 1);
 
 
 -- PAGE: make

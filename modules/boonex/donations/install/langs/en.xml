@@ -4,7 +4,6 @@
 
     <!-- Settings -->
     <string name="_bx_donations_option_show_title"><![CDATA[Show donation title in addition to amount]]></string>
-    <string name="_bx_donations_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
 
     <!-- Forms -->
     <string name="_bx_donations_form_type"><![CDATA[Type]]></string>
