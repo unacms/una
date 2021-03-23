@@ -40,7 +40,7 @@ class BxDolLocationField extends BxDolFactoryObject
         return 'not implemented';
     }
 
-    protected function getLocationVal ($aInput, $sIndex, $oForm) 
+    public function getLocationVal ($aInput, $sIndex, $oForm) 
     {
         $aSpecificValues = $oForm->getSpecificValues();
 
