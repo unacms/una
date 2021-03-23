@@ -3282,6 +3282,7 @@
 	<string name="_sys_uploader_record_video_start_button"><![CDATA[Начать запись]]></string>
 	<string name="_sys_uploader_record_video_stop_button"><![CDATA[Прекратить запись]]></string>
 	<string name="_sys_uploader_record_video_mb"><![CDATA[Мб]]></string>
+	<string name="_sys_uploader_record_video_switch_camera"><![CDATA[Переключить камеру]]></string>
 	<string name="_sys_uploader_unsupported_browser"><![CDATA[Ваш браузер не поддерживает запись видео. Попробуйте <strong>Google Chrome</strong> или <strong>Mozilla FireFox</strong>.]]></string>
 	<string name="_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_sys_exit"><![CDATA[Закончить]]></string>    
