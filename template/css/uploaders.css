@@ -88,6 +88,11 @@
     text-align: center;
     margin: 0.2rem 0;
 }
+.bx-record-camera-switch {
+    margin-bottom: 0.5rem;
+    text-align: right;
+    display: none;
+}
 
 @keyframes bx-uploader-recording-animation {
     0% {opacity: 0;}
