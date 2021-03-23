@@ -901,6 +901,17 @@ function bx_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
 function bx_append_url_params (sUrl, mixedParams) {
     var sParams = sUrl.indexOf('?') == -1 ? '?' : '&';
 
+    var sHash = '';
+    if(sUrl.indexOf('#') != -1) {
+        var oUrl = new URL(sUrl);
+        if(oUrl.hash.length > 0) {
+            sHash = oUrl.hash;
+            sUrl = sUrl.replace(sHash, '');
+        }
+        else
+            sUrl = sUrl.replace('#', '');
+    }
+
     if(mixedParams instanceof Array) {
     	for(var i in mixedParams)
             sParams += i + '=' + mixedParams[i] + '&';
@@ -915,7 +926,7 @@ function bx_append_url_params (sUrl, mixedParams) {
     else
         sParams += mixedParams;
 
-    return sUrl + sParams;
+    return sUrl + sParams + sHash;
 }
 
 function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, iMinLen) {
