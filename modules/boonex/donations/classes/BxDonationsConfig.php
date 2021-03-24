@@ -47,6 +47,7 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
 
             // some params
             'PARAM_SHOW_TITLE' => 'bx_donations_show_title',
+            'PARAM_AMOUNT_PRECISION' => 'bx_donations_amount_precision',
 
             // objects 
             'OBJECT_GRID_LIST' => 'bx_donations_list',

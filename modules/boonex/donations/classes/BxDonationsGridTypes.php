@@ -135,7 +135,9 @@ class BxDonationsGridTypes extends BxTemplGrid
 
     protected function _getCellPrice($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault(_t_format_currency($mixedValue), $sKey, $aField, $aRow);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return parent::_getCellDefault(_t_format_currency($mixedValue, getParam($CNF['PARAM_AMOUNT_PRECISION'])), $sKey, $aField, $aRow);
     }
 
     protected function _addJsCss()

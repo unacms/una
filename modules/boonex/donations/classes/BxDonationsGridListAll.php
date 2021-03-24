@@ -34,9 +34,11 @@ class BxDonationsGridListAll extends BxTemplGrid
 
     protected function _getCellEntry($mixedValue, $sKey, $aField, $aRow)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sTitlekey = '_bx_donations_txt_amount_' . ($this->_oModule->_oConfig->isShowTitle() ? 'with' : 'wo') . '_title';
 
-        $sAmount = _t_format_currency($aRow['type_price']);
+        $sAmount = _t_format_currency($aRow['type_price'], getParam($CNF['PARAM_AMOUNT_PRECISION']));
         $sAmount = _t('_bx_donations_txt_amount_single', $sAmount);
 
         return parent::_getCellDefault(_t($sTitlekey, $sAmount, _t($aRow['type_title'])), $sKey, $aField, $aRow);
