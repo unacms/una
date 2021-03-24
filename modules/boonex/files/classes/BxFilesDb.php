@@ -113,7 +113,7 @@ class BxFilesDb extends BxBaseModFilesDb
         $CNF = &$this->_oConfig->CNF;
 
         $sQuery = "
-            SELECT `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_TITLE']}`, `{$CNF['TABLE_ENTRIES']}`.`type`, `{$CNF['TABLE_FILES']}`.`path`, `{$CNF['TABLE_FILES']}`.`ext`, `{$CNF['TABLE_FILES']}`.`size` 
+            SELECT `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_FILE_ID']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_TITLE']}`, `{$CNF['TABLE_ENTRIES']}`.`type`, `{$CNF['TABLE_FILES']}`.`path`, `{$CNF['TABLE_FILES']}`.`ext`, `{$CNF['TABLE_FILES']}`.`size` 
             FROM `{$CNF['TABLE_ENTRIES']}` 
             LEFT JOIN `{$CNF['TABLE_FILES']}` ON `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_FILE_ID']}` = `{$CNF['TABLE_FILES']}`.`{$CNF['FIELD_ID']}`
         ";
@@ -196,6 +196,37 @@ class BxFilesDb extends BxBaseModFilesDb
         }
 
         return $aResult;
+    }
+
+    public function createDownloadingJob($aFiles, $sZipFileName, $iOwner) {
+        $this->query("INSERT INTO `bx_files_downloading_jobs` (`name`, `owner`, `files`, `started`) VALUES (:name, :owner, :files, UNIX_TIMESTAMP())", [
+            'files' => serialize($aFiles),
+            'owner' => $iOwner,
+            'name' => $sZipFileName
+        ]);
+        return $this->lastId();
+    }
+
+    public function getDownloadingJob($iJob) {
+        $aJob = $this->getRow("SELECT * FROM `bx_files_downloading_jobs` WHERE `id` = :id", ['id' => $iJob]);
+        if ($aJob && $aJob['files']) $aJob['files'] = unserialize($aJob['files']);
+        return $aJob;
+    }
+
+    public function updateDownloadingJob($iJob, $aFiles, $sZipFilePath) {
+        $this->query("UPDATE `bx_files_downloading_jobs` SET `result` = :result, `files` = :files WHERE `id` = :id", [
+            'result' => $sZipFilePath,
+            'files' => serialize($aFiles),
+            'id' => $iJob
+        ]);
+    }
+
+    public function deleteOldDownloadingJobs() {
+        $aFiles = $this->getColumn("SELECT `result` FROM `bx_files_downloading_jobs` WHERE UNIX_TIMESTAMP() - `started` > 24*3600");
+
+        if ($aFiles)
+            $this->query("DELETE FROM `bx_files_downloading_jobs` WHERE UNIX_TIMESTAMP() - `started` > 24*3600");
+        return $aFiles;
     }
 }
 
