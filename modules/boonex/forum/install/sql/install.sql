@@ -1,5 +1,4 @@
 SET @sName = 'bx_forum';
-SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 -- TABLE: entries
 CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
@@ -155,6 +154,25 @@ CREATE TABLE IF NOT EXISTS `bx_forum_subscribers` (
 
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_forum_cmts` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_object_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_author_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
+  `cmt_text` text NOT NULL,
+  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  `cmt_pinned` int(11) NOT NULL default '0',
+  PRIMARY KEY (`cmt_id`),
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
+  FULLTEXT KEY `search_fields` (`cmt_text`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_forum_cmts_notes` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
@@ -337,6 +355,8 @@ CREATE TABLE IF NOT EXISTS `bx_forum_polls_answers_votes_track` (
 
 
 -- STORAGES & TRANSCODERS
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_forum_covers', @sStorageEngine, '', 360, 2592000, 3, 'bx_forum_covers', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 
@@ -498,7 +518,8 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-(@sName, @sName, 'bx_forum_cmts', 1, 5000, 1000, 2, 50, 3, 'tail', 0, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-discussion&id={object_id}', '', 'bx_forum_discussions', 'id', 'author', 'title', 'comments', 'BxForumCmts', 'modules/boonex/forum/classes/BxForumCmts.php');
+(@sName, @sName, 'bx_forum_cmts', 1, 5000, 1000, 2, 50, 3, 'tail', 0, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-discussion&id={object_id}', '', 'bx_forum_discussions', 'id', 'author', 'title', 'comments', 'BxForumCmts', 'modules/boonex/forum/classes/BxForumCmts.php'),
+('bx_forum_notes', @sName, 'bx_forum_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-discussion&id={object_id}', '', 'bx_forum_discussions', 'id', 'author', 'title', '', 'BxTemplCmtsNotes', '');
 
 
 -- VIEWS

@@ -140,6 +140,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_forum',
             'OBJECT_CATEGORY' => 'bx_forum_cats',
             'OBJECT_COMMENTS' => 'bx_forum',
+            'OBJECT_NOTES' => 'bx_forum_notes',
             'OBJECT_METATAGS' => 'bx_forum',
             'OBJECT_PRIVACY_VIEW' => 'bx_forum_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_forum_allow_view_favorite_list',

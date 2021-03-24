@@ -109,6 +109,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_videos',
             'OBJECT_METATAGS' => 'bx_videos',
             'OBJECT_COMMENTS' => 'bx_videos',
+            'OBJECT_NOTES' => 'bx_videos_notes',
             'OBJECT_CATEGORY' => 'bx_videos_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_videos_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_videos_allow_view_favorite_list',

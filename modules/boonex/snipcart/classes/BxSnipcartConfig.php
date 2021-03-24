@@ -88,6 +88,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_snipcart',
             'OBJECT_METATAGS' => 'bx_snipcart',
             'OBJECT_COMMENTS' => 'bx_snipcart',
+            'OBJECT_NOTES' => 'bx_snipcart_notes',
             'OBJECT_CATEGORY' => 'bx_snipcart_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_snipcart_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_snipcart',
