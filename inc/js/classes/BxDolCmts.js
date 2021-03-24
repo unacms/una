@@ -73,7 +73,7 @@ BxDolCmts.prototype.cmtShowForm = function(oElement)
     oForm.find('.cmt-body-min').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
         oForm.find('.cmt-body').show(function() {
             var oTextarea = oForm.find("[name='cmt_text']");
-            if(typeof bx_editor_get_htmleditable === 'function')
+            if(oTextarea && oTextarea.hasClass('bx-form-input-html') && typeof bx_editor_get_htmleditable === 'function')
                 oTextarea = bx_editor_get_htmleditable(oTextarea);
 
             if(!oTextarea || oTextarea.length == 0)
