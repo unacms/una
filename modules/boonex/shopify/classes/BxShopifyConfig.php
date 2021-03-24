@@ -88,6 +88,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_shopify',
             'OBJECT_METATAGS' => 'bx_shopify',
             'OBJECT_COMMENTS' => 'bx_shopify',
+            'OBJECT_NOTES' => 'bx_shopify_notes',
             'OBJECT_CATEGORY' => 'bx_shopify_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_shopify_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_shopify',

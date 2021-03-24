@@ -78,7 +78,7 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
 
                 list($sJsCode, $sOnclick) = $aJs;
 
-                $sAmount = _t_format_currency($aType[$CNF['FIELD_PRICE']]);
+                $sAmount = _t_format_currency($aType[$CNF['FIELD_PRICE']], getParam($CNF['PARAM_AMOUNT_PRECISION']));
                 $sAmount = _t('_bx_donations_txt_amount_' . $sBillingType, $sAmount, $sDuration);
 
                 $aTmplVarsTypes[] = array(

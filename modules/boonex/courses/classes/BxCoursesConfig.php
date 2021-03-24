@@ -92,6 +92,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_FAVORITES' => 'bx_courses',
             'OBJECT_FEATURED' => 'bx_courses',
             'OBJECT_COMMENTS' => 'bx_courses',
+            'OBJECT_NOTES' => 'bx_courses_notes',
             'OBJECT_REPORTS' => 'bx_courses',
             'OBJECT_METATAGS' => 'bx_courses',
             'OBJECT_FORM_ENTRY' => 'bx_course',

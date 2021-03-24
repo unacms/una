@@ -97,6 +97,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_METATAGS' => 'bx_photos',
             'OBJECT_METATAGS_MEDIA_CAMERA' => 'bx_photos_camera',
             'OBJECT_COMMENTS' => 'bx_photos',
+            'OBJECT_NOTES' => 'bx_photos_notes',
             'OBJECT_CATEGORY' => 'bx_photos_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_photos_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_photos_allow_view_favorite_list',

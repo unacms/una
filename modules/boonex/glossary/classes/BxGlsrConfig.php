@@ -89,6 +89,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_glossary',
             'OBJECT_METATAGS' => 'bx_glossary',
             'OBJECT_COMMENTS' => 'bx_glossary',
+            'OBJECT_NOTES' => 'bx_glossary_notes',
             'OBJECT_CATEGORY' => 'bx_glossary_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_glossary_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_glossary_allow_view_favorite_list',

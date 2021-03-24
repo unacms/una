@@ -176,6 +176,7 @@
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Interested]]></string>
     <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Interested]]></string>
     <string name="_bx_events_page_block_title_profile_comments"><![CDATA[Comments]]></string>
+	<string name="_bx_events_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_events_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_actions"><![CDATA[Actions]]></string>
     <string name="_bx_events_page_block_title_featured_profiles"><![CDATA[Featured Events]]></string>

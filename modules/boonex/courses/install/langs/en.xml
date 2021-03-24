@@ -81,6 +81,7 @@
     <string name="_bx_courses_page_title_entry_fans"><![CDATA[Students]]></string>
     <string name="_bx_courses_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_courses_page_title_profile_comments"><![CDATA[Comments]]></string>
+	<string name="_bx_courses_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_courses_page_title_sys_profile_info"><![CDATA[Course Info]]></string>
     <string name="_bx_courses_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
     <string name="_bx_courses_page_title_sys_recent"><![CDATA[New Courses]]></string>

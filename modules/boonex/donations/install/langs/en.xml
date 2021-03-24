@@ -4,7 +4,8 @@
 
     <!-- Settings -->
     <string name="_bx_donations_option_show_title"><![CDATA[Show donation title in addition to amount]]></string>
-    <string name="_bx_donations_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
+    <string name="_bx_donations_option_amount_precision"><![CDATA[Number of digits after the decimal point in amounts]]></string>
+    
 
     <!-- Forms -->
     <string name="_bx_donations_form_type"><![CDATA[Type]]></string>
@@ -108,6 +109,7 @@
     <string name="_bx_donations_txt_amount_single"><![CDATA[{0}]]></string>
     <string name="_bx_donations_txt_amount_recurring"><![CDATA[{0} / {1}]]></string>
     <string name="_bx_donations_txt_amount_with_title"><![CDATA[{1} ({0})]]></string>
+    <string name="_bx_donations_txt_amount_wo_title"><![CDATA[{0}]]></string>
     <string name="_bx_donations_txt_do_title"><![CDATA[Select an Option Below to Donate]]></string>
     <string name="_bx_donations_txt_do_notes"><![CDATA[Some notes here]]></string>
     <string name="_bx_donations_txt_do_single"><![CDATA[One-Time Donations]]></string>

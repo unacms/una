@@ -100,6 +100,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_files',
             'OBJECT_METATAGS' => 'bx_files',
             'OBJECT_COMMENTS' => 'bx_files',
+            'OBJECT_NOTES' => 'bx_files_notes',
             'OBJECT_CATEGORY' => 'bx_files_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_files_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_files_allow_view_favorite_list',

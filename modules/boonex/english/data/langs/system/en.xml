@@ -1810,6 +1810,7 @@
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>
 	<string name="_cmt_txt_counter_empty"><![CDATA[Comment]]></string>
         <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, leave your comment here.]]></string>
+        <string name="_cmt_nts_popup_view_title"><![CDATA[Notes]]></string>
         <string name="_cmt_rvw_block_rating_title"><![CDATA[Reviews Rating]]></string>
         <string name="_cmt_rvw_block_reviews_title"><![CDATA[Reviews ({0})]]></string>
         <string name="_cmt_rvw_txt_min_form_placeholder"><![CDATA[{0}, leave your review here.]]></string>

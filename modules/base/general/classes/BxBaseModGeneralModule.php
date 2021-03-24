@@ -74,16 +74,18 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
         if(empty($CNF['OBJECT_NOTES']))
-            return false;
+            return echoJson(array());
 
         $iContentId = (int)bx_get('content_id');
 
         $oCmtsNotes = BxDolCmts::getObjectInstance($CNF['OBJECT_NOTES'], $iContentId, true, $this->_oTemplate);
         $aCmtsNotes = $oCmtsNotes->getCommentsBlock(array(), array('in_designbox' => false));
         if(empty($aCmtsNotes) || !is_array($aCmtsNotes))
-            return false;
+            return echoJson(array());
 
-        echo $aCmtsNotes['content'];
+        $sPopupId = $this->getName() . '_notes_' . $iContentId;
+        $sPopupTitle = !empty($CNF['T']['txt_cmts_notes_popup_view_title']) ? $CNF['T']['txt_cmts_notes_popup_view_title'] : '_cmt_nts_popup_view_title';
+        echoJson(array('popup' => BxTemplFunctions::getInstance()->popupBox($sPopupId, _t($sPopupTitle), $aCmtsNotes['content'])));
     }
     
     public function actionNested()
@@ -1292,42 +1294,6 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-page_blocks Page Blocks
-     * @subsubsection bx_base_general-entity_reports entity_reports
-     * 
-     * @code bx_srv('bx_posts', 'entity_reports', [...]); @endcode
-     * 
-     * Get content reports
-     * @param $iContentId content ID
-     * 
-     * @see BxBaseModGeneralModule::serviceEntityReports
-     */
-    /** 
-     * @ref bx_base_general-entity_reports "entity_reports"
-     */
-    public function serviceEntityReports ($iContentId = 0)
-    {
-        $mixedContent = $this->_getContent($iContentId);
-        list($iContentId, $aContentInfo) = $mixedContent;
-        
-        if($iContentId === false)
-            return false;
-        
-        $CNF = &$this->_oConfig->CNF;
-        
-        if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
-            return false;
-
-        if(!(BxDolAcl::getInstance()->isMemberLevelInSet(192) || bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']]))
-            return false;
-
-        $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId, true);
-        return $oReport->getReportedByWithComments($CNF['OBJECT_NOTES']);
-    }
-    
-    /**
-     * @page service Service Calls
-     * @section bx_base_general Base General
      * @subsection bx_base_general-menu Menu
      * @subsubsection bx_base_general-entity_social_sharing entity_social_sharing
      * 
@@ -2029,19 +1995,11 @@ class BxBaseModGeneralModule extends BxDolModule
     
     public function serviceCheckAllowedCommentsView($iContentId, $sObjectComments) 
     {
-        //negative id used in comments for reports
-        if ($iContentId < 0)
-            return CHECK_ACTION_RESULT_ALLOWED;
-        
         return $this->serviceCheckAllowedWithContent('comments_view', $iContentId);
     }
     
     public function serviceCheckAllowedCommentsPost($iContentId, $sObjectComments) 
     {
-        //negative id used in comments for reports
-        if ($iContentId < 0)
-            return CHECK_ACTION_RESULT_ALLOWED;
-        
         return $this->serviceCheckAllowedWithContent('comments_post', $iContentId);
     }
 
@@ -2237,7 +2195,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
     {
         // moderator always has access
-        if ($this->_isAdministrator($isPerformAction))
+        if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -2290,35 +2248,12 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    public function checkAllowedDeleteAnyEntry ($isPerformAction = false)
-    {
-    	return $this->checkAllowedDeleteAnyEntryForProfile($isPerformAction, $this->_iProfileId);
-    }
-    
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
     public function checkAllowedEditAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
     {
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
     	$aCheck = checkActionModule($iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
-    	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
-    		return CHECK_ACTION_RESULT_ALLOWED;
-
-    	return _t('_sys_txt_access_denied');
-    }
-    
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
-    public function checkAllowedDeleteAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
-    {
-        if(!$iProfileId)
-            $iProfileId = $this->_iProfileId;
-
-    	$aCheck = checkActionModule($iProfileId, 'delete any entry', $this->getName(), $isPerformAction);
     	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
     		return CHECK_ACTION_RESULT_ALLOWED;
 
@@ -2656,16 +2591,6 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _isModeratorForProfile($isPerformAction = false, $iProfileId = false)
     {
         return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntryForProfile ($isPerformAction, $iProfileId);
-    }
-    
-    public function _isAdministrator ($isPerformAction = false)
-    {
-        return $this->_isAdministratorForProfile($isPerformAction, $this->_iProfileId);
-    }
-
-    public function _isAdministratorForProfile($isPerformAction = false, $iProfileId = false)
-    {
-        return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedDeleteAnyEntryForProfile ($isPerformAction, $iProfileId);
     }
 
     public function _prepareAuditParams($aContentInfo, $bIsSaveData = true, $aOverrideAuditParams  = array())

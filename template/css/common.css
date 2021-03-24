@@ -366,13 +366,10 @@ body > .bx-popup-wrapper {
 .bx-popup-element-close:hover,
 .bx-popup-element-close {
     position: absolute;
-    width: 1.5rem;
-    height: 1.5rem;
     top: 0;
     right: 0;
     text-decoration: none;
-    line-height: 1.5rem;
-    font-size: 1.875rem !important;
+    font-size: 1.75rem !important;
 }
 
 .bx-popup-slide-wrapper {

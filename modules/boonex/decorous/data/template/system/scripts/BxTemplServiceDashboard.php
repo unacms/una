@@ -10,7 +10,7 @@
 /**
  * @see BxBaseDashboardServices
  */
-class BxTemplServiceDashboard extends BxBaseDashboardServices
+class BxTemplDashboardServices extends BxBaseDashboardServices
 {
     public function __construct()
     {

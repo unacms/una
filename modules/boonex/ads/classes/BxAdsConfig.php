@@ -148,6 +148,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_ads',
             'OBJECT_METATAGS' => 'bx_ads',
             'OBJECT_COMMENTS' => 'bx_ads',
+            'OBJECT_NOTES' => 'bx_ads_notes',
             'OBJECT_REVIEWS' => 'bx_ads_reviews',
             'OBJECT_CATEGORY' => '',
             'OBJECT_PRIVACY_VIEW' => 'bx_ads_allow_view_to',

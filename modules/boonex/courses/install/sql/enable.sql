@@ -44,7 +44,9 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:6:"admins";}', 0, 0, 1, 1),
 ('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"fans_without_admins";}', 0, 0, 1, 2),
 ('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:10:"bx_courses";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 3),
-('bx_courses_view_profile', 4, 'bx_courses', '', '_bx_courses_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0);
+('bx_courses_view_profile', 4, 'bx_courses', '', '_bx_courses_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0),
+('bx_courses_view_profile', 2, 'bx_courses', '', '_bx_courses_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_courses\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
+
 
 -- PAGE: view closed profile 
 
@@ -218,6 +220,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions', 'bx_courses', 'profile-fan-add', '_bx_courses_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_courses_fans\', \'add\', \'{profile_id}\')', '', 'sign-in-alt', '', 0, 2147483647, '', 1, 0, 0, 5),
 ('bx_courses_view_actions', 'bx_courses', 'profile-subscribe-add', '_bx_courses_menu_item_title_system_subscribe', '_bx_courses_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, '', 1, 0, 1, 20),
 ('bx_courses_view_actions', 'bx_courses', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_courses'', content_id: {content_id}});', '', 'check-circle', '', 0, 192, 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 1, 30),
+
 ('bx_courses_view_actions', 'bx_courses', 'profile-actions-more', '_bx_courses_menu_item_title_system_more_actions', '_bx_courses_menu_item_title_more_actions', 'javascript:void(0)', 'bx_menu_popup(''bx_courses_view_actions_more'', this, {}, {profile_id:{profile_id}});', '', 'cog', 'bx_courses_view_actions_more', 1, 2147483647, '', 1, 0, 1, 9999);
 
 -- MENU: view actions more
@@ -258,6 +261,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions_all', 'bx_courses', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 250),
 ('bx_courses_view_actions_all', 'bx_courses', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 260),
 ('bx_courses_view_actions_all', 'bx_courses', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 270),
+('bx_courses_view_actions_all', 'bx_courses', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, '', 1, 0, 280),
+('bx_courses_view_actions_all', 'bx_courses', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_courses&content_id={content_id}', '', '', 'history', '', '', 0, 192, '', 1, 0, 290),
 ('bx_courses_view_actions_all', 'bx_courses', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 300),
 ('bx_courses_view_actions_all', 'bx_courses', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 320),
 ('bx_courses_view_actions_all', 'bx_courses', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 330),

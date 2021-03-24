@@ -306,6 +306,25 @@ CREATE TABLE IF NOT EXISTS `bx_ads_cmts` (
   FULLTEXT KEY `search_fields` (`cmt_text`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_ads_cmts_notes` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_object_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_author_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
+  `cmt_text` text NOT NULL,
+  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  `cmt_pinned` int(11) NOT NULL default '0',
+  PRIMARY KEY (`cmt_id`),
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
+  FULLTEXT KEY `search_fields` (`cmt_text`)
+);
+
 -- TABLE: reviews
 CREATE TABLE IF NOT EXISTS `bx_ads_reviews` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -418,6 +437,8 @@ CREATE TABLE IF NOT EXISTS `bx_ads_reports_track` (
   `type` varchar(32) NOT NULL default '',
   `text` text NOT NULL default '',
   `date` int(11) NOT NULL default '0',
+  `checked_by` int(11) NOT NULL default '0',
+  `status` tinyint(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `report` (`object_id`, `author_nip`)
 );
@@ -781,6 +802,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_ads', 'bx_ads', 'bx_ads_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-ad&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', 'comments', '', ''),
+('bx_ads_notes', 'bx_ads', 'bx_ads_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-ad&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', '', 'BxTemplCmtsNotes', ''),
 ('bx_ads_reviews', 'bx_ads', 'bx_ads_reviews', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 0, 1, -3, 1, 'cmt', 'page.php?i=view-ad&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', 'reviews', 'BxTemplCmtsReviews', '');
 
 -- VOTES
