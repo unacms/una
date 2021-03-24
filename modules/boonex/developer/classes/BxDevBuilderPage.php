@@ -78,8 +78,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
     {
         $sContentInsert = $sContentDelete = "";
 
-        $aPage = array();
-        $this->oDb->getPages(array('type' => 'by_object', 'value' => $this->sPage), $aPage, false);
+        $aPage = $this->oDb->getPages(array('type' => 'by_object', 'value' => $this->sPage));
         if(empty($aPage) || !is_array($aPage))
             return array();
 
