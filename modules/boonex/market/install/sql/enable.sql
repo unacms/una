@@ -70,7 +70,9 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_market_view_entry', 3, 'bx_market', '_bx_market_page_block_title_sys_entry_context', '_bx_market_page_block_title_entry_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
 ('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:9:"bx_market";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 5),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:18:"entity_attachments";}', 0, 0, 0, 0);
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:18:"entity_attachments";}', 0, 0, 0, 0),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
+
 
 
 
@@ -302,6 +304,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view_actions', 'bx_market', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 260),
 ('bx_market_view_actions', 'bx_market', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 270),
 ('bx_market_view_actions', 'bx_market', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, '', 1, 0, 280),
+('bx_market_view_actions', 'bx_market', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', '/page/dashboard-audit?module=bx_market&content_id={content_id}', '', '', 'history', '', '', 0, 192, '', 1, 0, 290),
 ('bx_market_view_actions', 'bx_market', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 300),
 ('bx_market_view_actions', 'bx_market', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 320),
 ('bx_market_view_actions', 'bx_market', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 330),
