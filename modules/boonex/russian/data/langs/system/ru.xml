@@ -1770,6 +1770,7 @@
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>
 	<string name="_cmt_txt_counter_empty"><![CDATA[Комментировать]]></string>
         <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете оставить комментарий.]]></string>
+        <string name="_cmt_nts_popup_view_title"><![CDATA[Заметки]]></string>
         <string name="_cmt_rvw_block_rating_title"><![CDATA[Оценка по обзорам]]></string>
         <string name="_cmt_rvw_block_reviews_title"><![CDATA[Обзоры ({0})]]></string>
         <string name="_cmt_rvw_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете написать обзор.]]></string>

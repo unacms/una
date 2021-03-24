@@ -722,17 +722,28 @@ function bx_get_notes(oSource,  sModule, iContentId, oOptions, oVars) {
     var oOptions = oOptions || {};
     var oVars = oVars || {};
 
-    var oOptions = $.extend({}, $.fn.dolPopupDefaultOptions, {
-        id: sModule + '_notes_' + iContentId, 
-        url: bx_append_url_params('modules/?r=' + sModule + '/get_notes/', $.extend({content_id: iContentId}, oVars)),
-        closeOnOuterClick: false,
-        removeOnClose: true,
-        onBeforeShow: function(oPopup) {
-            $(oPopup).find('.bx-popup-close-wrapper').removeClass('bx-def-media-desktop-hide bx-def-media-tablet-hide');
-        }
-    }, oOptions);
+    $.post(
+        sUrlRoot + 'modules/?r=' + sModule + '/get_notes/',
+        $.extend({content_id: iContentId}, oVars),
+        function(oData) {
+            if(oData && oData.popup != undefined) {
+                if(typeof(oData.popup) == 'string')
+                    oData.popup = {html: oData.popup, options: {}};
 
-    $(window).dolPopupAjax(oOptions);
+                oData.popup.options = $.extend({}, $.fn.dolPopupDefaultOptions, oData.popup.options, {
+                    id: sModule + '_notes_' + iContentId, 
+                    closeOnOuterClick: false,
+                    removeOnClose: true,
+                    onBeforeShow: function(oPopup) {
+                        $(oPopup).find('.bx-popup-element-close').removeClass('bx-def-media-desktop-hide bx-def-media-tablet-hide');
+                    }
+                }, oOptions);
+            }
+            
+            processJsonData(oData);
+        },
+        'json'
+    );
 }
 
 function bx_get_report_comments(oSource, sModule, iContentId, oOptions, oVars) {
