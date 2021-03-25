@@ -287,4 +287,8 @@
     <string name="_bx_files_bulk_action_title_bookmark"><![CDATA[Сделать закладки]]></string>
     <string name="_bx_files_bulk_action_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_files_bulk_action_title_move_to"><![CDATA[Переместить в...]]></string>
+
+    <string name="_bx_files_txt_status_downloading"><![CDATA[Скачивание...]]></string>
+    <string name="_bx_files_txt_status_downloading_msg"><![CDATA[Скачивание скоро начнется...]]></string>
+    <string name="_bx_files_txt_status_downloading_ready_msg"><![CDATA[Нажмите <a href={0}>здесь</a>, если скачивание не началось автоматически.]]></string>
 </resources>
