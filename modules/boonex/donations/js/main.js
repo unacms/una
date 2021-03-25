@@ -30,4 +30,30 @@ BxDonationsMain.prototype.changeType = function(oLink, sType) {
     $(oLink).parents('.bx-dnt-make:first').find('.' + sClsCi + '.' + sType).toggleClass(sClsCa, true).siblings('.' + sClsCi + '.' + sClsCa).toggleClass(sClsCa, false);
 };
 
+BxDonationsMain.prototype.other = function(oLink, sBillingType) {
+    var $this = this;
+
+    var fOnOk = function(oPopup) {
+        var oParams = jQuery.extend({}, $this._getDefaultParams(), {
+            btype: sBillingType,
+            amount: $(oPopup).find("input[type = 'text']").val()
+        });
+
+        $.get(
+            $this._sActionsUrl + 'make_other/',
+            oParams,
+            function(oData){
+                processJsonData(oData);
+            },
+            'json'
+        );
+    };
+
+    bx_prompt('', '', fOnOk);
+};
+
+BxDonationsMain.prototype._getDefaultParams = function() {
+    var oDate = new Date();
+    return {_t:oDate.getTime()};
+};
 /** @} */
