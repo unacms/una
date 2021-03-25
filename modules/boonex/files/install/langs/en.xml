@@ -292,4 +292,8 @@
     <string name="_bx_files_bulk_action_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_files_bulk_action_title_move_to"><![CDATA[Move To...]]></string>
 
+    <string name="_bx_files_txt_status_downloading"><![CDATA[Downloading...]]></string>
+    <string name="_bx_files_txt_status_downloading_msg"><![CDATA[The download will start shortly...]]></string>
+    <string name="_bx_files_txt_status_downloading_ready_msg"><![CDATA[Click <a href={0}>here</a> if the download doesn't start automatically.]]></string>
+
 </resources>

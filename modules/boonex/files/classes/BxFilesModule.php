@@ -80,20 +80,30 @@ class BxFilesModule extends BxBaseModTextModule
             return;
         }
 
-        if ($aData['type'] == 'folder' || $aFilesToDownload) {
-            $sZipFilePath = $this->prepareFolderForDownloading($aFilesToDownload);
-            if ($sZipFilePath == -1) {
-                $this->_oTemplate->displayMsg(_t('_bx_files_txt_max_size_reached', _t_format_size(intval(getParam('bx_files_max_bulk_download_size')) * 1024 * 1024)));
-                return;
-            }
+        if ($aData['type'] == 'folder' || $aFilesToDownload && count($aFilesToDownload) > 1) {
+            bx_import('BulkDownloader', $this->_aModule);
+            $oDownloader = new BxFilesBulkDownloader($this);
+            $aResult = $oDownloader->createDownloadingJob($aFilesToDownload, $aData[$CNF['FIELD_TITLE']]);
 
-            if (!$sZipFilePath) {
-                $this->_oTemplate->displayPageNotFound();
-                return;
+            switch ($aResult['status']) {
+                case BX_FILES_DOWNLOADER_STATUS_TOO_LARGE:
+                    $this->_oTemplate->displayMsg(_t('_bx_files_txt_max_size_reached', _t_format_size(intval(getParam('bx_files_max_bulk_download_size')) * 1024 * 1024)));
+                    break;
+                case BX_FILES_DOWNLOADER_STATUS_DOWNLOADING:
+                    $this->_oTemplate->addJsTranslation('_bx_files_txt_status_downloading_ready_msg');
+                    $this->_oTemplate->displayMsg(['title' => _t('_bx_files_txt_status_downloading'), 'content' => $this->_oTemplate->parseHtmlByName('bulk_downloader_process.html', [
+                        'timeout' => BX_FILES_DOWNLOADER_TIMEOUT_REQUESTS,
+                        'action_url' => BX_DOL_URL_ROOT.$this->_oConfig->getBaseUri().'process_download/'.$aResult['job'],
+                    ])]);
+                    break;
+                case BX_FILES_DOWNLOADER_STATUS_READY:
+                    bx_smart_readfile($aResult['file'], $aResult['filename'], 'application/zip');
+                    break;
+                case BX_FILES_DOWNLOADER_STATUS_EMPTY:
+                default:
+                    $this->_oTemplate->displayPageNotFound();
+                    break;
             }
-
-            $sFolderName = $this->sanitizeFileName($aData[$CNF['FIELD_TITLE']]).'.zip';
-            bx_smart_readfile($sZipFilePath, $sFolderName, 'application/zip');
             exit;
         }
 
@@ -115,6 +125,34 @@ class BxFilesModule extends BxBaseModTextModule
         }
         
         exit;   
+    }
+
+    public function actionProcessDownload($iDownloadingJobId) {
+        if (!$iDownloadingJobId) die;
+
+        $aJob = $this->_oDb->getDownloadingJob($iDownloadingJobId);
+        if (!$aJob || $aJob['owner'] != bx_get_logged_profile_id()) die;
+
+        if ($aJob['result']) {
+            bx_smart_readfile($aJob['result'], $aJob['name'], 'application/zip');
+            exit;
+        }
+
+        bx_import('BulkDownloader', $this->_aModule);
+        $oDownloader = new BxFilesBulkDownloader($this);
+
+        $mRes = $oDownloader->processDownloading($aJob['files']);
+        if ($mRes === BX_FILES_DOWNLOADER_STATUS_DOWNLOADING) {
+            $this->_oDb->updateDownloadingJob($iDownloadingJobId, $aJob['files'], '');
+            echoJson([
+                'status' => 'downloading',
+            ]);
+        } else {
+            $this->_oDb->updateDownloadingJob($iDownloadingJobId, $aJob['files'], $mRes);
+            echoJson([
+                'status' => 'ready',
+            ]);
+        }
     }
     
     public function getContentFile($aData) 
@@ -187,6 +225,12 @@ class BxFilesModule extends BxBaseModTextModule
 
             $this->_oDb->updateFileData ($aContentInfo[$CNF['FIELD_ID']], $sData);
         }
+    }
+
+    public function servicePruneDownloadingJobs()
+    {
+        $aFiles = $this->_oDb->deleteOldDownloadingJobs();
+        if ($aFiles) foreach ($aFiles as $sFile) @unlink($sFile);
     }
 
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
@@ -528,87 +572,6 @@ class BxFilesModule extends BxBaseModTextModule
                 }
         }
         parent::serviceDeleteEntity($iContentId, $sFuncDelete);
-    }
-
-    private function prepareFolderForDownloading($aFiles) {
-        $CNF = &$this->_oConfig->CNF;
-
-        $aFilesList = $this->getFolderFiles($aFiles, '/', 'mixed');
-        if(!$aFilesList) return false;
-
-        $iMaxSize = intval(getParam('bx_files_max_bulk_download_size')) * 1024 * 1024;
-        if ($iMaxSize) {
-            $iTotalSize = 0;
-            foreach ($aFilesList as $aFile) {
-                $iTotalSize += $aFile['size'];
-            }
-            if ($iTotalSize >= $iMaxSize) return -1;
-        }
-
-        $sZipFile = BX_DIRECTORY_PATH_TMP.'files-folder-'.mt_rand().'.zip';
-        if (file_exists($sZipFile)) @unlink($sZipFile);
-
-        $oZipFile = new ZipArchive();
-        if ($oZipFile->open($sZipFile, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)) {
-
-            $iIndex = 0;
-            foreach ($aFilesList as $aFile) {
-                $sFilePath = BX_DIRECTORY_STORAGE . $CNF['OBJECT_STORAGE'].'/'.$aFile['path'];
-                if (file_exists($sFilePath) && is_readable($sFilePath)) {
-                    $oZipFile->addFile($sFilePath, $aFile['filename']);
-                    $oZipFile->setCompressionIndex($iIndex++, ZipArchive::CM_STORE);
-                }
-            }
-
-            $oZipFile->close();
-            return $sZipFile;
-        } else {
-            return false;
-        }
-    }
-
-    private function getFolderFiles($mFile, $sRelPath, $sType) {
-        $aFiles = $this->_oDb->getFolderFilesEx($mFile, $sType);
-        if (!$aFiles) return [];
-
-        $aResult = [];
-        $aUniqueNames = [];
-        foreach ($aFiles as $aFile) {
-            if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aFile)) continue;
-
-            //in case title has been changed we might have to add extensions manually
-            $aFileInfo = pathinfo($aFile['title']);
-            $sFileBaseName = isset($aFileInfo['filename']) ? $aFileInfo['filename'] : '_';
-            $sFileExt = isset($aFileInfo['extension']) ? $aFileInfo['extension'] : '';
-
-            if (!$sFileExt || $sFileExt != $aFile['ext']) $sFileExt = $aFile['ext'];
-
-            //handle multiple files with the same name
-            $sFilename = $this->sanitizeFileName($sFileBaseName);
-            $iIndex = 1;
-            while (isset($aUniqueNames[$sFilename])) {
-                $sFilename = $this->sanitizeFileName($sFileBaseName.'_'.$iIndex++);
-            }
-            $aUniqueNames[$sFilename] = 1;
-
-            if ($aFile['type'] == 'folder') {
-                $aResult = array_merge($aResult, $this->getFolderFiles($aFile['id'], $sRelPath . $sFilename . '/', 'folder'));
-            } else {
-                $aResult[] = [
-                    'filename' => trim($sRelPath.$sFilename.'.'.$sFileExt, '/'),
-                    'size' => $aFile['size'],
-                    'path' => $aFile['path'],
-                ];
-            }
-        }
-
-        return $aResult;
-    }
-
-    private function sanitizeFileName($sDesiredFilename) {
-        $sDesiredFilename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '_', $sDesiredFilename);
-        $sDesiredFilename = mb_ereg_replace("([\.]{2,})", '_', $sDesiredFilename);
-        return $sDesiredFilename;
     }
 }
 
