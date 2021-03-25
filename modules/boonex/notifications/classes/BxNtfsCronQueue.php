@@ -35,13 +35,9 @@ class BxNtfsCronQueue extends BxDolCron
         $this->_oModule->_oDb->queueDeleteByIds(array_keys($aItems));
 
         $aSent = array();
-        foreach($aItems as $aItem) {
-            $sMethod = 'sendNotification' . bx_gen_method_name($aItem['delivery']);
-            $oProfile = BxDolProfile::getInstance($aItem['profile_id']);
-
-            if($this->_oModule->$sMethod($oProfile, unserialize($aItem['content'])) !== false)
+        foreach($aItems as $aItem)
+            if($this->_oModule->{'sendNotification' . bx_gen_method_name($aItem['delivery'])}($aItem['profile_id'], unserialize($aItem['content'])) !== false)
                 $aSent[] = $aItem['id'];
-        }
     }
 }
 
