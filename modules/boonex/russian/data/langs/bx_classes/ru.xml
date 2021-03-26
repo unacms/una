@@ -93,6 +93,7 @@
   <string name="_bx_classes_acl_action_view_entry"><![CDATA[Просмотреть Класс]]></string>
   <string name="_bx_classes_acl_action_set_thumb"><![CDATA[Назначить изображение заголовка класса]]></string>
   <string name="_bx_classes_acl_action_edit_any_entry"><![CDATA[Редактировать любой класс]]></string>
+  <string name="_bx_classes_acl_action_delete_any_entry"><![CDATA[Удалять любой класс]]></string>
 
   <string name="_bx_classes_page_title_sys_create_entry"><![CDATA[Новый Класс]]></string>
   <string name="_bx_classes_page_title_create_entry"><![CDATA[Новый Класс]]></string>
@@ -112,6 +113,7 @@
   <string name="_bx_classes_page_block_title_entry_author"><![CDATA[Автор]]></string>
   <string name="_bx_classes_page_block_title_entry_actions"><![CDATA[Акции]]></string>
   <string name="_bx_classes_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
+  <string name="_bx_classes_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
   <string name="_bx_classes_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
   <string name="_bx_classes_page_block_title_entry_location"><![CDATA[Расположение]]></string>
   <string name="_bx_classes_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>

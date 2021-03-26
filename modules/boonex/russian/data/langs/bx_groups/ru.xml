@@ -75,6 +75,7 @@
 	<string name="_bx_groups_acl_action_delete_profile"><![CDATA[Удалить группу]]></string>
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Редактировать любую группу]]></string>
+	<string name="_bx_groups_acl_action_delete_any_profile"><![CDATA[Удалять любую группу]]></string>
 	<string name="_bx_groups_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
         <string name="_bx_groups_page_title_sys_entries_in_context"><![CDATA[Группы в контексте]]></string>

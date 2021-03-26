@@ -58,6 +58,7 @@
 	<string name="_bx_files_acl_action_delete_entry"><![CDATA[Удаление файлов]]></string>
 	<string name="_bx_files_acl_action_view_entry"><![CDATA[Просмотр файлов]]></string>
 	<string name="_bx_files_acl_action_edit_any_entry"><![CDATA[Редактировать любой файл]]></string>
+	<string name="_bx_files_acl_action_delete_any_entry"><![CDATA[Удалять любой файл]]></string>
 
 	<string name="_bx_files_page_title_sys_create_entry"><![CDATA[Загрузка файлов]]></string>
 	<string name="_bx_files_page_title_create_entry"><![CDATA[Загрузка файлов]]></string>
@@ -91,6 +92,7 @@
     <string name="_bx_files_page_block_title_sys_entry_context"><![CDATA[Файлы в контексте]]></string>
     <string name="_bx_files_page_block_title_entry_context"><![CDATA[Файлы в контексте - {display_name}]]></string>
     <string name="_bx_files_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
+	<string name="_bx_files_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
     <string name="_bx_files_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_files_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
     <string name="_bx_files_page_block_title_entry_attachments"><![CDATA[Присоединенные файлы]]></string>

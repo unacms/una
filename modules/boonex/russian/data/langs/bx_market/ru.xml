@@ -117,7 +117,8 @@
 	<string name="_bx_market_acl_action_set_cover"><![CDATA[Установить обложку продукта]]></string>
 	<string name="_bx_market_acl_action_set_subentries"><![CDATA[Установить подпродукты продукта]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Установить значок продукта]]></string>
-	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Редактировать любой продукт]]></string>
+	<string name="_bx_market_acl_action_delete_any_entry"><![CDATA[Редактировать любой продукт]]></string>
+	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Удалять любой продукт]]></string>
 
 	<string name="_bx_market_privacy_group_customers"><![CDATA[Клиенты]]></string>
 
@@ -161,6 +162,7 @@
     <string name="_bx_market_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_market_page_block_title_entry_breadcrumb"><![CDATA["Хлебные крошки"]]></string>
     <string name="_bx_market_page_block_title_entry_comments"><![CDATA[Обзоры]]></string>
+	<string name="_bx_market_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
     <string name="_bx_market_page_block_title_entry_comments_link"><![CDATA[Обзоры к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_market_page_block_title_entry_comments_n"><![CDATA[Обзоры ({0})]]></string>
     <string name="_bx_market_page_block_title_entry_info"><![CDATA[Информация]]></string>

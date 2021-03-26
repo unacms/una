@@ -92,6 +92,7 @@
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[Просмотреть обсуждение]]></string>
 	<string name="_bx_forum_acl_action_set_thumb"><![CDATA[Назначить обложку обсуждения]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Редактировать любое обсуждение]]></string>
+	<string name="_bx_forum_acl_action_delete_any_entry"><![CDATA[Удалять любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Закреплять любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Блокировать любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_hide_any_entry"><![CDATA[Скрывать любое обсуждение]]></string>
@@ -115,6 +116,7 @@
     <string name="_bx_forum_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_forum_page_block_title_entry_breadcrumb"><![CDATA["Хлебные крошки"]]></string>
     <string name="_bx_forum_page_block_title_entry_comments"><![CDATA[Ответов ({0})]]></string>
+	<string name="_bx_forum_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
     <string name="_bx_forum_page_block_title_entry_participants"><![CDATA[Участники]]></string>
     <string name="_bx_forum_page_block_title_entry_info"><![CDATA[Инфо]]></string>
     <string name="_bx_forum_page_title_browse"><![CDATA[Обсуждения]]></string>
