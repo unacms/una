@@ -9,10 +9,6 @@
  * @{
  */
 
-define('BX_ADS_STATUS_ACTIVE', 'active');
-define('BX_ADS_STATUS_HIDDEN', 'hidden');
-define('BX_ADS_STATUS_PENDING', 'pending');
-
 define('BX_ADS_OFFER_STATUS_ACCEPTED', 'accepted');
 define('BX_ADS_OFFER_STATUS_AWAITING', 'awaiting');
 define('BX_ADS_OFFER_STATUS_DECLINED', 'declined');

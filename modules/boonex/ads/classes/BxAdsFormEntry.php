@@ -140,7 +140,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(!$this->_oModule->_isModerator() && getParam($CNF['PARAM_AUTO_APPROVE']) != 'on')
-            $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_ADS_STATUS_PENDING;
+            $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_TEXT_STATUS_PENDING;
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))

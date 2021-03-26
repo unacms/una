@@ -2192,6 +2192,12 @@ If it is not enabled then please consider implement this optimization, since it 
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
+        <string name="_sys_et_txt_body_manage_approve"><![CDATA[{email_header}
+<p>Moderation team has a question for you about '{content_title}':</p>
+<p> </p>
+<p>{notes}</p>
+<p> </p>
+{email_footer}]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_success"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> module: {1}<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
@@ -2205,8 +2211,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Profile status changed to active]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Profile status changed to pending]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Profile status changed to suspended]]></string>
-  <string name="_sys_et_txt_name_account_change_status_activate"><![CDATA[Account status changed to active]]></string>
-  <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Account status changed to suspended]]></string>
+        <string name="_sys_et_txt_name_account_change_status_activate"><![CDATA[Account status changed to active]]></string>
+        <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Account status changed to suspended]]></string>
+        <string name="_sys_et_txt_name_manage_approve"><![CDATA[Approve: Contact content's author]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[New Accounts]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Pruning result]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Upgrade failed]]></string>
@@ -2225,8 +2232,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Profile activated]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Profile pending review]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Profile suspended]]></string>
-  <string name="_sys_et_txt_subject_account_change_status_activate"><![CDATA[Account activated]]></string>
-  <string name="_sys_et_txt_subject_account_change_status_suspended"><![CDATA[Account suspended]]></string>
+        <string name="_sys_et_txt_subject_account_change_status_activate"><![CDATA[Account activated]]></string>
+        <string name="_sys_et_txt_subject_account_change_status_suspended"><![CDATA[Account suspended]]></string>
+        <string name="_sys_et_txt_subject_manage_approve"><![CDATA[Approvement. A question about '{content_title}'.]]></string>
 	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} {account_count} accounts created yesterday]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} pruning result]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} upgrade failed]]></string>
@@ -2404,6 +2412,17 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_phone_error_format"><![CDATA[Wrong phone number, allowed digits only and start from '+']]></string>
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[This phone is already used by someone.]]></string>
 	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Wrong verification code. Please, repeat code or <a href="{0}">change the phone number and repeat from the beginning</a>.]]></string>
+        <string name="_sys_form_manage"><![CDATA[Manage form]]></string>
+        <string name="_sys_form_display_manage_approve"><![CDATA[Manage form: Approve]]></string>
+        <string name="_sys_form_manage_input_sys_content_id"><![CDATA[Content ID]]></string>
+        <string name="_sys_form_manage_input_sys_notes"><![CDATA[Notes]]></string>
+        <string name="_sys_form_manage_input_notes"><![CDATA[Notes]]></string>
+        <string name="_sys_form_manage_input_sys_do_send"><![CDATA[Send]]></string>
+        <string name="_sys_form_manage_input_do_send"><![CDATA[Send]]></string>
+        <string name="_sys_form_manage_input_sys_do_submit"><![CDATA[Submit]]></string>
+        <string name="_sys_form_manage_input_do_submit"><![CDATA[Submit]]></string>
+        <string name="_sys_form_manage_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+        <string name="_sys_form_manage_input_do_cancel"><![CDATA[Cancel]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Type name here...]]></string>
         <string name="_sys_form_ps_group_custom"><![CDATA[Privacy: Custom group]]></string>
         <string name="_sys_form_display_ps_gc_manage"><![CDATA[Privacy: Manage custom group display]]></string>
@@ -2622,6 +2641,10 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_macros_method_or_class_not_found"><![CDATA[Error: no such macros]]></string>
     <string name="_sys_macros_required_args_missing"><![CDATA[Error: required arguments are missing]]></string>
     <string name="_sys_macros_too_many_args"><![CDATA[Error: too many arguments]]></string>
+    <string name="_sys_manage_popup_approve_title"><![CDATA[Approve]]></string>
+    <string name="_sys_manage_txt_approved"><![CDATA[The content was approved.]]></string>
+    <string name="_sys_manage_txt_sent"><![CDATA[Message was sent.]]></string>
+    <string name="_sys_manage_err_cannot_perform_action"><![CDATA[Cannot perform the action. Please report.]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
     <string name="_sys_menu_item_title_copyright"><![CDATA[Copyright]]></string>
     <string name="_sys_menu_item_title_privacy"><![CDATA[Privacy]]></string>
@@ -2755,6 +2778,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Subscriptions]]></string>
         <string name="_sys_menu_title_view_actions"><![CDATA[View Actions]]></string>
         <string name="_sys_menu_set_title_view_actions"><![CDATA[View Actions]]></string>
+        <string name="_sys_menu_item_title_system_va_approve"><![CDATA[Approve]]></string>
         <string name="_sys_menu_item_title_system_va_comment"><![CDATA[Comment]]></string>
         <string name="_sys_menu_item_title_system_va_view"><![CDATA[View]]></string>
         <string name="_sys_menu_item_title_system_va_vote"><![CDATA[Vote (for)]]></string>
@@ -2765,7 +2789,9 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_menu_item_title_system_va_repost"><![CDATA[Repost]]></string>
         <string name="_sys_menu_item_title_system_va_report"><![CDATA[Report]]></string>
         <string name="_sys_menu_item_title_system_va_notes"><![CDATA[Notes]]></string>
+        <string name="_sys_menu_item_title_system_va_audit"><![CDATA[Audit]]></string>
         <string name="_sys_menu_item_title_system_va_more_auto"><![CDATA[More]]></string>
+        <string name="_sys_menu_item_title_va_approve"><![CDATA[Approve]]></string>
         <string name="_sys_menu_item_title_va_notes"><![CDATA[Notes]]></string>
         <string name="_sys_menu_item_title_va_audit"><![CDATA[Audit]]></string>
         <string name="_sys_menu_item_title_va_more_auto"><![CDATA[]]></string>

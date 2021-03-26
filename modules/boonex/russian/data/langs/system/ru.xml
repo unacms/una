@@ -2151,6 +2151,12 @@
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
+        <string name="_sys_et_txt_body_manage_approve"><![CDATA[{email_header}
+<p>У команды модераторов есть к вам вопрос о '{content_title}':</p>
+<p> </p>
+<p>{notes}</p>
+<p> </p>
+{email_footer}]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_success"><![CDATA[<b>{0}</b> модуль: up to {1} версия.<br />]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> молуль: {1}<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Посылка сообщения из Студии]]></string>
@@ -2164,8 +2170,9 @@
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Статус профиля изменён на Активный]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Статус профиля изменён на Ожидающий]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Статус профиля изменён на Заблокированный]]></string>
-  <string name="_sys_et_txt_name_account_change_status_activate"><![CDATA[Статус аккаунта изменён на Активный]]></string>
-  <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Статус аккаунта изменён на Заблокированный]]></string>
+        <string name="_sys_et_txt_name_account_change_status_activate"><![CDATA[Статус аккаунта изменён на Активный]]></string>
+        <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Статус аккаунта изменён на Заблокированный]]></string>
+        <string name="_sys_et_txt_name_manage_approve"><![CDATA[Одобрение: Связаться с автором контента]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[Новые аккаунты]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Результат очистки]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Обновление не удалось]]></string>
@@ -2184,8 +2191,10 @@
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Профиль активирован]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Профиль в ожидании одобрения]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Профиль заблокирован]]></string>
-  <string name="_sys_et_txt_subject_account_change_status_activate"><![CDATA[Аккаунт активирован]]></string>
-  <string name="_sys_et_txt_subject_account_change_status_suspended"><![CDATA[Аккаунт заблокирован]]></string>
+        <string name="_sys_et_txt_subject_account_change_status_activate"><![CDATA[Аккаунт активирован]]></string>
+        <string name="_sys_et_txt_subject_account_change_status_suspended"><![CDATA[Аккаунт заблокирован]]></string>
+        <string name="_sys_et_txt_subject_manage_approve"><![CDATA[Одобрение. Вопрос о '{content_title}'.]]></string>
+        <string name="_sys_et_txt_body_manage_approve"><![CDATA[]]></string>
 	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} - {account_count} аккаунтов, созданных вчера]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} - результат очистки]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} - обновление не удалось]]></string>
@@ -2363,6 +2372,17 @@
 	<string name="_sys_form_login_input_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[Этот телефон уже кем-то используется]]></string>
 	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.]]></string>
+        <string name="_sys_form_manage"><![CDATA[Форма управления]]></string>
+        <string name="_sys_form_display_manage_approve"><![CDATA[Форма управления: Одобрить]]></string>
+        <string name="_sys_form_manage_input_sys_content_id"><![CDATA[Идентификатор контента]]></string>
+        <string name="_sys_form_manage_input_sys_notes"><![CDATA[Заметки]]></string>
+        <string name="_sys_form_manage_input_notes"><![CDATA[Заметки]]></string>
+        <string name="_sys_form_manage_input_sys_do_send"><![CDATA[Отправить]]></string>
+        <string name="_sys_form_manage_input_do_send"><![CDATA[Отправить]]></string>
+        <string name="_sys_form_manage_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+        <string name="_sys_form_manage_input_do_submit"><![CDATA[Выполнить]]></string>
+        <string name="_sys_form_manage_input_sys_do_cancel"><![CDATA[Отмена]]></string>
+        <string name="_sys_form_manage_input_do_cancel"><![CDATA[Отмена]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>
         <string name="_sys_form_ps_group_custom"><![CDATA[Конфиденциальность: Пользовательская группа]]></string>
         <string name="_sys_form_display_ps_gc_manage"><![CDATA[Конфиденциальность: Управлять пользовательской группой]]></string>
@@ -2556,6 +2576,10 @@
     <string name="_sys_macros_method_or_class_not_found"><![CDATA[Ошибка: нет такого макроса]]></string>
     <string name="_sys_macros_required_args_missing"><![CDATA[Ошибка: остутствуют обязательные аргументы]]></string>
     <string name="_sys_macros_too_many_args"><![CDATA[Ошибка: слишком много аргументов]]></string>
+    <string name="_sys_manage_popup_approve_title"><![CDATA[Одобрить]]></string>
+    <string name="_sys_manage_txt_approved"><![CDATA[Контент был одобрен.]]></string>
+    <string name="_sys_manage_txt_sent"><![CDATA[Сообщение было отправлено.]]></string>
+    <string name="_sys_manage_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[О нас]]></string>
     <string name="_sys_menu_item_title_copyright"><![CDATA[Копирайт]]></string>
     <string name="_sys_menu_item_title_privacy"><![CDATA[Конфиденциальность]]></string>
@@ -2680,6 +2704,7 @@
 	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
         <string name="_sys_menu_title_view_actions"><![CDATA[Просмотр - Действия]]></string>
         <string name="_sys_menu_set_title_view_actions"><![CDATA[Просмотр - Действия]]></string>
+        <string name="_sys_menu_item_title_system_va_approve"><![CDATA[Одобрить]]></string>
         <string name="_sys_menu_item_title_system_va_comment"><![CDATA[Комментировать]]></string>
 	<string name="_sys_menu_item_title_system_va_view"><![CDATA[Посмотреть]]></string>
         <string name="_sys_menu_item_title_system_va_vote"><![CDATA[Проголосовать (за)]]></string>
@@ -2690,8 +2715,11 @@
         <string name="_sys_menu_item_title_system_va_repost"><![CDATA[Сделать репост]]></string>
         <string name="_sys_menu_item_title_system_va_report"><![CDATA[Пожаловаться]]></string>
         <string name="_sys_menu_item_title_system_va_notes"><![CDATA[Заметки]]></string>
+        <string name="_sys_menu_item_title_system_va_audit"><![CDATA[Аудит]]></string>
         <string name="_sys_menu_item_title_system_va_more_auto"><![CDATA[Еще]]></string>
+        <string name="_sys_menu_item_title_va_approve"><![CDATA[Одобрить]]></string>
         <string name="_sys_menu_item_title_va_notes"><![CDATA[Заметки]]></string>
+        <string name="_sys_menu_item_title_va_audit"><![CDATA[Аудит]]></string>
         <string name="_sys_menu_item_title_va_more_auto"><![CDATA[]]></string>
         <string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>

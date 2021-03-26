@@ -11,10 +11,10 @@
 
 class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 {
-	protected $_sFieldStatus;
-	protected $_sFilter1Name;
-	protected $_sFilter1Value;
-	protected $_aFilter1Values;
+    protected $_sFieldStatus;
+    protected $_sFilter1Name;
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -26,10 +26,12 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
-        	'active' => $CNF['T']['filter_item_active'],
-            'hidden' => $CNF['T']['filter_item_hidden'],
-		);
-        
+            BX_BASE_MOD_TEXT_STATUS_ACTIVE => $CNF['T']['filter_item_active'],
+            BX_BASE_MOD_TEXT_STATUS_HIDDEN => $CNF['T']['filter_item_hidden'],
+        );
+        if(isset($CNF['T']['filter_item_pending']))
+            $this->_aFilter1Values[BX_BASE_MOD_TEXT_STATUS_PENDING] = $CNF['T']['filter_item_pending'];
+
     	$sFilter1 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter1)) {
             $this->_sFilter1Value = bx_process_input($sFilter1);

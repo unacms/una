@@ -227,7 +227,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('system', '_sys_et_txt_name_upgrade_modules_success', 't_UpgradeModulesSuccess', '_sys_et_txt_subject_upgrade_modules_success', '_sys_et_txt_body_upgrade_modules_success'),
 ('system', '_sys_et_txt_name_bg_operation_failed', 't_BgOperationFailed', '_sys_et_txt_subject_bg_operation_failed', '_sys_et_txt_body_bg_operation_failed'),
 ('system', '_sys_et_txt_name_account_change_status_activate', 't_ChangeStatusAccountActivate', '_sys_et_txt_subject_account_change_status_activate', '_sys_et_txt_body_account_change_status_activate'),
-('system', '_sys_et_txt_name_account_change_status_suspended', 't_ChangeStatusAccountSuspend', '_sys_et_txt_subject_account_change_status_suspended', '_sys_et_txt_body_account_change_status_suspended');
+('system', '_sys_et_txt_name_account_change_status_suspended', 't_ChangeStatusAccountSuspend', '_sys_et_txt_subject_account_change_status_suspended', '_sys_et_txt_body_account_change_status_suspended'),
+('system', '_sys_et_txt_name_manage_approve', 't_ManageApprove', '_sys_et_txt_subject_manage_approve', '_sys_et_txt_body_manage_approve');
 
 -- --------------------------------------------------------
 
@@ -3195,7 +3196,8 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_favorite', 'system', '_sys_form_favorite', 'favorite.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:19:"bx-favorite-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', ''),
 ('sys_privacy_group_custom', 'system', '_sys_form_ps_group_custom', 'privacy.php', '', 'do_submit', 'sys_privacy_groups_custom', 'id', '', '', '', 0, 1, 'BxTemplPrivacyFormGroupCustom', ''),
 ('sys_labels', 'system', '_sys_form_labels', 'label.php', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTemplLabelForm', ''),
-('sys_wiki', 'system', '_sys_form_wiki', '', '', 'do_submit', 'sys_pages_wiki_blocks', 'id', '', '', '', 0, 1, 'BxTemplFormWiki', '');
+('sys_wiki', 'system', '_sys_form_wiki', '', '', 'do_submit', 'sys_pages_wiki_blocks', 'id', '', '', '', 0, 1, 'BxTemplFormWiki', ''),
+('sys_manage', 'system', '_sys_form_manage', '', '', 'a:2:{i:0;s:7:"do_send";i:1;s:9:"do_submit";}', '', '', '', '', '', 0, 1, '', '');
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3234,7 +3236,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_privacy_group_custom_manage', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_manage', 0),
 ('sys_labels_select', 'system', 'sys_labels', '_sys_form_labels_display_select', 0),
 ('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0),
-('sys_wiki_translate', 'system', 'sys_wiki', '_sys_form_display_wiki_translate', 0);
+('sys_wiki_translate', 'system', 'sys_wiki', '_sys_form_display_wiki_translate', 0),
+('sys_manage_approve', 'system', 'sys_manage', '_sys_form_display_manage_approve', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
@@ -3386,7 +3389,15 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_wiki', 'system', 'notes', '', '', 0, 'text', '', '_sys_form_wiki_input_caption_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'do_submit', '_sys_submit', '', 0, 'submit', '_sys_form_wiki_input_caption_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_wiki', 'system', 'close', '_sys_close', '', 0, 'reset', '_sys_form_wiki_input_caption_close', '', '', 0, 0, 0, 'a:2:{s:7:\"onclick\";s:46:\"$(\'.bx-popup-applied:visible\').dolPopupHide();\";s:5:\"class\";s:22:\"bx-def-margin-sec-left\";}', '', '', '', '', '', '', '', 1, 0),
-('sys_wiki', 'system', 'buttons', '', 'do_submit,close', 0, 'input_set', '_sys_form_wiki_buttons', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('sys_wiki', 'system', 'buttons', '', 'do_submit,close', 0, 'input_set', '_sys_form_wiki_buttons', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+
+('sys_manage', 'system', 'content_id', '', '', 0, 'hidden', '', '_sys_form_manage_input_sys_content_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_manage', 'system', 'notes', '', '', 0, 'textarea', '_sys_form_manage_input_sys_notes', '_sys_form_manage_input_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_manage', 'system', 'controls', '', 'do_send,do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_manage', 'system', 'do_send', '_sys_form_manage_input_do_send', '', 0, 'submit', '_sys_form_manage_input_sys_do_send', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_manage', 'system', 'do_submit', '_sys_form_manage_input_do_submit', '', 0, 'submit', '_sys_form_manage_input_sys_do_submit', '', '', 0, 0, 0, 'a:1:{s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+('sys_manage', 'system', 'do_cancel', '_sys_form_manage_input_do_cancel', '', 0, 'button', '_sys_form_manage_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:5:"class";s:22:"bx-def-margin-sec-left";s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";}', '', '', '', '', '', '', '', 0, 0);
+
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs_privacy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3582,7 +3593,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_wiki_translate', 'notes', 2147483647, 1, 5),
 ('sys_wiki_translate', 'do_submit', 2147483647, 1, 6),
 ('sys_wiki_translate', 'close', 2147483647, 1, 7),
-('sys_wiki_translate', 'buttons', 2147483647, 1, 8);
+('sys_wiki_translate', 'buttons', 2147483647, 1, 8),
+
+('sys_manage_approve', 'content_id', 2147483647, 1, 1),
+('sys_manage_approve', 'notes', 2147483647, 1, 2),
+('sys_manage_approve', 'controls', 2147483647, 1, 3),
+('sys_manage_approve', 'do_send', 2147483647, 1, 4),
+('sys_manage_approve', 'do_submit', 2147483647, 1, 5),
+('sys_manage_approve', 'do_cancel', 2147483647, 1, 6);
+
 
 CREATE TABLE `sys_form_fields_ids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

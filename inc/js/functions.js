@@ -746,6 +746,49 @@ function bx_get_notes(oSource,  sModule, iContentId, oOptions, oVars) {
     );
 }
 
+function bx_approve(oSource,  sModule, iContentId, oOptions, oVars) {
+    var oOptions = oOptions || {};
+    var oVars = oVars || {};
+
+    $.post(
+        sUrlRoot + 'modules/?r=' + sModule + '/approve/',
+        $.extend({content_id: iContentId}, oVars),
+        function(oData) {
+            if(oData && oData.popup != undefined) {
+                if(typeof(oData.popup) == 'string')
+                    oData.popup = {html: oData.popup, options: {}};
+
+                oData.popup.options = $.extend({}, $.fn.dolPopupDefaultOptions, oData.popup.options, {
+                    id: sModule + '_approve_' + iContentId, 
+                    closeOnOuterClick: false,
+                    removeOnClose: true,
+                    onBeforeShow: function(oPopup) {
+                        $(oPopup).find('.bx-popup-element-close').removeClass('bx-def-media-desktop-hide bx-def-media-tablet-hide');
+
+                        var oPopupForm = $(oPopup).find('form');
+                        if(oPopupForm.length > 0) {
+                            oPopupForm.ajaxForm({ 
+                                dataType: 'json',
+                                beforeSubmit: function(aFormData, oForm, oOptions) {
+                                    bx_loading(oPopupForm, true);
+                                },
+                                success: function(oData) {
+                                    $('.bx-popup-applied:visible').dolPopupHide();
+
+                                    processJsonData(oData);
+                                }
+                            });
+                        }
+                    }
+                }, oOptions);
+            }
+            
+            processJsonData(oData);
+        },
+        'json'
+    );
+}
+
 function validateLoginForm(eForm) {
     return true;
 }

@@ -46,6 +46,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_bShowAsButton = true;
         $this->_bShowTitle = true;
         $this->_sClassMiSa = 'bx-base-general-ea-sa';
+
+        $this->addMarkers(array(
+            'module' => $this->_oModule->_oConfig->getName(),
+            'module_uri' => $this->_oModule->_oConfig->getUri(),
+        ));
     }
 
     public function addMarkers($a)
@@ -378,8 +383,6 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             return false;
 
         $this->addMarkers(array(
-            'module' => $this->_oModule->_oConfig->getName(),
-            'module_uri' => $this->_oModule->_oConfig->getUri(),
             'content_id' => $iId
         ));
 

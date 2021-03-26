@@ -9,6 +9,10 @@
  * @{
  */
 
+define('BX_BASE_MOD_TEXT_STATUS_ACTIVE', 'active');
+define('BX_BASE_MOD_TEXT_STATUS_HIDDEN', 'hidden');
+define('BX_BASE_MOD_TEXT_STATUS_PENDING', 'pending');
+
 /**
  * Base module class for text based modules
  */
@@ -99,6 +103,97 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     public function actionFileEmbedSound($iFileId)
     {
         $this->_oTemplate->embedSound($iFileId);
+    }
+
+    public function actionApprove()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['FIELD_STATUS_ADMIN']))
+            return echoJson(array());
+
+        $iContentId = (int)bx_get('content_id');
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo) || $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_TEXT_STATUS_PENDING)
+            return echoJson(array());
+
+        $oForm = $this->_getApproveForm($iContentId, $aContentInfo);
+        $oForm->initChecker();
+
+        if(!$oForm->isSubmitted() || !$oForm->isValid()) {
+            $sPopupId = $this->getName() . '_approve_' . $iContentId;
+            $sPopupTitle = !empty($CNF['T']['txt_approve_popup_title']) ? $CNF['T']['txt_approve_popup_title'] : '_sys_manage_popup_approve_title';
+            return echoJson(array('popup' => BxTemplFunctions::getInstance()->popupBox($sPopupId, _t($sPopupTitle), $oForm->getCode(true))));
+        }
+
+        if($oForm->getCleanValue('do_send')) {
+            $aResult = array();
+            if($this->_sendApproveMessage($iContentId, $aContentInfo, $oForm))
+                $aResult = array('msg' => _t('_sys_manage_txt_sent'));
+            else
+                $aResult = array('msg' => _t('_sys_manage_err_cannot_perform_action'));
+
+            return echoJson($aResult);
+        }
+
+        if($oForm->getCleanValue('do_submit')) {
+            $aResult = array();
+            if($this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS_ADMIN'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $iContentId)))
+                $aResult = array('msg' => _t('_sys_manage_txt_approved'), 'reload' => 1);
+            else
+                $aResult = array('msg' => _t('_sys_manage_err_cannot_perform_action'));
+
+            return echoJson($aResult);
+        }
+    }
+
+    protected function _getApproveForm($iContentId, $aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sForm = 'sys_manage';
+        if(!empty($CNF['OBJECT_FORM_MANAGE']))
+            $sForm = $CNF['OBJECT_FORM_MANAGE'];
+
+        $sFormDisplay = 'sys_manage_approve';
+        if(!empty($CNF['OBJECT_FORM_MANAGE_APPROVE']))
+            $sFormDisplay = $CNF['OBJECT_FORM_MANAGE_APPROVE'];
+
+        $oForm = BxTemplFormView::getObjectInstance($sForm, $sFormDisplay);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'approve';
+        $oForm->aInputs['content_id']['value'] = $iContentId;
+
+        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
+            'content_id' => $iContentId,
+            'content_info' => $aContentInfo,
+            'override_result' => &$oForm
+        ));
+
+        return $oForm;
+    }
+
+    protected function _sendApproveMessage($iContentId, $aContentInfo, &$oForm)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sETemplate = 't_ManageApprove';
+        if(!empty($CNF['ETEMPLATE_MANAGE_APPROVE']))
+            $sETemplate = $CNF['ETEMPLATE_MANAGE_APPROVE'];
+
+        $aEParams = array(
+            'content_title' => !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'notes' => $oForm->getCleanValue('notes'),
+        );
+
+        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, array(
+            'content_id' => $iContentId,
+            'content_info' => $aContentInfo,
+            'form' => $oForm,
+            'email_template' => &$sETemplate,
+            'email_params' => &$aEParams
+        ));
+
+        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams, BX_EMAIL_NOTIFY, true);
     }
 
     // ====== SERVICE METHODS

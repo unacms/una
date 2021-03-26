@@ -27,7 +27,7 @@ class BxAdsPageEntry extends BxBaseModTextPageEntry
 
         $iEntryAuthor = (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
         $sEntryStatus = $this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']];
-        if(($iEntryAuthor == bx_get_logged_profile_id() || $this->_oModule->_isModerator()) && $sEntryStatus != BX_ADS_STATUS_ACTIVE)
+        if(($iEntryAuthor == bx_get_logged_profile_id() || $this->_oModule->_isModerator()) && $sEntryStatus != BX_BASE_MOD_TEXT_STATUS_ACTIVE)
             BxDolInformer::getInstance($this->_oModule->_oTemplate)->add('bx-ads-entry-' . $sEntryStatus, _t('_bx_ads_txt_msg_status_' . $sEntryStatus), BX_INFORMER_ALERT);
 
         $sResult = parent::getCode();
