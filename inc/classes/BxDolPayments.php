@@ -343,6 +343,18 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'get_add_to_cart_link', $aSrvParams, 'Cart');
     }
 
+    /**
+     * Subscribe an item in background mode.
+     */
+    public function subscribeWithAddons($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sItemAddons = '', $sRedirect = '', $aCustom = array())
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'subscribe_with_addons', 'Subscriptions'))
+            return array();
+
+        $aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom);
+        return bx_srv($this->_sActive, 'subscribe_with_addons', $aSrvParams, 'Subscriptions');
+    }
+
     public function getSubscriptionsUrl()
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscriptions_url', 'Subscriptions'))
