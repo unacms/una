@@ -86,8 +86,14 @@
         <string name="_Please enter characters"><![CDATA[Пожалуйста, введите некоторое количество символов]]></string>
 	<string name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string>
 	<string name="_Preview"><![CDATA[Предпросмотр]]></string>
-        <string name="_report_comment"><![CDATA[подал жалобу на '{0}']]></string>
-        <string name="_report_comment_with_note"><![CDATA[подал жалобу на '{0}' с пометкой: {1}]]></string>
+  <string name="_report_comment"><![CDATA[подал жалобу на '{0}']]></string>
+  <string name="_report_comment_with_note"><![CDATA[подал жалобу на '{0}' с пометкой: {1}]]></string>
+  <string name="_report_comment_check_in"><![CDATA[Взять в работу]]></string>
+  <string name="_report_comment_check_out"><![CDATA[Закончить работу]]></string>
+  <string name="_report_status_new"><![CDATA[Новый]]></string>
+  <string name="_report_status_check_in"><![CDATA[В обработке]]></string>
+  <string name="_report_status_check_out"><![CDATA[Обработан]]></string>
+  <string name="_report_status_all"><![CDATA[Все]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
         <string name="_report_do_unreport"><![CDATA[Отменить жалобу]]></string>
@@ -98,6 +104,8 @@
 	<string name="_report_err_not_enabled"><![CDATA[Жалоба не может быть принята в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_report_err_wrong_type"><![CDATA[Неправильный тип жалобы.]]></string>
 	<string name="_report_reported_as"><![CDATA[Тип жалобы:]]></string>
+  <string name="_report_reported_by"><![CDATA[Жалоба от ]]></string>
+  <string name="_report_comments_count"><![CDATA[Комментарии ({0})]]></string>
 	<string name="_RSS_Feed_Title_Common"><![CDATA[{0} RSS]]></string>
 	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0} недавние {1}]]></string>
 	<string name="_Rate"><![CDATA[Оценить]]></string>
@@ -721,6 +729,12 @@
 	<string name="_adm_form_btn_pre_values_create"><![CDATA[Добавить новый элемент]]></string>
 	<string name="_adm_form_btn_pre_values_delete_item"><![CDATA[Удалить элемент]]></string>
 	<string name="_adm_form_btn_pre_values_edit_item"><![CDATA[Редактировать элемент]]></string>
+
+  <string name="_adm_form_btn_reports_check_in"><![CDATA[Взять в работу]]></string>
+  <string name="_adm_form_btn_reports_check_out"><![CDATA[Закончить работу]]></string>
+  <string name="_adm_form_btn_reports_hide"><![CDATA[Скрыть]]></string>
+  <string name="_adm_form_btn_reports_unhide"><![CDATA[Открыть]]></string>
+  
 	<string name="_adm_form_btn_search_forms_edit"><![CDATA[Редактировать форму поиска]]></string>
     <string name="_adm_form_btn_search_forms_fields_edit"><![CDATA[Редактировать поле формы поиска]]></string>
     <string name="_adm_form_btn_search_forms_fields_reset"><![CDATA[Сбросить]]></string>
@@ -799,6 +813,7 @@
   <string name="_adm_form_txt_audit_profile"><![CDATA[Профиль]]></string>
   <string name="_adm_form_txt_audit_content"><![CDATA[Контент]]></string>
   <string name="_adm_form_txt_audit_module"><![CDATA[Модуль]]></string>
+  <string name="_adm_form_txt_audit_author_content"><![CDATA[Автор контента]]></string>
   <string name="_adm_pgt_txt_audit_context"><![CDATA[Контекст]]></string>
   <string name="_adm_pgt_txt_audit_action"><![CDATA[Действие]]></string>
 
@@ -827,8 +842,19 @@
   <string name="_adm_form_txt_badges_edit_popup"><![CDATA[Изменить "{0}" бейдж]]></string>
   <string name="_adm_pgt_txt_badges_text"><![CDATA[Текст]]></string>
   <string name="_adm_pgt_txt_badges_icon"><![CDATA[Иконка]]></string>
-  
-	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Редактировать "{0}" дисплей]]></string>
+
+  <string name="_adm_form_txt_reports_object"><![CDATA[Объект]]></string>
+  <string name="_adm_form_txt_reports_author"><![CDATA[Автор]]></string>
+  <string name="_adm_form_txt_reports_type"><![CDATA[Тип]]></string>
+  <string name="_adm_form_txt_reports_text"><![CDATA[Текст]]></string>
+  <string name="_adm_form_txt_reports_date"><![CDATA[Дата]]></string>
+  <string name="_adm_form_txt_reports_status"><![CDATA[Статус]]></string>
+  <string name="_adm_form_txt_reports_checked_by"><![CDATA[Проверен]]></string>
+  <string name="_adm_form_txt_reports_notes"><![CDATA[Заметки]]></string>
+  <string name="_adm_form_txt_reports_comments"><![CDATA[Комментарии]]></string>
+  <string name="_adm_form_txt_reports_action"><![CDATA[Действия]]></string>
+
+  <string name="_adm_form_txt_displays_edit_popup"><![CDATA[Редактировать "{0}" дисплей]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Поля]]></string>
 	<string name="_adm_form_txt_displays_gl_form"><![CDATA[Форма]]></string>
 	<string name="_adm_form_txt_displays_gl_module"><![CDATA[Модуль]]></string>
@@ -1926,6 +1952,8 @@
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Фильтр:]]></string>
+  <string name="_sys_audit_filter_profile_select"><![CDATA[Выберите профиль]]></string>
+  <string name="_sys_audit_filter_action_select"><![CDATA[Выберите действия]]></string>
 	<string name="_sys_audit_cron_jobs"><![CDATA[Планировщик]]></string>
 	<string name="_sys_audit_cron_jobs_exec_time"><![CDATA[Последний запуск планировщика]]></string>
 	<string name="_sys_audit_header_manual_audit"><![CDATA[Ручной аудит сервера]]></string>
@@ -2665,7 +2693,14 @@
 	<string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Профили]]></string>
 	<string name="_sys_menu_item_title_system_account_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_menu_item_title_system_account_dashboard_administration"><![CDATA[Администрация]]></string>
-	<string name="_sys_menu_item_title_system_account_settings"><![CDATA[Настройки]]></string>
+  <string name="_sys_menu_item_title_system_account_dashboard_content"><![CDATA[Контент]]></string>
+  <string name="_sys_menu_item_title_account_dashboard_content"><![CDATA[Контент]]></string>
+  <string name="_sys_menu_item_title_system_account_dashboard_reports"><![CDATA[Жалобы]]></string>
+  <string name="_sys_menu_item_title_account_dashboard_reports"><![CDATA[Жалобы]]></string>
+  <string name="_sys_menu_item_title_system_account_dashboard_audit"><![CDATA[Аудит]]></string>
+  <string name="_sys_menu_item_title_account_dashboard_audit"><![CDATA[Аудит]]></string>
+
+  <string name="_sys_menu_item_title_system_account_settings"><![CDATA[Настройки]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Аккаунт]]></string>
@@ -2715,6 +2750,7 @@
         <string name="_sys_menu_item_title_system_va_notes"><![CDATA[Заметки]]></string>
         <string name="_sys_menu_item_title_system_va_more_auto"><![CDATA[Еще]]></string>
         <string name="_sys_menu_item_title_va_notes"><![CDATA[Заметки]]></string>
+        <string name="_sys_menu_item_title_va_audit"><![CDATA[Аудит]]></string>
         <string name="_sys_menu_item_title_va_more_auto"><![CDATA[]]></string>
         <string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
@@ -2749,6 +2785,8 @@
 	<string name="_sys_menu_set_title_account_settings_more"><![CDATA[Аккаунт - Дополнительные настройки]]></string>
 	<string name="_sys_menu_set_title_account_notifications"><![CDATA[Аккаунт - Уведомления]]></string>
 	<string name="_sys_menu_set_title_add_content"><![CDATA[Добавить содержимое]]></string>
+  <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Управление контентом]]></string>
+  <string name="_sys_menu_set_title_dashboard_reports_manage"><![CDATA[Управление жалобами]]></string>
 	<string name="_sys_menu_set_title_add_profile"><![CDATA[Добавить профиль]]></string>
 	<string name="_sys_menu_set_title_cmts_item_actions"><![CDATA[Комментарий - Действия]]></string>
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Комментарий - Управление]]></string>
@@ -2817,10 +2855,13 @@
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
-        <string name="_sys_menu_title_set_badges"><![CDATA[Бейджи]]></string>
+  <string name="_sys_menu_title_set_badges"><![CDATA[Бейджи]]></string>
 	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string>
-        <string name="_sys_menu_title_create_post"><![CDATA[Создать пост - Меню]]></string>
-        <string name="_sys_menu_title_add_relation"><![CDATA[Добавить связь - Меню]]></string>
+  <string name="_sys_menu_title_create_post"><![CDATA[Создать пост - Меню]]></string>
+  <string name="_sys_menu_title_dashboard_content_manage"><![CDATA[Панель - Управление контентом]]></string>
+  <string name="_sys_menu_title_dashboard_reports_manage"><![CDATA[Панель - Управление жалобами]]></string>
+
+  <string name="_sys_menu_title_add_relation"><![CDATA[Добавить связь - Меню]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Панель инструментов - Пользователь]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Панель инструментов - Сайт]]></string>
@@ -2909,6 +2950,10 @@
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
+  <string name="_sys_page_block_title_dashboard_content"><![CDATA[Панель - контент]]></string>
+  <string name="_sys_page_block_title_dashboard_audit"><![CDATA[Панель - аудит]]></string>
+  <string name="_sys_page_block_title_dashboard_reports"><![CDATA[Панель - жалобы]]></string>
+  
 	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
   <string name="_sys_page_block_title_system_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
@@ -2964,6 +3009,12 @@
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Панель]]></string>
+  <string name="_sys_page_title_system_dashboard_content"><![CDATA[Контент]]></string>
+  <string name="_sys_page_title_dashboard_content"><![CDATA[Контент]]></string>
+  <string name="_sys_page_title_system_dashboard_reports"><![CDATA[Жалобы]]></string>
+  <string name="_sys_page_title_dashboard_reports"><![CDATA[Жалобы]]></string>
+  <string name="_sys_page_title_system_dashboard_audit"><![CDATA[Аудит]]></string>
+  <string name="_sys_page_title_dashboard_audit"><![CDATA[Аудит]]></string>
 	<string name="_sys_page_title_system_forgot_password"><![CDATA[Забыли пароль]]></string>
   <string name="_sys_page_title_system_search_keyword"><![CDATA[Поиск по ключевым словам]]></string>
   <string name="_sys_page_title_search_keyword"><![CDATA[Поиск по ключевым словам]]></string>
@@ -3235,6 +3286,10 @@
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} общих друзей]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> общий друг]]></string>
     <string name="_sys_txt_powered_by"><![CDATA[Сделано с помощью UNA - системя для управления сообществами]]></string>
+    <string name="_sys_txt_report_status_0"><![CDATA[Новая]]></string>
+    <string name="_sys_txt_report_status_1"><![CDATA[В обработке]]></string>
+    <string name="_sys_txt_report_status_2"><![CDATA[Обработана]]></string>
+    <string name="_sys_txt_report_status_3"><![CDATA[Скрытая]]></string>
 	<string name="_sys_txt_reset_pasword_success"><![CDATA[Ваш пароль был переустановлен. Вы можете войти в вашу учетную запись.]]></string>
         <string name="_sys_txt_reset_pasword_error_invalid_key"><![CDATA[Ссылка для сброса пароля устарела или уже использовалась. Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
         <string name="_sys_txt_reset_pasword_error_not_found"><![CDATA[Аккаунт с указанным email-ом не найден. Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
@@ -3262,6 +3317,7 @@
         <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>
         <string name="_sys_txt_user_n"><![CDATA[Пользователь #{0}]]></string>
         <string name="_sys_txt_reports_title"><![CDATA[Жалобы]]></string>
+        <string name="_sys_txt_reports_grid_view_notes"><![CDATA[Посмотреть заметки]]></string>
         <string name="_sys_unconfirmed"><![CDATA[Неподтвержденный]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Важная информация:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[База данных и версии файлов отличаются, возможно, предыдущий патч не был правильно применён.]]></string>

@@ -107,6 +107,7 @@
     <string name="_bx_snipcart_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_snipcart_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_snipcart_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
+	<string name="_bx_snipcart_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
     <string name="_bx_snipcart_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_snipcart_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_snipcart_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>
