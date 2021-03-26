@@ -70,7 +70,13 @@ class BxDonationsDb extends BxDolModuleDb
                     'period' => 0,
                 );
 
-                $sWhereClause .= "AND `tt`.`period`" . ($aParams['type'] == 'by_btype_single' ? '=' : '<>') . ":period";
+                $sWhereClause .= "AND `tt`.`period`" . ($aParams['type'] == 'by_btype_single' ? '=' : '<>') . ":period AND `tt`.`custom`='0'";
+
+                if(isset($aParams['active'])) {
+                    $aMethod['params'][1]['active'] = (int)$aParams['active'];
+
+                    $sWhereClause .= " AND `tt`.`active`=:active";
+                }
                 break;
 
             case 'conditions':
@@ -108,6 +114,13 @@ class BxDonationsDb extends BxDolModuleDb
         $CNF = &$this->_oConfig->CNF;
 
         return (int)$this->getOne("SELECT MAX(`order`) FROM `" . $CNF['TABLE_TYPES'] . "` WHERE 1");
+    }
+
+    public function insertType($aSet)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_TYPES'] . "` SET " . $this->arrayToSQL($aSet)) > 0 ? $this->lastId() : false;
     }
 
     public function deleteTypes($aWhere)

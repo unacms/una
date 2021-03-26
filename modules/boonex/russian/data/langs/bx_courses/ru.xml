@@ -52,6 +52,7 @@
     <string name="_bx_courses_acl_action_delete_profile"><![CDATA[Удалить курс]]></string>
     <string name="_bx_courses_acl_action_view_profile"><![CDATA[Просмотреть курс]]></string>
     <string name="_bx_courses_acl_action_edit_any_profile"><![CDATA[Редактировать любой курс]]></string>
+	<string name="_bx_courses_acl_action_delete_any_profile"><![CDATA[Удалять любой курс]]></string>
     <string name="_bx_courses_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
     <string name="_bx_courses_page_title_sys_joined_entries"><![CDATA[Курсы профиля]]></string>

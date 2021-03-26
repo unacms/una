@@ -16,6 +16,7 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
 
     protected $_iOwner;
     protected $_bShowTitle;
+    protected $_bEnableOther;
     protected $_aBillingTypes;
     protected $_aPeriodUnits;
 
@@ -38,7 +39,8 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
             'FIELD_TITLE' => 'title',
             'FIELD_PERIOD' => 'period',
             'FIELD_PERIOD_UNIT' => 'period_unit',
-            'FIELD_PRICE' => 'price',
+            'FIELD_AMOUNT' => 'amount',
+            'FIELD_CUSTOM' => 'custom',
 
             // page URIs
             'URL_MAKE' => 'page.php?i=donations-make',
@@ -47,7 +49,13 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
 
             // some params
             'PARAM_SHOW_TITLE' => 'bx_donations_show_title',
+            'PARAM_ENABLE_OTHER' => 'bx_donations_enable_other',
             'PARAM_AMOUNT_PRECISION' => 'bx_donations_amount_precision',
+
+            'PARAM_OTHER_NAME' => 'other',
+            'PARAM_OTHER_PERIOD' => 1,
+            'PARAM_OTHER_PERIOD_UNIT' => 'month',
+            'PARAM_OTHER_PRICE_MIN' => 5,
 
             // objects 
             'OBJECT_GRID_LIST' => 'bx_donations_list',
@@ -96,6 +104,7 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
         $this->_oDb = &$oDb;
 
         $this->_bShowTitle = $this->_oDb->getParam($this->CNF['PARAM_SHOW_TITLE']) == 'on';
+        $this->_bEnableOther = $this->_oDb->getParam($this->CNF['PARAM_ENABLE_OTHER']) == 'on';
     }
 
     public function getHtmlIds($sKey = '')
@@ -105,7 +114,7 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
 
         return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
-
+    
     public function getOwner()
     {
     	return $this->_iOwner;
@@ -115,6 +124,12 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
     {
         return $this->_bShowTitle;
     }
+
+    public function isEnableOther()
+    {
+        return $this->_bEnableOther;
+    }
+
     public function getBillingTypes()
     {
         return $this->_aBillingTypes;
@@ -128,6 +143,11 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
     public function getTypeName($sName)
     {
         return uriGenerate($sName, $this->CNF['TABLE_TYPES'], $this->CNF['FIELD_NAME']);
+    }
+
+    public function getTypeNameCustom()
+    {
+        return $this->getTypeName($this->CNF['PARAM_OTHER_NAME'] . '_' . bx_get_logged_profile_id());
     }
 }
 

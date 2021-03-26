@@ -221,10 +221,11 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
     /** 
      * @ref bx_payment-subscribe_with_addons "subscribe_with_addons"
      */
-    public function serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons = '', $sRedirect = '', $aCustom = array())
+    public function serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $mixedModuleId, $iItemId, $iItemCount, $sItemAddons = '', $sRedirect = '', $aCustom = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
+        $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
     	$iClientId = $this->_oModule->getProfileId();
 
     	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);

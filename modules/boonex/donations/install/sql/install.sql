@@ -5,7 +5,10 @@ SET @sName = 'bx_donations';
 CREATE TABLE IF NOT EXISTS `bx_donations_entries` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) unsigned NOT NULL default '0',
-  `type_id` int(11) unsigned NOT NULL default '0',
+  `type_id` int(11) NOT NULL default '0',
+  `period` int(11) unsigned NOT NULL default '0',
+  `period_unit` varchar(32) NOT NULL default '',
+  `amount` float unsigned NOT NULL default '0',
   `order` varchar(32) NOT NULL default '',
   `license` varchar(32) NOT NULL default '',
   `added` int(11) unsigned NOT NULL default '0',
@@ -15,7 +18,10 @@ CREATE TABLE IF NOT EXISTS `bx_donations_entries` (
 CREATE TABLE IF NOT EXISTS `bx_donations_entries_deleted` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) unsigned NOT NULL default '0',
-  `type_id` int(11) unsigned NOT NULL default '0',
+  `type_id` int(11) NOT NULL default '0',
+  `period` int(11) unsigned NOT NULL default '0',
+  `period_unit` varchar(32) NOT NULL default '',
+  `amount` float unsigned NOT NULL default '0',
   `order` varchar(32) NOT NULL default '',
   `license` varchar(32) NOT NULL default '',
   `added` int(11) unsigned NOT NULL default '0',
@@ -29,13 +35,14 @@ CREATE TABLE IF NOT EXISTS `bx_donations_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL default '',
   `title` varchar(128) NOT NULL default '',
-  `period` int(11) unsigned NOT NULL default '1',
+  `period` int(11) unsigned NOT NULL default '0',
   `period_unit` varchar(32) NOT NULL default '',
-  `price` float unsigned NOT NULL default '1',
+  `amount` float unsigned NOT NULL default '0',
+  `custom` tinyint(4) NOT NULL DEFAULT '0',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `type` (`period`, `period_unit`, `price`)
+  UNIQUE KEY `name` (`name`)
 );
 
 
@@ -52,7 +59,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_donations_type', @sName, 'title', '', '', 0, 'text_translatable', '_bx_donations_form_type_input_sys_title', '_bx_donations_form_type_input_title', '', 1, 0, 0, '', '', '', 'AvailTranslatable', 'a:1:{i:0;s:5:"title";}', '_bx_donations_form_type_input_err_title', 'Xss', '', 1, 0),
 ('bx_donations_type', @sName, 'period', '', '', 0, 'text', '_bx_donations_form_type_input_sys_period', '_bx_donations_form_type_input_period', '_bx_donations_form_type_input_inf_period', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_donations_type', @sName, 'period_unit', '', '#!bx_donations_period_units', 0, 'select', '_bx_donations_form_type_input_sys_period_unit', '_bx_donations_form_type_input_period_unit', '_bx_donations_form_type_input_inf_period_unit', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('bx_donations_type', @sName, 'price', '', '', 0, 'text', '_bx_donations_form_type_input_sys_price', '_bx_donations_form_type_input_price', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_donations_form_type_input_err_price', 'Float', '', 1, 0),
+('bx_donations_type', @sName, 'amount', '', '', 0, 'text', '_bx_donations_form_type_input_sys_amount', '_bx_donations_form_type_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_donations_form_type_input_err_amount', 'Float', '', 1, 0),
 ('bx_donations_type', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_donations_type', @sName, 'do_submit', '_bx_donations_form_type_input_do_submit', '', 0, 'submit', '_bx_donations_form_type_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_donations_type', @sName, 'do_cancel', '_bx_donations_form_type_input_do_cancel', '', 0, 'button', '_bx_donations_form_type_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
@@ -60,7 +67,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_donations_type_add', 'name', 2147483647, 1, 1),
 ('bx_donations_type_add', 'title', 2147483647, 1, 2),
-('bx_donations_type_add', 'price', 2147483647, 1, 3),
+('bx_donations_type_add', 'amount', 2147483647, 1, 3),
 ('bx_donations_type_add', 'period', 2147483647, 1, 4),
 ('bx_donations_type_add', 'period_unit', 2147483647, 1, 5),
 ('bx_donations_type_add', 'controls', 2147483647, 1, 6),
@@ -69,7 +76,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 ('bx_donations_type_edit', 'name', 2147483647, 1, 1),
 ('bx_donations_type_edit', 'title', 2147483647, 1, 2),
-('bx_donations_type_edit', 'price', 2147483647, 1, 3),
+('bx_donations_type_edit', 'amount', 2147483647, 1, 3),
 ('bx_donations_type_edit', 'period', 2147483647, 1, 4),
 ('bx_donations_type_edit', 'period_unit', 2147483647, 1, 5),
 ('bx_donations_type_edit', 'controls', 2147483647, 1, 6),

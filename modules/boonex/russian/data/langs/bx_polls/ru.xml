@@ -57,6 +57,7 @@
 	<string name="_bx_polls_acl_action_vote_entry"><![CDATA[Принять участие в голосовании]]></string>
 	<string name="_bx_polls_acl_action_set_thumb"><![CDATA[Назначить значок голосования]]></string>
 	<string name="_bx_polls_acl_action_edit_any_entry"><![CDATA[Редактировать любое голосование]]></string>
+	<string name="_bx_polls_acl_action_delete_any_entry"><![CDATA[Удалять любое голосование]]></string>
 
 	<string name="_bx_polls_page_title_sys_create_entry"><![CDATA[Новое голосование]]></string>
 	<string name="_bx_polls_page_title_create_entry"><![CDATA[Новое голосование]]></string>
@@ -90,6 +91,7 @@
     <string name="_bx_polls_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_polls_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_polls_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
+	<string name="_bx_polls_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
     <string name="_bx_polls_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_polls_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_polls_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>

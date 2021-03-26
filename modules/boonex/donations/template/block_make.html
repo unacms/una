@@ -1,7 +1,9 @@
 <div class="bx-dnt-make">
     <div class="bx-dnt-make-cnt">
         <div class="bx-dnt-make-title bx-def-font-h3 bx-def-font-align-center"><bx_text:_bx_donations_txt_do_title /></div>
-        <div class="bx-dnt-make-billing-types-menu bx-def-margin-top bx-def-padding-topbottom">__menu_billing_type__</div>
+        <bx_if:show_menu>
+            <div class="bx-dnt-make-billing-types-menu bx-def-margin-top bx-def-padding-topbottom">__menu_billing_type__</div>
+        </bx_if:show_menu>
         <div class="bx-dnt-make-billing-types bx-def-margin-topbottom">
             <bx_repeat:billing_types>
                 <div class="bx-dnt-make-billing-type __class__">

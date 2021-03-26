@@ -13,6 +13,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_donations_show_title', '', @iCategId, '_bx_donations_option_show_title', 'checkbox', '', '', '', 1),
+('bx_donations_enable_other', '', @iCategId, '_bx_donations_option_enable_other', 'checkbox', '', '', '', 2),
 ('bx_donations_amount_precision', '2', @iCategId, '_bx_donations_option_amount_precision', 'digit', '', '', '', 10);
 
 
@@ -67,16 +68,17 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- GRIDS: types
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_donations_types', 'Sql', 'SELECT * FROM `bx_donations_types` WHERE 1 ', 'bx_donations_types', 'id', 'order', '', '', 100, NULL, 'start', '', 'name,period,period_unit,price', 'title', 'like', '', '', 192, 'BxDonationsGridTypes', 'modules/boonex/donations/classes/BxDonationsGridTypes.php');
+('bx_donations_types', 'Sql', 'SELECT * FROM `bx_donations_types` WHERE 1 AND `custom`=''0'' ', 'bx_donations_types', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'name,period,period_unit,amount', 'title', 'like', '', '', 192, 'BxDonationsGridTypes', 'modules/boonex/donations/classes/BxDonationsGridTypes.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_donations_types', 'checkbox', '_sys_select', '1%', 0, 0, '', 1),
 ('bx_donations_types', 'order', '', '1%', 0, 0, '', 2),
-('bx_donations_types', 'name', '_bx_donations_grid_column_name', '24%', 0, 32, '', 3),
-('bx_donations_types', 'title', '_bx_donations_grid_column_title', '24%', 1, 32, '', 4),
-('bx_donations_types', 'price', '_bx_donations_grid_column_price', '15%', 0, 8, '', 5),
-('bx_donations_types', 'period', '_bx_donations_grid_column_period', '15%', 0, 8, '', 6),
-('bx_donations_types', 'actions', '', '20%', 0, '', '', 7);
+('bx_donations_types', 'switcher', '_bx_donations_grid_column_active', '8%', 0, '', '', 3),
+('bx_donations_types', 'name', '_bx_donations_grid_column_name', '20%', 0, 32, '', 4),
+('bx_donations_types', 'title', '_bx_donations_grid_column_title', '20%', 1, 32, '', 5),
+('bx_donations_types', 'amount', '_bx_donations_grid_column_amount', '15%', 0, 8, '', 6),
+('bx_donations_types', 'period', '_bx_donations_grid_column_period', '15%', 0, 8, '', 7),
+('bx_donations_types', 'actions', '', '20%', 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_donations_types', 'independent', 'add', '_bx_donations_grid_action_add', '', 0, 0, 1),
@@ -86,8 +88,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRIDS: entries list
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `show_total_count`, `override_class_name`, `override_class_file`) VALUES
-('bx_donations_list_all', 'Sql', 'SELECT `te`.`id` AS `id`, `te`.`profile_id` AS `profile_id`, `te`.`type_id` AS `type_id`, `tt`.`title` AS `type_title`, `tt`.`price` AS `type_price`, `tt`.`period` AS `type_period`, `tt`.`period_unit` AS `type_period_unit`, `te`.`order` AS `transaction`, `te`.`added` AS `added` FROM `bx_donations_entries` AS `te` LEFT JOIN `bx_donations_types` AS `tt` ON `te`.`type_id`=`tt`.`id` WHERE 1 ', 'bx_donations_entries', 'id', 'added', '', '', 20, NULL, 'start', '', 'tt`.`name,tt`.`period,tt`.`period_unit,tt`.`price,te`.`order', 'tt`.`title', 'like', '', '', 192, 0, 'BxDonationsGridListAll', 'modules/boonex/donations/classes/BxDonationsGridListAll.php'),
-('bx_donations_list', 'Sql', 'SELECT `te`.`id` AS `id`, `te`.`profile_id` AS `profile_id`, `te`.`type_id` AS `type_id`, `tt`.`title` AS `type_title`, `tt`.`price` AS `type_price`, `tt`.`period` AS `type_period`, `tt`.`period_unit` AS `type_period_unit`, `te`.`order` AS `transaction`, `te`.`added` AS `added` FROM `bx_donations_entries` AS `te` LEFT JOIN `bx_donations_types` AS `tt` ON `te`.`type_id`=`tt`.`id` WHERE 1 ', 'bx_donations_entries', 'id', 'added', '', '', 20, NULL, 'start', '', 'tt`.`name,tt`.`period,tt`.`period_unit,tt`.`price,te`.`order', 'tt`.`title', 'like', '', '', 2147483647, 0, 'BxDonationsGridList', 'modules/boonex/donations/classes/BxDonationsGridList.php');
+('bx_donations_list_all', 'Sql', 'SELECT `te`.`id` AS `id`, `te`.`profile_id` AS `profile_id`, `te`.`type_id` AS `type_id`, `tt`.`title` AS `type_title`, `tt`.`amount` AS `type_amount`, `tt`.`period` AS `type_period`, `tt`.`period_unit` AS `type_period_unit`, `te`.`order` AS `transaction`, `te`.`added` AS `added` FROM `bx_donations_entries` AS `te` LEFT JOIN `bx_donations_types` AS `tt` ON `te`.`type_id`=`tt`.`id` WHERE 1 ', 'bx_donations_entries', 'id', 'added', '', '', 20, NULL, 'start', '', 'tt`.`name,tt`.`period,tt`.`period_unit,tt`.`amount,te`.`order', 'tt`.`title', 'like', '', '', 192, 0, 'BxDonationsGridListAll', 'modules/boonex/donations/classes/BxDonationsGridListAll.php'),
+('bx_donations_list', 'Sql', 'SELECT `te`.`id` AS `id`, `te`.`profile_id` AS `profile_id`, `te`.`type_id` AS `type_id`, `tt`.`title` AS `type_title`, `tt`.`amount` AS `type_amount`, `tt`.`period` AS `type_period`, `tt`.`period_unit` AS `type_period_unit`, `te`.`order` AS `transaction`, `te`.`added` AS `added` FROM `bx_donations_entries` AS `te` LEFT JOIN `bx_donations_types` AS `tt` ON `te`.`type_id`=`tt`.`id` WHERE 1 ', 'bx_donations_entries', 'id', 'added', '', '', 20, NULL, 'start', '', 'tt`.`name,tt`.`period,tt`.`period_unit,tt`.`amount,te`.`order', 'tt`.`title', 'like', '', '', 2147483647, 0, 'BxDonationsGridList', 'modules/boonex/donations/classes/BxDonationsGridList.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_donations_list_all', 'profile_id', '_bx_donations_grid_column_title_lst_profile_id', '20%', 0, 0, '', 1),

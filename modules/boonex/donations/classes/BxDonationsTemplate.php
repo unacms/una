@@ -43,6 +43,7 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
         $sHtmlIdBTypeLink = $this->_oConfig->getHtmlIds('link_billing_type');
 
         $bShowTitle = $this->_oConfig->isShowTitle();
+        $bEnableOther = $this->_oConfig->isEnableOther();
         $aPeriodUnits = $this->_oConfig->getPeriodUnits();
 
         $aMenuBillingTypes = array();
@@ -50,11 +51,11 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
         
         $aBillingTypes = $this->_oConfig->getBillingTypes();
         foreach($aBillingTypes as $sBillingType) {
-            $aMenuBillingTypes[] = array('name' => $sHtmlIdBTypeLink . $sBillingType, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . ".changeType(this, '" . $sBillingType . "')", 'target' => '_self', 'title' => _t('_bx_donations_txt_do_' . $sBillingType));
+            $aTypes = $this->_oDb->getTypes(array('type' => 'by_btype_' . $sBillingType, 'active' => 1));
+            if(empty($aTypes) || !is_array($aTypes))
+                continue;
 
             $aTmplVarsTypes = array();
-
-            $aTypes = $this->_oDb->getTypes(array('type' => 'by_btype_' . $sBillingType));
             foreach($aTypes as $aType) {
                 $sDuration = '';
 
@@ -78,7 +79,7 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
 
                 list($sJsCode, $sOnclick) = $aJs;
 
-                $sAmount = _t_format_currency($aType[$CNF['FIELD_PRICE']], getParam($CNF['PARAM_AMOUNT_PRECISION']));
+                $sAmount = _t_format_currency($aType[$CNF['FIELD_AMOUNT']], getParam($CNF['PARAM_AMOUNT_PRECISION']));
                 $sAmount = _t('_bx_donations_txt_amount_' . $sBillingType, $sAmount, $sDuration);
 
                 $aTmplVarsTypes[] = array(
@@ -93,19 +94,49 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
                 );
             }
 
-            $aTmplVarsBillingTypes[] = array(
-                'class' => $sBillingType . ($sBillingType == $sSelected ? ' active' : ''),
+            if($bEnableOther)
+                $aTmplVarsTypes[] = array(
+                    'onclick' => $sJsObject . ".other(this, '" . $sBillingType . "')",
+                    'bx_if:show_title' => array(
+                        'condition' => $bShowTitle,
+                        'content' => array(
+                            'title' => _t('_bx_donations_txt_other_title')
+                        )
+                    ),
+                    'amount' => _t('_bx_donations_txt_other_value')
+                );
+
+            $aTmplVarsBillingTypes[$sBillingType] = array(
+                'class' => $sBillingType,
                 'bx_repeat:types' => $aTmplVarsTypes
             );
+
+            $aMenuBillingTypes[] = array('name' => $sHtmlIdBTypeLink . $sBillingType, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . ".changeType(this, '" . $sBillingType . "')", 'target' => '_self', 'title' => _t('_bx_donations_txt_do_' . $sBillingType));
         }
 
-        $oMenuBillingTypes = new BxTemplMenu(array('template' => 'menu_buttons_hor.html', 'menu_id'=> $this->_oConfig->getHtmlIds('menu_billing_types'), 'menu_items' => $aMenuBillingTypes));
-        $oMenuBillingTypes->setSelected('', $sHtmlIdBTypeLink . $sSelected);
+        $iTmplVarsBillingTypes = count($aTmplVarsBillingTypes);
+        if($iTmplVarsBillingTypes > 1 && isset($aTmplVarsBillingTypes[$sSelected]))
+            $aTmplVarsBillingTypes[$sSelected]['class'] .= ' active';
+        else if($iTmplVarsBillingTypes > 0)
+            $aTmplVarsBillingTypes[key($aTmplVarsBillingTypes)]['class'] .= ' active';
+
+        $aTmplVarsMenu = array();
+        if(count($aMenuBillingTypes) > 1) {
+            $oMenuBillingTypes = new BxTemplMenu(array('template' => 'menu_buttons_hor.html', 'menu_id'=> $this->_oConfig->getHtmlIds('menu_billing_types'), 'menu_items' => $aMenuBillingTypes));
+            $oMenuBillingTypes->setSelected('', $sHtmlIdBTypeLink . $sSelected);
+
+            $aTmplVarsMenu = array(
+                'menu_billing_type' => $oMenuBillingTypes->getCode(),
+            );
+        }       
 
         $sTmplName = 'block_make.html';
         $aTmplVars = array(
-            'menu_billing_type' => $oMenuBillingTypes->getCode(),
-            'bx_repeat:billing_types' => $aTmplVarsBillingTypes,
+            'bx_if:show_menu' => array(
+                'condition' => !empty($aTmplVarsMenu),
+                'content' => $aTmplVarsMenu
+            ),
+            'bx_repeat:billing_types' => array_values($aTmplVarsBillingTypes),
             'js_code' => $sJsCode . $this->getJsCode('main')
         );
 

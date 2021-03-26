@@ -46,6 +46,53 @@ class BxDonationsModule extends BxBaseModGeneralModule
     	));
     }
 
+    public function actionMakeOther()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sBillingType = bx_process_input(bx_get('btype'));
+        $bBillingTypeRecurring = $sBillingType == BX_DONATIONS_BTYPE_RECURRING;
+
+        $fAmount = bx_process_input(bx_get('amount'), BX_DATA_FLOAT);
+    	if(empty($sBillingType) || empty($fAmount))
+            return echoJson(array());
+
+        if($fAmount < $CNF['PARAM_OTHER_PRICE_MIN'])
+            return echoJson(array('msg' => _t('_bx_donations_err_min_value', _t_format_currency($CNF['PARAM_OTHER_PRICE_MIN'], getParam($CNF['PARAM_AMOUNT_PRECISION'])))));
+
+        $iOwner = $this->_oConfig->getOwner();
+        $sModule = $this->getName();
+        $iTypeId = $this->_oDb->insertType(array(
+            $CNF['FIELD_NAME'] => $this->_oConfig->getTypeNameCustom(),
+            $CNF['FIELD_PERIOD'] => $bBillingTypeRecurring ? $CNF['PARAM_OTHER_PERIOD'] : 0,
+            $CNF['FIELD_PERIOD_UNIT'] => $bBillingTypeRecurring ? $CNF['PARAM_OTHER_PERIOD_UNIT'] : '',
+            $CNF['FIELD_AMOUNT'] => $fAmount,
+            $CNF['FIELD_CUSTOM'] => 1
+        ));
+
+        $oPayments = BxDolPayments::getInstance();
+
+        $aResult = array();
+        switch($sBillingType) {
+            case BX_DONATIONS_BTYPE_SINGLE:
+                $aResultSrv = $oPayments->addToCart($iOwner, $sModule, $iTypeId, 1);
+                if(!empty($aResultSrv['code']))
+                    $aResult = array('msg' => isset($aResultSrv['message']) ? $aResultSrv['message'] : _t('_bx_donations_err_cannot_perform'));
+                else
+                    $aResult = array('redirect' => $oPayments->getCartUrl($iOwner));
+                break;
+
+            case BX_DONATIONS_BTYPE_RECURRING:
+                $aResultSrv = $oPayments->subscribeWithAddons($iOwner, '', $sModule, $iTypeId, 1);
+                if(!empty($aResultSrv['code']))
+                    $aResult = array('msg' => isset($aResultSrv['message']) ? $aResultSrv['message'] : _t('_bx_donations_err_cannot_perform'));
+                else 
+                    $aResult = isset($aResultSrv['popup']) || isset($aResultSrv['redirect']) ? $aResultSrv : array('redirect' => $oPayments->getSubscriptionsUrl());
+                break;
+        }
+
+        return echoJson($aResult);
+    }
 
     /**
      * SERVICE METHODS
@@ -107,11 +154,11 @@ class BxDonationsModule extends BxBaseModGeneralModule
             'id' => $aItem[$CNF['FIELD_ID']],
             'author_id' => $this->_oConfig->getOwner(),
             'name' => $aItem[$CNF['FIELD_NAME']],
-            'title' => _t($this->_oConfig->isShowTitle() ? $aItem[$CNF['FIELD_TITLE']] : '_bx_donations_txt_cart_item_title'),
-            'description' => '',
+            'title' => _t($this->_oConfig->isShowTitle() && !empty($aItem[$CNF['FIELD_TITLE']]) ? $aItem[$CNF['FIELD_TITLE']] : '_bx_donations_txt_cart_item_title'),
+            'description' => _t('_bx_donations_txt_cart_item_description', getParam('site_title')),
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MAKE']),
-            'price_single' => $aItem[$CNF['FIELD_PRICE']],
-            'price_recurring' => $aItem[$CNF['FIELD_PRICE']],
+            'price_single' => $aItem[$CNF['FIELD_AMOUNT']],
+            'price_recurring' => $aItem[$CNF['FIELD_AMOUNT']],
             'period_recurring' => $aItem[$CNF['FIELD_PERIOD']],
             'period_unit_recurring' => $aItem[$CNF['FIELD_PERIOD_UNIT']],
             'trial_recurring' => ''
@@ -138,11 +185,11 @@ class BxDonationsModule extends BxBaseModGeneralModule
                 'id' => $aItem[$CNF['FIELD_ID']],
                 'author_id' => $this->_oConfig->getOwner(),
                 'name' => $aItem[$CNF['FIELD_NAME']],
-                'title' => _t($bShowTitle ? $aItem[$CNF['FIELD_TITLE']] : '_bx_donations_txt_cart_item_title'),
-                'description' => '',
+                'title' => _t($bShowTitle && !empty($aItem[$CNF['FIELD_TITLE']]) ? $aItem[$CNF['FIELD_TITLE']] : '_bx_donations_txt_cart_item_title'),
+                'description' => _t('_bx_donations_txt_cart_item_description', getParam('site_title')),
                 'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MAKE']),
-                'price_single' => $aItem[$CNF['FIELD_PRICE']],
-                'price_recurring' => $aItem[$CNF['FIELD_PRICE']],
+                'price_single' => $aItem[$CNF['FIELD_AMOUNT']],
+                'price_recurring' => $aItem[$CNF['FIELD_AMOUNT']],
                 'period_recurring' => $aItem[$CNF['FIELD_PERIOD']],
                 'period_unit_recurring' => $aItem[$CNF['FIELD_PERIOD_UNIT']],
                 'trial_recurring' => ''
@@ -194,10 +241,6 @@ class BxDonationsModule extends BxBaseModGeneralModule
         if(empty($aItem) || !is_array($aItem))
             return array();
 
-        $aType = $this->_oDb->getTypeById($iItemId);
-        if(empty($aType) || !is_array($aType))
-            return array();
-
         if(!$this->_oDb->registerEntry($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
             return array();
 
@@ -206,6 +249,7 @@ class BxDonationsModule extends BxBaseModGeneralModule
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'type' => $sType,
+            'amount' => (float)$aItem['price_' . $sType],
             'count' => $iItemCount
         ));
 
@@ -232,6 +276,7 @@ class BxDonationsModule extends BxBaseModGeneralModule
 
     	return true;
     }
+
 
     /*
      * INTERNAL METHODS

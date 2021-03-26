@@ -4,6 +4,7 @@
 
     <!-- Settings -->
     <string name="_bx_donations_option_show_title"><![CDATA[Show donation title in addition to amount]]></string>
+    <string name="_bx_donations_option_enable_other"><![CDATA[Enable 'Other' choice (can be used with One-Time donations).]]></string>
     <string name="_bx_donations_option_amount_precision"><![CDATA[Number of digits after the decimal point in amounts]]></string>
     
 
@@ -26,9 +27,9 @@
     <string name="_bx_donations_form_type_input_period_unit"><![CDATA[Period unit]]></string>
     <string name="_bx_donations_form_type_input_inf_period_unit"><![CDATA[Leave empty for single time donation.]]></string>
     <string name="_bx_donations_form_type_input_err_period_unit"><![CDATA[You need to select a period unit here.]]></string>
-    <string name="_bx_donations_form_type_input_sys_price"><![CDATA[Price]]></string>
-    <string name="_bx_donations_form_type_input_price"><![CDATA[Price]]></string>
-    <string name="_bx_donations_form_type_input_err_price"><![CDATA[You need to enter a price here.]]></string>
+    <string name="_bx_donations_form_type_input_sys_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_donations_form_type_input_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_donations_form_type_input_err_amount"><![CDATA[You need to enter a amount here.]]></string>
     
     <string name="_bx_donations_form_type_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_donations_form_type_input_do_submit"><![CDATA[Submit]]></string>
@@ -71,10 +72,11 @@
     <string name="_bx_donations_menu_item_title_list_submenu_list"><![CDATA[My Donations]]></string>
 
     <!-- Grids -->
+    <string name="_bx_donations_grid_column_active"><![CDATA[Active]]></string>
     <string name="_bx_donations_grid_column_name"><![CDATA[Name]]></string>
     <string name="_bx_donations_grid_column_title"><![CDATA[Title]]></string>
     <string name="_bx_donations_grid_column_period"><![CDATA[Period]]></string>
-    <string name="_bx_donations_grid_column_price"><![CDATA[Price]]></string>
+    <string name="_bx_donations_grid_column_amount"><![CDATA[Amount]]></string>
     <string name="_bx_donations_grid_column_title_lst_profile_id"><![CDATA[Profile]]></string>
     <string name="_bx_donations_grid_column_title_lst_entry"><![CDATA[Donation]]></string>
     <string name="_bx_donations_grid_column_title_lst_billing_type"><![CDATA[Billing]]></string>
@@ -100,6 +102,7 @@
     <string name="_bx_donations_msg_empty_owner"><![CDATA['Main seller' is empty. You need to mark some profile as 'Main seller' in Settings of currently active Payment app.]]></string>
     <string name="_bx_donations_msg_performed"><![CDATA[The action was successfully performed.]]></string>
     <string name="_bx_donations_err_price_duplicate"><![CDATA[Similar donation plan is already exists.]]></string>
+    <string name="_bx_donations_err_min_value"><![CDATA[The value should exceed {0}.]]></string>
     <string name="_bx_donations_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
 
     <!-- Other -->
@@ -115,4 +118,7 @@
     <string name="_bx_donations_txt_do_single"><![CDATA[One-Time Donations]]></string>
     <string name="_bx_donations_txt_do_recurring"><![CDATA[Recurring Donations]]></string>
     <string name="_bx_donations_txt_cart_item_title"><![CDATA[Donation]]></string>
+    <string name="_bx_donations_txt_cart_item_description"><![CDATA[Donation on {0}]]></string>
+    <string name="_bx_donations_txt_other_title"><![CDATA[Your own value]]></string>
+    <string name="_bx_donations_txt_other_value"><![CDATA[Other]]></string>
 </resources>
