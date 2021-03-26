@@ -82,6 +82,7 @@
 	<string name="_bx_events_acl_action_delete_profile"><![CDATA[Удалить событие]]></string>
 	<string name="_bx_events_acl_action_view_profile"><![CDATA[Просмотреть событие]]></string>
 	<string name="_bx_events_acl_action_edit_any_profile"><![CDATA[Редактировать любое событие]]></string>
+	<string name="_bx_events_acl_action_delete_any_profile"><![CDATA[Удалять любое событие]]></string>
 	<string name="_bx_events_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
 	<string name="_bx_events_page_title_sys_joined"><![CDATA[События профиля]]></string>

@@ -93,6 +93,7 @@
   <string name="_bx_classes_acl_action_view_entry"><![CDATA[Просмотреть Класс]]></string>
   <string name="_bx_classes_acl_action_set_thumb"><![CDATA[Назначить изображение заголовка класса]]></string>
   <string name="_bx_classes_acl_action_edit_any_entry"><![CDATA[Редактировать любой класс]]></string>
+  <string name="_bx_classes_acl_action_delete_any_entry"><![CDATA[Удалять любой класс]]></string>
 
   <string name="_bx_classes_page_title_sys_create_entry"><![CDATA[Новый Класс]]></string>
   <string name="_bx_classes_page_title_create_entry"><![CDATA[Новый Класс]]></string>

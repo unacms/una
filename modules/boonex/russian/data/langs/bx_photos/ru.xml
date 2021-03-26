@@ -60,6 +60,7 @@
 	<string name="_bx_photos_acl_action_view_entry"><![CDATA[Просмотреть фото]]></string>
 	<string name="_bx_photos_acl_action_set_thumb"><![CDATA[Назначить значок фото]]></string>
 	<string name="_bx_photos_acl_action_edit_any_entry"><![CDATA[Редактировать любое фото]]></string>
+	<string name="_bx_photos_acl_action_delete_any_entry"><![CDATA[Удалять любое фото]]></string>
 
 	<string name="_bx_photos_page_title_sys_create_entry"><![CDATA[Загрузить фото]]></string>
 	<string name="_bx_photos_page_title_create_entry"><![CDATA[Загрузить фото]]></string>

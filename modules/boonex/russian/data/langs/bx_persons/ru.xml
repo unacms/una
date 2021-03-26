@@ -78,6 +78,7 @@
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Удалить персональный профиль]]></string>
 	<string name="_bx_persons_acl_action_view_profile"><![CDATA[Просмотреть персональный профиль]]></string>
 	<string name="_bx_persons_acl_action_edit_any_profile"><![CDATA[Редактировать любой персональный профиль]]></string>
+	<string name="_bx_persons_acl_action_delete_any_profile"><![CDATA[Удалять любой персональный профиль]]></string>
 
 	<string name="_bx_persons_page_title_sys_create_profile"><![CDATA[Создать профиль - человек]]></string>
 	<string name="_bx_persons_page_title_create_profile"><![CDATA[Создать профиль - человек]]></string>

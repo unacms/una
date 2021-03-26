@@ -58,6 +58,7 @@
 	<string name="_bx_files_acl_action_delete_entry"><![CDATA[Удаление файлов]]></string>
 	<string name="_bx_files_acl_action_view_entry"><![CDATA[Просмотр файлов]]></string>
 	<string name="_bx_files_acl_action_edit_any_entry"><![CDATA[Редактировать любой файл]]></string>
+	<string name="_bx_files_acl_action_delete_any_entry"><![CDATA[Удалять любой файл]]></string>
 
 	<string name="_bx_files_page_title_sys_create_entry"><![CDATA[Загрузка файлов]]></string>
 	<string name="_bx_files_page_title_create_entry"><![CDATA[Загрузка файлов]]></string>

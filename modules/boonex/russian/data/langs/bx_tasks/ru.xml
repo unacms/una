@@ -93,6 +93,7 @@
     <string name="_bx_tasks_acl_action_view_entry"><![CDATA[Просмотреть Задание]]></string>
     <string name="_bx_tasks_acl_action_set_thumb"><![CDATA[Назначить изображение заголовка публикации]]></string>
     <string name="_bx_tasks_acl_action_edit_any_entry"><![CDATA[Редактировать Любое Задание]]></string>
+	<string name="_bx_tasks_acl_action_delete_any_entry"><![CDATA[Удалять Любое Задание]]></string>
 
     <string name="_bx_tasks_page_title_sys_create_entry"><![CDATA[Новое Задание]]></string>
     <string name="_bx_tasks_page_title_create_entry"><![CDATA[Новое Задание]]></string>

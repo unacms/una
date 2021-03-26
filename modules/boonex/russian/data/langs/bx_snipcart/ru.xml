@@ -75,6 +75,7 @@
 	<string name="_bx_snipcart_acl_action_view_entry"><![CDATA[Просмотреть товар]]></string>
 	<string name="_bx_snipcart_acl_action_set_thumb"><![CDATA[Назначить значок товара]]></string>
 	<string name="_bx_snipcart_acl_action_edit_any_entry"><![CDATA[Редактировать любой товар]]></string>
+	<string name="_bx_snipcart_acl_action_delete_any_entry"><![CDATA[Удалять любой товар]]></string>
 
 	<string name="_bx_snipcart_page_title_sys_create_entry"><![CDATA[Новый товар]]></string>
 	<string name="_bx_snipcart_page_title_create_entry"><![CDATA[Новый товар]]></string>

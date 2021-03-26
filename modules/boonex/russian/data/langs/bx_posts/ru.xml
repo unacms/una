@@ -85,6 +85,7 @@
     <string name="_bx_posts_acl_action_view_entry"><![CDATA[Просмотреть публикацию]]></string>
     <string name="_bx_posts_acl_action_set_thumb"><![CDATA[Назначить изображение заголовка публикации]]></string>
     <string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Редактировать любую публикацию]]></string>
+	<string name="_bx_posts_acl_action_delete_any_entry"><![CDATA[Удалять любую публикацию]]></string>
 
     <string name="_bx_posts_page_title_sys_create_entry"><![CDATA[Новая публикация]]></string>
     <string name="_bx_posts_page_title_create_entry"><![CDATA[Новая публикация]]></string>

@@ -92,6 +92,7 @@
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[Просмотреть обсуждение]]></string>
 	<string name="_bx_forum_acl_action_set_thumb"><![CDATA[Назначить обложку обсуждения]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Редактировать любое обсуждение]]></string>
+	<string name="_bx_forum_acl_action_delete_any_entry"><![CDATA[Удалять любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Закреплять любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Блокировать любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_hide_any_entry"><![CDATA[Скрывать любое обсуждение]]></string>

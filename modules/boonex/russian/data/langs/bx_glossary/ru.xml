@@ -56,6 +56,7 @@
 	<string name="_bx_glossary_acl_action_view_entry"><![CDATA[Просмотреть термин]]></string>
 	<string name="_bx_glossary_acl_action_set_thumb"><![CDATA[Назначить значок Глоссарий]]></string>
 	<string name="_bx_glossary_acl_action_edit_any_entry"><![CDATA[Редактировать любую термин]]></string>
+	<string name="_bx_glossary_acl_action_delete_any_entry"><![CDATA[Удалять любую термин]]></string>
 
 	<string name="_bx_glossary_page_title_sys_create_entry"><![CDATA[Новый термин]]></string>
 	<string name="_bx_glossary_page_title_create_entry"><![CDATA[Новый термин]]></string>
