@@ -193,7 +193,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             'email_params' => &$aEParams
         ));
 
-        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams, BX_EMAIL_NOTIFY, true);
+        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
     }
 
     // ====== SERVICE METHODS
