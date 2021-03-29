@@ -440,6 +440,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
                 return false;
 
             $this->_oMenuSocialSharing->addMarkers($this->_aMarkers);
+            $this->addMarkers($this->_oMenuSocialSharing->getMarkers());
         }
 
         $aItem = $this->_oMenuSocialSharing->getMenuItem($aItem['name']);
