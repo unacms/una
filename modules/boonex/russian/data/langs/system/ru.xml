@@ -2409,6 +2409,7 @@
         <string name="_sys_form_manage_input_do_send"><![CDATA[Отправить]]></string>
         <string name="_sys_form_manage_input_sys_do_submit"><![CDATA[Выполнить]]></string>
         <string name="_sys_form_manage_input_do_submit"><![CDATA[Выполнить]]></string>
+        <string name="_sys_form_manage_input_do_submit_approve"><![CDATA[Одобрить]]></string>
         <string name="_sys_form_manage_input_sys_do_cancel"><![CDATA[Отмена]]></string>
         <string name="_sys_form_manage_input_do_cancel"><![CDATA[Отмена]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>

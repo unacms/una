@@ -162,6 +162,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $oForm = BxTemplFormView::getObjectInstance($sForm, $sFormDisplay);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'approve';
         $oForm->aInputs['content_id']['value'] = $iContentId;
+        foreach($oForm->aInputs['controls'] as $iKey => $mixedValue)
+            if(is_numeric($iKey) && isset($mixedValue['name']) && $mixedValue['name'] == 'do_submit')
+                $oForm->aInputs['controls'][$iKey]['value'] = _t('_sys_form_manage_input_do_submit_approve');
 
         bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
             'content_id' => $iContentId,

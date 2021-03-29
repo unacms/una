@@ -29,7 +29,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
             BX_BASE_MOD_TEXT_STATUS_ACTIVE => $CNF['T']['filter_item_active'],
             BX_BASE_MOD_TEXT_STATUS_HIDDEN => $CNF['T']['filter_item_hidden'],
         );
-        if(isset($CNF['T']['filter_item_pending']))
+        if($this->_oModule->_oConfig->isAutoApprove())
             $this->_aFilter1Values[BX_BASE_MOD_TEXT_STATUS_PENDING] = $CNF['T']['filter_item_pending'];
 
     	$sFilter1 = bx_get($this->_sFilter1Name);
