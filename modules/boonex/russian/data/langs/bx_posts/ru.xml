@@ -5,6 +5,7 @@
     <string name="_bx_posts_cmts"><![CDATA[Публикации - Комментарии]]></string>
     <string name="_bx_posts_reactions"><![CDATA[Публикации - Реакции]]></string>
 
+    <string name="_bx_posts_option_enable_auto_approve"><![CDATA[Автоматически активировать публикацию после создания]]></string>
     <string name="_bx_posts_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к публикациям]]></string>
     <string name="_bx_posts_option_plain_summary_chars"><![CDATA[Количество символов в описании публикации при отсутствующей картинке публикации]]></string>
     <string name="_bx_posts_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
@@ -239,21 +240,22 @@
     <string name="_bx_posts_menu_item_title_view_entries_in_context"><![CDATA[Публикации]]></string>    
     <string name="_bx_posts_menu_title_entries_my"><![CDATA[Мои Публикации - Меню действий]]></string>
     <string name="_bx_posts_menu_set_title_entries_my"><![CDATA[Мои Публикации - Меню]]></string>
-	<string name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[Мои публикации]]></string>
+    <string name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[Мои публикации]]></string>
     <string name="_bx_posts_menu_item_title_manage_my_posts"><![CDATA[Публикации]]></string>
     <string name="_bx_posts_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_posts_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_posts_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_posts_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Публикации]]></string>
-	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Публикации]]></string>
-	<string name="_bx_posts_menu_item_title_manage_my"><![CDATA[Мои публикации]]></string>
-	<string name="_bx_posts_menu_item_title_manage_all"><![CDATA[Все публикации]]></string>
+    <string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_menu_item_title_manage_my"><![CDATA[Мои публикации]]></string>
+    <string name="_bx_posts_menu_item_title_manage_all"><![CDATA[Все публикации]]></string>
 
-	<string name="_bx_posts_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
-	<string name="_bx_posts_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
-	<string name="_bx_posts_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
-	<string name="_bx_posts_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_posts_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_posts_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_posts_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_posts_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
+    <string name="_bx_posts_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_posts_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_posts_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_posts_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -318,6 +320,8 @@
     <string name="_bx_posts_txt_processing_failed"><![CDATA[Публикация не была опубликована, тк произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
     <string name="_bx_posts_txt_scheduled_awaiting"><![CDATA[Дата публикации: {date_publish_uf}]]></string>
 
+    <string name="_bx_posts_txt_msg_status_hidden"><![CDATA[Данная публикация была скрыта.]]></string>
+    <string name="_bx_posts_txt_msg_status_pending"><![CDATA[Данная публикация ожидает утверждения.]]></string>
     <string name="_bx_posts_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 
     <string name="_bx_posts_txt_poll_view_answers"><![CDATA[опрос]]></string>

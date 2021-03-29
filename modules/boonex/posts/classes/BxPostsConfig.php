@@ -85,6 +85,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=posts-administration',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_posts_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_posts_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_posts_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_posts_rss_num',
@@ -160,6 +161,13 @@ class BxPostsConfig extends BxBaseModTextConfig
 
             // informer messages
             'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-ads-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_posts_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_posts_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
                 'processing' => array (
                     'name' => 'bx-posts-processing',
                     'map' => array (
@@ -189,6 +197,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'grid_txt_account_manager' => '_bx_posts_grid_txt_account_manager',
                 'filter_item_active' => '_bx_posts_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_posts_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_posts_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_posts_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_posts_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_posts_menu_item_title_manage_all',
