@@ -194,6 +194,13 @@ class BxAdsConfig extends BxBaseModTextConfig
 
             // informer messages
             'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-ads-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_ads_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_ads_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
                 'processing' => array (
                     'name' => 'bx-ads-processing',
                     'map' => array (
