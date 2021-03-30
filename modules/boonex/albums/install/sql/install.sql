@@ -1,6 +1,3 @@
-
-SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
-
 -- TABLE: entries
 CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -26,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
 );
@@ -349,6 +346,8 @@ CREATE TABLE IF NOT EXISTS `bx_albums_scores_media_track` (
 
 
 -- STORAGES & TRANSCODERS
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_albums_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_albums_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
 ('bx_albums_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_albums_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0);

@@ -97,6 +97,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=discussions-administration',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_forum_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_forum_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_forum_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_forum_rss_num',
@@ -177,6 +178,17 @@ class BxForumConfig extends BxBaseModTextConfig
                 'bx_forum_view_more' => $aMenuItems2Methods,
             ),
 
+            // informer messages
+            'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-forum-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_forum_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_forum_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
+            ),
+
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_forum_txt_sample_single',
@@ -191,6 +203,7 @@ class BxForumConfig extends BxBaseModTextConfig
             	'grid_txt_account_manager' => '_bx_forum_grid_txt_account_manager',
             	'filter_item_active' => '_bx_forum_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_forum_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_forum_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_forum_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_forum_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_forum_menu_item_title_manage_all',

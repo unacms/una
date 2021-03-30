@@ -11,6 +11,7 @@ VALUES (@iTypeId, 'bx_files', '_bx_files', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_files_enable_auto_approve', 'on', @iCategId, '_bx_files_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_files_summary_chars', '700', @iCategId, '_bx_files_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_files_show_link_to_preview', '', @iCategId, '_bx_files_option_link_to_preview', 'checkbox', '', '', '', 5),
 ('bx_files_max_nesting_level', '3', @iCategId, '_bx_files_option_max_nesting_level', 'digit', '', '', '', 6),
@@ -239,6 +240,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_files_view_actions', 'bx_files', 'download-file', '_bx_files_menu_item_title_system_download_file', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_files_view_actions', 'bx_files', 'edit-file', '_bx_files_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_files_view_actions', 'bx_files', 'delete-file', '_bx_files_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30), 
+('bx_files_view_actions', 'bx_files', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 40),
 ('bx_files_view_actions', 'bx_files', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_files_view_actions', 'bx_files', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_files_view_actions', 'bx_files', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),

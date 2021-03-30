@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 
-	<string name="_bx_files"><![CDATA[Files]]></string>
-	<string name="_bx_files_cmts"><![CDATA[Files' Comments]]></string>
-        <string name="_bx_files_reactions"><![CDATA[Files' Reactions]]></string>
+    <string name="_bx_files"><![CDATA[Files]]></string>
+    <string name="_bx_files_cmts"><![CDATA[Files' Comments]]></string>
+    <string name="_bx_files_reactions"><![CDATA[Files' Reactions]]></string>
 
-	<string name="_bx_files_option_summary_chars"><![CDATA[Number of characters in auto-cropped file summary]]></string>
-	<string name="_bx_files_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_files_option_enable_auto_approve"><![CDATA[Auto approve a file after creation]]></string>
+    <string name="_bx_files_option_summary_chars"><![CDATA[Number of characters in auto-cropped file summary]]></string>
+    <string name="_bx_files_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_files_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
-	<string name="_bx_files_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_files_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
-  <string name="_bx_files_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_files_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
+    <string name="_bx_files_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+    <string name="_bx_files_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
 	<string name="_bx_files_form_upload"><![CDATA[Files Upload]]></string>
 	<string name="_bx_files_form_entry"><![CDATA[Files]]></string>
@@ -202,6 +203,7 @@
 	<string name="_bx_files_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_files_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_files_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+        <string name="_bx_files_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
 	<string name="_bx_files_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_files_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_files_grid_column_title_adm_added"><![CDATA[Added]]></string>
@@ -276,6 +278,8 @@
     <string name="_bx_files_toolbar_sorting_type"><![CDATA[Order by Type]]></string>
     <string name="_bx_files_toolbar_sorting_author"><![CDATA[Order by Author]]></string>
 
+    <string name="_bx_files_txt_msg_status_hidden"><![CDATA[This file was hidden.]]></string>
+    <string name="_bx_files_txt_msg_status_pending"><![CDATA[This file is pending approval.]]></string>
     <string name="_bx_files_txt_error"><![CDATA[File not found]]></string>
     <string name="_bx_files_txt_permission_denied"><![CDATA[Permission denied]]></string>
     <string name="_bx_files_txt_upload"><![CDATA[Upload]]></string>

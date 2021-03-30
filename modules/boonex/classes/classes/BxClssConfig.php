@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolInformer');
-
 class BxClssConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)

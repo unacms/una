@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolInformer');
-
 class BxPostsConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)
@@ -62,11 +60,6 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_DISABLE_COMMENTS' => 'disable_comments',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
-
-             // some params
-            'PARAM_MULTICAT_ENABLED' => true,
-            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_posts_auto_activation_for_categories',
-            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_posts_per_page_for_favorites_lists',
             
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',
@@ -91,6 +84,10 @@ class BxPostsConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_posts_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_posts_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_posts_per_page_browse_showcase',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_posts_per_page_for_favorites_lists',
+
+            'PARAM_MULTICAT_ENABLED' => true,
+            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_posts_auto_activation_for_categories',
 
             // objects
             'OBJECT_STORAGE' => 'bx_posts_covers',
@@ -162,7 +159,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             // informer messages
             'INFORMERS' => array (
                 'approving' => array (
-                    'name' => 'bx-ads-approving',
+                    'name' => 'bx-posts-approving',
                     'map' => array (
                         'pending' => array('msg' => '_bx_posts_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
                         'hidden' => array('msg' => '_bx_posts_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolInformer');
-
 class BxAdsConfig extends BxBaseModTextConfig
 {
     protected $_oDb;

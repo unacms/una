@@ -4,6 +4,7 @@
   <string name="_bx_classes_cmts"><![CDATA[Классы - Комментарии]]></string>
   <string name="_bx_classes_reactions"><![CDATA[Классы Реакции]]></string>
 
+  <string name="_bx_classes_option_enable_auto_approve"><![CDATA[Автоматически активировать класс после создания]]></string>
   <string name="_bx_classes_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к публикациям]]></string>
   <string name="_bx_classes_option_plain_summary_chars"><![CDATA[Количество символов в описании публикации при отсутствующей картинке публикации]]></string>
   <string name="_bx_classes_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
@@ -210,6 +211,7 @@
   <string name="_bx_classes_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
   <string name="_bx_classes_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
   <string name="_bx_classes_grid_filter_item_title_adm_hidden"><![CDATA[Скрытые]]></string>
+  <string name="_bx_classes_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
   <string name="_bx_classes_grid_column_title_adm_active"><![CDATA[Активные]]></string>
   <string name="_bx_classes_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
   <string name="_bx_classes_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
@@ -263,6 +265,8 @@
   <string name="_bx_classes_txt_reorder_modules"><![CDATA[Заново открыть модули]]></string>
   <string name="_bx_classes_txt_reorder_classes"><![CDATA[Заново открыть классы]]></string>
 
+  <string name="_bx_classes_txt_msg_status_hidden"><![CDATA[Данный класс был скрыт.]]></string>
+  <string name="_bx_classes_txt_msg_status_pending"><![CDATA[Данный класс ожидает утверждения.]]></string>
   <string name="_bx_classes_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
   <string name="_bx_classes_txt_err_cant_add_class_without_context"><![CDATA[Класс может быть добавлен только в контекст]]></string>
   <string name="_bx_classes_txt_err_cant_add_class_without_modules"><![CDATA[Пожалуйста, сначала создайте модуль класса]]></string>

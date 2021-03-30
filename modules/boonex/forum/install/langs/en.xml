@@ -5,6 +5,7 @@
     <string name="_bx_forum_cmts"><![CDATA[Discussions's Comments]]></string>
     <string name="_bx_forum_reactions"><![CDATA[Discussions's Reactions]]></string>
 
+    <string name="_bx_forum_option_enable_auto_approve"><![CDATA[Auto approve a discussion after creation]]></string>
     <string name="_bx_forum_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
     <string name="_bx_forum_option_plain_summary_chars"><![CDATA[Number of characters in plain discussion description when discussion hasn't thumb]]></string>
     <string name="_bx_forum_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -305,6 +306,7 @@
     <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_forum_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
     <string name="_bx_forum_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_forum_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_forum_grid_column_title_adm_added"><![CDATA[Added]]></string>
@@ -340,6 +342,8 @@
     <string name="_bx_forum_search_extended"><![CDATA[Discussions Search]]></string>
     <string name="_bx_forum_search_extended_cmts"><![CDATA[Discussions Comments Search]]></string>
 
+    <string name="_bx_forum_txt_msg_status_hidden"><![CDATA[This discussion was hidden.]]></string>
+    <string name="_bx_forum_txt_msg_status_pending"><![CDATA[This discussion is pending approval.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Discussion wasn't found.]]></string>
     <string name="_bx_forum_more"><![CDATA[{0} more]]></string>
     <string name="_bx_forum_participant_author"><![CDATA[author]]></string>

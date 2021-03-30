@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   `type` enum('file', 'folder') NOT NULL DEFAULT 'file',
   `parent_folder_id` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),

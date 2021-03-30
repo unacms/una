@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_files"><![CDATA[Файлы]]></string>
-	<string name="_bx_files_cmts"><![CDATA[Комментарии к файлам]]></string>
-        <string name="_bx_files_reactions"><![CDATA[Реакции к файлам]]></string>
+    <string name="_bx_files"><![CDATA[Файлы]]></string>
+    <string name="_bx_files_cmts"><![CDATA[Комментарии к файлам]]></string>
+    <string name="_bx_files_reactions"><![CDATA[Реакции к файлам]]></string>
 
-	<string name="_bx_files_option_summary_chars"><![CDATA[Количество символов в автоматическом описании к файлу]]></string>
-	<string name="_bx_files_option_per_page_browse"><![CDATA[Количество файлов на странице]]></string>
+    <string name="_bx_posts_option_enable_auto_approve"><![CDATA[Автоматически активировать файл после создания]]></string>
+    <string name="_bx_files_option_summary_chars"><![CDATA[Количество символов в автоматическом описании к файлу]]></string>
+    <string name="_bx_files_option_per_page_browse"><![CDATA[Количество файлов на странице]]></string>
     <string name="_bx_files_option_per_page_profile"><![CDATA[Количество файлов на странице профайла]]></string>
-	<string name="_bx_files_option_rss_num"><![CDATA[Количество файлов в RSS]]></string>
-	<string name="_bx_files_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-  <string name="_bx_files_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_files_option_rss_num"><![CDATA[Количество файлов в RSS]]></string>
+    <string name="_bx_files_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_files_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
   
 	<string name="_bx_files_form_upload"><![CDATA[Загрузка файлов]]></string>
 	<string name="_bx_files_form_entry"><![CDATA[Файлы]]></string>
@@ -200,6 +201,7 @@
 	<string name="_bx_files_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_files_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
 	<string name="_bx_files_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+        <string name="_bx_posts_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
 	<string name="_bx_files_grid_column_title_adm_active"><![CDATA[Активный]]></string>
     <string name="_bx_files_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_files_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>
@@ -274,6 +276,8 @@
     <string name="_bx_files_toolbar_sorting_type"><![CDATA[Сортировать по типу]]></string>
     <string name="_bx_files_toolbar_sorting_author"><![CDATA[Сортировать по автору]]></string>
 
+    <string name="_bx_posts_txt_msg_status_hidden"><![CDATA[Данный файл был скрыт.]]></string>
+    <string name="_bx_posts_txt_msg_status_pending"><![CDATA[Данный файл ожидает утверждения.]]></string>
     <string name="_bx_files_txt_error"><![CDATA[Файл не наден]]></string>
     <string name="_bx_files_txt_permission_denied"><![CDATA[Доступ запрещен]]></string>
     <string name="_bx_files_txt_upload"><![CDATA[Загрузить]]></string>
