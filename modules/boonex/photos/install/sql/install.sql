@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `bx_photos_entries` (
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   `exif` text NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)

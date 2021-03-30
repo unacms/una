@@ -5,6 +5,7 @@
 	<string name="_bx_market_cmts"><![CDATA[Рынок - Обзоры]]></string>
         <string name="_bx_market_reactions"><![CDATA[Рынок - Реакции]]></string>
 
+        <string name="_bx_market_option_enable_auto_approve"><![CDATA[Автоматически активировать продукт после создания]]></string>
 	<string name="_bx_market_option_enable_recurring"><![CDATA[Разрешить продажу подписок]]></string>
 	<string name="_bx_market_option_recurring_reserve"><![CDATA[Резерв (в днях) на принятие и обработку сообщения об оплате подписки.]]></string>
 	<string name="_bx_market_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к продуктам]]></string>
@@ -13,7 +14,7 @@
 	<string name="_bx_market_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_market_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-  <string name="_bx_market_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+        <string name="_bx_market_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Продукт]]></string>
 	<string name="_bx_market_form_entry_display_add"><![CDATA[Добавление продукта]]></string>
@@ -330,10 +331,11 @@
     <string name="_bx_market_menu_item_title_products_licenses"><![CDATA[Мои лицензии]]></string>
 
 
-	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
-	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
-	<string name="_bx_market_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
-	<string name="_bx_market_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_market_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_market_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
+    <string name="_bx_market_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_market_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_market_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_market_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -342,6 +344,7 @@
     <string name="_bx_market_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_market_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_market_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
+    <string name="_bx_market_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_market_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) продукт(ы).]]></string>
     <string name="_bx_market_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
     
@@ -406,19 +409,21 @@
     <string name="_bx_market_cat_translations"><![CDATA[Переводы]]></string>
     <string name="_bx_market_cat_video"><![CDATA[Видео]]></string>
 
-	<string name="_bx_market_pre_lists_durations"><![CDATA[Продолжительность]]></string>
-	<string name="_bx_market_cat_duration_day"><![CDATA[ежедневно]]></string>
-	<string name="_bx_market_cat_duration_week"><![CDATA[еженедельно]]></string>
-	<string name="_bx_market_cat_duration_month"><![CDATA[ежемесячно]]></string>
-	<string name="_bx_market_cat_duration_year"><![CDATA[ежегодно]]></string>
+    <string name="_bx_market_pre_lists_durations"><![CDATA[Продолжительность]]></string>
+    <string name="_bx_market_cat_duration_day"><![CDATA[ежедневно]]></string>
+    <string name="_bx_market_cat_duration_week"><![CDATA[еженедельно]]></string>
+    <string name="_bx_market_cat_duration_month"><![CDATA[ежемесячно]]></string>
+    <string name="_bx_market_cat_duration_year"><![CDATA[ежегодно]]></string>
 
-	<string name="_bx_market_vote_counter"><![CDATA[{0} голосов]]></string>
+    <string name="_bx_market_vote_counter"><![CDATA[{0} голосов]]></string>
 
-	<string name="_bx_market_err_access_denied"><![CDATA[Доступ запрещен.]]></string>
-	<string name="_bx_market_err_no_payments"><![CDATA[Нет ни одного установленного модуля обработки платежей.]]></string>
-	<string name="_bx_market_err_not_accept_payments"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
-	<string name="_bx_market_err_not_accept_payments_single"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с корзиной. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
-	<string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с подписками. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
+    <string name="_bx_market_txt_msg_status_hidden"><![CDATA[Данный продукт был скрыт.]]></string>
+    <string name="_bx_market_txt_msg_status_pending"><![CDATA[Данный продукт ожидает утверждения.]]></string>
+    <string name="_bx_market_err_access_denied"><![CDATA[Доступ запрещен.]]></string>
+    <string name="_bx_market_err_no_payments"><![CDATA[Нет ни одного установленного модуля обработки платежей.]]></string>
+    <string name="_bx_market_err_not_accept_payments"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
+    <string name="_bx_market_err_not_accept_payments_single"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с корзиной. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
+    <string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с подписками. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[{0} продуктов]]></string>
     <string name="_bx_market_txt_all_entries_in"><![CDATA[<a href="{0}">Все продукты в {1} ({2})</a>]]></string>

@@ -68,6 +68,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=glossary-administration',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_glossary_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_glossary_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_glossary_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_glossary_rss_num',
@@ -116,6 +117,17 @@ class BxGlsrConfig extends BxBaseModTextConfig
                     'create-glossary' => 'checkAllowedAdd',
                 ),
                 'bx_glossary_view' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-glossary-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_glossary_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_glossary_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
             ),
 
             // some language keys

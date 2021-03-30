@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 
-	<string name="_bx_glossary"><![CDATA[Glossary]]></string>
-	<string name="_bx_glossary_cmts"><![CDATA[Glossary's Comments]]></string>
-        <string name="_bx_glossary_reactions"><![CDATA[Glossary's Reactions]]></string>
+    <string name="_bx_glossary"><![CDATA[Glossary]]></string>
+    <string name="_bx_glossary_cmts"><![CDATA[Glossary's Comments]]></string>
+    <string name="_bx_glossary_reactions"><![CDATA[Glossary's Reactions]]></string>
 
-	<string name="_bx_glossary_option_summary_chars"><![CDATA[Number of characters in auto-cropped term summary]]></string>
-	<string name="_bx_glossary_option_plain_summary_chars"><![CDATA[Number of characters in plain term description when term hasn't thumb]]></string>
-	<string name="_bx_glossary_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_glossary_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
-	<string name="_bx_glossary_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_glossary_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
-  <string name="_bx_glossary_option_activate_terms_after_creation"><![CDATA[Activate terms after creation]]></string>
-  <string name="_bx_glossary_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_glossary_option_enable_auto_approve"><![CDATA[Auto approve a term after creation]]></string>
+    <string name="_bx_glossary_option_summary_chars"><![CDATA[Number of characters in auto-cropped term summary]]></string>
+    <string name="_bx_glossary_option_plain_summary_chars"><![CDATA[Number of characters in plain term description when term hasn't thumb]]></string>
+    <string name="_bx_glossary_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_glossary_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
+    <string name="_bx_glossary_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
+    <string name="_bx_glossary_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+    <string name="_bx_glossary_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
   <string name="_bx_glossary_form_entry"><![CDATA[Glossary]]></string>
 	<string name="_bx_glossary_form_entry_display_add"><![CDATA[Add Term]]></string>
@@ -209,6 +209,7 @@
     <string name="_bx_glossary_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_glossary_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_glossary_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>  
+    <string name="_bx_glossary_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_glossary_grid_action_err_delete"><![CDATA[Cannot delete the selected term(s).]]></string>
     <string name="_bx_glossary_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
@@ -242,5 +243,7 @@
     <string name="_bx_glossary_txt_sample_reaction_single"><![CDATA['{0}' reaction to term]]></string>
     <string name="_bx_glossary_txt_sample_score_up_single"><![CDATA[score up vote to term]]></string>
     <string name="_bx_glossary_txt_sample_score_down_single"><![CDATA[score down vote to term]]></string>
-    <string name="_bx_glossary_txt_term_in_pending_status"><![CDATA[This term is pending approval.]]></string>
+
+    <string name="_bx_glossary_txt_msg_status_hidden"><![CDATA[This term was hidden.]]></string>
+    <string name="_bx_glossary_txt_msg_status_pending"><![CDATA[This term is pending approval.]]></string>
 </resources>

@@ -19,15 +19,6 @@ class BxGlsrFormEntry extends BxBaseModTextFormEntry
         $this->MODULE = 'bx_glossary';
         parent::__construct($aInfo, $oTemplate);
     }
-    
-    public function insert ($aValsToAdd = array(), $isIgnore = false)
-    {
-        if(!BxDolAcl::getInstance()->isMemberLevelInSet(192)){
-            if (getParam('bx_glossary_activate_terms_after_creation') != 'on')
-                $aValsToAdd['status_admin'] = 'pending';  
-        }
-        return parent::insert ($aValsToAdd, $isIgnore);
-    }
 }
 
 /** @} */

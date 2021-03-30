@@ -320,6 +320,7 @@
     <string name="_bx_forum_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_forum_grid_action_title_add"><![CDATA[New discussion]]></string>
     <string name="_bx_forum_grid_action_title_show_to"><![CDATA[Show To]]></string>
+    <string name="_bx_forum_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_forum_grid_action_err_delete"><![CDATA[Cannot delete the selected discussion(s).]]></string>
     <string name="_bx_forum_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
     <string name="_bx_forum_grid_txt_manage_visibility"><![CDATA[Manage visibility settings.]]></string>

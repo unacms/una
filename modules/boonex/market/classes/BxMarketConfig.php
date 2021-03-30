@@ -11,7 +11,7 @@
 
 class BxMarketConfig extends BxBaseModTextConfig
 {
-	protected $_aCurrency;
+    protected $_aCurrency;
 
     function __construct($aModule)
     {
@@ -105,6 +105,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URL_VIEW_ENTRY' => 'page.php?i=view-product&id=',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_market_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_market_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_market_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_market_rss_num',
@@ -174,6 +175,17 @@ class BxMarketConfig extends BxBaseModTextConfig
                 'bx_market_snippet_more' => $aMenuItems2Methods,
             ),
 
+            // informer messages
+            'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-market-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_market_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_market_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
+            ),
+
             // global settings
             'OPTION_ENABLE_RECURRING' => 'bx_market_enable_recurring',
             'OPTION_RECURRING_RESERVE' => 'bx_market_recurring_reserve',
@@ -195,6 +207,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             	'grid_txt_account_manager' => '_bx_market_grid_txt_account_manager',
                 'filter_item_active' => '_bx_market_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_market_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_market_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_market_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_market_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_market_menu_item_title_manage_all',

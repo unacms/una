@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 
-	<string name="_bx_polls"><![CDATA[Polls]]></string>
-	<string name="_bx_polls_cmts"><![CDATA[Polls' Comments]]></string>
+        <string name="_bx_polls"><![CDATA[Polls]]></string>
+        <string name="_bx_polls_cmts"><![CDATA[Polls' Comments]]></string>
         <string name="_bx_polls_reactions"><![CDATA[Polls' Reactions]]></string>
 
-	<string name="_bx_polls_option_title_chars"><![CDATA[Number of characters in auto-cropped poll title]]></string>
-	<string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_polls_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_polls_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
-  <string name="_bx_polls_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+        <string name="_bx_polls_option_enable_auto_approve"><![CDATA[Auto approve a poll after creation]]></string>
+        <string name="_bx_polls_option_title_chars"><![CDATA[Number of characters in auto-cropped poll title]]></string>
+        <string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+        <string name="_bx_polls_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
+        <string name="_bx_polls_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+        <string name="_bx_polls_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
 
-  <string name="_bx_polls_form_entry"><![CDATA[Polls]]></string>
+        <string name="_bx_polls_form_entry"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_form_entry_display_add"><![CDATA[Add Poll]]></string>
 	<string name="_bx_polls_form_entry_display_edit"><![CDATA[Edit Poll]]></string>
 	<string name="_bx_polls_form_entry_display_delete"><![CDATA[Delete Poll]]></string>
@@ -24,7 +25,7 @@
 	<string name="_bx_polls_form_entry_input_do_publish"><![CDATA[Publish]]></string>
 	<string name="_bx_polls_form_entry_input_sys_cat"><![CDATA[Category]]></string>
 	<string name="_bx_polls_form_entry_input_cat"><![CDATA[Category]]></string>
-    <string name="_bx_polls_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
+        <string name="_bx_polls_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
 	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Question]]></string>
 	<string name="_bx_polls_form_entry_input_text"><![CDATA[Question]]></string>
 	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
@@ -203,6 +204,7 @@
 	<string name="_bx_polls_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_polls_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_polls_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+        <string name="_bx_polls_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
 	<string name="_bx_polls_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_polls_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_polls_grid_column_title_adm_added"><![CDATA[Added]]></string>
@@ -212,6 +214,7 @@
     <string name="_bx_polls_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_polls_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_polls_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
+    <string name="_bx_polls_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_polls_grid_action_err_delete"><![CDATA[Cannot delete the selected poll(s).]]></string>
     <string name="_bx_polls_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
@@ -256,4 +259,7 @@
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
     <string name="_bx_polls_msg_public_voting"><![CDATA[This voting is public, your choice will be displayed for others.]]></string>
+    
+    <string name="_bx_polls_txt_msg_status_hidden"><![CDATA[This poll was hidden.]]></string>
+    <string name="_bx_polls_txt_msg_status_pending"><![CDATA[This poll is pending approval.]]></string>
 </resources>

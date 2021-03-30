@@ -211,6 +211,7 @@
     <string name="_bx_files_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_files_grid_action_title_adm_more_actions"><![CDATA[Больше действий]]></string>
     <string name="_bx_files_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
+    <string name="_bx_files_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_files_grid_action_err_delete"><![CDATA[Ошибка удаления выбранных файлов]]></string>
     <string name="_bx_files_grid_txt_account_manager"><![CDATA[Перейти к управлению учетной записи]]></string>
 

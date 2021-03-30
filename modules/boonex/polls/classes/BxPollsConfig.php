@@ -75,6 +75,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=polls-administration',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_polls_enable_auto_approve',
             'PARAM_CHARS_TITLE' => 'bx_polls_title_chars',
             'PARAM_CHARS_SUMMARY' => '',
             'PARAM_CHARS_SUMMARY_PLAIN' => '',
@@ -132,6 +133,17 @@ class BxPollsConfig extends BxBaseModTextConfig
                 'bx_polls_view' => $aMenuItems2Methods,
             ),
 
+            // informer messages
+            'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-polls-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_polls_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_polls_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
+            ),
+
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_polls_txt_sample_single',
@@ -146,6 +158,7 @@ class BxPollsConfig extends BxBaseModTextConfig
                 'grid_txt_account_manager' => '_bx_polls_grid_txt_account_manager',
                 'filter_item_active' => '_bx_polls_grid_filter_item_title_adm_active',
                 'filter_item_hidden' => '_bx_polls_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_polls_grid_filter_item_title_adm_pending',
                 'filter_item_select_one_filter1' => '_bx_polls_grid_filter_item_title_adm_select_one_filter1',
                 'menu_item_manage_my' => '_bx_polls_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_polls_menu_item_title_manage_all',

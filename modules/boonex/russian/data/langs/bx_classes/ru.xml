@@ -222,6 +222,7 @@
   <string name="_bx_classes_grid_action_title_adm_edit"><![CDATA[Редактирование]]></string>
   <string name="_bx_classes_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
   <string name="_bx_classes_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
+  <string name="_bx_classes_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
   <string name="_bx_classes_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) класс(ы).]]></string>
   <string name="_bx_classes_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 

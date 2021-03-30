@@ -76,6 +76,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=photos-administration',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_photos_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_photos_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_photos_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_photos_rss_num',
@@ -129,6 +130,17 @@ class BxPhotosConfig extends BxBaseModTextConfig
                 'bx_photos_view' => $aMenuItems2Methods,
             ),
 
+            // informer messages
+            'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-photos-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_photos_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_photos_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
+            ),
+
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_photos_txt_sample_single',
@@ -144,6 +156,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             	'grid_txt_account_manager' => '_bx_photos_grid_txt_account_manager',
                 'filter_item_active' => '_bx_photos_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_photos_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_photos_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_photos_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_photos_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_photos_menu_item_title_manage_all',

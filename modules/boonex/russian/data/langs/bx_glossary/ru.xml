@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_glossary"><![CDATA[Глоссарий]]></string>
-	<string name="_bx_glossary_cmts"><![CDATA[Глоссарий - Комментарии]]></string>
-        <string name="_bx_glossary_reactions"><![CDATA[Глоссарий - Реакции]]></string>
+    <string name="_bx_glossary"><![CDATA[Глоссарий]]></string>
+    <string name="_bx_glossary_cmts"><![CDATA[Глоссарий - Комментарии]]></string>
+    <string name="_bx_glossary_reactions"><![CDATA[Глоссарий - Реакции]]></string>
 
-	<string name="_bx_glossary_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к термину]]></string>
-	<string name="_bx_glossary_option_plain_summary_chars"><![CDATA[Количество символов в описании Глоссарий при отсутствующей картинке Глоссарий]]></string>
+    <string name="_bx_glossary_option_enable_auto_approve"><![CDATA[Автоматически активировать термин после создания]]></string>
+    <string name="_bx_glossary_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к термину]]></string>
+    <string name="_bx_glossary_option_plain_summary_chars"><![CDATA[Количество символов в описании Глоссарий при отсутствующей картинке Глоссарий]]></string>
     <string name="_bx_glossary_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_glossary_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-	<string name="_bx_glossary_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_glossary_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-	<string name="_bx_glossary_option_activate_terms_after_creation"><![CDATA[Активировать термин после создания]]></string>
-  <string name="_bx_glossary_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_glossary_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_glossary_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_glossary_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_glossary_form_entry"><![CDATA[Глоссарий]]></string>
 	<string name="_bx_glossary_form_entry_display_add"><![CDATA[Добавить термин]]></string>
@@ -210,6 +210,7 @@
     <string name="_bx_glossary_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_glossary_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_glossary_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
+    <string name="_bx_glossary_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_glossary_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) термин(ции).]]></string>
     <string name="_bx_glossary_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
@@ -220,7 +221,7 @@
     <string name="_bx_glossary_search_extended_cmts"><![CDATA[Поиск комментариев к терминам]]></string>
 
     <string name="_bx_glossary_pre_lists_cats"><![CDATA[Категории терминов]]></string>
-	<string name="_bx_glossary_cat_Nouns"><![CDATA[Существительные]]></string>
+    <string name="_bx_glossary_cat_Nouns"><![CDATA[Существительные]]></string>
     <string name="_bx_glossary_cat_Pronouns"><![CDATA[Местоимения]]></string>
     <string name="_bx_glossary_cat_Verbs"><![CDATA[Глаголы]]></string>
     <string name="_bx_glossary_cat_Adverbs"><![CDATA[Наречия]]></string>
@@ -229,7 +230,7 @@
     <string name="_bx_glossary_cat_Prepositions"><![CDATA[Предлоги]]></string>
     <string name="_bx_glossary_cat_Infinitives"><![CDATA[Инфинитивы]]></string>
 	
-	<string name="_bx_glossary_pre_lists_statuses"><![CDATA[Статусы термина]]></string>
+    <string name="_bx_glossary_pre_lists_statuses"><![CDATA[Статусы термина]]></string>
     <string name="_bx_glossary_item_admin_status_active"><![CDATA[Активный]]></string>
     <string name="_bx_glossary_item_admin_status_hidden"><![CDATA[Скрытый]]></string>
     <string name="_bx_glossary_item_admin_status_pending"><![CDATA[Ожидающий]]></string>   
@@ -243,5 +244,7 @@
     <string name="_bx_glossary_txt_sample_reaction_single"><![CDATA[реакция '{0}' к термину]]></string>
     <string name="_bx_glossary_txt_sample_score_up_single"><![CDATA[голос за термин]]></string>
     <string name="_bx_glossary_txt_sample_score_down_single"><![CDATA[голос против термина]]></string>
-	<string name="_bx_glossary_txt_term_in_pending_status"><![CDATA[Этот термин ожидает одобрения.]]></string>
+        
+    <string name="_bx_glossary_txt_msg_status_hidden"><![CDATA[Данный термин был скрыт.]]></string>
+    <string name="_bx_glossary_txt_msg_status_pending"><![CDATA[Данный термин ожидает утверждения.]]></string>
 </resources>

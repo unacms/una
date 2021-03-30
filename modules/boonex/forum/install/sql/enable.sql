@@ -432,8 +432,9 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_forum_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_forum_common', 'switcher', '_bx_forum_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_forum_common', 'title', '_bx_forum_grid_column_title_adm_title', '40%', 0, '', '', 3),
-('bx_forum_common', 'added', '_bx_forum_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_forum_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_forum_common', 'added', '_bx_forum_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_forum_common', 'status_admin', '_bx_forum_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_forum_common', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_forum_administration', 'bulk', 'delete', '_bx_forum_grid_action_title_adm_delete', '', 0, 1, 1),

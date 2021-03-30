@@ -1,6 +1,3 @@
-
-SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
-
 -- TABLE: entries
 CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -28,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `anonymous` tinyint(4) NOT NULL DEFAULT '0',
   `hidden_results` tinyint(4) NOT NULL DEFAULT '0',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`text`)
 );
@@ -271,6 +268,8 @@ CREATE TABLE IF NOT EXISTS `bx_polls_scores_track` (
 
 
 -- STORAGES & TRANSCODERS
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_polls_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_polls_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_polls_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_polls_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);

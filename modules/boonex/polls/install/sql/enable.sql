@@ -1,6 +1,5 @@
 
 -- SETTINGS
-
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
 ('modules', 'bx_polls', '_bx_polls', 'bx_polls@modules/boonex/polls/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
@@ -11,6 +10,7 @@ VALUES (@iTypeId, 'bx_polls', '_bx_polls', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_polls_enable_auto_approve', 'on', @iCategId, '_bx_polls_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_polls_title_chars', '200', @iCategId, '_bx_polls_option_title_chars', 'digit', '', '', '', 1),
 ('bx_polls_per_page_browse', '12', @iCategId, '_bx_polls_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_polls_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
@@ -221,6 +221,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_polls_view_actions', 'bx_polls', 'edit-poll', '_bx_polls_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_polls_view_actions', 'bx_polls', 'delete-poll', '_bx_polls_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_polls_view_actions', 'bx_polls', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_polls_view_actions', 'bx_polls', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_polls_view_actions', 'bx_polls', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_polls_view_actions', 'bx_polls', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
@@ -444,11 +445,13 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_polls_administration', 'added', '_bx_polls_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_polls_administration', 'author', '_bx_polls_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_polls_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_polls_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_polls_common', 'switcher', '_bx_polls_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_polls_common', 'text', '_bx_polls_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_polls_common', 'added', '_bx_polls_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_polls_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_polls_common', 'added', '_bx_polls_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_polls_common', 'status_admin', '_bx_polls_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_polls_common', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_polls_administration', 'bulk', 'delete', '_bx_polls_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -458,6 +461,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_polls_administration', 'single', 'settings', '_bx_polls_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_polls_administration', 'single', 'audit_content', '_bx_polls_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
 ('bx_polls_administration', 'single', 'clear_reports', '_bx_polls_grid_action_title_adm_clear_reports', 'eraser', 1, 0, 5),
+
 ('bx_polls_common', 'bulk', 'delete', '_bx_polls_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_polls_common', 'single', 'edit', '_bx_polls_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_polls_common', 'single', 'delete', '_bx_polls_grid_action_title_adm_delete', 'remove', 1, 1, 2),

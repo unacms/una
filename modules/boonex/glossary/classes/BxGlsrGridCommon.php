@@ -16,12 +16,6 @@ class BxGlsrGridCommon extends BxBaseModTextGridCommon
         $this->MODULE = 'bx_glossary';
         parent::__construct ($aOptions, $oTemplate);
     }
-    
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
-    {
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `author`=?", bx_get_logged_profile_id());
-        return parent::__getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
-    }
 }
 
 /** @} */

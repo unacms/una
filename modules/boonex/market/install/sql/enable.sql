@@ -10,6 +10,7 @@ VALUES (@iTypeId, 'bx_market', '_bx_market', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_market_enable_auto_approve', 'on', @iCategId, '_bx_market_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_market_enable_recurring', 'on', @iCategId, '_bx_market_option_enable_recurring', 'checkbox', '', '', '', 1),
 ('bx_market_recurring_reserve', '4', @iCategId, '_bx_market_option_recurring_reserve', 'digit', '', '', '', 2),
 ('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 10),
@@ -293,7 +294,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view_actions', 'bx_market', 'hide-product', '_bx_market_menu_item_title_system_hide_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50),
 ('bx_market_view_actions', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 60),
 ('bx_market_view_actions', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 70),
-('bx_market_view_actions', 'bx_market', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_market'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 80),
+('bx_market_view_actions', 'bx_market', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, '', 1, 0, 80),
+('bx_market_view_actions', 'bx_market', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_market'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 90),
 ('bx_market_view_actions', 'bx_market', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_market_view_actions', 'bx_market', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
 ('bx_market_view_actions', 'bx_market', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 220),
@@ -596,8 +598,9 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_market_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_market_common', 'switcher', '_bx_market_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_market_common', 'title', '_bx_market_grid_column_title_adm_title', '40%', 0, '', '', 3),
-('bx_market_common', 'added', '_bx_market_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_market_common', 'actions', '', '20%', 0, '', '', 5),
+('bx_market_common', 'added', '_bx_market_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_market_common', 'status_admin', '_bx_market_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_market_common', 'actions', '', '20%', 0, '', '', 6),
 
 ('bx_market_licenses_administration', 'profile_id', '_bx_market_grid_column_title_lcs_profile_id', '10%', 0, '28', '', 1),
 ('bx_market_licenses_administration', 'product', '_bx_market_grid_column_title_lcs_product', '20%', 0, '28', '', 2),
@@ -626,6 +629,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_market_administration', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_market_administration', 'single', 'audit_content', '_bx_market_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
 ('bx_market_administration', 'single', 'clear_reports', '_bx_market_grid_action_title_adm_clear_reports', 'eraser', 1, 0, 5),
+
 ('bx_market_common', 'bulk', 'delete', '_bx_market_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_market_common', 'single', 'edit', '_bx_market_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),

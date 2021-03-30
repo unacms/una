@@ -317,6 +317,7 @@
     <string name="_bx_forum_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_forum_grid_action_title_add"><![CDATA[Новое сообщение]]></string>
     <string name="_bx_forum_grid_action_title_show_to"><![CDATA[Показать]]></string>
+    <string name="_bx_forum_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_forum_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) обсуждение(ния).]]></string>
     <string name="_bx_forum_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
     <string name="_bx_forum_grid_txt_manage_visibility"><![CDATA[Управление настройками видимости.]]></string>
