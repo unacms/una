@@ -69,6 +69,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             'URL_SETTINGS' => 'page.php?i=shopify-settings',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_shopify_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_shopify_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_shopify_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_shopify_rss_num',
@@ -117,6 +118,17 @@ class BxShopifyConfig extends BxBaseModTextConfig
                 ),
                 'bx_shopify_view' => $aMenuItems2Methods,
             ),
+            
+            // informer messages
+            'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-shopify-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_shopify_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_shopify_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
+            ),
 
             // some language keys
             'T' => array (
@@ -132,6 +144,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             	'grid_txt_account_manager' => '_bx_shopify_grid_txt_account_manager',
                 'filter_item_active' => '_bx_shopify_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_shopify_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_shopify_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_shopify_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_shopify_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_shopify_menu_item_title_manage_all',
@@ -145,18 +158,17 @@ class BxShopifyConfig extends BxBaseModTextConfig
 
         $this->_aJsClasses = array(
             'shop' => 'BxShopifyShop', 
-        	'manage_tools' => 'BxShopifyManageTools'
+            'manage_tools' => 'BxShopifyManageTools'
         );
 
         $this->_aJsObjects = array(
-        	'shop' => 'oBxShopifyShop{profile_id}',
-        	'manage_tools' => 'oBxShopifyManageTools'
+            'shop' => 'oBxShopifyShop{profile_id}',
+            'manage_tools' => 'oBxShopifyManageTools'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);

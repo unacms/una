@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_videos"><![CDATA[Видео]]></string>
-	<string name="_bx_videos_cmts"><![CDATA[Видео - Комментарии]]></string>
-        <string name="_bx_videos_reactions"><![CDATA[Видео - Реакции]]></string>
+    <string name="_bx_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_cmts"><![CDATA[Видео - Комментарии]]></string>
+    <string name="_bx_videos_reactions"><![CDATA[Видео - Реакции]]></string>
 
-	<string name="_bx_videos_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к видео]]></string>
-	<string name="_bx_videos_option_plain_summary_chars"><![CDATA[Количество символов в описании видео при отсутствующей картинке видео]]></string>
+    <string name="_bx_videos_option_enable_auto_approve"><![CDATA[Автоматически активировать видео после создания]]></string>
+    <string name="_bx_videos_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к видео]]></string>
+    <string name="_bx_videos_option_plain_summary_chars"><![CDATA[Количество символов в описании видео при отсутствующей картинке видео]]></string>
     <string name="_bx_videos_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_videos_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-	<string name="_bx_videos_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_videos_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-  <string name="_bx_videos_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_videos_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_videos_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_videos_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
-	<string name="_bx_videos_form_entry"><![CDATA[Видео]]></string>
-	<string name="_bx_videos_form_entry_display_add"><![CDATA[Добавить видео]]></string>
-	<string name="_bx_videos_form_entry_display_edit"><![CDATA[Редактировать видео]]></string>
-	<string name="_bx_videos_form_entry_display_delete"><![CDATA[Удалить видео]]></string>
-	<string name="_bx_videos_form_entry_display_view"><![CDATA[Просмотреть видео]]></string>
-	<string name="_bx_videos_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_videos_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_videos_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_videos_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_videos_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_videos_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
-	<string name="_bx_videos_form_entry_input_title"><![CDATA[Заголовок]]></string>
-	<string name="_bx_videos_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
-	<string name="_bx_videos_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_videos_form_entry_input_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_videos_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
-	<string name="_bx_videos_form_entry_input_sys_text"><![CDATA[Текст]]></string>
-	<string name="_bx_videos_form_entry_input_text"><![CDATA[Текст]]></string>
-	<string name="_bx_videos_form_entry_input_sys_duration"><![CDATA[Продолжительность]]></string>
+    <string name="_bx_videos_form_entry"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_form_entry_display_add"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_videos_form_entry_display_edit"><![CDATA[Редактировать видео]]></string>
+    <string name="_bx_videos_form_entry_display_delete"><![CDATA[Удалить видео]]></string>
+    <string name="_bx_videos_form_entry_display_view"><![CDATA[Просмотреть видео]]></string>
+    <string name="_bx_videos_form_entry_input_author"><![CDATA[Автор]]></string>
+    <string name="_bx_videos_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_videos_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_videos_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_videos_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_videos_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_videos_form_entry_input_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_videos_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_videos_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_videos_form_entry_input_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_videos_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
+    <string name="_bx_videos_form_entry_input_sys_text"><![CDATA[Текст]]></string>
+    <string name="_bx_videos_form_entry_input_text"><![CDATA[Текст]]></string>
+    <string name="_bx_videos_form_entry_input_sys_duration"><![CDATA[Продолжительность]]></string>
     <string name="_bx_videos_form_entry_input_duration"><![CDATA[Продолжительность]]></string>
-	<string name="_bx_videos_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
-	<string name="_bx_videos_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить это видео]]></string>
-	<string name="_bx_videos_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
-	<string name="_bx_videos_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить видео]]></string>
-	<string name="_bx_videos_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
-	<string name="_bx_videos_form_entry_input_pictures"><![CDATA[Картинки]]></string>
-	<string name="_bx_videos_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
+    <string name="_bx_videos_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить это видео]]></string>
+    <string name="_bx_videos_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
+    <string name="_bx_videos_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить видео]]></string>
+    <string name="_bx_videos_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
+    <string name="_bx_videos_form_entry_input_pictures"><![CDATA[Картинки]]></string>
+    <string name="_bx_videos_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_form_entry_input_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_form_entry_input_videos_error"><![CDATA[Видео обязателено. Пожалуйста, загрузите видео файл.]]></string>
     <string name="_bx_videos_form_entry_input_videos_upload"><![CDATA[Загрузить]]></string>
@@ -189,21 +190,22 @@
     <string name="_bx_videos_menu_item_title_view_entries_in_context"><![CDATA[Видео]]></string>
   <string name="_bx_videos_menu_title_entries_my"><![CDATA[Мои видео - Меню действий]]></string>
     <string name="_bx_videos_menu_set_title_entries_my"><![CDATA[Мои видео - Меню]]></string>
-	<string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[Мои видео]]></string>
+    <string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[Мои видео]]></string>
     <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_videos_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_videos_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_videos_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_videos_menu_item_title_system_admt_videos"><![CDATA[Видео]]></string>
-	<string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Видео]]></string>
-	<string name="_bx_videos_menu_item_title_manage_my"><![CDATA[Мои видео]]></string>
-	<string name="_bx_videos_menu_item_title_manage_all"><![CDATA[Все видео]]></string>
+    <string name="_bx_videos_menu_item_title_system_admt_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_menu_item_title_manage_my"><![CDATA[Мои видео]]></string>
+    <string name="_bx_videos_menu_item_title_manage_all"><![CDATA[Все видео]]></string>
 
-	<string name="_bx_videos_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
-	<string name="_bx_videos_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
-	<string name="_bx_videos_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
-	<string name="_bx_videos_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_videos_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_videos_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_videos_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_videos_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
+    <string name="_bx_videos_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_videos_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_videos_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_videos_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -212,6 +214,7 @@
     <string name="_bx_videos_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_videos_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_videos_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
+    <string name="_bx_videos_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_videos_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) видео.]]></string>
     <string name="_bx_videos_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
@@ -244,4 +247,7 @@
     <string name="_bx_videos_txt_n_views"><![CDATA[{0} просмотров]]></string>
     <string name="_bx_videos_txt_processing_awaiting"><![CDATA[Видео будет опубликовано как только сконвертируется.]]></string>
     <string name="_bx_videos_txt_processing_failed"><![CDATA[Видео не было опубликовано, тк произошла ошибка при конвертации. Обновите видео, чтобы решить проблему.]]></string>
+
+    <string name="_bx_videos_txt_msg_status_hidden"><![CDATA[Данное видео было скрыто.]]></string>
+    <string name="_bx_videos_txt_msg_status_pending"><![CDATA[Данное видео ожидает утверждения.]]></string>
 </resources>

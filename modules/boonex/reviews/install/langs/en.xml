@@ -5,6 +5,7 @@
     <string name="_bx_reviews_cmts"><![CDATA[Reviews' Comments]]></string>
     <string name="_bx_reviews_reactions"><![CDATA[Reviews' Reactions]]></string>
 
+    <string name="_bx_reviews_option_enable_auto_approve"><![CDATA[Auto approve a review after creation]]></string>
     <string name="_bx_reviews_option_summary_chars"><![CDATA[Number of characters in auto-cropped review summary]]></string>
     <string name="_bx_reviews_option_plain_summary_chars"><![CDATA[Number of characters in plain review description when review hasn't thumb]]></string>
     <string name="_bx_reviews_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -244,15 +245,16 @@
     <string name="_bx_reviews_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_reviews_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_reviews_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
-	<string name="_bx_reviews_menu_item_title_system_admt_reviews"><![CDATA[Reviews]]></string>
-	<string name="_bx_reviews_menu_item_title_admt_reviews"><![CDATA[Reviews]]></string>
-	<string name="_bx_reviews_menu_item_title_manage_my"><![CDATA[My Reviews]]></string>
-	<string name="_bx_reviews_menu_item_title_manage_all"><![CDATA[All Reviews]]></string>
+    <string name="_bx_reviews_menu_item_title_system_admt_reviews"><![CDATA[Reviews]]></string>
+    <string name="_bx_reviews_menu_item_title_admt_reviews"><![CDATA[Reviews]]></string>
+    <string name="_bx_reviews_menu_item_title_manage_my"><![CDATA[My Reviews]]></string>
+    <string name="_bx_reviews_menu_item_title_manage_all"><![CDATA[All Reviews]]></string>
 
-	<string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
-	<string name="_bx_reviews_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
-	<string name="_bx_reviews_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
-	<string name="_bx_reviews_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
+    <string name="_bx_reviews_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_reviews_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_reviews_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_reviews_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
@@ -262,6 +264,7 @@
     <string name="_bx_reviews_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
     <string name="_bx_reviews_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_reviews_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
+    <string name="_bx_reviews_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_reviews_grid_action_err_delete"><![CDATA[Cannot delete the selected review(s).]]></string>
     <string name="_bx_reviews_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
@@ -324,6 +327,8 @@
     <string name="_bx_reviews_txt_processing_awaiting"><![CDATA[Scheduled for publishing as soon as video conversion is complete.]]></string>
     <string name="_bx_reviews_txt_processing_failed"><![CDATA[Review isn't published because video conversion failed, edit video to fix the issue.]]></string>
 
+    <string name="_bx_reviews_txt_msg_status_hidden"><![CDATA[This review was hidden.]]></string>
+    <string name="_bx_reviews_txt_msg_status_pending"><![CDATA[This review is pending approval.]]></string>
     <string name="_bx_reviews_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 
     <string name="_bx_reviews_txt_poll_view_answers"><![CDATA[poll]]></string>

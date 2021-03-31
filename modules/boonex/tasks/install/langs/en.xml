@@ -5,6 +5,7 @@
     <string name="_bx_tasks_cmts"><![CDATA[Tasks' Comments]]></string>
     <string name="_bx_tasks_reactions"><![CDATA[Tasks' Reactions]]></string>
 
+    <string name="_bx_tasks_option_enable_auto_approve"><![CDATA[Auto approve a task after creation]]></string>
     <string name="_bx_tasks_option_summary_chars"><![CDATA[Number of characters in auto-cropped task summary]]></string>
     <string name="_bx_tasks_option_plain_summary_chars"><![CDATA[Number of characters in plain task description when task hasn't thumb]]></string>
     <string name="_bx_tasks_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -332,6 +333,8 @@
     <string name="_bx_tasks_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
     <string name="_bx_tasks_confirm_tasklist_deletion"><![CDATA[You will delete all tasks that are contained in this tasklist. Are you sure?]]></string>
   
+    <string name="_bx_tasks_txt_msg_status_hidden"><![CDATA[This task was hidden.]]></string>
+    <string name="_bx_tasks_txt_msg_status_pending"><![CDATA[This task is pending approval.]]></string>
 
     <!-- Notifications -->
     <string name="_bx_tasks_alert_action_completed_personal"><![CDATA[Complete task]]></string>

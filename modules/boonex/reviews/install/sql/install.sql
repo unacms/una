@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_reviews` (
   `product` varchar(255) NOT NULL,
   `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   KEY `reviewed_profile` (`reviewed_profile`),
   FULLTEXT KEY `title_text` (`title`,`text`)

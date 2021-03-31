@@ -10,6 +10,7 @@ VALUES (@iTypeId, 'bx_shopify', '_bx_shopify', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_shopify_enable_auto_approve', 'on', @iCategId, '_bx_shopify_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_shopify_per_page_browse', '12', @iCategId, '_bx_shopify_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_shopify_per_page_profile', '6', @iCategId, '_bx_shopify_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_shopify_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
@@ -196,6 +197,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_shopify_view_actions', 'bx_shopify', 'buy-shopify-entry', '_bx_shopify_menu_item_title_system_buy_entry', '_bx_shopify_menu_item_title_buy_entry', '', '', '', '', '', '', 0, 2147483647, 1, 0, 0),
 ('bx_shopify_view_actions', 'bx_shopify', 'edit-shopify-entry', '_bx_shopify_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_shopify_view_actions', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_shopify_view_actions', 'bx_shopify', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_shopify_view_actions', 'bx_shopify', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_shopify_view_actions', 'bx_shopify', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_shopify_view_actions', 'bx_shopify', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
@@ -412,8 +414,9 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_shopify_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_shopify_common', 'switcher', '_bx_shopify_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_shopify_common', 'title', '_bx_shopify_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_shopify_common', 'added', '_bx_shopify_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_shopify_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_shopify_common', 'added', '_bx_shopify_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_shopify_common', 'status_admin', '_bx_shopify_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_shopify_common', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_shopify_administration', 'bulk', 'delete', '_bx_shopify_grid_action_title_adm_delete', '', 0, 1, 1),

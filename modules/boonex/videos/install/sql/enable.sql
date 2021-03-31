@@ -9,6 +9,7 @@ VALUES (@iTypeId, 'bx_videos', '_bx_videos', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_videos_enable_auto_approve', 'on', @iCategId, '_bx_videos_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_videos_summary_chars', '700', @iCategId, '_bx_videos_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_videos_plain_summary_chars', '240', @iCategId, '_bx_videos_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_videos_per_page_browse', '12', @iCategId, '_bx_videos_option_per_page_browse', 'digit', '', '', '', 10),
@@ -214,6 +215,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_videos_view_actions', 'bx_videos', 'edit-video', '_bx_videos_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_videos_view_actions', 'bx_videos', 'delete-video', '_bx_videos_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_videos_view_actions', 'bx_videos', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_videos_view_actions', 'bx_videos', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_videos_view_actions', 'bx_videos', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_videos_view_actions', 'bx_videos', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
@@ -428,11 +430,13 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_videos_administration', 'added', '_bx_videos_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_videos_administration', 'author', '_bx_videos_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_videos_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_videos_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_videos_common', 'switcher', '_bx_videos_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_videos_common', 'title', '_bx_videos_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_videos_common', 'added', '_bx_videos_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_videos_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_videos_common', 'added', '_bx_videos_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_videos_common', 'status_admin', '_bx_videos_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_videos_common', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_videos_administration', 'bulk', 'delete', '_bx_videos_grid_action_title_adm_delete', '', 0, 1, 1),

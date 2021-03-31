@@ -5,6 +5,7 @@
     <string name="_bx_reviews_cmts"><![CDATA[Отзывы - Комментарии]]></string>
     <string name="_bx_reviews_reactions"><![CDATA[Отзывы - Реакции]]></string>
 
+    <string name="_bx_reviews_option_enable_auto_approve"><![CDATA[Автоматически активировать отзыв после создания]]></string>
     <string name="_bx_reviews_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к отзывам]]></string>
     <string name="_bx_reviews_option_plain_summary_chars"><![CDATA[Количество символов в описании отзыва при отсутствующей картинке отзыва]]></string>
     <string name="_bx_reviews_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
@@ -251,6 +252,7 @@
     <string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
     <string name="_bx_reviews_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_reviews_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_reviews_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
@@ -261,6 +263,7 @@
     <string name="_bx_reviews_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_reviews_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_reviews_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
+    <string name="_bx_reviews_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_reviews_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) отзыв(ы).]]></string>
     <string name="_bx_reviews_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
@@ -323,6 +326,8 @@
     <string name="_bx_reviews_txt_processing_awaiting"><![CDATA[Отзыв будет опубликован как только сконвертируется видео.]]></string>
     <string name="_bx_reviews_txt_processing_failed"><![CDATA[Отзыв не был опубликован, т.к. произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
 
+    <string name="_bx_reviews_txt_msg_status_hidden"><![CDATA[Данный отзыв был скрыт.]]></string>
+    <string name="_bx_reviews_txt_msg_status_pending"><![CDATA[Данный отзыв ожидает утверждения.]]></string>
     <string name="_bx_reviews_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 
     <string name="_bx_reviews_txt_poll_view_answers"><![CDATA[опрос]]></string>

@@ -11,6 +11,7 @@ VALUES (@iTypeId, 'bx_reviews', '_bx_reviews', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_reviews_enable_auto_approve', 'on', @iCategId, '_bx_reviews_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_reviews_summary_chars', '700', @iCategId, '_bx_reviews_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_reviews_plain_summary_chars', '350', @iCategId, '_bx_reviews_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_reviews_plain_summary_chars_with_thumb', '90', @iCategId, '_bx_reviews_option_plain_summary_chars_with_thumb', 'digit', '', '', '', 3),
@@ -267,6 +268,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_reviews_view_actions', 'bx_reviews', 'edit-review', '_bx_reviews_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_reviews_view_actions', 'bx_reviews', 'delete-review', '_bx_reviews_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_reviews_view_actions', 'bx_reviews', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_reviews_view_actions', 'bx_reviews', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_reviews'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 40),
 ('bx_reviews_view_actions', 'bx_reviews', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_reviews_view_actions', 'bx_reviews', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
@@ -483,15 +485,17 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_reviews_administration', 'added', '_bx_reviews_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_reviews_administration', 'author', '_bx_reviews_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_reviews_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_reviews_voting_options', 'order', '', '5%', 0, '', '', 1),
 ('bx_reviews_voting_options', 'lkey', '_bx_reviews_grid_column_title_adm_name', '75%', 1, '', '', 5),
 ('bx_reviews_voting_options', 'actions', '', '20%', 0, '', '', 9),
+
 ('bx_reviews_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_reviews_common', 'switcher', '_bx_reviews_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_reviews_common', 'title', '_bx_reviews_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_reviews_common', 'added', '_bx_reviews_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_reviews_common', 'actions', '', '20%', 0, '', '', 5);
-
+('bx_reviews_common', 'added', '_bx_reviews_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_reviews_common', 'status_admin', '_bx_reviews_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
+('bx_reviews_common', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_reviews_administration', 'bulk', 'delete', '_bx_reviews_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -501,16 +505,18 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_reviews_administration', 'single', 'settings', '_bx_reviews_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_reviews_administration', 'single', 'audit_content', '_bx_reviews_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
 ('bx_reviews_administration', 'single', 'clear_reports', '_bx_reviews_grid_action_title_adm_clear_reports', 'eraser', 1, 0, 5),
+
 ('bx_reviews_voting_options', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 0, 1, 1),
 ('bx_reviews_voting_options', 'single', 'edit', '_bx_reviews_grid_action_title_adm_edit', 'pencil-alt',0, 0, 2),
 ('bx_reviews_voting_options', 'independent', 'add', '_bx_reviews_grid_action_title_adm_add', 'plus', 0, 0, 1),
+
 ('bx_reviews_common', 'bulk', 'delete', '_bx_reviews_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_reviews_common', 'single', 'edit', '_bx_reviews_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_reviews_common', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_reviews_common', 'single', 'settings', '_bx_reviews_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
--- UPLOADERS
 
+-- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_reviews_simple', 1, 'BxReviewsUploaderSimple', 'modules/boonex/reviews/classes/BxReviewsUploaderSimple.php'),
 ('bx_reviews_html5', 1, 'BxReviewsUploaderHTML5', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5.php'),

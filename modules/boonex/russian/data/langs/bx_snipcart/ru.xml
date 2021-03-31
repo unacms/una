@@ -5,33 +5,34 @@
     <string name="_bx_snipcart_cmts"><![CDATA[Snipcart - Обзоры]]></string>
     <string name="_bx_snipcart_reactions"><![CDATA[Snipcart - Реакции]]></string>
 
+    <string name="_bx_snipcart_option_enable_auto_approve"><![CDATA[Автоматически активировать товар после создания]]></string>
     <string name="_bx_snipcart_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к товарам]]></string>
     <string name="_bx_snipcart_option_plain_summary_chars"><![CDATA[Количество символов в описании товара при отсутствующей картинке товара]]></string>
     <string name="_bx_snipcart_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_snipcart_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-	<string name="_bx_snipcart_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_snipcart_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_snipcart_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_snipcart_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
-	<string name="_bx_snipcart_form_entry"><![CDATA[Товары]]></string>
-	<string name="_bx_snipcart_form_entry_display_add"><![CDATA[Добавить товар]]></string>
-	<string name="_bx_snipcart_form_entry_display_edit"><![CDATA[Редактировать товар]]></string>
-	<string name="_bx_snipcart_form_entry_display_delete"><![CDATA[Удалить товар]]></string>
-	<string name="_bx_snipcart_form_entry_display_view"><![CDATA[Просмотреть товар]]></string>
-	<string name="_bx_snipcart_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_snipcart_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_snipcart_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_snipcart_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_snipcart_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_snipcart_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
-	<string name="_bx_snipcart_form_entry_input_title"><![CDATA[Заголовок]]></string>
-	<string name="_bx_snipcart_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
-	<string name="_bx_snipcart_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_snipcart_form_entry_input_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_snipcart_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
-	<string name="_bx_snipcart_form_entry_input_sys_text"><![CDATA[Текст]]></string>
-	<string name="_bx_snipcart_form_entry_input_text"><![CDATA[Текст]]></string>
-	<string name="_bx_snipcart_form_entry_input_text_err"><![CDATA[Поле для Текста не может быть пустым]]></string>
-	<string name="_bx_snipcart_form_entry_input_sys_price"><![CDATA[Цена]]></string>
+    <string name="_bx_snipcart_form_entry"><![CDATA[Товары]]></string>
+    <string name="_bx_snipcart_form_entry_display_add"><![CDATA[Добавить товар]]></string>
+    <string name="_bx_snipcart_form_entry_display_edit"><![CDATA[Редактировать товар]]></string>
+    <string name="_bx_snipcart_form_entry_display_delete"><![CDATA[Удалить товар]]></string>
+    <string name="_bx_snipcart_form_entry_display_view"><![CDATA[Просмотреть товар]]></string>
+    <string name="_bx_snipcart_form_entry_input_author"><![CDATA[Автор]]></string>
+    <string name="_bx_snipcart_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_snipcart_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_snipcart_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_snipcart_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_snipcart_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_snipcart_form_entry_input_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_snipcart_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_snipcart_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_snipcart_form_entry_input_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_snipcart_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
+    <string name="_bx_snipcart_form_entry_input_sys_text"><![CDATA[Текст]]></string>
+    <string name="_bx_snipcart_form_entry_input_text"><![CDATA[Текст]]></string>
+    <string name="_bx_snipcart_form_entry_input_text_err"><![CDATA[Поле для Текста не может быть пустым]]></string>
+    <string name="_bx_snipcart_form_entry_input_sys_price"><![CDATA[Цена]]></string>
     <string name="_bx_snipcart_form_entry_input_price"><![CDATA[Цена]]></string>
     <string name="_bx_snipcart_form_entry_input_price_inf"><![CDATA[Цена указывается в %s.]]></string>
     <string name="_bx_snipcart_form_entry_input_price_err"><![CDATA[Поле Цена не может быть пустым]]></string>
@@ -206,17 +207,18 @@
     <string name="_bx_snipcart_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_snipcart_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_snipcart_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_snipcart_menu_item_title_system_admt_entries"><![CDATA[Товары]]></string>
-	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Товары]]></string>
-	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[Мои товары]]></string>
-	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[Все товары]]></string>
-        <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Купить]]></string>
-	<string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Купить за {1}{0}]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_admt_entries"><![CDATA[Товары]]></string>
+    <string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Товары]]></string>
+    <string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[Мои товары]]></string>
+    <string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[Все товары]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Купить]]></string>
+    <string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Купить за {1}{0}]]></string>
 
-	<string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
-	<string name="_bx_snipcart_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
-	<string name="_bx_snipcart_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
-	<string name="_bx_snipcart_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
+    <string name="_bx_snipcart_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_snipcart_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_snipcart_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_snipcart_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -225,6 +227,7 @@
     <string name="_bx_snipcart_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_snipcart_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_snipcart_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
+    <string name="_bx_snipcart_grid_column_title_adm_status_admin"><![CDATA[Модерация]]></string>
     <string name="_bx_snipcart_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) товар(ы).]]></string>
     <string name="_bx_snipcart_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
@@ -252,6 +255,8 @@
 
     <string name="_bx_snipcart_pre_lists_currencies"><![CDATA[Валюта]]></string>
 
+    <string name="_bx_snipcart_txt_msg_status_hidden"><![CDATA[Данный товар был скрыт.]]></string>
+    <string name="_bx_snipcart_txt_msg_status_pending"><![CDATA[Данный товар ожидает утверждения.]]></string>
     <string name="_bx_snipcart_msg_save_settings"><![CDATA[Настройки сохранены.]]></string>
     <string name="_bx_snipcart_err_save_settings"><![CDATA[Невозможно сохранить настройки.]]></string>
     <string name="_bx_snipcart_err_not_configured"><![CDATA[Сначала вам необходимо настроить магазин. <a href="{0}">Нажмите здесь</a>.]]></string>

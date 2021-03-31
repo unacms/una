@@ -5,6 +5,7 @@
 	<string name="_bx_snipcart_cmts"><![CDATA[Snipcart's Reviews]]></string>
         <string name="_bx_snipcart_reactions"><![CDATA[Snipcart's Reactions]]></string>
 
+        <string name="_bx_snipcart_option_enable_auto_approve"><![CDATA[Auto approve a shop item after creation]]></string>
 	<string name="_bx_snipcart_option_summary_chars"><![CDATA[Number of characters in auto-cropped item summary]]></string>
 	<string name="_bx_snipcart_option_plain_summary_chars"><![CDATA[Number of characters in plain item description when item hasn't thumb]]></string>
 	<string name="_bx_snipcart_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -206,17 +207,18 @@
     <string name="_bx_snipcart_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_snipcart_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_snipcart_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
-	<string name="_bx_snipcart_menu_item_title_system_admt_entries"><![CDATA[Goods]]></string>
-	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Goods]]></string>
-	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[My Goods]]></string>
-	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[All Goods]]></string>
-        <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Buy]]></string>
-	<string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Buy for {1}{0}]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_admt_entries"><![CDATA[Goods]]></string>
+    <string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Goods]]></string>
+    <string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[My Goods]]></string>
+    <string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[All Goods]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Buy]]></string>
+    <string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Buy for {1}{0}]]></string>
 
-	<string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
-	<string name="_bx_snipcart_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
-	<string name="_bx_snipcart_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
-	<string name="_bx_snipcart_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_snipcart_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
+    <string name="_bx_snipcart_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_snipcart_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_snipcart_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_snipcart_grid_column_title_adm_author"><![CDATA[Author]]></string>
@@ -225,6 +227,7 @@
     <string name="_bx_snipcart_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_snipcart_grid_action_title_adm_audit_content"><![CDATA[More Actions]]></string>
     <string name="_bx_snipcart_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
+    <string name="_bx_snipcart_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_snipcart_grid_action_err_delete"><![CDATA[Cannot delete the selected product(s).]]></string>
     <string name="_bx_snipcart_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
@@ -252,6 +255,8 @@
 
     <string name="_bx_snipcart_pre_lists_currencies"><![CDATA[Currencies]]></string>
 
+    <string name="_bx_snipcart_txt_msg_status_hidden"><![CDATA[This shop item was hidden.]]></string>
+    <string name="_bx_snipcart_txt_msg_status_pending"><![CDATA[This shop item is pending approval.]]></string>
     <string name="_bx_snipcart_msg_save_settings"><![CDATA[Settings were successfully saved.]]></string>
     <string name="_bx_snipcart_err_save_settings"><![CDATA[Cannot save settings.]]></string>
     <string name="_bx_snipcart_err_not_configured"><![CDATA[You need to configure shop settings first. <a href="{0}">Click here</a>.]]></string>

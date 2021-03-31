@@ -85,6 +85,7 @@ class BxTasksConfig extends BxBaseModTextConfig
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=tasks-administration',
 
             // some params
+            'PARAM_AUTO_APPROVE' => 'bx_tasks_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_tasks_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_tasks_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_tasks_rss_num',
@@ -128,7 +129,7 @@ class BxTasksConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_tasks_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_tasks_entry_delete',
 			
-			'OBJECT_FORM_LIST_ENTRY' => 'bx_tasks_list',
+            'OBJECT_FORM_LIST_ENTRY' => 'bx_tasks_list',
             'OBJECT_FORM_LIST_ENTRY_DISPLAY_ADD' => 'bx_tasks_list_entry_add',
             'OBJECT_FORM_LIST_ENTRY_DISPLAY_EDIT' => 'bx_tasks_list_entry_edit',
 			
@@ -160,6 +161,13 @@ class BxTasksConfig extends BxBaseModTextConfig
 
             // informer messages
             'INFORMERS' => array (
+                'approving' => array (
+                    'name' => 'bx-tasks-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_tasks_txt_msg_status_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_tasks_txt_msg_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
                 'processing' => array (
                     'name' => 'bx-tasks-processing',
                     'map' => array (
