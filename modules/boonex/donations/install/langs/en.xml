@@ -30,7 +30,6 @@
     <string name="_bx_donations_form_type_input_sys_amount"><![CDATA[Amount]]></string>
     <string name="_bx_donations_form_type_input_amount"><![CDATA[Amount]]></string>
     <string name="_bx_donations_form_type_input_err_amount"><![CDATA[You need to enter a amount here.]]></string>
-    
     <string name="_bx_donations_form_type_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_donations_form_type_input_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_donations_form_type_input_sys_do_cancel"><![CDATA[Cancel]]></string>
