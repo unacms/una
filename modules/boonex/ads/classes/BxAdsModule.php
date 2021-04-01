@@ -131,6 +131,9 @@ class BxAdsModule extends BxBaseModTextModule
         $iAuthorId = bx_get_logged_profile_id();
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
+        if(empty($iAuthorId))
+            return echoJson(array('code' => 1, 'eval' => 'window.open("' . BxDolPermalinks::getInstance()->permalink('page.php?i=login') . '", "_self");'));
+
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return echoJson(array());
@@ -143,7 +146,7 @@ class BxAdsModule extends BxBaseModTextModule
         ));
 
         if(!empty($aOffer) && is_array($aOffer))
-            return echoJson(array('code' => 1, 'msg' => _t('_bx_ads_txt_err_duplicate')));
+            return echoJson(array('code' => 2, 'msg' => _t('_bx_ads_txt_err_duplicate')));
 
         $aOffer = $this->_oDb->getOffersBy(array(
             'type' => 'content_and_author_ids', 
@@ -153,7 +156,7 @@ class BxAdsModule extends BxBaseModTextModule
         ));
 
         if(!empty($aOffer) && is_array($aOffer))
-            return echoJson(array('code' => 1, 'msg' => _t('_bx_ads_txt_err_offer_accepted')));
+            return echoJson(array('code' => 3, 'msg' => _t('_bx_ads_txt_err_offer_accepted')));
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_OFFER'], $CNF['OBJECT_FORM_OFFER_DISPLAY_ADD']);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'make_offer', array('id' => $iContentId));
@@ -166,7 +169,7 @@ class BxAdsModule extends BxBaseModTextModule
             if($iId != 0)
                 $aResult = array('code' => 0, 'msg' => _t('_bx_ads_txt_msg_offer_added'), 'eval' => $sJsObject . '.onMakeOffer(oData);', 'id' => $iId);
             else
-                $aResult = array('code' => 2, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+                $aResult = array('code' => 4, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
             $this->onOfferAdded($iId);
 
