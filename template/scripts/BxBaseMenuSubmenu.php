@@ -20,11 +20,20 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
     protected $_sJsObject;
 
+    protected $_iContentId;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
 
         $this->_sJsObject = 'o' . bx_gen_method_name($this->_sObject);
+
+        $this->_iContentId = 0;
+    }
+
+    public function setContentId($iContentId)
+    {
+        $this->_iContentId = $iContentId;
     }
 
     /**
@@ -87,6 +96,9 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
         if(!$oMenuSubmenu || !$oMenuSubmenu->isVisible())
             return '';
+
+        if(!empty($this->_iContentId));
+            $oMenuSubmenu->setContentId($this->_iContentId);
 
         $sCode = $oMenuSubmenu->getCode();
         if(empty($sCode))
