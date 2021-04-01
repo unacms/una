@@ -97,7 +97,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if(!$oMenuSubmenu || !$oMenuSubmenu->isVisible())
             return '';
 
-        if(!empty($this->_iContentId));
+        if(!empty($this->_iContentId) && method_exists($oMenuSubmenu, 'setContentId'))
             $oMenuSubmenu->setContentId($this->_iContentId);
 
         $sCode = $oMenuSubmenu->getCode();
