@@ -476,6 +476,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sResult = '';
 
         switch($sTemplateName) {
+            default:
             case 'unit.html':
                 $sResult = $this->_sUnitClass;
                 break;
