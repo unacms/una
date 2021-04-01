@@ -287,7 +287,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups_view_actions_all', 'bx_groups', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
-('bx_groups_view_actions_all', 'bx_groups', 'join-group-profile', '_bx_groups_menu_item_title_system_become_fan_paid', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
+('bx_groups_view_actions_all', 'bx_groups', 'join-group-profile', '_bx_groups_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
 ('bx_groups_view_actions_all', 'bx_groups', 'profile-fan-add', '_bx_groups_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_groups_view_actions_all', 'bx_groups', 'profile-fan-remove', '_bx_groups_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_groups_view_actions_all', 'bx_groups', 'profile-subscribe-add', '_bx_groups_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
@@ -307,7 +307,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_groups_view_actions_all', 'bx_groups', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 330),
 ('bx_groups_view_actions_all', 'bx_groups', 'edit-group-cover', '_bx_groups_menu_item_title_system_edit_cover', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 400),
 ('bx_groups_view_actions_all', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 410),
-('bx_groups_view_actions_all', 'bx_groups', 'edit-group-pricing', '_bx_groups_menu_item_title_system_profile_pricing', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 415),
+('bx_groups_view_actions_all', 'bx_groups', 'edit-group-pricing', '_bx_groups_menu_item_title_system_edit_pricing', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 415),
 ('bx_groups_view_actions_all', 'bx_groups', 'invite-to-group', '_bx_groups_menu_item_title_system_invite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 420),
 ('bx_groups_view_actions_all', 'bx_groups', 'delete-group-profile', '_bx_groups_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 430),
 ('bx_groups_view_actions_all', 'bx_groups', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
