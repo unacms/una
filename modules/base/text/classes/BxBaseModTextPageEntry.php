@@ -118,7 +118,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         if(!$oMenuSubmenu)
             return false;
 
-        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array_merge(array(
+        $oMenuSubmenu->setObjectSubmenu(isset($this->_aObject['submenu']) && $this->_aObject['submenu'] ? $this->_aObject['submenu'] : $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array_merge(array(
             'title' => '',
             'link' => '',
             'icon' => '',
