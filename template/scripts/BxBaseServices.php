@@ -69,6 +69,138 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetOrdersCount' => 'BxBasePaymentsServices',
         );
     }
+
+    public function serviceModuleCheckForUpdate($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        $aUpdates = BxDolStudioInstallerUtils::getInstance()->checkUpdatesByModule($aModule['name']);
+        if(empty($aUpdates) || !is_array($aUpdates)) 
+            return false;
+
+        $aUpdate = array_shift($aUpdates);
+        return array(
+            'version_from' => $aUpdate['file_version'],
+            'version_to' => $aUpdate['file_version_to'],
+            'file_id' => $aUpdate['file_id']
+        );
+    }
+
+    public function serviceModuleUpdate($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return BX_DOL_STUDIO_IU_RC_FAILED;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($aModule['name'], true);
+        return $aResult['code'];
+    }
+
+    public function serviceModuleDelete($sModule, $bForceUninstall = false)
+    {
+        $sModulePath = '';
+        $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
+
+        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sModule, false);
+        if(!empty($aModule) && is_array($aModule)) {
+            if(!$bForceUninstall)
+                return BX_DOL_STUDIO_IU_RC_FAILED;
+
+            $sModulePath = $aModule['path'];
+
+            $aResult = $oInstallerUtils->perform($sModulePath, 'uninstall', array('auto_disable' => $bForceUninstall));
+            if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+                return BX_DOL_STUDIO_IU_RC_FAILED;
+        }
+        else {
+            $aModules = $oInstallerUtils->getModules(false);
+            if(!isset($aModules[$sModule]))
+                return BX_DOL_STUDIO_IU_RC_FAILED;
+            
+            $sModulePath = $aModules[$sModule]['dir'];
+        }
+
+        $aResult = $oInstallerUtils->perform($sModulePath, 'delete');
+        return $aResult['code'];
+    }
+
+    public function serviceModuleInstall($sModule, $bForceEnable = false)
+    {
+        $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
+
+        $aModules = $oInstallerUtils->getModules(false);
+        if(!isset($aModules[$sModule]))
+            return false;
+
+        $aResult = $oInstallerUtils->perform($aModules[$sModule]['dir'], 'install', array('auto_enable' => $bForceEnable));
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    public function serviceModuleUninstall($mixedModule, $bForceDisable = false)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        if((int)$aModule['enabled'] != 0 && !$bForceDisable)
+            return false;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall', array('auto_disable' => $bForceDisable));
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    public function serviceModuleEnable($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        if((int)$aModule['enabled'] != 0)
+            return false;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'enable');
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    public function serviceModuleDisable($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        if((int)$aModule['enabled'] == 0)
+            return false;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'disable');
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    public function serviceIsModuleInstalled($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        return !empty($aModule) && is_array($aModule);
+    }
+
+    public function serviceIsModuleEnabled($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        return !empty($aModule) && is_array($aModule) && (int)$aModule['enabled'] != 0;
+    }
+
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         return $this->_serviceProfileFunc('getUnit', $iContentId, $aParams);
