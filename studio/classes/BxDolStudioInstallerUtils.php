@@ -401,21 +401,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkUpdates($bAuthorizedAccess = false)
     {
-        $sVersion = bx_get_ver();
-        $sProducts = $this->getInstalledInfoShort();
+        return $this->getUpdatesInfo('', $bAuthorizedAccess);
+    }
 
-        if($bAuthorizedAccess)
-            return $this->getAccessObject(true)->loadItems(array(
-                'method' => 'browse_updates', 
-                'version' => $sVersion,
-                'products' => $sProducts
-            ));
-
-        return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(
-            'key' => getParam('sys_oauth_key'),
-            'version' => $sVersion,
-            'products' => $sProducts
-        ));
+    public function checkUpdatesByModule($sModule, $bAuthorizedAccess = false)
+    {
+        return $this->getUpdatesInfo($sModule, $bAuthorizedAccess);
     }
 
     public function downloadFileAuthorized($iFileId)
@@ -676,9 +667,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $aInstalledInfo;
     }
 
-    private function getInstalledInfoShort()
+    private function getInstalledInfoShort($sModule = '')
     {
-    	$aModules = BxDolModuleQuery::getInstance()->getModules();
+        if(!empty($sModule))
+            $aModules = array(BxDolModuleQuery::getInstance()->getModuleByName($sModule));
+        else
+            $aModules = BxDolModuleQuery::getInstance()->getModules();
 
         $aProducts = array();
         foreach($aModules as $aModule) {
@@ -693,6 +687,25 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         }
 
         return base64_encode(serialize($aProducts));
+    }
+
+    protected function getUpdatesInfo($sModule = '', $bAuthorizedAccess = false)
+    {
+        $sVersion = bx_get_ver();
+        $sProducts = $this->getInstalledInfoShort($sModule);
+
+        if($bAuthorizedAccess)
+            return $this->getAccessObject(true)->loadItems(array(
+                'method' => 'browse_updates', 
+                'version' => $sVersion,
+                'products' => $sProducts
+            ));
+
+        return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(
+            'key' => getParam('sys_oauth_key'),
+            'version' => $sVersion,
+            'products' => $sProducts
+        ));
     }
 
     private function addTransientJob($sName, $sAction, $aParams)
