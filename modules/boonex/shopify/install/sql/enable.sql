@@ -69,14 +69,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_shopify_popular', '_bx_shopify_page_title_sys_entries_popular', '_bx_shopify_page_title_entries_popular', 'bx_shopify', 5, 2147483647, 1, 'shopify-popular', 'page.php?i=shopify-popular', '', '', '', 0, 1, 0, 'BxShopifyPageBrowse', 'modules/boonex/shopify/classes/BxShopifyPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_shopify_popular', 1, 'bx_shopify', '_bx_shopify_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
+('bx_shopify_popular', 1, 'bx_shopify', '_bx_shopify_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, 1);
 
 -- PAGE: recently updated entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_shopify_updated', '_bx_shopify_page_title_sys_entries_updated', '_bx_shopify_page_title_entries_updated', 'bx_shopify', 5, 2147483647, 1, 'shopify-updated', 'page.php?i=shopify-updated', '', '', '', 0, 1, 0, 'BxShopifyPageBrowse', 'modules/boonex/shopify/classes/BxShopifyPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_shopify_updated', 1, 'bx_shopify', '_bx_shopify_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
+('bx_shopify_updated', 1, 'bx_shopify', '_bx_shopify_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, 1);
 
 -- PAGE: entries of author
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -150,14 +150,14 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('', 0, 'bx_shopify', '', '_bx_shopify_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:13:"browse_public";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, 'bx_shopify', '', '_bx_shopify_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:13:"browse_public";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
 
 ('', 0, 'bx_shopify', '', '_bx_shopify_page_block_title_recent_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
 ('', 0, 'bx_shopify', '', '_bx_shopify_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
 ('', 0, 'bx_shopify', '', '_bx_shopify_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4),
-('', 0, 'bx_shopify', '_bx_shopify_page_block_title_sys_recent_entries_view_showcase', '_bx_shopify_page_block_title_recent_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_shopify\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
-('', 0, 'bx_shopify', '_bx_shopify_page_block_title_sys_popular_entries_view_showcase', '_bx_shopify_page_block_title_popular_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_shopify\";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
-('', 0, 'bx_shopify', '_bx_shopify_page_block_title_sys_featured_entries_view_showcase', '_bx_shopify_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_shopify\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7);
+('', 0, 'bx_shopify', '_bx_shopify_page_block_title_sys_recent_entries_view_showcase', '_bx_shopify_page_block_title_recent_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_shopify\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{i:0;s:8:\"showcase\";i:1;b:0;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
+('', 0, 'bx_shopify', '_bx_shopify_page_block_title_sys_popular_entries_view_showcase', '_bx_shopify_page_block_title_popular_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_shopify\";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:3:{i:0;s:8:\"showcase\";i:1;b:0;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
+('', 0, 'bx_shopify', '_bx_shopify_page_block_title_sys_featured_entries_view_showcase', '_bx_shopify_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_shopify\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{i:0;s:8:\"showcase\";i:1;b:0;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7);
 
 
 -- MENU: add to site menu
