@@ -11,13 +11,13 @@ class BxAntispamDNSBlacklistsTest extends BxDolTestCase
 {
     protected $_oDNSBlacklists;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $oModule = BxDolModule::getInstance('bx_antispam');
         $this->_oDNSBlacklists = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->_oDNSBlacklists);
     }
