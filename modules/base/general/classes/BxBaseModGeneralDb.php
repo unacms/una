@@ -191,7 +191,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 		return $this->query("DELETE FROM `" . $sTableName . "` WHERE `" . $sTableKey . "` = :content_id", array('content_id' => $iNestedId));
 	}
    
-    function getNestedBy($aParams = array(), $sTableName)
+    function getNestedBy($aParams, $sTableName)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";

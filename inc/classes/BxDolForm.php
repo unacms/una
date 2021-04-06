@@ -1345,7 +1345,7 @@ class BxDolFormChecker
             $sCheckFunction = array($oChecker, 'check' . bx_gen_method_name($a['checker']['func']));
 
             if (is_callable($sCheckFunction))
-                $bool = call_user_func_array ($sCheckFunction, !empty($a['checker']['params']) ? array_merge(array($val), $a['checker']['params']) : array ($val));
+                $bool = call_user_func_array ($sCheckFunction, !empty($a['checker']['params']) ? array_merge(array($val), array_values($a['checker']['params'])) : array ($val));
             else
                 $bool = true;
 
