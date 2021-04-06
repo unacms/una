@@ -94,7 +94,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_reviews_popular', '_bx_reviews_page_title_sys_entries_popular', '_bx_reviews_page_title_entries_popular', 'bx_reviews', 5, 2147483647, 1, 'reviews-popular', 'page.php?i=reviews-popular', '', '', '', 0, 1, 0, 'BxReviewsPageBrowse', 'modules/boonex/reviews/classes/BxReviewsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_reviews_popular', 1, 'bx_reviews', '_bx_reviews_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, 1);
+('bx_reviews_popular', 1, 'bx_reviews', '_bx_reviews_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
 -- PAGE: top entries
 
@@ -102,7 +102,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_reviews_top', '_bx_reviews_page_title_sys_entries_top', '_bx_reviews_page_title_entries_top', 'bx_reviews', 5, 2147483647, 1, 'reviews-top', 'page.php?i=reviews-top', '', '', '', 0, 1, 0, 'BxReviewsPageBrowse', 'modules/boonex/reviews/classes/BxReviewsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_reviews_top', 1, 'bx_reviews', '_bx_reviews_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:10:"browse_top";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, 1);
+('bx_reviews_top', 1, 'bx_reviews', '_bx_reviews_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:10:"browse_top";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
 
 -- PAGE: recently updated entries
@@ -111,7 +111,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_reviews_updated', '_bx_reviews_page_title_sys_entries_updated', '_bx_reviews_page_title_entries_updated', 'bx_reviews', 5, 2147483647, 1, 'reviews-updated', 'page.php?i=reviews-updated', '', '', '', 0, 1, 0, 'BxReviewsPageBrowse', 'modules/boonex/reviews/classes/BxReviewsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_reviews_updated', 1, 'bx_reviews', '_bx_reviews_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, 1);
+('bx_reviews_updated', 1, 'bx_reviews', '_bx_reviews_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
 
 -- PAGE: entries of author
@@ -121,7 +121,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_reviews_author', 1, 'bx_reviews', '', '_bx_reviews_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
-('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_favorites_of_author', '_bx_reviews_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
+('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_favorites_of_author', '_bx_reviews_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
 ('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_entries_of_author', '_bx_reviews_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3),
 ('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_entries_in_context', '_bx_reviews_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_reviews\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 4);
 
@@ -131,7 +131,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_reviews_favorites', '_bx_reviews_page_title_sys_entries_favorites', '_bx_reviews_page_title_entries_favorites', 'bx_reviews', 12, 2147483647, 1, 'reviews-favorites', 'page.php?i=reviews-favorites', '', '', '', 0, 1, 0, 'BxReviewsPageListEntry', 'modules/boonex/reviews/classes/BxReviewsPageListEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_reviews_favorites', 2, 'bx_reviews', '_bx_reviews_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
+('bx_reviews_favorites', 2, 'bx_reviews', '_bx_reviews_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
 ('bx_reviews_favorites', 3, 'bx_reviews', '_bx_reviews_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
 ('bx_reviews_favorites', 3, 'bx_reviews', '_bx_reviews_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
 
@@ -203,9 +203,9 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system` , `
 ('', 0, 'bx_reviews', '', '_bx_reviews_page_block_title_recent_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
 ('', 0, 'bx_reviews', '', '_bx_reviews_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
 ('', 0, 'bx_reviews', '', '_bx_reviews_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4),
-('', 0, 'bx_reviews', '_bx_reviews_page_block_title_sys_recent_entries_view_showcase', '_bx_reviews_page_block_title_recent_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{i:0;s:8:\"showcase\";i:1;b:0;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
-('', 0, 'bx_reviews', '_bx_reviews_page_block_title_sys_popular_entries_view_showcase', '_bx_reviews_page_block_title_popular_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:3:{i:0;s:8:\"showcase\";i:1;b:0;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
-('', 0, 'bx_reviews', '_bx_reviews_page_block_title_sys_featured_entries_view_showcase', '_bx_reviews_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{i:0;s:8:\"showcase\";i:1;b:0;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7);
+('', 0, 'bx_reviews', '_bx_reviews_page_block_title_sys_recent_entries_view_showcase', '_bx_reviews_page_block_title_recent_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
+('', 0, 'bx_reviews', '_bx_reviews_page_block_title_sys_popular_entries_view_showcase', '_bx_reviews_page_block_title_popular_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
+('', 0, 'bx_reviews', '_bx_reviews_page_block_title_sys_featured_entries_view_showcase', '_bx_reviews_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7);
 
 
 -- MENU: add to site menu

@@ -129,9 +129,9 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_forum_author', 1, @sName, '', '_bx_forum_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
-('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_favorites_of_author', '_bx_forum_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
+('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_favorites_of_author', '_bx_forum_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
 ('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_entries_of_author', '_bx_forum_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3),
-('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_entries_in_context', '_bx_forum_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_context";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 1, 4);
+('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_entries_in_context', '_bx_forum_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_context";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";i:0;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 1, 4);
 
 
 -- PAGE: favorites by list
@@ -139,7 +139,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_forum_favorites', '_bx_forum_page_title_sys_entries_favorites', '_bx_forum_page_title_entries_favorites', @sName, 12, 2147483647, 1, 'discussions-favorites', 'page.php?i=discussions-favorites', '', '', '', 0, 1, 0, 'BxForumPageListEntry', 'modules/boonex/forum/classes/BxForumPageListEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_forum_favorites', 2, @sName, '_bx_forum_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
+('bx_forum_favorites', 2, @sName, '_bx_forum_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
 ('bx_forum_favorites', 3, @sName, '_bx_forum_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
 ('bx_forum_favorites', 3, @sName, '_bx_forum_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
 
