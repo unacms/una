@@ -295,8 +295,11 @@ EOS;
      * Perform JSON request to the API endpoint and get JSON response
      * @return false on error
      */
-    protected function _request($sURI, $sMethod = 'GET', $aData = array(), &$sError)
+    protected function _request($sURI, $sMethod, $aData, &$sError)
     {
+        $sMethod = !empty($sMethod) ? $sMethod : 'GET';
+        $aData = !empty($aData) ? $aData : array();
+
         $sAppId = getParam('bx_intercom_option_app_id');
         $sApiKey = getParam('bx_intercom_option_api_key');
         if (!$sAppId || !$sApiKey) {

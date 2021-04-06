@@ -5482,7 +5482,7 @@ class Less_Tree_Directive extends Less_Tree{
 	public $debugInfo;
 	public $type = 'Directive';
 
-	public function __construct($name, $value = null, $rules, $index = null, $currentFileInfo = null, $debugInfo = null ){
+	public function __construct($name, $value, $rules, $index = null, $currentFileInfo = null, $debugInfo = null ){
 		$this->name = $name;
 		$this->value = $value;
 		if( $rules ){
