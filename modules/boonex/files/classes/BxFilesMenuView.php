@@ -27,7 +27,7 @@ class BxFilesMenuView extends BxBaseModTextMenuView
         $CNF = $this->_oModule->_oConfig->CNF;
 
         $aFile = $this->_oModule->getContentFile($this->_aContentInfo);
-        $sFileExt = !empty($aFile['ext']) ? $aFile['ext'] : '';
+        $sFileExt = $aFile && !empty($aFile['ext']) ? $aFile['ext'] : '';
 
         if (!$aFile || !$aFile['private']) {
             $this->addMarkers(array(
