@@ -14,7 +14,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     protected $_sTableCache;
 
     protected $_sTableEvent2User;
-    protected $_sTablesRepostTrack;
+    protected $_sTableRepostsTrack;
     protected $_sTableHotTrack;
 
     protected $_aTablesMedia;
@@ -670,6 +670,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
 
                 $sLimitClause = "LIMIT 1";
+                break;
+
+            case 'reposted_by_track':
+                $sJoinClause = $this->prepareAsString("INNER JOIN `" . $this->_sTableRepostsTrack . "` AS `trt` ON `{$this->_sTable}`.`id`=`trt`.`event_id` AND `trt`.`reposted_id`=?", $aParams['value']);
                 break;
 
             case 'reposted_by_descriptor':
