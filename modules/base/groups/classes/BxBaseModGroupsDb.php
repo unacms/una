@@ -34,12 +34,13 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
     {
         if (is_array($mixedFansIds)) {
             foreach ($mixedFansIds as $iFanId)
-                $this->toAdmins ($iFanId);
+                $this->toAdmins ($iGroupProfileId, $iFanId);
+
             return true;
         }
 
         $iFanId = (int)$mixedFansIds;
-        $sQuery = $this->prepare("INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` SET `group_profile_id` = ?, `fan_id` = ?", $iGroupProfileId, $iFanId);
+        $sQuery = $this->prepare("INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` SET `group_profile_id` = ?, `fan_id` = ?, `role` = ?", $iGroupProfileId, $iFanId, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR);
         if (!$this->res($sQuery))
             return false;
 
@@ -118,12 +119,8 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
             $sSelectClause = '`role`';
         }
 
-        $aBindings = array('group_profile_id' => $iGroupProfileId, 'fan_id' => $iProfileId);
-        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id";
-        if($this->_oConfig->isPaidJoin()) {
-            $aBindings['role'] = 'BX_BASE_MOD_GROUPS_ROLE_COMMON';
-            $sWhereClause .= " AND `role` <> :role";
-        }
+        $aBindings = array('group_profile_id' => $iGroupProfileId, 'fan_id' => $iProfileId, 'role' => BX_BASE_MOD_GROUPS_ROLE_COMMON);
+        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id AND `role` <> :role";
 
         return $this->$sMethod("SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_ADMINS'] . "` WHERE 1" . $sWhereClause . " LIMIT 1", $aBindings);
     }
@@ -132,12 +129,8 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aBindings = array('group_profile_id' => $iGroupProfileId);
-        $sWhereClause = " AND `group_profile_id` = :group_profile_id";
-        if($this->_oConfig->isPaidJoin()) {
-            $aBindings['role'] = 'BX_BASE_MOD_GROUPS_ROLE_COMMON';
-            $sWhereClause .= " AND `role` <> :role";
-        }
+        $aBindings = array('group_profile_id' => $iGroupProfileId, 'role' => BX_BASE_MOD_GROUPS_ROLE_COMMON);
+        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `role` <> :role";
 
         $sLimitClause = "";
         if($iLimit > 0)
