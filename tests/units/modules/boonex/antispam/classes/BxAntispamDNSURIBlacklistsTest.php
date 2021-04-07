@@ -8,7 +8,7 @@ class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
     protected $_oDNSBlacklists;
     protected $_oDNSURIBlacklists;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
@@ -17,7 +17,7 @@ class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
         $this->_oDNSURIBlacklists = bx_instance('BxAntispamDNSURIBlacklists', array(), $oModule->_aModule);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->_oDNSBlacklists);
         unset($this->_oDNSURIBlacklists);

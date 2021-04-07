@@ -141,8 +141,8 @@ class BxBaseCmts extends BxDolCmts
         //add live update
 
         $sComments = $this->getComments($aBp, $aDp);
-        $sContentBefore = $this->_getContentBefore();
-        $sContentAfter = $this->_getContentAfter();
+        $sContentBefore = $this->_getContentBefore($aBp, $aDp);
+        $sContentAfter = $this->_getContentAfter($aBp, $aDp);
         $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)));
         $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)));
         $sJsContent = $this->getJsScript($aBp, $aDp);
@@ -793,12 +793,12 @@ class BxBaseCmts extends BxDolCmts
     /**
      * private functions
      */
-    protected function _getContentBefore()
+    protected function _getContentBefore($aBp = array(), $aDp = array())
     {
         return '';
     }
 
-    protected function _getContentAfter()
+    protected function _getContentAfter($aBp = array(), $aDp = array())
     {
         return '';
     }

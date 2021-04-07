@@ -271,8 +271,11 @@ class BxMailchimpModule extends BxDolModule
      * Perform JSON request to the API endpoint and get JSON response
      * @return false on error
      */
-    protected function _request($sURI, $sMethod = 'GET', $aData = array(), &$sError)
+    protected function _request($sURI, $sMethod, $aData, &$sError)
     {
+        $sMethod = !empty($sMethod) ? $sMethod : 'GET';
+        $aData = !empty($aData) ? $aData : array();
+
         $sApiKey = getParam('bx_mailchimp_option_api_key');
         if (!$sApiKey || !$this->sHostnameAPI) {
             $sError = "No API Key or hostname isn't configured";

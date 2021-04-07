@@ -16,7 +16,7 @@ class BxAntispamModuleTest extends BxDolTestCase
     protected $_oMockStopForumSpam;
     protected $_oMockAkismet;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_antispam');
@@ -28,7 +28,7 @@ class BxAntispamModuleTest extends BxDolTestCase
         $this->_oMockAkismet = $this->bxMockGet('BxAntispamAkismet', $this->_oModule->_aModule);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // free all mock objects after each test call
         $this->bxMockFree($this->_oMockIP);

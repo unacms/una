@@ -49,7 +49,7 @@ class BxDolService extends BxDol
         if (!$bIgnoreCache && isset(self::$_aMemoryCache[$sKey]))
             return self::$_aMemoryCache[$sKey];
 
-        self::$_aMemoryCache[$sKey] = BxDolRequest::processAsService($aModule, $sMethod, $aParams, $sClass);
+        self::$_aMemoryCache[$sKey] = BxDolRequest::processAsService($aModule, $sMethod, array_values($aParams), $sClass);
 
         return self::$_aMemoryCache[$sKey];
     }

@@ -421,11 +421,11 @@ class BxDolStudioToolsAudit extends BxDol
         $s = '';
 
         $sName = 'expires_module';
-        $sApacheModuleChack = _t('_sys_audit_msg_optimization_apache_module', $sName, $this->checkApacheModule($sName));
+        $sApacheModuleChack = _t('_sys_audit_msg_optimization_apache_module', $sName, $this->getMsgHTML($sName, $this->checkApacheModule($sName)));
         $s .= $this->getBlock(_t('_sys_audit_userside_caching'), '', _t('_sys_audit_msg_userside_caching', $this->getUrlForGooglePageSpeed('LeverageBrowserCaching'), $sApacheModuleChack));
 
         $sName = 'deflate_module';
-        $sApacheModuleChack = _t('_sys_audit_msg_optimization_apache_module', $sName, $this->checkApacheModule($sName));
+        $sApacheModuleChack = _t('_sys_audit_msg_optimization_apache_module', $sName, $this->getMsgHTML($sName, $this->checkApacheModule($sName)));
         $s .= $this->getBlock(_t('_sys_audit_serverside_compression'), '', _t('_sys_audit_msg_serverside_compression', $sApacheModuleChack));
 
         echo $this->getSection(_t('_sys_audit_section_webserver'), '', $s);

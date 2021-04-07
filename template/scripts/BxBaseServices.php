@@ -69,6 +69,316 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetOrdersCount' => 'BxBasePaymentsServices',
         );
     }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_check_for_update module_check_for_update
+     * 
+     * @code bx_srv('system', 'module_check_for_update', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_check_for_update', ["bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:module_check_for_update:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Checks whether an update is available for requested module or not.
+     * @param $mixedModule - module ID/name to check the updates for.
+     * @return array with information about the update, false if nothing was found
+     * 
+     * @see BxBaseServices::serviceModuleCheckForUpdate
+     */
+    /** 
+     * @ref bx_system_general-module_check_for_update "module_check_for_update"
+     */
+    public function serviceModuleCheckForUpdate($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        $aUpdates = BxDolStudioInstallerUtils::getInstance()->checkUpdatesByModule($aModule['name']);
+        if(empty($aUpdates) || !is_array($aUpdates)) 
+            return false;
+
+        $aUpdate = array_shift($aUpdates);
+        return array(
+            'version_from' => $aUpdate['file_version'],
+            'version_to' => $aUpdate['file_version_to'],
+            'file_id' => $aUpdate['file_id']
+        );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_update module_update
+     * 
+     * @code bx_srv('system', 'module_update', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_update', ["bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:module_update:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Download and install an update for requested module. The operation may be performed 
+     * immediately or by Transient Cron task. The second way is more common.
+     * @param $mixedModule - module ID/name to check the updates for.
+     * @return integer value determining the result of the operation. It can be one of the following values:
+     * BX_DOL_STUDIO_IU_RC_SUCCESS, BX_DOL_STUDIO_IU_RC_FAILED or BX_DOL_STUDIO_IU_RC_SCHEDULED.
+     * 
+     * @see BxBaseServices::serviceModuleUpdate
+     */
+    /** 
+     * @ref bx_system_general-module_update "module_update"
+     */
+    public function serviceModuleUpdate($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return BX_DOL_STUDIO_IU_RC_FAILED;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($aModule['name'], true);
+        return $aResult['code'];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_delete module_delete
+     * 
+     * @code bx_srv('system', 'module_delete', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_delete', ["bx_posts", true], 'TemplServices'); @endcode
+     * @code {{~system:module_delete:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Delete the requested module. By default only uninstalled module can be deleted.
+     * The operation may be performed immediately or by Transient Cron task. The second way is more common.
+     * @param $sModule - module name to delete.
+     * @param $bForceUninstall - if 'true' is passed the module will be uninstalled before deletion.
+     * @return integer value determining the result of the operation. It can be one of the following values:
+     * BX_DOL_STUDIO_IU_RC_SUCCESS, BX_DOL_STUDIO_IU_RC_FAILED or BX_DOL_STUDIO_IU_RC_SCHEDULED.
+     * 
+     * @see BxBaseServices::serviceModuleDelete
+     */
+    /** 
+     * @ref bx_system_general-module_delete "module_delete"
+     */
+    public function serviceModuleDelete($sModule, $bForceUninstall = false)
+    {
+        $sModulePath = '';
+        $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
+
+        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sModule, false);
+        if(!empty($aModule) && is_array($aModule)) {
+            if(!$bForceUninstall)
+                return BX_DOL_STUDIO_IU_RC_FAILED;
+
+            $sModulePath = $aModule['path'];
+
+            $aResult = $oInstallerUtils->perform($sModulePath, 'uninstall', array('auto_disable' => $bForceUninstall));
+            if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+                return BX_DOL_STUDIO_IU_RC_FAILED;
+        }
+        else {
+            $aModules = $oInstallerUtils->getModules(false);
+            if(!isset($aModules[$sModule]))
+                return BX_DOL_STUDIO_IU_RC_FAILED;
+            
+            $sModulePath = $aModules[$sModule]['dir'];
+        }
+
+        $aResult = $oInstallerUtils->perform($sModulePath, 'delete');
+        return $aResult['code'];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_install module_install
+     * 
+     * @code bx_srv('system', 'module_install', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_install', ["bx_posts", true], 'TemplServices'); @endcode
+     * @code {{~system:module_install:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Install the requested module. By default the module will be installed only.
+     * @param $sModule - module name to install.
+     * @param $bForceEnable - if 'true' is passed the module will be automatically enabled after installation.
+     * @return boolean value determining the result of the operation.
+     * 
+     * @see BxBaseServices::serviceModuleInstall
+     */
+    /** 
+     * @ref bx_system_general-module_install "module_install"
+     */
+    public function serviceModuleInstall($sModule, $bForceEnable = false)
+    {
+        $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
+
+        $aModules = $oInstallerUtils->getModules(false);
+        if(!isset($aModules[$sModule]))
+            return false;
+
+        $aResult = $oInstallerUtils->perform($aModules[$sModule]['dir'], 'install', array('auto_enable' => $bForceEnable));
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_uninstall module_uninstall
+     * 
+     * @code bx_srv('system', 'module_uninstall', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_uninstall', ["bx_posts", true], 'TemplServices'); @endcode
+     * @code {{~system:module_uninstall:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Uninstall the requested module. By default only disabled module can be uninstalled.
+     * @param $mixedModule - module ID/name to uninstall.
+     * @param $bForceDisable - if 'true' is passed the module will be automatically disabled before uninstallation.
+     * @return boolean value determining the result of the operation.
+     * 
+     * @see BxBaseServices::serviceModuleUninstall
+     */
+    /** 
+     * @ref bx_system_general-module_uninstall "module_uninstall"
+     */
+    public function serviceModuleUninstall($mixedModule, $bForceDisable = false)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        if((int)$aModule['enabled'] != 0 && !$bForceDisable)
+            return false;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall', array('auto_disable' => $bForceDisable));
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_enable module_enable
+     * 
+     * @code bx_srv('system', 'module_enable', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_enable', ["bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:module_enable:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Enable the requested module.
+     * @param $mixedModule - module ID/name to enable.
+     * @return boolean value determining the result of the operation.
+     * 
+     * @see BxBaseServices::serviceModuleEnable
+     */
+    /** 
+     * @ref bx_system_general-module_enable "module_enable"
+     */
+    public function serviceModuleEnable($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        if((int)$aModule['enabled'] != 0)
+            return false;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'enable');
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-module_disable module_disable
+     * 
+     * @code bx_srv('system', 'module_disable', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'module_disable', ["bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:module_disable:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Disable the requested module.
+     * @param $mixedModule - module ID/name to disable.
+     * @return boolean value determining the result of the operation.
+     * 
+     * @see BxBaseServices::serviceModuleDisable
+     */
+    /** 
+     * @ref bx_system_general-module_disable "module_disable"
+     */
+    public function serviceModuleDisable($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        if(empty($aModule) || !is_array($aModule))
+            return false;
+
+        if((int)$aModule['enabled'] == 0)
+            return false;
+
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'disable');
+        if($aResult['code'] != BX_DOL_STUDIO_IU_RC_SUCCESS)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-is_module_installed is_module_installed
+     * 
+     * @code bx_srv('system', 'is_module_installed', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'is_module_installed', ["bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:is_module_installed:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Checks whether the requested module is installed or not.
+     * @param $mixedModule - module ID/name to check.
+     * @return boolean value determining the result of the operation.
+     * 
+     * @see BxBaseServices::serviceIsModuleInstalled
+     */
+    /** 
+     * @ref bx_system_general-is_module_installed "is_module_installed"
+     */
+    public function serviceIsModuleInstalled($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        return !empty($aModule) && is_array($aModule);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-is_module_enabled is_module_enabled
+     * 
+     * @code bx_srv('system', 'is_module_enabled', ["bx_posts"]); @endcode
+     * @code bx_srv('system', 'is_module_enabled', ["bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:is_module_enabled:TemplServices["bx_posts"]~}} @endcode
+     * 
+     * Checks whether the requested module is enabled or not.
+     * @param $mixedModule - module ID/name to check.
+     * @return boolean value determining the result of the operation.
+     * 
+     * @see BxBaseServices::serviceIsModuleEnabled
+     */
+    /** 
+     * @ref bx_system_general-is_module_enabled "is_module_enabled"
+     */
+    public function serviceIsModuleEnabled($mixedModule)
+    {
+        $aModule = BxDolModuleQuery::getInstance()->{'getModuleBy' . (is_numeric($mixedModule) ? 'Id' : 'Name')}($mixedModule, false);
+        return !empty($aModule) && is_array($aModule) && (int)$aModule['enabled'] != 0;
+    }
+
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         return $this->_serviceProfileFunc('getUnit', $iContentId, $aParams);

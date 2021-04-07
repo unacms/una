@@ -904,7 +904,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
     if(function_exists('curl_init')) {
         $rConnect = curl_init();
 
-        curl_setopt($rConnect, CURLOPT_USERAGENT, 'UNA ' . BX_DOL_VERSION);
+        curl_setopt($rConnect, CURLOPT_USERAGENT, 'UNA ' . (defined('BX_DOL_VERSION') ? constant('BX_DOL_VERSION') : ''));
         curl_setopt($rConnect, CURLOPT_TIMEOUT, BxDolDb::getInstance() ? getParam('sys_default_curl_timeout') : 10);
         curl_setopt($rConnect, CURLOPT_URL, $sFileUrl);
         curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);

@@ -73,7 +73,7 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
                     $aInputField['attrs']['class'] = 'bx-form-input-location-' . $sKey;
                 if ('country' == $sKey) {
                     $aCountries = BxDolFormQuery::getDataItems('Country');
-                    array_unshift($aCountries, array('key' => '', 'value' => _t('_None')));
+                    array_unshift($aCountries, array('key' => '', 'value' => _t('_sys_please_select')));
                     $aInputField['values'] = $aCountries;
                     $sInputs .= $oForm->genInputSelect($aInputField);
                 }

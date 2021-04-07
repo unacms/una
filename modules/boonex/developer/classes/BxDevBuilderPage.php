@@ -385,6 +385,27 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         foreach($aDBoxes as $aDBox)
             $oForm->aInputs['designbox_id']['values'][] = array('key' => $this->sSelectKeyPrefix . $aDBox['id'], 'value' => _t($aDBox['title']));
 
+        $aContentPlaceholders = $this->oDb->getContentPlaceholders();
+        $oForm->aInputs['async']['values'] = array(
+            array('key' => 0, 'value' => _t('_sys_no_async'))
+        );
+        foreach ($aContentPlaceholders as $iKey => $sTitle)
+            $oForm->aInputs['async']['values'][] = array('key' => $iKey, 'value' => _t($sTitle));
+
+        $oForm->aInputs['hidden_on']['values'] = array(
+            BX_DB_HIDDEN_PHONE => _t('_bx_dev_bp_txt_block_hidden_on_phone'),
+            BX_DB_HIDDEN_TABLET => _t('_bx_dev_bp_txt_block_hidden_on_tablet'),
+            BX_DB_HIDDEN_DESKTOP => _t('_bx_dev_bp_txt_block_hidden_on_desktop'),
+            BX_DB_HIDDEN_MOBILE => _t('_bx_dev_bp_txt_block_hidden_on_mobile')
+        );
+
+        $aSubmenus = $this->oDb->getBlockSubmenus();
+        $oForm->aInputs['submenu']['values'] = array(
+            array('key' => '', 'value' => _t('_sys_no_menu'))
+        );
+        foreach ($aSubmenus as $sObject => $sTitle)
+            $oForm->aInputs['submenu']['values'][] = array('key' => $sObject, 'value' => _t($sTitle));
+
         $oForm->aInputs['visible_for']['value'] = $aBlock['visible_for_levels'] == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED;
         $oForm->aInputs['visible_for']['values'] = array(
             array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_bx_dev_bp_txt_block_visible_for_all')),

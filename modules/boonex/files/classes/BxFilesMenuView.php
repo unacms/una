@@ -27,10 +27,12 @@ class BxFilesMenuView extends BxBaseModTextMenuView
         $CNF = $this->_oModule->_oConfig->CNF;
 
         $aFile = $this->_oModule->getContentFile($this->_aContentInfo);
+        $sFileExt = $aFile && !empty($aFile['ext']) ? $aFile['ext'] : '';
+
         if (!$aFile || !$aFile['private']) {
             $this->addMarkers(array(
                 'file_download_token' => '0',
-                'file_ext' => $aFile && isset($aFile['ext']) ? $aFile['ext'] : '',
+                'file_ext' => $sFileExt,
             ));
             return;
         }
@@ -39,14 +41,14 @@ class BxFilesMenuView extends BxBaseModTextMenuView
         if (!$oStorage) {
             $this->addMarkers(array(
                 'file_download_token' => '0',
-                'file_ext' => $aFile['ext'],
+                'file_ext' => $sFileExt,
             ));
             return;
         }
 
         $this->addMarkers(array(
             'file_download_token' => $oStorage->genToken($aFile['id']),
-            'file_ext' => $aFile['ext'],
+            'file_ext' => $sFileExt,
         ));
     }
 
