@@ -3673,19 +3673,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         //--- Find and delete repost events when parent event was deleted.
         $bSystem = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']);
-	    $aRepostEvents = $this->_oDb->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aEvent['type']));
-		foreach($aRepostEvents as $aRepostEvent) {
-			$aContent = unserialize($aRepostEvent['content']);
-			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent[$CNF['FIELD_ID']])) && (int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent[$CNF['FIELD_ID']])) > 0) {
-			    $oComments = $this->getCmtsObject($sCommonPostComment, $aRepostEvent[$CNF['FIELD_ID']]);
-                if($oComments !== false)
-                    $oComments->onObjectDelete($aRepostEvent[$CNF['FIELD_ID']]);
+        $aRepostEvents = $this->_oDb->getEvents(array('browse' => 'reposted_by_track', 'value' => $aEvent[$CNF['FIELD_ID']]));
+        foreach($aRepostEvents as $aRepostEvent) {
+            if((int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent[$CNF['FIELD_ID']])) == 0) 
+                continue;
 
-                bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
-                    'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
-                ));
-            }
-		}
+            $this->_oDb->deleteRepostTrack($aRepostEvent[$CNF['FIELD_ID']]);
+
+            $oComments = $this->getCmtsObject($sCommonPostComment, $aRepostEvent[$CNF['FIELD_ID']]);
+            if($oComments !== false)
+                $oComments->onObjectDelete($aRepostEvent[$CNF['FIELD_ID']]);
+
+            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+                'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
+            ));
+        }
 
         //--- Delete associated meta.
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
