@@ -22,6 +22,9 @@ class BxFilesMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         $aFile = $this->_oModule->getContentFile($this->_aContentInfo);
+
+        if (!$aFile) return 0;
+
         return $this->getUnitMetaItemText(_t_format_size($aFile['size']));
     }
 }

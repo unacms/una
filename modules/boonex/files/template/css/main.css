@@ -142,12 +142,14 @@
 .bx-files-browser-toolbar .bx-btn {
     float: none;
     display: inline-block;
+    vertical-align: top;
 }
 .bx-files-toolbar-controls-group {
     display: inline-block;
     margin-right: 10px;
     white-space: nowrap;
     margin-bottom: 1rem;
+    vertical-align: middle;
 }
 .bx-files-toolbar-spacer {
     width: 100%;
