@@ -24,7 +24,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
     {
         $aFile = BxDolModule::getInstance($this->MODULE)->getContentFile($aData);
 
-        if (!$aFile['is_image'])
+        if (!$aFile || !$aFile['is_image'])
             return array('', '');
 
         $sPhotoThumb = '';
@@ -54,7 +54,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
 
         $aParams['template_name'] = $sTemplateName;
         $aVars = $this->getUnit($aData, $aParams);
-        $aVars['icon'] = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'far file';
+        $aVars['icon'] = $aFile && $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'far file';
 
         $aVars['bx_if:no_thumb']['content']['icon'] = $aVars['icon'];
 

@@ -162,11 +162,28 @@ class BxFilesModule extends BxBaseModTextModule
         if (!isset($aData[$CNF['FIELD_AUTHOR']]) || !isset($aData[$CNF['FIELD_ID']]))
             return false;
 
+        if (isset($aData['type']) && $aData['type'] == 'folder') {
+            return [
+                'id' => $aData[$CNF['FIELD_ID']],
+                'profile_id' => $aData[$CNF['FIELD_AUTHOR']],
+                'remote_id' => 0,
+                'path' => '',
+                'file_name' => $aData[$CNF['FIELD_TITLE']],
+                'mime_type' => '',
+                'ext' => '',
+                'size' => 0,
+                'added' => $aData[$CNF['FIELD_ADDED']],
+                'modified' => 0,
+                'private' => false,
+                'is_image' => false,
+            ];
+        }
+
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         if (!$oStorage)
             return false;
 
-        if (isset($aData[$CNF['FIELD_FILE_ID']]) && $aData[$CNF['FIELD_FILE_ID']]) 
+        if (isset($aData[$CNF['FIELD_FILE_ID']]) && $aData[$CNF['FIELD_FILE_ID']])
             return $this->_addFileFields($oStorage->getFile($aData[$CNF['FIELD_FILE_ID']]));
         
         $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);

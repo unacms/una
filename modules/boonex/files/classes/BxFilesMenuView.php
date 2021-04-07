@@ -30,7 +30,7 @@ class BxFilesMenuView extends BxBaseModTextMenuView
         if (!$aFile || !$aFile['private']) {
             $this->addMarkers(array(
                 'file_download_token' => '0',
-                'file_ext' => $aFile['ext'] ? $aFile['ext'] : '',
+                'file_ext' => $aFile && isset($aFile['ext']) ? $aFile['ext'] : '',
             ));
             return;
         }
