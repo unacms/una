@@ -973,6 +973,8 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function serviceEntityOfferAccepted($iContentId = 0)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if(!$this->_oConfig->isAuction())
             return '';
 
@@ -982,7 +984,7 @@ class BxAdsModule extends BxBaseModTextModule
             $iContentId = (int)$_iContentId;
 
         $aContent = $this->_oDb->getContentInfoById($iContentId);
-        if(empty($aContent) || !is_array($aContent))
+        if(empty($aContent) || !is_array($aContent) || $aContent[$CNF['FIELD_QUANTITY']] <= 0)
             return '';
 
         $aOffer = $this->_oDb->getOffersBy(array(
