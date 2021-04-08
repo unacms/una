@@ -31,7 +31,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
         $this->CNF = array_merge($this->CNF, array(
             // some params
-            'PARAM_CMSN_INVOICE_ISSUE_DAY' => 12, //the first day of month
+            'PARAM_CMSN_INVOICE_ISSUE_DAY' => 1, //the first day of month
             'PARAM_CMSN_INVOICE_LIFETIME' => 4, //in days
             'PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY' => 1, //in days, before expiration date
             'PARAM_CMSN_DATE_FORMAT' => 'd.m.Y',
