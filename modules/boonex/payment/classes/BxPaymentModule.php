@@ -1213,6 +1213,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 if((float)$aCommission['installment'] > 0)
                     $fCommission += (float)$aCommission['installment'];
             }
+            
+            bx_alert($this->getName(), 'calculate_commission', 0, 0, array(
+                'vendor' => $aVendor,
+                'commissions' => $aCommissions,
+                'override_result' => &$fCommission,
+            ));
 
             $this->_oDb->insertInvoice(array(
                 'name' => sprintf($sInvoiceNameMask, $iMainSellerId, $iVendorId, $this->_oDb->getInvoices(array(
