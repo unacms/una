@@ -1017,7 +1017,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
-        if(!$this->isAuction($mixedContent))
+        if(!$this->isAuction($mixedContent) || (int)$mixedContent[$CNF['FIELD_QUANTITY']] <= 0)
             return _t('_sys_txt_access_denied');
 
         if(!empty($mixedContent) && is_array($mixedContent) && $mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
