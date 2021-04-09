@@ -61,7 +61,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     break;
 
                 if(is_array($aParams['conditions']))
-                    $sWhereClause .= $this->arrayToSQL($aParams['conditions'], ' AND ');
+                    $sWhereClause .= " AND " . $this->arrayToSQL($aParams['conditions'], ' AND ');
                 else if(is_string($aParams['conditions']) && !empty($aParams['bindings']) && is_array($aParams['bindings'])) {
                     $sWhereClause .= $aParams['conditions'];
                     
