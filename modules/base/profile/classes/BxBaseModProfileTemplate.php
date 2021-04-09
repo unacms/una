@@ -47,9 +47,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile unit
      */
-    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = false)
+    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
         list($sTemplate) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate);
+
+        if(!empty($aParams['template_name']))
+            $sTemplate = $aParams['template_name'];
         if(empty($sTemplate))
             $sTemplate = $this->_sUnitDefault;
         
@@ -66,22 +69,38 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 $sTemplate = $sTemplatePrivate;
             }
         }
-        
-        $aVars = $this->unitVars($aData, $isCheckPrivateContent, $mixedTemplate);
+
+        $aVars = $this->unitVars($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
+        bx_alert($oModule->getName(), 'unit', 0, 0, array(
+            'data' => $aData,
+            'check_private_content' => $isCheckPrivateContent,
+            'template' => $mixedTemplate,
+            'params' => $aParams,
+            'tmpl_name' => &$sTemplate,
+            'tmpl_vars' => &$aVars
+        ));
  
         return $this->parseHtmlByName($sTemplate, $aVars);
     }
 
-    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false)
+    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
         list($sTemplate, $sTemplateSize, $aTemplateVars) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate, false, array());
 
+        if(!empty($aParams['template_name']))
+            $sTemplate = $aParams['template_name'];
         if(empty($sTemplate))
             $sTemplate = $this->_sUnitDefault;
+
+        if(!empty($aParams['template_size']))
+            $sTemplateSize = $aParams['template_size'];
         if(empty($sTemplateSize))
             $sTemplateSize = $this->_getUnitSize($aData, $sTemplate);
+
+        if(!empty($aParams['template_vars']) && is_array($aParams['template_vars']))
+            $aTemplateVars = $aParams['template_vars'];
         if(empty($aTemplateVars) || !is_array($aTemplateVars))
             $aTemplateVars = array();
 

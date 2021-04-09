@@ -37,11 +37,26 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
+        if(!empty($aParams['template_name']))
+            $sTemplateName = $aParams['template_name'];
+        else 
+            $aParams['template_name'] = $sTemplateName;
+
     	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
     	if($sResult)
-            return $sResult;
-        $aParams['template_name'] = $sTemplateName;
-		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
+            return $sResult;            
+
+        $aTemplateVars = $this->getUnit($aData, $aParams);
+        bx_alert($this->getModule()->getName(), 'unit', 0, 0, array(
+            'data' => $aData,
+            'check_private_content' => $isCheckPrivateContent,
+            'template' => $sTemplateName,
+            'params' => $aParams,
+            'tmpl_name' => &$sTemplateName,
+            'tmpl_vars' => &$aTemplateVars
+        ));
+
+        return $this->parseHtmlByName($sTemplateName, $aTemplateVars);
     }
 
     function entryAttachments ($aData, $aParams = array())

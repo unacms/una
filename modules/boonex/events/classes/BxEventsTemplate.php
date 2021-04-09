@@ -20,9 +20,9 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
-        $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
+        $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
 
         $CNF = &$this->_oConfig->CNF;
 
