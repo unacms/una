@@ -33,10 +33,10 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $this->_sUnitClassShowCase .= ' bx-base-groups-unit-with-cover bx-base-groups-unit-showcase';
     }
 
-    function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
-        $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
-        
+        $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
+
         $CNF = &$this->_oConfig->CNF;
 
         $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
