@@ -45,16 +45,3 @@ div.bx-std-page-column.bx-std-page-content {
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;
 }
-
-
-/*--- Blocks ---*/
-.bx-db-header {
-    -webkit-align-items: center;
-    align-items: center;
-
-    padding: 0.2rem 1rem;
-}
-
-.bx-db-content.bx-def-padding-top {
-    padding: 1rem;
-}

@@ -40,22 +40,26 @@ div.bx-std-block-caption {
     -webkit-align-items: center;
     align-items: center;
 
-    height: 3.5rem;
-    padding: 0 1.5rem;
-
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+    padding: 1.0rem 1.5rem;
 }
 div.bx-std-bcap-text {
-    line-height: 1.5rem;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+
+    line-height: 1.5;
     font-size: 1rem;
     font-weight: 600;
     color: #262626;
 }
 div.bx-std-bcap-actions {
-    position: absolute;
-    top: 0px;
-    right: 0px;
+    position: relative;
+    -webkit-flex: 0 2 auto;
+    -ms-flex: 0 2 auto;
+    flex: 0 2 auto;
+    max-width: 80%;
+
+    font-size: 0.875rem;
 }
 div.bx-std-bcap-action,
 div.bx-std-bcap-action-div {
