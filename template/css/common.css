@@ -164,6 +164,10 @@ div.mce-fullscreen {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+
+    line-height: 1.5;
+    font-size: 1.0rem;
+    font-weight: 600;
 }
 
 .bx-db-menu {
