@@ -633,8 +633,12 @@ class BxForumModule extends BxBaseModTextModule
         if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
             return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
 
-        if($sUnitView != 'table')   
-            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if($sUnitView != 'table')   {
+            $aParams = array('category' => $iCategory);
+            if ($sUnitView)
+                $aParams['unit_view'] = $sUnitView;
+            return $this->_serviceBrowse($sType, $aParams, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        }
 
         return $this->_serviceBrowseTable(array(
             'type' => $sType, 
