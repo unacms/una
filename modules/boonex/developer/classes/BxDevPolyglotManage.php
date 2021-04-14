@@ -9,6 +9,9 @@
  * @{
  */
 
+define('BX_DEV_PGT_CATEGORY_SYSTEM', 1);
+define('BX_DEV_PGT_CATEGORY_CUSTOM', 2);
+
 class BxDevPolyglotManage extends BxTemplStudioGrid
 {
     private $sAllUri = 'all';
@@ -38,6 +41,63 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
                 'translatable' => '0',
                 'chars_limit' => '0'
             );
+    }
+
+    public function performActionAddKeys()
+    {
+        $sAction = 'add_keys';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_pgt_keys');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_pgt_keys_add');
+
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
+        $this->fillInSelects($oForm->aInputs);
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+            $oXmlParser = BxDolXmlParser::getInstance();
+            $oLanguages = BxDolStudioLanguagesUtils::getInstance();
+            
+            $aLanguages = $oForm->getCleanValue('language');
+            $aLanguages = !empty($aLanguages) ? array($aLanguages) : array_keys($oLanguages->getLanguages(true));
+
+            $iCategory = $oForm->getCleanValue('category');
+
+            $sContent = '<strings>' . $oForm->getCleanValue('content') . '</strings>';
+            $aKeys = $oXmlParser->getValues($sContent, 'string');
+
+            $iReplace = $oForm->getCleanValue('replace');
+
+            $iKeys = 0;
+            foreach($aLanguages as $iLanguage) {
+                foreach($aKeys as $sKey => $sValue) {
+                    $bAdded = $oLanguages->addLanguageString($sKey, $sValue, $iLanguage, $iCategory, false) !== false;
+                    if(!$bAdded && !$iReplace) 
+                        continue;
+
+                    if(!$bAdded) {
+                        $oLanguages->deleteLanguageString($sKey, $iLanguage, false);
+                        if($oLanguages->addLanguageString($sKey, $sValue, $iLanguage, $iCategory, false) === false)
+                            continue;
+                    }
+
+                    $iKeys += 1;
+                }
+
+                $oLanguages->compileLanguage($iLanguage, true);
+            }
+
+            return echoJson(array('msg' => _t('_bx_dev_pgt_msg_keys_added', $iKeys)));
+        }
+
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-pgt-keys-add-popup', _t('_bx_dev_pgt_txt_keys_add_popup'), $this->oModule->_oTemplate->parseHtmlByName('pgt_add_keys.html', array(
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true),
+            'object' => $this->_sObject,
+            'action' => $sAction
+        )));
+
+        return echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
     }
 
     public function performActionRecompile()
@@ -94,6 +154,17 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
             array('id' => 0, 'title' => _t('_bx_dev_pgt_txt_manage_modules_all'), 'uri' => $this->sAllUri)
         );
         return array_merge($aData, parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage));
+    }
+
+    private function fillInSelects(&$aInputs)
+    {
+        $oLanguages = BxDolLanguagesQuery::getInstance();
+
+        $aInputs['language']['values'] = array_merge(array(0 => _t('_sys_please_select')), $oLanguages->getLanguages(true));
+        $aInputs['language']['value'] = '';
+        
+        $aInputs['category']['values'] = $oLanguages->getCategories();
+        $aInputs['category']['value'] = BX_DEV_PGT_CATEGORY_CUSTOM;
     }
 }
 /** @} */
