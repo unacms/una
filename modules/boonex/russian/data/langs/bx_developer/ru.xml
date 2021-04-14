@@ -468,8 +468,9 @@
     <string name="_bx_dev_bp_btn_sys_block_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_dev_bp_btn_block_delete"><![CDATA[Удалить]]></string>
 
-	<!-- Polyglot -->
+    <!-- Polyglot -->
     <string name="_bx_dev_pgt_txt_manage_gl_title"><![CDATA[Модуль]]></string>
+    <string name="_bx_dev_pgt_btn_manage_gl_add_keys"><![CDATA[Добавить ключи]]></string>
     <string name="_bx_dev_pgt_btn_manage_gl_recompile"><![CDATA[Перекомпилировать всё]]></string>
     <string name="_bx_dev_pgt_btn_manage_gl_restore"><![CDATA[Восстановить всё]]></string>
     <string name="_bx_dev_pgt_txt_manage_recompile_title_sing"><![CDATA[Перекомпилировать %s язык для модуля %s.]]></string>
@@ -477,11 +478,32 @@
     <string name="_bx_dev_pgt_txt_manage_recompile_title_plur"><![CDATA[Перекомпилировать %s язык для всех модулей.]]></string>
     <string name="_bx_dev_pgt_txt_manage_restore_title_plur"><![CDATA[Восстановить %s язык для всех модулей.]]></string>
     <string name="_bx_dev_pgt_txt_manage_modules_all"><![CDATA[Все]]></string>
+    <string name="_bx_dev_pgt_txt_keys_add_popup"><![CDATA[Добавить ключи]]></string>
+    
+    <string name="_bx_dev_pgt_txt_keys_form"><![CDATA[Ключи]]></string>
+    <string name="_bx_dev_pgt_txt_keys_display_add"><![CDATA[Добавить ключи]]></string>
+    <string name="_bx_dev_pgt_txt_sys_keys_language"><![CDATA[Язык]]></string>
+    <string name="_bx_dev_pgt_txt_keys_language"><![CDATA[Язык]]></string>
+    <string name="_bx_dev_pgt_inf_keys_language"><![CDATA[Оставьте пустым, чтобы добавить во все доступные языки.]]></string>
+    <string name="_bx_dev_pgt_txt_sys_keys_category"><![CDATA[Категория]]></string>
+    <string name="_bx_dev_pgt_txt_keys_category"><![CDATA[Категория]]></string>
+    <string name="_bx_dev_pgt_err_keys_category"><![CDATA[Вам нужно выбрать категорию]]></string>
+    <string name="_bx_dev_pgt_txt_sys_keys_content"><![CDATA[Ключи]]></string>
+    <string name="_bx_dev_pgt_txt_keys_content"><![CDATA[Ключи]]></string>
+    <string name="_bx_dev_pgt_err_keys_content"><![CDATA[Здесь нужно ввести значение]]></string>
+    <string name="_bx_dev_pgt_inf_keys_content"><![CDATA[Используйте XML формат, как показано в примере ниже:<br />&lt;string name="_key_first"&gt;&lt;![CDATA[Первое значение]]\&gt;&lt;/string&gt;<br />&lt;string name="_key_second"&gt;&lt;![CDATA[Второе значение]]\&gt;&lt;/string&gt;]]></string>
+    <string name="_bx_dev_pgt_txt_sys_keys_replace"><![CDATA[Заменить]]></string>
+    <string name="_bx_dev_pgt_txt_keys_replace"><![CDATA[Принудительно заменить, если существует]]></string>
+    <string name="_bx_dev_pgt_btn_sys_keys_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_dev_pgt_btn_keys_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_dev_pgt_btn_sys_keys_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_dev_pgt_btn_keys_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_dev_pgt_msg_keys_added"><![CDATA[Было добавлено {0} ключей]]></string>
 
-	<!-- Hash -->
-	<string name="_bx_dev_hash_msg_reset_hash_system"><![CDATA[Системный хэш успешно сброшен.]]></string>
-	<string name="_bx_dev_hash_err_reset_hash_system"><![CDATA[Невозможно сбросить системный хэш.]]></string>
-	<string name="_bx_dev_hash_msg_reset_hash_modules"><![CDATA[Хэш успешно сброшен для следующих модулей:]]></string>
-	<string name="_bx_dev_hash_txt_reset_hash_module"><![CDATA[Модуль]]></string>
-	<string name="_bx_dev_hash_txt_reset_hash_files"><![CDATA[Файлов хэшировано]]></string>
+    <!-- Hash -->
+    <string name="_bx_dev_hash_msg_reset_hash_system"><![CDATA[Системный хэш успешно сброшен.]]></string>
+    <string name="_bx_dev_hash_err_reset_hash_system"><![CDATA[Невозможно сбросить системный хэш.]]></string>
+    <string name="_bx_dev_hash_msg_reset_hash_modules"><![CDATA[Хэш успешно сброшен для следующих модулей:]]></string>
+    <string name="_bx_dev_hash_txt_reset_hash_module"><![CDATA[Модуль]]></string>
+    <string name="_bx_dev_hash_txt_reset_hash_files"><![CDATA[Файлов хэшировано]]></string>
 </resources>
