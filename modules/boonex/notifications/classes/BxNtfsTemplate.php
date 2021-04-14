@@ -294,6 +294,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($aContent) || !is_array($aContent)) 
             return;
 
+        bx_alert($this->_oConfig->getName(), 'get_content', 0, 0, array(
+            'event' => $aEvent,
+            'override_result' => &$aContent
+        ));
+
         $aSet = array();
         if(!empty($aContent['entry_author'])) {
             $aSet['object_owner_id'] = (int)$aContent['entry_author'];
