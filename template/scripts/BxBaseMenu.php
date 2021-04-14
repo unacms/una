@@ -29,6 +29,18 @@ class BxBaseMenu extends BxDolMenu
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
+    public function getDisplayAddons()
+    {
+        return $this->_bDisplayAddons;
+    }   
+
+    public function setDisplayAddons($b)
+    {
+        $bRet = $this->_bDisplayAddons;
+        $this->_bDisplayAddons = $b;
+        return $bRet;
+    }
+
     /**
      * Get menu code.
      * @return string
