@@ -2200,6 +2200,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => $this->_oConfig->getPrefix('common_post') . 'repost',
             'action' => '',
             'object_id' => $iAuthorId,
+            'object_owner_id' => $iAuthorId,
             'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
             'content' => serialize(array(
                 'type' => $sType,
@@ -3614,6 +3615,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function onRepost($iContentId, $aReposted = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
 
         if(empty($aReposted)) {
@@ -3624,7 +3627,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return;
         }
 
-        $iUserId = $this->getUserId();
+        $iUserId = (int)$aEvent[$CNF['FIELD_OBJECT_OWNER_ID']];
         $this->_oDb->insertRepostTrack($aEvent['id'], $iUserId, $this->getUserIp(), $aReposted['id']);
         $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts']);
 
