@@ -25,6 +25,12 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
+        bx_alert($this->_oModule->getName(), 'before_register_alert', 0, 0, array(
+            'unit' => $oAlert->sUnit,
+            'action' => $oAlert->sAction,
+            'alert' => &$oAlert,
+        ));
+
     	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
         if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
             return;
