@@ -93,6 +93,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
 
     protected function _getMenuItemDefault($aItem)
     {
+        if(empty($this->_oMenuSocialSharing)) {
+            $this->_oMenuSocialSharing = BxDolMenu::getObjectInstance('sys_social_sharing');
+            if($this->_oMenuSocialSharing) {
+                $this->_oMenuSocialSharing->addMarkers($this->_aMarkers);           // adding current markers to social sharing menu object to force it to generate its own markers
+                $aSocialSharingMarkers = $this->_oMenuSocialSharing->getMarkers();  // getting generated social sharing markers back
+                $this->addMarkers($aSocialSharingMarkers);                          // adding all of these to current menu object so now these markers can be parsed for any menu item
+            }
+        }
+
         $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
 
         if($this->_bShowAsButton)
