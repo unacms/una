@@ -183,9 +183,20 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
     /** 
      * @ref bx_events-browse_past_profiles "browse_past_profiles"
      */
-    public function serviceBrowsePastProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    public function serviceBrowsePastProfiles ($aParams)
     {
-        return $this->_serviceBrowse ('past', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+        $bDisplayEmptyMsg = false;
+        if(isset($aParams['empty_message'])) {
+            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+        return $this->_serviceBrowse ('past', $aParams, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     /**
