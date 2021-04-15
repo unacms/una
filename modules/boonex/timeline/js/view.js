@@ -127,10 +127,6 @@ BxTimelineView.prototype.init = function(bForceInit)
     if(this.bViewItem) {
         //-- Check content to show 'See More'
         this.initSeeMore(this.oView, false);
-        
-        this.oView.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
-            $this.onFindOverflow(oElement);
-        });
 
         //--- Init Video Layout
         if(this._sVideosAutoplay != 'off')
@@ -449,11 +445,8 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
             if(!oResponse.content)
                 return;
 
-            var oContent = $(oResponse.content);
-            oContent.filter(sView).hide();
-
             oViewBefore.hide();
-            oViews.append(oContent).find(sView).bxProcessHtml().show();
+            oViews.append(oResponse.content).find(sView).bxProcessHtml();
         },
         'json'
     );
