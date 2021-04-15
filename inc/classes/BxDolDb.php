@@ -60,6 +60,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         parent::__construct();
 
 		$this->_bPdoPersistent = true;
+        if (defined('BX_DATABASE_PERSISTENT'))
+            $this->_bPdoPersistent = (bool)BX_DATABASE_PERSISTENT;
+
         $this->_iPdoFetchType = PDO::FETCH_ASSOC;
         $this->_iPdoErrorMode = BX_DB_MODE_EXCEPTION;
 
