@@ -33,6 +33,7 @@ define('BX_CMT_FILTER_ALL', 'all');
 define('BX_CMT_FILTER_OTHERS', 'others');
 define('BX_CMT_FILTER_FRIENDS', 'friends');
 define('BX_CMT_FILTER_SUBSCRIPTIONS', 'subscriptions');
+define('BX_CMT_FILTER_PINNED', 'pinned');
 
 define('BX_CMT_ORDER_WAY_ASC', 'asc');
 define('BX_CMT_ORDER_WAY_DESC', 'desc');

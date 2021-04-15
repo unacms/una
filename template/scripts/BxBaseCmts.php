@@ -141,6 +141,7 @@ class BxBaseCmts extends BxDolCmts
         //add live update
 
         $sComments = $this->getComments($aBp, $aDp);
+        $sCommentsPinned = $this->getCommentsPinned($aBp, $aDp);
         $sContentBefore = $this->_getContentBefore($aBp, $aDp);
         $sContentAfter = $this->_getContentAfter($aBp, $aDp);
         $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)));
@@ -159,6 +160,7 @@ class BxBaseCmts extends BxDolCmts
             'post_form_top' => &$sPostFormTop,
             'content_before' => &$sContentBefore,
             'comments' => &$sComments,
+            'comments_pinned' => &$sCommentsPinned,
             'content_after' => &$sContentAfter,
             'post_form_bottom'  => &$sPostFormBottom,
             'js_content' => &$sJsContent,
@@ -172,6 +174,7 @@ class BxBaseCmts extends BxDolCmts
             'id' => $this->getId(),
             'content_before' => $sContentBefore,
             'comments' => $sComments,
+            'comments_pinned' => $sCommentsPinned,
             'content_after' => $sContentAfter,
             'post_form_top' => $sPostFormTop,
             'post_form_bottom'  => $sPostFormBottom,
@@ -210,9 +213,26 @@ class BxBaseCmts extends BxDolCmts
         $sCmts = '';
         foreach($aCmts as $k => $aCmt)
             $sCmts .= $this->getComment($aCmt, $aBp, $aDp);
+        $sCmts = $this->_getMoreLink($sCmts, $aBp, $aDp);       
 
-        $sCmts = $this->_getMoreLink($sCmts, $aBp, $aDp);
         return $sCmts;
+    }
+
+    function getCommentsPinned($aBp = array(), $aDp = array())
+    {
+        $this->_prepareParams($aBp, $aDp);
+
+        $aCmts = $this->getCommentsArray($aBp['vparent_id'], BX_CMT_FILTER_PINNED, $aBp['order'], 0, -1);
+        if(empty($aCmts) || !is_array($aCmts))
+            return '';
+
+        $aDp['read_only'] = true;
+
+        $sCmts = '';
+        foreach($aCmts as $k => $aCmt)
+            $sCmts .= $this->getComment($aCmt, $aBp, $aDp);
+
+        return $sCmts . $this->_getDivider();
     }
 
     public function getCommentsByStructure($aBp = array(), $aDp = array())
@@ -311,7 +331,9 @@ class BxBaseCmts extends BxDolCmts
         if(!empty($aDp['class_comment_content']))
             $sClassCnt .= ' ' . $aDp['class_comment_content'];
 
-        $sActions = $this->_getActionsBox($aCmt, $aDp);
+        $sActions = '';
+        if(!isset($aDp['read_only']) || $aDp['read_only'] === false)
+            $sActions = $this->_getActionsBox($aCmt, $aDp);
 
         $aTmplReplyTo = array();
         if((int)$aCmt['cmt_parent_id'] != 0) {
@@ -922,7 +944,9 @@ class BxBaseCmts extends BxDolCmts
                 'caption' => '',
                 'attrs' => array(
                     'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtShowForm(this)',
-                    'placeholder' => _t($this->_aT['txt_min_form_placeholder'], $sAuthorName)
+                    'placeholder' => _t($this->_aT['txt_min_form_placeholder'], $sAuthorName),
+                    'autocomplete' => 'off',
+                    'readonly' => 'readonly'
                 ),
                 'value' => '',
             );
@@ -1291,6 +1315,13 @@ class BxBaseCmts extends BxDolCmts
             'style_prefix' => $this->_sStylePrefix,
             'class' => $sClass,
             'content' => MsgBox(_t('_Empty'))
+        ));
+    }
+
+    protected function _getDivider()
+    {
+        return $this->_oTemplate->parseHtmlByName('comment_divider.html', array(
+            'style_prefix' => $this->_sStylePrefix
         ));
     }
 

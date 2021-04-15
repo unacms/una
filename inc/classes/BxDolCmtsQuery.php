@@ -253,23 +253,31 @@ class BxDolCmtsQuery extends BxDolDb
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
     	$aBindings = array(
-    		'cmt_object_id' => $iId,
+            'cmt_object_id' => $iId,
             'system_id' => $this->_oMain->getSystemId()
     	);
         $sFields = $sJoin = "";
         
         $sWhereParent = '';
         if((int)$iCmtVParentId >= 0) {
-        	$aBindings['cmt_vparent_id'] = $iCmtVParentId;
+            $aBindings['cmt_vparent_id'] = $iCmtVParentId;
 
             $sWhereParent = " AND `{$this->_sTable}`.`cmt_vparent_id` = :cmt_vparent_id";
         }
 
-        if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
-            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+        $sWhereFilter = '';
+        switch($sFilter) {
+            case BX_CMT_FILTER_PINNED:
+                $sWhereFilter .= " AND `{$this->_sTable}`.`cmt_pinned` <> 0";
+                break;
 
-            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
-            $sJoin .= ' ' . $aQueryParts['join'];
+            case BX_CMT_FILTER_FRIENDS:
+            case BX_CMT_FILTER_SUBSCRIPTIONS:
+                $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+
+                $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+                $sJoin .= ' ' . $aQueryParts['join'];
+                break;
         }
 
         $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, `{$this->_sTable}`.`cmt_time` ASC";
@@ -278,7 +286,7 @@ class BxDolCmtsQuery extends BxDolDb
 
             switch($aOrder['by']) {
                 case BX_CMT_ORDER_BY_DATE:
-                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
+                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
                     break;
 
                 case BX_CMT_ORDER_BY_POPULAR:
@@ -292,7 +300,7 @@ class BxDolCmtsQuery extends BxDolDb
                     if(count($aSortFields) == 0)
                         array_push($aSortFields, '`' . $this->_sTable . '`.`id`');
 
-                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, " . implode($aOrder['way'] . ', ', $aSortFields) . " " . $aOrder['way'];
+                    $sOrder = " ORDER BY " . implode($aOrder['way'] . ', ', $aSortFields) . " " . $aOrder['way'];
                     break;
             }
         }
@@ -306,7 +314,7 @@ class BxDolCmtsQuery extends BxDolDb
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id)
             $sJoin
-            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sOrder . $sLimit;
+            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sWhereFilter . $sOrder . $sLimit;
         return $this->getAll($sQuery, $aBindings);
     }
 
