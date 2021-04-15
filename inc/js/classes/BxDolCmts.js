@@ -684,7 +684,7 @@ BxDolCmts.prototype._getCmts = function (oElement, oRequestParams, onLoad)
     oData['action'] = 'GetCmts';
     oData = $.extend({}, oData, oRequestParams);
 
-    var sListId =  this._sRootId + ' #cmt' + oData['CmtParent'] + ' > ul:first';
+    var sListId =  this._sRootId + ' #cmt' + oData['CmtParent'] + ' > ul.cmts-all:first';
 
     if(oElement)
         this._loadingInBlock(oElement, true);
