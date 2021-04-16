@@ -1194,7 +1194,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         }
         //--- End: Using pregenerated structure
         else
-            return $this->getComments($aBp, $aDp);
+            return $this->{'getComments' . ($aBp['pinned'] ? 'Pinned' : '')}($aBp, $aDp);
     }
 
     public function actionSubmitPostForm()
@@ -1586,6 +1586,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aBp['per_view'] = isset($aBp['per_view']) ? (int)$aBp['per_view'] : -1;
         if(bx_get('CmtPerView') !== false) 
             $aBp['per_view'] = bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT);
+
+        $aBp['pinned'] = isset($aBp['pinned']) ? (int)$aBp['pinned'] : 0;
+        if(bx_get('CmtPinned') !== false) 
+            $aBp['pinned'] = bx_process_input(bx_get('CmtPinned'), BX_DATA_INT);
 
         //--- Process 'Display' params.
         $aDp['type'] = isset($aDp['type']) ? $aDp['type'] : '';

@@ -226,13 +226,11 @@ class BxBaseCmts extends BxDolCmts
         if(empty($aCmts) || !is_array($aCmts))
             return '';
 
-        $aDp['read_only'] = true;
-
         $sCmts = '';
         foreach($aCmts as $k => $aCmt)
             $sCmts .= $this->getComment($aCmt, $aBp, $aDp);
 
-        return $sCmts . $this->_getDivider();
+        return $sCmts;
     }
 
     public function getCommentsByStructure($aBp = array(), $aDp = array())
@@ -331,9 +329,7 @@ class BxBaseCmts extends BxDolCmts
         if(!empty($aDp['class_comment_content']))
             $sClassCnt .= ' ' . $aDp['class_comment_content'];
 
-        $sActions = '';
-        if(!isset($aDp['read_only']) || $aDp['read_only'] === false)
-            $sActions = $this->_getActionsBox($aCmt, $aDp);
+        $sActions = $this->_getActionsBox($aCmt, $aDp);
 
         $aTmplReplyTo = array();
         if((int)$aCmt['cmt_parent_id'] != 0) {
@@ -893,12 +889,12 @@ class BxBaseCmts extends BxDolCmts
     	$bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
 
         $sMenuActions = '';
-		if(!$bViewOnly) {
-	        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
-	        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
-	        $oMenuActions->setDynamicMode($bDynamicMode);
-	        $sMenuActions = $oMenuActions->getCode();
-		}
+        if(!$bViewOnly) {
+            $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
+            $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
+            $oMenuActions->setDynamicMode($bDynamicMode);
+            $sMenuActions = $oMenuActions->getCode();
+        }
 
         return $this->_oTemplate->parseHtmlByName('comment_actions.html', array(
             'id' => $aCmt['cmt_id'],
@@ -1315,13 +1311,6 @@ class BxBaseCmts extends BxDolCmts
             'style_prefix' => $this->_sStylePrefix,
             'class' => $sClass,
             'content' => MsgBox(_t('_Empty'))
-        ));
-    }
-
-    protected function _getDivider()
-    {
-        return $this->_oTemplate->parseHtmlByName('comment_divider.html', array(
-            'style_prefix' => $this->_sStylePrefix
         ));
     }
 
