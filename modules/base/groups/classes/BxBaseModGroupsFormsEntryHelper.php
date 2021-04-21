@@ -135,22 +135,33 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
      */ 
     protected function makeAuthorAdmin ($oGroupProfile, $aInitialProfiles)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        $iAdminProfileId = bx_get_logged_profile_id();
+        $this->makeAdmin (bx_get_logged_profile_id(), $oGroupProfile, $aInitialProfiles);
+    }
 
-        if (!isset($CNF['OBJECT_CONNECTIONS']) || !$CNF['OBJECT_CONNECTIONS'] || !is_array($aInitialProfiles) || !in_array($iAdminProfileId, $aInitialProfiles))
+    /**
+     * Make profile admin if he is in initial invitations list
+     * @param $iProfileId profile id
+     * @param $oGroupProfile group id
+     * @param $aInitialProfiles array of initial profile ids
+     * @return nothing
+     */ 
+    protected function makeAdmin ($iProfileId, $oGroupProfile, $aInitialProfiles)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!isset($CNF['OBJECT_CONNECTIONS']) || !$CNF['OBJECT_CONNECTIONS'] || !is_array($aInitialProfiles) || !in_array($iProfileId, $aInitialProfiles))
             return;
 
         if (!($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             return;
 
-        if (!$oConnection->isConnected($oGroupProfile->id(), (int)$iAdminProfileId))
-            $oConnection->addConnection($oGroupProfile->id(), (int)$iAdminProfileId);
-        if (!$oConnection->isConnected((int)$iAdminProfileId, $oGroupProfile->id()))
-            $oConnection->addConnection((int)$iAdminProfileId, $oGroupProfile->id());
+        if (!$oConnection->isConnected($oGroupProfile->id(), (int)$iProfileId))
+            $oConnection->addConnection($oGroupProfile->id(), (int)$iProfileId);
+        if (!$oConnection->isConnected((int)$iProfileId, $oGroupProfile->id()))
+            $oConnection->addConnection((int)$iProfileId, $oGroupProfile->id());
 
-        if (!$this->_oModule->_oDb->isAdmin ($oGroupProfile->id(), $iAdminProfileId))
-            $this->_oModule->_oDb->toAdmins ($oGroupProfile->id(), $iAdminProfileId);
+        if (!$this->_oModule->_oDb->isAdmin ($oGroupProfile->id(), $iProfileId))
+            $this->_oModule->_oDb->toAdmins ($oGroupProfile->id(), $iProfileId);
     }
 }
 
