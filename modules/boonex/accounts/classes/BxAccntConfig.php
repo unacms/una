@@ -24,11 +24,14 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         $this->CNF = array (
             // some params
             'PARAM_PROFILE_NAME_LENGTH_MAX' => 10,
+            'PARAM_EXPORT_TO' => 'bx_accounts_export_to',
+            'PARAM_EXPORT_FIELDS' => 'bx_accounts_export_fields',
 
             // page URIs
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=accounts-administration',
 
             // objects
+            'OBJECT_STORAGE_FILES' => 'sys_files',
             'OBJECT_FORM_ACCOUNT' => 'bx_accounts_account',
             'OBJECT_FORM_ACCOUNT_DISPLAY_SETTINGS_EMAIL' => 'bx_accounts_account_settings_email',
             'OBJECT_FORM_ACCOUNT_DISPLAY_CREATE' => 'bx_accounts_account_create',

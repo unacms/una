@@ -1,6 +1,21 @@
 SET @sName = 'bx_accounts';
 
 
+-- SETTINGS
+SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
+INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
+('modules', @sName, '_bx_accounts', 'bx_accounts@modules/boonex/accounts/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
+SET @iTypeId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, @sName, '_bx_accounts', 1);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+('bx_accounts_export_to', 'csv', @iCategId, '_bx_accounts_option_export_to', 'select', '', '', 'a:2:{s:6:"module";s:11:"bx_accounts";s:6:"method";s:21:"get_options_export_to";}', 10),
+('bx_accounts_export_fields', 'name,email', @iCategId, '_bx_accounts_option_export_fields', 'list', '', '', 'a:2:{s:6:"module";s:11:"bx_accounts";s:6:"method";s:25:"get_options_export_fields";}', 20);
+
+
 -- PAGE: module administration
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_accounts_administration', '_bx_accnt_page_title_sys_manage_administration', '_bx_accnt_page_title_manage', @sName, 5, 192, 1, 'accounts-administration', 'page.php?i=accounts-administration', '', '', '', 0, 1, 0, '', '');
@@ -87,9 +102,11 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_accounts_administration', 'bulk', 'confirm', '_bx_accnt_grid_action_title_adm_confirm', '', 0, 0, 5),
 ('bx_accounts_administration', 'bulk', 'delete', '_bx_accnt_grid_action_title_adm_delete', '', 0, 1, 6),
 ('bx_accounts_administration', 'bulk', 'delete_with_content', '_bx_accnt_grid_action_title_adm_delete_with_content', '', 0, 1, 7),
+('bx_accounts_administration', 'bulk', 'export', '_bx_accnt_grid_action_title_adm_export', '', 0, 0, 8),
 ('bx_accounts_administration', 'single', 'edit_email', '_bx_accnt_grid_action_title_adm_edit_email', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'reset_password', '_bx_accnt_grid_action_title_adm_reset_password', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'resend_remail', '_bx_accnt_grid_action_title_adm_resend_remail', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'unlock_account', '_bx_accnt_grid_action_title_adm_unlock_account', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'settings', '_bx_accnt_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
-('bx_accounts_administration', 'independent', 'add', '_bx_accnt_grid_action_title_adm_more_add', 'plus', 0, 0, 0);
+('bx_accounts_administration', 'independent', 'add', '_bx_accnt_grid_action_title_adm_more_add', 'plus', 0, 0, 0),
+('bx_accounts_administration', 'independent', 'export', '_bx_accnt_grid_action_title_adm_export', 'download', 0, 0, 1);

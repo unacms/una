@@ -18,16 +18,12 @@ class BxAccntStudioPage extends BxTemplStudioModule
 
     function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        $this->sPageDefault = BX_DOL_STUDIO_MOD_TYPE_MANAGE;
-
         $this->_sModule = 'bx_accounts';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems = array(
-            array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_accnt_menu_item_title_manage')
-        );
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_MANAGE] = array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_accnt_menu_item_title_manage');
     }
 
     protected function getManage()
