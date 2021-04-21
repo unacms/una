@@ -3,6 +3,9 @@
     <string name="_bx_accnt"><![CDATA[Accounts]]></string>
     <string name="_bx_accounts"><![CDATA[Accounts]]></string>
 
+    <string name="_bx_accounts_option_export_to"><![CDATA[Export to]]></string>
+    <string name="_bx_accounts_option_export_fields"><![CDATA[Export fields]]></string>
+
     <string name="_bx_accounts_form_display_account_settings_email_popup"><![CDATA[Edit Email]]></string>
     <string name="_bx_accounts_form_display_account_create_popup"><![CDATA[Create new Account]]></string>
     <string name="_bx_accounts_form_display_account_settings_password_popup"><![CDATA[Reset Password]]></string>
@@ -67,6 +70,7 @@
     <string name="_bx_accnt_grid_action_title_adm_suspend"><![CDATA[Suspend]]></string>
     <string name="_bx_accnt_grid_action_title_adm_confirm"><![CDATA[Confirm]]></string>
     <string name="_bx_accnt_grid_action_title_adm_edit_email"><![CDATA[Edit Email]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_export"><![CDATA[Export]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_cemail"><![CDATA[Resend Confirmation]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_remail"><![CDATA[Resend Reset Password]]></string>
     <string name="_bx_accnt_grid_action_title_adm_reset_password"><![CDATA[Reset Password]]></string>
@@ -91,4 +95,16 @@
     <string name="_bx_accnt_txt_see_more"><![CDATA[See more]]></string>
     <string name="_bx_accnt_txt_copy_to_clipboard"><![CDATA[Copy to Clipboard]]></string>
     <string name="_bx_accnt_txt_not_operator"><![CDATA[Not an Operator]]></string>
+    <string name="_bx_accnt_txt_export_to_csv"><![CDATA[CSV]]></string>
+    <string name="_bx_accnt_txt_export_to_xml"><![CDATA[XML]]></string>
+    <string name="_bx_accnt_txt_field_name"><![CDATA[Name]]></string>
+    <string name="_bx_accnt_txt_field_email"><![CDATA[Email]]></string>
+    <string name="_bx_accnt_txt_field_email_confirmed"><![CDATA[Email Confirmed]]></string>
+    <string name="_bx_accnt_txt_field_phone"><![CDATA[Phone]]></string>
+    <string name="_bx_accnt_txt_field_receive_updates"><![CDATA[Receive Updates]]></string>
+    <string name="_bx_accnt_txt_field_receive_news"><![CDATA[Receive News]]></string>
+    <string name="_bx_accnt_txt_field_added"><![CDATA[Added]]></string>
+    <string name="_bx_accnt_txt_field_changed"><![CDATA[Changed]]></string>
+    <string name="_bx_accnt_txt_field_logged"><![CDATA[Logged]]></string>
+    <string name="_bx_accnt_txt_field_ip"><![CDATA[IP]]></string>
 </resources>
