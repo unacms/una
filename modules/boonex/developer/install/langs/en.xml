@@ -491,7 +491,7 @@
     <string name="_bx_dev_pgt_txt_sys_keys_content"><![CDATA[Keys]]></string>
     <string name="_bx_dev_pgt_txt_keys_content"><![CDATA[Keys]]></string>
     <string name="_bx_dev_pgt_err_keys_content"><![CDATA[You need to enter a value here]]></string>
-    <string name="_bx_dev_pgt_inf_keys_content"><![CDATA[Use XML format, like the following:<br />&lt;string name="_key_first"&gt;&lt;![CDATA[First Value]]\&gt;&lt;/string&gt;<br />&lt;string name="_key_second"&gt;&lt;![CDATA[Second Value]]\&gt;&lt;/string&gt;]]></string>
+    <string name="_bx_dev_pgt_inf_keys_content"><![CDATA[Use XML format, like the following:<br />&lt;string name="_key_first"&gt;&lt;![CDATA[First Value]]&gt;&lt;/string&gt;<br />&lt;string name="_key_second"&gt;&lt;![CDATA[Second Value]]&gt;&lt;/string&gt;]]></string>
     <string name="_bx_dev_pgt_txt_sys_keys_replace"><![CDATA[Replace]]></string>
     <string name="_bx_dev_pgt_txt_keys_replace"><![CDATA[Force replace if exists]]></string>
     <string name="_bx_dev_pgt_btn_sys_keys_submit"><![CDATA[Submit]]></string>
