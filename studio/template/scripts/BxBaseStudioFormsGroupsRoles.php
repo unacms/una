@@ -39,6 +39,8 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
             return '';
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r'));
         $oForm->initChecker();
+        if ($oForm->isSubmitted())
+            $this->initDataSwitchers($oForm->aInputs);
 
         if($oForm->isSubmittedAndValid()) {
             $iNewValue = $this->_getAvailableSetValue($this->sRolesDataList);
@@ -102,6 +104,9 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
 
         $oForm = $this->_getPermissionsForm($sAction, $aItem);
         $oForm->initChecker();
+        if ($oForm->isSubmitted())
+            $this->initDataSwitchers($oForm->aInputs);
+
         if($oForm->isSubmittedAndValid()) {
             $aData = $oForm->getCleanValue('Data');
             $aAllActions = $this->_getDefaultActionsArray($aItem['Value']);
@@ -213,7 +218,7 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
                 // if pemission is set explicitly then use the value set
                 if (!empty($aRole) && is_array($aRole['Data']) && isset($aRole['Data'][$sModule]) && isset($aRole['Data'][$sModule][$sAction]) && $aRole['Data'][$sModule][$sAction]) $bChecked = true;
 
-                $aInputs[$sModule.'_'.$sAction] = [
+                $aInputs[$sModule.'|'.$sAction] = [
                     'type' => 'switcher',
                     'name' => "Data[{$sModule}][{$sAction}]",
                     'caption' => _t('_adm_form_txt_groups_role_'.$sAction),
@@ -406,6 +411,14 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
     function getJsObject()
     {
         return 'oBxDolStudioFormsGroupsRoles';
+    }
+
+    function initDataSwitchers(&$aInputs) {
+        foreach ($aInputs as $sName => $aInput) {
+            if ($aInput['type'] != 'switcher') continue;
+            list ($sModule, $sAction) = explode('|', $sName);
+            $aInputs[$sName]['checked'] = isset($_POST['Data']) && isset($_POST['Data'][$sModule]) && isset($_POST['Data'][$sModule][$sAction]);
+        }
     }
     
     function getCode($isDisplayHeader = true)
