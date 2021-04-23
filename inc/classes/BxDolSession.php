@@ -9,6 +9,8 @@
 
 if (!defined('BX_DOL_SESSION_LIFETIME'))
     define('BX_DOL_SESSION_LIFETIME', 3600);
+if (!defined('BX_DOL_SESSION_SKIP_UPDATE'))
+    define('BX_DOL_SESSION_SKIP_UPDATE', 30);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
 class BxDolSession extends BxDolFactory implements iBxDolSingleton
