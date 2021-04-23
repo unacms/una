@@ -230,11 +230,12 @@ interface iBxDolProfileService
     public function serviceCheckAllowedProfileContact($iContentId);
     
     /**
-     * Check if posting in profile is allowed, for example posting in profile's timeline
+     * Check if posting of a certain type of content in profile is allowed, for example posting in profile's timeline
      * @param $iContentId content ID
+     * @param $sPostModule type of content to be posted
      * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
      */    
-    public function serviceCheckAllowedPostInProfile($iContentId);
+    public function serviceCheckAllowedPostInProfile($iContentId, $sPostModule = '');
 
     /**
      * Get profiles, current profile have relation with, like friends, joined groups and events

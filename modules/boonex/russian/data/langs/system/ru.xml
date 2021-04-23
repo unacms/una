@@ -3453,4 +3453,18 @@
     <string name="_sys_wiki_title_content"><![CDATA[{0} содержимое]]></string>
     <string name="_sys_wiki_title_time"><![CDATA[{0} обновлен]]></string>
     <string name="_sys_wiki_orig"><![CDATA[Ориг.]]></string>
+
+	<string name="_adm_lmi_cpt_groups_roles"><![CDATA[Роли]]></string>
+	<string name="_adm_form_txt_groups_roles_add_popup"><![CDATA[Создать роль]]></string>
+	<string name="_adm_form_txt_groups_role_value"><![CDATA[Имя роли]]></string>
+	<string name="_adm_form_txt_groups_role_value_err"><![CDATA[Имя роли обязательно]]></string>
+	<string name="_adm_form_txt_groups_roles_edit_popup"><![CDATA[Редактировать роль]]></string>
+	<string name="_adm_form_txt_groups_role_manage_fans"><![CDATA[Управлять участниками]]></string>
+	<string name="_adm_form_txt_groups_role_manage_roles"><![CDATA[Управлять ролями]]></string>
+	<string name="_adm_form_txt_groups_role_edit"><![CDATA[Редактировать]]></string>
+	<string name="_adm_form_txt_groups_role_invite"><![CDATA[Приглашать]]></string>
+	<string name="_adm_form_txt_groups_role_change_cover"><![CDATA[Менять обложку]]></string>
+	<string name="_adm_form_txt_groups_role_post"><![CDATA[Создавать]]></string>
+	<string name="_adm_form_txt_groups_role_edit_any"><![CDATA[Редактировать любое/все]]></string>
+	<string name="_adm_form_txt_groups_role_delete_any"><![CDATA[Удалять любое/все]]></string>
 </resources>

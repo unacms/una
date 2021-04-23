@@ -4341,6 +4341,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 ('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 1000, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', ''),
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
+('sys_studio_groups_roles', 'Sql', 'SELECT * FROM `sys_form_pre_values` WHERE 1 ', 'sys_form_pre_values', 'id', 'Order', '', '', 20, NULL, 'start', '', '', 'LKey', 'like', '', '', 'BxTemplStudioFormsGroupsRoles', ''),
 
 ('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', 'content_module,profile_id,content_id,context_profile_id,added', 'action_lang_key', 'BxTemplAuditGrid', ''),
 
@@ -4484,6 +4485,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_categories', 'added', '_adm_form_txt_categories_added', '15%', 1, 25, '', 6),
 ('sys_studio_categories', 'actions', '', '20%', 0, 0, '', 7),
 
+('sys_studio_groups_roles', 'order', '', '2%', 0, 0, '', 1),
+('sys_studio_groups_roles', 'LKey', '_adm_rl_txt_title', '40%', 1, 0, '', 2),
+('sys_studio_groups_roles', 'actions_list', '_adm_rl_txt_actions', '10%', 0, 35, '', 3),
+('sys_studio_groups_roles', 'actions', '', '48%', 0, 0, '', 4),
+
 ('sys_audit_administration', 'added', '_adm_form_txt_audit_added', '15%', 1, 25, '', 1),
 ('sys_audit_administration', 'profile_id', '_adm_form_txt_audit_profile', '15%', 1, 25, '', 2),
 ('sys_audit_administration', 'content_id', '_adm_form_txt_audit_content', '20%', 1, 25, '', 3),
@@ -4587,6 +4593,10 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_categories', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('sys_studio_categories', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_categories', 'independent', 'add', '_adm_form_btn_categories_add', '', 0, 1),
+
+('sys_studio_groups_roles', 'independent', 'add', '_adm_rl_btn_role_add', '', 0, 1),
+('sys_studio_groups_roles', 'single', 'edit', '_adm_rl_btn_role_edit', 'pencil-alt', 0, 1),
+('sys_studio_groups_roles', 'single', 'delete', '_adm_rl_btn_role_delete', 'remove', 1, 3),
 
 ('sys_badges_administration', 'bulk', 'delete', '_adm_form_btn_badges_delete', '', 1, 1),
 ('sys_badges_administration', 'single', 'edit', '', 'pencil-alt', 0, 1),
