@@ -1398,12 +1398,18 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
 
         // notify about admin status
-        if(!empty($CNF['EMAIL_FAN_SET_ROLE']) && $iFanProfileId != $iProfileId)
+        if(!empty($CNF['EMAIL_FAN_SET_ROLE']) && $iFanProfileId != $iProfileId) {
+            $aSetRoles = is_array($mixedRole) ? $mixedRole : [$mixedRole];
+            $aRolesNames = [];
+            foreach ($aSetRoles as $iRole)
+                $aRolesNames[] = $aRoles[(int)$iRole];
+
             sendMailTemplate($CNF['EMAIL_FAN_SET_ROLE'], 0, $iFanProfileId, array(
                 'EntryUrl' => $oGroupProfile->getUrl(),
                 'EntryTitle' => $oGroupProfile->getDisplayName(),
-                'Role' => !is_array($mixedRole) ? $aRoles[(int)$mixedRole] : 'TODO: Add List of Roles'
+                'Role' => implode(', ', $aRolesNames),
             ), BX_EMAIL_NOTIFY);
+        }
 
         bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             'object_author_id' => $iGroupProfileId,
