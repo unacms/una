@@ -32,8 +32,16 @@ class BxDolSessionQuery extends BxDolDb
     }
     function save($sId, $aSet)
     {
-    	$aSet['id'] = $sId;
-        return (int)$this->query("REPLACE INTO `" . $this->sTable . "` SET " . $this->arrayToSQL($aSet) . ", `date`=UNIX_TIMESTAMP()") > 0;
+        $aSet['date'] = time();
+        $aUpdate = $aSet;
+        $aSet['id'] = $sId;
+        $aBind = $aSet;
+        unset($aBind['date']);
+
+        if ($this->getOne("SELECT `date` FROM `" . $this->sTable . "` WHERE `id` = :id AND `data` = :data AND `user_id` = :user_id AND `date` > UNIX_TIMESTAMP() - " . BX_DOL_SESSION_SKIP_UPDATE, $aBind))
+            return true;
+
+        return (int)$this->query("INSERT INTO `" . $this->sTable . "` SET " . $this->arrayToSQL($aSet) . " ON DUPLICATE KEY UPDATE " . $this->arrayToSQL($aUpdate)) > 0;
     }
 	function update($sId, $aSet = array())
     {
