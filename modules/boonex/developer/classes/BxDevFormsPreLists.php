@@ -120,7 +120,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
 
         $aValues = array();
         $this->oDb->getValues(array('type' => 'by_key', 'value' => $aList['key']), $aValues, false);
-        $sContentInsert .= $this->oModule->_oDb->getQueryInsert('sys_form_pre_values', $aValues, false, array('id', 'key', 'value', 'lkey', 'lkey2', 'order'));
+        $sContentInsert .= $this->oModule->_oDb->getQueryInsert('sys_form_pre_values', $aValues, false, array('id', 'key', 'value', 'lkey', 'lkey2', 'data', 'order'));
         $sContentDelete .= $this->oModule->_oDb->getQueryDelete('sys_form_pre_values', 'Key', array(array('Key' => $aList['key'])), false);
 
         $aFormStructure = array(

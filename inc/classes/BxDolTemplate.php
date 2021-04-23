@@ -2450,7 +2450,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 continue;
 
             $aKeys[] = "'" . $aKeyWrappers['left'] . $aKeysSrc[$i] . $aKeyWrappers['right'] . "'s";
-            $aValues[] = str_replace('$', '\\$', $aValuesSrc[$i]);
+            $aValues[] = str_replace('$', '\\$', str_replace('\\', '\\\\', $aValuesSrc[$i]));
         }
 
         //--- Parse keys with constructions ---//
@@ -2485,7 +2485,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 continue;
 
             $aKeys[] = $sKey;
-            $aValues[] = str_replace('$', '\\$', $sValue);
+            $aValues[] = str_replace('$', '\\$', str_replace('\\', '\\\\', $sValue));
         }
 
         try {

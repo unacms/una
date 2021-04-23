@@ -160,6 +160,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
                     'name' => 'insert',
                     'caption' => _t('_bx_dev_frm_txt_forms_export_insert'),
                     'value' => $sContentInsert,
+                    'code' => 1
                 ),
                 'delete' => array(
                     'type' => 'textarea',
