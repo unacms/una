@@ -285,6 +285,12 @@ BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
                 $('#' + sId).dolPopup($this._oPopupOptions);
             }        
         }
+        if (oData && oData.reload != undefined && parseInt(oData.reload) == 1) {
+            document.location = document.location;
+        }
+        if (oData && oData.redirect != undefined && oData.redirect.length != 0) {
+            document.location = oData.redirect;
+        }
         if (oData && undefined != oData.eval) {
             eval(oData.eval);
         }

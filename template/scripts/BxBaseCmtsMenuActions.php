@@ -107,6 +107,9 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!parent::_isVisible($a))
             return false;
 
+        if((int)$this->_aCmt['cmt_pinned'] > 0 && !in_array($a['name'], array('item-pin', 'item-unpin', 'item-more')))
+            return false;
+
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {

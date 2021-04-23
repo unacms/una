@@ -26,6 +26,34 @@ class BxAccntModule extends BxBaseModGeneralModule
         return array ();
     }
 
+    public function serviceGetOptionsExportTo()
+    {
+        return array(
+            'csv' => _t('_bx_accnt_txt_export_to_csv'),
+            'xml' => _t('_bx_accnt_txt_export_to_xml'),
+        );
+    }
+
+    public function serviceGetOptionsExportFields()
+    {
+        $aResult = array();
+
+        $aFields = $this->_oDb->getAccountFields();
+        if(empty($aFields['original']) || !is_array($aFields['original']))
+            return $aResult;
+
+        foreach($aFields['original'] as $sField) {
+            $sLangKey = '_bx_accnt_txt_field_' . $sField;
+            $sLangString = _t($sLangKey);
+            if(strcmp($sLangKey, $sLangString) == 0)
+                continue;
+
+            $aResult[] = array('key' => $sField, 'value' => $sLangString);
+        }
+
+        return $aResult;
+    }
+
     /**
      * @page service Service Calls
      * @section bx_accounts Accounts
@@ -43,21 +71,21 @@ class BxAccntModule extends BxBaseModGeneralModule
     /** 
      * @ref bx_accounts-get_menu_addon_manage_tools "get_menu_addon_manage_tools"
      */
-	public function serviceGetMenuAddonManageTools()
-	{
-		bx_import('SearchResult', $this->_aModule);
+    public function serviceGetMenuAddonManageTools()
+    {
+        bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
         $o->unsetPaginate();
         $iNumTotal = $o->getNum();
         
         $o->fillFilters(array(
-			'unconfirmed' => 1,
+            'unconfirmed' => 1,
             'non_robot' => 'Robot'
         ));
       
         return array('counter1_value' => $o->getNum(),'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
-	}
+    }
     
     public function checkAllowedConfirm(&$aDataEntry, $isPerformAction = false)
     {

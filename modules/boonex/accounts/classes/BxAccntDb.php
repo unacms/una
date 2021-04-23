@@ -16,6 +16,16 @@ class BxAccntDb extends BxBaseModGeneralDb
         parent::__construct($oConfig);
     }
 
+    public function getAccountFields()
+    {
+        return $this->getFields('sys_accounts');
+    }
+
+    public function getAccountIds()
+    {
+    	return $this->getColumn("SELECT `id` FROM `sys_accounts` WHERE 1", "id");
+    }
+
     public function updateAccount($aSet, $aWhere)
     {
     	return (int)$this->query("UPDATE `sys_accounts` SET " . $this->arrayToSQL($aSet) . " WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;

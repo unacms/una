@@ -13,7 +13,11 @@ define('BX_DOL_QUEUE_COMPLETE', 'complete'); ///< file is already processed
 define('BX_DOL_QUEUE_FAILED', 'failed'); ///< file processing was failed
 define('BX_DOL_QUEUE_DELETE', 'delete'); ///< file is subject to delete
 
-define('BX_DOL_MAX_RETINA_DIMENSION_MOBILE', 500); ///< max image dimension which will be processes as retine on mobiles
+if (!defined('BX_DOL_MAX_RETINA_DIMENSION_MOBILE'))
+    define('BX_DOL_MAX_RETINA_DIMENSION_MOBILE', 500); ///< max image dimension which will be processes as retine on mobiles
+
+if (!defined('BX_DOL_SKIP_ATIME_UPDATE'))
+    define('BX_DOL_SKIP_ATIME_UPDATE', 43200); ///< time interval to not update last access time, it should be comaparatively low compared to atime_prining
 
 /**
  * Base class for @see BxDolTranscoderImage and @see BxDolTranscoderVideo transcoders

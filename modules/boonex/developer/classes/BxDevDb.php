@@ -29,15 +29,12 @@ class BxDevDb extends BxDolModuleDb
             $aValues = array_values($aItem);
             $iValues = count($aValues);
 
-            foreach ($aValues as $iKey => $sValue)
-                $aValues[$iKey] = BxDevFunctions::dbAddSlashes($sValue, true);
-
             if($bFirst) {
                 $sContent .= "INSERT INTO `" . $sTable . "`(`" . implode("`, `", $aKeys) . "`) VALUES \n";
                 $bFirst = false;
             }
 
-            $sSql = "(" . implode(", ", array_fill(0, $iValues, "?")) . "),\n";
+            $sSql = "(" . implode(", ", array_fill(0, $iValues, "?")) . "),\n";            
             $sSql = call_user_func_array(array($this, 'prepareAsString'), array_merge(array($sSql), $aValues));
 
             $sContent .= $sSql;

@@ -1449,7 +1449,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent, $aBrowseParams);
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
-        $bPinned = (int)$aEvent['pinned'] > 0;
+        $bPinned = $aBrowseParams['type'] == BX_BASE_MOD_NTFS_TYPE_OWNER && (int)$aEvent['pinned'] > 0;
         $bSticked = (int)$aEvent['sticked'] > 0;
         $bPromoted = (int)$aEvent['promoted'] > 0;
 
