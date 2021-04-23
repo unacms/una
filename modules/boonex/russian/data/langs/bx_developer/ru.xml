@@ -491,7 +491,7 @@
     <string name="_bx_dev_pgt_txt_sys_keys_content"><![CDATA[Ключи]]></string>
     <string name="_bx_dev_pgt_txt_keys_content"><![CDATA[Ключи]]></string>
     <string name="_bx_dev_pgt_err_keys_content"><![CDATA[Здесь нужно ввести значение]]></string>
-    <string name="_bx_dev_pgt_inf_keys_content"><![CDATA[Используйте XML формат, как показано в примере ниже:<br />&lt;string name="_key_first"&gt;&lt;![CDATA[Первое значение]]\&gt;&lt;/string&gt;<br />&lt;string name="_key_second"&gt;&lt;![CDATA[Второе значение]]\&gt;&lt;/string&gt;]]></string>
+    <string name="_bx_dev_pgt_inf_keys_content"><![CDATA[Используйте XML формат, как показано в примере ниже:<br />&lt;string name="_key_first"&gt;&lt;![CDATA[Первое значение]]&gt;&lt;/string&gt;<br />&lt;string name="_key_second"&gt;&lt;![CDATA[Второе значение]]&gt;&lt;/string&gt;]]></string>
     <string name="_bx_dev_pgt_txt_sys_keys_replace"><![CDATA[Заменить]]></string>
     <string name="_bx_dev_pgt_txt_keys_replace"><![CDATA[Принудительно заменить, если существует]]></string>
     <string name="_bx_dev_pgt_btn_sys_keys_submit"><![CDATA[Выполнить]]></string>

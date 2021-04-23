@@ -187,6 +187,39 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
     {
         return $this->_serviceBrowse ('past', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_events Events
+     * @subsection bx_events-browse Browse
+     * @subsubsection bx_events-browse_past_profiles browse_past_profiles_by_params
+     * 
+     * @code bx_srv('bx_events', 'browse_past_profiles_by_params', [...]); @endcode
+     * 
+     * Browse past events
+     * 
+     * @param $aParams array with all parameters
+     *
+     * @see BxEventsModule::serviceBrowsePastProfilesByParams
+     */
+    /** 
+     * @ref bx_events-browse_past_profiles_by_params "browse_past_profiles_by_params"
+     */
+    public function serviceBrowsePastProfilesByParams ($aParams)
+    {
+        $bDisplayEmptyMsg = false;
+        if(isset($aParams['empty_message'])) {
+            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+        return $this->_serviceBrowse ('past', $aParams, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
 
     /**
      * @page service Service Calls

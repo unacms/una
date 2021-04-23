@@ -210,7 +210,8 @@ BxDolCmts.prototype.cmtPin = function(oLink, iCmtId, iWay, bHideMenu) {
                         CmtParent: oData.parent_id,
                         CmtBrowse: $this._sBrowseType,
                         CmtFilter: $this._sBrowseFilter,
-                        CmtDisplay: $this._sDisplayType
+                        CmtDisplay: $this._sDisplayType,
+                        CmtPinned: 1
                     }, function(sListId, sContent) {
                         $this._loadingInBlock(oCmt, false);
 
@@ -684,7 +685,7 @@ BxDolCmts.prototype._getCmts = function (oElement, oRequestParams, onLoad)
     oData['action'] = 'GetCmts';
     oData = $.extend({}, oData, oRequestParams);
 
-    var sListId =  this._sRootId + ' #cmt' + oData['CmtParent'] + ' > ul.cmts-all:first';
+    var sListId =  this._sRootId + ' #cmt' + oData['CmtParent'] + ' > ul.cmts-' + (oRequestParams.CmtPinned ? 'pinned' : 'all') + ':first';
 
     if(oElement)
         this._loadingInBlock(oElement, true);
@@ -693,13 +694,13 @@ BxDolCmts.prototype._getCmts = function (oElement, oRequestParams, onLoad)
         this._sActionsUrl,
         oData,
         function(s) {
-        	if(oElement)
-        		$this._loadingInBlock(oElement, false);
+            if(oElement)
+                $this._loadingInBlock(oElement, false);
 
-        	if(typeof onLoad == 'function')
-    			onLoad(sListId, s);
-        	else
-        		$this._cmtsAppend(sListId, s);
+            if(typeof onLoad == 'function')
+                onLoad(sListId, s);
+            else
+                $this._cmtsAppend(sListId, s);
         }
     );
 };

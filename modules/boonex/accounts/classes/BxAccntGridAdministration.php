@@ -225,6 +225,47 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
+
+    public function performActionExport()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aFields = explode(',', getParam($CNF['PARAM_EXPORT_FIELDS']));
+        if(empty($aFields) || !is_array($aFields))
+            return echoJson(array());
+
+        
+        $aTitles = $aConverters = array();
+        foreach($aFields as $sField) {
+            $aTitles[$sField] = _t('_bx_accnt_txt_field_' . $sField);
+            
+            $sConverter = '_exportFieldConverter' . bx_gen_method_name($sField);
+            if(method_exists($this, $sConverter))
+                $aConverters[$sField] = $sConverter;
+        }
+
+        $sMethod = '_exportTo' . bx_gen_method_name(getParam($CNF['PARAM_EXPORT_TO']));
+        if(!method_exists($this, $sMethod))
+            return echoJson(array());
+
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds))
+            $aIds = $this->_oModule->_oDb->getAccountIds();
+
+        if(($aFile = $this->$sMethod($aIds, $aFields, $aTitles, $aConverters)) === false)
+            return echoJson(array());
+
+        list($sFilePath, $sFileUrl) = $aFile;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+        if($oStorage && ($iFileId = $oStorage->storeFileFromPath($sFilePath, true, bx_get_logged_profile_id())) !== false) {
+            $sFileUrl = $oStorage->getFileUrlById($iFileId);
+
+            @unlink($sFilePath);
+        }
+
+        return echoJson(array('redirect' => $sFileUrl));
+    }
     
     public function performActionConfirm()
     {
@@ -583,6 +624,107 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             return true;
         
         return parent::_isVisibleGrid($a);
+    }
+
+    protected function _exportToCsv($aIds, $aFields, $aTitles, $aConverters)
+    {
+        $sFileDiv = ';';
+        $sFileName = 'accounts-' . date('Y.m.d') . '.csv';
+        $sFilePath = BX_DIRECTORY_PATH_TMP . $sFileName;
+        $oFileHandler = fopen($sFilePath, 'w');
+        if(!$oFileHandler)
+            return false;
+
+        fputcsv($oFileHandler, $aTitles, $sFileDiv);
+
+        $aFieldsFlip = array_flip($aFields);
+        $oAccountQuery = BxDolAccountQuery::getInstance();
+
+        foreach($aIds as $iId) {
+            $aAccount = $oAccountQuery->getInfoById($iId);
+            if(empty($aAccount) || !is_array($aAccount))
+                continue;
+            
+            $aConvert = array_intersect_key($aConverters, $aAccount);
+            foreach($aConvert as $sField => $sMethod)
+                $aAccount[$sField] = $this->$sMethod($aAccount[$sField]);
+
+            fputcsv($oFileHandler, array_intersect_key($aAccount, $aFieldsFlip), $sFileDiv);
+        }
+
+        fclose($oFileHandler);
+
+        return array($sFilePath, BX_DOL_URL_ROOT . 'tmp/' . $sFileName);
+    }
+
+    protected function _exportToXml($aIds, $aFields, $aTitles, $aConverters)
+    {
+        $sFileName = 'accounts-' . date('Y.m.d') . '.xml';
+        $sFilePath = BX_DIRECTORY_PATH_TMP . $sFileName;
+        $oFileHandler = fopen($sFilePath, 'w');
+        if(!$oFileHandler)
+            return false;
+
+        $aFieldsFlip = array_flip($aFields);
+        $oAccountQuery = BxDolAccountQuery::getInstance();
+
+        $oXML = xmlwriter_open_memory();
+        xmlwriter_set_indent($oXML, 1);
+        xmlwriter_set_indent_string($oXML, '  ');
+        
+        xmlwriter_start_document($oXML, '1.0', 'UTF-8');
+        xmlwriter_start_element($oXML, 'accounts');
+
+        foreach($aIds as $iId) {
+            $aAccount = $oAccountQuery->getInfoById($iId);
+            if(empty($aAccount) || !is_array($aAccount))
+                continue;
+
+            $aConvert = array_intersect_key($aConverters, $aAccount);
+            foreach($aConvert as $sField => $sMethod)
+                $aAccount[$sField] = $this->$sMethod($aAccount[$sField]);
+
+            xmlwriter_start_element($oXML, 'account');
+            $aAccountFields = array_intersect_key($aAccount, $aFieldsFlip);
+            foreach($aAccountFields as $sAccountField => $sAccountValue) {
+                xmlwriter_start_element($oXML, $sAccountField);
+                xmlwriter_write_cdata($oXML, $sAccountValue);
+                xmlwriter_end_element($oXML);
+            }
+            xmlwriter_end_element($oXML);
+        }
+
+        xmlwriter_end_document($oXML);
+
+        fwrite($oFileHandler, xmlwriter_output_memory($oXML));
+        fclose($oFileHandler);
+
+        return array($sFilePath, BX_DOL_URL_ROOT . 'tmp/' . $sFileName);
+    }
+
+    protected function _exportFieldConverterAdded($mixedValue)
+    {
+        return $this->__exportFieldConverterDate($mixedValue);
+    }
+
+    protected function _exportFieldConverterChanged($mixedValue)
+    {
+        return $this->__exportFieldConverterDate($mixedValue);
+    }
+
+    protected function _exportFieldConverterLogged($mixedValue)
+    {
+        return $this->__exportFieldConverterDateTime($mixedValue);
+    }
+
+    protected function __exportFieldConverterDate($mixedValue)
+    {
+        return date('Y.m.d', $mixedValue);
+    }
+
+    protected function __exportFieldConverterDateTime($mixedValue)
+    {
+        return date('Y.m.d H:i', $mixedValue);
     }
 }
 

@@ -47,8 +47,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $bValueId = $aValues && !empty($aValues['id']);
         $iValueId = $bValueId ? (int)$aValues['id'] : 0;
 
-        if(isset($this->aInputs[$CNF['FIELD_ATTACHMENTS']])) {
-            $oMenu = $this->_oModule->getAttachmentsMenuObject();
+        if(isset($this->aInputs[$CNF['FIELD_ATTACHMENTS']]) && ($oMenu = $this->_oModule->getAttachmentsMenuObject()) !== false) {
             $oMenu->setEventById($iValueId);
             $oMenu->setUploadersInfo($this->_aUploadersInfo);
 

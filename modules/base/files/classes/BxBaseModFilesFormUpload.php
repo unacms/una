@@ -57,8 +57,10 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
         // get values form main form to pass it to each file later
         $aFormValues = array();
         foreach ($this->aInputs as $aInput) {
-            if ($aInput['name'] && isset($aInput['value']) && $aInput['value'] && !is_array($aInput['value']) && $aInput['name'] != 'do_submit' && $aInput['name'] != $CNF['FIELD_PHOTO'] && $aInput['name'] != 'profile_id')
-                $aFormValues[$aInput['name']] = $aInput['value'];
+            if(in_array($aInput['name'], array('do_submit', 'profile_id', $CNF['FIELD_PHOTO'])))
+                continue;
+
+            $aFormValues[$aInput['name']] = $this->getCleanValue($aInput['name']);
         }
 
         $aContentIds = array();

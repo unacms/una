@@ -93,9 +93,15 @@ class BxDolTranscoderQuery extends BxDolDb
     public function updateAccessTime($mixedHandler)
     {
         $iTime = time();
+
+        if ($this->getOne("SELECT `atime` FROM {$this->_sTableFiles} WHERE `transcoder_object` = :obj AND `handler` = :hndl AND `atime` > :ts LIMIT 1", array('obj' => $this->_aObject['object'], 'hndl' => (string)$mixedHandler, 'ts' => $iTime - BX_DOL_SKIP_ATIME_UPDATE))) // avoid deadlocks by making changes less frequent
+            return true;
+
         $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `atime` = ? WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $iTime, $this->_aObject['object'], (string)$mixedHandler);
         $mixedRes = $this->res($sQuery);
+
         $this->setReadOnlyMode(true);
+
         return $mixedRes;
     }
 

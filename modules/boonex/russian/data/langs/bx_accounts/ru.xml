@@ -3,6 +3,9 @@
     <string name="_bx_accnt"><![CDATA[Аккаунты]]></string>
     <string name="_bx_accounts"><![CDATA[Аккаунты]]></string>
 
+    <string name="_bx_accounts_option_export_to"><![CDATA[Экспортировать в]]></string>
+    <string name="_bx_accounts_option_export_fields"><![CDATA[Экспортируемые поля]]></string>
+
     <string name="_bx_accounts_form_display_account_settings_email_popup"><![CDATA[Изменить email]]></string>
     <string name="_bx_accounts_form_display_account_create_popup"><![CDATA[Создать новый аккаунт]]></string>
     <string name="_bx_accounts_form_display_account_settings_password_popup"><![CDATA[Сбросить пароль]]></string>
@@ -44,7 +47,7 @@
     <string name="_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption"><![CDATA[неподтверждено]]></string>
 
     <string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Редактировать любой аккаунт]]></string>
-	<string name="_bx_accnt_acl_action_delete_any_account"><![CDATA[Удалять любой аккаунт]]></string>
+    <string name="_bx_accnt_acl_action_delete_any_account"><![CDATA[Удалять любой аккаунт]]></string>
 
     <string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Все]]></string>
@@ -68,6 +71,7 @@
     <string name="_bx_accnt_grid_action_title_adm_suspend"><![CDATA[Заблокировать]]></string>
     <string name="_bx_accnt_grid_action_title_adm_confirm"><![CDATA[Подтвердить]]></string>
     <string name="_bx_accnt_grid_action_title_adm_edit_email"><![CDATA[Изменить email]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_export"><![CDATA[Экспортировать]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_cemail"><![CDATA[Переслать подтверждение]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_remail"><![CDATA[Переслать сброс пароля]]></string>
     <string name="_bx_accnt_grid_action_title_adm_reset_password"><![CDATA[Сбросить пароль]]></string>
@@ -92,4 +96,16 @@
     <string name="_bx_accnt_txt_see_more"><![CDATA[Ещё]]></string>
     <string name="_bx_accnt_txt_copy_to_clipboard"><![CDATA[Скопировать]]></string>
     <string name="_bx_accnt_txt_not_operator"><![CDATA[Не оператор]]></string>
+    <string name="_bx_accnt_txt_export_to_csv"><![CDATA[CSV]]></string>
+    <string name="_bx_accnt_txt_export_to_xml"><![CDATA[XML]]></string>
+    <string name="_bx_accnt_txt_field_name"><![CDATA[Имя]]></string>
+    <string name="_bx_accnt_txt_field_email"><![CDATA[Email]]></string>
+    <string name="_bx_accnt_txt_field_email_confirmed"><![CDATA[Email подтвержден]]></string>
+    <string name="_bx_accnt_txt_field_phone"><![CDATA[Телефон]]></string>
+    <string name="_bx_accnt_txt_field_receive_updates"><![CDATA[Получать обновления]]></string>
+    <string name="_bx_accnt_txt_field_receive_news"><![CDATA[Получать новости]]></string>
+    <string name="_bx_accnt_txt_field_added"><![CDATA[Создан]]></string>
+    <string name="_bx_accnt_txt_field_changed"><![CDATA[Изменен]]></string>
+    <string name="_bx_accnt_txt_field_logged"><![CDATA[Заходил]]></string>
+    <string name="_bx_accnt_txt_field_ip"><![CDATA[IP]]></string>
 </resources>
