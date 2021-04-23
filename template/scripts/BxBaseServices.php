@@ -448,7 +448,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     /**
      * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
      */ 
-    public function serviceCheckAllowedPostInProfile($iContentId)
+    public function serviceCheckAllowedPostInProfile($iContentId, $sPostModule = '')
     {
         return _t('_Access denied');
     }

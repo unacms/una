@@ -30,6 +30,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
             BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
             BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => array('icon' => 'folder'),
+            BX_DOL_STUDIO_FORM_TYPE_GROUPS_ROLES => array('icon' => 'user'),
         );
 
         $this->aGridObjects = array(
@@ -42,6 +43,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             'search_fields' => 'sys_studio_search_forms_fields',
             'labels' => 'sys_studio_labels',
             'categories' => 'sys_studio_categories',
+            'groups_roles' => 'sys_studio_groups_roles',
     	);
     }
 
@@ -205,6 +207,16 @@ class BxBaseStudioForms extends BxDolStudioForms
     protected function getCategoriesObject()
     {
         return $this->getGridObject($this->aGridObjects['categories']);
+    }
+
+    protected function getGroupsRoles()
+    {
+        return $this->getGrid($this->aGridObjects['groups_roles']);
+    }
+
+    protected function getGroupsRolesObject()
+    {
+        return $this->getGridObject($this->aGridObjects['groups_roles']);
     }
 
     protected function getGridObject($sObjectName)

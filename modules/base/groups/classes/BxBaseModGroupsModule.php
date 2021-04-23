@@ -22,6 +22,8 @@ define('BX_BASE_MOD_GROUPS_ACTION_INVITE', 'invite');
 define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS', 'manage_fans');
 define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES', 'manage_roles');
 define('BX_BASE_MOD_GROUPS_ACTION_DELETE', 'delete');
+define('BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT', 'edit_any');
+define('BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT', 'delete_any');
 
 define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY', 'day');
 define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_WEEK', 'week');
@@ -1113,19 +1115,31 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId)
     {
-        $bResult = false;
-
         $iProfileRole = $this->_oDb->getRole($iGroupProfileId, $iProfileId);
-        if(!empty($iProfileRole))
-            switch($sAction) {
-                case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
-                    if($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR))
-                        $bResult = true;
-                    break;
 
-                default:
-                    $bResult = true;
+        $bResult = $iProfileId ? $this->isAllowedModuleActionByRole($this->getName(), $sAction, $iProfileRole) : false;
+        // in case neithe of the profile's roles are having permissions set explicitly
+        if ($bResult === NULL) {
+            $bResult = false;
+            if(!empty($iProfileRole)) {
+                switch ($sAction) {
+                    case BX_BASE_MOD_GROUPS_ACTION_DELETE:
+                    case BX_BASE_MOD_GROUPS_ACTION_EDIT:
+                    case BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER:
+                    case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
+                        if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)) $bResult = true;
+                        break;
+                    case BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS:
+                    case BX_BASE_MOD_GROUPS_ACTION_INVITE:
+                    case BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT:
+                    case BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT:
+                        if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) $bResult = true;
+                        break;
+                    default:
+                        $bResult = true;
+                }
             }
+        }
 
         // call alert to allow custom checks
         bx_alert('system', 'check_allowed_action_by_role', 0, 0, array(
@@ -1140,6 +1154,56 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         ));
 
         return $bResult;
+    }
+
+    public function isAllowedModuleActionByRole($sModule, $sAction, $iProfileRole) {
+        static $aRoles;
+        if (!$aRoles && isset($this->_oConfig->CNF['OBJECT_PRE_LIST_ROLES']) && !empty($this->_oConfig->CNF['OBJECT_PRE_LIST_ROLES']))
+            $aRoles = BxBaseFormView::getDataItems($this->_oConfig->CNF['OBJECT_PRE_LIST_ROLES'], true, BX_DATA_VALUES_ALL);
+
+        if ($aRoles) {
+            foreach ($aRoles as $iRole => $aRoleData) {
+                if ($iRole == 0 && $iProfileRole == 0 || $iRole > 0 && $this->isRole($iProfileRole, $iRole)) {
+                    $mPermissions = isset($aRoles[$iRole]) && isset($aRoles[$iRole]['Data']) && !empty($aRoles[$iRole]['Data']) ? unserialize($aRoles[$iRole]['Data']) : false;
+                    if ($mPermissions && isset($mPermissions[$sModule])) {
+                         return isset($mPermissions[$sModule][$sAction]) && $mPermissions[$sModule][$sAction];
+                    } else {
+                        // default values in case a role has not been specified explicitly
+                        switch ($sAction) {
+                            case BX_BASE_MOD_GROUPS_ACTION_EDIT:
+                            case BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER:
+                            case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
+                                if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)) return true;
+                                break;
+                            case BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS:
+                            case BX_BASE_MOD_GROUPS_ACTION_INVITE:
+                            case BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT:
+                            case BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT:
+                                if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) return true;
+                                break;
+                            // for the rest of the actions like "Post" still return NULL
+                            // to let the code go down the stack of checkAllowed* function calls for a default behavior
+                        }
+                    }
+                }
+            }
+        }
+
+        return NULL;
+    }
+
+    public function isAllowedModuleActionByProfile($iContentId, $sPostModule, $sAction, $iProfileId = 0) {
+        if (!$iProfileId) $iProfileId = bx_get_logged_profile_id();
+
+        if ($iProfileId && $this->isFan($iContentId, $iProfileId)) {
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+            $iProfileRole = $this->_oDb->getRole($oGroupProfile->id(), $iProfileId);
+            $bResult = $this->isAllowedModuleActionByRole($sPostModule, $sAction, $iProfileRole);
+            if ($bResult === true) return CHECK_ACTION_RESULT_ALLOWED;
+            if ($bResult === false) return _t('_sys_txt_access_denied');
+        }
+
+        return NULL; //undefined, because the profile is either not a fan or his role is not having permissions defined. So process the default way then.
     }
 
     public function isRole($iProfileRole, $iRole)
@@ -1398,12 +1462,18 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
 
         // notify about admin status
-        if(!empty($CNF['EMAIL_FAN_SET_ROLE']) && $iFanProfileId != $iProfileId)
+        if(!empty($CNF['EMAIL_FAN_SET_ROLE']) && $iFanProfileId != $iProfileId) {
+            $aSetRoles = is_array($mixedRole) ? $mixedRole : [$mixedRole];
+            $aRolesNames = [];
+            foreach ($aSetRoles as $iRole)
+                $aRolesNames[] = $aRoles[(int)$iRole];
+
             sendMailTemplate($CNF['EMAIL_FAN_SET_ROLE'], 0, $iFanProfileId, array(
                 'EntryUrl' => $oGroupProfile->getUrl(),
                 'EntryTitle' => $oGroupProfile->getDisplayName(),
-                'Role' => !is_array($mixedRole) ? $aRoles[(int)$mixedRole] : 'TODO: Add List of Roles'
+                'Role' => implode(', ', $aRolesNames),
             ), BX_EMAIL_NOTIFY);
+        }
 
         bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             'object_author_id' => $iGroupProfileId,

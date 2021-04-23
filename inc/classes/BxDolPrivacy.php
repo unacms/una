@@ -418,10 +418,21 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $oModule = BxDolModule::getInstance($aModule['name']);
             
             $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
+
+            // for an organization we should treat the organization profile itself as a participant of itself
+            // to be able to post into an organization's context while being logged as that organization
+            if ($aModule['name'] == 'bx_organizations' && $oProfile->getModule() == 'bx_organizations') $a = array_merge($a, [$oProfile->id()]);
+
             $aSpaces = array();       
             foreach ($a as $iProfileId) {
                 if (!($o = BxDolProfile::getInstance($iProfileId)))
                     continue;
+
+                // check whether a profile is allowed to post this type of content to a context
+                $oConnectedProfile = BxDolProfile::getInstance($iProfileId);
+                if (bx_srv($aModule['name'], 'check_allowed_post_in_profile', array($oConnectedProfile->getContentId(), $this->_aObject['module'])) !== CHECK_ACTION_RESULT_ALLOWED)
+                    continue;
+
                 $aSpaces[-$iProfileId] = array('key' => -$iProfileId, 'value' => $o->getDisplayName());
             }
 

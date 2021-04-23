@@ -509,15 +509,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             else
                 $a = array_merge($a, $o->getConnectedContentByType($iProfileId, $this->getName()));
         }
-        $a = array_unique($a);
-        $aRet = array();
-        foreach ($a as $iConnectedProfileId) {
+        $aRet = array_unique($a);
+
+        // the check for an ability to post in profile has been moved to BxDolPrivacy because we need to have an extended check
+        // with an ability to check for extended roles taking into account the type of content which is going be posted/edited
+        // so now this service returns just a fans, not filtered by an ability to post into an entry's context
+        /*foreach ($a as $iConnectedProfileId) {
             if (!($oConnectedProfile = BxDolProfile::getInstance($iConnectedProfileId)))
                 continue;
 
-            if (CHECK_ACTION_RESULT_ALLOWED === bx_srv($oConnectedProfile->getModule(), 'check_allowed_post_in_profile', array($oConnectedProfile->getContentId(), $iProfileId)))
+             if (CHECK_ACTION_RESULT_ALLOWED === bx_srv($oConnectedProfile->getModule(), 'check_allowed_post_in_profile', array($oConnectedProfile->getContentId(), $iProfileId)))
                 $aRet[] = $iConnectedProfileId;
-        }
+        }*/
 
         bx_alert('system', 'get_participating_profiles', $iProfileId, false, array(
             'module' => $this->_oConfig->getName(),
@@ -1255,8 +1258,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /**
      * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
      */
-    public function serviceCheckAllowedPostInProfile($iContentId)
+    public function serviceCheckAllowedPostInProfile($iContentId, $sPostModule = '')
     {
+        // for groups based profiles we do have a Role permissions which have a higher priority than the site-wide permissions.
+        if (method_exists($this, 'isAllowedModuleActionByProfile')) {
+            $bResult = $this->isAllowedModuleActionByProfile($iContentId, $sPostModule, 'post');
+            // if a profile is having a role and a role is having permissions set then it overrides the site-wide setting.
+            if ($bResult !== NULL) return $bResult;
+        }
+
         return $this->serviceCheckAllowedWithContent('Post', $iContentId);
     }
 
