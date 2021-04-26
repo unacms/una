@@ -175,6 +175,10 @@ class BxBaseCmts extends BxDolCmts
             'content_before' => $sContentBefore,
             'comments' => $sComments,
             'comments_pinned' => $sCommentsPinned,
+            'bx_if:show_divider_hidden' => array(
+                'condition' => empty($sCommentsPinned),
+                'content' => array()
+            ),
             'content_after' => $sContentAfter,
             'post_form_top' => $sPostFormTop,
             'post_form_bottom'  => $sPostFormBottom,
