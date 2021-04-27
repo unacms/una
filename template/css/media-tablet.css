@@ -5,6 +5,7 @@ html.bx-media-tablet {
 
 /* never visible - used to check MQ */
 .bx-media-tablet body::before {
+    display: none;
     content: 'tablet';
 }
 
