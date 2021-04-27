@@ -1112,6 +1112,14 @@ function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel, oParams)
 }
 
 /**
+ * Check if mobile or desktop device.
+ */
+function bx_check_mq()
+{
+    return window.getComputedStyle(document.querySelector('body'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
+}
+
+/**
  * This function loads the passed list of js files and executes callback function when the all files are loaded.
  * In case when this function is called for dynamic loading of the same file but many times (like Plyr video init)
  * it allows to avoid multiply loadings of the same file.
