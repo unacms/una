@@ -199,20 +199,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * Reset group's author for particular group
      * @param $iContentId group id 
+     * @parem $iAuthorId new author profile ID
      * @return false of error, or number of updated records on success
      */
-    public function serviceReassignEntityAuthor ($iContentId)
+    public function serviceReassignEntityAuthor ($iContentId, $iAuthorId = 0)
     {
         $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
         if (!$aContentInfo)
             return false;
 
-        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
-            return false;
+        if (empty($iAuthorId)) {
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+            if (!$oGroupProfile)
+                return false;
 
-        $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
+            $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
+            if($aAdmins)
+                $iAuthorId = array_pop($aAdmins);
+        }
 
-        return $this->_oDb->updateAuthorById($iContentId, $aAdmins ? array_pop($aAdmins) : 0);
+        return $this->_oDb->updateAuthorById($iContentId, $iAuthorId);
     }
 
     /**
@@ -244,10 +250,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     
     /**
      * Reset group's author when author profile is deleted
-     * @param $iProfileId profile id 
+     * @param $iProfileId author profile id 
+     * @param $iAuthorId new author profile id 
      * @return number of changed items
      */
-    public function serviceReassignEntitiesByAuthor ($iProfileId)
+    public function serviceReassignEntitiesByAuthor ($iProfileId, $iAuthorId = 0)
     {
         $a = $this->_oDb->getEntriesByAuthor((int)$iProfileId);
         if (!$a)
@@ -255,7 +262,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $iCount = 0;
         foreach ($a as $aContentInfo)
-            $iCount += ('' == $this->serviceReassignEntityAuthor($aContentInfo[$this->_oConfig->CNF['FIELD_ID']]) ? 1 : 0);
+            $iCount += ('' == $this->serviceReassignEntityAuthor($aContentInfo[$this->_oConfig->CNF['FIELD_ID']], $iAuthorId) ? 1 : 0);
 
         return $iCount;
     }
