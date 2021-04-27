@@ -9,7 +9,7 @@
             sidebar = $('.cd-side-nav'),
             sidebarTrigger = $('.cd-nav-trigger');
 
-        var mq = checkMQ();            
+        var mq = bx_check_mq();            
         if (mq != 'mobile') {
             $(window).scroll(function () {
                 $.each($('.content-wrapper-wrp, .cd-side-nav'), function (index, val) {
