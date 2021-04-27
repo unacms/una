@@ -5,6 +5,7 @@ html.bx-media-desktop {
 
 /* never visible - used to check MQ */
 .bx-media-desktop body::before {
+    display: none;
     content: 'desktop';
 }
 
