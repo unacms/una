@@ -75,12 +75,13 @@
     <string name="_bx_groups_form_price_input_sys_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_groups_form_price_input_do_cancel"><![CDATA[Cancel]]></string>
 
-	<string name="_bx_groups_acl_action_create_profile"><![CDATA[Create Group]]></string>
-	<string name="_bx_groups_acl_action_delete_profile"><![CDATA[Delete Group]]></string>
-	<string name="_bx_groups_acl_action_view_profile"><![CDATA[View Group]]></string>
-	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Edit Any Group]]></string>
-	<string name="_bx_groups_acl_action_delete_any_profile"><![CDATA[Delete Any Group]]></string>
-  <string name="_bx_groups_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
+    <string name="_bx_groups_acl_action_create_profile"><![CDATA[Create Group]]></string>
+    <string name="_bx_groups_acl_action_use_paid_join"><![CDATA[Use paid join]]></string>
+    <string name="_bx_groups_acl_action_delete_profile"><![CDATA[Delete Group]]></string>
+    <string name="_bx_groups_acl_action_view_profile"><![CDATA[View Group]]></string>
+    <string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Edit Any Group]]></string>
+    <string name="_bx_groups_acl_action_delete_any_profile"><![CDATA[Delete Any Group]]></string>
+    <string name="_bx_groups_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
         <string name="_bx_groups_page_title_sys_entries_in_context"><![CDATA[Groups in context]]></string>
         <string name="_bx_groups_page_title_entries_in_context"><![CDATA[Groups in {display_name}]]></string>

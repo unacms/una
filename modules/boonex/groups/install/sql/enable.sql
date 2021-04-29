@@ -412,6 +412,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionProfileCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_groups', 'use paid join', NULL, '_bx_groups_acl_action_use_paid_join', '', 1, 1);
+SET @iIdActionUsePaidJoin = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_groups', 'delete entry', NULL, '_bx_groups_acl_action_delete_profile', '', 1, 1);
 SET @iIdActionProfileDelete = LAST_INSERT_ID();
 
@@ -451,6 +455,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionProfileCreate),
 (@iAdministrator, @iIdActionProfileCreate),
 (@iPremium, @iIdActionProfileCreate),
+
+-- use paid join
+(@iStandard, @iIdActionUsePaidJoin),
+(@iModerator, @iIdActionUsePaidJoin),
+(@iAdministrator, @iIdActionUsePaidJoin),
+(@iPremium, @iIdActionUsePaidJoin),
 
 -- profile delete
 (@iAccount, @iIdActionProfileDelete),

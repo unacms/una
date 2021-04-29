@@ -97,12 +97,12 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         if(!isset($CNF['TABLE_ADMINS']))
             return false;
 
-        $aBindings = array('group_profile_id' => $iGroupProfileId, 'fan_id' => $iFanId);
-        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id";
-        if($this->_oConfig->isPaidJoin()) {
-            $aBindings['role'] = 'BX_BASE_MOD_GROUPS_ROLE_COMMON';
-            $sWhereClause .= " AND `role` <> :role";
-        }
+        $aBindings = array(
+            'group_profile_id' => $iGroupProfileId, 
+            'fan_id' => $iFanId, 
+            'role' => BX_BASE_MOD_GROUPS_ROLE_COMMON
+        );
+        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id AND `role` <> :role";
 
         return $this->getOne("SELECT `id` FROM `" . $CNF['TABLE_ADMINS'] . "` WHERE 1" . $sWhereClause, $aBindings) ? true : false;
     }

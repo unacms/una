@@ -10,7 +10,6 @@
  */
 
 define('BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES', 'multi_roles');
-define('BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN', 'paid_join');
 
 define('BX_BASE_MOD_GROUPS_ROLE_COMMON', 0);
 define('BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR', 1);
@@ -563,6 +562,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$this->_oConfig->isPaidJoin())
             return '';
 
+        if($this->checkAllowedUsePaidJoin() !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox(_t('_Access denied'));
+
         if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox(_t('_Access denied'));
 
@@ -630,6 +632,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$this->_oConfig->isPaidJoin())
             return false;
 
+        if($this->checkAllowedUsePaidJoin() !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;        
+
         if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
@@ -664,6 +669,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return !$this->isPaidJoinByProfile($oProfile->id());
     }
 
+    /**
+     * Is Paid Join enabled as is and whether a group has pricing plans added.
+     * 
+     * @param type $iProfileId - Group profile ID.
+     * @return boolean
+     */
     public function isPaidJoinByProfile($iProfileId)
     {
         if(!$this->_oConfig->isPaidJoin())
@@ -1046,6 +1057,19 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
 
     // ====== PERMISSION METHODS
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
+    public function checkAllowedUsePaidJoin($isPerformAction = false)
+    {
+        // check ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'use paid join', $this->getName(), $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */

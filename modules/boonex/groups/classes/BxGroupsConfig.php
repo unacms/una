@@ -82,6 +82,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_groups_per_page_browse_recommended',
 
             'PARAM_MMODE' => 'bx_groups_members_mode',
+            'PARAM_PAID_JOIN_ENABLED' => true,
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_groups_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_groups_internal_notifications',
