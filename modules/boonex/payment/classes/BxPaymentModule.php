@@ -474,7 +474,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
             'profile_link' => $oBuyer->getUrl(),
             'items' => $sItems,
             'amount' => $aData['currency']['sign'] . sprintf("%.2f", (float)($aData['amount'])),
-            'date' => bx_time_js(time(), BX_FORMAT_DATE, true)
+            'date' => bx_time_js(time(), BX_FORMAT_DATE, true),
+            'pending_orders_link' => $this->getObjectOrders()->serviceGetPendingOrdersUrl()
         ), 0, $iSeller);
 
         $sEmail = '';
