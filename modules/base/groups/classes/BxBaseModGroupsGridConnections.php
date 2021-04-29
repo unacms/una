@@ -178,7 +178,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         if($this->_bManageMembers || $iProfileId == bx_get_logged_profile_id()) {
             $aRole = $this->_oModule->_oDb->getRoles(array('type' => 'by_gf_id', 'group_profile_id' => $this->_iGroupProfileId, 'fan_id' => $iProfileId));
             if(!empty($aRole) && is_array($aRole))
-                $mixedValue = bx_time_js($aRole['added'], BX_FORMAT_DATE, true);
+                $mixedValue = !empty($aRole['added']) ? bx_time_js($aRole['added'], BX_FORMAT_DATE, true) : '';
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -203,7 +203,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         if($this->_bManageMembers || $iProfileId == bx_get_logged_profile_id()) {
             $aRole = $this->_oModule->_oDb->getRoles(array('type' => 'by_gf_id', 'group_profile_id' => $this->_iGroupProfileId, 'fan_id' => $iProfileId));
             if(!empty($aRole) && is_array($aRole))
-                $mixedValue = bx_time_js($aRole['expired'], BX_FORMAT_DATE, true);
+                $mixedValue = !empty($aRole['expired']) ? bx_time_js($aRole['expired'], BX_FORMAT_DATE, true) : '';
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);

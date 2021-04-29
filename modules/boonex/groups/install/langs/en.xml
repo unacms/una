@@ -56,6 +56,10 @@
     <string name="_bx_groups_form_price_display_edit"><![CDATA[Edit]]></string>
     <string name="_bx_groups_form_price_input_sys_id"><![CDATA[ID]]></string>
     <string name="_bx_groups_form_price_input_sys_role_id"><![CDATA[Role ID]]></string>
+    <string name="_bx_groups_form_price_input_sys_name"><![CDATA[Name]]></string>
+    <string name="_bx_groups_form_price_input_name"><![CDATA[Name]]></string>
+    <string name="_bx_groups_form_price_input_inf_name"><![CDATA[Unique value which will be used in back end and API calls]]></string>
+    <string name="_bx_groups_form_price_input_err_name"><![CDATA[You need to enter a unique value here]]></string>
     <string name="_bx_groups_form_price_input_sys_period"><![CDATA[Period]]></string>
     <string name="_bx_groups_form_price_input_period"><![CDATA[Period]]></string>
     <string name="_bx_groups_form_price_input_inf_period"><![CDATA[Use 0 for lifetime]]></string>
@@ -325,7 +329,7 @@
     <string name="_bx_groups_grid_action_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_groups_grid_action_title_buy"><![CDATA[Buy]]></string>
     <string name="_bx_groups_grid_action_title_buy_title"><![CDATA[One-time payment]]></string>
-    <string name="_bx_groups_grid_action_title_subscribe"><![CDATA[Rent]]></string>
+    <string name="_bx_groups_grid_action_title_subscribe"><![CDATA[Subscribe]]></string>
     <string name="_bx_groups_grid_action_title_subscribe_title"><![CDATA[Subscribe on recurring payments]]></string>
     <string name="_bx_groups_grid_action_title_choose"><![CDATA[Choose]]></string>
     <string name="_bx_groups_grid_action_title_choose_title"><![CDATA[Switch to the level for free]]></string>
