@@ -56,6 +56,9 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
+            'FIELD_PRICE_ROLE_ID' => 'role_id',
+            'FIELD_PRICE_NAME' => 'name',
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',

@@ -18,6 +18,32 @@ function BxGroupsPrices(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
+BxGroupsPrices.prototype.checkName = function(sNameId, iId) {
+    var oDate = new Date();
+
+    var oName = jQuery("[name='" + sNameId + "']");
+    var sName = oName.val();
+
+    if(!sName.length)
+        return;
+
+    jQuery.get(
+        this._sActionsUrl + 'check_name',
+        {
+            name: sName,
+            id: iId && parseInt(iId) > 0 ? iId : 0,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            if(!oData || oData.name == undefined)
+                return;
+
+            oName.val(oData.name);
+        },
+        'json'
+    );
+};
+
 BxGroupsPrices.prototype.onChangeRole = function() {
 	this.reloadGrid($('#bx-grid-level-' + this._sObjNameGrid).val());
 };

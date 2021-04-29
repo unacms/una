@@ -58,6 +58,11 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
     {
         return !empty($this->CNF['PARAM_MMODE']) && getParam($this->CNF['PARAM_MMODE']) == BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN;
     }
+
+    public function getPriceName($sName)
+    {
+        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_PRICE_NAME']);
+    }
 }
 
 /** @} */
