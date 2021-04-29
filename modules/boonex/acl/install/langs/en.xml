@@ -69,7 +69,7 @@
 	<string name="_bx_acl_grid_action_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_acl_grid_action_buy"><![CDATA[Buy]]></string>
 	<string name="_bx_acl_grid_action_buy_title"><![CDATA[One-time payment]]></string>
-	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Rent]]></string>
+	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Subscribe]]></string>
 	<string name="_bx_acl_grid_action_subscribe_title"><![CDATA[Subscribe on recurring payments]]></string>
 	<string name="_bx_acl_grid_action_choose"><![CDATA[Choose]]></string>
     <string name="_bx_acl_grid_action_choose_title"><![CDATA[Switch to the level for free]]></string>
