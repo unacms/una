@@ -76,6 +76,7 @@
     <string name="_bx_groups_form_price_input_do_cancel"><![CDATA[Отменить]]></string>
 
 	<string name="_bx_groups_acl_action_create_profile"><![CDATA[Создать группу]]></string>
+        <string name="_bx_groups_acl_action_use_paid_join"><![CDATA[Использовать платный вход в группу]]></string>
 	<string name="_bx_groups_acl_action_delete_profile"><![CDATA[Удалить группу]]></string>
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Редактировать любую группу]]></string>
