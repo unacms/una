@@ -194,7 +194,7 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
     
     protected function _getCellModule ($mixedValue, $sKey, $aField, $aRow)
     {
-        $oModule = bxDolModule::getInstance($aRow['module']);
+        $oModule = DolModule::getInstance($aRow['module']);
         if($oModule && $oModule instanceof iBxDolContentInfoService){
             $mixedValue = $oModule->_aModule['title'];
         }
