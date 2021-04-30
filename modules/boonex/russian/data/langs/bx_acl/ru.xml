@@ -70,7 +70,7 @@
 	<string name="_bx_acl_grid_action_buy"><![CDATA[Купить]]></string>
 	<string name="_bx_acl_grid_action_buy_title"><![CDATA[Единовременный платеж]]></string>
 	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Подписаться]]></string>
-	<string name="_bx_acl_grid_action_subscribe_title"><![CDATA[Подписка на периодические платежи]]></string>
+	<string name="_bx_acl_grid_action_subscribe_title"><![CDATA[Создать подписку с регулярным выставлением счетов]]></string>
 	<string name="_bx_acl_grid_action_choose"><![CDATA[Выбирать]]></string>
     <string name="_bx_acl_grid_action_choose_title"><![CDATA[Бесплатно переключиться на уровень]]></string>
 
