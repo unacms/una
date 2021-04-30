@@ -39,7 +39,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             'FIELD_CHANGED' => 'changed',
             'FIELD_CODE' => 'code',
             'FIELD_TITLE' => 'title',
-            'FIELD_TEXT' => 'text',
+            'FIELD_TEXT' => '',
             'FIELD_TEXT_ID' => 'shopify-entry-text',
             'FIELD_CATEGORY' => 'cat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
