@@ -191,6 +191,24 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=notifications-view');
     }
 
+    public function getContentModule(&$aEvent)
+    {
+        $sModule = $aEvent['type'];
+        if($this->_oDb->isEnabledByName($sModule))
+            return $sModule;
+
+        $sModule = str_replace(array('_media', '_reactions'), array('', ''), $sModule);
+        if($this->_oDb->isEnabledByName($sModule))
+            return $sModule;
+
+        return '';
+    }
+
+    public function getContentObjectId(&$aEvent)
+    {
+        return !empty($aEvent['content']['object_id']) ? (int)$aEvent['content']['object_id'] : (int)$aEvent['object_id'];
+    }
+
     public function getProfileBasedModules() 
     {
         if ($this->_aModulesProfiles !== false && $this->_aModulesContexts !== false)
