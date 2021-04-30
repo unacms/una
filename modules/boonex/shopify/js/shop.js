@@ -135,8 +135,13 @@ BxShopifyShop.prototype.onGetEntry = function(oProduct) {
     //--- Fetch price.
     if(oProduct.variants.length > 0) {
         var oBuy = $('#' + this._aHtmlIds['entry_buy']);
+
         var sBuyContent = oBuy.html();
         oBuy.html(sBuyContent.replace('{price}', oProduct.variants[0].price)).show();
+
+        var oItem = oBuy.parents('.bx-menu-item:first');
+        if(oItem.attr('bx-mma-width'))
+            oItem.attr('bx-mma-width', oItem.outerWidth());
     }
 
     bx_loading($('.' + this._sClassCover), false);
