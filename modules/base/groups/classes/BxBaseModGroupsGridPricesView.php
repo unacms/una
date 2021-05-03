@@ -13,6 +13,12 @@ require_once('BxBaseModGroupsGridPrices.php');
 
 class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
 {
+    /**
+     * Array with check_sum => JS_code pairs of all JS codes 
+     * which should be added to the page.
+     */
+    protected $_aJsCodes;
+
     protected $_oPayment;
     protected $_bTypeSingle;
     protected $_bTypeRecurring;
@@ -26,6 +32,8 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
         parent::__construct ($aOptions, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_aJsCodes = array();
 
         $this->_oPayment = BxDolPayments::getInstance();
 
@@ -60,7 +68,15 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
 
     public function getCode($isDisplayHeader = true)
     {
-    	return $this->_oPayment->getCartJs() . parent::getCode($isDisplayHeader);
+    	return parent::getCode($isDisplayHeader) . $this->getJsCode();
+    }
+
+    public function getJsCode()
+    {
+        if(empty($this->_aJsCodes) || !is_array($this->_aJsCodes))
+            return '';
+
+        return implode('', $this->_aJsCodes);
     }
 
     protected function _getCellRoleId($mixedValue, $sKey, $aField, $aRow)
@@ -87,6 +103,10 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
         if(!empty($aJs) && is_array($aJs)) {
             list($sJsCode, $sJsMethod) = $aJs;
 
+            $sJsCodeCheckSum = md5($sJsCode);
+            if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
+                $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
+
             $a['attr'] = array(
                 'title' => bx_html_attribute(_t($CNF['T']['txt_buy_title'])),
                 'onclick' => $sJsMethod
@@ -107,6 +127,10 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
         if(!empty($aJs) && is_array($aJs)) {
             list($sJsCode, $sJsMethod) = $aJs;
 
+            $sJsCodeCheckSum = md5($sJsCode);
+            if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
+                $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
+
             $a['attr'] = array(
                 'title' => bx_html_attribute(_t($CNF['T']['txt_subscribe_title'])),
                 'onclick' => $sJsMethod
@@ -114,6 +138,13 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
         }
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+    }
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString("AND `profile_id`=? ", $this->_iGroupProfileId);
+
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);;
     }
 }
 

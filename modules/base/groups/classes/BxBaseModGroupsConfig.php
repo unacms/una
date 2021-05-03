@@ -56,7 +56,12 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
 
     public function isPaidJoin()
     {
-        return !empty($this->CNF['PARAM_MMODE']) && getParam($this->CNF['PARAM_MMODE']) == BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN;
+        return isset($this->CNF['PARAM_PAID_JOIN_ENABLED']) && $this->CNF['PARAM_PAID_JOIN_ENABLED'] === true;
+    }
+
+    public function getPriceName($sName)
+    {
+        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_PRICE_NAME']);
     }
 }
 

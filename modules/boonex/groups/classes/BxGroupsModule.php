@@ -20,16 +20,6 @@ class BxGroupsModule extends BxBaseModGroupsModule
 
         $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_JOIN_CONFIRMATION'];
     }
-
-    public function serviceGetOptionsMembersMode()
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $aOptions = parent::serviceGetOptionsMembersMode();
-        $aOptions[] = array('key' => BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN, 'value' => _t($CNF['T']['option_members_mode_' . BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN]));
-
-        return $aOptions;
-    }
 }
 
 /** @} */

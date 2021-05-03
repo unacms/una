@@ -40,8 +40,8 @@
 	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Цена]]></string>
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
 	<string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Периодические выплаты]]></string>
-	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Рента]]></string>
-    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Выберите 'Нет', чтобы сделать продукт бесплатным.]]></string>
+	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Цена]]></string>
+    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
 	<string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_sys_trial_recurring"><![CDATA[Пробный период]]></string>
@@ -260,8 +260,8 @@
     <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Удалить продукт]]></string>
 	<string name="_bx_market_menu_item_title_system_add_to_cart"><![CDATA[Купить]]></string>
     <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[Купить за {0}{1}]]></string>
-    <string name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Арендовать]]></string>
-    <string name="_bx_market_menu_item_title_subscribe"><![CDATA[Арендовать за {0}{1}/{2}]]></string>
+    <string name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_market_menu_item_title_subscribe"><![CDATA[Подписаться за {0}{1}/{2}]]></string>
     <string name="_bx_market_menu_item_title_system_download"><![CDATA[Скачать]]></string>
     <string name="_bx_market_menu_item_title_download"><![CDATA[Скачать]]></string>
     <string name="_bx_market_menu_item_title_system_product_more"><![CDATA[Ещё действия]]></string>
@@ -441,7 +441,7 @@
     <string name="_bx_market_txt_last_active"><![CDATA[Последняя активность:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[Купить за {0}{1}]]></string>
     <string name="_bx_market_txt_price_single_short"><![CDATA[{0}{1}]]></string>
-    <string name="_bx_market_txt_price_recurring"><![CDATA[Арендовать за {0}{1}/{2}]]></string>
+    <string name="_bx_market_txt_price_recurring"><![CDATA[Подписаться за {0}{1}/{2}]]></string>
     <string name="_bx_market_txt_price_recurring_short"><![CDATA[{0}{1}/{2}]]></string>
     <string name="_bx_market_txt_price_free"><![CDATA[Бесплатно]]></string>
     <string name="_bx_market_txt_per_hour"><![CDATA[час]]></string>

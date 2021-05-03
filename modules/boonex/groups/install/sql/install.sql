@@ -359,7 +359,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 -- FORMS: Price
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups_price', 'bx_groups', '_bx_groups_form_price', '', '', 'do_submit', 'bx_groups_prices', 'id', '', '', '', 0, 1, '', '');
+('bx_groups_price', 'bx_groups', '_bx_groups_form_price', '', '', 'do_submit', 'bx_groups_prices', 'id', '', '', '', 0, 1, 'BxGroupsFormPrice', 'modules/boonex/groups/classes/BxGroupsFormPrice.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_groups_price_add', 'bx_groups', 'bx_groups_price', '_bx_groups_form_price_display_add', 0),
@@ -368,6 +368,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_groups_price', 'bx_groups', 'id', '', '', 0, 'hidden', '_bx_groups_form_price_input_sys_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_groups_price', 'bx_groups', 'role_id', '', '', 0, 'hidden', '_bx_groups_form_price_input_sys_role_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_groups_price', 'bx_groups', 'name', '', '', 0, 'text', '_bx_groups_form_price_input_sys_name', '_bx_groups_form_price_input_name', '_bx_groups_form_price_input_inf_name', 1, 0, 0, '', '', '', 'Avail', '', '_bx_groups_form_price_input_err_name', 'Xss', '', 1, 0),
 ('bx_groups_price', 'bx_groups', 'period', '', '', 0, 'text', '_bx_groups_form_price_input_sys_period', '_bx_groups_form_price_input_period', '_bx_groups_form_price_input_inf_period', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_groups_price', 'bx_groups', 'period_unit', '', '#!bx_groups_period_units', 0, 'select', '_bx_groups_form_price_input_sys_period_unit', '_bx_groups_form_price_input_period_unit', '_bx_groups_form_price_input_inf_period_unit', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_groups_price', 'bx_groups', 'price', '', '', 0, 'text', '_bx_groups_form_price_input_sys_price', '_bx_groups_form_price_input_price', '_bx_groups_form_price_input_inf_price', 1, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
@@ -378,21 +379,23 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_groups_price_add', 'id', 2147483647, 0, 1),
 ('bx_groups_price_add', 'role_id', 2147483647, 1, 2),
-('bx_groups_price_add', 'price', 2147483647, 1, 3),
-('bx_groups_price_add', 'period', 2147483647, 1, 4),
-('bx_groups_price_add', 'period_unit', 2147483647, 1, 5),
-('bx_groups_price_add', 'controls', 2147483647, 1, 6),
-('bx_groups_price_add', 'do_submit', 2147483647, 1, 7),
-('bx_groups_price_add', 'do_cancel', 2147483647, 1, 8),
+('bx_groups_price_add', 'name', 2147483647, 1, 3),
+('bx_groups_price_add', 'price', 2147483647, 1, 4),
+('bx_groups_price_add', 'period', 2147483647, 1, 5),
+('bx_groups_price_add', 'period_unit', 2147483647, 1, 6),
+('bx_groups_price_add', 'controls', 2147483647, 1, 7),
+('bx_groups_price_add', 'do_submit', 2147483647, 1, 8),
+('bx_groups_price_add', 'do_cancel', 2147483647, 1, 9),
 
 ('bx_groups_price_edit', 'id', 2147483647, 1, 1),
 ('bx_groups_price_edit', 'role_id', 2147483647, 1, 2),
-('bx_groups_price_edit', 'price', 2147483647, 1, 3),
-('bx_groups_price_edit', 'period', 2147483647, 1, 4),
-('bx_groups_price_edit', 'period_unit', 2147483647, 1, 5),
-('bx_groups_price_edit', 'controls', 2147483647, 1, 6),
-('bx_groups_price_edit', 'do_submit', 2147483647, 1, 7),
-('bx_groups_price_edit', 'do_cancel', 2147483647, 1, 8);
+('bx_groups_price_edit', 'name', 2147483647, 1, 3),
+('bx_groups_price_edit', 'price', 2147483647, 1, 4),
+('bx_groups_price_edit', 'period', 2147483647, 1, 5),
+('bx_groups_price_edit', 'period_unit', 2147483647, 1, 6),
+('bx_groups_price_edit', 'controls', 2147483647, 1, 7),
+('bx_groups_price_edit', 'do_submit', 2147483647, 1, 8),
+('bx_groups_price_edit', 'do_cancel', 2147483647, 1, 9);
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES

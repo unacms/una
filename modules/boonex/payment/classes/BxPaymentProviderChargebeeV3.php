@@ -93,6 +93,15 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         $this->_oModule->_oTemplate->addCss($this->_aIncludeCss);
     }
 
+    public function getJsObject($aParams = array())
+    {
+        $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
+        if(isset($aParams['iModuleId'], $aParams['iSellerId'], $aParams['iItemId']))
+            $sJsObject .= '_' . md5($aParams['iModuleId'] . '-' . $aParams['iSellerId'] . '-' . $aParams['iItemId']);
+        
+        return $sJsObject;
+    }
+
     public function initializeCheckout($iPendingId, $aCartInfo, $sRedirect = '')
     {
         $sPageId = bx_process_input(bx_get('page_id'));
@@ -255,8 +264,6 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     
     protected function _getButtonJs($sType, $iClientId, $iVendorId, $aParams = array())
     {
-        $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
-
         $sSite = '';
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
             'type' => &$sType, 
@@ -265,6 +272,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         ));
 
         $sJsMethod = '';
+        $sJsObject = $this->getJsObject($aParams);
         switch($sType) {
             case BX_PAYMENT_TYPE_SINGLE:
                 /**
@@ -278,6 +286,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         }
 
         return array($this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+            'js_object' => $sJsObject,
             'sProvider' => $this->_sName,
             'sSite' => !empty($sSite) ? $sSite : $this->_getSite(),
             'iClientId' => $iClientId

@@ -138,13 +138,13 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             if(!$oPrivacyInt->check($aEvent['id'], $iViewerId))
                 return '';
 
-            $oPrivacyExt = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
+            $oPrivacyExt = $this->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
             if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iViewerId))
                 return '';
 
-            $sSrvModule = $this->_getContentModule($aEvent);
+            $sSrvModule = $this->_oConfig->getContentModule($aEvent);
             $sSrvMethod = 'check_allowed_with_content_for_profile';
-            if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
         }
 
@@ -347,24 +347,6 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             return array();
 
         return $this->$sMethod($aEvent);
-    }
-
-    protected function _getContentModule(&$aEvent)
-    {
-        $sModule = $aEvent['type'];
-        if($this->_oDb->isEnabledByName($sModule))
-            return $sModule;
-
-        $sModule = str_replace(array('_media', '_reactions'), array('', ''), $sModule);
-        if($this->_oDb->isEnabledByName($sModule))
-            return $sModule;
-
-        return '';
-    }
-
-    protected function _getContentObjectId(&$aEvent)
-    {
-        return !empty($aEvent['content']['object_id']) ? (int)$aEvent['content']['object_id'] : (int)$aEvent['object_id'];
     }
 
     protected function _getContentLangKey(&$aEvent)
