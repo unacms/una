@@ -294,4 +294,7 @@
     <string name="_bx_files_txt_status_downloading_msg"><![CDATA[The download will start shortly...]]></string>
     <string name="_bx_files_txt_status_downloading_ready_msg"><![CDATA[Click <a href={0}>here</a> if the download doesn't start automatically.]]></string>
 
+    <string name="_bx_files_option_allowed_ext"><![CDATA[Allow only the following extensions (comma separated list)]]></string>
+    <string name="_bx_files_option_default_layout_mode"><![CDATA[Files default layout]]></string>
+
 </resources>

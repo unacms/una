@@ -291,4 +291,7 @@
     <string name="_bx_files_txt_status_downloading"><![CDATA[Скачивание...]]></string>
     <string name="_bx_files_txt_status_downloading_msg"><![CDATA[Скачивание скоро начнется...]]></string>
     <string name="_bx_files_txt_status_downloading_ready_msg"><![CDATA[Нажмите <a href={0}>здесь</a>, если скачивание не началось автоматически.]]></string>
+
+    <string name="_bx_files_option_allowed_ext"><![CDATA[Разрешать файлы только со следующими расширениями (через запятую)]]></string>
+    <string name="_bx_files_option_default_layout_mode"><![CDATA[Режим отображения файлов по умолчанию]]></string>
 </resources>

@@ -12,9 +12,11 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_files_summary_chars', '700', @iCategId, '_bx_files_option_summary_chars', 'digit', '', '', '', 1),
+('bx_files_default_layout_mode', 'showcase', @iCategId, '_bx_files_option_default_layout_mode', 'select', '', '', 'showcase,table', 4),
 ('bx_files_show_link_to_preview', '', @iCategId, '_bx_files_option_link_to_preview', 'checkbox', '', '', '', 5),
 ('bx_files_max_nesting_level', '3', @iCategId, '_bx_files_option_max_nesting_level', 'digit', '', '', '', 6),
 ('bx_files_max_bulk_download_size', '100', @iCategId, '_bx_files_option_max_bulk_download_size', 'digit', '', '', '', 7),
+('bx_files_allowed_ext', '', @iCategId, '_bx_files_option_allowed_ext', 'digit', '', '', '', 8),
 ('bx_files_per_page_browse', '12', @iCategId, '_bx_files_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_files_per_page_profile', '6', @iCategId, '_bx_files_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_files_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),

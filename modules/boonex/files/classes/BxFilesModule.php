@@ -27,13 +27,7 @@ class BxFilesModule extends BxBaseModTextModule
         if ($iGroupProfileId == bx_get_logged_profile_id())
             return true;
 
-        $sProfileModule = $oProfile->getModule();
-
-        $aContentInfo = BxDolService::call($sProfileModule, 'get_content_info_by_id', array($oProfile->getContentId()));
-        if (BxDolService::call($sProfileModule, 'is_group_profile') && (BxDolService::call($sProfileModule, 'is_fan', array($iGroupProfileId)) || bx_get_logged_profile_id() == $aContentInfo['author']))
-            return true;
-
-        return false;
+        return bx_srv($oProfile->getModule(), 'check_allowed_post_in_profile', array($oProfile->getContentId(), $this->getName())) === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function serviceMyEntriesActions ($iProfileId = 0)
@@ -367,23 +361,29 @@ class BxFilesModule extends BxBaseModTextModule
             exit;
         }
 
-        if ($aData[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id()) {
+        if ($this->checkAllowedEdit($aData, false) !== CHECK_ACTION_RESULT_ALLOWED) {
             echoJson(['message' => _t('_bx_files_txt_permission_denied')]);
             exit;
         }
 
+        setlocale(LC_ALL,'C.UTF-8'); //otherwise pathinfo returns empty string on a non-latin characters filenames
+
         if (isset($_POST['title'])) {
             if ($sNewTitle = bx_get('title')) {
-                $this->_oDb->updateEntryTitle($iContentId, $sNewTitle);
+                $sExt = pathinfo($aData[$CNF['FIELD_TITLE']], PATHINFO_EXTENSION);
+                if ($sExt) $sExt = '.'.$sExt;
+
+                $this->_oDb->updateEntryTitle($iContentId, $sNewTitle.$sExt);
                 $aData = $this->_oDb->getContentInfoById($iContentId);
                 echo bx_process_output($aData[$CNF['FIELD_TITLE']]);
             }
             exit;
         }
 
+
         $sActionUrl = BX_DOL_URL_ROOT.$this->_oConfig->getBaseUri();
         echoJson([
-            'eval' => "bx_prompt('"._t('_bx_files_form_entry_input_title')."', '".bx_js_string($aData[$CNF['FIELD_TITLE']])."', function(val) {                
+            'eval' => "bx_prompt('"._t('_bx_files_form_entry_input_title')."', '".bx_js_string(pathinfo($aData[$CNF['FIELD_TITLE']], PATHINFO_FILENAME))."', function(val) {                
                 $.post('{$sActionUrl}entry_edit_title/{$iContentId}', {title: val.getValue()}, function(sTitle) {
                     if (sTitle)
                         $('.bx-file-entry[file_id=".$aData[$CNF['FIELD_ID']]."] .bx-files-filename a').html(sTitle);
@@ -411,9 +411,8 @@ class BxFilesModule extends BxBaseModTextModule
                     exit;
                 }
 
-                if ($aData[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id() && !($aData[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 && $this->serviceIsAllowedAddContentToProfile(-$aData[$CNF['FIELD_ALLOW_VIEW_TO']]))) {
-                    echoJson(['message' => _t('_bx_files_txt_permission_denied')]);
-                    exit;
+                if ($this->checkAllowedDelete($aData, false) !== CHECK_ACTION_RESULT_ALLOWED) {
+                    continue;
                 }
 
                 $this->serviceDeleteEntity($iContentId);
@@ -453,7 +452,7 @@ class BxFilesModule extends BxBaseModTextModule
             exit;
         }
 
-        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToProfile($iContext)) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
@@ -470,11 +469,10 @@ class BxFilesModule extends BxBaseModTextModule
                     bx_set('title-'.$aFile['id'], $aFile['file_name'], 'post');
                 }
                 bx_set('attachments', $aFilesIDs, 'post');
+                bx_set('profile_id', $iAuthorProfile, 'post');
+                bx_set('allow_view_to', !$iContext ? BX_DOL_PG_ALL : -$iContext, 'post');
 
                 $oForm = BxDolForm::getObjectInstance($this->_oConfig->CNF['OBJECT_FORM_ENTRY_UPLOAD'], $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_UPLOAD']);
-                $oForm->aInputs['profile_id']['value'] = $iAuthorProfile;
-                $oForm->aInputs['allow_view_to']['value'] = $iContext == $iAuthorProfile ? 3 : -$iContext;
-
                 $aFiles = $oForm->insert();
 
                 if ($iFolder != 0 && !empty($aFiles))
@@ -493,14 +491,15 @@ class BxFilesModule extends BxBaseModTextModule
             exit;
         }
 
-        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToProfile($iContext)) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
 
         if (!empty($sName)) {
             $iAuthor = bx_get_logged_profile_id();
-            //in case it is posted to context make the context profile as an author of an entry
+            // in case it is posted to context make the context profile as an author of an entry
+            // to leave folder in case creator is removed
             $this->_oDb->createFolder($iFolder, $iAuthor == $iContext ? $iAuthor : $iContext, $iAuthor == $iContext ? BX_DOL_PG_ALL : -$iContext, $sName);
         }
 
@@ -528,7 +527,7 @@ class BxFilesModule extends BxBaseModTextModule
 
         $iContext = $aData[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 ? -$aData[$CNF['FIELD_ALLOW_VIEW_TO']] : $aData[$CNF['FIELD_AUTHOR']];
 
-        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+        if (!isAdmin() && ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext))) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
@@ -544,7 +543,7 @@ class BxFilesModule extends BxBaseModTextModule
 
                 $iContextMoveTo = $aDataMoveTo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 ? -$aDataMoveTo[$CNF['FIELD_ALLOW_VIEW_TO']] : $aDataMoveTo[$CNF['FIELD_AUTHOR']];
 
-                if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContextMoveTo)) {
+                if (!isAdmin() && ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContextMoveTo))) {
                     echoJson(['message' => _t('_Access denied')]);
                     exit;
                 }
@@ -589,6 +588,18 @@ class BxFilesModule extends BxBaseModTextModule
                 }
         }
         parent::serviceDeleteEntity($iContentId, $sFuncDelete);
+    }
+
+    public function serviceBrowseContext ($iProfileId = 0, $aParams = array()) {
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId)
+            return;
+        // do not show files in context block for persons profiles
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if ($oProfile && $oProfile->getModule() == 'bx_persons') return;
+
+        return parent::serviceBrowseContext($iProfileId, $aParams);
     }
 }
 
