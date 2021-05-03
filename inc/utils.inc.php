@@ -1787,9 +1787,10 @@ function bx_show_service_unavailable_error_and_exit ($sMsg = false, $iRetryAfter
  * @param $sMimeType file mime type, by default 'application/octet-stream'
  * @param $iCacheAge file cache age, by default 0
  * @param $sCachePrivacy cache privacy 'public' (default value) or 'private'
+ * @param $sContentDisposition content disposition header ('inline' or 'attachment' usually
  * @return true on success or false on error
  */
-function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/octet-stream', $iCacheAge = 0, $sCachePrivacy = 'public')
+function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/octet-stream', $iCacheAge = 0, $sCachePrivacy = 'public', $sContentDisposition = 'inline')
 {
     if (!file_exists($sPath))
         return  false;
@@ -1805,7 +1806,7 @@ function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/oc
     header('Cache-Control: ' . $sCachePrivacy . ', must-revalidate, max-age=' . $iCacheAge);
     header("Accept-Ranges: 0-$length");
     if ($sFilename)
-        header('Content-Disposition: inline; filename="' . $sFilename . '"');
+        header('Content-Disposition: ' . $sContentDisposition . '; filename="' . $sFilename . '"');
 
     if (isset($_SERVER['HTTP_RANGE'])) {
 
