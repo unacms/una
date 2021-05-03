@@ -572,6 +572,25 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return parent::getPerPage($sType);
     }
 
+    public function getExtenalsEvery($sType = 'default')
+    {
+        if($this->isInfiniteScroll())
+            $sType = 'preload';
+
+        $iExtenalsEvery = (int)getParam($this->getPrefix('option') . 'extenals_every_' . $sType);
+        if(!$iExtenalsEvery)
+            return $iExtenalsEvery;
+
+        $iPerPage = $this->getPerPage($sType);
+        if(empty($iPerPage))
+            $iPerPage = $this->getPerPage();
+
+        if($iExtenalsEvery > $iPerPage)
+            $iExtenalsEvery = $iPerPage;
+
+        return $iExtenalsEvery;
+    }
+
     public function getAutoPreloads()
     {
         return $this->_iInfScrollAutoPreloads;
