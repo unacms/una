@@ -3,6 +3,12 @@ html.bx-media-phone {
     font-size:85%;
 }
 
+/* never visible - used to check MQ */
+.bx-media-phone body::before {
+  display: none;
+  content: 'mobile';
+}
+
 .bx-media-phone .bx-def-media-phone-hide {
     display:none !important;
 }

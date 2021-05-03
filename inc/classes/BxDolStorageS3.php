@@ -246,8 +246,14 @@ class BxDolStorageS3 extends BxDolStorage
 
     protected function getObjectBaseUrl ($isPrivate = false)
     {
-        $sProto = $this->_bSSL ? 'https://' : 'http://';
-        return $sProto . $this->_sBucket . '.' . ($this->_sEndpoint ? $this->_sEndpoint : 's3.amazonaws.com'). '/' . $this->getObjectBaseDir($isPrivate);
+        $sPath = $this->_bSSL ? 'https://' : 'http://';
+        if ($this->_sDomain)
+            $sPath .= $this->_sDomain;
+        elseif ($this->_sEndpoint)
+            $sPath .= $this->_sEndpoint . '/' . $this->_sBucket;
+        else
+            $sPath .= $this->_sBucket . '.s3.amazonaws.com';
+        return $sPath . '/' . $this->getObjectBaseDir($isPrivate);
     }
 }
 

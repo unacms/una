@@ -60,8 +60,8 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
             $this->_iRoleId = (int)$iRoleId;
 
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_PRICE'], $CNF['OBJECT_FORM_PRICE_DISPLAY_ADD']);
-    	$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId));
-    	$oForm->aInputs['role_id']['value'] = $this->_iRoleId;
+    	$oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId)));
+        $oForm->setRoleId($this->_iRoleId);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -75,9 +75,7 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
             if(!empty($aPrice) && is_array($aPrice))
                 return echoJson(array('msg' => _t('_bx_groups_err_price_duplicate')));
 
-            $sName = uriGenerate(strtolower(strmaxtextlen($this->_aGroupContentInfo[$CNF['FIELD_TITLE']], 8, '')) . ' ' . strtolower($this->_aRoles[$this->_iRoleId]) . ' ' . $iPeriod . ' ' . $sPeriodUnit, $CNF['TABLE_PRICES'], 'name');
-
-            $iId = (int)$oForm->insert(array('name' => $sName, 'profile_id' => $this->_iGroupProfileId, 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iRoleId) + 1));
+            $iId = (int)$oForm->insert(array('profile_id' => $this->_iGroupProfileId, 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iRoleId) + 1));
             if($iId != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
@@ -113,7 +111,7 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
             return echoJson(array());
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_PRICE'], $CNF['OBJECT_FORM_PRICE_DISPLAY_EDIT']);
-    	$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId));
+    	$oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId)));
 
         $oForm->initChecker($aItem);
         if($oForm->isSubmittedAndValid()) {

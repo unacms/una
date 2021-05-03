@@ -3,6 +3,12 @@ html.bx-media-desktop {
     font-size:100%;
 }
 
+/* never visible - used to check MQ */
+.bx-media-desktop body::before {
+    display: none;
+    content: 'desktop';
+}
+
 .bx-media-desktop .bx-def-media-desktop-hide {
     display:none !important;
 }

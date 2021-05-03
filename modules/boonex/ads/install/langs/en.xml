@@ -397,5 +397,6 @@
     <string name="_bx_ads_txt_poll_answer_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_ads_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
+    <string name="_bx_ads_alert_action_doInterest_personal"><![CDATA[Someone interested in your ad]]></string>
     <string name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>

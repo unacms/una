@@ -217,6 +217,14 @@ BxDolCmts.prototype.cmtPin = function(oLink, iCmtId, iWay, bHideMenu) {
 
                         $this._sDisplayType = $this._sDisplayType;
                         $this._cmtsReplaceContent($(sListId), sContent);
+
+                        var oDivider = $(sListId).siblings('.cmts-divider');
+                        if(oDivider.length > 0) {
+                            if(oDivider.is(':hidden') && sContent.length != 0)
+                                oDivider.show();
+                            else if(!oDivider.is(':hidden') && sContent.length == 0)
+                                oDivider.hide();
+                        }
                     });
             	}
             };
@@ -658,7 +666,7 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
         function (oData) {
             $this._loadingInBlock (e, false);
 
-            var sListId = $this._sRootId + ' #cmt' + oData.vparent_id + ' > ul';
+            var sListId = $this._sRootId + ' #cmt' + oData.vparent_id + ' > ul.cmts-all';
             var sReplyFormId = $this._sRootId + ' #cmt' + oData.parent_id + ' > .cmt-reply';
 
             //--- Hide reply form ---//

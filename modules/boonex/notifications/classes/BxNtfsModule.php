@@ -304,10 +304,36 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
         $aParams = array_merge($aParams, array(
             'new' => 1,
-            'count_only' => 1
         ));
 
-        return (int)$this->_oDb->getEvents($aParams);
+        $sParamCheck = 'perform_privacy_check';
+        $sParamCheckFor = 'perform_privacy_check_for';
+
+        $iEvents = 0;
+        $aEvents = $this->_oDb->getEvents($aParams);
+        foreach($aEvents as $aEvent) {
+            if(isset($aBrowseParams[$sParamCheck]) && $aBrowseParams[$sParamCheck] !== true) 
+                continue;
+
+            $iViewerId = !empty($aBrowseParams[$sParamCheckFor]) ? (int)$aBrowseParams[$sParamCheckFor] : 0;
+
+            $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+            if(!$oPrivacyInt->check($aEvent['id'], $iViewerId))
+                continue;
+
+            $oPrivacyExt = $this->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
+            if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iViewerId))
+                continue;
+
+            $sSrvModule = $this->_oConfig->getContentModule($aEvent);
+            $sSrvMethod = 'check_allowed_with_content_for_profile';
+            if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
+                continue;
+
+            $iEvents++;
+        }
+
+        return $iEvents;
     }
 
     /**

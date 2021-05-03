@@ -723,7 +723,15 @@ BLAH;
                 break;
 
             default:
-                $sValue = isset($aInput['value']) && '' !== $aInput['value'] ? bx_process_output($aInput['value']) : null;
+                if(isset($aInput['value']) && '' !== $aInput['value']) {
+                    $sValue = $aInput['value'];
+                    if(get_mb_substr($sValue, 0, 1) == '_')
+                        $sValue = _t($sValue);
+
+                    $sValue = bx_process_output($sValue);
+                }
+                else
+                    $sValue = null;
         }
 
         return $sValue;
@@ -1073,7 +1081,13 @@ BLAH;
                 break;
 
             case 'value':
-                $sInput = isset($aInput['value']) ? $aInput['value'] : '';
+                $sInput = '';
+                if(!isset($aInput['value']))
+                    break;
+
+                $sInput = $aInput['value'];
+                if(get_mb_substr($sInput, 0, 1) == '_') 
+                    $sInput = _t($sInput);
             break;
 
             default:

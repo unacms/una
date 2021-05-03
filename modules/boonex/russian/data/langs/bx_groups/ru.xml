@@ -56,6 +56,10 @@
     <string name="_bx_groups_form_price_display_edit"><![CDATA[Редактирование]]></string>
     <string name="_bx_groups_form_price_input_sys_id"><![CDATA[ID]]></string>
     <string name="_bx_groups_form_price_input_sys_role_id"><![CDATA[ID роли]]></string>
+    <string name="_bx_groups_form_price_input_sys_name"><![CDATA[Имя]]></string>
+    <string name="_bx_groups_form_price_input_name"><![CDATA[Имя]]></string>
+    <string name="_bx_groups_form_price_input_inf_name"><![CDATA[Уникальное значение, которое будет использоваться в серверной части и API запросах]]></string>
+    <string name="_bx_groups_form_price_input_err_name"><![CDATA[Введите уникальное значение]]></string>
     <string name="_bx_groups_form_price_input_sys_period"><![CDATA[Период]]></string>
     <string name="_bx_groups_form_price_input_period"><![CDATA[Период]]></string>
     <string name="_bx_groups_form_price_input_inf_period"><![CDATA[Используйте 0 для пожизненного]]></string>
@@ -72,6 +76,7 @@
     <string name="_bx_groups_form_price_input_do_cancel"><![CDATA[Отменить]]></string>
 
 	<string name="_bx_groups_acl_action_create_profile"><![CDATA[Создать группу]]></string>
+        <string name="_bx_groups_acl_action_use_paid_join"><![CDATA[Использовать платный вход в группу]]></string>
 	<string name="_bx_groups_acl_action_delete_profile"><![CDATA[Удалить группу]]></string>
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Редактировать любую группу]]></string>
@@ -320,8 +325,8 @@
     <string name="_bx_groups_grid_action_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_grid_action_title_buy"><![CDATA[Купить]]></string>
     <string name="_bx_groups_grid_action_title_buy_title"><![CDATA[Единовременный платеж]]></string>
-    <string name="_bx_groups_grid_action_title_subscribe"><![CDATA[Арендовать]]></string>
-    <string name="_bx_groups_grid_action_title_subscribe_title"><![CDATA[Подписка на периодические платежи]]></string>
+    <string name="_bx_groups_grid_action_title_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_groups_grid_action_title_subscribe_title"><![CDATA[Создать подписку с регулярным выставлением счетов]]></string>
     <string name="_bx_groups_grid_action_title_choose"><![CDATA[Выбирать]]></string>
     <string name="_bx_groups_grid_action_title_choose_title"><![CDATA[Бесплатно переключиться на уровень]]></string>
     <string name="_bx_groups_popup_title_price_add"><![CDATA[Добавить ценовой план]]></string>

@@ -10,7 +10,6 @@
  */
 
 define('BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES', 'multi_roles');
-define('BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN', 'paid_join');
 
 define('BX_BASE_MOD_GROUPS_ROLE_COMMON', 0);
 define('BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR', 1);
@@ -72,6 +71,28 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             }
             $this->_oDb->deleteInviteByKey($sKey, $iGroupProfileId);
         }   
+    }
+
+    public function actionCheckName()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$sName = bx_process_input(bx_get('name'));
+    	if(empty($sName))
+            return echoJson(array());
+
+        $sResult = '';
+
+        $iId = (int)bx_get('id');
+        if(!empty($iId)) {
+            $aPrice = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iId)); 
+            if(strcmp($sName, $aPrice[$CNF['FIELD_PRICE_NAME']]) == 0) 
+                $sResult = $sName;
+        }
+
+    	echoJson(array(
+            'name' => !empty($sResult) ? $sResult : $this->_oConfig->getPriceName($sName)
+    	));
     }
 
     public function serviceGetOptionsMembersMode()
@@ -197,20 +218,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * Reset group's author for particular group
      * @param $iContentId group id 
+     * @parem $iAuthorId new author profile ID
      * @return false of error, or number of updated records on success
      */
-    public function serviceReassignEntityAuthor ($iContentId)
+    public function serviceReassignEntityAuthor ($iContentId, $iAuthorId = 0)
     {
         $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
         if (!$aContentInfo)
             return false;
 
-        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
-            return false;
+        if (empty($iAuthorId)) {
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+            if (!$oGroupProfile)
+                return false;
 
-        $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
+            $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
+            if($aAdmins)
+                $iAuthorId = array_pop($aAdmins);
+        }
 
-        return $this->_oDb->updateAuthorById($iContentId, $aAdmins ? array_pop($aAdmins) : 0);
+        return $this->_oDb->updateAuthorById($iContentId, $iAuthorId);
     }
 
     /**
@@ -242,10 +269,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     
     /**
      * Reset group's author when author profile is deleted
-     * @param $iProfileId profile id 
+     * @param $iProfileId author profile id 
+     * @param $iAuthorId new author profile id 
      * @return number of changed items
      */
-    public function serviceReassignEntitiesByAuthor ($iProfileId)
+    public function serviceReassignEntitiesByAuthor ($iProfileId, $iAuthorId = 0)
     {
         $a = $this->_oDb->getEntriesByAuthor((int)$iProfileId);
         if (!$a)
@@ -253,7 +281,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $iCount = 0;
         foreach ($a as $aContentInfo)
-            $iCount += ('' == $this->serviceReassignEntityAuthor($aContentInfo[$this->_oConfig->CNF['FIELD_ID']]) ? 1 : 0);
+            $iCount += ('' == $this->serviceReassignEntityAuthor($aContentInfo[$this->_oConfig->CNF['FIELD_ID']], $iAuthorId) ? 1 : 0);
 
         return $iCount;
     }
@@ -532,6 +560,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$this->_oConfig->isPaidJoin())
             return '';
 
+        if($this->checkAllowedUsePaidJoin() !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox(_t('_Access denied'));
+
         if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox(_t('_Access denied'));
 
@@ -599,6 +630,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$this->_oConfig->isPaidJoin())
             return false;
 
+        if($this->checkAllowedUsePaidJoin() !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;        
+
         if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
@@ -633,6 +667,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return !$this->isPaidJoinByProfile($oProfile->id());
     }
 
+    /**
+     * Is Paid Join enabled as is and whether a group has pricing plans added.
+     * 
+     * @param type $iProfileId - Group profile ID.
+     * @return boolean
+     */
     public function isPaidJoinByProfile($iProfileId)
     {
         if(!$this->_oConfig->isPaidJoin())
@@ -1015,6 +1055,19 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
 
     // ====== PERMISSION METHODS
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
+    public function checkAllowedUsePaidJoin($isPerformAction = false)
+    {
+        // check ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'use paid join', $this->getName(), $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */

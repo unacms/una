@@ -38,12 +38,37 @@ class BxBaseModPaymentOrders extends BxDol
     /** 
      * @ref bx_base_payment-get_orders_url "get_orders_url"
      */
-	public function serviceGetOrdersUrl()
+    public function serviceGetOrdersUrl()
     {
     	if(!$this->_oModule->isLogged())
             return '';
 
     	return $this->_oModule->_oConfig->getUrl('URL_ORDERS');
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_pending_orders_url get_pending_orders_url
+     * 
+     * @code bx_srv('bx_payment', 'get_pending_orders_url', [...], 'Orders'); @endcode
+     * 
+     * Get pending orders page URL.
+     *
+     * @return string with pending orders page URL.
+     * 
+     * @see BxBaseModPaymentOrders::serviceGetPendingOrdersUrl
+     */
+    /** 
+     * @ref bx_base_payment-get_pending_orders_url "get_pending_orders_url"
+     */
+    public function serviceGetPendingOrdersUrl()
+    {
+    	if(!$this->_oModule->isLogged())
+            return '';
+
+    	return $this->_oModule->_oConfig->getUrl('URL_ORDERS', array('type' => 'pending'));
     }
 
     /**

@@ -1,11 +1,6 @@
 <script language="javascript">
     var iToolbarSubmenuTopOffset = -2;
 
-    function checkMQ() {
-        //check if mobile or desktop device
-        return window.getComputedStyle(document.querySelector('.cd-main-content'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
-    }
-
     $(document).ready(function () {
 
         // hide toolbar on scrolldown, show - on scroll up
@@ -25,7 +20,7 @@
             }
         }).init();
 
-        var mq = checkMQ();
+        var mq = bx_check_mq();
         if(mq == 'mobile') {
             //process submenu in top menu
             $('.bx-menu-floating-blocks-big:visible > li:has(.bx-sliding-smenu-submenu) > a').bind('click', function() {
