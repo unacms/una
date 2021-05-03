@@ -1689,6 +1689,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oGrid->getCode();
     }
 
+    public function serviceGetPost($mixedEvent, $aParams = array())
+    {
+        if(!empty($mixedEvent) && !is_array($mixedEvent))
+            $mixedEvent = $this->_oDb->getContentInfoById((int)$mixedEvent);
+
+        if(empty($mixedEvent) || !is_array($mixedEvent))
+            return '';
+
+        $aParams = $this->_prepareParams(array_merge(array(
+            'view' => BX_TIMELINE_VIEW_ITEM, 
+            'type' => BX_TIMELINE_TYPE_ITEM
+        ), $aParams));
+
+        return $this->_oTemplate->getPost($mixedEvent, $aParams);
+    }
+
     public function serviceGetTimelineRepostAllowedView($aEvent)
     {
         return isset($aEvent['content']['allowed_view']) ? $aEvent['content']['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;

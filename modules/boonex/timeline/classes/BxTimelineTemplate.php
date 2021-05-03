@@ -594,7 +594,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
+        $iExtenalsEvery = $this->_oConfig->getExtenalsEvery($aParams['type']);
+
         $bFirst = true;
+        $iEventIndex = 0;
         $mixedEvents = $bReturnArray ? array() : '';
         foreach($aEvents as $aEvent) {
             $iEvent = (int)$aEvent['id'];
@@ -616,6 +619,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $mixedEvents .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
             $mixedEvents .= $sEvent;
+
+            $iEventIndex++;
+            if($iExtenalsEvery > 0 && $iEventIndex % $iExtenalsEvery == 0) {
+                $sExternalPost = false;
+                bx_alert($this->_oConfig->getName(), 'get_external_post', 0, 0, array(
+                    'params' => $aParams,
+                    'override_result' => &$sExternalPost,
+                ));
+
+                if($sExternalPost !== false)
+                    $mixedEvents .= $sExternalPost;
+            }
         }
 
         if($bReturnArray)
