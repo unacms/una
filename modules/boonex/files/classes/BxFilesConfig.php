@@ -86,6 +86,8 @@ class BxFilesConfig extends BxBaseModTextConfig
             'PARAM_LINK_TO_PREVIEW' => 'bx_files_show_link_to_preview',
             'PARAM_MAX_NESTING_LEVEL' => 'bx_files_max_nesting_level',
             'PARAM_MAX_BULK_DOWNLOAD_SIZE' => 'bx_files_max_bulk_download_size',
+            'PARAM_ALLOWED_EXT' => 'bx_files_allowed_ext',
+            'PARAM_DEFAULT_LAYOUT_MODE' => 'bx_files_default_layout_mode',
 
             // objects
             'OBJECT_STORAGE' => 'bx_files_files',

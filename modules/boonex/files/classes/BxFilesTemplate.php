@@ -38,11 +38,9 @@ class BxFilesTemplate extends BxBaseModTextTemplate
     {
         $oModule = $this->getModule();
 
-        if ($aData['type'] != 'folder') {
-            $sResult = $this->checkPrivacy($aData, $isCheckPrivateContent, $oModule, $sTemplateName);
-            if ($sResult)
-                return $sResult;
-        }
+        $sResult = $this->checkPrivacy($aData, $isCheckPrivateContent, $oModule, $sTemplateName);
+        if ($sResult)
+            return $sResult;
 
         $CNF = &$oModule->_oConfig->CNF;
 
@@ -67,7 +65,8 @@ class BxFilesTemplate extends BxBaseModTextTemplate
             if ($oMenu) {
                 $oMenu->setContentId($aData[$CNF['FIELD_ID']]);
                 $oMenu->setBookmarked($this->_oDb->isFileBookmarked($aData[$CNF['FIELD_ID']], bx_get_logged_profile_id()));
-                $oMenu->setAllowEditOptions($aData[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id());
+                $bEditAllowed = $this->getModule()->checkAllowedEdit($aData, false) === CHECK_ACTION_RESULT_ALLOWED;
+                $oMenu->setAllowEditOptions($bEditAllowed);
                 $aVars['bx_if:inline_menu']['content']['menu'] = $oMenu->getCode();
             }
         }

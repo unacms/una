@@ -17,8 +17,10 @@ function BxFilesBrowserTools(oOptions) {
 
     var $this = this;
 
-    $('input[type=checkbox]', $(this._oToolbarObject).parent()).change(function(){
-        $this.updateBulkActionsPanelVisivility();
+    $(document).ready(function(){
+        $('input[type=checkbox]', $($this._oToolbarObject).parent()).change(function(){
+            $this.updateBulkActionsPanelVisivility();
+        });
     });
 
     $(window).on('files_browser.update', function(){
@@ -41,6 +43,7 @@ BxFilesBrowserTools.prototype.updateBulkActionsPanelVisivility = function() {
 }
 
 BxFilesBrowserTools.prototype.reloadBlock = function(iPage) {
+    if (typeof iPage == 'undefined') iPage = 0;
     loadDynamicBlockAutoPaginate(this._oToolbarObject, iPage, '0', this.getRequestUrl());
 }
 

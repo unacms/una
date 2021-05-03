@@ -228,6 +228,23 @@ class BxFilesDb extends BxBaseModFilesDb
             $this->query("DELETE FROM `bx_files_downloading_jobs` WHERE UNIX_TIMESTAMP() - `started` > 24*3600");
         return $aFiles;
     }
+
+    public function setStorageAllowedExtensions($sExtensions) {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aExtensions = explode(',', $sExtensions);
+        if ($aExtensions) foreach ($aExtensions as $iKey => $sExtension) {
+            $aExtensions[$iKey] = trim($sExtension, ' .');
+        }
+
+        $sExtensionsSet = implode(',', $aExtensions);
+
+        $this->query("UPDATE `sys_objects_storage` SET `ext_mode` = :ext_mode, `ext_allow` = :extensions WHERE `sys_objects_storage`.`object` = :storage_object", [
+            'extensions' => $sExtensionsSet,
+            'ext_mode' => empty($sExtensionsSet) ? 'deny-allow' : 'allow-deny',
+            'storage_object' => $CNF['OBJECT_STORAGE'],
+        ]);
+    }
 }
 
 /** @} */
