@@ -75,7 +75,7 @@ class BxDolStorageS3 extends BxDolStorage
     }
 
     /**
-     * Start file fownloading by remote id. If file is private then token is checked.
+     * Start file downloading by remote id. If file is private then token is checked.
      */
     public function download ($sRemoteId, $sToken = false)
     {
@@ -93,7 +93,19 @@ class BxDolStorageS3 extends BxDolStorage
         }
 
         $sUrl = $this->getFileUrlById($aFile['id']);
-        header("Location: " . $sUrl);
+
+
+        // download remote file to tmp
+        $sTmpFilePath = BX_DIRECTORY_PATH_TMP . 'dwnld_'.$sRemoteId;
+        if (!file_exists($sTmpFilePath)) {
+            @file_put_contents($sTmpFilePath, bx_file_get_contents($sUrl));
+        }
+
+        // read from a local storage to be able to send it as attahment and give it a proper name
+        if (!file_exists($sTmpFilePath) || !bx_smart_readfile($sTmpFilePath, $aFile['file_name'], $aFile['mime_type'], $aFile['private'] && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl, $aFile['private'] ? 'private' : 'public', 'attachment')) {
+            $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
+            return false;
+        }
 
         return parent::download($aFile);
     }
