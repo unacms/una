@@ -4002,6 +4002,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->_iOwnerId = $aParams['owner_id'];
         $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
+        if(!$oProfileOwner)
+            return array();
 
         $mixedResult = $oProfileOwner->checkAllowedProfileView();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
