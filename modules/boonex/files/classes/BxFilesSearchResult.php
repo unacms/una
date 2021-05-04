@@ -18,6 +18,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
     protected $sCurrentView;
     protected $bFileManagerMode = false;
     protected $iFileManagerUploadTo = 0;
+    protected $sMode = '';
 
     function __construct($sMode = '', $aParams = array())
     {
@@ -33,7 +34,12 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         if (($sMode == 'author' || $sMode == 'context') && !isset($aParams['no_toolbar'])) {
             $this->bFileManagerMode = true;
             $this->setUnitParams(['show_inline_menu' => true]);
+
+            if (!bx_get('unit_view'))
+                $aParams['unit_view'] = getParam('bx_files_default_layout_mode');
         }
+
+        $this->sMode = $sMode;
 
         parent::__construct($sMode, $aParams);
 
@@ -62,7 +68,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_files',
             'title' => _t('_bx_files_page_title_browse'),
             'table' => 'bx_files_main',
-            'ownFields' => array('id', 'file_id', 'title', 'desc', 'author', 'added', 'type', 'parent_folder_id'),
+            'ownFields' => array('id', 'file_id', 'title', 'desc', 'author', 'added', 'type', 'parent_folder_id', 'allow_view_to'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
@@ -187,7 +193,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             $this->removeContainerClass('bx-def-margin-sec-lefttopright-neg');
 
             if (!$this->isError) {
-                if ($sMode == 'author' || $oProfileAuthor->id() != bx_get_logged_profile_id())
+                if ($sMode == 'author' && $oProfileAuthor->id() == bx_get_logged_profile_id() || $sMode == 'context')
                     $this->iFileManagerUploadTo = $oProfileAuthor->id();
             }
 
@@ -236,7 +242,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], [
             'files' => [
-                'type' => 'INNER',
+                'type' => 'LEFT',
                 'table' => $CNF['TABLE_FILES'],
                 'mainTable' => $CNF['TABLE_ENTRIES'],
                 'mainField' => $CNF['FIELD_ID'],
@@ -285,7 +291,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                 $CNF['FIELD_ID'] => '-1',
                 $CNF['FIELD_FILE_ID'] => '0',
                 $CNF['FIELD_TITLE'] => '..',
-                $CNF['FIELD_AUTHOR'] => 0,
+                $CNF['FIELD_AUTHOR'] => bx_get_logged_profile_id(),
                 $CNF['FIELD_ADDED'] => 0,
                 $CNF['FIELD_ALLOW_VIEW_TO'] => BX_DOL_PG_ALL,
                 'type' => 'folder',
@@ -298,6 +304,19 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
     function processing ()
     {
+        $iViewedProfile = 0;
+        if ($this->_sMode == 'context' && $this->iFileManagerUploadTo) $iViewedProfile = $this->iFileManagerUploadTo;
+        if ($this->_sMode == 'author' && $this->aCurrent['restriction']['author']['value']) $iViewedProfile = $this->aCurrent['restriction']['author']['value'];
+
+        if ($iViewedProfile) {
+            if (is_array($iViewedProfile)) $iViewedProfile = abs($iViewedProfile[0]);
+            $oProfile = BxDolProfile::getInstance($iViewedProfile);
+            if ($oProfile->checkAllowedProfileView() !== CHECK_ACTION_RESULT_ALLOWED) {
+                $this->aCurrent['paginate']['num'] = 1;
+                return MsgBox(_t('_sys_access_denied_to_private_content'));
+            }
+        }
+
         $sCode = parent::processing();
         if (!$this->aCurrent['paginate']['num']  && $this->bFileManagerMode) {
             //to show toolbar in case of empty results
@@ -485,7 +504,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $sUniqueIdent = mt_rand();
         $aParams['unique_ident'] = $sUniqueIdent;
-        $aParams['context'] = $this->iFileManagerUploadTo;
+        $aParams['context'] = $this->sMode == 'context' ? $this->iFileManagerUploadTo : '';
 
         $sJsCode = $this->oModule->_oTemplate->getJsCode(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent], $aParams);
         $sJsObject = $this->oModule->_oConfig->getJsObject(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent]);
