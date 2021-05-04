@@ -52,7 +52,7 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
         if(empty($aParent) || !is_array($aParent))
             return '';
 
-        $oProfile = BxDolProfile::getInstanceMagic($aParent['cmt_author_id']);
+        $oProfile = BxDolProfile::getInstanceMagic((int)$aParent['cmt_author_id']);
         $sParAuthorName = $oProfile->getDisplayName();
         $sParAuthorUnit = $oProfile->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon')));
 
