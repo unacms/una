@@ -132,7 +132,7 @@ class BxBaseServiceAccount extends BxDol
     public function serviceGetConfirmationTypes()
     {
         $aResult = array();
-        $aChoices = array(BX_ACCOUNT_CONFIRMATION_NONE, BX_ACCOUNT_CONFIRMATION_EMAIL, BX_ACCOUNT_CONFIRMATION_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE);
+        $aChoices = array(BX_ACCOUNT_CONFIRMATION_NONE, BX_ACCOUNT_CONFIRMATION_EMAIL, BX_ACCOUNT_CONFIRMATION_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_OR_PHONE);
         foreach($aChoices as $sChoice)
             $aResult[$sChoice] = _t('_sys_acc_confirmation_type_' . $sChoice);
         
@@ -430,7 +430,7 @@ class BxBaseServiceAccount extends BxDol
                 $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $sForgotPasswordUrl);
 
                 $mixedOverrideResult = null;
-                bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => $sPhone, 'sms_text' => $sSmsText, 'override_result' => &$mixedOverrideResult));
+                bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => &$sPhone, 'sms_text' => &$sSmsText, 'override_result' => &$mixedOverrideResult));
                 if ($mixedOverrideResult === null) {
                     $oTwilio = BxDolTwilio::getInstance();
                     if($oTwilio->sendSms($sPhone,  $sSmsText))
