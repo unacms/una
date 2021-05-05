@@ -147,16 +147,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $aInput['ghost_templates'] = $aInput['ghost_template'];
             $this->genGhostTemplateForInputNestedForm ($aInput);
             foreach($aInput['ghost_templates'] as $oForm) {
-                array_push(
-				    $aNestedForms,
-				    array(
-					    'key_value' => $oForm->aInputs[$aInput['name']]['value'],
-                        'key_name' => $aInput['name'],
-					    'form_code' => $oForm->genRows(),
-                        'js_instance_name' => 'oBxNestedForm_' . $sUniqId,
-                        'nested_type' => $aInput['name'],
-				    )
-			    );
+                if (isset($oForm->aInputs)){
+                    array_push(
+                        $aNestedForms,
+                        array(
+                            'key_value' => $oForm->aInputs[$aInput['name']]['value'],
+                            'key_name' => $aInput['name'],
+                            'form_code' => $oForm->genRows(),
+                            'js_instance_name' => 'oBxNestedForm_' . $sUniqId,
+                            'nested_type' => $aInput['name'],
+                        )
+                    );
+                }
             }
         }
 

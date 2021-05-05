@@ -1552,10 +1552,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
-        return BxDolProfile::getInstanceMagic($iAuthorId);
+        return BxDolProfile::getInstanceMagic((int)$iAuthorId);
     }
 
-	protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
     {
         $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
 
