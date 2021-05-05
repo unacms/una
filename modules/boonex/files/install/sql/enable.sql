@@ -13,7 +13,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_files_enable_auto_approve', 'on', @iCategId, '_bx_files_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_files_summary_chars', '700', @iCategId, '_bx_files_option_summary_chars', 'digit', '', '', '', 1),
-('bx_files_default_layout_mode', 'showcase', @iCategId, '_bx_files_option_default_layout_mode', 'select', '', '', 'showcase,table', 4),
+('bx_files_default_layout_mode', 'gallery', @iCategId, '_bx_files_option_default_layout_mode', 'select', '', '', 'gallery,table', 4),
 ('bx_files_show_link_to_preview', '', @iCategId, '_bx_files_option_link_to_preview', 'checkbox', '', '', '', 5),
 ('bx_files_max_nesting_level', '3', @iCategId, '_bx_files_option_max_nesting_level', 'digit', '', '', '', 6),
 ('bx_files_max_bulk_download_size', '100', @iCategId, '_bx_files_option_max_bulk_download_size', 'digit', '', '', '', 7),
