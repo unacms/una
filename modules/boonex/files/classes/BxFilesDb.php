@@ -73,6 +73,16 @@ class BxFilesDb extends BxBaseModFilesDb
             'id' => $iContentId,
             'title' => $sNewTitle,
         ]);
+
+        $iFileId = $this->getOne("SELECT `file_id` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_ID'] . "` = :id", [
+            'id' => $iContentId,
+        ]);
+
+        if ($iFileId)
+            $this->query("UPDATE `" . $this->_oConfig->CNF['TABLE_FILES'] . "` SET `file_name` = :title WHERE `id` = :id", [
+                'id' => $iFileId,
+                'title' => $sNewTitle,
+            ]);
     }
 
     public function createFolder($iParentFolder, $iAuthor, $iContext, $sTitle) {
