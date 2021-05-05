@@ -115,6 +115,12 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
                 if($a['email_confirmed'] && $a['phone_confirmed'])
                     $bResult = true;
                 break;
+                
+            case BX_ACCOUNT_CONFIRMATION_EMAIL_OR_PHONE:
+                if($a['email_confirmed'] || $a['phone_confirmed'])
+                    $bResult = true;
+                break;  
+                
         }
 
         bx_alert('account', 'is_confirmed', $iId, false, array('type' => $sConfirmationType, 'override_result' => &$bResult));
@@ -175,14 +181,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 
     static public function isNeedConfirmEmail()
     {
-        if (getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL || getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE) 
+        if(in_array(getParam('sys_account_confirmation_type'), array(BX_ACCOUNT_CONFIRMATION_EMAIL, BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_OR_PHONE)))
             return true;
         return false;
     }
     
     static public function isNeedConfirmPhone()
     {
-        if (getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_PHONE || getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE) 
+        if(in_array(getParam('sys_account_confirmation_type'), array(BX_ACCOUNT_CONFIRMATION_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_OR_PHONE)))
             return true;
         return false;
     }
@@ -658,15 +664,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function addInformerPermanentMessages ($oInformer)
     {
-        if (!$this->isConfirmedEmail()) {
-            $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&resend=1';
-            $aAccountInfo = $this->getInfo();
-            $oInformer->add('sys-account-unconfirmed-email', _t('_sys_txt_account_unconfirmed_email', $sUrl, $aAccountInfo['email']), BX_INFORMER_ALERT);
-        }
-		if (!$this->isConfirmedPhone()) {
-            $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone') . '';
-            $aAccountInfo = $this->getInfo();
-            $oInformer->add('sys-account-unconfirmed-phone', _t('_sys_txt_account_unconfirmed_phone', $sUrl), BX_INFORMER_ALERT);
+        if (!$this->isConfirmed()) {
+            if (!$this->isConfirmedEmail()) {
+                $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&resend=1';
+                $aAccountInfo = $this->getInfo();
+                $oInformer->add('sys-account-unconfirmed-email', _t('_sys_txt_account_unconfirmed_email', $sUrl, $aAccountInfo['email']), BX_INFORMER_ALERT);
+            }
+            if (!$this->isConfirmedPhone()) {
+                $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone') . '';
+                $aAccountInfo = $this->getInfo();
+                $oInformer->add('sys-account-unconfirmed-phone', _t('_sys_txt_account_unconfirmed_phone', $sUrl), BX_INFORMER_ALERT);
+            }
         }
     }
 

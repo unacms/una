@@ -90,6 +90,7 @@ define('BX_ACCOUNT_CONFIRMATION_NONE', 'none');
 define('BX_ACCOUNT_CONFIRMATION_EMAIL', 'email');
 define('BX_ACCOUNT_CONFIRMATION_PHONE', 'phone');
 define('BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE', 'email_and_phone');
+define('BX_ACCOUNT_CONFIRMATION_EMAIL_OR_PHONE', 'email_or_phone');
 
 //--- Include files needed for basic functionality ---//
 require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDol.php');
