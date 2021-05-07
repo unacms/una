@@ -23,6 +23,7 @@ define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES', 'manage_roles');
 define('BX_BASE_MOD_GROUPS_ACTION_DELETE', 'delete');
 define('BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT', 'edit_any');
 define('BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT', 'delete_any');
+define('BX_BASE_MOD_GROUPS_ACTION_TIMELINE_POST_PIN', 'pin'); //for timeline posts only
 
 define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY', 'day');
 define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_WEEK', 'week');
@@ -1232,6 +1233,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                             case BX_BASE_MOD_GROUPS_ACTION_INVITE:
                             case BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT:
                             case BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT:
+                            case BX_BASE_MOD_GROUPS_ACTION_TIMELINE_POST_PIN:
                                 if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) return true;
                                 break;
                             // for the rest of the actions like "Post" still return NULL

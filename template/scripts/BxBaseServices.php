@@ -454,6 +454,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     }
 
     /**
+     * @see iBxDolProfileService::serviceCheckAllowedModuleActionInProfile
+     */
+    public function serviceCheckAllowedModuleActionInProfile($iContentId, $sPostModule, $sActionName)
+    {
+        return _t('_Access denied');
+    }
+
+    /**
      * @see iBxDolProfileService::serviceGetSpaceTitle
      */ 
     public function serviceGetSpaceTitle()

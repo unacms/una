@@ -200,7 +200,7 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
             ],
         ];
 
-        $aAllActions = $this->_getDefaultActionsArray(isset($aRole['id']) ? (int)$aRole['id'] : 0);
+        $aAllActions = $this->_getDefaultActionsArray(isset($aRole['Value']) ? (int)$aRole['Value'] : 0);
         foreach ($aAllActions as $sModule => $aActionsList) {
             $oModule = BxDolModule::getInstance($sModule);
 
@@ -365,6 +365,17 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
                 'change_cover' => $iRole == BX_DOL_MOD_GROUPS_ROLE_ADMINISTRATOR,
             ]
         ];
+
+        // if timeline is installed then handle it as a special case
+        $oTimeline = BxDolModule::getInstance('bx_timeline');
+        if ($oTimeline) {
+            $aDefaultActions['bx_timeline'] = [
+                'post' => 1,
+                'edit_any' => $bAdminOrModerator,
+                'delete_any' => $bAdminOrModerator,
+                'pin' => $bAdminOrModerator,
+            ];
+        }
 
         $aModules = $this->getModules(false, false);
         foreach ($aModules as $sModuleUri => $sModuleName) {

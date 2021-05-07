@@ -1271,6 +1271,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     /**
+     * @see iBxDolProfileService::serviceCheckAllowedModuleActionInProfile
+     */
+    public function serviceCheckAllowedModuleActionInProfile($iContentId, $sPostModule, $sActionName)
+    {
+        if (method_exists($this, 'isAllowedModuleActionByProfile')) {
+            $bResult = $this->isAllowedModuleActionByProfile($iContentId, $sPostModule, $sActionName);
+            if ($bResult !== NULL) return $bResult;
+        }
+
+        return _t('_Access denied');
+    }
+
+    /**
      * @see iBxDolProfileService::serviceCheckSpacePrivacy
      */ 
     public function serviceCheckSpacePrivacy($iContentId)

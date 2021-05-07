@@ -238,6 +238,14 @@ interface iBxDolProfileService
     public function serviceCheckAllowedPostInProfile($iContentId, $sPostModule = '');
 
     /**
+     * Check if a certain type of action in a content module in profile is allowed, for example deleting timeline's posts inside a context
+     * @param $iContentId content ID
+     * @param $sPostModule type of content to be posted
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */
+    public function serviceCheckAllowedModuleActionInProfile($iContentId, $sModule, $sActionName);
+
+    /**
      * Get profiles, current profile have relation with, like friends, joined groups and events
      * @param $iProfileId profile to get relations for
      * @param $aConnectionObject look for relations in these connection objects

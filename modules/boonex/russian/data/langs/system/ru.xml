@@ -3468,4 +3468,5 @@
 	<string name="_adm_form_txt_groups_role_post"><![CDATA[Создавать]]></string>
 	<string name="_adm_form_txt_groups_role_edit_any"><![CDATA[Редактировать любое/все]]></string>
 	<string name="_adm_form_txt_groups_role_delete_any"><![CDATA[Удалять любое/все]]></string>
+	<string name="_adm_form_txt_groups_role_pin"><![CDATA[Заркепить любой пост]]></string>
 </resources>

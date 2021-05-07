@@ -388,10 +388,10 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * @see iBxDolProfile::checkAllowedPostInProfile
      */
-    public function checkAllowedPostInProfile($iProfileId = 0)
+    public function checkAllowedPostInProfile($iProfileId = 0, $sPostModule = '')
     {
         $aInfo = $this->getInfo($iProfileId);
-        return BxDolService::call($aInfo['type'], 'check_allowed_post_in_profile', array($aInfo['content_id']));
+        return BxDolService::call($aInfo['type'], 'check_allowed_post_in_profile', array($aInfo['content_id'], $sPostModule));
     }
     
     /**

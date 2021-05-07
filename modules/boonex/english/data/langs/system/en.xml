@@ -3494,5 +3494,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_adm_form_txt_groups_role_post"><![CDATA[Post]]></string>
 	<string name="_adm_form_txt_groups_role_edit_any"><![CDATA[Edit any entry]]></string>
 	<string name="_adm_form_txt_groups_role_delete_any"><![CDATA[Delete any entry]]></string>
+	<string name="_adm_form_txt_groups_role_pin"><![CDATA[Pin entry]]></string>
 </resources>
 
