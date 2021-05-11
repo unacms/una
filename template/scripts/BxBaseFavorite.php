@@ -269,15 +269,14 @@ class BxBaseFavorite extends BxDolFavorite
         $oForm->aInputs['list']['values'] = $aListsValues;
         $oForm->aInputs['list']['value'] = $this->_oQuery->getList(array('type' => 'object_and_author', 'object_id' => $iObjectId, 'author_id' => $iAuthorId));
         $oForm->aInputs['list']['label_as_html'] = true;
-        
-        
+
         $oModule = BxDolModule::getInstance($this->_aSystem["name"]);
         $CNF = $oModule->_oConfig->CNF;    
-       
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF["OBJECT_PRIVACY_LIST_VIEW"]);
         if(!$oPrivacy) 
-            return;
-        
+            return array('code' => 5, 'message' => _t('_favorite_err_cannot_perform_action'));
+
         $aSave = array('db' => array('pass' => 'Xss'));
         $aGroupChooser = $oPrivacy->getGroupChooser($CNF["OBJECT_PRIVACY_LIST_VIEW"]);
         $oForm->aInputs["allow_view_favorite_list_to"] = array_merge($oForm->aInputs["allow_view_favorite_list_to"], $aGroupChooser, $aSave);
