@@ -54,6 +54,8 @@ BxDolVoteReactions.prototype.vote = function(oLink, iValue, sReaction, onComplet
     oParams['value'] = iValue;
     oParams['reaction'] = sReaction;
 
+    $('#' + this._aHtmlIds['do_popup']).dolPopupHide({});
+
     $.post(
     	this._sActionsUrl,
     	oParams,
@@ -75,8 +77,6 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
     if(oData && oData.code != 0)
         return;
-    
-    $('#' + this._aHtmlIds['do_popup']).dolPopupHide({});
 
     oLink = $('.' + this._aHtmlIds['main'] + ' .' + this._sClassDo);
 
