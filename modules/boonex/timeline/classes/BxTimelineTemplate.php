@@ -849,65 +849,69 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
 
         //--- Do repost link ---//
-		$sClass = $sStylePrefixRepost . 'do-repost';
-		if($bShowDoRepostAsButton)
-			$sClass .= ' bx-btn';
-		else if($bShowDoRepostAsButtonSmall)
-			$sClass .= ' bx-btn bx-btn-small';
+        $sClass = $sStylePrefixRepost . 'do-repost';
+        if($bShowDoRepostAsButton)
+            $sClass .= ' bx-btn';
+        else if($bShowDoRepostAsButtonSmall)
+            $sClass .= ' bx-btn bx-btn-small';
 
-                $sOnClick = '';
-                if(!$bDisabled) {
-                    $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
-                    if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
-                        $aRepostedData = unserialize($aReposted['content']);
+        $sOnClick = '';
+        if(!$bDisabled) {
+            $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+            if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+                $aRepostedData = unserialize($aReposted['content']);
 
-                        $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
-                    }
-                    else
-                        $sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
-                }
-                else
-                    $sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
+                $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+            }
+            else
+                $sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+        }
+        else
+            $sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
 
-		$aOnClickAttrs = array(
-			'title' => _t('_bx_timeline_txt_do_repost')
-		);
-		if(!empty($sClass))
-			$aOnClickAttrs['class'] = $sClass;
-		if(!empty($sOnClick))
-			$aOnClickAttrs['onclick'] = $sOnClick;
+        $aOnClickAttrs = array(
+            'title' => _t('_bx_timeline_txt_do_repost')
+        );
+        if(!empty($sClass))
+            $aOnClickAttrs['class'] = $sClass;
+        if(!empty($sOnClick))
+            $aOnClickAttrs['onclick'] = $sOnClick;
 
-		//--- Do repost label ---//
-		$sMethodDoRepostLabel = ''; 
-		$sTemplateDoRepostLabel = '';
-		if(!empty($aParams['template_do_repost_label'])) {
-			$sMethodDoRepostLabel = 'parseHtmlByContent';
-			$sTemplateDoRepostLabel = $aParams['template_do_repost_label'];
-		}
-		else {
-			$sMethodDoRepostLabel = 'parseHtmlByName';
-			$sTemplateDoRepostLabel = $aParams['template_do_repost_label_name'];
-		}
+        //--- Do repost label ---//
+        $sMethodDoRepostLabel = ''; 
+        $sTemplateDoRepostLabel = '';
+        if(!empty($aParams['template_do_repost_label'])) {
+            $sMethodDoRepostLabel = 'parseHtmlByContent';
+            $sTemplateDoRepostLabel = $aParams['template_do_repost_label'];
+        }
+        else {
+            $sMethodDoRepostLabel = 'parseHtmlByName';
+            $sTemplateDoRepostLabel = $aParams['template_do_repost_label_name'];
+        }
 
-		$sDoRepost = $this->$sMethodDoRepostLabel($sTemplateDoRepostLabel, array(
-        	'bx_if:show_image' => array(
-        		'condition' => $bShowDoRepostImage,
-        		'content' => array(
-        			'src' => $this->getIconUrl($aParams['image_do_repost'])
-        		)
-        	),
-        	'bx_if:show_icon' => array(
-        		'condition' => $bShowDoRepostIcon,
-        		'content' => array(
-        			'name' => $aParams['icon_do_repost']
-        		)
-        	),
-        	'bx_if:show_text' => array(
-        		'condition' => $bShowDoRepostText,
-        		'content' => array(
-        			'text' => _t($aParams['text_do_repost'])
-        		)
-        	)
+        $sDoRepost = $this->$sMethodDoRepostLabel($sTemplateDoRepostLabel, array(
+            'style_prefix' => $sStylePrefix,
+            'bx_if:show_image' => array(
+                'condition' => $bShowDoRepostImage,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'src' => $this->getIconUrl($aParams['image_do_repost'])
+                )
+            ),
+            'bx_if:show_icon' => array(
+                'condition' => $bShowDoRepostIcon,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'name' => $aParams['icon_do_repost']
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => $bShowDoRepostText,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'text' => _t($aParams['text_do_repost'])
+                )
+            )
         ));
 
         return $this->parseHtmlByName('repost_element_block.html', array(
@@ -920,10 +924,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => $bShowCounter,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-        			'bx_if:show_hidden' => array(
-        				'condition' => (int)$aReposted['reposts'] == 0,
-        				'content' => array()
-        			),
+                    'bx_if:show_hidden' => array(
+                        'condition' => (int)$aReposted['reposts'] == 0,
+                        'content' => array()
+                    ),
                     'counter' => $this->getRepostCounter($aReposted, $aParams)
                 )
             ),
