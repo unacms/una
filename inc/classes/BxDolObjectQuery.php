@@ -223,7 +223,7 @@ class BxDolObjectQuery extends BxDolDb
     /**
      * Is used instead of 'updateTriggerTable' when trigger table contains 
      * only one field related to this object (View, Vote, Comment, etc).
-     * For example, it's used in Favourite and Feature objects.
+     * For example, it's used in Favourite (simple mode w\o lists) and Feature objects.
      */
     public function updateTriggerTableValue($iObjectId, $iValue)
     {
