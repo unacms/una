@@ -127,13 +127,15 @@ setParam('sys_cron_time', time());
 // run one time transient jobs
 $aJobsTransient = $oDb->getTransientJobs();
 if (!empty($aJobsTransient)) {
-	$oDb->deleteTransientJobs();
+    if (!defined('BX_CRON_FILTER') || in_array($aJobsTransient['name'], constant('BX_CRON_FILTER'))) {
+	    $oDb->deleteTransientJobs();
 
-    foreach ($aJobsTransient as $aRow)
-        runJob($aRow);
+        foreach ($aJobsTransient as $aRow)
+            runJob($aRow);
 
-    if (isset($aJobsTransient['sys_perform_upgrade']))
-        exit;
+        if (isset($aJobsTransient['sys_perform_upgrade']))
+            exit;
+    }
 }
 
 if (bx_check_maintenance_mode()) // don't run regular cron jobs when site is in maintenance mode
@@ -145,8 +147,9 @@ bx_import('BxDolLanguages');
 $aJobs = $oDb->getJobs();
 $aDate = getdate(time());
 foreach($aJobs as $aRow) {
-    if (checkCronJob($aRow['time'], $aDate))
-        runJob($aRow);
+    if (!defined('BX_CRON_FILTER') || in_array($aRow['name'], constant('BX_CRON_FILTER')))
+        if (checkCronJob($aRow['time'], $aDate))
+            runJob($aRow);
 }
 
 /** @} */
