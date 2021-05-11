@@ -115,7 +115,8 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         else
             $sPopupContent = $this->_oModule->_oTemplate->getPopupSetRole($this->_aRoles, $iId, $iRole);
 
-        return echoJson(array('popup' => BxTemplFunctions::getInstance()->transBox(str_replace('_', '-', $this->_sContentModule) . '-set-role-popup', $sPopupContent)));
+        $oFunctions = BxTemplFunctions::getInstance();
+        return echoJson(array('popup' => $oFunctions->transBox(str_replace('_', '-', $this->_sContentModule) . '-set-role-popup', $oFunctions->simpleBoxContent($sPopupContent))));
     }
 
     public function performActionSetRoleSubmit()
