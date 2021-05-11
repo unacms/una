@@ -125,12 +125,13 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     	return $this->simpleBox($sName, $sContent, $isHiddenByDefault, false, 'popup_slide.html');
     }
 
-	function inlineBox($sName, $sContent, $isHiddenByDefault = false)
+    function inlineBox($sName, $sContent, $isHiddenByDefault = false)
     {
         return $this->simpleBox($sName, $sContent, $isHiddenByDefault, false, 'popup_inline.html');
     }
 
-    protected function simpleBox($sName, $sContent, $isHiddenByDefault, $isPlaceInCenter, $sTemplate) {
+    protected function simpleBox($sName, $sContent, $isHiddenByDefault, $isPlaceInCenter, $sTemplate) 
+    {
     	$iId = !empty($sName) ? $sName : time();
 
         if(!is_array($sContent))
@@ -147,6 +148,16 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             $sContent = '<div class="login_ajax_wrap">' . $sContent . '</div>';
 
         return $sContent;
+    }
+
+    function simpleBoxContent($sContent, $bWithIndent = true)
+    {
+        if(!$bWithIndent)
+            return $sContent;
+
+        return $this->_oTemplate->parseHtmlByName('popup_content_indent.html', array(
+            'content' => $sContent
+        ));
     }
 
     function getTemplateIcon($sName)
