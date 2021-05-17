@@ -16,6 +16,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_courses_num_rss', '10', @iCategId, '_bx_courses_option_num_rss', 'digit', '', '', '', 12),
 ('bx_courses_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_courses_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
+('bx_courses_per_page_for_favorites_lists', '5', @iCategId, '_bx_courses_option_per_page_for_favorites_lists', 'digit', '', '', '', 17),
 ('bx_courses_searchable_fields', 'name,desc', @iCategId, '_bx_courses_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
 ('bx_courses_members_mode', '', @iCategId, '_bx_courses_option_members_mode', 'select', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:24:"get_options_members_mode";}', '', '', 40), 
 ('bx_courses_internal_notifications', '', @iCategId, '_bx_courses_option_internal_notifications', 'checkbox', '', '', '', 50);
@@ -89,8 +90,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_courses_delete_profile', 1, 'bx_courses', '_bx_courses_page_block_title_delete_profile', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:13:"entity_delete";}', 0, 0, 0);
 
--- PAGE: profile info
+-- PAGE: join profile
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_courses_join_profile', 'join-course-profile', '_bx_courses_page_title_sys_join_profile', '_bx_courses_page_title_join_profile', 'bx_courses', 5, 2147483647, 1, 'page.php?i=join-course-profile', '', '', '', 0, 1, 0, 'BxCoursesPageEntry', 'modules/boonex/courses/classes/BxCoursesPageEntry.php');
 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_courses_join_profile', 1, 'bx_courses', '_bx_courses_page_block_title_join_profile', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:11:"entity_join";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
+
+-- PAGE: profile info
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_courses_profile_info', 'course-profile-info', '_bx_courses_page_title_sys_profile_info', '_bx_courses_page_title_profile_info', 'bx_courses', 5, 2147483647, 1, 'page.php?i=course-profile-info', '', '', '', 0, 1, 0, 'BxCoursesPageEntry', 'modules/boonex/courses/classes/BxCoursesPageEntry.php');
 
@@ -98,8 +105,14 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_courses_profile_info', 1, 'bx_courses', '_bx_courses_page_block_title_system_profile_info', '_bx_courses_page_block_title_profile_info_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:16:"entity_info_full";}', 0, 0, 1, 1),
 ('bx_courses_profile_info', 1, 'bx_courses', '', '_bx_courses_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 2);
 
--- PAGE: course fans
+-- PAGE: manage profile pricing
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_courses_profile_pricing', 'edit-course-pricing', '_bx_courses_page_title_sys_profile_pricing', '_bx_courses_page_title_profile_pricing', 'bx_courses', 5, 2147483647, 1, 'page.php?i=edit-course-pricing', '', '', '', 0, 1, 0, 'BxCoursesPageEntry', 'modules/boonex/courses/classes/BxCoursesPageEntry.php');
 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_courses_profile_pricing', 1, 'bx_courses', '_bx_courses_page_block_title_system_profile_pricing', '_bx_courses_page_block_title_profile_pricing_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:14:"entity_pricing";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
+
+-- PAGE: course fans
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_courses_fans', 'course-fans', '_bx_courses_page_title_sys_entry_fans', '_bx_courses_page_title_entry_fans', 'bx_courses', 5, 2147483647, 1, 'page.php?i=course-fans', '', '', '', 0, 1, 0, 'BxCoursesPageEntry', 'modules/boonex/courses/classes/BxCoursesPageEntry.php');
 
@@ -174,6 +187,16 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_courses_joined', 1, 'bx_courses', '_bx_courses_page_block_title_sys_favorites_of_author', '_bx_courses_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 3),
 ('bx_courses_joined', 1, 'bx_courses', '_bx_courses_page_block_title_sys_joined_entries', '_bx_courses_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 4);
 
+-- PAGE: favorites by list
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_courses_favorites', '_bx_courses_page_title_sys_entries_favorites', '_bx_courses_page_title_entries_favorites', 'bx_courses', 12, 2147483647, 1, 'courses-favorites', 'page.php?i=courses-favorites', '', '', '', 0, 1, 0, 'BxCoursesPageListEntry', 'modules/boonex/courses/classes/BxCoursesPageListEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_courses_favorites', 2, 'bx_courses', '_bx_courses_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
+('bx_courses_favorites', 3, 'bx_courses', '_bx_courses_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
+('bx_courses_favorites', 3, 'bx_courses', '_bx_courses_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
+
+
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
@@ -217,6 +240,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_courses_view_actions', 'bx_courses', '_bx_courses_menu_set_title_view_profile_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_courses_view_actions', 'bx_courses', 'join-course-profile', '_bx_courses_menu_item_title_system_pay_and_join', '_bx_courses_menu_item_title_pay_and_join', 'page.php?i=join-course-profile&profile_id={profile_id}', '', '', 'sign-in-alt', '', 0, 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"is_paid_join_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 0, 5),
 ('bx_courses_view_actions', 'bx_courses', 'profile-fan-add', '_bx_courses_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_courses_fans\', \'add\', \'{profile_id}\')', '', 'sign-in-alt', '', 0, 2147483647, '', 1, 0, 0, 5),
 ('bx_courses_view_actions', 'bx_courses', 'profile-subscribe-add', '_bx_courses_menu_item_title_system_subscribe', '_bx_courses_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, '', 1, 0, 1, 20),
 ('bx_courses_view_actions', 'bx_courses', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_courses'', content_id: {content_id}});', '', 'check-circle', '', 0, 192, 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 1, 30),
@@ -231,13 +255,14 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_courses_view_actions_more', 'bx_courses', '_bx_courses_menu_set_title_view_profile_actions_more', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_courses_view_actions_more', 'bx_courses', 'profile-fan-remove', '_bx_courses_menu_item_title_system_leave_entry', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_courses_fans\', \'remove\', \'{profile_id}\')', '', 'sign-out-alt', '', 2147483647, 1, 0, 10),
-('bx_courses_view_actions_more', 'bx_courses', 'profile-subscribe-remove', '_bx_courses_menu_item_title_system_unsubscribe', '_bx_courses_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
-('bx_courses_view_actions_more', 'bx_courses', 'edit-course-cover', '_bx_courses_menu_item_title_system_edit_cover', '_bx_courses_menu_item_title_edit_cover', 'page.php?i=edit-course-cover&id={content_id}', '', '', 'edit', '', 2147483647, 1, 0, 30),
-('bx_courses_view_actions_more', 'bx_courses', 'edit-course-profile', '_bx_courses_menu_item_title_system_edit_profile', '_bx_courses_menu_item_title_edit_profile', 'page.php?i=edit-course-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 40),
-('bx_courses_view_actions_more', 'bx_courses', 'invite-to-course', '_bx_courses_menu_item_title_system_invite', '_bx_courses_menu_item_title_invite', 'page.php?i=invite-to-course&id={content_id}', '', '', 'user-friends', '', 2147483647, 1, 0, 42),
-('bx_courses_view_actions_more', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '_bx_courses_menu_item_title_delete_profile', 'page.php?i=delete-course-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_courses_view_actions_more', 'bx_courses', 'profile-fan-remove', '_bx_courses_menu_item_title_system_leave_entry', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_courses_fans\', \'remove\', \'{profile_id}\')', '', 'sign-out-alt', '', 2147483647, '', 1, 0, 10),
+('bx_courses_view_actions_more', 'bx_courses', 'profile-subscribe-remove', '_bx_courses_menu_item_title_system_unsubscribe', '_bx_courses_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, '', 1, 0, 20),
+('bx_courses_view_actions_more', 'bx_courses', 'edit-course-cover', '_bx_courses_menu_item_title_system_edit_cover', '_bx_courses_menu_item_title_edit_cover', 'page.php?i=edit-course-cover&id={content_id}', '', '', 'edit', '', 2147483647, '', 1, 0, 30),
+('bx_courses_view_actions_more', 'bx_courses', 'edit-course-profile', '_bx_courses_menu_item_title_system_edit_profile', '_bx_courses_menu_item_title_edit_profile', 'page.php?i=edit-course-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
+('bx_courses_view_actions_more', 'bx_courses', 'edit-course-pricing', '_bx_courses_menu_item_title_system_edit_pricing', '_bx_courses_menu_item_title_edit_pricing', 'page.php?i=edit-course-pricing&profile_id={profile_id}', '', '', 'money-check-alt', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:20:"is_pricing_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 41),
+('bx_courses_view_actions_more', 'bx_courses', 'invite-to-course', '_bx_courses_menu_item_title_system_invite', '_bx_courses_menu_item_title_invite', 'page.php?i=invite-to-course&id={content_id}', '', '', 'user-friends', '', 2147483647, '', 1, 0, 42),
+('bx_courses_view_actions_more', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '_bx_courses_menu_item_title_delete_profile', 'page.php?i=delete-course-profile&id={content_id}', '', '', 'remove', '', 2147483647, '', 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
 
@@ -248,6 +273,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_courses_view_actions_all', 'bx_courses', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_courses_view_actions_all', 'bx_courses', 'join-course-profile', '_bx_courses_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
 ('bx_courses_view_actions_all', 'bx_courses', 'profile-fan-add', '_bx_courses_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_courses_view_actions_all', 'bx_courses', 'profile-fan-remove', '_bx_courses_menu_item_title_system_leave_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_courses_view_actions_all', 'bx_courses', 'profile-subscribe-add', '_bx_courses_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
@@ -268,6 +294,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions_all', 'bx_courses', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 330),
 ('bx_courses_view_actions_all', 'bx_courses', 'edit-course-cover', '_bx_courses_menu_item_title_system_edit_cover', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 400),
 ('bx_courses_view_actions_all', 'bx_courses', 'edit-course-profile', '_bx_courses_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 410),
+('bx_courses_view_actions_all', 'bx_courses', 'edit-course-pricing', '_bx_courses_menu_item_title_system_edit_pricing', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 415),
 ('bx_courses_view_actions_all', 'bx_courses', 'invite-to-course', '_bx_courses_menu_item_title_system_invite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 420),
 ('bx_courses_view_actions_all', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 430),
 ('bx_courses_view_actions_all', 'bx_courses', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
@@ -321,19 +348,20 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_courses_snippet_meta', 'bx_courses', '_sys_menu_set_title_snippet_meta', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('bx_courses_snippet_meta', 'bx_courses', 'privacy', '_bx_courses_menu_item_title_system_sm_privacy', '_bx_courses_menu_item_title_sm_privacy', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
-('bx_courses_snippet_meta', 'bx_courses', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
-('bx_courses_snippet_meta', 'bx_courses', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
-('bx_courses_snippet_meta', 'bx_courses', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
-('bx_courses_snippet_meta', 'bx_courses', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
-('bx_courses_snippet_meta', 'bx_courses', 'members', '_bx_courses_menu_item_title_system_sm_members', '_bx_courses_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 6),
-('bx_courses_snippet_meta', 'bx_courses', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, 0, 0, 1, 7),
-('bx_courses_snippet_meta', 'bx_courses', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, 1, 0, 1, 8),
-('bx_courses_snippet_meta', 'bx_courses', 'join', '_bx_courses_menu_item_title_system_sm_join', '_bx_courses_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 1, 0, 1, 9),
-('bx_courses_snippet_meta', 'bx_courses', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, 0, 0, 1, 10),
-('bx_courses_snippet_meta', 'bx_courses', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 11),
-('bx_courses_snippet_meta', 'bx_courses', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 12);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
+('bx_courses_snippet_meta', 'bx_courses', 'privacy', '_bx_courses_menu_item_title_system_sm_privacy', '_bx_courses_menu_item_title_sm_privacy', '', '', '', '', '', 2147483647, '', 1, 0, 1, 1),
+('bx_courses_snippet_meta', 'bx_courses', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, '', 0, 0, 1, 2),
+('bx_courses_snippet_meta', 'bx_courses', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', 0, 0, 1, 3),
+('bx_courses_snippet_meta', 'bx_courses', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', 0, 0, 1, 4),
+('bx_courses_snippet_meta', 'bx_courses', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', 0, 0, 1, 5),
+('bx_courses_snippet_meta', 'bx_courses', 'members', '_bx_courses_menu_item_title_system_sm_members', '_bx_courses_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', 1, 0, 1, 6),
+('bx_courses_snippet_meta', 'bx_courses', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', 0, 0, 1, 7),
+('bx_courses_snippet_meta', 'bx_courses', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 8),
+('bx_courses_snippet_meta', 'bx_courses', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 9),
+('bx_courses_snippet_meta', 'bx_courses', 'join', '_bx_courses_menu_item_title_system_sm_join', '_bx_courses_menu_item_title_sm_join', '', '', '', '', '', 2147483647, '', 1, 0, 1, 10),
+('bx_courses_snippet_meta', 'bx_courses', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 0, 0, 1, 11),
+('bx_courses_snippet_meta', 'bx_courses', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 12),
+('bx_courses_snippet_meta', 'bx_courses', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 13);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
@@ -366,6 +394,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_courses', 'create entry', NULL, '_bx_courses_acl_action_create_profile', '', 1, 1);
 SET @iIdActionProfileCreate = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_courses', 'use paid join', NULL, '_bx_courses_acl_action_use_paid_join', '', 1, 1);
+SET @iIdActionUsePaidJoin = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_courses', 'delete entry', NULL, '_bx_courses_acl_action_delete_profile', '', 1, 1);
@@ -407,6 +439,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionProfileCreate),
 (@iAdministrator, @iIdActionProfileCreate),
 (@iPremium, @iIdActionProfileCreate),
+
+-- use paid join
+(@iStandard, @iIdActionUsePaidJoin),
+(@iModerator, @iIdActionUsePaidJoin),
+(@iAdministrator, @iIdActionUsePaidJoin),
+(@iPremium, @iIdActionUsePaidJoin),
 
 -- profile delete
 (@iAccount, @iIdActionProfileDelete),
@@ -474,7 +512,9 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_courses_fans', 'name', '_sys_name', '50%', '', 10),
 ('bx_courses_fans', 'role', '_bx_courses_txt_role', '10%', '', 15),
-('bx_courses_fans', 'actions', '', '40%', '', 20);
+('bx_courses_fans', 'role_added', '_bx_courses_txt_role_added', '10%', '', 16),
+('bx_courses_fans', 'role_expired', '_bx_courses_txt_role_expired', '10%', '', 17),
+('bx_courses_fans', 'actions', '', '20%', '', 20);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_courses_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
@@ -526,6 +566,34 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_courses_common', 'bulk', 'delete_with_content', '_bx_courses_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
 ('bx_courses_common', 'single', 'settings', '_bx_courses_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
 
+-- GRIDS: Pricing
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_courses_prices_manage', 'Sql', 'SELECT * FROM `bx_courses_prices` WHERE 1 ', 'bx_courses_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', '', 'like', '', '', 2147483647, 'BxCoursesGridPricesManage', 'modules/boonex/courses/classes/BxCoursesGridPricesManage.php'),
+('bx_courses_prices_view', 'Sql', 'SELECT * FROM `bx_courses_prices` WHERE 1 ', 'bx_courses_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', '', 'like', '', '', 2147483647, 'BxCoursesGridPricesView', 'modules/boonex/courses/classes/BxCoursesGridPricesView.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_courses_prices_manage', 'checkbox', '_sys_select', '1%', 0, '', '', 1),
+('bx_courses_prices_manage', 'order', '', '1%', 0, '', '', 2),
+('bx_courses_prices_manage', 'name', '_bx_courses_grid_column_title_name', '38%', 0, 32, '', 3),
+('bx_courses_prices_manage', 'price', '_bx_courses_grid_column_title_price', '20%', 0, 16, '', 4),
+('bx_courses_prices_manage', 'period', '_bx_courses_grid_column_title_period', '20%', 0, 16, '', 5),
+('bx_courses_prices_manage', 'actions', '', '20%', 0, '', '', 6),
+
+('bx_courses_prices_view', 'role_id', '_bx_courses_grid_column_title_role_id', '40%', 0, 32, '', 1),
+('bx_courses_prices_view', 'price', '_bx_courses_grid_column_title_price', '20%', 0, 16, '', 2),
+('bx_courses_prices_view', 'period', '_bx_courses_grid_column_title_period', '20%', 0, 16, '', 3),
+('bx_courses_prices_view', 'actions', '', '20%', 0, '', '', 4);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_courses_prices_manage', 'independent', 'add', '_bx_courses_grid_action_title_add', '', 0, 0, 1),
+('bx_courses_prices_manage', 'single', 'edit', '_bx_courses_grid_action_title_edit', 'pencil-alt', 1, 0, 1),
+('bx_courses_prices_manage', 'single', 'delete', '_bx_courses_grid_action_title_delete', 'remove', 1, 1, 2),
+('bx_courses_prices_manage', 'bulk', 'delete', '_bx_courses_grid_action_title_delete', '', 0, 1, 1),
+
+('bx_courses_prices_view', 'single', 'buy', '_bx_courses_grid_action_title_buy', 'cart-plus', 0, 0, 1),
+('bx_courses_prices_view', 'single', 'subscribe', '_bx_courses_grid_action_title_subscribe', 'credit-card', 0, 0, 2),
+('bx_courses_prices_view', 'single', 'choose', '_bx_courses_grid_action_title_choose', 'far check-square', 0, 0, 3);
+
 
 -- ALERTS
 
@@ -555,12 +623,13 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_courses', 'timeline_pin', @iHandler),
 ('bx_courses', 'timeline_promote', @iHandler);
 
--- PRIVACY 
+-- PRIVACY
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_courses_allow_view_to', 'bx_courses', 'view', '_bx_courses_form_profile_input_allow_view_to', '3', '', 'bx_courses_data', 'id', 'author', 'BxCoursesPrivacy', 'modules/boonex/courses/classes/BxCoursesPrivacy.php'),
 ('bx_courses_allow_view_notification_to', 'bx_courses', 'view_event', '_bx_courses_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxCoursesPrivacyNotifications', 'modules/boonex/courses/classes/BxCoursesPrivacyNotifications.php'),
-('bx_courses_allow_post_to', 'bx_courses', 'post', '_bx_courses_form_profile_input_allow_post_to', 'p', '', 'bx_courses_data', 'id', 'author', 'BxCoursesPrivacyPost', 'modules/boonex/courses/classes/BxCoursesPrivacyPost.php');
+('bx_courses_allow_post_to', 'bx_courses', 'post', '_bx_courses_form_profile_input_allow_post_to', 'p', '', 'bx_courses_data', 'id', 'author', 'BxCoursesPrivacyPost', 'modules/boonex/courses/classes/BxCoursesPrivacyPost.php'),
+('bx_courses_allow_view_favorite_list', 'bx_courses', 'view_favorite_list', '_bx_courses_form_entry_input_allow_view_favorite_list', '3', '', 'bx_courses_favorites_lists', 'id', 'author_id', 'BxCoursesPrivacy', 'modules/boonex/courses/classes/BxCoursesPrivacy.php');
 
 -- EMAIL TEMPLATES
 
@@ -580,3 +649,7 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_courses_cover_crop', 1, 'BxCoursesUploaderCoverCrop', 'modules/boonex/courses/classes/BxCoursesUploaderCoverCrop.php'),
 ('bx_courses_picture_crop', 1, 'BxCoursesUploaderPictureCrop', 'modules/boonex/courses/classes/BxCoursesUploaderPictureCrop.php');
 
+-- CRON
+
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_courses_pruning', '0 0 * * *', 'BxCoursesCronPruning', 'modules/boonex/courses/classes/BxCoursesCronPruning.php', '');

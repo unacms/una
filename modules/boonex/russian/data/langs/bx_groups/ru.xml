@@ -9,7 +9,6 @@
     <string name="_bx_groups_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_groups_option_members_mode"><![CDATA[Спец. режим для членов группы]]></string>
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
-    <string name="_bx_groups_option_members_mode_paid_join"><![CDATA[Платное присоединение]]></string>
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
     <string name="_bx_groups_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
@@ -196,6 +195,7 @@
     <string name="_bx_groups_page_block_title_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
     <string name="_bx_groups_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
     <string name="_bx_groups_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
+    <string name="_bx_groups_page_block_title_favorites_entries_actions"><![CDATA[Действия]]></string>
 
   <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>
