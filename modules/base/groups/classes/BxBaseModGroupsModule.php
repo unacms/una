@@ -675,7 +675,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function isPaidJoinByProfile($iProfileId)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if(!$this->_oConfig->isPaidJoin())
+            return false;
+
+        if(BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->isConnected($this->_iProfileId, $iProfileId))
             return false;
 
         $aPrices = $this->_oDb->getPrices(array('type' => 'by_profile_id', 'profile_id' => $iProfileId));

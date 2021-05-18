@@ -144,7 +144,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_groups_roles',
-            'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_groups_period_units',
+            'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_groups_period_units',
             
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,

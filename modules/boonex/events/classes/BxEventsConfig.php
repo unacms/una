@@ -33,6 +33,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
+            'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -59,11 +60,15 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELD_LABELS' => 'labels',
 
+            'FIELD_PRICE_ROLE_ID' => 'role_id',
+            'FIELD_PRICE_NAME' => 'name',
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-event-profile',
             'URI_EDIT_ENTRY' => 'edit-event-profile',
             'URI_ENTRIES_BY_CONTEXT' => 'events-context',
             'URI_EDIT_COVER' => 'edit-event-cover',
+            'URI_JOIN_ENTRY' => 'join-event-profile',
             'URI_JOINED_ENTRIES' => 'joined-events',
             'URI_MANAGE_COMMON' => 'events-manage',
             'URI_FAVORITES_LIST' => 'events-favorites',
@@ -81,6 +86,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
             'PARAM_MMODE' => 'bx_events_members_mode',
+            'PARAM_PAID_JOIN_ENABLED' => true,
+            'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_events_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_events_internal_notifications',
 
@@ -112,6 +119,9 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_event_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_event_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_event_invite',
+            'OBJECT_FORM_PRICE' => 'bx_events_price',
+            'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_events_price_add',
+            'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_events_price_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_events_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_events_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_events_view_actions_all', // all actions menu on view entry page
@@ -132,10 +142,13 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_COMMON' => 'bx_events_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_GRID_INVITES' => 'bx_events_invites',
+            'OBJECT_GRID_PRICES_MANAGE' => 'bx_events_prices_manage',
+            'OBJECT_GRID_PRICES_VIEW' => 'bx_events_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_events_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_events_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_events_roles',
+            'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_events_period_units',
             
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
@@ -211,7 +224,6 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_leave_group_cancel_request' => '_bx_events_menu_item_title_leave_group_cancel_request',
                 'menu_item_title_become_fan' => '_bx_events_menu_item_title_become_fan',
                 'menu_item_title_leave_group' => '_bx_events_menu_item_title_leave_group',
-                
                 'menu_item_title_become_fan_sent' => '_bx_events_menu_item_title_become_fan_sent',
                 'menu_item_title_become_fan' => '_bx_events_menu_item_title_become_fan',
             	'txt_all_entries_by_author' => '_bx_events_page_title_browse_by_author',
@@ -222,6 +234,12 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'txt_invitation_popup_decline_button' => '_bx_events_txt_invite_popup_button_decline',
                 'txt_invitation_popup_error_invitation_absent' => '_bx_events_txt_invite_popup_error_invitation_absent',
                 'txt_invitation_popup_error_wrong_user' => '_bx_events_txt_invite_popup_error_invitation_wrong_user',
+                'txt_n_unit' => '_bx_events_txt_n_unit',
+                'txt_buy_title' => '_bx_events_grid_action_title_buy_title',
+                'txt_cart_item_title' => '_bx_events_txt_cart_item_title',
+                'txt_subscribe_title' => '_bx_events_grid_action_title_subscribe_title',
+                'msg_performed' => '_bx_events_msg_performed',
+                'err_cannot_perform' => '_bx_events_err_cannot_perform',
             ),
 
         );
@@ -230,14 +248,16 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'main' => 'BxEventsMain',
             'entry' => 'BxEventsEntry',
             'manage_tools' => 'BxEventsManageTools',
-            'invite_popup' => 'BxEventsInvitePopup'
+            'invite_popup' => 'BxEventsInvitePopup',
+            'prices' => 'BxEventsPrices'
         );
 
         $this->_aJsObjects = array(
             'main' => 'oBxEventsMain',
             'entry' => 'oBxEventsEntry',
             'manage_tools' => 'oBxEventsManageTools',
-            'invite_popup' => 'oBxEventsInvitePopup'
+            'invite_popup' => 'oBxEventsInvitePopup',
+            'prices' => 'oBxEventsPrices'
         );
 
         $this->_aGridObjects = array(
