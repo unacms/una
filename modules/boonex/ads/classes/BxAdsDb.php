@@ -154,6 +154,8 @@ class BxAdsDb extends BxBaseModTextDb
                 $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
                 if(isset($aParams['with_content']) && $aParams['with_content'] === true)
                     $sWhereClause .= " AND `tc`.`items`>0";
+                if(isset($aParams['active']) && $aParams['active'] === true)
+                    $sWhereClause .= " AND `tc`.`active`=1";
                 break;
 
             case 'parent_id_count':
@@ -164,6 +166,8 @@ class BxAdsDb extends BxBaseModTextDb
 
                 $sSelectClause = "COUNT(`tc`.`id`)";
                 $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
+                if(isset($aParams['active']) && $aParams['active'] === true)
+                    $sWhereClause .= " AND `tc`.`active`=1";
                 break;
         
             case 'parent_id_order':

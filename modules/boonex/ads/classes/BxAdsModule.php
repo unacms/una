@@ -1230,7 +1230,7 @@ class BxAdsModule extends BxBaseModTextModule
 
     protected function _getCategoryOptions($iParentId, &$aValues)
     {
-        $aCategories = $this->_oDb->getCategories(array('type' => 'parent_id', 'parent_id' => $iParentId));
+        $aCategories = $this->_oDb->getCategories(array('type' => 'parent_id', 'parent_id' => $iParentId, 'active' => true));
         foreach($aCategories as $aCategory) {
             $aValues[] = array('key' => $aCategory['id'], 'value' => str_repeat('--', (int)$aCategory['level']) . ' ' . _t($aCategory['title']));
 
