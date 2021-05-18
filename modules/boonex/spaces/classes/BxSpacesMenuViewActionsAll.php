@@ -21,12 +21,22 @@ class BxSpacesMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         parent::__construct($aObject, $oTemplate);
     }
 
+    protected function _getMenuItemJoinSpaceProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
     protected function _getMenuItemEditSpaceCover($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
     protected function _getMenuItemEditSpaceProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+
+    protected function _getMenuItemEditSpacePricing($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }

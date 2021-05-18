@@ -26,7 +26,7 @@
     <string name="_bx_courses_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_courses_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_courses_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
-    <string name="_bx_courses_form_entry_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
+    <string name="_bx_courses_form_profile_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
     <string name="_bx_courses_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the course and see who's in it, only students can see posts. Secret - only students can find the course and see posts.]]></string>
     <string name="_bx_courses_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
     <string name="_bx_courses_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>

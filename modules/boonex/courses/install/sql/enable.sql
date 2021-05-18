@@ -629,7 +629,7 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_courses_allow_view_to', 'bx_courses', 'view', '_bx_courses_form_profile_input_allow_view_to', '3', '', 'bx_courses_data', 'id', 'author', 'BxCoursesPrivacy', 'modules/boonex/courses/classes/BxCoursesPrivacy.php'),
 ('bx_courses_allow_view_notification_to', 'bx_courses', 'view_event', '_bx_courses_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxCoursesPrivacyNotifications', 'modules/boonex/courses/classes/BxCoursesPrivacyNotifications.php'),
 ('bx_courses_allow_post_to', 'bx_courses', 'post', '_bx_courses_form_profile_input_allow_post_to', 'p', '', 'bx_courses_data', 'id', 'author', 'BxCoursesPrivacyPost', 'modules/boonex/courses/classes/BxCoursesPrivacyPost.php'),
-('bx_courses_allow_view_favorite_list', 'bx_courses', 'view_favorite_list', '_bx_courses_form_entry_input_allow_view_favorite_list', '3', '', 'bx_courses_favorites_lists', 'id', 'author_id', 'BxCoursesPrivacy', 'modules/boonex/courses/classes/BxCoursesPrivacy.php');
+('bx_courses_allow_view_favorite_list', 'bx_courses', 'view_favorite_list', '_bx_courses_form_profile_input_allow_view_favorite_list', '3', '', 'bx_courses_favorites_lists', 'id', 'author_id', 'BxCoursesPrivacy', 'modules/boonex/courses/classes/BxCoursesPrivacy.php');
 
 -- EMAIL TEMPLATES
 

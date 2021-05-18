@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_groups';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_groups' OR `object` IN('bx_groups_create_profile', 'bx_groups_delete_profile', 'bx_groups_context', 'bx_groups_join_profile', 'bx_groups_edit_profile', 'bx_groups_edit_profile_cover', 'bx_groups_invite', 'bx_groups_view_profile', 'bx_groups_view_profile_closed', 'bx_groups_profile_info', 'bx_groups_profile_pricing', 'bx_groups_profile_comments', 'bx_groups_home', 'bx_groups_fans', 'bx_groups_joined', 'bx_groups_top', 'bx_groups_search', 'bx_groups_manage', 'bx_groups_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_groups' OR `object` IN('bx_groups_create_profile', 'bx_groups_delete_profile', 'bx_groups_context', 'bx_groups_join_profile', 'bx_groups_edit_profile', 'bx_groups_edit_profile_cover', 'bx_groups_invite', 'bx_groups_view_profile', 'bx_groups_view_profile_closed', 'bx_groups_profile_info', 'bx_groups_profile_pricing', 'bx_groups_profile_comments', 'bx_groups_home', 'bx_groups_fans', 'bx_groups_joined', 'bx_groups_favorites', 'bx_groups_top', 'bx_groups_search', 'bx_groups_manage', 'bx_groups_administration');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_groups';

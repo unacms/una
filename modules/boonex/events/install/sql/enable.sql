@@ -678,7 +678,7 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_events_allow_view_to', 'bx_events', 'view', '_bx_events_form_profile_input_allow_view_to', '3', 'bx_groups,bx_spaces', 'bx_events_data', 'id', 'author', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php'),
 ('bx_events_allow_view_notification_to', 'bx_events', 'view_event', '_bx_events_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxEventsPrivacyNotifications', 'modules/boonex/events/classes/BxEventsPrivacyNotifications.php'),
 ('bx_events_allow_post_to', 'bx_events', 'post', '_bx_events_form_profile_input_allow_post_to', 'p', '', 'bx_events_data', 'id', 'author', 'BxEventsPrivacyPost', 'modules/boonex/events/classes/BxEventsPrivacyPost.php'),
-('bx_events_allow_view_favorite_list', 'bx_events', 'view_favorite_list', '_bx_events_form_entry_input_allow_view_favorite_list', '3', '', 'bx_events_favorites_lists', 'id', 'author_id', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php');
+('bx_events_allow_view_favorite_list', 'bx_events', 'view_favorite_list', '_bx_events_form_profile_input_allow_view_favorite_list', '3', '', 'bx_events_favorites_lists', 'id', 'author_id', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php');
 
 
 -- EMAIL TEMPLATES
