@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_spaces_data`, `bx_spaces_pics`, `bx_spaces_pics_resized`, `bx_spaces_cmts`, `bx_spaces_cmts_notes`, `bx_spaces_views_track`, `bx_spaces_meta_keywords`, `bx_spaces_meta_locations`, `bx_spaces_meta_mentions`, `bx_spaces_fans`, `bx_spaces_admins`, `bx_spaces_votes`, `bx_spaces_votes_track`, `bx_spaces_reports`, `bx_spaces_reports_track`, `bx_spaces_favorites_track`, `bx_spaces_scores`, `bx_spaces_scores_track`, `bx_spaces_invites`;
+DROP TABLE IF EXISTS `bx_spaces_data`, `bx_spaces_pics`, `bx_spaces_pics_resized`, `bx_spaces_cmts`, `bx_spaces_cmts_notes`, `bx_spaces_views_track`, `bx_spaces_meta_keywords`, `bx_spaces_meta_locations`, `bx_spaces_meta_mentions`, `bx_spaces_fans`, `bx_spaces_admins`, `bx_spaces_votes`, `bx_spaces_votes_track`, `bx_spaces_reports`, `bx_spaces_reports_track`, `bx_spaces_favorites_track`, `bx_spaces_favorites_lists`, `bx_spaces_scores`, `bx_spaces_scores_track`, `bx_spaces_invites`, `bx_spaces_prices`;
 
 -- PROFILES
 
@@ -21,7 +21,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_space
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_spaces';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_spaces';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_spaces';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_space_add', 'bx_space_delete', 'bx_space_edit', 'bx_space_edit_cover', 'bx_space_view', 'bx_space_view_full', 'bx_space_invite');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_space_add', 'bx_space_delete', 'bx_space_edit', 'bx_space_edit_cover', 'bx_space_view', 'bx_space_view_full', 'bx_space_invite', 'bx_space_invite', 'bx_spaces_price_add', 'bx_spaces_price_edit');
 
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_spaces';
