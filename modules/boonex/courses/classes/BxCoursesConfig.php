@@ -143,7 +143,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_UPLOADERS_COVER' => array('bx_courses_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_courses_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_courses_roles',
-            'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_courses_period_units',
+            'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_courses_period_units',
 
             'BADGES_AVALIABLE' => true,
             

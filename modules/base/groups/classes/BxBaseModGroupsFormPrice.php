@@ -53,20 +53,6 @@ class BxBaseModGroupsFormPrice extends BxTemplFormView
         }
     }
 
-    public function getCode($bDynamicMode = false)
-    {
-    	$sJs = $this->_oModule->_oTemplate->addJs(array('prices.js'), $bDynamicMode);
-
-        $sCode = '';
-        if($bDynamicMode)
-            $sCode .= $sJs;
-
-        $sCode .= $this->_oModule->_oTemplate->getJsCode('prices');
-        $sCode .= parent::getCode($bDynamicMode);
-
-        return $sCode;
-    }
-
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
