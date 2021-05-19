@@ -940,6 +940,7 @@
 	<string name="_adm_form_txt_field_type_submit"><![CDATA[отправка]]></string>
 	<string name="_adm_form_txt_field_type_switcher"><![CDATA[переключатель]]></string>
 	<string name="_adm_form_txt_field_type_text"><![CDATA[текст]]></string>
+        <string name="_adm_form_txt_field_type_text_range"><![CDATA[текст (диапазон)]]></string>
 	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[авто текст]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[текстовое поле]]></string>
         <string name="_adm_form_txt_field_type_time"><![CDATA[время]]></string>
