@@ -642,51 +642,66 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return true;
     }
 
-    public function serviceIsPaidJoinAvaliable($iProfileId)
+    public function serviceIsPaidJoinAvaliable($iGroupProfileId, $iProfileId = 0)
     {
-        return $this->isPaidJoinByProfile($iProfileId);
+        return $this->isPaidJoinByProfileForProfile($iGroupProfileId, $iProfileId);
     }
 
-    public function serviceIsPaidJoinAvaliableByContent($iContentId)
+    public function serviceIsPaidJoinAvaliableByContent($iGroupContentId, $iProfileId = 0)
     {
-        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
-        if(!$oProfile)
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iGroupContentId, $this->getName());
+        if(!$oGroupProfile)
             return false;
 
-        return $this->isPaidJoinByProfile($oProfile->id());
+        return $this->isPaidJoinByProfileForProfile($oGroupProfile->id(), $iProfileId);
     }
 
-    public function serviceIsFreeJoinAvaliable($iProfileId)
+    public function serviceIsFreeJoinAvaliable($iGroupProfileId, $iProfileId = 0)
     {
-        return !$this->isPaidJoinByProfile($iProfileId);
+        return !$this->isPaidJoinByProfileForProfile($iGroupProfileId, $iProfileId);
     }
 
-    public function serviceIsFreeJoinAvaliableByContent($iContentId)
+    public function serviceIsFreeJoinAvaliableByContent($iGroupContentId, $iProfileId = 0)
     {
-        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
-        if(!$oProfile)
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iGroupContentId, $this->getName());
+        if(!$oGroupProfile)
             return false;
 
-        return !$this->isPaidJoinByProfile($oProfile->id());
+        return !$this->isPaidJoinByProfileForProfile($oGroupProfile->id(), $iProfileId);
+    }
+
+    /**
+     * Is Paid Join enabled in the group and whether a profile can use it.
+     * 
+     * @param type $iGroupProfileId - Group profile ID.
+     * @param type $iProfileId - Profile ID of the user who wants to join.
+     * @return boolean
+     */
+    public function isPaidJoinByProfileForProfile($iGroupProfileId, $iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($iProfileId))
+            $iProfileId = $this->_iProfileId;
+
+        if(BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->isConnected($iProfileId, $iGroupProfileId))
+            return false;
+
+        return $this->isPaidJoinByProfile($iGroupProfileId);
     }
 
     /**
      * Is Paid Join enabled as is and whether a group has pricing plans added.
      * 
-     * @param type $iProfileId - Group profile ID.
+     * @param type $iGroupProfileId - Group profile ID.
      * @return boolean
      */
-    public function isPaidJoinByProfile($iProfileId)
+    public function isPaidJoinByProfile($iGroupProfileId)
     {
-        $CNF = &$this->_oConfig->CNF;
-
         if(!$this->_oConfig->isPaidJoin())
             return false;
 
-        if(BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->isConnected($this->_iProfileId, $iProfileId))
-            return false;
-
-        $aPrices = $this->_oDb->getPrices(array('type' => 'by_profile_id', 'profile_id' => $iProfileId));
+        $aPrices = $this->_oDb->getPrices(array('type' => 'by_profile_id', 'profile_id' => $iGroupProfileId));
         if(empty($aPrices) || !is_array($aPrices))
             return false;
 
