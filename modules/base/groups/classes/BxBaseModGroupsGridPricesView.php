@@ -31,18 +31,41 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
     {
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_aJsCodes = array();
+    }
+
+    public function setClientId($iClientId = 0)
+    {
+        $this->_iClient = $iClientId;
+        if(empty($this->_iClient))
+            $this->_iClient = bx_get_logged_profile_id();
+
+        $this->_iClientRole = 0;
+        if(!empty($this->_iGroupProfileId))
+            $this->_iClientRole = $this->_oModule->getRole($this->_iGroupProfileId, $this->_iClient);
+    }
+
+    public function setSellerId($iSellerId = 0)
+    {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_aJsCodes = array();
+        $this->_iSeller = $iSellerId;
+        if(empty($this->_iSeller) && !empty($this->_aGroupContentInfo) && is_array($this->_aGroupContentInfo))
+            $this->_iSeller = $this->_aGroupContentInfo[$CNF['FIELD_AUTHOR']];
 
-        $this->_oPayment = BxDolPayments::getInstance();
-
-        $this->_iSeller = $this->_aGroupContentInfo[$CNF['FIELD_AUTHOR']];
-        $this->_iClient = bx_get_logged_profile_id();
-        $this->_iClientRole = $this->_oModule->getRole($this->_iGroupProfileId, $this->_iClient);
+        if(empty($this->_oPayment))
+            $this->_oPayment = BxDolPayments::getInstance();
 
         $this->_bTypeSingle = $this->_oPayment->isAcceptingPayments($this->_iSeller, BX_PAYMENT_TYPE_SINGLE);
         $this->_bTypeRecurring = $this->_oPayment->isAcceptingPayments($this->_iSeller, BX_PAYMENT_TYPE_RECURRING);
+    }
+
+    public function setProfileId($iProfileId)
+    {
+        parent::setProfileId($iProfileId);
+
+        $this->setClientId();
+        $this->setSellerId();
     }
 
     public function performActionChoose()

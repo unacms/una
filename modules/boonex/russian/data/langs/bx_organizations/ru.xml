@@ -85,7 +85,32 @@
     <string name="_bx_orgs_form_profile_input_followers_count"><![CDATA[Количество подписчиков]]></string>
     <string name="_bx_orgs_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
 
+    <string name="_bx_orgs_form_price"><![CDATA[Цена]]></string>
+    <string name="_bx_orgs_form_price_display_add"><![CDATA[Добавление]]></string>
+    <string name="_bx_orgs_form_price_display_edit"><![CDATA[Редактирование]]></string>
+    <string name="_bx_orgs_form_price_input_sys_id"><![CDATA[ID]]></string>
+    <string name="_bx_orgs_form_price_input_sys_role_id"><![CDATA[ID роли]]></string>
+    <string name="_bx_orgs_form_price_input_sys_name"><![CDATA[Имя]]></string>
+    <string name="_bx_orgs_form_price_input_name"><![CDATA[Имя]]></string>
+    <string name="_bx_orgs_form_price_input_inf_name"><![CDATA[Уникальное значение, которое будет использоваться в серверной части и API запросах]]></string>
+    <string name="_bx_orgs_form_price_input_err_name"><![CDATA[Введите уникальное значение]]></string>
+    <string name="_bx_orgs_form_price_input_sys_period"><![CDATA[Период]]></string>
+    <string name="_bx_orgs_form_price_input_period"><![CDATA[Период]]></string>
+    <string name="_bx_orgs_form_price_input_inf_period"><![CDATA[Используйте 0 для пожизненного]]></string>
+    <string name="_bx_orgs_form_price_input_sys_period_unit"><![CDATA[Единица измерения периода]]></string>
+    <string name="_bx_orgs_form_price_input_period_unit"><![CDATA[Единица измерения периода]]></string>
+    <string name="_bx_orgs_form_price_input_inf_period_unit"><![CDATA[Оставьте пустым для пожизненного уровня.]]></string>
+    <string name="_bx_orgs_form_price_input_err_period_unit"><![CDATA[Здесь Вам необходимо выбрать единицу измерения периода.]]></string>
+    <string name="_bx_orgs_form_price_input_sys_price"><![CDATA[Цена]]></string>
+    <string name="_bx_orgs_form_price_input_price"><![CDATA[Цена]]></string>
+    <string name="_bx_orgs_form_price_input_inf_price"><![CDATA[Введите 0 или оставьте пустым для создания бесплатного уровня.]]></string>
+    <string name="_bx_orgs_form_price_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_orgs_form_price_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_orgs_form_price_input_sys_do_cancel"><![CDATA[Отменить]]></string>
+    <string name="_bx_orgs_form_price_input_do_cancel"><![CDATA[Отменить]]></string>
+    
 	<string name="_bx_orgs_acl_action_create_profile"><![CDATA[Создать профиль организации]]></string>
+        <string name="_bx_orgs_acl_action_use_paid_join"><![CDATA[Использовать платный вход в организацию]]></string>
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Удалить профиль организации]]></string>
 	<string name="_bx_orgs_acl_action_view_profile"><![CDATA[Просмотреть профиль организации]]></string>
 	<string name="_bx_orgs_acl_action_edit_any_profile"><![CDATA[Редактировать профиль любой организации]]></string>
@@ -98,6 +123,8 @@
 	<string name="_bx_orgs_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Удалить профиль]]></string>
 	<string name="_bx_orgs_page_title_delete_profile"><![CDATA[Удалить профиль]]></string>
+        <string name="_bx_orgs_page_title_sys_join_profile"><![CDATA[Присоединиться к организации]]></string>
+        <string name="_bx_orgs_page_title_join_profile"><![CDATA[Присоединиться к организации]]></string>
     <string name="_bx_orgs_page_title_sys_view_profile"><![CDATA[Просмотр профиля]]></string>
     <string name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[Просмотр профиля с ограничением доступа]]></string>
 	<string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
@@ -126,6 +153,8 @@
     <string name="_bx_orgs_page_title_fans"><![CDATA[Участники]]></string>
     <string name="_bx_orgs_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_orgs_page_title_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_orgs_page_title_sys_profile_pricing"><![CDATA[Цены]]></string>
+    <string name="_bx_orgs_page_title_profile_pricing"><![CDATA[Цены]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Инфо профиля]]></string>
 	<string name="_bx_orgs_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
 	<string name="_bx_orgs_page_title_sys_recent"><![CDATA[Новые организации]]></string>
@@ -153,11 +182,15 @@
 	<string name="_bx_orgs_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_orgs_page_block_title_delete_profile"><![CDATA[Удалить профиль]]></string>
 	<string name="_bx_orgs_page_block_title_profile_all_actions"><![CDATA[Все действия]]></string>
+        <string name="_bx_orgs_page_block_title_join_profile"><![CDATA[Присоединиться к организации]]></string>
 	<string name="_bx_orgs_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_profile_info"><![CDATA[Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_membership"><![CDATA[Членство]]></string>
+        <string name="_bx_orgs_page_block_title_system_profile_pricing"><![CDATA[Цены]]></string>
+        <string name="_bx_orgs_page_block_title_profile_pricing"><![CDATA[Цены]]></string>
+        <string name="_bx_orgs_page_block_title_profile_pricing_link"><![CDATA[Расценки организации: <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_description"><![CDATA[Описание]]></string>
 	<string name="_bx_orgs_page_block_title_profile_favorites"><![CDATA[Избранные организации]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_favorites"><![CDATA[Избранные организации]]></string>
@@ -232,6 +265,8 @@
     <string name="_bx_orgs_menu_item_title_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_orgs_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_orgs_menu_item_title_system_edit_pricing"><![CDATA[Редактировать цены]]></string>
+    <string name="_bx_orgs_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_profile"><![CDATA[Редактировать организацию]]></string>
     <string name="_bx_orgs_menu_item_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Удалить организацию]]></string>
@@ -282,6 +317,8 @@
     <string name="_bx_orgs_menu_item_title_leave_organization"><![CDATA[Покинуть организацию]]></string>
     <string name="_bx_orgs_menu_item_title_leave_organization_cancel_request"><![CDATA[Отменить присоединение]]></string>
     <string name="_bx_orgs_menu_item_title_leave_organization_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
+    <string name="_bx_orgs_menu_item_title_system_pay_and_join"><![CDATA[Оплатить и присоединиться]]></string>
+    <string name="_bx_orgs_menu_item_title_pay_and_join"><![CDATA[Оплатить и присоединиться]]></string>
     <string name="_bx_orgs_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_orgs_menu_item_title_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_orgs_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>
@@ -347,6 +384,22 @@
 	<string name="_bx_orgs_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) организацию(ции).]]></string>
 	<string name="_bx_orgs_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_orgs_grid_column_title_name"><![CDATA[Название]]></string>
+    <string name="_bx_orgs_grid_column_title_role_id"><![CDATA[Роль]]></string>
+    <string name="_bx_orgs_grid_column_title_period"><![CDATA[Период]]></string>
+    <string name="_bx_orgs_grid_column_title_price"><![CDATA[Цена]]></string>
+    <string name="_bx_orgs_grid_action_title_add"><![CDATA[Добавить]]></string>
+    <string name="_bx_orgs_grid_action_title_edit"><![CDATA[Изменить]]></string>
+    <string name="_bx_orgs_grid_action_title_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_orgs_grid_action_title_buy"><![CDATA[Купить]]></string>
+    <string name="_bx_orgs_grid_action_title_buy_title"><![CDATA[Единовременный платеж]]></string>
+    <string name="_bx_orgs_grid_action_title_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_orgs_grid_action_title_subscribe_title"><![CDATA[Создать подписку с регулярным выставлением счетов]]></string>
+    <string name="_bx_orgs_grid_action_title_choose"><![CDATA[Выбирать]]></string>
+    <string name="_bx_orgs_grid_action_title_choose_title"><![CDATA[Бесплатно переключиться на уровень]]></string>
+    <string name="_bx_orgs_popup_title_price_add"><![CDATA[Добавить ценовой план]]></string>
+    <string name="_bx_orgs_popup_title_price_edit"><![CDATA[Редактировать ценовой план]]></string>
+
     <string name="_bx_orgs_chart_growth"><![CDATA[Организации: Развитие]]></string>
     <string name="_bx_orgs_chart_growth_speed"><![CDATA[Организации: Скорость развития]]></string>
 
@@ -400,6 +453,12 @@
     <string name="_bx_orgs_role_administrator"><![CDATA[Администратор]]></string>
     <string name="_bx_orgs_role_moderator"><![CDATA[Модератор]]></string>
 
+    <string name="_bx_orgs_pre_lists_period_units"><![CDATA[Платежный интервал]]></string>
+    <string name="_bx_orgs_period_unit_day"><![CDATA[день]]></string>
+    <string name="_bx_orgs_period_unit_week"><![CDATA[неделя]]></string>
+    <string name="_bx_orgs_period_unit_month"><![CDATA[месяц]]></string>
+    <string name="_bx_orgs_period_unit_year"><![CDATA[год]]></string>
+
     <string name="_bx_organizations_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_organizations_alert_action_join_invitation_notif"><![CDATA[приглашение вступить в группу]]></string>
     <string name="_bx_organizations_alert_action_join_request"><![CDATA[запрос на присоединение к организации]]></string>
@@ -423,9 +482,17 @@
     <string name="_bx_orgs_txt_sample_pi_action_user"><![CDATA[{0} сменила {1}]]></string>
     <string name="_bx_orgs_txt_N_friends"><![CDATA[Друзья: {0}]]></string>
     <string name="_bx_orgs_txt_role"><![CDATA[Роль]]></string>
+    <string name="_bx_orgs_txt_role_added"><![CDATA[Начало]]></string>
+    <string name="_bx_orgs_txt_role_expired"><![CDATA[Окончание]]></string>
     <string name="_bx_orgs_txt_set_role"><![CDATA[Задать роль]]></string>
     <string name="_bx_orgs_txt_private_organization"><![CDATA[Приватная организация]]></string>
     <string name="_bx_orgs_ps_group_title_participants"><![CDATA[Сотрудники]]></string>
+    <string name="_bx_orgs_txt_n_unit"><![CDATA[{0} ({1})]]></string>
+    <string name="_bx_orgs_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
+
+    <string name="_bx_orgs_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
+    <string name="_bx_orgs_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>
+    <string name="_bx_orgs_err_cannot_perform"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 
     <string name="_bx_orgs_email_friend_request"><![CDATA[Запрос на добавление в друзья]]></string>
     <string name="_bx_orgs_email_friend_request_subject"><![CDATA[Подружиться]]></string>
