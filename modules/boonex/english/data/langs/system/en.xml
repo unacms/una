@@ -919,6 +919,7 @@
 	<string name="_adm_form_txt_field_type_submit"><![CDATA[submit]]></string>
 	<string name="_adm_form_txt_field_type_switcher"><![CDATA[switcher]]></string>
 	<string name="_adm_form_txt_field_type_text"><![CDATA[text]]></string>
+        <string name="_adm_form_txt_field_type_text_range"><![CDATA[text (range)]]></string>
 	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[auto text]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[textarea]]></string>
         <string name="_adm_form_txt_field_type_time"><![CDATA[time]]></string>
