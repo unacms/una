@@ -661,6 +661,22 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
 
     /**
      * Get file url.
+     * @param $sRemoteId file remote id
+     * @return file url or false on error
+     */
+    public function getFileUrlByRemoteId($sRemoteId)
+    {
+        $aFile = $this->_oDb->getFileByRemoteId($sRemoteId);
+        if (!$aFile) {
+            $this->setErrorCode(BX_DOL_STORAGE_ERR_FILE_NOT_FOUND);
+            return false;
+        }
+
+        return $this->getFileUrlById($aFile['id']);
+    }
+
+    /**
+     * Get file url.
      * @param $iFileId file id
      * @return file url or false on error
      */
