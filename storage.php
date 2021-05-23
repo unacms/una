@@ -7,8 +7,6 @@
  * @{
  */
 
-//ob_start();
-
 require_once('./inc/header.inc.php');
 
 $sStorageObject = bx_process_input(bx_get('o'));
@@ -31,7 +29,22 @@ if (!$sRemoteId) {
     exit;
 }
 
-//ob_end_clean();
+// redirect for remote storage in case if some references still pointing to local storage
+$aObject = $oStorage->getObjectData();
+if ('Local' != $aObject['engine']) {
+    if (!($sUrl = $oStorage->getFileUrlByRemoteId($sFile))) {
+        // Tmp fix for storages renaming in the past
+        if ('bx_posts_files' == $sStorageObject && ($oStorage = BxDolStorage::getObjectInstance('bx_posts_covers'))) {
+            $sFile = preg_replace("/\.[A-Za-z0-9]+$/", '', $sFile);
+            $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
+        }
+        if (!$sUrl) {
+            bx_storage_download_error_occured();
+            exit;
+        }
+    }
+    header("Location: " . $sUrl);
+}
 
 if (!$oStorage->download($sRemoteId, $sToken)) {
     $iError = $oStorage->getErrorCode();
