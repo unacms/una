@@ -57,23 +57,10 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sName = '';
-
-    	$sTitle = bx_process_input(bx_get($CNF['FIELD_TITLE']));
-    	if(empty($sTitle))
-            return echoJson(array());
-
         $iId = (int)bx_get($CNF['FIELD_ID']);
-        if(!empty($iId)) {
-            $aEntry = $this->_oDb->getContentInfoById($iId); 
-            if(strcmp($sTitle, $aEntry[$CNF['FIELD_NAME']]) == 0) 
-                $sName = $sTitle;
-        }
+    	$sTitle = bx_process_input(bx_get($CNF['FIELD_TITLE']));
 
-    	echoJson(array(
-            'title' => $sTitle,
-            'name' => !empty($sName) ? $sName : $this->_oConfig->getEntryName($sTitle, $iId)
-    	));
+    	echoJson($this->serviceCheckName($sTitle, $iId));
     }
 
     public function actionInterested()
@@ -193,6 +180,26 @@ class BxAdsModule extends BxBaseModTextModule
             'CategoriesList' => '',
             'BrowseCategory' => '',
         ));
+    }
+
+    public function serviceCheckName($sTitle, $iId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	if(empty($sTitle))
+            return array();
+
+        $sName = '';
+        if(!empty($iId)) {
+            $aEntry = $this->_oDb->getContentInfoById($iId); 
+            if(strcmp($sTitle, $aEntry[$CNF['FIELD_NAME']]) == 0) 
+                $sName = $sTitle;
+        }
+
+        return array(
+            'title' => $sTitle,
+            'name' => !empty($sName) ? $sName : $this->_oConfig->getEntryName($sTitle, $iId)
+    	);
     }
 
     public function serviceUpdateCategoriesStats()
