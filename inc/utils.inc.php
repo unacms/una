@@ -937,7 +937,8 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         $sAllCookies = '';
         foreach($_COOKIE as $sKey => $mValue){
             if(is_array($mValue)){
-                $sAllCookies .= $sKey . '=' . implode(',', $mValue) . ';';
+                foreach ($mValue as $k => $v)
+                    $sAllCookies .= "{$sKey}[{$k}]={$v};";
             }
             else{
                 $sAllCookies .= $sKey . '=' . $mValue . ';';
