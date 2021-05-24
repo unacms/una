@@ -12,8 +12,6 @@
  */
 class BxBasePageHome extends BxTemplPage
 {
-    protected $_sTourTheme = 'default';
-
     public function __construct($aObject, $oTemplate)
     {
         parent::__construct($aObject, $oTemplate);
@@ -44,7 +42,7 @@ class BxBasePageHome extends BxTemplPage
     {
         $s = parent::getCode ();
         if (isAdmin() && getParam('site_tour_home') == 'on')
-            $s .= $this->_oTemplate->parseHtmlByName('homepage_tour.html', array('tour_theme' => $this->_sTourTheme));
+            $s .= $this->_oTemplate->parseHtmlByName('homepage_tour.html', array());
 
         return $s;
     }
@@ -80,12 +78,11 @@ class BxBasePageHome extends BxTemplPage
         parent::_addJsCss();
         if (isAdmin()) {
             $this->_oTemplate->addJs(array(
-                'shepherd/js/tether.min.js',
                 'shepherd/js/shepherd.min.js',
             ));
             $this->_oTemplate->addCss(array(
                 'homepage.css',
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css'
+                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd.css'
             ));
         }
     }

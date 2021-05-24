@@ -67,8 +67,9 @@
     ];
 
     glTour = new Shepherd.Tour({
-        defaults: {
-            classes: 'shepherd-theme-__tour_theme__ bx-def-z-index-modal',
+        useModalOverlay: true,
+        defaultStepOptions: {
+            classes: 'shepherd-active bx-def-z-index-modal',
             showCancelLink: true,
             scrollTo: true
         }
@@ -99,12 +100,13 @@
             });
 
         var aOpts = {
+            id: a[i].id,
             title: a[i].title,
             text: a[i].text,
             attachTo: a[i].sel,
             buttons: aBtns
         };
-        glTour.addStep(a[i].id, aOpts);
+        glTour.addStep(aOpts);
     }
 
     if (!$.cookie('launcher-tour-hidden'))
