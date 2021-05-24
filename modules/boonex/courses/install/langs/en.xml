@@ -9,6 +9,7 @@
     <string name="_bx_courses_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_courses_option_members_mode"><![CDATA[Special mode for course members]]></string>
     <string name="_bx_courses_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
+    <string name="_bx_courses_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
     <string name="_bx_courses_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
     <string name="_bx_courses_form_profile"><![CDATA[Courses]]></string>
@@ -25,6 +26,7 @@
     <string name="_bx_courses_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_courses_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_courses_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_courses_form_profile_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
     <string name="_bx_courses_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the course and see who's in it, only students can see posts. Secret - only students can find the course and see posts.]]></string>
     <string name="_bx_courses_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
     <string name="_bx_courses_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
@@ -48,11 +50,36 @@
     <string name="_bx_courses_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
     <string name="_bx_courses_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete course.]]></string>
 
+    <string name="_bx_courses_form_price"><![CDATA[Price]]></string>
+    <string name="_bx_courses_form_price_display_add"><![CDATA[Add]]></string>
+    <string name="_bx_courses_form_price_display_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_courses_form_price_input_sys_id"><![CDATA[ID]]></string>
+    <string name="_bx_courses_form_price_input_sys_role_id"><![CDATA[Role ID]]></string>
+    <string name="_bx_courses_form_price_input_sys_name"><![CDATA[Name]]></string>
+    <string name="_bx_courses_form_price_input_name"><![CDATA[Name]]></string>
+    <string name="_bx_courses_form_price_input_inf_name"><![CDATA[Unique value which will be used in back end and API calls]]></string>
+    <string name="_bx_courses_form_price_input_err_name"><![CDATA[You need to enter a unique value here]]></string>
+    <string name="_bx_courses_form_price_input_sys_period"><![CDATA[Period]]></string>
+    <string name="_bx_courses_form_price_input_period"><![CDATA[Period]]></string>
+    <string name="_bx_courses_form_price_input_inf_period"><![CDATA[Use 0 for lifetime]]></string>
+    <string name="_bx_courses_form_price_input_sys_period_unit"><![CDATA[Period unit]]></string>
+    <string name="_bx_courses_form_price_input_period_unit"><![CDATA[Period unit]]></string>
+    <string name="_bx_courses_form_price_input_inf_period_unit"><![CDATA[Leave empty for lifetime level.]]></string>
+    <string name="_bx_courses_form_price_input_err_period_unit"><![CDATA[You need to select a period unit here.]]></string>
+    <string name="_bx_courses_form_price_input_sys_price"><![CDATA[Price]]></string>
+    <string name="_bx_courses_form_price_input_price"><![CDATA[Price]]></string>
+    <string name="_bx_courses_form_price_input_inf_price"><![CDATA[Use 0 or leave empty to create free level.]]></string>
+    <string name="_bx_courses_form_price_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_courses_form_price_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_courses_form_price_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_courses_form_price_input_do_cancel"><![CDATA[Cancel]]></string>
+
     <string name="_bx_courses_acl_action_create_profile"><![CDATA[Create Course]]></string>
+    <string name="_bx_courses_acl_action_use_paid_join"><![CDATA[Use paid join]]></string>
     <string name="_bx_courses_acl_action_delete_profile"><![CDATA[Delete Course]]></string>
     <string name="_bx_courses_acl_action_view_profile"><![CDATA[View Course]]></string>
     <string name="_bx_courses_acl_action_edit_any_profile"><![CDATA[Edit Any Course]]></string>
-	<string name="_bx_courses_acl_action_delete_any_profile"><![CDATA[Delete Any Course]]></string>
+    <string name="_bx_courses_acl_action_delete_any_profile"><![CDATA[Delete Any Course]]></string>
     <string name="_bx_courses_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
     <string name="_bx_courses_page_title_sys_joined_entries"><![CDATA[Profile Courses]]></string>
@@ -65,6 +92,8 @@
     <string name="_bx_courses_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_courses_page_title_sys_delete_profile"><![CDATA[Delete Course]]></string>
     <string name="_bx_courses_page_title_delete_profile"><![CDATA[Delete Course]]></string>
+    <string name="_bx_courses_page_title_sys_join_profile"><![CDATA[Join Course]]></string>
+    <string name="_bx_courses_page_title_join_profile"><![CDATA[Join Course]]></string>
     <string name="_bx_courses_page_title_sys_view_profile_closed"><![CDATA[View Closed Course]]></string>
     <string name="_bx_courses_page_title_sys_view_profile"><![CDATA[View Course]]></string>
     <string name="_bx_courses_page_title_view_profile"><![CDATA[{display_name}]]></string>
@@ -81,9 +110,11 @@
     <string name="_bx_courses_page_title_entry_fans"><![CDATA[Students]]></string>
     <string name="_bx_courses_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_courses_page_title_profile_comments"><![CDATA[Comments]]></string>
-	<string name="_bx_courses_page_block_title_entry_reports"><![CDATA[Reports]]></string>
+    <string name="_bx_courses_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_courses_page_title_sys_profile_info"><![CDATA[Course Info]]></string>
     <string name="_bx_courses_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
+    <string name="_bx_courses_page_title_sys_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_courses_page_title_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_courses_page_title_sys_recent"><![CDATA[New Courses]]></string>
     <string name="_bx_courses_page_title_recent"><![CDATA[New Courses]]></string>
     <string name="_bx_courses_page_title_sys_manage"><![CDATA[Manage Own Courses]]></string>
@@ -97,9 +128,14 @@
     <string name="_bx_courses_page_title_invite_to_course"><![CDATA[Invite Students to the Course]]></string>
     <string name="_bx_courses_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_courses_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_courses_page_title_sys_entries_favorites"><![CDATA[Favorives Courses]]></string>
+    <string name="_bx_courses_page_title_entries_favorites"><![CDATA[Favorives Courses]]></string>
 
     <string name="_bx_courses_page_block_title_sys_entries_actions"><![CDATA[Courses actions]]></string>
     <string name="_bx_courses_page_block_title_entries_actions"><![CDATA[Courses actions]]></string>
+    <string name="_bx_courses_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+    <string name="_bx_courses_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
+    <string name="_bx_courses_page_block_title_favorites_entries_actions"><![CDATA[Favorites List Actions]]></string>
     <string name="_bx_courses_page_block_title_sys_entries_of_author"><![CDATA[Courses of author]]></string>
     <string name="_bx_courses_page_block_title_entries_of_author"><![CDATA[Courses by {display_name}]]></string>
     <string name="_bx_courses_page_block_title_favorites_of_author"><![CDATA[Favorite Courses]]></string>
@@ -110,9 +146,13 @@
     <string name="_bx_courses_page_block_title_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_courses_page_block_title_delete_profile"><![CDATA[Delete Course]]></string>
+    <string name="_bx_courses_page_block_title_join_profile"><![CDATA[Join Course]]></string>
     <string name="_bx_courses_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_courses_page_block_title_system_profile_info"><![CDATA[Info]]></string>
+    <string name="_bx_courses_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_courses_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_courses_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_description"><![CDATA[Description]]></string>
     <string name="_bx_courses_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_courses_page_block_title_profile_friends"><![CDATA[Friends]]></string>
@@ -175,6 +215,8 @@
     <string name="_bx_courses_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_courses_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_courses_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
+    <string name="_bx_courses_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_courses_menu_item_title_system_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_menu_item_title_edit_profile"><![CDATA[Edit Course]]></string>
     <string name="_bx_courses_menu_item_title_system_delete_profile"><![CDATA[Delete Course]]></string>
@@ -219,6 +261,9 @@
     <string name="_bx_courses_menu_item_title_leave_entry"><![CDATA[Leave Course]]></string>
     <string name="_bx_courses_menu_item_title_leave_entry_cancel_request"><![CDATA[Cancel Request]]></string>
     <string name="_bx_courses_menu_item_title_leave_entry_reject_request"><![CDATA[Reject Request]]></string>
+
+    <string name="_bx_courses_menu_item_title_system_pay_and_join"><![CDATA[Pay & Join]]></string>
+    <string name="_bx_courses_menu_item_title_pay_and_join"><![CDATA[Pay & Join]]></string>
 
     <string name="_bx_courses_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_courses_menu_item_title_subscribe"><![CDATA[Follow]]></string>
@@ -274,6 +319,22 @@
     <string name="_bx_courses_grid_action_err_delete"><![CDATA[Cannot delete the selected course(s).]]></string>
     <string name="_bx_courses_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_courses_grid_column_title_name"><![CDATA[Name]]></string>
+    <string name="_bx_courses_grid_column_title_role_id"><![CDATA[Role]]></string>
+    <string name="_bx_courses_grid_column_title_period"><![CDATA[Period]]></string>
+    <string name="_bx_courses_grid_column_title_price"><![CDATA[Price]]></string>
+    <string name="_bx_courses_grid_action_title_add"><![CDATA[Add]]></string>
+    <string name="_bx_courses_grid_action_title_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_courses_grid_action_title_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_courses_grid_action_title_buy"><![CDATA[Buy]]></string>
+    <string name="_bx_courses_grid_action_title_buy_title"><![CDATA[One-time payment]]></string>
+    <string name="_bx_courses_grid_action_title_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_courses_grid_action_title_subscribe_title"><![CDATA[Create a subscription with recurring billing]]></string>
+    <string name="_bx_courses_grid_action_title_choose"><![CDATA[Choose]]></string>
+    <string name="_bx_courses_grid_action_title_choose_title"><![CDATA[Switch to the level for free]]></string>
+    <string name="_bx_courses_popup_title_price_add"><![CDATA[Add Pricing Plan]]></string>
+    <string name="_bx_courses_popup_title_price_edit"><![CDATA[Edit Pricing Plan]]></string>
+
     <string name="_bx_courses_chart_growth"><![CDATA[Courses: Growth]]></string>
     <string name="_bx_courses_chart_growth_speed"><![CDATA[Courses: Growth Speed]]></string>
 
@@ -284,6 +345,8 @@
     <string name="_bx_courses_txt_account_suspended"><![CDATA[This course is suspended.]]></string>
     <string name="_bx_courses_txt_N_fans"><![CDATA[{0} students]]></string>
     <string name="_bx_courses_txt_role"><![CDATA[Role]]></string>
+    <string name="_bx_courses_txt_role_added"><![CDATA[Added]]></string>
+    <string name="_bx_courses_txt_role_expired"><![CDATA[Expires]]></string>
     <string name="_bx_courses_txt_sample_single"><![CDATA[course]]></string>
     <string name="_bx_courses_txt_sample_single_with_article"><![CDATA[a course]]></string>
     <string name="_bx_courses_txt_sample_comment_single"><![CDATA[comment to course]]></string>
@@ -291,8 +354,6 @@
     <string name="_bx_courses_txt_sample_score_up_single"><![CDATA[score up vote to course]]></string>
     <string name="_bx_courses_txt_sample_score_down_single"><![CDATA[score down vote to course]]></string>
     <string name="_bx_courses_txt_set_role"><![CDATA[Set Role]]></string>
-    <string name="_bx_courses_txt_to_admins"><![CDATA[To Instructors]]></string>
-    <string name="_bx_courses_txt_from_admins"><![CDATA[From Instructors]]></string>
     <string name="_bx_courses_txt_private_entry"><![CDATA[Private course]]></string>
     <string name="_bx_courses_txt_invite_popup_text"><![CDATA[You have been invited to a course. Click the button below to accept the invitation.]]></string>
     <string name="_bx_courses_txt_invite_popup_title"><![CDATA[Invitation to a course]]></string>
@@ -300,6 +361,12 @@
     <string name="_bx_courses_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
     <string name="_bx_courses_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this course. The invitation is expired or deleted.]]></string>
     <string name="_bx_courses_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this course. This invitation cannot be used by you.]]></string>
+    <string name="_bx_courses_txt_n_unit"><![CDATA[{0} ({1})]]></string>
+    <string name="_bx_courses_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
+
+    <string name="_bx_courses_msg_performed"><![CDATA[The action was successfully performed.]]></string>
+    <string name="_bx_courses_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
+    <string name="_bx_courses_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
 
     <string name="_bx_courses_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_courses_txt_ntfs_fan_added"><![CDATA[Course <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
@@ -316,6 +383,12 @@
     <string name="_bx_courses_role_regular"><![CDATA[Student]]></string>
     <string name="_bx_courses_role_administrator"><![CDATA[Instructor]]></string>
     <string name="_bx_courses_role_moderator"><![CDATA[Assistant]]></string>
+
+    <string name="_bx_courses_pre_lists_period_units"><![CDATA[Billing Interval]]></string>
+    <string name="_bx_courses_period_unit_day"><![CDATA[day]]></string>
+    <string name="_bx_courses_period_unit_week"><![CDATA[week]]></string>
+    <string name="_bx_courses_period_unit_month"><![CDATA[month]]></string>
+    <string name="_bx_courses_period_unit_year"><![CDATA[year]]></string>
 
     <string name="_bx_courses_email_join_request"><![CDATA[Course join request]]></string>
     <string name="_bx_courses_email_join_request_subject"><![CDATA[Request to join your course]]></string>

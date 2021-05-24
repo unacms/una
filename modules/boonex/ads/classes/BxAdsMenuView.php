@@ -75,7 +75,7 @@ class BxAdsMenuView extends BxBaseModTextMenuView
 
                 $bResult = true;
                 $this->addMarkers(array(
-                    'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE']]),
+                    'add_to_cart_title' => _t('_bx_ads_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE']]),
                     'add_to_cart_onclick' => $sJsMethod
                 ));
                 break;

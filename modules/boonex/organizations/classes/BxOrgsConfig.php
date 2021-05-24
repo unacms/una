@@ -43,6 +43,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -67,6 +68,9 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'FIELD_MULTICAT' => 'multicat',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
+            'FIELD_PRICE_ROLE_ID' => 'role_id',
+            'FIELD_PRICE_NAME' => 'name',
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-organization-profile',
             'URI_VIEW_FRIENDS' => 'organization-profile-friends',
@@ -74,6 +78,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
+            'URI_JOIN_ENTRY' => 'join-organization-profile',
             'URI_JOINED_ENTRIES' => 'joined-organizations',
             'URI_MANAGE_COMMON' => 'organizations-manage',
             'URI_VIEW_SUBSCRIPTIONS' => 'organization-profile-subscriptions',
@@ -95,6 +100,8 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_organizations_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_organizations_per_page_browse_recommended',
             'PARAM_MMODE' => 'bx_organizations_members_mode',
+            'PARAM_PAID_JOIN_ENABLED' => true,
+            'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
             'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
             'PARAM_SBS_WO_JOIN' => 'bx_organizations_enable_subscribe_wo_join',
@@ -134,6 +141,9 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_organization_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_organization_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_organization_invite',
+            'OBJECT_FORM_PRICE' => 'bx_organizations_price',
+            'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_organizations_price_add',
+            'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_organizations_price_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_organizations_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_organizations_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_organizations_view_actions_all', // all actions menu on view entry page
@@ -154,10 +164,13 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
             'OBJECT_GRID_COMMON' => 'bx_organizations_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_organizations_fans',
+            'OBJECT_GRID_PRICES_MANAGE' => 'bx_organizations_prices_manage',
+            'OBJECT_GRID_PRICES_VIEW' => 'bx_organizations_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_organizations_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_organizations_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_organizations_roles',
+            'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_organizations_period_units',
             
             'BADGES_AVALIABLE' => true,
 
@@ -253,26 +266,33 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
                 'option_activation_on' => '_bx_orgs_option_activation_on',
             	'option_activation_off' => '_bx_orgs_option_activation_off',
             	'option_activation_add' => '_bx_orgs_option_activation_add',
-                'option_activation_edit' => '_bx_orgs_option_activation_edit'
+                'option_activation_edit' => '_bx_orgs_option_activation_edit',
+                'txt_n_unit' => '_bx_orgs_txt_n_unit',
+                'txt_buy_title' => '_bx_orgs_grid_action_title_buy_title',
+                'txt_cart_item_title' => '_bx_orgs_txt_cart_item_title',
+                'txt_subscribe_title' => '_bx_orgs_grid_action_title_subscribe_title',
+                'msg_performed' => '_bx_orgs_msg_performed',
+                'err_cannot_perform' => '_bx_orgs_err_cannot_perform',
             ),
         ));
 
         $this->_aJsClasses = array(
             'main' => 'BxOrgsMain',
             'manage_tools' => 'BxOrgsManageTools',
-            'categories' => 'BxDolCategories'
+            'categories' => 'BxDolCategories',
+            'prices' => 'BxOrgsPrices'
         );
 
         $this->_aJsObjects = array(
             'main' => 'oBxOrgsMain',
             'manage_tools' => 'oBxOrgsManageTools',
-            'categories' => 'oBxDolCategories'
+            'categories' => 'oBxDolCategories',
+            'prices' => 'oBxOrgsPrices'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
     }
 

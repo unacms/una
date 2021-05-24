@@ -144,7 +144,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_groups_roles',
-            'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_groups_period_units',
+            'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_groups_period_units',
             
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
@@ -197,7 +197,6 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'txt_ntfs_fan_added' => '_bx_groups_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_groups_txt_ntfs_timeline_post_common',
                 'option_members_mode_multi_roles' => '_bx_groups_option_members_mode_multi_roles',
-                'option_members_mode_paid_join' => '_bx_groups_option_members_mode_paid_join',
                 'form_field_author' => '_bx_groups_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',

@@ -33,7 +33,7 @@ class BxBaseModGroupsGridPrices extends BxTemplGrid
         $CNF = $this->_oModule->_oConfig->CNF;
 
         $this->_aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
-        $this->_aPeriodUnits = BxDolForm::getDataItems($CNF['OBJECT_FORM_PRELISTS_PERIOD_UNITS']);
+        $this->_aPeriodUnits = BxDolForm::getDataItems($CNF['OBJECT_PRE_LIST_PERIOD_UNITS']);
 
         $this->_iGroupProfileId = 0;
         $this->_iGroupContentId = 0;

@@ -94,8 +94,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_events_delete_profile', 1, 'bx_events', '_bx_events_page_block_title_delete_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:13:\"entity_delete\";}', 0, 0, 0);
 
--- PAGE: profile info
+-- PAGE: join profile
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_join_profile', 'join-event-profile', '_bx_events_page_title_sys_join_profile', '_bx_events_page_title_join_profile', 'bx_events', 5, 2147483647, 1, 'page.php?i=join-event-profile', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_events_join_profile', 1, 'bx_events', '_bx_events_page_block_title_join_profile', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:11:"entity_join";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
+
+-- PAGE: profile info
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_profile_info', 'event-profile-info', '_bx_events_page_title_sys_profile_info', '_bx_events_page_title_profile_info', 'bx_events', 5, 2147483647, 1, 'page.php?i=event-profile-info', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
@@ -105,8 +111,14 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_events_profile_info', 3, 'bx_events', '', '_bx_events_page_block_title_profile_calendar', 11, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:8:\"calendar\";s:6:\"params\";a:2:{i:0;a:1:{s:5:\"event\";s:12:\"{content_id}\";}i:1;s:21:\"calendar_compact.html\";}}', 0, 0, 1, 0),
 ('bx_events_profile_info', 2, 'bx_events', '', '_bx_events_page_block_title_entry_location', 11, '', 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:9:\"bx_events\";i:1;s:12:\"{content_id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 1);
 
--- PAGE: event fans
+-- PAGE: manage profile pricing
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_profile_pricing', 'edit-event-pricing', '_bx_events_page_title_sys_profile_pricing', '_bx_events_page_title_profile_pricing', 'bx_events', 5, 2147483647, 1, 'page.php?i=edit-event-pricing', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_events_profile_pricing', 1, 'bx_events', '_bx_events_page_block_title_system_profile_pricing', '_bx_events_page_block_title_profile_pricing_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:14:"entity_pricing";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
+
+-- PAGE: event fans
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_fans', 'event-fans', '_bx_events_page_title_sys_group_fans', '_bx_events_page_title_group_fans', 'bx_events', 5, 2147483647, 1, 'page.php?i=event-fans', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
@@ -276,6 +288,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_view_actions', 'bx_events', '_bx_events_menu_set_title_view_profile_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_events_view_actions', 'bx_events', 'join-event-profile', '_bx_events_menu_item_title_system_pay_and_join', '_bx_events_menu_item_title_pay_and_join', 'page.php?i=join-event-profile&profile_id={profile_id}', '', '', 'sign-in-alt', '', 0, 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:22:"is_paid_join_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 0, 5),
 ('bx_events_view_actions', 'bx_events', 'profile-fan-add', '_bx_events_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_events_fans\', \'add\', \'{profile_id}\')', '', 'sign-in-alt', '', 0, 2147483647, '', 1, 0, 0, 5),
 ('bx_events_view_actions', 'bx_events', 'profile-subscribe-add', '_bx_events_menu_item_title_system_subscribe', '_bx_events_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, '', 1, 0, 1, 20),
 ('bx_events_view_actions', 'bx_events', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_events'', content_id: {content_id}});', '', 'check-circle', '', 0, 192, 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 1, 30),
@@ -289,13 +302,14 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_events_view_actions_more', 'bx_events', '_bx_events_menu_set_title_view_profile_actions_more', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_events_view_actions_more', 'bx_events', 'profile-fan-remove', '_bx_events_menu_item_title_system_leave_group', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_events_fans\', \'remove\', \'{profile_id}\')', '', 'sign-out-alt', '', 2147483647, 1, 0, 10),
-('bx_events_view_actions_more', 'bx_events', 'profile-subscribe-remove', '_bx_events_menu_item_title_system_unsubscribe', '_bx_events_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
-('bx_events_view_actions_more', 'bx_events', 'edit-event-cover', '_bx_events_menu_item_title_system_edit_cover', '_bx_events_menu_item_title_edit_cover', 'page.php?i=edit-event-cover&id={content_id}', '', '', 'edit', '', 2147483647, 1, 0, 30),
-('bx_events_view_actions_more', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '_bx_events_menu_item_title_edit_profile', 'page.php?i=edit-event-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 40),
-('bx_events_view_actions_more', 'bx_events', 'invite-to-event', '_bx_events_menu_item_title_system_invite', '_bx_events_menu_item_title_invite', 'page.php?i=invite-to-event&id={content_id}', '', '', 'user-friends', '', 2147483647, 1, 0, 42),
-('bx_events_view_actions_more', 'bx_events', 'delete-event-profile', '_bx_events_menu_item_title_system_delete_profile', '_bx_events_menu_item_title_delete_profile', 'page.php?i=delete-event-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_events_view_actions_more', 'bx_events', 'profile-fan-remove', '_bx_events_menu_item_title_system_leave_group', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_events_fans\', \'remove\', \'{profile_id}\')', '', 'sign-out-alt', '', 2147483647, '', 1, 0, 10),
+('bx_events_view_actions_more', 'bx_events', 'profile-subscribe-remove', '_bx_events_menu_item_title_system_unsubscribe', '_bx_events_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, '', 1, 0, 20),
+('bx_events_view_actions_more', 'bx_events', 'edit-event-cover', '_bx_events_menu_item_title_system_edit_cover', '_bx_events_menu_item_title_edit_cover', 'page.php?i=edit-event-cover&id={content_id}', '', '', 'edit', '', 2147483647, '', 1, 0, 30),
+('bx_events_view_actions_more', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '_bx_events_menu_item_title_edit_profile', 'page.php?i=edit-event-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
+('bx_events_view_actions_more', 'bx_events', 'edit-event-pricing', '_bx_events_menu_item_title_system_edit_pricing', '_bx_events_menu_item_title_edit_pricing', 'page.php?i=edit-event-pricing&profile_id={profile_id}', '', '', 'money-check-alt', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:20:"is_pricing_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 41),
+('bx_events_view_actions_more', 'bx_events', 'invite-to-event', '_bx_events_menu_item_title_system_invite', '_bx_events_menu_item_title_invite', 'page.php?i=invite-to-event&id={content_id}', '', '', 'user-friends', '', 2147483647, '', 1, 0, 42),
+('bx_events_view_actions_more', 'bx_events', 'delete-event-profile', '_bx_events_menu_item_title_system_delete_profile', '_bx_events_menu_item_title_delete_profile', 'page.php?i=delete-event-profile&id={content_id}', '', '', 'remove', '', 2147483647, '', 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
 
@@ -306,6 +320,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_view_actions_all', 'bx_events', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_events_view_actions_all', 'bx_events', 'join-event-profile', '_bx_events_menu_item_title_system_pay_and_join', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 5),
 ('bx_events_view_actions_all', 'bx_events', 'profile-fan-add', '_bx_events_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_events_view_actions_all', 'bx_events', 'profile-fan-remove', '_bx_events_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_events_view_actions_all', 'bx_events', 'profile-subscribe-add', '_bx_events_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
@@ -326,6 +341,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_events_view_actions_all', 'bx_events', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 330),
 ('bx_events_view_actions_all', 'bx_events', 'edit-event-cover', '_bx_events_menu_item_title_system_edit_cover', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 400),
 ('bx_events_view_actions_all', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 410),
+('bx_events_view_actions_all', 'bx_events', 'edit-event-pricing', '_bx_events_menu_item_title_system_edit_pricing', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 415),
 ('bx_events_view_actions_all', 'bx_events', 'invite-to-event', '_bx_events_menu_item_title_system_invite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 420),
 ('bx_events_view_actions_all', 'bx_events', 'delete-event-profile', '_bx_events_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 430),
 ('bx_events_view_actions_all', 'bx_events', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
@@ -382,22 +398,23 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_events_snippet_meta', 'bx_events', '_sys_menu_set_title_snippet_meta', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('bx_events_snippet_meta', 'bx_events', 'date-start', '_bx_events_menu_item_title_system_sm_date_start', '_bx_events_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, 0, 0, 1, 0),
-('bx_events_snippet_meta', 'bx_events', 'date-end', '_bx_events_menu_item_title_system_sm_date_end', '_bx_events_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, 0, 0, 1, 0),
-('bx_events_snippet_meta', 'bx_events', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 1),
-('bx_events_snippet_meta', 'bx_events', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
-('bx_events_snippet_meta', 'bx_events', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
-('bx_events_snippet_meta', 'bx_events', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
-('bx_events_snippet_meta', 'bx_events', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 5),
-('bx_events_snippet_meta', 'bx_events', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
-('bx_events_snippet_meta', 'bx_events', 'country', '_sys_menu_item_title_system_sm_country', '_sys_menu_item_title_sm_country', '', '', '', '', '', 2147483647, 0, 0, 1, 7),
-('bx_events_snippet_meta', 'bx_events', 'country-city', '_sys_menu_item_title_system_sm_country_city', '_sys_menu_item_title_sm_country_city', '', '', '', '', '', 2147483647, 0, 0, 1, 8),
-('bx_events_snippet_meta', 'bx_events', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, 1, 0, 1, 9),
-('bx_events_snippet_meta', 'bx_events', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 1, 0, 1, 10),
-('bx_events_snippet_meta', 'bx_events', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, 0, 0, 1, 11),
-('bx_events_snippet_meta', 'bx_events', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 12),
-('bx_events_snippet_meta', 'bx_events', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 13);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
+('bx_events_snippet_meta', 'bx_events', 'date-start', '_bx_events_menu_item_title_system_sm_date_start', '_bx_events_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, '', 0, 0, 1, 0),
+('bx_events_snippet_meta', 'bx_events', 'date-end', '_bx_events_menu_item_title_system_sm_date_end', '_bx_events_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, '', 0, 0, 1, 0),
+('bx_events_snippet_meta', 'bx_events', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, '', 0, 0, 1, 1),
+('bx_events_snippet_meta', 'bx_events', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', 0, 0, 1, 2),
+('bx_events_snippet_meta', 'bx_events', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', 0, 0, 1, 3),
+('bx_events_snippet_meta', 'bx_events', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', 0, 0, 1, 4),
+('bx_events_snippet_meta', 'bx_events', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', 1, 0, 1, 5),
+('bx_events_snippet_meta', 'bx_events', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', 0, 0, 1, 6),
+('bx_events_snippet_meta', 'bx_events', 'country', '_sys_menu_item_title_system_sm_country', '_sys_menu_item_title_sm_country', '', '', '', '', '', 2147483647, '', 0, 0, 1, 7),
+('bx_events_snippet_meta', 'bx_events', 'country-city', '_sys_menu_item_title_system_sm_country_city', '_sys_menu_item_title_sm_country_city', '', '', '', '', '', 2147483647, '', 0, 0, 1, 8),
+('bx_events_snippet_meta', 'bx_events', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 9),
+('bx_events_snippet_meta', 'bx_events', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 10),
+('bx_events_snippet_meta', 'bx_events', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 11),
+('bx_events_snippet_meta', 'bx_events', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 0, 0, 1, 12),
+('bx_events_snippet_meta', 'bx_events', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 13),
+('bx_events_snippet_meta', 'bx_events', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 14);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
@@ -432,6 +449,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_events', 'create entry', NULL, '_bx_events_acl_action_create_profile', '', 1, 1);
 SET @iIdActionProfileCreate = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_events', 'use paid join', NULL, '_bx_events_acl_action_use_paid_join', '', 1, 1);
+SET @iIdActionUsePaidJoin = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_events', 'delete entry', NULL, '_bx_events_acl_action_delete_profile', '', 1, 1);
@@ -473,6 +494,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionProfileCreate),
 (@iAdministrator, @iIdActionProfileCreate),
 (@iPremium, @iIdActionProfileCreate),
+
+-- use paid join
+(@iStandard, @iIdActionUsePaidJoin),
+(@iModerator, @iIdActionUsePaidJoin),
+(@iAdministrator, @iIdActionUsePaidJoin),
+(@iPremium, @iIdActionUsePaidJoin),
 
 -- profile delete
 (@iAccount, @iIdActionProfileDelete),
@@ -539,7 +566,9 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_events_fans', 'name', '_sys_name', '50%', '', 10),
 ('bx_events_fans', 'role', '_bx_events_txt_role', '10%', '', 15),
-('bx_events_fans', 'actions', '', '40%', '', 20);
+('bx_events_fans', 'role_added', '_bx_events_txt_role_added', '10%', '', 16),
+('bx_events_fans', 'role_expired', '_bx_events_txt_role_expired', '10%', '', 17),
+('bx_events_fans', 'actions', '', '20%', '', 20);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_events_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
@@ -588,6 +617,34 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_events_common', 'bulk', 'delete_with_content', '_bx_events_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
 ('bx_events_common', 'single', 'settings', '_bx_events_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
 
+-- GRIDS: Pricing
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_events_prices_manage', 'Sql', 'SELECT * FROM `bx_events_prices` WHERE 1 ', 'bx_events_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', '', 'like', '', '', 2147483647, 'BxEventsGridPricesManage', 'modules/boonex/events/classes/BxEventsGridPricesManage.php'),
+('bx_events_prices_view', 'Sql', 'SELECT * FROM `bx_events_prices` WHERE 1 ', 'bx_events_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', '', 'like', '', '', 2147483647, 'BxEventsGridPricesView', 'modules/boonex/events/classes/BxEventsGridPricesView.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_events_prices_manage', 'checkbox', '_sys_select', '1%', 0, '', '', 1),
+('bx_events_prices_manage', 'order', '', '1%', 0, '', '', 2),
+('bx_events_prices_manage', 'name', '_bx_events_grid_column_title_name', '38%', 0, 32, '', 3),
+('bx_events_prices_manage', 'price', '_bx_events_grid_column_title_price', '20%', 0, 16, '', 4),
+('bx_events_prices_manage', 'period', '_bx_events_grid_column_title_period', '20%', 0, 16, '', 5),
+('bx_events_prices_manage', 'actions', '', '20%', 0, '', '', 6),
+
+('bx_events_prices_view', 'role_id', '_bx_events_grid_column_title_role_id', '40%', 0, 32, '', 1),
+('bx_events_prices_view', 'price', '_bx_events_grid_column_title_price', '20%', 0, 16, '', 2),
+('bx_events_prices_view', 'period', '_bx_events_grid_column_title_period', '20%', 0, 16, '', 3),
+('bx_events_prices_view', 'actions', '', '20%', 0, '', '', 4);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_events_prices_manage', 'independent', 'add', '_bx_events_grid_action_title_add', '', 0, 0, 1),
+('bx_events_prices_manage', 'single', 'edit', '_bx_events_grid_action_title_edit', 'pencil-alt', 1, 0, 1),
+('bx_events_prices_manage', 'single', 'delete', '_bx_events_grid_action_title_delete', 'remove', 1, 1, 2),
+('bx_events_prices_manage', 'bulk', 'delete', '_bx_events_grid_action_title_delete', '', 0, 1, 1),
+
+('bx_events_prices_view', 'single', 'buy', '_bx_events_grid_action_title_buy', 'cart-plus', 0, 0, 1),
+('bx_events_prices_view', 'single', 'subscribe', '_bx_events_grid_action_title_subscribe', 'credit-card', 0, 0, 2),
+('bx_events_prices_view', 'single', 'choose', '_bx_events_grid_action_title_choose', 'far check-square', 0, 0, 3);
+
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
@@ -621,7 +678,7 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_events_allow_view_to', 'bx_events', 'view', '_bx_events_form_profile_input_allow_view_to', '3', 'bx_groups,bx_spaces', 'bx_events_data', 'id', 'author', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php'),
 ('bx_events_allow_view_notification_to', 'bx_events', 'view_event', '_bx_events_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxEventsPrivacyNotifications', 'modules/boonex/events/classes/BxEventsPrivacyNotifications.php'),
 ('bx_events_allow_post_to', 'bx_events', 'post', '_bx_events_form_profile_input_allow_post_to', 'p', '', 'bx_events_data', 'id', 'author', 'BxEventsPrivacyPost', 'modules/boonex/events/classes/BxEventsPrivacyPost.php'),
-('bx_events_allow_view_favorite_list', 'bx_events', 'view_favorite_list', '_bx_events_form_entry_input_allow_view_favorite_list', '3', '', 'bx_events_favorites_lists', 'id', 'author_id', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php');
+('bx_events_allow_view_favorite_list', 'bx_events', 'view_favorite_list', '_bx_events_form_profile_input_allow_view_favorite_list', '3', '', 'bx_events_favorites_lists', 'id', 'author_id', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php');
 
 
 -- EMAIL TEMPLATES
@@ -643,4 +700,5 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
-('bx_events_process_reminders', '55 * * * *', 'BxEventsCronProcessReminders', 'modules/boonex/events/classes/BxEventsCronProcessReminders.php', '');
+('bx_events_process_reminders', '55 * * * *', 'BxEventsCronProcessReminders', 'modules/boonex/events/classes/BxEventsCronProcessReminders.php', ''),
+('bx_events_pruning', '0 0 * * *', 'BxEventsCronPruning', 'modules/boonex/events/classes/BxEventsCronPruning.php', '');

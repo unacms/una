@@ -33,6 +33,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
+            'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -57,10 +58,14 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELD_LABELS' => 'labels',
 
+            'FIELD_PRICE_ROLE_ID' => 'role_id',
+            'FIELD_PRICE_NAME' => 'name',
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-space-profile',
             'URI_EDIT_ENTRY' => 'edit-space-profile',
             'URI_EDIT_COVER' => 'edit-space-cover',
+            'URI_JOIN_ENTRY' => 'join-space-profile',
             'URI_JOINED_ENTRIES' => 'joined-spaces',
             'URI_MANAGE_COMMON' => 'spaces-manage',
 
@@ -77,6 +82,9 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_spaces_per_page_browse_recommended',
 
             'PARAM_MMODE' => 'bx_spaces_members_mode',
+            'PARAM_PAID_JOIN_ENABLED' => true,
+            'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_spaces_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_spaces_internal_notifications',
 
             // objects
@@ -107,6 +115,9 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_space_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_space_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_space_invite',
+            'OBJECT_FORM_PRICE' => 'bx_spaces_price',
+            'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_spaces_price_add',
+            'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_spaces_price_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_spaces_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_spaces_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_spaces_view_actions_all', // all actions menu on view entry page
@@ -120,16 +131,20 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_spaces_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_spaces_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_spaces_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_spaces_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_spaces_allow_view_notification_to',
             'OBJECT_PRIVACY_POST' => 'bx_spaces_allow_post_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_spaces_administration',
             'OBJECT_GRID_COMMON' => 'bx_spaces_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_spaces_fans',
             'OBJECT_GRID_INVITES' => 'bx_spaces_invites',
+            'OBJECT_GRID_PRICES_MANAGE' => 'bx_spaces_prices_manage',
+            'OBJECT_GRID_PRICES_VIEW' => 'bx_spaces_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_spaces_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_spaces_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_spaces_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_spaces_roles',
+            'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_spaces_period_units',
 
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
@@ -207,6 +222,12 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
 				'txt_invitation_popup_decline_button' => '_bx_spaces_txt_invite_popup_button_decline',
                 'txt_invitation_popup_error_invitation_absent' => '_bx_spaces_txt_invite_popup_error_invitation_absent',
 				'txt_invitation_popup_error_wrong_user' => '_bx_spaces_txt_invite_popup_error_invitation_wrong_user',
+                'txt_n_unit' => '_bx_spaces_txt_n_unit',
+                'txt_buy_title' => '_bx_spaces_grid_action_title_buy_title',
+                'txt_cart_item_title' => '_bx_spaces_txt_cart_item_title',
+                'txt_subscribe_title' => '_bx_spaces_grid_action_title_subscribe_title',
+                'msg_performed' => '_bx_spaces_msg_performed',
+                'err_cannot_perform' => '_bx_spaces_err_cannot_perform',
             ),
 
         );
@@ -214,13 +235,15 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
         $this->_aJsClasses = array(
             'main' => 'BxSpacesMain',
             'manage_tools' => 'BxSpacesManageTools',
-            'invite_popup' => 'BxSpacesInvitePopup'
+            'invite_popup' => 'BxSpacesInvitePopup',
+            'prices' => 'BxSpacesPrices'
         );
 
         $this->_aJsObjects = array(
             'main' => 'oBxSpacesMain',
             'manage_tools' => 'oBxSpacesManageTools',
-            'invite_popup' => 'oBxSpacesInvitePopup'
+            'invite_popup' => 'oBxSpacesInvitePopup',
+            'prices' => 'oBxSpacesPrices'
         );
 
         $this->_aGridObjects = array(

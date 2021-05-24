@@ -935,8 +935,14 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
 
         $sAllCookies = '';
-        foreach($_COOKIE as $sKey=>$sValue){
-            $sAllCookies .= $sKey . '=' . $sValue . ';';
+        foreach($_COOKIE as $sKey => $mValue){
+            if(is_array($mValue)){
+                foreach ($mValue as $k => $v)
+                    $sAllCookies .= "{$sKey}[{$k}]={$v};";
+            }
+            else{
+                $sAllCookies .= $sKey . '=' . $mValue . ';';
+            }
         }
         curl_setopt($rConnect, CURLOPT_COOKIE, $sAllCookies);
 
