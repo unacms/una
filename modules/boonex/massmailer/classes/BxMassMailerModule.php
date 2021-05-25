@@ -445,6 +445,14 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     {
         return $this->checkAllowed($isPerformAction);
     }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedEditAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+        return $this->checkAllowed($isPerformAction);
+    }
 
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
