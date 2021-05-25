@@ -1,8 +1,9 @@
 <script defer language="javascript">
 <!--    
     glTour = new Shepherd.Tour({
-        defaults: {
-            classes: 'shepherd-theme-__tour_theme__ bx-def-z-index-modal',
+        useModalOverlay: true,
+        defaultStepOptions: {
+            classes: 'bx-def-z-index-modal',
             showCancelLink: true,
             scrollTo: true
         }
@@ -12,7 +13,8 @@
         $.cookie('homepage-tour-hidden', 1, {expires: 9999});
     });
 
-    glTour.addStep('tour-homepage', {
+    glTour.addStep({
+        id: 'tour-homepage',
         title: '<bx_text_js:_sys_tour_homepage_welcome_title />',
         text: '<bx_text_js:_sys_tour_homepage_welcome_txt />',
         buttons: [{
@@ -26,10 +28,12 @@
         }]
     });
 
-    glTour.addStep('tour-account-menu', {
+    glTour.addStep({
+        id: 'tour-account-menu',
         title: '<bx_text_js:_sys_tour_homepage_account_menu_title />',
         text: '<bx_text_js:_sys_tour_homepage_account_menu_txt />',
-        attachTo: '#bx-menu-toolbar-item-account bottom',
+        attachTo: { element: '#bx-menu-toolbar-item-account', on: 'bottom'},
+        canClickTarget: false,
         buttons: [{
             text: '<bx_text_js:_sys_done />',
             action: glTour.cancel,

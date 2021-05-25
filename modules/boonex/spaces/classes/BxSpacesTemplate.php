@@ -20,15 +20,18 @@ class BxSpacesTemplate extends BxBaseModGroupsTemplate
         parent::__construct($oConfig, $oDb);
     }
     
-    public function entryChilds($aData)
+    public function entryChilds($aData, $aParams = array())
     {
         $CNF = $this->_oConfig->CNF;
         $aChild = $this->_oModule->_oDb->getChildEntriesIdByProfileId($aData[$CNF['FIELD_ID']]);
         
         if (count($aChild) == 0)
             return false;
+        
+        if (!isset($aParams['template_name']))
+            $aParams['template_name'] = 'entry-childs.html';
 
-        return $this->parseHtmlByName('entry-childs.html', array('content' => $this->getBrowseQuick($aChild)));
+        return $this->parseHtmlByName($aParams['template_name'], array('content' => $this->getBrowseQuick($aChild)));
     }
     
     public function entryParent($aData)
@@ -36,7 +39,11 @@ class BxSpacesTemplate extends BxBaseModGroupsTemplate
         $CNF = $this->_oConfig->CNF;
         if ($aData[$CNF['FIELD_PARENT']] == 0)
             return false;
-        return $this->parseHtmlByName('entry-parent.html', array('content' => $this->getBrowseQuick(array($aData[$CNF['FIELD_PARENT']]))));
+        
+        if (!isset($aParams['template_name']))
+            $aParams['template_name'] = 'entry-parent.html';
+        
+        return $this->parseHtmlByName($aParams['template_name'], array('content' => $this->getBrowseQuick(array($aData[$CNF['FIELD_PARENT']]))));
     }
     
     private function getBrowseQuick($aProfiles)

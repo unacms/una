@@ -32,18 +32,22 @@ if (!$sRemoteId) {
 // redirect for remote storage in case if some references still pointing to local storage
 $aObject = $oStorage->getObjectData();
 if ('Local' != $aObject['engine']) {
-    if (!($sUrl = $oStorage->getFileUrlByRemoteId($sFile))) {
-        // Tmp fix for storages renaming in the past
-        if ('bx_posts_files' == $sStorageObject && ($oStorage = BxDolStorage::getObjectInstance('bx_posts_covers'))) {
-            $sFile = preg_replace("/\.[A-Za-z0-9]+$/", '', $sFile);
-            $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
-        }
-        if (!$sUrl) {
-            bx_storage_download_error_occured();
-            exit;
-        }
+    $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
+
+    if (!$sUrl) {
+        $sFile = preg_replace("/\.[A-Za-z0-9]+$/", '', $sFile);
+        $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
     }
-    header("Location: " . $sUrl);
+
+    // Tmp fix for storages renaming in the past
+    if (!$sUrl && 'bx_posts_files' == $sStorageObject && ($oStorage = BxDolStorage::getObjectInstance('bx_posts_covers'))) 
+        $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
+
+    if (!$sUrl)
+        bx_storage_download_error_occured();
+    else
+        header("Location: " . $sUrl);
+    exit;
 }
 
 if (!$oStorage->download($sRemoteId, $sToken)) {

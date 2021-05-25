@@ -13,8 +13,6 @@ define('BX_DOL_STUDIO_LAUNCHER_JS_OBJECT', 'oBxDolStudioLauncher');
 
 class BxBaseStudioLauncher extends BxDolStudioLauncher
 {
-    protected $_sTourTheme = 'default';
-
     public function __construct()
     {
         parent::__construct();
@@ -27,7 +25,7 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         $aCss = array(
             'launcher.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icon-css/css/|flag-icon.min.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd.css',
         );
         foreach($this->aIncludes as $sName => $oInclude)
             $aCss = array_merge($aCss, $oInclude->getCss());
@@ -46,7 +44,6 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
             'jquery.easing.js',
             'jquery.cookie.min.js',
             'launcher.js',
-            'shepherd/js/tether.min.js',
             'shepherd/js/shepherd.min.js',
         );
         foreach($this->aIncludes as $sName => $oInclude)
@@ -92,7 +89,7 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         ));
 
         if (getParam('site_tour_studio') == 'on')
-            $sResult .= $oTemplate->parseHtmlByName('launcher_tour.html', array('tour_theme' => $this->_sTourTheme));
+            $sResult .= $oTemplate->parseHtmlByName('launcher_tour.html', array());
 
         $oTemplate->addInjection('injection_body_style', 'text', ' bx-std-page-launcher');
         return $sResult;

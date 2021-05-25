@@ -266,23 +266,6 @@ div.bx-std-widget-caption a {
 }
 
 /**
- * Tour
- */
-body.shepherd-active #bx-std-menu-top-center,
-body.shepherd-active .bx-menu-toolbar li,
-body.shepherd-active .bx-std-widget-cont {
-    -moz-opacity: 0.3;
-    -khtml-opacity: 0.3;
-    opacity: 0.3;
-}
-body.shepherd-active .bx-menu-toolbar li.shepherd-enabled,
-body.shepherd-active .bx-std-widget-cont.shepherd-enabled {
-    -moz-opacity: 1;
-    -khtml-opacity: 1;
-    opacity: 1;
-}
-
-/**
  * Launcher Browser
  */
 #bx-std-launcher-browser {
