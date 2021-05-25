@@ -2730,13 +2730,24 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _serviceTemplateFunc ($sFunc, $iContentId, $sFuncGetContent = 'getContentInfoById')
     {
-        $mixedContent = $this->_getContent($iContentId, $sFuncGetContent);
+        return $this->_serviceTemplateFuncEx($sFunc, $iContentId, array('function_get_content' => 'getContentInfoById'));
+    }
+    
+    protected function _serviceTemplateFuncEx ($sFunc, $iContentId, $aParams = array())
+    {
+        if (!isset($aParams['function_get_content']))
+            $aParams['function_get_content'] = 'getContentInfoById';
+        
+        $mixedContent = $this->_getContent($iContentId, $aParams['function_get_content']);
         if($mixedContent === false)
             return false;
 
         list($iContentId, $aContentInfo) = $mixedContent;
 
-        return $this->_oTemplate->$sFunc($aContentInfo);
+        if (isset($aParams['template_name']) && !empty($aParams['template_name']))
+            return $this->_oTemplate->$sFunc($aContentInfo, array('template_name' => $aParams['template_name']));
+        else
+            return $this->_oTemplate->$sFunc($aContentInfo);
     }
 
     protected function _rss ($aArgs, $sClass = 'SearchResult')
