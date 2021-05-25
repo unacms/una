@@ -33,11 +33,14 @@ if (!$sRemoteId) {
 $aObject = $oStorage->getObjectData();
 if ('Local' != $aObject['engine']) {
     if (!($sUrl = $oStorage->getFileUrlByRemoteId($sFile))) {
+
+        $sFile = preg_replace("/\.[A-Za-z0-9]+$/", '', $sFile);
+        $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
+
         // Tmp fix for storages renaming in the past
-        if ('bx_posts_files' == $sStorageObject && ($oStorage = BxDolStorage::getObjectInstance('bx_posts_covers'))) {
-            $sFile = preg_replace("/\.[A-Za-z0-9]+$/", '', $sFile);
+        if (!$sUrl && 'bx_posts_files' == $sStorageObject && ($oStorage = BxDolStorage::getObjectInstance('bx_posts_covers'))) 
             $sUrl = $oStorage->getFileUrlByRemoteId($sFile);
-        }
+
         if (!$sUrl) {
             bx_storage_download_error_occured();
             exit;
