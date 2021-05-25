@@ -192,7 +192,7 @@
                         }
 
                         $(document).on({
-                            click: fCallback,
+                            mousedown: fCallback,
                             touchend: fCallback
                         });
                     }
