@@ -1268,6 +1268,7 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
                 'info' => _t('_adm_form_dsc_field_info'),
                 'value' => '_sys_form_txt_field',
                 'required' => '0',
+                'code' => 1,
                 'db' => array (
                     'pass' => 'Xss',
                 )
