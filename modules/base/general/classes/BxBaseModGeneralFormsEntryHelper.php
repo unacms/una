@@ -305,6 +305,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	$sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+        bx_alert($this->_oModule->getName(), 'redirect_after_add', 0, false, array(
+            'ajax_mode' => $this->_bAjaxMode,
+            'content' => $aContentInfo,
+            'override_result' => &$sUrl,
+        ));
+
         if($this->_bAjaxMode) {
             echoJson($this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect'));
             exit;
@@ -383,7 +389,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     protected function redirectAfterEdit($aContentInfo)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+
+        $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+        bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
+            'content' => $aContentInfo,
+            'override_result' => &$sUrl,
+        ));
+
+        $this->_redirectAndExit($sUrl);
     }
 
     public function deleteDataForm ($iContentId, $sDisplay = false, $sCheckFunction = false)
@@ -425,10 +438,20 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     protected function redirectAfterDelete($aContentInfo)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $this->_redirectAndExit($CNF['URL_HOME'], true, array(
+
+        $sUrl = $CNF['URL_HOME'];
+        $aMarkers = array(
             'account_id' => getLoggedId(),
             'profile_id' => bx_get_logged_profile_id(),
+        );
+
+        bx_alert($this->_oModule->getName(), 'redirect_after_delete', 0, false, array(
+            'content' => $aContentInfo,
+            'markers' => &$aMarkers,
+            'override_result' => &$sUrl,
         ));
+
+        $this->_redirectAndExit($sUrl, true, $aMarkers);
     }
 
     /**
