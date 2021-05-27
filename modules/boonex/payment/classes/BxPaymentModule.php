@@ -1167,7 +1167,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        if((int)date('j') == $CNF['PARAM_CMSN_INVOICE_ISSUE_DAY'])
+        if((int)date('j') == $this->_oConfig->getInvoiceIssueDay())
             $this->_invoicesIssue();
 
         $this->_invoicesCheck();
@@ -1184,7 +1184,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $iPeriodStart = mktime(0, 0, 0, $iMonth-1, 1, $iYear);
         $iPeriodEnd = mktime(23, 59, 59, $iMonth, 0, $iYear);
         $iDateIssue = time();
-        $iDateDue = $iDateIssue + 86400 * $CNF['PARAM_CMSN_INVOICE_LIFETIME'];
+        $iDateDue = $iDateIssue + 86400 * $this->_oConfig->getInvoiceLifetime();
 
         $aCommissionsInfo = array();
         $aAclLevels = BxDolAcl::getInstance()->getMemberships(false, true, false, true);
@@ -1259,7 +1259,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
                 $bResult = sendMailTemplate($sPrefix . 'expiring_notification_committent', 0, (int)$aInvoice['committent_id'], array(
                     'invoice' => $aInvoice['name'],
-                    'days' => $CNF['PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY'],
+                    'days' => $this->_oConfig->getInvoiceExpirationNotify(),
                     'period_start' => $this->_oConfig->formatDate($aInvoice['period_start']),
                     'period_end' => $this->_oConfig->formatDate($aInvoice['period_end']),
                     'date_issue' => $this->_oConfig->formatDateTime($aInvoice['date_issue']),

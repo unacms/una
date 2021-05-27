@@ -694,7 +694,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
                 case 'expiring':
                     $aMethod['params'][1] = array(
-                        'notify_days' => $CNF['PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY'],
+                        'notify_days' => $this->_oConfig->getInvoiceExpirationNotify(),
                         'status' => BX_PAYMENT_INV_STATUS_UNPAID
                     );
 
