@@ -3,11 +3,16 @@
     <string name="_bx_payment"><![CDATA[Payments]]></string>
 
     <!-- OPTIONS -->
+    <string name="_bx_payment_options_category_general"><![CDATA[General]]></string>
+    <string name="_bx_payment_options_category_commissions"><![CDATA[Commissions]]></string>
     <string name="_bx_payment_option_default_currency_code"><![CDATA[Currency]]></string>
     <string name="_bx_payment_option_err_default_currency_code"><![CDATA[Currency code cannot be empty.]]></string>
     <string name="_bx_payment_option_site_admin"><![CDATA[Main seller (To sell on behalf of the site)]]></string>
     <string name="_bx_payment_option_credits_only"><![CDATA[Pay with Credits only mode ('Credits' app should be installed).]]></string>
     <string name="_bx_payment_option_single_seller"><![CDATA[Single seller mode (To sell everything on behalf of the 'Main seller').]]></string>
+    <string name="_bx_payment_option_inv_issue_day"><![CDATA[Day of month when invoices are automatically generated (1, 2, 3, etc)]]></string>
+    <string name="_bx_payment_option_inv_lifetime"><![CDATA[Due date - days after invoice date]]></string>
+    <string name="_bx_payment_option_inv_expiraction_notify"><![CDATA[Number of days before invoice expiration to notify payer]]></string>
 
     <!-- PAGES and BLOCKS -->
     <string name="_bx_payment_page_title_sys_carts"><![CDATA[Shopping Carts]]></string>
@@ -144,9 +149,9 @@
     <string name="_bx_payment_grid_column_title_cms_description"><![CDATA[Description]]></string>
     <string name="_bx_payment_grid_column_title_cms_acl_id"><![CDATA[Membership]]></string>
     <string name="_bx_payment_grid_column_title_cms_percentage"><![CDATA[Percentage]]></string>
-    <string name="_bx_payment_grid_column_title_cms_installment"><![CDATA[Installment]]></string>
-    <string name="_bx_payment_grid_column_title_inv_commissionaire_id"><![CDATA[Commissionaire]]></string>
-    <string name="_bx_payment_grid_column_title_inv_committent_id"><![CDATA[Committent]]></string>
+    <string name="_bx_payment_grid_column_title_cms_installment"><![CDATA[Fixed fee]]></string>
+    <string name="_bx_payment_grid_column_title_inv_commissionaire_id"><![CDATA[Payee]]></string>
+    <string name="_bx_payment_grid_column_title_inv_committent_id"><![CDATA[Payer]]></string>
     <string name="_bx_payment_grid_column_title_inv_name"><![CDATA[Name]]></string>
     <string name="_bx_payment_grid_column_title_inv_period_start"><![CDATA[Period start]]></string>
     <string name="_bx_payment_grid_column_title_inv_period_end"><![CDATA[Period end]]></string>
@@ -185,8 +190,8 @@
     <string name="_bx_payment_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
     <string name="_bx_payment_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
     <string name="_bx_payment_popup_title_crd_providers_select"><![CDATA[Select Payment Method]]></string>
-    <string name="_bx_payment_popup_title_cms_add"><![CDATA[Add Commission]]></string>
-    <string name="_bx_payment_popup_title_cms_edit"><![CDATA[Edit Commission]]></string>
+    <string name="_bx_payment_popup_title_cms_add"><![CDATA[Add Monthly Commission]]></string>
+    <string name="_bx_payment_popup_title_cms_edit"><![CDATA[Edit Monthly Commission]]></string>
     <string name="_bx_payment_popup_title_inv_edit"><![CDATA[Edit Invoice]]></string>
 
     <!-- FORMS -->
@@ -238,8 +243,8 @@
     <string name="_bx_payment_form_commissions_input_acl_id"><![CDATA[Membership Level]]></string>
     <string name="_bx_payment_form_commissions_input_percentage_sys"><![CDATA[Percentage]]></string>
     <string name="_bx_payment_form_commissions_input_percentage"><![CDATA[Percentage]]></string>
-    <string name="_bx_payment_form_commissions_input_installment_sys"><![CDATA[Installment]]></string>
-    <string name="_bx_payment_form_commissions_input_installment"><![CDATA[Installment]]></string>
+    <string name="_bx_payment_form_commissions_input_installment_sys"><![CDATA[Fixed fee]]></string>
+    <string name="_bx_payment_form_commissions_input_installment"><![CDATA[Fixed fee]]></string>
     <string name="_bx_payment_form_commissions_input_submit_sys"><![CDATA[Submit]]></string>
     <string name="_bx_payment_form_commissions_input_submit"><![CDATA[Submit]]></string>
     <string name="_bx_payment_form_commissions_input_cancel_sys"><![CDATA[Cancel]]></string>
