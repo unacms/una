@@ -821,13 +821,14 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'amount' => $fAmount,
             'rate' => $fRate,
             'message' => $sMessage,
+            'confirm_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HISTORY_ADMINISTRATION'])
         );
         $aTemplate = $oEmailTemplates->parseTemplate($CNF['ETEMPLATE_WITHDRAW_REQUESTED'], $aTemplateVars);
         if(!$aTemplate)
             return $aResult;
 
         $sEmail = $this->_oConfig->getWithdrawEmail();
-        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), false))
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), true))
             return $aResult;
 
         bx_alert($this->getName(), 'withdraw_requested', 0, $iProfileId, array(

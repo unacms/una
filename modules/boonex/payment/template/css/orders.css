@@ -6,7 +6,7 @@ iframe.hidden {
 
 /*--- 'Manual Order' and 'More' windows ---*/
 .ui-autocomplete.ui-front {
-	z-index: 1001;
+	z-index: 10001;
 }
 div.bx-payment-pa-items {
 	max-height: 300px;

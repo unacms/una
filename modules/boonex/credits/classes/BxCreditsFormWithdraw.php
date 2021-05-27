@@ -26,7 +26,28 @@ class BxCreditsFormWithdraw extends BxTemplFormView
 
         parent::__construct($aInfo, $oTemplate);
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $this->_fRate = $this->_oModule->_oConfig->getConversionRateWithdraw();
+
+        if(isset($this->aInputs[$CNF['FIELD_C_MESSAGE']])) {
+            $sInfo = '_bx_credits_form_credit_input_message_inf_';
+            switch($this->aParams['display']) {
+                case $CNF['OBJECT_FORM_CREDIT_DISPLAY_GRANT']:
+                    $sInfo .= 'g';
+                    break;
+
+                case $CNF['OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_REQUEST']:
+                    $sInfo .= 'wr';
+                    break;
+                
+                case $CNF['OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_CONFIRM']:
+                    $sInfo .= 'wc';
+                    break;
+            }
+
+            $this->aInputs[$CNF['FIELD_C_MESSAGE']]['info'] = _t($sInfo);
+        }
     }
 
     protected function genCustomRowRate(&$aInput)
