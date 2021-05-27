@@ -43,9 +43,9 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
 
         return array_merge($aVars, array(
 			'date_start' => $aData['date_start'],
-			'date_start_f' => $oDateStart->format('j M'),
+			'date_start_f' => strftime('%e %b', $oDateStart->getTimestamp()),
 			'date_end' => $aData['date_end'],
-			'date_end_f' => $oDateEnd->format('j M'),
+			'date_end_f' => strftime('%e %b', $oDateEnd->getTimestamp()),
         ));
     }
 }
