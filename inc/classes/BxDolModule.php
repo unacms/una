@@ -111,13 +111,13 @@ class BxDolModule extends BxDol
     }
 
     public static function getTitle($sUri)
-    {
+    {   
         return _t(self::getTitleKey($sUri));
     }
 
     public static function getTitleKey($sUri)
     {
-        return '_sys_module_' . strtolower(str_replace(' ', '_', $sUri));
+        return 'system' == $sUri ? '_adm_txt_module_system' : '_sys_module_' . strtolower(str_replace(' ', '_', $sUri));
     }
 
 	/**
