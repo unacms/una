@@ -37,6 +37,15 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     }
 
     /**
+     * Get current menu in submenu
+     * @return menu object name
+     */
+    public function getObjectSubmenu()
+    {        
+        return $this->_sObjectSubmenu;
+    }
+    
+    /**
      * Set current menu object in submenu
      * @param $sMenuObject menu object name
      * @param $sForceMainMenuSelection force main menu item selection by menu item name
