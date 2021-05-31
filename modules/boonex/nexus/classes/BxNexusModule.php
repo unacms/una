@@ -64,6 +64,7 @@ class BxNexusModule extends BxDolModule
             'txt_pull_to_refresh' => bx_js_string(_t('_bx_nexus_pull_to_refresh')),
             'txt_release_to_refresh' => bx_js_string(_t('_bx_nexus_release_to_refresh')),
             'txt_refreshing' => bx_js_string(_t('_bx_nexus_refreshing')),
+            'main_menu' => getParam('bx_nexus_option_main_menu'),
         ));
 
         //  TODO: enable it back when it will work correctly on Android
@@ -74,6 +75,17 @@ class BxNexusModule extends BxDolModule
         }
 
         return $s;
+    }
+
+    public function serviceGetMenusList()
+    {
+        $a = BxDolMenuQuery::getMenuObjects();
+        array_unshift($a, array('object' => 'default', 'title' => '_sys_page_type_default', 'module' => '', 'uri' => ''));
+        $aRes = array();
+        foreach($a as $r) {
+            $aRes[] = array('key' => $r['object'], 'value' => $r['uri'] ? _t('_bx_nexus_option_main_menu_value', BxDolModule::getTitle($r['uri']), _t($r['title'])) : _t($r['title']));
+        }
+        return $aRes;
     }
 
     protected function redirects()
