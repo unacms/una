@@ -554,7 +554,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $this->_aProfile = array();
 
         // alert about status changing
-        bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction));
+        bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction, 'status' => &$sStatus, 'send_email_notification' => &$bSendEmailNotification));
         
         $this->doAudit('_sys_audit_action_set_status_' . $sStatus);
         
