@@ -491,8 +491,9 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $sVideoUrlHd = '';
             if($isVideo) {
                 $sVideoUrl = $oStorage->getFileUrlById($a['id']);
-                $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
-                if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+                $aVideoFile = $oStorage->getFile($a['id']);
+
+                if (!empty($aVideoFile['dimensions']) && $aTranscodersVideo['mp4_hd']->isProcessHD($aVideoFile['dimensions']))
                     $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
             }
 
@@ -555,8 +556,9 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         // check HD video version
         $sVideoUrlHd = '';
         $sVideoUrl = $oStorage->getFileUrlById($a['id']);
-        $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
-        if (!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+        $aVideoFile = $oStorage->getFile($a['id']);
+
+        if (!empty($aVideoFile['dimensions']) && $aTranscodersVideo['mp4_hd']->isProcessHD($aVideoFile['dimensions']))
             $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
 
         // generate player code
