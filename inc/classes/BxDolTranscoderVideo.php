@@ -232,6 +232,12 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         return true;
     }
 
+    public function isProcessHD ($sOrigVideoDim)
+    {
+        $iHeight = $this->getMaxResizeDimention('Mp4', 'h');
+        return ($aDim = explode('x', $sOrigVideoDim)) && isset($aDim[1]) && (int)$aDim[1] >= $iHeight ? true : false;
+    }
+
     /**
      * Get video size. 
      * It generated image from the video and returns size of the image.

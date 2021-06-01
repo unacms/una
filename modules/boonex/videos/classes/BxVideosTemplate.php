@@ -104,7 +104,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $aVideoFile = $oStorage->getFile($iFile);
 
         $sVideoUrlHd = '';
-        if (!empty($aVideoFile['dimensions']) && ($aDim = explode('x', $aVideoFile['dimensions'])) && isset($aDim[1]) && (int)$aDim[1] >= 720)
+        if (!empty($aVideoFile['dimensions']) && $aTranscodersVideo['mp4_hd']->isProcessHD($aVideoFile['dimensions']))
             $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($iFile);
 
         return array(

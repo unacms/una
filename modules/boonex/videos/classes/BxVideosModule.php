@@ -125,7 +125,7 @@ class BxVideosModule extends BxBaseModTextModule
         $aVideoFile = $oStorage->getFile($iFile);
 
         $sVideoUrlHd = '';
-        if (!empty($aVideoFile['dimensions']) && ($aDim = explode('x', $aVideoFile['dimensions'])) && isset($aDim[1]) && (int)$aDim[1] >= 720)
+        if (!empty($aVideoFile['dimensions']) && $oTcvMp4Hd->isProcessHD($aVideoFile['dimensions']))
             $sVideoUrlHd = $oTcvMp4Hd->getFileUrl($iFile);
 
         return array(
