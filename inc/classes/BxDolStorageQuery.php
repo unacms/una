@@ -122,13 +122,21 @@ class BxDolStorageQuery extends BxDolDb
         return BxDolProfileQuery::getInstance()->updateProfileQuota($iProfileId, $iSize, $iNumber);
     }
 
-    public function addFile($iProfileId, $sLocalId, $sPath, $aFileName, $sMimeType, $sExt, $iSize, $iTime, $isPrivate)
+    public function addFile($iProfileId, $sLocalId, $sPath, $aFileName, $sMimeType, $sExt, $iSize, $iTime, $isPrivate, $aAdditionalFields = array())
     {
-        $sQuery = $this->prepare("INSERT INTO " . $this->_sTableFiles . " SET
-            `profile_id` = ?, `remote_id` = ?, `path` = ?, `file_name` = ?, `mime_type` = ?, `ext` = ?, `size` = ?, `added` = ?, `modified` = ?, `private` = ?",
-            $iProfileId, $sLocalId, $sPath, $aFileName, $sMimeType, $sExt, $iSize, $iTime, $iTime, $isPrivate ? 1 : 0
-        );
-        return $this->query($sQuery);
+        $aBind = array('profile_id' => $iProfileId, 'local_id' => $sLocalId, 'path' => $sPath, 'file_name' => $aFileName, 'mime_type' => $sMimeType, 'ext' => $sExt, 'size' => $iSize, 'time' => $iTime, 'private' => $isPrivate ? 1 : 0);
+
+        $sQuery = "INSERT INTO " . $this->_sTableFiles . " SET
+            `profile_id` = :profile_id, `remote_id` = :local_id, `path` = :path, `file_name` = :file_name, `mime_type` = :mime_type, `ext` = :ext, `size` = :size, `added` = :time, `modified` = :time, `private` = :private";
+
+        if ($aAdditionalFields && is_array($aAdditionalFields)) {
+            foreach ($aAdditionalFields as $sField => $sValue) {
+                $aBind[$sField] = $sValue;
+                $sQuery .= ", `$sField` = :$sField";
+            }
+        }
+
+        return $this->query($sQuery, $aBind);
     }
 
     public function modifyFilePrivate($iFileId, $isPrivate)
