@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `bx_classes_videos` (
   `mime_type` varchar(128) NOT NULL,
   `ext` varchar(32) NOT NULL,
   `size` bigint(20) NOT NULL,
+  `dimensions` varchar(12) NOT NULL,
   `added` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `private` int(11) NOT NULL,
@@ -403,7 +404,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_classes_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_classes_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 
-('bx_classes_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
+('bx_classes_videos', @sStorageEngine, 'a:1:{s:6:"fields";a:1:{s:10:"dimensions";s:17:"getFileDimensions";}}', 360, 2592000, 3, 'bx_classes_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
 ('bx_classes_videos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_videos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
 
 ('bx_classes_sounds', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_sounds', 'allow-deny', 'mp3,m4a,m4b,wma,wav,3gp', '', 0, 0, 0, 0, 0, 0),
