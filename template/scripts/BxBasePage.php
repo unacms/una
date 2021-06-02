@@ -367,7 +367,16 @@ class BxBasePage extends BxDolPage
                             $sHiddenOn .= ' ' . $sClass;
 
                 if ($sContentWithBox)
-                    $sCell .= '<div class="bx-page-block-container bx-def-padding-sec-topbottom' . $sHiddenOn . '" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
+                    $sCell .= $this->_oTemplate->parseHtmlByName('designbox_container.html', array(
+                        'class_add' => $sHiddenOn,
+                        'bx_if:show_html_id' => array(
+                            'condition' => true,
+                            'content' => array(
+                                'html_id' => 'bx-page-block-' . $aBlock['id']
+                            ),
+                        ),
+                        'content' => $sContentWithBox
+                    ));
             }
             $aVars[$sKey] = $sCell;
         }

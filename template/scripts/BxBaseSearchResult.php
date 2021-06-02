@@ -86,20 +86,29 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function displaySearchBox ($sContent, $sPaginate = '')
     {
-		$sContent .= $sPaginate;
-		$sMenu = $this->getDesignBoxMenu();
+        $sContent .= $sPaginate;
+        $sMenu = $this->getDesignBoxMenu();
 
         if ($this->id) {
             $sTitle = _t($this->aCurrent['title']);
-        	$sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
-            return '<div class="bx-page-block-container bx-search-results bx-def-padding-sec-topbottom bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
+            $sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
+            return $this->_oTemplate->parseHtmlByName('designbox_container.html', array(
+                'class_add' => ' bx-search-results',
+                'bx_if:show_html_id' => array(
+                    'condition' => true,
+                    'content' => array(
+                        'html_id' => 'bx-page-block-' . $this->id
+                    ),
+                ),
+                'content' => $sCode
+            ));
         }
 
         $this->addPageRssLink ();
 
         return array(        	
-        	'content' => $sContent,
-        	'menu' => $sMenu,
+            'content' => $sContent,
+            'menu' => $sMenu,
         );
     }
 

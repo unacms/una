@@ -110,8 +110,15 @@ class BxBaseSearch extends BxDolSearch
         }
         if ($bOnlyForm)
             return $sForm;
-        
-        return '<div class="bx-page-block-container bx-def-padding-sec-topbottom bx-clearfix">' . DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate) . '</div>';
+
+        return $this->_oTemplate->parseHtmlByName('designbox_container.html', array(
+            'class_add' => '',
+            'bx_if:show_html_id' => array(
+                'condition' => false,
+                'content' => array(),
+            ),
+            'content' => DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate)
+        ));
     }
 
     public function getResultsContainer($sCode = '')
