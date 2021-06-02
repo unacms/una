@@ -79,7 +79,8 @@ define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file 
  * - engine - storage engine, for now the following engines are supported:
  *     1. Local - local storage, by default files are stored in /storage/ subfolder 
  *     2. S3 - Amazon S3 storage, files are stored on Amazon S3 storage, you need to point AWS Access Key, AWS Secret Key and AWS Bucket in the settings
- * - params - custom storage engine params as php serialized string
+ * - params - custom storage engine params as php serialized string, supported params:
+ *      1. fields - list of additional fields to add to database as key(field name) and value(func or serialized service call to get the value)
  * - token_life - life of the security token in seconds for private files
  * - cache_control - control browser cache, allow browser to store files in browser's cache for this number of seconds, to disable browser cache,
  *   or let browser to decide on its own set it to 0(zero)
@@ -450,6 +451,21 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             return false;
         }
 
+        // process additional custom fields, like video duration and video dimension
+
+        $aAdditionalFields = array();
+        if (isset($this->_aParams['fields']) && is_array($this->_aParams['fields'])) {
+            foreach ($this->_aParams['fields'] as $sField => $mixedMethod) {
+                if (is_string($mixedMethod) && method_exists($this, $mixedMethod)) {
+                    $aAdditionalFields[$sField] = $this->$mixedMethod($sTmpFile, $sMimeType, $sExt, $this);
+                }
+                elseif (is_array($mixedMethod) && isset($mixedMethod['module']) && isset($mixedMethod['method'])) {
+                    $mixedMethod['params'] = array($sTmpFile, $sMimeType, $sExt, $this);
+                    $aAdditionalFields[$sField] = call_user_func_array('bx_srv', array($mixedMethod['module'], $mixedMethod['method'], $mixedMethod['params'], isset($mixedMethod['class']) ? $mixedMethod['class'] : 'Module'));
+                } 
+            }
+        }
+
         // store file to storage engine
 
         $sLocalId = $this->genRandName();
@@ -467,7 +483,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
 
         $iTime = time();
         $iSize = $oHelper->getSize();
-        $bFileAdded = $this->_oDb->addFile($iProfileId, $sLocalId, $sRemoteNamePath, $oHelper->getName(), $sMimeType, $sExt, $iSize, $iTime, $isPrivate);
+        $bFileAdded = $this->_oDb->addFile($iProfileId, $sLocalId, $sRemoteNamePath, $oHelper->getName(), $sMimeType, $sExt, $iSize, $iTime, $isPrivate, $aAdditionalFields);
         $iId = $this->_oDb->lastId();
         if (!$bFileAdded || !$iId) {
             $this->deleteFileFromEngine($sPath . $sLocalId, $isPrivate);
@@ -689,7 +705,29 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getFile($iFileId)
     {
-        return $this->_oDb->getFileById($iFileId);
+        $a = $this->_oDb->getFileById($iFileId);
+
+        // update custom fields for previously uploaded files
+        if (!defined('BX_DOL_STORAGE_CUSTOM_FIELDS_UPDATE_SKIP') && isset($this->_aParams['fields']) && is_array($this->_aParams['fields'])) {
+            foreach ($this->_aParams['fields'] as $sField => $mixedMethod) {
+                if ($a[$sField])
+                    continue;
+
+                $sFileUrl = $this->getFileUrlById($iFileId);
+
+                if (is_string($mixedMethod) && method_exists($this, $mixedMethod)) {
+                    $a[$sField] = $this->$mixedMethod($sFileUrl, $a['mime_type'], $a['ext'], $this);
+                }
+                elseif (is_array($mixedMethod) && isset($mixedMethod['module']) && isset($mixedMethod['method'])) {
+                    $mixedMethod['params'] = array($sFileUrl, $a['mime_type'], $a['ext'], $this);
+                    $a[$sField] = call_user_func_array('bx_srv', array($mixedMethod['module'], $mixedMethod['method'], $mixedMethod['params'], isset($mixedMethod['class']) ? $mixedMethod['class'] : 'Module'));
+                } 
+                if ($a[$sField])
+                    $this->_oDb->modifyCustomField($iFileId, $sField, $a[$sField], false);
+            }
+        }
+
+        return $a;
     }
 
     /**
@@ -1200,6 +1238,23 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             $a[] = $aFile['id'];
 
         return $this->queueFilesForDeletion($a);
+    }
+
+    protected function getFileDuration($sFilePath, $sMimeType, $sExt, $oStorage)
+    {
+        if (strncmp('video/', $sMimeType, 6) === 0)
+            return (int)BxDolTranscoderVideo::getDuration($sFilePath);
+        return 0;
+    }
+
+    protected function getFileDimensions($sFilePath, $sMimeType, $sExt, $oStorage)
+    {
+        if (strncmp('video/', $sMimeType, 6) === 0 && $o = BxDolTranscoderVideo::getObjectVideoAbstract()) {
+            $a = $o->getVideoSize($sFilePath);
+            if ($a && isset($a['w']) && isset($a['h']))
+                return $a['w'] . 'x' . $a['h'];
+        }
+        return '';
     }
 }
 

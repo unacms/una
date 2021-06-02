@@ -286,10 +286,10 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $sVideoDuration = _t_format_duration($iVideoDuration);
 
             $sVideoUrl = $oStorage->getFileUrlById($aMediaInfo['file_id']);
-            $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
+            $aVideoFile = $oStorage->getFile($aMediaInfo['file_id']);
 
             $sVideoUrlHd = '';
-            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+            if (!empty($aVideoFile['dimensions']) && $aTranscodersVideo['mp4_hd']->isProcessHD($aVideoFile['dimensions']))
                 $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($aMediaInfo['file_id']);
 
             $aTmplVarsVideo = array (

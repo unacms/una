@@ -122,10 +122,10 @@ class BxVideosModule extends BxBaseModTextModule
             $sPoster = $oTcvPoster->getFileUrl($iFile);
 
         $sVideoUrl = $oStorage->getFileUrlById($iFile);
-        $aVideoSize = $oTcvMp4Hd->getVideoSize($sVideoUrl);
+        $aVideoFile = $oStorage->getFile($iFile);
 
         $sVideoUrlHd = '';
-        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+        if (!empty($aVideoFile['dimensions']) && $oTcvMp4Hd->isProcessHD($aVideoFile['dimensions']))
             $sVideoUrlHd = $oTcvMp4Hd->getFileUrl($iFile);
 
         return array(

@@ -882,10 +882,10 @@ class BxAlbumsModule extends BxBaseModTextModule
                 continue;
 
             $sVideoUrl = $oStorage->getFileUrlById($aMedia['file_id']);
-            $aVideoSize = $oTcMp4Hd->getVideoSize($sVideoUrl);
+            $aVideoFile = $oStorage->getFile($aMedia['file_id']);
 
             $sVideoUrlHd = '';
-            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+            if (!empty($aVideoFile['dimensions']) && $oTcMp4Hd->isProcessHD($aVideoFile['dimensions']))
                 $sVideoUrlHd = $oTcMp4Hd->getFileUrl($aMedia['file_id']);
 
             $aOutput[$aMedia['id']] = array(
