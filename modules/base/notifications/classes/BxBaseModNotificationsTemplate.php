@@ -16,6 +16,13 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function addLocationBase()
+    {
+        parent::addLocationBase();
+
+        $this->addLocation('mod_notifications', BX_DIRECTORY_PATH_MODULES . 'base' . DIRECTORY_SEPARATOR . 'notifications' . DIRECTORY_SEPARATOR, BX_DOL_URL_MODULES . 'base/notifications/');
+    }
+
     public function getAddedCss($sType = '', $bDynamic = false)
     {
         $mixedResult = $this->addCss(array(

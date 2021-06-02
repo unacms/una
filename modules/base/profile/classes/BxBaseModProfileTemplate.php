@@ -44,6 +44,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $this->_bLetterAvatar = true;
     }
 
+    public function addLocationBase()
+    {
+        parent::addLocationBase();
+
+        $this->addLocation('mod_profile', BX_DIRECTORY_PATH_MODULES . 'base' . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR, BX_DOL_URL_MODULES . 'base/profile/');
+    }
+
     /**
      * Get profile unit
      */
