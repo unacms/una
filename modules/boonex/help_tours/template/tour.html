@@ -10,6 +10,7 @@
 
     <bx_if:not_preview>
     Shepherd.on('cancel', function () {
+        $.cookie('bx-help-tours-seen-__tour_id__', 1, {expires: 9999});
         $.post('__finish_callback_url__', {tour: __tour_id__});
     })
     </bx_if:not_preview>
@@ -17,22 +18,24 @@
     var bx_help_tour_steps =  __steps__;
     var bx_help_tour_steps_filtered = [];
     for (i in bx_help_tour_steps) {
-        //do not show help items for missing elements.
-        if (bx_help_tour_steps[i].attachTo.element.length && !$(bx_help_tour_steps[i].attachTo.element).length) continue;
+        if (typeof bx_help_tour_steps[i].attachTo !== 'undefined' && bx_help_tour_steps[i].attachTo.element.length) {
+            //do not show help items for missing elements.
+            if (!$(bx_help_tour_steps[i].attachTo.element).length) continue;
 
-        // if this is a help for a field that is sitting inside a collapsed section then
-        // we are `uncollapsing` it on this page load
-        if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) {
-            var sect = $(bx_help_tour_steps[i].attachTo.element).closest('.bx-form-section-hidden');
-            if (sect.length && sect.hasClass('bx-form-section-hidden')) {
-                $(sect).children('legend').trigger('click');
-                sect.removeClass('bx-form-collapsed');
-                sect.removeClass('bx-form-section-hidden');
+            // if this is a help for a field that is sitting inside a collapsed section then
+            // we are `uncollapsing` it on this page load
+            if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) {
+                var sect = $(bx_help_tour_steps[i].attachTo.element).closest('.bx-form-section-hidden');
+                if (sect.length && sect.hasClass('bx-form-section-hidden')) {
+                    $(sect).children('legend').trigger('click');
+                    sect.removeClass('bx-form-collapsed');
+                    sect.removeClass('bx-form-section-hidden');
+                }
             }
-        }
 
-        //do not process hidden elements
-        if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) continue;
+            //do not process hidden elements
+            if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) continue;
+        }
 
         bx_help_tour_steps_filtered.push(bx_help_tour_steps[i]);
     }

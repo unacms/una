@@ -66,14 +66,17 @@ class BxHelpToursDb extends BxDolModuleDb
         return $aData;
     }
 
-    public function putHelpTourOnPage($iTourId, $sOldPage) {
+    public function putHelpTourOnPage($iTourId, $sOldPage, $iPageBlockVisibility) {
         $aTour = $this->getTourDetails($iTourId);
         $sPage = $aTour['page'];
 
+        $sServiceCall = str_replace('__tour_id__', $iTourId, $this->_sTourBlockTemplate);
+
         if ($sOldPage != $sPage) {
             if (!empty($sOldPage)) {
-                $this->query("DELETE FROM `sys_pages_blocks` WHERE `object` = :page AND `module` = 'bx_help_tours'", [
+                $this->query("DELETE FROM `sys_pages_blocks` WHERE `object` = :page AND `module` = 'bx_help_tours' AND `content` = :service_call", [
                     'page' => $sOldPage,
+                    'service_call' => $sServiceCall,
                 ]);
             }
 
@@ -81,24 +84,39 @@ class BxHelpToursDb extends BxDolModuleDb
 
             $this->query("
                 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-                (:page, 1, 'bx_help_tours', '_bx_help_tours_page_block_caption', 0, 2147483647, 'service', :service_call, 0, 0, :order);
+                (:page, 1, 'bx_help_tours', '_bx_help_tours_page_block_caption', 0, :visibility, 'service', :service_call, 0, 0, :order);
             ", [
                 'page' => $sPage,
-                'service_call' => str_replace('__tour_id__', $iTourId, $this->_sTourBlockTemplate),
+                'service_call' => $sServiceCall,
                 'order' => $iOrder,
+                'visibility' => $iPageBlockVisibility,
+            ]);
+
+            // disable the built-in site tour on homepage to avoid tours conflicts
+            if ($sPage == 'sys_home') setParam('site_tour_home', '');
+        } else {
+            $this->query("UPDATE `sys_pages_blocks` SET `visible_for_levels` = :visibility WHERE `object` = :page AND `module` = 'bx_help_tours' AND `content` = :service_call", [
+                'page' => $sPage,
+                'service_call' => $sServiceCall,
+                'visibility' => $iPageBlockVisibility,
             ]);
         }
     }
 
-    function deleteHelpTourBlock($iTourId) {
+    public function deleteHelpTourBlock($iTourId) {
         $aTour = $this->getTourDetails($iTourId);
 
-        $this->query("DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_help_tours' AND `object` = :page", [
+        $this->query("DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_help_tours' AND `object` = :page AND `content` = :call", [
             'page' => $aTour['page'],
+            'call' => str_replace('__tour_id__', $iTourId, $this->_sTourBlockTemplate),
         ]);
     }
 
-    function getHelpTourItemsCount($iTourId) {
+    public function deleteHelpTourTrackingData($iTourId) {
+        $this->query("DELETE FROM `bx_help_tours_track_views` WHERE `tour` = :tour", ['tour' => $iTourId]);
+    }
+
+    public function getHelpTourItemsCount($iTourId) {
         return $this->getOne("SELECT COUNT(*) FROM `bx_help_tours_items` WHERE `tour` = :tour", [
             'tour' => $iTourId,
         ]);
@@ -143,7 +161,18 @@ class BxHelpToursDb extends BxDolModuleDb
     }
 
     public function isHelpTourSeen($iAccount, $iTour) {
+        if (isset($_COOKIE['bx-help-tours-seen-'.$iTour])) return true;
+        if (!$iAccount) return false;
         return $this->getOne("SELECT COUNT(*) FROM `bx_help_tours_track_views` WHERE `account` = :account AND `tour` = :tour", ['account' => $iAccount, 'tour' => $iTour]);
+    }
+
+    public function getTourVisibility($iTour) {
+        $aTour = $this->getTourDetails($iTour);
+
+        return $this->getOne("SELECT `visible_for_levels` FROM `sys_pages_blocks` WHERE `module` = 'bx_help_tours' AND `object` = :page AND `content` = :call", [
+            'page' => $aTour['page'],
+            'call' => str_replace('__tour_id__', $iTour, $this->_sTourBlockTemplate),
+        ]);
     }
 }
 

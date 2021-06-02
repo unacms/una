@@ -49,4 +49,8 @@
 	<string name="_bx_help_tours_form_field_option_custom"><![CDATA[Custom]]></string>
 
 	<string name="_bx_help_tours_page_block_caption"><![CDATA[Help Tour]]></string>
+	<string name="_bx_help_tours_form_field_visible_for"><![CDATA[Visible For]]></string>
+	<string name="_bx_help_tours_form_field_visible_for_levels"><![CDATA[Select Levels]]></string>
+	<string name="_bx_help_tours_form_field_visible_for_all"><![CDATA[Anyone]]></string>
+	<string name="_bx_help_tours_form_field_visible_for_selected"><![CDATA[Selected levels]]></string>
 </resources>

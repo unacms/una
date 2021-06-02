@@ -29,7 +29,6 @@ class BxHelpToursTemplate extends BxBaseModGeneralTemplate
             $aStep = [
                 'id' => 'bx-help-tour-step-'.$aItem['id'],
                 'text' => _t($aItem['text']),
-                'attachTo' => ['element' => $aItem['element'], 'on' => $aItem['arrow']],
             ];
 
             if ($aItem['title']) $aStep['title'] = _t($aItem['title']);
