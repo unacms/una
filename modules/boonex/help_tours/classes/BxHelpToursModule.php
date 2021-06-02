@@ -17,7 +17,12 @@ class BxHelpToursModule extends BxDolModule
     }
 
     public function serviceGetHelpTour($iTourId) {
-        if (!isLogged() || !$iTourId) return;
+        static $_bAlreadyPlacedATour;
+
+        // avoid running multiple tours at once on a single page
+        if ($_bAlreadyPlacedATour) return;
+
+        if (!$iTourId) return;
 
         $aTour = $this->_oDb->getTourDetails($iTourId);
         if (!$aTour) return;
@@ -27,6 +32,7 @@ class BxHelpToursModule extends BxDolModule
 
         if ((!isAdmin() || !bx_get('help_tour_preview')) && $this->_oDb->isHelpTourSeen(getLoggedId(), $iTourId)) return;
 
+        $_bAlreadyPlacedATour = true;
         return $this->_oTemplate->getHelpTourCode($aTour, $aHelpTourItems);
     }
 

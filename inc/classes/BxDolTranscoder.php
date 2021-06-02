@@ -885,13 +885,15 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         return false;
     }
 
-    public function getMaxResizeDimention ()
+    public function getMaxResizeDimention ($sFilter = 'Resize', $sKey = '')
     {
-        $a = $this->_oDb->getTranscoderFilters('Resize');
+        $a = $this->_oDb->getTranscoderFilters($sFilter);
         if (!$a)
             return 0;
         $aFilter = array_pop($a);
         $aFilterParams = $aFilter['filter_params'] ? unserialize($aFilter['filter_params']) : array();
+        if ($sKey)
+            return isset($aFilterParams[$sKey]) ? $aFilterParams[$sKey] : 0;
         return $aFilterParams ? max(isset($aFilterParams['w']) ? $aFilterParams['w'] : 0, isset($aFilterParams['h']) ? $aFilterParams['h'] : 0) : 0;
     }
 

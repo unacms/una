@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolStudioUtils');
+
 class BxHelpToursGridTours extends BxTemplGrid
 {
     public function __construct ($aOptions, $oTemplate = false)
@@ -60,7 +62,10 @@ class BxHelpToursGridTours extends BxTemplGrid
             }
         }
 
-        $oForm = $this->getAddEditFormObject($iEntry);
+        $iTourVisibility = !$iEntry ? BX_DOL_INT_MAX : $this->_oModule->_oDb->getTourVisibility($iEntry);
+        if (bx_get('visible_for'))
+            $iTourVisibility = BxDolStudioUtils::getVisibilityValue(bx_get('visible_for'), bx_get('visible_for_levels'));
+        $oForm = $this->getAddEditFormObject($iEntry, $iTourVisibility);
 
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT.'grid.php?o=' . $this->_sObject . '&a='.($aEntry ? 'edit' : 'add');
 
@@ -75,7 +80,7 @@ class BxHelpToursGridTours extends BxTemplGrid
             }
 
             if ($iResult) {
-                $this->_oModule->_oDb->putHelpTourOnPage($iResult, $aEntry ? $aEntry['page'] : '');
+                $this->_oModule->_oDb->putHelpTourOnPage($iResult, $aEntry ? $aEntry['page'] : '', $iTourVisibility);
                 $aRes = ['grid' => $this->getCode(false), 'blink' => $iResult];
             } else {
                 $aRes = ['msg' => "Error occured"]; // if record adding failed, display error message
@@ -102,6 +107,7 @@ class BxHelpToursGridTours extends BxTemplGrid
             echoJson(['popup' => [
                 'html' => BxTemplStudioFunctions::getInstance()->popupBox('bx-tour-details-popup', _t('_bx_help_tours_cpt_tour_details'), $s),
                 'options' => [
+                    'onBeforeShow' => empty($aEntry) ? "$('#grid-popup-bx_help_tours_tours-edit').remove();" : "$('#grid-popup-bx_help_tours_tours-add').remove();",
                     'closeOnOuterClick' => false,
                 ]]]
             );
@@ -149,6 +155,7 @@ class BxHelpToursGridTours extends BxTemplGrid
 
         foreach ($aIds as $iEntry) {
             $this->_oModule->_oDb->deleteHelpTourBlock($iEntry);
+            $this->_oModule->_oDb->deleteHelpTourTrackingData($iEntry);
 
             $aItems = $this->_oModule->_oDb->getHelpTourItems($iEntry);
             if ($aItems) foreach ($aItems as $aItem) {
@@ -165,7 +172,7 @@ class BxHelpToursGridTours extends BxTemplGrid
         ));
     }
 
-    private function getAddEditFormObject($iEntry) {
+    private function getAddEditFormObject($iEntry, $iVisibility = BX_DOL_INT_MAX) {
         $aForm = [
             'form_attrs' => [
                 'method' => 'post',
@@ -211,6 +218,29 @@ class BxHelpToursGridTours extends BxTemplGrid
                         'pass' => 'Int',
                     ],
                 ],
+                'visible_for' => [
+                    'type' => 'select',
+                    'name' => 'visible_for',
+                    'caption' => _t('_bx_help_tours_form_field_visible_for'),
+                    'value' => $iVisibility == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED,
+                    'values' => [
+                        ['key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_bx_help_tours_form_field_visible_for_all')],
+                        ['key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_bx_help_tours_form_field_visible_for_selected')],
+                    ],
+                    'attrs' => [
+                        'onchange' => "$('#bx-form-element-visible_for_levels').bx_anim(this.value == 'all' ? 'hide' : 'show')",
+                    ],
+                ],
+                'visible_for_levels' => [
+                    'type' => 'checkbox_set',
+                    'name' => 'visible_for_levels',
+                    'caption' => _t('_bx_help_tours_form_field_visible_for_levels'),
+                    'value' => '',
+                    'values' => [],
+                    'tr_attrs' => [
+                        'style' => $iVisibility == BX_DOL_INT_MAX ? 'display:none' : ''
+                    ],
+                ],
                 'actions' => [
                     'type' => 'input_set',
                     0 => [
@@ -230,6 +260,8 @@ class BxHelpToursGridTours extends BxTemplGrid
                 ],
             ],
         ];
+        BxDolStudioUtils::getVisibilityValues($iVisibility, $aForm['inputs']['visible_for_levels']['values'], $aForm['inputs']['visible_for_levels']['value']);
+
         return new BxTemplFormView($aForm);
     }
 }

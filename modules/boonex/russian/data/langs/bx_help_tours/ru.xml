@@ -49,4 +49,8 @@
 	<string name="_bx_help_tours_form_field_option_custom"><![CDATA[Пользовательский]]></string>
 
 	<string name="_bx_help_tours_page_block_caption"><![CDATA[Тур Помощи]]></string>
+	<string name="_bx_help_tours_form_field_visible_for"><![CDATA[Видимо для]]></string>
+	<string name="_bx_help_tours_form_field_visible_for_levels"><![CDATA[Выбрать уровни]]></string>
+	<string name="_bx_help_tours_form_field_visible_for_all"><![CDATA[Всех]]></string>
+	<string name="_bx_help_tours_form_field_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
 </resources>
