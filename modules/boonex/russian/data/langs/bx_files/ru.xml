@@ -159,6 +159,8 @@
     <string name="_bx_files_menu_item_title_create_entry"><![CDATA[Файл]]></string>
     <string name="_bx_files_menu_item_title_system_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_files_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string>
+    <string name="_bx_files_menu_item_title_system_edit_title"><![CDATA[Переименовать]]></string>
+    <string name="_bx_files_menu_item_title_edit_title"><![CDATA[Переименовать]]></string>
     <string name="_bx_files_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_files_menu_item_title_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_files_menu_item_title_system_view_entry"><![CDATA[Просмотр файла]]></string>

@@ -161,6 +161,8 @@
     <string name="_bx_files_menu_item_title_create_entry"><![CDATA[File]]></string>
     <string name="_bx_files_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_files_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
+    <string name="_bx_files_menu_item_title_system_edit_title"><![CDATA[Rename]]></string>
+    <string name="_bx_files_menu_item_title_edit_title"><![CDATA[Rename]]></string>
     <string name="_bx_files_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_files_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_files_menu_item_title_system_view_entry"><![CDATA[View File]]></string>
