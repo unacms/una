@@ -113,6 +113,11 @@ class BxTimelineMenuItemActionsAll extends BxTimelineMenuItemActions
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
+
+    protected function _getMenuItemItemRepost($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
     
 
     /**

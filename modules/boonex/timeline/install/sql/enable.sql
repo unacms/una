@@ -112,7 +112,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_timeline_menu_item_share', 'bx_timeline', '_bx_timeline_menu_set_title_item_share', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('bx_timeline_menu_item_share', 'bx_timeline', 'item-repost', '_bx_timeline_menu_item_title_system_item_repost', '_bx_timeline_menu_item_title_item_repost', 'javascript:void(0)', 'javascript:{js_onclick_repost}', '_self', 'redo', '', 2147483647, 1, 0, 1),
+('bx_timeline_menu_item_share', 'bx_timeline', 'item-repost', '_bx_timeline_menu_item_title_system_item_repost', '_bx_timeline_menu_item_title_item_repost', 'javascript:void(0)', 'javascript:{repost_onclick}', '_self', 'redo', '', 2147483647, 1, 0, 1),
 ('bx_timeline_menu_item_share', 'bx_timeline', 'item-send', '_bx_timeline_menu_item_title_system_item_send', '_bx_timeline_menu_item_title_item_send', 'page.php?i=start-convo&et={et_send}', '', '_self', 'envelope', '', 2147483647, 1, 0, 2);
 
 -- MENU: Item Manage (Pin, Delete, etc)
@@ -148,6 +148,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-reaction', '_bx_timeline_menu_item_title_system_item_reaction', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 30),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-score', '_bx_timeline_menu_item_title_system_item_score', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 40),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_share'', this, {''id'':''bx_timeline_menu_item_share_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'share-alt', '', 'bx_timeline_menu_item_share', 1, 2147483647, 1, 0, 1, 50),
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-repost', '_bx_timeline_menu_item_title_system_item_repost', '_bx_timeline_menu_item_title_item_repost', 'javascript:void(0)', 'javascript:{repost_onclick}', '', 'redo', '', '', 0, 2147483647, 0, 0, 1, 55),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-more', '_bx_timeline_menu_item_title_system_item_more', '_bx_timeline_menu_item_title_item_more', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_manage'', this, {''id'':''bx_timeline_menu_item_manage_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'ellipsis-v', '', 'bx_timeline_menu_item_manage', 1, 2147483647, 0, 0, 1, 60);
 
 -- MENU: all actions menu for view entry 
@@ -164,6 +165,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-reaction', '_bx_timeline_menu_item_title_system_item_reaction', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 30),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-score', '_bx_timeline_menu_item_title_system_item_score', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 40),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 50),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-repost', '_bx_timeline_menu_item_title_system_item_repost', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 55),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-pin', '_bx_timeline_menu_item_title_system_item_pin', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 100),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-unpin', '_bx_timeline_menu_item_title_system_item_unpin', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 110),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-stick', '_bx_timeline_menu_item_title_system_item_stick', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 120),

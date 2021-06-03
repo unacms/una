@@ -74,7 +74,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             'content_id' => $this->_iEvent,
             'content_url' => $this->_aEvent['url'],
 
-            'js_onclick_repost' => $sRepostOnclick,
+            'repost_onclick' => $sRepostOnclick,
             'et_send' => $sAetSend
     	));
     }
