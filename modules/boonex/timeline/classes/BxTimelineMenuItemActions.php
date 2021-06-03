@@ -58,8 +58,12 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $this->_aEvent = $aEvent;
         $this->_iEvent = (int)$this->_aEvent['id'];
 
+        $sType = $this->_aEvent['type'];
+        $sAction = $this->_aEvent['action'];
+
         $this->_setBrowseParams($aBrowseParams);
 
+        //--- Comment item
         $iCommentsObject = 0;
         $sCommentsSystem = $sCommentsOnclick = '';
         if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system'])) {
@@ -68,7 +72,12 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             $sCommentsOnclick = bx_replace_markers("{js_object_view}.commentItem(this, '" . $sCommentsSystem . "', " . $iCommentsObject . ")", $this->_aMarkers);
         }
 
-        $bSystem = $this->_oModule->_oConfig->isSystem($this->_aEvent['type'], $this->_aEvent['action']);
+        //--- Repost item
+        $iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be reposted
+        $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
+        $sRepostOnclick = $this->_oModule->serviceGetRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+
+        $bSystem = $this->_oModule->_oConfig->isSystem($sType, $sAction);
 
         $this->addMarkers(array(
             'content_id' => $this->_iEvent,
@@ -76,6 +85,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             'comment_system' => $sCommentsSystem,
             'comment_object' => $iCommentsObject,
             'comment_onclick' => $sCommentsOnclick,
+
+            'repost_onclick' => $sRepostOnclick,
 
             'delete_title' => _t('_bx_timeline_menu_item_title_item_delete_' . ($bSystem ? 'system' : 'common'))
         ));

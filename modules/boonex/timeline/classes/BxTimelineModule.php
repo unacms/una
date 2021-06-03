@@ -3505,6 +3505,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function isAllowedMore($aEvent, $bPerform = false)
     {
     	$oMoreMenu = $this->getManageMenuObject();
+        if(!$oMoreMenu)
+            return false;
+
     	$oMoreMenu->setEvent($aEvent);
     	return $oMoreMenu->isVisible();
     }
