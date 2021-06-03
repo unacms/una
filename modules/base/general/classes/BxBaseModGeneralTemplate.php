@@ -23,6 +23,13 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function addLocationBase()
+    {
+        parent::addLocationBase();
+
+        $this->addLocation('mod_general', BX_DIRECTORY_PATH_MODULES . 'base' . DIRECTORY_SEPARATOR . 'general' . DIRECTORY_SEPARATOR, BX_DOL_URL_MODULES . 'base/general/');
+    }
+
     public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
     {
         $sMask = "{var} {object} = new {class}({params});";

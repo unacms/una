@@ -28,6 +28,8 @@ class BxDolModuleTemplate extends BxDolTemplate
         $sHomePath = $oConfig->getHomePath();
         $sHomeUrl = $oConfig->getHomeUrl();
 
+        if(method_exists($this, 'addLocationBase'))
+            $this->addLocationBase();
         $this->addLocation($sName, $sHomePath, $sHomeUrl);
         $this->addLocationJs($sName, $sHomePath . 'js/', $sHomeUrl . 'js/');
     }
@@ -51,6 +53,10 @@ class BxDolModuleTemplate extends BxDolTemplate
 
         bx_import('BxTemplFunctions');
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
+    }
+
+    public function addLocationBase()
+    {        
     }
 
     function addCssSystem($mixedFiles, $bDynamic = false)

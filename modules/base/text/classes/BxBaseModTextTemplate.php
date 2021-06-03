@@ -23,6 +23,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $this->_sUnitClassShowCase = 'bx-base-unit-showcase bx-base-text-unit-showcase bx-def-margin-sec-bottom';
     }
 
+    public function addLocationBase()
+    {
+        parent::addLocationBase();
+
+        $this->addLocation('mod_text', BX_DIRECTORY_PATH_MODULES . 'base' . DIRECTORY_SEPARATOR . 'text' . DIRECTORY_SEPARATOR, BX_DOL_URL_MODULES . 'base/text/');
+    }
+
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

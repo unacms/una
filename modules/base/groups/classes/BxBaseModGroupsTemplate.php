@@ -33,6 +33,13 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $this->_sUnitClassShowCase .= ' bx-base-groups-unit-with-cover bx-base-groups-unit-showcase';
     }
 
+    public function addLocationBase()
+    {
+        parent::addLocationBase();
+
+        $this->addLocation('mod_groups', BX_DIRECTORY_PATH_MODULES . 'base' . DIRECTORY_SEPARATOR . 'groups' . DIRECTORY_SEPARATOR, BX_DOL_URL_MODULES . 'base/groups/');
+    }
+
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
         $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);

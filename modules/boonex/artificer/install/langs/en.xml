@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+    <string name="_bx_artificer_wgt_cpt"><![CDATA[Artificer]]></string>
+
+    <!-- Settings -->
+    <string name="_bx_artificer_stg_cpt_type"><![CDATA[Artificer]]></string>
+
+    <string name="_bx_artificer_stg_cpt_category_system"><![CDATA[General]]></string>
+    <string name="_bx_artificer_stg_cpt_option_switcher_name"><![CDATA[Name in Template Switcher]]></string>	
+    <string name="_bx_artificer_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
+
+    <string name="_bx_artificer_stg_cpt_category_styles_custom"><![CDATA[Custom Styles]]></string>
+    <string name="_bx_artificer_stg_cpt_option_styles_custom"><![CDATA[Custom Styles]]></string>
+
+    <!-- Menus -->
+    <string name="_bx_artificer_lmi_cpt_styles"><![CDATA[Styles]]></string>
+</resources>

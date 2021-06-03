@@ -350,6 +350,10 @@ class BxDolStudioSettings extends BxTemplStudioWidget
 
     protected function getProcessedValue($aOption, $mixedValue)
     {
+        $sMethod = 'processCustomValue' . bx_gen_method_name(trim(str_replace($this->sType, '', $aOption['name']), '_'));
+    	if(method_exists($this, $sMethod))
+    	    return $this->$sMethod($aOption, $mixedValue);
+
         if(is_array($mixedValue))
             $mixedValue = implode(',', $mixedValue);
 
@@ -386,6 +390,16 @@ class BxDolStudioSettings extends BxTemplStudioWidget
         $oCacheUtilities = BxDolCacheUtilities::getInstance();
         $oCacheUtilities->clear('db');
         $oCacheUtilities->clear('css');
+    }
+
+    protected function getCustomValueCurrencySign($aItem, $mixedValue)
+    {
+        return htmlspecialchars($mixedValue);
+    }
+
+    protected function processCustomValueCurrencySign($aItem, $mixedValue)
+    {
+        return htmlspecialchars_decode($mixedValue);
     }
 }
 

@@ -1,0 +1,38 @@
+/*--
+@import url(../../../../../../../template/css/menu.css);
+--*/
+
+/*--- Sliding Menu ---*/
+.bx-sliding-menu, 
+.bx-sliding-menu-main {
+    left: auto !important;
+    right: 0 !important;
+    max-width: 31.25rem;
+}
+.bx-sliding-menu-close,
+.bx-sliding-menu-close:hover {
+    position:absolute;
+    top:0;
+    right:0;
+    text-decoration:none;
+}
+
+/*--- Top Menu ---*/
+.bx-sliding-smenu-main .bx-arr-menu-floating-blocks {
+    flex-wrap: nowrap;
+}
+
+/*--- Account Popup ---*/
+@media (min-width:720px) {
+    #bx-sliding-menu-account.bx-sliding-menu-main {
+        left: auto !important;
+        right: 0px !important;
+        width: auto !important;
+    }
+}
+#bx-sliding-menu-account.bx-sliding-menu-main.bx-sliding-menu-fullheight {
+    height: calc(100% - 3.75rem);
+}
+#bx-sliding-menu-account.bx-sliding-menu-main .bx-menu-item-addon.bx-def-unit-alert {
+    position: relative;
+}

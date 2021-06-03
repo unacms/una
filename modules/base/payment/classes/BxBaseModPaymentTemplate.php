@@ -16,7 +16,14 @@ class BxBaseModPaymentTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-	public function displayJsCode($sType, $aParams = array(), $aRequestParams = array())
+    public function addLocationBase()
+    {
+        parent::addLocationBase();
+
+        $this->addLocation('mod_payment', BX_DIRECTORY_PATH_MODULES . 'base' . DIRECTORY_SEPARATOR . 'payment' . DIRECTORY_SEPARATOR, BX_DOL_URL_MODULES . 'base/payment/');
+    }
+
+    public function displayJsCode($sType, $aParams = array(), $aRequestParams = array())
     {
     	$sJsClass = $this->_oConfig->getJsClass($sType);
     	$sJsObject = $this->_oConfig->getJsObject($sType);
