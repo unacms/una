@@ -421,6 +421,12 @@
 	<string name="__Yemen"><![CDATA[Yemen]]></string>
 	<string name="__Zambia"><![CDATA[Zambia]]></string>
 	<string name="__Zimbabwe"><![CDATA[Zimbabwe]]></string>
+        <string name="__AUD"><![CDATA[AUD]]></string>
+        <string name="__CAD"><![CDATA[CAD]]></string>
+        <string name="__EUR"><![CDATA[EUR]]></string>
+        <string name="__GBP"><![CDATA[GBP]]></string>
+        <string name="__USD"><![CDATA[USD]]></string>
+        <string name="__YEN"><![CDATA[YEN]]></string>
 	<string name="_adm_act_err_failed_page_loading"><![CDATA[Cannot load the page]]></string>
 	<string name="_adm_action_cpt_checkout"><![CDATA[Checkout]]></string>
 	<string name="_adm_action_cpt_delete_all"><![CDATA[Delete All]]></string>
@@ -988,6 +994,7 @@
 	<string name="_adm_form_txt_pre_lists_gl_use_for_sets"><![CDATA[Use For Sets]]></string>
 	<string name="_adm_form_txt_pre_lists_gl_values"><![CDATA[Values]]></string>
 	<string name="_adm_form_txt_pre_lists_language"><![CDATA[Language]]></string>
+        <string name="_adm_form_txt_pre_lists_currency"><![CDATA[Currency]]></string>
 	<string name="_adm_form_txt_pre_lists_manage_values"><![CDATA[Manage values]]></string>
 	<string name="_adm_form_txt_pre_lists_n_values"><![CDATA[{0} items]]></string>
 	<string name="_adm_form_txt_pre_lists_no"><![CDATA[No]]></string>
