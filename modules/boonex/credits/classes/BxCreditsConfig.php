@@ -44,14 +44,16 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'FIELD_PRICE' => 'price',
             'FIELD_STATUS' => 'active',
 
+            'FIELD_C_MESSAGE' => 'message',
+
             // page URIs
             'URI_HOME' => 'credits-home',
             'URL_HOME' => 'page.php?i=credits-home',
             'URL_CHECKOUT' => 'page.php?i=credits-checkout',
-            'URL_MANAGE_COMMON' => 'page.php?i=credits-manage',
-            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=credits-administration',
             'URL_ORDERS_COMMON' => 'page.php?i=credits-orders',
             'URL_ORDERS_ADMINISTRATION' => 'page.php?i=credits-orders-administration',
+            'URL_HISTORY_COMMON' => 'page.php?i=credits-history-common',
+            'URL_HISTORY_ADMINISTRATION' => 'page.php?i=credits-history-administration',
 
             // some params
             'PARAM_WITHDRAW' => 'bx_credits_enable_withdraw',

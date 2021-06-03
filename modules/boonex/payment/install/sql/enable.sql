@@ -8,7 +8,7 @@ INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VAL
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
-VALUES (@iTypeId, @sName, '_bx_payment', 1);
+VALUES (@iTypeId, 'bx_payment_general', '_bx_payment_options_category_general', 1);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
@@ -16,6 +16,15 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_payment_site_admin', '', @iCategoryId, '_bx_payment_option_site_admin', 'select', '', '', '', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:22:"get_options_site_admin";}', 1), 
 ('bx_payment_credits_only', '', @iCategoryId, '_bx_payment_option_credits_only', 'checkbox', '', '', '', '', 10),
 ('bx_payment_single_seller', '', @iCategoryId, '_bx_payment_option_single_seller', 'checkbox', '', '', '', '', 11);
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_payment_commissions', '_bx_payment_options_category_commissions', 10);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_payment_inv_issue_day', '1', @iCategoryId, '_bx_payment_option_inv_issue_day', 'digit', '', '', '', '', 1),
+('bx_payment_inv_lifetime', '4', @iCategoryId, '_bx_payment_option_inv_lifetime', 'digit', '', '', '', '', 2),
+('bx_payment_inv_expiraction_notify', '1', @iCategoryId, '_bx_payment_option_inv_expiraction_notify', 'digit', '', '', '', '', 3);
 
 
 -- PAGES & BLOCKS

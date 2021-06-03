@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_courses_data`, `bx_courses_pics`, `bx_courses_pics_resized`, `bx_courses_cmts`, `bx_courses_views_track`, `bx_courses_meta_keywords`, `bx_courses_meta_locations`, `bx_courses_meta_mentions`, `bx_courses_fans`, `bx_courses_admins`, `bx_courses_votes`, `bx_courses_votes_track`, `bx_courses_reports`, `bx_courses_reports_track`, `bx_courses_favorites_track`, `bx_courses_scores`, `bx_courses_scores_track`, `bx_courses_invites`;
+DROP TABLE IF EXISTS `bx_courses_data`, `bx_courses_pics`, `bx_courses_pics_resized`, `bx_courses_cmts`, `bx_courses_views_track`, `bx_courses_meta_keywords`, `bx_courses_meta_locations`, `bx_courses_meta_mentions`, `bx_courses_fans`, `bx_courses_admins`, `bx_courses_votes`, `bx_courses_votes_track`, `bx_courses_reports`, `bx_courses_reports_track`, `bx_courses_favorites_track`, `bx_courses_favorites_lists`, `bx_courses_scores`, `bx_courses_scores_track`, `bx_courses_invites`, `bx_courses_prices`;
 
 -- PROFILES
 
@@ -21,13 +21,13 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_cours
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_courses';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_courses';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_courses';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_course_add', 'bx_course_delete', 'bx_course_edit', 'bx_course_edit_cover', 'bx_course_view', 'bx_course_view_full', 'bx_course_invite');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_course_add', 'bx_course_delete', 'bx_course_edit', 'bx_course_edit_cover', 'bx_course_view', 'bx_course_view_full', 'bx_course_invite', 'bx_courses_price_add', 'bx_courses_price_edit');
 
 -- PRE-VALUES
 
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_courses';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_courses_cats', 'bx_courses_roles');
+DELETE FROM `sys_form_pre_values` WHERE `Key` LIKE 'bx_courses%';
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_courses';

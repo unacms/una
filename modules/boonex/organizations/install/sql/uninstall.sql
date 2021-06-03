@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_cmts`, `bx_organizations_cmts_notes`, `bx_organizations_views_track`, `bx_organizations_votes`, `bx_organizations_votes_track`, `bx_organizations_favorites_track`, `bx_organizations_favorites_lists`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`, `bx_organizations_meta_mentions`, `bx_organizations_fans`, `bx_organizations_admins`, `bx_organizations_scores`, `bx_organizations_scores_track`;
+DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_cmts`, `bx_organizations_cmts_notes`, `bx_organizations_views_track`, `bx_organizations_votes`, `bx_organizations_votes_track`, `bx_organizations_favorites_track`, `bx_organizations_favorites_lists`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`, `bx_organizations_meta_mentions`, `bx_organizations_fans`, `bx_organizations_admins`, `bx_organizations_scores`, `bx_organizations_scores_track`, `bx_organizations_prices`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_organizations';
@@ -17,7 +17,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_organ
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_organizations';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_organizations';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_organizations';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_organization_add', 'bx_organization_delete', 'bx_organization_edit', 'bx_organization_edit_cover', 'bx_organization_view', 'bx_organization_view_full', 'bx_organization_invite');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_organization_add', 'bx_organization_delete', 'bx_organization_edit', 'bx_organization_edit_cover', 'bx_organization_view', 'bx_organization_view_full', 'bx_organization_invite', 'bx_organizations_price_add', 'bx_organizations_price_edit');
 
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_organizations';

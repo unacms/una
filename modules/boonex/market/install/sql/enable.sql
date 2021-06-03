@@ -432,8 +432,8 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_market_allow_view_to', 'bx_market', 'view', '_bx_market_form_entry_input_allow_view_to', '3', 'all', 'bx_market_products', 'id', 'author', '', ''),
 ('bx_market_allow_purchase_to', 'bx_market', 'purchase', '_bx_market_form_entry_input_allow_purchase_to', '3', '', 'bx_market_products', 'id', 'author', '', ''),
 ('bx_market_allow_comment_to', 'bx_market', 'comment', '_bx_market_form_entry_input_allow_comment_to', 'c', '', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php'),
-('bx_market_allow_vote_to', 'bx_market', 'vote', '_bx_market_form_entry_input_allow_vote_to', 'c', '', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php');
-
+('bx_market_allow_vote_to', 'bx_market', 'vote', '_bx_market_form_entry_input_allow_vote_to', 'c', '', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php'),
+('bx_market_allow_view_favorite_list', 'bx_market', 'view_favorite_list', '_bx_market_form_entry_input_allow_view_favorite_list', '3', 'all', 'bx_market_favorites_lists', 'id', 'author_id', '', '');
 
 
 -- ACL

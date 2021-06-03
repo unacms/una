@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_organizations';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` IN('bx_organizations_create_profile', 'bx_organizations_delete_profile', 'bx_organizations_edit_profile', 'bx_organizations_edit_profile_cover', 'bx_organizations_invite', 'bx_organizations_view_profile', 'bx_organizations_view_profile_closed', 'bx_organizations_profile_info', 'bx_organizations_fans', 'bx_organizations_profile_friends', 'bx_organizations_friend_requests', 'bx_organizations_profile_favorites', 'bx_organizations_profile_subscriptions', 'bx_organizations_profile_comments', 'bx_organizations_home', 'bx_organizations_search', 'bx_organizations_manage', 'bx_organizations_joined');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` IN('bx_organizations_create_profile', 'bx_organizations_delete_profile', 'bx_organizations_join_profile', 'bx_organizations_edit_profile', 'bx_organizations_edit_profile_cover', 'bx_organizations_invite', 'bx_organizations_view_profile', 'bx_organizations_view_profile_closed', 'bx_organizations_profile_info', 'bx_organizations_profile_pricing', 'bx_organizations_fans', 'bx_organizations_profile_friends', 'bx_organizations_friend_requests', 'bx_organizations_profile_favorites', 'bx_organizations_profile_subscriptions', 'bx_organizations_profile_comments', 'bx_organizations_home', 'bx_organizations_search', 'bx_organizations_manage', 'bx_organizations_joined');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_organizations';
@@ -58,3 +58,6 @@ DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_organizations';
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` IN ('bx_organizations_cover_crop', 'bx_organizations_picture_crop');
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_organizations_pruning');

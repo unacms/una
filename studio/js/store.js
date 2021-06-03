@@ -270,13 +270,14 @@ BxDolStudioStore.prototype.initScreenshots = function(iCount) {
 	var bBusy = false;
 
 	$(".bx-std-pv-screenshots a[rel=group]").fancybox({
-		transitionIn: 'elastic',
-		transitionOut: 'elastic',
-		speedIn: 600,
-		speedOut: 200
+            type: 'image',
+            transitionIn: 'elastic',
+            transitionOut: 'elastic',
+            speedIn: 600,
+            speedOut: 200
 	});
 	if(iCount <= 2)
-		return;
+            return;
 
 	$(".bx-std-pvs-left").bind('click', function() {
 		if(bBusy || parseInt($(".bx-std-pvs-cnt").css('left')) >= 0)

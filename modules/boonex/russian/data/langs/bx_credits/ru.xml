@@ -51,6 +51,9 @@
     <string name="_bx_credits_form_credit_input_amount"><![CDATA[Количество]]></string>
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Сообщение]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Сообщение]]></string>
+    <string name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string>
+    <string name="_bx_credits_form_credit_input_message_inf_wr"><![CDATA[Платежные инструкции и другие примечания]]></string>
+    <string name="_bx_credits_form_credit_input_message_inf_wc"><![CDATA[Подтверждение оплаты и другие примечания]]></string>
     <string name="_bx_credits_form_credit_input_profile"><![CDATA[Профиль]]></string>
     <string name="_bx_credits_form_credit_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_credits_form_credit_input_do_submit"><![CDATA[Выполнить]]></string>
@@ -184,8 +187,9 @@
     <string name="_bx_credits_et_txt_subject_withdraw_requested"><![CDATA[Запрос на снятие.]]></string>
     <string name="_bx_credits_et_txt_body_withdraw_requested"><![CDATA[{email_header}
 <p><a href="{profile_link}">{profile_name}</a> запросил снятие <b>{amount}</b> кредитов с его/её баланса.</p>
-<p>{message}</p>
 <p>Текущий коэффициент вывода: <b>{rate}</b></p>
+<p>Подтвердить вывод можно перейдя по <a href="{confirm_url}">ссылке</a>.</p>
+<p>Примечания от <b>{profile_name}</b>:<br />{message}</p>
 {email_footer}]]></string>
     <string name="_bx_credits_et_txt_name_withdraw_sent"><![CDATA[Снятие было выполнено.]]></string>
     <string name="_bx_credits_et_txt_subject_withdraw_sent"><![CDATA[Снятие было выполнено.]]></string>

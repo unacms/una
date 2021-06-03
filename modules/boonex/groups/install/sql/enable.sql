@@ -635,7 +635,7 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_groups_allow_view_to', 'bx_groups', 'view', '_bx_groups_form_profile_input_allow_view_to', '3', 'bx_events,bx_spaces', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php'),
 ('bx_groups_allow_view_notification_to', 'bx_groups', 'view_event', '_bx_groups_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxGroupsPrivacyNotifications', 'modules/boonex/groups/classes/BxGroupsPrivacyNotifications.php'),
 ('bx_groups_allow_post_to', 'bx_groups', 'post', '_bx_groups_form_profile_input_allow_post_to', 'p', '', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacyPost', 'modules/boonex/groups/classes/BxGroupsPrivacyPost.php'),
-('bx_groups_allow_view_favorite_list', 'bx_groups', 'view_favorite_list', '_bx_groups_form_entry_input_allow_view_favorite_list', '3', '', 'bx_groups_favorites_lists', 'id', 'author_id', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php');
+('bx_groups_allow_view_favorite_list', 'bx_groups', 'view_favorite_list', '_bx_groups_form_profile_input_allow_view_favorite_list', '3', '', 'bx_groups_favorites_lists', 'id', 'author_id', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php');
 -- EMAIL TEMPLATES
 
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES

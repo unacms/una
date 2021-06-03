@@ -34,6 +34,13 @@ class BxDolMenuQuery extends BxDolDb
         return $aObject;
     }
 
+    static public function getMenuObjects($bActive = true, $bFromCache = true)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sSql = $oDb->prepare("SELECT `sys_objects_menu`.`title`, `object`, `module`, `uri` FROM `sys_objects_menu` INNER JOIN `sys_modules` ON (`sys_modules`.`name` = `sys_objects_menu`.`module`) WHERE `active` = ? ORDER BY FIELD(`module`, 'system') DESC, `module` ASC, `object` ASC", $bActive ? 1 : 0);
+        return $bFromCache ? $oDb->fromMemory('sys_menus', 'getAll', $sSql) : $oDb->getAll($sSql);
+    }
+
     static public function getMenuTriggers($sTriggerName)
     {
         $oDb = BxDolDb::getInstance();

@@ -12,6 +12,7 @@
 
 class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
 {
+    protected $_iNow;
     protected $_sManageType;
 
     public function __construct ($aOptions, $oTemplate = false)
@@ -20,6 +21,7 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
 
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_iNow = time();
         $this->_sOrdersType = BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION;
         $this->_sManageType = 'administration';
     }
@@ -75,7 +77,7 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
     
     protected function _getCellDateNext($mixedValue, $sKey, $aField, $aRow)
     {
-        if(empty($mixedValue))
+        if(empty($mixedValue) || (is_numeric($mixedValue) && (int)$mixedValue < $this->_iNow))
             return parent::_getCellDefault(_t('_uknown'), $sKey, $aField, $aRow);
 
         return $this->_getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow);

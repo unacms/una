@@ -49,6 +49,10 @@ class BxDolFavorite extends BxDolObject
 {
     protected $_sBaseUrl;
 
+    protected $_sFormObject;
+    protected $_sFormDisplayAdd;
+    protected $_sFormDisplayListEdit;
+
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);

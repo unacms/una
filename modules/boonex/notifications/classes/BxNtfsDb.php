@@ -35,7 +35,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     {
         $this->queueDeleteByProfile($iUserId, $iEventId);
 
-        return (int)$this->query("REPLACE `" . $this->_sTableEvt2Usr . "` SET `user_id`=:user_id, `event_id`=:event_id", array(
+        return (int)$this->query("INSERT INTO `" . $this->_sTableEvt2Usr . "` (`user_id`, `event_id`) VALUES (:user_id, :event_id) ON DUPLICATE KEY UPDATE `event_id`=:event_id", array(
             'user_id' => $iUserId,
             'event_id' => $iEventId
         )) > 0;
@@ -334,7 +334,6 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     public function cleanEvents($iClearIntervalInDays)
     {
         $this->query("DELETE FROM `{$this->_sTable}` WHERE `date` < :date", array('date' => time() - $iClearIntervalInDays * 86400));
-        $this->query("DELETE FROM `{$this->_sTableEvt2Usr}` WHERE `event_id` NOT IN (SELECT `id` FROM `{$this->_sTable}`)");
     }   
 }
 

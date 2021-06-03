@@ -421,6 +421,12 @@
 	<string name="__Yemen"><![CDATA[Йемен]]></string>
 	<string name="__Zambia"><![CDATA[Замбия]]></string>
 	<string name="__Zimbabwe"><![CDATA[Зимбабве]]></string>
+        <string name="__AUD"><![CDATA[AUD]]></string>
+        <string name="__CAD"><![CDATA[CAD]]></string>
+        <string name="__EUR"><![CDATA[EUR]]></string>
+        <string name="__GBP"><![CDATA[GBP]]></string>
+        <string name="__USD"><![CDATA[USD]]></string>
+        <string name="__YEN"><![CDATA[YEN]]></string>
 	<string name="_adm_act_err_failed_page_loading"><![CDATA[Невозможно загрузить страницу]]></string>
 	<string name="_adm_action_cpt_checkout"><![CDATA[Оплата]]></string>
 	<string name="_adm_action_cpt_delete_all"><![CDATA[Удалить всё]]></string>
@@ -914,6 +920,7 @@
 	<string name="_adm_form_txt_field_type_submit"><![CDATA[отправка]]></string>
 	<string name="_adm_form_txt_field_type_switcher"><![CDATA[переключатель]]></string>
 	<string name="_adm_form_txt_field_type_text"><![CDATA[текст]]></string>
+        <string name="_adm_form_txt_field_type_text_range"><![CDATA[текст (диапазон)]]></string>
 	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[авто текст]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[текстовое поле]]></string>
         <string name="_adm_form_txt_field_type_time"><![CDATA[время]]></string>
@@ -973,6 +980,7 @@
 	<string name="_adm_form_txt_pre_lists_gl_use_for_sets"><![CDATA[Использовать для наборов]]></string>
 	<string name="_adm_form_txt_pre_lists_gl_values"><![CDATA[Значения]]></string>
 	<string name="_adm_form_txt_pre_lists_language"><![CDATA[Язык]]></string>
+        <string name="_adm_form_txt_pre_lists_currency"><![CDATA[Валюта]]></string>
 	<string name="_adm_form_txt_pre_lists_manage_values"><![CDATA[Управление значениями]]></string>
 	<string name="_adm_form_txt_pre_lists_n_values"><![CDATA[{0} элементов]]></string>
 	<string name="_adm_form_txt_pre_lists_no"><![CDATA[Нет]]></string>
@@ -1818,6 +1826,7 @@
 	<string name="_sys_acc_confirmation_type_email"><![CDATA[email подтвержден]]></string>
 	<string name="_sys_acc_confirmation_type_phone"><![CDATA[телефон подтвержден]]></string>
 	<string name="_sys_acc_confirmation_type_email_and_phone"><![CDATA[email и телефон подтвержден]]></string>
+  <string name="_sys_acc_confirmation_type_email_or_phone"><![CDATA[email или телефон подтвержден]]></string>
 	<string name="_sys_acl_action_account"><![CDATA[Вы не создали ни одного профиля, поэтому Вы не можете '{1}'.]]></string>
 	<string name="_sys_acl_action_chart_view"><![CDATA[Диаграммы - Просматривать]]></string>
     <string name="_sys_acl_action_chart_view_desc"><![CDATA[Просматривать статистические диаграммы]]></string>

@@ -36,13 +36,15 @@ class BxDolFavoriteQuery extends BxDolObjectQuery
         if(!empty($iPerPage))
             $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
 
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC" . $sLimitClause, $iObjectId);
+        $sQuery = $this->prepare("SELECT DISTINCT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC" . $sLimitClause, $iObjectId);
         return $this->getAll($sQuery);
     }
 
-	public function getFavorite($iObjectId)
+    public function getFavorite($iObjectId)
     {
-        return array('count' => $this->getObjectCount($iObjectId));
+        return $this->getRow("SELECT COUNT(DISTINCT `author_id`) AS `count` FROM `{$this->_sTableTrack}` WHERE `object_id`=:object_id LIMIT 1", array(
+            'object_id' => $iObjectId
+        ));
     }
 
     public function clearFavorite($iObjectId, $iAuthorId)

@@ -1,11 +1,16 @@
 <script>
     function bx_mobile_apps_show_main_menu () {
-        if ($('.cd-dropdown-trigger').size())
-            $('.cd-dropdown-trigger').click();
-        else if ($('.cd-side-nav').size())
-            $([$('.cd-side-nav'), $('.cd-nav-trigger')]).toggleClass('nav-is-visible');
-        else
-            bx_menu_slide_inline('#bx-sliding-menu-sys_site', null, 'site');
+        if ('__main_menu__' == 'default') {
+            if ($('.cd-dropdown-trigger').size())
+                $('.cd-dropdown-trigger').click();
+            else if ($('.cd-side-nav').size())
+                $([$('.cd-side-nav'), $('.cd-nav-trigger')]).toggleClass('nav-is-visible');
+            else
+                bx_menu_slide_inline('#bx-sliding-menu-sys_site', null, 'site');
+        }
+        else {
+            bx_menu_popup('__main_menu__');
+        }
     }
 
     function bx_mobile_apps_show_profile_menu () {

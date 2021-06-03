@@ -156,6 +156,11 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getCommentsCountAll ($iId)
     {
+        $iCount = false;
+		bx_alert('comment', 'get_comments_count', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'object_id' => $iId, 'result' => &$iCount));
+		if ($iCount !== false)
+			return $iCount;
+        
         if ($this->_sTriggerFieldComments) {
             $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldComments}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ?", $iId);
             return (int)$this->getOne($sQuery);
@@ -312,9 +317,11 @@ class BxDolCmtsQuery extends BxDolDb
                 `{$this->_sTableIds}`.`id` AS `cmt_unique_id`
                 $sFields
             FROM `{$this->_sTable}`
-            LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id)
-            $sJoin
-            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sWhereFilter . $sOrder . $sLimit;
+            LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id) ";
+           
+        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'select_clause' => &$sQuery, 'join_clause' => &$sJoin, 'where_clause' => &$sWhereParent, 'order_clause' => &$sOrder, 'limit_clause' => &$sLimit)); 
+        $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sOrder . $sLimit;
+        
         return $this->getAll($sQuery, $aBindings);
     }
 

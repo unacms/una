@@ -21,12 +21,22 @@ class BxCoursesMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         parent::__construct($aObject, $oTemplate);
     }
 
+    protected function _getMenuItemJoinCourseProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
     protected function _getMenuItemEditCourseCover($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
     protected function _getMenuItemEditCourseProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+
+    protected function _getMenuItemEditCoursePricing($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }

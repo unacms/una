@@ -12,7 +12,7 @@ bx_import('BxDolForm');
 class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 {
     public static $SEARCHABLE_TYPES = array(
-        'text', 'textarea', 'number', 
+        'text', 'textarea', 'number', 'slider',
         'select', 'radio_set',
         'checkbox_set', 'select_multiple',
         'checkbox', 'switcher',
@@ -24,6 +24,7 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'text' => array('text', 'text_range'),
         'textarea' => array('text'),
         'number' => array('text'),
+        'slider' => array('text_range', 'text'),
         'text_auto' => array('text_auto'),
         'select' => array('checkbox_set', 'select_multiple', 'select'),
         'radio_set' => array('checkbox_set', 'select_multiple', 'select'),
@@ -40,6 +41,7 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'text' => array('like', '=', 'between'),
         'textarea' => array('like', '='),
         'number' => array('='),
+        'slider' => array('between', '='),
         'text_auto' => array('in'),
         'select' => array('in'),
         'radio_set' => array('in'),

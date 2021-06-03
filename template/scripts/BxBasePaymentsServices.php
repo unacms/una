@@ -12,9 +12,46 @@
  */
 class BxBasePaymentsServices extends BxDol
 {
+    protected $_sPrelistsCurrency;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->_sPrelistsCurrency = 'Currency';
+    }
+
+    public function serviceGetOptionsCurrencyCodeDefault()
+    {
+        $aCurrencies = BxDolForm::getDataItems($this->_sPrelistsCurrency);
+
+        $aResult = array();
+        foreach($aCurrencies as $sKey => $sValue)
+            $aResult[] = array(
+                'key' => $sKey,
+                'value' => $sValue
+            );
+
+        return $aResult;
+    }
+
+    public function serviceGetOptionsCurrencySignDefault()
+    {
+        $aCurrencies = BxDolForm::getDataItems($this->_sPrelistsCurrency, false, BX_DATA_VALUES_ALL);
+
+        $aResult = array();
+        foreach($aCurrencies as $aCurrency) {
+            $aData = array();
+            if(empty($aCurrency['Data']) || !($aData = unserialize($aCurrency['Data'])))
+                continue;
+
+            $aResult[] = array(
+                'key' => htmlspecialchars($aData['sign'], ENT_XHTML),
+                'value' => $aData['sign']
+            );
+        }
+
+        return $aResult;
     }
 
     public function serviceGetPayments()

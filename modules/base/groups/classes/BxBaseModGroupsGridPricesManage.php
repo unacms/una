@@ -38,10 +38,15 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
         if(empty($sResult))
             return $sResult;
 
-        $sJsCode = $this->_oModule->_oTemplate->getJsCode('prices', array(
-            'sObjNameGrid' => $this->_sObject, 
-            'aHtmlIds' => $this->_oModule->_oConfig->getHtmlIds()
-        ));
+        $sJsCode = '';
+        if($isDisplayHeader) {
+            $this->_oModule->_oTemplate->addJs(array('prices.js'));
+
+            $sJsCode = $this->_oModule->_oTemplate->getJsCode('prices', array(
+                'sObjNameGrid' => $this->_sObject, 
+                'aHtmlIds' => $this->_oModule->_oConfig->getHtmlIds()
+            ));
+        }
 
         return $sJsCode . $sResult;
     }

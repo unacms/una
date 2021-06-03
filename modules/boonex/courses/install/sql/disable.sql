@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_courses';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_courses' OR `object` IN('bx_courses_create_profile', 'bx_courses_delete_profile', 'bx_courses_edit_profile', 'bx_courses_edit_profile_cover', 'bx_courses_invite', 'bx_courses_view_profile', 'bx_courses_view_profile_closed', 'bx_courses_profile_info', 'bx_courses_profile_comments', 'bx_courses_home', 'bx_courses_fans', 'bx_courses_joined', 'bx_courses_top', 'bx_courses_search', 'bx_courses_manage', 'bx_courses_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_courses' OR `object` IN('bx_courses_create_profile', 'bx_courses_delete_profile', 'bx_courses_join_profile', 'bx_courses_edit_profile', 'bx_courses_edit_profile_cover', 'bx_courses_invite', 'bx_courses_view_profile', 'bx_courses_view_profile_closed', 'bx_courses_profile_info', 'bx_courses_profile_pricing', 'bx_courses_profile_comments', 'bx_courses_home', 'bx_courses_fans', 'bx_courses_joined', 'bx_courses_favorites', 'bx_courses_top', 'bx_courses_search', 'bx_courses_manage', 'bx_courses_administration');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_courses';
@@ -38,9 +38,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_courses%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_courses%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_courses_administration', 'bx_courses_moderation', 'bx_courses_common', 'bx_courses_fans', 'bx_courses_invites', 'bx_courses_prices_manage', 'bx_courses_prices_view');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_courses' LIMIT 1);
@@ -48,10 +48,13 @@ DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_courses_allow_view_to', 'bx_courses_allow_view_notification_to', 'bx_courses_allow_post_to');
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_courses_allow_view_to', 'bx_courses_allow_view_notification_to', 'bx_courses_allow_post_to', 'bx_courses_allow_view_favorite_list');
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_courses';
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` IN ('bx_courses_cover_crop', 'bx_courses_picture_crop');
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_courses_pruning');

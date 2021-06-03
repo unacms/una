@@ -104,6 +104,7 @@ BxMarketEntry.prototype.initScreenshots = function() {
 	var bBusy = false;
 
 	oItems.find('a[rel=group]').fancybox({
+            type: 'image',
             transitionIn: 'elastic',
             transitionOut: 'elastic',
             speedIn: 600,

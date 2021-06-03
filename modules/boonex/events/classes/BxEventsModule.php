@@ -338,7 +338,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             'title' => $a['content']['title'],
             'title_attr' => bx_html_attribute($a['content']['title']),
             'url' => $a['content']['url'],
-            'date' => $oDateStart->format(getParam('bx_events_short_date_format')) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . $oDateEnd->format(getParam('bx_events_short_date_format'))),
+            'date' => strftime(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . strftime(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp())),
             'date_c' => $oDateStart->format('c'),
             'bx_if:location' => array(
                 'condition' => !!$sLocationString,

@@ -133,6 +133,24 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         return $this->_bSingleSeller;
     }
 
+    public function getInvoiceIssueDay()
+    {
+        $sKey = 'PARAM_CMSN_INVOICE_ISSUE_DAY';
+        return is_numeric($this->CNF[$sKey]) ? $this->CNF[$sKey] : $this->_oDb->getParam($this->CNF[$sKey]);
+    }
+
+    public function getInvoiceLifetime()
+    {
+        $sKey = 'PARAM_CMSN_INVOICE_LIFETIME';
+        return is_numeric($this->CNF[$sKey]) ? $this->CNF[$sKey] : $this->_oDb->getParam($this->CNF[$sKey]);
+    }
+
+    public function getInvoiceExpirationNotify()
+    {
+        $sKey = 'PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY';
+        return is_numeric($this->CNF[$sKey]) ? $this->CNF[$sKey] : $this->_oDb->getParam($this->CNF[$sKey]);
+    }
+
     public function getKey($sType)
     {
     	$sResult = '';

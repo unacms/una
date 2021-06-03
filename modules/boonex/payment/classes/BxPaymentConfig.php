@@ -51,6 +51,11 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
             'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
 
+            // some params
+            'PARAM_CMSN_INVOICE_ISSUE_DAY' => 'bx_payment_inv_issue_day', //some day of month
+            'PARAM_CMSN_INVOICE_LIFETIME' => 'bx_payment_inv_lifetime', //in days
+            'PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY' => 'bx_payment_inv_expiraction_notify', //in days, before expiration date
+
             // objects
             'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_payment_currencies',
             'OBJECT_PP_OFFLINE' => 'offline', //Offline payment provider
