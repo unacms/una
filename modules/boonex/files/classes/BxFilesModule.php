@@ -491,7 +491,7 @@ class BxFilesModule extends BxBaseModTextModule
             exit;
         }
 
-        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || $iContext && !$this->serviceIsAllowedAddContentToProfile($iContext)) {
             echoJson(['message' => _t('_Access denied')]);
             exit;
         }
@@ -500,7 +500,8 @@ class BxFilesModule extends BxBaseModTextModule
             $iAuthor = bx_get_logged_profile_id();
             // in case it is posted to context make the context profile as an author of an entry
             // to leave folder in case creator is removed
-            $this->_oDb->createFolder($iFolder, $iAuthor == $iContext ? $iAuthor : $iContext, $iAuthor == $iContext ? BX_DOL_PG_ALL : -$iContext, $sName);
+            // and to delete folder when context profile is being deleted
+            $this->_oDb->createFolder($iFolder, $iContext ? $iContext : $iAuthor, !$iContext || $iAuthor == $iContext ? BX_DOL_PG_ALL : -$iContext, $sName);
         }
 
         echoJson([]);
