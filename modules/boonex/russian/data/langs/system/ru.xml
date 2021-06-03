@@ -429,6 +429,12 @@
 	<string name="__Yemen"><![CDATA[Йемен]]></string>
 	<string name="__Zambia"><![CDATA[Замбия]]></string>
 	<string name="__Zimbabwe"><![CDATA[Зимбабве]]></string>
+        <string name="__AUD"><![CDATA[AUD]]></string>
+        <string name="__CAD"><![CDATA[CAD]]></string>
+        <string name="__EUR"><![CDATA[EUR]]></string>
+        <string name="__GBP"><![CDATA[GBP]]></string>
+        <string name="__USD"><![CDATA[USD]]></string>
+        <string name="__YEN"><![CDATA[YEN]]></string>
 	<string name="_adm_act_err_failed_page_loading"><![CDATA[Невозможно загрузить страницу]]></string>
 	<string name="_adm_action_cpt_checkout"><![CDATA[Оплата]]></string>
 	<string name="_adm_action_cpt_delete_all"><![CDATA[Удалить всё]]></string>
@@ -1000,6 +1006,7 @@
 	<string name="_adm_form_txt_pre_lists_gl_use_for_sets"><![CDATA[Использовать для наборов]]></string>
 	<string name="_adm_form_txt_pre_lists_gl_values"><![CDATA[Значения]]></string>
 	<string name="_adm_form_txt_pre_lists_language"><![CDATA[Язык]]></string>
+        <string name="_adm_form_txt_pre_lists_currency"><![CDATA[Валюта]]></string>
 	<string name="_adm_form_txt_pre_lists_manage_values"><![CDATA[Управление значениями]]></string>
 	<string name="_adm_form_txt_pre_lists_n_values"><![CDATA[{0} элементов]]></string>
 	<string name="_adm_form_txt_pre_lists_no"><![CDATA[Нет]]></string>

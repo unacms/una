@@ -427,15 +427,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_oauth_key', '_adm_stg_cpt_option_sys_oauth_key', '', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_oauth_secret', '_adm_stg_cpt_option_sys_oauth_secret', '', 'digit', '', '', '', 21),
 
-(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'Avail', '_adm_stg_err_option_currency_code', 30),
-(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'Avail', '_adm_stg_err_option_currency_sign', 31),
+(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:33:"get_options_currency_code_default";s:5:"class";s:21:"TemplPaymentsServices";}', 'Avail', '_adm_stg_err_option_currency_code', 30),
+(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:33:"get_options_currency_sign_default";s:5:"class";s:21:"TemplPaymentsServices";}', 'Avail', '_adm_stg_err_option_currency_sign', 31),
+(@iCategoryId, 'sys_default_payment', '_adm_stg_cpt_option_sys_default_payment', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:12:"get_payments";s:5:"class";s:21:"TemplPaymentsServices";}', '', '', 35),
 
 (@iCategoryId, 'client_image_resize_width', '_adm_stg_cpt_option_client_image_resize_width', '0', 'digit', '', '', '', 42),
 (@iCategoryId, 'client_image_resize_height', '_adm_stg_cpt_option_client_image_resize_height', '0', 'digit', '', '', '', 43),
 
 (@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 45),
-
-(@iCategoryId, 'sys_default_payment', '_adm_stg_cpt_option_sys_default_payment', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:12:"get_payments";s:5:"class";s:21:"TemplPaymentsServices";}', '', '', 60),
 
 (@iCategoryId, 'sys_embed_default', '_adm_stg_cpt_option_sys_embed_default', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_embed_default";s:5:"class";s:13:"TemplServices";}', '', '', 79),
 (@iCategoryId, 'sys_embedly_api_key', '_adm_stg_cpt_option_sys_embedly_api_key', '', 'digit', '', '', '', 80),
@@ -3635,6 +3634,7 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `exte
 ('Country', '_adm_form_txt_pre_lists_country', 'system', '0', '1'),
 ('Sex', '_adm_form_txt_pre_lists_sex', 'system', '1', '1'),
 ('Language', '_adm_form_txt_pre_lists_language', 'system', '0', '1'),
+('Currency', '_adm_form_txt_pre_lists_currency', 'system', '0', '1'),
 ('sys_report_types', '_sys_pre_lists_report_types', 'system', '0', '0'),
 ('sys_vote_reactions', '_sys_pre_lists_vote_reactions', 'system', '0', '0'),
 ('sys_relations', '_sys_pre_lists_relations', 'system', '0', '1'),
@@ -3961,6 +3961,14 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('Language', '51', 51, '__Urdu', ''),
 ('Language', '52', 52, '__Vietnamese', ''),
 ('Language', '53', 53, '__Visayan', '');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
+('Currency', 'AUD', 1, '__AUD', '', 'a:1:{s:4:"sign";s:6:"A&#36;";}'),
+('Currency', 'CAD', 2, '__CAD', '', 'a:1:{s:4:"sign";s:6:"C&#36;";}'),
+('Currency', 'EUR', 3, '__EUR', '', 'a:1:{s:4:"sign";s:6:"&#128;";}'),
+('Currency', 'GBP', 4, '__GBP', '', 'a:1:{s:4:"sign";s:6:"&#163;";}'),
+('Currency', 'USD', 5, '__USD', '', 'a:1:{s:4:"sign";s:5:"&#36;";}'),
+('Currency', 'YEN', 6, '__YEN', '', 'a:1:{s:4:"sign";s:6:"&#165;";}');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('sys_report_types', 'spam', 1, '_sys_pre_lists_report_types_spam', ''),
