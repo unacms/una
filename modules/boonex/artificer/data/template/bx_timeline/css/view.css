@@ -1,0 +1,66 @@
+/*--
+@import url(../../../../../timeline/template/css/view.css);
+--*/
+
+/*--- Item Style: Timeline ---*/
+div.bx-tl-view-timeline div.bx-tl-items,
+div.bx-tl-view-search div.bx-tl-items,
+div.bx-tl-view-item div.bx-tl-items {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+div.bx-tl-view-timeline div.bx-tl-items:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0.875rem;
+    width: 4px;
+    height: 100%;
+
+    background: #dddddd;
+}
+
+div.bx-tl-view-timeline div.bx-tl-item-type {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+div.bx-tl-view-timeline div.bx-tl-item-circle {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    background-color: #dddddd;
+    background-clip: padding-box;
+    border-radius: 2rem;
+
+    text-align: center;
+    color: #999999;
+
+    overflow: hidden;
+}
+div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
+    font-size: 1.0rem;
+}
+
+/*--- Item Meta Info Style ---*/
+.bx-tl-item-meta ul.bx-menu-custom li:first-child .bx-tl-item-meta-div {
+    display: none;
+}
+
+/*--- Item Activity (Actions and Manage are different menus) ---*/
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
+    flex-wrap: wrap;
+}
+
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor .sys-action {
+    height: 1.5rem;
+}
