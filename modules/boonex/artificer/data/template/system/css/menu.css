@@ -17,6 +17,7 @@ import url(../../../../../../../template/css/menu.css);
     text-decoration:none;
 }
 
+
 /*--- Top Menu ---*/
 .bx-sliding-smenu-main .bx-arr-menu-floating-blocks {
     flex-wrap: nowrap;
@@ -35,4 +36,9 @@ import url(../../../../../../../template/css/menu.css);
 }
 #bx-sliding-menu-account.bx-sliding-menu-main .bx-menu-item-addon.bx-def-unit-alert {
     position: relative;
+}
+
+/*--- Add Popup ---*/
+div.bx-sliding-menu-main.sys-add-content ul {
+    flex-direction: column;
 }

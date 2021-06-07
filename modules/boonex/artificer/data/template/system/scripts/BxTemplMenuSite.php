@@ -39,7 +39,12 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         }
 
         $this->_oModule->_oTemplate->addJs(array('menu_site.js'));
-        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav" style="' . $sStyle . '"><div class="bx-sliding-menu-main-cnt">' . parent::getCode() . '</div></div>';
+        return $this->_oModule->_oTemplate->parseHtmlByName('menu_main_sliding.html', array(
+            'id' => 'bx-sliding-menu-' . $this->_sObject,
+            'class' => $sClass . ' ' . str_replace('_', '-', $this->_sObject),
+            'style' => $sStyle,
+            'content' => parent::getCode()
+        ));
     }
 }
 

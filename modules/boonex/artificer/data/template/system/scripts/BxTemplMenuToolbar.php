@@ -12,11 +12,17 @@
  */
 class BxTemplMenuToolbar extends BxBaseMenuToolbar
 {
-    protected $_bSiteToolbar;
+    protected $_aHideFromSiteToolbar;
+    protected $_aHideFromMemberToolbar;
+
+    protected $_bSiteToolbar;    
 
     public function __construct ($aObject, $oTemplate = false)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_aHideFromSiteToolbar = array('search');
+        $this->_aHideFromMemberToolbar = array();
 
         $this->_bSiteToolbar = $this->_sObject == 'sys_toolbar_site';
     }
@@ -24,11 +30,11 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
     protected function _getMenuItem ($a)
     {
     	//--- Hide '[Search]' from Site Toolbar
-        if($this->_bSiteToolbar && in_array($a['name'], array('search')))
+        if($this->_bSiteToolbar && in_array($a['name'], $this->_aHideFromSiteToolbar))
             return false;
 
         //--- Hide '[+ Add]' from Member Toolbar
-        if(!$this->_bSiteToolbar && in_array($a['name'], array('add-content')))
+        if(!$this->_bSiteToolbar && in_array($a['name'], $this->_aHideFromMemberToolbar))
             return false;
 
         $a = parent::_getMenuItem ($a);
