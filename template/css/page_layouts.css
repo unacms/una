@@ -29,6 +29,17 @@
     width:33.4%;
 }
 
+/* layout 3 columns (1:3:2) */
+.bx-layout-col1-col3-col2-column1 {
+    width:20.0%;
+}
+.bx-layout-col1-col3-col2-column2 {
+    width:50.0%;
+}
+.bx-layout-col1-col3-col2-column3 {
+    width:30.0%;
+}
+
 
 /* layout bar content bar */
 .bx-layout-bcb-bar1,
