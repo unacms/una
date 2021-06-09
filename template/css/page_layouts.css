@@ -29,6 +29,7 @@
     width:33.4%;
 }
 
+
 /* layout 3 columns (1:3:2) */
 .bx-layout-col1-col3-col2-column1 {
     width:20.0%;
@@ -38,6 +39,15 @@
 }
 .bx-layout-col1-col3-col2-column3 {
     width:30.0%;
+}
+
+
+/* layout 2 columns (1:5) */
+.bx-layout-col1-col5-column1 {
+    width:20.0%;
+}
+.bx-layout-col1-col5-column2 {
+    width:80.0%;
 }
 
 
