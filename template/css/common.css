@@ -171,9 +171,9 @@ div.mce-fullscreen {
 }
 
 .bx-db-menu {
-    -webkit-flex: 0 2 auto;
-    -ms-flex: 0 2 auto;
-    flex: 0 2 auto;
+    -webkit-flex: 1 2 auto;
+    -ms-flex: 1 2 auto;
+    flex: 1 2 auto;
 
     max-width: 80%;
 }
@@ -183,7 +183,8 @@ div.mce-fullscreen {
 }
 
 .bx-db-menu-tab {
-    margin-left:5px;
+    margin-left: 5px;
+    text-align: right;
 }
 
 .bx-db-menu-tab-active {
@@ -194,8 +195,17 @@ div.mce-fullscreen {
     text-decoration:none;
 }
 
+.bx-db-menu-tab-btn a.bx-btn {
+    display: inline-block;
+    float: none;
+}
+
 .bx-db-menu .sys-icon-a {
     vertical-align:middle;
+}
+
+.bx-db-menu-popup {
+    text-align: left;
 }
 
 /*--- Design Boxes Menu ---*/
@@ -246,8 +256,9 @@ div.mce-fullscreen {
     line-height: normal;
 }
 .bx-db-menu ul li:not(.bx-menu-item-more-auto) a span,
-.bx-db-menu .bx-popup ul.bx-menu-custom.bx-menu-submenu-more-auto li:not(.bx-menu-item-more-auto) a span,
-.bx-popup .bx-db-menu-popup ul.bx-menu-ver li a > div > span {
+.bx-db-menu .bx-menu-item-more-popup ul.bx-menu-custom.bx-menu-submenu-more-auto li:not(.bx-menu-item-more-auto) a span,
+.bx-db-menu .bx-popup .bx-db-menu-popup ul.bx-menu-custom.bx-menu-custom-ver li a > span,
+.bx-db-menu .bx-popup .bx-db-menu-popup ul.bx-menu-ver li a > div > span {
     margin: 0;
 }
 .bx-db-menu ul.bx-menu-hor li.bx-menu-tab-active,
