@@ -65,6 +65,11 @@ class BxDolSessionQuery extends BxDolDb
             $this->query("OPTIMIZE TABLE `" . $this->sTable . "`");
         return $iRet;
     }
+    function getOldSession($iUserId) {
+        $sSql = $this->prepare("SELECT `id` FROM `" . $this->sTable . "` WHERE `user_id`=? LIMIT 1", $iUserId);
+        $sSession = $this->getOne($sSql);
+        return !empty($sSession) ? $sSession : false;
+    }
 }
 
 /** @} */
