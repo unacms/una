@@ -2366,13 +2366,45 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== COMMON METHODS
+    public function onPublished($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return;
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->getName(), 'added', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+    }
+
+    public function onFailed($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return;
+
+        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+    }
+
     public function alertAfterAdd($aContentInfo) {}
     
     public function alertAfterEdit($aContentInfo) {}
 
-    public function onPublished($iContentId) {}
+    /**
+     * Get array of params to be passed in Add/Edit Alert.
+     */
+    protected function _alertParams($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
 
-    public function onFailed($iContentId) {}
+        return array(
+            'object_author_id' => (int)$aContentInfo[$CNF['FIELD_AUTHOR']]
+        );
+    }
 
     public function processMetasAdd($iContentId)
     {

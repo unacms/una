@@ -40,6 +40,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
+            'FIELD_PUBLISHED' => 'published',
             'FIELD_NAME' => 'event_name',
             'FIELD_TITLE' => 'event_name',
             'FIELD_TEXT' => 'event_desc',
@@ -54,6 +55,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
+            'FIELD_STATUS' => 'status',
             'FIELDS_QUICK_SEARCH' => array('event_name'),
             'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
@@ -183,6 +185,12 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                     'map' => array (
                         BX_PROFILE_STATUS_PENDING => '_bx_events_txt_account_pending',
                         BX_PROFILE_STATUS_SUSPENDED => '_bx_events_txt_account_suspended',
+                    ),
+                ),
+                'scheduled' => array (
+                    'name' => 'bx-events-scheduled',
+                    'map' => array (
+                        'awaiting' => array('msg' => '_bx_events_txt_scheduled_awaiting', 'type' => BX_INFORMER_ALERT),
                     ),
                 ),
             ),

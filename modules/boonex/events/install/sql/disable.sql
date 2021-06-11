@@ -57,4 +57,4 @@ DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_events';
 DELETE FROM `sys_objects_uploader` WHERE `object` IN ('bx_events_cover_crop', 'bx_events_picture_crop');
 
 -- CRON
-DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_events_process_reminders', 'bx_events_pruning');
+DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_events_process_reminders', 'bx_events_pruning', 'bx_events_publishing');

@@ -460,35 +460,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     // ====== COMMON METHODS
-    public function onPublished($iContentId)
-    {
-        parent::onPublished($iContentId);
-
-        $CNF = &$this->_oConfig->CNF;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if(!$aContentInfo)
-            return;
-
-        $aParams = $this->_alertParams($aContentInfo);
-        bx_alert($this->getName(), 'added', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
-    }
-
-    public function onFailed($iContentId)
-    {
-        parent::onFailed($iContentId);
-
-        $CNF = &$this->_oConfig->CNF;
-        
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if(!$aContentInfo)
-            return;
-
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-
-        bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
-    }
-
     public function alertAfterAdd($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -520,19 +491,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
      */
     protected function _alertParams($aContentInfo)
     {
+        $aParams = parent::_alertParams($aContentInfo);
+
         $CNF = &$this->_oConfig->CNF;
 
-        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
-        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
-
-        $aParams = array(
-            'object_author_id' => $iAuthorId
-        );
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
         if(!empty($CNF['OBJECT_METATAGS']))
             $aParams['timeline_group'] = array(
-                'by' => $this->getName() . '_' . $iAuthorId . '_' . $iId,
+                'by' => $this->getName() . '_' . (int)$aContentInfo[$CNF['FIELD_AUTHOR']] . '_' . (int)$aContentInfo[$CNF['FIELD_ID']],
                 'field' => 'owner_id'
             );
 

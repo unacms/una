@@ -18,7 +18,34 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
     {
         parent::__construct($aObject, $oTemplate);
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $this->_sCoverClass = 'bx-base-group-cover-wrapper ' . $this->_oModule->getName() . '_cover';
+
+        $bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id();
+        $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
+
+        $aInformers = array ();
+        $oInformer = BxDolInformer::getInstance($this->_oTemplate);
+        if($oInformer && ($bLoggedOwner || $bLoggedModerator)) {
+            $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
+
+            //--- Display 'scheduled' informer if an item wasn't published yet.
+            if(isset($CNF['FIELD_PUBLISHED'])) {
+                if(!empty($CNF['INFORMERS']['scheduled']) && isset($CNF['INFORMERS']['scheduled']['map'][$sStatus])) {
+                    $this->addMarkers(array(
+                        'date_publish_uf' => bx_time_js((int)$this->_aContentInfo[$CNF['FIELD_PUBLISHED']], BX_FORMAT_DATE, true)
+                    ));
+
+                    $aInformer = $CNF['INFORMERS']['scheduled'];
+                    $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']);
+                }
+            }
+
+            if($aInformers)
+                foreach($aInformers as $aInformer)
+                    $oInformer->add($aInformer['name'], $this->_replaceMarkers($aInformer['msg']), $aInformer['type']);
+        }
     }
 
     protected function _processPermissionsCheck ()
