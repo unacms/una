@@ -80,7 +80,16 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 		if($this->bAutoLogout && isLogged())
 			bx_logout();
 
-        $this->sId = genRndPwd(32, true);
+		// try to restore user's old session
+		if (isLogged()) {
+		    $this->sId = $this->oDb->getOldSession(getLoggedId());
+		    if ($this->sId)
+		        $this->exists($this->sId); // it exists for sure but required for initializing some data there
+        }
+
+		// if an old session has not been found then generate a new one
+		if (!$this->sId)
+            $this->sId = genRndPwd(32, true);
 
         $aUrl = parse_url(BX_DOL_URL_ROOT);
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
