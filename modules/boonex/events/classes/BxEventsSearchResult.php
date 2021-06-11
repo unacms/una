@@ -34,6 +34,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 'past' => array('value' => '', 'field' => 'date_end', 'operator' => '<', 'table' => 'bx_events_data'),
                 'date_start_from' => array('value' => '', 'field' => 'date_start', 'operator' => '>=', 'table' => 'bx_events_data'),
                 'date_start_to' => array('value' => '', 'field' => 'date_start', 'operator' => '<=', 'table' => 'bx_events_data'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'bx_events_data'),
             ),
             'join' => array (
                 'profile' => array(

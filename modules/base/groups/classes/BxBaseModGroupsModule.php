@@ -38,6 +38,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if(isset($CNF['FIELD_PUBLISHED']))
+            $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+                $CNF['FIELD_PUBLISHED'],
+            ));
     }
 
     /**
@@ -1064,14 +1071,21 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $a = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
         if($a === false)
             return false;
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
-
         $a['content']['url'] = $oGroupProfile->getUrl();
         $a['content']['title'] = $oGroupProfile->getDisplayName();
+
+        if(isset($CNF['FIELD_PUBLISHED'])) {
+            $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+            if($aContentInfo[$CNF['FIELD_PUBLISHED']] > $a['date'])
+                $a['date'] = $aContentInfo[$CNF['FIELD_PUBLISHED']];
+        }
 
         return $a;
     }
@@ -1449,6 +1463,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return $sResult;
 
         return parent::_checkAllowedConnect ($aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap);
+    }
+
+
+    // ====== COMMON METHODS
+    /**
+     * Get array of params to be passed in Add/Edit Alert.
+     */
+    protected function _alertParams($aContentInfo)
+    {
+        $aParams = parent::_alertParams($aContentInfo);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        return $aParams;
     }
 
     public function addFollower ($iProfileId1, $iProfileId2)

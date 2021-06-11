@@ -701,4 +701,5 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_events_process_reminders', '55 * * * *', 'BxEventsCronProcessReminders', 'modules/boonex/events/classes/BxEventsCronProcessReminders.php', ''),
-('bx_events_pruning', '0 0 * * *', 'BxEventsCronPruning', 'modules/boonex/events/classes/BxEventsCronPruning.php', '');
+('bx_events_pruning', '0 0 * * *', 'BxEventsCronPruning', 'modules/boonex/events/classes/BxEventsCronPruning.php', ''),
+('bx_events_publishing', '* * * * *', 'BxEventsCronPublishing', 'modules/boonex/events/classes/BxEventsCronPublishing.php', '');

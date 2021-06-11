@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `published` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
   `event_name` varchar(255) NOT NULL,
@@ -31,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `reminder` int(11) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
+  `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`event_name`, `event_desc`)
 );
@@ -342,6 +344,9 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_event', 'bx_events', 'reoccurring', '', '', 0, 'custom', '_bx_events_form_profile_input_sys_reoccurring', '_bx_events_form_profile_input_reoccurring', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
 ('bx_event', 'bx_events', 'time', '', '', 0, 'custom', '_bx_events_form_profile_input_sys_time', '_bx_events_form_profile_input_time', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'timezone', 'UTC', '', 0, 'select', '_bx_events_form_profile_input_sys_timezone', '_bx_events_form_profile_input_timezone', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_event', 'bx_events', 'added', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_added', '_bx_events_form_profile_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_event', 'bx_events', 'changed', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_changed', '_bx_events_form_profile_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_event', 'bx_events', 'published', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_published', '_bx_events_form_profile_input_date_published', '_bx_events_form_profile_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
 ('bx_event', 'bx_events', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
@@ -363,7 +368,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_add', 'reminder', 2147483647, 1, 15),
 ('bx_event_add', 'allow_view_to', 2147483647, 1, 16),
 ('bx_event_add', 'allow_post_to', 2147483647, 1, 17),
-('bx_event_add', 'do_submit', 2147483647, 1, 18),
+('bx_event_add', 'published', 192, 1, 18),
+('bx_event_add', 'do_submit', 2147483647, 1, 19),
 
 ('bx_event_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_event_invite', 'do_submit', 2147483647, 1, 2),
@@ -392,7 +398,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_edit', 'reminder', 2147483647, 1, 15),
 ('bx_event_edit', 'allow_view_to', 2147483647, 1, 16),
 ('bx_event_edit', 'allow_post_to', 2147483647, 1, 17),
-('bx_event_edit', 'do_submit', 2147483647, 1, 18),
+('bx_event_edit', 'published', 192, 1, 18),
+('bx_event_edit', 'do_submit', 2147483647, 1, 19),
 
 ('bx_event_edit_cover', 'allow_view_to', 2147483647, 0, 1),
 ('bx_event_edit_cover', 'time', 2147483647, 0, 2),
@@ -426,6 +433,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view', 'time', 2147483647, 1, 13),
 ('bx_event_view', 'timezone', 2147483647, 1, 14),
 ('bx_event_view', 'event_desc', 2147483647, 0, 15),
+('bx_event_view', 'added', 192, 1, 16),
+('bx_event_view', 'changed', 192, 1, 17),
+('bx_event_view', 'published', 192, 1, 18),
 
 ('bx_event_view_full', 'allow_view_to', 2147483647, 0, 1),
 ('bx_event_view_full', 'reoccurring', 2147483647, 0, 2),
@@ -441,7 +451,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view_full', 'date_end', 2147483647, 1, 12),
 ('bx_event_view_full', 'time', 2147483647, 1, 13),
 ('bx_event_view_full', 'timezone', 2147483647, 1, 14),
-('bx_event_view_full', 'event_desc', 2147483647, 0, 15);
+('bx_event_view_full', 'event_desc', 2147483647, 0, 15),
+('bx_event_view_full', 'added', 192, 1, 16),
+('bx_event_view_full', 'changed', 192, 1, 17),
+('bx_event_view_full', 'published', 192, 1, 18);
 
 -- FORMS: Price
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

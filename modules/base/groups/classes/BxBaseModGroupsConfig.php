@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolInformer');
+
 class BxBaseModGroupsConfig extends BxBaseModProfileConfig
 {
     protected $_aHtmlIds;
