@@ -209,7 +209,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_polls_view', 'bx_polls', 'edit-poll', '_bx_polls_menu_item_title_system_edit_entry', '_bx_polls_menu_item_title_edit_entry', 'page.php?i=edit-poll&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_polls_view', 'bx_polls', 'delete-poll', '_bx_polls_menu_item_title_system_delete_entry', '_bx_polls_menu_item_title_delete_entry', 'page.php?i=delete-poll&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_polls_view', 'bx_polls', 'delete-poll', '_bx_polls_menu_item_title_system_delete_entry', '_bx_polls_menu_item_title_delete_entry', 'page.php?i=delete-poll&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
+('bx_polls_view', 'bx_polls', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 3);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -221,7 +222,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_polls_view_actions', 'bx_polls', 'edit-poll', '_bx_polls_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_polls_view_actions', 'bx_polls', 'delete-poll', '_bx_polls_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
-('bx_polls_view_actions', 'bx_polls', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 30),
+('bx_polls_view_actions', 'bx_polls', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_polls_view_actions', 'bx_polls', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_polls_view_actions', 'bx_polls', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_polls_view_actions', 'bx_polls', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),

@@ -11,17 +11,13 @@
 
 class BxMarketMenuSnippetActions extends BxBaseModTextMenu
 {
-    protected $_sModule;
-    protected $_oModule;
-
     protected $_iContentId;
-    
+
     public function __construct($aObject, $oTemplate = false)
     {
-        parent::__construct($aObject, $oTemplate);
+        $this->MODULE = 'bx_market';
 
-        $this->_sModule = 'bx_market';
-        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+        parent::__construct($aObject, $oTemplate);
     }
 
     /**

@@ -256,6 +256,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_forum_view', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '_bx_forum_menu_item_title_stick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'stick\', {content_id});', '', 'thumbtack', '', 0, 2147483647, 1, 0, 2),
 ('bx_forum_view', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '_bx_forum_menu_item_title_lock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'lock\', {content_id});', '', 'lock', '', 0, 2147483647, 1, 0, 3),
 ('bx_forum_view', @sName, 'hide-discussion', '_bx_forum_menu_item_title_system_hide_entry', '_bx_forum_menu_item_title_hide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'hide\', {content_id});', '', 'stop-circle', '', 0, 2147483647, 1, 0, 4),
+('bx_forum_view', @sName, 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 0, 2147483647, 1, 0, 5),
 ('bx_forum_view', @sName, 'more', '_bx_forum_menu_item_title_system_more', '_bx_forum_menu_item_title_more', 'javascript:void(0)', 'bx_menu_popup(\'bx_forum_view_more\', this, {}, {id:{content_id}});', '', 'cog', 'bx_forum_view_more', 1, 2147483647, 1, 0, 9999);
 
 -- MENU: view actions more
@@ -291,7 +292,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_forum_view_actions', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 80),
 ('bx_forum_view_actions', @sName, 'edit-discussion', '_bx_forum_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 90),
 ('bx_forum_view_actions', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 100),
-('bx_forum_view_actions', @sName, 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, '', 1, 0, 100),
+('bx_forum_view_actions', @sName, 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 100),
 ('bx_forum_view_actions', @sName, 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_forum'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 110),
 ('bx_forum_view_actions', @sName, 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_forum_view_actions', @sName, 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),

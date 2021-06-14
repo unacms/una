@@ -144,7 +144,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_classes_view', 'bx_classes', 'complete-class', '', '_bx_classes_menu_item_title_complete_class', 'javascript:void(0);', 'bx_classes_mark_as_completed(''{content_id}'');', '', 'check', '', 2147483647, 1, 0, 1),
 ('bx_classes_view', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '_bx_classes_menu_item_title_edit_entry', 'page.php?i=edit-class&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 2),
-('bx_classes_view', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '_bx_classes_menu_item_title_delete_entry', 'page.php?i=delete-class&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3);
+('bx_classes_view', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '_bx_classes_menu_item_title_delete_entry', 'page.php?i=delete-class&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3),
+('bx_classes_view', 'bx_classes', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 4);
 
 
 -- MENU: all actions menu for view entry 
@@ -159,7 +160,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_classes_view_actions', 'bx_classes', 'complete-class', '', '_bx_classes_menu_item_title_complete_class', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1),
 ('bx_classes_view_actions', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_classes_view_actions', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
-('bx_classes_view_actions', 'bx_classes', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_classes_view_actions', 'bx_classes', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_classes_view_actions', 'bx_classes', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_classes'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 40),
 ('bx_classes_view_actions', 'bx_classes', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_classes_view_actions', 'bx_classes', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),

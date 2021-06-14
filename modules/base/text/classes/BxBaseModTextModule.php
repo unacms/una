@@ -547,6 +547,31 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function isAllowedApprove($mixedContent, $isPerformAction = false)
+    {
+        return $this->checkAllowedApprove($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedApprove($mixedContent, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $sTxtError = '_sys_txt_access_denied';
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        if(empty($mixedContent) || !is_array($mixedContent))
+            return _t($sTxtError);
+        
+        if(!isset($CNF['FIELD_STATUS_ADMIN']) || $mixedContent[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_TEXT_STATUS_PENDING)
+            return _t($sTxtError);
+
+        if($this->_isModerator())
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return _t($sTxtError);
+    }    
+
     public function isPollPerformed($iObjectId, $iAuthorId = 0, $iAuthorIp = 0)
     {
         if(empty($iAuthorId)) {

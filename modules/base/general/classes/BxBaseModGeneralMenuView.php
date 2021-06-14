@@ -25,6 +25,11 @@ class BxBaseModGeneralMenuView extends BxTemplMenu
         parent::__construct($aObject, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $this->addMarkers(array(
+            'module' => $this->_oModule->_oConfig->getName(),
+            'module_uri' => $this->_oModule->_oConfig->getUri(),
+        ));
     }
 
     /**

@@ -226,7 +226,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_glossary_view', 'bx_glossary', 'edit-glossary', '_bx_glossary_menu_item_title_system_edit_entry', '_bx_glossary_menu_item_title_edit_entry', 'page.php?i=edit-glossary&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_glossary_view', 'bx_glossary', 'delete-glossary', '_bx_glossary_menu_item_title_system_delete_entry', '_bx_glossary_menu_item_title_delete_entry', 'page.php?i=delete-glossary&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_glossary_view', 'bx_glossary', 'delete-glossary', '_bx_glossary_menu_item_title_system_delete_entry', '_bx_glossary_menu_item_title_delete_entry', 'page.php?i=delete-glossary&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
+('bx_glossary_view', 'bx_glossary', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 3);
 
 
 -- MENU: all actions menu for view entry 
@@ -240,7 +241,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_glossary_view_actions', 'bx_glossary', 'edit-glossary', '_bx_glossary_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_glossary_view_actions', 'bx_glossary', 'delete-glossary', '_bx_glossary_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
-('bx_glossary_view_actions', 'bx_glossary', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 30),
+('bx_glossary_view_actions', 'bx_glossary', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_glossary_view_actions', 'bx_glossary', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_glossary_view_actions', 'bx_glossary', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_glossary_view_actions', 'bx_glossary', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),

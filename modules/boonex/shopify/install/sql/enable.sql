@@ -184,7 +184,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_shopify_view', 'bx_shopify', 'edit-shopify-entry', '_bx_shopify_menu_item_title_system_edit_entry', '_bx_shopify_menu_item_title_edit_entry', 'page.php?i=edit-shopify-entry&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_shopify_view', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '_bx_shopify_menu_item_title_delete_entry', 'page.php?i=delete-shopify-entry&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_shopify_view', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '_bx_shopify_menu_item_title_delete_entry', 'page.php?i=delete-shopify-entry&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
+('bx_shopify_view', 'bx_shopify', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 3);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -197,7 +198,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_shopify_view_actions', 'bx_shopify', 'buy-shopify-entry', '_bx_shopify_menu_item_title_system_buy_entry', '_bx_shopify_menu_item_title_buy_entry', '', '', '', '', '', '', 0, 2147483647, 1, 0, 0),
 ('bx_shopify_view_actions', 'bx_shopify', 'edit-shopify-entry', '_bx_shopify_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_shopify_view_actions', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
-('bx_shopify_view_actions', 'bx_shopify', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 30),
+('bx_shopify_view_actions', 'bx_shopify', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_shopify_view_actions', 'bx_shopify', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_shopify_view_actions', 'bx_shopify', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_shopify_view_actions', 'bx_shopify', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
