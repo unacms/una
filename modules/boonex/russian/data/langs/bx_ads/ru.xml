@@ -291,6 +291,10 @@
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Удалить]]></string>
+    <string name="_bx_ads_menu_item_title_system_mark_delivered"><![CDATA[Доставлен]]></string>
+    <string name="_bx_ads_menu_item_title_mark_delivered"><![CDATA[Доставлен]]></string>
+    <string name="_bx_ads_menu_item_title_system_mark_received"><![CDATA[Получен]]></string>
+    <string name="_bx_ads_menu_item_title_mark_received"><![CDATA[Получен]]></string>
     <string name="_bx_ads_menu_item_title_system_review_entry"><![CDATA[Разместить обзор]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entry"><![CDATA[Просмотреть объявление]]></string>
     <string name="_bx_ads_menu_item_title_system_entries_home"><![CDATA[Объявления]]></string>

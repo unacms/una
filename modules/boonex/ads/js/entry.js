@@ -19,49 +19,19 @@ function BxAdsEntry(oOptions) {
 }
 
 BxAdsEntry.prototype.interested = function(oElement, iContentId) {
-    var $this = this;
-    var oParams = this._getDefaultData();
-    oParams['id'] = iContentId;
-
-    if(oElement)
-        this.loadingInButton(oElement, true);
-
-    jQuery.get (
-        this._sActionsUrl + 'interested',
-        oParams,
-        function(oData) {
-            if(oElement)
-                $this.loadingInButton(oElement, false);
-
-            processJsonData(oData);
-        },
-        'json'
-    );
+    this._performAction(oElement, 'interested', iContentId);
 };
 
 BxAdsEntry.prototype.makeOffer = function(oElement, iContentId) {
-    var $this = this;
-    var oParams = this._getDefaultData();
-    oParams['id'] = iContentId;
-
-    if(oElement)
-        this.loadingInButton(oElement, true);
-
-    jQuery.get (
-        this._sActionsUrl + 'make_offer',
-        oParams,
-        function(oData) {
-            if(oElement)
-                $this.loadingInButton(oElement, false);
-
-            processJsonData(oData);
-        },
-        'json'
-    );
+    this._performAction(oElement, 'make_offer', iContentId);
 };
 
-BxAdsEntry.prototype.onMakeOffer = function(oData) {
-    
+BxAdsEntry.prototype.delivered = function(oElement, iContentId) {
+    this._performAction(oElement, 'delivered', iContentId);
+};
+
+BxAdsEntry.prototype.received = function(oElement, iContentId) {
+    this._performAction(oElement, 'received', iContentId);
 };
 
 BxAdsEntry.prototype.loadingInButton = function(e, bShow) {
@@ -74,6 +44,27 @@ BxAdsEntry.prototype.loadingInButton = function(e, bShow) {
 BxAdsEntry.prototype.loadingInBox = function(e, bShow) {
     var oParent = $(e).length ? $(e).parents('.bx-base-text-poll:first') : $('body'); 
     bx_loading(oParent, bShow);
+};
+
+BxAdsEntry.prototype._performAction = function(oElement, sAction, iContentId) {
+    var $this = this;
+    var oParams = this._getDefaultData();
+    oParams['id'] = iContentId;
+
+    if(oElement)
+        this.loadingInButton(oElement, true);
+
+    jQuery.get (
+        this._sActionsUrl + sAction,
+        oParams,
+        function(oData) {
+            if(oElement)
+                $this.loadingInButton(oElement, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
 };
 
 BxAdsEntry.prototype._getDefaultData = function() {

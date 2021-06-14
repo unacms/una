@@ -60,6 +60,16 @@ class BxAdsMenuViewActions extends BxBaseModTextMenuViewActions
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
+    
+    protected function _getMenuItemDelivered($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
+    protected function _getMenuItemReceived($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
 
     protected function _getMenuItemReview($aItem, $aParams = array())
     {

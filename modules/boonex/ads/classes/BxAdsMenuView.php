@@ -92,6 +92,18 @@ class BxAdsMenuView extends BxBaseModTextMenuView
                 $bResult = $this->_oModule->isAllowedViewOffers($this->_aContentInfo);
                 break;
 
+            case 'approve':
+                $bResult = $this->_oModule->isAllowedApprove($this->_aContentInfo);
+                break;
+
+            case 'delivered':
+                $bResult = $this->_oModule->isAllowedMarkDelivered($this->_aContentInfo);
+                break;
+
+            case 'received':
+                $bResult = $this->_oModule->isAllowedMarkReceived($this->_aContentInfo);
+                break;
+
             default:
                 $bResult = true;
         }

@@ -345,11 +345,66 @@ class BxAdsDb extends BxBaseModTextDb
         return $this->query($sQuery, $aWhereBindings) !== false;
     }
 
+    public function getLicense($aParams = array())
+    {
+    	$CNF = &$this->_oConfig->CNF;
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sSelectClause = "`tl`.*";
+    	$sJoinClause = $sWhereClause = $sLimitClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tl`.`id`=:id";
+                break;
+
+            case 'has_by':
+                $aMethod['name'] = "getOne";
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id'],
+                    'entry_id' => $aParams['entry_id']
+                );
+
+                $sSelectClause = "`tl`.`id`";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`entry_id`=:entry_id";
+
+                if(!empty($aParams['order'])) {
+                    $aMethod['params'][1]['order'] = $aParams['order'];
+                    $sWhereClause .= " AND `tl`.`order`=:order";
+                }
+
+                $sLimitClause = "1";
+                break;
+        }
+
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+            " . $sSelectClause . "
+            FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`" . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     public function updateLicense($aSet, $aWhere)
     {
         $CNF = &$this->_oConfig->CNF;
 
         return (int)$this->query("UPDATE `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+
+    public function hasLicense($iProfileId, $iEntryId)
+    {
+    	return (int)$this->getLicense(array(
+            'type' => 'has_by', 
+            'profile_id' => $iProfileId, 
+            'entry_id' => $iEntryId
+    	)) > 0;
     }
 
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)

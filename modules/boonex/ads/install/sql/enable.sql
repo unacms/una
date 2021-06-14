@@ -250,7 +250,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view', 'bx_ads', 'make-offer', '_bx_ads_menu_item_title_system_make_offer', '_bx_ads_menu_item_title_make_offer', 'javascript:void(0);', 'javascript:{js_object}.makeOffer(this, {content_id})', '', 'hand-holding-usd', '', 2147483647, 1, 0, 16),
 ('bx_ads_view', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '_bx_ads_menu_item_title_view_offers', 'page.php?i=view-ad-offers&id={content_id}', '', '', '', '', 2147483647, 1, 0, 17),
 ('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
-('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
+('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30),
+('bx_ads_view', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this,  ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 40),
+('bx_ads_view', 'bx_ads', 'delivered', '_bx_ads_menu_item_title_system_mark_delivered', '_bx_ads_menu_item_title_mark_delivered', 'javascript:void(0)', 'javascript:{js_object}.delivered(this, {content_id})', '', 'truck', '', 2147483647, 1, 0, 50),
+('bx_ads_view', 'bx_ads', 'received', '_bx_ads_menu_item_title_system_mark_received', '_bx_ads_menu_item_title_mark_received', 'javascript:void(0)', 'javascript:{js_object}.received(this, {content_id})', '', 'clipboard-check', '', 2147483647, 1, 0, 55);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -266,7 +269,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view_actions', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 17),
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
-('bx_ads_view_actions', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this,  ''{module_uri}'', {content_id});', '', 'check', '', '', 0, 2147483647, 1, 0, 40),
+('bx_ads_view_actions', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 40),
+('bx_ads_view_actions', 'bx_ads', 'delivered', '_bx_ads_menu_item_title_system_mark_delivered', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
+('bx_ads_view_actions', 'bx_ads', 'received', '_bx_ads_menu_item_title_system_mark_received', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 55),
 ('bx_ads_view_actions', 'bx_ads', 'review', '_bx_ads_menu_item_title_system_review_entry', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 190),
 ('bx_ads_view_actions', 'bx_ads', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_ads_view_actions', 'bx_ads', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),

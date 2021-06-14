@@ -171,6 +171,16 @@ class BxAdsModule extends BxBaseModTextModule
         return echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
     }
 
+    public function actionDelivered()
+    {
+        return echoJson($this->_actionMarkAs('delivered'));
+    }
+
+    public function actionReceived()
+    {
+        return echoJson($this->_actionMarkAs('received'));
+    }
+
     public function serviceGetSafeServices()
     {
         $a = parent::serviceGetSafeServices();
@@ -1013,7 +1023,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         return $this->_oConfig->isAuction() && (int)$aContentInfo[$CNF['FIELD_AUCTION']] != 0;
     }
-    
+
     public function isAllowedMakeOffer($mixedContent, $isPerformAction = false)
     {
         return $this->checkAllowedMakeOffer($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
@@ -1022,18 +1032,22 @@ class BxAdsModule extends BxBaseModTextModule
     public function checkAllowedMakeOffer($mixedContent, $isPerformAction = false)
     {
         $CNF = &$this->_oConfig->CNF;
+        $sTxtError = '_sys_txt_access_denied';
 
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
-        if(!$this->isAuction($mixedContent) || (int)$mixedContent[$CNF['FIELD_QUANTITY']] <= 0)
-            return _t('_sys_txt_access_denied');
+        if(empty($mixedContent) || !is_array($mixedContent))
+            return _t($sTxtError);
 
-        if(!empty($mixedContent) && is_array($mixedContent) && $mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
+        if(!$this->isAuction($mixedContent) || (int)$mixedContent[$CNF['FIELD_QUANTITY']] <= 0)
+            return _t($sTxtError);
+
+        if($mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        return _t('_sys_txt_access_denied');
-    }    
+        return _t($sTxtError);
+    }
 
     public function isAllowedViewOffers($mixedContent, $isPerformAction = false)
     {
@@ -1043,22 +1057,70 @@ class BxAdsModule extends BxBaseModTextModule
     public function checkAllowedViewOffers($mixedContent, $isPerformAction = false)
     {
         $CNF = &$this->_oConfig->CNF;
+        $sTxtError = '_sys_txt_access_denied';
 
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
+        if(empty($mixedContent) || !is_array($mixedContent))
+            return _t($sTxtError);
+
         if(!$this->isAuction($mixedContent))
-            return _t('_sys_txt_access_denied');
+            return _t($sTxtError);
 
-        if($this->checkAllowedEditAnyEntry($isPerformAction) === CHECK_ACTION_RESULT_ALLOWED)
+        if($this->_isModerator())
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        if(!empty($mixedContent) && is_array($mixedContent) && $mixedContent[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id())
+        if($mixedContent[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id())
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        return _t('_sys_txt_access_denied');
+        return _t($sTxtError);
     }
 
+    public function isAllowedMarkDelivered($mixedContent, $isPerformAction = false)
+    {
+        return $this->checkAllowedMarkDelivered($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedMarkDelivered($mixedContent, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $sTxtError = '_sys_txt_access_denied';
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        if(empty($mixedContent) || !is_array($mixedContent))
+            return _t($sTxtError);
+
+        if((int)$mixedContent[$CNF['FIELD_DELIVERED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
+            return _t($sTxtError);
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+    
+    public function isAllowedMarkReceived($mixedContent, $isPerformAction = false)
+    {
+        return $this->checkAllowedMarkReceived($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedMarkReceived($mixedContent, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $sTxtError = '_sys_txt_access_denied';
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        if(empty($mixedContent) || !is_array($mixedContent))
+            return _t($sTxtError);
+
+        if((int)$mixedContent[$CNF['FIELD_RECEIVED']] != 0 || !$this->_oDb->hasLicense(bx_get_logged_profile_id(), $mixedContent[$CNF['FIELD_ID']]))
+            return _t($sTxtError);
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+    
     public function onOfferAdded($iOfferId)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1208,6 +1270,30 @@ class BxAdsModule extends BxBaseModTextModule
     /**
      * Internal methods.
      */
+    protected function _actionMarkAs($sAction)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $sMethodCheck = 'checkAllowedMark' . bx_gen_method_name($sAction);
+        if(!method_exists($this, $sMethodCheck))
+            return array();
+
+        if(($mixedCheckResult = $this->$sMethodCheck($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return array('msg' => $mixedCheckResult);
+
+        if((int)$this->_oDb->updateEntriesBy(array($CNF['FIELD_' . strtoupper($sAction)] => time()), array($CNF['FIELD_ID'] => $iContentId)) == 0)
+            return array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+
+        $this->$sMethodCheck($aContentInfo, true);
+
+        return array(
+            'reload' => 1
+        );
+    }
+
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false, $sCheckFunction = false, $bErrorMsg = true)
     {
         $CNF = &$this->_oConfig->CNF;
