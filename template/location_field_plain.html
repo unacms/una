@@ -12,7 +12,7 @@
 
 <script>
 (function () {
-    var getLocationString = function () {
+    var getLocationString = function (sMode) {
         var sCountry = $('select[name="__name___country"]').val();
         var sZip = $('input[name="__name___zip"]').val();
         var sState = $('input[name="__name___state"]').val();
@@ -24,13 +24,43 @@
             return '';
 
         sRet = (sZip.length ? sZip + ', ' : '') + sCountry;
-
+        if ('undefined' !== typeof(sMode) && 'zip_only' == sMode) {
+            return sZip.length ? sRet : '';
+        }
+        if ('undefined' !== typeof(sMode) && 'city_only' == sMode) {
+            return (sCity.length ? sCity + ', ': '') + (sState.length ? sState + ', ': '') + sCountry;
+        }
         sRet = (sCity.length ? sCity + ', ': '') + (sState.length ? sState + ', ': '') + sRet;
         
         if (sCity.length)
             sRet = (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + sRet;
 
         return sRet;
+    }
+
+    var geocode = function (a, i) {
+        var s = a[i];
+        $.getJSON('__nominatim_server__/search/' + encodeURIComponent(s) + '?format=json&limit=1&email=__nominatim_email__', function (oResult) {
+            glBxLocationFieldPlainGeocodingRequest = false;
+            if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
+                $('input[name="__name___lat"]').val(oResult[0].lat);
+                $('input[name="__name___lng"]').val(oResult[0].lon);
+                if ('undefined' !== typeof(oResult[0].licence))
+                    $('.bx-form-input-location-__name__ .bx-form-input-location-copyright').html(oResult[0].licence);
+                setLocationStatus('ok');
+            } 
+            else {
+                i += 1;
+                if ('undefined' !== typeof(a[i])) {
+                    geocode(a, i);
+                }
+                else {
+                    $('input[name="__name___lat"]').val(0);
+                    $('input[name="__name___lng"]').val(0);
+                    setLocationStatus('fail');
+                }
+            }
+        });
     }
 
     var setLocationStatus = function (s) {
@@ -55,23 +85,15 @@
                 setLocationStatus('undef');
                 return;
             }
-
+            var a = [s];
+            if (s = getLocationString('zip_only'))
+                a.push(s);
+            if (s = getLocationString('city_only'))
+                a.push(s);
+ 
             glBxLocationFieldPlainGeocodingRequest = setTimeout(function () {
                 setLocationStatus('loading');
-                $.getJSON('__nominatim_server__/search/' + encodeURIComponent(s) + '?format=json&limit=1&email=__nominatim_email__', function (oResult) {
-                    glBxLocationFieldPlainGeocodingRequest = false;
-                    if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
-                        $('input[name="__name___lat"]').val(oResult[0].lat);
-                        $('input[name="__name___lng"]').val(oResult[0].lon);
-                        if ('undefined' !== typeof(oResult[0].licence))
-                            $('.bx-form-input-location-__name__ .bx-form-input-location-copyright').html(oResult[0].licence);
-                        setLocationStatus('ok');
-                    } else {
-                        $('input[name="__name___lat"]').val(0);
-                        $('input[name="__name___lng"]').val(0);
-                        setLocationStatus('fail');
-                    }
-                });
+                geocode(a, 0);
             }, 1500);
         });
 
