@@ -164,6 +164,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             'acodec' => 'aac',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
+            'pix_fmt' => 'yuv420p',
         ));
     }
 
@@ -178,6 +179,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             'acodec' => 'libvorbis',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
+            'pix_fmt' => 'yuv420p',
         ));
     }
 
