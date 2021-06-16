@@ -3905,10 +3905,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aResult = array();
         foreach($aVideos as $iVideoId) {
             $sVideoUrl = $oStorage->getFileUrlById($iVideoId);
-            $aVideoSize = $oTranscoderMp4Hd->getVideoSize($sVideoUrl);
+            $aVideoFile = $oStorage->getFile($iVideoId);
 
             $sVideoUrlHd = '';
-            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+            if (!empty($aVideoFile['dimensions']) && $oTranscoderMp4Hd->isProcessHD($aVideoFile['dimensions']))
                 $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iVideoId);
 
             $aResult[$iVideoId] = array(

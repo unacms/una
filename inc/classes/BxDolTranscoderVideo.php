@@ -77,6 +77,16 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         $this->_sQueueTable = $this->_oDb->getQueueTable();
     }
 
+    public static function getObjectVideoAbstract()
+    {
+        if (isset($GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract']))
+            return $GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract'];
+
+        $aObject = array('object' => 'abstract');
+        $o = new BxDolTranscoderVideo ($aObject, null);
+        return ($GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract'] = $o);
+    }
+
     public static function getDuration($sFile)
     {
         $sCommand = escapeshellcmd(BX_SYSTEM_FFMPEG) . " -i " . escapeshellarg($sFile) . " 2>&1";
@@ -222,6 +232,12 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             return false;
 
         return true;
+    }
+
+    public function isProcessHD ($sOrigVideoDim)
+    {
+        $iHeight = $this->getMaxResizeDimention('Mp4', 'h');
+        return ($aDim = explode('x', $sOrigVideoDim)) && isset($aDim[1]) && (int)$aDim[1] >= $iHeight ? true : false;
     }
 
     /**
