@@ -5,10 +5,18 @@
 #bx-toolbar {
 	z-index: 500;
 }
+.bx-media-phone #bx-toolbar-content{
+    display: flex;
+    justify-content: space-between;
+}
 #bx-logo-container {
     margin: 0.5rem 1.2rem;
     text-align: left;
 	height: auto;
+	flex-grow: 3
+}
+.bx-media-phone #bx-logo-container {
+	 margin: 0;
 }
 #bx-logo-container a {
 	color: #595959;
@@ -134,6 +142,22 @@
   font-size: 1.4rem;
 }
 
+@media (max-width: 720px){
+	.cd-side-nav {
+		top:57px;
+		box-shadow: none;
+	}
+	.bx-sliding-menu, .bx-sliding-menu-main{
+		width: 100% !important;
+		left:0px !important;
+		top:56px !important;
+	}
+	#bx-menu-toolbar-item-main-menu{
+		margin-top: 3px;
+	}
+}
+
+	
 @media only screen and (min-width: 720px) {
   .cd-side-nav {
     position: relative;
