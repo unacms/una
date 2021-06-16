@@ -1537,7 +1537,7 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS - дополнительный домен (требует дополнительной настройки DNS)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS - секретный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_endpoint"><![CDATA[Endpoint (например storage.googleapis.com или s3.wasabisys.com, для Amazon оставивить пустым)]]></string>
-	<string name="_adm_stg_cpt_option_sys_storage_s3_sig_ver"><![CDATA[Версия подписи (только S3v4 движок хранения поддерживает v4)]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_sig_ver"><![CDATA[Версия подписи (только S3v4alt движок поддерживает обе версии v4 и v2)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_region"><![CDATA[Регион (только для подписи v4)]]></string>
 
 	<string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Задействовать кэш для изображений]]></string>
