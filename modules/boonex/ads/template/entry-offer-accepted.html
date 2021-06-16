@@ -4,11 +4,13 @@
         <div class="bx-def-font-h2 bx-def-margin-top">__amount__</div>
         <div class="bx-def-font-small bx-def-margin-bottom bx-def-font-grayed">__quantity__</div>
         <div class="bx-def-font-h3"><bx_text:_bx_ads_txt_accepted /></div>
-        <bx_if:show_pay>
-            <div class="bx-ads-eoa bx-def-margin-top">
-                <a class="bx-btn" href="javascript:void(0)" onclick="__js_method__"><bx_text:_bx_ads_txt_pay /></a>
-            </div>
-        </bx_if:show_pay>
+        <div class="bx-ads-eoa bx-def-margin-top">
+            <bx_if:show_pay>
+                <a class="bx-btn bx-btn-primary bx-def-margin-right" href="javascript:void(0)" onclick="__js_method_pay__"><bx_text:_bx_ads_txt_pay /></a>
+            </bx_if:show_pay>
+            <a class="bx-btn" href="javascript:void(0)" onclick="javascript:__js_object__.cancelOffer(this, __id__)"><bx_text:_bx_ads_txt_cancel /></a>
+        </div>
+        
         __js_code__
     </div>
 </div>

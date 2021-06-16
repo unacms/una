@@ -27,21 +27,23 @@ class BxAdsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sJsCode = $sJsMethod = '';
-        $aJs = BxDolPayments::getInstance()->getAddToCartJs($aContent[$CNF['FIELD_AUTHOR']], $this->MODULE, $aContent[$CNF['FIELD_ID']], $aOffer[$CNF['FIELD_OFR_QUANTITY']], true);
-        if(!empty($aJs) && is_array($aJs))
-            list($sJsCode, $sJsMethod) = $aJs;
+        $sJsCodePay = $sJsMethodPay = '';
+        $aJsPay = BxDolPayments::getInstance()->getAddToCartJs($aContent[$CNF['FIELD_AUTHOR']], $this->MODULE, $aContent[$CNF['FIELD_ID']], $aOffer[$CNF['FIELD_OFR_QUANTITY']], true);
+        if(!empty($aJsPay) && is_array($aJsPay))
+            list($sJsCodePay, $sJsMethodPay) = $aJsPay;
 
         return $this->parseHtmlByName('entry-offer-accepted.html', array(
+            'js_object' => $this->_oConfig->getJsObject('entry'),
+            'id' => $aOffer['id'],
             'amount' => _t_format_currency($aOffer['amount']),
             'quantity' => _t('_bx_ads_txt_n_items', $aOffer['quantity']),
             'bx_if:show_pay' => array(
-                'condition' => !empty($sJsMethod),
+                'condition' => !empty($sJsMethodPay),
                 'content' => array(
-                    'js_method' => $sJsMethod,
+                    'js_method_pay' => $sJsMethodPay,
                 )
             ),
-            'js_code' => $sJsCode
+            'js_code' => $sJsCodePay
         ));
     }
 

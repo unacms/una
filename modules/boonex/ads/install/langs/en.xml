@@ -291,8 +291,8 @@
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
-    <string name="_bx_ads_menu_item_title_system_mark_delivered"><![CDATA[Delivered]]></string>
-    <string name="_bx_ads_menu_item_title_mark_delivered"><![CDATA[Delivered]]></string>
+    <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Shipped]]></string>
+    <string name="_bx_ads_menu_item_title_mark_shipped"><![CDATA[Shipped]]></string>
     <string name="_bx_ads_menu_item_title_system_mark_received"><![CDATA[Received]]></string>
     <string name="_bx_ads_menu_item_title_mark_received"><![CDATA[Received]]></string>
     <string name="_bx_ads_menu_item_title_system_review_entry"><![CDATA[Review]]></string>
@@ -458,7 +458,7 @@
 <p><b><a href="{viewer_url}">{viewer_name}</a></b> is interested in your ad <b><a href="{ad_url}">{ad_name}</a></b>.</p>
 {email_footer}]]></string>
 
-    <string name="_bx_ads_et_txt_name_purchased"><![CDATA[Ad purchased.]]></string>
+    <string name="_bx_ads_et_txt_name_purchased"><![CDATA[Ad was purchased.]]></string>
     <string name="_bx_ads_et_txt_subject_purchased"><![CDATA[You've purchased {entry_name} ad.]]></string>
     <string name="_bx_ads_et_txt_body_purchased"><![CDATA[{email_header}
 <p>Hello, {client_name}.</p>
@@ -466,25 +466,46 @@
 <p>{notes}</p>
 {email_footer}]]></string>
 
+    <string name="_bx_ads_et_txt_name_shipped"><![CDATA[Ad was shipped.]]></string>
+    <string name="_bx_ads_et_txt_subject_shipped"><![CDATA[Ad {entry_name} was shipped.]]></string>
+    <string name="_bx_ads_et_txt_body_shipped"><![CDATA[{email_header}
+<p>Hello, {profile_name}.</p>
+<p>The <a href="{entry_url}">{entry_name}</a> ad was shipped by <a href="{vendor_url}">{vendor_name}</a>.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_ads_et_txt_name_received"><![CDATA[Ad received.]]></string>
+    <string name="_bx_ads_et_txt_subject_received"><![CDATA[Ad {entry_name} was received.]]></string>
+    <string name="_bx_ads_et_txt_body_received"><![CDATA[{email_header}
+<p>Hello, {profile_name}.</p>
+<p>The <a href="{entry_url}">{entry_name}</a> ad was received by <a href="{client_url}">{client_name}</a>.</p>
+{email_footer}]]></string>
+
     <string name="_bx_ads_et_txt_name_offer_added"><![CDATA[New offer was added.]]></string>
     <string name="_bx_ads_et_txt_subject_offer_added"><![CDATA[{viewer_name} added an offer for your ad.]]></string>
     <string name="_bx_ads_et_txt_body_offer_added"><![CDATA[{email_header}
 <p>Hello, {profile_name}.</p>
-<p><b><a href="{viewer_url}">{viewer_name}</a></b> added an offer for your ad <b><a href="{ad_url}">{ad_name}</a></b>.</p>
+<p><b><a href="{viewer_url}">{viewer_name}</a></b> added an offer for your ad <b><a href="{entry_url}">{entry_name}</a></b>.</p>
 {email_footer}]]></string>
 
     <string name="_bx_ads_et_txt_name_offer_accepted"><![CDATA[The offer was accepted.]]></string>
-    <string name="_bx_ads_et_txt_subject_offer_accepted"><![CDATA[Your offer for {ad_name} ad was accepted.]]></string>
+    <string name="_bx_ads_et_txt_subject_offer_accepted"><![CDATA[Your offer for {entry_name} ad was accepted.]]></string>
     <string name="_bx_ads_et_txt_body_offer_accepted"><![CDATA[{email_header}
 <p>Hello, {offerer_name}.</p>
-<p>Your offer for <b><a href="{ad_url}">{ad_name}</a></b> ad was accepted.</p>
+<p>Your offer for <b><a href="{entry_url}">{entry_name}</a></b> ad was accepted.</p>
 {email_footer}]]></string>
 
     <string name="_bx_ads_et_txt_name_offer_declined"><![CDATA[The offer was declined.]]></string>
-    <string name="_bx_ads_et_txt_subject_offer_declined"><![CDATA[Your offer for {ad_name} ad was declined.]]></string>
+    <string name="_bx_ads_et_txt_subject_offer_declined"><![CDATA[Your offer for {entry_name} ad was declined.]]></string>
     <string name="_bx_ads_et_txt_body_offer_declined"><![CDATA[{email_header}
 <p>Hello, {offerer_name}.</p>
-<p>Your offer for <b><a href="{ad_url}">{ad_name}</a></b> ad was declined.</p>
+<p>Your offer for <b><a href="{entry_url}">{entry_name}</a></b> ad was declined.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_ads_et_txt_name_offer_canceled"><![CDATA[The offer was canceled.]]></string>
+    <string name="_bx_ads_et_txt_subject_offer_canceled"><![CDATA[{offerer_name} canceled the offer for {entry_name} ad.]]></string>
+    <string name="_bx_ads_et_txt_body_offer_canceled"><![CDATA[{email_header}
+<p>Hello, {profile_name}.</p>
+<p><a href="{offerer_url}">{offerer_name}</a> canceled the offer for <b><a href="{entry_url}">{entry_name}</a></b> ad.</p>
 {email_footer}]]></string>
 
     <string name="_bx_ads_txt_all_entries_in"><![CDATA[<a href="{0}">All Ads in {1} ({2})</a>]]></string>
@@ -507,15 +528,20 @@
     <string name="_bx_ads_txt_offer_status_awaiting"><![CDATA[Awaiting]]></string>
     <string name="_bx_ads_txt_offer_status_accepted"><![CDATA[Accepted]]></string>
     <string name="_bx_ads_txt_offer_status_declined"><![CDATA[Declined]]></string>
+    <string name="_bx_ads_txt_offer_status_canceled"><![CDATA[Canceled]]></string>
     <string name="_bx_ads_txt_your_offer"><![CDATA[Your offer]]></string>
     <string name="_bx_ads_txt_accepted"><![CDATA[was accepted]]></string>
     <string name="_bx_ads_txt_n_items"><![CDATA[{0} item(s)]]></string>
     <string name="_bx_ads_txt_pay"><![CDATA[Pay]]></string>
+    <string name="_bx_ads_txt_cancel"><![CDATA[Cancel]]></string>
 
     <string name="_bx_ads_txt_msg_status_hidden"><![CDATA[This ad was hidden.]]></string>
     <string name="_bx_ads_txt_msg_status_pending"><![CDATA[This ad is pending approval.]]></string>
+    <string name="_bx_ads_txt_msg_auction_offer"><![CDATA[This ad is under offer.]]></string>
+    <string name="_bx_ads_txt_msg_auction_sold"><![CDATA[This ad was sold.]]></string>
     <string name="_bx_ads_txt_msg_author_notified"><![CDATA[Advertiser was notified, that you're interested in his ad. Please wait.]]></string>
     <string name="_bx_ads_txt_msg_offer_added"><![CDATA[Your offer was added. Advertiser will be notified about it. Please wait.]]></string>
+    <string name="_bx_ads_txt_msg_offer_canceled"><![CDATA[The offer was canceled.]]></string>
     <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[You already made an offer. Please wait for the results.]]></string>
     <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Your offer was already accepted.]]></string>
     <string name="_bx_ads_txt_err_your_own"><![CDATA[You cannot do the action because it's your own ad.]]></string>

@@ -26,8 +26,18 @@ BxAdsEntry.prototype.makeOffer = function(oElement, iContentId) {
     this._performAction(oElement, 'make_offer', iContentId);
 };
 
-BxAdsEntry.prototype.delivered = function(oElement, iContentId) {
-    this._performAction(oElement, 'delivered', iContentId);
+BxAdsEntry.prototype.onMakeOffer = function(oData) {};
+
+BxAdsEntry.prototype.cancelOffer = function(oElement, iOfferId) {
+    var $this = this;
+
+    bx_confirm('', function() {
+        $this._performAction(oElement, 'cancel_offer', iOfferId);
+    });
+};
+
+BxAdsEntry.prototype.shipped = function(oElement, iContentId) {
+    this._performAction(oElement, 'shipped', iContentId);
 };
 
 BxAdsEntry.prototype.received = function(oElement, iContentId) {

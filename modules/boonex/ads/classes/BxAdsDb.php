@@ -454,6 +454,14 @@ class BxAdsDb extends BxBaseModTextDb
                     $sWhereClause = " AND `to`.`id`=:id";
                     break;
 
+                case 'accepted':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1]['content_id'] = (int)$aParams['content_id'];
+                    $aMethod['params'][1]['status'] = BX_ADS_OFFER_STATUS_ACCEPTED;
+
+                    $sWhereClause = " AND `to`.`content_id`=:content_id AND `to`.`status`=:status";
+                    break;
+
                 case 'content_author_id':
                     $aMethod['params'][1]['author_id'] = (int)$aParams['author_id'];
 
@@ -513,6 +521,16 @@ class BxAdsDb extends BxBaseModTextDb
             $aSet[$CNF['FIELD_OFR_CHANGED']] = time();
 
         return (int)$this->query("UPDATE `" . $CNF['TABLE_OFFERS'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+
+    public function deleteOffer($aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aWhere) || !is_array($aWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_OFFERS'] . "` WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
     }
 }
 

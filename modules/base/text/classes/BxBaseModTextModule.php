@@ -23,7 +23,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         parent::__construct($aModule);
     }
 
+
     // ====== ACTIONS METHODS
+
     public function actionEmbedPoll($iPollId = 0)
     {
         if(empty($iPollId) && bx_get('poll_id') !== false)
@@ -138,8 +140,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         if($oForm->getCleanValue('do_submit')) {
             $aResult = array();
-            if($this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS_ADMIN'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $iContentId)))
+            if($this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS_ADMIN'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $iContentId))) {
+                $this->onApprove($aContentInfo);
+
                 $aResult = array('msg' => _t('_sys_manage_txt_approved'), 'reload' => 1);
+            }
             else
                 $aResult = array('msg' => _t('_sys_manage_err_cannot_perform_action'));
 
@@ -147,57 +152,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         }
     }
 
-    protected function _getApproveForm($iContentId, $aContentInfo)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sForm = 'sys_manage';
-        if(!empty($CNF['OBJECT_FORM_MANAGE']))
-            $sForm = $CNF['OBJECT_FORM_MANAGE'];
-
-        $sFormDisplay = 'sys_manage_approve';
-        if(!empty($CNF['OBJECT_FORM_MANAGE_APPROVE']))
-            $sFormDisplay = $CNF['OBJECT_FORM_MANAGE_APPROVE'];
-
-        $oForm = BxTemplFormView::getObjectInstance($sForm, $sFormDisplay);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'approve';
-        $oForm->aInputs['content_id']['value'] = $iContentId;
-        foreach($oForm->aInputs['controls'] as $iKey => $mixedValue)
-            if(is_numeric($iKey) && isset($mixedValue['name']) && $mixedValue['name'] == 'do_submit')
-                $oForm->aInputs['controls'][$iKey]['value'] = _t('_sys_form_manage_input_do_submit_approve');
-
-        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
-            'content_id' => $iContentId,
-            'content_info' => $aContentInfo,
-            'override_result' => &$oForm
-        ));
-
-        return $oForm;
-    }
-
-    protected function _sendApproveMessage($iContentId, $aContentInfo, &$oForm)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sETemplate = 't_ManageApprove';
-        if(!empty($CNF['ETEMPLATE_MANAGE_APPROVE']))
-            $sETemplate = $CNF['ETEMPLATE_MANAGE_APPROVE'];
-
-        $aEParams = array(
-            'content_title' => !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-            'notes' => $oForm->getCleanValue('notes'),
-        );
-
-        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, array(
-            'content_id' => $iContentId,
-            'content_info' => $aContentInfo,
-            'form' => $oForm,
-            'email_template' => &$sETemplate,
-            'email_params' => &$aEParams
-        ));
-
-        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
-    }
 
     // ====== SERVICE METHODS
 
@@ -532,7 +486,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         return $iCount;
     }
-    
+
+
     // ====== PERMISSION METHODS
 
     /**
@@ -582,7 +537,17 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $this->_oDb->isPollPerformed($iObjectId, $iAuthorId, $iAuthorIp);
     }
 
+
     // ====== COMMON METHODS
+
+    public function onApprove($mixedContent)
+    {
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        $this->alertAfterApprove($mixedContent);
+    }
+
     public function alertAfterAdd($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -594,7 +559,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
             $sAction = 'deferred';
 
-        $aParams = $this->_alertParams($aContentInfo);
+        $aParams = $this->_alertParamsAdd($aContentInfo);
         bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->getName(), 'action' => $sAction, 'object_id' => $iId, 'sender_id' => $iAuthorId, 'extras' => &$aParams));
         bx_alert($this->getName(), $sAction, $iId, $iAuthorId, $aParams);
     }
@@ -608,6 +573,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $aParams = $this->_alertParams($aContentInfo);
         bx_alert($this->getName(), 'edited', $iId, false, $aParams);
     }
+    
+    public function alertAfterApprove($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->getName(), 'approved', $iId, false, $aParams);
+    }
 
     /**
      * Get array of params to be passed in Add/Edit Alert.
@@ -620,6 +595,15 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        return $aParams;
+    }
+
+    protected function _alertParamsAdd($aContentInfo)
+    {
+        $aParams = $this->_alertParams($aContentInfo);
+
+        $CNF = &$this->_oConfig->CNF;
 
         if(!empty($CNF['OBJECT_METATAGS']))
             $aParams['timeline_group'] = array(
@@ -694,9 +678,61 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $mResult;
     }
 
-    
+
     // ====== PROTECTED METHODS
-    
+
+    protected function _getApproveForm($iContentId, $aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sForm = 'sys_manage';
+        if(!empty($CNF['OBJECT_FORM_MANAGE']))
+            $sForm = $CNF['OBJECT_FORM_MANAGE'];
+
+        $sFormDisplay = 'sys_manage_approve';
+        if(!empty($CNF['OBJECT_FORM_MANAGE_APPROVE']))
+            $sFormDisplay = $CNF['OBJECT_FORM_MANAGE_APPROVE'];
+
+        $oForm = BxTemplFormView::getObjectInstance($sForm, $sFormDisplay);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'approve';
+        $oForm->aInputs['content_id']['value'] = $iContentId;
+        foreach($oForm->aInputs['controls'] as $iKey => $mixedValue)
+            if(is_numeric($iKey) && isset($mixedValue['name']) && $mixedValue['name'] == 'do_submit')
+                $oForm->aInputs['controls'][$iKey]['value'] = _t('_sys_form_manage_input_do_submit_approve');
+
+        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
+            'content_id' => $iContentId,
+            'content_info' => $aContentInfo,
+            'override_result' => &$oForm
+        ));
+
+        return $oForm;
+    }
+
+    protected function _sendApproveMessage($iContentId, $aContentInfo, &$oForm)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sETemplate = 't_ManageApprove';
+        if(!empty($CNF['ETEMPLATE_MANAGE_APPROVE']))
+            $sETemplate = $CNF['ETEMPLATE_MANAGE_APPROVE'];
+
+        $aEParams = array(
+            'content_title' => !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'notes' => $oForm->getCleanValue('notes'),
+        );
+
+        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, array(
+            'content_id' => $iContentId,
+            'content_info' => $aContentInfo,
+            'form' => $oForm,
+            'email_template' => &$sETemplate,
+            'email_params' => &$aEParams
+        ));
+
+        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
+    }
+
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;

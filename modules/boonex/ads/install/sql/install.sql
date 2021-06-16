@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `author` int(11) NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
-  `delivered` int(11) NOT NULL,
+  `shipped` int(11) NOT NULL,
   `received` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
-  `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
+  `status` enum('active','awaiting','offer','sold','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
@@ -522,7 +522,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_offers` (
   `amount` float NOT NULL default '0',
   `quantity` int(11) NOT NULL default '0',
   `message` text NOT NULL,
-  `status` enum('accepted','awaiting','declined') NOT NULL DEFAULT 'awaiting',
+  `status` enum('accepted','awaiting','declined','canceled') NOT NULL DEFAULT 'awaiting',
   PRIMARY KEY (`id`)
 );
 

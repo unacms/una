@@ -48,7 +48,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
-            'FIELD_DELIVERED' => 'delivered',
+            'FIELD_SHIPPED' => 'shipped',
             'FIELD_RECEIVED' => 'received',
             'FIELD_TITLE' => 'title',
             'FIELD_NAME' => 'name',
@@ -209,15 +209,25 @@ class BxAdsConfig extends BxBaseModTextConfig
                         'awaiting' => array('msg' => '_bx_ads_txt_processing_awaiting', 'type' => BX_INFORMER_ALERT),
                         'failed' => array('msg' => '_bx_ads_txt_processing_failed', 'type' => BX_INFORMER_ERROR)
                     ),
+                ),
+                'auction' => array (
+                    'name' => 'bx-ads-auction',
+                    'map' => array (
+                        'offer' => array('msg' => '_bx_ads_txt_msg_auction_offer', 'type' => BX_INFORMER_INFO),
+                        'sold' => array('msg' => '_bx_ads_txt_msg_auction_sold', 'type' => BX_INFORMER_INFO)
+                    ),
                 )
             ),
 
             // email templates
             'ETEMPLATE_INTERESTED' => 'bx_ads_interested',
             'ETEMPLATE_PURCHASED' => 'bx_ads_purchased',
+            'ETEMPLATE_SHIPPED' => 'bx_ads_shipped',
+            'ETEMPLATE_RECEIVED' => 'bx_ads_received',
             'ETEMPLATE_OFFER_ADDED' => 'bx_ads_offer_added',
             'ETEMPLATE_OFFER_ACCEPTED' => 'bx_ads_offer_accepted',
             'ETEMPLATE_OFFER_DECLINED' => 'bx_ads_offer_declined',
+            'ETEMPLATE_OFFER_CANCELED' => 'bx_ads_offer_canceled',
 
             // some language keys
             'T' => array (

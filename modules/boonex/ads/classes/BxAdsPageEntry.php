@@ -19,6 +19,24 @@ class BxAdsPageEntry extends BxBaseModTextPageEntry
         $this->MODULE = 'bx_ads';
 
         parent::__construct($aObject, $oTemplate);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($oInformer = BxDolInformer::getInstance($this->_oTemplate)) !== false) {
+            $aInformers = array();
+            $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
+
+            //--- Display 'auction' informer.
+            if(!empty($CNF['INFORMERS']['auction']) && isset($CNF['INFORMERS']['auction']['map'][$sStatus])) {
+                $aInformer = $CNF['INFORMERS']['auction'];
+                $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']);
+            }
+
+            //--- Add informers
+            if($aInformers)
+                foreach($aInformers as $aInformer)
+                    $oInformer->add($aInformer['name'], $this->_replaceMarkers($aInformer['msg']), $aInformer['type']);
+        }
     }
 
     public function getCode ()

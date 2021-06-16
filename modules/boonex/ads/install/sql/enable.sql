@@ -252,7 +252,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
 ('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30),
 ('bx_ads_view', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this,  ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 40),
-('bx_ads_view', 'bx_ads', 'delivered', '_bx_ads_menu_item_title_system_mark_delivered', '_bx_ads_menu_item_title_mark_delivered', 'javascript:void(0)', 'javascript:{js_object}.delivered(this, {content_id})', '', 'truck', '', 2147483647, 1, 0, 50),
+('bx_ads_view', 'bx_ads', 'shipped', '_bx_ads_menu_item_title_system_mark_shipped', '_bx_ads_menu_item_title_mark_shipped', 'javascript:void(0)', 'javascript:{js_object}.shipped(this, {content_id})', '', 'truck', '', 2147483647, 1, 0, 50),
 ('bx_ads_view', 'bx_ads', 'received', '_bx_ads_menu_item_title_system_mark_received', '_bx_ads_menu_item_title_mark_received', 'javascript:void(0)', 'javascript:{js_object}.received(this, {content_id})', '', 'clipboard-check', '', 2147483647, 1, 0, 55);
 
 -- MENU: all actions menu for view entry 
@@ -270,7 +270,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_ads_view_actions', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 40),
-('bx_ads_view_actions', 'bx_ads', 'delivered', '_bx_ads_menu_item_title_system_mark_delivered', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
+('bx_ads_view_actions', 'bx_ads', 'shipped', '_bx_ads_menu_item_title_system_mark_shipped', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
 ('bx_ads_view_actions', 'bx_ads', 'received', '_bx_ads_menu_item_title_system_mark_received', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 55),
 ('bx_ads_view_actions', 'bx_ads', 'review', '_bx_ads_menu_item_title_system_review_entry', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 190),
 ('bx_ads_view_actions', 'bx_ads', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
@@ -633,6 +633,9 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
 ('bx_ads', '_bx_ads_et_txt_name_interested', 'bx_ads_interested', '_bx_ads_et_txt_subject_interested', '_bx_ads_et_txt_body_interested'),
 ('bx_ads', '_bx_ads_et_txt_name_purchased', 'bx_ads_purchased', '_bx_ads_et_txt_subject_purchased', '_bx_ads_et_txt_body_purchased'),
+('bx_ads', '_bx_ads_et_txt_name_shipped', 'bx_ads_shipped', '_bx_ads_et_txt_subject_shipped', '_bx_ads_et_txt_body_shipped'),
+('bx_ads', '_bx_ads_et_txt_name_received', 'bx_ads_received', '_bx_ads_et_txt_subject_received', '_bx_ads_et_txt_body_received'),
 ('bx_ads', '_bx_ads_et_txt_name_offer_added', 'bx_ads_offer_added', '_bx_ads_et_txt_subject_offer_added', '_bx_ads_et_txt_body_offer_added'),
 ('bx_ads', '_bx_ads_et_txt_name_offer_accepted', 'bx_ads_offer_accepted', '_bx_ads_et_txt_subject_offer_accepted', '_bx_ads_et_txt_body_offer_accepted'),
-('bx_ads', '_bx_ads_et_txt_name_offer_declined', 'bx_ads_offer_declined', '_bx_ads_et_txt_subject_offer_declined', '_bx_ads_et_txt_body_offer_declined');
+('bx_ads', '_bx_ads_et_txt_name_offer_declined', 'bx_ads_offer_declined', '_bx_ads_et_txt_subject_offer_declined', '_bx_ads_et_txt_body_offer_declined'),
+('bx_ads', '_bx_ads_et_txt_name_offer_canceled', 'bx_ads_offer_canceled', '_bx_ads_et_txt_subject_offer_canceled', '_bx_ads_et_txt_body_offer_canceled');

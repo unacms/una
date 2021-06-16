@@ -9,9 +9,13 @@
  * @{
  */
 
+define('BX_ADS_STATUS_OFFER', 'offer');
+define('BX_ADS_STATUS_SOLD', 'sold');
+
 define('BX_ADS_OFFER_STATUS_ACCEPTED', 'accepted');
 define('BX_ADS_OFFER_STATUS_AWAITING', 'awaiting');
 define('BX_ADS_OFFER_STATUS_DECLINED', 'declined');
+define('BX_ADS_OFFER_STATUS_CANCELED', 'canceled');
 
 /**
  * Ads module
@@ -171,9 +175,32 @@ class BxAdsModule extends BxBaseModTextModule
         return echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
     }
 
-    public function actionDelivered()
+    public function actionCancelOffer()
     {
-        return echoJson($this->_actionMarkAs('delivered'));
+        $CNF = &$this->_oConfig->CNF;
+
+        $iOfferId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aOffer = $this->_oDb->getOffersBy(array(
+            'type' => 'id', 
+            'id' => $iOfferId
+        ));
+
+        if(empty($aOffer) || !is_array($aOffer))
+            return echoJson(array());
+
+        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_CANCELED), array($CNF['FIELD_OFR_ID'] => $iOfferId)))
+            return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
+
+        $this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $aOffer[$CNF['FIELD_OFR_CONTENT']]));
+
+        $this->onOfferCanceled($iOfferId);
+
+        return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_canceled'), 'reload' => 1));
+    }
+
+    public function actionShipped()
+    {
+        return echoJson($this->_actionMarkAs('shipped'));
     }
 
     public function actionReceived()
@@ -706,13 +733,18 @@ class BxAdsModule extends BxBaseModTextModule
             return array();
 
         $aEntry = $this->_oDb->getContentInfoById($iItemId);
-        if(empty($aEntry) || !is_array($aEntry) || (int)$aEntry[$CNF['FIELD_QUANTITY']] <= 0)
+        $iEntryQnt = (int)$aEntry[$CNF['FIELD_QUANTITY']];
+        if(empty($aEntry) || !is_array($aEntry) || ($iEntryQnt - $iItemCount) < 0)
             return array();
 
         if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
             return array();
 
-        $this->_oDb->updateEntriesBy(array($CNF['FIELD_QUANTITY'] => (int)$aEntry[$CNF['FIELD_QUANTITY']] - $iItemCount), array($CNF['FIELD_ID'] => $iItemId));
+        $iEntryQnt -= $iItemCount;
+        $this->_oDb->updateEntriesBy(array(
+            $CNF['FIELD_QUANTITY'] => $iEntryQnt,
+            $CNF['FIELD_STATUS'] => $iEntryQnt == 0 ? BX_ADS_STATUS_SOLD : BX_BASE_MOD_TEXT_STATUS_ACTIVE
+        ), array($CNF['FIELD_ID'] => $iItemId));
 
         bx_alert($this->getName(), 'license_register', 0, false, array(
             'product_id' => $iItemId,
@@ -721,6 +753,11 @@ class BxAdsModule extends BxBaseModTextModule
             'license' => $sLicense,
             'count' => $iItemCount
         ));
+
+        if($iEntryQnt == 0) {
+            $aParams = $this->_alertParams($aEntry);
+            bx_alert($this->getName(), 'sold', $iItemId, false, $aParams);
+        }
 
         $oClient = BxDolProfile::getInstanceMagic($iClientId);
         $oSeller = BxDolProfile::getInstanceMagic($iSellerId);
@@ -1017,6 +1054,22 @@ class BxAdsModule extends BxBaseModTextModule
         return $this->_oTemplate->entryOfferAccepted($iUserId, $aContent, $aOffer);
     }
 
+    public function isEntryActive($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_isModerator())
+            return true;
+
+        if(isset($CNF['FIELD_STATUS']) && !in_array($aContentInfo[$CNF['FIELD_STATUS']], array(BX_BASE_MOD_TEXT_STATUS_ACTIVE, BX_ADS_STATUS_OFFER, BX_ADS_STATUS_SOLD)))
+            return false;
+
+        if(isset($CNF['FIELD_STATUS_ADMIN']) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active')
+            return false;
+
+        return true;        
+    }
+
     public function isAuction($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1077,12 +1130,12 @@ class BxAdsModule extends BxBaseModTextModule
         return _t($sTxtError);
     }
 
-    public function isAllowedMarkDelivered($mixedContent, $isPerformAction = false)
+    public function isAllowedMarkShipped($mixedContent, $isPerformAction = false)
     {
-        return $this->checkAllowedMarkDelivered($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
+        return $this->checkAllowedMarkShipped($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    public function checkAllowedMarkDelivered($mixedContent, $isPerformAction = false)
+    public function checkAllowedMarkShipped($mixedContent, $isPerformAction = false)
     {
         $CNF = &$this->_oConfig->CNF;
         $sTxtError = '_sys_txt_access_denied';
@@ -1093,7 +1146,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($mixedContent) || !is_array($mixedContent))
             return _t($sTxtError);
 
-        if((int)$mixedContent[$CNF['FIELD_DELIVERED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
+        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
             return _t($sTxtError);
 
         return CHECK_ACTION_RESULT_ALLOWED;
@@ -1140,8 +1193,8 @@ class BxAdsModule extends BxBaseModTextModule
         sendMailTemplate($CNF['ETEMPLATE_OFFER_ADDED'], 0, $aContentInfo[$CNF['FIELD_AUTHOR']], array(
             'viewer_name' => $oViewer->getDisplayName(),
             'viewer_url' => $oViewer->getUrl(),
-            'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
                 'i' => $CNF['URI_VIEW_ENTRY'], 
                 $CNF['FIELD_ID'] => $iContentId
             ))
@@ -1164,14 +1217,17 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
+        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => BX_ADS_STATUS_OFFER), array($CNF['FIELD_ID'] => $iContentId)))
+            return;
+
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
 
         sendMailTemplate($CNF['ETEMPLATE_OFFER_ACCEPTED'], 0, $iOfferer, array(
             'offerer_name' => $oOfferer->getDisplayName(),
             'offerer_url' => $oOfferer->getUrl(),
-            'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
                 'i' => $CNF['URI_VIEW_ENTRY'], 
                 $CNF['FIELD_ID'] => $iContentId
             ))
@@ -1200,8 +1256,8 @@ class BxAdsModule extends BxBaseModTextModule
         sendMailTemplate($CNF['ETEMPLATE_OFFER_DECLINED'], 0, $iOfferer, array(
             'offerer_name' => $oOfferer->getDisplayName(),
             'offerer_url' => $oOfferer->getUrl(),
-            'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
                 'i' => $CNF['URI_VIEW_ENTRY'], 
                 $CNF['FIELD_ID'] => $iContentId
             ))
@@ -1211,10 +1267,100 @@ class BxAdsModule extends BxBaseModTextModule
         bx_alert($this->getName(), 'offer_declined', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
     }
 
+    public function onOfferCanceled($iOfferId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aOfferInfo = $this->_oDb->getOffersBy(array('type' => 'id', 'id' => $iOfferId));
+        if(empty($aOfferInfo) || !is_array($aOfferInfo))
+            return;
+
+        $iContentId = (int)$aOfferInfo[$CNF['FIELD_OFR_CONTENT']];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return;
+
+        $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
+        $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
+
+        sendMailTemplate($CNF['ETEMPLATE_OFFER_CANCELED'], 0, (int)$aContentInfo[$CNF['FIELD_AUTHOR']], array(
+            'offerer_name' => $oOfferer->getDisplayName(),
+            'offerer_url' => $oOfferer->getUrl(),
+            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'i' => $CNF['URI_VIEW_ENTRY'], 
+                $CNF['FIELD_ID'] => $iContentId
+            ))
+        ));
+
+        $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
+        bx_alert($this->getName(), 'offer_canceled', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+    }
 
     /**
      * Common methods.
      */
+    public function onShipped($mixedContent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+        $iContentId = (int)$mixedContent[$CNF['FIELD_ID']];
+
+        $aOffer = $this->_oDb->getOffersBy(array('type' => 'accepted', 'content_id' => $iContentId));
+        if(empty($aOffer) || !is_array($aOffer))
+            return;
+
+        $iClient = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];
+        $iVendor = (int)$mixedContent[$CNF['FIELD_AUTHOR']];
+        $oVendor = BxDolProfile::getInstanceMagic($iVendor);
+
+        sendMailTemplate($CNF['ETEMPLATE_SHIPPED'], 0, $iClient, array(
+            'vendor_name' => $oVendor->getDisplayName(),
+            'vendor_url' => $oVendor->getUrl(),
+            'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'i' => $CNF['URI_VIEW_ENTRY'], 
+                $CNF['FIELD_ID'] => $iContentId
+            ))
+        ));
+
+        $aParams = $this->_alertParams($mixedContent);
+        $aParams['offer_author_id'] = $iClient;
+        bx_alert($this->getName(), 'shipped', $iContentId, false, $aParams);
+    }
+
+    public function onReceived($mixedContent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+        $iContentId = (int)$mixedContent[$CNF['FIELD_ID']];
+
+        $aOffer = $this->_oDb->getOffersBy(array('type' => 'accepted', 'content_id' => $iContentId));
+        if(empty($aOffer) || !is_array($aOffer))
+            return;
+
+        $iClient = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];
+        $oClient = BxDolProfile::getInstanceMagic($iClient);
+
+        sendMailTemplate($CNF['ETEMPLATE_RECEIVED'], 0, (int)$mixedContent[$CNF['FIELD_AUTHOR']], array(
+            'client_name' => $oClient->getDisplayName(),
+            'client_url' => $oClient->getUrl(),
+            'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'i' => $CNF['URI_VIEW_ENTRY'], 
+                $CNF['FIELD_ID'] => $iContentId
+            ))
+        ));
+
+        $aParams = $this->_alertParams($mixedContent);
+        $aParams['offer_author_id'] = $iClient;
+        bx_alert($this->getName(), 'received', $iContentId, false, $aParams);
+    }
+
     public function processMetasAdd($iContentId)
     {
         if(!parent::processMetasAdd($iContentId))
@@ -1288,6 +1434,10 @@ class BxAdsModule extends BxBaseModTextModule
             return array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
         $this->$sMethodCheck($aContentInfo, true);
+
+        $sMethodOnResult = 'on' . bx_gen_method_name($sAction);
+        if(method_exists($this, $sMethodOnResult))
+            $this->$sMethodOnResult($aContentInfo);        
 
         return array(
             'reload' => 1
