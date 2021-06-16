@@ -83,6 +83,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         if($CNF['OBJECT_VIDEOS_TRANSCODERS'])
             $aTranscodersVideo = array (
                 'poster' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'gallery' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster_gallery']),
                 'mp4' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
                 'mp4_hd' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']),
             );
@@ -91,6 +92,8 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $aFile = $oStorage->getFile($iFile);
         if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
             return false;
+
+        $aTranscodersVideo['gallery']->getFileUrl($iFile); // it's needed to transcode gallery image if it's not available yet
 
         $this->_checkDuration($aContentInfo);
 
