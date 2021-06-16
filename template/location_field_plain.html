@@ -35,6 +35,10 @@
         if (sCity.length)
             sRet = (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + sRet;
 
+        if ('undefined' !== typeof(sMode) &&  'address_wo_zip' == sMode) {
+            return sCity.length && sStreet.length ? (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + (sCity.length ? sCity + ', ': '') + (sState.length ? sState + ', ': '') + sCountry : '';
+        }
+
         return sRet;
     }
 
@@ -86,6 +90,8 @@
                 return;
             }
             var a = [s];
+            if (s = getLocationString('address_wo_zip'))
+                a.push(s);
             if (s = getLocationString('zip_only'))
                 a.push(s);
             if (s = getLocationString('city_only'))
