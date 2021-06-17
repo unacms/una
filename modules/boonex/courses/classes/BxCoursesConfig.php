@@ -49,6 +49,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_VIEWS' => 'views',
+            'FIELD_STATUS' => 'status',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('name'),
             'FIELD_LOCATION' => 'location',

@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '5',
   `allow_contact_to` varchar(16) NOT NULL DEFAULT '3',
+  `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
 );
