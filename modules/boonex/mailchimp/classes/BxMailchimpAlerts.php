@@ -37,7 +37,10 @@ class BxMailchimpAlerts extends BxDolAlertsResponse
             $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
             
             if ($oAccount)
-                $this->_oModule->serviceUpdateAccount($oAccount->id());
+                if ('delete' == $o->sAction && isset($o->aExtras['type']) && 'system' == $o->aExtras['type'])
+                    $this->_oModule->serviceRemoveAccount($oAccount->id());
+                else
+                    $this->_oModule->serviceUpdateAccount($oAccount->id());
         }
     }    
 }
