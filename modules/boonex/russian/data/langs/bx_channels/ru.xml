@@ -42,6 +42,7 @@
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[Просмотреть канал]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Редактировать любой канал]]></string>
 	<string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Создавать канал автоматически]]></string>
+  <string name="_bx_channels_acl_action_create_channel_auto_info"><![CDATA[Автоматически создавать новый канал, когда новый хэштег упоминается кем-либо с этим уровнем]]></string>
 
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Редактировать канал]]></string>
 	<string name="_bx_channels_page_title_edit_profile"><![CDATA[Редактировать канал]]></string>
@@ -79,6 +80,8 @@
     <string name="_bx_channels_page_title_entries_toplevel"><![CDATA[Верхний уровень]]></string>
     <string name="_bx_channels_page_title_entries_of_author"><![CDATA[{display_name} - Каналы]]></string>
 
+    <string name="_bx_channels_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string>
+    <string name="_bx_channels_page_block_title_profile_subscribed_me"><![CDATA[Подписчики]]></string>
     <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Каналы - Действия]]></string>
     <string name="_bx_channels_page_block_title_entries_actions"><![CDATA[Каналы - Действия]]></string>
     <string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Просматриваемые каналы]]></string>

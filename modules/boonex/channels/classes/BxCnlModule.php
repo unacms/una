@@ -41,8 +41,9 @@ class BxCnlModule extends BxBaseModGroupsModule
          * Note! For now metatag object name is used here as module name, because usually it's equal to module's name. This should be changed in Ticket #1596
          * For now if module cannot be created then a channel for such tag shouldn't be created too.
          */
+
         $oModule = BxDolModule::getInstance($sModuleName);
-        if(empty($oModule))
+        if(empty($oModule) && $sModuleName != 'sys_cmts')
             return;
 
         /*
@@ -294,6 +295,10 @@ class BxCnlModule extends BxBaseModGroupsModule
             return $sError;
 
         $aEventContent = $this->_oDb->getContentById($aEvent['object_id']);
+        
+        if ($aEventContent['module_name'] == 'sys_cmts')
+            return CHECK_ACTION_RESULT_ALLOWED;
+            
         if(empty($aEventContent) || !is_array($aEventContent))
             return $sError;
 
@@ -307,15 +312,20 @@ class BxCnlModule extends BxBaseModGroupsModule
     {
         if(empty($aEvent) || !is_array($aEvent))
             return false;
-
+        
         $aEventContent = $this->_oDb->getContentById($aEvent['object_id']);
         if(empty($aEventContent) || !is_array($aEventContent))
             return false;
-
+       
         $sModule = $aEventContent['module_name'];
-        if(!BxDolRequest::serviceExists($sModule, 'get_timeline_post'))
+        $sClass = 'Module';
+        if($sModule == 'sys_cmts'){
+            $sClass = 'TemplCmtsServices';
+            $sModule = 'system';
+        }
+        
+        if(!BxDolRequest::serviceExists($sModule, 'get_timeline_post', $sClass))
             return false;
-
         /**
          * Prepare fake event array (only mandatory parameters) to get
          * necessary data (related to an 'original' event with hashtag/label) 
@@ -331,16 +341,15 @@ class BxCnlModule extends BxBaseModGroupsModule
             if(is_numeric($mixedAllowViewTo) && (int)$mixedAllowViewTo < 0)
                 $iOwnerId = abs($mixedAllowViewTo);
         }
-
         $aResult = BxDolService::call($sModule, 'get_timeline_post', array(array(
             'owner_id' => $iOwnerId,
             'object_id' => $iContentId,
             'object_privacy_view' => $mixedObjectPrivacyView
-        ), $aBrowseParams));
+        ), $aBrowseParams), $sClass);
 
         if(empty($aResult) || !is_array($aResult))
             return $aResult;
-
+        
         /**
          * Note. The context shouldn't be changed therefore 
          * use input event's context (owner_id) in returned results.
