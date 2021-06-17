@@ -43,8 +43,9 @@
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Edit Any Channel]]></string>
 	<string name="_bx_channels_acl_action_delete_any_profile"><![CDATA[Delete Any Channel]]></string>
   <string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Create Channel Auto]]></string>
-
-	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Edit Channel]]></string>
+  <string name="_bx_channels_acl_action_create_channel_auto_info"><![CDATA[Automatically create new channel when new hashtag is mentioned by anyone with this level]]></string>
+ 
+  <string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_title_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile_cover"><![CDATA[Edit Channel Cover]]></string>
 	<string name="_bx_channels_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
@@ -77,10 +78,12 @@
 	<string name="_bx_channels_page_title_entries_search"><![CDATA[Search]]></string>
   <string name="_bx_channels_page_title_sys_entries_toplevel"><![CDATA[Top level]]></string>
   <string name="_bx_channels_page_title_entries_toplevel"><![CDATA[Top level]]></string>
-        <string name="_bx_channels_page_title_sys_entries_of_author"><![CDATA[Сhannels of author]]></string>
-        <string name="_bx_channels_page_title_entries_of_author"><![CDATA[Сhannels by {display_name}]]></string>
+  <string name="_bx_channels_page_title_sys_entries_of_author"><![CDATA[Сhannels of author]]></string>
+  <string name="_bx_channels_page_title_entries_of_author"><![CDATA[Сhannels by {display_name}]]></string>
 
-        <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Channels actions]]></string>
+  <string name="_bx_channels_page_block_title_system_profile_subscribed_me"><![CDATA[Followers]]></string>
+  <string name="_bx_channels_page_block_title_profile_subscribed_me"><![CDATA[Followers]]></string>
+  <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Channels actions]]></string>
 	<string name="_bx_channels_page_block_title_entries_actions"><![CDATA[Channels actions]]></string>
 	<string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Followed Сhannels]]></string>
 	<string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Followed Сhannels]]></string>

@@ -61,8 +61,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
 
             'PARAM_DEFAULT_AUTHOR' => 'bx_channels_default_author',
             'PARAM_NUM_RSS' => 'bx_channels_num_rss',
-            'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_channels_num_connections_quick',
-
+          
             'PARAM_SEARCHABLE_FIELDS' => 'bx_channels_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_channels_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_channels_per_page_browse_recommended',

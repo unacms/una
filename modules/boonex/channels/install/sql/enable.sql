@@ -35,7 +35,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_channels_view_profile', 2, 'bx_channels', '', '_bx_channels_page_block_title_entry_parent', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:13:"entity_parent";}', 0, 0, 1, 1),
 ('bx_channels_view_profile', 3, 'bx_channels', '', '_bx_channels_page_block_title_entry_childs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:13:"entity_childs";}', 0, 0, 1, 1),
 ('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_search_results_by_hashtag', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:24:\"search_result_by_hashtag\";}', 0, 0, 0, 0),
-('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 1);
+('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 1),
+('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_subscribed_me', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:21:\"profile_subscribed_me\";}', 0, 1, 1, 0);
 
 -- PAGE: view closed profile 
 
@@ -289,7 +290,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_channels', 'create channel auto', NULL, '_bx_channels_acl_action_create_channel_auto', '', 1, 1);
+('bx_channels', 'create channel auto', NULL, '_bx_channels_acl_action_create_channel_auto', '_bx_channels_acl_action_create_channel_auto_info', 1, 1);
 SET @iIdActionCreateChannelAuto = LAST_INSERT_ID();
 
 SET @iUnauthenticated = 1;
