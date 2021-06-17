@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `bx_spaces_data` (
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
+  `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`space_name`, `space_desc`)
 );

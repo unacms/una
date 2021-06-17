@@ -60,6 +60,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_ALLOW_CONTACT_TO' => 'allow_contact_to',
             'FIELD_VIEWS' => 'views',
+			'FIELD_STATUS' => 'status',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('org_name'),
             'FIELD_LOCATION' => 'location',
