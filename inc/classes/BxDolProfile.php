@@ -427,7 +427,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         // create system event before deletion
         $isStopDeletion = false;
-        bx_alert('profile', 'before_delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent, 'stop_deletion' => &$isStopDeletion));
+        bx_alert('profile', 'before_delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent, 'stop_deletion' => &$isStopDeletion, 'type' => $aProfileInfo['type']));
         if ($isStopDeletion)
             return false;
 
@@ -459,7 +459,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             return false;
 
         // create system event
-        bx_alert('profile', 'delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent));
+        bx_alert('profile', 'delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent, 'type' => $aProfileInfo['type']));
 
         // unset class instance to prevent creating the instance again
         $this->_iProfileID = 0;

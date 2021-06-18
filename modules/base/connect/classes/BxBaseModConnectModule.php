@@ -185,7 +185,6 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
             // create account
             $aFieldsAccount['password'] = genRndPwd();
-            $aFieldsAccount['email_confirmed'] = $this->_oConfig->isAlwaysConfirmEmail; 
             if (!($iAccountId = $oFormAccount->insert($aFieldsAccount)))
                 return _t('_sys_txt_error_account_creation');
 
@@ -211,6 +210,10 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
             else {
                 $iProfileId = $iAccountProfileId;
             }
+            
+            $oAccount = BxDolAccount::getInstance($iAccountId);
+            if ($oAccount)
+                $oAccount->updateEmailConfirmed($this->_oConfig->isAlwaysConfirmEmail);
 
             // send email with password
             sendMailTemplate($this->_oConfig->sEmailTemplatePasswordGenerated, $iAccountId, $iProfileId, array('password' => $aFieldsAccount['password']), BX_EMAIL_SYSTEM);
