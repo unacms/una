@@ -20,7 +20,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_posts_per_page_for_favorites_lists', '5', @iCategId, '_bx_posts_option_per_page_for_favorites_lists', 'digit', '', '', '', 17),
 ('bx_posts_rss_num', '10', @iCategId, '_bx_posts_option_rss_num', 'digit', '', '', '', 20),
 ('bx_posts_searchable_fields', 'title,text', @iCategId, '_bx_posts_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_posts_auto_activation_for_categories', 'on', @iCategId, '_bx_posts_option_auto_activation_for_categories', 'checkbox', '', '', '', 35);
+('bx_posts_auto_activation_for_categories', 'on', @iCategId, '_bx_posts_option_auto_activation_for_categories', 'checkbox', '', '', '', 35),
+('bx_posts_allow_content_author_delete_any_comments', 'on', @iCategId, '_bx_posts_option_allow_content_author_delete_any_comments', 'checkbox', '', '', '', 40);
 
 -- PAGE: create entry
 

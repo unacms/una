@@ -14,7 +14,8 @@
     <string name="_bx_posts_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_posts_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
     <string name="_bx_posts_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
-  
+    <string name="_bx_posts_option_allow_content_author_delete_any_comments"><![CDATA[Allow content author to delete any comments posted on their content page]]></string>
+
     <string name="_bx_posts_form_entry"><![CDATA[Posts]]></string>
     <string name="_bx_posts_form_entry_display_add"><![CDATA[Add Post]]></string>
     <string name="_bx_posts_form_entry_display_edit"><![CDATA[Edit Post]]></string>
