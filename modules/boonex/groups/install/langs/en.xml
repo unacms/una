@@ -11,6 +11,8 @@
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
     <string name="_bx_groups_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
+    <string name="_bx_groups_option_allow_content_author_delete_any_comments"><![CDATA[Allow content author to delete any comments posted on their content page]]></string>
+    <string name="_bx_groups_option_allow_group_admin_delete_any_comments"><![CDATA[Allow group admin to delete any comments posted into group context]]></string>
 
     <string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
     <string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>

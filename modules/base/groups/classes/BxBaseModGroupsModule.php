@@ -1109,6 +1109,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
     }
+    
+    public function serviceCheckAllowedDeleteCommentsInContext($iGroupProfileId, $iProfileId) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        if (getParam($CNF['PARAM_ALLOW_GROUP_ADMIN_DELETE_ANY_COMMENTS']) == 'on' &&  BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR === $this->_oDb->getRole($iGroupProfileId, $iProfileId)){
+            return CHECK_ACTION_RESULT_ALLOWED;    
+        }
+        
+        return CHECK_ACTION_RESULT_NOT_ALLOWED;
+    }
 
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
