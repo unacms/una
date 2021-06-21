@@ -66,7 +66,7 @@ class BxMailchimpModule extends BxDolModule
 
         $aRet = array();
         foreach ($a['lists'] as $r)
-            $aRet[$r['id']] = $r['name'];
+            $aRet[] = array('key' => $r['id'], 'value' => $r['name']);
 
         if ($bAddEmptyValue)
             array_unshift($aRet, _t('_sys_please_select'));

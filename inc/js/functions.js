@@ -874,6 +874,11 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             // process syntax hightlighing
             if ('undefined' !== typeof(Prism) && eElement.size())
                 Prism.highlightAllUnder(eElement[0]);
+
+            // flickity update
+            setTimeout(function () {
+                eElement.find('.flickity-enabled').flickity('resize');
+            }, 250);
         }
         if ('undefined' !== typeof(oCallback)) {
             oCallback(eElement);
