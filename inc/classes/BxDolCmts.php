@@ -1058,7 +1058,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if($this->isRemoveAllowedAll($isPerformAction))
             return true;
 
-        return abs($aCmt['cmt_author_id']) == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction);
+        if(abs($aCmt['cmt_author_id']) == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction))
+            return true;
+        
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_delete_comments', array($this->getId(), $this->_getAuthorId()));
+        if($mixedResult === CHECK_ACTION_RESULT_ALLOWED)
+            return true;
+        
+        return false;
     }
 
     public function isRemoveAllowedAll ($isPerformAction = false)
