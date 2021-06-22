@@ -49,6 +49,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_VIEWS' => 'views',
+            'FIELD_STATUS' => 'status',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELD_LOCATION' => 'location',
@@ -86,7 +87,9 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_groups_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_groups_internal_notifications',
-
+            'PARAM_ALLOW_CONTENT_AUTHOR_DELETE_ANY_COMMENTS' => 'bx_groups_allow_content_author_delete_any_comments',
+            'PARAM_ALLOW_GROUP_ADMIN_DELETE_ANY_COMMENTS' => 'bx_groups_allow_group_admin_delete_any_comments',
+            
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',
             'OBJECT_STORAGE_COVER' => 'bx_groups_pics',

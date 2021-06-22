@@ -286,8 +286,8 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     if(!isset($CNF['OBJECT_METATAGS']))
                         break;
                     if ($aSearchParam['type'] == 'location_radius'){
-                        if ($aSearchParam['value']['string'] != ''){
-                            list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip, $sStreet, $sStreetNumber, $iRadius) = $aSearchParam['value']['array'];
+                        list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip, $sStreet, $sStreetNumber, $iRadius) = $aSearchParam['value']['array'];
+                        if ($fLatitude && $fLongitude && $iRadius) {
                             $aBounds = bx_get_location_bounds_latlng($fLatitude, $fLongitude, $iRadius);   
                             $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], '', '', '', '', $aBounds);
                         }

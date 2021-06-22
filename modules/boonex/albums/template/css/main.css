@@ -173,8 +173,8 @@
     height: 11.25rem;
 }
 .bx-albums-unit-image {
-    display: -webkit-flex;
-    display: flex;
+    display: -webkit-inline-flex;
+    display: inline-flex;
     -webkit-justify-content: center;
     justify-content: center;
     -webkit-align-items: center;

@@ -581,8 +581,10 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 
             // delete present and future memberships
             $bResult = $this->oDb->deleteLevelByProfileId($iProfileId);
-            if($bResult)
+            if($bResult) {
                 $this->oDb->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . time());
+                unset(self::$_aCacheData[$iProfileId . '_0']);
+            }
 
             return $bResult;
         }
@@ -600,6 +602,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
             $this->oDb->deleteLevelByProfileId($iProfileId, true); 
             $this->oDb->clearActionsTracksForMember($iProfileId);
             $this->oDb->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . time());
+            unset(self::$_aCacheData[$iProfileId . '_0']);
         }
         else
             $iDateStarts = $aMembershipLatest['date_expires'];
