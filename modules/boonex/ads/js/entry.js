@@ -22,11 +22,35 @@ BxAdsEntry.prototype.interested = function(oElement, iContentId) {
     this._performAction(oElement, 'interested', iContentId);
 };
 
+BxAdsEntry.prototype.show = function(oElement, iContentId) {
+    this._performAction(oElement, 'show', iContentId);
+};
+
+BxAdsEntry.prototype.hide = function(oElement, iContentId) {
+    this._performAction(oElement, 'hide', iContentId);
+};
+
 BxAdsEntry.prototype.makeOffer = function(oElement, iContentId) {
     this._performAction(oElement, 'make_offer', iContentId);
 };
 
 BxAdsEntry.prototype.onMakeOffer = function(oData) {};
+
+BxAdsEntry.prototype.acceptOffer = function(oElement, iOfferId) {
+    var $this = this;
+
+    bx_confirm('', function() {
+        $this._performAction(oElement, 'accept_offer', iOfferId);
+    });
+};
+
+BxAdsEntry.prototype.declineOffer = function(oElement, iOfferId) {
+    var $this = this;
+
+    bx_confirm('', function() {
+        $this._performAction(oElement, 'decline_offer', iOfferId);
+    });
+};
 
 BxAdsEntry.prototype.cancelOffer = function(oElement, iOfferId) {
     var $this = this;

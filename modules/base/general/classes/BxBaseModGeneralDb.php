@@ -60,6 +60,11 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 if(empty($aParams['conditions']))
                     break;
 
+                if(isset($aParams['count']) && $aParams['count'] === true) {
+                    $aMethod['name'] = 'getOne';
+                    $sSelectClause = 'COUNT(`' . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . '`)';
+                }
+
                 if(is_array($aParams['conditions']))
                     $sWhereClause .= " AND " . $this->arrayToSQL($aParams['conditions'], ' AND ');
                 else if(is_string($aParams['conditions']) && !empty($aParams['bindings']) && is_array($aParams['bindings'])) {

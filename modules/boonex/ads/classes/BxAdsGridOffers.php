@@ -34,30 +34,20 @@ class BxAdsGridOffers extends BxTemplGrid
 
     public function performActionAccept()
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         $iId = $this->_getId();
-        if($iId && $this->_oModule->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_ACCEPTED), array($CNF['FIELD_OFR_ID'] => $iId))) {
-            $this->_oModule->onOfferAccepted($iId);
-
-            $aResult = array('grid' => $this->getCode(false),  'blick' => $iId);
-        }
+        if($iId && $this->_oModule->offerAccept($iId))
+            $aResult = array('grid' => $this->getCode(false), 'blick' => $iId);
         else
             $aResult = array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
         echoJson($aResult);
     }
-    
+
     public function performActionDecline()
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         $iId = $this->_getId();
-        if($iId && $this->_oModule->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_DECLINED), array($CNF['FIELD_OFR_ID'] => $iId))) {
-            $this->_oModule->onOfferDeclined($iId);
-
-            $aResult = array('grid' => $this->getCode(false),  'blick' => $iId);
-        }
+        if($iId && $this->_oModule->offerDecline($iId))
+            $aResult = array('grid' => $this->getCode(false), 'blick' => $iId);
         else
             $aResult = array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
