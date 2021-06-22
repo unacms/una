@@ -1876,6 +1876,8 @@
         <string name="_sys_acl_action_comments_pin"><![CDATA[Comments Pin]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Comments Post]]></string>
 	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Comments Remove All]]></string>
+  <string name="_sys_acl_action_comments_remove_in_own_content"><![CDATA[Comments Remove All In Own Content]]></string>
+  <string name="_sys_acl_action_comments_remove_in_group_context"><![CDATA[Comments Remove All In Context for Context's admins]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Comments Remove Own]]></string>
 	<string name="_sys_acl_action_connect"><![CDATA[Connect (befriend, follow, etc)]]></string>
 	<string name="_sys_acl_action_create_account"><![CDATA[Create Account]]></string>
