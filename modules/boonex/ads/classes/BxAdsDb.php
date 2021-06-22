@@ -454,6 +454,18 @@ class BxAdsDb extends BxBaseModTextDb
                     $sWhereClause = " AND `to`.`id`=:id";
                     break;
 
+                case 'content_id':
+                    $aMethod['params'][1]['content_id'] = (int)$aParams['content_id'];
+
+                    $sWhereClause = " AND `to`.`content_id`=:content_id";
+
+                    if(isset($aParams['count']) && $aParams['count'] === true) {
+                        $aMethod['name'] = 'getOne';
+
+                        $sSelectClause = "COUNT(`to`.`id`)";
+                    }
+                    break;
+
                 case 'accepted':
                     $aMethod['name'] = 'getRow';
                     $aMethod['params'][1]['content_id'] = (int)$aParams['content_id'];

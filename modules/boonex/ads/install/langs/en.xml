@@ -541,6 +541,8 @@
     <string name="_bx_ads_txt_msg_auction_sold"><![CDATA[This ad was sold.]]></string>
     <string name="_bx_ads_txt_msg_author_notified"><![CDATA[Advertiser was notified, that you're interested in his ad. Please wait.]]></string>
     <string name="_bx_ads_txt_msg_offer_added"><![CDATA[Your offer was added. Advertiser will be notified about it. Please wait.]]></string>
+    <string name="_bx_ads_txt_msg_offer_accepted"><![CDATA[The offer was accepted.]]></string>
+    <string name="_bx_ads_txt_msg_offer_declined"><![CDATA[The offer was declined.]]></string>
     <string name="_bx_ads_txt_msg_offer_canceled"><![CDATA[The offer was canceled.]]></string>
     <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[You already made an offer. Please wait for the results.]]></string>
     <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Your offer was already accepted.]]></string>

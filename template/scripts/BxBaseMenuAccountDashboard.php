@@ -25,8 +25,7 @@ class BxBaseMenuAccountDashboard extends BxTemplMenu
      */
     protected function _isVisible ($a)
     {
-        // default visible settings
-        if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
+        if(!parent::_isVisible($a))
             return false;
 
         switch ($a['name']) {

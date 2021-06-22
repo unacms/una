@@ -48,6 +48,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
+            'FIELD_SOLD' => 'sold',
             'FIELD_SHIPPED' => 'shipped',
             'FIELD_RECEIVED' => 'received',
             'FIELD_TITLE' => 'title',

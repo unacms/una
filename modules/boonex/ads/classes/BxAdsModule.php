@@ -114,6 +114,16 @@ class BxAdsModule extends BxBaseModTextModule
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_author_notified')));
     }
 
+    public function actionShow()
+    {
+        return echoJson($this->_actionChangeStatus(BX_BASE_MOD_TEXT_STATUS_ACTIVE));
+    }
+
+    public function actionHide()
+    {
+        return echoJson($this->_actionChangeStatus(BX_BASE_MOD_TEXT_STATUS_HIDDEN));
+    }
+
     public function actionMakeOffer()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -175,25 +185,32 @@ class BxAdsModule extends BxBaseModTextModule
         return echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
     }
 
-    public function actionCancelOffer()
+    public function actionAcceptOffer()
     {
-        $CNF = &$this->_oConfig->CNF;
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        $iOfferId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        $aOffer = $this->_oDb->getOffersBy(array(
-            'type' => 'id', 
-            'id' => $iOfferId
-        ));
-
-        if(empty($aOffer) || !is_array($aOffer))
-            return echoJson(array());
-
-        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_CANCELED), array($CNF['FIELD_OFR_ID'] => $iOfferId)))
+        if(!$this->offerAccept($iId))
             return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
 
-        $this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $aOffer[$CNF['FIELD_OFR_CONTENT']]));
+        return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_accepted'), 'reload' => 1));
+    }
 
-        $this->onOfferCanceled($iOfferId);
+    public function actionDeclineOffer()
+    {
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$this->offerDecline($iId))
+            return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
+
+        return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_declined'), 'reload' => 1));
+    }
+            
+    public function actionCancelOffer()
+    {
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$this->offerCancel($iId))
+            return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));     
 
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_canceled'), 'reload' => 1));
     }
@@ -743,7 +760,8 @@ class BxAdsModule extends BxBaseModTextModule
         $iEntryQnt -= $iItemCount;
         $this->_oDb->updateEntriesBy(array(
             $CNF['FIELD_QUANTITY'] => $iEntryQnt,
-            $CNF['FIELD_STATUS'] => $iEntryQnt == 0 ? BX_ADS_STATUS_SOLD : BX_BASE_MOD_TEXT_STATUS_ACTIVE
+            $CNF['FIELD_STATUS'] => $iEntryQnt == 0 ? BX_ADS_STATUS_SOLD : BX_BASE_MOD_TEXT_STATUS_ACTIVE,
+            $CNF['FIELD_SOLD'] => $iEntryQnt == 0 ? time() : 0,
         ), array($CNF['FIELD_ID'] => $iItemId));
 
         bx_alert($this->getName(), 'license_register', 0, false, array(
@@ -1151,7 +1169,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
-    
+
     public function isAllowedMarkReceived($mixedContent, $isPerformAction = false)
     {
         return $this->checkAllowedMarkReceived($mixedContent, $isPerformAction) === CHECK_ACTION_RESULT_ALLOWED;
@@ -1280,6 +1298,9 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
+        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $iContentId)))
+            return;
+
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
 
@@ -1361,6 +1382,39 @@ class BxAdsModule extends BxBaseModTextModule
         bx_alert($this->getName(), 'received', $iContentId, false, $aParams);
     }
 
+    public function offerAccept($iId) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_ACCEPTED), array($CNF['FIELD_OFR_ID'] => $iId)))
+            return false;
+    
+        $this->onOfferAccepted($iId);
+        return true;        
+    }
+
+    public function offerDecline($iId) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_DECLINED), array($CNF['FIELD_OFR_ID'] => $iId)))
+            return false;
+    
+        $this->onOfferDeclined($iId);
+        return true;        
+    }
+
+    public function offerCancel($iId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_CANCELED), array($CNF['FIELD_OFR_ID'] => $iId)))
+            return false;
+
+        $this->onOfferCanceled($iId);
+        return true;
+    }
+
     public function processMetasAdd($iContentId)
     {
         if(!parent::processMetasAdd($iContentId))
@@ -1438,6 +1492,24 @@ class BxAdsModule extends BxBaseModTextModule
         $sMethodOnResult = 'on' . bx_gen_method_name($sAction);
         if(method_exists($this, $sMethodOnResult))
             $this->$sMethodOnResult($aContentInfo);        
+
+        return array(
+            'reload' => 1
+        );
+    }
+
+    protected function _actionChangeStatus($sStatus)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        if(($mixedResult = $this->checkAllowedEdit($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return array('msg' => $mixedResult);
+
+        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => $sStatus), array($CNF['FIELD_ID'] => $iContentId)))
+            return array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
         return array(
             'reload' => 1

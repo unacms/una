@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `author` int(11) NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `sold` int(11) NOT NULL,
   `shipped` int(11) NOT NULL,
   `received` int(11) NOT NULL,
   `category` int(11) NOT NULL,
