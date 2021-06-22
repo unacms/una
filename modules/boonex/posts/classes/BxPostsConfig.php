@@ -91,7 +91,6 @@ class BxPostsConfig extends BxBaseModTextConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_posts_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_posts_per_page_browse_showcase',
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_posts_per_page_for_favorites_lists',
-            'PARAM_ALLOW_CONTENT_AUTHOR_DELETE_ANY_COMMENTS' => 'bx_posts_allow_content_author_delete_any_comments',
 
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_posts_auto_activation_for_categories',

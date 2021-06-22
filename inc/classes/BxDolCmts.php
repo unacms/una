@@ -1061,9 +1061,22 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(abs($aCmt['cmt_author_id']) == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction))
             return true;
         
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_delete_comments', array($this->getId(), $this->_getAuthorId()));
-        if($mixedResult === CHECK_ACTION_RESULT_ALLOWED)
+        $aContentInfo = BxDolRequest::serviceExists($this->_aSystem['module'], 'get_all') ? BxDolService::call($this->_aSystem['module'], 'get_all', array(array('type' => 'id', 'id' => $this->getId()))) : array();
+        $oModule = BxDolModule::getInstance($this->_aSystem['module']);
+        $CNF = $oModule->_oConfig->CNF;
+        
+        if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $this->_getAuthorId() && $this->checkAction('comments remove in own content', $isPerformAction)){
             return true;
+        }
+        
+        if (isset($CNF['FIELD_ALLOW_VIEW_TO']) &&  $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0){
+            $iGroupProfileId = -(int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+            $oProfileContext = BxDolProfile::getInstance($iGroupProfileId);
+            $oModule = BxDolModule::getInstance($oProfileContext->getModule()); 
+            if ($oModule->getRole($iGroupProfileId, $this->_getAuthorId()) === BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR && $this->checkAction('comments remove in group context', $isPerformAction)){
+                return true;
+            }
+        }
         
         return false;
     }

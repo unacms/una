@@ -2000,29 +2000,6 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         return $this->serviceCheckAllowedWithContent('comments_post', $iContentId);
     }
-    
-    public function serviceCheckAllowedDeleteComments($iContentId, $iProfileId) 
-    {
-        $CNF = &$this->_oConfig->CNF;
-        if (!isset($CNF['PARAM_ALLOW_CONTENT_AUTHOR_DELETE_ANY_COMMENTS']))
-            return CHECK_ACTION_RESULT_NOT_ALLOWED;
-        
-        if (getParam($CNF['PARAM_ALLOW_CONTENT_AUTHOR_DELETE_ANY_COMMENTS']) == 'on'){
-            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-            
-            if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId)
-                return CHECK_ACTION_RESULT_ALLOWED;    
-            
-            if (isset($CNF['FIELD_ALLOW_VIEW_TO']) &&  $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0){
-                $iGroupProfileId = -(int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-                $oProfileContext = BxDolProfile::getInstance($iGroupProfileId);
-                $mixedResult = BxDolService::call($oProfileContext->getModule(), 'check_allowed_delete_comments_in_context', array($iGroupProfileId, $iProfileId));
-                if ($mixedResult === CHECK_ACTION_RESULT_ALLOWED)
-                    return CHECK_ACTION_RESULT_ALLOWED;
-            }
-        }
-        return CHECK_ACTION_RESULT_NOT_ALLOWED;
-    }
 
     public function serviceGetContentOwnerProfileId ($iContentId)
     {
