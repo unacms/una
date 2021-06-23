@@ -428,8 +428,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     protected function _getDataSqCounter($sQuery, $sFilter)
     {
-        $oDb = BxDolDb::getInstance();
-        return $oDb->getOne("SELECT COUNT(*) " . substr($sQuery, strpos($sQuery, " FROM" )));
+        $oDb = BxDolDb::getInstance();        
+        return $oDb->getOne(preg_replace("/^.+FROM\s+`?" . $this->_aOptions['table'] . "`?/", "SELECT COUNT(*) FROM `" . $this->_aOptions['table'] . "`", $sQuery));
     }
    
     protected function _getDataSqlWhereClause($sFilter, &$sOrderByFilter)

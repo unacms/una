@@ -193,8 +193,12 @@ class BxBaseGrid extends BxDolGrid
         if (!empty($this->_aConfirmMessages) && is_array($this->_aConfirmMessages))
             $sConfirmMessages = json_encode($this->_aConfirmMessages);
 
-		$iColumns = count($this->_aOptions['fields']);
-		$aVarsHead = $this->_getRowHead();
+        $iColumns = count($this->_aOptions['fields']);
+        $aVarsHead = $this->_getRowHead();
+
+        $sClassHeader = '';
+        if($this->_aOptions['show_total_count'] == 0)
+            $sClassHeader .= ' bx-gh-no-counter';
 
         $aVars = array (
             'object' => $this->_sObject,
@@ -243,6 +247,7 @@ class BxBaseGrid extends BxDolGrid
             'bx_if:display_header' => array (
                 'condition' => $isDisplayHeader,
                 'content' => array (
+                    'class' => $sClassHeader,
                     'bx_if:actions_independent' => array (
                         'condition' => !empty($this->_aOptions['actions_independent']),
                         'content' => array(
