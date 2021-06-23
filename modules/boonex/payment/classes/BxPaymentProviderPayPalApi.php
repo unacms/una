@@ -74,7 +74,7 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
 
         $this->_bCheckAmount = true;
         $this->_iMode = (int)$this->getOption('mode');
-        $this->_sEndpoint = 'https://api-m.' . ($this->_iMode == PP_API_MODE_TEST ? 'sandbox' : '') . '.paypal.com/';
+        $this->_sEndpoint = 'https://api-m' . ($this->_iMode == PP_API_MODE_TEST ? '.sandbox' : '') . '.paypal.com/';
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo)
