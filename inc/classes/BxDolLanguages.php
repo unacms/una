@@ -243,15 +243,17 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
     function _t_format_size ($iSize)
     {
         $a = array (
-            1024 => '_sys_format_size_b',
-            1024*1024 => '_sys_format_size_kb',
-            1024*1024*1024 => '_sys_format_size_mb',
-            1024*1024*1024*1024 => '_sys_format_size_gb',
-            1024*1024*1024*1024*1024 => '_sys_format_size_tb',
+            '_sys_format_size_b'  => 1024,
+            '_sys_format_size_kb' => 1024*1024,
+            '_sys_format_size_mb' => 1024*1024*1024,
+            '_sys_format_size_gb' => 1024*1024*1024*1024,
+            '_sys_format_size_tb' => 1024*1024*1024*1024*1024,
         );
-        foreach($a as $i => $sKey)
-            if($iSize < $i)
+
+        foreach($a as $sKey => $i)
+            if ($iSize < $i)
                 return $this->_t($sKey, round($iSize / ($i / 1024), 1));
+
         return $this->_t('_sys_format_size_b', 0);
     }
 

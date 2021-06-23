@@ -1065,7 +1065,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $oModule = BxDolModule::getInstance($this->_aSystem['module']);
         $CNF = $oModule->_oConfig->CNF;
         
-        if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $this->_getAuthorId() && $this->checkAction('comments remove in own content', $isPerformAction)){
+        if (isset($CNF['FIELD_AUTHOR']) && $aContentInfo[$CNF['FIELD_AUTHOR']] == $this->_getAuthorId() && $this->checkAction('comments remove in own content', $isPerformAction)){
             return true;
         }
         
