@@ -774,6 +774,14 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionCmtRemoveAll = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments remove in own content', NULL, '_sys_acl_action_comments_remove_in_own_content', '', 1, 3);
+SET @iIdActionCmtRemoveInOwnContent = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments remove in group context', NULL, '_sys_acl_action_comments_remove_in_group_context', '', 1, 3);
+SET @iIdActionCmtRemoveInGroupContext = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'comments pin', NULL, '_sys_acl_action_comments_pin', '', 1, 3);
 SET @iIdActionCmtPin = LAST_INSERT_ID();
 
@@ -982,6 +990,14 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- comments remove all
 (@iModerator, @iIdActionCmtRemoveAll),
 (@iAdministrator, @iIdActionCmtRemoveAll),
+
+-- comments remove in own content
+(@iModerator, @iIdActionCmtRemoveInOwnContent),
+(@iAdministrator, @iIdActionCmtRemoveInOwnContent),
+
+-- comments remove in group context
+(@iModerator, @iIdActionCmtRemoveInGroupContext),
+(@iAdministrator, @iIdActionCmtRemoveInGroupContext),
 
 -- comments pin
 (@iModerator, @iIdActionCmtPin),

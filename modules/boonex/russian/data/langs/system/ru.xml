@@ -1861,7 +1861,9 @@
 	<string name="_sys_acl_action_comments_edit_own"><![CDATA[Комментарии - Редактировать Свои]]></string>
         <string name="_sys_acl_action_comments_pin"><![CDATA[Комментарии - Закреплять]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Комментарии - Размещать]]></string>
-	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Комментарии - Удалить Все]]></string>
+	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Комментарии - Удалять Все]]></string>
+  <string name="_sys_acl_action_comments_remove_in_own_content"><![CDATA[Комментарии - Удалять в собственном контенте]]></string>
+  <string name="_sys_acl_action_comments_remove_in_group_context"><![CDATA[Комментарии - Удалять в контексте для администраторов контекста]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Комментарии - Удалить Собственные]]></string>
 	<string name="_sys_acl_action_connect"><![CDATA[Установить связь (подружиться, следить и т.п.)]]></string>
 	<string name="_sys_acl_action_create_account"><![CDATA[Создать Аккаунт]]></string>
