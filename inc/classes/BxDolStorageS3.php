@@ -77,7 +77,7 @@ class BxDolStorageS3 extends BxDolStorage
     /**
      * Start file downloading by remote id. If file is private then token is checked.
      */
-    public function download ($sRemoteId, $sToken = false)
+    public function download ($sRemoteId, $sToken = false, $bForceDownloadDialog = false)
     {
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
@@ -94,17 +94,20 @@ class BxDolStorageS3 extends BxDolStorage
 
         $sUrl = $this->getFileUrlById($aFile['id']);
 
+        if ($bForceDownloadDialog) {
+            // download remote file to tmp
+            $sTmpFilePath = BX_DIRECTORY_PATH_TMP . 'dwnld_'.$sRemoteId;
+            if (!file_exists($sTmpFilePath)) {
+                @file_put_contents($sTmpFilePath, bx_file_get_contents($sUrl));
+            }
 
-        // download remote file to tmp
-        $sTmpFilePath = BX_DIRECTORY_PATH_TMP . 'dwnld_'.$sRemoteId;
-        if (!file_exists($sTmpFilePath)) {
-            @file_put_contents($sTmpFilePath, bx_file_get_contents($sUrl));
-        }
-
-        // read from a local storage to be able to send it as attahment and give it a proper name
-        if (!file_exists($sTmpFilePath) || !bx_smart_readfile($sTmpFilePath, $aFile['file_name'], $aFile['mime_type'], $aFile['private'] && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl, $aFile['private'] ? 'private' : 'public', 'attachment')) {
-            $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
-            return false;
+            // read from a local storage to be able to send it as attachment and give it a proper name
+            if (!file_exists($sTmpFilePath) || !bx_smart_readfile($sTmpFilePath, $aFile['file_name'], $aFile['mime_type'], $aFile['private'] && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl, $aFile['private'] ? 'private' : 'public', 'attachment')) {
+                $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
+                return false;
+            }
+        } else {
+            header("Location: " . $sUrl);
         }
 
         return parent::download($aFile);
