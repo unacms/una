@@ -109,10 +109,7 @@
     <string name="_bx_courses_page_title_entry_fans"><![CDATA[Students]]></string>
     <string name="_bx_courses_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_courses_page_title_profile_comments"><![CDATA[Comments]]></string>
-<<<<<<< HEAD
-=======
     <string name="_bx_courses_page_block_title_entry_reports"><![CDATA[Reports]]></string>
->>>>>>> 6d91a1c15... Ticket #3367 - Usage in Cources. Minor changes in Groups. 
     <string name="_bx_courses_page_title_sys_profile_info"><![CDATA[Course Info]]></string>
     <string name="_bx_courses_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
     <string name="_bx_courses_page_title_sys_profile_pricing"><![CDATA[Pricing]]></string>
