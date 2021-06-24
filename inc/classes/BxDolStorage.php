@@ -650,8 +650,9 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Download file.
      * @param array $aFile downloading file info.
+     * @param boolean $bForceDownloadDialog if downloading to a local file system first is required and/or send the outout as attachment rather than inline.
      */
-    public function download ($aFile)
+    public function download ($aFile, $sToken = false, $bForceDownloadDialog = false)
     {
     	$bRet = true;
         bx_alert($this->_aObject['object'], 'file_downloaded', $aFile['id'], bx_get_logged_profile_id(), array(
