@@ -113,7 +113,7 @@ class BxFilesModule extends BxBaseModTextModule
             return;
         }
 
-        if (!$oStorage->download($aFile['remote_id'], $sToken)) {
+        if (!$oStorage->download($aFile['remote_id'], $sToken, true)) {
             $this->_oTemplate->displayErrorOccured();
             return;
         }
