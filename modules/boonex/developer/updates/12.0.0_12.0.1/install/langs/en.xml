@@ -20,8 +20,8 @@
     <string_add name="_bx_dev_pgt_txt_keys_language"><![CDATA[Language]]></string_add>
     <string_add name="_bx_dev_pgt_inf_keys_language"><![CDATA[Leave empty to add in all available languages.]]></string_add>
     <string_add name="_bx_dev_pgt_txt_sys_keys_category"><![CDATA[Category]]></string_add>
-    <string_add name="_bx_dev_pgt_txt_keys_category"><![CDATA[Ñategory]]></string_add>
-    <string_add name="_bx_dev_pgt_err_keys_category"><![CDATA[You need to select a ñategory]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_category"><![CDATA[Category]]></string_add>
+    <string_add name="_bx_dev_pgt_err_keys_category"><![CDATA[You need to select a category]]></string_add>
     <string_add name="_bx_dev_pgt_txt_sys_keys_content"><![CDATA[Keys]]></string_add>
     <string_add name="_bx_dev_pgt_txt_keys_content"><![CDATA[Keys]]></string_add>
     <string_add name="_bx_dev_pgt_err_keys_content"><![CDATA[You need to enter a value here]]></string_add>

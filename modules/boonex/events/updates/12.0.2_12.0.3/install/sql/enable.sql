@@ -40,6 +40,8 @@ DELETE FROM `sys_menu_items` WHERE `set_name`='bx_events_snippet_meta' AND `name
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `markers`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
 ('bx_events_snippet_meta', 'bx_events', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 10);
 
+UPDATE `sys_menu_items` SET `visibility_custom`='a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}' WHERE `set_name`='bx_events_snippet_meta' AND `name`='join';
+
 UPDATE `sys_menu_items` SET `name`='profile-stats-manage-events' WHERE `set_name`='sys_profile_stats' AND `module`='bx_events' AND `name`='profile-stats-manage-groups';
 
 

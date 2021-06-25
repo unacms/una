@@ -51,6 +51,8 @@ DELETE FROM `sys_menu_items` WHERE `set_name`='bx_courses_snippet_meta' AND `nam
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `markers`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
 ('bx_courses_snippet_meta', 'bx_courses', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 9);
 
+UPDATE `sys_menu_items` SET `visibility_custom`='a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}' WHERE `set_name`='bx_courses_snippet_meta' AND `name`='join';
+
 
 -- ACL
 SET @iIdActionUsePaidJoin = (SELECT `ID` FROM `sys_acl_actions` WHERE `Module`='bx_courses' AND `Name`='use paid join' LIMIT 1);

@@ -35,6 +35,8 @@ DELETE FROM `sys_menu_items` WHERE `set_name`='bx_organizations_snippet_meta' AN
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `markers`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
 ('bx_organizations_snippet_meta', 'bx_organizations', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 10);
 
+UPDATE `sys_menu_items` SET `visibility_custom`='a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}' WHERE `set_name`='bx_organizations_snippet_meta' AND `name`='join';
+
 UPDATE `sys_menu_items` SET `link`='page.php?i=organization-profile-subscriptions&profile_id={member_id}#subscribers' WHERE `set_name`='sys_profile_stats' AND `name`='profile-stats-subscribed-me';
 
 
