@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_ads_alert_action_doInterest_personal"><![CDATA[Кто-то заинтересовался вашим объявлением]]></string_add>
+</resources>

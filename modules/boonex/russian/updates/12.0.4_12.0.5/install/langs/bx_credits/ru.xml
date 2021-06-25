@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string_add>
+    <string_add name="_bx_credits_form_credit_input_message_inf_wr"><![CDATA[Платежные инструкции и другие примечания]]></string_add>
+    <string_add name="_bx_credits_form_credit_input_message_inf_wc"><![CDATA[Подтверждение оплаты и другие примечания]]></string_add>
+
+	<string_upd name="_bx_credits_et_txt_body_withdraw_requested"><![CDATA[{email_header}
+<p><a href="{profile_link}">{profile_name}</a> запросил снятие <b>{amount}</b> кредитов с его/её баланса.</p>
+<p>Текущий коэффициент вывода: <b>{rate}</b></p>
+<p>Подтвердить вывод можно перейдя по <a href="{confirm_url}">ссылке</a>.</p>
+<p>Примечания от <b>{profile_name}</b>:<br />{message}</p>
+{email_footer}]]></string_upd>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_dev_bp_txt_sys_block_async"><![CDATA[Асинхронный режим]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string_add>
+    <string_add name="_bx_dev_bp_txt_sys_block_submenu"><![CDATA[Подменю блока]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_submenu"><![CDATA[Подменю блока]]></string_add>
+    <string_add name="_bx_dev_bp_txt_sys_block_tabs"><![CDATA[Использовать подменю-вкладки]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_tabs"><![CDATA[Использовать подменю блока в виде вкладок]]></string_add>
+    <string_add name="_bx_dev_bp_txt_sys_block_hidden_on"><![CDATA[Скрыть на]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_hidden_on"><![CDATA[Скрыть на(в)]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_hidden_on_phone"><![CDATA[телефоне]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_hidden_on_tablet"><![CDATA[планшете]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_hidden_on_mobile"><![CDATA[мобильном приложении]]></string_add>
+	<string_add name="_bx_dev_pgt_btn_manage_gl_add_keys"><![CDATA[Добавить ключи]]></string_add>
+	<string_add name="_bx_dev_pgt_txt_keys_add_popup"><![CDATA[Добавить ключи]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_form"><![CDATA[Ключи]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_display_add"><![CDATA[Добавить ключи]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_sys_keys_language"><![CDATA[Язык]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_language"><![CDATA[Язык]]></string_add>
+    <string_add name="_bx_dev_pgt_inf_keys_language"><![CDATA[Оставьте пустым, чтобы добавить во все доступные языки.]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_sys_keys_category"><![CDATA[Категория]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_category"><![CDATA[Категория]]></string_add>
+    <string_add name="_bx_dev_pgt_err_keys_category"><![CDATA[Вам нужно выбрать категорию]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_sys_keys_content"><![CDATA[Ключи]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_content"><![CDATA[Ключи]]></string_add>
+    <string_add name="_bx_dev_pgt_err_keys_content"><![CDATA[Здесь нужно ввести значение]]></string_add>
+    <string_add name="_bx_dev_pgt_inf_keys_content"><![CDATA[Используйте XML формат, как показано в примере ниже:<br />&lt;string name="_key_first"&gt;&lt;![CDATA[Первое значение]]&gt;&lt;/string&gt;<br />&lt;string name="_key_second"&gt;&lt;![CDATA[Второе значение]]&gt;&lt;/string&gt;]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_sys_keys_replace"><![CDATA[Заменить]]></string_add>
+    <string_add name="_bx_dev_pgt_txt_keys_replace"><![CDATA[Принудительно заменить, если существует]]></string_add>
+    <string_add name="_bx_dev_pgt_btn_sys_keys_submit"><![CDATA[Выполнить]]></string_add>
+    <string_add name="_bx_dev_pgt_btn_keys_submit"><![CDATA[Выполнить]]></string_add>
+    <string_add name="_bx_dev_pgt_btn_sys_keys_cancel"><![CDATA[Отмена]]></string_add>
+    <string_add name="_bx_dev_pgt_btn_keys_cancel"><![CDATA[Отмена]]></string_add>
+    <string_add name="_bx_dev_pgt_msg_keys_added"><![CDATA[Было добавлено {0} ключей]]></string_add>
+</resources>
