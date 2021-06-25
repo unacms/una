@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_payment_options_category_general"><![CDATA[General]]></string_add>
+    <string_add name="_bx_payment_options_category_commissions"><![CDATA[Commissions]]></string_add>
+	<string_add name="_bx_payment_option_inv_issue_day"><![CDATA[Day of month when invoices are automatically generated (1, 2, 3, etc)]]></string_add>
+    <string_add name="_bx_payment_option_inv_lifetime"><![CDATA[Due date - days after invoice date]]></string_add>
+    <string_add name="_bx_payment_option_inv_expiraction_notify"><![CDATA[Number of days before invoice expiration to notify payer]]></string_add>
+
+	<string_upd name="_bx_payment_grid_column_title_cms_installment"><![CDATA[Fixed fee]]></string_upd>
+    <string_upd name="_bx_payment_grid_column_title_inv_commissionaire_id"><![CDATA[Payee]]></string_upd>
+    <string_upd name="_bx_payment_grid_column_title_inv_committent_id"><![CDATA[Payer]]></string_upd>
+	<string_upd name="_bx_payment_popup_title_cms_add"><![CDATA[Add Monthly Commission]]></string_upd>
+    <string_upd name="_bx_payment_popup_title_cms_edit"><![CDATA[Edit Monthly Commission]]></string_upd>
+	<string_upd name="_bx_payment_form_commissions_input_installment_sys"><![CDATA[Fixed fee]]></string_upd>
+    <string_upd name="_bx_payment_form_commissions_input_installment"><![CDATA[Fixed fee]]></string_upd>
+	<string_upd name="_bx_payment_et_txt_body_checkout_offline"><![CDATA[{email_header}
+<p>Hello,</p>
+<p>A site member <a href="{profile_link}">{profile_name}</a> wanted to pay you with cash for:</p>
+<p>{items}</p>
+<p>Amount: {amount}<br />Date: {date}</p>
+<p>Go to the <a href="{pending_orders_link}">pending orders page</a> to process the order once the payment is received.</p>
+{email_footer}]]></string_upd>
+</resources>
