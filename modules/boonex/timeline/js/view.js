@@ -1046,7 +1046,7 @@ BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
                 $this.initSeeMore($(this), false);
 
                 //-- Init Flickity
-                $this.initFlickity();
+                $this.initFlickity($this.oView);
 
                 //--- Init Video Autoplay
                 $this.initVideosAutoplay($this.oView);
@@ -1058,7 +1058,7 @@ BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
                 $this.initSeeMore(oItems, false);
 
                 //-- Init Flickity
-                $this.initFlickity();
+                $this.initFlickity($this.oView);
 
                 //--- Init Video Layout
                 if($this._sVideosAutoplay != 'off') 
@@ -1126,7 +1126,7 @@ BxTimelineView.prototype._onGetPosts = function(oData)
             oItems.html(sItems).bxProcessHtml();
 
             this.blink(oItems);
-            this.initFlickity();
+            this.initFlickity(this.oView);
 
             onComplete();
             return;
@@ -1143,7 +1143,7 @@ BxTimelineView.prototype._onGetPosts = function(oData)
                 this.initMasonry();
 
             this.blink(oItems);
-            this.initFlickity();
+            this.initFlickity(this.oView);
 
             onComplete();
             return;
@@ -1163,7 +1163,7 @@ BxTimelineView.prototype._onGetPost = function(oData)
         $this.onFindOverflow(oElement);
     });
 
-    this.initFlickity();
+    this.initFlickity(this.oView);
 };
 
 BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction)
