@@ -376,7 +376,7 @@ BxTimelinePost.prototype._onGetPost = function(oData)
                             $this.onFindOverflow(oElement);
                         });
 
-                        $this.initFlickity();
+                        $this.initFlickity($this.oView);
                     });
 
                     if($this._sVideosAutoplay != 'off')
@@ -389,7 +389,7 @@ BxTimelinePost.prototype._onGetPost = function(oData)
                             $this.onFindOverflow(oElement);
                         });
 
-                        $this.initFlickity();
+                        $this.initFlickity($this.oView);
                     });
                     break;
             }
