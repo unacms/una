@@ -74,24 +74,24 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
             $sPeriodUnit = $oForm->getCleanValue('period_unit');
 
             if(!empty($iPeriod) && empty($sPeriodUnit)) 
-                return echoJson(array('msg' => _t('_bx_groups_form_price_input_err_period_unit')));
+                return echoJson(array('msg' => _t($CNF['T']['err_period_unit'])));
 
             $aPrice = $this->_oModule->_oDb->getPrices(array('type' => 'by_prpp', 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId, 'period' => $iPeriod, 'period_unit' => $sPeriodUnit));
             if(!empty($aPrice) && is_array($aPrice))
-                return echoJson(array('msg' => _t('_bx_groups_err_price_duplicate')));
+                return echoJson(array('msg' => _t($CNF['T']['err_price_duplicate'])));
 
             $iId = (int)$oForm->insert(array('profile_id' => $this->_iGroupProfileId, 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iRoleId) + 1));
             if($iId != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
-                $aRes = array('msg' => _t('_bx_groups_err_cannot_perform'));
+                $aRes = array('msg' => _t($CNF['T']['err_cannot_perform']));
 
             echoJson($aRes);
             return;
         }
 
         bx_import('BxTemplFunctions');
-        $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_groups_popup_title_price_add'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
+        $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t($CNF['T']['popup_title_price_add']), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,
@@ -123,13 +123,13 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
             if($oForm->update($aItem['id']) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
-                $aRes = array('msg' => _t('_bx_groups_err_cannot_perform'));
+                $aRes = array('msg' => _t($CNF['T']['err_cannot_perform']));
 
             return echoJson($aRes);
         }
 
         bx_import('BxTemplFunctions');
-        $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_groups_popup_title_price_edit'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
+        $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t($CNF['T']['popup_title_price_edit']), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,
@@ -157,7 +157,7 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
                 $iAffected++;
             }
 
-        return echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_bx_groups_err_cannot_perform')));
+        return echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['err_cannot_perform'])));
     }
 
     protected function _addJsCss()

@@ -246,7 +246,11 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'txt_buy_title' => '_bx_events_grid_action_title_buy_title',
                 'txt_cart_item_title' => '_bx_events_txt_cart_item_title',
                 'txt_subscribe_title' => '_bx_events_grid_action_title_subscribe_title',
+                'popup_title_price_add' => '_bx_events_popup_title_price_add',
+                'popup_title_price_edit' => '_bx_events_popup_title_price_edit',
                 'msg_performed' => '_bx_events_msg_performed',
+                'err_period_unit' => '_bx_events_form_price_input_err_period_unit',
+                'err_price_duplicate' => '_bx_events_err_price_duplicate',
                 'err_cannot_perform' => '_bx_events_err_cannot_perform',
             ),
 
