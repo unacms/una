@@ -3,6 +3,8 @@ SET @sName = 'bx_payment';
 -- SETTINGS
 UPDATE `sys_options_categories` SET `name`='bx_payment_general', `caption`='_bx_payment_options_category_general' WHERE `name`=@sName;
 
+SET @iTypeId = (SELECT `id` FROM `sys_options_types` WHERE `name`=@sName LIMIT 1);
+
 DELETE FROM `sys_options_categories` WHERE `name`='bx_payment_commissions';
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_payment_commissions', '_bx_payment_options_category_commissions', 10);
