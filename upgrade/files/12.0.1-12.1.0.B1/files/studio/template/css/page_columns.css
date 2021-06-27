@@ -1,0 +1,47 @@
+/*--- 2 columns ---*/
+.bx-std-pc-stretch {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+.bx-std-pc-vstretch {
+    width: 100%
+}
+
+div.bx-std-page-columns-cnt {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+}
+div.bx-std-page-column.bx-std-page-menu {
+    position: relative;
+    -webkit-flex: 0 0 230px;
+    flex: 0 0 230px;
+
+    width: 230px;
+
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
+}
+div.bx-std-page-column.bx-std-page-menu div.bx-std-page-column-cnt {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+    
+div.bx-std-page-column.bx-std-page-content {
+    position: relative;
+    -webkit-flex-grow: 2;
+    flex-grow: 2;
+
+    overflow-x: hidden;
+}
+div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
+    width: 100%;
+}
