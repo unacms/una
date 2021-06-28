@@ -1065,6 +1065,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         $sDbName = defined('BX_DATABASE_NAME') ? BX_DATABASE_NAME : '';
         if (is_array($sDbName))
             $sDbName = array_shift($sDbName);
+
         return array(
             'from' => array('{db_name}'),
             'to' => array($sDbName),
