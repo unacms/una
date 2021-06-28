@@ -1,36 +1,41 @@
-<?php defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    UnaUpgrade UNA Upgrade Script
+ * @defgroup    UnaCore UNA Core
  * @{
  */
 
-define('BX_UPGRADE_DB_FULL_VISUAL_PROCESSING', true);
-define('BX_UPGRADE_DB_FULL_DEBUG_MODE', true);
+define('BX_DB_MODE_SILENT', PDO::ERRMODE_SILENT);
+define('BX_DB_MODE_EXCEPTION', PDO::ERRMODE_EXCEPTION);
 
-define('BX_UPGRADE_DB_ERR_CONNECT_FAILD', 1);
-define('BX_UPGRADE_DB_ERR_QUERY_ERROR', 2);
-define('BX_UPGRADE_DB_ERR_ESCAPE', 3);
+define('BX_DB_ERR_CONNECT_FAILD', 1);
+define('BX_DB_ERR_QUERY_ERROR', 2);
+define('BX_DB_ERR_ESCAPE', 3);
 
-define('BX_UPGRADE_PDO_STATE_SUCCESS', '00000');
+define('BX_PDO_STATE_NOT_EXECUTED', NULL);
+define('BX_PDO_STATE_SUCCESS', '00000');
 
-class BxDolUpgradeDb
+class BxDolDb extends BxDolFactory implements iBxDolSingleton
 {	
     protected static $_rLink;
     protected static $_aDbCacheData;
 
     protected static $_aParams;
     protected static $_sParamsCacheName = 'sys_options';
-    protected static $_sParamsCacheNameMixed = 'sys_options_mixed';
+    protected static $_sParamsCacheNameMixed = 'sys_options_mixed_';
+    protected static $_sParamsCacheNameMix = 'sys_options_mix_';
 
     protected static $_sErrorKey = 'bx_db_error';
     protected static $_aErrors = array(
-    	BX_UPGRADE_DB_ERR_CONNECT_FAILD => 'Database connect failed',
-    	BX_UPGRADE_DB_ERR_QUERY_ERROR => 'Database query error',
-    	BX_UPGRADE_DB_ERR_ESCAPE => 'Escape string error'
+    	BX_DB_ERR_CONNECT_FAILD => 'Database connect failed',
+    	BX_DB_ERR_QUERY_ERROR => 'Database query error',
+    	BX_DB_ERR_ESCAPE => 'Escape string error'
     );
+
+    protected static $_bReadOnlyMode = true;
+    protected static $_bMultuServersMode = false;
 
 	protected $_bPdoPersistent;
 	protected $_iPdoFetchType;
@@ -47,30 +52,61 @@ class BxDolUpgradeDb
     /**
      * set database parameters and connect to it
      */
-    protected function __construct()
+    protected function __construct($aDbConf = false)
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
+        parent::__construct();
+
 		$this->_bPdoPersistent = true;
+        if (defined('BX_DATABASE_PERSISTENT'))
+            $this->_bPdoPersistent = (bool)BX_DATABASE_PERSISTENT;
+
         $this->_iPdoFetchType = PDO::FETCH_ASSOC;
-        $this->_iPdoErrorMode = PDO::ERRMODE_EXCEPTION;
+        $this->_iPdoErrorMode = BX_DB_MODE_EXCEPTION;
 
         $this->_bErrorChecking = true;
         $this->_aError = array();
 
         $this->_sStorageEngine = 'MYISAM';
+        if (defined('BX_DATABASE_ENGINE'))
+            $this->_sStorageEngine = BX_DATABASE_ENGINE;
 
         $this->_sCharset = 'utf8mb4';
-
-        $this->_sHost = is_array(BX_DATABASE_HOST) ? array_values(BX_DATABASE_HOST)[0] : BX_DATABASE_HOST;
-        $this->_sPort = is_array(BX_DATABASE_PORT) ? array_values(BX_DATABASE_PORT)[0] : BX_DATABASE_PORT;
-        $this->_sSocket = is_array(BX_DATABASE_SOCK) ? array_values(BX_DATABASE_SOCK)[0] : BX_DATABASE_SOCK;
-        $this->_sDbname = is_array(BX_DATABASE_NAME) ? array_values(BX_DATABASE_NAME)[0] : BX_DATABASE_NAME;
-        $this->_sUser = is_array(BX_DATABASE_USER) ? array_values(BX_DATABASE_USER)[0] : BX_DATABASE_USER;
-        $this->_sPassword = is_array(BX_DATABASE_PASS) ? array_values(BX_DATABASE_PASS)[0] : BX_DATABASE_PASS;
+        if($aDbConf === false) {
+            $this->_sHost = BX_DATABASE_HOST;
+            $this->_sPort = BX_DATABASE_PORT;
+            $this->_sSocket = BX_DATABASE_SOCK;
+            $this->_sDbname = BX_DATABASE_NAME;
+            $this->_sUser = BX_DATABASE_USER;
+            $this->_sPassword = BX_DATABASE_PASS;
+        } 
+        else {
+            $this->_sHost = $aDbConf['host'];
+            $this->_sPort = $aDbConf['port'];
+            $this->_sSocket = $aDbConf['sock'];
+            $this->_sDbname = $aDbConf['name'];
+            $this->_sUser = $aDbConf['user'];
+            $this->_sPassword = $aDbConf['pwd'];
+            if(isset($aDbConf['charset']))
+            	$this->_sCharset = $aDbConf['charset'];
+            if(isset($aDbConf['error_checking']))
+                $this->_bErrorChecking = $aDbConf['error_checking'];
+            if(isset($aDbConf['storage_engine']))
+            	$this->_sStorageEngine = $aDbConf['storage_engine'];
+        }
 
         @set_exception_handler(array($this, 'pdoExceptionHandler'));
+    }
+
+    /**
+     * Prevent cloning the instance
+     */
+    public function __clone()
+    {
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+            trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
     /**
@@ -78,12 +114,24 @@ class BxDolUpgradeDb
      */
     public static function getInstance()
     {
+        $null = null;
+        return self::getInstanceWithConf(false, $null);
+    }
+    
+    public static function getInstanceWithConf($aDbConf, &$sError)
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
-            if(!defined('BX_DATABASE_HOST'))
+            if($aDbConf === false && !defined('BX_DATABASE_HOST'))
                 return null;
 
-            $o = new BxDolUpgradeDb();
-            $o->connect();
+            $o = new BxDolDb($aDbConf);
+            $sErrorMessage = $o->connect();
+            if($sErrorMessage) {
+                if($sError !== null)
+                    $sError = $sErrorMessage;
+
+                return null;
+            }
 
 			$GLOBALS['bxDolClasses'][__CLASS__] = $o;
         }
@@ -96,6 +144,40 @@ class BxDolUpgradeDb
     	return self::$_rLink;
     }
 
+    public function setReadOnlyMode($b)
+    {
+        if ($b == self::$_bReadOnlyMode)
+            return;
+        self::$_bReadOnlyMode = $b;
+        if (self::$_bMultuServersMode) {
+            $this->disconnect();
+            $this->connect();
+        }
+    }
+
+    protected function balancer()
+    {
+        // regular mode - one DB server
+        if (!is_array($this->_sHost))
+            return array($this->_sHost, $this->_sPort, $this->_sSocket, $this->_sUser, $this->_sPassword, $this->_sDbname);
+
+        $iServersNum = count($this->_sHost);
+        if ($iServersNum > 1)
+            self::$_bMultuServersMode = true;
+
+        // in read/write mode always use first server, which should be always master (also check for regular mode but with array with 1 item)        
+        if (!self::$_bReadOnlyMode || 1 == $iServersNum)
+            $i = 0;
+        // in case of 2 servers - always use second server, in read only mode
+        elseif (2 == $iServersNum)
+            $i = 1;
+        // when there are more that 2 servers, randomly select read only server
+        else
+            $i = rand(1, $iServersNum-1);
+            
+        return array($this->_sHost[$i], $this->_sPort[$i], $this->_sSocket[$i], $this->_sUser[$i], $this->_sPassword[$i], $this->_sDbname[$i]);
+    }
+
     /**
      * connect to database with appointed parameters
      */
@@ -104,30 +186,34 @@ class BxDolUpgradeDb
     	if(self::$_rLink)
     		return;
 
-    	try {
-	    	$sDsn = "mysql:host=" . $this->_sHost . ";";
-	   		$sDsn .= $this->_sPort ? "port=" . $this->_sPort . ";" : "";
-	   		$sDsn .= $this->_sSocket ? "unix_socket=" . $this->_sSocket . ";" : "";
-	    	$sDsn .= "dbname=" . $this->_sDbname . ";charset=" . $this->_sCharset;
+        list ($sHost, $sPort, $sSocket, $sUser, $sPassword, $sDBName) = $this->balancer();
 
-	        self::$_rLink = new PDO($sDsn, $this->_sUser, $this->_sPassword, array(
+    	try {   
+	    	$sDsn = "mysql:host=" . $sHost . ";";
+	   		$sDsn .= $sPort ? "port=" . $sPort . ";" : "";
+	   		$sDsn .= $sSocket ? "unix_socket=" . $sSocket . ";" : "";
+	    	$sDsn .= "dbname=" . $sDBName . ";charset=" . $this->_sCharset;
+
+	        self::$_rLink = new PDO($sDsn, $sUser, $sPassword, array(
 				PDO::ATTR_ERRMODE => $this->_iPdoErrorMode,
 				PDO::ATTR_DEFAULT_FETCH_MODE => $this->_iPdoFetchType,
 				PDO::ATTR_PERSISTENT => $this->_bPdoPersistent
 	        ));
 
-	    	$this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
+            $this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
             $this->pdoExec("SET sql_mode = ''");
+            if (0 == strcasecmp($this->_sStorageEngine, 'INNODB'))
+                $this->pdoExec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
 
             $sVer = $this->getVersion();
             $sStorageEngine = !$sVer || version_compare($sVer, '5.7.5', '>=') ? 'default_storage_engine' : 'storage_engine';
             $this->pdoExec("SET $sStorageEngine=" . $this->_sStorageEngine);
 
-			self::$_aDbCacheData = array();
+			$this->cleanMemoryAll();
     	}
     	catch (PDOException $oException) {
     		$oException->errorInfo[self::$_sErrorKey] = array(
-    			'code' => BX_UPGRADE_DB_ERR_CONNECT_FAILD,
+    			'code' => BX_DB_ERR_CONNECT_FAILD,
     			'message' => $oException->getMessage(),
     			'trace' => $oException->getTrace()
     		);
@@ -180,11 +266,19 @@ class BxDolUpgradeDb
      */
     public function pdoExceptionHandler($oException)
     {
-    	if(!($oException instanceof PDOException))
-    		return;
+        if(!($oException instanceof PDOException)) {
+            throw $oException;
+            return;
+        }
+
+		if(!isset($oException->errorInfo[self::$_sErrorKey]))
+			$oException->errorInfo[self::$_sErrorKey] = array(
+				'code' => BX_DB_ERR_QUERY_ERROR,
+				'message' => !empty($oException->errorInfo[2]) ? $oException->errorInfo[2] : $oException->getMessage(),
+				'trace' => $oException->getTrace()
+			);
 
     	$this->error($oException->errorInfo[self::$_sErrorKey]);
-    	return;
     }
 
     /**
@@ -333,13 +427,13 @@ class BxDolUpgradeDb
      */
     public function fillArray($oStatement, $aBindings = array(), $iFetchType = PDO::FETCH_ASSOC)
     {
-    	return $this->getAll($oStatement, $aBindings);
+    	return $this->getAll($oStatement, $aBindings, $iFetchType);
     }
 
 	/**
      * execute sql query and return table of records as result
      */
-    public function getAllWithKey($oStatement, $sFieldKey, $aBindings = array())
+    public function getAllWithKey($oStatement, $sFieldKey, $aBindings = array(), $iFetchType = PDO::FETCH_ASSOC)
     {
     	$aResult = array();
         if(!$oStatement)
@@ -347,11 +441,11 @@ class BxDolUpgradeDb
 		else if(!($oStatement instanceof PDOStatement) && is_string($oStatement))
 			$oStatement = $this->prepare($oStatement);
 
-        $aRow = $this->getFirstRow($oStatement, $aBindings, PDO::FETCH_ASSOC);
+        $aRow = $this->getFirstRow($oStatement, $aBindings, $iFetchType);
         while(!empty($aRow)) {
         	$aResult[$aRow[$sFieldKey]] = $aRow;
 
-        	$aRow = $this->getNextRow(PDO::FETCH_ASSOC);
+        	$aRow = $this->getNextRow($iFetchType);
         }
 
         return $aResult;
@@ -360,7 +454,7 @@ class BxDolUpgradeDb
     /**
      * execute sql query and return table of records as result
      */
-    public function getPairs($oStatement, $sFieldKey, $sFieldValue, $aBindings = array())
+    public function getPairs($oStatement, $sFieldKey, $sFieldValue, $aBindings = array(), $iFetchType = PDO::FETCH_ASSOC)
     {
     	$aResult = array();
         if(!$oStatement)
@@ -368,11 +462,11 @@ class BxDolUpgradeDb
 		else if(!($oStatement instanceof PDOStatement) && is_string($oStatement))
 			$oStatement = $this->prepare($oStatement);
 
-        $aRow = $this->getFirstRow($oStatement, $aBindings, PDO::FETCH_ASSOC);
+        $aRow = $this->getFirstRow($oStatement, $aBindings, $iFetchType);
         while(!empty($aRow)) {
         	$aResult[$aRow[$sFieldKey]] = $aRow[$sFieldValue];
 
-        	$aRow = $this->getNextRow(PDO::FETCH_ASSOC);
+        	$aRow = $this->getNextRow($iFetchType);
         }
 
         return $aResult;
@@ -432,24 +526,43 @@ class BxDolUpgradeDb
 		if(!$oStatement || !($oStatement instanceof PDOStatement))
             return false;
 
-		if($oStatement->errorCode() == BX_UPGRADE_PDO_STATE_SUCCESS)
+		if($oStatement->errorCode() == BX_PDO_STATE_SUCCESS)
 			return true;
 
         if(isset($GLOBALS['bx_profiler']))
         	$GLOBALS['bx_profiler']->beginQuery($oStatement->queryString);
 
-		$bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose);
+        for ($iAttempts = 3; $iAttempts > 0; --$iAttempts) {
 
-		//if mysql connection is lost - reconnect and try again
-        if(!$bResult && !$this->ping()) {
-            $this->disconnect();
-            $this->connect();
+            $oException = null;
+            $iErrorCode = 0;
+            $bResult = false;
+            try {
+                $bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose, $iErrorCode);
+            } catch (PDOException $oException) {
+                $iErrorCode = $oException->errorInfo[1];
+            }
 
-            $bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose);
+            // if deadlock timeout - try again, make sure that deadlock timeout is short
+            if (!$bResult && (1205 == $iErrorCode || 1213 == $iErrorCode)) {
+                continue;
+            }
+
+	    	// if mysql connection is lost - reconnect and try again
+            if(!$bResult && !$this->ping()) {
+                $this->disconnect();
+                $this->connect();
+                continue;
+            }
+
+            // in all other cases exit from the loop
+            if ($oException)
+                throw $oException;
+            break;
         }
 
         if(isset($GLOBALS['bx_profiler']))
-        	$GLOBALS['bx_profiler']->endQuery($bResult);
+        	$GLOBALS['bx_profiler']->endQuery($oStatement);
 
 		//is needed for SILENT mode
 		if(!$bResult && !empty($this->_aError))
@@ -499,6 +612,30 @@ class BxDolUpgradeDb
         return $aResult;
     }
 
+    public function fetchField($oStatement, $iField, $aBindings = array())
+    {
+        $aResult = array();
+        if(!$oStatement)
+            return $aResult;
+
+        else if(!($oStatement instanceof PDOStatement) && is_string($oStatement)) {
+            $oStatement = $this->prepare($oStatement);
+            if(!$this->res($oStatement, $aBindings))
+                return $aResult;
+        }
+
+        return $oStatement->getColumnMeta($iField);
+    }
+
+    public function isTableExists($sTable)
+    {
+        $aTableNames = $this->listTables();
+        foreach($aTableNames as $iKey => $sTableName)
+            $aTableNames[$iKey] = strtoupper($sTableName);
+
+        return in_array(strtoupper($sTable), $aTableNames);
+    }
+
     public function isFieldExists($sTable, $sFieldName)
     {
         $aFields = $this->getFields($sTable);
@@ -507,35 +644,182 @@ class BxDolUpgradeDb
 
 	public function isIndexExists($sTable, $sIndexName)
 	{
-        $aIndexes = $this->getAll("SHOW INDEXES FROM `" . $sTable . "`");
-        foreach ($aIndexes as $aIndex)
-			if ($aIndex['Key_name'] == $sIndexName)
-				return true;
+		$bIndex = false;
 
-		return false;
-    }
-    
+        $aIndexes = $this->getAll("SHOW INDEXES FROM `" . $sTable . "`");
+        foreach($aIndexes as $aIndex)
+			if($aIndex['Key_name'] == $sIndexName) {
+				$bIndex = true;
+				break;
+			}
+
+		return $bIndex;
+	}
+
     public function error($aError)
     {
     	$sErrorType = self::$_aErrors[$aError['code']];
 
     	$bVerbose = isset($aError['verbose']) ? (bool)$aError['verbose'] : $this->_bErrorChecking;
         if(!$bVerbose) {
-			$this->log($sErrorType . ': ' . $aError['message']);
-			return;
+            $this->log($sErrorType . ': ' . $aError['message']);
+            if (!defined('BX_DOL_INSTALL')) // this is needed to display error during installation
+    			return;
         }
 
-        if(defined('BX_UPGRADE_DB_FULL_VISUAL_PROCESSING') && BX_UPGRADE_DB_FULL_VISUAL_PROCESSING) {
+        if((defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) || defined('BX_DOL_INSTALL')) {
             $sOutput = '<div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">';
             $sOutput .= '<div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>';
             $sOutput .= '<div style="text-align:center;">' . $sErrorType . '</div>';
-            if(defined('BX_UPGRADE_DB_FULL_DEBUG_MODE') && BX_UPGRADE_DB_FULL_DEBUG_MODE)
+            if((defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE) || defined('BX_DOL_INSTALL'))
 				$sOutput .= $this->errorOutput($aError);
             $sOutput .= '</div>';
-            echo $sOutput;
+        } 
+
+        if(defined('BX_DB_DO_EMAIL_ERROR_REPORT') && BX_DB_DO_EMAIL_ERROR_REPORT) {
+            $sSiteTitle = $this->getParam('site_title');
+
+            $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
+            $sMailBody .= $this->errorOutput($aError);
+            $sMailBody .= "<hr />Auto-report system";
+
+            sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
+        }
+
+        bx_show_service_unavailable_error_and_exit($sOutput);
+    }
+
+    protected function isParamInCache($sKey)
+    {
+        return is_array(self::$_aParams) && isset(self::$_aParams[$sKey]);
+    }
+
+    public function cacheParams($bForceCacheInvalidate = false, $bForceCacheInvalidateMixed = false)
+    {
+        if ($bForceCacheInvalidate)
+            $this->cacheParamsClear();
+
+        self::$_aParams = $this->fromCache(self::$_sParamsCacheName, 'getPairs', "SELECT `name`, `value` FROM `sys_options`", "name", "value");
+
+        list($sTmplCode, $sTmplName) = BxDolTemplate::retrieveCode();
+        if(!empty($sTmplCode) && !empty($sTmplName)) {
+            $iTmplMix = 0;
+            if(is_array($sTmplCode))
+                list($sTmplCode, $iTmplMix) = $sTmplCode;
+
+            if(empty($iTmplMix))
+                $iTmplMix = (int)$this->getParam($sTmplName . '_default_mix');
+
+            if(!empty($iTmplMix)) {
+                $sCacheNameMixed = self::$_sParamsCacheNameMixed . $sTmplCode .  '_' . $iTmplMix;
+                if($bForceCacheInvalidateMixed)
+                    $this->cacheParamsClear($sCacheNameMixed);
+
+                $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', "SELECT `option`, `value` FROM `sys_options_mixes2options` WHERE `mix_id`=:mix_id", "option", "value", array(
+                    'mix_id' => $iTmplMix
+                ));
+
+                if(!empty($aMixed) && is_array($aMixed))
+                    self::$_aParams = array_merge(self::$_aParams, $aMixed);
+            }
+        }
+
+        if (empty(self::$_aParams)) {
+            self::$_aParams = array();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function cacheParamsClear($sCacheName = '')
+    {
+        if(empty($sCacheName))
+            $sCacheName = self::$_sParamsCacheName;
+
+        return $this->cleanCache($sCacheName);
+    }
+
+    public function isParam($sKey, $bFromCache = true)
+    {
+        if ($bFromCache && $this->isParamInCache($sKey))
+           return true;
+
+        $sQuery = $this->prepare("SELECT `name` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
+        return $this->getOne($sQuery) == $sKey;
+    }
+
+    public function addParam($sName, $sValue, $iKateg, $sDesc, $sType)
+    {
+        $sQuery = $this->prepare("INSERT INTO `sys_options` SET `category_id` = ?, `name` = ?, `caption` = ?, `value` = ?, `type` = ?", $iKateg, $sName, $sDesc, $sValue, $sType);
+        $this->query($sQuery);
+
+        // renew params cache
+        $this->cacheParams(true);
+    }
+
+    public function getParam($sKey, $bFromCache = true)
+    {
+        if (!$sKey)
+            return false;
+
+        if ($bFromCache && $this->isParamInCache($sKey)) {
+            return self::$_aParams[$sKey];
+        } else {
+            $sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' WHERE `tmo`.`option`=? LIMIT 1", $sKey);
+            $mixedValue = $this->getOne($sQuery);
+            if($mixedValue !== false)
+                return $mixedValue;
+
+            $sQuery = $this->prepare("SELECT `value` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
+            return $this->getOne($sQuery);
         }
     }
-    
+
+    public function setParam($sKey, $mixedValue, $iMixId = 0)
+    {
+    	if(empty($iMixId))
+            $sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
+        else
+            $sQuery = $this->prepare("REPLACE INTO `sys_options_mixes2options` SET `option` = ?, `mix_id` = ?, `value` = ?", $sKey, $iMixId, $mixedValue);
+
+        $bResult = (int)$this->query($sQuery) > 0;
+
+        // renew params cache
+        $bResult &= $this->cacheParams(true, !empty($iMixId));
+
+        return $bResult;
+    }
+
+    public function getParamsMix($iId)
+    {
+        return $this->fromCache(self::$_sParamsCacheNameMix . $iId, 'getRow', 'SELECT * FROM `sys_options_mixes` WHERE `id`=:id', array(
+            'id' => $iId
+        ));
+    }
+
+    public function getParamsMixActive($sType)
+    {
+        return $this->getRow("SELECT * FROM `sys_options_mixes` WHERE `type`=:type AND `active`='1'", array(
+            'type' => $sType
+        ));
+    }
+
+    public function getParamsMixes($sType, $mixedPublished = false)
+    {
+        $aBindings = array('type' => $sType);
+
+        $sQuery = "SELECT * FROM `sys_options_mixes` WHERE `type`=:type";
+        if($mixedPublished !== false) {
+            $aBindings['published'] = (int)$mixedPublished;
+
+            $sQuery .= " AND `published`=:published";
+        }
+
+        return $this->getAll($sQuery, $aBindings);
+    }
+
     public function setTimezone($sTimezone)
     {
         $oDate = new DateTime('now', new DateTimeZone($sTimezone));
@@ -557,6 +841,93 @@ class BxDolUpgradeDb
     }
 
     /**
+     * Cache functions.
+     */
+    public function getDbCacheObject ()
+    {
+        if($this->_oDbCacheObject != null)
+			return $this->_oDbCacheObject;
+
+		$sEngine = $this->getParam('sys_db_cache_engine');
+		$this->_oDbCacheObject = bx_instance('BxDolCache'.$sEngine);
+		if(!$this->_oDbCacheObject->isAvailable())
+			$this->_oDbCacheObject = bx_instance('BxDolCacheFile');
+
+		return $this->_oDbCacheObject;
+    }
+
+    public function genDbCacheKey ($sName)
+    {
+        return 'db_' . $sName . '_' . bx_site_hash() . '.php';
+    }
+
+    public function fromCache ($sName, $sFunc)
+    {
+        $aArgs = func_get_args();
+        array_shift ($aArgs); // shift $sName
+        array_shift ($aArgs); // shift $sFunc
+
+        if (!$this->getParam('sys_db_cache_enable'))
+            return call_user_func_array (array ($this, $sFunc), $aArgs); // pass other function parameters as database function parameters
+
+        $oCache = $this->getDbCacheObject ();
+
+        $sKey = $this->genDbCacheKey($sName);
+
+        $mixedRet = $oCache->getData($sKey);
+
+        if ($mixedRet !== null) {
+
+            return $mixedRet;
+
+        } else {
+
+            $mixedRet = call_user_func_array (array ($this, $sFunc), $aArgs); // pass other function parameters as database function parameters
+
+            $oCache->setData($sKey, $mixedRet);
+        }
+
+        return $mixedRet;
+    }
+
+    public function cleanCache ($sName)
+    {
+        $oCache = $this->getDbCacheObject();
+
+        $sKey = $this->genDbCacheKey($sName);
+
+        return $oCache->delData($sKey);
+    }
+
+    public function &fromMemory ($sName, $sFunc)
+    {
+        if(array_key_exists($sName, self::$_aDbCacheData) && !defined('BX_DOL_INSTALL') && !defined('BX_DOL_CRON_EXECUTE'))
+			return self::$_aDbCacheData[$sName];
+
+		$aArgs = func_get_args();
+		array_shift($aArgs); // shift $sName
+		array_shift($aArgs); // shift $sFunc
+		self::$_aDbCacheData[$sName] = call_user_func_array (array ($this, $sFunc), $aArgs); // pass other function parameters as database function parameters
+
+		return self::$_aDbCacheData[$sName];
+    }
+
+    public function cleanMemory ($sName)
+    {
+        if(!isset(self::$_aDbCacheData[$sName])) 
+        	return false;
+
+		unset(self::$_aDbCacheData[$sName]);
+		return true;
+    }
+
+    public function cleanMemoryAll ()
+    {
+        self::$_aDbCacheData = array();
+		return true;
+    }
+
+    /**
      * It escapes string to pass to mysql query.
      * Try to use "prepare" function always (@see BxDolDb::prepare), use "escape" only if "prepare" function is not possible at all.
      * Also consider using "implode_escape" function (@see BxDolDb::implode_escape).
@@ -571,7 +942,7 @@ class BxDolUpgradeDb
     	}
     	catch (PDOException $oException) {
     		$oException->errorInfo[self::$_sErrorKey] = array(
-    			'code' => BX_UPGRADE_DB_ERR_ESCAPE,
+    			'code' => BX_DB_ERR_ESCAPE,
     			'message' => $oException->getMessage(),
     			'trace' => $oException->getTrace()
     		);
@@ -644,6 +1015,9 @@ class BxDolUpgradeDb
     	if(!self::$_rLink)
     		return false;
 
+        if (self::$_bMultuServersMode && (0 != strncasecmp(ltrim($sQuery, " \t\n\r(\0\x0B"), 'SELECT', 6)))
+            $this->setReadOnlyMode(false);
+
         $aArgs = func_get_args();
         $sQuery = array_shift($aArgs);
 
@@ -653,7 +1027,7 @@ class BxDolUpgradeDb
         foreach($aArgs as $mixedArg) {
         	if(is_null($mixedArg))
 				$iValueType = PDO::PARAM_NULL;
-            else if(is_numeric($mixedArg))
+            else if(is_numeric($mixedArg) && is_int($mixedArg))
                 $iValueType = PDO::PARAM_INT;
             else
                 $iValueType = PDO::PARAM_STR;
@@ -734,7 +1108,7 @@ class BxDolUpgradeDb
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
             return array(array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied'));
 
-		self::$_rLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+		self::$_rLink->setAttribute(PDO::ATTR_ERRMODE, BX_DB_MODE_SILENT);
 
         $sQuery = "";
         $sDelimiter = ';';
@@ -778,9 +1152,21 @@ class BxDolUpgradeDb
         return empty($aResult) ? true : $aResult;
     }
 
-    protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null)
+    protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null, &$iErrorCode = null)
     {
-    	$bResult = false;
+        $bResult = false;
+
+        if (!isset($aBindings[0])) {
+    		foreach($aBindings as $sKey => $mixedValue) {
+	    		if(is_null($mixedValue))
+		    		$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_NULL);
+                else if(is_numeric($mixedValue) && is_int($mixedValue))
+                    $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_INT);
+                else
+                    $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);
+            }
+            $aBindings = array();
+        }
 
     	switch (self::$_rLink->getAttribute(PDO::ATTR_ERRMODE)) {
     		case PDO::ERRMODE_SILENT:
@@ -791,6 +1177,11 @@ class BxDolUpgradeDb
     			$bResult = $this->executeStatementException($oStatement, $aBindings, $bVerbose);
     			break;
     	}
+
+        if (!$bResult && !is_null($iErrorCode)) {
+            $aError = $oStatement->errorInfo();
+            $iErrorCode = $aError[1];
+        }
 
     	return $bResult;
     }
@@ -806,7 +1197,7 @@ class BxDolUpgradeDb
 			$aError = $oStatement->errorInfo();
 
 			$oException->errorInfo[self::$_sErrorKey] = array(
-				'code' => BX_UPGRADE_DB_ERR_QUERY_ERROR,
+				'code' => BX_DB_ERR_QUERY_ERROR,
 				'message' => !empty($aError[2]) ? $aError[2] : $oException->getMessage(),
 				'query' => $oStatement->queryString,
 				'trace' => $oException->getTrace(),
@@ -831,7 +1222,7 @@ class BxDolUpgradeDb
         unset($aTrace[0]);
 
 		$this->_aError = array(
-			'code' => BX_UPGRADE_DB_ERR_QUERY_ERROR,
+			'code' => BX_DB_ERR_QUERY_ERROR,
 			'message' => !empty($aError[2]) ? $aError[2] : '',
 			'query' => $oStatement->queryString,
 			'trace' => $aTrace,
@@ -857,6 +1248,7 @@ class BxDolUpgradeDb
                         }
 
         $sOutput = '';
+        
         if(!empty($aError['query']))
             $sOutput .= '<p><b>Query:</b><br />' . $aError['query'] . '</p>';
 
@@ -866,10 +1258,14 @@ class BxDolUpgradeDb
 		if(!empty($aErrorLocation))
 			$sOutput .= '<p><b>Location:</b><br />The error was found in <b>' . $aErrorLocation['function'] . '</b> function in the file <b>' . $aErrorLocation['file'] . '</b> at line <b>' . $aErrorLocation['line'] . '</b>.</p>';
 
+        $sOutput .= '<p><b>collation_connection:</b><br />' . $this->getOne("SELECT @@collation_connection") . '</p>';
+        
 		if(!empty($aError['trace'])) {
-			$sBackTrace = print_r($aError['trace'], true);
-            $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
-            $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
+            $sBackTrace = print_r($aError['trace'], true);
+            if (defined ('BX_DATABASE_USER') && !is_array(BX_DATABASE_USER))
+                $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
+            if (defined ('BX_DATABASE_PASS') && !is_array(BX_DATABASE_PASS))
+                $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
 
 			$sOutput .= '<div><b>Debug backtrace:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sBackTrace) . '</pre></div>';
 		}
@@ -890,6 +1286,21 @@ class BxDolUpgradeDb
 
         return $sOutput;
     }
+}
+
+/**
+ * Create the very first instance and initiate connetion to database.
+ */
+BxDolDb::getInstance();
+
+function getParam($sParamName, $bUseCache = true)
+{
+    return BxDolDb::getInstance()->getParam($sParamName, $bUseCache);
+}
+
+function setParam($sParamName, $sParamVal)
+{
+    return BxDolDb::getInstance()->setParam($sParamName, $sParamVal);
 }
 
 /** @} */
