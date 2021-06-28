@@ -63,12 +63,12 @@ class BxDolUpgradeDb
 
         $this->_sCharset = 'utf8mb4';
 
-        $this->_sHost = BX_DATABASE_HOST;
-        $this->_sPort = BX_DATABASE_PORT;
-        $this->_sSocket = BX_DATABASE_SOCK;
-        $this->_sDbname = BX_DATABASE_NAME;
-        $this->_sUser = BX_DATABASE_USER;
-        $this->_sPassword = BX_DATABASE_PASS;
+        $this->_sHost = is_array(BX_DATABASE_HOST) ? array_values(BX_DATABASE_HOST)[0] : BX_DATABASE_HOST;
+        $this->_sPort = is_array(BX_DATABASE_PORT) ? array_values(BX_DATABASE_PORT)[0] : BX_DATABASE_PORT;
+        $this->_sSocket = is_array(BX_DATABASE_SOCK) ? array_values(BX_DATABASE_SOCK)[0] : BX_DATABASE_SOCK;
+        $this->_sDbname = is_array(BX_DATABASE_NAME) ? array_values(BX_DATABASE_NAME)[0] : BX_DATABASE_NAME;
+        $this->_sUser = is_array(BX_DATABASE_USER) ? array_values(BX_DATABASE_USER)[0] : BX_DATABASE_USER;
+        $this->_sPassword = is_array(BX_DATABASE_PASS) ? array_values(BX_DATABASE_PASS)[0] : BX_DATABASE_PASS;
 
         @set_exception_handler(array($this, 'pdoExceptionHandler'));
     }
