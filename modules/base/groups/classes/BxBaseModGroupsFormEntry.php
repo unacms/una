@@ -74,12 +74,14 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($aValsToAdd[$CNF['FIELD_PUBLISHED']]) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']])) {
-            $iPublished = $this->getCleanValue($CNF['FIELD_PUBLISHED']);
-            if(empty($iPublished))
-                $iPublished = time();
+        if(isset($CNF['FIELD_PUBLISHED']){
+            if(empty($aValsToAdd[$CNF['FIELD_PUBLISHED']]) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']])) {
+                $iPublished = $this->getCleanValue($CNF['FIELD_PUBLISHED']);
+                if(empty($iPublished))
+                    $iPublished = time();
 
-            $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
+                $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
+            }
         }
 
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
