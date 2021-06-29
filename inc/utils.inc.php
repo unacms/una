@@ -1808,9 +1808,11 @@ function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/oc
     $start  = 0;
     $end    = $size - 1;
 
-    header('Content-type: ' . $sMimeType);
+    header('Content-Type: ' . $sMimeType);
     header('Cache-Control: ' . $sCachePrivacy . ', must-revalidate, max-age=' . $iCacheAge);
-    header("Accept-Ranges: 0-$length");
+    header("Expires: " . gmdate('D, d M Y H:i:s', time() + $iCacheAge) . ' GMT');
+    header("Last-Modified: " . gmdate('D, d M Y H:i:s', @filemtime($sPath)) . ' GMT');
+    header("Accept-Ranges: bytes");
     if ($sFilename)
         header('Content-Disposition: ' . $sContentDisposition . '; filename="' . $sFilename . '"');
 
@@ -1847,14 +1849,13 @@ function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/oc
     header("Content-Range: bytes $start-$end/$size");
     header("Content-Length: ".$length);
 
-
+    set_time_limit(0);
     $buffer = 1024 * 8;
     while(!feof($fp) && ($p = ftell($fp)) <= $end) {
 
         if ($p + $buffer > $end) {
             $buffer = $end - $p + 1;
         }
-        set_time_limit(0);
         echo fread($fp, $buffer);
         flush();
     }

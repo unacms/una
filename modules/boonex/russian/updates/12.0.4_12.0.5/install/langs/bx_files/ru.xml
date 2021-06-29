@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_files_menu_item_title_system_edit_title"><![CDATA[Переименовать]]></string_add>
+    <string_add name="_bx_files_menu_item_title_edit_title"><![CDATA[Переименовать]]></string_add>
+	<string_add name="_bx_files_txt_status_downloading"><![CDATA[Скачивание...]]></string_add>
+    <string_add name="_bx_files_txt_status_downloading_msg"><![CDATA[Скачивание скоро начнется...]]></string_add>
+    <string_add name="_bx_files_txt_status_downloading_ready_msg"><![CDATA[Нажмите <a href={0}>здесь</a>, если скачивание не началось автоматически.]]></string_add>
+    <string_add name="_bx_files_option_allowed_ext"><![CDATA[Разрешать файлы только со следующими расширениями (через запятую)]]></string_add>
+    <string_add name="_bx_files_option_default_layout_mode"><![CDATA[Режим отображения файлов по умолчанию]]></string_add>
+</resources>

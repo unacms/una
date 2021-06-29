@@ -569,7 +569,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$oProfile)
             return '';
 
-        $bEmptyMessage = false;
+        $bEmptyMessage = true;
         if(isset($aParams['empty_message'])) {
             $bEmptyMessage = (bool)$aParams['empty_message'];
             unset($aParams['empty_message']);

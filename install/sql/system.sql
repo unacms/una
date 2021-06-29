@@ -1066,7 +1066,7 @@ CREATE TABLE `sys_acl_levels` (
   `Removable` enum('yes','no') NOT NULL default 'yes',
   `QuotaSize` bigint(20) NOT NULL,
   `QuotaNumber` int(11) NOT NULL,
-  `QuotaMaxFileSize` int(11) NOT NULL,
+  `QuotaMaxFileSize` bigint(20) NOT NULL,
   `Order` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `Name` (`Name`),

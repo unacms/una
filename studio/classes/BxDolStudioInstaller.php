@@ -1062,9 +1062,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     protected function getMarkersForDb()
     {
+        $sDbName = defined('BX_DATABASE_NAME') ? BX_DATABASE_NAME : '';
+        if (is_array($sDbName))
+            $sDbName = array_shift($sDbName);
         return array(
             'from' => array('{db_name}'),
-            'to' => array(defined('BX_DATABASE_NAME') ? BX_DATABASE_NAME : ''),
+            'to' => array($sDbName),
         );
     }
 

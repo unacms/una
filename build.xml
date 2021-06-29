@@ -229,7 +229,7 @@
         <if>
             <available file="${project.basedir}/modules/${vendor}/${module}/install/config.php" type="file" />
             <then>
-                <php expression="eval('include(&quot;${project.basedir}/modules/${vendor}/${module}/install/config.php&quot;); return $aConfig[&quot;version&quot;];')" returnProperty="module_version" />
+                <php expression="eval('define(&quot;BX_DOL_MODULE_TYPE_LANGUAGE&quot;, &quot;language&quot;); define(&quot;BX_DOL_MODULE_TYPE_TEMPLATE&quot;, &quot;template&quot;); define(&quot;BX_DOL_MODULE_TYPE_MODULE&quot;, &quot;module&quot;); include(&quot;${project.basedir}/modules/${vendor}/${module}/install/config.php&quot;); return $aConfig[&quot;version&quot;];')" returnProperty="module_version" />
                 <property name="package_name" value="${module}" />
                 <property name="package_file" value="${package_name}-v.${module_version}.zip" />
 

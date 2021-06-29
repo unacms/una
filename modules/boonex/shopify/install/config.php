@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_shopify',
     'title' => 'Shopify',
     'note' => 'Shopify shopping module.',
-    'version' => '12.0.1.DEV',
+    'version' => '12.0.2.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

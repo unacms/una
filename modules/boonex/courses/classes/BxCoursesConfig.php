@@ -228,6 +228,10 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'txt_cart_item_title' => '_bx_courses_txt_cart_item_title',
                 'txt_subscribe_title' => '_bx_courses_grid_action_title_subscribe_title',
                 'msg_performed' => '_bx_courses_msg_performed',
+                'popup_title_price_add' => '_bx_courses_popup_title_price_add',
+                'popup_title_price_edit' => '_bx_courses_popup_title_price_edit',
+                'err_period_unit' => '_bx_courses_form_price_input_err_period_unit',
+                'err_price_duplicate' => '_bx_courses_err_price_duplicate',
                 'err_cannot_perform' => '_bx_courses_err_cannot_perform',
             ),
 

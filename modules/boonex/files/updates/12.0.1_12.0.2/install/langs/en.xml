@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_files_menu_item_title_system_edit_title"><![CDATA[Rename]]></string_add>
+    <string_add name="_bx_files_menu_item_title_edit_title"><![CDATA[Rename]]></string_add>
+	<string_add name="_bx_files_txt_status_downloading"><![CDATA[Downloading...]]></string_add>
+    <string_add name="_bx_files_txt_status_downloading_msg"><![CDATA[The download will start shortly...]]></string_add>
+    <string_add name="_bx_files_txt_status_downloading_ready_msg"><![CDATA[Click <a href={0}>here</a> if the download doesn't start automatically.]]></string_add>
+    <string_add name="_bx_files_option_allowed_ext"><![CDATA[Allow only the following extensions (comma separated list)]]></string_add>
+    <string_add name="_bx_files_option_default_layout_mode"><![CDATA[Files default layout]]></string_add>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_accounts_option_export_to"><![CDATA[Export to]]></string_add>
+    <string_add name="_bx_accounts_option_export_fields"><![CDATA[Export fields]]></string_add>
+	<string_add name="_bx_accnt_grid_action_title_adm_export"><![CDATA[Export]]></string_add>
+	<string_add name="_bx_accnt_txt_export_to_csv"><![CDATA[CSV]]></string_add>
+    <string_add name="_bx_accnt_txt_export_to_xml"><![CDATA[XML]]></string_add>
+    <string_add name="_bx_accnt_txt_field_name"><![CDATA[Name]]></string_add>
+    <string_add name="_bx_accnt_txt_field_email"><![CDATA[Email]]></string_add>
+    <string_add name="_bx_accnt_txt_field_email_confirmed"><![CDATA[Email Confirmed]]></string_add>
+    <string_add name="_bx_accnt_txt_field_phone"><![CDATA[Phone]]></string_add>
+    <string_add name="_bx_accnt_txt_field_receive_updates"><![CDATA[Receive Updates]]></string_add>
+    <string_add name="_bx_accnt_txt_field_receive_news"><![CDATA[Receive News]]></string_add>
+    <string_add name="_bx_accnt_txt_field_added"><![CDATA[Added]]></string_add>
+    <string_add name="_bx_accnt_txt_field_changed"><![CDATA[Changed]]></string_add>
+    <string_add name="_bx_accnt_txt_field_logged"><![CDATA[Logged]]></string_add>
+    <string_add name="_bx_accnt_txt_field_ip"><![CDATA[IP]]></string_add>
+</resources>

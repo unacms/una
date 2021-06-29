@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_upd name="_bx_market_form_entry_input_price_recurring"><![CDATA[Цена]]></string_upd>
+	<string_upd name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string_upd>
+	<string_upd name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string_upd>
+	<string_upd name="_bx_market_menu_item_title_subscribe"><![CDATA[Подписаться за {0}{1}/{2}]]></string_upd>
+	<string_upd name="_bx_market_txt_price_recurring"><![CDATA[Подписаться за {0}{1}/{2}]]></string_upd>
+</resources>
