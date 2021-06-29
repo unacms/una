@@ -272,7 +272,11 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
                 'txt_buy_title' => '_bx_orgs_grid_action_title_buy_title',
                 'txt_cart_item_title' => '_bx_orgs_txt_cart_item_title',
                 'txt_subscribe_title' => '_bx_orgs_grid_action_title_subscribe_title',
+                'popup_title_price_add' => '_bx_orgs_popup_title_price_add',
+                'popup_title_price_edit' => '_bx_orgs_popup_title_price_edit',
                 'msg_performed' => '_bx_orgs_msg_performed',
+                'err_period_unit' => '_bx_orgs_form_price_input_err_period_unit',
+                'err_price_duplicate' => '_bx_orgs_err_price_duplicate',
                 'err_cannot_perform' => '_bx_orgs_err_cannot_perform',
             ),
         ));

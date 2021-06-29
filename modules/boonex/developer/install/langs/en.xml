@@ -485,9 +485,9 @@
     <string name="_bx_dev_pgt_txt_sys_keys_language"><![CDATA[Language]]></string>
     <string name="_bx_dev_pgt_txt_keys_language"><![CDATA[Language]]></string>
     <string name="_bx_dev_pgt_inf_keys_language"><![CDATA[Leave empty to add in all available languages.]]></string>
-    <string name="_bx_dev_pgt_txt_sys_keys_category"><![CDATA[Сategory]]></string>
-    <string name="_bx_dev_pgt_txt_keys_category"><![CDATA[Сategory]]></string>
-    <string name="_bx_dev_pgt_err_keys_category"><![CDATA[You need to select a сategory]]></string>
+    <string name="_bx_dev_pgt_txt_sys_keys_category"><![CDATA[Category]]></string>
+    <string name="_bx_dev_pgt_txt_keys_category"><![CDATA[Category]]></string>
+    <string name="_bx_dev_pgt_err_keys_category"><![CDATA[You need to select a category]]></string>
     <string name="_bx_dev_pgt_txt_sys_keys_content"><![CDATA[Keys]]></string>
     <string name="_bx_dev_pgt_txt_keys_content"><![CDATA[Keys]]></string>
     <string name="_bx_dev_pgt_err_keys_content"><![CDATA[You need to enter a value here]]></string>
