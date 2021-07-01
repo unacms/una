@@ -154,8 +154,8 @@
         <string name="_bx_albums_page_block_title_my_entries"><![CDATA[{display_name} Albums]]></string>
   	<string name="_bx_albums_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_albums_page_title_entries_search"><![CDATA[Search]]></string>
-    <string name="_bx_albums_page_title_sys_entries_favorites"><![CDATA[Favorives Media]]></string>
-    <string name="_bx_albums_page_title_entries_favorites"><![CDATA[Favorives Media]]></string>
+    <string name="_bx_albums_page_title_sys_entries_favorites"><![CDATA[Favorites Media]]></string>
+    <string name="_bx_albums_page_title_entries_favorites"><![CDATA[Favorites Media]]></string>
     <string name="_bx_albums_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_albums_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_albums_page_block_title_search_form_media"><![CDATA[Images Search Form]]></string>

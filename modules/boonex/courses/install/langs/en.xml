@@ -127,8 +127,8 @@
     <string name="_bx_courses_page_title_invite_to_course"><![CDATA[Invite Students to the Course]]></string>
     <string name="_bx_courses_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_courses_page_title_entries_search"><![CDATA[Search]]></string>
-    <string name="_bx_courses_page_title_sys_entries_favorites"><![CDATA[Favorives Courses]]></string>
-    <string name="_bx_courses_page_title_entries_favorites"><![CDATA[Favorives Courses]]></string>
+    <string name="_bx_courses_page_title_sys_entries_favorites"><![CDATA[Favorites Courses]]></string>
+    <string name="_bx_courses_page_title_entries_favorites"><![CDATA[Favorites Courses]]></string>
 
     <string name="_bx_courses_page_block_title_sys_entries_actions"><![CDATA[Courses actions]]></string>
     <string name="_bx_courses_page_block_title_entries_actions"><![CDATA[Courses actions]]></string>

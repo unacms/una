@@ -197,8 +197,8 @@
     <string name="_bx_forum_page_block_title_my_entries"><![CDATA[{display_name} Discussions]]></string>
     <string name="_bx_forum_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_forum_page_title_entries_search"><![CDATA[Search]]></string>
-    <string name="_bx_forum_page_title_sys_entries_favorites"><![CDATA[Favorives Discussions]]></string>
-    <string name="_bx_forum_page_title_entries_favorites"><![CDATA[Favorives Discussions]]></string>
+    <string name="_bx_forum_page_title_sys_entries_favorites"><![CDATA[Favorites Discussions]]></string>
+    <string name="_bx_forum_page_title_entries_favorites"><![CDATA[Favorites Discussions]]></string>
     <string name="_bx_forum_page_block_title_entries_search_form"><![CDATA[Search]]></string>
     <string name="_bx_forum_page_block_title_entries_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_forum_page_block_title_search_form"><![CDATA[Search Form]]></string>
