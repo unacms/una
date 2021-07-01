@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxCoursesCronPruning extends BxBaseModCoursesCronPruning
+class BxCoursesCronPruning extends BxBaseModGroupsCronPruning
 {
     public function __construct()
     {
