@@ -289,6 +289,10 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
 
     protected function _createProduct($aItem)
     {
+        if(empty($aItem['description']))
+            $aItem['description'] = _t('_bx_payment_txt_payment_description', getParam('site_title'));
+        $aItem['description'] = strmaxtextlen($aItem['description'], 60, '...');
+
         $mixedResult = $this->_apiCallAuthorized($this->_sEndpoint . 'v1/catalogs/products', array(
             'id' => $aItem['name'],
             'name' => $aItem['title'],
@@ -299,8 +303,11 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             'PayPal-Request-Id: bx_prod_' . $aItem['name']
         ));
 
-        if($mixedResult === false)
+        if($mixedResult === false || !isset($mixedResult['id'])) {
             $this->log($mixedResult, 'Create Product:');
+
+            return false;
+        }
 
         return $mixedResult;
     }
@@ -373,8 +380,11 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             'PayPal-Request-Id: bx_plan_' . $aItem['name']
         ));
 
-        if($mixedResult === false)
+        if($mixedResult === false || !isset($mixedResult['id'])) {
             $this->log($mixedResult, 'Create Plan:');
+
+            return false;
+        }
 
         return $mixedResult;
     }
