@@ -410,6 +410,7 @@
     <string name="_bx_payment_txt_status_unknown"><![CDATA[Неизвестно]]></string>
     <string name="_bx_payment_txt_invoice_title"><![CDATA[Счет {0} от {1}]]></string>
     <string name="_bx_payment_txt_invoice_description"><![CDATA[За период между {0} и {1}]]></string>
+    <string name="_bx_payment_txt_payment_description"><![CDATA[Выплата на сайте {0}.]]></string>
 
     <!-- Offline payment provider -->
     <string name="_bx_payment_off_cpt"><![CDATA[Офлайн]]></string>
