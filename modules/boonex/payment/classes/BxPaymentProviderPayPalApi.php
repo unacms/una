@@ -138,6 +138,11 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         return $this->getOption($this->_getMode() . '_secret');
     }
 
+    public function getMenuItemsActionsRecurring($iClientId, $iVendorId, $aParams = array())
+    {
+        return array();
+    }
+
     protected function _finalizeCheckoutSingle(&$aData)
     {
         $sOrder = '';
