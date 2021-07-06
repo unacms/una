@@ -901,22 +901,18 @@ BLAH;
             $aInput['tr_attrs']['id'] = "bx-form-element-" . $aInput['name'];
         $sTrAttrs = bx_convert_array2attrs(empty($aInput['tr_attrs']) ? array() : $aInput['tr_attrs'], "bx-form-element-wrapper bx-def-margin-top");
 
-        $sCaptionCode = '';
-        if ($sCaption)
-            $sCaptionCode = '<div class="bx-form-caption">' . $sCaption . $sRequired . '</div>';
-
-        $sCode = <<<BLAH
-                <div $sTrAttrs>
-                    $sCaptionCode
-                    <div class="bx-form-value$sClassAdd">
-                        <div class="bx-clear"></div>
-                            $sInput
-                        <div class="bx-clear"></div>
-                    </div>
-                </div>
-BLAH;
-
-        return $sCode;
+        return $this->oTemplate->parseHtmlByName('form_row_custom.html', array(
+            'tr_attrs' => $sTrAttrs,
+            'bx_if:show_caption' => array(
+                'condition' => !empty($sCaption),
+                'content' => array(
+                    'caption' => $sCaption,
+                    'required' => $sRequired
+                )
+            ),
+            'class_value' => $sClassAdd,
+            'value' => $sInput,
+        ));
     }
 
     /**
