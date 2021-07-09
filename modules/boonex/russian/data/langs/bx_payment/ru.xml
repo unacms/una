@@ -375,7 +375,7 @@
     <string name="_bx_payment_txt_checkout_to"><![CDATA[Продолжить оплату в пользу {0}]]></string>
     <string name="_bx_payment_txt_checkout_with"><![CDATA[Заплатить используя {0}]]></string>
     <string name="_bx_payment_txt_checkout_with_cash"><![CDATA[Оплата наличными]]></string>
-    <string name="_bx_credits_txt_checkout_for"><![CDATA[Сообщение о том, что Вы хотите оплатить следующие позиции наличными, было отправлено продавцу ({0}). Он свяжется с вами в ближайшее время.]]></string>
+    <string name="_bx_payment_txt_checkout_for"><![CDATA[Сообщение о том, что Вы хотите оплатить следующие позиции наличными, было отправлено продавцу ({0}). Он свяжется с вами в ближайшее время.]]></string>
     <string name="_bx_payment_txt_checkout_qt"><![CDATA[шт.]]></string>
     <string name="_bx_payment_txt_checkout_item"><![CDATA[{0} ({1}шт.)<br />]]></string>
     <string name="_bx_payment_txt_client"><![CDATA[Покупатель]]></string>
