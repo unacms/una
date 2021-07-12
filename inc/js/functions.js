@@ -818,7 +818,9 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
 
             // flickity update
             setTimeout(function () {
-                eElement.find('.flickity-enabled').flickity('resize');
+                const oFlickity = eElement.find('.flickity-enabled');
+                if (oFlickity.length)
+                    oFlickity.flickity('resize');
             }, 250);
         }
         if ('undefined' !== typeof(oCallback)) {
