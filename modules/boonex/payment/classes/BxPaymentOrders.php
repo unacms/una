@@ -143,6 +143,37 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         return $this->_oModule->_oDb->getOrderPending(array('type' => 'mixed', 'conditions' => $aConditions));
     }
 
+    public function serviceProcessOrder($iSellerId, $iClientId, $iModuleId, $aItems, $sType, $sOrder)
+    {
+        $mixedResult = $this->addOrder(array(
+            'client_id' => $iClientId,
+            'seller_id' => $iSellerId,
+            'provider' => 'manual',
+            'type' => $sType,
+            'order' => $sOrder,
+            'error_code' => 0,
+            'error_msg' => 'Manually processed',        		
+            'module_id' => $iModuleId,
+            'items' => $aItems
+        ));
+
+        if(is_array($mixedResult))
+            return false;
+
+        return $this->_oModule->registerPayment((int)$mixedResult);
+    }
+
+    public function serviceProcessOrderByPending($iPendingId, $sOrder)
+    {
+        $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
+            'order' => $sOrder,
+            'error_code' => 0,
+            'error_msg' => 'Manually processed'
+        ));
+
+        return $this->_oModule->registerPayment($iPendingId);
+    }
+
     public function addOrder($aData)
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
