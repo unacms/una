@@ -138,8 +138,8 @@
     <string name="_bx_polls_page_block_title_my_entries"><![CDATA[{display_name} Polls]]></string>
     <string name="_bx_polls_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_polls_page_title_entries_search"><![CDATA[Search]]></string>
-    <string name="_bx_polls_page_title_sys_entries_favorites"><![CDATA[Favorives Polls]]></string>
-    <string name="_bx_polls_page_title_entries_favorites"><![CDATA[Favorives Polls]]></string>
+    <string name="_bx_polls_page_title_sys_entries_favorites"><![CDATA[Favorites Polls]]></string>
+    <string name="_bx_polls_page_title_entries_favorites"><![CDATA[Favorites Polls]]></string>
     <string name="_bx_polls_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_polls_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_polls_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>

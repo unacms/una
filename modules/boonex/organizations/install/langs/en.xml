@@ -173,8 +173,8 @@
     <string name="_bx_orgs_page_title_invite_to_organization"><![CDATA[Invite Members to the Organization]]></string>
 	<string name="_bx_orgs_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_orgs_page_title_entries_search"><![CDATA[Search]]></string>
-    <string name="_bx_orgs_page_title_sys_entries_favorites"><![CDATA[Favorives Organizations]]></string>
-    <string name="_bx_orgs_page_title_entries_favorites"><![CDATA[Favorives Organizations]]></string>
+    <string name="_bx_orgs_page_title_sys_entries_favorites"><![CDATA[Favorites Organizations]]></string>
+    <string name="_bx_orgs_page_title_entries_favorites"><![CDATA[Favorites Organizations]]></string>
     <string name="_bx_orgs_page_title_sys_joined_entries"><![CDATA[Joined Organizations]]></string>
     <string name="_bx_orgs_page_title_joined_entries"><![CDATA[Joined Organizations]]></string>
 

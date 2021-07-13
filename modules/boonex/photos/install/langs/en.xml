@@ -112,8 +112,8 @@
     <string name="_bx_photos_page_title_entries_updated"><![CDATA[Updated Photos]]></string>
     <string name="_bx_photos_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_photos_page_title_entries_search"><![CDATA[Search]]></string>
-    <string name="_bx_photos_page_title_sys_entries_favorites"><![CDATA[Favorives Photos]]></string>
-    <string name="_bx_photos_page_title_entries_favorites"><![CDATA[Favorives Photos]]></string>
+    <string name="_bx_photos_page_title_sys_entries_favorites"><![CDATA[Favorites Photos]]></string>
+    <string name="_bx_photos_page_title_entries_favorites"><![CDATA[Favorites Photos]]></string>
     <string name="_bx_photos_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_photos_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_photos_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>

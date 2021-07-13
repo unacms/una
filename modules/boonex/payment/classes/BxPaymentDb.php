@@ -153,7 +153,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
                `tuv`.`value` AS `value`
             FROM `" . $this->_sPrefix . "providers_options` AS `tpo`
             LEFT JOIN `" . $this->_sPrefix . "user_values` AS `tuv` ON `tpo`.`id`=`tuv`.`option_id`
-            WHERE 1" . $sWhereAddon . " AND `tuv`.`user_id`=:user_id";
+            WHERE 1" . $sWhereAddon . " AND `tuv`.`user_id`=:user_id ORDER BY `tpo`.`order`";
 
         return $this->getAllWithKey($sQuery, 'name', $aBinding);
     }

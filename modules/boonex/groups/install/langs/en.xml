@@ -131,8 +131,8 @@
 	<string name="_bx_groups_page_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
 	<string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_groups_page_title_entries_search"><![CDATA[Search]]></string>
-  <string name="_bx_groups_page_title_sys_entries_favorites"><![CDATA[Favorives Groups]]></string>
-  <string name="_bx_groups_page_title_entries_favorites"><![CDATA[Favorives Groups]]></string>
+  <string name="_bx_groups_page_title_sys_entries_favorites"><![CDATA[Favorites Groups]]></string>
+  <string name="_bx_groups_page_title_entries_favorites"><![CDATA[Favorites Groups]]></string>
 
     <string name="_bx_groups_page_block_title_sys_entries_actions"><![CDATA[Groups actions]]></string>
     <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Groups actions]]></string>

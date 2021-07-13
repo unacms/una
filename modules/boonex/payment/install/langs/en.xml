@@ -373,7 +373,7 @@
 	<string name="_bx_payment_txt_checkout_to"><![CDATA[Continue checkouting to {0}]]></string>
 	<string name="_bx_payment_txt_checkout_with"><![CDATA[Checkout with {0}]]></string>
         <string name="_bx_payment_txt_checkout_with_cash"><![CDATA[Checkout with cash]]></string>
-        <string name="_bx_credits_txt_checkout_for"><![CDATA[A message was sent to the seller ({0}), that you want to pay with cash for the following items. He should contact you shortly.]]></string>
+        <string name="_bx_payment_txt_checkout_for"><![CDATA[A message was sent to the seller ({0}), that you want to pay with cash for the following items. He should contact you shortly.]]></string>
         <string name="_bx_payment_txt_checkout_qt"><![CDATA[qt.]]></string>
         <string name="_bx_payment_txt_checkout_item"><![CDATA[{0} ({1}qt.)<br />]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Client]]></string>
@@ -408,6 +408,7 @@
         <string name="_bx_payment_txt_status_unknown"><![CDATA[Unknown]]></string>
         <string name="_bx_payment_txt_invoice_title"><![CDATA[Invoice {0} from {1}]]></string>
         <string name="_bx_payment_txt_invoice_description"><![CDATA[For a period between {0} and {1}]]></string>
+        <string name="_bx_payment_txt_payment_description"><![CDATA[Payment on {0} site.]]></string>
 
         <!-- Offline payment provider -->
 	<string name="_bx_payment_off_cpt"><![CDATA[Offline]]></string>

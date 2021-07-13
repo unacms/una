@@ -1920,8 +1920,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'title' => $sTitle
             ));
 
+        $sMethodPrepare = '_prepareTextForOutput';
+        if($this->_oConfig->isBriefCards() && !$bViewItem)
+            $sMethodPrepare .= 'BriefCard';
+
         $sText = isset($aContent['text']) ? $aContent['text'] : '';
-        $sText = $this->_prepareTextForOutput($sText, $aEvent['id']);
+        $sText = $this->$sMethodPrepare($sText, $aEvent['id']);
 
         //--- Process Links ---//
         $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
@@ -2740,11 +2744,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
     }
 
+    protected function _prepareTextForOutputBriefCard($s, $iEventId = 0)
+    {
+        $s = strip_tags($s, $this->_oConfig->getBriefCardsTags(true));
+        
+        return $this->_prepareTextForOutput($s, $iEventId = 0);
+    }
+
     protected function _prepareTextForOutput($s, $iEventId = 0)
     {
-        if($this->_oConfig->isBriefCards())
-            $s = strip_tags($s, $this->_oConfig->getBriefCardsTags(true));
-
     	$s = bx_process_output($s, BX_DATA_HTML);
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));

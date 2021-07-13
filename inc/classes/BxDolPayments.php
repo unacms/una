@@ -216,6 +216,14 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'get_orders_info', $aSrvParams, 'Orders');
     }
 
+    public function getPendingOrdersUrl()
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_pending_orders_url', 'Orders'))
+            return '';
+
+    	return bx_srv($this->_sActive, 'get_pending_orders_url', array(), 'Orders');
+    }
+
     public function getPendingOrdersInfo($aConditions)
     {
         if(!BxDolRequest::serviceExists($this->_sActive, 'get_pending_orders_info', 'Orders'))
@@ -435,6 +443,24 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 
         $aSrvParams = array($sOrderId);
         return bx_srv($this->_sActive, 'prolong_subscription', $aSrvParams);
+    }
+
+    public function processOrder($iSellerId, $iClientId, $iModuleId, $aItems, $sType, $sOrder)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'process_order', 'Orders'))
+            return false;
+
+        $aSrvParams = array($iSellerId, $iClientId, $iModuleId, $aItems, $sType, $sOrder);
+        return bx_srv($this->_sActive, 'process_order', $aSrvParams, 'Orders');
+    }
+
+    public function processOrderByPending($iPendingId, $sOrder)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'process_order_by_pending', 'Orders'))
+            return false;
+
+        $aSrvParams = array($iPendingId, $sOrder);
+        return bx_srv($this->_sActive, 'process_order_by_pending', $aSrvParams, 'Orders');
     }
 
     public function generateLicense()
