@@ -97,6 +97,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_LINK' => 'link',
             'FIELD_PHOTO' => 'photo',
             'FIELD_VIDEO' => 'video',
+            'FIELD_FILE' => 'file',
             'FIELD_STATUS' => 'status',
             'FIELD_STICKED' => 'sticked',
             'FIELD_DATE' => 'date',
@@ -115,6 +116,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             // objects
             'OBJECT_STORAGE' => $this->_sName . '_photos',
             'OBJECT_STORAGE_VIDEOS' => $this->_sName . '_videos',
+            'OBJECT_STORAGE_FILES' => $this->_sName . '_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
                 'poster' => 'bx_timeline_videos_poster', 
@@ -126,6 +128,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_UPLOADER_VIDEO_SIMPLE' => $this->_sName . '_simple_video',
             'OBJECT_UPLOADER_VIDEO_HTML5' => $this->_sName . '_html5_video',
             'OBJECT_UPLOADER_VIDEO_RECORD' => $this->_sName . '_record_video',
+            'OBJECT_UPLOADER_FILE_HTML5' => $this->_sName . '_html5_file',
+            'OBJECT_UPLOADER_FILE_SIMPLE' => $this->_sName . '_simple_file',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
@@ -193,6 +197,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             'storage_photos' => $this->CNF['OBJECT_STORAGE'],
             'storage_videos' => $this->CNF['OBJECT_STORAGE_VIDEOS'],
+            'storage_files' => $this->CNF['OBJECT_STORAGE_FILES'],
             'transcoder_photos_preview' => $this->CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
             'transcoder_photos_view' => $this->_sName . '_photos_view',
             'transcoder_photos_medium' => $this->_sName . '_photos_medium',
@@ -230,6 +235,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_aPhotoUploaders = array($this->CNF['OBJECT_UPLOADER_PHOTO_SIMPLE']);
         $this->_aVideoUploaders = array($this->CNF['OBJECT_UPLOADER_VIDEO_SIMPLE']);
+        $this->_aFilesUploaders = array($this->CNF['OBJECT_UPLOADER_FILE_SIMPLE']);
 
         $this->_aItemToUploader = array(
             'add-photo-simple' => $this->CNF['OBJECT_UPLOADER_PHOTO_SIMPLE'],
@@ -237,6 +243,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'add-video-simple' => $this->CNF['OBJECT_UPLOADER_VIDEO_SIMPLE'],
             'add-video-html5' => $this->CNF['OBJECT_UPLOADER_VIDEO_HTML5'],
             'add-video-record' => $this->CNF['OBJECT_UPLOADER_VIDEO_RECORD'],
+            'add-file-simple' => $this->CNF['OBJECT_UPLOADER_FILE_SIMPLE'],
+            'add-file-html5' => $this->CNF['OBJECT_UPLOADER_FILE_HTML5'],
         );
 
         $this->_bJsMode = false;
@@ -550,6 +558,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 break;
             case 'video':
                 $aResult = $this->_aVideoUploaders;
+                break;
+            case 'file':
+                $aResult = $this->_aFilesUploaders;
                 break;
         }
 

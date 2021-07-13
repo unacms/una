@@ -64,9 +64,19 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = $iValueId;
             }
 
-            $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getVideoGhostTmplVars($aContentInfo));
+            $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getGhostTmplVars($CNF['FIELD_VIDEO'], $aContentInfo));
         }
+		
+		if(isset($CNF['FIELD_FILE']) && isset($this->aInputs[$CNF['FIELD_FILE']])) {
+            $aContentInfo = false;
+            if($bValueId) {
+                $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($iValueId);
+                $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = $iValueId;
+            }
 
+            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getGhostTmplVars($CNF['FIELD_FILE'], $aContentInfo));
+        }
+	
         if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
             if(isset($aValues[$CNF['FIELD_STATUS']]) && in_array($aValues[$CNF['FIELD_STATUS']], array(BX_TIMELINE_STATUS_ACTIVE, BX_TIMELINE_STATUS_HIDDEN)))
                 unset($this->aInputs[$CNF['FIELD_PUBLISHED']]);
@@ -217,6 +227,28 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = '';
         }
+        
+        if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
+            $sStorage = $this->_oModule->_oConfig->getObject('storage_files');
+            $sUploadersId = genRndPwd(8, false);
+            $aUploaders = !empty($this->aInputs[$CNF['FIELD_FILE']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_FILE']]['value']) : $this->_oModule->_oConfig->getUploaders($CNF['FIELD_FILE']);
+          
+            foreach($aUploaders as $sUploader){
+                $this->_aUploadersInfo[$sUploader] = array(
+                    'id' => $sUploadersId, 
+                    'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
+                );
+            }
+            
+            $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $sStorage;
+            $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = '';
+            $this->aInputs[$CNF['FIELD_FILE']]['uploaders_id'] = $sUploadersId;
+            $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] = $aUploaders;
+            $this->aInputs[$CNF['FIELD_FILE']]['upload_buttons_titles'] = array('Simple' => 'file');
+            $this->aInputs[$CNF['FIELD_FILE']]['multiple'] = true;
+            $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = 0;
+            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = '';
+        }
 
         if (isset($this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]))
             $this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = false;
@@ -340,13 +372,11 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         ));
     }
 
-    protected function _getVideoGhostTmplVars($aContentInfo = array())
+    protected function _getGhostTmplVars($sName, $aContentInfo = array())
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
     	return array (
-            'name' => $this->aInputs[$CNF['FIELD_VIDEO']]['name'],
-            'content_id' => (int)$this->aInputs[$CNF['FIELD_VIDEO']]['content_id'],
+            'name' => $this->aInputs[$sName]['name'],
+            'content_id' => (int)$this->aInputs[$sName]['content_id'],
         );
     }
 }

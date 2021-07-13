@@ -1990,7 +1990,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sAttachmentsLayout = BX_TIMELINE_ML_GALLERY;
 
         $iAttachmentsTotal = 0;
-        $aTmplVarsImages = $aTmplVarsVideos = $aTmplVarsAttachments = array();
+        $aTmplVarsImages = $aTmplVarsVideos = $aTmplVarsFiles = $aTmplVarsAttachments = array();
 
         //--- Process Photos ---//
         $bImages = !empty($aContent['images']) && is_array($aContent['images']);
@@ -2003,7 +2003,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'bx_repeat:items' => $aImages['items']
                 );
         }
-
         $bImagesAttach = !empty($aContent['images_attach']) && is_array($aContent['images_attach']);
         if($bImagesAttach) {
             $aImagesAttach = $this->_getTmplVarsImages($aContent['images_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
@@ -2045,7 +2044,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aVideosAttach['items']);
             }
         }
-
+ 
         //--- Process Files ---//
         $bFiles = !empty($aContent['files']) && is_array($aContent['files']);
         if($bFiles) {
@@ -2058,16 +2057,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 );
         }
 
-        $bFilesAttach = !empty($aContent['files_attach']) && is_array($aContent['files_attach']);
+		$bFilesAttach = !empty($aContent['files_attach']) && is_array($aContent['files_attach']);
         if($bFilesAttach) {
             $aFilesAttach = $this->_getTmplVarsFiles($aContent['files_attach'], $aEvent, $aBrowseParams);
-            if(!empty($aFilesAttach)) {
+			if(!empty($aFilesAttach)) {
                 $iAttachmentsTotal += $aFilesAttach['total'];
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aFilesAttach['items']);
             }
         }
-
-        /*
+		
+		/*
          *  Process collected attachments in case of Showcase layout.
          */
         $iAttachmentsShow = 4;
@@ -2123,6 +2122,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'bx_if:show_videos' => array(
                 'condition' => !empty($aTmplVarsVideos),
                 'content' => $aTmplVarsVideos
+            ),
+			 'bx_if:show_files' => array(
+                'condition' => !empty($aTmplVarsFiles),
+                'content' => $aTmplVarsFiles
             ),
             'bx_if:show_attachments' => array(
                 'condition' => !empty($aTmplVarsAttachments),
@@ -2587,6 +2590,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['content']['links'] = $oModule->getEventLinks($aEvent['id']);
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
                 $aResult['content']['videos_attach'] = $oModule->getEventVideos($aEvent['id']);
+				$aResult['content']['files_attach'] = $oModule->getEventFiles($aEvent['id']);
                 break;
 
             case BX_TIMELINE_PARSE_TYPE_REPOST:

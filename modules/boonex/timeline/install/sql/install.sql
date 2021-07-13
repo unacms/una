@@ -165,6 +165,30 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_videos2events` (
   UNIQUE KEY `media` (`event_id`, `media_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_timeline_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_files2events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL DEFAULT '0',
+  `media_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `media` (`event_id`, `media_id`)
+);
+
 -- TABLES: LINKS
 CREATE TABLE IF NOT EXISTS `bx_timeline_links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -349,14 +373,18 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_timeline_simple_video', 1, 'BxTimelineUploaderSimpleAttach', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleAttach.php'),
 ('bx_timeline_html5_photo', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php'),
 ('bx_timeline_html5_video', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php'),
-('bx_timeline_record_video', 1, 'BxTimelineUploaderRecordVideoAttach', 'modules/boonex/timeline/classes/BxTimelineUploaderRecordVideoAttach.php');
+('bx_timeline_record_video', 1, 'BxTimelineUploaderRecordVideoAttach', 'modules/boonex/timeline/classes/BxTimelineUploaderRecordVideoAttach.php'),
+('bx_timeline_simple_file', 1, 'BxTimelineUploaderSimpleAttach', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleAttach.php'),
+('bx_timeline_html5_file', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php');
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_timeline_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_timeline_photos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos_processed', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 
 ('bx_timeline_videos', @sStorageEngine, 'a:1:{s:6:"fields";a:1:{s:10:"dimensions";s:17:"getFileDimensions";}}', 360, 2592000, 3, 'bx_timeline_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
-('bx_timeline_videos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_videos_processed', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0);
+('bx_timeline_videos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_videos_processed', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
+
+('bx_timeline_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_files', 'deny-allow', '', 'jpg,jpeg,jpe,gif,png,action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline_photos_preview', 'bx_timeline_photos_processed', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0', '', ''),
@@ -405,6 +433,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_timeline_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'photo', 'a:1:{i:0;s:23:"bx_timeline_html5_photo";}', 'a:2:{s:24:"bx_timeline_simple_photo";s:26:"_sys_uploader_simple_title";s:23:"bx_timeline_html5_photo";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'video', 'a:2:{i:0;s:23:"bx_timeline_html5_video";i:1;s:24:"bx_timeline_record_video";}', 'a:3:{s:24:"bx_timeline_simple_video";s:26:"_sys_uploader_simple_title";s:23:"bx_timeline_html5_video";s:25:"_sys_uploader_html5_title";s:24:"bx_timeline_record_video";s:32:"_sys_uploader_record_video_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_video', '_bx_timeline_form_post_input_video', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_timeline_post', @sName, 'file', 'a:1:{i:0;s:22:"bx_timeline_html5_file";}', 'a:2:{s:23:"bx_timeline_simple_file";s:26:"_sys_uploader_simple_title";s:22:"bx_timeline_html5_file";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_files', '_bx_timeline_form_post_input_files', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'attachments', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'controls', '', 'tlb_do_submit,tlb_do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_timeline_post', @sName, 'tlb_do_submit', '_bx_timeline_form_post_input_do_submit', '', 0, 'submit', '_bx_timeline_form_post_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -422,7 +451,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add', 'photo', 2147483647, 1, 9),
 ('bx_timeline_post_add', 'video', 2147483647, 1, 10),
-('bx_timeline_post_add', 'tlb_do_submit', 2147483647, 1, 11),
+('bx_timeline_post_add', 'file', 2147483647, 1, 11),
+('bx_timeline_post_add', 'tlb_do_submit', 2147483647, 1, 12),
 
 ('bx_timeline_post_add_public', 'type', 2147483647, 1, 0),
 ('bx_timeline_post_add_public', 'action', 2147483647, 1, 1),
@@ -435,7 +465,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add_public', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add_public', 'photo', 2147483647, 1, 9),
 ('bx_timeline_post_add_public', 'video', 2147483647, 1, 10),
-('bx_timeline_post_add_public', 'tlb_do_submit', 2147483647, 1, 11),
+('bx_timeline_post_add_public', 'file', 2147483647, 1, 11),
+('bx_timeline_post_add_public', 'tlb_do_submit', 2147483647, 1, 12),
 
 ('bx_timeline_post_add_profile', 'type', 2147483647, 1, 0),
 ('bx_timeline_post_add_profile', 'action', 2147483647, 1, 1),
@@ -448,7 +479,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add_profile', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add_profile', 'photo', 2147483647, 1, 9),
 ('bx_timeline_post_add_profile', 'video', 2147483647, 1, 10),
-('bx_timeline_post_add_profile', 'tlb_do_submit', 2147483647, 1, 11),
+('bx_timeline_post_add_profile', 'file', 2147483647, 1, 11),
+('bx_timeline_post_add_profile', 'tlb_do_submit', 2147483647, 1, 12),
 
 ('bx_timeline_post_edit', 'type', 2147483647, 1, 1),
 ('bx_timeline_post_edit', 'action', 2147483647, 1, 2),
@@ -460,9 +492,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_edit', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_edit', 'photo', 2147483647, 1, 9),
 ('bx_timeline_post_edit', 'video', 2147483647, 1, 10),
-('bx_timeline_post_edit', 'controls', 2147483647, 1, 11),
-('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 12),
-('bx_timeline_post_edit', 'tlb_do_cancel', 2147483647, 1, 13);
+('bx_timeline_post_edit', 'file', 2147483647, 1, 11),
+('bx_timeline_post_edit', 'controls', 2147483647, 1, 12),
+('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 13),
+('bx_timeline_post_edit', 'tlb_do_cancel', 2147483647, 1, 14);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

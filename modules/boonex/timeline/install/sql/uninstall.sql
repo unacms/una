@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS `bx_timeline_photos`, `bx_timeline_photos_processed`, `bx_t
 
 DROP TABLE IF EXISTS `bx_timeline_videos`, `bx_timeline_videos_processed`, `bx_timeline_videos2events`;
 
+DROP TABLE IF EXISTS `bx_timeline_files`, `bx_timeline_files2events`;
+
 DROP TABLE IF EXISTS `bx_timeline_links`, `bx_timeline_links2events`;
 
 DROP TABLE IF EXISTS `bx_timeline_reposts_track`;

@@ -68,6 +68,8 @@
     <string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
     <string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Photo]]></string>
     <string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
+    <string name="_bx_timeline_form_post_input_sys_files"><![CDATA[File]]></string>
+    <string name="_bx_timeline_form_post_input_files"><![CDATA[]]></string>
     <string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Add Photo]]></string>
     <string name="_bx_timeline_form_post_input_sys_video"><![CDATA[Video]]></string>
     <string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
@@ -238,7 +240,12 @@
     <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Add Photo]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_simple"><![CDATA[Add Video (Simple)]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_html5"><![CDATA[Add Video (HTML5)]]></string>
-    <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
+
+    <string name="_bx_timeline_menu_item_title_add_file"><![CDATA[Add File]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_file_simple"><![CDATA[Add File (Simple)]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_file_html5"><![CDATA[Add File (HTML5)]]></string>
+
+  <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_record"><![CDATA[Record Video]]></string>
     <string name="_bx_timeline_menu_item_title_add_video_record"><![CDATA[Record Video]]></string>
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>

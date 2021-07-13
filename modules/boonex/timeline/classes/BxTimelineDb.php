@@ -37,11 +37,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $this->_aTablesMedia = array(
             $CNF['FIELD_PHOTO'] => $this->_sPrefix . 'photos',
-            $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos' 
+            $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos',
+			$CNF['FIELD_FILE'] => $this->_sPrefix . 'files' 
         );
         $this->_aTablesMedia2Events = array(
             $CNF['FIELD_PHOTO'] => $this->_sPrefix . 'photos2events',
-            $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos2events'
+            $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos2events',
+			$CNF['FIELD_FILE'] => $this->_sPrefix . 'files2events'
         );
     }
 

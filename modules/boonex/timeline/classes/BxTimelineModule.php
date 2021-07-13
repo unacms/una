@@ -2797,15 +2797,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
+			
+			//--- Process Files ---//
+			$aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
+            $bFileIds = !empty($aFileIds) && is_array($aFileIds);
+			
 
-            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds) {
+            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
             	return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode);
             }
 
-            $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oConfig->getTitleDefault($bLinkIds, $bPhotoIds, $bVideoIds);
+            $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oConfig->getTitleDefault($bLinkIds, $bPhotoIds, $bVideoIds);//RLTODO
             $sDescription = _t('_bx_timeline_txt_user_added_sample', '{profile_name}', _t('_bx_timeline_txt_sample_with_article'));
 
             /**
@@ -2848,6 +2853,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 //--- Process Media ---//
                 $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId, true);
                 $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId, true);
+				$this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId, true);
+				
 
                 $this->onPost($iId);
 
@@ -2962,8 +2969,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
+			
+			$aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
+            $bFileIds = !empty($aFileIds) && is_array($aFileIds);
 
-            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds) {
+            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
@@ -2986,6 +2996,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             //--- Process Media ---//
             $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId);
             $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId);
+			$this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId);
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
             $this->_oDb->deleteCache(array('event_id' => $iId));
@@ -3686,7 +3697,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_POST) {
             $this->_deleteMedia($CNF['FIELD_PHOTO'], $aEvent[$CNF['FIELD_ID']]);
             $this->_deleteMedia($CNF['FIELD_VIDEO'], $aEvent[$CNF['FIELD_ID']]);
-
+			$this->_deleteMedia($CNF['FIELD_FILE'], $aEvent[$CNF['FIELD_ID']]);
             $this->_deleteLinks($aEvent[$CNF['FIELD_ID']]);
     	}
 
@@ -3929,6 +3940,34 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $aResult;
     }
+	
+	public function getEventFiles($iEventId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aFiles = $this->_oDb->getMedia($CNF['FIELD_FILE'], $iEventId);
+		
+        if(empty($aFiles) || !is_array($aFiles))
+            return array();
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_files'));
+		
+        $aResult = array();
+        foreach($aFiles as $iFileId) {
+            $sFileUrl = $oStorage->getFileUrlById($iFileId);
+            $aFileFile = $oStorage->getFile($iFileId);
+
+            $aResult[$iFileId] = array(
+                'id' => $iFileId,
+                'src' => $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFileFile['file_name'])),
+                'src_medium' => '',
+                'src_orig' => '',
+                'url' => $sFileUrl
+            );
+        }
+
+        return $aResult;
+    }
 
     /**
      * Protected Methods 
@@ -4097,7 +4136,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'videos' => array(),
             'videos_attach' => $this->getEventVideos($iId),
             'files' => array(),
-            'files_attach' => array()
+            'files_attach' => $this->getEventFiles($iId)
         );
     }
 
@@ -4243,7 +4282,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iProfileId = $this->_iProfileId;
 
         $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
-
         $aGhostFiles = $oStorage->getGhosts ($iProfileId, !$isAssociateWithContent ? $iContentId : 0, true, $this->_isModerator());
         if(empty($aGhostFiles) || !is_array($aGhostFiles))
             return;
