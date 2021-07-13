@@ -92,7 +92,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         if ($this->id) {
             $sTitle = _t($this->aCurrent['title']);
             $sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
-            return $this->_oTemplate->parseHtmlByName('designbox_container.html', array(
+            return BxDolTemplate::getInstance()->parseHtmlByName('designbox_container.html', array(
                 'class_add' => ' bx-search-results',
                 'bx_if:show_html_id' => array(
                     'condition' => true,
