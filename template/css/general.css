@@ -299,6 +299,7 @@ div.bx-account-unit-online {
 .bx-profile-stats .bx-ps-user-info {
     -webkit-flex: 1 1 auto; 
     flex: 1 1 auto;
+    overflow: hidden;
 }
 
 .bx-profile-stats .bx-ps-user-info-cnt {
@@ -309,7 +310,15 @@ div.bx-account-unit-online {
     -webkit-flex-direction: column;
     flex-direction: column;
 }
-
+.bx-profile-stats .bx-ps-user-line,
+.bx-profile-stats .bx-ps-user-line a {
+    max-width: 100%;
+}
+.bx-profile-stats .bx-ps-user-line a {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* --------------- Create Post Form */
 
