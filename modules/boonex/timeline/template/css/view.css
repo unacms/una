@@ -260,6 +260,7 @@ div.bx-tl-item div.bx-tl-owner-info {
     align-items: flex-start;
     -webkit-justify-content: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
@@ -275,6 +276,11 @@ div.bx-tl-item div.bx-tl-owner-name {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 
+    max-width: 100%;
+}
+
+div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name {
+    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
