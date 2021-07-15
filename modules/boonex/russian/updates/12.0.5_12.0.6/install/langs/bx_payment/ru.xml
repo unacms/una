@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_payment_txt_checkout_for"><![CDATA[Сообщение о том, что Вы хотите оплатить следующие позиции наличными, было отправлено продавцу ({0}). Он свяжется с вами в ближайшее время.]]></string_add>
+	<string_add name="_bx_payment_txt_payment_description"><![CDATA[Выплата на сайте {0}.]]></string_add>
+</resources>

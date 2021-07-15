@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_upd name="_bx_events_page_title_sys_entries_favorites"><![CDATA[Favorites Events]]></string_upd>
+    <string_upd name="_bx_events_page_title_entries_favorites"><![CDATA[Favorites Events]]></string_upd>
+</resources>

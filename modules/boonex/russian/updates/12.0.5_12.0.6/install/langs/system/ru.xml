@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_sys_form_favorite"><![CDATA[Избранное]]></string_add>
+	<string_add name="_sys_form_display_favorite_add"><![CDATA[Добавить в список избранного]]></string_add>
+	<string_add name="_sys_form_display_favorite_list_edit"><![CDATA[Изменить список избранного]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_sys"><![CDATA[Тип объекта]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_list_id"><![CDATA[ID списка]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_object_id"><![CDATA[ID объекта]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_action"><![CDATA[Действие]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_id"><![CDATA[ID системы]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_list"><![CDATA[Добавить в список]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_list"><![CDATA[Добавить в список]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_title"><![CDATA[Заголовок]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_title"><![CDATA[Заголовок]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_allow_view_to"><![CDATA[Видимость]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_allow_view_to"><![CDATA[Видимость]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_submit"><![CDATA[Сохранить]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_system_submit"><![CDATA[Сохранить]]></string_add>
+	<string_add name="_sys_form_favorite_input_caption_button_new_list"><![CDATA[<i class="sys-icon folder-plus"></i>]]></string_add>
+	<string_add name="_sys_form_favorite_list_title_count"><![CDATA[Количество]]></string_add>
+	<string_add name="_sys_form_favorite_list_title_created"><![CDATA[Создан]]></string_add>
+	<string_add name="_sys_form_favorite_list_title_updated"><![CDATA[Изменен]]></string_add>
+	<string_add name="_sys_form_favorite_list_title_visibility"><![CDATA[Видимость]]></string_add>
+	<string_add name="_sys_txt_default_favorite_list"><![CDATA[По умолчанию]]></string_add>
+</resources>
