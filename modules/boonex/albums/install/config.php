@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_albums',
     'title' => 'Albums',
     'note' => 'Photos & videos',
-    'version' => '12.0.5.DEV',
+    'version' => '12.0.6.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
