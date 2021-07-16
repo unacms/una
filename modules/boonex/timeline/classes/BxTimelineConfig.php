@@ -696,16 +696,18 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->getTitle($s, $mixedProfile, 'getCharsDisplayMinTitle');
     }
 
-    public function getTitleDefault($bL, $bP, $bV)
+    public function getTitleDefault($bL, $bP, $bV, $bF)
     {
         $sResult = '';
 
-        if($bL && !$bP && !$bV)
+        if($bL && !$bP && !$bV && !$bF)
             $sResult = 'link';
-        else if(!$bL && $bP && !$bV)
+        else if(!$bL && $bP && !$bV && !$bF)
             $sResult = 'image';
-        else if(!$bL && !$bP && $bV)
+        else if(!$bL && !$bP && $bV && !$bF)
             $sResult = 'video';
+        else if(!$bL && !$bP && !$bV && $bF)
+            $sResult = 'file';
         else 
             $sResult = 'media';
 
