@@ -1073,7 +1073,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $iGroupProfileId = -(int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
             $oProfileContext = BxDolProfile::getInstance($iGroupProfileId);
             $oModule = BxDolModule::getInstance($oProfileContext->getModule()); 
-            if ($oModule->getRole($iGroupProfileId, $this->_getAuthorId()) === BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR && $this->checkAction('comments remove in group context', $isPerformAction)){
+            if ($oModule->_oConfig->isRoles() && $oModule->getRole($iGroupProfileId, $this->_getAuthorId()) === BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR && $this->checkAction('comments remove in group context', $isPerformAction)){
                 return true;
             }
         }
