@@ -12,8 +12,8 @@ class BxBaseReportsGrid extends BxTemplGrid
     protected $_sParamsDivider;
     
     protected $_sFilter1Name;
-	protected $_sFilter1Value;
-	protected $_aFilter1Values;
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
     protected $sJsObject = 'oBxDolReportsManageTools';
     
     protected $_aReportSystemInfo;
@@ -25,13 +25,13 @@ class BxBaseReportsGrid extends BxTemplGrid
         $this->_sParamsDivider = '#-#';
 
         $this->_sDefaultSortingOrder = 'DESC';
-        
+
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
             '' => _t('_report_status_all'),
-			0 => _t('_report_status_new'),
-			1 => _t('_report_status_check_in'),
-			2 => _t('_report_status_check_out'),
+            0 => _t('_report_status_new'),
+            1 => _t('_report_status_check_in'),
+            2 => _t('_report_status_check_out'),
         );
 
         $sFilter2 = bx_get($this->_sFilter1Name);
@@ -39,8 +39,7 @@ class BxBaseReportsGrid extends BxTemplGrid
             $this->_sFilter1Value = bx_process_input($sFilter2);
             $this->_aQueryAppend[$this->_sFilter1Name] = $this->_sFilter1Value;
         }
-		
-        
+
         if (bx_get('module_name')){
             $this->setModule(bx_get('module_name'));
         }
@@ -57,6 +56,7 @@ class BxBaseReportsGrid extends BxTemplGrid
         $CNF = $oModule->_oConfig->CNF;
         $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], -1, false);
         $this->_aReportSystemInfo = $oReport->getSystemInfo();
+        $this->_aOptions['table'] = $this->_aReportSystemInfo['table_track'];
         $this->_aQueryAppend['module_name'] = $sModuleName;
     }
     
@@ -66,12 +66,10 @@ class BxBaseReportsGrid extends BxTemplGrid
             'sObjName' => $this->sJsObject,
             'aHtmlIds' => array(),
             'oRequestParams' => array(),
-        	'sObjNameGrid' => 'sys_reports_administration'
+            'sObjNameGrid' => 'sys_reports_administration'
         );
         return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->sJsObject . " = new BxDolReportsManageTools(" . json_encode($aParams) . ");");
     }
-    
-   
     
     public function performActionCheckIn()
     {
@@ -89,17 +87,17 @@ class BxBaseReportsGrid extends BxTemplGrid
 
         $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['module_name']);
         $CNF = $oModule->_oConfig->CNF;
-        
-		$iAffected = 0;
-		$aIdsAffected = array ();
-		foreach($aIds as $iId) {
-			$oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iId, true);
+
+        $iAffected = 0;
+        $aIdsAffected = array ();
+        foreach($aIds as $iId) {
+            $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iId, true);
             $oReport->changeStatusReport($iStatus, bx_get_logged_profile_id(), _t($sCmtsText));
-			$aIdsAffected[] = $iId;
-			$iAffected++;
-		}
-		
-		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => $mixedResult));
+            $aIdsAffected[] = $iId;
+            $iAffected++;
+        }
+
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => $mixedResult));
     }
     
     
@@ -121,7 +119,7 @@ class BxBaseReportsGrid extends BxTemplGrid
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getCellComments($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = '';
@@ -217,19 +215,19 @@ class BxBaseReportsGrid extends BxTemplGrid
         
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
-    
+
     protected function _getFilterControls()
     {
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
-	
-	protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
+
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
     {
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
         
-		foreach($aFilterValues as $sKey => $sValue)
-			$aFilterValues[$sKey] = _t($sValue);
+        foreach($aFilterValues as $sKey => $sValue)
+            $aFilterValues[$sKey] = _t($sValue);
 
         $aInputModules = array(
             'type' => 'select',
@@ -245,8 +243,8 @@ class BxBaseReportsGrid extends BxTemplGrid
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputModules);
     }
-	
-	protected function _getSearchInput()
+
+    protected function _getSearchInput()
     {
         $aInputSearch = array(
             'type' => 'text',
@@ -261,18 +259,18 @@ class BxBaseReportsGrid extends BxTemplGrid
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputSearch);
     }
-    
+
     protected function _getDataSql ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         $this->_aOptions['source'] = "SELECT * FROM `" . $this->_aReportSystemInfo['table_track'] . "` " . $this->_aOptions['source'];
-        
+
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
-		
+
         if(isset($this->_sFilter1Value) && $this->_sFilter1Value !== ''){
             $this->_aOptions['source'] .= " AND `status` = " . $this->_sFilter1Value;
-		}
-        
+        }
+
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }
