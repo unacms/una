@@ -57,26 +57,19 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(isset($this->aInputs[$CNF['FIELD_LINK']]))
             $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
 
-        if(isset($CNF['FIELD_VIDEO']) && isset($this->aInputs[$CNF['FIELD_VIDEO']])) {
-            $aContentInfo = false;
-            if($bValueId) {
-                $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($iValueId);
-                $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = $iValueId;
-            }
+        
+        foreach(['FIELD_VIDEO', 'FIELD_FILE'] as $sSetting){
+            if(isset($CNF[$sSetting]) && isset($this->aInputs[$CNF[$sSetting]])) {
+                $aContentInfo = false;
+                if($bValueId) {
+                    $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($iValueId);
+                    $this->aInputs[$CNF[$sSetting]]['content_id'] = $iValueId;
+                }
 
-            $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getGhostTmplVars($CNF['FIELD_VIDEO'], $aContentInfo));
-        }
-		
-		if(isset($CNF['FIELD_FILE']) && isset($this->aInputs[$CNF['FIELD_FILE']])) {
-            $aContentInfo = false;
-            if($bValueId) {
-                $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($iValueId);
-                $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = $iValueId;
+                $this->aInputs[$CNF[$sSetting]]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getGhostTmplVars($CNF['FIELD_VIDEO'], $aContentInfo));
             }
-
-            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getGhostTmplVars($CNF['FIELD_FILE'], $aContentInfo));
         }
-	
+       
         if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
             if(isset($aValues[$CNF['FIELD_STATUS']]) && in_array($aValues[$CNF['FIELD_STATUS']], array(BX_TIMELINE_STATUS_ACTIVE, BX_TIMELINE_STATUS_HIDDEN)))
                 unset($this->aInputs[$CNF['FIELD_PUBLISHED']]);

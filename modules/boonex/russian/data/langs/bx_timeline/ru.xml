@@ -69,6 +69,8 @@
     <string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Фото]]></string>
     <string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
     <string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_timeline_form_post_input_sys_files"><![CDATA[Файл]]></string>
+    <string name="_bx_timeline_form_post_input_files"><![CDATA[]]></string>
     <string name="_bx_timeline_form_post_input_sys_video"><![CDATA[Видео]]></string>
     <string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
     <string name="_bx_timeline_form_post_input_video_alt"><![CDATA[Добавить видео]]></string>
@@ -239,6 +241,9 @@
     <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Добавить видео]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_record"><![CDATA[Записать видео]]></string>
     <string name="_bx_timeline_menu_item_title_add_video_record"><![CDATA[Записать видео]]></string>
+    <string name="_bx_timeline_menu_item_title_add_file"><![CDATA[Добавить Файл]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_file_simple"><![CDATA[Добавить Файл (Обычная загрузка)]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_file_html5"><![CDATA[Добавить Файл (Множественная загрузка)]]></string>
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Статус]]></string>
@@ -309,6 +314,7 @@
     <string name="_bx_timeline_txt_sample_with_image"><![CDATA[с изображением]]></string>
     <string name="_bx_timeline_txt_sample_with_video"><![CDATA[с видео]]></string>
     <string name="_bx_timeline_txt_sample_with_media"><![CDATA[с медиа]]></string>
+    <string name="_bx_timeline_txt_sample_with_file"><![CDATA[с файлом]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
     <string name="_bx_timeline_txt_some_text_here"><![CDATA[Поделитесь своими мыслями]]></string>
     <string name="_bx_timeline_txt_show"><![CDATA[Показать]]></string>
