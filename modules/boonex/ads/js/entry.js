@@ -36,6 +36,10 @@ BxAdsEntry.prototype.makeOffer = function(oElement, iContentId) {
 
 BxAdsEntry.prototype.onMakeOffer = function(oData) {};
 
+BxAdsEntry.prototype.viewOffer = function(oElement, iOfferId) {
+    this._performAction(oElement, 'view_offer', iOfferId);
+};
+
 BxAdsEntry.prototype.acceptOffer = function(oElement, iOfferId) {
     var $this = this;
 
@@ -58,6 +62,10 @@ BxAdsEntry.prototype.cancelOffer = function(oElement, iOfferId) {
     bx_confirm('', function() {
         $this._performAction(oElement, 'cancel_offer', iOfferId);
     });
+};
+
+BxAdsEntry.prototype.payOffer = function(oElement, iOfferId) {
+    this._performAction(oElement, 'pay_offer', iOfferId);
 };
 
 BxAdsEntry.prototype.shipped = function(oElement, iContentId) {

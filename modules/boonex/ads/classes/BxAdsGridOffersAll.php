@@ -23,9 +23,11 @@ class BxAdsGridOffersAll extends BxTemplGrid
     	if(!$oTemplate)
             $oTemplate = $this->_oModule->_oTemplate;
 
-        $this->_iProfileId = bx_get_logged_profile_id();
-
         parent::__construct ($aOptions, $oTemplate);
+        
+        $this->_sDefaultSortingOrder = 'DESC';
+
+        $this->_iProfileId = bx_get_logged_profile_id();
     }
 
     protected function _getCellContentId($mixedValue, $sKey, $aField, $aRow)

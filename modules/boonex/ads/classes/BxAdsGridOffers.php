@@ -23,6 +23,8 @@ class BxAdsGridOffers extends BxTemplGrid
 
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_sDefaultSortingOrder = 'DESC';
+
         if(($iContentId = bx_get('content_id')) !== false)
             $this->setContentId($iContentId);
     }

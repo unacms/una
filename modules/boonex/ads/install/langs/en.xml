@@ -126,6 +126,7 @@
     
     <string name="_bx_ads_form_offer"><![CDATA[Offer]]></string>
     <string name="_bx_ads_form_offer_display_add"><![CDATA[Add Offer]]></string>
+    <string name="_bx_ads_form_offer_display_view"><![CDATA[View Offer]]></string>
     <string name="_bx_ads_form_offer_input_sys_amount"><![CDATA[Amount]]></string>
     <string name="_bx_ads_form_offer_input_amount"><![CDATA[Amount]]></string>
     <string name="_bx_ads_form_offer_input_amount_err"><![CDATA[Amount is essential. Please, fill in this field.]]></string>

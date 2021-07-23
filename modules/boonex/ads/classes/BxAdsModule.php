@@ -172,7 +172,7 @@ class BxAdsModule extends BxBaseModTextModule
             else
                 $aResult = array('code' => 4, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
-            $this->onOfferAdded($iId);
+            $this->onOfferAdded($iId, $aResult);
 
             return echoJson($aResult);
         }
@@ -183,6 +183,28 @@ class BxAdsModule extends BxBaseModTextModule
         )));
 
         return echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
+    }
+
+    public function actionViewOffer()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iAuthorId = bx_get_logged_profile_id();
+        $iOfferId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        $aOffer = $this->_oDb->getOffersBy(array('type' => 'id', 'id' => $iOfferId));
+        if(empty($aOffer) || !is_array($aOffer))
+            return echoJson(array());
+        
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_OFFER'], $CNF['OBJECT_FORM_OFFER_DISPLAY_VIEW']);
+        $oForm->initChecker($aOffer);
+
+        $sContent = BxTemplFunctions::getInstance()->transBox($this->_oConfig->getHtmlIds('offer_popup'), $this->_oTemplate->parseHtmlByName('offer_popup.html', array(
+            'form_id' => $oForm->getId(),
+            'form' => $oForm->getCode(true)
+        )));
+
+        return echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => true, 'removeOnClose' => true))));
     }
 
     public function actionAcceptOffer()
@@ -213,6 +235,16 @@ class BxAdsModule extends BxBaseModTextModule
             return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));     
 
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_canceled'), 'reload' => 1));
+    }
+    
+    public function actionPayOffer()
+    {
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(($mixedResult = $this->offerPay($iId)) !== false)
+            return echoJson($mixedResult);
+
+        return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));     
     }
 
     public function actionShipped()
@@ -315,6 +347,43 @@ class BxAdsModule extends BxBaseModTextModule
         }
 
         return parent::serviceGetSearchableFieldsExtended($aInputsAdd);
+    }
+
+    /**
+     * Mark an ad as shipped/received by seller/bauer accordingly.
+     * @param type $sAction - shipped/received action.
+     * @param type $iContentId - an ad the action will be performed with.
+     * @param integer $iProfileSrc - profile, who performed the action.
+     * @param integer $iProfileDst - profile, the action is pointed on.
+     * @return boolean - true or a string value with error message.
+     */
+    public function serviceMarkAs($sAction, $iContentId, $iProfileSrc = 0, $iProfileDst = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileSrc)
+            $iProfileSrc = bx_get_logged_profile_id();
+
+        $sTxtError = '_bx_ads_txt_err_cannot_perform_action';
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $sMethodCheck = 'checkAllowedMark' . bx_gen_method_name($sAction) . 'ForProfile';
+        if(!method_exists($this, $sMethodCheck))
+            return _t($sTxtError);
+
+        if(($mixedCheckResult = $this->$sMethodCheck($aContentInfo, false, $iProfileSrc)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedCheckResult;
+
+        if((int)$this->_oDb->updateEntriesBy(array($CNF['FIELD_' . strtoupper($sAction)] => time()), array($CNF['FIELD_ID'] => $iContentId)) == 0)
+            return _t($sTxtError);
+
+        $this->$sMethodCheck($aContentInfo, true, $iProfileSrc);
+
+        $sMethodOnResult = 'on' . bx_gen_method_name($sAction);
+        if(method_exists($this, $sMethodOnResult))
+            $this->$sMethodOnResult($aContentInfo, $iProfileSrc, $iProfileDst);        
+
+        return true;
     }
 
     public function serviceEntityCreate ($sParams = false)
@@ -1155,16 +1224,24 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function checkAllowedMarkShipped($mixedContent, $isPerformAction = false)
     {
+        return $this->checkAllowedMarkShippedForProfile($mixedContent, $isPerformAction);
+    }
+
+    public function checkAllowedMarkShippedForProfile($mixedContent, $isPerformAction = false, $iProfileId = false)
+    {
         $CNF = &$this->_oConfig->CNF;
         $sTxtError = '_sys_txt_access_denied';
 
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+                
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
         if(empty($mixedContent) || !is_array($mixedContent))
             return _t($sTxtError);
 
-        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
+        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != $iProfileId)
             return _t($sTxtError);
 
         return CHECK_ACTION_RESULT_ALLOWED;
@@ -1177,8 +1254,16 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function checkAllowedMarkReceived($mixedContent, $isPerformAction = false)
     {
+        return $this->checkAllowedMarkReceivedForProfile($mixedContent, $isPerformAction);
+    }
+
+    public function checkAllowedMarkReceivedForProfile($mixedContent, $isPerformAction = false, $iProfileId = false)
+    {
         $CNF = &$this->_oConfig->CNF;
         $sTxtError = '_sys_txt_access_denied';
+
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
 
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
@@ -1186,13 +1271,13 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($mixedContent) || !is_array($mixedContent))
             return _t($sTxtError);
 
-        if((int)$mixedContent[$CNF['FIELD_RECEIVED']] != 0 || !$this->_oDb->hasLicense(bx_get_logged_profile_id(), $mixedContent[$CNF['FIELD_ID']]))
+        if((int)$mixedContent[$CNF['FIELD_RECEIVED']] != 0 || !$this->_oDb->hasLicense($iProfileId, $mixedContent[$CNF['FIELD_ID']]))
             return _t($sTxtError);
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
     
-    public function onOfferAdded($iOfferId)
+    public function onOfferAdded($iOfferId, &$aResult)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1219,6 +1304,7 @@ class BxAdsModule extends BxBaseModTextModule
         ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
+        $aParams['override_result'] = &$aResult;
         bx_alert($this->getName(), 'offer_added', $iOfferId, $aOfferInfo[$CNF['FIELD_OFR_AUTHOR']], $aParams);
     }
 
@@ -1321,7 +1407,7 @@ class BxAdsModule extends BxBaseModTextModule
     /**
      * Common methods.
      */
-    public function onShipped($mixedContent)
+    public function onShipped($mixedContent, $iProfileSrc = 0, $iProfileDst = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1329,30 +1415,39 @@ class BxAdsModule extends BxBaseModTextModule
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
         $iContentId = (int)$mixedContent[$CNF['FIELD_ID']];
 
+        if(empty($iProfileSrc))
+            $iProfileSrc = (int)$mixedContent[$CNF['FIELD_AUTHOR']];
+
+        $oProfileSrc = BxDolProfile::getInstanceMagic($iProfileSrc);
+
         $aOffer = $this->_oDb->getOffersBy(array('type' => 'accepted', 'content_id' => $iContentId));
-        if(empty($aOffer) || !is_array($aOffer))
-            return;
+        $bOffer = !empty($aOffer) && is_array($aOffer);
 
-        $iClient = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];
-        $iVendor = (int)$mixedContent[$CNF['FIELD_AUTHOR']];
-        $oVendor = BxDolProfile::getInstanceMagic($iVendor);
+        if(empty($iProfileDst) && $bOffer)
+            $iProfileDst = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];        
 
-        sendMailTemplate($CNF['ETEMPLATE_SHIPPED'], 0, $iClient, array(
-            'vendor_name' => $oVendor->getDisplayName(),
-            'vendor_url' => $oVendor->getUrl(),
-            'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
-        ));
+        if(!empty($oProfileSrc) && !empty($iProfileDst))
+            sendMailTemplate($CNF['ETEMPLATE_SHIPPED'], 0, $iProfileDst, array(
+                'vendor_name' => $oProfileSrc->getDisplayName(),
+                'vendor_url' => $oProfileSrc->getUrl(),
+                'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
+                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         $aParams = $this->_alertParams($mixedContent);
-        $aParams['offer_author_id'] = $iClient;
+        $aParams = array_merge($aParams, array(
+            'profile_src' => $iProfileSrc,
+            'profile_dst' => $iProfileDst,
+            'offer_id' => $bOffer ? (int)$aOffer[$CNF['FIELD_OFR_ID']] : 0,
+        ));
+
         bx_alert($this->getName(), 'shipped', $iContentId, false, $aParams);
     }
 
-    public function onReceived($mixedContent)
+    public function onReceived($mixedContent, $iProfileSrc = 0, $iProfileDst = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1360,25 +1455,34 @@ class BxAdsModule extends BxBaseModTextModule
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
         $iContentId = (int)$mixedContent[$CNF['FIELD_ID']];
 
+        if(empty($iProfileDst))
+            $iProfileDst = (int)$mixedContent[$CNF['FIELD_AUTHOR']];
+
         $aOffer = $this->_oDb->getOffersBy(array('type' => 'accepted', 'content_id' => $iContentId));
-        if(empty($aOffer) || !is_array($aOffer))
-            return;
+        $bOffer = !empty($aOffer) && is_array($aOffer);
 
-        $iClient = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];
-        $oClient = BxDolProfile::getInstanceMagic($iClient);
+        if(empty($iProfileSrc) && $bOffer)
+            $iProfileSrc = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];
+        $oProfileSrc = BxDolProfile::getInstanceMagic($iProfileSrc);
 
-        sendMailTemplate($CNF['ETEMPLATE_RECEIVED'], 0, (int)$mixedContent[$CNF['FIELD_AUTHOR']], array(
-            'client_name' => $oClient->getDisplayName(),
-            'client_url' => $oClient->getUrl(),
-            'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
-        ));
+        if(!empty($iProfileSrc) && !empty($iProfileDst))
+            sendMailTemplate($CNF['ETEMPLATE_RECEIVED'], 0, $iProfileDst, array(
+                'client_name' => $oProfileSrc->getDisplayName(),
+                'client_url' => $oProfileSrc->getUrl(),
+                'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
+                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         $aParams = $this->_alertParams($mixedContent);
-        $aParams['offer_author_id'] = $iClient;
+        $aParams = array_merge($aParams, array(
+            'profile_src' => $iProfileSrc,
+            'profile_dst' => $iProfileDst,
+            'offer_id' => $bOffer ? (int)$aOffer[$CNF['FIELD_OFR_ID']] : 0,
+        ));
+
         bx_alert($this->getName(), 'received', $iContentId, false, $aParams);
     }
 
@@ -1413,6 +1517,20 @@ class BxAdsModule extends BxBaseModTextModule
 
         $this->onOfferCanceled($iId);
         return true;
+    }
+    
+    public function offerPay($iId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aOffer = $this->_oDb->getOffersBy(array('type' => 'id', 'id' => $iId));
+        if(empty($aOffer) || !is_array($aOffer))
+            return false;
+
+        return array('redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+            'i' => $CNF['URI_VIEW_ENTRY'], 
+            $CNF['FIELD_ID'] => $aOffer[$CNF['FIELD_OFR_CONTENT']]
+        )));
     }
 
     public function processMetasAdd($iContentId)
@@ -1472,26 +1590,10 @@ class BxAdsModule extends BxBaseModTextModule
      */
     protected function _actionMarkAs($sAction)
     {
-        $CNF = &$this->_oConfig->CNF;
-
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
 
-        $sMethodCheck = 'checkAllowedMark' . bx_gen_method_name($sAction);
-        if(!method_exists($this, $sMethodCheck))
-            return array();
-
-        if(($mixedCheckResult = $this->$sMethodCheck($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return array('msg' => $mixedCheckResult);
-
-        if((int)$this->_oDb->updateEntriesBy(array($CNF['FIELD_' . strtoupper($sAction)] => time()), array($CNF['FIELD_ID'] => $iContentId)) == 0)
-            return array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
-
-        $this->$sMethodCheck($aContentInfo, true);
-
-        $sMethodOnResult = 'on' . bx_gen_method_name($sAction);
-        if(method_exists($this, $sMethodOnResult))
-            $this->$sMethodOnResult($aContentInfo);        
+        if(($mixedResult = $this->serviceMarkAs($sAction, $iContentId)) !== true)
+            return array('msg' => $mixedResult); 
 
         return array(
             'reload' => 1

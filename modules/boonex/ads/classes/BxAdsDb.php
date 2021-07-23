@@ -29,6 +29,47 @@ class BxAdsDb extends BxBaseModTextDb
         $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.*";
 
         switch($aParams['type']) {
+            case 'purchased':
+                $aMethod['params'][1] = array(
+                    'buyer_id' => $aParams['buyer_id'],
+                );
+
+                $sJoinClause .= " INNER JOIN `" . $CNF['TABLE_LICENSES'] . "` ON `" . $CNF['TABLE_ENTRIES'] . "`.`id`=`" . $CNF['TABLE_LICENSES'] . "`.`entry_id` AND `" . $CNF['TABLE_LICENSES'] . "`.`profile_id`=:buyer_id";
+
+                if(isset($aParams['count']) && $aParams['count'] === true) {
+                    $aMethod['name'] = 'getOne';
+
+                    $sSelectClause = "COUNT(`" . $CNF['TABLE_ENTRIES'] . "`.`id`)";
+                }
+                break;
+
+            case 'shipped':
+                $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_SHIPPED'] . "`<>0 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RECEIVED'] . "`=0";
+
+                if(!empty($aParams['seller_id'])) {
+                    $aMethod['params'][1] = array(
+                        'seller_id' => $aParams['seller_id']
+                    );
+
+                    $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_AUTHOR'] . "`=:seller_id";
+                }
+
+                if(!empty($aParams['buyer_id'])) {
+                    $aMethod['params'][1] = array(
+                        'buyer_id' => $aParams['buyer_id'],
+                        'status' => BX_ADS_OFFER_STATUS_ACCEPTED
+                    );
+
+                    $sJoinClause .= " INNER JOIN `" . $CNF['TABLE_OFFERS'] . "` ON `" . $CNF['TABLE_ENTRIES'] . "`.`id`=`" . $CNF['TABLE_OFFERS'] . "`.`content_id` AND `" . $CNF['TABLE_OFFERS'] . "`.`author_id`=:buyer_id AND `" . $CNF['TABLE_OFFERS'] . "`.`status`=:status";
+                }
+
+                if(isset($aParams['count']) && $aParams['count'] === true) {
+                    $aMethod['name'] = 'getOne';
+
+                    $sSelectClause = "COUNT(`" . $CNF['TABLE_ENTRIES'] . "`.`id`)";
+                }
+                break;
+
             case 'expired':
                 $aMethod['params'][1]['days'] = 86400 * (int)$aParams['days'];
 
@@ -351,7 +392,7 @@ class BxAdsDb extends BxBaseModTextDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
     	$sSelectClause = "`tl`.*";
-    	$sJoinClause = $sWhereClause = $sLimitClause = "";
+    	$sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
         switch($aParams['type']) {
             case 'id':
             	$aMethod['name'] = 'getRow';
@@ -360,6 +401,20 @@ class BxAdsDb extends BxBaseModTextDb
                 );
 
                 $sWhereClause = " AND `tl`.`id`=:id";
+                break;
+
+            case 'entry_id':
+                $aMethod['params'][1] = array(
+                    'entry_id' => $aParams['entry_id']
+                );
+
+                $sWhereClause = " AND `tl`.`entry_id`=:entry_id";
+                $sOrderClause = "`tl`.`added` DESC";
+
+                if(isset($aParams['newest']) && $aParams['newest'] === true) {
+                    $aMethod['name'] = 'getRow';
+                    $sLimitClause = "1";
+                }
                 break;
 
             case 'has_by':
@@ -381,12 +436,13 @@ class BxAdsDb extends BxBaseModTextDb
                 break;
         }
 
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
         $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
 
         $aMethod['params'][0] = "SELECT
             " . $sSelectClause . "
             FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause . " " . $sLimitClause;
+            WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
@@ -458,6 +514,24 @@ class BxAdsDb extends BxBaseModTextDb
                     $aMethod['params'][1]['content_id'] = (int)$aParams['content_id'];
 
                     $sWhereClause = " AND `to`.`content_id`=:content_id";
+
+                    if(isset($aParams['count']) && $aParams['count'] === true) {
+                        $aMethod['name'] = 'getOne';
+
+                        $sSelectClause = "COUNT(`to`.`id`)";
+                    }
+                    else if(isset($aParams['highest']) && $aParams['highest'] === true) {
+                        $aMethod['name'] = 'getRow';
+
+                        $sOrderClause = "`to`.`amount` DESC";
+                        $sLimitClause = 1;
+                    }
+                    break;
+
+                case 'author_id':
+                    $aMethod['params'][1]['author_id'] = (int)$aParams['author_id'];
+
+                    $sWhereClause = " AND `to`.`author_id`=:author_id";
 
                     if(isset($aParams['count']) && $aParams['count'] === true) {
                         $aMethod['name'] = 'getOne';

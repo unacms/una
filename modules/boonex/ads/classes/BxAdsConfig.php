@@ -168,6 +168,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_POLL_DISPLAY_ADD' => 'bx_ads_poll_add',
             'OBJECT_FORM_OFFER' => 'bx_ads_offer',
             'OBJECT_FORM_OFFER_DISPLAY_ADD' => 'bx_ads_offer_add',
+            'OBJECT_FORM_OFFER_DISPLAY_VIEW' => 'bx_ads_offer_view',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => 'bx_ads_entry_attachments', // attachments menu in create/edit forms
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_ads_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_ads_view_actions', // all actions menu on view entry page

@@ -126,6 +126,7 @@
 
     <string name="_bx_ads_form_offer"><![CDATA[Предложение]]></string>
     <string name="_bx_ads_form_offer_display_add"><![CDATA[Добавить предложение]]></string>
+    <string name="_bx_ads_form_offer_display_view"><![CDATA[Просмотреть предложение]]></string>
     <string name="_bx_ads_form_offer_input_sys_amount"><![CDATA[Сумма]]></string>
     <string name="_bx_ads_form_offer_input_amount"><![CDATA[Сумма]]></string>
     <string name="_bx_ads_form_offer_input_amount_err"><![CDATA[Сумма обязательна. Пожалуйста, заполните это поле.]]></string>
