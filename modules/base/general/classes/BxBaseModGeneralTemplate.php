@@ -314,30 +314,35 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     public function getFavoritesListInfo($aList, $oProfile)
     {
         $CNF = $this->_oConfig->CNF;
-        
+
+        $iListId = !empty($aList['id']) ? (int)$aList['id'] : 0;
+
+        $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
+        $aListInfo = $oFavorite->getQueryObject()->getList(array('type' => 'info', 'list_id' => $iListId, 'author_id' => $oProfile->id()));
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
         $sTitle = "";
-        if ($aList['allow_view_favorite_list_to'] < 0){
-            $oProfileContext = BxDolProfile::getInstance(abs($aList['allow_view_favorite_list_to']));
+        if ($aListInfo['allow_view_favorite_list_to'] < 0){
+            $oProfileContext = BxDolProfile::getInstance(abs($aListInfo['allow_view_favorite_list_to']));
             $sTitle = $oProfileContext->getDisplayName();
         }
         else{
-            if (empty($aList['allow_view_favorite_list_to']))
-                $aList['allow_view_favorite_list_to'] = 3;
-            $aPrivaciInfo = $oPrivacy->getGroupsBy(array('type'=>'id' , 'id'=> $aList['allow_view_favorite_list_to']));
+            if (empty($aListInfo['allow_view_favorite_list_to']))
+                $aListInfo['allow_view_favorite_list_to'] = 3;
+            $aPrivaciInfo = $oPrivacy->getGroupsBy(array('type'=>'id' , 'id'=> $aListInfo['allow_view_favorite_list_to']));
             $sTitle = _t($aPrivaciInfo['title']);
         }
         
         $aListsTmpl = array();
         
-        if (!empty($aList['created'])){
-            $aListsTmpl[] = array('title' => _t('_sys_form_favorite_list_title_created'), 'value' => bx_time_js($aList['created']));
+        if (!empty($aListInfo['created'])){
+            $aListsTmpl[] = array('title' => _t('_sys_form_favorite_list_title_created'), 'value' => bx_time_js($aListInfo['created']));
         }
         
         $aListsTmpl = array_merge($aListsTmpl, 
             array(
-                array('title' => _t('_sys_form_favorite_list_title_updated'), 'value' => bx_time_js($aList['updated'])),
-                array('title' => _t('_sys_form_favorite_list_title_count'), 'value' => $aList['count']),
+                array('title' => _t('_sys_form_favorite_list_title_updated'), 'value' => bx_time_js($aListInfo['updated'])),
+                array('title' => _t('_sys_form_favorite_list_title_count'), 'value' => $aListInfo['count']),
                 array('title' => _t('_sys_form_favorite_list_title_visibility'), 'value' => $sTitle)
             )
         );

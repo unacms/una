@@ -18,38 +18,47 @@ class BxBaseModGeneralPageListEntry extends BxBaseModGeneralPageBrowse
     
     public function __construct($aObject, $oTemplate = false)
     {
-        
         parent::__construct($aObject, $oTemplate);
-        
+
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $this->_iListId = null;
-        if(bx_get('list_id') === false)
-            return false; 
-        $this->_iListId = (int)bx_get('list_id');
-        
+
+        $this->_iListId = 0;
+        if(bx_get('list_id') !== false)
+            $this->_iListId = (int)bx_get('list_id');
+
         $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
         $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $this->_iListId));   
-        if($this->_iListId == 0){
-            $aList['title'] = _t('_sys_txt_default_favorite_list');
+        if($this->_iListId != 0 && (empty($aList) || !is_array($aList))) {
+            $this->_iListId = false;
+            return false;
         }
+
+        $sTitle = $this->_iListId != 0 ? $aList['title'] : _t('_sys_txt_default_favorite_list');
+
         $this->addMarkers(array(
-            'title' => $aList['title']
+            'title' => $sTitle
         ));
-        $this->_aObject['title'] = $aList['title'];
+
+        $this->_aObject['title'] = $sTitle;
     }
-    
+
     public function getCode ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
-        
-        if ($this->_iListId > 0){
-            if (!$oPrivacy->check($this->_iListId)){
+        if($this->_iListId === false) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
+        if ($this->_iListId > 0) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
+            if (!$oPrivacy->check($this->_iListId)) {
                 $this->_oTemplate->displayAccessDenied('');
                 exit;
             }
         }
-        return parent::getCode ();
+
+        return parent::getCode();
     }
 }

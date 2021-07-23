@@ -633,51 +633,52 @@ class BxBaseModGeneralModule extends BxDolModule
     /** 
      * @ref bx_base_general-browse_favorite_list_actions "browse_favorite_list_actions"
      */
-     public function serviceFavoritesListActions(){
-         $iListId = null;
-         if(bx_get('list_id') === false)
-             return false;
-         
-         $iListId = (int) bx_get('list_id');
-         
-         $oProfile = null;
-         if(bx_get('profile_id') !== false)
-             $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
-         if(!$oProfile)
-             return false;
+    public function serviceFavoritesListActions()
+    {
+        $iListId = 0;
+        if(bx_get('list_id') !== false)
+            $iListId = (int) bx_get('list_id');        
 
-         $CNF = &$this->_oConfig->CNF;
-         $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
-        
-         $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
-         
-         $sRv = '';
-         if (!empty($aList) && $oFavorite->isAllowedEditList($aList['author_id'])){  
-             $aMarkers = array(
-                 'js_object' => $oFavorite->getJsObjectName(),
-                 'list_id' => $iListId,
-             );
+        $oProfile = null;
+        if(bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        if(!$oProfile)
+            return false;
 
-             $oMenu = BxDolMenu::getObjectInstance('sys_favorite_list');
+        $CNF = &$this->_oConfig->CNF;
+        $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
 
-             $oMenu->addMarkers($aMarkers);
-             $sMenu = $oMenu->getCode();
+        $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
+        if($iListId != 0 && (empty($aList) || !is_array($aList)))
+            return false;
 
-             $sRv .= $sMenu . $oFavorite->getJsScript();
+        $sRv = '';
+        if (!empty($aList) && $oFavorite->isAllowedEditList($aList['author_id'])){  
+            $aMarkers = array(
+                'js_object' => $oFavorite->getJsObjectName(),
+                'list_id' => $iListId,
+            );
+
+            $oMenu = BxDolMenu::getObjectInstance('sys_favorite_list');
+
+            $oMenu->addMarkers($aMarkers);
+            $sMenu = $oMenu->getCode();
+
+            $sRv .= $sMenu . $oFavorite->getJsScript();
         }
-        
-         $aMarkers = array(
+
+        $aMarkers = array(
             'id' => $iListId,
             'module' => $this->_aModule['name'],
             'url' => $this->_getFavoriteListUrl($iListId, $oProfile->id()),
             'title' => $iListId > 0 ? $aList['title'] : _t('_sys_txt_default_favorite_list')
         );
 
-         $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
-         $oMenu->addMarkers($aMarkers);
-         $sRv .= $sMenu = $oMenu->getCode();
-         return $sRv;
-     }
+        $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
+        $oMenu->addMarkers($aMarkers);
+        $sRv .= $sMenu = $oMenu->getCode();
+        return $sRv;
+    }
      
      /**
     * @page service Service Calls
@@ -696,27 +697,26 @@ class BxBaseModGeneralModule extends BxDolModule
     /** 
     * @ref bx_base_general-favorites_list_info "favorites_list_info"
     */
-    public function serviceFavoritesListInfo($aParams = array()){
+    public function serviceFavoritesListInfo($aParams = array())
+    {
         $CNF = &$this->_oConfig->CNF;
-        
-        $iListId = null;
-        if(bx_get('list_id') === false)
+
+        $iListId = 0;
+        if(bx_get('list_id') !== false)
+            $iListId = (int) bx_get('list_id');       
+
+        $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
+        $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
+        if($iListId != 0 && (empty($aList) || !is_array($aList)))
             return false;
-        
-        $iListId = (int) bx_get('list_id');
-        
+
         $oProfile = null;
         if(bx_get('profile_id') !== false)
             $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
-        
+
         if(!$oProfile)
             return false;
-        
-        $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
-        $aList = $oFavorite->getQueryObject()->getList(array('type' => 'info', 'list_id' => $iListId, 'author_id' => $oProfile->id()));    
-        if (empty($aList))
-            return false;
-    
+
         return $this->_oTemplate->getFavoritesListInfo($aList, $oProfile);
     }
     
