@@ -811,7 +811,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             }
         }
 
-        bx_alert($this->getName(), 'before_pending', 0, bx_get_logged_profile_id(), array(
+        $this->alert('before_pending', 0, bx_get_logged_profile_id(), array(
             'client_id' => $this->_iUserId,
             'type' => &$sType,
             'provider' => &$sProvider,
@@ -887,7 +887,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if(!empty($aResult['paid']) || ($bTypeRecurring && !empty($aResult['trial'])))
             $this->registerPayment($aPending);
 
-        bx_alert($this->getName(), 'finalize_checkout', 0, bx_get_logged_profile_id(), array(
+        $this->alert('finalize_checkout', 0, bx_get_logged_profile_id(), array(
             'pending' => $aPending,
             'transactions' => $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id'])),
             'provider' => $oProvider,
@@ -1215,7 +1215,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
                     $fCommission += (float)$aCommission['installment'];
             }
             
-            bx_alert($this->getName(), 'calculate_commission', 0, 0, array(
+            $this->alert('calculate_commission', 0, 0, array(
                 'vendor' => $aVendor,
                 'commissions' => $aCommissions,
                 'override_result' => &$fCommission,
@@ -1345,7 +1345,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     public function onPaymentRegisterBefore($aPending, $aResult = array())
     {
-        bx_alert('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        $this->alert('before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
     }
 
     public function onPaymentRegister($aPending, $aResult = array())
@@ -1358,12 +1358,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 $this->isAllowedPurchase(array('module_id' => $aItem['module_id'], 'item_id' => $aItem['item_id']), true);
         }
 
-        bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        $this->alert('register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
     }
 
     public function onPaymentRefund($aPending, $aResult = array())
     {
-        bx_alert('system', 'refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        $this->alert('refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
     }
 
     public function onSubscriptionCreate($aPending, $aSubscription, $aResult = array())
@@ -1371,7 +1371,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
         $this->isAllowedPurchase(array('module_id' => $aItems[0]['module_id'], 'item_id' => $aItems[0]['item_id']), true);
 
-        bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array(
+        $this->alert('create_subscription', 0, $aPending['client_id'], array(
             'pending' => $aPending,
             'subscription' => $aSubscription
         ));
@@ -1379,7 +1379,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     public function onSubscriptionProlong($aPending, $aSubscription, $aResult = array())
     {
-        bx_alert('system', 'prolong_subscription', 0, $aPending['client_id'], array(
+        $this->alert('prolong_subscription', 0, $aPending['client_id'], array(
             'pending' => $aPending,
             'subscription' => $aSubscription
         ));
@@ -1387,7 +1387,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     public function onSubscriptionOverdue($aPending, $aSubscription, $aResult = array())
     {
-        bx_alert('system', 'overdue_subscription', 0, $aPending['client_id'], array(
+        $this->alert('overdue_subscription', 0, $aPending['client_id'], array(
             'pending' => $aPending,
             'subscription' => $aSubscription
         ));
@@ -1395,7 +1395,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     public function onSubscriptionCancel($aPending, $aSubscription, $aResult = array())
     {
-        bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array(
+        $this->alert('cancel_subscription', 0, $aPending['client_id'], array(
             'pending' => $aPending,
             'subscription' => $aSubscription
         ));
@@ -1619,7 +1619,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if(!$this->_oDb->updateInvoice($iItemId, array('status' => BX_PAYMENT_INV_STATUS_PAID)))
             return array();
 
-        bx_alert($this->getName(), 'invoice_marked_as_paid', 0, false, array(
+        $this->alert('invoice_marked_as_paid', 0, false, array(
             'product_id' => $iItemId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
@@ -1661,7 +1661,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if(!$this->_oDb->updateInvoice($iItemId, array('status' => BX_PAYMENT_INV_STATUS_UNPAID)))
             return false;
 
-        bx_alert($this->getName(), 'invoice_marked_as_unpaid', 0, false, array(
+        $this->alert('invoice_marked_as_unpaid', 0, false, array(
             'product_id' => $iItemId,
             'profile_id' => $iClientId,
             'order' => $sOrder,

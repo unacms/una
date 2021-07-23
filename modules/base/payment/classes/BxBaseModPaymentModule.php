@@ -279,6 +279,18 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         return new $aProvider['class_name']($aProvider);
     }
 
+    /**
+     * Method to fire alert on behalf of both 'system' and currently active payment module.
+     * It's needed for general events like: Finalize Checkout, Register Payment, Refund Payment, etc.
+     */
+    public function alert($sAction, $iObjectId, $iSender = false, $aExtras = array())
+    {
+        $sSystem = 'system';
+        $sModule = $this->getName();
+        foreach([$sSystem, $sModule] as $sUnit)
+            bx_alert($sUnit, $sAction, $iObjectId, $iSender, ($sUnit == $sSystem ? array_merge(array('module' => $sModule), $aExtras) : $aExtras));
+    }
+
     public function callGetPaymentData($mixedModule)
     {
     	$sMethod = 'get_payment_data';

@@ -265,7 +265,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $aCart['items'] = trim(preg_replace("'" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '[0-9]+:?')) . "'", "", $aCart['items']), ":");
         $this->_oModule->_oDb->setCartItems($iClientId, $aCart['items'], $aCartCustom);
 
-        bx_alert($this->_oModule->getName(), 'delete_from_cart', 0, 0, array(
+        $this->_oModule->alert('delete_from_cart', 0, 0, array(
             'seller_id' => $iSellerId,
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
@@ -287,7 +287,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         foreach($aContent as $iSellerId => $aSellerItems)
             $aResult[$iSellerId] = $this->_getInfo($sType, $iUserId, $iSellerId, $aSellerItems);
 
-        bx_alert($this->_oModule->getName(), 'get_cart_info', 0, 0, array(
+        $this->_oModule->alert('get_cart_info', 0, 0, array(
            'type' => $sType,
            'client_id' => $iUserId,
            'seller_id' => $iSellerId,

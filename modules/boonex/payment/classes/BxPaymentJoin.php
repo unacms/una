@@ -44,7 +44,7 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
     /** 
      * @ref bx_payment-get_block_join "get_block_join"
      */
-	public function serviceGetBlockJoin()
+    public function serviceGetBlockJoin()
     {
     	$sSessionKeyPending = $this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING');
     	$sRequestKeyPending = $this->_oModule->_oConfig->getKey('KEY_REQUEST_PENDING');
@@ -53,83 +53,81 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
     	$iPendingId = (int)$oSession->getValue($sSessionKeyPending);
 
     	if(empty($iPendingId) && bx_get($sRequestKeyPending) !== false) {
-    		$iPendingId = (int)bx_get($sRequestKeyPending);
+            $iPendingId = (int)bx_get($sRequestKeyPending);
 
-    		$oSession->setValue($sSessionKeyPending, $iPendingId);
+            $oSession->setValue($sSessionKeyPending, $iPendingId);
     	}
 
-		if(empty($iPendingId))
-			return array(
-        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_not_allowed'))
-			);
+        if(empty($iPendingId))
+            return array(
+                'content' => MsgBox(_t($this->_sLangsPrefix . 'err_not_allowed'))
+            );
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
-	    if(empty($aPending['order']) || (int)$aPending['error_code'] != 1)
-			return array(
-        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_not_processed'))
-			);
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if(empty($aPending['order']) || (int)$aPending['error_code'] != 1)
+            return array(
+                'content' => MsgBox(_t($this->_sLangsPrefix . 'err_not_processed'))
+            );
 
-		if((int)$aPending['processed'] == 1)
-			return array(
-        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_already_processed'))
-			);
+        if((int)$aPending['processed'] == 1)
+            return array(
+                'content' => MsgBox(_t($this->_sLangsPrefix . 'err_already_processed'))
+            );
 
-		//--- 'System' -> 'Join after Payment' for Alerts Engine ---//
-		$bOverride = false;
-		$sOverrideError = '';
-
-		bx_alert('system', 'join_after_payment', 0, 0, array('override' => &$bOverride, 'override_error' => &$sOverrideError));
-
+        //--- 'System' -> 'Join after Payment' for Alerts Engine ---//
+        $bOverride = false;
+        $sOverrideError = '';
+        $this->_oModule->alert('join_after_payment', 0, 0, array('override' => &$bOverride, 'override_error' => &$sOverrideError));
         if($bOverride)
-        	return;
-		//--- 'System' -> 'Join after Payment' for Alerts Engine ---//
+            return;
+        //--- 'System' -> 'Join after Payment' for Alerts Engine ---//
 
-    	$sContent = BxDolService::call('system', 'create_account_form', array(array('action' => $this->_oModule->_oConfig->getUrl('URL_JOIN'))), 'TemplServiceAccount');
-    	if(!empty($sOverrideError))
-    		$sContent = MsgBox(_t($sOverrideError)) . $sContent;
+        $sContent = BxDolService::call('system', 'create_account_form', array(array('action' => $this->_oModule->_oConfig->getUrl('URL_JOIN'))), 'TemplServiceAccount');
+        if(!empty($sOverrideError))
+            $sContent = MsgBox(_t($sOverrideError)) . $sContent;
 
-		return array(
-        	'content' => $sContent
-		);
+        return array(
+            'content' => $sContent
+        );
     }
 
-	public function performJoin($iPendingId, $sClientName = '', $sClientEmail = '')
+    public function performJoin($iPendingId, $sClientName = '', $sClientEmail = '')
     {
-		BxDolSession::getInstance()->setValue($this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING'), (int)$iPendingId);
+        BxDolSession::getInstance()->setValue($this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING'), (int)$iPendingId);
 
-		if(!empty($sClientName) && !empty($sClientEmail)) {
-			$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oModule->_oConfig->getPrefix('general') . 'paid_need_join', array(
-				'RealName' => $sClientName,
-				'JoinLink' => $this->_oModule->_oConfig->getUrl('URL_JOIN', array($this->_oModule->_oConfig->getKey('KEY_REQUEST_PENDING') => (int)$iPendingId))
-			));
+        if(!empty($sClientName) && !empty($sClientEmail)) {
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oModule->_oConfig->getPrefix('general') . 'paid_need_join', array(
+                'RealName' => $sClientName,
+                'JoinLink' => $this->_oModule->_oConfig->getUrl('URL_JOIN', array($this->_oModule->_oConfig->getKey('KEY_REQUEST_PENDING') => (int)$iPendingId))
+            ));
 
-			sendMail($sClientEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
-		}
+            sendMail($sClientEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
+        }
 
-		header('Location: ' . $this->_oModule->_oConfig->getUrl('URL_JOIN'));
-		exit;
-	}
+        header('Location: ' . $this->_oModule->_oConfig->getUrl('URL_JOIN'));
+        exit;
+    }
 
-	public function onProfileJoin($iProfileId)
+    public function onProfileJoin($iProfileId)
     {
     	$sSessionKeyPending = $this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING');
 
     	$oSession = BxDolSession::getInstance();
-		$iPendingId = (int)$oSession->getValue($sSessionKeyPending);
+        $iPendingId = (int)$oSession->getValue($sSessionKeyPending);
 
         if(empty($iProfileId) || empty($iPendingId))
-        	return;
+            return;
  
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
-		if(empty($aPending) || (isset($aPending['client_id']) && (int)$aPending['client_id'] != 0))
-			return;
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if(empty($aPending) || (isset($aPending['client_id']) && (int)$aPending['client_id'] != 0))
+            return;
 
-		if(!$this->_oModule->_oDb->updateOrderPending($iPendingId, array('client_id' => $iProfileId)))
-			return;
+        if(!$this->_oModule->_oDb->updateOrderPending($iPendingId, array('client_id' => $iProfileId)))
+            return;
 
-		$this->_oModule->registerPayment($iPendingId);
+        $this->_oModule->registerPayment($iPendingId);
 
-		$oSession->unsetValue($sSessionKeyPending);
+        $oSession->unsetValue($sSessionKeyPending);
     }
 }
 
