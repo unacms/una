@@ -122,8 +122,10 @@
     <string name="_bx_photos_page_block_title_popular_entries_view_full"><![CDATA[Популярные фото (Полный просмотр)]]></string>
     <string name="_bx_photos_page_block_title_top_entries"><![CDATA[Топ фото]]></string>
     <string name="_bx_photos_page_block_title_updated_entries"><![CDATA[Обновленные фото]]></string>
+    <string name="_bx_photos_page_block_title_sys_favorites_entries"><![CDATA[Избранное]]></string>
     <string name="_bx_photos_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
     <string name="_bx_photos_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
+    <string name="_bx_photos_page_block_title_favorites_entries_actions"><![CDATA[Действия]]></string>
     <string name="_bx_photos_page_title_sys_view_entry_comments"><![CDATA[Комментарии к фото]]></string>
     <string name="_bx_photos_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_photos_page_title_sys_entries_of_author"><![CDATA[Фото автора]]></string>

@@ -182,6 +182,7 @@
     <string name="_bx_events_page_block_title_sys_calendar_in_context"><![CDATA[Events Calendar]]></string>
     <string name="_bx_events_page_block_title_calendar_for_context"><![CDATA[Events Calendar]]></string>
     <string name="_bx_events_page_block_title_browse_for_context"><![CDATA[Events in context]]></string>
+    <string name="_bx_events_page_block_title_sys_favorites_entries"><![CDATA[Favorite List]]></string>
     <string name="_bx_events_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
     <string name="_bx_events_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_events_page_block_title_favorites_entries_actions"><![CDATA[Favorites List Actions]]></string>

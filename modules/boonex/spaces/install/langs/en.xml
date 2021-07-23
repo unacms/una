@@ -130,11 +130,15 @@
 	<string name="_bx_spaces_page_title_invite_to_space"><![CDATA[Invite Members to the Space]]></string>
 	<string name="_bx_spaces_page_title_sys_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_spaces_page_title_entries_search"><![CDATA[Search]]></string>
-        <string name="_bx_spaces_page_title_sys_entries_favorites"><![CDATA[Favorites Groups]]></string>
-        <string name="_bx_spaces_page_title_entries_favorites"><![CDATA[Favorites Groups]]></string>
+        <string name="_bx_spaces_page_title_sys_entries_favorites"><![CDATA[Favorites Spaces]]></string>
+        <string name="_bx_spaces_page_title_entries_favorites"><![CDATA[Favorites Spaces]]></string>
 	
 	<string name="_bx_spaces_page_block_title_sys_entries_actions"><![CDATA[Spaces actions]]></string>
 	<string name="_bx_spaces_page_block_title_entries_actions"><![CDATA[Spaces actions]]></string>
+        <string name="_bx_spaces_page_block_title_sys_favorites_entries"><![CDATA[Favorite List]]></string>
+        <string name="_bx_spaces_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+        <string name="_bx_spaces_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
+        <string name="_bx_spaces_page_block_title_favorites_entries_actions"><![CDATA[Favorites List Actions]]></string>
 	<string name="_bx_spaces_page_block_title_sys_entries_of_author"><![CDATA[Spaces of author]]></string>
 	<string name="_bx_spaces_page_block_title_entries_of_author"><![CDATA[Spaces by {display_name}]]></string>
 	<string name="_bx_spaces_page_block_title_favorites_of_author"><![CDATA[Favorite Spaces]]></string>

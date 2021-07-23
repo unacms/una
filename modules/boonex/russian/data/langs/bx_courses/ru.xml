@@ -132,6 +132,7 @@
 
     <string name="_bx_courses_page_block_title_sys_entries_actions"><![CDATA[Курсы - Действия]]></string>
     <string name="_bx_courses_page_block_title_entries_actions"><![CDATA[Курсы - Действия]]></string>
+    <string name="_bx_courses_page_block_title_sys_favorites_entries"><![CDATA[Избранное]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries_actions"><![CDATA[Действия]]></string>

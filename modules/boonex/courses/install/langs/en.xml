@@ -133,6 +133,7 @@
 
     <string name="_bx_courses_page_block_title_sys_entries_actions"><![CDATA[Courses actions]]></string>
     <string name="_bx_courses_page_block_title_entries_actions"><![CDATA[Courses actions]]></string>
+    <string name="_bx_courses_page_block_title_sys_favorites_entries"><![CDATA[Favorite List]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_courses_page_block_title_favorites_entries_actions"><![CDATA[Favorites List Actions]]></string>

@@ -193,6 +193,7 @@
     <string name="_bx_groups_page_block_title_groups_browse_by_label"><![CDATA[Навигация по меткам]]></string>
     <string name="_bx_groups_page_block_title_sys_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
     <string name="_bx_groups_page_block_title_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
+    <string name="_bx_groups_page_block_title_sys_favorites_entries"><![CDATA[Избранное]]></string>
     <string name="_bx_groups_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
     <string name="_bx_groups_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
     <string name="_bx_groups_page_block_title_favorites_entries_actions"><![CDATA[Действия]]></string>

@@ -206,8 +206,10 @@
     <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Отвеченные мной]]></string>
+    <string name="_bx_forum_page_block_title_sys_favorites_entries"><![CDATA[Избранное]]></string>
     <string name="_bx_forum_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
     <string name="_bx_forum_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries_actions"><![CDATA[Действия]]></string>
 
     <string name="_bx_forum_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_forum_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
