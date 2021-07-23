@@ -3137,18 +3137,19 @@
             <li><b>{0}</b> всего</li>
             <li><b>{1}</b> удалено</li>
         </ul>]]></string>
-        <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
-        <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
-	<string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>
-        <string name="_sys_ps_group_title_friends_selected"><![CDATA[Избранные друзья...]]></string>
-        <string name="_sys_ps_group_title_relations"><![CDATA[Отношения]]></string>
-        <string name="_sys_ps_group_title_relations_selected"><![CDATA[Избранные отношения...]]></string>
-	<string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
-	<string name="_sys_ps_group_title_members"><![CDATA[Пользователи]]></string>
-	<string name="_sys_ps_group_title_public"><![CDATA[Все]]></string>
-        <string name="_sys_ps_group_title_participants"><![CDATA[Участники]]></string>
-	<string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
+    <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
+    <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
+    <string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>
+    <string name="_sys_ps_group_title_friends_selected"><![CDATA[Избранные друзья...]]></string>
+    <string name="_sys_ps_group_title_relations"><![CDATA[Отношения]]></string>
+    <string name="_sys_ps_group_title_relations_selected"><![CDATA[Избранные отношения...]]></string>
+    <string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
+    <string name="_sys_ps_group_title_members"><![CDATA[Пользователи]]></string>
+    <string name="_sys_ps_group_title_public"><![CDATA[Все]]></string>
+    <string name="_sys_ps_group_title_participants"><![CDATA[Участники]]></string>
+    <string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
     <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
+    <string name="_sys_ps_group_title_unknown"><![CDATA[Неизвестная]]></string>
     <string name="_sys_ps_ferr_incorrect_gc_not_allowed"><![CDATA[Пользовательские группы конфиденциальности не доступны.]]></string>
     <string name="_sys_ps_ferr_incorrect_gc_owner"><![CDATA[Вы не являетесь владельцем данного контента.]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[Вам нужно выбрать значение]]></string>

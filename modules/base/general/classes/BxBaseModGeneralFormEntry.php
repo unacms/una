@@ -335,6 +335,9 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->_preloadPrivacyField($sField, $sObject, $aValues);
 
         parent::initChecker ($aValues, $aSpecificValues);
+
+        foreach($aPrivacyFields as $sField => $sObject)
+            $this->_validatePrivacyField($sField, $sObject, $aValues);
     }
     
     public function insert ($aValsToAdd = array(), $isIgnore = false)
@@ -803,6 +806,31 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         ));
     }
     
+    protected function _validatePrivacyField($sField, $sPrivacyObject, $aValues)
+    {
+        $mixedValue = $this->aInputs[$sField]['value'];
+
+        $bValue = false;
+        foreach($this->aInputs[$sField]['values'] as $aValue)
+            if(isset($aValue['key']) && $aValue['key'] == $mixedValue) {
+                $bValue = true;
+                break;
+            }
+
+        if(!$bValue) {
+            $sTitle = '';
+            if(is_numeric($mixedValue) && (int)$mixedValue < 0 && ($oContext = BxDolProfile::getInstance(abs((int)$mixedValue))) !== false)
+                $sTitle = $oContext->getDisplayName();
+            else
+                $sTitle = _t('_sys_ps_group_title_unknown');
+
+            $this->aInputs[$sField]['values'] = array_merge(array(
+                array('key' => $mixedValue, 'value' => $sTitle),
+                array('key' => '', 'value' => '----', 'attrs' => array('disabled' => 'disabled'))
+            ), $this->aInputs[$sField]['values']);
+        }
+    }
+
     /**
      * 
      * MultiCategories related methods. 

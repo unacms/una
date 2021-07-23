@@ -3169,6 +3169,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_ps_group_title_participants"><![CDATA[Participants]]></string>
 	<string name="_sys_ps_group_title_closed"><![CDATA[Closed]]></string>
 	<string name="_sys_ps_group_title_secret"><![CDATA[Secret]]></string>
+        <string name="_sys_ps_group_title_unknown"><![CDATA[Unknown]]></string>
     <string name="_sys_ps_ferr_incorrect_gc_not_allowed"><![CDATA[Custom privacy groups aren't allowed.]]></string>
     <string name="_sys_ps_ferr_incorrect_gc_owner"><![CDATA[You are not an owner of the content.]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[You need to select some value]]></string>
