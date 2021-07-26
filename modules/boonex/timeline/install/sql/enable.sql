@@ -509,4 +509,4 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 -- PRELOADER
 SET @iOrderPreloader = (SELECT IFNULL(MAX(`order`), 9999) FROM `sys_preloader` WHERE `type`='js_system' AND `order` > 9999 LIMIT 1);
 INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALUES
-('bx_timeline', 'js_system', 'modernizr.min.js', 1, @iOrderPreloader + 1);
+('bx_timeline', 'js_system', 'modules/boonex/timeline/js/|modernizr.min.js', 1, @iOrderPreloader + 1);

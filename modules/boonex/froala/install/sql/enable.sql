@@ -39,4 +39,4 @@ INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `repl
 
 SET @iMaxOrder = (SELECT `order` FROM `sys_preloader` WHERE `type` = 'css_system' ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALUES
-('bx_froala', 'css_system', '{dir_plugins_modules}boonex/froala/plugins/froala/css/|froala_style.min.css',  '1',  @iMaxOrder + 1);
+('bx_froala', 'css_system', 'modules/boonex/froala/plugins/froala/css/|froala_style.min.css',  '1',  @iMaxOrder + 1);

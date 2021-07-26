@@ -28,10 +28,10 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 UPDATE `sys_preloader` SET `active` = 0 WHERE `module` = 'system' AND `type` = 'css_system' AND `content` = 'icons.css';
 
 INSERT INTO `sys_preloader` (`module`, `type`, `content`, `active`) VALUES
-('bx_fontawesome', 'css_system', 'icons.css', 1),
-('bx_fontawesome', 'css_system', 'fonts-all.css', 1),
-('bx_fontawesome', 'css_system', 'fonts-duotone.css', 0),
-('bx_fontawesome', 'css_system', 'fonts-light.css', 0);
+('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|icons.css', 1),
+('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|fonts-all.css', 1),
+('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|fonts-duotone.css', 0),
+('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|fonts-light.css', 0);
 
 -- Injections
 

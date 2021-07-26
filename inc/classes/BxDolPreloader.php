@@ -10,21 +10,19 @@
 bx_import('BxDolLanguages');
 
 define('BX_PRELOADER_TYPE_CSS', 'css_system');
-define('BX_PRELOADER_TYPE_STUDIO_CSS', 'studio_css_system');
 define('BX_PRELOADER_TYPE_JS', 'js_system');
-define('BX_PRELOADER_TYPE_STUDIO_JS', 'studio_js_system');
 define('BX_PRELOADER_TYPE_JS_OPTION', 'js_option');
 define('BX_PRELOADER_TYPE_JS_TRANSLATION', 'js_translation');
 define('BX_PRELOADER_TYPE_JS_IMAGE', 'js_image');
 
 class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 {
-	protected $_oDb;
+    protected $_oDb;
 
-	protected $_aEntries;
+    protected $_aEntries;
 
-	protected $_aTypes;
-	protected $_aMarkers;
+    protected $_aTypes;
+    protected $_aMarkers;
 
     protected function __construct()
     {
@@ -36,9 +34,7 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 
         $this->_aTypes = array(
             BX_PRELOADER_TYPE_CSS => '',
-            BX_PRELOADER_TYPE_STUDIO_CSS => '',  
             BX_PRELOADER_TYPE_JS => '', 
-            BX_PRELOADER_TYPE_STUDIO_JS => '',
             BX_PRELOADER_TYPE_JS_OPTION => '',
             BX_PRELOADER_TYPE_JS_TRANSLATION => '',
             BX_PRELOADER_TYPE_JS_IMAGE => ''
@@ -58,40 +54,28 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-	public static function getInstance()
+    public static function getInstance()
     {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
-        	$GLOBALS['bxDolClasses'][__CLASS__] = new BxDolPreloader();
+            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolPreloader();
 
-		return $GLOBALS['bxDolClasses'][__CLASS__];
+        return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
     public function perform($oTemplateSystem)
     {
-    	$bStudio = $oTemplateSystem instanceof BxDolStudioTemplate;
-    	$aTypesAvail = array_keys($this->_aTypes);
+        $bStudio = $oTemplateSystem instanceof BxDolStudioTemplate;
+        $aTypesAvail = array_keys($this->_aTypes);
 
         foreach($this->_aEntries as $aEntry) {
             $sType = $aEntry['type'];
             if(!in_array($sType, $aTypesAvail))
                 continue;
 
-            $sLocKey = '';
-            $bLocRemove = false;
-            $bLocRemoveJs = false;
-
-            $bModule = $aEntry['module'] != 'system';
-            $oModule = $bModule ? BxDolModule::getInstance($aEntry['module']) : null;
-            if($bModule && !$oModule)
-            	continue;
-
-            $sMethod = $this->_aTypes[($bStudio && $bModule ? 'studio_' : '') . $sType];
+            $sMethod = $this->_aTypes[$sType];
             $sContent = bx_replace_markers($aEntry['content'], $this->_aMarkers);
 
-            if($bModule)
-            	$oModule->_oTemplate->$sMethod($sContent);
-            else
-            	$oTemplateSystem->$sMethod($sContent);
+            $oTemplateSystem->$sMethod($sContent);
         }
     }
 }
