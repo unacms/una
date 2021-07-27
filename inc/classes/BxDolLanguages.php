@@ -270,7 +270,11 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
 
     function _t_format_currency ($fPrice, $iPrecision = 2)
     {
-        return $this->_t('_sys_currency', getParam('currency_sign'), sprintf("%." . $iPrecision . "f", (float)$fPrice));
+        $sSign = BxDolPayments::getInstance()->getOption('default_currency_sign');
+        if(empty($sSign))
+            $sSign = getParam('currency_sign');
+
+        return $this->_t('_sys_currency', $sSign, sprintf("%." . $iPrecision . "f", (float)$fPrice));
     }
 
     function _t_format_extensions ($mixedExtensions)
