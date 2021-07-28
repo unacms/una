@@ -23,8 +23,7 @@ class BxDolViewQuery extends BxDolObjectQuery
 
         $aSystem = $this->_oModule->getSystemInfo();
         $this->_iPeriod = (int)$aSystem['period'];
-
-        $this->_iPerPageDefault = 30;
+        $this->_iPerPageDefault = $aSystem['per_page_default'];
     }
 
     public function isPerformed($iObjectId, $iAuthorId)

@@ -56,6 +56,8 @@ class BxDolView extends BxDolObject
         if(empty($this->_sSystem))
             return;
 
+        $this->_aSystem['per_page_default'] = 20;
+
         $this->_oQuery = new BxDolViewQuery($this);
     }
 
@@ -126,6 +128,19 @@ class BxDolView extends BxDolObject
            return '';
 
         return $this->_getViewedBy();
+    }
+    
+    public function actionGetUsers()
+    {
+        if (!$this->isEnabled())
+           return echoJson(array());
+
+        $iStart = (int)bx_get('start');
+        $iPerPage = (int)bx_get('per_page');
+        return echoJson(array(
+            'content' => $this->_getViewedBy($iStart, $iPerPage),
+            'eval' => $this->getJsObjectName() . '.onGetUsers(oData)'
+        ));
     }
 
     public function doView()

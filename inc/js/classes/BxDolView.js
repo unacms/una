@@ -33,11 +33,45 @@ BxDolView.prototype.toggleByPopup = function(oLink) {
     });
 };
 
+BxDolView.prototype.getUsers = function(oLink, iStart, iPerPage) {
+    var $this = this;
+    var oData = this._getDefaultParams();
+    oData['action'] = 'GetUsers';
+    oData['start'] = iStart;
+    oData['per_page'] = iPerPage;
+
+    this._loadingInPopup(oLink, true);
+
+    $.get(
+        this._sActionsUri,
+        oData,
+        function(oData) {
+            $this._loadingInPopup(oLink, false);
+
+            oData.source = oLink;
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxDolView.prototype.onGetUsers = function(oData) {
+    if(!oData.content)
+        return;
+
+    $(oData.source).parents('.bx-popup-content-wrapped:first').html(oData.content);
+};
+
 BxDolView.prototype._loadingInButton = function(e, bShow) {
     if($(e).length)
         bx_loading_btn($(e), bShow);
     else
         bx_loading($('body'), bShow);
+};
+
+BxDolView.prototype._loadingInPopup = function(e, bShow) {
+    var oParent = $(e).length ? $(e).parents('.bx-popup-content:first') : $('body'); 
+    bx_loading(oParent, bShow);
 };
 
 BxDolView.prototype._getDefaultParams = function() {

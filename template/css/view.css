@@ -1,11 +1,12 @@
 /*--- Comment Viewed By ---*/
 div.bx-view-by-list {}
-div.bx-view-by-list-cnt {
-	max-height: 200px;
-	max-height: 12.5rem;
-	min-width: 220px;
-	min-width: 13.75rem;
-	overflow: auto;
+div.bx-view-by-list-cnt {}
+div.bx-view-by-items {
+    max-height: 200px;
+    max-height: 12.5rem;
+    min-width: 220px;
+    min-width: 13.75rem;
+    overflow: auto;
 }
 div.bx-view-user {
     position: relative;
@@ -30,6 +31,13 @@ div.bx-view-user-name a.bx-view-user-name {
 }
 div.bx-view-user-name span.bx-view-user-info {
     white-space: nowrap;
+}
+div.bx-view-by-paginate {
+    text-align: right;
+}
+div.bx-view-by-paginate div.bx-paginate {
+    display: inline-block;
+    margin-top: 0.5rem;
 }
 
 /*--- View Element Styles ---*/

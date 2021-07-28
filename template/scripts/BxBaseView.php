@@ -270,11 +270,21 @@ class BxBaseView extends BxDolView
         ));
     }
 
-    protected function _getViewedBy()
+    protected function _getViewedBy($iStart = 0, $iPerPage = 0)
     {
-        $aTmplUsers = array();
+        if(empty($iPerPage))
+            $iPerPage = $this->_aSystem['per_page_default'];
 
-        $aUsers = $this->_oQuery->getPerformedBy($this->getId());
+        $aUsers = $this->_oQuery->getPerformedBy($this->getId(), $iStart, $iPerPage + 1);
+
+        $oPaginate = new BxTemplPaginate(array(
+            'on_change_page' => $this->getJsObjectName() . '.getUsers(this, {start}, {per_page})',
+            'start' => $iStart,
+            'per_page' => $iPerPage,
+        ));
+        $oPaginate->setNumFromDataArray($aUsers);
+
+        $aTmplUsers = array();
         foreach($aUsers as $aUser) {
             list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit, $sUserUnitWoInfo) = $this->_getAuthorInfo($aUser['id']);
 
@@ -287,7 +297,7 @@ class BxBaseView extends BxDolView
                 'bx_if:show_user_info' => array(
                     'condition' => (int)$aUser['id'] == 0 && (int)$aUser['count'] > 0,
                     'content' => array(
-                		'style_prefix' => $this->_sStylePrefix,
+                        'style_prefix' => $this->_sStylePrefix,
                         'user_info' => _t('_view_do_view_by_counter', $aUser['count'])
                     )
                 )
@@ -299,7 +309,8 @@ class BxBaseView extends BxDolView
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameByList, array(
             'style_prefix' => $this->_sStylePrefix,
-            'bx_repeat:list' => $aTmplUsers
+            'bx_repeat:list' => $aTmplUsers,
+            'paginate' => $oPaginate->getSimplePaginate()
         ));
     }
 }
