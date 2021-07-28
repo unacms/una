@@ -5097,6 +5097,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `content` text NOT NULL,
   `text` mediumtext NOT NULL,
   `text_updated` int(11) NOT NULL,
+  `help` varchar(255) NOT NULL,
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `active` tinyint(4) NOT NULL DEFAULT '1',

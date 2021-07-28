@@ -175,11 +175,11 @@ div.mce-fullscreen {
     -ms-flex: 1 2 auto;
     flex: 1 2 auto;
 
-    max-width: 80%;
+    max-width: 75%;
 }
 
 .bx-media-phone .bx-db-menu {
-    max-width: 70%;
+    max-width: 65%;
 }
 
 .bx-db-menu-tab {
@@ -206,6 +206,12 @@ div.mce-fullscreen {
 
 .bx-db-menu-popup {
     text-align: left;
+}
+
+.bx-db-help-popup {
+    max-width: 25rem;
+    max-height: 25rem;
+    overflow: auto;
 }
 
 /*--- Design Boxes Menu ---*/

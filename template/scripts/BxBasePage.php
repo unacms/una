@@ -37,6 +37,26 @@ class BxBasePage extends BxDolPage
         $this->_sJsObjectName = 'oBxDolPage';
         
         $this->_bStickyColumns = isset($this->_aObject['sticky_columns']) && $this->_aObject['sticky_columns'] == 1;
+
+        $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $this->_sObject);
+        $this->_aHtmlIds = array(
+            'help_popup' => $sHtmlId . '-help-popup-',
+        );
+    }
+
+    public function performActionGetHelp ()
+    {
+        $iBlockId = (int)bx_get('block_id');
+        if(empty($iBlockId))
+            return;
+
+        $aBlock = $this->_oQuery->getPageBlock($iBlockId);
+        if(empty($aBlock) || !is_array($aBlock) || empty($aBlock['help']))
+            return;
+
+        echo $this->_oTemplate->parseHtmlByName('designbox_help_popup.html', array(
+            'content' => _t($aBlock['help'])
+        ));
     }
 
     /**
@@ -184,6 +204,9 @@ class BxBasePage extends BxDolPage
         $sJsObjClass = $this->getJsClassName();
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
             'sObjName' => $sJsObjName,
+            'sObject' => $this->_sObject,
+            'sRootUrl' => BX_DOL_URL_ROOT,
+            'aHtmlIds' => $this->_aHtmlIds,
             'isStickyColumns' => $this->_bStickyColumns
         )) . ");";
 
@@ -269,6 +292,21 @@ class BxBasePage extends BxDolPage
     public function getBlockTitle ($aBlock)
     {
         return $this->_replaceMarkers(_t($aBlock['title']), array('block_id' => $aBlock['id']));
+    }
+
+    /**
+     * Get help control if help is available for the block.
+     * @return string
+     */
+    public function getBlockHelp ($aBlock)
+    {
+        if(empty($aBlock['help']))
+            return '';
+
+        return $this->_oTemplate->parseHtmlByName('designbox_help.html', array(
+            'js_object' => $this->_sJsObjectName,
+            'block_id' => $aBlock['id']
+        ));
     }
 
     /**
@@ -424,12 +462,15 @@ class BxBasePage extends BxDolPage
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
 
+        $sTitle = $this->getBlockTitle($aBlock);
+        $sHelp = $this->getBlockHelp($aBlock);
+
         $sFunc = '_getBlock' . ucfirst($aBlock['type']);
         $bBlockVisible = $this->_isVisibleBlock($aBlock);
         if ($iAsync && $bBlockVisible) {    
             $sContent = $this->getBlockAsyncCode($aBlock, $iAsync);
             $aParams = array(
-                $this->getBlockTitle($aBlock),
+                $sTitle . $sHelp,
                 $sContent,
                 $aBlock['designbox_id']
             );
@@ -438,13 +479,11 @@ class BxBasePage extends BxDolPage
         elseif ($bBlockVisible && method_exists($this, $sFunc)) {
             $mixedContent = $this->$sFunc($aBlock);
 
-            $sTitle = $this->getBlockTitle($aBlock);
-
             $this->_oQuery->setReadOnlyMode(true);
 
             if(is_array($mixedContent) && !empty($mixedContent['content'])) {
                 $aParams = array(
-                    isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
+                    (isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle) . $sHelp,
                     $mixedContent['content'],
                     isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id']
                 );
@@ -463,7 +502,7 @@ class BxBasePage extends BxDolPage
             }
             else if(is_string($mixedContent) && !empty($mixedContent)) {
                 $aParams = array(
-                    $sTitle,
+                    $sTitle . $sHelp,
                     $mixedContent,
                     $aBlock['designbox_id']
                 );

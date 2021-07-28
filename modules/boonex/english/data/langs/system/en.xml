@@ -548,6 +548,7 @@
 	<string name="_adm_bp_txt_block_content_service_module"><![CDATA[Module]]></string>
 	<string name="_adm_bp_txt_block_designbox"><![CDATA[Block Layout]]></string>
 	<string name="_adm_bp_txt_block_designbox_empty"><![CDATA[Select layout...]]></string>
+        <string name="_adm_bp_txt_block_help"><![CDATA[Help]]></string>
 	<string name="_adm_bp_txt_block_hidden_on"><![CDATA[Hidden on]]></string>
 	<string name="_adm_bp_txt_block_hidden_on_phone"><![CDATA[phone]]></string>
 	<string name="_adm_bp_txt_block_hidden_on_tablet"><![CDATA[tablet]]></string>

@@ -14,6 +14,19 @@ bx_import('BxDolLanguages');
 
 check_logged();
 
+if(($sObject = bx_get('o')) !== false && ($sAction = bx_get('a')) !== false) {
+    $sObject = bx_process_input($sObject);
+    $sAction = bx_process_input($sAction);
+    if(!empty($sObject) && !empty($sAction)) {
+        $oPage = BxDolPage::getObjectInstance($sObject);
+        $sAction = 'performAction' . bx_gen_method_name($sAction);
+        if($oPage && method_exists($oPage, $sAction)) {
+            $oPage->$sAction();
+            exit;
+        }
+    }
+}
+
 $oPage = BxDolPage::getObjectInstanceByURI('', false, true);
 if ($oPage) {
 

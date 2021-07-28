@@ -783,6 +783,18 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Int',
                     )
                 ),
+                'help' => array(
+                    'type' => 'textarea_translatable',
+                    'name' => 'help',
+                    'caption' => _t('_adm_bp_txt_block_help'),
+                    'info' => '',
+                    'value' => $aBlock['help'],
+                    'required' => '0',
+                    'html' => 2,
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
                 'active' => array(
                     'type' => 'switcher',
                     'name' => 'active',
