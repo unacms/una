@@ -464,7 +464,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_albums', 'bx_albums', 'bx_albums_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album&id={object_id}', '', 'bx_albums_albums', 'id', 'author', 'title', 'comments', '', ''),
-('bx_albums_notes', 'bx_albums', 'bx_albums_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_albums_albums', 'id', 'author', 'title', 'comments', 'BxTemplCmtsNotes', ''),
+('bx_albums_notes', 'bx_albums', 'bx_albums_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_albums_albums', 'id', 'author', 'title', '', 'BxTemplCmtsNotes', ''),
 ('bx_albums_media', 'bx_albums', 'bx_albums_cmts_media', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album-media&id={object_id}', '', 'bx_albums_files2albums', 'id', 'author', 'title', 'comments', 'BxAlbumsCmtsMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsMedia.php');
 
 
