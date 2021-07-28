@@ -52,7 +52,6 @@ class BxBaseStudioFormView extends BxDolStudioForm
                 break;
 
             case 'textarea_translatable':
-                $aInput['html'] = 0;
                 $sInput = $this->genInputTranslatable($aInput, 'textarea');
                 break;
 
@@ -172,10 +171,18 @@ class BxBaseStudioFormView extends BxDolStudioForm
             $aInput['name'] = $sInputName . '-' . $aLanguage['name'];
             $aInput['value'] = $sValue;
             $aInput['attrs'] = array_merge($aInputAttrs, array(
-                'id' => $sInputIdPrefix . $aInput['name'],
-                'style' => !$bLanguage ? 'display:none;' : ''
+                'id' => $sInputIdPrefix . $aInput['name']
             ));
-            $sInput .= $this->{$aInputMethod[$sType]}($aInput);
+
+            $sInput .= $this->oTemplate->parseHtmlByName('form_input_translation.html', array(
+                'class' => ' bx-form-input-translation-' . $aInput['name'],
+                'attrs' => bx_convert_array2attrs(array(
+                    'style' => !$bLanguage ? 'display:none;' : ''
+                )),
+                'content' => $this->{$aInputMethod[$sType]}($aInput)
+            ));
+                    
+                    
 
             $aTmplVarValue = array(
                 'condition' => $bValue,

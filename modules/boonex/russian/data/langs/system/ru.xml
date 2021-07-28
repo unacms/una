@@ -759,6 +759,7 @@
 	<string name="_adm_form_dsc_field_collapsed"><![CDATA[Упаковать группу данного поля по умолчанию]]></string>
 	<string name="_adm_form_dsc_field_html"><![CDATA[Выбрать тип HTML-редактора]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Введите описание поля (необязательно)]]></string>
+        <string name="_adm_form_dsc_field_help"><![CDATA[Добавьте вспомогательную информацию для поля (необязательно)]]></string>
         <string name="_adm_form_dsc_field_privacy"><![CDATA[Отметьте, если для данного поля настройки "Конфиденциальности" могут быть изменены]]></string>
   <string name="_adm_form_dsc_field_rateable"><![CDATA[Добавляет возможность оценки значений]]></string>
 	<string name="_adm_form_dsc_field_required"><![CDATA[Отметьте, если поле должно иметь значение]]></string>
@@ -903,6 +904,7 @@
 	<string name="_adm_form_txt_field_html_none"><![CDATA[Без редактора]]></string>
 	<string name="_adm_form_txt_field_html_standard"><![CDATA[Стандартный]]></string>
 	<string name="_adm_form_txt_field_info"><![CDATA[Описание]]></string>
+        <string name="_adm_form_txt_field_help"><![CDATA[Помощь]]></string>
 	<string name="_adm_form_txt_field_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_form_txt_field_name"><![CDATA[Имя]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Форма]]></string>

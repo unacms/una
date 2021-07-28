@@ -133,10 +133,22 @@ class BxBaseFormView extends BxDolForm
 
         $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sName);
         $this->_aHtmlIds = array(
+            'help_popup' => $sHtmlId . '-help-popup-',
             'pgc' =>  $sHtmlId . '-pgc-',
             'pgc_popup' => $sHtmlId . '-pgc-popup-',
             'pgc_form' => $sHtmlId . '-pgc-form-',
         );
+    }
+
+    public function performActionGetHelp()
+    {
+        $sInput = bx_process_input(bx_get('input'));
+        if(empty($sInput) || empty($this->aInputs[$sInput]['help']))
+            return;
+
+        echo $this->oTemplate->parseHtmlByName('form_field_help_popup.html', array(
+            'content' => _t($this->aInputs[$sInput]['help'])
+        ));
     }
 
     public function performActionChangePrivacyGroup()
@@ -334,9 +346,7 @@ class BxBaseFormView extends BxDolForm
             'sObject' => isset($this->aParams['object']) ? $this->aParams['object'] : '',
             'sDisplay' => isset($this->aParams['display']) ? $this->aParams['display'] : '',
             'sRootUrl' => BX_DOL_URL_ROOT,
-            'aHtmlIds' => array(
-                'pgc_popup' => 'bx-form-input-pgc-popup'
-            ),
+            'aHtmlIds' => $this->_aHtmlIds,
         )) . ");";
 
         return $bWrap ? $this->oTemplate->_wrapInTagJsCode($sCode) : $sCode;
@@ -792,6 +802,8 @@ BLAH;
         $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption'], BX_DATA_HTML) : '';
 
         $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span> ' : '';
+        
+        $sHelp = !empty($aInput['help']) ? '<a href="javascript:void(0)" onclick="javascript:' . $this->getJsObjectName() . '.showHelp(this, \'' . $aInput['name'] . '\')"><i class="sys-icon question-circle"></i></a> ' : '';
 
         $sClassAdd = !empty($aInput['error']) ? ' bx-form-error' : '';
         $sInfoIcon = !empty($aInput['info']) ? $this->genInfoIcon($aInput['info']) : '';
@@ -829,7 +841,8 @@ BLAH;
                 'content' => array(
                     'class_caption' => $sClassOneLineCaption,
                     'caption' => $sCaption,
-                    'required' => $sRequired
+                    'required' => $sRequired,
+                    'help' => $sHelp,
                 )
             ),
             'class_value' => $sClassAdd . $sClassOneLineValue,
@@ -1835,7 +1848,6 @@ BLAH;
         return $this->oTemplate->parseHtmlByName('form_field_privacy.html', array(
             'js_object' => $this->getJsObjectName(),
             'html_id' => $this->_aHtmlIds['pgc'] . $iInputId,
-            'html_id_popup' => $this->_aHtmlIds['pgc_popup'] . $iInputId,
             'id' => $iInputId,
             'privacy_object' => $sPrivacyObject,
             'icon' => $this->_getPrivacyIcon($mixedPrivacyGroup)

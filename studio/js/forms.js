@@ -52,10 +52,10 @@ function fvtTogglePopup(sName, oLink) {
 };
 
 function fvtSelectLanguage(sName, sLangName, oLink) {
-	var oTranslator = $(oLink).parents('.bx-form-input-translator:first');
+    var oTranslator = $(oLink).parents('.bx-form-input-translator:first');
 
-	//--- Update popup languages
-	var sId = '#bx-form-language-' + sName + '-' + sLangName;
+    //--- Update popup languages
+    var sId = '#bx-form-language-' + sName + '-' + sLangName;
     $(oLink).parent().siblings('.active:visible').hide().siblings('.not-active:hidden').show().siblings(sId + '-pas:visible').hide().siblings(sId + '-act:hidden').show();
 
     //--- Update current language
@@ -65,7 +65,8 @@ function fvtSelectLanguage(sName, sLangName, oLink) {
     oTranslator.find('#bx-form-field-translator-popup-' + sName).dolPopupHide();
 
     //--- Update inputs
-    $(oLink).parents('#bx-form-element-' + sName + ':first').find('.bx-form-input-text:visible, .bx-form-input-textarea:visible').hide().siblings('#bx-form-input-' + sName + '-' + sLangName + ':hidden').show();    
+    $(oLink).parents('#bx-form-element-' + sName + ':first').find('.bx-form-input-text:visible').hide().siblings('#bx-form-input-' + sName + '-' + sLangName + ':hidden').show();
+    $(oLink).parents('#bx-form-element-' + sName + ':first').find('.bx-form-input-translation:visible').hide().siblings('.bx-form-input-translation-' + sName + '-' + sLangName + ':hidden').show();
 };
 
 /** @} */

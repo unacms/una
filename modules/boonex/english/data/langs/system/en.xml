@@ -763,6 +763,7 @@
 	<string name="_adm_form_dsc_field_collapsed"><![CDATA[Pack down the group of this field by default]]></string>
 	<string name="_adm_form_dsc_field_html"><![CDATA[Select type of HTML editor]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Enter field description (optional)]]></string>
+        <string name="_adm_form_dsc_field_help"><![CDATA[Enter help information for the field (optional)]]></string>
   <string name="_adm_form_dsc_field_privacy"><![CDATA[Check it if privacy settings can be changed for the field]]></string>
   <string name="_adm_form_dsc_field_rateable"><![CDATA[Make this field rateable]]></string>
 	<string name="_adm_form_dsc_field_required"><![CDATA[Check it if the field should have value]]></string>
@@ -908,6 +909,7 @@
 	<string name="_adm_form_txt_field_html_none"><![CDATA[No Editor]]></string>
 	<string name="_adm_form_txt_field_html_standard"><![CDATA[Standard]]></string>
 	<string name="_adm_form_txt_field_info"><![CDATA[Description]]></string>
+        <string name="_adm_form_txt_field_help"><![CDATA[Help]]></string>
 	<string name="_adm_form_txt_field_module"><![CDATA[Module]]></string>
 	<string name="_adm_form_txt_field_name"><![CDATA[Name]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Form]]></string>

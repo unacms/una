@@ -1226,8 +1226,8 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
     protected $aFieldUnique;
 
     public function init()
-	{
-		parent::init();
+    {
+        parent::init();
 
         $this->aParams['table_alter'] = true;
         $this->aParams['table_field_type'] = 'varchar(255)';
@@ -1269,6 +1269,18 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
                 'value' => '_sys_form_txt_field',
                 'required' => '0',
                 'code' => 1,
+                'db' => array (
+                    'pass' => 'Xss',
+                )
+            ),
+            'help' => array(
+                'type' => 'textarea_translatable',
+                'name' => 'help',
+                'caption' => _t('_adm_form_txt_field_help'),
+                'info' => _t('_adm_form_dsc_field_help'),
+                'value' => '_sys_form_txt_field',
+                'required' => '0',
+                'html' => 2,
                 'db' => array (
                     'pass' => 'Xss',
                 )
@@ -1344,7 +1356,7 @@ class BxBaseStudioFormsFieldTextarea extends BxBaseStudioFormsFieldText
             ),
         );
 
-        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'info', $aFields);
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'help', $aFields);
         unset($this->aForm['inputs']['unique']);
     }
 }

@@ -3267,6 +3267,7 @@ CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
   `caption_system` varchar(255) NOT NULL,
   `caption` varchar(255) NOT NULL,
   `info` varchar(255) NOT NULL,
+  `help` varchar(255) NOT NULL,
   `required` tinyint(4) NOT NULL DEFAULT '0',
   `unique` tinyint(4) NOT NULL DEFAULT '0',
   `collapsed` tinyint(4) NOT NULL DEFAULT '0',

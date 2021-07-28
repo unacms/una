@@ -23,6 +23,20 @@ function BxDolForm(oOptions)
     this._aHtmlIds = oOptions.aHtmlIds;
 }
 
+BxDolForm.prototype.showHelp = function(oLink, sInputName)
+{
+    var oData = this._getDefaultParams();
+    oData['a'] = 'get_help';
+    oData['input'] = sInputName;
+
+    $(oLink).dolPopupAjax({
+        id: {value:this._aHtmlIds['help_popup'] + sInputName, force:1}, 
+        url: bx_append_url_params(this._sActionsUri, oData),
+        closeOnOuterClick: true,
+        removeOnClose: false,
+    });
+};
+
 BxDolForm.prototype.pgcTogglePopup = function(oLink, iInputId, sPrivacyObject)
 {
     var oData = this._getDefaultParams();
@@ -31,7 +45,7 @@ BxDolForm.prototype.pgcTogglePopup = function(oLink, iInputId, sPrivacyObject)
     oData['privacy_object'] = sPrivacyObject;
 
     $(oLink).dolPopupAjax({
-        id: this._aHtmlIds['pgc_popup'] + iInputId, 
+        id: {value:this._aHtmlIds['pgc_popup'] + iInputId, force:1},
         url: bx_append_url_params(this._sActionsUri, oData),
         closeOnOuterClick: false,
         removeOnClose: true,

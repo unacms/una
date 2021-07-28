@@ -324,8 +324,14 @@
     align-items: center;
 }
 
-/* switcher */
+/* help popup */
+.bx-form-input-help-popup {
+    max-width: 25rem;
+    max-height: 25rem;
+    overflow: auto;
+}
 
+/* switcher */
 .bx-switcher-cont {
 	position:relative;
     width:60px;
