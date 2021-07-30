@@ -341,7 +341,7 @@ class BxBaseFormView extends BxDolForm
         $sJsObjName = $this->getJsObjectName();
         $sJsObjClass = $this->getJsClassName();
 
-        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) window['" . $sJsObjName . "'] = new " . $sJsObjClass . "(" . json_encode(array(
             'sObjName' => $sJsObjName,
             'sObject' => isset($this->aParams['object']) ? $this->aParams['object'] : '',
             'sDisplay' => isset($this->aParams['display']) ? $this->aParams['display'] : '',
