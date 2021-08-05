@@ -305,6 +305,46 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )), true, true);
         }
 
+        $bIsAllowEditCover = CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData);
+        $bIsAllowEditPicture =  CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
+        
+        $sAddClassCover = "";
+        $sAddClassPicture = "";
+        $sAddCode = "";
+
+        if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
+            bx_alert('system', 'image_editor', 0, 0, array(
+               'module' => $oModule->getName(),
+               'image_type' => 'cover',
+               'is_allow_edit' => $bIsAllowEditCover,
+               'image_url' => $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
+               'content_id' => $aData[$CNF['FIELD_ID']],
+               'uploader' => $CNF['OBJECT_UPLOADERS_COVER'][0],
+               'storage' => $CNF['OBJECT_STORAGE_COVER'],
+               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
+               'field' => $CNF['FIELD_COVER'],
+               'is_background' => true,
+               'add_class' => &$sAddClassCover,
+               'add_code' => &$sAddCode
+            ));
+        }
+        if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
+            bx_alert('system', 'image_editor', 0, 0, array(
+               'module' => $oModule->getName(),
+               'image_type' => 'avatar',
+               'is_allow_edit' => $bIsAllowEditPicture,
+               'image_url' =>  $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
+               'content_id' => $aData[$CNF['FIELD_ID']],
+               'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
+               'storage' => $CNF['OBJECT_STORAGE'],
+               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'],
+               'field' => $CNF['FIELD_PICTURE'],
+               'is_background' => false,
+               'add_class' => &$sAddClassPicture,
+               'add_code' => &$sAddCode
+            )); 
+        }
+        
         $bShowAvatar = $bUrlAvatar || $this->_bLetterAvatar;
         $aShowAvatar = array();
         $sPicturePopup = '';
@@ -312,10 +352,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sPicturePopupId = $this->MODULE . '-popup-picture';
 
             $aShowAvatar = array(
+                'add_class' => $sAddClassPicture,
                 'bx_if:show_ava_image' => array(
                     'condition' => $bUrlAvatar,
                     'content' => array(
-                        'ava_url' => $sUrlAvatar
+                        'ava_url' => $sUrlAvatar,
+                        'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
                     )
                 ),
                 'bx_if:show_ava_letter' => array(
@@ -368,11 +410,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'content' => $aShowAvatar
             ),
             'picture_popup' => $sPicturePopup,
-
             'cover_popup' => $sCoverPopup,
             'cover_popup_id' => $sCoverPopupId,
             'cover_url' => $sUrlCover,
-            'cover_href' => !$aData[$CNF['FIELD_COVER']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
+            'add_class' => $sAddClassCover,
+            'img_class' => $sAddClassCover != '' ? 'bx-media-editable-src' : '',
+            'additional_code' => $sAddCode,
+            'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
             'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
         );
 
