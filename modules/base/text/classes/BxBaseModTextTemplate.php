@@ -495,13 +495,38 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             if($o)
                 $sImage = $o->getFileUrlById($mixedImage['id']);
         }
+        
+        $sAddClassPicture = "";
+        $sAddCode = "";
+        $oModule = $this->getModule();
+        $bIsAllowEditPicture =  CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
 
+        if(isset($CNF['FIELD_THUMB']) && isset($CNF['OBJECT_UPLOADERS']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'])){
+            bx_alert('system', 'image_editor', 0, 0, array(
+               'module' => $oModule->getName(),
+               'image_type' => 'header_image',
+               'is_allow_edit' => $bIsAllowEditPicture,
+               'image_url' => $aData[$CNF['FIELD_THUMB']] ? $sImage : '',
+               'content_id' => $aData[$CNF['FIELD_ID']],
+               'uploader' => $CNF['OBJECT_UPLOADERS'][0],
+               'storage' => $CNF['OBJECT_STORAGE'],
+               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
+               'field' => $CNF['FIELD_THUMB'],
+               'is_background' => false,
+               'add_class' => &$sAddClassPicture,
+               'add_code' => &$sAddCode
+            )); 
+        }
+        
         $aVars['content_description_before'] = '';
         $aVars['content_description_after'] = '';
         $aVars['bx_if:show_image'] = array(
             'condition' => !empty($sImage),
             'content' => array(
-                'entry_image' => $sImage
+                'entry_image' => $sImage,
+                'add_class' => $sAddClassPicture,
+                'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
+                'additional_code' => $sAddCode,
             )
         );
 
