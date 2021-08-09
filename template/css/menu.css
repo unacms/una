@@ -7,8 +7,8 @@ ul.bx-menu-custom-hor {
     list-style:none;
 }
 
-.bx-menu-hor li,
-.bx-menu-custom-hor li {
+.bx-menu-hor > li,
+.bx-menu-custom-hor > li {
     display:inline-block;
     vertical-align:middle;
 }
@@ -902,6 +902,14 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
 .bx-menu-add-relation-hidden {
     display: none;
+}
+
+/* --------------- footer menu */
+#bx-menu-footer.bx-menu-hor li {
+    text-align: left;
+}
+#bx-menu-footer.bx-menu-hor > li {
+    vertical-align: top;
 }
 
 /* --------------- switch language menu (popup) */
