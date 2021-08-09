@@ -4154,6 +4154,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
   `set_name` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `name` varchar(255) NOT NULL,

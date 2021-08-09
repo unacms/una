@@ -1127,7 +1127,8 @@
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[Картинка не загружена. В элементе меню будет использован текст.]]></string>
 	<string name="_adm_nav_dsc_items_link"><![CDATA[Введите URL ссылки]]></string>
 	<string name="_adm_nav_dsc_items_onclick"><![CDATA[Введите корректный JavaScript код для ссылки]]></string>
-	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Выберите, если у ссылки должно быть подменю.]]></string>
+        <string name="_adm_nav_dsc_items_parent_id"><![CDATA[Используйте для создания многоуровневого меню внутри одного меню. Оставьте пустым для одноуровневых меню.]]></string>
+	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Выберите, если пункт меню должен использовать другое меню в качестве подменю.]]></string>
 	<string name="_adm_nav_dsc_items_target"><![CDATA[Выберите, если ссылка должна открываться на новой или текущей странице.]]></string>
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Название ссылки для отображения в меню сайта. Используйте как минимум 3 символа.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Имя элемента, отображаемое только в Студии.]]></string>
@@ -1168,6 +1169,7 @@
 	<string name="_adm_nav_txt_items_gl_link"><![CDATA[URL]]></string>
 	<string name="_adm_nav_txt_items_gl_link_custom"><![CDATA[Индивидуальное действие]]></string>
 	<string name="_adm_nav_txt_items_gl_link_menu"><![CDATA[Меню:]]></string>
+        <string name="_adm_nav_txt_items_gl_link_subitems"><![CDATA[Подпункты:]]></string>
 	<string name="_adm_nav_txt_items_gl_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_nav_txt_items_gl_title_system"><![CDATA[Системное имя]]></string>
 	<string name="_adm_nav_txt_items_gl_visible"><![CDATA[Видимо для]]></string>
@@ -1178,6 +1180,8 @@
 	<string name="_adm_nav_txt_items_import_popup"><![CDATA[Импортировать элементы]]></string>
 	<string name="_adm_nav_txt_items_link"><![CDATA[URL]]></string>
 	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
+        <string name="_adm_nav_txt_items_parent_id"><![CDATA[Родительский пункт]]></string>
+        <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[Нет родительского пункта]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Отображать "{0}" элемент меню для: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Подменю]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[Без подменю]]></string>

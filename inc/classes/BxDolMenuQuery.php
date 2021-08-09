@@ -77,11 +77,45 @@ class BxDolMenuQuery extends BxDolDb
     {
         return $this->getMenuItemsFromSet($this->_aObject['set_name']);
     }
-
-    public function getMenuItemsFromSet($sSetName)
+    
+    public function getMenuItemsHierarchy()
     {
-        $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $sSetName);
-        return $this->getAllWithKey($sQuery, 'name');
+        $aWithSubitems = $this->getMenuItemsBy(array(
+            'type' => 'with_subitems', 
+            'set_name' => $this->_aObject['set_name']
+        ));
+
+        $aResult = array();
+        $this->_getMenuItemsHierarchy($this->_aObject['set_name'], 0, $aWithSubitems, $aResult);
+
+        return $aResult;
+    }
+
+    public function _getMenuItemsHierarchy($sSet, $iParentId, $aWithSubitems, &$aResult)
+    {
+        $aItems = $this->getMenuItemsFromSet($sSet, $iParentId);
+        foreach($aItems as $sItem => $aItem) {
+            $aResult[$sItem] = $aItem;
+
+            if(!in_array($sItem, $aWithSubitems))
+                continue;
+
+            $this->_getMenuItemsHierarchy($sSet, $aItem['id'], $aWithSubitems, $aResult[$sItem]['subitems']);
+        }
+    }
+
+    public function getMenuItemsFromSet($sSetName, $iParentId = false)
+    {
+        $aBindings = array('set_name' => $sSetName);
+        $sWhereClause = " AND `set_name` = :set_name";
+        
+        if($iParentId !== false) {
+            $aBindings['parent_id'] = $iParentId;
+
+            $sWhereClause .= " AND `parent_id` = :parent_id";
+        }
+
+        return $this->getAllWithKey("SELECT * FROM `sys_menu_items` WHERE 1" . $sWhereClause . " ORDER BY `order` ASC", 'name', $aBindings);
     }
 
     public function getMenuItemsBy($aParams = array())
@@ -90,7 +124,7 @@ class BxDolMenuQuery extends BxDolDb
         $aBindings = array();
 
     	$sSelectClause = '*';
-    	$sWhereClause = $sGroupClause = $sOrderClause = '';
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = '';
     	$sLimitClause = isset($aParams['start']) && !empty($aParams['per_page']) ? " LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
 
     	if(!empty($aParams['type']))
@@ -101,7 +135,7 @@ class BxDolMenuQuery extends BxDolDb
                     $sWhereClause = 'AND `set_name` = :set_name';
                     $sOrderClause = '`order` ASC';
                     break;
-                    
+
                 case 'set_name_duplicates':
                     $aMethod['name'] = 'getColumn';
                     $aBindings['set_name'] = $aParams['set_name'];
@@ -109,6 +143,24 @@ class BxDolMenuQuery extends BxDolDb
                     $sSelectClause = '`name`';
                     $sWhereClause = 'AND `set_name` = :set_name';
                     $sGroupClause = '`name` HAVING COUNT(`id`) > 1';
+                    break;
+
+                case 'with_subitems':
+                    $aMethod['name'] = 'getColumn';
+                    $aBindings['set_name'] = $aParams['set_name'];
+
+                    $sSelectClause = 'DISTINCT `ti`.`name`';
+                    $sJoinClause = 'AS `ti` INNER JOIN `sys_menu_items` AS `tsi` ON `ti`.`id`=`tsi`.`parent_id`';
+                    $sWhereClause = 'AND `ti`.`set_name` = :set_name';
+                    break;
+
+                case 'subitems':
+                    $aMethod['name'] = 'getAllWithKey';
+                    $aMethod['params'][1] = 'name';
+                    $aBindings['parent_id'] = $aParams['parent_id'];
+
+                    $sWhereClause = 'AND `parent_id` = :parent_id';
+                    $sOrderClause = '`order` ASC';
                     break;
             }
 
@@ -118,7 +170,7 @@ class BxDolMenuQuery extends BxDolDb
         if(!empty($sOrderClause))
             $sOrderClause = " ORDER BY " . $sOrderClause;
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `sys_menu_items` WHERE 1 " . $sWhereClause . $sGroupClause . $sOrderClause . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `sys_menu_items` " . $sJoinClause . " WHERE 1 " . $sWhereClause . $sGroupClause . $sOrderClause . $sLimitClause;
         $aMethod['params'][] = $aBindings;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
@@ -128,6 +180,12 @@ class BxDolMenuQuery extends BxDolDb
     {
         $sSql = $this->prepare("SELECT * FROM `sys_menu_templates` WHERE `id`=? LIMIT 1", $iId);
         return $bFromCache ? $this->fromMemory('sys_menu_templates_' . $iId, 'getRow', $sSql) : $this->getRow($sSql);
+    }
+
+    public function isSetMultilevel($sName)
+    {
+        $sSql = $this->prepare("SELECT COUNT(*) FROM `sys_menu_items` WHERE `set_name`=? AND `parent_id`<>'0' LIMIT 1", $sName);
+        return (int)$this->getOne($sSql) > 0;
     }
 }
 

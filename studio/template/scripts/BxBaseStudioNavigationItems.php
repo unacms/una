@@ -421,7 +421,23 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
     protected function _getCellLink ($mixedValue, $sKey, $aField, $aRow)
     {
-        if($aRow['submenu_object'] != "") {
+        $aSubitems = array();
+        $this->oDb->getItems(array('type' => 'by_parent_id', 'value' => $aRow['id']), $aSubitems, false);
+
+        if(!empty($aSubitems) && is_array($aSubitems)) {
+            $sPrefix = _t('_adm_nav_txt_items_gl_link_subitems');
+
+            $aField['chars_limit'] -= strlen($sPrefix);
+
+            $aTitles = array();
+            foreach($aSubitems as $aSubitem)
+                $aTitles[] = _t(!empty($aSubitem['title_system']) ? $aSubitem['title_system'] : $aSubitem['title']);
+
+            $aValue = $this->_limitMaxLength(implode(', ', $aTitles), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow, false);
+
+            $mixedValue = $sPrefix . ' ' . $aValue[0] . (isset($aValue[1]) ? $aValue[1] : '');
+        }
+        else if($aRow['submenu_object'] != "") {
             $aMenu = array();
             $this->oDb->getMenus(array('type' => 'by_object', 'value' => $aRow['submenu_object']), $aMenu, false);
 
@@ -438,7 +454,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             }
             else 
                 $mixedValue = $sPrefix . ' ' . _t('_undefined');
-        } else if($aRow['submenu_object'] == "" && $aRow['onclick'] != "")
+        } 
+        else if($aRow['submenu_object'] == "" && $aRow['onclick'] != "")
             $mixedValue = $this->_limitMaxLength(_t('_adm_nav_txt_items_gl_link_custom'), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         else
             $mixedValue = BxDolPermalinks::getInstance()->permalink($mixedValue);
@@ -595,6 +612,21 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Xss',
                     ),
                 ),
+                'parent_id' => array(
+                    'type' => 'select',
+                    'name' => 'parent_id',
+                    'caption' => _t('_adm_nav_txt_items_parent_id'),
+                    'info' => _t('_adm_nav_dsc_items_parent_id'),
+                    'value' => isset($aItem['parent_id']) ? $aItem['parent_id'] : '',
+                    'values' => array(
+                        0 => _t('_adm_nav_txt_items_parent_id_empty')
+                    ),
+                    'required' => '0',
+                    'attrs' => array(),
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
                 'submenu_object' => array(
                     'type' => 'select',
                     'name' => 'submenu_object',
@@ -741,6 +773,11 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 )
             )
         );
+        
+        $aItems = array();
+        $this->oDb->getItems(array('type' => 'by_set_name', 'value' => $this->sSet), $aItems, false);
+        foreach($aItems as $aItem)
+            $aForm['inputs']['parent_id']['values'][$aItem['id']] = _t(!empty($aItem['title_system']) ? $aItem['title_system'] : $aItem['title']);
 
         $aMenus = array();
         $this->oDb->getMenus(array('type' => 'all'), $aMenus, false);

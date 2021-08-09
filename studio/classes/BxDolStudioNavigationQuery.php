@@ -203,6 +203,14 @@ class BxDolStudioNavigationQuery extends BxDolDb
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
+    function isParentItem($iItemId)
+    {
+        $aItems = array();
+        $this->getItems(array('type' => 'by_parent_id', 'value' => $iItemId), $aItems, false);
+
+        return !empty($aItems) && is_array($aItems);
+    }
+
     function getItems($aParams, &$aItems, $bReturnCount = true)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
@@ -215,15 +223,23 @@ class BxDolStudioNavigationQuery extends BxDolDb
             case 'by_id':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
                 $sWhereClause = " AND `tmi`.`id`=:id ";
                 break;
 
+            case 'by_parent_id':
+                $aMethod['params'][1] = array(
+                    'parent_id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tmi`.`parent_id`=:parent_id ";
+                break;
+
             case 'by_set_name':
             	$aMethod['params'][1] = array(
-                	'set_name' => $aParams['value']
+                    'set_name' => $aParams['value']
                 );
 
                 $sWhereClause = " AND `tmi`.`set_name`=:set_name ";
@@ -251,6 +267,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tmi`.`id` AS `id`,
+                `tmi`.`parent_id` AS `parent_id`,
                 `tmi`.`set_name` AS `set_name`,
                 `tmi`.`module` AS `module`,
                 `tmi`.`name` AS `name`,

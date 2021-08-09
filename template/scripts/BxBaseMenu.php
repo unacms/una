@@ -136,7 +136,10 @@ class BxBaseMenu extends BxDolMenu
      */
     protected function getMenuItemsRaw ()
     {
-        return $this->_oQuery->getMenuItems();
+        if($this->_bMultilevel)
+            return $this->_oQuery->getMenuItemsHierarchy();
+        else 
+            return $this->_oQuery->getMenuItems();
     }
 
     protected function _getMenuItem ($a)
@@ -225,6 +228,28 @@ class BxBaseMenu extends BxDolMenu
             'condition' => $this->_bDisplayAddons && !empty($aTmplVarsAddon['addon']),
             'content' => $aTmplVarsAddon
         );
+
+        $aTmplVarsSubitems = array('subitems' => '');
+        $bTmplVarsSubitems = $this->_bMultilevel && !empty($a['subitems']);
+        if($bTmplVarsSubitems) {
+            $aSubitems = array();
+            foreach($a['subitems'] as $aSubitem) {
+                $aSubitem = $this->_getMenuItem($aSubitem);
+                if($aSubitem !== false)
+                    $aSubitems[] = $aSubitem;
+            }
+
+            $aTmplVarsSubitems['subitems'] = $this->_oTemplate->parseHtmlByName(str_replace('.html', '_subitems.html', $this->_aObject['template']), array(
+                'bx_repeat:menu_items' => $aSubitems,
+            ));
+        }
+
+        $a['bx_if:show_subitems'] = array (
+            'condition' => $bTmplVarsSubitems,
+            'content' => $aTmplVarsSubitems
+        );
+
+        unset($a['subitems']);
 
         foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
             if (!isset($a[$sName]))

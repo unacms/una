@@ -1141,7 +1141,8 @@
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
 	<string name="_adm_nav_dsc_items_link"><![CDATA[Enter the link URL]]></string>
 	<string name="_adm_nav_dsc_items_onclick"><![CDATA[Enter a correct JavaScript code for the link]]></string>
-	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Select if you want the link to have a submenu.]]></string>
+        <string name="_adm_nav_dsc_items_parent_id"><![CDATA[Use it to create multilevel menu inside one menu. Leave empty for one level menus.]]></string>
+	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Select if you want the link to use another menu as submenu.]]></string>
 	<string name="_adm_nav_dsc_items_target"><![CDATA[Select if you want the link to open as a new page or within current page.]]></string>
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Link name displayed in site menus. Use at least 3 characters.]]></string>
 	<string name="_adm_nav_dsc_items_title_system"><![CDATA[Item name, displayed in Studio only.]]></string>
@@ -1182,6 +1183,7 @@
 	<string name="_adm_nav_txt_items_gl_link"><![CDATA[URL]]></string>
 	<string name="_adm_nav_txt_items_gl_link_custom"><![CDATA[Custom Action]]></string>
 	<string name="_adm_nav_txt_items_gl_link_menu"><![CDATA[Menu:]]></string>
+        <string name="_adm_nav_txt_items_gl_link_subitems"><![CDATA[Subitems:]]></string>
 	<string name="_adm_nav_txt_items_gl_module"><![CDATA[Module]]></string>
 	<string name="_adm_nav_txt_items_gl_title_system"><![CDATA[System Name]]></string>
 	<string name="_adm_nav_txt_items_gl_visible"><![CDATA[Visible For]]></string>
@@ -1192,6 +1194,8 @@
 	<string name="_adm_nav_txt_items_import_popup"><![CDATA[Import Items]]></string>
 	<string name="_adm_nav_txt_items_link"><![CDATA[URL]]></string>
 	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
+        <string name="_adm_nav_txt_items_parent_id"><![CDATA[Parent Item]]></string>
+        <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[No Parent Item]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[No Submenu]]></string>
