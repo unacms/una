@@ -110,7 +110,7 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $this->_oQuery = new BxDolMenuQuery($this->_aObject);
         $this->_oPermalinks = BxDolPermalinks::getInstance();
 
-        $this->_bMultilevel = $this->_oQuery->isSetMultilevel($this->_aObject['set_name']);
+        $this->_bMultilevel = !empty($this->_aObject['set_name']) && $this->_oQuery->isSetMultilevel($this->_aObject['set_name']);
 
         if (isLogged()) {
             $oProfile = BxDolProfile::getInstance();
