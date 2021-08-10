@@ -13,6 +13,9 @@
 .bx-dnt-make-billing-types-menu .bx-menu-tab-active .bx-btn {
     background-color: rgba(0, 0, 0, 0.05);
 }
+.bx-media-phone .bx-dnt-make-billing-types-menu .bx-menu-item a {
+    margin-right: 0;
+}
 
 .bx-dnt-make-billing-types {
     position: relative;

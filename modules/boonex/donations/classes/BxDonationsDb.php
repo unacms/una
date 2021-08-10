@@ -53,15 +53,15 @@ class BxDonationsDb extends BxDolModuleDb
                 $sWhereClause .= "AND `tt`.`name`=:name";
                 break;
 
-            case 'by_duration_price':
+            case 'by_duration_amount':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
                     'period' => $aParams['period'],
                     'period_unit' => $aParams['period_unit'],
-                    'price' => $aParams['price'],
+                    'amount' => $aParams['amount'],
                 );
 
-                $sWhereClause .= "AND `tt`.`period`=:period AND `tt`.`period_unit`=:period_unit AND `tt`.`price`=:price";
+                $sWhereClause .= "AND `tt`.`period`=:period AND `tt`.`period_unit`=:period_unit AND `tt`.`amount`=:amount";
                 break;
             
             case 'by_btype_single':

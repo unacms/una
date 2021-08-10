@@ -48,8 +48,8 @@ class BxDonationsGridTypes extends BxTemplGrid
             if($bPeriod && !$bPeriodUnit) 
                 return echoJson(array('msg' => _t('_bx_donations_form_type_input_err_period_unit')));
 
-            $iPrice = $oForm->getCleanValue('price');
-            $aType = $this->_oModule->_oDb->getTypes(array('type' => 'by_duration_price', 'period' => $iPeriod, 'period_unit' => $sPeriodUnit, 'price' => $iPrice));
+            $iAmount = $oForm->getCleanValue('amount');
+            $aType = $this->_oModule->_oDb->getTypes(array('type' => 'by_duration_amount', 'period' => $iPeriod, 'period_unit' => $sPeriodUnit, 'amount' => $iAmount));
             if(!empty($aType) && is_array($aType))
                 return echoJson(array('msg' => _t('_bx_donations_err_price_duplicate')));
 
