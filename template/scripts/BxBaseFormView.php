@@ -801,9 +801,9 @@ BLAH;
     {
         $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption'], BX_DATA_HTML) : '';
 
-        $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span> ' : '';
+        $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span>' : '';
         
-        $sHelp = !empty($aInput['help']) ? '<a href="javascript:void(0)" onclick="javascript:' . $this->getJsObjectName() . '.showHelp(this, \'' . $aInput['name'] . '\')"><i class="sys-icon question-circle"></i></a> ' : '';
+        $sHelp = !empty($aInput['help']) ? ' <a href="javascript:void(0)" onclick="javascript:' . $this->getJsObjectName() . '.showHelp(this, \'' . $aInput['name'] . '\')"><i class="sys-icon question-circle"></i></a> ' : '';
 
         $sClassAdd = !empty($aInput['error']) ? ' bx-form-error' : '';
         $sInfoIcon = !empty($aInput['info']) ? $this->genInfoIcon($aInput['info']) : '';
@@ -902,7 +902,9 @@ BLAH;
     {
         $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '';
 
-        $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span> ' : '';
+        $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span>' : '';
+        
+        $sHelp = !empty($aInput['help']) ? ' <a href="javascript:void(0)" onclick="javascript:' . $this->getJsObjectName() . '.showHelp(this, \'' . $aInput['name'] . '\')"><i class="sys-icon question-circle"></i></a> ' : '';
 
         $sClassAdd = !empty($aInput['error']) ? ' bx-form-error' : '';
         $sInfoIcon = !empty($aInput['info']) ? $this->genInfoIcon($aInput['info']) : '';
@@ -920,7 +922,8 @@ BLAH;
                 'condition' => !empty($sCaption),
                 'content' => array(
                     'caption' => $sCaption,
-                    'required' => $sRequired
+                    'required' => $sRequired,
+                    'help' => $sHelp
                 )
             ),
             'class_value' => $sClassAdd,
