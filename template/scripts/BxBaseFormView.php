@@ -147,7 +147,18 @@ class BxBaseFormView extends BxDolForm
             return;
 
         echo $this->oTemplate->parseHtmlByName('form_field_help_popup.html', array(
-            'content' => _t($this->aInputs[$sInput]['help'])
+            'content' => _t($this->aInputs[$sInput]['help']),
+            'bx_if:show_edit' => array(
+                'condition' => isAdmin(),
+                'content' => array(
+                    'link' => BX_DOL_URL_STUDIO . bx_append_url_params('builder_forms.php', array(
+                        'page' => 'fields',
+                        'module' => $this->aParams['module'],
+                        'object' => $this->aParams['object'],
+                        'display' => $this->aParams['display']
+                    ))
+                )
+            )
         ));
     }
 

@@ -108,6 +108,7 @@ class BxDolFormQuery extends BxDolDb
                 'uri' => $aObject['uri'],
                 'uri_title' => $aObject['uri_title'],
             ),
+            'module' => $aObject['module'],
             'object' => $sObject,
             'display' => $sDisplayName,
             'view_mode' => $aDisplay['view_mode'],
