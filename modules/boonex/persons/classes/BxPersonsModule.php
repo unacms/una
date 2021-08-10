@@ -23,7 +23,9 @@ class BxPersonsModule extends BxBaseModProfileModule
 
     public function servicePrepareFields ($aFieldsProfile)
     {
-        return parent::_servicePrepareFields($aFieldsProfile, array(), array('fullname' => 'name'));
+        $a = parent::_servicePrepareFields($aFieldsProfile, array(), array());
+        if (empty($a['fullname']))
+            $a['fullname'] = $aFieldsProfile['name'];
     }
     
     /**

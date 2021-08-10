@@ -75,9 +75,12 @@ class BxOrgsModule extends BxBaseModGroupsModule
     public function servicePrepareFields ($aFieldsProfile)
     {
         return parent::_servicePrepareFields($aFieldsProfile, array('org_cat' => 35), array(
-            'org_name' => 'name',
             'org_desc' => 'description',
         ));
+        if (!empty($a['fullname'])) {
+            $a['org_name'] = $a['fullname'];
+            unset($a['fullname']);
+        }
     }
 
     public function serviceGetTimelineData()
