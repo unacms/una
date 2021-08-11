@@ -11,9 +11,9 @@
 
 class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministration
 {
-	protected $_sFilter1Name;
-	protected $_sFilter1Value;
-	protected $_aFilter1Values;
+    protected $_sFilter1Name;
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -23,12 +23,15 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
         $this->_aQueryReset = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
 
+        $this->_sStatusField = $CNF['FIELD_STATUS'];
+        $this->_aStatusValues = array('active', 'pending', 'suspended');
+
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
-			'active' => $CNF['T']['filter_item_active'],
+            'active' => $CNF['T']['filter_item_active'],
             'pending' => $CNF['T']['filter_item_pending'],
             'suspended' => $CNF['T']['filter_item_suspended'],
-		);
+        );
 
     	$sFilter1 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter1)) {

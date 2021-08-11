@@ -17,7 +17,8 @@ class BxBaseModTextGridCommon extends BxBaseModTextGridAdministration
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_sFieldStatus = $CNF['FIELD_STATUS'];
+        $this->_sStatusField = $CNF['FIELD_STATUS'];
+        $this->_aStatusValues = array('active', 'hidden');
 
         if($this->_oModule->_oConfig->isAutoApprove() && isset($this->_aFilter1Values[BX_BASE_MOD_TEXT_STATUS_PENDING]))
             unset($this->_aFilter1Values[BX_BASE_MOD_TEXT_STATUS_PENDING]);

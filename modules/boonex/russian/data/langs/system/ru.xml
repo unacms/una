@@ -3196,6 +3196,8 @@
         <string name="_sys_status"><![CDATA[Статус]]></string>
         <string name="_sys_status_awaiting"><![CDATA[ожидающий]]></string>
         <string name="_sys_status_failed"><![CDATA[неудавшийся]]></string>
+        <string name="_sys_status_pending"><![CDATA[ожидающий]]></string>
+        <string name="_sys_status_suspended"><![CDATA[заблокированный]]></string>
 	<string name="_sys_storage_err_db"><![CDATA[ошибка базы данных]]></string>
 	<string name="_sys_storage_err_engine_add"><![CDATA[произошла ошибка]]></string>
 	<string name="_sys_storage_err_engine_get"><![CDATA[произошла ошибка]]></string>

@@ -13,27 +13,32 @@ define('BX_DOL_MANAGE_TOOLS_COMMON', 'common');
 
 class BxBaseModGeneralGridAdministration extends BxTemplGrid
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
-	protected $_sManageType;
-	protected $_sParamsDivider;
+    protected $_sManageType;
+    protected $_sParamsDivider;
+
+    protected $_sStatusField;
+    protected $_aStatusValues;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
     	if(!$oTemplate)
-			$oTemplate = $this->_oModule->_oTemplate;
+            $oTemplate = $this->_oModule->_oTemplate;
 
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sManageType = BX_DOL_MANAGE_TOOLS_ADMINISTRATION;
         $this->_sParamsDivider = '#-#';
 
+        $this->_aStatusValues = array('active');
+
         $this->_sDefaultSortingOrder = 'DESC';
     }
 
-	public function performActionDelete($aParams = array())
+    public function performActionDelete($aParams = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -259,10 +264,10 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(isset($CNF['FIELD_STATUS']) && isset($aRow[$CNF['FIELD_STATUS']]) && !in_array($aRow[$CNF['FIELD_STATUS']], array('active', 'hidden'))) {
-            $sStatusKey = '_sys_status_' . $aRow[$CNF['FIELD_STATUS']];
-            if(!empty($CNF['T']['txt_status_' . $aRow[$CNF['FIELD_STATUS']]]))
-                $sStatusKey = $CNF['T']['txt_status_' . $aRow[$CNF['FIELD_STATUS']]];
+        if(isset($aRow[$this->_sStatusField]) && !in_array($aRow[$this->_sStatusField], $this->_aStatusValues)) {
+            $sStatusKey = '_sys_status_' . $aRow[$this->_sStatusField];
+            if(!empty($CNF['T']['txt_status_' . $aRow[$this->_sStatusField]]))
+                $sStatusKey = $CNF['T']['txt_status_' . $aRow[$this->_sStatusField]];
 
             return parent::_getCellDefault(_t($sStatusKey), $sKey, $aField, $aRow);
         }

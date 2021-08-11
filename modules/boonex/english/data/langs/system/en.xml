@@ -3216,6 +3216,8 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_status"><![CDATA[Status]]></string>
         <string name="_sys_status_awaiting"><![CDATA[awaiting]]></string>
         <string name="_sys_status_failed"><![CDATA[failed]]></string>
+        <string name="_sys_status_pending"><![CDATA[pending]]></string>
+        <string name="_sys_status_suspended"><![CDATA[suspended]]></string>
 	<string name="_sys_storage_err_db"><![CDATA[database error]]></string>
 	<string name="_sys_storage_err_engine_add"><![CDATA[error occurred]]></string>
 	<string name="_sys_storage_err_engine_get"><![CDATA[error occurred]]></string>
