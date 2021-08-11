@@ -230,6 +230,9 @@
     <string name="_bx_classes_chart_growth"><![CDATA[Classes: Growth]]></string>
     <string name="_bx_classes_chart_growth_speed"><![CDATA[Classes: Growth Speed]]></string>
 
+    <string name="_bx_classes_search_extended"><![CDATA[Classes Search]]></string>
+    <string name="_bx_classes_search_extended_cmts"><![CDATA[Classes Comments Search]]></string>
+
     <string name="_bx_classes_pre_lists_availability"><![CDATA[Availability]]></string>
     <string name="_bx_classes_avail_always"><![CDATA[Always]]></string>
     <string name="_bx_classes_avail_prev_class_completed"><![CDATA[When previous class is completed]]></string>

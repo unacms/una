@@ -229,6 +229,9 @@
   <string name="_bx_classes_chart_growth"><![CDATA[Классы: Развитие]]></string>
   <string name="_bx_classes_chart_growth_speed"><![CDATA[Классы: Скорость развития]]></string>
 
+  <string name="_bx_classes_search_extended"><![CDATA[Поиск классов]]></string>
+  <string name="_bx_classes_search_extended_cmts"><![CDATA[Поиск комментариев к классам]]></string>
+
   <string name="_bx_classes_pre_lists_availability"><![CDATA[Доступность]]></string>
   <string name="_bx_classes_avail_always"><![CDATA[Всегда]]></string>
   <string name="_bx_classes_avail_prev_class_completed"><![CDATA[Когда закончен предыдущий класс]]></string>
