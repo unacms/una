@@ -169,37 +169,37 @@ class BxBaseCmtsServices extends BxDol
 
         //--- Votes
         $aVotes = array();
-        if(($oVotes = $oCmts->getVoteObject($iCmtId)) !== false)
+        if(($oVotes = $oCmts->getVoteObject($iCmtUniqId)) !== false)
             $aVotes = array(
                 'system' => $oVotes->getSystemName(),
-                'object_id' => $iCmtId,
+                'object_id' => $iCmtUniqId,
                 'count' => $aCmt['votes']
             );
         
         //--- Reactions
         $aReactions = array();
-        if(($oReactions = $oCmts->getReactionObject($iCmtId)) !== false)
+        if(($oReactions = $oCmts->getReactionObject($iCmtUniqId)) !== false)
             $aReactions = array(
                 'system' => $oReactions->getSystemName(),
-                'object_id' => $iCmtId,
+                'object_id' => $iCmtUniqId,
                 'count' => $aCmt['rvotes']
             );
 
         //--- Scores
         $aScores = array();
-        if(($oScores = $oCmts->getScoreObject($iCmtId)) !== false)
+        if(($oScores = $oCmts->getScoreObject($iCmtUniqId)) !== false)
             $aScores = array(
                 'system' => $oScores->getSystemName(),
-                'object_id' => $iCmtId,
+                'object_id' => $iCmtUniqId,
                 'score' => $aCmt['score']
             );
 
         //--- Reports
         $aReports = array();
-        if(($oReports = $oCmts->getReportObject($iCmtId)) !== false)
+        if(($oReports = $oCmts->getReportObject($iCmtUniqId)) !== false)
             $aReports = array(
                 'system' => $oReports->getSystemName(),
-                'object_id' => $iCmtId,
+                'object_id' => $iCmtUniqId,
                 'count' => $aCmt['reports']
             );
 
