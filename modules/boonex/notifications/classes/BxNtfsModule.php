@@ -301,7 +301,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         if(!$iOwnerId)
             return 0;
 
-        $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
+        $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId, 0, PHP_INT_MAX);
         $aParams = array_merge($aParams, array(
             'new' => 1,
         ));
