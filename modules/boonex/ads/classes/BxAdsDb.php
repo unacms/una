@@ -599,6 +599,16 @@ class BxAdsDb extends BxBaseModTextDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
+    public function insertOffer($aSet)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aSet[$CNF['FIELD_OFR_ADDED']]))
+            $aSet[$CNF['FIELD_OFR_ADDED']] = time();
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_OFFERS'] . "` SET " . $this->arrayToSQL($aSet)) > 0;
+    }
+
     public function updateOffer($aSet, $aWhere)
     {
         $CNF = &$this->_oConfig->CNF;
