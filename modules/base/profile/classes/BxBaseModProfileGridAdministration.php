@@ -23,7 +23,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
         $this->_aQueryReset = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
 
-        $this->_sStatusField = $CNF['FIELD_STATUS'];
+        $this->_sStatusField = !empty($CNF['FIELD_STATUS']) ? $CNF['FIELD_STATUS'] : 'status';
         $this->_aStatusValues = array('active', 'pending', 'suspended');
 
         $this->_sFilter1Name = 'filter1';
