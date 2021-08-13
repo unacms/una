@@ -37,6 +37,46 @@ class BxBaseServiceProfiles extends BxDol
         return $aTypes;
     }
 
+    public function serviceProfileAvatar ($iProfileId = 0)
+    {
+        if (!$iProfileId && !($iProfileId = bx_get_logged_profile_id()))
+            return '';
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return '';
+
+        $oAcl = BxDolAcl::getInstance();
+        $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
+        $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
+
+        $aSwitcher = bx_srv('system', 'account_profile_switcher', array(), 'TemplServiceProfiles');
+        $sSwitcher = $aSwitcher !== false ? BxTemplFunctions::getInstance()->transBox('bx-profile-switcher', $aSwitcher['content'], true) : '';
+
+        $aVars = array(
+            'profile_id' => $oProfile->id(),
+            'profile_url' => $oProfile->getUrl(),
+            'profile_edit_url' => $oProfile->getEditUrl(),
+            'profile_title' => $oProfile->getDisplayName(),
+            'profile_title_attr' => bx_html_attribute($oProfile->getDisplayName()),
+            'profile_ava_url' => $oProfile->getAvatar(),
+            'profile_unit' => $oProfile->getUnit(0, array('template' => array(
+                'name' => 'unit_wo_info',
+                'size' => 'ava'
+            ))),
+            'profile_acl_title' => _t($aAclInfo['name']),
+            'profile_acl_icon' => $aAclInfo['icon'],
+            'profile_switcher' => $sSwitcher
+        );
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('profile_avatar.html', $aVars);
+    }
+
+    public function serviceProfileMenu ($iProfileId = 0)
+    {
+        return BxDolMenu::getObjectInstance('sys_profile_stats')->getCode();
+    }
+
     public function serviceProfileStats ($iProfileId = 0)
     {
         if (!$iProfileId && !($iProfileId = bx_get_logged_profile_id()))
@@ -337,7 +377,7 @@ class BxBaseServiceProfiles extends BxDol
         if (null === $iActiveProfileId)
             $iActiveProfileId = bx_get_logged_profile_id();
 
-		$oModuleDb = BxDolModuleQuery::getInstance();
+        $oModuleDb = BxDolModuleQuery::getInstance();
 
         $aVars = array (
             'bx_repeat:row' => array(),
@@ -346,11 +386,12 @@ class BxBaseServiceProfiles extends BxDol
             if (!$bShowAll && $iActiveProfileId == $aProfile['id'])
                 continue;
 
-        	if(!$oModuleDb->isEnabledByName($aProfile['type']))
-        		continue;
+            if(!$oModuleDb->isEnabledByName($aProfile['type']))
+                continue;
 
             if (!BxDolService::call($aProfile['type'], 'act_as_profile'))
                 continue;
+
             $aVars['bx_repeat:row'][] = array (
                 'class' => $iActiveProfileId == $aProfile['id'] ? '' : 'bx-def-color-bg-box',
                 'bx_if:active' => array (

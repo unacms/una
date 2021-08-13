@@ -3010,6 +3010,8 @@
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Управление]]></string>
 	<string name="_sys_page_block_title_privacy"><![CDATA[Политика конфиденциальности]]></string>
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
+        <string name="_sys_page_block_title_profile_avatar"><![CDATA[Профиль - Аватар]]></string>
+        <string name="_sys_page_block_title_profile_menu"><![CDATA[Профиль - Меню]]></string>
 	<string name="_sys_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_sys_page_block_title_unsubscribe_news"><![CDATA[Отписаться от новостей сайта]]></string>
 	<string name="_sys_page_block_title_unsubscribe_notifications"><![CDATA[Отписаться от уведомлений сайта]]></string>
