@@ -270,6 +270,8 @@
     <string name="_bx_persons_menu_item_title_relations"><![CDATA[Relationships]]></string>
     <string name="_bx_persons_menu_item_title_system_related_me"><![CDATA[Relationships with Me]]></string>
     <string name="_bx_persons_menu_item_title_related_me"><![CDATA[Relationships with Me]]></string>
+    <string name="_bx_persons_menu_item_title_system_followings"><![CDATA[Persons]]></string>
+    <string name="_bx_persons_menu_item_title_followings"><![CDATA[Persons]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_search"><![CDATA[Search]]></string>

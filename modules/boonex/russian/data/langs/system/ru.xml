@@ -2844,6 +2844,7 @@
 	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальные сети]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Основание]]></string>
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Профиль - Создание]]></string>
+        <string name="_sys_menu_set_title_profile_followings"><![CDATA[Профиль - Подписки]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_set_title_site"><![CDATA[Сайт]]></string>
 	<string name="_sys_menu_set_title_homepage"><![CDATA[Модули с содержимым]]></string>
@@ -2875,9 +2876,10 @@
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Аккаунт - Всплывающие]]></string>
 	<string name="_sys_menu_template_title_custom_hor"><![CDATA[Горизонтальное меню с индивидуальными элементами]]></string>
     <string name="_sys_menu_template_title_custom_ver"><![CDATA[Вертикальное меню с индивидуальными элементами]]></string>
+    <string name="_sys_menu_template_title_profile_followings"><![CDATA[Подписки профиля - Меню]]></string>
     <string name="_sys_menu_template_title_profile_stats"><![CDATA[Статистика профиля - Меню]]></string>
-	<string name="_sys_menu_title_account_dashboard"><![CDATA[Панель аккаунта - Меню]]></string>
-	<string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Меню инструментов управления]]></string>
+    <string name="_sys_menu_title_account_dashboard"><![CDATA[Панель аккаунта - Меню]]></string>
+    <string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Меню инструментов управления]]></string>
     <string name="_sys_menu_title_account_notifications"><![CDATA[Меню с уведомлениями]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Аккаунт - Всплывающее меню]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Аккаунт - Меню настроек]]></string>
@@ -2900,6 +2902,7 @@
 	<string name="_sys_menu_item_title_system_trends"><![CDATA[Тренды]]></string>
 	<string name="_sys_menu_item_title_trends"><![CDATA[Тренды]]></string>
 	<string name="_sys_menu_title_profiles_create"><![CDATA[Профиль - Создание]]></string>
+        <string name="_sys_menu_title_profile_followings"><![CDATA[Профиль - Подписки]]></string>
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
@@ -3012,6 +3015,7 @@
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
         <string name="_sys_page_block_title_profile_avatar"><![CDATA[Профиль - Аватар]]></string>
         <string name="_sys_page_block_title_profile_menu"><![CDATA[Профиль - Меню]]></string>
+        <string name="_sys_page_block_title_profile_followings"><![CDATA[Профиль - Подписки]]></string>
 	<string name="_sys_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_sys_page_block_title_unsubscribe_news"><![CDATA[Отписаться от новостей сайта]]></string>
 	<string name="_sys_page_block_title_unsubscribe_notifications"><![CDATA[Отписаться от уведомлений сайта]]></string>

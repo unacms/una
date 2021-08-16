@@ -443,6 +443,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_profile_stats', 'bx_organizations', 'profile-stats-relations', '_bx_orgs_menu_item_title_system_relations', '_bx_orgs_menu_item_title_relations', 'page.php?i=organization-profile-relations&profile_id={member_id}#relations', '', '_self', 'sync col-blue3', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_connected_content_num";s:6:"params";a:3:{i:0;s:22:"sys_profiles_relations";i:1;i:0;i:2;i:1;}s:5:"class";s:23:"TemplServiceConnections";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 6),
 ('sys_profile_stats', 'bx_organizations', 'profile-stats-related-me', '_bx_orgs_menu_item_title_system_related_me', '_bx_orgs_menu_item_title_related_me', 'page.php?i=organization-profile-relations&profile_id={member_id}#related-me', '', '_self', 'sync col-blue3', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:28:"get_connected_initiators_num";s:6:"params";a:3:{i:0;s:22:"sys_profiles_relations";i:1;i:0;i:2;i:1;}s:5:"class";s:23:"TemplServiceConnections";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 7);
 
+-- MENU: profile followings
+SET @iFollowingsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_profile_followings' LIMIT 1);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_profile_followings', 'bx_organizations', 'organizations', '_bx_orgs_menu_item_title_system_followings', '_bx_orgs_menu_item_title_followings', 'javascript:void(0)', '', '_self', 'briefcase col-red2', '', '', 2147483647, 1, 0, @iFollowingsMenuOrder + 1);
+
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_organizations_menu_manage_tools', '_bx_orgs_menu_title_manage_tools', 'bx_organizations_menu_manage_tools', 'bx_organizations', 6, 0, 1, 'BxOrgsMenuManageTools', 'modules/boonex/organizations/classes/BxOrgsMenuManageTools.php');

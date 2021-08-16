@@ -275,6 +275,8 @@
     <string name="_bx_courses_menu_item_title_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_courses_menu_item_title_system_manage_my_entries"><![CDATA[Мои курсы]]></string>
     <string name="_bx_courses_menu_item_title_manage_my_entries"><![CDATA[Курсы]]></string>
+    <string name="_bx_courses_menu_item_title_system_followings"><![CDATA[Курсы]]></string>
+    <string name="_bx_courses_menu_item_title_followings"><![CDATA[Курсы]]></string>
     <string name="_bx_courses_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_courses_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_courses_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>

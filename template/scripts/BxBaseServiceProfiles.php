@@ -77,6 +77,11 @@ class BxBaseServiceProfiles extends BxDol
         return BxDolMenu::getObjectInstance('sys_profile_stats')->getCode();
     }
 
+    public function serviceProfileFollowings ($iProfileId = 0)
+    {
+        return BxDolMenu::getObjectInstance('sys_profile_followings')->getCode();
+    }
+
     public function serviceProfileStats ($iProfileId = 0)
     {
         if (!$iProfileId && !($iProfileId = bx_get_logged_profile_id()))

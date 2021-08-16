@@ -202,6 +202,8 @@
 	<string name="_bx_channels_menu_item_title_entries_top"><![CDATA[Top]]></string>
         <string name="_bx_channels_menu_item_title_system_view_entries_author"><![CDATA[Channels]]></string>
         <string name="_bx_channels_menu_item_title_view_entries_author"><![CDATA[Channels]]></string>
+        <string name="_bx_channels_menu_item_title_system_followings"><![CDATA[Channels]]></string>
+        <string name="_bx_channels_menu_item_title_followings"><![CDATA[Channels]]></string>
 
 	<string name="_bx_channels_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_channels_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
