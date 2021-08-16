@@ -42,3 +42,20 @@ import url(../../../../../../../template/css/menu.css);
 div.bx-sliding-menu-main.sys-add-content ul {
     flex-direction: column;
 }
+
+/* --- Profile Followings Menu ---*/
+.bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-show {
+    display: none;
+}
+.bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-hide {
+    display: inline;
+}
+.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-show {
+    display: inline;
+}
+.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-hide {
+    display: none;
+}
+.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-item-subitems {
+    display: none;
+}

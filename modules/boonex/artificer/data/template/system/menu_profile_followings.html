@@ -1,0 +1,22 @@
+<ul class="bx-menu-profile-followings bx-menu-ver bx-menu-object-__object__">
+    <bx_repeat:menu_items>
+        <li class="bx-menu-item bx-menu-item-__name__ __class_add__ text-sm font-medium">
+            <div class="bx-menu-item-cnt">
+                <div class="bx-menu-item-link flex items-center justify-between p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 rounded">
+                    <a class="flex items-center" href="__link__" onclick="__onclick__"__attrs__>
+                        <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
+                        <bx_if:image><img class="w-6 bg-contain bx-no-repeat bg-center" style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
+                        <span class="ml-2">__title__</span>
+                    </a>
+                    <span class="bx-menu-collapse pl-2">
+                        <a class="bx-menu-hide" href="javascript:void(0)" onclick="javascript:$(this).parents('li:first').toggleClass('bx-menu-item-collapsed', true)"><i class="sys-icon chevron-up"></i></a>
+                        <a class="bx-menu-show" href="javascript:void(0)" onclick="javascript:$(this).parents('li:first').toggleClass('bx-menu-item-collapsed', false)"><i class="sys-icon chevron-down"></i></a>
+                    </span>
+                </div>
+                <bx_if:show_subitems>
+                    <div class="bx-menu-item-subitems">__subitems__</div>
+                </bx_if:show_subitems>
+            </div>
+        </li>
+    </bx_repeat:menu_items>
+</ul>

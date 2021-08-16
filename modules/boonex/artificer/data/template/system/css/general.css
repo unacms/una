@@ -1,3 +1,9 @@
 /*--
 import url(../../../../../../../template/css/general.css);
 --*/
+
+
+/*--- Profile Avatar ---*/
+#bx-profile-switcher .bx-def-hr {
+    display: none;
+}

@@ -1,0 +1,18 @@
+<ul class="bx-menu-item-subitems bx-menu-pf-subitems bx-menu-ver">
+    <bx_repeat:menu_items>
+        <li class="bx-menu-subitem bx-menu-subitem-__name__ __class_add__ text-sm font-medium">
+            <div class="bx-menu-item-cnt flex items-center pl-4 pr-2 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 rounded">
+                <a class="flex items-center" href="__link__" onclick="__onclick__"__attrs__>
+                    <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
+                    <bx_if:image><img class="w-6 bg-contain bx-no-repeat bg-center" style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
+                    <span class="ml-2">__title__</span>
+                </a>
+                <bx_if:addon>
+                    <div class="bx-menu-addon pl-2">
+                        <div class="bx-menu-addon-cnt bx-def-label menu">__addon__</div>
+                    </div>
+                </bx_if:addon>
+            </div>
+        </li>
+    </bx_repeat:menu_items>
+</ul>
