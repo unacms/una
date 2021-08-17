@@ -321,6 +321,15 @@ div.bx-account-unit-online {
     text-overflow: ellipsis;
 }
 
+.bx-profile-avatar .bx-pa-action .sys-icon {
+    display: inline-block;
+    text-align: center;
+    line-height: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.0rem;
+}
+
 .bx-profile-avatar-switcher .bx-def-hr {
     display: none;
 }

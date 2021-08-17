@@ -74,7 +74,7 @@ class BxBaseServiceProfiles extends BxDol
             'profile_ava_url' => $oProfile->getAvatar(),
             'profile_unit' => $oProfile->getUnit(0, array('template' => array(
                 'name' => 'unit_wo_info_links',
-                'size' => 'ava'
+                'size' => 'thumb'
             ))),
             'profile_acl_title' => _t($aAclInfo['name']),
             'profile_acl_icon' => $aAclInfo['icon'],
