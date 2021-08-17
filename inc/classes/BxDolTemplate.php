@@ -2489,25 +2489,37 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         try {
-        	$oTemplate = &$this;
+            $oTemplate = &$this;
 
-        	$aCallbackPatterns = array(
-        		"'<bx_include_auto:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BOTH,
-        		"'<bx_include_base:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BASE,
-        		"'<bx_include_tmpl:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_TMPL
-        	);
-	        foreach($aCallbackPatterns as $sPattern => $sCheckIn)
-		        $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVariables, $mixedKeyWrapperHtml, $sCheckIn) {
-		        	return $oTemplate->parseHtmlByName($aMatches[1], $aVariables, $mixedKeyWrapperHtml, $sCheckIn);
-		        }, $sContent);
+            $aCallbackPatterns = array(
+                "'<bx_include_auto:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BOTH,
+                "'<bx_include_auto_mod_general:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_general'),
+                "'<bx_include_auto_mod_profile:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_profile'),
+                "'<bx_include_auto_mod_group:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_group'),
+                "'<bx_include_auto_mod_text:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_text'),
+                "'<bx_include_base:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BASE,
+                "'<bx_include_base_mod_general:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_general'),
+                "'<bx_include_base_mod_profile:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_profile'),
+                "'<bx_include_base_mod_group:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_group'),
+                "'<bx_include_base_mod_text:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_text'),
+                "'<bx_include_tmpl:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_TMPL,
+                "'<bx_include_tmpl_mod_general:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_general'),
+                "'<bx_include_tmpl_mod_profile:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_profile'),
+                "'<bx_include_tmpl_mod_group:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_group'),
+                "'<bx_include_tmpl_mod_text:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_text')
+            );
+            foreach($aCallbackPatterns as $sPattern => $sCheckIn)
+                $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVariables, $mixedKeyWrapperHtml, $sCheckIn) {
+                    return $oTemplate->parseHtmlByName($aMatches[1], $aVariables, $mixedKeyWrapperHtml, $sCheckIn);
+                }, $sContent);
 
-			$sContent = $this->_parseContentKeys($sContent, array(
-				"'<bx_injection:([^\s]+) />'s" => 'get_injection',
-            	"'<bx_menu:([^\s]+) \/>'s" => 'get_menu',
-			));
+            $sContent = $this->_parseContentKeys($sContent, array(
+                "'<bx_injection:([^\s]+) />'s" => 'get_injection',
+                "'<bx_menu:([^\s]+) \/>'s" => 'get_menu',
+            ));
         }
-		catch(Exception $oException) {
-        	return '';
+            catch(Exception $oException) {
+            return '';
         }
 
         $aKeys = array_merge($aKeys, array(
@@ -2593,26 +2605,38 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         try {
-        	$oTemplate = &$this;
+            $oTemplate = &$this;
 
-        	$aCallbackPatterns = array(
-        		"'<bx_include_auto:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BOTH,
-        		"'<bx_include_base:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BASE,
-        		"'<bx_include_tmpl:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_TMPL
-        	);
-	        foreach($aCallbackPatterns as $sPattern => $sCheckIn)
-		        $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVarValues, $mixedKeyWrapperHtml, $sCheckIn) {
-		        	$mixedResult = $oTemplate->getCached($aMatches[1], $aVarValues, $mixedKeyWrapperHtml, $sCheckIn, false);
-		        	if($mixedResult === false)
-		        		throw new Exception('Unable to create cache file.');
+            $aCallbackPatterns = array(
+                "'<bx_include_auto:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BOTH,
+                "'<bx_include_auto_mod_general:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_general'),
+                "'<bx_include_auto_mod_profile:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_profile'),
+                "'<bx_include_auto_mod_group:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_group'),
+                "'<bx_include_auto_mod_text:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BOTH, 'sub' => 'mod_text'),
+                "'<bx_include_base:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BASE,
+                "'<bx_include_base_mod_general:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_general'),
+                "'<bx_include_base_mod_profile:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_profile'),
+                "'<bx_include_base_mod_group:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_group'),
+                "'<bx_include_base_mod_text:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_BASE, 'sub' => 'mod_text'),
+                "'<bx_include_tmpl:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_TMPL,
+                "'<bx_include_tmpl_mod_general:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_general'),
+                "'<bx_include_tmpl_mod_profile:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_profile'),
+                "'<bx_include_tmpl_mod_group:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_group'),
+                "'<bx_include_tmpl_mod_text:([^\s]+) \/>'s" => array('in' => BX_DOL_TEMPLATE_CHECK_IN_TMPL, 'sub' => 'mod_text')
+            );
+            foreach($aCallbackPatterns as $sPattern => $sCheckIn)
+                $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVarValues, $mixedKeyWrapperHtml, $sCheckIn) {
+                    $mixedResult = $oTemplate->getCached($aMatches[1], $aVarValues, $mixedKeyWrapperHtml, $sCheckIn, false);
+                    if($mixedResult === false)
+                        throw new Exception('Unable to create cache file.');
 
-		        	return $mixedResult;
-		        }, $sContent);
+                    return $mixedResult;
+                }, $sContent);
 
-			$sContent = $this->_parseContentKeys($sContent);
+            $sContent = $this->_parseContentKeys($sContent);
         }
         catch(Exception $oException) {
-        	return false;
+            return false;
         }
 
         $aKeys = array_merge($aKeys, array(
@@ -2640,45 +2664,45 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     	$oTemplate = &$this;
 
     	$aCallbackPatterns = array_merge($aCallbackPatterns, array(
-			"'<bx_image_url:([^\s]+) \/>'s" => "get_image_url",
-			"'<bx_icon_url:([^\s]+) \/>'s" => "get_icon_url",
-			"'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s" => "get_text",
-			"'<bx_text_js:([^\s]+) \/>'s" => "get_text_js",
-			"'<bx_text_attribute:([^\s]+) \/>'s" => "get_text_attribute",
-		));
+            "'<bx_image_url:([^\s]+) \/>'s" => "get_image_url",
+            "'<bx_icon_url:([^\s]+) \/>'s" => "get_icon_url",
+            "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s" => "get_text",
+            "'<bx_text_js:([^\s]+) \/>'s" => "get_text_js",
+            "'<bx_text_attribute:([^\s]+) \/>'s" => "get_text_attribute",
+        ));
 
-		foreach($aCallbackPatterns as $sPattern => $sAction)
-			$sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $sAction) {
-		    	$sResult = '';
+        foreach($aCallbackPatterns as $sPattern => $sAction)
+            $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $sAction) {
+            $sResult = '';
 
-	        	switch($sAction) {
-	        		case 'get_image_url':
-	        			$sResult = $oTemplate->getImageUrl($aMatches[1]);
-	        			break;
-	        		case 'get_icon_url':
-	        			$sResult = $oTemplate->getIconUrl($aMatches[1]);
-	        			break;
-					case 'get_text':
-	        			$sResult = _t($aMatches[1]);
-	        			break;
-	        		case 'get_text_js':
-	        			$sResult = bx_js_string(_t($aMatches[1]));
-	        			break;
-	        		case 'get_text_attribute':
-	        			$sResult = bx_html_attribute(_t($aMatches[1]));
-	        			break;
-	        		case 'get_injection':
-	        			$sResult = $oTemplate->processInjection($oTemplate->getPageNameIndex(), $aMatches[1]);
-	        			break;
-	        		case 'get_menu':
-	        			$sResult = $oTemplate->getMenu($aMatches[1]);
-	        			break;
-	        	}
+            switch($sAction) {
+                case 'get_image_url':
+                    $sResult = $oTemplate->getImageUrl($aMatches[1]);
+                    break;
+                case 'get_icon_url':
+                    $sResult = $oTemplate->getIconUrl($aMatches[1]);
+                    break;
+                case 'get_text':
+                    $sResult = _t($aMatches[1]);
+                    break;
+                case 'get_text_js':
+                    $sResult = bx_js_string(_t($aMatches[1]));
+                    break;
+                case 'get_text_attribute':
+                    $sResult = bx_html_attribute(_t($aMatches[1]));
+                    break;
+                case 'get_injection':
+                    $sResult = $oTemplate->processInjection($oTemplate->getPageNameIndex(), $aMatches[1]);
+                    break;
+                case 'get_menu':
+                    $sResult = $oTemplate->getMenu($aMatches[1]);
+                    break;
+            }
 
-	        	return $sResult;
-	        }, $sContent);
+            return $sResult;
+        }, $sContent);
 
-		return $sContent;
+        return $sContent;
     }
 
     /**
@@ -2715,9 +2739,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sResult = '';
         $aLocations = array_reverse($this->_aLocations, true);
         foreach($aLocations as $sKey => $aLocation) {
-            if(($sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_BOTH || $sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_TMPL) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName))
+            if((in_array($sCheckIn, array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL)) || (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL)) && $sCheckIn['sub'] == $sKey)) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName))
                 $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sKey . $sDivider . $sFolder . $sName;
-            else if(($sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_BOTH || $sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_BASE) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName))
+            else if((in_array($sCheckIn, array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE)) || (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE)) && $sCheckIn['sub'] == $sKey)) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName))
                 $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
             else
                 continue;
