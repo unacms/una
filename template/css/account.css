@@ -27,6 +27,9 @@
     -webkit-flex: 0 2 auto;
     flex: 0 2 auto;
 }
+.sys-profile-switch-row-control .sys-icon {
+    font-size: 1.5rem;
+}
 .sys-profile-switch-row-control .bx-btn {
     float: none;
 }

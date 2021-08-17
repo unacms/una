@@ -50,18 +50,30 @@ class BxBaseServiceProfiles extends BxDol
         $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
         $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
 
-        $aSwitcher = bx_srv('system', 'account_profile_switcher', array(), 'TemplServiceProfiles');
-        $sSwitcher = $aSwitcher !== false ? BxTemplFunctions::getInstance()->transBox('bx-profile-switcher', $aSwitcher['content'], true) : '';
+        $oTemplate = BxDolTemplate::getInstance();
+
+        $aSwitcher = bx_srv('system', 'account_profile_switcher', array(false, null, '', true), 'TemplServiceProfiles');
+        $sSwitcher = $aSwitcher !== false ? BxTemplFunctions::getInstance()->transBox('bx-profile-switcher', $oTemplate->parseHtmlByName('profile_avatar_switcher.html', array(
+            'profile_switcher' => $aSwitcher['content'],
+            'bx_if:multiple_profiles_mode' => array(
+                'condition' => (int)getParam('sys_account_limit_profiles_number') != 1,
+                'content' => array(
+                    'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
+                )
+            )
+        )), true) : '';
+
+        $sDisplayName = $oProfile->getDisplayName();
 
         $aVars = array(
             'profile_id' => $oProfile->id(),
             'profile_url' => $oProfile->getUrl(),
             'profile_edit_url' => $oProfile->getEditUrl(),
-            'profile_title' => $oProfile->getDisplayName(),
-            'profile_title_attr' => bx_html_attribute($oProfile->getDisplayName()),
+            'profile_title' => $sDisplayName,
+            'profile_title_attr' => bx_html_attribute($sDisplayName),
             'profile_ava_url' => $oProfile->getAvatar(),
             'profile_unit' => $oProfile->getUnit(0, array('template' => array(
-                'name' => 'unit_wo_info',
+                'name' => 'unit_wo_info_links',
                 'size' => 'ava'
             ))),
             'profile_acl_title' => _t($aAclInfo['name']),
@@ -69,7 +81,7 @@ class BxBaseServiceProfiles extends BxDol
             'profile_switcher' => $sSwitcher
         );
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('profile_avatar.html', $aVars);
+        return $oTemplate->parseHtmlByName('profile_avatar.html', $aVars);
     }
 
     public function serviceProfileMenu ($iProfileId = 0)

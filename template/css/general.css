@@ -321,12 +321,16 @@ div.bx-account-unit-online {
     text-overflow: ellipsis;
 }
 
-#bx-profile-switcher .bx-popup-content {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
-#bx-profile-switcher .bx-def-hr {
+.bx-profile-avatar-switcher .bx-def-hr {
     display: none;
+}
+.bx-profile-avatar-switcher .sys-profile-switch-row {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.bx-profile-avatar-switcher .bx-pas-list-link .bx-btn {
+    float: none;
+    display: inline-block;
 }
 
 
