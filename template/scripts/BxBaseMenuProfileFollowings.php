@@ -33,6 +33,9 @@ class BxBaseMenuProfileFollowings extends BxTemplMenu
         foreach($aMenuItems as $iIndex => $aItem) {
             $aIds = $oConnection->getConnectedContentByType($iProfile, array($aItem['module']));
 
+            if(empty($aItem['onclick']))
+                $aMenuItems[$iIndex]['onclick'] = 'bx_toggle_pf(this)';
+
             $aSubmenu = array();
             foreach($aIds as $iId) {
                 $oContext = BxDolProfile::getInstance($iId);

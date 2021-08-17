@@ -2844,7 +2844,7 @@
 	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальные сети]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Основание]]></string>
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Профиль - Создание]]></string>
-        <string name="_sys_menu_set_title_profile_followings"><![CDATA[Профиль - Подписки]]></string>
+        <string name="_sys_menu_set_title_profile_followings"><![CDATA[Отслеживаемые контексты]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_set_title_site"><![CDATA[Сайт]]></string>
 	<string name="_sys_menu_set_title_homepage"><![CDATA[Модули с содержимым]]></string>
