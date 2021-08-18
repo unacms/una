@@ -32,19 +32,9 @@ class BxArtificerAlertsResponse extends BxDolAlertsResponse
         $this->$sMethod($oAlert);
     }
 
-    protected function _processBxPersonsUnit($oAlert)
-    {
-        return $this->_processProfileUnit($oAlert);
-    }
-
-    protected function _processBxOrganizationsUnit($oAlert)
-    {
-        return $this->_processProfileUnit($oAlert);
-    }
-
     protected function _processProfileUnit($oAlert)
     {
-        $sModule = $oAlert->sUnit;
+        $sModule = $oAlert->aExtras['module'];
         $oModule = BxDolModule::getInstance($sModule);
         if(!$oModule)
             return;

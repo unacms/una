@@ -78,14 +78,18 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         $aVars = $this->unitVars($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
-        bx_alert($oModule->getName(), 'unit', 0, 0, array(
+        
+        $aExtras = array(
+            'module' => $oModule->getName(),
             'data' => $aData,
             'check_private_content' => $isCheckPrivateContent,
             'template' => $mixedTemplate,
             'params' => $aParams,
             'tmpl_name' => &$sTemplate,
             'tmpl_vars' => &$aVars
-        ));
+        );
+        bx_alert('profile', 'unit', 0, 0, $aExtras);
+        bx_alert($aExtras['module'], 'unit', 0, 0, $aExtras);
  
         return $this->parseHtmlByName($sTemplate, $aVars);
     }
