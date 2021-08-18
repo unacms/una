@@ -33,6 +33,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     protected $_sTmplNameItem;
 
+    protected $_aItem2CheckFunc;
+
     public function __construct($aObject, $oTemplate = false)
     {
         $this->_sModule = 'bx_timeline';
@@ -48,6 +50,25 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $this->_bShowCountersEmpty = false;
         $this->_bShowCountersIcons = true;
         $this->_sTmplNameItem = 'menu_custom_item_hor.html';
+
+        $this->_aItem2CheckFunc = array(
+            'item-view' => 'isAllowedViewCounter',
+            'item-comment' => 'isAllowedComment',
+            'item-vote' => 'isAllowedVote',
+            'item-reaction' => 'isAllowedReaction',
+            'item-score' => 'isAllowedScore',
+            'item-report' => 'isAllowedReport',
+            'item-mute' => 'isAllowedMute',
+            'item-more' => 'isAllowedMore',
+            'item-pin' => 'isAllowedPin',
+            'item-unpin' => 'isAllowedUnpin',
+            'item-stick' => 'isAllowedStick',
+            'item-unstick' => 'isAllowedUnstick',
+            'item-promote' => 'isAllowedPromote',
+            'item-unpromote' => 'isAllowedUnpromote',
+            'item-edit' => 'isAllowedEdit',
+            'item-delete' => 'isAllowedDelete'
+        );
     }
 
     public function setEvent($aEvent, $aBrowseParams = array())
@@ -296,79 +317,30 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sCheckFuncName = '';
         $aCheckFuncParams = array($this->_aEvent);
         switch ($a['name']) {
-            case 'item-view':
-                $sCheckFuncName = 'isAllowedViewCounter';
-                break;
-
             case 'item-comment':
                 if($this->_sView == BX_TIMELINE_VIEW_ITEM)
                     return false;
 
-                $sCheckFuncName = 'isAllowedComment';
+                $sCheckFuncName = $this->_aItem2CheckFunc[$a['name']];
                 break;
-
-            case 'item-vote':
-                $sCheckFuncName = 'isAllowedVote';
-                break;
-            
-            case 'item-reaction':
-                $sCheckFuncName = 'isAllowedReaction';
-                break;
-
-            case 'item-score':
-                $sCheckFuncName = 'isAllowedScore';
-                break;
-
-            case 'item-report':
-                $sCheckFuncName = 'isAllowedReport';
-                break;
-
-            case 'item-mute':
-                $sCheckFuncName = 'isAllowedMute';
-                break;
-
-            case 'item-more':
-            	$sCheckFuncName = 'isAllowedMore';
-            	break;
 
             case 'item-pin':
                 if($this->_sType != BX_BASE_MOD_NTFS_TYPE_OWNER)
                     return false;
 
-                $sCheckFuncName = 'isAllowedPin';
+                $sCheckFuncName = $this->_aItem2CheckFunc[$a['name']];
                 break;
 
             case 'item-unpin':
                 if($this->_sType != BX_BASE_MOD_NTFS_TYPE_OWNER)
                     return false;
 
-                $sCheckFuncName = 'isAllowedUnpin';
-                break;
-
-            case 'item-stick':
-                $sCheckFuncName = 'isAllowedStick';
-                break;
-
-            case 'item-unstick':
-                $sCheckFuncName = 'isAllowedUnstick';
-                break;
-
-            case 'item-promote':
-                $sCheckFuncName = 'isAllowedPromote';
-                break;
-
-            case 'item-unpromote':
-                $sCheckFuncName = 'isAllowedUnpromote';
-                break;
-
-            case 'item-edit':
-                $sCheckFuncName = 'isAllowedEdit';
-                break;
-
-            case 'item-delete':
-                $sCheckFuncName = 'isAllowedDelete';
+                $sCheckFuncName = $this->_aItem2CheckFunc[$a['name']];
                 break;
         }
+
+        if(empty($sCheckFuncName) && isset($this->_aItem2CheckFunc[$a['name']]))
+            $sCheckFuncName = $this->_aItem2CheckFunc[$a['name']];
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))
             return true;

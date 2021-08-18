@@ -22,6 +22,11 @@ class BxTimelineMenuItemCounters extends BxTimelineMenuItemActions
 
         $this->_sMode = self::$_sModeCounters;
         $this->_bShowCounters = true;
+
+        $this->_aItem2CheckFunc = array_merge($this->_aItem2CheckFunc, array(
+            'item-vote' => 'isAllowedVoteView',
+            'item-reaction' => 'isAllowedReactionView',
+        ));
     }
 
     protected function _getMenuItemItemComment($aItem)

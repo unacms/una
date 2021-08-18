@@ -3321,11 +3321,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
 
         if(!$oVote->isAllowedVote($bPerform))
-        	return false;
+            return false;
 
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
+    }
+    
+    public function isAllowedVoteView($aEvent, $bPerform = false)
+    {
+        $mixedVotes = $this->getVotesData($aEvent['votes']);
+        if($mixedVotes === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedVotes;
+        $oVote = $this->getVoteObject($sSystem, $iObjectId);
+
+        if(!$oVote->isAllowedVoteView($bPerform))
+            return false;
+
+        $bResult = true;
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
@@ -3345,6 +3364,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
+    }
+
+    public function isAllowedReactionView($aEvent, $bPerform = false)
+    {
+        $mixedReactions = $this->getReactionsData($aEvent['reactions']);
+        if($mixedReactions === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedReactions;
+        $oReaction = $this->getReactionObject($sSystem, $iObjectId);
+
+        if(!$oReaction->isAllowedVoteView($bPerform))
+            return false;
+
+        $bResult = true;
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
