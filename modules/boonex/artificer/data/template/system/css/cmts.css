@@ -1,0 +1,40 @@
+/*--
+import url(../../../../../../../template/css/cmts.css);
+--*/
+
+
+/*--- Comment Actions ---*/
+.cmt-actions .bx-menu-custom.bx-menu-custom-hor {
+    justify-content: space-between;
+}
+
+
+/*--- Minified Post Form ---*/
+div.cmt-reply.cmt-reply-min div.cmt-body {
+    display: none;
+}
+
+
+/* +++ Comment Element: Counter +++ */
+.cmt-counter > * {
+    position: relative;
+}
+.cmt-counter div.cmt-counter-icon,
+.cmt-counter div.bx-base-pofile-unit-wo-info {
+    margin-left: -0.5rem;
+}
+.cmt-counter div.cmt-counter-icon:first-child,
+.cmt-counter div.bx-base-pofile-unit-wo-info:first-child {
+    margin-left: 0 !important;
+}
+.bx-media-phone .cmt-counter div.cmt-counter-icon,
+.bx-media-phone .cmt-counter div.bx-base-pofile-unit-wo-info {
+    margin-left: -1.0rem;
+}
+.bx-media-tablet .bx-layout-column-thin .cmt-counter div.bx-base-pofile-unit-wo-info,
+.bx-media-tablet .bx-layout-column-half .cmt-counter div.bx-base-pofile-unit-wo-info {
+    display: none;
+}
+.cmt-counter div.cmt-counter-icon {
+    z-index: 2;
+}
