@@ -2,6 +2,18 @@
 import url(../../../../../../../template/css/menu.css);
 --*/
 
+/* --- Horizontal menu ---*/
+.bx-menu-hor li.bx-menu-tab-active a,
+.bx-menu-custom-hor li.bx-menu-tab-active a {
+    font-weight: 600;
+    color: #000;
+}
+
+/*--- Interactive Menu ---*/
+li.bx-menu-inter-hidden {
+    display: none;
+}
+
 /*--- Sliding Menu ---*/
 .bx-sliding-menu, 
 .bx-sliding-menu-main {
@@ -16,7 +28,6 @@ import url(../../../../../../../template/css/menu.css);
     right:0;
     text-decoration:none;
 }
-
 
 /*--- Top Menu ---*/
 .bx-sliding-smenu-main .bx-arr-menu-floating-blocks {
@@ -57,10 +68,5 @@ div.bx-sliding-menu-main.sys-add-content ul {
     display: none;
 }
 .bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-item-subitems {
-    display: none;
-}
-
-/*--- Interactive Menu ---*/
-li.bx-menu-inter-hidden {
     display: none;
 }

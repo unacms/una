@@ -236,6 +236,19 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return $this->_aObject['template_id'];
     }
 
+    /**
+     * Get template name with checking for custom template related to exactly this menu object.
+     * @return string with template name.
+     */
+    public function getTemplateName($sName = '')
+    {
+        if(empty($sName))
+            $sName = $this->_aObject['template'];
+
+        $sNameCustom = str_replace('.html', '_' . $this->_sObject . '.html', $sName);
+        return $this->_oTemplate->isHtml($sNameCustom) ? $sNameCustom : $sName;
+    }
+
     public function setTemplateById ($iTemplateId)
     {
         $aTemplate = $this->_oQuery->getMenuTemplateById($iTemplateId);

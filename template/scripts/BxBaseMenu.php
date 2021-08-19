@@ -64,7 +64,7 @@ class BxBaseMenu extends BxDolMenu
 
     protected function _getCode($sTmplName, $aTmplVars)
     {
-        return $this->_oTemplate->parseHtmlByName($sTmplName, $aTmplVars);
+        return $this->_oTemplate->parseHtmlByName($this->getTemplateName($sTmplName), $aTmplVars);
     }
 
     public function getCodeItem ($sName)

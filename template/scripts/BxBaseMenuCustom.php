@@ -21,14 +21,27 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
         parent::__construct($aObject, $oTemplate);
 
         if(empty(self::$_sTmplContentDefault))
-            self::$_sTmplContentDefault = $this->_oTemplate->getHtml($aObject['template']);
+            self::$_sTmplContentDefault = $this->_oTemplate->getHtml($this->getTemplateName());
         $this->_sTmplContent = self::$_sTmplContentDefault;
 
         if(empty(self::$_sTmplContentItemDefault))
-            self::$_sTmplContentItemDefault = $this->_oTemplate->getHtml('menu_custom_item.html');
+            self::$_sTmplContentItemDefault = $this->_oTemplate->getHtml($this->getTemplateNameItem());
         $this->_sTmplContentItem = self::$_sTmplContentItemDefault;
 
         $this->_sTmplNameItemMore = 'menu_custom_item_more.html';
+    }
+
+    /**
+     * Get template name with checking for custom template related to exactly this menu object.
+     * @return string with template name.
+     */
+    public function getTemplateNameItem($sName = '')
+    {
+        if(empty($sName))
+            $sName = 'menu_custom_item.html';
+
+        $sNameCustom = str_replace('.html', '_' . $this->_sObject . '.html', $sName);
+        return $this->_oTemplate->isHtml($sNameCustom) ? $sNameCustom : $sName;
     }
 
     public function setTemplateById ($iTemplateId)
@@ -48,7 +61,7 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
         parent::setTemplateById ($iTemplateId);
 
         if($sTemplate != $this->_aObject['template'])
-            $this->_sTmplContent = $this->_oTemplate->getHtml($this->_aObject['template']);
+            $this->_sTmplContent = $this->_oTemplate->getHtml($this->getTemplateName());
     }
 
     protected function _getCode($sTmplName, $aTmplVars)

@@ -1379,6 +1379,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Check whether HTML file exists or not.
+     *
+     * @param  string $sName    - HTML file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
+     * @return boolean result of operation.
+     */
+    function isHtml($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
+        return $this->_getAbsoluteLocation('path', $this->_sFolderHtml, $sName, $sCheckIn) != '';
+    }
+
+    /**
      * Get content of HTML file.
      *
      * @param  string $sName    - HTML file name.
