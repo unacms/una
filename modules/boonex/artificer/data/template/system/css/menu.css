@@ -59,3 +59,8 @@ div.bx-sliding-menu-main.sys-add-content ul {
 .bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-item-subitems {
     display: none;
 }
+
+/*--- Interactive Menu ---*/
+li.bx-menu-inter-hidden {
+    display: none;
+}

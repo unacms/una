@@ -60,7 +60,3 @@ div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     flex-wrap: wrap;
 }
-
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor .sys-action {
-    height: 1.5rem;
-}

@@ -99,15 +99,15 @@ class BxBaseView extends BxDolView
             $sClass .= ' bx-btn-height';
 
         $sContent = (int)$aView['count'] > 0 ? $this->_getCounterLabel($aView['count'], $aParams) : '';
-        return $this->_oTemplate->parseHtmlByContent($this->_sTmplContentCounter, array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
             'html_id' => $this->_aHtmlIds['counter'],
             'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_text' => array(
                 'condition' => !$bAllowedViewViewViewers,
                 'content' => array(
+                    'class' => $sClass,
                     'bx_repeat:attrs' => array(
                         array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                        array('key' => 'class', 'value' => $sClass),
                     ),
                     'content' => $sContent
                 )
@@ -115,9 +115,9 @@ class BxBaseView extends BxDolView
             'bx_if:show_link' => array(
                 'condition' => $bAllowedViewViewViewers,
                 'content' => array(
+                    'class' => $sClass,
                     'bx_repeat:attrs' => array(
                         array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                        array('key' => 'class', 'value' => $sClass),
                         array('key' => 'href', 'value' => 'javascript:void(0)'),
                         array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)'),
                         array('key' => 'title', 'value' => _t('_view_do_view_by'))

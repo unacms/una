@@ -103,9 +103,7 @@ class BxBaseVote extends BxDolVote
         if(!empty($aParams['class_counter']))
             $sClass .= $aParams['class_counter'];
 
-        $aTmplVarsAttrs = array(
-            array('key' => 'class', 'value' => $sClass),
-        );
+        $aTmplVarsAttrs = array();
 
         if($bShowActive)
             $aTmplVarsAttrs = array_merge($aTmplVarsAttrs, array(
@@ -125,6 +123,7 @@ class BxBaseVote extends BxDolVote
             'bx_if:show_text' => array(
                 'condition' => !$bShowActive,
                 'content' => array(
+                    'class' => $sClass,
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
                 )
@@ -132,10 +131,12 @@ class BxBaseVote extends BxDolVote
             'bx_if:show_link' => array(
                 'condition' => $bShowActive,
                 'content' => array(
+                    'class' => $sClass,
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
                 )
             ),
+            'class' => $sClass,
             'bx_repeat:attrs' => $aTmplVarsAttrs,
             'content' => $sContent,
             'script' => $bShowScript ? $this->getJsScript($aParams) : ''
