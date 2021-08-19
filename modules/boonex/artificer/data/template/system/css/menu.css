@@ -9,6 +9,18 @@ import url(../../../../../../../template/css/menu.css);
     color: #000;
 }
 
+/* --- Vertical, Vertical lite, Custom Vertical Menus ---*/
+.bx-menu-ver li,
+.bx-menu-verlit li,
+.bx-menu-custom-ver li {
+    margin-top: 1px;
+}
+.bx-menu-ver li:first-child,
+.bx-menu-verlit li:first-child,
+.bx-menu-custom-ver li:first-child {
+    margin-top: 0px;
+}
+
 /*--- Interactive Menu ---*/
 li.bx-menu-inter-hidden {
     display: none;
