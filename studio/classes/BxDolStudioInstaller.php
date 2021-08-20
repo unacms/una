@@ -622,8 +622,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         $bResult = true;
         if($sOperation == 'install')
             $bResult = $oLanguages->installLanguage(array('name' => $this->_aConfig['name'], 'path' => $this->_aConfig['home_dir'], 'uri' => $this->_aConfig['home_uri'], 'lang_category' => $this->_aConfig['language_category']), false);
+        if($bResult)
+            $bResult &= $oLanguages->compileLanguage(0, true);
 
-        return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+        $oLanguages->fixLanguage($sLanguage);
+
+        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     protected function actionUpdateLanguages($sOperation)
     {

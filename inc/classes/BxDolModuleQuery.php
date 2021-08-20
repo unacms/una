@@ -151,6 +151,12 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
             	$aMethod['params'][2] = 'uri';
             	break;
 
+            case 'all_key_name':
+                $sPostfix .= 'all_key_name';
+            	$aMethod['name'] = 'getAllWithKey';
+            	$aMethod['params'][1] = 'name';
+            	break;
+
             case 'all':
             	break;
         }
