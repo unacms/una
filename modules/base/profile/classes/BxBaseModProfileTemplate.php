@@ -295,20 +295,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         
         $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
-        $sCoverPopup = '';
-        $sCoverPopupId = $this->MODULE . '-popup-cover';
-        if($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
-            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
-                'image_url' => $sUrlCover,
-                'bx_if:owner' => array (
-                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData),
-                    'content' => array (
-                        'change_image_url' => $sUrlCoverChange,
-                    ),
-                ),
-            )), true, true);
-        }
-
         $bIsAllowEditCover = CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData);
         $bIsAllowEditPicture =  CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
         
@@ -332,6 +318,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                'add_code' => &$sAddCode
             ));
         }
+        
         if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
             bx_alert('system', 'image_editor', 0, 0, array(
                'module' => $oModule->getName(),
@@ -349,6 +336,20 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )); 
         }
         
+        $sCoverPopup = '';
+        $sCoverPopupId = $this->MODULE . '-popup-cover';
+        if($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
+            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
+                'image_url' => $sUrlCover,
+                'bx_if:owner' => array (
+                    'condition' => $bIsAllowEditCover && empty($sAddClassCover),
+                    'content' => array (
+                        'change_image_url' => $sUrlCoverChange,
+                    ),
+                ),
+            )), true, true);
+        }
+
         $bShowAvatar = $bUrlAvatar || $this->_bLetterAvatar;
         $aShowAvatar = array();
         $sPicturePopup = '';
@@ -385,7 +386,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
                     'image_url' => $sUrlPicture,
                     'bx_if:owner' => array (
-                        'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData),
+                        'condition' => $bIsAllowEditPicture && empty($sAddClassPicture),
                         'content' => array (
                             'change_image_url' => $sUrlPictureChange,
                         ),
