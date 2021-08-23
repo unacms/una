@@ -16,6 +16,7 @@ class BxPollsConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-poll' => 'checkAllowedEdit',
             'delete-poll' => 'checkAllowedDelete',
         );

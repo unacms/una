@@ -20,6 +20,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         $aMenuItems2Methods = array (
             'hide-product' => 'checkAllowedHide',
             'unhide-product' => 'checkAllowedUnhide',
+            'approve' => 'checkAllowedApprove',
             'edit-product' => 'checkAllowedEdit',
             'delete-product' => 'checkAllowedDelete',
             'product-more' => 'checkAllowedViewMoreMenu'

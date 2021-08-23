@@ -18,6 +18,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-photo' => 'checkAllowedEdit',
             'delete-photo' => 'checkAllowedDelete',
         );

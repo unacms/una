@@ -16,6 +16,7 @@ class BxPostsConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-post' => 'checkAllowedEdit',
             'delete-post' => 'checkAllowedDelete',
         );

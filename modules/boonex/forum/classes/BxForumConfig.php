@@ -24,6 +24,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'unlock-discussion' => 'checkAllowedUnlockAnyEntry',
             'hide-discussion' => 'checkAllowedHideAnyEntry',
             'unhide-discussion' => 'checkAllowedUnhideAnyEntry',
+            'approve' => 'checkAllowedApprove',
             'edit-discussion' => 'checkAllowedEdit',
             'delete-discussion' => 'checkAllowedDelete'
         );

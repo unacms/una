@@ -24,6 +24,7 @@ class BxAdsConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-ad' => 'checkAllowedEdit',
             'delete-ad' => 'checkAllowedDelete',
         );

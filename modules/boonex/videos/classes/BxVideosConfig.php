@@ -19,6 +19,7 @@ class BxVideosConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-video' => 'checkAllowedEdit',
             'delete-video' => 'checkAllowedDelete',
         );

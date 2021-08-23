@@ -16,6 +16,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-snipcart-entry' => 'checkAllowedEdit',
             'delete-snipcart-entry' => 'checkAllowedDelete',
         );

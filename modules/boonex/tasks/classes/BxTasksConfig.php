@@ -17,6 +17,7 @@ class BxTasksConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-task' => 'checkAllowedEdit',
             'delete-task' => 'checkAllowedDelete',
         );

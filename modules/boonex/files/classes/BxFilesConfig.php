@@ -16,6 +16,7 @@ class BxFilesConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'download-file' => 'checkAllowedView',
             'edit-file' => 'checkAllowedEdit',
             'delete-file' => 'checkAllowedDelete',

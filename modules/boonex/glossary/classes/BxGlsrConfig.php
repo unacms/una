@@ -16,6 +16,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-glossary' => 'checkAllowedEdit',
             'delete-glossary' => 'checkAllowedDelete',
         );

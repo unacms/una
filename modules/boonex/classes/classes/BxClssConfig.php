@@ -16,6 +16,7 @@ class BxClssConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'complete-class' => 'checkAllowedViewMarkAsCompletedButton',
             'edit-class' => 'checkAllowedEdit',
             'delete-class' => 'checkAllowedDelete',

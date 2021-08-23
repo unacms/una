@@ -2211,6 +2211,40 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
+    public function checkAllowedApprove ($aDataEntry, $isPerformAction = false)
+    {
+        // moderator always have access
+        if ($this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check for context's admins 
+        if (!empty($this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+            $oProfile = BxDolProfile::getInstance(-(int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]);
+            if ($oProfile){
+                $sModule = $oProfile->getModule();
+                $aEntity = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $oProfile->getContentId()))) : array();
+
+                $oModule = BxDolModule::getInstance($sModule);
+
+                // check for context's extra roles with rights
+                if (method_exists($oModule, 'isAllowedModuleActionByProfile')) {
+                    $bResult = $oModule->isAllowedModuleActionByProfile($oProfile->getContentId(), $this->getName(), 'edit_any');
+                    if ($bResult !== NULL) return $bResult;
+                }
+
+                // if allowed edit a group then allowed to edit anything inside its context
+                if(isset($aEntity) && $oModule->checkAllowedEdit($aEntity) === CHECK_ACTION_RESULT_ALLOWED){
+                    return CHECK_ACTION_RESULT_ALLOWED;
+                }
+            }
+        }
+
+        return _t('_sys_txt_access_denied');
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
         // moderator and owner always have access

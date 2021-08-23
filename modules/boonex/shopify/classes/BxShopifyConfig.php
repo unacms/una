@@ -18,6 +18,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'approve' => 'checkAllowedApprove',
             'edit-shopify-entry' => 'checkAllowedEdit',
             'delete-shopify-entry' => 'checkAllowedDelete',
         );
