@@ -11,6 +11,7 @@
 
 define('BX_BASE_MOD_TEXT_STATUS_ACTIVE', 'active');
 define('BX_BASE_MOD_TEXT_STATUS_HIDDEN', 'hidden');
+define('BX_BASE_MOD_TEXT_STATUS_AWAITING', 'awaiting');
 define('BX_BASE_MOD_TEXT_STATUS_PENDING', 'pending');
 
 /**
@@ -542,10 +543,14 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
     public function onApprove($mixedContent)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
         $this->alertAfterApprove($mixedContent);
+
+        $this->onPublished($mixedContent[$CNF['FIELD_ID']]);
     }
 
     public function alertAfterAdd($aContentInfo)
@@ -556,7 +561,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
 
         $sAction = 'added';
-        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
+        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == BX_BASE_MOD_TEXT_STATUS_AWAITING)
+            $sAction = 'deferred';
+        else if(isset($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == BX_BASE_MOD_TEXT_STATUS_PENDING)
             $sAction = 'deferred';
 
         $aParams = $this->_alertParamsAdd($aContentInfo);
