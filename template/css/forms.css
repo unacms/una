@@ -258,7 +258,7 @@
 }
 
 .bx-form-datepicker-modal {
-    z-index:1001 !important;
+    z-index:10001 !important;
 }
 
 .bx-form-input-number,
