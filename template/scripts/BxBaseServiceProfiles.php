@@ -399,6 +399,17 @@ class BxBaseServiceProfiles extends BxDol
         $aVars = array (
             'bx_repeat:row' => array(),
         );
+        
+        bx_alert('system', 'account_profile_switcher', 0, false, array(
+            'account_id' => $iAccountId,
+            'active_profile_id' => &$iActiveProfileId,
+            'url_profile_action' => &$sUrlProfileAction,
+            'show_all' => &$bShowAll,
+            'button_title' => &$sButtonTitle,
+            'profile_template' => &$sProfileTemplate,
+            'profiles' => &$aProfiles
+        ));
+        
         foreach ($aProfiles as $aProfile) {
             if (!$bShowAll && $iActiveProfileId == $aProfile['id'])
                 continue;
