@@ -73,12 +73,20 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
     protected function redirectAfterEdit($aContentInfo)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+        $sUrl = '';
         if (bx_get('initial_members') && isset($CNF['URL_ENTRY_FANS'])){
-            $this->_redirectAndExit($CNF['URL_ENTRY_FANS'] . '&profile_id=' . $aContentInfo['profile_id']);
+            $sUrl = $CNF['URL_ENTRY_FANS'] . '&profile_id=' . $aContentInfo['profile_id'];
         }
         else{
-            $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+            $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
         }
+        
+        bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
+            'content' => $aContentInfo,
+            'override_result' => &$sUrl,
+        ));
+        
+        $this->_redirectAndExit($sUrl);
     }
     
     public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
