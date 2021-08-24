@@ -122,6 +122,9 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
         $iGroupId = $oGroupProfile->id();
 
+        if (!is_array($aInitialProfiles))
+			$aInitialProfiles = [$aInitialProfiles];
+        
         // insert invited members, so they will join without confirmation
         foreach($aInitialProfiles as $iProfileId) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
