@@ -266,7 +266,7 @@ class BxBaseServiceProfiles extends BxDol
         return $oProfilesQuery->getOnlineCount();
     }
     
-    public function serviceGetProfilesModules ()
+    public function serviceGetProfilesModules ($bForceActAsProfile = true)
     {
         if (getParam('sys_db_cache_enable')) { // get list of profiles  modules from db cache, cache is invalidated when new module is installed
 
@@ -274,7 +274,7 @@ class BxBaseServiceProfiles extends BxDol
 
             $oCache = $oDb->getDbCacheObject ();
 
-            $sKey = $oDb->genDbCacheKey('profiles_modules_array');
+            $sKey = $oDb->genDbCacheKey('profiles_' . (!$bForceActAsProfile ? 'all_' : '') . 'modules_array');
             $sKeyTs = $oDb->genDbCacheKey('profiles_modules_ts');
 
             $mixedRetTs = $oCache->getData($sKeyTs);
@@ -288,7 +288,7 @@ class BxBaseServiceProfiles extends BxDol
 
             } else {
 
-                $aModulesArray = $this->_getProfilesModules ();
+                $aModulesArray = $this->_getProfilesModules ($bForceActAsProfile);
 
                 $oCache->setData($sKey, $aModulesArray);
                 $oCache->setData($sKeyTs, $iNewestModuleTs);
@@ -296,7 +296,7 @@ class BxBaseServiceProfiles extends BxDol
 
         } else {
 
-            $aModulesArray = $this->_getProfilesModules ();
+            $aModulesArray = $this->_getProfilesModules ($bForceActAsProfile);
 
         }
 
@@ -442,15 +442,22 @@ class BxBaseServiceProfiles extends BxDol
         return $aModuleNewest['date'];
     }
 
-    protected function _getProfilesModules ()
+    protected function _getProfilesModules($bForceActAsProfile = true)
     {
         $aRet = array();
+
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
-        foreach ($aModules as $aModule) {
+        foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
-            if ($oModule instanceof iBxDolProfileService && $oModule->serviceActAsProfile())
-                $aRet[] = $aModule;
+            if(!($oModule instanceof iBxDolProfileService)) 
+                continue;
+
+            if($bForceActAsProfile && !$oModule->serviceActAsProfile())
+                continue;
+
+            $aRet[] = $aModule;
         }
+
         return $aRet;
     }
 

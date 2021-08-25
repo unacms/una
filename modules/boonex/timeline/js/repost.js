@@ -66,6 +66,31 @@ BxTimelineRepost.prototype.repostItem = function(oLink, iOwnerId, sType, sAction
     );
 };
 
+BxTimelineRepost.prototype.repostItemTo = function(oLink, iReposterId, sType, sAction, iId) {
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData = jQuery.extend({}, oData, {
+        reposter_id: iReposterId,
+        type: sType,
+        action: sAction,
+        object_id: iId
+    });   
+
+    $(window).dolPopupAjax({
+        id: {value: this._aHtmlIds['to_popup'], force: true}, 
+        url: bx_append_url_params(this._sActionsUri + 'repost_to/', oData),
+        closeOnOuterClick: false,
+        removeOnClose: true,
+        onBeforeShow: function() {
+            $this.loadingIn(oLink, false);
+
+            $(oLink).parents(".bx-popup-applied:visible:first").dolPopupHide();
+        }
+    });
+
+    return false;
+};
+
 BxTimelineRepost.prototype.toggleByPopup = function(oLink, iId) {
     var oData = this._getDefaultData();
     oData['id'] = iId;

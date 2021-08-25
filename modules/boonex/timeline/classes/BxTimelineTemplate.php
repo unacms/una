@@ -984,6 +984,70 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getRepostTo($oForm)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObject('repost');
+
+        return $this->parseHtmlByName('repost_to_popup.html', array(
+            'style_prefix' => $sStylePrefix,
+            'js_object' => $sJsObject,
+            'form' => $oForm->getCode(),
+            'form_id' => $oForm->getId()
+        ));
+    }
+
+    public function getRepostToFieldList($oForm, $aInput)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if(!$oConnection)
+            return '';
+
+        $iProfileId = bx_get_logged_profile_id();
+        $aConnectedIds = $oConnection->getConnectedContent($iProfileId);
+
+        $aSelected = array();
+        $aTmplVarsModules = array();
+        if(!empty($aConnectedIds) && is_array($aConnectedIds)) {
+            $aCheckbox = $aInput;
+            $aCheckbox['type'] = 'checkbox';
+            $aCheckbox['name'] .= '[]';
+
+            foreach($aConnectedIds as $iConnectedId) {
+                $oProfile = BxDolProfile::getInstanceMagic($iConnectedId);
+                if(!$oProfile)
+                    continue;
+
+                $sProfileModule = $oProfile->getModule();
+                if(!isset($aTmplVarsModules[$sProfileModule]))
+                    $aTmplVarsModules[$sProfileModule] = array(
+                        'style_prefix' => $sStylePrefix,
+                        'title' => _t('_' . $sProfileModule),
+                        'bx_repeat:contexts' => array()
+                    );
+                        
+                $aCheckbox['value'] = $iConnectedId;
+                $aCheckbox['checked'] = in_array($iConnectedId, $aSelected) ? 1 : 0;
+
+                $aTmplVarsModules[$sProfileModule]['bx_repeat:contexts'][] = array(
+                    'style_prefix' => $sStylePrefix,
+                    'checkbox' => $oForm->genInput($aCheckbox),
+                    'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_cover'))
+                );
+            }
+        }      
+
+        if(empty($aTmplVarsModules))
+            $aTmplVarsModules = MsgBox(_t('_Empty'));
+
+        return $this->parseHtmlByName('repost_to_list.html', array(
+            'style_prefix' => $sStylePrefix,
+            'bx_repeat:modules' => array_values($aTmplVarsModules)
+        ));
+    }
+
     public function getRepostJsScript($bDynamicMode = false)
     {
         $sCode = $this->getJsCode('repost', array(), array('mask' => '{object} = new {class}({params});', 'wrap' => false));
@@ -1024,6 +1088,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
         else
             $sResult = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+
+        return $sResult;
+    }
+
+    public function getRepostToJsClick($iReposterId, $sType, $sAction, $iObjectId)
+    {
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
+            return '';
+
+        $sResult = '';
+        $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+        if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+            $aRepostedData = unserialize($aReposted['content']);
+
+            $sResult = $this->_getRepostToJsClick($iReposterId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+        }
+        else
+            $sResult = $this->_getRepostToJsClick($iReposterId, $sType, $sAction, $iObjectId);
 
         return $sResult;
     }
@@ -1677,6 +1760,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getModule()->getUserId(); //--- in whose timeline the content will be reposted
         return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
+    }
+
+    protected function _getRepostToJsClick($iReposterId, $sType, $sAction, $iObjectId)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('repost');
+        $sFormat = "%s.repostItemTo(this, %d, '%s', '%s', %d);";
+
+        $iReposterId = !empty($iReposterId) ? (int)$iReposterId : $this->getModule()->getUserId();
+        return sprintf($sFormat, $sJsObject, $iReposterId, $sType, $sAction, (int)$iObjectId);
     }
 
     protected function _getJumpToList($aParams)

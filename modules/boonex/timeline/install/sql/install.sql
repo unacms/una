@@ -518,6 +518,35 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_attach_link_add', 'do_submit', 2147483647, 1, 4),
 ('bx_timeline_attach_link_add', 'do_cancel', 2147483647, 1, 5);
 
+-- Forms -> Repost To
+INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_repost_to', @sName, '_bx_timeline_form_repost_to', '', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTimelineFormRepostTo', 'modules/boonex/timeline/classes/BxTimelineFormRepostTo.php');
+
+INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('bx_timeline_repost_to_browse', @sName, 'bx_timeline_repost_to', '_bx_timeline_form_repost_to_display_browse', 0);
+
+INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+('bx_timeline_repost_to', @sName, 'reposter_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_reposter_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'type', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'object_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_object_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'search', '', '', 0, 'custom', '_bx_timeline_form_repost_to_input_sys_search', '_bx_timeline_form_repost_to_input_search', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'list', '', '', 0, 'custom', '_bx_timeline_form_repost_to_input_sys_list', '_bx_timeline_form_repost_to_input_list', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'do_submit', '_bx_timeline_form_repost_to_input_do_submit', '', 0, 'submit', '_bx_timeline_form_repost_to_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost_to', @sName, 'do_cancel', '_bx_timeline_form_repost_to_input_do_cancel', '', 0, 'button', '_bx_timeline_form_repost_to_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+
+INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_timeline_repost_to_browse', 'reposter_id', 2147483647, 1, 1),
+('bx_timeline_repost_to_browse', 'type', 2147483647, 1, 2),
+('bx_timeline_repost_to_browse', 'action', 2147483647, 1, 3),
+('bx_timeline_repost_to_browse', 'object_id', 2147483647, 1, 4),
+('bx_timeline_repost_to_browse', 'search', 2147483647, 1, 5),
+('bx_timeline_repost_to_browse', 'list', 2147483647, 1, 6),
+('bx_timeline_repost_to_browse', 'controls', 2147483647, 1, 7),
+('bx_timeline_repost_to_browse', 'do_submit', 2147483647, 1, 8),
+('bx_timeline_repost_to_browse', 'do_cancel', 2147483647, 1, 9);
+
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES

@@ -90,6 +90,41 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /**
      * ACTION METHODS
      */
+    public function actionGetContexts($iLimit = 20)
+    {
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if(!$oConnection)
+            return echoJson(array());
+
+        $iProfileId = bx_get_logged_profile_id();
+        $aConnected = $oConnection->getConnectedContent($iProfileId);
+
+        $sTerm = bx_get('term');
+        if(!$sTerm)
+            return array_slice($aConnected, 0, $iLimit);
+
+        $aResults = array();
+        $aModules = bx_srv('system', 'get_profiles_modules', array(false), 'TemplServiceProfiles');
+        foreach($aModules as $aModule) {
+            if(!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                continue;
+
+            $aContexts = bx_srv($aModule['name'], 'profiles_search', array($sTerm, PHP_INT_MAX));
+            foreach($aContexts as $aContext) {
+                if(!in_array($aContext['value'], $aConnected))
+                    continue;
+
+                $aResults[] = $aContext;
+            }
+        }
+
+        usort($aResults, function($r1, $r2) {
+            return strcmp($r1['label'], $r2['label']);
+        });
+
+        echoJson(array_slice($aResults, 0, $iLimit));
+    }
+
     public function actionVideo($iEventId, $iVideoId)
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEventId));
@@ -317,6 +352,60 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'counter' => $sCounter,
             'disabled' => true
         ));
+    }
+
+    public function actionRepostTo()
+    {
+        $iReposterId = bx_process_input(bx_get('reposter_id'), BX_DATA_INT);
+        if($iReposterId != $this->getUserId())
+            return;
+
+        $sType = bx_process_input(bx_get('type'), BX_DATA_TEXT);
+        $sAction = bx_process_input(bx_get('action'), BX_DATA_TEXT);
+        $iObjectId = bx_process_input(bx_get('object_id'), BX_DATA_INT);
+
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_repost_to'), $this->_oConfig->getObject('form_display_repost_to_browse'));
+        $oForm->initChecker(array(
+            'reposter_id' => $iReposterId,
+            'type' => $sType,
+            'action' => $sAction, 
+            'object_id' => $iObjectId
+        ));
+
+        if($oForm->isSubmitted()) {
+            if(!$oForm->isValid())
+                return echoJson(array('popup' => array(
+                    'html' => BxTemplFunctions::getInstance()->transBox($this->_oConfig->getHtmlIds('repost', 'to_popup'), $this->_oTemplate->getRepostTo($oForm)), 
+                    'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true)
+                )));
+
+            $aContexts = array();
+            if(($aContextsSearch = $oForm->getCleanValue('search')) !== false)
+                $aContexts = array_merge($aContexts, $aContextsSearch);
+
+            if(($aContextsList = $oForm->getCleanValue('list')) !== false)
+                $aContexts = array_merge($aContexts, $aContextsList);
+
+            $aContexts = array_unique($aContexts);
+            if(empty($aContexts) || !is_array($aContexts))
+                return echoJson(array());
+
+            foreach($aContexts as $iContextId)
+                $this->serviceRepost($iReposterId, $iContextId, $sType, $sAction, $iObjectId);
+
+            $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+            $sCounter = $this->_oTemplate->getRepostCounter($aReposted);
+
+            return echoJson(array(
+                'code' => 0, 
+                'message' => _t('_bx_timeline_txt_msg_success_repost'), 
+                'count' => $aReposted['reposts'], 
+                'countf' => (int)$aReposted['reposts'] > 0 ? $this->_oTemplate->getRepostCounterLabel($aReposted['reposts']) : '',
+                'counter' => $sCounter,
+            ));
+        }
+
+        echo $this->_oTemplate->getRepostTo($oForm);
     }
 
     function actionGetView()
@@ -2168,9 +2257,38 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId)
     {
     	if(!$this->isEnabled())
-    		return '';
+            return '';
 
         return $this->_oTemplate->getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_to_js_click get_repost_to_js_click
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_to_js_click', [...]); @endcode
+     * 
+     * Get 'repost to' JavaScript code for OnClick event.
+     * 
+     * @param $iReposterId integer value with reposter profile ID.
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @return HTML string with JavaScript code to display in OnClick events of HTML elements.
+     * 
+     * @see BxTimelineModule::serviceGetRepostToJsClick
+     */
+    /** 
+     * @ref bx_timeline-get_repost_to_js_click "get_repost_to_js_click"
+     */
+    public function serviceGetRepostToJsClick($iReposterId, $sType, $sAction, $iObjectId)
+    {
+    	if(!$this->isEnabled())
+            return '';
+
+        return $this->_oTemplate->getRepostToJsClick($iReposterId, $sType, $sAction, $iObjectId);
     }
 
     /**

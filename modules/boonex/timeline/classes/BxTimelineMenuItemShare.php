@@ -56,10 +56,11 @@ class BxTimelineMenuItemShare extends BxTemplMenu
                     $this->_aEvent['url'] = $aResult['url'];
             }
 
-            //--- Repost item
+            //--- Repost and 'Repost To' items
             $iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be reposted
             $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
             $sRepostOnclick = $this->_oModule->serviceGetRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+            $sRepostToOnclick = $this->_oModule->serviceGetRepostToJsClick($iOwnerId, $sType, $sAction, $iObjectId);
 
             //--- Send item
     	    $sAetSend = urlencode(base64_encode(serialize(array(
@@ -75,6 +76,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             'content_url' => $this->_aEvent['url'],
 
             'repost_onclick' => $sRepostOnclick,
+            'repost_to_onclick' => $sRepostToOnclick,
             'et_send' => $sAetSend
     	));
     }

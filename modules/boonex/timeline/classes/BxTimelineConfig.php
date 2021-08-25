@@ -218,12 +218,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             'form_post' => $this->_sName . '_post',
             'form_attach_link' => $this->_sName . '_attach_link',
+            'form_repost_to' => $this->_sName . '_repost_to',
             'form_display_post_add' => $this->_sName . '_post_add',
             'form_display_post_add_public' => $this->_sName . '_post_add_public',
             'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
             'form_display_post_edit' => $this->_sName . '_post_edit',
             'form_display_post_view' => $this->_sName . '_post_view',
             'form_display_attach_link_add' => $this->_sName . '_attach_link_add',
+            'form_display_repost_to_browse' => $this->_sName . '_repost_to_browse',
 
             'grid_mute' => $this->CNF['OBJECT_GRID_MUTE'],
 
@@ -293,6 +295,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'main' => $sHp . '-repost-',
                 'counter' => $sHp . '-repost-counter-',
                 'by_popup' => $sHp . '-repost-by-',
+                'to_popup' => $sHp . '-repost-to',
             )
         );
 
