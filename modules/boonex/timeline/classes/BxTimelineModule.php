@@ -3087,8 +3087,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
-			
-			$aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
+            if($bVideoIds)
+                $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+
+            $aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
             $bFileIds = !empty($aFileIds) && is_array($aFileIds);
 
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
@@ -3114,7 +3116,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             //--- Process Media ---//
             $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId);
             $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId);
-			$this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId);
+            $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId);
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
             $this->_oDb->deleteCache(array('event_id' => $iId));
