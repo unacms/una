@@ -220,11 +220,6 @@ class BxPollsModule extends BxBaseModTextModule
         return array($iContentId, $aContentInfo);
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
-    {
-        return array();
-    }
-
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;

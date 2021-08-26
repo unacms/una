@@ -188,7 +188,9 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     protected function getUnitThumbAndGallery ($aData)
     {
-        return array('', '');
+        list($sPhotoThumb, $sPhotoGallery) = parent::getUnitThumbAndGallery($aData);
+
+        return array($sPhotoGallery, $sPhotoGallery);
     }
 
     protected function _getGetBlockMenu($aData, $sSelected = '')
