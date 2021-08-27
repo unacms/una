@@ -567,7 +567,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             $sAction = 'deferred';
 
         $aParams = $this->_alertParamsAdd($aContentInfo);
-        bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->getName(), 'action' => $sAction, 'object_id' => $iId, 'sender_id' => $iAuthorId, 'extras' => &$aParams));
+        bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->getName(), 'action' => &$sAction, 'object_id' => &$iId, 'sender_id' => &$iAuthorId, 'extras' => &$aParams));
         bx_alert($this->getName(), $sAction, $iId, $iAuthorId, $aParams);
     }
 
