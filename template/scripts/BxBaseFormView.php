@@ -824,7 +824,7 @@ BLAH;
         $sClassWrapper = 'bx-form-element-wrapper';
         if($isOneLine)
             $sClassWrapper .= ' ' . $sClassWrapper . '-oneline';
-        $sClassWrapper .= ' bx-def-margin-top';
+        $sClassWrapper .= ' bx-def-margin-top-auto';
 
         if (isset($aInput['name']))
             $aInput['tr_attrs']['id'] = "bx-form-element-" . $aInput['name'];
@@ -1181,6 +1181,15 @@ BLAH;
      */
     function genInputStandard(&$aInput)
     {
+        $aAttrs = $this->_genInputStandardAttrs($aInput);
+
+        return  $this->oTemplate->parseHtmlByName('form_field_standard.html', [
+            'attrs' => bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}")
+        ]);
+    }
+
+    protected function _genInputStandardAttrs(&$aInput)
+    {
         // clone attributes for system use ;)
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
 
@@ -1221,9 +1230,7 @@ BLAH;
         if (isset($aInput['checked']) and $aInput['checked'])
             $aAttrs['checked'] = 'checked';
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}");
-
-        return  "<input $sAttrs />\n";
+        return $aAttrs;
     }
 
     /**
@@ -1236,20 +1243,17 @@ BLAH;
     {
         $aInput['type'] = 'checkbox';
         $sCheckbox = $this->genInputStandard($aInput);
+
         $aInput['type'] = 'switcher';
 
         $sClass = 'off';
-        if (isset($aInput['checked']) and $aInput['checked'])
+        if(isset($aInput['checked']) && $aInput['checked'])
             $sClass = 'on';
 
-        return '
-            <div class="bx-switcher-cont ' . $sClass . '">' . $sCheckbox . '
-                <div class="bx-switcher-canvas">
-                    <div class="bx-switcher-on"><i class="sys-icon check"></i></div>
-                    <div class="bx-switcher-off"><i class="sys-icon times"></i></div>
-                    <div class="bx-switcher-handler">&nbsp;</div>
-                </div>
-            </div>';
+        return $this->oTemplate->parseHtmlByName('form_field_switcher.html', [
+            'class' => $sClass,
+            'checkbox' => $sCheckbox
+        ]);
     }
 
     /**
@@ -1260,19 +1264,31 @@ BLAH;
      */
     function genInputButton(&$aInput)
     {
-        // clone attributes for system use ;)
-        $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
+        $aAttrs = $this->_genInputButtonAttrs($aInput);
+
+        $sClassAdd = "bx-def-font-inputs bx-form-input-{$aInput['type']} bx-btn";
+        if($aInput['type'] == 'submit')
+            $sClassAdd .= ' bx-btn-primary';
+
+        return $this->oTemplate->parseHtmlByName('form_field_button.html', [
+            'attrs' => bx_convert_array2attrs($aAttrs, $sClassAdd),
+            'value' => $aInput['value']
+        ]);
+    }
+    
+    protected function _genInputButtonAttrs(&$aInput)
+    {
+        $aAttrs = !empty($aInput['attrs']) ? $aInput['attrs'] : [];
 
         // add default className to attributes
         $aAttrs['type'] = $aInput['type'];
-        if (isset($aInput['value']))
+        if(isset($aInput['value']))
             $aAttrs['value'] = $aInput['value'];
 
-        if (isset($aInput['name'])) $aAttrs['name'] = $aInput['name'];
-
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']} bx-btn" . ('submit' == $aInput['type'] ? ' bx-btn-primary' : ''));
-
-        return  "<button $sAttrs>" . $aInput['value'] . "</button>\n";
+        if(isset($aInput['name'])) 
+            $aAttrs['name'] = $aInput['name'];
+        
+        return $aAttrs;
     }
 
     /**
@@ -1283,20 +1299,31 @@ BLAH;
      */
     function genInputTextarea(&$aInput)
     {
-        // clone attributes for system use ;)
-        $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
+        $aAttrs = $this->_genInputTextareaAttrs($aInput);
+
+        $sClassAdd = "bx-def-font-inputs bx-form-input-{$aInput['type']}";
+        if(isset($aInput['html']) && $aInput['html'] && $this->addHtmlEditor($aInput['html'], $aInput))
+              $sClassAdd .= ' bx-form-input-html';
+
+        $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value']), BX_DATA_TEXT, array('no_process_macros')) : '';
+
+        return $this->oTemplate->parseHtmlByName('form_field_textarea.html', [
+            'attrs' => bx_convert_array2attrs($aAttrs, $sClassAdd),
+            'value' => $sValue
+        ]);
+    }
+
+    protected function _genInputTextareaAttrs(&$aInput)
+    {
+        $aAttrs = !empty($aInput['attrs']) ? $aInput['attrs'] : array();
 
         $aAttrs['name'] = $aInput['name'];
 
         // for inputs with labels generate id
         if (isset($aInput['label']))
             $aAttrs['id'] = $this->getInputId($aInput);
-
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}" . ((isset($aInput['html']) and $aInput['html'] and $this->addHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-html' : ''));
-
-        $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value']), BX_DATA_TEXT, array('no_process_macros')) : '';
-
-        return "<textarea $sAttrs>$sValue</textarea>";
+        
+        return $aAttrs;
     }
 
     function isHtmlEditor($iViewMode, &$aInput)
@@ -1436,53 +1463,53 @@ BLAH;
 
     protected function genCustomInputUsernamesSuggestions ($aInput)
     {
-        $this->addCssJsUi();
+        $bDisabled = isset($aInput['attrs']['disabled']) && $aInput['attrs']['disabled'] == 'disabled';
 
-        $sVals = '';
+        $aAttrs = $this->_genCustomInputUsernamesSuggestionsAttrs($aInput, $bDisabled);
+
+        $aTmplVarsVals = [];
         if(!empty($aInput['value'])) {
             if(is_array($aInput['value'])) {
                 foreach($aInput['value'] as $sVal) {
                     if(!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                         continue;
 
-                   $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getUnit(0, array('template' => 'unit_wo_info')) . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
+                   $aTmplVarsVals[] = [
+                       'item_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+                       'item_name' => $oProfile->getDisplayName(),
+                       'name' => $aInput['name'],
+                       'value' => $sVal
+                   ];
                 }
-                $sVals = trim($sVals, ',');
             }
             else if(is_string($aInput['value']))
-                $sVals = $aInput['value'];
+                $aTmplVarsVals = $aInput['value'];
         }
 
-        $bDisabled = isset($aInput['attrs']['disabled']) && $aInput['attrs']['disabled'] == 'disabled';
+        $aTmplVarsInputText = [];
+        if(!$bDisabled) {
+            $aInputText = $aInput;
+            $aInputText['type'] = 'text';
+            $aInputText['value'] = '';
+            $aInputText['attrs'] = $this->_genCustomInputUsernamesSuggestionsTextAttrs($aInputText, $bDisabled);       
 
-        $sId = $aInput['name'] . time() . mt_rand(0, 100);
-        $sClass = 'bx-form-input-autotoken bx-def-font-inputs bx-form-input-text';
-        if($bDisabled)
-            $sClass .= ' bx-form-input-disabled';
-        if(!empty($aInput['attrs']['class'])) {
-            $sClass .= ' ' . $aInput['attrs']['class'];
-            unset($aInput['attrs']['class']);
+            $aTmplVarsInputText['input'] = $this->genInputStandard($aInputText);
         }
 
-        $aAttrs = array('value' => '', 'autocomplete' => 'off', 'autocapitalize' => 'off', 'autocorrect' => 'off');
-        if(isset($aInput['attrs']) && is_array($aInput['attrs']))
-            $aAttrs = array_merge($aAttrs, $aInput['attrs']);
+        $this->addCssJsUi();
 
         return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
-            'id' => $sId,
             'name' => $aInput['name'],
-            'class' => $sClass,
-            'vals' => $sVals,
+            'attrs' => bx_convert_array2attrs($aAttrs),
+            'bx_repeat:vals' => $aTmplVarsVals,
             'bx_if:input' => array(
                 'condition' => !$bDisabled,
-                'content' => array(
-                    'attrs' => bx_convert_array2attrs($aAttrs),
-                )
+                'content' => $aTmplVarsInputText
             ),
             'bx_if:init' => array(
                 'condition' => !$bDisabled,
                 'content' => array(
-                    'id' => $sId,
+                    'id' => $aAttrs['id'],
                     'name' => $aInput['name'],
                     'url_get_recipients' => $aInput['ajax_get_suggestions'],
                     'b_img' => isset($aInput['custom']['b_img']) ? (int)$aInput['custom']['b_img'] : 1,
@@ -1492,6 +1519,35 @@ BLAH;
                 )
             )
         ));
+    }
+
+    protected function _genCustomInputUsernamesSuggestionsAttrs (&$aInput, $bDisabled = false)
+    {
+        $aAttrs = [
+            'id' => $aInput['name'] . time() . mt_rand(0, 100),
+        ];
+
+        $aAttrs['class'] = 'bx-form-input-autotoken bx-form-input-text bx-def-font-inputs';
+        if($bDisabled)
+            $aAttrs['class'] .= ' bx-form-input-disabled';
+        if(!empty($aInput['attrs']['class']))
+            $aAttrs['class'] .= ' ' . $aInput['attrs']['class'];
+
+        return $aAttrs;
+    }
+
+    protected function _genCustomInputUsernamesSuggestionsTextAttrs (&$aInput, $bDisabled = false)
+    {
+        $aAttrs = ['value' => '', 'autocomplete' => 'off', 'autocapitalize' => 'off', 'autocorrect' => 'off'];
+
+        if(!empty($aInput['attrs']) && is_array($aInput['attrs'])) {
+            if(isset($aInput['attrs']['class']))
+                unset($aInput['attrs']['class']);
+
+            $aAttrs = array_merge($aAttrs, $aInput['attrs']);
+        }
+
+        return $aAttrs;
     }
 
     protected function genCustomViewRowValueLabels ($aInput)
@@ -1617,7 +1673,93 @@ BLAH;
 
     function _genInputSelect(&$aInput, $isMultiple, $mixedCurrentVal, $sIsSelectedFunc)
     {
-        $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
+        $aOptions = [];
+        if(isset($aInput['values']) && is_array($aInput['values'])) {
+            foreach ($aInput['values'] as $sOptValue => $sOptTitle) {
+                $aOption = array(
+                    'bx_if:show_option_group_begin' => [
+                        'condition' => false,
+                        'content' => []
+                    ],
+                    'bx_if:show_option_group_end' => [
+                        'condition' => false,
+                        'content' => []
+                    ],
+                    'bx_if:show_option' => [
+                        'condition' => false,
+                        'content' => []
+                    ]
+                );
+
+                $sOptAttrs = "";
+                if(is_array($sOptTitle)) {
+                    if(isset($sOptTitle['type'])) {
+                        switch($sOptTitle['type']) {
+                            case 'group_header':
+                                $aOption = array_merge($aOption, [
+                                    'bx_if:show_option_group_begin' => [
+                                        'condition' => true,
+                                        'content' => [
+                                            'opt_label' => bx_process_output($sOptTitle['value'])
+                                        ]
+                                    ]
+                                ]);
+                                $aOptions[] = $aOption;
+                                break;
+
+                            case 'group_end':
+                                $aOption = array_merge($aOption, [
+                                    'bx_if:show_option_group_end' => [
+                                        'condition' => true,
+                                        'content' => []
+                                    ]
+                                ]);
+                                $aOptions[] = $aOption;
+                                break;
+                        }
+
+                        continue;
+                    }
+
+                    $aOptAttrs = $this->_genInputSelectOptionAttrs($sOptTitle);
+                    if(!empty($aOptAttrs))
+                        $sOptAttrs = bx_convert_array2attrs($aOptAttrs);
+
+                    $sOptValue = $sOptTitle['key'];
+                    $sOptTitle = $sOptTitle['value'];
+                }
+
+                $aOption = array_merge($aOption, [
+                    'bx_if:show_option' => [
+                        'condition' => true,
+                        'content' => [
+                            'opt_title' => bx_process_output($sOptTitle),
+                            'opt_value' => bx_html_attribute($sOptValue),
+                            'opt_attrs' => $sOptAttrs,
+                            'bx_if:show_selected' => [
+                                'condition' => $this->$sIsSelectedFunc($sOptValue, $mixedCurrentVal),
+                                'content' => []
+                            ]
+                        ]
+                    ]
+                ]);
+
+                $aOptions[] = $aOption;
+            }
+        }
+
+        $aAttrs = $this->_genInputSelectAttrs($aInput, $isMultiple);
+
+        return $this->_parseInputSelect('form_field_select.html', [
+            'attrs' => bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}"),
+            'bx_repeat:options' => $aOptions,
+            'content' => !empty($aInput['content']) ? $aInput['content'] : ''
+        ]);
+    }
+
+    protected function _genInputSelectAttrs(&$aInput, $isMultiple)
+    {
+        $aAttrs = !empty($aInput['attrs']) ? $aInput['attrs'] : [];
 
         $aAttrs['name'] = $aInput['name'];
         if ($isMultiple) {
@@ -1628,70 +1770,28 @@ BLAH;
         // for inputs with labels generate id
         if (isset($aInput['label']))
             $aAttrs['id'] = $this->getInputId($aInput);
+        
+        return $aAttrs;
+    }
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}");
+    protected function _genInputSelectOptionAttrs(&$aOption)
+    {
+        $aAttrs = [];
+        if(!empty($aOption['attrs']) && is_array($aOption['attrs']))
+            $aAttrs = $aOption['attrs'];
 
-        // generate options
-        $sOptions = '';
-        if (isset($aInput['values']) and is_array($aInput['values'])) {
-            foreach ($aInput['values'] as $sValue => $sTitle) {
-                $sAttrsOpt = "";
-                if(is_array($sTitle)) {
-                    if(isset($sTitle['type'])) {
-                        switch($sTitle['type']) {
-                            case 'group_header':
-                                $sTitle = bx_process_output($sTitle['value']);
-                                $sOptions .= <<<BLAH
-                                       <optgroup label="$sTitle">
-BLAH;
-                                break;
-                            case 'group_end':
-                                $sOptions .= <<<BLAH
-                                       </optgroup>
-BLAH;
-                                break;
-                        }
-                        continue;
-                    }
+        if(isset($aOption['class']))
+            $aAttrs['class'] = !empty($aAttrs['class']) ? $aAttrs['class'] . ' ' . $aOption['class'] : $aOption['class'];
 
-                    $aAttrsOpt = array();
-                    if(!empty($sTitle['attrs']) && is_array($sTitle['attrs']))
-                        $aAttrsOpt = $sTitle['attrs'];
+        if(isset($aOption['style']))
+            $aAttrs['style'] = !empty($aAttrs['style']) ? $aAttrs['style'] . ' ' . $aOption['style'] : $aOption['style'];
+        
+        return $aAttrs;
+    }
 
-                    if(isset($sTitle['class']))
-                        $aAttrsOpt['class'] = !empty($aAttrsOpt['class']) ? $aAttrsOpt['class'] . ' ' . $sTitle['class'] : $sTitle['class'];
-
-                    if(isset($sTitle['style']))
-                        $aAttrsOpt['style'] = !empty($aAttrsOpt['style']) ? $aAttrsOpt['style'] . ' ' . $sTitle['style'] : $sTitle['style'];
-
-                    $sAttrsOpt = !empty($aAttrsOpt) ? bx_convert_array2attrs($aAttrsOpt) : '';
-
-                    $sValue = $sTitle['key'];
-                    $sTitle = $sTitle['value'];
-                }
-                $sValueC = bx_html_attribute($sValue);
-                $sTitleC = bx_process_output($sTitle);
-
-                $sSelected = $this->$sIsSelectedFunc($sValue, $mixedCurrentVal) ? 'selected="selected"' : '';
-
-                $sOptions .= <<<BLAH
-                   <option value="$sValueC" $sAttrsOpt $sSelected>$sTitleC</option>
-BLAH;
-
-            }
-        }
-
-        // generate element
-        $sCode = <<<BLAH
-            <select $sAttrs>
-                $sOptions
-            </select>
-BLAH;
-
-        if(!empty($aInput['content']))
-            $sCode .= $aInput['content'];
-
-        return $sCode;
+    protected function _parseInputSelect($sTmplName, $aTmplVars)
+    {
+        return $this->oTemplate->parseHtmlByName($sTmplName, $aTmplVars);
     }
 
     function _genInputsSet(&$aInput, $sType, $mixedCurrentVal, $sIsCheckedFunc, $sNameAppend = '')
