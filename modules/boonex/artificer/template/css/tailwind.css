@@ -1,0 +1,10 @@
+/* tailwind source */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .bx-btn {
+    @apply group block w-min px-4 py-2 bg-white ring-1 ring-gray-200 dark:ring-gray-800 dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white flex items-center text-sm font-normal whitespace-nowrap rounded;
+  }
+}
