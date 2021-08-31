@@ -1,0 +1,280 @@
+bx-form-element/*--
+import url(../../../../../../../template/css/forms.css);
+--*/
+
+.bx-form-advanced-wrapper .bx-form-section-wrapper:first-child {
+    margin-top:0;
+}
+
+.bx-form-advanced-wrapper .bx-form-section-divider:first-child {
+    border-top:none; 
+    padding-top:0; 
+}
+
+.bx-form-advanced-wrapper .bx-form-section-divider:first-child .bx-form-section-content {
+    padding-top:0; 
+}
+
+.bx-form-advanced-wrapper .bx-form-section-wrapper:last-child .bx-form-section-content {
+    padding-bottom:0;
+}
+
+.bx-form-advanced-wrapper .bx-form-section-wrapper:first-child .bx-form-row-view-wrapper:first-child {
+    padding-top:0;
+}
+
+.bx-form-input-wrapper-pgc {
+    position: relative;
+}
+
+/*--- One Line fields ---*/
+.bx-form-element-wrapper-oneline .bx-form-element {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
+
+
+/*-- Form field: Switcher --*/
+.bx-switcher-cont {
+    position: relative;
+    width: 3.8rem;
+    height: 1.5rem;
+    box-sizing: content-box;    
+
+    background-color: #fff;
+
+    border: 0.125rem solid transparent;
+    -moz-border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+
+    overflow: hidden;
+    cursor: pointer;
+}
+.bx-switcher-cont input {
+    position:absolute; 
+    top:-32px;
+    top:-2rem;
+}
+.bx-switcher-canvas {
+    position:relative;
+    width:90px;
+    width:5.7rem;
+
+    -webkit-transition: left 0.2s ease-in-out;
+    -moz-transition: left 0.2s ease-in-out;
+    -ms-transition: left 0.2s ease-in-out;
+    -o-transition: left 0.2s ease-in-out;
+}
+.bx-switcher-cont.on .bx-switcher-canvas {
+    left:3px;
+    left:0.2rem;
+}
+.bx-switcher-cont.off .bx-switcher-canvas {
+    left:-34px;
+    left:-2.1rem;
+}
+.bx-switcher-on,
+.bx-switcher-off,
+.bx-switcher-handler {
+    position:absolute;	
+    top:0rem;
+    line-height:24px;
+    line-height:1.5rem;
+    color:#999;
+}
+.bx-switcher-on {
+    left:0rem;
+    width:34px;
+    width:2.1rem;
+    height:24px;
+    height:1.5rem;
+    margin-left:8px;
+    margin-left:0.5rem;
+}
+.bx-switcher-off {	
+    left:65px;
+    left:4.05rem;
+    width:34px;
+    width:2.1rem;
+    height:24px;
+    height:1.5rem;
+    margin-left:3px;
+    margin-left:0.2rem;
+}
+.bx-switcher-handler {
+    left:36px;
+    left:2.23rem;
+    top:2px;
+    top:0.13rem;
+    width:20px;
+    width:1.25rem;
+    height:20px;
+    height:1.25rem;
+    margin:0rem;
+
+    -moz-border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+
+    -webkit-transition: background-color 0.2s ease-in-out;
+    -moz-transition: background-color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out;
+    -o-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+}
+.bx-switcher-cont.on .bx-switcher-handler {
+    background-color:#d0efa2;
+}
+.bx-switcher-cont.off .bx-switcher-handler {
+    background-color:#e7938a;
+}
+
+
+/*--- Form field: File ---*/
+.bx-form-input-wrapper-file .bx-btn {
+    display: inline-block;
+    float: none;
+}
+.bx-form-input-file {
+    position: fixed;
+    top: -1000px;
+
+    border: none;
+    background-color: transparent;
+}
+
+
+/*--- Form field: Location ---*/
+.bx-form-element .bx-form-value input,
+.bx-form-element .bx-form-value select {
+    display: inline-block;
+}
+.bx-form-element .bx-form-input-location-country,
+.bx-form-element .bx-form-input-location-zip,
+.bx-form-element .bx-form-input-location-state,
+.bx-form-element .bx-form-input-location-city {
+    width:49%;
+}
+.bx-form-element .bx-form-input-location-street {
+    width:83%;
+}
+.bx-form-element .bx-form-input-location-street_number {
+    width:15%;
+}
+.bx-form-element .bx-form-input-location-street_number,
+.bx-form-element .bx-form-input-location-street,
+.bx-form-element .bx-form-input-location-state,
+.bx-form-element .bx-form-input-location-city {
+    margin-bottom: 0.25rem;
+}
+.bx-form-element .bx-form-input-location-street,
+.bx-form-element .bx-form-input-location-state,
+.bx-form-element .bx-form-input-location-country {
+    margin-left: 0.25rem;
+}
+
+.bx-form-element .bx-form-input-location-cont .bx-form-input-location-status-cont {
+    float:none;
+    width:98%;
+    line-height:normal;
+}
+.bx-form-element .bx-form-input-location-status {
+    float:left;
+}
+.bx-form-element .bx-form-input-location-copyright {
+    float:right;
+}
+
+.bx-form-element .bx-form-input-location-auto-cont {
+    display:table;
+}
+.bx-form-element .bx-form-input-location-auto-cont > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+/*--- Form field: Auto-siggestion ---*/
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
+    float:left;
+    padding:0px;
+    height:auto;
+    box-shadow: none;
+    min-height: 2.8rem;
+}
+.bx-form-value .bx-form-input-autotoken b {
+    display: block;
+    margin: 0.125rem;
+    padding-right: 1.5rem; 
+    border-radius: 1.25rem;
+
+    line-height: 2.5rem;
+    white-space: nowrap;
+    font-weight: normal;    
+    cursor: pointer;
+}
+.bx-form-value .bx-form-input-autotoken b:hover {
+    opacity: 0.7;
+}
+.bx-form-value .bx-form-input-autotoken b:after {
+    font-family: 'sys-user', 'sys-user-fal';
+    content: "\f00d";    
+    position:absolute;    
+    padding:0 0.5em;
+    margin-left: 0.5em;
+    font-size:0.7em;
+    font-weight:bold;
+}
+.bx-form-value .bx-form-input-autotoken.bx-form-input-disabled b {
+    cursor: default;
+}
+.bx-form-value .bx-form-input-autotoken.bx-form-input-disabled b:after{
+    display: none;
+}
+.bx-form-value .bx-form-input-autotoken input {
+    border:0;
+    margin:0;
+    padding:0 0 0 5px;
+    width:auto;
+    float:left;
+    box-shadow: none;
+}
+.bx-form-value .bx-form-input-autotoken .bx-base-pofile-unit-wo-info {
+    display: inline-block;
+    vertical-align: middle;
+
+    margin-right: 8px;
+    margin-right: 0.5rem;
+}
+.bx-form-value .bx-form-input-autotoken-labels b {
+    padding-left: 1em;
+}
+.bx-form-value .bx-form-input-autotoken-labels-show-more,
+.bx-form-value .bx-form-input-autotoken-labels-sel b {
+    display:inline-block;
+    line-height:1.5rem;
+    font-size:85%;    
+    padding-right:1em;
+    margin-top:0.625rem;
+    font-style:normal;
+}
+.bx-form-value .bx-form-input-autotoken-labels-show-more {
+    margin-left:0.1em;
+    margin-right:0.1em;
+}
+.bx-form-value .bx-form-input-autotoken-labels-sel b:after {
+    display:none;
+}
+.bx-form-input-autotoken-labels-more {
+    display:none;
+}
+.select2-container {
+    width:100% !important;
+}

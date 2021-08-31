@@ -1,4 +1,26 @@
-@import url(../../../../../../../template/css/common.css);
+/*
+import url(../../../../../../../template/css/common.css);
+*/
+
+/*--- General ---*/
+.bx-clear {
+    clear:both;
+    float:none;
+    display:block;
+    width: 0px;
+    height: 0px;
+    font-size:1px;
+}
+
+.bx-clearfix:before,
+.bx-clearfix:after {
+    content:"";
+    display:table;
+}
+.bx-clearfix:after {
+    clear:both;
+}
+
 
 /*--- Buttons ---*/
 .bx-btn {
@@ -15,4 +37,8 @@
 /*--- Popup boxes ---*/
 body > .bx-popup-wrapper {
     overflow: visible;
+}
+
+.bx-popup-width {
+    width: 31.25rem;
 }
