@@ -27,6 +27,75 @@ import url(../../../../../../../template/css/forms.css);
     position: relative;
 }
 
+
+/*-- Section Toggler ---*/
+.bx-form-section-wrapper {
+    position: relative;
+}
+
+.bx-form-section {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.bx-form-section-header legend {
+    position: relative;
+
+    line-height: 1.125rem;
+    text-transform: uppercase;
+}
+
+.bx-form-section-header legend u {
+    cursor: pointer;
+}
+
+.bx-form-section-header span {
+    white-space: nowrap;
+    text-transform: none;
+    font-size: 0.75rem;
+}
+
+.bx-form-section-hidden .bx-form-section-content {
+    display:none;
+}
+
+.bx-form-collapsable .bx-form-section-toggler {
+    position:absolute;
+    left: -2px;
+    top: 2px;
+
+    width:20px;
+    height:20px;
+
+    text-decoration:none;
+
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+
+.bx-form-collapsed .bx-form-section-toggler {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+}
+
+.bx-form-section-toggler .sys-icon {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 0 0 5px;
+    font-size:0.875rem;
+    line-height:1.2rem;
+}
+
 /*--- One Line fields ---*/
 .bx-form-element-wrapper-oneline .bx-form-element {
     display: -webkit-flex;
@@ -39,6 +108,50 @@ import url(../../../../../../../template/css/forms.css);
     justify-content: flex-start;
 }
 
+
+/*-- Form field: Password --*/
+.bx-form-input-wrapper-password {
+    padding: 0 2.125rem 0 0;
+}
+.bx-form-input-wrapper-password > a {
+    position: absolute;
+    z-index: 1000;
+    
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    top: 0;
+    right: 0;    
+    height: 100%;
+
+    margin: 0 0.5rem;
+}
+.bx-form-input-password {
+    position: relative;
+
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0.2rem 0.4rem;
+
+    border: 0;
+    background-color: transparent;
+}
+.bx-form-input-password:focus {
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
 
 /*-- Form field: Switcher --*/
 .bx-switcher-cont {

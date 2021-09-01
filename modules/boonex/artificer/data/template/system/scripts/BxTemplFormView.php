@@ -14,11 +14,34 @@ class BxTemplFormView extends BxBaseFormView
         parent::__construct($aInfo, $oTemplate);
     }
 
+    protected function _genWrapperInputAttrs(&$aInput)
+    {
+        $aAttrs = parent::_genWrapperInputAttrs($aInput);
+
+        if(in_array($aInput['type'], ['password']))
+            $this->_genWrapperInputAttrsPassword($aAttrs);
+
+        return $aAttrs;
+    }
+
+    protected function _genWrapperInputAttrsPassword(&$aAttrs)
+    {
+        if(!isset($aAttrs['class']))
+            $aAttrs['class'] = '';
+
+        $aAttrs['class'] .= 'relative block w-full py-1.5 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded leading-5 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm';
+
+        return $aAttrs;
+    }
+
     protected function _genInputStandardAttrs(&$aInput)
     {
         $aAttrs = parent::_genInputStandardAttrs($aInput);
-        if(in_array($aInput['type'], ['hidden']))
+        if(in_array($aInput['type'], ['hidden', 'password']))
             return $aAttrs;
+
+        if(in_array($aInput['type'], ['checkbox', 'radio']))
+            return $this->_updateInputAttrsCheckbox($aAttrs);
 
         return $this->_updateInputAttrs($aAttrs);
     }
@@ -75,6 +98,16 @@ class BxTemplFormView extends BxBaseFormView
             $aAttrs['class'] = '';
 
         $aAttrs['class'] .= ' block w-full px-3 py-1.5 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded leading-5 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm';
+
+        return $aAttrs;
+    }
+
+    protected function _updateInputAttrsCheckbox(&$aAttrs)
+    {
+        if(!isset($aAttrs['class']))
+            $aAttrs['class'] = '';
+
+        $aAttrs['class'] .= ' block px-3 py-1.5 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded leading-5 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm';
 
         return $aAttrs;
     }

@@ -609,7 +609,7 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getFilterControls ()
     {
-        $oForm = new BxTemplStudioFormView(array());
+        $oForm = new BxTemplFormView(array());
 
         $aInput = array(
             'type' => 'text',

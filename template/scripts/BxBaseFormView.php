@@ -879,27 +879,21 @@ BLAH;
 
     function genWrapperInput($aInput, $sContent)
     {
-        $sClass = "";
+        $aAttrs = $this->_genWrapperInputAttrs($aInput);
+
+        $sClass = "bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}";
         if(isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput))
             $sClass .= ' bx-form-input-wrapper-html';
 
-        $sAttrs = "";
-        if(isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper'])) {
-            if(!empty($aInput['attrs_wrapper']['class'])) {
-                $sClass .= ' ' . trim($aInput['attrs_wrapper']['class']);
-
-                unset($aInput['attrs_wrapper']['class']);
-            }
-
-            $sAttrs = bx_convert_array2attrs($aInput['attrs_wrapper']);
-        }
-
         return $this->oTemplate->parseHtmlByName('form_input_wrapper.html', array(
-            'type' => $aInput['type'],
-            'class' => $sClass,
-            'attrs' => $sAttrs,
+            'attrs' =>  bx_convert_array2attrs($aAttrs, $sClass),
             'content' => $sContent
         ));
+    }
+
+    protected function _genWrapperInputAttrs(&$aInput)
+    {
+        return isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? $aInput['attrs_wrapper'] : [];
     }
 
     /**
