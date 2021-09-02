@@ -76,17 +76,15 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
     	$this->getCssJs();
 
     	if($sTemplateName == 'unit.html')
-    		return $this->getUnit($aData);
+            return $this->getUnit($aData);
 
         $oModule = $this->getModule();
         $CNF = &$this->_oConfig->CNF;
 
-        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->isAllowedView($aData))) {
-            $aVars = array (
-                'summary' => $sMsg,
-            );
-            return $this->parseHtmlByName('unit_private.html', $aVars);
-        }
+        if ($isCheckPrivateContent && !$oModule->isAllowedView($aData))
+            return $this->parseHtmlByName('unit_private.html', array (
+                'summary' => _t('_sys_access_denied_to_private_content'),
+            ));
 
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aData['object_id']);
         $bAuthorIcon = !empty($sAuthorIcon);

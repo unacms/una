@@ -979,7 +979,7 @@ function bx_append_url_params (sUrl, mixedParams) {
     return sUrl + sParams + sHash;
 }
 
-function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, iMinLen) {
+function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, iMinLen, onComplete) {
     var oForm = $(e.target).parents(sFormSel + ':first');
 
     if ('undefined' != typeof(e) && 13 == e.keyCode) {
@@ -996,13 +996,13 @@ function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bS
         clearTimeout(glBxSearchTimeoutHandler);
 
     glBxSearchTimeoutHandler = setTimeout(function () {
-        bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults);
+        bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, onComplete);
     }, 500);
 
     return true;
 }
 
-function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
+function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, onComplete) {
     if ('undefined' == typeof(sLoadingContSel))
         sLoadingContSel = sResultsContSel;
     if ('undefined' == typeof(bSortResults))
@@ -1013,6 +1013,10 @@ function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults)
     bx_loading($(sLoadingContSel), true);
     $.post(sUrlRoot + 'searchKeywordContent.php', sQuery, function(data) {
         bx_loading($(sLoadingContSel), false);
+
+        if(!data)
+            return;
+
         if (bSortResults) {
             var aSortedUnits = $(data).find(".bx-def-unit-live-search").toArray().sort(function (a, b) {
                 return b.getAttribute('data-ts') - a.getAttribute('data-ts');
@@ -1022,7 +1026,12 @@ function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults)
                 data += e.outerHTML;
             });
         } 
-        $(sResultsContSel).html(data).bxProcessHtml();
+
+        var oContainer = $(sResultsContSel);
+        oContainer.html(data).bxProcessHtml();
+
+        if(typeof onComplete === 'function')
+            onComplete(oContainer, data);
     });
 
     return false;
