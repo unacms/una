@@ -4,7 +4,20 @@
 @tailwind utilities;
 
 @layer components {
-  .bx-btn {
-    @apply group block w-min px-4 py-2 bg-white ring-1 ring-gray-200 dark:ring-gray-800 dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white flex items-center text-sm font-normal whitespace-nowrap rounded;
-  }
+    .bx-btn {
+        @apply group block flex items-center box-border w-min h-8 px-4 rounded ring-1 ring-gray-200 dark:ring-gray-800 bg-white dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white leading-8 text-base font-normal whitespace-nowrap;
+    }
+
+    .bx-btn i, 
+    .bx-btn u {
+        @apply inline-block align-top;
+    }
+
+    .bx-btn u {
+        @apply ml-2;
+    }
+
+    .bx-btn.bx-btn-small {
+        @apply group block flex items-center box-border w-min h-7 px-2 rounded ring-1 ring-gray-200 dark:ring-gray-800 bg-white dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white leading-7 text-xs font-normal whitespace-nowrap;
+    }
 }

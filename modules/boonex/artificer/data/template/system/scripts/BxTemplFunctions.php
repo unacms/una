@@ -30,7 +30,7 @@ class BxTemplFunctions extends BxBaseFunctions
             case 'sys_site_search':
                 $oSearch = new BxTemplSearch();
                 $oSearch->setLiveSearch(true);
-                return $oSearch->getForm(BX_DB_CONTENT_ONLY) . $oSearch->getResultsContainer();
+                return $oSearch->getForm(BX_DB_PADDING_DEF, false, true) . $oSearch->getResultsContainer();
 
             default:
                 return parent::TemplPageAddComponent($sKey);

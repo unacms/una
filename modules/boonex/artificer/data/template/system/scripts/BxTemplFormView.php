@@ -58,18 +58,6 @@ class BxTemplFormView extends BxBaseFormView
         return $this->_updateInputAttrs($aAttrs);
     }
 
-    protected function _genInputButtonAttrs(&$aInput)
-    {
-        $aAttrs = parent::_genInputButtonAttrs($aInput);
-        
-        if(!isset($aAttrs['class']))
-            $aAttrs['class'] = '';
-
-        $aAttrs['class'] .= ' group block px-4 py-2 bg-white ring-1 ring-gray-200 dark:ring-gray-800 dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white flex items-center text-sm font-normal rounded';
-
-        return $aAttrs;
-    }
-
     protected function _genCustomInputUsernamesSuggestionsAttrs (&$aInput, $bDisabled = false)
     {
         $aAttrs = parent::_genCustomInputUsernamesSuggestionsAttrs($aInput, $bDisabled);
