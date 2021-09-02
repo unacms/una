@@ -1,0 +1,51 @@
+{
+    "config": {
+        "vendor-dir": "plugins"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/unaio/composer-cleanup-plugin.git",
+            "reference": "dev-master"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/unaio/amazon-s3-php-class.git",
+            "reference": "dev-master"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "achingbrain/php5-akismet",
+                "version": "0.5",
+                "source": {
+                    "url": "https://github.com/achingbrain/php5-akismet",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "unaio/amazon-s3-php-class-hmac-v2",
+                "version": "0.5",
+                "source": {
+                    "url": "https://github.com/unaio/amazon-s3-php-class-hmac-v2",
+                    "type": "git",
+                    "reference": "main"
+                }
+            }
+        }
+    ],
+    "require": {
+        "akeeba/s3": "dev-main",
+        "achingbrain/php5-akismet": "0.5",
+        "unaio/amazon-s3-php-class-hmac-v2": "*",
+        "tpyo/amazon-s3-php-class": "dev-master",
+
+        "wikimedia/less.php": "*",
+        
+        "avto-dev/composer-cleanup-plugin": "dev-master"
+    }
+}
