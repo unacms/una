@@ -103,6 +103,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_accounts_administration', 'bulk', 'delete', '_bx_accnt_grid_action_title_adm_delete', '', 0, 1, 6),
 ('bx_accounts_administration', 'bulk', 'delete_with_content', '_bx_accnt_grid_action_title_adm_delete_with_content', '', 0, 1, 7),
 ('bx_accounts_administration', 'bulk', 'export', '_bx_accnt_grid_action_title_adm_export', '', 0, 0, 8),
+('bx_accounts_administration', 'bulk', 'send_message', '_bx_accnt_grid_action_title_adm_send_message', '', 0, 0, 9),
 ('bx_accounts_administration', 'single', 'edit_email', '_bx_accnt_grid_action_title_adm_edit_email', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'reset_password', '_bx_accnt_grid_action_title_adm_reset_password', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'resend_remail', '_bx_accnt_grid_action_title_adm_resend_remail', '', 0, 0, 0),

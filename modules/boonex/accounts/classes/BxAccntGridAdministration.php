@@ -158,6 +158,44 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
+	
+	public function performActionSendMessage()
+    {
+		$sAction = 'send_message';
+		
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds))
+            return echoJson(array());
+		
+		$oForm = BxDolForm::getObjectInstance('bx_accounts_account', 'bx_accounts_send_test');
+        if (!$oForm)
+            return '';
+		
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+        	$aIdsAffected = array();
+			foreach($aIds as $iId) {
+				if(sendMail(BxDolAccount::getInstance()->getEmail($iId), $oForm->getCleanValue('message_subject'), $oForm->getCleanValue('message_text'), 0, [], BX_EMAIL_MASS, 'text', false, ['From' => "=?UTF-8?B?" . base64_encode(getParam('site_title')) . "?= <" . getParam('site_email_notify') . ">"], false)){
+					$aIdsAffected[] = $iId;
+				}	
+			}
+			
+            echoJson(count($aIdsAffected) > 0 ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
+        }
+        else {
+            
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-account-send-message', _t('_bx_accounts_form_display_account_send_message'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
+                'form_id' => $oForm->id,
+                'form' => $oForm->getCode(true),
+                'object' => $this->_sObject,
+                'action' => $sAction
+            )));
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+        }
+    }
     
     public function performActionAdd()
     {

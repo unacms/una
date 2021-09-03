@@ -9,6 +9,7 @@
     <string name="_bx_accounts_form_display_account_settings_email_popup"><![CDATA[Изменить email]]></string>
     <string name="_bx_accounts_form_display_account_create_popup"><![CDATA[Создать новый аккаунт]]></string>
     <string name="_bx_accounts_form_display_account_settings_password_popup"><![CDATA[Сбросить пароль]]></string>
+    <string name="_bx_accounts_form_display_account_send_message"><![CDATA[Отправить тестовое письмо]]></string>
 
     <string name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Управление всеми аккаунтами]]></string>
     <string name="_bx_accnt_page_title_manage"><![CDATA[Управление аккаунтами]]></string>
@@ -78,6 +79,7 @@
     <string name="_bx_accnt_grid_action_title_adm_unlock_account"><![CDATA[Разблокировать]]></string>
     <string name="_bx_accnt_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_accnt_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_send_message"><![CDATA[Отправить письмо]]></string>
     <string name="_bx_accnt_grid_action_title_adm_more_actions"><![CDATA[Дополнительно]]></string>
     <string name="_bx_accnt_grid_action_title_adm_more_add"><![CDATA[Добавить новый]]></string>
     <string name="_bx_accnt_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) аккаунт(ы).]]></string>
@@ -91,6 +93,13 @@
 
     <string name="_bx_accnt_form_login_input_caption_system_email_confirmed"><![CDATA[Email подтвержден]]></string>
     <string name="_bx_accnt_form_account_input_email_confirmed"><![CDATA[Email подтвержден]]></string>
+    <string name="_bx_accnt_form_account_input_caption_system_message_subject"><![CDATA[Тема письма]]></string>
+    <string name="_bx_accnt_form_account_input_caption_message_subject"><![CDATA[Тема письма]]></string>
+    <string name="_bx_accnt_form_account_input_message_subject_error"><![CDATA[Тема письма не может быть пустой]]></string>
+    <string name="_bx_accnt_form_account_input_caption_system_message_text"><![CDATA[Текст письма]]></string>
+    <string name="_bx_accnt_form_account_input_caption_message_text"><![CDATA[Текст письма]]></string>
+    <string name="_bx_accnt_form_account_input_message_text_error"><![CDATA[Текст письма не может быть пустой]]></string>
+    <string name="_bx_accnt_form_display_send_message"><![CDATA[Отправка тестового письма]]></string>
 
     <string name="_bx_accnt_txt_more"><![CDATA[{0} ещё]]></string>
     <string name="_bx_accnt_txt_see_more"><![CDATA[Ещё]]></string>
