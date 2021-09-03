@@ -16,6 +16,28 @@
         {
             "type": "package",
             "package": {
+                "name": "curl/cacert",
+                "version": "0.0.1",
+                "dist": {
+                    "url": "https://curl.se/ca/cacert.pem",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ffmpeg/ffmpeg",
+                "version": "4.4.0",
+                "dist": {
+                    "url": "https://github.com/eugeneware/ffmpeg-static/releases/download/b4.4/linux-x64",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "achingbrain/php5-akismet",
                 "version": "0.5",
                 "source": {
@@ -43,6 +65,13 @@
         "achingbrain/php5-akismet": "0.5",
         "unaio/amazon-s3-php-class-hmac-v2": "*",
         "tpyo/amazon-s3-php-class": "dev-master",
+        "snipe/banbuilder": "dev-master",
+        "chargebee/chargebee-php": "^2.0",
+        "curl/cacert": "*",
+        "facebook/graph-sdk": "^5.6.0",
+        "ffmpeg/ffmpeg": "*",
+        "ezyang/htmlpurifier": "^4.13",
+        "intervention/image": "^2.6",
 
         "wikimedia/less.php": "*",
         
