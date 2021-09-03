@@ -178,7 +178,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if($oForm->isSubmittedAndValid()) {
         	$aIdsAffected = array();
 			foreach($aIds as $iId) {
-				if(sendMail('user1@roma1.ru', $oForm->getCleanValue('message_subject'), $oForm->getCleanValue('message_text').BxDolAccount::getInstance()->getEmail($iId), 0, [], BX_EMAIL_MASS, 'text', false, ['From' => "=?UTF-8?B?" . base64_encode(getParam('site_title')) . "?= <" . getParam('site_email_notify') . ">"], false)){
+				if(sendMail(BxDolAccount::getInstance()->getEmail($iId), $oForm->getCleanValue('message_subject'), $oForm->getCleanValue('message_text'), 0, [], BX_EMAIL_MASS, 'text', false, ['From' => "=?UTF-8?B?" . base64_encode(getParam('site_title')) . "?= <" . getParam('site_email_notify') . ">"], false)){
 					$aIdsAffected[] = $iId;
 				}	
 			}
