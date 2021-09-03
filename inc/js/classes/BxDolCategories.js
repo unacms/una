@@ -35,7 +35,7 @@ BxDolCategories.prototype.categoryAddNew = function (oButton, sName) {
     oCategory.find("input[type = 'text']").val('');
     oCategory.find("input[type = 'hidden']").remove();
 
-    $('.bx-form-input-categories .bx-form-input-category-add:first').before(oCategory);
+    oButton.parents('#bx-form-element-' + sName).find('.bx-form-input-categories .bx-form-input-category-add:first').before(oCategory);
 };
 
 BxDolCategories.prototype.categoryDelete = function (oButton) {
