@@ -1486,6 +1486,7 @@ BLAH;
             $aInputText['type'] = 'text';
             $aInputText['value'] = '';
             $aInputText['attrs'] = $this->_genCustomInputUsernamesSuggestionsTextAttrs($aInputText, $bDisabled);       
+            unset($aInputText['name']);
 
             $aTmplVarsInputText['input'] = $this->genInputStandard($aInputText);
         }
@@ -1517,9 +1518,7 @@ BLAH;
 
     protected function _genCustomInputUsernamesSuggestionsAttrs (&$aInput, $bDisabled = false)
     {
-        $aAttrs = [
-            'id' => $aInput['name'] . time() . mt_rand(0, 100),
-        ];
+        $aAttrs = ['id' => $aInput['name'] . time() . mt_rand(0, 100)];
 
         $aAttrs['class'] = 'bx-form-input-autotoken bx-form-input-text bx-def-font-inputs';
         if($bDisabled)
