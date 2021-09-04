@@ -78,6 +78,8 @@
         "bshaffer/oauth2-server-php": "^1.11",
         "erusev/parsedown": "@dev",
         "paypal/paypal-checkout-sdk": "^1.0",
+        "phpmailer/phpmailer": "^6.5",
+        "recurly/recurly-client": "2.10.*",
 
         "avto-dev/composer-cleanup-plugin": "dev-master"
     }
