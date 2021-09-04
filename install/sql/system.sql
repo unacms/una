@@ -114,7 +114,6 @@ CREATE TABLE `sys_objects_captcha` (
 );
 
 INSERT INTO `sys_objects_captcha` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
-('sys_recaptcha', 'reCAPTCHA', 'BxTemplCaptchaReCAPTCHA', ''),
 ('sys_recaptcha_new', 'reCAPTCHA New', 'BxTemplCaptchaReCAPTCHANew', ''),
 ('sys_recaptcha_invisible', 'reCAPTCHA Invisible', 'BxTemplCaptchaReCAPTCHAInvisible', '');
 
