@@ -15,8 +15,6 @@ use OAuth\Common\Storage\Session;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Consumer\Credentials;
 
-require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth/bootstrap.php');
-
 class BxDolStudioOAuthPlugin extends BxDolStudioOAuthOAuth1 implements iBxDolSingleton
 {
     protected $sService;

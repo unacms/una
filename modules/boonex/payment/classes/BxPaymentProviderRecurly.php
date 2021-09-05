@@ -9,8 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'recurly/recurly.php');
-
 define('RCRL_MODE_LIVE', 1);
 define('RCRL_MODE_TEST', 2);
 

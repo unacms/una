@@ -9,8 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'chargebee/ChargeBee.php');
-
 define('CBEE_MODE_LIVE', 1);
 define('CBEE_MODE_TEST', 2);
 

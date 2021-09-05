@@ -31,8 +31,6 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
     {
         parent::__construct($aModule);
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'facebook-php-sdk/src/Facebook/autoload.php');
-
         // Create our Application instance.
         $this -> oFacebook = null;
 

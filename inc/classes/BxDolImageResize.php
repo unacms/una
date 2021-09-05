@@ -7,16 +7,6 @@
  * @{
  */
 
-spl_autoload_register(function ($sClass) {
-    // autoload Intervention Image files
-    $sClass = trim($sClass, '\\');
-    if (0 === strncmp('Intervention', $sClass, 12)) {
-        $sFile = BX_DIRECTORY_PATH_PLUGINS . 'intervention-image/' . str_replace('\\', '/', $sClass) . '.php';
-        if (file_exists($sFile))
-            require_once($sFile);
-    }
-});
-
 define('IMAGE_ERROR_SUCCESS', 0); ///< operation was successfull
 define('IMAGE_ERROR_WRONG_TYPE', 2); ///< operation failed, most probably because incorrect image format(or not image file) was provided
 

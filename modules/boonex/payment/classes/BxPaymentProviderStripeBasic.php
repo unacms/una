@@ -9,8 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'stripe/init.php');
-
 define('STRP_MODE_LIVE', 1);
 define('STRP_MODE_TEST', 2);
 

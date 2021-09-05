@@ -20,13 +20,12 @@
 class BxAntispamProfanityFilter extends BxDol
 {
     protected $oProfanityFilter = null;
-    protected $sPluginPath = BX_DIRECTORY_PATH_PLUGINS . 'banbuilder/src/';
+    protected $sPluginPath = BX_DIRECTORY_PATH_PLUGINS . 'snipe/banbuilder/src/';
     
     public function __construct()
     {
         parent::__construct();
         
-        require_once ($this->sPluginPath .'CensorWords.php');
         $sClassName = 'Snipe\BanBuilder\CensorWords';
         $this->oProfanityFilter = new $sClassName;
         
