@@ -7,7 +7,7 @@
 
     <if>
         <not><isset property="composer" /></not>
-        <then><property name="composer" value="${project.basedir}/tests/composer.phar" override="yes" /></then>
+        <then><property name="composer" value="${project.basedir}/composer.phar" override="yes" /></then>
     </if>
     <if>
         <not><isset property="php" /></not>
@@ -96,6 +96,7 @@
     <!-- ============================================  -->
     <target name="prepare">
         <echo msg="Prepage: installing necessary components" />
+        <exec command="${php} ${composer} install" dir="${project.basedir}" checkreturn="true" />
         <exec command="${php} ${composer} install" dir="${project.basedir}/tests" checkreturn="true" />
     </target>
 
