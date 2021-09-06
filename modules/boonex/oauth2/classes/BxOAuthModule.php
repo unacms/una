@@ -9,9 +9,6 @@
  * @{
  */
 
-require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth2/Autoloader.php');
-OAuth2\Autoloader::register();
-
 class BxOAuthUserCredentialsStorage extends OAuth2\Storage\Pdo implements OAuth2\Storage\UserCredentialsInterface
 {
     public function checkUserCredentials($sLogin, $sPassword)
