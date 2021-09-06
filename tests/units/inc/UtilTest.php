@@ -26,7 +26,6 @@ class UtilTest extends \PHPUnit\Framework\TestCase
     protected function _testClearXss($isAdmin, $sCalled)
     {
         // create mock object instance of HTMLPurifier class
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php');
         $GLOBALS['oHtmlPurifier'] = $this->createMock('HTMLPurifier');
 
         // set admin or not admin user
