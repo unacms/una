@@ -197,6 +197,8 @@
     <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Add/Edit Pictures]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_image"><![CDATA[Edit Image]]></string>
     <string name="_bx_albums_menu_item_title_edit_image"><![CDATA[Edit Image]]></string>
+	<string name="_bx_albums_menu_item_title_system_delete_image"><![CDATA[Delete Image]]></string>
+	<string name="_bx_albums_menu_item_title_delete_image"><![CDATA[Delete Image]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry"><![CDATA[View Album]]></string>
