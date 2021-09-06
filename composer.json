@@ -86,6 +86,12 @@
     },
     "scripts": {
         "post-update-cmd": [
+            "@relocate-ffmpeg"
+        ],
+        "post-install-cmd": [
+            "@relocate-ffmpeg"
+        ],
+        "relocate-ffmpeg": [
             "test -f ./plugins/ffmpeg/ffmpeg/linux-x64 && mv ./plugins/ffmpeg/ffmpeg/linux-x64 ./plugins/ffmpeg/ffmpeg.exe && rm -rf ./plugins/ffmpeg/ffmpeg || true"
         ]
     }
