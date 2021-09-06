@@ -4230,8 +4230,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return array();
 
         $mixedResult = $oProfileOwner->checkAllowedProfileView();
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return array('content' => MsgBox($mixedResult));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED) {
+            $this->_oTemplate->displayAccessDenied($mixedResult);
+            exit;
+        }
 
         $sUserName = $this->getObjectUser($aParams['owner_id'])->getDisplayName();
 
