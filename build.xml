@@ -56,6 +56,9 @@
         <exclude name="inc/header*" />
         <exclude name="build.xml" />
         <exclude name="build.properties" />
+        <exclude name="composer.json" />
+        <exclude name="composer.lock" />
+        <exclude name="composer.phar" />
         <exclude name="storage/**/*" />
         <exclude name="samples/**" />
         <exclude name="scripts/**" />
