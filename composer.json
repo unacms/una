@@ -82,7 +82,11 @@
         "recurly/recurly-client": "2.10.*",
         "stripe/stripe-php": "^7.95",
         "twilio/sdk": "^5.19",
-
         "avto-dev/composer-cleanup-plugin": "dev-master"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "test -f ./plugins/ffmpeg/ffmpeg/linux-x64 && mv ./plugins/ffmpeg/ffmpeg/linux-x64 ./plugins/ffmpeg/ffmpeg.exe && rm -rf ./plugins/ffmpeg/ffmpeg || true"
+        ]
     }
 }
