@@ -4,6 +4,7 @@ cache/*
 cache_public/*
 tmp/*
 logs/*
+plugins/*
 
 # Exclude main config file
 inc/header*
@@ -23,6 +24,7 @@ cs_fixer_tmp*
 
 # Exclude tests files
 build.properties
+composer.phar
 tests/vendor
 tests/composer.phar
 samples/img/*

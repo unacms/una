@@ -1,4 +1,13 @@
 {
+    "name": "unaio/una",
+    "description": "UNA - Community Management System",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "UNA, Inc",
+            "homepage": "https://una.io"
+        }
+    ],
     "config": {
         "vendor-dir": "plugins"
     },
@@ -61,6 +70,7 @@
         }
     ],
     "require": {
+        "php": ">=5.6",
         "akeeba/s3": "dev-main",
         "achingbrain/php5-akismet": "0.5",
         "unaio/amazon-s3-php-class-hmac-v2": "*",
