@@ -618,6 +618,7 @@
 	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA on]]></string>
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
+	<string name="_adm_dbd_txt_updated"><![CDATA[Updated:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
     <string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute.<br />Don't forget to <a href="{0}store.php?page=updates">check for modules updates</a> after that.]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
@@ -1531,6 +1532,7 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
 	<string name="_adm_stg_cpt_option_sys_cron_time"><![CDATA[Last cron execution time]]></string>
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
+	<string name="_adm_stg_cpt_option_sys_update_time"><![CDATA[Last update]]></string>
 	<string name="_adm_stg_cpt_option_sys_upgrade_channel"><![CDATA[Update channel]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
     <string name="_adm_stg_cpt_option_sys_location_field_default"><![CDATA[Location field provider]]></string>
