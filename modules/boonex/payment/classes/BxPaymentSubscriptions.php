@@ -242,7 +242,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
             $sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
             $sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
             return array('popup' => array(
-                'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect, $aCustom)), 
+                'html' => BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect, $aCustom)), 
                 'options' => array('closeOnOuterClick' => true)
             ));
         }

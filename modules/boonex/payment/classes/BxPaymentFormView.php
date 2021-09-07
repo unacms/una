@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxPaymentFormView extends BxTemplStudioFormView
+class BxPaymentFormView extends BxTemplFormView
 {
     function __construct($aInfo, $oTemplate = false)
     {
