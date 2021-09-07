@@ -45,11 +45,6 @@ li.bx-menu-inter-hidden {
     text-decoration:none;
 }
 
-/*--- Top Menu ---*/
-.bx-sliding-smenu-main .bx-arr-menu-floating-blocks {
-    flex-wrap: nowrap;
-}
-
 /*--- Toolbar Menu ---*/
 .bx-menu-toolbar .bx-menu-toolbar-item.bx-menu-item-account {
     padding: 0;
