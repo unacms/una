@@ -21,7 +21,7 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
         $this->_sOrdersType = 'pending';
     }
 
-	public function performActionProcess()
+    public function performActionProcess()
     {
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -46,13 +46,13 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	$iId = $oForm->getCleanValue('id');
+            $iId = $oForm->getCleanValue('id');
 
-			$this->_oModule->_oDb->updateOrderPending($iId, array(
-				'order' => $oForm->getCleanValue('order'),
-				'error_code' => 0,
-				'error_msg' => 'Manually processed'
-			));
+            $this->_oModule->_oDb->updateOrderPending($iId, array(
+                'order' => $oForm->getCleanValue('order'),
+                'error_code' => 0,
+                'error_msg' => 'Manually processed'
+            ));
 
             if($this->_oModule->registerPayment($iId))
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
@@ -66,22 +66,22 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
         $sId = $this->_oModule->_oConfig->getHtmlIds('pending', $sKey);
     	$sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
 
-		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('order_pending_process.html', array(
-			'form_id' => $oForm->aFormAttrs['id'],
-			'form' => $oForm->getCode(true),
-			'object' => $this->_sObject,
-			'action' => $sAction
-		)));
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('order_pending_process.html', array(
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true),
+            'object' => $this->_sObject,
+            'action' => $sAction
+        )));
 
-		echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+        echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
     }
 
-	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
     	if(empty($this->_aQueryAppend['seller_id']))
-    		return array();
+            return array();
 
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

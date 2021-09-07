@@ -206,7 +206,7 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
             )
         );
 
-        $oForm = new BxTemplStudioFormView(array());
+        $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInput);
     }
 }

@@ -2869,6 +2869,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Toolbar Member]]></string>
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Toolbar Site]]></string>
 	<string name="_sys_menu_set_title_snippet_meta"><![CDATA[Snippet Meta Info]]></string>
+        <string name="_sys_menu_template_title_add_content"><![CDATA[Add Content Menu]]></string>
         <string name="_sys_menu_template_title_block_submenu_hor"><![CDATA[Horizontal Block Submenu]]></string>
         <string name="_sys_menu_template_title_block_submenu_ver"><![CDATA[Vertical Block Submenu]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Horizontal Buttons]]></string>
@@ -2885,6 +2886,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_interactive"><![CDATA[Interactive Horizontal Links]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Interactive Vertical Links]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Empty Menu]]></string>
+        <string name="_sys_menu_template_title_main"><![CDATA[Site Navigation Menu]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>
         <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Site Navigation Submenu (with Auto More)]]></string>
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>

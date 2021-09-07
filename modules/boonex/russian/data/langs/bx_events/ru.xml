@@ -222,10 +222,9 @@
     <string name="_bx_events_menu_title_view_profile_actions_more"><![CDATA[Событие - Дополнительные действия]]></string>
     <string name="_bx_events_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра события]]></string>
     <string name="_bx_events_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра события]]></string>
-    <string name="_bx_events_menu_title_view_profile_submenu_cover"><![CDATA[Подменю события на обложке]]></string>
     <string name="_bx_events_menu_title_entries_my"><![CDATA[События профиля - Меню действий]]></string>
     <string name="_bx_events_menu_set_title_entries_my"><![CDATA[События профиля - Меню]]></string>
-	<string name="_bx_events_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
+    <string name="_bx_events_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_events_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_events_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_events_menu_item_title_delete"><![CDATA[Удалить]]></string>

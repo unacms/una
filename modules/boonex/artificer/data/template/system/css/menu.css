@@ -9,6 +9,10 @@ import url(../../../../../../../template/css/menu.css);
     color: #000;
 }
 
+.bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto .bx-menu-item {
+    padding: 0 0.5rem;
+}
+
 /* --- Vertical, Vertical lite, Custom Vertical Menus ---*/
 .bx-menu-ver li,
 .bx-menu-verlit li,
@@ -41,9 +45,9 @@ li.bx-menu-inter-hidden {
     text-decoration:none;
 }
 
-/*--- Top Menu ---*/
-.bx-sliding-smenu-main .bx-arr-menu-floating-blocks {
-    flex-wrap: nowrap;
+/*--- Toolbar Menu ---*/
+.bx-menu-toolbar .bx-menu-toolbar-item.bx-menu-item-account {
+    padding: 0;
 }
 
 /*--- Account Popup ---*/

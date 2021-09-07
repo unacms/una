@@ -151,7 +151,6 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_organizations_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_organizations_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_organizations_view_submenu',  // view entry submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_organizations_view_submenu_cover',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'organizations-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_SNIPPET_META' => 'bx_organizations_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools

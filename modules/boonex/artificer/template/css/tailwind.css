@@ -4,20 +4,35 @@
 @tailwind utilities;
 
 @layer components {
+    /* defaults */
+    .bx-def-hr {
+        @apply m-0 p-0 border-t border-gray-200 dark:border-gray-700;
+    }
+
+    /* common elements */
     .bx-btn {
-        @apply group block flex items-center box-border w-min h-8 px-4 rounded ring-1 ring-gray-200 dark:ring-gray-800 bg-white dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white leading-8 text-base font-normal whitespace-nowrap;
+        @apply group relative inline-flex items-center box-border w-min h-8 px-2.5 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-base font-medium whitespace-nowrap text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600;
     }
 
     .bx-btn i, 
     .bx-btn u {
-        @apply inline-block align-top;
+        @apply inline-block align-middle;
     }
 
     .bx-btn u {
-        @apply ml-2;
+        @apply ml-2 first:ml-0 no-underline;
+    }
+
+    .bx-btn.bx-btn-disabled {
+        @apply bg-gray-200 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
     }
 
     .bx-btn.bx-btn-small {
-        @apply group block flex items-center box-border w-min h-7 px-2 rounded ring-1 ring-gray-200 dark:ring-gray-800 bg-white dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm text-gray-900 dark:text-white leading-7 text-xs font-normal whitespace-nowrap;
+        @apply group relative inline-flex items-center box-border w-min h-7 px-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-xs font-medium whitespace-nowrap text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600;
+    }
+
+    /* Timeline */
+    .bx-tl-view.bx-tl-view-timeline .bx-tl-cnt .bx-tl-items:before {
+        @apply bg-gray-200 dark:bg-gray-700;
     }
 }

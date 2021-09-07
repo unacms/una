@@ -114,6 +114,7 @@ CREATE TABLE `sys_objects_captcha` (
 );
 
 INSERT INTO `sys_objects_captcha` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
+('sys_recaptcha', 'reCAPTCHA', 'BxTemplCaptchaReCAPTCHA', ''),
 ('sys_recaptcha_new', 'reCAPTCHA New', 'BxTemplCaptchaReCAPTCHANew', ''),
 ('sys_recaptcha_invisible', 'reCAPTCHA Invisible', 'BxTemplCaptchaReCAPTCHAInvisible', '');
 
@@ -4041,7 +4042,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (5, 'menu_toolbar.html', '_sys_menu_template_title_toolbar', 0),
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver', 1),
 (7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks', 1),
-(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 8),
+(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 0),
 (9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor', 1),
 (10, 'menu_inline.html', '_sys_menu_template_title_inline', 1),
 (11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical', 0),
@@ -4051,7 +4052,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (15, 'menu_custom_hor.html', '_sys_menu_template_title_custom_hor', 0),
 (16, 'menu_buttons_ver.html', '_sys_menu_template_title_buttons_ver', 1),
 (17, 'menu_inline_sbtn.html', '_sys_menu_template_title_inline_sbtn', 1),
-(18, 'menu_main_submenu_more_auto.html', '_sys_menu_template_title_main_submenu_more_auto', 8),
+(18, 'menu_main_submenu_more_auto.html', '_sys_menu_template_title_main_submenu_more_auto', 0),
 (19, 'menu_floating_blocks_wide.html', '_sys_menu_template_title_floating_blocks_wide', 0),
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
@@ -4060,7 +4061,9 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (24, 'menu_floating_blocks_dash.html', '_sys_menu_template_title_floating_blocks_dash', 0),
 (25, 'menu_block_submenu_hor.html', '_sys_menu_template_title_block_submenu_hor', 1),
 (26, 'menu_block_submenu_ver.html', '_sys_menu_template_title_block_submenu_ver', 1),
-(27, 'menu_profile_followings.html', '_sys_menu_template_title_profile_followings', 0);
+(27, 'menu_profile_followings.html', '_sys_menu_template_title_profile_followings', 0),
+(28, 'menu_main.html', '_sys_menu_template_title_main', 0),
+(29, 'menu_add_content.html', '_sys_menu_template_title_add_content', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4078,14 +4081,14 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 );
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
+('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 28, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 7, 0, 1, 'BxTemplMenuHomepage', ''),
 ('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, 'BxTemplMenuFooter', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
-('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
+('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 29, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 14, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_add_profile_vertical', '_sys_menu_title_add_profile_vertical', 'sys_add_profile_links', 'system', 6, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_account_dashboard', '_sys_menu_title_account_dashboard', 'sys_account_dashboard', 'system', 8, 0, 1, 'BxTemplMenuAccountDashboard', ''),
