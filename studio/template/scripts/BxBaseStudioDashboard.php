@@ -114,16 +114,16 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 	public function serviceGetBlockVersion()
     {
     	$sJsObject = $this->getPageJsObject();
-
+        $aSysInfo = BxDolModuleQuery::getInstance()->getModuleByName('system');
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions.html', array(
         	'js_object' => $sJsObject,
             'domain' => getParam('site_title'),
             'version' => bx_get_ver(),
-            'installed' => bx_time_js(getParam('sys_install_time')),
+            'installed' => bx_time_js($aSysInfo['date']),
 			'bx_if:show_update_info' => array(
-        		'condition' => getParam('sys_update_time') > 0,
+        		'condition' => $aSysInfo['updated'] > 0,
         		'content' => array(
-		        	'updated' => bx_time_js(getParam('sys_update_time')),
+		        	'updated' => bx_time_js($aSysInfo['updated']),
        			)
        		),
         ));

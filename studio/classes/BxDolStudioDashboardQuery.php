@@ -19,12 +19,6 @@ class BxDolStudioDashboardQuery extends BxDolStudioPageQuery
     	$sSql = "SELECT SUM(`current_size`) AS `size` FROM `sys_objects_storage` WHERE `object` LIKE " . $this->escape($sModule . '%') . " LIMIT 1";
     	return $this->getOne($sSql);
     }
-    
-    function setUpdateDate()
-    {
-    	$sSql = "UPDATE `sys_options` SET value = :value WHERE `name` = 'sys_update_time'";
-    	return $this->query($sSql, ['value' => time()]);
-    }
 }
 
 /** @} */

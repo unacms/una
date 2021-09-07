@@ -71,7 +71,7 @@ class BxDolStudioDashboard extends BxTemplStudioWidget
                         $aResult = array('code' => 1, 'message' => $oUpgrader->getError());
 					}
                     else{
-						$this->oDb->setUpdateDate();
+						BxDolModuleQuery::getInstance()->updateModule(array('updated' => time()), array('name' => 'system'));
                         $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_upgrade_started', BX_DOL_URL_STUDIO));
 					}
                     break;
