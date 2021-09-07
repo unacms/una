@@ -2851,6 +2851,7 @@
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Панель инструментов - Пользователь]]></string>
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Панель инструментов - Сайт]]></string>
 	<string name="_sys_menu_set_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
+        <string name="_sys_menu_template_title_add_content"><![CDATA[Добавить содержимое - Меню]]></string>
         <string name="_sys_menu_template_title_block_submenu_hor"><![CDATA[Горизонтальное подменю блолка]]></string>
         <string name="_sys_menu_template_title_block_submenu_ver"><![CDATA[Вертикальное подменю блолка]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Горизонтальные кнопки]]></string>
@@ -2867,6 +2868,7 @@
 	<string name="_sys_menu_template_title_interactive"><![CDATA[Интерактивные горизонтальные ссылки]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные вертикальные ссылки]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Пустое меню]]></string>
+        <string name="_sys_menu_template_title_main"><![CDATA[Навигация по сайту - Меню]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Навигация по сайту - Подменю]]></string>
         <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Навигация по сайту - Подменю (перестраиваемое)]]></string>
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Панель инструментов - Кнопки]]></string>
