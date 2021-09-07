@@ -1517,6 +1517,7 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP-сервер - Пароль]]></string>
 	<string name="_adm_stg_cpt_option_sys_cron_time"><![CDATA[Дата последнего запуска планировщика]]></string>
     <string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string>
+	<string name="_adm_stg_cpt_option_sys_update_time"><![CDATA[Последнее обновление]]></string>
     <string name="_adm_stg_cpt_option_sys_upgrade_channel"><![CDATA[Канал обновлений]]></string>
     <string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
     <string name="_adm_stg_cpt_option_sys_location_field_default"><![CDATA[Поставщик для поля ввода адреса]]></string>

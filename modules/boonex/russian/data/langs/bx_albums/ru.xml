@@ -195,6 +195,8 @@
     <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Добавить/Изменить изображения]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_image"><![CDATA[Изменить изображение]]></string>
     <string name="_bx_albums_menu_item_title_edit_image"><![CDATA[Изменить изображение]]></string>
+    <string name="_bx_albums_menu_item_title_system_delete_image"><![CDATA[Удалить изображение]]></string>
+	  <string name="_bx_albums_menu_item_title_delete_image"><![CDATA[Удалить изображение]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry"><![CDATA[Просмотреть альбом]]></string>

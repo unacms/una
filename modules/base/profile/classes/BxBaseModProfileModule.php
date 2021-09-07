@@ -12,6 +12,7 @@
 define('BX_DOL_PROFILE_REDIRECT_PROFILE', 'profile');
 define('BX_DOL_PROFILE_REDIRECT_LAST', 'last');
 define('BX_DOL_PROFILE_REDIRECT_CUSTOM', 'custom');
+define('BX_DOL_PROFILE_REDIRECT_HOMEPAGE', 'homepage');
 
 define('BX_DOL_PROFILE_ACTIVATE_ALWAYS', 'on');
 define('BX_DOL_PROFILE_ACTIVATE_NEVER', 'off');
@@ -111,7 +112,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $CNF = &$this->_oConfig->CNF;
 
         $aResult = array();
-        $aChoices = array(BX_DOL_PROFILE_REDIRECT_PROFILE, BX_DOL_PROFILE_REDIRECT_LAST, BX_DOL_PROFILE_REDIRECT_CUSTOM);
+        $aChoices = array(BX_DOL_PROFILE_REDIRECT_PROFILE, BX_DOL_PROFILE_REDIRECT_LAST, BX_DOL_PROFILE_REDIRECT_CUSTOM, BX_DOL_PROFILE_REDIRECT_HOMEPAGE);
         foreach($aChoices as $sChoice) 
             $aResult[] = array('key' => $sChoice, 'value' => _t($CNF['T']['option_redirect_aadd_' . $sChoice]));
 

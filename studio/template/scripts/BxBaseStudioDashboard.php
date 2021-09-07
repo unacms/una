@@ -119,7 +119,13 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
         	'js_object' => $sJsObject,
             'domain' => getParam('site_title'),
             'version' => bx_get_ver(),
-            'installed' => bx_time_js(getParam('sys_install_time'))
+            'installed' => bx_time_js(getParam('sys_install_time')),
+			'bx_if:show_update_info' => array(
+        		'condition' => getParam('sys_update_time') > 0,
+        		'content' => array(
+		        	'updated' => bx_time_js(getParam('sys_update_time')),
+       			)
+       		),
         ));
 
     	return array('content' => $sContent);

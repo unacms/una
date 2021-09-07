@@ -263,6 +263,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             	'option_redirect_aadd_profile' => '_bx_orgs_option_redirect_aadd_profile',
             	'option_redirect_aadd_last' => '_bx_orgs_option_redirect_aadd_last',
             	'option_redirect_aadd_custom' => '_bx_orgs_option_redirect_aadd_custom',
+                'option_redirect_aadd_homepage' => '_bx_orgs_option_redirect_aadd_homepage',
                 'option_activation_on' => '_bx_orgs_option_activation_on',
             	'option_activation_off' => '_bx_orgs_option_activation_off',
             	'option_activation_add' => '_bx_orgs_option_activation_add',

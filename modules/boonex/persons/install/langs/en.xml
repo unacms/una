@@ -11,6 +11,7 @@
 	<string name="_bx_persons_option_redirect_aadd_profile"><![CDATA[Profile Page]]></string>
 	<string name="_bx_persons_option_redirect_aadd_last"><![CDATA[Last Page]]></string>
 	<string name="_bx_persons_option_redirect_aadd_custom"><![CDATA[Custom Page]]></string>
+  <string name="_bx_persons_option_redirect_aadd_homepage"><![CDATA[Homepage]]></string>
 	<string name="_bx_persons_option_redirect_aadd_custom_url"><![CDATA[URL for 'Custom Page' redirect]]></string>
   <string name="_bx_persons_option_activation_on"><![CDATA[After creation & after editing]]></string>
   <string name="_bx_persons_option_activation_add"><![CDATA[After creation only]]></string>

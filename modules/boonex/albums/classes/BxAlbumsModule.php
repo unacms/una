@@ -737,6 +737,18 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
     }
+	
+	
+	public function actionDeleteMedia($iMediaId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+		$aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+		$oUploader = BxDolUploader::getObjectInstance($CNF['OBJECT_UPLOADERS'][0], $CNF['OBJECT_STORAGE'], '');
+        $oUploader->deleteGhost($aMediaInfo['file_id'], bx_get_logged_profile_id());
+        
+        echoJson(['redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aMediaInfo['content_id'])]);
+    }
 
     public function actionGetSiblingMedia($iMediaId, $mixedContext)
     {
