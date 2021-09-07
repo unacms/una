@@ -328,8 +328,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view submenu
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_courses_view_submenu', '_bx_courses_menu_title_view_profile_submenu', 'bx_courses_view_submenu', 'bx_courses', 18, 0, 1, 'BxCoursesMenuView', 'modules/boonex/courses/classes/BxCoursesMenuView.php'),
-('bx_courses_view_submenu_cover', '_bx_courses_menu_title_view_profile_submenu_cover', 'bx_courses_view_submenu', 'bx_courses', 7, 0, 1, 'BxCoursesMenuView', 'modules/boonex/courses/classes/BxCoursesMenuView.php');
+('bx_courses_view_submenu', '_bx_courses_menu_title_view_profile_submenu', 'bx_courses_view_submenu', 'bx_courses', 18, 0, 1, 'BxCoursesMenuView', 'modules/boonex/courses/classes/BxCoursesMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_courses_view_submenu', 'bx_courses', '_bx_courses_menu_set_title_view_profile_submenu', 0);

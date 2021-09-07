@@ -402,14 +402,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // generate html
         $aVars = array (
             'module' => $this->_oConfig->getName(),
-
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
-            //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
-
             'action_menu' => $sActionsMenu,
-
             'bx_if:show_avatar' => array(
                 'condition' => $bShowAvatar,
                 'content' => $aShowAvatar

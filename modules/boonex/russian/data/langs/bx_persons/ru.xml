@@ -178,7 +178,7 @@
     <string name="_bx_persons_page_block_title_sys_active_entries_view_showcase"><![CDATA[Активные профили (Витринный просмотр)]]></string>
     <string name="_bx_persons_page_block_title_active_entries_view_showcase"><![CDATA[Активные профили]]></string>
 
-	<string name="_bx_persons_menu_title_submenu"><![CDATA[Персоны - Подменю]]></string>
+    <string name="_bx_persons_menu_title_submenu"><![CDATA[Персоны - Подменю]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Персоны - Подменю]]></string>
     <string name="_bx_persons_menu_set_title_view_profile_actions"><![CDATA[Персоны - Действия]]></string>
     <string name="_bx_persons_menu_title_view_profile_actions"><![CDATA[Персоны - Действия]]></string>
@@ -186,8 +186,7 @@
     <string name="_bx_persons_menu_title_view_profile_actions_more"><![CDATA[Персоны - Дополнительные действия]]></string>
     <string name="_bx_persons_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра персоны]]></string>
     <string name="_bx_persons_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра персоны]]></string>
-    <string name="_bx_persons_menu_title_view_profile_submenu_cover"><![CDATA[Подменю персоны на обложке]]></string>
-	<string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
+    <string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_persons_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_persons_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_persons_menu_item_title_delete"><![CDATA[Удалить]]></string>

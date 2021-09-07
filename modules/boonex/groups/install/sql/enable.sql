@@ -344,8 +344,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view submenu
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_groups_view_submenu', '_bx_groups_menu_title_view_profile_submenu', 'bx_groups_view_submenu', 'bx_groups', 18, 0, 1, 'BxGroupsMenuView', 'modules/boonex/groups/classes/BxGroupsMenuView.php'),
-('bx_groups_view_submenu_cover', '_bx_groups_menu_title_view_profile_submenu_cover', 'bx_groups_view_submenu', 'bx_groups', 7, 0, 1, 'BxGroupsMenuView', 'modules/boonex/groups/classes/BxGroupsMenuView.php');
+('bx_groups_view_submenu', '_bx_groups_menu_title_view_profile_submenu', 'bx_groups_view_submenu', 'bx_groups', 18, 0, 1, 'BxGroupsMenuView', 'modules/boonex/groups/classes/BxGroupsMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_groups_view_submenu', 'bx_groups', '_bx_groups_menu_set_title_view_profile_submenu', 0);

@@ -255,10 +255,9 @@
     <string name="_bx_orgs_menu_title_view_profile_actions_more"><![CDATA[Организации - Дополнительные Действия]]></string>
     <string name="_bx_orgs_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра организации]]></string>
     <string name="_bx_orgs_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра организации]]></string>
-    <string name="_bx_orgs_menu_title_view_profile_submenu_cover"><![CDATA[Подменю организации на обложке]]></string>
     <string name="_bx_orgs_menu_title_entries_my"><![CDATA[Организации профиля - Меню действий]]></string>
     <string name="_bx_orgs_menu_set_title_entries_my"><![CDATA[Организации профиля - Меню]]></string>
-	<string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
+    <string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_orgs_menu_item_title_delete"><![CDATA[Удалить]]></string>
