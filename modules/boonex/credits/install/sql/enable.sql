@@ -118,7 +118,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_admt_credits', '_bx_credits_menu_item_title_admt_credits', 'page.php?i=credits-history-administration', '', '_self', 'copyright col-green3', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_admt_credits', '_bx_credits_menu_item_title_admt_credits', 'page.php?i=credits-history-administration', '', '_self', 'copyright', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 
 -- GRIDS: bundles
