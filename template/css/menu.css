@@ -424,6 +424,9 @@ ul.bx-menu-floating-blocks {
     justify-content: flex-start;
     align-items: center
 }
+.bx-menu-floating-blocks-dash-item span a {
+    display:inline-block !important;
+}
 .bx-menu-floating-blocks-dash-item .bx-menu-floating-blocks-icon {
     position: relative;
     display: -webkit-flex;
