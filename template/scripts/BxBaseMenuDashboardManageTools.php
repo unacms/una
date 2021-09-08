@@ -53,14 +53,15 @@ class BxBaseMenuDashboardManageTools extends BxTemplMenu
                 'condition' => $aValues['counter2_value'] > 0,
                 'content' => array(
                     'value' => $aValues['counter2_value'],
-                    'caption' => $aValues['counter2_caption']
+                    'caption' => $aValues['counter2_caption'],
+                    'link' => $aMenuItem['link'] . '?order_field=reports&order_dir=desc'
                 )
             ),
             'bx_if:counter3' => array(
                 'condition' => $aValues['counter3_value'] > 0,
                 'content' => array(
                     'total_value' => $aValues['counter3_value'],
-                    'total_caption' => $aValues['counter3_caption']     
+                    'total_caption' => $aValues['counter3_caption']
                 )
             ),
         );

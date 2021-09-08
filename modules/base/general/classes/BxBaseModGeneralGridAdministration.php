@@ -30,6 +30,8 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_aQueryReset = array($this->_aOptions['filter_get'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+        
         $this->_sManageType = BX_DOL_MANAGE_TOOLS_ADMINISTRATION;
         $this->_sParamsDivider = '#-#';
 
