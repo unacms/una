@@ -171,10 +171,10 @@ BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onCompl
                     }
                 });
             }
-
-            if(typeof onComplete === 'function')
-                return onComplete(aData);
         }
+
+        if(typeof onComplete === 'function')
+            return onComplete(aData);
     });
 };
 
