@@ -132,7 +132,7 @@ BxDolUploaderSimple.prototype.cancelAll = function () {
     this.onUploadCompleted(_t('_sys_uploader_upload_canceled'));
 }
 
-BxDolUploaderSimple.prototype.restoreGhosts = function () {
+BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onComplete) {
     var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&_t=' + escape(new Date());
     var $this = this;
 
@@ -146,26 +146,63 @@ BxDolUploaderSimple.prototype.restoreGhosts = function () {
             $('#' + $this._sResultContainerId + ' .bx-uploader-ghost').remove();
 
         if ('object' === typeof(aData)) {
-            $.each(aData, function(iFileId, oVars) {
-            	var oFileContainer = $('#' + $this._getFileContainerId(iFileId));
-                if (oFileContainer.length > 0)
-                    return;
-                var sHTML;
-                if (typeof $this._sTemplateGhost == 'object')
-                    sHTML = $this._sTemplateGhost[iFileId];
-                else
-                    sHTML = $this._sTemplateGhost;
-                for (var i in oVars)
-                    sHTML = sHTML.replace (new RegExp('{'+i+'}', 'g'), oVars[i]);
-                
-                $('#' + $this._sResultContainerId).prepend(sHTML);
-
-                oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
-            });
+            if('object' === typeof(aData.g) && 'object' === typeof(aData.o)) 
+                for(var i in aData.o) {
+                    var iFileId = aData.o[i];
+                    $this.showGhost(iFileId, aData.g[iFileId]);
+                }
+            else
+                $.each(aData, function(iFileId, oVars) {
+                    $this.showGhost(iFileId, oVars);
+                });
 
             $('#' + $this._sResultContainerId).bx_show_more_check_overflow();
+
+            if(bInitReordering) {
+                $('#' + $this._sResultContainerId).sortable({
+                    items: '.bx-uploader-ghost', 
+                    start: function(oEvent, oUi) {
+                        oUi.item.addClass('bx-uploader-ghost-dragging');
+                    },
+                    stop: function(oEvent, oUi) {
+                        oUi.item.removeClass('bx-uploader-ghost-dragging');
+
+                        $this.reorderGhosts(oUi.item);
+                    }
+                });
+            }
+
+            if(typeof onComplete === 'function')
+                return onComplete(aData);
         }
     });
+};
+
+BxDolUploaderSimple.prototype.reorderGhosts = function(oDraggable) {
+    var sUrl = this._getUrlWithStandardParams() + '&a=reorder_ghosts&f=json' + '&c=' + this._iContentId + '&' + $('#' + this._sResultContainerId).sortable('serialize', {key: 'ghosts[]'}) + '&_t=' + escape(new Date());
+
+    $.getJSON(sUrl, function (aData) {
+        processJsonData(aData);
+    });
+};
+
+BxDolUploaderSimple.prototype.showGhost = function(iId, oVars) {
+    var oFileContainer = $('#' + this._getFileContainerId(iId));
+    if(oFileContainer.length > 0)
+        return;
+
+    var sHTML;
+    if (typeof this._sTemplateGhost == 'object')
+        sHTML = this._sTemplateGhost[iId];
+    else
+        sHTML = this._sTemplateGhost;
+
+    for(var i in oVars)
+        sHTML = sHTML.replace (new RegExp('{' + i + '}', 'g'), oVars[i]);
+
+    $('#' + this._sResultContainerId).append(sHTML);
+
+    oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
 };
 
 BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {

@@ -15,10 +15,9 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function __construct($sMode = '', $aParams = array())
     {
-       
         $this->sUnitTemplateLiveSearch = 'unit_media_live_search.html';
-		
-		$aParams['unit_views'] = array('gallery' => 'unit_media.html', 'showcase' => 'unit_showcase.html');
+
+        $aParams['unit_views'] = array('gallery' => 'unit_media.html', 'showcase' => 'unit_showcase.html');
         parent::__construct($sMode, $aParams);
 
         $this->aCurrent = array(
@@ -33,7 +32,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
                 'album' => array('value' => '', 'field' => 'content_id', 'operator' => '='),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
             ),
             'join' => array(
                 'albums' => array(
@@ -79,13 +78,17 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
         switch ($sMode) {
             case 'album':
-                $this->aCurrent['restriction']['album']['value'] = (int)$aParams['album_id'];
-                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . (int)$aParams['album_id']);
+                $iAlbumId = (int)$aParams['album_id'];
+                $this->aCurrent['restriction']['album']['value'] = $iAlbumId;
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iAlbumId);
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_media_in_album');
-                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode . '/' . (int)$aParams['album_id'];
+                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode . '/' . $iAlbumId;
                 $this->aCurrent['sorting'] = 'order';
                 $this->sOrderDirection = 'ASC';
                 $this->setProcessPrivateContent(true);
+
+                if($CNF['PARAM_ORDER_BY_GHOSTS'])
+                    $this->_updateCurrentForOrderByGhosts();
                 break;
 
             case 'favorite':
@@ -159,6 +162,10 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $aSql['order'] = " ORDER BY `" . $sTable . "`.`order` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . " ";
                 break;
 
+            case 'order_by_ghosts':
+                $aSql['order'] = " ORDER BY `g`.`order` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . " ";
+                break;
+
             case 'last':
                 $aSql['order'] = " ORDER BY `f`.`added` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . " ";
                 break;
@@ -212,12 +219,17 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         foreach ($aRestrictions as $sKey) 
             if (0 === strpos($sKey, 'privacy_'))
                 unset($this->aCurrent['restriction'][$sKey]);
-        
+
         switch ($this->aCurrent['sorting']) {
             case 'order':
                 $this->sOrderDirection = $isNext ? 'ASC' : 'DESC';
                 $sOper = $isNext ? '>' : '<';
                 $this->aCurrent['restriction_sql'] = " AND (`{$this->aCurrent['table']}`.`order` {$sOper} {$aMediaInfo['order']} OR (`{$this->aCurrent['table']}`.`order` = {$aMediaInfo['order']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
+                break;
+            case 'order_by_ghosts':
+                $this->sOrderDirection = $isNext ? 'ASC' : 'DESC';
+                $sOper = $isNext ? '>' : '<';
+                $this->aCurrent['restriction_sql'] = " AND (`g`.`order` {$sOper} {$aMediaInfo['gorder']} OR (`g`.`order` = {$aMediaInfo['gorder']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
                 break;
             case 'last':
                 $this->aCurrent['restriction_sql'] = " AND (`f`.`added` {$sOper} {$aMediaInfo['added']} OR (`f`.`added` = {$aMediaInfo['added']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
@@ -241,6 +253,23 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']);
     }
+
+    protected function _updateCurrentForOrderByGhosts()
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $this->aCurrent['join']['ghosts'] = [
+            'type' => 'INNER',
+            'table' => 'sys_storage_ghosts',
+            'table_alias' => 'g',
+            'mainField' => 'file_id',
+            'on_sql' => $this->oModule->_oDb->prepareAsString(" `g`.`id`=`bx_albums_files2albums`.`file_id` AND `g`.`content_id`=`bx_albums_files2albums`.`content_id` AND `g`.`object`=? ", $CNF['OBJECT_STORAGE']),
+            'joinFields' => array('order'),
+        ];
+        $this->aCurrent['sorting'] = 'order_by_ghosts';
+        $this->sOrderDirection = 'ASC';
+    }
+
 /*
     function displaySearchUnit ($aData)
     {

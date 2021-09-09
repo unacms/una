@@ -2095,6 +2095,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   `object` varchar(64) NOT NULL,
   `content_id` int(11) NOT NULL,
   `created` int(10) unsigned NOT NULL,
+  `order` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`,`object`),
   KEY `created` (`created`),
   KEY `profile_object_content` (`profile_id`,`object`,`content_id`)

@@ -665,7 +665,7 @@ class BxDolSearchResult implements iBxDolReplaceable
                 if (isset($aValue['groupTable']))
                     $aSql['groupBy'] =  "GROUP BY `{$aValue['groupTable']}`.`{$aValue['groupField']}`, ";
                 $sOn = isset($aValue['mainTable']) ? $aValue['mainTable'] : $this->aCurrent['table'];
-                $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` $sTableAlias ON `{$sAlias}`.`{$aValue['onField']}`=`$sOn`.`{$aValue['mainField']}`";
+                $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` $sTableAlias ON " . (!empty($aValue['on_sql']) ? $aValue['on_sql'] : "`{$sAlias}`.`{$aValue['onField']}`=`$sOn`.`{$aValue['mainField']}`");
                 $aSql['ownFields'] .= $this->setFieldUnit($aValue['mainField'], $sOn, '', $bRenameMode);
             }
             $aSql['joinFields'] = trim($aSql['joinFields'], ', ');

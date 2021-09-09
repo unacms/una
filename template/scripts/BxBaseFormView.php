@@ -1414,6 +1414,15 @@ BLAH;
             $sUploaders .= $oUploader->getUploaderButton($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParams, $this->_bDynamicMode);
         }
 
+        $bInitReordering = $oUploader && !empty($aInput['init_reordering']);
+        if($bInitReordering)
+            $this->oTemplate->addJs(array(
+                'jquery-ui/jquery.ui.core.min.js',
+                'jquery-ui/jquery.ui.widget.min.js',
+                'jquery-ui/jquery.ui.mouse.min.js',
+                'jquery-ui/jquery.ui.sortable.min.js',
+            ));
+
         return $this->oTemplate->parseHtmlByName('form_field_uploader.html', array(
             'uploaders_buttons' => $sUploaders,
             'info' => $sInfo,
@@ -1422,6 +1431,7 @@ BLAH;
             'id_container_result' => $oUploader ? $oUploader->getIdContainerResult() : '',
             'uploader_instance_name' => $oUploader ? $oUploader->getNameJsInstanceUploader() : '',
             'is_init_ghosts' => isset($aInput['init_ghosts']) && !$aInput['init_ghosts'] ? 0 : 1,
+            'is_init_reordering' => !$bInitReordering ? 0 : 1
         ));
     }
 

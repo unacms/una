@@ -341,11 +341,47 @@ abstract class BxDolUploader extends BxDolFactory
             $a[$aFile['id']] = array_merge($aVars, $this->getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder));
         }
 
+        if ('array' == $sFormat) {
+            return $a;
+        }
+        else if ('json' == $sFormat) {
+            return json_encode($a);
+        } else { // html format is not suported for this data type
+            return false;
+        }
+    }
+
+    public function getGhostsWithOrder($iProfileId, $sFormat, $sImagesTranscoder = false, $iContentId = false)
+    {
+        $a = $this->getGhosts($iProfileId, 'array', $sImagesTranscoder, $iContentId);
+        if(!empty($a) && is_array($a))
+            $a = ['g' => $a, 'o' => array_keys($a)];
+
         if ('json' == $sFormat) {
             return json_encode($a);
         } else { // html format is not suported for this data type
             return false;
         }
+    }
+    
+    /**
+     * Reorder uploaded ghosts.
+     * @param $iProfileId - profile id to get orphaned files from
+     * @param $sFormat - output format, only 'json' output formt is supported
+     * @param $aGhosts - an array of ordered ghosts' IDs.
+     * @param $iContentId - content id to order orphaned files for, false by default
+     * @return JSON string
+     */
+    public function reorderGhosts($iProfileId, $sFormat, $aGhosts, $iContentId = false)
+    {
+        $bResult = true;
+        if(($oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject)) !== false)
+            $bResult = $oStorage->reorderGhosts($this->isAdmin($iContentId) && $iContentId ? false : $iProfileId, $iContentId, $aGhosts);
+
+        if($sFormat == 'json')
+            return json_encode($bResult ? [] : ['msg' => _t('_error occured')]);
+        else
+            return $bResult;
     }
 
     /**

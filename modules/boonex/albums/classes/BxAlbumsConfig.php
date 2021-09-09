@@ -83,6 +83,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_albums_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_albums_searchable_fields',
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_albums_per_page_for_favorites_lists',
+            'PARAM_ORDER_BY_GHOSTS' => true,
 
             // objects
             'OBJECT_STORAGE' => 'bx_albums_files',
