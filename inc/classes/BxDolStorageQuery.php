@@ -309,6 +309,7 @@ class BxDolStorageQuery extends BxDolDb
 
         $sWhere = '';
         $sJoin = '';
+        $sOrder = '';
         if ($isGhostsOnly) {
             $aBindings['object'] = $this->_aObject['object'];
 
@@ -333,6 +334,8 @@ class BxDolStorageQuery extends BxDolDb
             }
 
             $sJoin .= ')';
+
+            $sOrder = ' ORDER BY `g`.`order` ASC';
         } 
         else {
             if (is_array($mixedProfileId) && $mixedProfileId) {
@@ -345,7 +348,7 @@ class BxDolStorageQuery extends BxDolDb
             }
         }
 
-        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $sWhere . " ORDER BY `g`.`order` ASC";
+        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $sWhere . $sOrder;
         return $this->getAll($sQuery, $aBindings);
     }
 

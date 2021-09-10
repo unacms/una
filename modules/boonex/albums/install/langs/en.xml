@@ -48,8 +48,11 @@
 
         <string name="_bx_albums_form_media"><![CDATA[Medias]]></string>
         <string name="_bx_albums_form_media_display_edit"><![CDATA[Edit Media]]></string>
+        <string name="_bx_albums_form_media_display_move"><![CDATA[Move Media]]></string>
         <string name="_bx_albums_form_media_input_sys_title"><![CDATA[Caption]]></string>
 	<string name="_bx_albums_form_media_input_title"><![CDATA[Caption]]></string>
+        <string name="_bx_albums_form_media_input_sys_content_id"><![CDATA[Album]]></string>
+	<string name="_bx_albums_form_media_input_content_id"><![CDATA[Album]]></string>
         <string name="_bx_albums_form_media_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_albums_form_media_input_do_submit"><![CDATA[Submit]]></string>
         <string name="_bx_albums_form_media_input_sys_do_cancel"><![CDATA[Cancel]]></string>
@@ -197,8 +200,10 @@
     <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Add/Edit Pictures]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_image"><![CDATA[Edit Image]]></string>
     <string name="_bx_albums_menu_item_title_edit_image"><![CDATA[Edit Image]]></string>
-	<string name="_bx_albums_menu_item_title_system_delete_image"><![CDATA[Delete Image]]></string>
-	<string name="_bx_albums_menu_item_title_delete_image"><![CDATA[Delete Image]]></string>
+    <string name="_bx_albums_menu_item_title_system_delete_image"><![CDATA[Delete Image]]></string>
+    <string name="_bx_albums_menu_item_title_delete_image"><![CDATA[Delete Image]]></string>
+    <string name="_bx_albums_menu_item_title_system_move_image"><![CDATA[Move Image To]]></string>
+    <string name="_bx_albums_menu_item_title_move_image"><![CDATA[Move Image To]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry"><![CDATA[View Album]]></string>

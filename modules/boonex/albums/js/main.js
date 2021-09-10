@@ -54,31 +54,51 @@ BxAlbumsMain.prototype.editMedia = function(oButton, iId) {
     );
 };
 
-BxAlbumsMain.prototype.deleteMedia = function(oButton, iId) {
-    var $this = this;
-	
-    bx_confirm(_t('_Are_you_sure'), function() {
-		var oDate = new Date();
-		$this.loadingInButton(oButton, true);
-
-		$.get(
-			$this._sActionsUrl + 'delete_media/' + iId, 
-			{
-				_t: oDate.getTime()
-			},
-			function(oData) {
-				$this.loadingInButton(oButton, false);
-
-				processJsonData(oData);
-			},
-			'json'
-		);
-	});
-};
-
 BxAlbumsMain.prototype.onEditMedia = function(oData) {
     if(oData && oData.content != undefined)
         $('#' + this._oHtmlIds['subentry_votes'] + oData.content.subentry_id).html(oData.content.votes_formated);
+};
+
+BxAlbumsMain.prototype.deleteMedia = function(oButton, iId) {
+    var $this = this;
+
+    bx_confirm(_t('_Are_you_sure'), function() {
+        var oDate = new Date();
+        $this.loadingInButton(oButton, true);
+
+        $.get(
+            $this._sActionsUrl + 'delete_media/' + iId, 
+            {
+                _t: oDate.getTime()
+            },
+            function(oData) {
+                $this.loadingInButton(oButton, false);
+
+                processJsonData(oData);
+            },
+            'json'
+        );
+    });
+};
+
+BxAlbumsMain.prototype.moveMedia = function(oButton, iId) {
+    var $this = this;
+    var oDate = new Date();
+
+    this.loadingInButton(oButton, true);
+
+    $.get(
+        this._sActionsUrl + 'move_media/' + iId, 
+        {
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            $this.loadingInButton(oButton, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
 };
 
 BxAlbumsMain.prototype.loadingInButton = function(e, bShow) {

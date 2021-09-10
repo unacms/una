@@ -126,6 +126,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_albums_entry_delete',
             'OBJECT_FORM_MEDIA' => 'bx_albums_media',
             'OBJECT_FORM_MEDIA_DISPLAY_EDIT' => 'bx_albums_media_edit',
+            'OBJECT_FORM_MEDIA_DISPLAY_MOVE' => 'bx_albums_media_move',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_albums_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_albums_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_MEDIA' => 'bx_albums_view_media', // actions menu on view media page

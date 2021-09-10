@@ -90,7 +90,16 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
         ));
     }
 	
-	protected function _getMenuItemDeleteImage($aItem)
+    protected function _getMenuItemDeleteImage($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $this->_getMenuItemByNameActions($aItem, array(
+            'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']
+        ));
+    }
+
+    protected function _getMenuItemMoveImage($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 

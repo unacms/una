@@ -48,8 +48,11 @@
 
         <string name="_bx_albums_form_media"><![CDATA[Изображения]]></string>
         <string name="_bx_albums_form_media_display_edit"><![CDATA[Редактировать изображение]]></string>
+        <string name="_bx_albums_form_media_display_move"><![CDATA[Переместить изображение]]></string>
 	<string name="_bx_albums_form_media_input_sys_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_albums_form_media_input_title"><![CDATA[Заголовок]]></string>
+        <string name="_bx_albums_form_media_input_sys_content_id"><![CDATA[Альбом]]></string>
+	<string name="_bx_albums_form_media_input_content_id"><![CDATA[Альбом]]></string>
         <string name="_bx_albums_form_media_input_sys_do_submit"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_albums_form_media_input_do_submit"><![CDATA[Опубликовать]]></string>
         <string name="_bx_albums_form_media_input_sys_do_cancel"><![CDATA[Отмена]]></string>
@@ -196,7 +199,9 @@
     <string name="_bx_albums_menu_item_title_system_edit_image"><![CDATA[Изменить изображение]]></string>
     <string name="_bx_albums_menu_item_title_edit_image"><![CDATA[Изменить изображение]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_image"><![CDATA[Удалить изображение]]></string>
-	  <string name="_bx_albums_menu_item_title_delete_image"><![CDATA[Удалить изображение]]></string>
+    <string name="_bx_albums_menu_item_title_delete_image"><![CDATA[Удалить изображение]]></string>
+    <string name="_bx_albums_menu_item_title_system_move_image"><![CDATA[Переместить изображение в]]></string>
+    <string name="_bx_albums_menu_item_title_move_image"><![CDATA[Переместить изображение в]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry"><![CDATA[Просмотреть альбом]]></string>
