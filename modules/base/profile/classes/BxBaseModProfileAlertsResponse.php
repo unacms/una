@@ -91,8 +91,11 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             $this->processTimelineView($oAlert, $oAlert->iObject);
             break;
 
-        case 'timeline_comment':
         case 'timeline_report':
+            $this->processTimelineEventsBoolResult($oAlert, $oAlert->iObject,'checkAllowedView');
+            break;    
+            
+        case 'timeline_comment':
         case 'timeline_vote':
         case 'timeline_score':
             $this->processTimelineEventsBoolResult($oAlert, $oAlert->iObject);
