@@ -20,8 +20,9 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'add-images-to-album' => 'checkAllowedEdit',
             'edit-album' => 'checkAllowedEdit',
             'edit-image' => 'checkAllowedEdit',
+            'move-image' => 'checkAllowedEdit',
             'delete-album' => 'checkAllowedDelete',
-			'delete-image' => 'checkAllowedDelete',
+            'delete-image' => 'checkAllowedDelete',
         );
 
         $this->CNF = array (
