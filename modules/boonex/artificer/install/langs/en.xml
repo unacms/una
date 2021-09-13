@@ -12,6 +12,15 @@
     <string name="_bx_artificer_stg_cpt_category_styles_custom"><![CDATA[Custom Styles]]></string>
     <string name="_bx_artificer_stg_cpt_option_styles_custom"><![CDATA[Custom Styles]]></string>
 
+    <!-- Pages -->
+    <string name="_bx_artificer_page_block_title_splash"><![CDATA[Splash]]></string>
+
     <!-- Menus -->
     <string name="_bx_artificer_lmi_cpt_styles"><![CDATA[Styles]]></string>
+
+    <!-- Other -->
+    <string name="_bx_artificer_txt_splash_line1"><![CDATA[The Good]]></string>
+    <string name="_bx_artificer_txt_splash_line2"><![CDATA[Social Network]]></string>
+    <string name="_bx_artificer_txt_splash_line3"><![CDATA[Online.me is an independent social network that protects privacy, promotes freedom of expression and creates positive experiences.]]></string>
+    <string name="_bx_artificer_txt_splash_powered"><![CDATA[Powered by]]></string>
 </resources>
