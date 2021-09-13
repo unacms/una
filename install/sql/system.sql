@@ -4528,7 +4528,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_audit_administration', 'content_id', '_adm_form_txt_audit_content', '20%', 1, 25, '', 3),
 ('sys_audit_administration', 'author_id', '_adm_form_txt_audit_author_content', '10%', 1, 25, '', 4),
 ('sys_audit_administration', 'content_module', '_adm_form_txt_audit_module', '10%', 1, 25, '', 5),
-('sys_audit_administration', 'context_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
+('sys_audit_administration', 'context_profile_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
 ('sys_audit_administration', 'action_lang_key', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 7),
 
 ('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
