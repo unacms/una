@@ -4376,7 +4376,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
 ('sys_studio_groups_roles', 'Sql', 'SELECT * FROM `sys_form_pre_values` WHERE 1 ', 'sys_form_pre_values', 'id', 'Order', '', '', 20, NULL, 'start', '', '', 'LKey', 'like', '', '', 'BxTemplStudioFormsGroupsRoles', ''),
 
-('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', 'content_module,profile_id,content_id,context_profile_id,added', 'action_lang_key', 'BxTemplAuditGrid', ''),
+('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', 'content_module,profile_id,content_id,author_id,context_profile_id,added', 'action_lang_key', 'BxTemplAuditGrid', ''),
 
 ('sys_badges_administration', 'Sql', 'SELECT * FROM `sys_badges` WHERE 1 ', 'sys_badges', 'id', 'added', '', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 'BxTemplStudioBadgesGrid', ''),
 
@@ -4528,7 +4528,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_audit_administration', 'content_id', '_adm_form_txt_audit_content', '20%', 1, 25, '', 3),
 ('sys_audit_administration', 'author_id', '_adm_form_txt_audit_author_content', '10%', 1, 25, '', 4),
 ('sys_audit_administration', 'content_module', '_adm_form_txt_audit_module', '10%', 1, 25, '', 5),
-('sys_audit_administration', 'context_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
+('sys_audit_administration', 'context_profile_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
 ('sys_audit_administration', 'action_lang_key', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 7),
 
 ('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),

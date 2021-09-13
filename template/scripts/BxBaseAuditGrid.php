@@ -46,12 +46,11 @@ class BxBaseAuditGrid extends BxDolAuditGrid
     {
         $mixedValue = '';
         if ($aRow['content_id'] > 0){
-            $iAuthorProfileId = BxDolRequest::serviceExists($aRow['content_module'], 'get_author') ? BxDolService::call($aRow['content_module'], 'get_author', array($aRow['content_id'])) : '';
-            $oProfile = BxDolProfile::getInstance($iAuthorProfileId);
-            if ($oProfile){
-                $mixedValue = BxDolTemplate::getInstance()->parseLink($oProfile->getUrl(), $oProfile->getDisplayName());
+			$sLink = BxDolRequest::serviceExists($aRow['content_module'], 'get_link') ? BxDolService::call($aRow['content_module'], 'get_link', array($aRow['content_id'])) : '';
+			$sTitle = BxDolRequest::serviceExists($aRow['content_module'], 'get_title') ? BxDolService::call($aRow['content_module'], 'get_title', array($aRow['content_id'])) : '';
+            if ($sLink){
+                $mixedValue = BxDolTemplate::getInstance()->parseLink($sLink, $sTitle);
             }
-            
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
