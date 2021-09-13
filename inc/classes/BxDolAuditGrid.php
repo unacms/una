@@ -53,7 +53,8 @@ class BxDolAuditGrid extends BxTemplGrid
         $this->_aFilterProfileValues[''] = _t('_sys_audit_filter_profile_select');
         foreach($aProfiles as $iProfile){
             $oProfile = BxDolProfile::getInstance($iProfile);
-            $this->_aFilterProfileValues[$iProfile] = $oProfile->getDisplayName();
+			if ($oProfile)
+				$this->_aFilterProfileValues[$iProfile] = $oProfile->getDisplayName();
         }
 
     	$sFilterProfile = bx_get($this->_sFilterProfileName);
@@ -110,9 +111,8 @@ class BxDolAuditGrid extends BxTemplGrid
         
         if(bx_get('content_id') && is_numeric(bx_get('content_id')))
             $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `content_id` = ?", (int)bx_get('content_id'));
-        if(bx_get('actor_id')  && is_numeric(bx_get('actor_id')))
-            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `profile_id` = ?", (int)bx_get('actor_id'));
-        if(bx_get('context_id')  && is_numeric(bx_get('context_id')))
+        
+		if(bx_get('context_id')  && is_numeric(bx_get('context_id')))
             $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `context_profile_id` = ?", (int)bx_get('context_id'));
         
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
