@@ -20,7 +20,7 @@
 
     /* Common elements: Buttons */
     .bx-btn {
-        @apply group relative inline-flex items-center box-border w-min h-8 px-2.5 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-base font-medium whitespace-nowrap text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600;
+        @apply group relative inline-flex justify-center items-center box-border w-min h-8 px-2.5 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 shadow-sm;
     }
 
     .bx-btn i, 
@@ -32,12 +32,16 @@
         @apply ml-2 first:ml-0 no-underline;
     }
 
+    .bx-btn.bx-btn-primary {
+        @apply border-transparent text-white hover:text-white dark:hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    }
+
     .bx-btn.bx-btn-disabled {
         @apply bg-gray-200 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
     }
 
     .bx-btn.bx-btn-small {
-        @apply group relative inline-flex items-center box-border w-min h-7 px-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-xs font-medium whitespace-nowrap text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600;
+        @apply h-7 text-xs;
     }
     
     /* Common elements: Menus */

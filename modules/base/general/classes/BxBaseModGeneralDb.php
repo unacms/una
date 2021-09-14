@@ -90,6 +90,11 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 break;
 
             case 'all':
+                if(isset($aParams['count']) && $aParams['count'] === true) {
+                    $aMethod['name'] = 'getOne';
+                    $sSelectClause = 'COUNT(`' . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . '`)';
+                }
+
                 $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
                 break;
         }

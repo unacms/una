@@ -46,6 +46,41 @@ class BxDolCmtsQuery extends BxDolDb
         parent::__construct();
     }
 
+    public static function getInfoBy($aParams)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+        
+        $sSelectClause = "`ti`.*";
+
+        switch($aParams['type']) {
+            case 'uniq_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['uniq_id'] = (int)$aParams['uniq_id'];
+
+                $sWhereClause .= " AND `ti`.`id` = :uniq_id";
+                break;
+
+            case 'all':
+                if(isset($aParams['count']) && $aParams['count'] === true) {
+                    $aMethod['name'] = 'getOne';
+                    $sSelectClause = "COUNT(`ti`.`id`)";
+                }
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . BxDolCmts::$sTableIds . "` " . $sJoinClause . " AS `ti` WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array(array($oDb, $aMethod['name']), $aMethod['params']);
+    }
+
     public static function getInfoByUniqId($iUniqId)
     {
         $oDb = BxDolDb::getInstance();
