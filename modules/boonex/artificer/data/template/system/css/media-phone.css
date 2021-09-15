@@ -1,0 +1,8 @@
+@import url(../../../../../../../template/css/media-phone.css);
+
+
+/* --- General ---*/
+.bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
+    margin-left: 0;
+    margin-right: 0;
+}

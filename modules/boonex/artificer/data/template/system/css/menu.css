@@ -44,6 +44,12 @@ li.bx-menu-inter-hidden {
     padding: 0;
 }
 
+.bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-item-addon {
+    position: absolute;
+    top: -0.375rem;
+    right: -0.375rem;
+}
+
 /*--- Account Popup ---*/
 @media (min-width:720px) {
     #bx-sliding-menu-account.bx-sliding-menu-main {

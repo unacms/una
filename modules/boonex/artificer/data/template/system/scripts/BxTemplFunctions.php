@@ -13,17 +13,78 @@ class BxTemplFunctions extends BxBaseFunctions
     {
         parent::__construct($oTemplate);
     }
-    
-    public function getMainLogo($aParams = array())
+
+    function getMainLogo($aParams = array())
     {
-        if(!isset($aParams['attrs']))
-            $aParams['attrs'] = array();
+        $oDesigns = BxDolDesigns::getInstance();
 
-        $aParams['attrs']['class'] = '';
+        $sTitle = getParam('site_title');
+        $bTitle = !empty($sTitle);
 
-        return parent::getMainLogo($aParams);
+        $sAlt = $oDesigns->getSiteLogoAlt();
+        if(empty($sAlt) && $bTitle)
+            $sAlt = $sTitle;
+        $sAltAttr = bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE);
+
+        $bTmplVarsShowTitle = $bTitle;
+        $aTmplVarsShowImage = [];
+        $aTmplVarsShowImageMini = [];
+
+        $bDefault = false;
+        if(($sFileUrl = $this->getMainLogoUrl()) !== false || ($bDefault = (!$bTitle && ($sFileUrl = $this->_oTemplate->getImageUrl('logo-generic.svg')) != ''))) {
+            $iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
+            $sMaxWidth = $iLogoWidth > 0 ? 'max-width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+
+            $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
+            $sMaxHeight = $iLogoHeight > 0 ? 'max-height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+
+            $bTmplVarsShowTitle = false;
+            $aTmplVarsShowImage = [
+                'class' => '',
+                'style' => $sMaxWidth . $sMaxHeight,
+                'src' => $sFileUrl,
+                'alt' => $sAltAttr
+            ];
+
+            if($bDefault) {
+                $aTmplVarsShowImage['class'] = 'hidden lg:block';
+
+                if(($sFileUrl = $this->_oTemplate->getImageUrl('mark-generic.svg')) != '')
+                    $aTmplVarsShowImageMini = [
+                        'class' => 'block lg:hidden',
+                        'style' => $sMaxWidth . $sMaxHeight,
+                        'src' => $sFileUrl,
+                        'alt' => $sAltAttr
+                    ];
+            }
+        }
+
+        $aAttrs = [
+            'href' => BX_DOL_URL_ROOT, 
+            'title' => $sAltAttr
+        ];
+        if(!empty($aParams['attrs']) && is_array($aParams['attrs']))
+            $aAttrs = array_merge($aAttrs, $aParams['attrs']);
+
+        return $this->_oTemplate->parseHtmlByName('logo_main.html', [
+            'attrs' => bx_convert_array2attrs($aAttrs),
+            'bx_if:show_title' => [
+                'condition' => $bTmplVarsShowTitle,
+                'content' => [
+                    'logo' => $sTitle,
+                ]
+            ],
+            'bx_if:show_image' => [
+                'condition' => !empty($aTmplVarsShowImage),
+                'content' => $aTmplVarsShowImage
+            ],
+            'bx_if:show_image_mini' => [
+                'condition' => !empty($aTmplVarsShowImageMini),
+                'content' => $aTmplVarsShowImageMini
+            ]
+        ]);
     }
-    
+
     public function TemplPageAddComponent($sKey)
     {
         switch( $sKey ) {
