@@ -49,7 +49,12 @@ class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderCrop
         if (!$s || !$iContentId) // if we're creating new profile return all ghosts
             return $s;
 
-        $a = json_decode($s, true);
+        $a = array();
+        if ($sFormat == 'array')
+            $a = $s;
+        else if ($sFormat == 'json')
+            $a = json_decode($s, true);
+
         if (!$a)
             return $s;
 
@@ -65,7 +70,14 @@ class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderCrop
 
         }
 
-        return json_encode($aResult);
+        if ('array' == $sFormat) {
+            return $a;
+        }
+        else if ('json' == $sFormat) {
+            return json_encode($a);
+        } else { // html format is not suported for this data type
+            return false;
+        }
     }
 
     protected function isAdmin ($iContentId = 0)
