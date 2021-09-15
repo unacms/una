@@ -37,6 +37,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_bBriefCards;
     protected $_aBriefCardsTags;
+    protected $_sVideosPreload;
     protected $_sVideosAutoplay;
     protected $_iPreloadComments;
     protected $_iPreloadCommentsMax;
@@ -160,6 +161,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
                 'form_input_title_object_privacy_view' => '_bx_timeline_form_post_input_object_privacy_view',
+                'option_vp_auto' => '_bx_timeline_option_videos_preload_auto',
+                'option_vp_metadata' => '_bx_timeline_option_videos_preload_metadata',
+                'option_vp_none' => '_bx_timeline_option_videos_preload_none',
                 'option_vap_off' => '_bx_timeline_option_videos_autoplay_off',
                 'option_vap_on_mute' => '_bx_timeline_option_videos_autoplay_on_mute',
                 'option_vap_on' => '_bx_timeline_option_videos_autoplay_on',
@@ -369,6 +373,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_bBriefCards = getParam($sOptionPrefix . 'enable_brief_cards') == 'on';
 
+        $this->_sVideosPreload = getParam($sOptionPrefix . 'videos_preload');
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
 
         $this->_iPreloadCommentsMax = 7;
@@ -633,6 +638,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getBriefCardsTags($bAsString = false)
     {
         return !$bAsString ? $this->_aBriefCardsTags : '<' . implode('><', $this->_aBriefCardsTags) . '>';
+    }
+
+    public function getVideosPreload()
+    {
+        return $this->_sVideosPreload;
     }
 
     public function getVideosAutoplay()

@@ -2494,6 +2494,39 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_options_videos_preload get_options_videos_preload
+     * 
+     * @code bx_srv('bx_timeline', 'get_options_videos_preload', [...]); @endcode
+     * 
+     * Get an array with available options for 'Videos preload in Timeline' setting.
+     *
+     * @return an array with available options represented as key => value pairs.
+     * 
+     * @see BxTimelineModule::serviceGetOptionsVideosPreload
+     */
+    /** 
+     * @ref bx_timeline-get_options_videos_preload "get_options_videos_preload"
+     */
+    public function serviceGetOptionsVideosPreload()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aOptions = array('auto', 'metadata', 'none');
+
+        $aResult = array();
+        foreach($aOptions as $sOption)
+            $aResult[] = array(
+                'key' => $sOption,
+                'value' => _t($CNF['T']['option_vp_' . $sOption])
+            );
+
+        return $aResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_options_videos_autoplay get_options_videos_autoplay
      * 
      * @code bx_srv('bx_timeline', 'get_options_videos_autoplay', [...]); @endcode
