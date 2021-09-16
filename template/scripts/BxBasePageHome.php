@@ -56,8 +56,6 @@ class BxBasePageHome extends BxTemplPage
             if(!isLogged()) {
                 $sJoinForm = BxDolService::call('system', 'create_account_form', array(), 'TemplServiceAccount');
                 $sLoginForm = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
-                $sLoginFormOnly = BxDolService::call('system', 'login_form', array('no_join_text no_auth_buttons'), 'TemplServiceLogin');
-                $sLoginSocial = BxDolService::call('system', 'member_auth_code', array(), 'TemplServiceLogin');
             }
 
             $oTemplate = BxDolTemplate::getInstance();
@@ -69,9 +67,6 @@ class BxBasePageHome extends BxTemplPage
                 'login_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=login'),
                 'login_form' => $sLoginForm,
                 'login_form_in_box' => !empty($sLoginForm) ? DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF) : '',
-                'login_form_only' => $sLoginFormOnly,
-                'login_form_only_in_box' => !empty($sLoginFormOnly) ? DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginFormOnly, BX_DB_PADDING_DEF) : '',
-                'login_social' => $sLoginSocial,
             ));
         }
 

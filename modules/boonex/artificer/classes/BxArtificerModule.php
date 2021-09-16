@@ -18,6 +18,13 @@ class BxArtificerModule extends BxBaseModTemplateModule
         parent::__construct($aModule);
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array_merge(parent::serviceGetSafeServices(), [
+            'GetSplashMarker' => '',
+        ]);
+    }
+
     public function serviceIncludeCssJs()
     {
         if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
@@ -26,28 +33,41 @@ class BxArtificerModule extends BxBaseModTemplateModule
         return $this->_oTemplate->getIncludeCssJs();
     }
 
-    public function serviceGetBlockSplash()
+    public function serviceGetSplashMarker($sName)
     {
-        if($this->_oTemplate->getCode() != $this->_oConfig->getUri())
-            return '';
+        $sResult = '';
 
-        $oPermalink = BxDolPermalinks::getInstance();
+        switch($sName) {
+            case 'members':
+                $sResult = '0';
+                if($aMembers = BxDolAccountQuery::getInstance()->getAccounts(['type' => 'confirmed']))
+                    $sResult = count($aMembers);
+                break;
 
-        $sJoinForm = $sLoginForm = '';
-        if(!isLogged()) {
-            $sJoinForm = BxDolService::call('system', 'create_account_form', array(), 'TemplServiceAccount');
-            $sLoginForm = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
+            case 'posts':
+                $iPosts = 0;
+                $aModules = bx_srv('system', 'get_modules_by_type', ['content']);
+                foreach($aModules as $aModule)
+                    if(BxDolRequest::serviceExists($aModule['name'], 'get_all'))
+                        $iPosts += bx_srv($aModule['name'], 'get_all', [['type' => 'all', 'count' => true]]);
+                
+                $sResult = $iPosts;
+                break;
+
+            case 'comments':
+                $sResult = (int)BxDolCmtsQuery::getInfoBy(['type' => 'all', 'count' => true]);
+                break;
+
+            case 'login_agreement':
+                $oPermalink = BxDolPermalinks::getInstance();
+                $sLinkTerms = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=terms');
+                $sLinkPrivacy = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=privacy');
+
+                $sResult = _t('_bx_artificer_txt_splash_login_agreement', $sLinkTerms, $sLinkPrivacy);
+                break;
         }
 
-        $this->_oTemplate->addJs(array('lottie.min.js'));
-        return $this->_oTemplate->parseHtmlByName('splash.html', array(
-            'join_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=create-account'),
-            'join_form' => $sJoinForm,
-            'join_form_in_box' => !empty($sJoinForm) ? DesignBoxContent(_t('_sys_txt_splash_join'), $sJoinForm, BX_DB_PADDING_DEF) : '',
-            'login_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=login'),
-            'login_form' => $sLoginForm,
-            'login_form_in_box' => !empty($sLoginForm) ? DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF) : ''
-        ));
+        return $sResult;
     }
 }
 

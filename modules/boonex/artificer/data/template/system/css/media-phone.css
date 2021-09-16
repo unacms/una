@@ -1,5 +1,9 @@
 @import url(../../../../../../../template/css/media-phone.css);
 
+html.bx-media-phone {
+    font-size:100%;
+}
+
 
 /* --- General ---*/
 .bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
