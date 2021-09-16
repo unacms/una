@@ -53,6 +53,14 @@
     .bx-menu-custom-hor.bx-menu-object-sys_create_post li.bx-menu-tab-active a {
         @apply rounded ring-1 ring-gray-200 dark:ring-gray-800;
     }
+    
+    .bx-popup .bx-menu-ver > li:hover {
+        @apply group hover:text-gray-900 dark:hover:text-gray-100;
+    }
+
+    .bx-popup .bx-menu-ver > li.bx-def-color-bg-active {
+        @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white rounded;
+    }
 
     /* Timeline */
     .bx-menu-custom-hor.bx-menu-object-bx_timeline_menu_view li.bx-menu-tab-active a {
