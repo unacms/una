@@ -100,9 +100,8 @@ import url(../../../../../../../template/css/common.css);
     text-decoration:none;
 }
 
-.bx-db-menu-tab-btn a.bx-btn {
-    display: inline-block;
-    float: none;
+.bx-db-menu-tab-btn ul > li {
+    display: flex;
 }
 
 .bx-db-menu .sys-icon-a {

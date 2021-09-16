@@ -1,1 +1,18 @@
-<bx_include_auto:menu_main.html />
+<ul id="__html_id__" class="bx-menu-main<bx_if:show_more_auto_class> bx-menu-more-auto</bx_if:show_more_auto_class> bx-menu-object-__object__ flex flex-nowrap">
+    <bx_repeat:menu_items><li class="bx-menu-item bx-menu-item-__name__ rounded __class_add__">
+        <a href="__link__" onclick="__onclick__" class="group text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 flex items-center p-2 text-sm font-normal rounded"__attrs__>
+            <div class="bx-menu-floating-blocks-icon flex items-center justify-center text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 mr-2 h-5 w-5">
+                <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
+                <bx_if:image><img style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
+            </div>
+            <div class="bx-menu-floating-blocks-title ml-1">__title__</div>
+        </a>__popup__
+    </li></bx_repeat:menu_items>
+</ul>
+<script language="javascript">
+    $(document).ready(function () {
+        // add default class to active menu items
+        $('.bx-menu-floating-blocks > li.bx-menu-tab-active').not('.bx-def-color-bg-active').addClass('bx-def-color-bg-active');
+    });
+</script>
+__js_code__
