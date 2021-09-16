@@ -68,6 +68,20 @@ class BxBaseDashboardServices extends BxDol
         );
     }
     
+    public function serviceGetReportsCount($sModule, $iStatus)
+    {
+        $iCount = 0;
+        $oModule = BxDolModule::getInstance($sModule);
+        if ($oModule instanceof iBxDolContentInfoService){
+            $CNF = $oModule->_oConfig->CNF;
+            if (isset($CNF['OBJECT_REPORTS']))
+                $iCount = BxDolService::call($sModule, 'reports_count_by_status', array($iStatus));
+        }
+        if ($iCount > 0)
+            return $iCount;
+        return ;
+    }
+    
     public function serviceManageAudit()
     {
         return bx_srv('system', 'manage_tools', array(), 'TemplAuditServices');

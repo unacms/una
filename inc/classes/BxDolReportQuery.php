@@ -55,6 +55,12 @@ class BxDolReportQuery extends BxDolObjectQuery
 
         return $aResult;
     }
+    
+    public function getReportsCountByStatus($iStatus)
+    {
+        $sQuery = $this->prepare("SELECT COUNT(*) FROM {$this->_sTableTrack} WHERE `status` = ?", $iStatus);
+        return $this->getOne($sQuery);
+    }
 
     public function putReport($iObjectId, $iAuthorId, $bUndo = false)
     {
