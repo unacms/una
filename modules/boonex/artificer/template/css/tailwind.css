@@ -18,6 +18,10 @@
         @apply m-0 p-0 border-t border-gray-200 dark:border-gray-700;
     }
 
+    .bx-def-font-grayed {
+        @apply text-gray-700 dark:text-gray-500 text-opacity-50;
+    }
+
     /* Common elements: Buttons */
     .bx-btn {
         @apply group relative inline-flex justify-center items-center box-border w-min h-8 px-2.5 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 shadow-sm;
