@@ -59,22 +59,34 @@ class BxDolModuleTemplate extends BxDolTemplate
 
     function addCssSystem($mixedFiles, $bDynamic = false)
     {
+        $sResult = '';
         $bResult = false;
 
-        foreach($this->getLocations() as $sKey => $aLocation)
-            $bResult |= $this->_addFiles(BxDolTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true, [$sKey => $aLocation]);
+        foreach($this->getLocations() as $sKey => $aLocation) {
+            $mixedResult = $this->_addFiles(BxDolTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true, [$sKey => $aLocation]);
+            if($bDynamic)
+                $sResult .= $mixedResult;
+            else
+                $bResult |= $mixedResult;
+        }
 
-        return $bResult;
+        return $bDynamic ? $sResult : $bResult;
     }
 
     function addCss($mixedFiles, $bDynamic = false)
     {
+        $sResult = '';
         $bResult = false;
 
-        foreach($this->getLocations() as $sKey => $aLocation)
-            $bResult |= $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true, [$sKey => $aLocation]);
+        foreach($this->getLocations() as $sKey => $aLocation) {
+            $mixedResult = $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true, [$sKey => $aLocation]);
+            if($bDynamic)
+                $sResult .= $mixedResult;
+            else
+                $bResult |= $mixedResult;
+        }
 
-        return $bResult;
+        return $bDynamic ? $sResult : $bResult;
     }
 
     function addJsSystem($mixedFiles, $bDynamic = false)
