@@ -250,11 +250,43 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         return $aTmplVarsMeta;
     }
-
-    /**
-     * Get profile cover
-     */
-    function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
+    
+    function getBlockCover ($aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
+        if(!$oProfile)
+            return '';
+        
+        $aVars = $this->prepareCover($aData, false);
+        
+        $oConnectionFriends = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        $oConnectionFollowing = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        $aVars2 = [
+            'bx_if:show_following' => array (
+                'condition' => $oConnectionFollowing && $this->_oModule->serviceActAsProfile(),
+                'content' => array (
+                    'count' => $oConnectionFollowing->getConnectedContentCount($oProfile->id(), false),
+                ),
+            ),
+            'bx_if:show_followers' => array (
+                'condition' => $oConnectionFollowing,
+                'content' => array (
+                    'count' => $oConnectionFollowing->getConnectedInitiatorsCount($oProfile->id(), false),
+                ),
+            ),
+            'bx_if:show_friends' => array (
+                'condition' => $oConnectionFriends && $this->_oModule->serviceActAsProfile(),
+                'content' => array (
+                    'count' => $oConnectionFriends->getConnectedContentCount($oProfile->id(), true),
+                ),
+            ),
+            'info' => isset($CNF['FIELD_TEXT']) ? $aData[$CNF['FIELD_TEXT']] : ''
+        ];
+       
+        return $this->parseHtmlByName('cover_block.html', array_merge($aVars, $aVars2));
+    }
+    function prepareCover($aData, $oPage)
     {
         $CNF = &$this->_oConfig->CNF;
         $oModule = $this->getModule();
@@ -420,8 +452,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
             'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
         );
-
-        BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
+        
+        return $aVars;
+    }
+    /**
+     * Get profile cover
+     */
+    function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
+    {
+        BxDolCover::getInstance($this)->set($this->prepareCover($aData, $oPage), $sTemplateName);
     }
 
     /**

@@ -879,6 +879,34 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-page_blocks Page Blocks
+     * @subsubsection bx_base_profile-entity_cover entity_cover
+     * 
+     * @code bx_srv('bx_persons', 'entity_cover', [...]); @endcode
+     * 
+     * Get cover
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModProfileModule::serviceEntityCover
+     */
+    /** 
+     * @ref bx_base_general-entity_cover "entity_cover"
+     */
+    public function serviceEntityCover ($iContentId = 0)
+    {
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
+            return false;
+        
+        $sModule = $this->_oConfig->getName();
+        $aData = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
+        
+        return $this->_oTemplate->getBlockCover($aData, $sModule);
+    }
+    
 	/**
      * Entry comments
      */
