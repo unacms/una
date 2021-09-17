@@ -189,6 +189,9 @@
     <string name="_bx_persons_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended People]]></string>
     <string name="_bx_persons_page_block_title_sys_active_entries_view_showcase"><![CDATA[Active People (Showcase View)]]></string>
     <string name="_bx_persons_page_block_title_active_entries_view_showcase"><![CDATA[Active People]]></string>
+	
+	<string name="_bx_persons_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+    <string name="_bx_persons_page_block_title_cover_block"><![CDATA[Cover]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Persons Submenu]]></string>
