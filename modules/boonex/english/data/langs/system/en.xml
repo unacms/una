@@ -744,6 +744,7 @@
   
   <string name="_adm_form_btn_reports_check_in"><![CDATA[Check in]]></string>
   <string name="_adm_form_btn_reports_check_out"><![CDATA[Check out]]></string>
+  <string name="_adm_form_btn_reports_audit"><![CDATA[Audit]]></string>
   <string name="_adm_form_btn_reports_hide"><![CDATA[Hide]]></string>
   <string name="_adm_form_btn_reports_unhide"><![CDATA[Unhide]]></string>
   

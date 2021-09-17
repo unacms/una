@@ -1328,6 +1328,33 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oReport->getReportedByWithComments($CNF['OBJECT_NOTES']);
     }
     
+     /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-reports_count_by_status reports_count_by_status
+     * 
+     * @code bx_srv('bx_posts', 'reports_count_by_status', [...]); @endcode
+     * 
+     * Get number of reports with specified status
+     * @param $iStatus status ID
+     * 
+     * @see BxBaseModGeneralModule::serviceReportsCountByStatus
+     */
+    /** 
+     * @ref bx_base_general-entity_reports "entity_reports"
+     */
+    public function serviceReportsCountByStatus ($iStatus)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
+            return false;
+        
+        $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], 0, false);
+        return $oReport->getCountByStatus($iStatus);
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_base_general Base General

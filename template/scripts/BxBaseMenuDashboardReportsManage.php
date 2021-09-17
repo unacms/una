@@ -22,6 +22,7 @@ class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
         $this->_aObject['menu_id'] = 'sys-dashboard-reports-manage-menu';
 
         $this->_bShowDivider = false;
+        $this->_bDisplayAddons = true;
     }
 
     public function setMenuData ($aModulesList)
@@ -33,14 +34,23 @@ class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
     {
         $aResult = array();
         $aUrl = bx_get_base_url_inline();
-        
+       
         foreach($this->_aModulesList as $aModule){
             $aResult[$aModule['name']] = array(
                 'name' => $aModule['name'],
                 'title' => $aModule['title'],
                 'link' => bx_append_url_params($aUrl[0], array_merge($aUrl[1], array('module' => $aModule['uri']))),
                 'active' => true,
-                'selected' => $aModule['selected']//todo selected
+                'addon' =>  serialize([
+                    'module' => 'system',
+                    'method' => 'get_reports_count',
+                    'params' => [
+                        'module' => $aModule['name'],
+                        'status' => BX_DOL_REPORT_STASUS_NEW
+                    ],
+                    'class' => 'TemplDashboardServices'
+                    ]),
+                'selected' => $aModule['selected']
             );                
     	}
         if(!empty($aResult) && is_array($aResult)){
