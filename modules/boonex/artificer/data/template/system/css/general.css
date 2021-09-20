@@ -13,6 +13,12 @@ import url(../../../../../../../template/css/general.css);
 }
 
 
+/*--- Page Submenu ---*/
+.bx-menu-main-bar-cnt {
+    height: 3.25rem;
+}
+
+
 /*--- Profile Avatar ---*/
 #bx-profile-switcher .bx-def-hr {
     display: none;
