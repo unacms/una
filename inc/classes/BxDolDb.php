@@ -549,7 +549,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
             }
 
 	    	// if mysql connection is lost - reconnect and try again
-            if(!$bResult && !$this->ping()) {
+            if(!$bResult && (2006 == $iErrorCode || !$this->ping())) {
                 $this->disconnect();
                 $this->connect();
                 continue;
