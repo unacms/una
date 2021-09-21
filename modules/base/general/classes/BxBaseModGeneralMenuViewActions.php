@@ -110,7 +110,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
 
         if($this->_bShowAsButton)
-            $aItem['class_link'] = 'bx-btn' . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
+            $aItem['class_link'] = 'bx-btn' . (isset($aItem['primary']) && (int)$aItem['primary'] == 1 ? ' bx-btn-primary' : '') . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
 
         if(!$this->_bShowTitle)
             $aItem['bx_if:title']['condition'] = false;

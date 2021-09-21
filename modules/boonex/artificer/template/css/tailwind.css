@@ -24,14 +24,28 @@
 
     /* Common elements: Buttons */
     .bx-btn {
-        @apply group relative inline-flex justify-center items-center box-border w-min h-8 px-2.5 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 shadow-sm;
+        @apply group relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
     }
 
     .bx-btn i, 
     .bx-btn u {
         @apply inline-block align-middle;
     }
+    
+    .bx-btn i, 
+    .bx-btn img {
+        @apply w-5 h-5 text-gray-600 dark:text-gray-300;
+    }
+    
+    .bx-btn:hover i, 
+    .bx-btn:hover img {
+        @apply text-gray-800 dark:text-gray-100;
+    }
 
+    .bx-btn i {
+        @apply text-center;
+    }
+    
     .bx-btn u {
         @apply ml-2 first:ml-0 no-underline;
     }
@@ -40,12 +54,22 @@
         @apply border-transparent text-white hover:text-white dark:hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
     }
 
+    .bx-btn.bx-btn-primary i, 
+    .bx-btn.bx-btn-primary img {
+        @apply text-gray-300;
+    }
+    
+    .bx-btn.bx-btn-primary:hover i, 
+    .bx-btn.bx-btn-primary:hover img {
+        @apply text-gray-100;
+    }
+    
     .bx-btn.bx-btn-disabled {
         @apply bg-gray-200 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
     }
 
     .bx-btn.bx-btn-small {
-        @apply h-7 text-xs;
+        @apply py-1 text-xs;
     }
     
     /* Common elements: Menus */

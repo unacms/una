@@ -2801,7 +2801,7 @@
         <string name="_sys_menu_item_title_va_approve"><![CDATA[Одобрить]]></string>
         <string name="_sys_menu_item_title_va_notes"><![CDATA[Заметки]]></string>
         <string name="_sys_menu_item_title_va_audit"><![CDATA[Аудит]]></string>
-        <string name="_sys_menu_item_title_va_more_auto"><![CDATA[]]></string>
+        <string name="_sys_menu_item_title_va_more_auto"><![CDATA[Ещё]]></string>
         <string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>

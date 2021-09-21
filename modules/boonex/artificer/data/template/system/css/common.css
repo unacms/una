@@ -22,19 +22,6 @@ import url(../../../../../../../template/css/common.css);
 }
 
 
-/*--- Buttons ---*/
-.bx-btn {
-    float: none;
-    
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-
-    height: 2.0rem;
-    line-height: 2.0rem;
-}
-
-
 /*--- Design Boxes ---*/
 .bx-db-container {
     position:relative;
