@@ -1182,6 +1182,7 @@
 	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
         <string name="_adm_nav_txt_items_parent_id"><![CDATA[Родительский пункт]]></string>
         <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[Нет родительского пункта]]></string>
+        <string name="_adm_nav_txt_items_primary"><![CDATA[Основная]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Отображать "{0}" элемент меню для: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Подменю]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[Без подменю]]></string>

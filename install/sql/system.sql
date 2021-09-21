@@ -4178,6 +4178,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `visibility_custom` text NOT NULL,
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
+  `primary` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `editable` tinyint(4) NOT NULL DEFAULT '1',

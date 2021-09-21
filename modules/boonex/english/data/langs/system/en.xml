@@ -1198,6 +1198,7 @@
 	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
         <string name="_adm_nav_txt_items_parent_id"><![CDATA[Parent Item]]></string>
         <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[No Parent Item]]></string>
+        <string name="_adm_nav_txt_items_primary"><![CDATA[Primary]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[No Submenu]]></string>

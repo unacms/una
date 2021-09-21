@@ -753,6 +753,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'caption' => _t('_adm_nav_txt_items_icon_image_old'),
                     'content' => ''
                 ),
+                'primary' => array(
+                    'type' => 'switcher',
+                    'name' => 'primary',
+                    'caption' => _t('_adm_nav_txt_items_primary'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aItem['primary']) && (int)$aItem['primary'] == 1,
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
                 'controls' => array(
                     'name' => 'controls',
                     'type' => 'input_set',
@@ -774,10 +785,10 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             )
         );
         
-        $aItems = array();
-        $this->oDb->getItems(array('type' => 'by_set_name', 'value' => $this->sSet), $aItems, false);
-        foreach($aItems as $aItem)
-            $aForm['inputs']['parent_id']['values'][$aItem['id']] = _t(!empty($aItem['title_system']) ? $aItem['title_system'] : $aItem['title']);
+        $aSetItems = array();
+        $this->oDb->getItems(array('type' => 'by_set_name', 'value' => $this->sSet), $aSetItems, false);
+        foreach($aSetItems as $aSetItem)
+            $aForm['inputs']['parent_id']['values'][$aSetItem['id']] = _t(!empty($aSetItem['title_system']) ? $aSetItem['title_system'] : $aSetItem['title']);
 
         $aMenus = array();
         $this->oDb->getMenus(array('type' => 'all'), $aMenus, false);
