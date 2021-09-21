@@ -55,6 +55,8 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         );
 
         $this->_aObjects = array_merge($this->_aObjects, array(
+            'form_details' => $this->_sName . '_form_details',
+            'form_display_details_edit' => $this->_sName . '_form_details_edit',
             'form_pendings' => $this->_sName . '_form_pendings',
             'form_processed' => $this->_sName . '_form_processed',
             'form_display_pendings_process' => $this->_sName . '_form_pendings_process',

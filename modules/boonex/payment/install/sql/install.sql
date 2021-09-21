@@ -498,6 +498,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_payment_form_details', @sName, '_bx_payment_form_details_form', '', '', 'submit', '', 'id', '', '', 'a:1:{s:14:"checker_helper";s:33:"BxPaymentDetailsFormCheckerHelper";}', 0, 1, 'BxPaymentFormDetails', 'modules/boonex/payment/classes/BxPaymentFormDetails.php'),
+
 ('bx_payment_form_pendings', @sName, '_bx_payment_form_pendings_form', '', '', 'do_submit', 'bx_payment_transactions_pending', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php'),
 ('bx_payment_form_processed', @sName, '_bx_payment_form_processed_form', '', '', 'do_submit', 'bx_payment_transactions', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php'),
 
@@ -513,6 +515,8 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('bx_payment_form_details_edit', @sName, 'bx_payment_form_details', '_bx_payment_form_details_display_edit', 0),
+
 ('bx_payment_form_pendings_process', @sName, 'bx_payment_form_pendings', '_bx_payment_form_pendings_display_process', 0),
 ('bx_payment_form_processed_add', @sName, 'bx_payment_form_processed', '_bx_payment_form_processed_display_add', 0),
 

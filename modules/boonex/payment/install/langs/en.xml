@@ -199,6 +199,9 @@
     <string name="_bx_payment_form_cart_input_do_checkout"><![CDATA[Checkout]]></string>
     <string name="_bx_payment_form_details_input_do_submit"><![CDATA[Save]]></string>
 
+    <string name="_bx_payment_form_details_form"><![CDATA[Details Form]]></string>
+    <string name="_bx_payment_form_details_display_edit"><![CDATA[Edit Details Display]]></string>
+
     <string name="_bx_payment_form_pendings_form"><![CDATA[Pendings Form]]></string>
     <string name="_bx_payment_form_processed_form"><![CDATA[Processed Form]]></string>
     <string name="_bx_payment_form_pendings_display_process"><![CDATA[Process Pending Display]]></string>
