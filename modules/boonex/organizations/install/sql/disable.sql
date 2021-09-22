@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` I
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_organizations';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_organizations';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_organizations' OR `set_name` IN('bx_organizations_view_submenu', 'bx_organizations_submenu', 'bx_organizations_view_actions', 'bx_organizations_view_actions_more', 'bx_organizations_view_actions_all', 'bx_organizations_my', 'bx_organizations_snippet_meta', 'bx_organizations_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_organizations' OR `set_name` IN('bx_organizations_view_submenu', 'bx_organizations_submenu', 'bx_organizations_view_actions', 'bx_organizations_view_actions_more', 'bx_organizations_view_actions_all', 'bx_organizations_view_meta', 'bx_organizations_my', 'bx_organizations_snippet_meta', 'bx_organizations_menu_manage_tools');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_organizations';

@@ -60,7 +60,8 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_ALLOW_CONTACT_TO' => 'allow_contact_to',
             'FIELD_VIEWS' => 'views',
-			'FIELD_STATUS' => 'status',
+            'FIELD_VOTES' => 'votes',
+            'FIELD_STATUS' => 'status',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('org_name'),
             'FIELD_LOCATION' => 'location',
@@ -152,6 +153,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_SUBMENU' => 'bx_organizations_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_organizations_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'organizations-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_organizations_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_organizations_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',

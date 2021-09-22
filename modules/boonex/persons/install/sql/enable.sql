@@ -275,7 +275,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_persons_view_actions_all', 'bx_persons', 'profile-set-acl-level', '_sys_menu_item_title_system_set_acl_level', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50),
 ('bx_persons_view_actions_all', 'bx_persons', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:10:"bx_persons";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 60),
 ('bx_persons_view_actions_all', 'bx_persons', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
-('bx_persons_view_actions_all', 'bx_persons', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
+('bx_persons_view_actions_all', 'bx_persons', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 210),
 ('bx_persons_view_actions_all', 'bx_persons', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 215),
 ('bx_persons_view_actions_all', 'bx_persons', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 220),
 ('bx_persons_view_actions_all', 'bx_persons', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 230),
@@ -289,6 +289,21 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_persons_view_actions_all', 'bx_persons', 'delete-persons-account', '_bx_persons_menu_item_title_system_delete_account', '', '', '', '', '', '', '', 0, 128, '', 1, 0, 430),
 ('bx_persons_view_actions_all', 'bx_persons', 'delete-persons-account-content', '_bx_persons_menu_item_title_system_delete_account_content', '', '', '', '', '', '', '', 0, 128, '', 1, 0, 440),
 ('bx_persons_view_actions_all', 'bx_persons', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
+
+-- MENU: meta (counters) menu for view entry
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_persons_view_meta', '_bx_persons_menu_title_view_profile_meta', 'bx_persons_view_meta', 'bx_persons', 15, 0, 1, 'BxPersonsMenuViewMeta', 'modules/boonex/persons/classes/BxPersonsMenuViewMeta.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_persons_view_meta', 'bx_persons', '_bx_persons_menu_set_title_view_profile_meta', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_persons_view_meta', 'bx_persons', 'membership', '_sys_menu_item_title_system_vm_membership', '_sys_menu_item_title_vm_membership', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_persons_view_meta', 'bx_persons', 'badges', '_sys_menu_item_title_system_vm_badges', '_sys_menu_item_title_vm_badges', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_persons_view_meta', 'bx_persons', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_persons_view_meta', 'bx_persons', 'votes', '_sys_menu_item_title_system_sm_votes', '_sys_menu_item_title_sm_votes', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_persons_view_meta', 'bx_persons', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50);
 
 -- MENU: module sub-menu
 
