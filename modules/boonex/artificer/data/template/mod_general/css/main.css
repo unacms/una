@@ -14,31 +14,32 @@
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: block;
 }
-.bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
+.bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div,
+.bx-base-profile-cover-meta ul.bx-menu-custom li:first-child .sys-meta-div {
     display: none;
 }
 
 
 /* badges */
 div.bx-badges-list {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content:center;
 }
 div.bx-badge {
-	display: flex;
+    display: flex;
     align-items:center;
-	text-align: center;
+    text-align: center;
     color:#fff;	
-	max-width: 9rem;
+    max-width: 9rem;
     min-width: 1.25rem;
-	vertical-align: middle;
-	height: 1.25rem;
-	line-height: 1.25rem;
-	padding: 0 0.5rem ;
-	border-radius: 2em;
-	white-space: nowrap; 
-	text-overflow: ellipsis; 
+    vertical-align: middle;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    padding: 0 0.5rem ;
+    border-radius: 2em;
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
     overflow: hidden;
 }
 div.bx-badges-list div.bx-badge{
@@ -51,27 +52,27 @@ img.bx-badge-icon {
 }
 div.bx-badge img{
 
-	margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 div.bx-badge span{
-	text-overflow: ellipsis; 
+    text-overflow: ellipsis; 
     overflow: hidden;
 }
 div.bx-badge:not(.bx-badge-compact-to) .sys-icon,
 div.bx-badge:not(.bx-badge-compact-to) span{
-	color: inherit !important;
-	margin-right: 0.5rem;
+    color: inherit !important;
+    margin-right: 0.5rem;
 }
 div.bx-badge.bx-badge-compact{
-	width: 1.25rem;
-	text-align: center;
+    width: 1.25rem;
+    text-align: center;
 }
 div.bx-badge.bx-badge-compact-to{
-	padding: 0;
-	width: auto;
+    padding: 0;
+    width: auto;
 }
 div.bx-badge.bx-badge-compact .sys-icon{
-	width: 1.25rem;
+    width: 1.25rem;
 }
 div.bx-badge.bx-badge-compact .sys-icon,
 div.bx-badge.bx-badge-compact img{

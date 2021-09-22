@@ -19,7 +19,7 @@
     }
 
     .bx-def-font-grayed {
-        @apply text-gray-700 dark:text-gray-500 text-opacity-50;
+        @apply text-gray-700 dark:text-gray-500 text-opacity-60;
     }
 
     /* Common elements: Buttons */
@@ -73,6 +73,7 @@
     }
     
     /* Common elements: Menus */
+    /* Horizontal menu */
     .bx-menu-hor li.bx-menu-tab-active a,
     .bx-menu-custom-hor li.bx-menu-tab-active a {
         @apply text-gray-700 dark:text-gray-200 font-medium;
@@ -82,12 +83,18 @@
         @apply rounded ring-1 ring-gray-200 dark:ring-gray-800;
     }
     
+    /* Vertical menu in Popup */
     .bx-popup .bx-menu-ver > li:hover {
         @apply group hover:text-gray-900 dark:hover:text-gray-100;
     }
 
     .bx-popup .bx-menu-ver > li.bx-def-color-bg-active {
         @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white rounded;
+    }
+
+    /* Page Submenu */
+    .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active {
+        @apply border-blue-500 text-gray-900 dark:text-gray-100;
     }
 
     /* Timeline */

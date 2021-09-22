@@ -29,12 +29,15 @@
                             </bx_if:show_online>
                         </div>
                     </bx_if:show_avatar>
+                    <bx_if:show_avatar_placeholder>
+                        <div class="bx-base-pofile-cover-thumb-placeholder h-24 lg:h-36"></div>
+                    </bx_if:show_avatar_placeholder>
                     <div class="bx-base-pofile-cover-user relative mt-6 flex flex-col lg:flex-row lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 sm:pb-1">
                         <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 lg:mt-6">
                             <h1 class="bx-def-unit-info text-3xl font-bold leading-7 text-gray-900 text-center dark:text-gray-100 sm:leading-9 sm:truncate lg:text-left">__title__ </h1>
-                            <div class="bx-base-profile-cover-bages bx-base-bages-container flex flex-row flex-wrap justify-center mt-8 -ml-1 sm:mt-1 lg:justify-start">__badges__</div>
+                            <div class="bx-base-profile-cover-meta flex flex-row flex-wrap justify-center mt-8 -ml-1 sm:mt-1 lg:justify-start">__meta__</div>
                         </div>
-                        <div class="bx-base-pofile-cover-actions relative flex lg:flex-1 h-8 mt-8" onclick="event.stopPropagation();">__action_menu__</div>
+                        <div class="bx-base-pofile-cover-actions relative flex lg:flex-1 h-14 md:h-8 mt-8" onclick="event.stopPropagation();">__action_menu__</div>
                     </div>
                 </div>
             </div>

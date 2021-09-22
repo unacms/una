@@ -92,6 +92,10 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 
 
 /*--- Profile Cover ---*/
+.bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
 .bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
     position: absolute;
     width: 100%;
