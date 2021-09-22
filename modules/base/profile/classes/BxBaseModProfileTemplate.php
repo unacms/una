@@ -431,6 +431,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])) !== false)
             $sActionsMenu = $oMenu->getCode();
 
+        $sMetaMenu = '';
+        if(!empty($CNF['OBJECT_MENU_VIEW_ENTRY_META']) && ($oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META'])) !== false) {
+            $oMetaMenu->setContentId($aData[$CNF['FIELD_ID']]);
+            $oMetaMenu->setContentPublic($this->isProfilePublic($aData));
+            $sMetaMenu = $oMetaMenu->getCode();
+        }
+
         // generate html
         $aVars = array (
             'module' => $this->_oConfig->getName(),
@@ -451,6 +458,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'additional_code' => $sAddCode,
             'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
             'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
+            'meta' => $sMetaMenu,
         );
         
         return $aVars;

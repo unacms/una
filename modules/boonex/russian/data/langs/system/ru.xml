@@ -2730,6 +2730,8 @@
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[Подписчики: {0}]]></string>
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Страна]]></string>
     <string name="_sys_menu_item_title_sm_country_city"><![CDATA[Страна и город]]></string>
+    <string name="_sys_menu_item_title_vm_membership"><![CDATA[Членство]]></string>
+    <string name="_sys_menu_item_title_vm_badges"><![CDATA[Значки]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
         <string name="_sys_menu_item_title_system_copyright"><![CDATA[Копирайт]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
@@ -2829,6 +2831,8 @@
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Участники]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Подписки]]></string>
+    <string name="_sys_menu_item_title_system_vm_membership"><![CDATA[Членство]]></string>
+    <string name="_sys_menu_item_title_system_vm_badges"><![CDATA[Значки]]></string>
 	<string name="_sys_menu_set_title_account_dashboard"><![CDATA[Панель аккаунта]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Инструменты управления]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Аккаунт - Настройки]]></string>
