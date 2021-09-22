@@ -449,6 +449,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'condition' => $bShowAvatar,
                 'content' => $aShowAvatar
             ),
+            'bx_if:show_avatar_placeholder' => array(
+                'condition' => !$bShowAvatar,
+                'content' => array()
+            ),
             'picture_popup' => $sPicturePopup,
             'cover_popup' => $sCoverPopup,
             'cover_popup_id' => $sCoverPopupId,

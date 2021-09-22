@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_events' OR `object` IN('bx_e
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_events';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_events';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_events' OR `set_name` IN('bx_events_view_submenu', 'bx_events_submenu', 'bx_events_view_actions', 'bx_events_view_actions_more', 'bx_events_view_actions_all', 'bx_events_my', 'bx_events_snippet_meta', 'bx_events_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_events' OR `set_name` IN('bx_events_view_submenu', 'bx_events_submenu', 'bx_events_view_actions', 'bx_events_view_actions_more', 'bx_events_view_actions_all', 'bx_events_view_meta', 'bx_events_my', 'bx_events_snippet_meta', 'bx_events_menu_manage_tools');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_events';

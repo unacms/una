@@ -204,6 +204,8 @@
     <string name="_bx_groups_menu_title_view_profile_actions"><![CDATA[Группа - Действия]]></string>
     <string name="_bx_groups_menu_set_title_view_profile_actions_more"><![CDATA[Группа - Дополнительные действия]]></string>
     <string name="_bx_groups_menu_title_view_profile_actions_more"><![CDATA[Группа - Дополнительные действия]]></string>
+    <string name="_bx_groups_menu_title_view_profile_meta"><![CDATA[Группа - Мета инфо]]></string>
+    <string name="_bx_groups_menu_set_title_view_profile_meta"><![CDATA[Группа - Мета инфо]]></string>
     <string name="_bx_groups_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра группы]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра группы]]></string>
     <string name="_bx_groups_menu_title_entries_my"><![CDATA[Группы профиля - Меню действий]]></string>

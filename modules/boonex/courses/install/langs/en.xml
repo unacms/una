@@ -201,6 +201,8 @@
     <string name="_bx_courses_menu_title_view_profile_actions"><![CDATA[Course Actions]]></string>
     <string name="_bx_courses_menu_set_title_view_profile_actions_more"><![CDATA[Course More Actions]]></string>
     <string name="_bx_courses_menu_title_view_profile_actions_more"><![CDATA[Course More Actions]]></string>
+    <string name="_bx_courses_menu_title_view_profile_meta"><![CDATA[Course Meta]]></string>
+    <string name="_bx_courses_menu_set_title_view_profile_meta"><![CDATA[Course Meta]]></string>
     <string name="_bx_courses_menu_set_title_view_profile_submenu"><![CDATA[View Course Submenu]]></string>
     <string name="_bx_courses_menu_title_view_profile_submenu"><![CDATA[View Course Submenu]]></string>
     <string name="_bx_courses_menu_title_entries_my"><![CDATA[Profile Courses Action Menu]]></string>

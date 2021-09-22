@@ -200,6 +200,8 @@
 	<string name="_bx_spaces_menu_title_view_profile_actions"><![CDATA[Space Actions]]></string>
 	<string name="_bx_spaces_menu_set_title_view_profile_actions_more"><![CDATA[Space More Actions]]></string>
 	<string name="_bx_spaces_menu_title_view_profile_actions_more"><![CDATA[Space More Actions]]></string>
+        <string name="_bx_spaces_menu_title_view_profile_meta"><![CDATA[Space Meta]]></string>
+        <string name="_bx_spaces_menu_set_title_view_profile_meta"><![CDATA[Space Meta]]></string>
 	<string name="_bx_spaces_menu_set_title_view_profile_submenu"><![CDATA[View Space Submenu]]></string>
 	<string name="_bx_spaces_menu_title_view_profile_submenu"><![CDATA[View Space Submenu]]></string>
 	<string name="_bx_spaces_menu_title_entries_my"><![CDATA[Profile Spaces Action Menu]]></string>

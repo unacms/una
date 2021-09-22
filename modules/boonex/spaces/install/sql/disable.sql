@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_spaces' OR `object` IN('bx_s
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_spaces';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_spaces';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_spaces' OR `set_name` IN('bx_spaces_view_submenu', 'bx_spaces_submenu', 'bx_spaces_view_actions', 'bx_spaces_view_actions_more', 'bx_spaces_view_actions_all', 'bx_spaces_my', 'bx_spaces_snippet_meta', 'bx_spaces_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_spaces' OR `set_name` IN('bx_spaces_view_submenu', 'bx_spaces_submenu', 'bx_spaces_view_actions', 'bx_spaces_view_actions_more', 'bx_spaces_view_actions_all', 'bx_spaces_view_meta', 'bx_spaces_my', 'bx_spaces_snippet_meta', 'bx_spaces_menu_manage_tools');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_spaces';
