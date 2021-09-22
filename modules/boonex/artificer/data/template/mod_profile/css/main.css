@@ -70,21 +70,17 @@
 }
 
 /*--- Unit ---*/
-p.bx-base-pofile-unit-thumb {
-    display: -webkit-flex;
-    display: flex;
-
-    -webkit-justify-content: center;
-    justify-content: center;
-
-    -webkit-align-items: center;
-    align-items: center;
-
-    margin: 0px;
-
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #ffffff;
+p.bx-base-pofile-unit-thumb.bx-def-icon-size {
+    font-size: 1.125rem;
+}
+p.bx-base-pofile-unit-thumb.bx-def-thumb-size {
+    font-size: 1.75rem;
+}
+p.bx-base-pofile-unit-thumb.bx-def-ava-size {
+    font-size: 2.375rem;
+}
+p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
+    font-size: 3rem;
 }
 
 

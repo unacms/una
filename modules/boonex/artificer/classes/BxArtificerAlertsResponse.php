@@ -38,8 +38,8 @@ class BxArtificerAlertsResponse extends BxDolAlertsResponse
         $oModule = BxDolModule::getInstance($sModule);
         if(!$oModule)
             return;
-
-        $sClassSize = $this->_oModule->_oConfig->getThumbSize(isset($oAlert->aExtras['template'][1]) ? $oAlert->aExtras['template'][1] : '');
+        $sTemplate = !empty($oAlert->aExtras['template']) && is_array($oAlert->aExtras['template']) ? $oAlert->aExtras['template'][0] : $oAlert->aExtras['template'];
+        $sClassSize = $this->_oModule->_oConfig->getThumbSize(isset($oAlert->aExtras['template'][1]) ? $oAlert->aExtras['template'][1] : '', $sTemplate);
 
         $aTmplVarsThumbnail = array(
             'class_size' => $sClassSize,

@@ -15,30 +15,37 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
 {
     protected $_sThumbSizeDefault;
     protected $_aThumbSizes;
+    protected $_aThumbSizeByTemplate;
 
     function __construct($aModule)
     {
         parent::__construct($aModule);
 
-        $this->_aPrefixes = array(
+        $this->_aPrefixes = [
             'option' => 'bx_artificer_'
-        );
+        ];
 
         $this->_sThumbSizeDefault = 'thumb';
-        $this->_aThumbSizes = array(
+        $this->_aThumbSizes = [
             'icon' => 'h-8 w-8',
             'thumb' => 'h-10 w-10',
             'ava' => 'h-24 w-24',
-            'ava-big' => 'h-48'
-        );
+            'ava-big' => 'w-48 h-48'
+        ];
+        $this->_aThumbSizeByTemplate = [
+            'unit_with_cover.html' => 'h-24 w-24' //--- 'ava' size
+        ];
     }
 
-    public function getThumbSize($sName = '')
+    public function getThumbSize($sName = '', $sTemplate = '')
     {
-        if(empty($sName) || !isset($this->_aThumbSizes[$sName]))
-            $sName = $this->_sThumbSizeDefault;
+        if(!empty($sName) && isset($this->_aThumbSizes[$sName]))
+            return $this->_aThumbSizes[$sName];
 
-        return $this->_aThumbSizes[$sName];
+        if(!empty($sTemplate) && isset($this->_aThumbSizeByTemplate[$sTemplate]))
+            return $this->_aThumbSizeByTemplate[$sTemplate];
+
+        return $this->_sThumbSizeDefault;
     }
 }
 
