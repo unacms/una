@@ -187,7 +187,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomViewRowValuePrice(&$aInput)
     {
-        return isset($aInput['value']) && $aInput['value'] !== '' ? getParam('currency_sign') . bx_process_output($aInput['value']) : null;
+        return isset($aInput['value']) && $aInput['value'] !== '' ? _t_format_currency(bx_process_output($aInput['value'])) : null;
     }
 
     protected function genCustomViewRowValueQuantity(&$aInput)
