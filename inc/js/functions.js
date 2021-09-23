@@ -127,6 +127,11 @@ function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams
     if ('undefined' != typeof(sAdditionalUrlParams))
         sUrl = bx_append_url_params(sUrl, sAdditionalUrlParams);
 
+	if ($(e).parents('.bx-search-result-block-pagination').length > 0){
+		$([document.documentElement, document.body]).animate({
+			scrollTop: $(e).parents('.bx-search-result-block-pagination').first().offset().top
+		}, 500);
+	}
     return loadDynamicBlockAuto(e, sUrl);
 }
 
