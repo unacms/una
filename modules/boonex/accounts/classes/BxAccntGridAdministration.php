@@ -58,6 +58,9 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
                         case 'email_and_phone':
                             $this->_aOptions['source'] .= " AND (`ta`.`email_confirmed`='0' OR `ta`.`phone_confirmed`='0')";
                             break;
+                        case 'email_or_phone':
+                            $this->_aOptions['source'] .= " AND (`ta`.`email_confirmed`='0' AND `ta`.`phone_confirmed`='0')";
+                            break;
                     }
                     break;
 
