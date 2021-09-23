@@ -104,7 +104,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if(empty($sPagination))
             return '';
 
-        return '<div class="bx-search-result-block-pagination bx-def-margin-top">' . $sPagination . '</div>';
+        return $sPagination;
     }
 
     protected function getItemPerPageInShowCase ()
