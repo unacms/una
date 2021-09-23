@@ -51,7 +51,7 @@ class BxBaseFormLogin extends BxTemplFormView
     public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
-
+        $this->_aFieldsExcludeFromCheckForSpam = array("ID");
         $aNoRelocatePages = array('forgot-password', 'login', 'create-account', 'logout');
 
         if (isset($this->aInputs['ID']))
