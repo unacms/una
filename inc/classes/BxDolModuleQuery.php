@@ -202,7 +202,16 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
     function getDependent($sName, $sUri)
     {
-        return $this->getAll("SELECT `id`, `title`, `enabled` FROM `sys_modules` WHERE (`dependencies` LIKE " . $this->escape('%' . $sName . '%') . " OR `dependencies` LIKE " . $this->escape('%' . $sUri . '%') . ") AND `enabled`='1'");
+        $aResults = array();
+
+        $aModules = $this->getAll("SELECT `id`, `title`, `dependencies`, `enabled` FROM `sys_modules` WHERE (`dependencies` LIKE " . $this->escape('%' . $sName . '%') . " OR `dependencies` LIKE " . $this->escape('%' . $sUri . '%') . ") AND `enabled`='1'");
+        foreach($aModules as $aModule) {
+            $aDependencies = explode(',', $aModule['dependencies']);
+            if(in_array($sName, $aDependencies) || in_array($sUri, $aDependencies))
+                $aResults[] = $aModule;
+        }
+
+        return $aResults;
     }
 
     public function updateModule($aParamsSet, $aParamsWhere = array())
