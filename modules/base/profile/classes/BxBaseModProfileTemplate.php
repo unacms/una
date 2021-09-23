@@ -428,7 +428,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         $sActionsMenu = $oModule->serviceEntityAllActions();
-        if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])) !== false)
+        if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'], $this)) !== false)
             $sActionsMenu = $oMenu->getCode();
 
         $sMetaMenu = '';

@@ -14,8 +14,7 @@
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: block;
 }
-.bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div,
-.bx-base-profile-cover-meta ul.bx-menu-custom li:first-child .sys-meta-div {
+.bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
     display: none;
 }
 

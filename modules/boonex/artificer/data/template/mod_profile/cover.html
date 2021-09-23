@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="bx-base-pofile-cover-info bx-def-page-width relative mx-auto px-6 lg:px-8">
-                <div class="bx-base-pofile-ci-cnt relative flex flex-col -mt-24 lg:-mt-16 lg:flex-row lg:items-end lg:space-x-6">
+                <div class="bx-base-pofile-ci-cnt relative flex flex-col -mt-24 lg:-mt-16 lg:flex-row lg:items-center lg:space-x-6">
                     <bx_if:show_avatar>
                         <div class="bx-base-pofile-cover-thumb flex justify-center lg:flex-none">
                             <a class="bx-base-pofile-cover-thumb" href="__picture_href__" onclick="$('#__picture_popup_id__').dolPopupImage('__picture_url__', $(this).parent()); event.stopPropagation();">
@@ -32,12 +32,14 @@
                     <bx_if:show_avatar_placeholder>
                         <div class="bx-base-pofile-cover-thumb-placeholder h-24 lg:h-36"></div>
                     </bx_if:show_avatar_placeholder>
-                    <div class="bx-base-pofile-cover-user relative mt-6 flex flex-col lg:flex-row lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 sm:pb-1">
-                        <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 lg:mt-6">
-                            <h1 class="bx-def-unit-info text-3xl font-bold leading-7 text-gray-900 text-center dark:text-gray-100 sm:leading-9 sm:truncate lg:text-left">__title__ </h1>
-                            <div class="bx-base-profile-cover-meta flex flex-row flex-wrap justify-center mt-8 -ml-1 sm:mt-1 lg:justify-start">__meta__</div>
+                    <div class="bx-base-pofile-cover-user relative flex flex-col lg:flex-row lg:flex-1 lg:items-start lg:justify-end lg:space-x-6 mt-6 sm:pb-1">
+                        <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 lg:mt-14 mb-2">
+                            <h1 class="bx-def-unit-info text-4xl font-bold text-gray-900 dark:text-gray-50 text-center lg:text-left sm:truncate">__title__ </h1>
+                            <div class="bx-base-profile-cover-meta-holder lg:h-8">
+                                <div class="bx-base-profile-cover-meta lg:absolute flex flex-row flex-wrap justify-center mt-6 md:mt-2 -ml-1 lg:justify-start text-base font-medium">__meta__</div>
+                            </div>
                         </div>
-                        <div class="bx-base-pofile-cover-actions relative flex lg:flex-1 h-14 md:h-8 mt-8" onclick="event.stopPropagation();">__action_menu__</div>
+                        <div class="bx-base-pofile-cover-actions relative flex lg:flex-1 h-14 md:h-10 mt-6 lg:mt-14" onclick="event.stopPropagation();">__action_menu__</div>
                     </div>
                 </div>
             </div>

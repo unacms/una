@@ -1257,7 +1257,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aMarkers['img_url'] = $sImageUrl;
         }
 
-        $oActions = BxDolMenu::getObjectInstance($sObjectMenu);
+        $oActions = BxDolMenu::getObjectInstance($sObjectMenu, $this->_oTemplate);
         if(!$oActions)
             return false;
 

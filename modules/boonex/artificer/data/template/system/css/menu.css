@@ -39,6 +39,12 @@ li.bx-menu-inter-hidden {
     text-decoration:none;
 }
 
+/*--- Page Submenu ---*/
+.bx-menu-main-submenu {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
 /*--- Toolbar Menu ---*/
 .bx-menu-toolbar .bx-menu-toolbar-item.bx-menu-item-account {
     padding: 0;
