@@ -38,6 +38,10 @@ class BxArtificerModule extends BxBaseModTemplateModule
         $sResult = '';
 
         switch($sName) {
+            case 'header':
+                $sResult = $this->_oTemplate->getHeader();
+                break;
+
             case 'members':
                 $sResult = '0';
                 if($aMembers = BxDolAccountQuery::getInstance()->getAccounts(['type' => 'confirmed']))

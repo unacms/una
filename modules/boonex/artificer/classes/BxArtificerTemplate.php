@@ -34,6 +34,11 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
 
         return $sCss;
     }
+
+    public function getHeader()
+    {
+        return $this->parseHtmlByName('header.html', []);
+    }
 }
 
 /** @} */
