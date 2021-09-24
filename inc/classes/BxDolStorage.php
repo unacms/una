@@ -785,6 +785,24 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         
         return $this->_oDb->getGhosts($iProfileId, $iContentId, $isAdmin);
     }
+    
+    /**
+     * Reorder ghost/orphaned files for particular content/user.
+     * @param $iProfileId profile id
+     * @param $iContentId content id, or false to not consider content id at all
+     * @param $aGhosts an ordered list of ghost/orphaned files' IDs.
+     * @return boolean result of operation
+     */
+    public function reorderGhosts($iProfileId, $iContentId, $aGhosts)
+    {
+        $bResult = true;
+
+        $iGhosts = count($aGhosts);
+        for($i = 0; $i < $iGhosts; $i++)
+            $bResult &= $this->_oDb->updateGhostOrder($iProfileId, $iContentId, (int)$aGhosts[$i], $i);
+
+        return $bResult;
+    }
 
     /**
      * Update ghosts' content id.

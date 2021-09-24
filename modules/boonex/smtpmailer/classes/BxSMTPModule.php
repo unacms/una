@@ -9,10 +9,6 @@
  * @{
  */
 
-require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/Exception.php");
-require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/PHPMailer.php");
-require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/SMTP.php");
-
 class BxSMTPModule extends BxDolModule
 {
     function __construct(&$aModule)

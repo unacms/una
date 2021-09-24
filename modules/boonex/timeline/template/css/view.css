@@ -585,6 +585,12 @@ div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.b
     text-overflow: ellipsis;
 }
 
+.bx-media-phone div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
+.bx-media-phone div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .sys-action-do-text {
+    display: none;
+}
+
+
 /*--- Item Style: Timeline ---*/
 div.bx-tl-view-timeline div.bx-tl-items:before {
     content: '';

@@ -199,6 +199,11 @@ class BxDolReport extends BxDolObject
         return $aReport['count'];
     }
     
+    public function getCountByStatus($iStatus)
+    {
+        return $this->_oQuery->getReportsCountByStatus($iStatus);
+    }
+    
     /**
      * Actions functions
      */

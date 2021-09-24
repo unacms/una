@@ -303,6 +303,21 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_spaces_view_actions_all', 'bx_spaces', 'delete-space-profile', '_bx_spaces_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 430),
 ('bx_spaces_view_actions_all', 'bx_spaces', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
 
+-- MENU: meta (counters) menu for view entry
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_spaces_view_meta', '_bx_spaces_menu_title_view_profile_meta', 'bx_spaces_view_meta', 'bx_spaces', 15, 0, 1, 'BxSpacesMenuViewMeta', 'modules/boonex/spaces/classes/BxSpacesMenuViewMeta.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_spaces_view_meta', 'bx_spaces', '_bx_spaces_menu_set_title_view_profile_meta', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_spaces_view_meta', 'bx_spaces', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_spaces_view_meta', 'bx_spaces', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_spaces_view_meta', 'bx_spaces', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_spaces_view_meta', 'bx_spaces', 'votes', '_sys_menu_item_title_system_sm_votes', '_sys_menu_item_title_sm_votes', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_spaces_view_meta', 'bx_spaces', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50);
+
 -- MENU: actions menu for my entries
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -332,8 +347,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view submenu
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_spaces_view_submenu', '_bx_spaces_menu_title_view_profile_submenu', 'bx_spaces_view_submenu', 'bx_spaces', 18, 0, 1, 'BxSpacesMenuView', 'modules/boonex/spaces/classes/BxSpacesMenuView.php'),
-('bx_spaces_view_submenu_cover', '_bx_spaces_menu_title_view_profile_submenu_cover', 'bx_spaces_view_submenu', 'bx_spaces', 7, 0, 1, 'BxSpacesMenuView', 'modules/boonex/spaces/classes/BxSpacesMenuView.php');
+('bx_spaces_view_submenu', '_bx_spaces_menu_title_view_profile_submenu', 'bx_spaces_view_submenu', 'bx_spaces', 18, 0, 1, 'BxSpacesMenuView', 'modules/boonex/spaces/classes/BxSpacesMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_spaces_view_submenu', 'bx_spaces', '_bx_spaces_menu_set_title_view_profile_submenu', 0);

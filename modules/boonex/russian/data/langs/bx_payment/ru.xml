@@ -200,6 +200,9 @@
     <string name="_bx_payment_form_cart_input_do_checkout"><![CDATA[Оплатить]]></string>
     <string name="_bx_payment_form_details_input_do_submit"><![CDATA[Сохранить]]></string>
 
+    <string name="_bx_payment_form_details_form"><![CDATA[Форма деталей платежных систем]]></string>
+    <string name="_bx_payment_form_details_display_edit"><![CDATA[Изменить детали платежных систем]]></string>
+
     <string name="_bx_payment_form_pendings_form"><![CDATA[Форма обрабатываемых заказов]]></string>
     <string name="_bx_payment_form_processed_form"><![CDATA[Форма обработанных заказов]]></string>
     <string name="_bx_payment_form_pendings_display_process"><![CDATA[Обработать]]></string>

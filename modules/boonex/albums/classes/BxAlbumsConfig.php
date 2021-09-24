@@ -20,7 +20,9 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'add-images-to-album' => 'checkAllowedEdit',
             'edit-album' => 'checkAllowedEdit',
             'edit-image' => 'checkAllowedEdit',
+            'move-image' => 'checkAllowedEdit',
             'delete-album' => 'checkAllowedDelete',
+            'delete-image' => 'checkAllowedDelete',
         );
 
         $this->CNF = array (
@@ -82,6 +84,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_albums_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_albums_searchable_fields',
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_albums_per_page_for_favorites_lists',
+            'PARAM_ORDER_BY_GHOSTS' => true,
 
             // objects
             'OBJECT_STORAGE' => 'bx_albums_files',
@@ -124,6 +127,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_albums_entry_delete',
             'OBJECT_FORM_MEDIA' => 'bx_albums_media',
             'OBJECT_FORM_MEDIA_DISPLAY_EDIT' => 'bx_albums_media_edit',
+            'OBJECT_FORM_MEDIA_DISPLAY_MOVE' => 'bx_albums_media_move',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_albums_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_albums_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_MEDIA' => 'bx_albums_view_media', // actions menu on view media page

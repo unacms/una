@@ -49,6 +49,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_VIEWS' => 'views',
+            'FIELD_VOTES' => 'votes',
             'FIELD_STATUS' => 'status',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('name'),
@@ -124,8 +125,8 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_courses_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_courses_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_courses_view_submenu',  // view entry submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_courses_view_submenu_cover',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'courses-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_courses_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_courses_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_courses_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_courses_view_profile',

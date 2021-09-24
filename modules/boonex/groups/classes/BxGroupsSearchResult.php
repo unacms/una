@@ -47,7 +47,7 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                     'joinFields' => array(),
                 ),
             ),
-            'paginate' => array('perPage' => getParam('bx_groups_per_page_browse'), 'start' => 0),
+            'paginate' => array('perPage' => getParam('bx_groups_per_page_browse'), 'start' => 0, 'on_top' => true, 'on_bottom' => true),
             'sorting' => 'last',
             'rss' => array(
                 'title' => '',

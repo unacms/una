@@ -384,7 +384,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        if (!($aAlbumInfo = $oModule->_oDb->getContentInfoById($aMediaInfo['content_id'])))
+        if (!($aAlbumInfo = $oModule->_oDb->getContentInfoById($aMediaInfo['id'])))
             return '';
 
         return $this->entryAuthor ($aMediaInfo, $aAlbumInfo[$CNF['FIELD_AUTHOR']]);

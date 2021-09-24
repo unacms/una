@@ -110,7 +110,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
 
         if($this->_bShowAsButton)
-            $aItem['class_link'] = 'bx-btn' . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
+            $aItem['class_link'] = 'bx-btn' . (isset($aItem['primary']) && (int)$aItem['primary'] == 1 ? ' bx-btn-primary' : '') . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
 
         if(!$this->_bShowTitle)
             $aItem['bx_if:title']['condition'] = false;
@@ -134,11 +134,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_view_as_button' => $this->_bShowAsButton,
             'show_do_view_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -161,12 +165,16 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_comment_as_button' => $this->_bShowAsButton,
             'show_do_comment_label' => $this->_bShowTitle,
             'show_counter' => false
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -189,11 +197,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -216,11 +228,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -243,11 +259,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -270,11 +290,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_favorite_as_button' => $this->_bShowAsButton,
             'show_do_favorite_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -300,11 +324,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_feature_as_button' => $this->_bShowAsButton,
             'show_do_feature_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 
@@ -365,11 +393,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        $sResult = $oObject->getElementBlock(array(
+        $aObjectOptions = array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_report_as_button' => $this->_bShowAsButton,
             'show_do_report_label' => $this->_bShowTitle
-        ));
+        );
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
 

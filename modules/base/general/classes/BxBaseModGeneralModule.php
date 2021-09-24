@@ -422,45 +422,44 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $aTextFields;
     }
-    
+
     public function serviceManageTools($sType = 'common')
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
         if(!$oGrid)
             return '';
 
-		$CNF = &$this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
-		$sMenu = '';
-		if(BxDolAcl::getInstance()->isMemberLevelInSet(192)) {
-			$oPermalink = BxDolPermalinks::getInstance();
+        $mixedMenu = '';
+        if(BxDolAcl::getInstance()->isMemberLevelInSet(192)) {
+            $oPermalink = BxDolPermalinks::getInstance();
 
-			$aMenuItems = array();
-			if(!empty($CNF['OBJECT_GRID_COMMON']) && !empty($CNF['T']['menu_item_manage_my']))
-				$aMenuItems[] = array('id' => 'manage-common', 'name' => 'manage-common', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_COMMON']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_my']), 'active' => 1);
-			if(!empty($CNF['OBJECT_GRID_ADMINISTRATION']) && !empty($CNF['T']['menu_item_manage_all']))
-				$aMenuItems[] = array('id' => 'manage-administration', 'name' => 'manage-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_ADMINISTRATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
+            $aMenuItems = array();
+            if(!empty($CNF['OBJECT_GRID_COMMON']) && !empty($CNF['T']['menu_item_manage_my']))
+                $aMenuItems[] = array('id' => 'manage-common', 'name' => 'manage-common', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_COMMON']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_my']), 'active' => 1);
+            if(!empty($CNF['OBJECT_GRID_ADMINISTRATION']) && !empty($CNF['T']['menu_item_manage_all']))
+                $aMenuItems[] = array('id' => 'manage-administration', 'name' => 'manage-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_ADMINISTRATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
 
-			if(count($aMenuItems) > 1) {
-	            $oMenu = new BxTemplMenu(array(
-	            	'template' => 'menu_vertical.html', 
-	            	'menu_items' => $aMenuItems
-	            ), $this->_oTemplate);
-	            $oMenu->setSelected($this->_aModule['name'], 'manage-' . $sType);
-	            $sMenu = $oMenu->getCode();
-			}
-		}
+            if(count($aMenuItems) > 1) {
+                $mixedMenu = new BxTemplMenu(array(
+                    'template' => 'menu_block_submenu_ver.html', 
+                    'menu_items' => $aMenuItems
+                ), $this->_oTemplate);
+                $mixedMenu->setSelected($this->_aModule['name'], 'manage-' . $sType);
+            }
+        }
 
-		if(!empty($CNF['OBJECT_MENU_SUBMENU']) && isset($CNF['URI_MANAGE_COMMON'])) {
-			BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
-		}
+        if(!empty($CNF['OBJECT_MENU_SUBMENU']) && isset($CNF['URI_MANAGE_COMMON'])) {
+            BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
+        }
 
         $this->_oTemplate->addCss(array('manage_tools.css'));
         $this->_oTemplate->addJs(array('manage_tools.js'));
         $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
         return array(
-        	'content' => $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->getGridObject($sType))) . $oGrid->getCode(),
-        	'menu' => $sMenu
+            'content' => $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->getGridObject($sType))) . $oGrid->getCode(),
+            'menu' => $mixedMenu
         );
     }
 
@@ -468,7 +467,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
     	return 0;
     }
-    
+
     public function serviceGetMenuAddonManageToolsProfileStats()
     {
     	return 0;
@@ -1258,7 +1257,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aMarkers['img_url'] = $sImageUrl;
         }
 
-        $oActions = BxDolMenu::getObjectInstance($sObjectMenu);
+        $oActions = BxDolMenu::getObjectInstance($sObjectMenu, $this->_oTemplate);
         if(!$oActions)
             return false;
 
@@ -1327,6 +1326,33 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId, true);
         return $oReport->getReportedByWithComments($CNF['OBJECT_NOTES']);
+    }
+    
+     /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-reports_count_by_status reports_count_by_status
+     * 
+     * @code bx_srv('bx_posts', 'reports_count_by_status', [...]); @endcode
+     * 
+     * Get number of reports with specified status
+     * @param $iStatus status ID
+     * 
+     * @see BxBaseModGeneralModule::serviceReportsCountByStatus
+     */
+    /** 
+     * @ref bx_base_general-entity_reports "entity_reports"
+     */
+    public function serviceReportsCountByStatus ($iStatus)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
+            return false;
+        
+        $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], 0, false);
+        return $oReport->getCountByStatus($iStatus);
     }
     
     /**
@@ -2095,7 +2121,10 @@ class BxBaseModGeneralModule extends BxDolModule
         if($sResult !== false)
             return $sResult;
 
-        if($bIsSingle && count($aBadges) > 0)
+        if(empty($aBadges) || !is_array($aBadges))
+            return '';
+
+        if($bIsSingle)
             return BxDolService::call('system', 'get_badge', array($aBadges[0], $bIsCompact), 'TemplServices');
 
         $aBadgesOutput = array();

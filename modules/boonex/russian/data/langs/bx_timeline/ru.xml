@@ -25,6 +25,10 @@
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Включить лаконичные карточки]]></string>
+    <string name="_bx_timeline_option_videos_preload"><![CDATA[Предварительная загрузка для видео роликов]]></string>
+    <string name="_bx_timeline_option_videos_preload_auto"><![CDATA[Автоматически]]></string>
+    <string name="_bx_timeline_option_videos_preload_metadata"><![CDATA[Метаданные]]></string>
+    <string name="_bx_timeline_option_videos_preload_none"><![CDATA[Отключено]]></string>
     <string name="_bx_timeline_option_videos_autoplay"><![CDATA[Автоматически проигрывать видео ролики (доступно только для Ленты)]]></string>
     <string name="_bx_timeline_option_videos_autoplay_off"><![CDATA[Отключено]]></string>
     <string name="_bx_timeline_option_videos_autoplay_on_mute"><![CDATA[Включено (без звука)]]></string>

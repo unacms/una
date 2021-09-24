@@ -11,6 +11,7 @@
 	<string name="_bx_persons_option_redirect_aadd_profile"><![CDATA[Profile Page]]></string>
 	<string name="_bx_persons_option_redirect_aadd_last"><![CDATA[Last Page]]></string>
 	<string name="_bx_persons_option_redirect_aadd_custom"><![CDATA[Custom Page]]></string>
+  <string name="_bx_persons_option_redirect_aadd_homepage"><![CDATA[Homepage]]></string>
 	<string name="_bx_persons_option_redirect_aadd_custom_url"><![CDATA[URL for 'Custom Page' redirect]]></string>
   <string name="_bx_persons_option_activation_on"><![CDATA[After creation & after editing]]></string>
   <string name="_bx_persons_option_activation_add"><![CDATA[After creation only]]></string>
@@ -188,6 +189,9 @@
     <string name="_bx_persons_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended People]]></string>
     <string name="_bx_persons_page_block_title_sys_active_entries_view_showcase"><![CDATA[Active People (Showcase View)]]></string>
     <string name="_bx_persons_page_block_title_active_entries_view_showcase"><![CDATA[Active People]]></string>
+	
+	<string name="_bx_persons_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+    <string name="_bx_persons_page_block_title_cover_block"><![CDATA[Cover]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Persons Submenu]]></string>
@@ -195,10 +199,11 @@
     <string name="_bx_persons_menu_title_view_profile_actions"><![CDATA[Person Actions]]></string>
     <string name="_bx_persons_menu_set_title_view_profile_actions_more"><![CDATA[Person More Actions]]></string>
     <string name="_bx_persons_menu_title_view_profile_actions_more"><![CDATA[Person More Actions]]></string>
+    <string name="_bx_persons_menu_title_view_profile_meta"><![CDATA[Person Meta]]></string>
+    <string name="_bx_persons_menu_set_title_view_profile_meta"><![CDATA[Person Meta]]></string>
     <string name="_bx_persons_menu_set_title_view_profile_submenu"><![CDATA[View Person Submenu]]></string>
     <string name="_bx_persons_menu_title_view_profile_submenu"><![CDATA[View Person Submenu]]></string>
-    <string name="_bx_persons_menu_title_view_profile_submenu_cover"><![CDATA[Person Cover Submenu]]></string>
-	<string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_persons_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_persons_menu_item_title_system_delete"><![CDATA[Delete]]></string>
     <string name="_bx_persons_menu_item_title_delete"><![CDATA[Delete]]></string>

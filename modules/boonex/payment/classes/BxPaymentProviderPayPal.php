@@ -262,7 +262,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
 		$sResponse = curl_exec($rConnect);
     	if(curl_errno($rConnect) == 60) { // CURLE_SSL_CACERT
-            curl_setopt($rConnect, CURLOPT_CAINFO, BX_DIRECTORY_PATH_PLUGINS . 'curl/cacert.pem');
+            curl_setopt($rConnect, CURLOPT_CAINFO, BX_DIRECTORY_PATH_PLUGINS . 'curl/cacert/cacert.pem');
             $sResponse = curl_exec($rConnect);
         }
 

@@ -49,6 +49,8 @@ require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallModulesTools.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallLang.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallSiteConfig.php');
 
+require BX_INSTALL_DIR_PLUGINS . 'autoload.php';
+
 $oController = new BxDolInstallController ();
 $oController->run(isset($_REQUEST['action']) ? $_REQUEST['action'] : '');
 

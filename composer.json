@@ -1,0 +1,108 @@
+{
+    "name": "unaio/una",
+    "description": "UNA - Community Management System",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "UNA, Inc",
+            "homepage": "https://una.io"
+        }
+    ],
+    "config": {
+        "vendor-dir": "plugins"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/unaio/composer-cleanup-plugin.git",
+            "reference": "dev-master"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/unaio/amazon-s3-php-class.git",
+            "reference": "dev-master"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "curl/cacert",
+                "version": "0.0.1",
+                "dist": {
+                    "url": "https://curl.se/ca/cacert.pem",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ffmpeg/ffmpeg",
+                "version": "4.4.0",
+                "dist": {
+                    "url": "https://github.com/eugeneware/ffmpeg-static/releases/download/b4.4/linux-x64",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "achingbrain/php5-akismet",
+                "version": "0.5",
+                "source": {
+                    "url": "https://github.com/achingbrain/php5-akismet",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "unaio/amazon-s3-php-class-hmac-v2",
+                "version": "0.5",
+                "source": {
+                    "url": "https://github.com/unaio/amazon-s3-php-class-hmac-v2",
+                    "type": "git",
+                    "reference": "main"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "akeeba/s3": "dev-main",
+        "achingbrain/php5-akismet": "0.5",
+        "unaio/amazon-s3-php-class-hmac-v2": "*",
+        "tpyo/amazon-s3-php-class": "dev-master",
+        "snipe/banbuilder": "dev-master",
+        "chargebee/chargebee-php": "^2.0",
+        "curl/cacert": "*",
+        "facebook/graph-sdk": "^5.6.0",
+        "ffmpeg/ffmpeg": "*",
+        "ezyang/htmlpurifier": "^4.13",
+        "intervention/image": "^2.6",
+        "wikimedia/less.php": "*",
+        "matthiasmullie/minify": "^1.3",
+        "lusitanian/oauth": "^0.8.11",
+        "bshaffer/oauth2-server-php": "^1.11",
+        "erusev/parsedown": "@dev",
+        "paypal/paypal-checkout-sdk": "^1.0",
+        "phpmailer/phpmailer": "^6.5",
+        "recurly/recurly-client": "2.10.*",
+        "stripe/stripe-php": "^7.95",
+        "twilio/sdk": "^5.19",
+        "avto-dev/composer-cleanup-plugin": "dev-master"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "@relocate-ffmpeg"
+        ],
+        "post-install-cmd": [
+            "@relocate-ffmpeg"
+        ],
+        "relocate-ffmpeg": [
+            "test -f ./plugins/ffmpeg/ffmpeg/linux-x64 && mv ./plugins/ffmpeg/ffmpeg/linux-x64 ./plugins/ffmpeg/ffmpeg.exe && rm -rf ./plugins/ffmpeg/ffmpeg || true"
+        ]
+    }
+}

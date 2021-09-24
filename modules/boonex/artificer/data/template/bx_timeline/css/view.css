@@ -16,8 +16,6 @@ div.bx-tl-view-timeline div.bx-tl-items:before {
     left: 0.875rem;
     width: 4px;
     height: 100%;
-
-    background: #dddddd;
 }
 
 div.bx-tl-view-timeline div.bx-tl-item-type {
@@ -38,12 +36,10 @@ div.bx-tl-view-timeline div.bx-tl-item-circle {
     width: 2rem;
     height: 2rem;
 
-    background-color: #dddddd;
     background-clip: padding-box;
     border-radius: 2rem;
 
     text-align: center;
-    color: #999999;
 
     overflow: hidden;
 }

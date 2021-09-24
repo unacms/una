@@ -573,8 +573,6 @@ function clear_xss($val)
     global $oHtmlPurifier;
     if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
 
-        require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
-
         HTMLPurifier_Bootstrap::registerAutoload();
 
         $oConfig = HTMLPurifier_Config::createDefault();
@@ -593,7 +591,7 @@ function clear_xss($val)
             $oConfig->set('HTML.Nofollow', 'true');
         }
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe(), new HTMLPurifier_Filter_AddBxLinksClass(), new HTMLPurifier_Filter_LocalIframe()));
+        $oConfig->set('Filter.Custom', array (new BxDolHTMLPurifierFilterYouTube(), new BxDolHTMLPurifierFilterYoutubeIframe(), new BxDolHTMLPurifierFilterAddBxLinksClass(), new BxDolHTMLPurifierFilterLocalIframe()));
 
 	    $oConfig->set('HTML.DefinitionID', 'html5-definitions');
 		$oConfig->set('HTML.DefinitionRev', 1);
@@ -781,11 +779,6 @@ function bx_autoload($sClassName)
 {
     if (0 === strncmp($sClassName, 'BxDol', 5) || 0 === strncmp($sClassName, 'BxBase', 6) || 0 === strncmp($sClassName, 'BxTempl', 7))
         bx_import($sClassName);
-    else {
-        if (0 === strpos($sClassName, 'Akeeba\Engine\Postproc\Connector\S3v4')) {
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'akeeba-s3/src' . str_replace('\\', '/', substr($sClassName, 37)) . '.php');
-        }
-    }
 }
 
 /**
@@ -953,7 +946,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         $sResult = curl_exec($rConnect);
 
         if (curl_errno($rConnect) == 60) { // CURLE_SSL_CACERT
-            curl_setopt($rConnect, CURLOPT_CAINFO, BX_DIRECTORY_PATH_PLUGINS . 'curl/cacert.pem');
+            curl_setopt($rConnect, CURLOPT_CAINFO, BX_DIRECTORY_PATH_PLUGINS . 'curl/cacert/cacert.pem');
             $sResult = curl_exec($rConnect);
         }
 

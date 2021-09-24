@@ -10,23 +10,15 @@
 
 class BxBaseMenuCustom extends BxTemplMenuMoreAuto
 {
-    protected static $_sTmplContentDefault;
-    protected static $_sTmplContentItemDefault;
-
     protected $_sTmplContent;
     protected $_sTmplContentItem;
-    
+
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
-        if(empty(self::$_sTmplContentDefault))
-            self::$_sTmplContentDefault = $this->_oTemplate->getHtml($this->getTemplateName());
-        $this->_sTmplContent = self::$_sTmplContentDefault;
-
-        if(empty(self::$_sTmplContentItemDefault))
-            self::$_sTmplContentItemDefault = $this->_oTemplate->getHtml($this->getTemplateNameItem());
-        $this->_sTmplContentItem = self::$_sTmplContentItemDefault;
+        $this->_sTmplContent = $this->_oTemplate->getHtml($this->getTemplateName());
+        $this->_sTmplContentItem = $this->_oTemplate->getHtml($this->getTemplateNameItem());
 
         $this->_sTmplNameItemMore = 'menu_custom_item_more.html';
     }

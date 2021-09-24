@@ -1,0 +1,108 @@
+/* tailwind source */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+}
+
+@layer components {
+    /* Defaults */
+    .bx-def-hr {
+        @apply m-0 p-0 border-t border-gray-200 dark:border-gray-700;
+    }
+
+    .bx-def-font-grayed {
+        @apply text-gray-700 dark:text-gray-500 text-opacity-60;
+    }
+
+    /* Common elements: Buttons */
+    .bx-btn {
+        @apply group relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    }
+
+    .bx-btn i, 
+    .bx-btn u {
+        @apply inline-block align-middle;
+    }
+    
+    .bx-btn i, 
+    .bx-btn img {
+        @apply w-5 h-5 text-gray-600 dark:text-gray-300;
+    }
+    
+    .bx-btn:hover i, 
+    .bx-btn:hover img {
+        @apply text-gray-800 dark:text-gray-100;
+    }
+
+    .bx-btn i {
+        @apply text-center;
+    }
+    
+    .bx-btn u {
+        @apply ml-2 first:ml-0 no-underline;
+    }
+
+    .bx-btn.bx-btn-primary {
+        @apply border-transparent text-white hover:text-white dark:hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    }
+
+    .bx-btn.bx-btn-primary i, 
+    .bx-btn.bx-btn-primary img {
+        @apply text-gray-300;
+    }
+    
+    .bx-btn.bx-btn-primary:hover i, 
+    .bx-btn.bx-btn-primary:hover img {
+        @apply text-gray-100;
+    }
+    
+    .bx-btn.bx-btn-disabled {
+        @apply bg-gray-200 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
+    }
+
+    .bx-btn.bx-btn-small {
+        @apply py-1 text-xs;
+    }
+    
+    /* Common elements: Menus */
+    /* Horizontal menu */
+    .bx-menu-hor li.bx-menu-tab-active a,
+    .bx-menu-custom-hor li.bx-menu-tab-active a {
+        @apply text-gray-700 dark:text-gray-200 font-medium;
+    }
+
+    .bx-menu-custom-hor.bx-menu-object-sys_create_post li.bx-menu-tab-active a {
+        @apply rounded ring-1 ring-gray-200 dark:ring-gray-800;
+    }
+    
+    /* Vertical menu in Popup */
+    .bx-popup .bx-menu-ver > li:hover {
+        @apply group hover:text-gray-900 dark:hover:text-gray-100;
+    }
+
+    .bx-popup .bx-menu-ver > li.bx-def-color-bg-active {
+        @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white rounded;
+    }
+
+    /* Page Submenu */
+    .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active {
+        @apply border-blue-500 text-gray-900 dark:text-gray-100;
+    }
+
+    /* Timeline */
+    .bx-menu-custom-hor.bx-menu-object-bx_timeline_menu_view li.bx-menu-tab-active a {
+        @apply rounded ring-1 ring-gray-200 dark:ring-gray-800;
+    }
+
+    .bx-tl-view.bx-tl-view-timeline .bx-tl-cnt .bx-tl-items:before {
+        @apply bg-gray-200 dark:bg-gray-700;
+    }
+}

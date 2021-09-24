@@ -3,6 +3,22 @@ import url(../../../../../../../template/css/general.css);
 --*/
 
 
+/*--- Toolbar ---*/
+.bx-toolbar-item.bx-ti-search .bx-form-advanced-wrapper .bx-form-section-wrapper:first-child {
+    margin-top: 0;
+}
+.bx-toolbar-item.bx-ti-search .sys-search-results-quick {
+    position: absolute;
+    z-index: 10;
+}
+
+
+/*--- Page Submenu ---*/
+.bx-menu-main-bar-cnt {
+    height: 3.375rem;
+}
+
+
 /*--- Profile Avatar ---*/
 #bx-profile-switcher .bx-def-hr {
     display: none;

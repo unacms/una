@@ -98,6 +98,7 @@ require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . 'version.inc.php');
 
 spl_autoload_register('bx_autoload');
+require BX_DIRECTORY_PATH_PLUGINS . 'autoload.php';
 
 BxDolDb::getInstance()->cacheParams();
 

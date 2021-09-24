@@ -50,10 +50,11 @@ class BxBaseSearchResult extends BxDolSearchResult
     {
         $sCode = '';
         bx_alert('simple_search', 'before_get_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode));
+
         $aData = $this->getSearchData();
         bx_alert('simple_search', 'get_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode, 'search_results' => &$aData));
-        if ($this->aCurrent['paginate']['num'] > 0) {
 
+        if ($this->aCurrent['paginate']['num'] > 0) {
             $sCode .= $this->addCustomParts();
 
             foreach ($aData as $aValue)
@@ -65,18 +66,21 @@ class BxBaseSearchResult extends BxDolSearchResult
             $sAttributes = '';
             if(is_array($this->aContainerAttrs) && !empty($this->aContainerAttrs))
             	foreach ($this->aContainerAttrs as $sName => $sValue)
-            		$sAttributes .= ' ' . $sName . '="' . $sValue . '"';
+                    $sAttributes .= ' ' . $sName . '="' . $sValue . '"';
 
-            $sCode = '<div id="' . $sSearchResultBlockId . '" class="' . $sClasses . '"' . $sAttributes . '>' . $sCode . '</div>';
-
-            if (!$this->_bLiveSearch && $this->sCenterContentUnitSelector) {
-                $sCode .= "
-                    <script>
-                        $(document).ready(function() {
-                            bx_center_content('#{$sSearchResultBlockId}', '{$this->sCenterContentUnitSelector}', true);
-                        });
-                    </script>";
-            }
+            $sCode = BxDolTemplate::getInstance()->parseHtmlByName('search_result_block.html', [
+                'html_id' => $sSearchResultBlockId,
+                'class' => $sClasses,
+                'attrs' => $sAttributes,
+                'content' => $sCode,
+                'bx_if:do_center' => [
+                    'condition' => !$this->_bLiveSearch && $this->sCenterContentUnitSelector,
+                    'content' => [
+                        'html_id' => $sSearchResultBlockId,
+                        'selector_content' => $this->sCenterContentUnitSelector
+                    ]
+                ]
+            ]);
         }
 
         bx_alert('simple_search', 'show_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode, 'search_results' => &$sCode));
@@ -86,7 +90,22 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function displaySearchBox ($sContent, $sPaginate = '')
     {
-        $sContent .= $sPaginate;
+		$sContent = BxDolTemplate::getInstance()->parseHtmlByName('paginate_block.html', array(
+			'bx_if:top' => array(
+				'condition' => isset($this->aCurrent['paginate']['on_top']) && $this->aCurrent['paginate']['on_top'] == true,
+				'content' => array(
+					'paginate' => $sPaginate
+				),
+			),
+			'bx_if:bottom' => array(
+				'condition' => !isset($this->aCurrent['paginate']['on_bottom']) || $this->aCurrent['paginate']['on_bottom'] != false,
+				'content' => array(
+					'paginate' => $sPaginate
+				),
+			),
+			'content' => $sContent
+		));
+		
         $sMenu = $this->getDesignBoxMenu();
 
         if ($this->id) {

@@ -443,13 +443,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_entry_delete', 'title', 2147483647, 0, 0);
 
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_albums_media', 'bx_albums', '_bx_albums_form_media', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_albums_files2albums', 'id', '', '', 'do_submit', '', 0, 1, '', '');
+('bx_albums_media', 'bx_albums', '_bx_albums_form_media', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_albums_files2albums', 'id', '', '', 'do_submit', '', 0, 1, 'BxAlbumsFormMedia', 'modules/boonex/albums/classes/BxAlbumsFormMedia.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
-('bx_albums_media', 'bx_albums_media_edit', 'bx_albums', 0, '_bx_albums_form_media_display_edit');
+('bx_albums_media', 'bx_albums_media_edit', 'bx_albums', 0, '_bx_albums_form_media_display_edit'),
+('bx_albums_media', 'bx_albums_media_move', 'bx_albums', 0, '_bx_albums_form_media_display_move');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_albums_media', 'bx_albums', 'title', '', '', 0, 'text', '_bx_albums_form_media_input_sys_title', '_bx_albums_form_media_input_title', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_albums_media', 'bx_albums', 'content_id', '', '', 0, 'select', '_bx_albums_form_media_input_sys_content_id', '_bx_albums_form_media_input_content_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_albums_media', 'bx_albums', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_albums_media', 'bx_albums', 'do_submit', '_bx_albums_form_media_input_do_submit', '', 0, 'submit', '_bx_albums_form_media_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_albums_media', 'bx_albums', 'do_cancel', '_bx_albums_form_media_input_do_cancel', '', 0, 'button', '_bx_albums_form_media_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -458,7 +460,12 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_media_edit', 'title', 2147483647, 1, 1),
 ('bx_albums_media_edit', 'controls', 2147483647, 1, 2),
 ('bx_albums_media_edit', 'do_submit', 2147483647, 1, 3),
-('bx_albums_media_edit', 'do_cancel', 2147483647, 1, 4);
+('bx_albums_media_edit', 'do_cancel', 2147483647, 1, 4),
+
+('bx_albums_media_move', 'content_id', 2147483647, 1, 1),
+('bx_albums_media_move', 'controls', 2147483647, 1, 2),
+('bx_albums_media_move', 'do_submit', 2147483647, 1, 3),
+('bx_albums_media_move', 'do_cancel', 2147483647, 1, 4);
 
 
 -- COMMENTS

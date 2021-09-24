@@ -167,23 +167,23 @@ class BxPaymentProviderRecurly extends BxBaseModPaymentProvider implements iBxBa
         
         $sId = 'bx-payment-rcrl-card-add';
     	$sTitle = _t($this->_sLangsPrefix . 'popup_title_rcrl_card_add');
-		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('rcrl_card_popup_add.html', array(
-			'public_key' => $this->getOption('api_key_public'),
-			'font_family' => $aTmplConfig['bx-font-family'],
-			'font_size' => $aTmplConfig['bx-font-size-default'],
-			'font_color' => $aTmplConfig['bx-font-color-default'],
-			'form_id' => $oForm->aFormAttrs['id'],
-			'form' => $oForm->getCode(true),
-		)));
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('rcrl_card_popup_add.html', array(
+            'public_key' => $this->getOption('api_key_public'),
+            'font_family' => $aTmplConfig['bx-font-family'],
+            'font_size' => $aTmplConfig['bx-font-size-default'],
+            'font_color' => $aTmplConfig['bx-font-color-default'],
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true),
+        )));
 
-		return array('popup' => array(
-			'html' => $sContent, 
-			'options' => array(
-				'closeOnOuterClick' => false, 
-				'onBeforeShow' => 'bxRecurlyFieldsInit();', 
-				'onHide' => 'bxRecurlyFieldsDestroy();'
-			)
-		));
+        return array('popup' => array(
+            'html' => $sContent, 
+            'options' => array(
+                'closeOnOuterClick' => false, 
+                'onBeforeShow' => 'bxRecurlyFieldsInit();', 
+                'onHide' => 'bxRecurlyFieldsDestroy();'
+            )
+        ));
     }
 
 	public function createSubscription($sToken, $sItem, $aClient)

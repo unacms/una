@@ -1527,10 +1527,28 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aOffer) || !is_array($aOffer))
             return false;
 
-        return array('redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-            'i' => $CNF['URI_VIEW_ENTRY'], 
-            $CNF['FIELD_ID'] => $aOffer[$CNF['FIELD_OFR_CONTENT']]
-        )));
+        $iContent = (int)$aOffer[$CNF['FIELD_OFR_CONTENT']];
+        $aContent = $this->_oDb->getContentInfoById($iContent);
+        $iContentAuthor = (int)$aContent[$CNF['FIELD_AUTHOR']];
+
+        $aReturn = array(
+            'redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'i' => $CNF['URI_VIEW_ENTRY'], 
+                $CNF['FIELD_ID'] => $aOffer[$CNF['FIELD_OFR_CONTENT']]
+            ))
+        );
+
+        $oPayments = BxDolPayments::getInstance();
+        $aResult = $oPayments->addToCart($iContentAuthor, $this->getName(), $iContent, $aOffer[$CNF['FIELD_OFR_QUANTITY']]);
+        if(!empty($aResult) && is_array($aResult)) {
+            if(!empty($aResult['message']))
+                $aReturn['msg'] = $aResult['message'];
+
+            if(isset($aResult['code']) && (int)$aResult['code'] == 0)
+                $aReturn['redirect'] = $oPayments->getCartUrl($iContentAuthor);
+        }
+
+        return $aReturn;
     }
 
     public function processMetasAdd($iContentId)

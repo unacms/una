@@ -186,8 +186,6 @@ div.bx-base-text-pr-graph .bx-base-text-prg-text {
 .bx-base-text-poll-embed {
     width: 100%;
     height: 240px;
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
 }
 
 .bx-page-iframe .bx-base-text-poll {
@@ -195,7 +193,7 @@ div.bx-base-text-pr-graph .bx-base-text-prg-text {
     height: 100vh;
 }
 .bx-page-iframe .bx-base-text-showcase-type-single .bx-base-text-poll {
-    width: 100vw;
+    width: 100%;
 }
 .bx-page-iframe .bx-base-text-poll-cnt {
     height: 100%;

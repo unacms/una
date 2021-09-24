@@ -9,8 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'stripe/init.php');
-
 define('BX_STRIPE_CONNECT_MODE_LIVE', 'live');
 define('BX_STRIPE_CONNECT_MODE_TEST', 'test');
 

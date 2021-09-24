@@ -52,7 +52,13 @@ switch ($sAction) {
     case 'restore_ghosts':
         header('Content-Type: application/json; charset=utf-8');
         $sImagesTranscoder = bx_process_input(bx_get('img_trans'));
-        echo $oUploader->getGhosts((int)bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId);
+        echo $oUploader->getGhostsWithOrder((int)bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId);
+        break;
+    
+    case 'reorder_ghosts':
+        header('Content-Type: application/json; charset=utf-8');
+        $aGhosts = bx_process_input(bx_get('ghosts'));
+        echo $oUploader->reorderGhosts((int)bx_get_logged_profile_id(), $sFormat, $aGhosts, $iContentId);
         break;
 
     case 'delete':

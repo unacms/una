@@ -389,11 +389,31 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     {
         $aTmplVarsItems = array();
 
+        $oForm = new BxTemplFormView(array());
+
         if(!empty($aItems) && is_array($aItems))
             foreach($aItems as $aItem) {
+                $fPrice = $this->_oConfig->getPrice($sType, $aItem);
+
+                $aInputHidden = array(
+                    'type' => 'hidden',
+                    'name' => 'item-price-' . $aItem['id'],
+                    'value' => $fPrice
+                );
+                $aInputCheckbox = array(
+                    'type' => 'checkbox',
+                    'name' => 'items[]',
+                    'value' => $aItem['id']
+                );
+                $aInputText = array(
+                    'type' => 'text',
+                    'name' => 'item-quantity-' . $aItem['id'],
+                    'value' => 1
+                );
+
                 $aTmplVarsItems[$aItem['title']] = array(
                     'id' => $aItem['id'],
-                    'price' => $this->_oConfig->getPrice($sType, $aItem),
+                    'price' => $fPrice,
                     'bx_if:link' => array(
                         'condition' => !empty($aItem['url']),
                         'content' => array(
@@ -407,6 +427,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                             'title' => $aItem['title']
                         )
                     ),
+                    'input_hidden' => $oForm->genRow($aInputHidden),
+                    'input_checkbox' => $oForm->genRow($aInputCheckbox),
+                    'input_text' => $oForm->genRow($aInputText),
                 );
             }
 
@@ -415,11 +438,11 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             $aTmplVarsItems = array_values($aTmplVarsItems);
         }
         else 
-        	$aTmplVarsItems = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+            $aTmplVarsItems = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
         return $this->parseHtmlByName('items.html', array(
-        	'html_id' => $this->_oConfig->getHtmlIds('processed', 'order_processed_items'),
-        	'bx_repeat:items' => $aTmplVarsItems
+            'html_id' => $this->_oConfig->getHtmlIds('processed', 'order_processed_items'),
+            'bx_repeat:items' => $aTmplVarsItems
         ));
     }
 

@@ -98,7 +98,6 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_channels_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_channels_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '',  // view entry submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => '',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'channels-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_SNIPPET_META' => 'bx_channels_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_channels_menu_manage_tools', //manage menu in content administration tools

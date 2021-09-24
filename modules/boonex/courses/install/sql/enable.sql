@@ -299,6 +299,21 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions_all', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 430),
 ('bx_courses_view_actions_all', 'bx_courses', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
 
+-- MENU: meta (counters) menu for view entry
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_courses_view_meta', '_bx_courses_menu_title_view_profile_meta', 'bx_courses_view_meta', 'bx_courses', 15, 0, 1, 'BxCoursesMenuViewMeta', 'modules/boonex/courses/classes/BxCoursesMenuViewMeta.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_courses_view_meta', 'bx_courses', '_bx_courses_menu_set_title_view_profile_meta', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_courses_view_meta', 'bx_courses', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+('bx_courses_view_meta', 'bx_courses', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_courses_view_meta', 'bx_courses', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_courses_view_meta', 'bx_courses', 'votes', '_sys_menu_item_title_system_sm_votes', '_sys_menu_item_title_sm_votes', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_courses_view_meta', 'bx_courses', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50);
+
 -- MENU: actions menu for my entries
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -328,8 +343,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view submenu
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_courses_view_submenu', '_bx_courses_menu_title_view_profile_submenu', 'bx_courses_view_submenu', 'bx_courses', 18, 0, 1, 'BxCoursesMenuView', 'modules/boonex/courses/classes/BxCoursesMenuView.php'),
-('bx_courses_view_submenu_cover', '_bx_courses_menu_title_view_profile_submenu_cover', 'bx_courses_view_submenu', 'bx_courses', 7, 0, 1, 'BxCoursesMenuView', 'modules/boonex/courses/classes/BxCoursesMenuView.php');
+('bx_courses_view_submenu', '_bx_courses_menu_title_view_profile_submenu', 'bx_courses_view_submenu', 'bx_courses', 18, 0, 1, 'BxCoursesMenuView', 'modules/boonex/courses/classes/BxCoursesMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_courses_view_submenu', 'bx_courses', '_bx_courses_menu_set_title_view_profile_submenu', 0);

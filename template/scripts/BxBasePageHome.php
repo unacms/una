@@ -66,7 +66,7 @@ class BxBasePageHome extends BxTemplPage
                 'join_form_in_box' => !empty($sJoinForm) ? DesignBoxContent(_t('_sys_txt_splash_join'), $sJoinForm, BX_DB_PADDING_DEF) : '',
                 'login_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=login'),
                 'login_form' => $sLoginForm,
-                'login_form_in_box' => !empty($sLoginForm) ? DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF) : ''
+                'login_form_in_box' => !empty($sLoginForm) ? DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF) : '',
             ));
         }
 

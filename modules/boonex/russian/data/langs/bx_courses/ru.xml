@@ -200,9 +200,10 @@
     <string name="_bx_courses_menu_title_view_profile_actions"><![CDATA[Курс - Действия]]></string>
     <string name="_bx_courses_menu_set_title_view_profile_actions_more"><![CDATA[Курс - Дополнительные действия]]></string>
     <string name="_bx_courses_menu_title_view_profile_actions_more"><![CDATA[Курс - Дополнительные действия]]></string>
+    <string name="_bx_courses_menu_title_view_profile_meta"><![CDATA[Курс - Мета инфо]]></string>
+    <string name="_bx_courses_menu_set_title_view_profile_meta"><![CDATA[Курс - Мета инфо]]></string>
     <string name="_bx_courses_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра курсов]]></string>
     <string name="_bx_courses_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра курсов]]></string>
-    <string name="_bx_courses_menu_title_view_profile_submenu_cover"><![CDATA[Подменю курсов на обложке]]></string>
     <string name="_bx_courses_menu_title_entries_my"><![CDATA[Курсы профиля - Меню действий]]></string>
     <string name="_bx_courses_menu_set_title_entries_my"><![CDATA[Курсы профиля - Меню]]></string>
     <string name="_bx_courses_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>

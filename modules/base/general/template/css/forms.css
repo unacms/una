@@ -1,5 +1,8 @@
 
 /* uploader */
+.bx-form-input-files-result.ui-sortable .bx-uploader-ghost {
+    cursor: move;
+}
 
 .bx-uploader-ghost .bx-base-general-icon-wrapper {
     float:left;

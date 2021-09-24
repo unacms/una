@@ -606,7 +606,7 @@ class BxAdsDb extends BxBaseModTextDb
         if(!isset($aSet[$CNF['FIELD_OFR_ADDED']]))
             $aSet[$CNF['FIELD_OFR_ADDED']] = time();
 
-        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_OFFERS'] . "` SET " . $this->arrayToSQL($aSet)) > 0;
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_OFFERS'] . "` SET " . $this->arrayToSQL($aSet)) > 0 ? $this->lastId() : false;
     }
 
     public function updateOffer($aSet, $aWhere)

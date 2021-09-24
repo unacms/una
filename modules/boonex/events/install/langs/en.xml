@@ -253,12 +253,13 @@
     <string name="_bx_events_menu_title_view_profile_actions"><![CDATA[Event Actions]]></string>
     <string name="_bx_events_menu_set_title_view_profile_actions_more"><![CDATA[Event More Actions]]></string>
     <string name="_bx_events_menu_title_view_profile_actions_more"><![CDATA[Event More Actions]]></string>
+    <string name="_bx_events_menu_title_view_profile_meta"><![CDATA[Event Meta]]></string>
+    <string name="_bx_events_menu_set_title_view_profile_meta"><![CDATA[Event Meta]]></string>
     <string name="_bx_events_menu_set_title_view_profile_submenu"><![CDATA[View Event Submenu]]></string>
     <string name="_bx_events_menu_title_view_profile_submenu"><![CDATA[View Event Submenu]]></string>
-    <string name="_bx_events_menu_title_view_profile_submenu_cover"><![CDATA[Event Cover Submenu]]></string>
     <string name="_bx_events_menu_title_entries_my"><![CDATA[Profile Events Action Menu]]></string>
     <string name="_bx_events_menu_set_title_entries_my"><![CDATA[Profile Events Menu]]></string>
-	<string name="_bx_events_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_events_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_events_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_events_menu_item_title_system_delete"><![CDATA[Delete]]></string>
     <string name="_bx_events_menu_item_title_delete"><![CDATA[Delete]]></string>

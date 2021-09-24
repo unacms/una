@@ -1352,6 +1352,7 @@ CREATE TABLE `sys_modules` (
   `enabled` tinyint(1) NOT NULL default '0',
   `pending_uninstall` tinyint(4) NOT NULL,
   `hash` varchar(32) NOT NULL default '',
+  `updated` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `path` (`path`(191)),
@@ -1361,7 +1362,7 @@ CREATE TABLE `sys_modules` (
 );
 
 INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
-('module', 'system', 'System', 'UNA, Inc', '9', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
+('module', 'system', 'System', 'UNA, Inc', '9', '', 'system', 'Bx', 'sys_', 'System', '', UNIX_TIMESTAMP(), 1);
 
 
 CREATE TABLE `sys_modules_file_tracks` (
@@ -2094,6 +2095,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   `object` varchar(64) NOT NULL,
   `content_id` int(11) NOT NULL,
   `created` int(10) unsigned NOT NULL,
+  `order` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`,`object`),
   KEY `created` (`created`),
   KEY `profile_object_content` (`profile_id`,`object`,`content_id`)
@@ -4041,7 +4043,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (5, 'menu_toolbar.html', '_sys_menu_template_title_toolbar', 0),
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver', 1),
 (7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks', 1),
-(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 8),
+(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 0),
 (9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor', 1),
 (10, 'menu_inline.html', '_sys_menu_template_title_inline', 1),
 (11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical', 0),
@@ -4051,7 +4053,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (15, 'menu_custom_hor.html', '_sys_menu_template_title_custom_hor', 0),
 (16, 'menu_buttons_ver.html', '_sys_menu_template_title_buttons_ver', 1),
 (17, 'menu_inline_sbtn.html', '_sys_menu_template_title_inline_sbtn', 1),
-(18, 'menu_main_submenu_more_auto.html', '_sys_menu_template_title_main_submenu_more_auto', 8),
+(18, 'menu_main_submenu_more_auto.html', '_sys_menu_template_title_main_submenu_more_auto', 0),
 (19, 'menu_floating_blocks_wide.html', '_sys_menu_template_title_floating_blocks_wide', 0),
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
@@ -4060,7 +4062,9 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (24, 'menu_floating_blocks_dash.html', '_sys_menu_template_title_floating_blocks_dash', 0),
 (25, 'menu_block_submenu_hor.html', '_sys_menu_template_title_block_submenu_hor', 1),
 (26, 'menu_block_submenu_ver.html', '_sys_menu_template_title_block_submenu_ver', 1),
-(27, 'menu_profile_followings.html', '_sys_menu_template_title_profile_followings', 0);
+(27, 'menu_profile_followings.html', '_sys_menu_template_title_profile_followings', 0),
+(28, 'menu_main.html', '_sys_menu_template_title_main', 0),
+(29, 'menu_add_content.html', '_sys_menu_template_title_add_content', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4078,14 +4082,14 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 );
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
+('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 28, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 7, 0, 1, 'BxTemplMenuHomepage', ''),
 ('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, 'BxTemplMenuFooter', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
-('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
+('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 29, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 14, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_add_profile_vertical', '_sys_menu_title_add_profile_vertical', 'sys_add_profile_links', 'system', 6, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_account_dashboard', '_sys_menu_title_account_dashboard', 'sys_account_dashboard', 'system', 8, 0, 1, 'BxTemplMenuAccountDashboard', ''),
@@ -4174,6 +4178,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `visibility_custom` text NOT NULL,
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
+  `primary` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `editable` tinyint(4) NOT NULL DEFAULT '1',
@@ -4372,7 +4377,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
 ('sys_studio_groups_roles', 'Sql', 'SELECT * FROM `sys_form_pre_values` WHERE 1 ', 'sys_form_pre_values', 'id', 'Order', '', '', 20, NULL, 'start', '', '', 'LKey', 'like', '', '', 'BxTemplStudioFormsGroupsRoles', ''),
 
-('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', 'content_module,profile_id,content_id,context_profile_id,added', 'action_lang_key', 'BxTemplAuditGrid', ''),
+('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', 'content_module,profile_id,content_id,author_id,context_profile_id,added', 'action_lang_key', 'BxTemplAuditGrid', ''),
 
 ('sys_badges_administration', 'Sql', 'SELECT * FROM `sys_badges` WHERE 1 ', 'sys_badges', 'id', 'added', '', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 'BxTemplStudioBadgesGrid', ''),
 
@@ -4524,7 +4529,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_audit_administration', 'content_id', '_adm_form_txt_audit_content', '20%', 1, 25, '', 3),
 ('sys_audit_administration', 'author_id', '_adm_form_txt_audit_author_content', '10%', 1, 25, '', 4),
 ('sys_audit_administration', 'content_module', '_adm_form_txt_audit_module', '10%', 1, 25, '', 5),
-('sys_audit_administration', 'context_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
+('sys_audit_administration', 'context_profile_id', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 6),
 ('sys_audit_administration', 'action_lang_key', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 7),
 
 ('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
@@ -4635,7 +4640,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`, `icon_only`) VALUES
 ('sys_reports_administration', 'single', 'check_in', '_adm_form_btn_reports_check_in', 'lock-open', 0, 1, 1),
-('sys_reports_administration', 'single', 'check_out', '_adm_form_btn_reports_check_out', 'lock', 0, 2, 1);
+('sys_reports_administration', 'single', 'check_out', '_adm_form_btn_reports_check_out', 'lock', 0, 2, 1),
+('sys_reports_administration', 'single', 'audit', '_adm_form_btn_reports_audit', 'history', 0, 3, 1);
 
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES

@@ -52,10 +52,6 @@
     display:none;
 }
 
-.bx-form-element-wrapper:first-child {
-    margin-top:0px;
-}
-
 .bx-form-caption {
     margin-bottom:5px;
 }

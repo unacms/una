@@ -886,6 +886,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get a lis of all added locations.
+     * @return array with locations.
+     */
+    function getLocations()
+    {
+        return $this->_aLocations;
+    }
+
+    /**
      * Add location in array of locations.
      * Note. Location is the path/url to folder where 'templates' folder is stored.
      *
@@ -2178,15 +2187,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _lessCss($mixed)
     {
-    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Less.php');
-
         if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
             $sPathFile = realpath($mixed['path']);
             $aInfoFile = pathinfo($sPathFile);
             if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
                 return $mixed;
 
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Cache.php');
         	$aFiles = array($mixed['path'] => $mixed['url']);
         	$aOptions = array('cache_dir' => $this->_sCachePublicFolderPath, 'prefix' => $this->_sCssLessPrefix);
         	$sFile = Less_Cache::Get($aFiles, $aOptions, $this->_oTemplateConfig->aLessConfig);
@@ -2750,15 +2756,26 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $sResult = '';
         $aLocations = array_reverse($this->_aLocations, true);
-        foreach($aLocations as $sKey => $aLocation) {
-            if((in_array($sCheckIn, array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL)) || (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL)) && $sCheckIn['sub'] == $sKey)) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName))
-                $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sKey . $sDivider . $sFolder . $sName;
-            else if((in_array($sCheckIn, array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE)) || (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], array(BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE)) && $sCheckIn['sub'] == $sKey)) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName))
-                $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
-            else
-                continue;
-            break;
-        }
+
+        //--- Check it Template.
+        $bInSub = false;
+        $aCheckIn = [BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL];
+        if(in_array($sCheckIn, $aCheckIn) || $bInSub = (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], $aCheckIn)))
+            foreach($aLocations as $sKey => $aLocation)
+                if((!$bInSub || $sCheckIn['sub'] == $sKey) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName)) {
+                    $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sKey . $sDivider . $sFolder . $sName;
+                    break;
+                }
+
+        //--- Check it Base.
+        $bInSub = false;
+        $aCheckIn = [BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE];
+        if(empty($sResult) && (in_array($sCheckIn, $aCheckIn) || $bInSub = (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], $aCheckIn))))
+            foreach($aLocations as $sKey => $aLocation)
+                if((!$bInSub || $sCheckIn['sub'] == $sKey) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName)) {
+                    $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
+                    break;
+                }
 
         /**
          * try to find from received path

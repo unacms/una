@@ -54,6 +54,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_VIEWS' => 'views',
+            'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
             'FIELDS_QUICK_SEARCH' => array('event_name'),
@@ -130,8 +131,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_events_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_events_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_events_view_submenu',  // view entry submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_events_view_submenu_cover',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'events-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_events_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_events_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_events_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_events_view_profile',

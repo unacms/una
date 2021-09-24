@@ -13,9 +13,6 @@ use OAuth\OAuth1\Service\Twitter;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 
-require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth/bootstrap.php');
-require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth/ServiceFactory.php');
-
 class BxTwitterModule extends BxBaseModConnectModule
 {
     protected $_oStorage;

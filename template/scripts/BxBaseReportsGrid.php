@@ -215,6 +215,17 @@ class BxBaseReportsGrid extends BxTemplGrid
         
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
+    
+    protected function _getActionAudit($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=dashboard-audit&module=' . $this->_aReportSystemInfo['module_name'] . '&content_id=' . $aRow['object_id']);
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . $sUrl . "','_self');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
 
     protected function _getFilterControls()
     {

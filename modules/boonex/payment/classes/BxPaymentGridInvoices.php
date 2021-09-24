@@ -52,7 +52,7 @@ class BxPaymentGridInvoices extends BxBaseModPaymentGridInvoices
         $sId = $this->_oModule->_oConfig->getHtmlIds('invoice', 'popup_' . $sAction);
         $sTitle = _t($this->_sLangsPrefix . 'popup_title_cms_' . $sAction);
 
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('commission_form.html', array(
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('commission_form.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,

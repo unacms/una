@@ -13,19 +13,6 @@ class BxTemplFormView extends BxBaseFormView
     {
         parent::__construct($aInfo, $oTemplate);
     }
-
-    //TODO: genWrapperInput and isHtmlEditor methods can be removed after RC9 is released. 
-    function genWrapperInput($aInput, $sContent)
-    {
-    	$sAttr = isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? bx_convert_array2attrs($aInput['attrs_wrapper']) : '';
-    
-    	return "<div class=\"bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}" . ((isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-wrapper-html' : '') . "\" $sAttr>$sContent</div>";
-    }
-
-    function isHtmlEditor($iViewMode, &$aInput)
-    {
-    	return BxDolEditor::getObjectInstance(false, $this->oTemplate) !== false;
-    }
 }
 
 /** @} */

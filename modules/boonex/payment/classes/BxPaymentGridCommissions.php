@@ -51,7 +51,7 @@ class BxPaymentGridCommissions extends BxBaseModPaymentGridCommissions
         $sId = $this->_oModule->_oConfig->getHtmlIds('commission', 'popup_' . $sAction);
         $sTitle = _t($this->_sLangsPrefix . 'popup_title_cms_' . $sAction);
 
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('commission_form.html', array(
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('commission_form.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,
@@ -95,7 +95,7 @@ class BxPaymentGridCommissions extends BxBaseModPaymentGridCommissions
         $sId = $this->_oModule->_oConfig->getHtmlIds('commission', 'popup_' . $sAction);
         $sTitle = _t($this->_sLangsPrefix . 'popup_title_cms_' . $sAction);
 
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('commission_form.html', array(
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('commission_form.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,

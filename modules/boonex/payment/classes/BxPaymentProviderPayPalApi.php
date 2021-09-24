@@ -35,8 +35,6 @@
  * 
  */
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'paypal/autoload.php');
-
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;

@@ -75,6 +75,41 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
+
+    protected function _getMenuItemView($aItem, $aParams = array())
+    {
+        return parent::_getMenuItemView($aItem, array_merge($aParams, [
+            'object_options' => ['show_counter' => false]
+        ]));
+    }
+
+    protected function _getMenuItemComment($aItem, $aParams = array())
+    {
+        return parent::_getMenuItemComment($aItem, array_merge($aParams, [
+            'object_options' => ['show_counter' => false]
+        ]));
+    }
+
+    protected function _getMenuItemVote($aItem, $aParams = array())
+    {
+        return parent::_getMenuItemVote($aItem, array_merge($aParams, [
+            'object_options' => ['show_counter' => false]
+        ]));
+    }
+
+    protected function _getMenuItemReaction($aItem, $aParams = array())
+    {
+        return parent::_getMenuItemReaction($aItem, array_merge($aParams, [
+            'object_options' => ['show_counter' => false]
+        ]));
+    }
+
+    protected function _getMenuItemScore($aItem, $aParams = array())
+    {
+        return parent::_getMenuItemScore($aItem, array_merge($aParams, [
+            'object_options' => ['show_counter' => false]
+        ]));
+    }
 }
 
 /** @} */

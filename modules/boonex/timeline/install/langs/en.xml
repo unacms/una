@@ -25,6 +25,10 @@
     <string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Show events]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Enable brief cards]]></string>
+    <string name="_bx_timeline_option_videos_preload"><![CDATA[Videos preload]]></string>
+    <string name="_bx_timeline_option_videos_preload_auto"><![CDATA[Auto]]></string>
+    <string name="_bx_timeline_option_videos_preload_metadata"><![CDATA[Metadata]]></string>
+    <string name="_bx_timeline_option_videos_preload_none"><![CDATA[Disabled]]></string>
     <string name="_bx_timeline_option_videos_autoplay"><![CDATA[Videos autoplay (for Timeline view only)]]></string>
     <string name="_bx_timeline_option_videos_autoplay_off"><![CDATA[Disabled]]></string>
     <string name="_bx_timeline_option_videos_autoplay_on_mute"><![CDATA[Enabled without sound]]></string>

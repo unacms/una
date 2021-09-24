@@ -235,6 +235,26 @@ class BxDolStorageQuery extends BxDolDb
         return $iCount;
     }
 
+    public function updateGhostOrder($iProfileId, $iContentId, $iFileId, $iOrder)
+    {
+        $aBindings = array(
+            'object' => $this->_aObject['object'],
+            'content_id' => $iContentId,
+            'id' => $iFileId,
+            'order' => $iOrder,
+        );
+
+        $sWhereClause = " AND `object`=:object AND `content_id`=:content_id AND `id`=:id";
+
+        if(!empty($iProfileId)) {
+            $aBindings['profile_id'] = $iProfileId;
+            
+            $sWhereClause .= " AND `profile_id`=:profile_id";
+        }
+
+        return $this->query("UPDATE `sys_storage_ghosts` SET `order`=:order WHERE 1" . $sWhereClause, $aBindings) !== false;
+    }
+
     public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles = array(), $isAdmin = false)
     {
         $aBindings = array(
@@ -289,6 +309,7 @@ class BxDolStorageQuery extends BxDolDb
 
         $sWhere = '';
         $sJoin = '';
+        $sOrder = '';
         if ($isGhostsOnly) {
             $aBindings['object'] = $this->_aObject['object'];
 
@@ -313,6 +334,8 @@ class BxDolStorageQuery extends BxDolDb
             }
 
             $sJoin .= ')';
+
+            $sOrder = ' ORDER BY `g`.`order` ASC';
         } 
         else {
             if (is_array($mixedProfileId) && $mixedProfileId) {
@@ -325,7 +348,7 @@ class BxDolStorageQuery extends BxDolDb
             }
         }
 
-        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $sWhere;
+        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $sWhere . $sOrder;
         return $this->getAll($sQuery, $aBindings);
     }
 

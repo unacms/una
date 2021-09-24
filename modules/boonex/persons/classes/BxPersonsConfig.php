@@ -50,6 +50,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_ALLOW_CONTACT_TO' => 'allow_contact_to',
             'FIELD_VIEWS' => 'views',
+            'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
             'FIELD_LOCATION' => 'location',
@@ -118,8 +119,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_persons_view_actions_all', // all actions menu on view entry page
             'OBJECT_MENU_SUBMENU' => 'bx_persons_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_persons_view_submenu_cover',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'persons-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_VIEW_ENTRY_META' => 'bx_persons_view_meta', // meta menu on view entry page
             'OBJECT_MENU_SNIPPET_META' => 'bx_persons_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_persons_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_persons_view_profile',
@@ -204,6 +205,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
                 'option_redirect_aadd_profile' => '_bx_persons_option_redirect_aadd_profile',
             	'option_redirect_aadd_last' => '_bx_persons_option_redirect_aadd_last',
             	'option_redirect_aadd_custom' => '_bx_persons_option_redirect_aadd_custom',
+                'option_redirect_aadd_homepage' => '_bx_persons_option_redirect_aadd_homepage',
                 'option_activation_on' => '_bx_persons_option_activation_on',
             	'option_activation_off' => '_bx_persons_option_activation_off',
             	'option_activation_add' => '_bx_persons_option_activation_add',

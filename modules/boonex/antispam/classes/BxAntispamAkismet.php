@@ -21,7 +21,7 @@ class BxAntispamAkismet extends BxDol
         parent::__construct();
         $sKey = getParam('bx_antispam_akismet_api_key');
         if ($sKey && $oAccount = BxDolAccount::getInstance((int)$iAccoutId)) {
-            require_once (BX_DIRECTORY_PATH_PLUGINS . 'akismet/Akismet.class.php');
+            require_once (BX_DIRECTORY_PATH_PLUGINS . 'achingbrain/php5-akismet/src/main/php/net/achingbrain/Akismet.class.php');
             $this->oAkismet = new Akismet(BX_DOL_URL_ROOT, $sKey);
 
             $oProfile = BxDolProfile::getInstanceByAccount((int)$iAccoutId);

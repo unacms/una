@@ -55,18 +55,38 @@ class BxDolModuleTemplate extends BxDolTemplate
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
     }
 
-    public function addLocationBase()
-    {        
-    }
+    public function addLocationBase() {}
 
     function addCssSystem($mixedFiles, $bDynamic = false)
     {
-        return $this->_addFiles(BxDolTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true);
+        $sResult = '';
+        $bResult = false;
+
+        foreach($this->getLocations() as $sKey => $aLocation) {
+            $mixedResult = $this->_addFiles(BxDolTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true, [$sKey => $aLocation]);
+            if($bDynamic)
+                $sResult .= $mixedResult;
+            else
+                $bResult |= $mixedResult;
+        }
+
+        return $bDynamic ? $sResult : $bResult;
     }
 
     function addCss($mixedFiles, $bDynamic = false)
     {
-        return $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true);
+        $sResult = '';
+        $bResult = false;
+
+        foreach($this->getLocations() as $sKey => $aLocation) {
+            $mixedResult = $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true, [$sKey => $aLocation]);
+            if($bDynamic)
+                $sResult .= $mixedResult;
+            else
+                $bResult |= $mixedResult;
+        }
+
+        return $bDynamic ? $sResult : $bResult;
     }
 
     function addJsSystem($mixedFiles, $bDynamic = false)
@@ -89,12 +109,12 @@ class BxDolModuleTemplate extends BxDolTemplate
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
-	function addStudioCssSystem($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    function addStudioCssSystem($mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
-	function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addJs', 'isLocationJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, $bSearchInModule);
     }
@@ -109,29 +129,33 @@ class BxDolModuleTemplate extends BxDolTemplate
         BxDolStudioTemplate::getInstance()->addJsTranslation($mixedKey);
     }
 
-    function _addFiles($oTemplate, $sFuncAddFiles, $sFuncIsLocation, $sFuncAddLocation, $sFuncRemoveLocation, $sPath, $mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    function _addFiles($oTemplate, $sFuncAddFiles, $sFuncIsLocation, $sFuncAddLocation, $sFuncRemoveLocation, $sPath, $mixedFiles, $bDynamic = false, $bSearchInModule = true, $aLocations = array())
     {
-        $sLocationKey = '';
-        $bLocationRemove = false;
-
         if($bSearchInModule) {
-            if(strpos($sFuncAddLocation, 'Dynamic') === false) {
-                $sLocationKey = $this->_oConfig->getName();
-                if(!$oTemplate->$sFuncIsLocation($sLocationKey)) {
-                    $sLocationKey = $oTemplate->$sFuncAddLocation($sLocationKey, $this->_oConfig->getHomePath() . $sPath, $this->_oConfig->getHomeUrl() . $sPath);
-                    $bLocationRemove = true;
-                }
-            }
-            else {
-                $sLocationKey = $oTemplate->$sFuncAddLocation($this->_oConfig->getHomePath() . $sPath, $this->_oConfig->getHomeUrl() . $sPath);
-                $bLocationRemove = true;
+            if(empty($aLocations))
+                $aLocations = [
+                    $this->_oConfig->getName() => [
+                        'path' => $this->_oConfig->getHomePath() . $sPath,
+                        'url' => $this->_oConfig->getHomeUrl() . $sPath
+                    ]
+                ];
+
+            foreach($aLocations as $sLocationKey => $aLocation) {
+                if($oTemplate->$sFuncIsLocation($sLocationKey))
+                    continue;
+
+                $oTemplate->$sFuncAddLocation($sLocationKey, $aLocation['path'], $aLocation['url']);
+                
+                $aLocations[$sLocationKey]['delete'] = true;
             }
         }
 
         $mixedResult = $oTemplate->$sFuncAddFiles($mixedFiles, $bDynamic);
 
-        if($bLocationRemove && $sLocationKey != '')
-            $oTemplate->$sFuncRemoveLocation($sLocationKey);
+        if($bSearchInModule && !empty($aLocations))
+            foreach($aLocations as $sLocationKey => $aLocation) 
+                if(isset($aLocation['delete']) && $aLocation['delete'] === true)
+                    $oTemplate->$sFuncRemoveLocation($sLocationKey);           
 
         return $mixedResult;
     }

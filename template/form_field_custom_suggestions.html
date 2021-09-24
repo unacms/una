@@ -1,8 +1,8 @@
-<div id="__id__" class="__class__">
-    __vals__
-    <bx_if:input>
-        <input type="text" class="bx-def-font-inputs bx-form-input-text" __attrs__ />
-    </bx_if:input>
+<div __attrs__>
+    <bx_repeat:vals>
+        <b class="val bx-def-color-bg-hl bx-def-round-corners">__item_unit____item_name__<input type="hidden" name="__name__[]" value="__value__" /></b>
+    </bx_repeat:vals>
+    <bx_if:input>__input__</bx_if:input>
 </div>
 <bx_if:init>
     <script language="javascript">

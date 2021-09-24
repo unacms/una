@@ -379,6 +379,37 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return !empty($aModule) && is_array($aModule) && (int)$aModule['enabled'] != 0;
     }
 
+    /**
+     * Get modules by type. Available types are 'content', 'context', 'profile'.
+     * 
+     * @param type $sType - string with type.
+     * @return array of modules.
+     */
+    public function serviceGetModulesByType($sType)
+    {
+        $aResults = array();
+
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach($aModules as $aModule) {
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            if(!$oModule)
+                continue;
+
+            if($sType == 'content' && (!($oModule instanceof iBxDolContentInfoService) || $oModule instanceof iBxDolProfileService))
+                continue;
+
+            if($sType == 'context' && !($oModule instanceof iBxDolProfileService))
+                continue;
+
+            if($sType == 'profile' && (!($oModule instanceof iBxDolProfileService) || !$oModule->serviceActAsProfile()))
+                continue;
+
+            $aResults[] = $aModule;
+        }
+
+        return $aResults;
+    }
+
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         return $this->_serviceProfileFunc('getUnit', $iContentId, $aParams);

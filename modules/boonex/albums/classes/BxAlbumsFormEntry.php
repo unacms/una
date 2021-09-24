@@ -18,6 +18,11 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
     {
         $this->MODULE = 'bx_albums';
         parent::__construct($aInfo, $oTemplate);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']]))
+            $this->aInputs[$CNF['FIELD_PHOTO']]['init_reordering'] = true;
     }
 
     public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)

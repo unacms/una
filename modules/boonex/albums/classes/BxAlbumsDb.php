@@ -57,7 +57,17 @@ class BxAlbumsDb extends BxBaseModTextDb
 
     public function getMediaInfoById($iMediaId)
     {
-        $sQuery = $this->prepare ("SELECT `f2e`.*, `f`.`added` FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` AS `f2e` INNER JOIN `" . $this->_oConfig->CNF['TABLE_FILES'] . "` AS `f` ON (`f`.`id` = `f2e`.`file_id`) INNER JOIN `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `e` ON (`e`.`id` = `f2e`.`content_id`) WHERE `f2e`.`id` = ?", $iMediaId);
+        $CNF = &$this->_oConfig->CNF;
+
+        $sSelectClause = "`f2e`.*, `f`.`added`";
+        $sJoinClause = "INNER JOIN `" . $CNF['TABLE_FILES'] . "` AS `f` ON (`f`.`id` = `f2e`.`file_id`) INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `e` ON (`e`.`id` = `f2e`.`content_id`)";
+
+        if($CNF['PARAM_ORDER_BY_GHOSTS']) {
+            $sSelectClause .= ", `g`.`order` as `gorder`";
+            $sJoinClause .= $this->prepareAsString("INNER JOIN `sys_storage_ghosts` AS `g` ON `g`.`id`=`f2e`.`file_id` AND `g`.`content_id`=`f2e`.`content_id` AND `g`.`object`=?", $CNF['OBJECT_STORAGE']);
+        }
+
+        $sQuery = $this->prepare("SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_FILES2ENTRIES'] . "` AS `f2e` " . $sJoinClause . " WHERE `f2e`.`id` = ?", $iMediaId);
         return $this->getRow($sQuery);
     }
 

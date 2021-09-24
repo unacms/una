@@ -31,15 +31,17 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
 
     public function getCode ()
     {
+        $sTemplate = 'menu_main_sliding.html';
         $sClass = 'bx-sliding-menu-main';
         $sStyle = 'display:none';
         if($this->_bSiteMenu) {
-            $sClass = 'bx-sliding-smenu-main';
+            $sTemplate = 'menu_main_inline.html';
+            $sClass = 'bx-inline-smenu-main';
             $sStyle = '';
         }
 
         $this->_oModule->_oTemplate->addJs(array('menu_site.js'));
-        return $this->_oModule->_oTemplate->parseHtmlByName('menu_main_sliding.html', array(
+        return $this->_oModule->_oTemplate->parseHtmlByName($sTemplate, array(
             'id' => 'bx-sliding-menu-' . $this->_sObject,
             'class' => $sClass . ' ' . str_replace('_', '-', $this->_sObject),
             'style' => $sStyle,

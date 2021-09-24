@@ -250,11 +250,43 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         return $aTmplVarsMeta;
     }
-
-    /**
-     * Get profile cover
-     */
-    function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
+    
+    function getBlockCover ($aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
+        if(!$oProfile)
+            return '';
+        
+        $aVars = $this->prepareCover($aData, false);
+        
+        $oConnectionFriends = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        $oConnectionFollowing = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        $aVars2 = [
+            'bx_if:show_following' => array (
+                'condition' => $oConnectionFollowing && $this->_oModule->serviceActAsProfile(),
+                'content' => array (
+                    'count' => $oConnectionFollowing->getConnectedContentCount($oProfile->id(), false),
+                ),
+            ),
+            'bx_if:show_followers' => array (
+                'condition' => $oConnectionFollowing,
+                'content' => array (
+                    'count' => $oConnectionFollowing->getConnectedInitiatorsCount($oProfile->id(), false),
+                ),
+            ),
+            'bx_if:show_friends' => array (
+                'condition' => $oConnectionFriends && $this->_oModule->serviceActAsProfile(),
+                'content' => array (
+                    'count' => $oConnectionFriends->getConnectedContentCount($oProfile->id(), true),
+                ),
+            ),
+            'info' => isset($CNF['FIELD_TEXT']) ? $aData[$CNF['FIELD_TEXT']] : ''
+        ];
+       
+        return $this->parseHtmlByName('cover_block.html', array_merge($aVars, $aVars2));
+    }
+    function prepareCover($aData, $oPage)
     {
         $CNF = &$this->_oConfig->CNF;
         $oModule = $this->getModule();
@@ -396,23 +428,30 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         $sActionsMenu = $oModule->serviceEntityAllActions();
-        if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])) !== false)
+        if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'], $this)) !== false)
             $sActionsMenu = $oMenu->getCode();
+
+        $sMetaMenu = '';
+        if(!empty($CNF['OBJECT_MENU_VIEW_ENTRY_META']) && ($oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META'])) !== false) {
+            $oMetaMenu->setContentId($aData[$CNF['FIELD_ID']]);
+            $oMetaMenu->setContentPublic($this->isProfilePublic($aData));
+            $sMetaMenu = $oMetaMenu->getCode();
+        }
 
         // generate html
         $aVars = array (
             'module' => $this->_oConfig->getName(),
-
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
-            //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
-
             'action_menu' => $sActionsMenu,
-
             'bx_if:show_avatar' => array(
                 'condition' => $bShowAvatar,
                 'content' => $aShowAvatar
+            ),
+            'bx_if:show_avatar_placeholder' => array(
+                'condition' => !$bShowAvatar,
+                'content' => array()
             ),
             'picture_popup' => $sPicturePopup,
             'cover_popup' => $sCoverPopup,
@@ -423,9 +462,17 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'additional_code' => $sAddCode,
             'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
             'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
+            'meta' => $sMetaMenu,
         );
-
-        BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
+        
+        return $aVars;
+    }
+    /**
+     * Get profile cover
+     */
+    function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
+    {
+        BxDolCover::getInstance($this)->set($this->prepareCover($aData, $oPage), $sTemplateName);
     }
 
     /**

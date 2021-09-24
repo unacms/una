@@ -12,6 +12,7 @@
 define('BX_DOL_PROFILE_REDIRECT_PROFILE', 'profile');
 define('BX_DOL_PROFILE_REDIRECT_LAST', 'last');
 define('BX_DOL_PROFILE_REDIRECT_CUSTOM', 'custom');
+define('BX_DOL_PROFILE_REDIRECT_HOMEPAGE', 'homepage');
 
 define('BX_DOL_PROFILE_ACTIVATE_ALWAYS', 'on');
 define('BX_DOL_PROFILE_ACTIVATE_NEVER', 'off');
@@ -111,7 +112,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $CNF = &$this->_oConfig->CNF;
 
         $aResult = array();
-        $aChoices = array(BX_DOL_PROFILE_REDIRECT_PROFILE, BX_DOL_PROFILE_REDIRECT_LAST, BX_DOL_PROFILE_REDIRECT_CUSTOM);
+        $aChoices = array(BX_DOL_PROFILE_REDIRECT_PROFILE, BX_DOL_PROFILE_REDIRECT_LAST, BX_DOL_PROFILE_REDIRECT_CUSTOM, BX_DOL_PROFILE_REDIRECT_HOMEPAGE);
         foreach($aChoices as $sChoice) 
             $aResult[] = array('key' => $sChoice, 'value' => _t($CNF['T']['option_redirect_aadd_' . $sChoice]));
 
@@ -878,6 +879,34 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-page_blocks Page Blocks
+     * @subsubsection bx_base_profile-entity_cover entity_cover
+     * 
+     * @code bx_srv('bx_persons', 'entity_cover', [...]); @endcode
+     * 
+     * Get cover
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModProfileModule::serviceEntityCover
+     */
+    /** 
+     * @ref bx_base_general-entity_cover "entity_cover"
+     */
+    public function serviceEntityCover ($iContentId = 0)
+    {
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
+            return false;
+        
+        $sModule = $this->_oConfig->getName();
+        $aData = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
+        
+        return $this->_oTemplate->getBlockCover($aData, $sModule);
+    }
+    
 	/**
      * Entry comments
      */

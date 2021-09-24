@@ -2,4 +2,36 @@
     $(document).ready(function () {
         bx_activate_anim_icons('#283C50');
     });
+
+    function bx_site_search_complete(oContainer, oData) {
+        if(!oData)
+            return;
+
+        oContainer.show();
+
+        setTimeout(function () {
+            var iWidthPrev = $(window).width();
+            $(window).on('resize.bx-site-search', function () {
+                if($(this).width() == iWidthPrev)
+                    return;
+
+                iWidthPrev = $(this).width();
+                bx_site_search_close_all_opened();
+            });
+ 
+            $(document).on('click.bx-site-search touchend.bx-site-search', function (event) {
+                if ($(event.target).parents('.sys-search-results-quick').length || $(event.target).filter('.sys-search-results-quick').length || e === event.target)
+                    event.stopPropagation();
+                else
+                    bx_site_search_close_all_opened();
+            });
+
+        }, 10);
+    }
+
+    function bx_site_search_close_all_opened() {
+        $('.sys-search-results-quick:visible').each(function () {
+            $(this).hide();
+        });
+    }
 </script>

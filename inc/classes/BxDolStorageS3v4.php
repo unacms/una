@@ -15,8 +15,8 @@ class BxDolStorageS3v4 extends BxDolStorageS3
 {
     protected function init ($aObject)
     {
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'amazon-s3/S3.php');
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'amazon-s3/S3v4.php');
+        require_once(BX_DIRECTORY_PATH_PLUGINS . 'unaio/amazon-s3-php-class-hmac-v2/S3.php');
+        require_once(BX_DIRECTORY_PATH_PLUGINS . 'tpyo/amazon-s3-php-class/S3.php'); // HMAC v4
         $this->_s3 = new S3v4\S3(
             getParam('sys_storage_s3_access_key'), 
             getParam('sys_storage_s3_secret_key'), 

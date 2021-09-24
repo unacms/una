@@ -375,7 +375,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_ads', 'ads-administration', '_bx_ads_menu_item_title_system_admt_ads', '_bx_ads_menu_item_title_admt_ads', 'page.php?i=ads-administration', '', '_self', 'ad col-green2', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_ads', 'ads-administration', '_bx_ads_menu_item_title_system_admt_ads', '_bx_ads_menu_item_title_admt_ads', 'page.php?i=ads-administration', '', '_self', 'ad', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: account dashboard
 SET @iDashboardMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);

@@ -221,6 +221,10 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
                 if($sRedirectCustom) {
                     $sRedirectUrl = $this->prepareCustomRedirectUrl($sRedirectCustom, $aContentInfo);
                 }
+                
+            case BX_DOL_PROFILE_REDIRECT_HOMEPAGE:
+                $sRedirectUrl =  BX_DOL_URL_ROOT;  
+                break;
         }
 
         $sCustomReferrer = $oSession->getValue('custom-referrer');

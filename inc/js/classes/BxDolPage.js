@@ -42,6 +42,9 @@ BxDolPage.prototype.showHelp = function(oLink, iBlockId)
         url: bx_append_url_params(this._sActionsUri, oData),
         closeOnOuterClick: true,
         removeOnClose: false,
+        onBeforeShow: function(oPopup) {
+            oPopup.addClass('bx-popup-help');
+        }
     });
 };
 

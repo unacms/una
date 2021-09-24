@@ -179,7 +179,7 @@
 	<string name="_bx_spaces_page_block_title_system_manage_administration"><![CDATA[Manage All Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_manage"><![CDATA[Manage Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_top_profiles"><![CDATA[Top Spaces]]></string>
-  <string name="_bx_spaces_page_block_title_joined_profiles"><![CDATA[Joined Spaces]]></string>
+        <string name="_bx_spaces_page_block_title_joined_profiles"><![CDATA[Joined Spaces]]></string>
         <string name="_bx_spaces_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_spaces_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 	<string name="_bx_spaces_page_block_title_categories"><![CDATA[Spaces Categories]]></string>
@@ -192,17 +192,18 @@
 	<string name="_bx_spaces_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Recommended Spaces (Showcase View)]]></string>
 	<string name="_bx_spaces_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Spaces]]></string>
-  <string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string>
+        <string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string>
 
-  <string name="_bx_spaces_menu_title_submenu"><![CDATA[Spaces Submenu]]></string>
+        <string name="_bx_spaces_menu_title_submenu"><![CDATA[Spaces Submenu]]></string>
 	<string name="_bx_spaces_menu_set_title_submenu"><![CDATA[Spaces Submenu]]></string>
 	<string name="_bx_spaces_menu_set_title_view_profile_actions"><![CDATA[Space Actions]]></string>
 	<string name="_bx_spaces_menu_title_view_profile_actions"><![CDATA[Space Actions]]></string>
 	<string name="_bx_spaces_menu_set_title_view_profile_actions_more"><![CDATA[Space More Actions]]></string>
 	<string name="_bx_spaces_menu_title_view_profile_actions_more"><![CDATA[Space More Actions]]></string>
+        <string name="_bx_spaces_menu_title_view_profile_meta"><![CDATA[Space Meta]]></string>
+        <string name="_bx_spaces_menu_set_title_view_profile_meta"><![CDATA[Space Meta]]></string>
 	<string name="_bx_spaces_menu_set_title_view_profile_submenu"><![CDATA[View Space Submenu]]></string>
 	<string name="_bx_spaces_menu_title_view_profile_submenu"><![CDATA[View Space Submenu]]></string>
-	<string name="_bx_spaces_menu_title_view_profile_submenu_cover"><![CDATA[Space Cover Submenu]]></string>
 	<string name="_bx_spaces_menu_title_entries_my"><![CDATA[Profile Spaces Action Menu]]></string>
 	<string name="_bx_spaces_menu_set_title_entries_my"><![CDATA[Profile Spaces Menu]]></string>
 	<string name="_bx_spaces_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
@@ -211,8 +212,8 @@
 	<string name="_bx_spaces_menu_item_title_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_spaces_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
 	<string name="_bx_spaces_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
-  <string name="_bx_spaces_menu_item_title_system_clear_reports"><![CDATA[Clear reports]]></string>
-  <string name="_bx_spaces_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
+        <string name="_bx_spaces_menu_item_title_system_clear_reports"><![CDATA[Clear reports]]></string>
+        <string name="_bx_spaces_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
 	<string name="_bx_spaces_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_spaces_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
         <string name="_bx_spaces_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>

@@ -116,7 +116,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         $sId = $this->_oModule->_oConfig->getHtmlIds('processed', $sKey);
         $sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
 
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('order_processed_add.html', array(
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('order_processed_add.html', array(
             'js_object' => $sJsObject,
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true),

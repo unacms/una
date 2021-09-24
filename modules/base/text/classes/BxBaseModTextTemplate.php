@@ -786,8 +786,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     
     function mediaExif ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = 'media-exif.html') 
     {
-
-        if (!$aMediaInfo['exif'])
+        if (empty($aMediaInfo['exif']))
             return '';
 
         $a = unserialize($aMediaInfo['exif']);
