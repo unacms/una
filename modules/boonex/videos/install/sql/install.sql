@@ -6,7 +6,10 @@ CREATE TABLE IF NOT EXISTS `bx_videos_entries` (
   `changed` int(11) NOT NULL default '0',
   `thumb` int(11) NOT NULL default '0',
   `poster` int(11) NOT NULL default '0',
+  `video_source` enum('upload', 'embed') NOT NULL DEFAULT 'upload',
   `video` int(11) NOT NULL default '0',
+  `video_embed` TEXT,
+  `video_embed_data` TEXT,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `multicat` text NOT NULL,
@@ -277,6 +280,18 @@ CREATE TABLE IF NOT EXISTS `bx_videos_scores_track` (
   KEY `vote` (`object_id`, `author_nip`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_videos_embeds_providers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object` varchar(64) NOT NULL,
+  `module` varchar(64) NOT NULL,
+  `class_name` varchar(255) NOT NULL,
+  `class_file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `bx_videos_embeds_providers` (`object`, `module`, `class_name`, `class_file`) VALUES
+('youtube', 'bx_videos', 'BxVideosEmbedProviderYoutube', 'modules/boonex/videos/classes/BxVideosEmbedProviderYoutube.php'),
+('vimeo', 'bx_videos', 'BxVideosEmbedProviderVimeo', 'modules/boonex/videos/classes/BxVideosEmbedProviderVimeo.php');
+
 
 -- STORAGES & TRANSCODERS
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
@@ -314,7 +329,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_videos', 'bx_videos', '_bx_videos_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_videos_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxVideosFormEntry', 'modules/boonex/videos/classes/BxVideosFormEntry.php');
+('bx_videos', 'bx_videos', '_bx_videos_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_videos_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', 'a:1:{s:14:"checker_helper";s:25:"BxVideosFormCheckerHelper";}', 0, 1, 'BxVideosFormEntry', 'modules/boonex/videos/classes/BxVideosFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_videos', 'bx_videos_entry_add', 'bx_videos', 0, '_bx_videos_form_entry_display_add'),
@@ -328,7 +343,9 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_videos', 'bx_videos', 'do_publish', '_bx_videos_form_entry_input_do_publish', '', 0, 'submit', '_bx_videos_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_videos', 'bx_videos', 'do_submit', '_bx_videos_form_entry_input_do_submit', '', 0, 'submit', '_bx_videos_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_videos', 'bx_videos', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_videos', 'bx_videos', 'videos', 'a:2:{i:0;s:15:"bx_videos_html5";i:1;s:22:"bx_videos_record_video";}', 'a:3:{s:16:"bx_videos_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_videos_html5";s:25:"_sys_uploader_html5_title";s:22:"bx_videos_record_video";s:32:"_sys_uploader_record_video_title";}', 0, 'files', '_bx_videos_form_entry_input_sys_videos', '_bx_videos_form_entry_input_videos', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_videos_form_entry_input_videos_error', '', '', 1, 0),
+('bx_videos', 'bx_videos', 'video_source', 'upload', '#!bx_videos_source', 0, 'radio_set', '_bx_videos_form_entry_input_sys_video_source', '_bx_videos_form_entry_input_video_source', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_videos', 'bx_videos', 'video_embed', '', '', 0, 'custom', '_bx_videos_form_entry_input_sys_video_embed', '_bx_videos_form_entry_input_video_embed', '', 1, 0, 0, '', '', '', 'EmbedVideoAvail', '', '_bx_videos_form_entry_input_video_embed_error', 'Xss', '', 1, 0),
+('bx_videos', 'bx_videos', 'videos', 'a:2:{i:0;s:15:"bx_videos_html5";i:1;s:22:"bx_videos_record_video";}', 'a:3:{s:16:"bx_videos_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_videos_html5";s:25:"_sys_uploader_html5_title";s:22:"bx_videos_record_video";s:32:"_sys_uploader_record_video_title";}', 0, 'files', '_bx_videos_form_entry_input_sys_videos', '_bx_videos_form_entry_input_videos', '', 1, 0, 0, '', '', '', 'UploadVideoAvail', '', '_bx_videos_form_entry_input_videos_error', '', '', 1, 0),
 ('bx_videos', 'bx_videos', 'pictures', 'a:1:{i:0;s:15:"bx_videos_html5";}', 'a:2:{s:16:"bx_videos_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_videos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_videos_form_entry_input_sys_pictures', '_bx_videos_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_videos', 'bx_videos', 'text', '', '', 0, 'textarea', '_bx_videos_form_entry_input_sys_text', '_bx_videos_form_entry_input_text', '', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_videos', 'bx_videos', 'title', '', '', 0, 'text', '_bx_videos_form_entry_input_sys_title', '_bx_videos_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_videos_form_entry_input_title_err', 'Xss', '', 1, 0),
@@ -343,11 +360,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_videos_entry_add', 'title', 2147483647, 1, 1),
 ('bx_videos_entry_add', 'cat', 2147483647, 1, 2),
 ('bx_videos_entry_add', 'text', 2147483647, 1, 3),
-('bx_videos_entry_add', 'videos', 2147483647, 1, 4),
-('bx_videos_entry_add', 'pictures', 2147483647, 1, 5),
-('bx_videos_entry_add', 'allow_view_to', 2147483647, 1, 6),
-('bx_videos_entry_add', 'location', 2147483647, 1, 7),
-('bx_videos_entry_add', 'do_publish', 2147483647, 1, 8),
+('bx_videos_entry_add', 'video_source', 2147483647, 1, 4),
+('bx_videos_entry_add', 'video_embed', 2147483647, 1, 5),
+('bx_videos_entry_add', 'videos', 2147483647, 1, 6),
+('bx_videos_entry_add', 'pictures', 2147483647, 1, 7),
+('bx_videos_entry_add', 'allow_view_to', 2147483647, 1, 8),
+('bx_videos_entry_add', 'location', 2147483647, 1, 9),
+('bx_videos_entry_add', 'do_publish', 2147483647, 1, 10),
 
 ('bx_videos_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_videos_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -355,11 +374,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_videos_entry_edit', 'title', 2147483647, 1, 1),
 ('bx_videos_entry_edit', 'cat', 2147483647, 1, 2),
 ('bx_videos_entry_edit', 'text', 2147483647, 1, 3),
-('bx_videos_entry_edit', 'videos', 2147483647, 1, 4),
-('bx_videos_entry_edit', 'pictures', 2147483647, 1, 5),
-('bx_videos_entry_edit', 'allow_view_to', 2147483647, 1, 6),
-('bx_videos_entry_edit', 'location', 2147483647, 1, 7),
-('bx_videos_entry_edit', 'do_submit', 2147483647, 1, 8),
+('bx_videos_entry_edit', 'video_source', 2147483647, 1, 4),
+('bx_videos_entry_edit', 'video_embed', 2147483647, 1, 5),
+('bx_videos_entry_edit', 'videos', 2147483647, 1, 6),
+('bx_videos_entry_edit', 'pictures', 2147483647, 1, 7),
+('bx_videos_entry_edit', 'allow_view_to', 2147483647, 1, 8),
+('bx_videos_entry_edit', 'location', 2147483647, 1, 9),
+('bx_videos_entry_edit', 'do_submit', 2147483647, 1, 10),
 
 ('bx_videos_entry_view', 'duration', 2147483647, 1, 1),
 ('bx_videos_entry_view', 'cat', 2147483647, 1, 2),
@@ -369,7 +390,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('bx_videos_cats', '_bx_videos_pre_lists_cats', 'bx_videos', '0');
+('bx_videos_cats', '_bx_videos_pre_lists_cats', 'bx_videos', '0'),
+('bx_videos_source', '_bx_videos_pre_lists_source', 'bx_videos', '0');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_videos_cats', '', 0, '_sys_please_select', ''),
@@ -381,7 +403,10 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_videos_cats', '6', 6, '_bx_videos_cat_news', ''),
 ('bx_videos_cats', '7', 7, '_bx_videos_cat_people_and_blogs', ''),
 ('bx_videos_cats', '8', 8, '_bx_videos_cat_sports', ''),
-('bx_videos_cats', '9', 9, '_bx_videos_cat_travel', '');
+('bx_videos_cats', '9', 9, '_bx_videos_cat_travel', ''),
+
+('bx_videos_source', 'upload', 0, '_bx_videos_source_upload', ''),
+('bx_videos_source', 'embed', 1, '_bx_videos_source_embed', '');
 
 
 -- COMMENTS

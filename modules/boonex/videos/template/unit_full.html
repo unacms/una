@@ -2,7 +2,9 @@
     <bx_if:thumb>
         <div class="bx-base-text-unit-cover">
             <a href="__content_url__"><img class="bx-base-text-unit-cover bx-def-round-corners" alt="__title__" src="__thumb_url__" /></a>
-            <div class="bx-video-unit-duration bx-def-padding-sec-leftright bx-def-padding-thd-topbottom bx-def-border bx-def-round-corners bx-def-font">__duration__</div>
+            <bx_if:duration_set>
+                <div class="bx-video-unit-duration bx-def-padding-sec-leftright bx-def-padding-thd-topbottom bx-def-border bx-def-round-corners bx-def-font">__duration__</div>
+            </bx_if:duration_set>
         </div>
     </bx_if:thumb>
     <h1 class="bx-base-text-unit-title bx-def-padding-sec-top"><a href="__content_url__">__title__</a></h1>

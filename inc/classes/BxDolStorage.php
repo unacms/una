@@ -707,6 +707,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     public function getFile($iFileId)
     {
         $a = $this->_oDb->getFileById($iFileId);
+        if (!$a) return false;
 
         // update custom fields for previously uploaded files
         if (!defined('BX_DOL_STORAGE_CUSTOM_FIELDS_UPDATE_SKIP') && isset($this->_aParams['fields']) && is_array($this->_aParams['fields'])) {

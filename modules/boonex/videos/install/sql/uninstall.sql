@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_videos_entries`, `bx_videos_photos`, `bx_videos_videos`, `bx_videos_media_resized`, `bx_videos_cmts`, `bx_videos_cmts_notes`, `bx_videos_votes`, `bx_videos_votes_track`, `bx_videos_svotes`, `bx_videos_svotes_track`, `bx_videos_reactions`, `bx_videos_reactions_track`, `bx_videos_views_track`, `bx_videos_meta_keywords`, `bx_videos_meta_locations`, `bx_videos_meta_mentions`, `bx_videos_reports`, `bx_videos_reports_track`, `bx_videos_favorites_track`, `bx_videos_favorites_lists`, `bx_videos_scores`, `bx_videos_scores_track`;
+DROP TABLE IF EXISTS `bx_videos_entries`, `bx_videos_photos`, `bx_videos_videos`, `bx_videos_media_resized`, `bx_videos_cmts`, `bx_videos_cmts_notes`, `bx_videos_votes`, `bx_videos_votes_track`, `bx_videos_svotes`, `bx_videos_svotes_track`, `bx_videos_reactions`, `bx_videos_reactions_track`, `bx_videos_views_track`, `bx_videos_meta_keywords`, `bx_videos_meta_locations`, `bx_videos_meta_mentions`, `bx_videos_reports`, `bx_videos_reports_track`, `bx_videos_favorites_track`, `bx_videos_favorites_lists`, `bx_videos_scores`, `bx_videos_scores_track`, `bx_videos_embeds_providers`;
 
 
 -- STORAGES & TRANSCODERS
@@ -23,7 +23,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_videos_entry_
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_videos';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_videos_cats');
+DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_videos_cats', 'bx_videos_source');
 
 
 -- COMMENTS

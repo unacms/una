@@ -40,6 +40,11 @@
     <string name="_bx_videos_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить видео]]></string>
     <string name="_bx_videos_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_videos_form_entry_input_pictures"><![CDATA[Картинки]]></string>
+    <string name="_bx_videos_form_entry_input_sys_video_source"><![CDATA[Источник видео]]></string>
+    <string name="_bx_videos_form_entry_input_video_source"><![CDATA[Источник видео]]></string>
+    <string name="_bx_videos_form_entry_input_sys_video_embed"><![CDATA[Ссылка на видео]]></string>
+    <string name="_bx_videos_form_entry_input_video_embed"><![CDATA[Ссылка на видео]]></string>
+    <string name="_bx_videos_form_entry_input_video_embed_error"><![CDATA[Требуется корректная ссылка на видео.]]></string>
     <string name="_bx_videos_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_form_entry_input_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_form_entry_input_videos_error"><![CDATA[Видео обязателено. Пожалуйста, загрузите видео файл.]]></string>
@@ -236,6 +241,10 @@
     <string name="_bx_videos_cat_people_and_blogs"><![CDATA[Люди и Блоги]]></string>
     <string name="_bx_videos_cat_sports"><![CDATA[Спорт]]></string>
     <string name="_bx_videos_cat_travel"><![CDATA[Путешествия]]></string>
+
+    <string name="_bx_videos_pre_lists_source"><![CDATA[Источники видео]]></string>
+    <string name="_bx_videos_source_upload"><![CDATA[Загрузить]]></string>
+    <string name="_bx_videos_source_embed"><![CDATA[Ссылка]]></string>
 
     <string name="_bx_videos_txt_all_entries_by"><![CDATA[{0} видео]]></string>
     <string name="_bx_videos_txt_all_entries_in"><![CDATA[<a href="{0}">Все видео в {1} ({2})</a>]]></string>

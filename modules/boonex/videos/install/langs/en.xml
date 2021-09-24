@@ -44,6 +44,11 @@
     <string name="_bx_videos_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the video]]></string>
     <string name="_bx_videos_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
     <string name="_bx_videos_form_entry_input_pictures"><![CDATA[Pictures]]></string>
+    <string name="_bx_videos_form_entry_input_sys_video_source"><![CDATA[Video Source]]></string>
+    <string name="_bx_videos_form_entry_input_video_source"><![CDATA[Video Source]]></string>
+    <string name="_bx_videos_form_entry_input_sys_video_embed"><![CDATA[Video Embed Link]]></string>
+    <string name="_bx_videos_form_entry_input_video_embed"><![CDATA[Video Embed Link]]></string>
+    <string name="_bx_videos_form_entry_input_video_embed_error"><![CDATA[Please provide a valid embed link.]]></string>
     <string name="_bx_videos_form_entry_input_sys_videos"><![CDATA[Video]]></string>
     <string name="_bx_videos_form_entry_input_videos"><![CDATA[Video]]></string>
     <string name="_bx_videos_form_entry_input_videos_error"><![CDATA[Video is essential. Please upload a video file.]]></string>
@@ -245,6 +250,10 @@
     <string name="_bx_videos_cat_people_and_blogs"><![CDATA[People & Blogs]]></string>
     <string name="_bx_videos_cat_sports"><![CDATA[Sports]]></string>
     <string name="_bx_videos_cat_travel"><![CDATA[Travel]]></string>
+
+    <string name="_bx_videos_pre_lists_source"><![CDATA[Videos Source]]></string>
+    <string name="_bx_videos_source_upload"><![CDATA[Upload]]></string>
+    <string name="_bx_videos_source_embed"><![CDATA[Embed]]></string>
 
     <string name="_bx_videos_txt_all_entries_by"><![CDATA[{0} videos]]></string>
     <string name="_bx_videos_txt_all_entries_in"><![CDATA[<a href="{0}">All Videos in {1} ({2})</a>]]></string>

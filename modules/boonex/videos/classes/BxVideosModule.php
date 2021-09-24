@@ -19,6 +19,23 @@ class BxVideosModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+    public function actionParseEmbedLink() {
+        $sCode = bx_get('code');
+        $aRes = $this->parseEmbedLink($sCode);
+        if ($aRes) echo $aRes['embed'];
+    }
+
+    public function parseEmbedLink($sLink) {
+        $aEmbedProviders = $this->_oDb->getEmbedProviders();
+        if ($aEmbedProviders) foreach ($aEmbedProviders as $aEmbedProvider) {
+            if ($aEmbedProvider['class_file']) require_once(BX_DIRECTORY_PATH_ROOT . $aEmbedProvider['class_file']);
+            $mResult = $aEmbedProvider['class_name']::parseLink($sLink);
+            if ($mResult) return $mResult;
+        }
+
+        return false;
+    }
+
     /**
      * @page service Service Calls
      * @section bx_videos Videos
@@ -74,6 +91,15 @@ class BxVideosModule extends BxBaseModTextModule
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+
+        if ($aContentInfo['video_source'] == 'embed' && !empty($aContentInfo['video_embed_data'])) {
+            if (!is_array($aContentInfo['video_embed_data'])) $aContentInfo['video_embed_data'] = unserialize($aContentInfo['video_embed_data']);
+            if (isset($aContentInfo['video_embed_data']['embed']) && !empty($aContentInfo['video_embed_data']['embed'])) {
+                $aResult['images'] = array();
+                $aResult['top_raw'] = $this->_oTemplate->getResponsiveEmbed($aContentInfo['video_embed_data']['embed'], isset($aBrowseParams['dynamic_mode']) ? $aBrowseParams['dynamic_mode'] : false);
+                return $aResult;
+            }
+        }
 
         if(!empty($aResult['videos']) && is_array($aResult['videos']))
             $aResult['images'] = array();

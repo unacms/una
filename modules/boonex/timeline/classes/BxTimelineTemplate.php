@@ -1997,6 +1997,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewSearch = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_SEARCH;
 
+        //--- Process Top Raw ---//
+        $sTopRaw = isset($aContent['top_raw']) ? $aContent['top_raw'] : '';
+
         //--- Process Raw ---//
         $sRaw = isset($aContent['raw']) ? $aContent['raw'] : '';
 
@@ -2195,6 +2198,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
                     'item_content' => $sText
+                )
+            ),
+            'bx_if:show_top_raw' => array(
+                'condition' => !empty($sTopRaw),
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'item_content_top_raw' => $sTopRaw
                 )
             ),
             'bx_if:show_raw' => array(
