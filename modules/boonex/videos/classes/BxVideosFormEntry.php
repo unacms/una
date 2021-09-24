@@ -33,6 +33,7 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_VIDEOS']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_VIDEOS']]['ghost_template'] = '';
         }
+
     }
     
     public function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -67,6 +68,12 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
                 $aValsToAdd[$CNF['FIELD_POSTER']] = $iFilePoster;
         }
 
+        if (bx_get('video_source') == 'embed') {
+            $aEmbedData = $this->_oModule->parseEmbedLink($this->getCleanValue('video_embed'));
+            if ($aEmbedData)
+                $aValsToAdd['video_embed_data'] = serialize($aEmbedData);
+        }
+
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
             $this->processFiles($CNF['FIELD_VIDEOS'], $iContentId, true);
@@ -88,11 +95,56 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
                 $aValsToAdd[$CNF['FIELD_POSTER']] = $iFilePoster;
         }
 
-        $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        if (bx_get('video_source') == 'embed') {
+            $aValsToAdd[$CNF['FIELD_STATUS']] = 'active'; //no need to keep awaiting if we've switched to embed
+            $aEmbedData = $this->_oModule->parseEmbedLink($this->getCleanValue('video_embed'));
+            if ($aEmbedData)
+                $aValsToAdd['video_embed_data'] = serialize($aEmbedData);
+        } else {
+            $aValsToAdd['video_embed_data'] = '';
+            $aValsToAdd['video_embed'] = '';
+        }
 
+        $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
         $this->processFiles($CNF['FIELD_VIDEOS'], $iContentId, false);
 
+
         return $iRet;
+    }
+
+    public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if ($sFieldFile == $CNF['FIELD_VIDEOS'] && bx_get('video_source') == 'embed') {
+            // delete video files in case the embed link has been provided
+            if ($iContentId) {
+                if (!isset($this->aInputs[$sFieldFile]))
+                    return true;
+
+                $mixedFileIds = $this->getCleanValue($sFieldFile);
+                if (!$mixedFileIds)
+                    return true;
+
+                $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sFieldFile]['storage_object']);
+                if (!$oStorage)
+                    return false;
+
+                $iProfileId = $this->getContentOwnerProfileId($iContentId);
+
+                $aGhostFiles = $oStorage->getGhosts($iProfileId, $isAssociateWithContent ? 0 : $iContentId, true, $this->_isAdmin($iContentId));
+                if (!$aGhostFiles)
+                    return true;
+
+                foreach ($aGhostFiles as $aFile) {
+                    if (is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
+                        continue;
+                    $oStorage->deleteFile($aFile['id'], bx_get_logged_profile_id());
+                }
+            }
+        } else {
+            return parent::processFiles($sFieldFile, $iContentId, $isAssociateWithContent);
+        }
     }
 
     function delete ($iContentId, $aContentInfo = array())
@@ -115,6 +167,7 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomViewRowValueDuration(&$aInput)
     {
+        if (!$aInput['value']) return null;
         return _t_format_duration($aInput['value']);
     }
 
@@ -162,6 +215,87 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
     		'name_thumb' => isset($CNF['FIELD_VIDEO']) ? $CNF['FIELD_VIDEO'] : '',
 			'content_id' => $this->aInputs[$CNF['FIELD_VIDEOS']]['content_id'],
 		);
+    }
+
+    public function genCustomRowVideoEmbed(&$aInput) {
+        $sSource = isset($this->aInputs['video_source']) && $this->aInputs['video_source']['value'] == 'embed' ? 'embed' : 'upload';
+        if ($sSource != 'embed') $aInput['tr_attrs']['style'] = 'display:none';
+        return $this->genRowStandard($aInput);
+    }
+
+    public function genCustomRowVideos(&$aInput) {
+        $sSource = isset($this->aInputs['video_source']) && $this->aInputs['video_source']['value'] == 'embed' ? 'embed' : 'upload';
+        if ($sSource != 'upload') $aInput['tr_attrs']['style'] = 'display:none';
+        return $this->genRowCustom($aInput, 'genInputFiles');
+    }
+
+    public function genCustomInputVideoEmbed(&$aInput) {
+        $aEmbedInput = [
+            'type' => 'text',
+            'name' => $aInput['name'],
+            'value' => isset($aInput['value']) ? $aInput['value'] : '',
+            'attrs' => [
+                'onchange' => $this->_oModule->_oConfig->getJsObject('embeds').'.onNewEmbedCode(this.value)',
+            ],
+        ];
+
+        $sEmbedCode = '';
+        if (isset($aInput['value']) && !empty($aInput['value']) && $aEmbed = $this->_oModule->parseEmbedLink($aInput['value'])) {
+            $sEmbedCode = $aEmbed['embed'];
+        }
+
+        return $this->_oModule->_oTemplate->parseHtmlByName('form_field_embed.html', [
+            'input' => $this->genInputStandard($aEmbedInput),
+            'bx_if:noembed_code' => [
+                'condition' => empty($sEmbedCode),
+                'content' => [],
+            ],
+            'embed_code' => $sEmbedCode,
+        ]);
+    }
+
+    public function genInput(&$aInput) {
+        $sJsCode = '';
+
+        if ($aInput['name'] == 'video_source' && $aInput['type'] == 'radio_set') {
+            $aInput['attrs']['onchange'] = $this->_oModule->_oConfig->getJsObject('embeds').'.changeVideoSource(this.value);';
+            $sJsCode = $this->_oModule->_oTemplate->getJsCode('embeds');
+            if ($this->_bDynamicMode) {
+                $sJsCode .= $this->_oModule->_oTemplate->addJs('embeds.js', true);
+                $sJsCode .= $this->_oModule->_oTemplate->addCss('embeds.css', true);
+            } else {
+                $this->_oModule->_oTemplate->addJs('embeds.js', false);
+                $this->_oModule->_oTemplate->addCss('embeds.css', false);
+            }
+        }
+
+        return parent::genInput($aInput).$sJsCode;
+    }
+}
+
+class BxVideosFormCheckerHelper extends BxDolFormCheckerHelper {
+    static public function checkUploadVideoAvail ($s)
+    {
+        $sSource = bx_get('video_source');
+        if ($sSource != 'embed') $sSource = 'upload';
+
+        if ($sSource == 'embed') return true; //if we are embedding then skip uploads check
+
+        return parent::checkAvail($s);
+    }
+    static public function checkEmbedVideoAvail ($s)
+    {
+        $sSource = bx_get('video_source');
+        if ($sSource != 'embed') $sSource = 'upload';
+
+        if ($sSource == 'upload') return true; //if we are uploading then skip embed check
+
+        if (!parent::checkAvail($s)) return false;
+
+        $oModule = BxDolModule::getInstance('bx_videos');
+        if (!$oModule->parseEmbedLink($s)) return false;
+
+        return true;
     }
 }
 

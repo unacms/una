@@ -4,7 +4,9 @@
             <a href="__content_url__" title="__summary_attr__">
                 <div class="bx-base-text-unit-thumb bx-def-gal-div-size bx-def-round-corners bx-def-font-middle" style="background-image:url(__gallery_url__)">
                     <div class="bx-base-text-unit-strecher">__strecher__</div>
-                    <div class="bx-video-unit-duration bx-def-padding-sec-leftright bx-def-padding-thd-topbottom bx-def-border bx-def-round-corners bx-def-font">__duration__</div>
+                    <bx_if:duration_set>
+                        <div class="bx-video-unit-duration bx-def-padding-sec-leftright bx-def-padding-thd-topbottom bx-def-border bx-def-round-corners bx-def-font">__duration__</div>
+                    </bx_if:duration_set>
                 </div>
             </a>
         </bx_if:thumb>

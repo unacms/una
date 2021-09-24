@@ -46,6 +46,13 @@ class BxVideosTemplate extends BxBaseModTextTemplate
             'video' => ''
         );
 
+        if ($aContentInfo['video_source'] == 'embed' && !empty($aContentInfo['video_embed_data'])) {
+            if (!is_array($aContentInfo['video_embed_data'])) $aContentInfo['video_embed_data'] = unserialize($aContentInfo['video_embed_data']);
+            if (isset($aContentInfo['video_embed_data']['embed']) && !empty($aContentInfo['video_embed_data']['embed'])) {
+                return $this->getResponsiveEmbed($aContentInfo['video_embed_data']['embed']);
+            }
+        }
+
         $mixedVideo = $this->getVideo($aContentInfo);
         if($mixedVideo !== false)
             $aTmplVars = array_merge($aTmplVars, array(
@@ -76,6 +83,16 @@ class BxVideosTemplate extends BxBaseModTextTemplate
     public function getVideo($aContentInfo)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
+
+        if ($aContentInfo['video_source'] == 'embed' && !empty($aContentInfo['video_embed_data'])) {
+            if (!is_array($aContentInfo['video_embed_data'])) $aContentInfo['video_embed_data'] = unserialize($aContentInfo['video_embed_data']);
+            if (isset($aContentInfo['video_embed_data']['thumb']) && !empty($aContentInfo['video_embed_data']['thumb']) && isset($aContentInfo['video_embed_data']['embed']) && !empty($aContentInfo['video_embed_data']['embed'])) {
+                return [
+                    'poster_url' => $aContentInfo['video_embed_data']['thumb'],
+                    'player' => $this->getResponsiveEmbed($aContentInfo['video_embed_data']['embed']),
+                ];
+            }
+        }
 
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
 
@@ -155,7 +172,12 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $this->_checkDuration($aData);
 
         $aUnit = parent::getUnit($aData, $aParams);
-        $aUnit['bx_if:thumb']['content']['duration'] = _t_format_duration($aData[$CNF['FIELD_DURATION']]);
+        $aUnit['bx_if:thumb']['content']['bx_if:duration_set'] = [
+            'condition' => $aData[$CNF['FIELD_DURATION']] > 0,
+            'content' => [
+                'duration' => _t_format_duration($aData[$CNF['FIELD_DURATION']]),
+            ]
+        ];
 
         return $aUnit;
     }
@@ -183,12 +205,16 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $sImage = '';
-        if(empty($sField) || empty($aData[$sField])) 
-            return $sImage;
 
         $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
         if($oImagesTranscoder)
             $sImage = $oImagesTranscoder->getFileUrl($aData[$sField]);
+
+        if (!$aData[$sField] && $aData['video_source'] == 'embed' && !empty($aData['video_embed_data'])) {
+            if (!is_array($aData['video_embed_data'])) $aData['video_embed_data'] = unserialize($aData['video_embed_data']);
+            if (isset($aData['video_embed_data']['thumb']) && !empty($aData['video_embed_data']['thumb']))
+                return $aData['video_embed_data']['thumb'];
+        }
 
         return $sImage;
     }
@@ -212,6 +238,13 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $this->_oDb->updateEntries(array($CNF['FIELD_DURATION'] => $iDuration), array($CNF['FIELD_ID'] => $aContentInfo[$CNF['FIELD_ID']]));
     }
 
+    public function getResponsiveEmbed($sEmbedCode, $bDynamic = false) {
+        $sCss = $this->addCss('embeds.css', $bDynamic);
+
+        return $this->parseHtmlByName('entry-video-embed.html', [
+            'video' => $sEmbedCode,
+        ]).($bDynamic ? $sCss : '');
+    }
 }
 
 /** @} */

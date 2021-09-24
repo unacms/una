@@ -29,6 +29,10 @@ class BxVideosDb extends BxBaseModTextDb
         $sSql = "UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
         return $this->query($sSql);
     }
+
+    public function getEmbedProviders() {
+        return $this->getAll("SELECT * FROM `bx_videos_embeds_providers`");
+    }
 }
 
 /** @} */

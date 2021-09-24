@@ -187,12 +187,14 @@ class BxVideosConfig extends BxBaseModTextConfig
 
         $this->_aJsClasses = array(
         	'manage_tools' => 'BxVideosManageTools',
-            'categories' => 'BxDolCategories'
+            'categories' => 'BxDolCategories',
+            'embeds' => 'BxVideosEmbeds',
         );
 
         $this->_aJsObjects = array(
         	'manage_tools' => 'oBxVideosManageTools',
-            'categories' => 'oBxDolCategories'
+            'categories' => 'oBxDolCategories',
+            'embeds' => 'oBxVideosEmbeds',
         );
 
         $this->_aGridObjects = array(
