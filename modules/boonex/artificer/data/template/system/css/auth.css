@@ -1,0 +1,18 @@
+/*--
+import url(../../../../../../../template/css/auth.css);
+--*/
+
+.sys-auth-block.sys-auth-compact-container {
+    -webkit-justify-content:flex-start;
+    justify-content:flex-start;
+    margin-left: 0;
+}
+
+.sys-auth.sys-auth-compact {
+    width: auto;
+}
+
+.sys-auth.sys-auth-compact .bx-btn {
+    margin-left: 0;
+    margin-right: 0;
+}
