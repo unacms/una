@@ -17,6 +17,9 @@ function BxVideosEmbeds(oOptions) {
 
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+
+    this._hTypingTimer = null;
+    this._sLastCodeChecked = '';
 }
 
 BxVideosEmbeds.prototype.changeVideoSource = function(sSource) {
@@ -29,7 +32,16 @@ BxVideosEmbeds.prototype.changeVideoSource = function(sSource) {
     }
 };
 
-BxVideosEmbeds.prototype.onNewEmbedCode = function(sCode) {
+BxVideosEmbeds.prototype.onNewEmbedCode = function() {
+    if (this._hTypingTimer) {
+        clearTimeout(this._hTypingTimer);
+        this._hTypingTimer = null;
+    }
+
+    var sCode = $('#bx-video-embed-link').val();
+
+    if (this._sLastCodeChecked && this._sLastCodeChecked == sCode) return;
+    this._sLastCodeChecked = sCode;
 	$.get(this._sActionsUrl + 'parse_embed_link/', {code: sCode}, function(sEmbed){
 	    if (!sEmbed.length) {
             $('#bx-videos-input-embed-preview').fadeOut(function () {
@@ -40,6 +52,14 @@ BxVideosEmbeds.prototype.onNewEmbedCode = function(sCode) {
             $('#bx-videos-input-embed-preview').fadeIn();
         }
     });
+};
+
+BxVideosEmbeds.prototype.onNewEmbedCodeTyping = function(iDelay) {
+	if (this._hTypingTimer) clearTimeout(this._hTypingTimer);
+	var $this = this;
+	this._hTypingTimer = setTimeout(function(){
+	    $this.onNewEmbedCode();
+    }, iDelay);
 };
 
 /** @} */

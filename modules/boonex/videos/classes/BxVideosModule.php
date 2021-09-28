@@ -29,8 +29,9 @@ class BxVideosModule extends BxBaseModTextModule
         $aEmbedProviders = $this->_oDb->getEmbedProviders();
         if ($aEmbedProviders) foreach ($aEmbedProviders as $aEmbedProvider) {
             if ($aEmbedProvider['class_file']) require_once(BX_DIRECTORY_PATH_ROOT . $aEmbedProvider['class_file']);
-            $mResult = $aEmbedProvider['class_name']::parseLink($sLink);
-            if ($mResult) return $mResult;
+            $oLinkParser = new $aEmbedProvider['class_name']($aEmbedProvider);
+            if ($mResult = $oLinkParser->parseLink($sLink))
+                return $mResult;
         }
 
         return false;
