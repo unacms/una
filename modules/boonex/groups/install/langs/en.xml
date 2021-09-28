@@ -200,6 +200,8 @@
     <string name="_bx_groups_page_block_title_groups_browse_by_label"><![CDATA[Browse by label]]></string>
     <string name="_bx_groups_page_block_title_sys_labels_breadcrumbs"><![CDATA[Labels breadcrumbs]]></string>
     <string name="_bx_groups_page_block_title_labels_breadcrumbs"><![CDATA[Labels breadcrumbs]]></string>
+    <string name="_bx_groups_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+    <string name="_bx_groups_page_block_title_cover_block"><![CDATA[Cover]]></string>
     
 
   <string name="_bx_groups_menu_title_submenu"><![CDATA[Groups Submenu]]></string>

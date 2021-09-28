@@ -11,7 +11,7 @@
  * reCAPTCHA representation.
  * @see BxDolCaptcha
  */
-class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
+class BxBaseCaptchaHCaptcha extends BxDolCaptcha
 {
 	protected $sApiUrl;
 	protected $sVerifyUrl;
@@ -20,9 +20,9 @@ class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
     {
         parent::__construct ($aObject, $oTemplate);
 		
-        $this->_sSkin = 'light';
-        $this->sApiUrl = 'https://www.google.com/recaptcha/api.js';
-        $this->sVerifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+		$this->_sSkin = 'light';
+        $this->sApiUrl = 'https://js.hcaptcha.com/1/api.js';
+        $this->sVerifyUrl = 'https://hcaptcha.com/siteverify';
     }
 
     /**
@@ -30,7 +30,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
      */
     public function display ($bDynamicMode = false)
     {
-        $sCode = '';
+       $sCode = '';
         $aApiParams = array();
         if($bDynamicMode)  {
         	$sPostfix = $this->_sObject;
@@ -39,7 +39,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
         	$sOnLoadFunction = 'onLoadCallback' . $sPostfix;
         	$sOnLoadCode = "
 	        	var " . $sOnLoadFunction . " = function() {
-					grecaptcha.render('" . $sId . "', {
+					hcaptcha.render('" . $sId . "', {
 						'sitekey': '" . $this->_sKeyPublic . "',
 						'theme': '" . $this->_sSkin . "'
 					});
@@ -59,7 +59,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
         		'render' => 'onload'
         	);
 
-        	$sCode .= '<div class="g-recaptcha" data-sitekey="' . $this->_sKeyPublic . '" data-theme="' . $this->_sSkin . '"></div>';
+        	$sCode .= '<div class="h-captcha" data-sitekey="' . $this->_sKeyPublic . '" data-theme="' . $this->_sSkin . '"></div>';
         }
 
         $aApiParams['hl'] = BxDolLanguages::getInstance()->getCurrentLanguage();
@@ -75,9 +75,9 @@ class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
     {
     	$mixedResponce = bx_file_get_contents($this->sVerifyUrl, array(
     		'secret' => $this->_sKeyPrivate, 
-    		'response' => bx_process_input(bx_get('g-recaptcha-response')),
-    		'remoteip' => getVisitorIP()
-    	));
+    		'response' => bx_process_input(bx_get('h-captcha-response'))
+    	), 'post');
+	
     	if($mixedResponce === false)
     		return false;
 
