@@ -3984,7 +3984,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('Currency', 'AUD', 1, '__AUD', '', 'a:1:{s:4:"sign";s:6:"A&#36;";}'),
 ('Currency', 'CAD', 2, '__CAD', '', 'a:1:{s:4:"sign";s:6:"C&#36;";}'),
-('Currency', 'EUR', 3, '__EUR', '', 'a:1:{s:4:"sign";s:6:"&#128;";}'),
+('Currency', 'EUR', 3, '__EUR', '', 'a:1:{s:4:"sign";s:7:"&#8364;";}'),
 ('Currency', 'GBP', 4, '__GBP', '', 'a:1:{s:4:"sign";s:6:"&#163;";}'),
 ('Currency', 'USD', 5, '__USD', '', 'a:1:{s:4:"sign";s:5:"&#36;";}'),
 ('Currency', 'YEN', 6, '__YEN', '', 'a:1:{s:4:"sign";s:6:"&#165;";}');

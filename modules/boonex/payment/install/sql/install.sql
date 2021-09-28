@@ -672,7 +672,7 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `exte
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_payment_currencies', 'AUD', 1, 'AUD', 'A&#36;'),
 ('bx_payment_currencies', 'CAD', 2, 'CAD', 'C&#36;'),
-('bx_payment_currencies', 'EUR', 3, 'EUR', '&#128;'),
+('bx_payment_currencies', 'EUR', 3, 'EUR', '&#8364;'),
 ('bx_payment_currencies', 'GBP', 4, 'GBP', '&#163;'),
 ('bx_payment_currencies', 'USD', 5, 'USD', '&#36;'),
 ('bx_payment_currencies', 'YEN', 6, 'YEN', '&#165;');
