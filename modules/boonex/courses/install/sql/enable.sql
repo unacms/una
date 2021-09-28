@@ -196,12 +196,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_courses_favorites', 3, 'bx_courses', '', '_bx_courses_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
 ('bx_courses_favorites', 3, 'bx_courses', '', '_bx_courses_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
 
-
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('sys_home', 1, 'bx_courses', '', '_bx_courses_page_block_title_latest_profiles', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"browse_recent_profiles";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1),
 ('sys_home', 1, 'bx_courses', '_bx_courses_page_block_title_sys_recommended_entries_view_showcase', '_bx_courses_page_block_title_recommended_entries_view_showcase', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:18:"browse_recommended";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 2);
+
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
@@ -210,7 +210,9 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_recommended_entries_view_showcase', '_bx_courses_page_block_title_recommended_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:18:"browse_recommended";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 3),
 ('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_labels_tree', '_bx_courses_page_block_title_labels_tree', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"get_lables_tree";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 4),
 ('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_browse_by_label', '_bx_courses_page_block_title_browse_by_label', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"browse_by_label";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 5),
-('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_labels_breadcrumbs', '_bx_courses_page_block_title_labels_breadcrumbs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"get_lables_breadcrumbs";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 6);
+('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_labels_breadcrumbs', '_bx_courses_page_block_title_labels_breadcrumbs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"get_lables_breadcrumbs";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 6),
+('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_cover_block', '_bx_courses_page_block_title_cover_block', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_courses\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 7);
+
 -- MENU
 
 -- MENU: add to site menu

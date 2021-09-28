@@ -252,8 +252,10 @@
     <string name="_bx_orgs_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Organizations]]></string>
     <string name="_bx_orgs_page_block_title_sys_active_entries_view_showcase"><![CDATA[Active Organizations (Showcase View)]]></string>
     <string name="_bx_orgs_page_block_title_active_entries_view_showcase"><![CDATA[Active Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+    <string name="_bx_orgs_page_block_title_cover_block"><![CDATA[Cover]]></string>
 
-    <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
+  <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_view_profile_actions"><![CDATA[Organization Actions]]></string>
     <string name="_bx_orgs_menu_title_view_profile_actions"><![CDATA[Organization Actions]]></string>
