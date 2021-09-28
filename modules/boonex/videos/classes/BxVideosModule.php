@@ -28,8 +28,12 @@ class BxVideosModule extends BxBaseModTextModule
     public function parseEmbedLink($sLink) {
         $aEmbedProviders = $this->_oDb->getEmbedProviders();
         if ($aEmbedProviders) foreach ($aEmbedProviders as $aEmbedProvider) {
-            if ($aEmbedProvider['class_file']) require_once(BX_DIRECTORY_PATH_ROOT . $aEmbedProvider['class_file']);
-            $oLinkParser = new $aEmbedProvider['class_name']($aEmbedProvider);
+            if (!$aEmbedProvider['class_name']) continue;
+
+            if ($aEmbedProvider['class_file'])
+                require_once(BX_DIRECTORY_PATH_ROOT . $aEmbedProvider['class_file']);
+
+            $oLinkParser = new $aEmbedProvider['class_name']($aEmbedProvider['params'] ? unserialize($aEmbedProvider['params']) : []);
             if ($mResult = $oLinkParser->parseLink($sLink))
                 return $mResult;
         }

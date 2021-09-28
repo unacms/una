@@ -17,9 +17,9 @@ class BxVideosEmbedProviderOEmbed
     var $_sOEmbedUrl;
     var $_sQuickCheck;
 
-    public function __construct($aObject) {
-        $this->_sOEmbedUrl = $aObject['oembed_url'];
-        $this->_sQuickCheck = $aObject['quick_check'];
+    public function __construct($aParams) {
+        $this->_sOEmbedUrl = $aParams['oembed_url'];
+        $this->_sQuickCheck = $aParams['quick_check'];
     }
 
     public function parseLink($sLink) {
