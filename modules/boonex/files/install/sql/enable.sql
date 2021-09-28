@@ -264,7 +264,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: actions menu for view inline entry
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_files_view_inline', '_bx_files_menu_title_view_inline', 'bx_files_view_inline', 'bx_files', 9, 0, 1, 'BxFilesMenuViewActionsInline', 'modules/boonex/files/classes/BxFilesMenuViewActions.php');
+('bx_files_view_inline', '_bx_files_menu_title_view_inline', 'bx_files_view_inline', 'bx_files', 15, 0, 1, 'BxFilesMenuViewActionsInline', 'modules/boonex/files/classes/BxFilesMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_files_view_inline', 'bx_files', '_bx_files_menu_set_title_view_inline', 0);

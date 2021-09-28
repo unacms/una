@@ -259,7 +259,7 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
 
         if ($aInput['name'] == 'video_source' && $aInput['type'] == 'radio_set') {
             $aInput['attrs']['onchange'] = $this->_oModule->_oConfig->getJsObject('embeds').'.changeVideoSource(this.value);';
-            $sJsCode = $this->_oModule->_oTemplate->getJsCode('embeds');
+            $sJsCode = '';
             if ($this->_bDynamicMode) {
                 $sJsCode .= $this->_oModule->_oTemplate->addJs('embeds.js', true);
                 $sJsCode .= $this->_oModule->_oTemplate->addCss('embeds.css', true);
@@ -267,6 +267,8 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
                 $this->_oModule->_oTemplate->addJs('embeds.js', false);
                 $this->_oModule->_oTemplate->addCss('embeds.css', false);
             }
+
+            $sJsCode .= $this->_oModule->_oTemplate->getJsCode('embeds');
         }
 
         return parent::genInput($aInput).$sJsCode;
