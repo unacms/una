@@ -3340,6 +3340,9 @@
 	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь.</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Введённый email или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
   <string name="_sys_txt_login_locked"><![CDATA[Ваш аккаунт заблокирован, для разблокировки, пожалуйста, используйте  <a href="{0}">страницу сброса пароля</a>.]]></string>
+    <string name="_sys_txt_following_counter"><![CDATA[Подписки: {0}]]></string>
+    <string name="_sys_txt_followers_counter"><![CDATA[Подписчики: {0}]]></string>
+    <string name="_sys_txt_friends_counter"><![CDATA[Друзья: {0}]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая картинка]]></string>

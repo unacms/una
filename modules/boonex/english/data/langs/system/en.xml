@@ -3368,6 +3368,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
   <string name="_sys_txt_login_locked"><![CDATA[Your account is locked and needs to be unlocked using <a href="{0}">forgot password page</a>.]]></string>
   
+    <string name="_sys_txt_following_counter"><![CDATA[Following: {0}]]></string>
+    <string name="_sys_txt_followers_counter"><![CDATA[Followers: {0}]]></string>
+    <string name="_sys_txt_friends_counter"><![CDATA[Friends: {0}]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Create a new profile]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[New Picture]]></string>

@@ -447,6 +447,32 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     right:0;
 }
 
+/* Cover block */
+.bx-base-profile-cover-block-wrapper .bx-base-pofile-cover-image{
+    max-height: 15rem;
+}
+
+.bx-base-profile-cover-block-wrapper .bx-base-pofile-ci-cnt{
+    justify-content: center
+}
+
+.bx-base-profile-cover-block-wrapper .bx-base-pofile-cover-user{
+    align-items: center
+}
+.bx-base-profile-cover-block-wrapper .bx-menu-custom.bx-menu-custom-hor{
+    justify-content: center;
+}
+.bx-base-profile-cover-block-wrapper .bx-def-unit-desc P{
+    margin: 0px;
+}
+.bx-base-profile-cover-block-wrapper .bx-base-pofile-informers{
+    display: flex;
+    justify-content: space-around;
+}
+.bx-base-profile-cover-block-wrapper .bx-base-pofile-informers DIV{
+    width: 25%;
+}
+
 /* flexbox */
 .bx-base-pofile-units-wrapper {
     display: -webkit-box;
