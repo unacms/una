@@ -1553,8 +1553,8 @@
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Номер для отправки SMS по умолчанию]]></string>
 	<string name="_adm_stg_cpt_option_sys_nominatim_server"><![CDATA[Nominatim сервер (URL)]]></string>    
 	<string name="_adm_stg_cpt_option_sys_nominatim_email"><![CDATA[Nominatim Email адрес (чтобы идентифицировать запросы)]]></string>
-	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
-	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
+	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA/hCaptcha - приватный ключ]]></string>
+	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA/hCaptcha - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
     <string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Перенаправлять после подтверждения email-а на]]></string>
     <string name="_adm_stg_cpt_option_sys_relations"><![CDATA[Разрешить связи между]]></string>

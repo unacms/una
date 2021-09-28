@@ -11,7 +11,7 @@
  * reCAPTCHA representation.
  * @see BxDolCaptcha
  */
-class BxBaseCaptchaReCAPTCHAInvisible extends BxTemplCaptchaReCAPTCHA
+class BxBaseCaptchaReCAPTCHAInvisible extends BxDolCaptcha
 {
 	protected $sApiUrl;
 	protected $sVerifyUrl;
@@ -19,7 +19,7 @@ class BxBaseCaptchaReCAPTCHAInvisible extends BxTemplCaptchaReCAPTCHA
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
-
+		
         $this->sApiUrl = 'https://www.google.com/recaptcha/api.js';
         $this->sVerifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
     }

@@ -114,9 +114,9 @@ CREATE TABLE `sys_objects_captcha` (
 );
 
 INSERT INTO `sys_objects_captcha` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
-('sys_recaptcha', 'reCAPTCHA', 'BxTemplCaptchaReCAPTCHA', ''),
-('sys_recaptcha_new', 'reCAPTCHA New', 'BxTemplCaptchaReCAPTCHANew', ''),
-('sys_recaptcha_invisible', 'reCAPTCHA Invisible', 'BxTemplCaptchaReCAPTCHAInvisible', '');
+('sys_recaptcha_new', 'reCAPTCHA', 'BxTemplCaptchaReCAPTCHANew', ''),
+('sys_recaptcha_invisible', 'reCAPTCHA Invisible', 'BxTemplCaptchaReCAPTCHAInvisible', ''),
+('sys_hcaptcha', 'hCaptcha', 'BxTemplCaptchaHCaptcha', '');
 
 
 -- --------------------------------------------------------
@@ -313,7 +313,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_redirect_after_email_confirmation', '_adm_stg_cpt_option_sys_redirect_after_email_confirmation', '', 'digit', '', '', '', '', 41),
 
 (@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', '', 50),
-(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'digit', '', '', '', '', 51),
+(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'select', 'sys_recaptcha_new,sys_recaptcha_invisible,sys_hcaptcha', '', '', '', 51),
 (@iCategoryId, 'sys_player_default', '_adm_stg_cpt_option_sys_player_default', 'sys_html5', 'digit', '', '', '', '', 55),
 (@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_quality', 'sd', 'select', 'sd,hd', '', '', '', 56),
 
