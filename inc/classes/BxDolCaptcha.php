@@ -52,12 +52,20 @@ class BxDolCaptcha extends BxDolFactory implements iBxDolFactoryObject
      * Constructor
      * @param $aObject array of captcha options
      */
-    protected function __construct($aObject)
+    protected function __construct($aObject, $oTemplate)
     {
         parent::__construct();
 
         $this->_sObject = $aObject['object'];
         $this->_aObject = $aObject;
+        
+        $this->_sKeyPublic = getParam('sys_recaptcha_key_public');
+        $this->_sKeyPrivate = getParam('sys_recaptcha_key_private');
+        
+        if ($oTemplate)
+            $this->_oTemplate = $oTemplate;
+        else
+            $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
     /**
@@ -74,6 +82,7 @@ class BxDolCaptcha extends BxDolFactory implements iBxDolFactoryObject
             return $GLOBALS['bxDolClasses']['BxDolCaptcha!'.$sObject];
 
         $aObject = BxDolCaptchaQuery::getCaptchaObject($sObject);
+        
         if (!$aObject || !is_array($aObject))
             return false;
 
@@ -121,7 +130,7 @@ class BxDolCaptcha extends BxDolFactory implements iBxDolFactoryObject
      */
     public function isAvailable ()
     {
-        // override this function in particular class
+        return !empty($this->_sKeyPublic) && !empty($this->_sKeyPrivate);
     }
 }
 
