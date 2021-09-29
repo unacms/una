@@ -112,6 +112,7 @@ $aConfig = array(
     	'process_esearches' => 1,
         'register_transcoders' => 1,
         'clear_db_cache' => 1,
+        'initialize_oembed_endpoints' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,

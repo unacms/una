@@ -15,6 +15,11 @@ class BxVideosInstaller extends BxBaseModTextInstaller
     {
         parent::__construct($aConfig);
     }
+
+    protected function actionInitializeOEmbedEndpoints($sOperation) {
+        bx_srv('bx_videos', 'update_oembed_providers', array());
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
 }
 
 /** @} */
