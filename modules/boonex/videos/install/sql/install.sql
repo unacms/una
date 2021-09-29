@@ -289,9 +289,21 @@ CREATE TABLE IF NOT EXISTS `bx_videos_embeds_providers` (
   `class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `bx_videos_oembed_endpoints` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_videos_oembed_schemes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `endpoint_id` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
 INSERT INTO `bx_videos_embeds_providers` (`object`, `module`, `params`, `class_name`, `class_file`) VALUES
-('youtube', 'bx_videos', 'a:2:{s:10:"oembed_url";s:42:"https://www.youtube.com/oembed?format=json";s:11:"quick_check";s:5:"youtu";}', 'BxVideosEmbedProviderOEmbed', 'modules/boonex/videos/classes/BxVideosEmbedProviderOEmbed.php'),
-('vimeo', 'bx_videos', 'a:2:{s:10:"oembed_url";s:33:"https://vimeo.com/api/oembed.json";s:11:"quick_check";s:5:"vimeo";}', 'BxVideosEmbedProviderOEmbed', 'modules/boonex/videos/classes/BxVideosEmbedProviderOEmbed.php');
+('oembed', 'bx_videos', '', 'BxVideosEmbedProviderOEmbed', 'modules/boonex/videos/classes/BxVideosEmbedProviderOEmbed.php');
 
 
 -- STORAGES & TRANSCODERS
