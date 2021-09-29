@@ -1,5 +1,5 @@
-<div class="bx-base-profile-cover-block-wrapper bx-menu-toolbar-padding">
-    <div class="bx-base-pofile-cover-wrapper bx-base-pofile-cover-wrapper __class__ bx-def-centered bx-def-box-sizing">
+<div class="bx-base-profile-cover-block-wrapper">
+    <div class="bx-base-pofile-cover-wrapper __class__ bx-def-centered bx-def-box-sizing">
         <div class="bx-base-pofile-cover bx-def-cover-color-bg bx-def-box-sizing">
             <div class="bx-base-pofile-cover-image __add_class__">
                 <a class="bx-base-pofile-cover-image bx-def-box-sizing" href="__cover_href__" onclick="$('#__cover_popup_id__').dolPopupImage('__cover_url__', this)">
@@ -25,30 +25,20 @@
                         </div>
                     </bx_if:show_avatar>
                 </div>
+                <div class="bx-base-pofile-cover-user bx-def-margin-sec-topbottom">
+                    <div class="bx-base-profile-cover-title-bages">
+                        <h1 class="bx-def-unit-info">__title__ </h1>
+                        <div class="bx-base-profile-cover-bages bx-base-bages-container">
+                            __badges__
+                        </div>
+                    </div>
+                    <div class="bx-base-pofile-cover-actions bx-def-margin-sec-leftright-neg" onclick="event.stopPropagation();">__action_menu__</div>
+                    <div class="bx-def-margin-sec bx-def-unit-desc">__info__</div>
+                </div>
             </div>
         </div>
-		<div class="bx-base-pofile-cover-user bx-def-margin-sec-topbottom">
-			<div class="bx-base-profile-cover-title-bages">
-				<h1 class="bx-def-unit-info">__title__ </h1>
-				<div class="bx-base-profile-cover-bages bx-base-bages-container">
-					__badges__
-				</div>
-			</div>
-			<div class="bx-def-margin-sec bx-def-unit-desc" >__info__</div>
-			<div class="bx-base-pofile-cover-actions bx-def-margin-sec-leftright-neg" onclick="event.stopPropagation();">__action_menu__</div>
-		</div>
     </div>
     __cover_popup__
     __picture_popup__
-	<div class="bx-def-margin-sec bx-base-pofile-informers" >
-		<div>
-			<bx_if:show_following>__count__</bx_if:show_following>
-		</div>
-		<div>
-			<bx_if:show_followers>__count__</bx_if:show_followers>
-		</div>
-		<div>
-			<bx_if:show_friends>__count__</bx_if:show_friends>
-		</div>
-	</div>
 </div>
+__additional_code__

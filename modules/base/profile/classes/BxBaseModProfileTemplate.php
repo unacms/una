@@ -260,29 +260,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         
         $aVars = $this->prepareCover($aData, false);
         
-        $oConnectionFriends = BxDolConnection::getObjectInstance('sys_profiles_friends');
-        $oConnectionFollowing = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        
         $aVars2 = [
-            'bx_if:show_following' => array (
-                'condition' => $oConnectionFollowing && $this->_oModule->serviceActAsProfile(),
-                'content' => array (
-                    'count' => _t('_sys_txt_following_counter', $oConnectionFollowing->getConnectedContentCount($oProfile->id(), false)),
-                ),
-            ),
-            'bx_if:show_followers' => array (
-                'condition' => $oConnectionFollowing,
-                'content' => array (
-                    'count' => _t('_sys_txt_followers_counter', $oConnectionFollowing->getConnectedInitiatorsCount($oProfile->id(), false)),
-                ),
-            ),
-            'bx_if:show_friends' => array (
-                'condition' => $oConnectionFriends && $this->_oModule->serviceActAsProfile(),
-                'content' => array (
-                    'count' => _t('_sys_txt_friends_counter', $oConnectionFriends->getConnectedContentCount($oProfile->id(), true)),
-                ),
-            ),
-            'info' => isset($CNF['FIELD_TEXT']) ? strmaxtextlen($aData[$CNF['FIELD_TEXT']], 125) : ''
+            'info' => isset($CNF['FIELD_TEXT']) ? strmaxtextlen(strip_tags($aData[$CNF['FIELD_TEXT']]), 150) : ''
         ];
         return $this->parseHtmlByName('cover_block.html', array_merge($aVars, $aVars2));
     }
