@@ -17,6 +17,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     protected $_sObjectActionsMenu = false;
     protected $_sObjectSubmenu = false;
     protected $_mixedMainMenuItemSelected = false;
+    protected $_sTemplateWrapper = 'menu_main_submenu_bar.html';
 
     protected $_sJsObject;
 
@@ -93,6 +94,24 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     }
 
     /**
+     * Get template wrapper
+     * @return template wrapper
+     */
+    public function getTemplateWrapper ()
+    {
+        return $this->_sTemplateWrapper;
+    }
+    
+    /**
+     * Set template wrapper
+     * @param $s template wrapper
+     */
+    public function setTemplateWrapper ($s)
+    {
+        $this->_sTemplateWrapper = $s;
+    }
+    
+    /**
      * Get menu code.
      * @return string
      */
@@ -114,7 +133,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
             return '';
 
         $this->_addJsCss();
-        return $this->_oTemplate->parseHtmlByName('menu_main_submenu_bar.html', array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTemplateWrapper, array(
             'class' => $oMenuSubmenu->getTemplateId() == BX_MENU_TEMPLATE_SUBMENU_MORE_AUTO ? 'bx-menu-more-auto' : '',
             'code' => $sCode
         ));

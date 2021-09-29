@@ -573,7 +573,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _setSubmenu ($aParams)
     {
-        if(empty($this->_aObject['submenu']))
+        if(empty($this->_aObject['submenu']) || $this->_aObject['submenu'] == 'disabled')
             return;
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');

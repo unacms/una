@@ -590,7 +590,29 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'menu' => $oMenu
         );
     }
-
+    
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-get_site_submenu get_site_submenu
+     * 
+     * @code bx_srv('system', 'get_site_submenu', [], 'TemplServices'); @endcode
+     * @code {{~system:get_site_submenu:TemplServices[]~}} @endcode
+     * 
+     * Get Site Submenu code.
+     * @see BxBaseServices::serviceGetSiteSubmenu
+     */
+    /** 
+     * @ref bx_system_general-get_site_submenu "get_site_submenu"
+     */
+    public function serviceGetSiteSubmenu()
+    {
+        $oMenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        $oMenu->setTemplateWrapper('menu_main_submenu_empty.html');
+        return $oMenu ? $oMenu->getCode () : '';
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 

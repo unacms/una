@@ -1384,6 +1384,13 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getMenu ($s)
     {
         $oMenu = BxDolMenu::getObjectInstance($s);
+        
+        if($s == 'sys_site_submenu'){
+            $oPage = BxDolPage::getObjectInstanceByURI();
+            if ($oPage->getSubMenu() == 'disabled'){
+                return;
+            }
+        }
         return $oMenu ? $oMenu->getCode () : '';
     }
 
