@@ -263,7 +263,7 @@ class BxBaseGrid extends BxDolGrid
                     'bx_if:counter' => array (
                         'condition' => $this->_aOptions['show_total_count'] == 1,
                         'content' => array(
-                            'counter' => _t('_sys_grid_total_count', $this->_iTotalCount),
+                            'counter' => $this->_getCounter(),
                         ),
                     ),
                 ),
@@ -621,6 +621,11 @@ class BxBaseGrid extends BxDolGrid
 
         $this->_oTemplate->addCss('forms.css');
         return $oForm->genRow($aInput);
+    }
+
+    protected function _getCounter()
+    {
+        return _t('_sys_grid_total_count', $this->_iTotalCount);
     }
 
     protected function _limitMaxLength ($mixedValue, $sKey, $aField, $aRow, $isDisplayPopupOnTextOverflow, $bReturnString = true)
