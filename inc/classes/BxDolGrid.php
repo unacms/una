@@ -416,7 +416,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         // calculate total records count
         if ($this->_aOptions['show_total_count'] == 1){
-             $this->_iTotalCount = $this->_getDataSqCounter($sQuery, $sFilter);
+             $this->_iTotalCount = $this->_getDataSqlCounter($sQuery, $sFilter);
         }
         
         // add order
@@ -426,7 +426,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return $oDb->getAll($sQuery);
     }
 
-    protected function _getDataSqCounter($sQuery, $sFilter)
+    protected function _getDataSqlCounter($sQuery, $sFilter)
     {
         $oDb = BxDolDb::getInstance();
 
