@@ -44,7 +44,7 @@ class BxBaseGrid extends BxDolGrid
         echoJson(array(
             'grid' => $this->getCode(false), 
             'total_count' => $this->_iTotalCount,
-            'total_count_f' => _t('_sys_grid_total_count', $this->_iTotalCount)
+            'total_count_f' => $this->_getCounter()
         ));
     }
 
