@@ -211,7 +211,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_labels_tree', '_bx_courses_page_block_title_labels_tree', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"get_lables_tree";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 4),
 ('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_browse_by_label', '_bx_courses_page_block_title_browse_by_label', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"browse_by_label";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 5),
 ('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_labels_breadcrumbs', '_bx_courses_page_block_title_labels_breadcrumbs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:22:"get_lables_breadcrumbs";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 6),
-('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_cover_block', '_bx_courses_page_block_title_cover_block', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_courses\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 7);
+('', 0, 'bx_courses', '_bx_courses_page_block_title_sys_cover_block', '_bx_courses_page_block_title_cover_block', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_courses\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 7);
 
 -- MENU
 
