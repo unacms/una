@@ -206,15 +206,19 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
         $sImage = '';
 
+        if (empty($sField) || empty($aData[$sField])) {
+            if ($aData['video_source'] == 'embed' && !empty($aData['video_embed_data'])) {
+                if (!is_array($aData['video_embed_data'])) $aData['video_embed_data'] = unserialize($aData['video_embed_data']);
+                if (isset($aData['video_embed_data']['thumb']) && !empty($aData['video_embed_data']['thumb']))
+                    return $aData['video_embed_data']['thumb'];
+            } else {
+                return $sImage;
+            }
+        }
+
         $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
         if($oImagesTranscoder)
             $sImage = $oImagesTranscoder->getFileUrl($aData[$sField]);
-
-        if (!$aData[$sField] && $aData['video_source'] == 'embed' && !empty($aData['video_embed_data'])) {
-            if (!is_array($aData['video_embed_data'])) $aData['video_embed_data'] = unserialize($aData['video_embed_data']);
-            if (isset($aData['video_embed_data']['thumb']) && !empty($aData['video_embed_data']['thumb']))
-                return $aData['video_embed_data']['thumb'];
-        }
 
         return $sImage;
     }

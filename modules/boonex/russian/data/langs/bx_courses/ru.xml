@@ -192,6 +192,8 @@
     <string name="_bx_courses_page_block_title_browse_by_label"><![CDATA[Навигация по меткам]]></string>
     <string name="_bx_courses_page_block_title_sys_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
     <string name="_bx_courses_page_block_title_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
+    <string name="_bx_courses_page_block_title_sys_cover_block"><![CDATA[Обложка]]></string>
+    <string name="_bx_courses_page_block_title_cover_block"><![CDATA[Обложка]]></string>
     
 
     <string name="_bx_courses_menu_title_submenu"><![CDATA[Курсы - Подменю]]></string>

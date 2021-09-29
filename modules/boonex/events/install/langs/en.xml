@@ -246,6 +246,8 @@
     <string name="_bx_events_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Events]]></string>
     <string name="_bx_events_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Recommended Events (Showcase View)]]></string>
     <string name="_bx_events_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Events]]></string>
+    <string name="_bx_events_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
+    <string name="_bx_events_page_block_title_cover_block"><![CDATA[Cover]]></string>
     
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>

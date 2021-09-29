@@ -1569,8 +1569,8 @@
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Default 'From' number for SMS]]></string>    
 	<string name="_adm_stg_cpt_option_sys_nominatim_server"><![CDATA[Nominatim server URL]]></string>    
 	<string name="_adm_stg_cpt_option_sys_nominatim_email"><![CDATA[Nominatim email to identify requests]]></string>
-	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
-	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
+	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA/hCaptcha private key]]></string>
+	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA/hCaptcha public key]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Redirect after email confirmation to]]></string>
         <string name="_adm_stg_cpt_option_sys_relations"><![CDATA[Enable relationships between]]></string>
@@ -3368,6 +3368,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
   <string name="_sys_txt_login_locked"><![CDATA[Your account is locked and needs to be unlocked using <a href="{0}">forgot password page</a>.]]></string>
   
+    <string name="_sys_txt_following_counter"><![CDATA[Following: {0}]]></string>
+    <string name="_sys_txt_followers_counter"><![CDATA[Followers: {0}]]></string>
+    <string name="_sys_txt_friends_counter"><![CDATA[Friends: {0}]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Create a new profile]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[New Picture]]></string>

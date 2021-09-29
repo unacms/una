@@ -178,6 +178,8 @@
     <string name="_bx_persons_page_block_title_recommended_entries_view_showcase"><![CDATA[Рекомендованные профили]]></string>
     <string name="_bx_persons_page_block_title_sys_active_entries_view_showcase"><![CDATA[Активные профили (Витринный просмотр)]]></string>
     <string name="_bx_persons_page_block_title_active_entries_view_showcase"><![CDATA[Активные профили]]></string>
+    <string name="_bx_persons_page_block_title_sys_cover_block"><![CDATA[Обложка]]></string>
+    <string name="_bx_persons_page_block_title_cover_block"><![CDATA[Обложка]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Персоны - Подменю]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Персоны - Подменю]]></string>

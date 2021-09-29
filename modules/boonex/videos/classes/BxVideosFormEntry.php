@@ -72,6 +72,16 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
             $aEmbedData = $this->_oModule->parseEmbedLink($this->getCleanValue('video_embed'));
             if ($aEmbedData)
                 $aValsToAdd['video_embed_data'] = serialize($aEmbedData);
+
+            //if poster is not set then set it implicitly by using the embed poster link
+            if (!bx_get($CNF['FIELD_THUMB']) && $aEmbedData && $aEmbedData['thumb']) {
+                $oPhotosStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+                $iFile = $oPhotosStorage->storeFileFromUrl($aEmbedData['thumb'], false, bx_get_logged_profile_id());
+                bx_set($CNF['FIELD_THUMB'], [$iFile], 'get');
+                bx_set($CNF['FIELD_THUMB'], [$iFile], 'post');
+                bx_set($CNF['FIELD_PHOTO'], [$iFile], 'get');
+                bx_set($CNF['FIELD_PHOTO'], [$iFile], 'post');
+            }
         }
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
@@ -100,6 +110,16 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
             $aEmbedData = $this->_oModule->parseEmbedLink($this->getCleanValue('video_embed'));
             if ($aEmbedData)
                 $aValsToAdd['video_embed_data'] = serialize($aEmbedData);
+
+            //if poster is not set then set it implicitly by using the embed poster link
+            if (!bx_get($CNF['FIELD_THUMB']) && $aEmbedData && $aEmbedData['thumb']) {
+                $oPhotosStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+                $iFile = $oPhotosStorage->storeFileFromUrl($aEmbedData['thumb'], false, bx_get_logged_profile_id(), $iContentId);
+                bx_set($CNF['FIELD_THUMB'], [$iFile], 'get');
+                bx_set($CNF['FIELD_THUMB'], [$iFile], 'post');
+                bx_set($CNF['FIELD_PHOTO'], [$iFile], 'get');
+                bx_set($CNF['FIELD_PHOTO'], [$iFile], 'post');
+            }
         } else {
             $aValsToAdd['video_embed_data'] = '';
             $aValsToAdd['video_embed'] = '';
@@ -235,7 +255,10 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
             'name' => $aInput['name'],
             'value' => isset($aInput['value']) ? $aInput['value'] : '',
             'attrs' => [
-                'onchange' => $this->_oModule->_oConfig->getJsObject('embeds').'.onNewEmbedCode(this.value)',
+                'id' => 'bx-video-embed-link',
+                'onchange' => $this->_oModule->_oConfig->getJsObject('embeds').'.onNewEmbedCode()',
+                'onpaste' => $this->_oModule->_oConfig->getJsObject('embeds').'.onNewEmbedCodeTyping(100)', //the reason is that on this event the value has not been update yet
+                'onkeydown' => $this->_oModule->_oConfig->getJsObject('embeds').'.onNewEmbedCodeTyping(500)',
             ],
         ];
 
