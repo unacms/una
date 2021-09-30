@@ -31,8 +31,8 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
 
     public function getCode ()
     {
-        $sTemplate = 'menu_main_sliding.html';
-        $sClass = 'bx-sliding-menu-main';
+        $sTemplate = 'menu_main_popup.html';
+        $sClass = 'bx-popup-menu-main';
         $sStyle = 'display:none';
         if($this->_bSiteMenu) {
             $sTemplate = 'menu_main_inline.html';

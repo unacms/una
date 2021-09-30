@@ -24,21 +24,6 @@ li.bx-menu-inter-hidden {
     display: none;
 }
 
-/*--- Sliding Menu ---*/
-.bx-sliding-menu, 
-.bx-sliding-menu-main {
-    left: auto !important;
-    right: 0 !important;
-    max-width: 31.25rem;
-}
-.bx-sliding-menu-close,
-.bx-sliding-menu-close:hover {
-    position:absolute;
-    top:0;
-    right:0;
-    text-decoration:none;
-}
-
 /*--- Page Submenu ---*/
 .bx-menu-main-submenu {
     -webkit-justify-content: center;
@@ -57,22 +42,18 @@ li.bx-menu-inter-hidden {
 }
 
 /*--- Account Popup ---*/
-@media (min-width:720px) {
-    #bx-sliding-menu-account.bx-sliding-menu-main {
-        left: auto !important;
-        right: 0px !important;
-        width: auto !important;
-    }
-}
-#bx-sliding-menu-account.bx-sliding-menu-main.bx-sliding-menu-fullheight {
-    height: calc(100% - 3.75rem);
-}
-#bx-sliding-menu-account.bx-sliding-menu-main .bx-menu-item-addon.bx-def-unit-alert {
+#bx-sliding-menu-account .bx-menu-account-popup .bx-menu-item-addon.bx-def-unit-alert {
     position: relative;
+}
+#bx-sliding-menu-account .bx-menu-account-popup-profile-switcher-link {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 
 /*--- Add Popup ---*/
-div.bx-sliding-menu-main.sys-add-content ul {
+div.bx-popup-menu-main.sys-add-content ul {
     flex-direction: column;
 }
 

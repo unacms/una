@@ -101,6 +101,14 @@
         @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white rounded;
     }
 
+    /* Main menu: Mobile */
+    .bx-media-phone .go-back a::before, 
+    .bx-media-phone .go-back a::after,
+    .bx-media-phone .has-children > a::before, 
+    .bx-media-phone .has-children > a::after {
+        @apply bg-gray-700 dark:bg-gray-300;
+    }
+
     /* Page Submenu */
     .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active {
         @apply border-blue-500 text-gray-900 dark:text-gray-100;

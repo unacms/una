@@ -9,8 +9,14 @@
 
 class BxTemplConfig extends BxBaseConfig
 {
+    protected $_bModule;
+    protected $_sModule;
+
     function __construct()
     {
+        $this->_sModule = 'bx_artificer';
+        $this->_bModule = BxDolModuleQuery::getInstance()->isModuleByName($this->_sModule);
+
         parent::__construct();
 
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
@@ -26,8 +32,24 @@ class BxTemplConfig extends BxBaseConfig
 
             'bx-border-color' => '#00a0ce',
         ));
+        
+        if($this->_bModule) {
+            $this->setPageWidth('bx_artificer_page_width');
 
-        $this->setPageWidth('bx_artificer_page_width');
+            $oModule = BxDolModule::getInstance($this->_sModule);
+            if($oModule)
+                $oModule->_oTemplate->addJs(array(
+                    'jquery.menu-aim.js',
+                ));
+        }
+
+        BxDolTemplate::getInstance()->addJs(array(
+            'modernizr.min.js'
+        ));
+
+        BxDolTemplate::getInstance()->addCss(array(
+            'menu-dropdown.css'
+        ));
     }
 }
 

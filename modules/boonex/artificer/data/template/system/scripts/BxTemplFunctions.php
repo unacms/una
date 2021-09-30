@@ -116,6 +116,37 @@ class BxTemplFunctions extends BxBaseFunctions
 
         return $sContent;
     }
+
+    protected function getInjFooterMenuDropdown() 
+    {
+        $oSearch = new BxTemplSearch();
+        $oSearch->setLiveSearch(true);
+        $sSearch = $oSearch->getForm(BX_DB_CONTENT_ONLY);
+
+        $sLogoUrl = $this->getMainLogoUrl();
+        $bLogoUrl = !empty($sLogoUrl);
+
+        $sLogoText = BxDolDesigns::getInstance()->getSiteLogoAlt();
+        if(empty($sLogoText))
+            $sLogoText = getParam('site_title');
+
+        return $this->_oTemplate->parsePageByName('menu_dropdown.html', array(
+            'bx_if:show_logo_image' => array(
+                'condition' => $bLogoUrl,
+                'content' => array(
+                    'logo_url' => $sLogoUrl,
+                    'logo_text' => $sLogoText
+                )
+            ),
+            'bx_if:show_logo_text' => array(
+                'condition' => !$bLogoUrl,
+                'content' => array(
+                    'logo_text' => $sLogoText
+                )
+            ),
+            'search_form' => $sSearch,
+        ));;
+    }
 }
 
 /** @} */
