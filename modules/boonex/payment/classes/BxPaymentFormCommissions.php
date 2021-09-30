@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxPaymentFormCommissions extends BxTemplFormView
+class BxPaymentFormCommissions extends BxTemplStudioFormView
 {
     protected $_sModule;
     protected $_oModule;
