@@ -51,8 +51,37 @@ class BxAnalyticsModule extends BxDolModule
     */
     public function serviceGetCanvas()
     {
+		$sMsg = $this->checkAllowed();
+		if($sMsg !== CHECK_ACTION_RESULT_ALLOWED){
+			$this->_oTemplate->displayAccessDenied($sMsg, BX_PAGE_EMBED);
+			exit;
+		}
+		
         return $this->_oTemplate->getCanvas();
     }
+	
+	/**
+    * @page service Service Calls
+    * @section bx_analytics Analytics
+    * @subsection bx_analytics-other Other
+    * @subsubsection bx_analytics is_avaliable
+    * 
+    * @code bx_srv('bx_analytics', 'is_avaliable', [...]); @endcode
+    * 
+    * Check avalability for current profile  
+    * 
+    * @return boolean. 
+    * 
+    * @see BxAnalyticsModule::serviceIsAvaliable
+    */
+    /** 
+    * @ref bx_analytics-is_avaliable "is_avaliable"
+    */
+	public function serviceIsAvaliable()
+    {
+		return $this->checkAllowed() === CHECK_ACTION_RESULT_ALLOWED ? true : false;
+    }
+	
           
     /**
     * @page service Service Calls
@@ -97,7 +126,7 @@ class BxAnalyticsModule extends BxDolModule
           
     public function actionGetReports($sModuleName)
     {
-        if(!BxDolAcl::getInstance()->isMemberLevelInSet(192))
+		if(!$this->serviceIsAvaliable())
             return '';
             
         header('Content-Type: application/json');
@@ -140,7 +169,7 @@ class BxAnalyticsModule extends BxDolModule
           
     public function actionGetReportsData($sModuleName, $sReportName, $sDateFrom, $sDateTo, $sType = '')
     {
-        if(!BxDolAcl::getInstance()->isMemberLevelInSet(192))
+        if(!$this->serviceIsAvaliable())
             return '';
         
         if ($sType == 'csv'){
@@ -423,6 +452,14 @@ class BxAnalyticsModule extends BxDolModule
         );
         
         return json_encode($aDataForChart);
+    }
+	
+	public function checkAllowed($isPerformAction = false)
+    {
+        $aCheck = checkActionModule(bx_get_logged_profile_id(), 'use analytics', $this->getName(), $isPerformAction);
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+             return _t('_sys_txt_access_denied');
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
           
     public function getSelectedModules()
