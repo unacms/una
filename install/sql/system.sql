@@ -361,7 +361,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_splash_enabled', '', '', 'checkbox', '', '', '', 26),
 
 (@iCategoryId, 'sys_site_cover_common', '', '0', 'digit', '', '', '', 27),
-(@iCategoryId, 'sys_unit_cover_profile', '', '0', 'digit', '', '', '', 28);
+(@iCategoryId, 'sys_unit_cover_profile', '', '0', 'digit', '', '', '', 28),
+(@iCategoryId, 'sys_site_cover_disabled', '', '', 'checkbox', '', '', '', 29);
 
 
 --

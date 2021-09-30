@@ -32,6 +32,9 @@ class BxBaseCover extends BxDolCover
      */
     public function display ()
     {
+		if (getParam('sys_site_cover_disabled') == 'on')
+			return '';
+		
         $this->_addJsCss();
 
         if(!empty($this->_aOptions) && is_array($this->_aOptions))
