@@ -14,18 +14,20 @@
  */
 class BxVideosEmbedProviderOEmbed
 {
-    var $_sOEmbedUrl;
-    var $_sQuickCheck;
+    var $_oModule;
+    public function __construct(&$oModule) {
+        $this->_oModule = $oModule;
+    }
 
-    public function __construct($aParams) {
-        $this->_sOEmbedUrl = $aParams['oembed_url'];
-        $this->_sQuickCheck = $aParams['quick_check'];
+    public function updateEndpoints() {
+        $this->_oModule->_oDb->updateOEmbedProviders();
     }
 
     public function parseLink($sLink) {
-        if ($this->_sQuickCheck && stripos($sLink, $this->_sQuickCheck) === false) return false;
+        $sEndpointUrl = $this->_oModule->_oDb->getOEmbedEndpoint($sLink);
+        if (!$sEndpointUrl) return false;
 
-        $aResponse = @json_decode(file_get_contents(bx_append_url_params($this->_sOEmbedUrl, ['url' => $sLink])), true);
+        $aResponse = @json_decode(bx_file_get_contents(bx_append_url_params($sEndpointUrl, ['url' => $sLink])), true);
         if ($aResponse) {
             if (isset($aResponse['type']) && $aResponse['type'] == 'video' && isset($aResponse['html']) && !empty($aResponse['html']))
                 return [

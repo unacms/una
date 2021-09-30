@@ -470,3 +470,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'delete', @iHandler),
 
 ('bx_videos_video_mp4', 'transcoded', @iHandler);
+
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_videos_oembed_update', '0 0 * * 0', '', '', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:23:"update_oembed_providers";}');

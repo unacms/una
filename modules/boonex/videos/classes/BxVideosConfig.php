@@ -183,6 +183,8 @@ class BxVideosConfig extends BxBaseModTextConfig
                 'txt_all_entries_by_context' => '_bx_videos_page_title_browse_by_context',
                 'txt_pict_use_as_poster' => '_bx_videos_form_entry_input_picture_use_as_poster',
             ),
+
+            'OEMBED_PROVIDERS_IMPORT_URL' => 'https://oembed.com/providers.json',
         );
 
         $this->_aJsClasses = array(

@@ -838,7 +838,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $aForm['inputs']['async']['values'][] = array('key' => $iKey, 'value' => _t($sTitle));
 
         $aSubmenus = $this->oDb->getBlockSubmenus();
-        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_no_menu'));
+        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_menu_item_title_inherited'));
+        $aForm['inputs']['submenu']['values'][] = array('key' => 'disabled', 'value' => _t('_sys_menu_item_title_disabled'));
         foreach ($aSubmenus as $sObject => $sTitle)
             $aForm['inputs']['submenu']['values'][] = array('key' => $sObject, 'value' => _t($sTitle));
 
@@ -1059,7 +1060,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         	$aForm['inputs']['type_id']['values'][] = array('key' => $aType['id'], 'value' => _t($aType['title']));
 
         $aSubmenus = $this->oDb->getSubmenus();
-        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_no_menu'));
+        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_menu_item_title_inherited'));
+        $aForm['inputs']['submenu']['values'][] = array('key' => 'disabled', 'value' => _t('_sys_menu_item_title_disabled'));
         foreach ($aSubmenus as $sObject => $sTitle)
             $aForm['inputs']['submenu']['values'][] = array('key' => $sObject, 'value' => _t($sTitle));
 

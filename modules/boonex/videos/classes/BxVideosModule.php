@@ -33,7 +33,7 @@ class BxVideosModule extends BxBaseModTextModule
             if ($aEmbedProvider['class_file'])
                 require_once(BX_DIRECTORY_PATH_ROOT . $aEmbedProvider['class_file']);
 
-            $oLinkParser = new $aEmbedProvider['class_name']($aEmbedProvider['params'] ? unserialize($aEmbedProvider['params']) : []);
+            $oLinkParser = new $aEmbedProvider['class_name']($this);
             if ($mResult = $oLinkParser->parseLink($sLink))
                 return $mResult;
         }
@@ -167,6 +167,12 @@ class BxVideosModule extends BxBaseModTextModule
             	'src_mp4_hd' => $sVideoUrlHd
             )
         );
+    }
+
+    public function serviceUpdateOEmbedProviders() {
+        bx_import('EmbedProviderOEmbed', $this->_aModule);
+        $oLinkParser = new BxVideosEmbedProviderOEmbed($this);
+        $oLinkParser->updateEndpoints();
     }
 }
 

@@ -269,6 +269,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
     	return $this->_aObject['module'];
     }
+    
+    public function getSubMenu ()
+    {
+        return $this->_aObject['submenu'];
+    }
 
     public function getName ()
     {
@@ -303,7 +308,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
         return $this->_isVisiblePage($this->_aObject);
     }
-
+    
     public function isEditAllowed ()
     {
         return false;

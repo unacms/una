@@ -61,3 +61,6 @@ DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_videos_simple', 'bx_vid
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_videos' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` = 'bx_videos_oembed_update';

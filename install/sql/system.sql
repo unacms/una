@@ -5134,7 +5134,8 @@ SET @iBlockOrder = IFNULL((SELECT `order` FROM `sys_pages_blocks` WHERE `object`
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `tabs`, `async`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('', 0, 'system', '_sys_page_block_title_sys_create_post', '_sys_page_block_title_create_post', 11, 1, 4, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_create_post_form";s:6:"params";a:1:{i:0;i:0;}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, @iBlockOrder + 1),
 ('', 0, 'system', '_sys_page_block_title_sys_create_post_context', '_sys_page_block_title_create_post_context', 11, 1, 4, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_create_post_form";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, @iBlockOrder + 2),
-('', 0, 'system', '_sys_page_block_title_sys_create_post_public', '_sys_page_block_title_create_post_public', 11, 1, 4, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_create_post_form";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, @iBlockOrder + 3);
+('', 0, 'system', '_sys_page_block_title_sys_create_post_public', '_sys_page_block_title_create_post_public', 11, 1, 4, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_create_post_form";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, @iBlockOrder + 3),
+('', 0, 'system', '_sys_page_block_title_sys_std_site_submenu', '_sys_page_block_title_std_site_submenu', 3, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"get_site_submenu";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, @iBlockOrder + 4);
 
 -- content blocks
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `tabs`, `async`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
@@ -5225,6 +5226,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('sys_std_dashboard', 2, 'system', '', '_sys_page_block_title_std_dash_host_tools', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_block_host_tools";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1, 1),
 
 ('sys_std_dashboard', 2, 'system', '', '_sys_page_block_title_std_dash_cache', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_block_cache";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1, 2);
+
 
 -- --------------------------------------------------------
 
