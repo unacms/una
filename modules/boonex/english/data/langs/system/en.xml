@@ -658,6 +658,7 @@
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Logo Text]]></string>
 	<string name="_adm_dsg_txt_cover_common"><![CDATA[Default pages cover]]></string>
 	<string name="_adm_dsg_txt_cover_unit_profile"><![CDATA[Default profile unit cover]]></string>
+	<string name="_adm_dsg_txt_cover_disabled"><![CDATA[Disable pages covers]]></string>
 	<string name="_adm_dsg_txt_splash_enabled"><![CDATA[Enable splash page]]></string>
 	<string name="_adm_dsg_txt_default"><![CDATA[default]]></string>
 	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Apple Touch Devices (152x152)]]></string>

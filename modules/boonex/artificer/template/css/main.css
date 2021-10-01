@@ -6,3 +6,7 @@ html.hidden {
 .bx-def-unit.absolute {
     position: relative;
 }
+
+.bx-base-profile-cover-block-wrapper .bx-menu-custom.bx-menu-custom-hor{
+    justify-content: center !important;
+}

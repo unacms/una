@@ -1387,7 +1387,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         
         if($s == 'sys_site_submenu'){
             $oPage = BxDolPage::getObjectInstanceByURI();
-            if ($oPage->getSubMenu() == 'disabled'){
+            if ($oPage && $oPage->getSubMenu() == 'disabled'){
                 return;
             }
         }

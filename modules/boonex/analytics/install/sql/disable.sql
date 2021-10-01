@@ -12,3 +12,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = @sName;
 
 -- MENU
 DELETE FROM `sys_menu_items` WHERE `module` = @sName ;
+
+-- ACL
+DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = @sName;
+DELETE FROM `sys_acl_actions` WHERE `Module` = @sName;

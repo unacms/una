@@ -21,9 +21,20 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_analytics_page', '_bx_analytics_page_title_sys_page', '_bx_analytics_page_title_page', @sName, 5, 2147483647, 1, 'analytics', '', '', '', '', 0, 1, 0, 'BxAnalyticsPage', 'modules/boonex/analytics/classes/BxAnalyticsPage.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('bx_analytics_page', 1,  @sName, '_bx_analytics_page_block_title_system_canvas', '_bx_analytics_page_block_title_canvas', 11, 192, 'service', 'a:2:{s:6:"module";s:12:"bx_analytics";s:6:"method";s:10:"get_canvas";}', 0, 1, 1, 0);
+('bx_analytics_page', 1,  @sName, '_bx_analytics_page_block_title_system_canvas', '_bx_analytics_page_block_title_canvas', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_analytics";s:6:"method";s:10:"get_canvas";}', 0, 1, 1, 0);
 
 -- MENU: account dashboard
 SET @iMoAccountDashboard = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('sys_account_dashboard', @sName, 'dashboard-analytics', '_bx_analytics_item_title_system_analytics', '_bx_analytics_item_title_analytics', 'page.php?i=analytics', '', '', 'certificate col-red', '', '', 192, 1, 0, 1, @iMoAccountDashboard + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_account_dashboard', @sName, 'dashboard-analytics', '_bx_analytics_item_title_system_analytics', '_bx_analytics_item_title_analytics', 'page.php?i=analytics', '', '', 'certificate col-red', '', '', 2147483647, 'a:2:{s:6:"module";s:12:"bx_analytics";s:6:"method";s:12:"is_avaliable";}', 1, 0, 1, @iMoAccountDashboard + 1);
+
+-- ACL
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+(@sName, 'use analytics', NULL, '_bx_analytics_acl_action_use_analytics', '', 1, 3);
+SET @iIdActionUseAnalytics = LAST_INSERT_ID();
+
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
+(@iModerator, @iIdActionUseAnalytics),
+(@iAdministrator, @iIdActionUseAnalytics);
