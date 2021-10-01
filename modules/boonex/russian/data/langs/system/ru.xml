@@ -836,7 +836,7 @@
   <string name="_adm_form_txt_badges_icon_image"><![CDATA[]]></string>
   <string name="_adm_form_txt_badges_icon_image_new"><![CDATA[]]></string>
   <string name="_adm_form_txt_badges_icon_image_old"><![CDATA[Текущая иконка]]></string>
-  <string name="_adm_form_dsc_badges_icon"><![CDATA[Вы можете использовать здесь иконку для шрифта]]></string>
+  <string name="_adm_form_dsc_badges_icon"><![CDATA[Вы можете использовать здесь: 1) иконку для шрифта, 2) html код SVG, 3) эмодзи]]></string>
   <string name="_adm_form_dsc_badges_items_icon_image_current"><![CDATA[]]></string>
   <string name="_adm_form_dsc_badges_icon_image"><![CDATA[или загрузить маленькую картинку для отображения рядом со ссылкой.]]></string>
   <string name="_adm_form_dsc_badges_icon_image_current"><![CDATA[Картинка не загружена. В бейдже будет использован текст.]]></string>

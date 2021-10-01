@@ -720,11 +720,12 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     )
                 ),
                 'icon' => array(
-                    'type' => 'text',
+                    'type' => 'textarea',
                     'name' => 'icon',
                     'caption' => _t('_adm_nav_txt_items_icon'),
                     'info' => _t('_adm_nav_dsc_items_icon'),
                     'value' => '',
+					'code' => 1,
                     'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
@@ -734,6 +735,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'params' => array(),
                         'error' => _t('_adm_nav_err_items_icon'),
                     ),
+					'attrs' => array('class' => 'bx-form-input-textarea-small'),
                 ),
                 'icon_image' => array(
                     'type' => 'file',
@@ -843,15 +845,16 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         return  new BxTemplStudioFormView($aForm);
     }
 
-    protected function _getIconPreview($iId, $sIconImage = '', $sIconFont = '')
+    protected function _getIconPreview($iId, $sIconImage = '', $sIconFontOrSvg = '')
     {
         $bIconImage = !empty($sIconImage);
-        $bIconFont = !empty($sIconFont);
-
+		$bIconSvg = !empty($sIconFontOrSvg) && strpos($sIconFontOrSvg, '<svg') !== false;
+        $bIconFont = !empty($sIconFontOrSvg) && !$bIconSvg;
+		
         return $this->_oTemplate->parseHtmlByName('nav_item_icon_preview.html', array(
             'id' => $iId,
             'bx_if:show_icon_empty' => array(
-                'condition' => !$bIconImage && !$bIconFont,
+                'condition' => !$bIconImage && !$bIconFont && !$bIconSvg,
                 'content' => array()
             ),
             'bx_if:show_icon_image' => array(
@@ -865,7 +868,13 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             'bx_if:show_icon_font' => array(
                 'condition' => $bIconFont,
                 'content' => array(
-                    'icon' => $sIconFont
+                    'icon' => $sIconFontOrSvg
+                )
+            ),
+			'bx_if:show_icon_svg' => array(
+                'condition' => $bIconSvg,
+                'content' => array(
+                    'icon' => $sIconFontOrSvg
                 )
             )
         ));
