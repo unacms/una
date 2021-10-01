@@ -21,6 +21,10 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
     {
         parent::__construct($aObject, $oTemplate);
 
+        $this->_sTmplContent = $this->_oTemplate->getHtml($this->getTemplateName('menu_custom_actions.html'));
+        $this->_sTmplContentItem = $this->_oTemplate->getHtml($this->getTemplateNameItem('menu_custom_item_actions.html'));
+        $this->_bShowAsButton = false;
+
         if(empty($this->_iContentId) && bx_get('profile_id') !== false)
             $this->setContentId(BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getContentId());
     }

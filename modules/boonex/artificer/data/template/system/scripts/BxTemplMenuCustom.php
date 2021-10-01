@@ -16,6 +16,22 @@ class BxTemplMenuCustom extends BxBaseMenuCustom
     {
         parent::__construct ($aObject, $oTemplate);
     }
+
+    protected function _getMenuItem ($a)
+    {
+        $aResult = parent::_getMenuItem($a);
+        if($aResult === false)
+            return $aResult;
+
+        if((int)$a['primary'] != 0) {
+            if(!isset($aResult['class']))
+                $aResult['class'] = '';
+
+            $aResult['class'] .= ' bx-mi-primary'; 
+        }
+
+        return $aResult;
+    }
 }
 
 /** @} */

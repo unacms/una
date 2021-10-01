@@ -30,6 +30,22 @@ class BxTemplMenu extends BxBaseMenu
             'js_code' => ''
         ));
     }
+
+    protected function _getMenuItem ($a)
+    {
+        $aResult = parent::_getMenuItem($a);
+        if($aResult === false)
+            return $aResult;
+
+        if((int)$a['primary'] != 0) {
+            if(!isset($aResult['class_add']))
+                $aResult['class_add'] = '';
+
+            $aResult['class_add'] .= ' bx-mi-primary'; 
+        }
+
+        return $aResult;
+    }
 }
 
 /** @} */

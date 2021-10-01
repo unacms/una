@@ -119,6 +119,11 @@
         @apply bg-blue-500 group-hover:bg-blue-500;
     }
 
+    /* Profile Cover Actions */
+    .bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor.bx-menu-hor-inline li.bx-mi-primary {
+        @apply border-transparent text-gray-200 hover:text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+    }
+    
     /* Modules: Timeline */
     .bx-menu-custom-hor.bx-menu-object-bx_timeline_menu_view li.bx-menu-tab-active a {
         @apply bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 shadow text-gray-900 dark:text-white;

@@ -25,15 +25,24 @@ li.bx-menu-inter-hidden {
     display: none;
 }
 
+/*--- Page Main menu ---*/
+.bx-menu-main .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item,
+.bx-menu-main .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item a {
+    border-radius: 0;
+}
 
 /*--- Page Submenu ---*/
 .bx-menu-main-submenu {
     -webkit-justify-content: center;
     justify-content: center;
 }
-
 .bx-menu-main-submenu .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item > a {
     width: 100%;
+    padding: 0.5rem; 
+    text-align: left;
+}
+.bx-menu-main-submenu .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item .bx-mi-underline {
+    display: none;
 }
 
 /*--- Toolbar Menu ---*/
