@@ -1060,7 +1060,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 CREATE TABLE `sys_acl_levels` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(100) NOT NULL default '',
-  `Icon` varchar(255) NOT NULL default '',
+  `Icon` text NOT NULL default '',
   `Description` varchar(255) NOT NULL default '',
   `Active` enum('yes','no') NOT NULL default 'no',
   `Purchasable` enum('yes','no') NOT NULL default 'yes',

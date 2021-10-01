@@ -107,6 +107,8 @@ class BxBaseServiceProfiles extends BxDol
         $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
         $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
 
+		list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getIcon($aAclInfo['icon']);
+		
         $aVars = array(
             'profile_id' => $oProfile->id(),
             'profile_url' => $oProfile->getUrl(),
@@ -119,8 +121,28 @@ class BxBaseServiceProfiles extends BxDol
                 'size' => 'ava'
             ))),
             'profile_acl_title' => _t($aAclInfo['name']),
-            'profile_acl_icon' => $aAclInfo['icon'],
             'menu' => BxDolMenu::getObjectInstance('sys_profile_stats')->getCode(),
+        );
+		
+		$aVars['bx_if:image'] = array (
+            'condition' => (bool)$sIconUrl,
+            'content' => array('icon_url' => $sIconUrl),
+        );
+        $aVars['bx_if:image_inline'] = array (
+            'condition' => false,
+            'content' => array('image' => ''),
+        );
+        $aVars['bx_if:icon'] = array (
+            'condition' => (bool)$sIcon,
+            'content' => array('icon' => $sIcon),
+        );
+		$a['bx_if:icon-html'] = array (
+            'condition' => (bool)$sIconHtml,
+            'content' => array('icon' => $sIconHtml),
+        );
+        $aVars['bx_if:icon-a'] = array (
+            'condition' => (bool)$sIconA,
+            'content' => array('icon-a' => $sIconA),
         );
 
         return BxDolTemplate::getInstance()->parseHtmlByName('profile_stats.html', $aVars);
@@ -444,6 +466,47 @@ class BxBaseServiceProfiles extends BxDol
         );
     }
 
+	protected function _getIcon ($sIcon)
+    {
+        $sIconFont = false;
+        $sIconA = false;
+        $sIconUrl = false;
+		$sIconHtml = false;
+        if ($sIcon != '') {
+            if ((int)$sIcon > 0 ) {
+                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+                $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$sIcon) : false;
+            } else {
+				//svg
+				if (strpos($sIcon, '<svg') !== false){
+					$sIconHtml = $sIcon;
+					$sClass = 'sys-icon sys-icon-svg-inline ';
+					if ($sClass != '' && strpos($sIconHtml, 'class="') !== false)
+						$sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
+					else
+						$sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+				}
+				else{
+					//emoji
+					if(preg_match('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', $sIcon, $aTmp)){
+						$sIconHtml = $this->_oTemplate->parseHtmlByName('icon_emoji.html', array('icon' => $sIcon));
+					}
+						else{
+						if (false === strpos($sIcon, '.')) { 
+							if (0 === strncmp($sIcon, 'a:', 2))
+								$sIconA = substr($sIcon, 2); // animated icon
+							else
+								$sIconFont = $sIcon; // font icons
+						} else {
+							$sIconUrl = $this->_oTemplate->getIconUrl($sIcon);
+						}
+					}
+				}
+            }
+        }
+        return array ($sIconFont, $sIconUrl, $sIconA, $sIconHtml);
+    }
+	
     protected function _getLatestModuleTimestamp ()
     {
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1, 'order_by' => '`date` ASC'));
