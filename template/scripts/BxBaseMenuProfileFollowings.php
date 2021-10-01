@@ -66,12 +66,12 @@ class BxBaseMenuProfileFollowings extends BxTemplMenu
 
     protected function _getMenuIcon ($a)
     {
-        list($sIcon, $sIconUrl, $sIconA) = parent::_getMenuIcon($a);
+        list($sIcon, $sIconUrl, $sIconA, $sIconHtml) = parent::_getMenuIcon($a);
 
-        if(!$sIcon && !$sIconUrl && !$sIconA && !empty($a['icon']) && strpos($a['icon'], '.') !== false)
+        if(!$sIcon && !$sIconUrl && !$sIconA && !$sIconHtml && !empty($a['icon']) && strpos($a['icon'], '.') !== false)
             $sIconUrl = $a['icon'];
 
-        return array($sIcon, $sIconUrl, $sIconA);
+        return array($sIcon, $sIconUrl, $sIconA, $sIconHtml);
     }
 
     protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
