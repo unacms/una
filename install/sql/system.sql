@@ -4171,7 +4171,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `link` varchar(255) NOT NULL,
   `onclick` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
+  `icon` text NOT NULL,
   `addon` text NOT NULL,
   `markers` text NOT NULL,
   `submenu_object` varchar(64) NOT NULL,
