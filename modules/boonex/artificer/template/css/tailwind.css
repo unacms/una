@@ -66,7 +66,7 @@
     }
     
     .bx-btn.bx-btn-disabled {
-        @apply bg-gray-200 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
+        @apply bg-gray-50 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
     }
 
     .bx-btn.bx-btn-small {
@@ -88,7 +88,7 @@
     }
 
     .bx-menu-custom-hor.bx-menu-object-sys_create_post li.bx-menu-tab-active a {
-        @apply rounded ring-1 ring-gray-200 dark:ring-gray-800;
+        @apply bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 shadow text-gray-900 dark:text-white;
     }
 
 
@@ -101,6 +101,11 @@
         @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white rounded;
     }
 
+    /* Main menu */
+    .bx-toolbar-item.bx-ti-menu .bx-menu-main .bx-menu-item.bx-menu-tab-active {
+        @apply bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 shadow text-gray-900 dark:text-white;
+    }
+
     /* Main menu: Mobile */
     .bx-media-phone .go-back a::before, 
     .bx-media-phone .go-back a::after,
@@ -110,14 +115,13 @@
     }
 
     /* Page Submenu */
-    .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active {
-        @apply border-blue-500 text-gray-900 dark:text-gray-100;
+    .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active .bx-mi-underline {
+        @apply bg-blue-500 group-hover:bg-blue-500;
     }
-
 
     /* Modules: Timeline */
     .bx-menu-custom-hor.bx-menu-object-bx_timeline_menu_view li.bx-menu-tab-active a {
-        @apply rounded ring-1 ring-gray-200 dark:ring-gray-800;
+        @apply bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 shadow text-gray-900 dark:text-white;
     }
 
     .bx-tl-view.bx-tl-view-timeline .bx-tl-cnt .bx-tl-items:before {

@@ -1,0 +1,23 @@
+/*--
+import url(../../../../../../../template/css/cover.css);
+--*/
+
+.bx-cover-wrapper {
+    position: relative;
+    background-image: url(../images/cover.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.bx-cover-homepage {
+    background-image: url(../images/cover-homepage.svg);
+}
+
+.bx-cover-title {
+    text-shadow:-1px 0px 0px rgba(0, 0, 0, .3), 1px 0px 0px rgba(0, 0, 0, .3), 0px -1px 0px rgba(0, 0, 0, .3), 0px 1px 0px rgba(0, 0, 0, .3);
+}

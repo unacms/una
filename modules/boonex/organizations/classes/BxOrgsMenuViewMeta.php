@@ -12,7 +12,7 @@
 /**
  * View entry meta menu
  */
-class BxOrgsMenuViewMeta extends BxBaseModProfileMenuViewMeta
+class BxOrgsMenuViewMeta extends BxBaseModGroupsMenuViewMeta
 {
     public function __construct($aObject, $oTemplate = false)
     {
