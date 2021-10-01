@@ -41,6 +41,10 @@
     line-height:normal;
 }
 
+.bx-form-value .bx-form-input-textarea-small {
+    height: 4.5rem;
+}
+
 .bx-form-value .bx-form-input-wrapper-textarea .CodeMirror {
     height: 30rem;
 }

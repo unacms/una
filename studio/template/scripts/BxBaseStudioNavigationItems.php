@@ -720,11 +720,12 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     )
                 ),
                 'icon' => array(
-                    'type' => 'text',
+                    'type' => 'textarea',
                     'name' => 'icon',
                     'caption' => _t('_adm_nav_txt_items_icon'),
                     'info' => _t('_adm_nav_dsc_items_icon'),
                     'value' => '',
+					'code' => 1,
                     'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
@@ -734,6 +735,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'params' => array(),
                         'error' => _t('_adm_nav_err_items_icon'),
                     ),
+					'attrs' => array('class' => 'bx-form-input-textarea-small'),
                 ),
                 'icon_image' => array(
                     'type' => 'file',
@@ -843,15 +845,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         return  new BxTemplStudioFormView($aForm);
     }
 
-    protected function _getIconPreview($iId, $sIconImage = '', $sIconFont = '')
+    protected function _getIconPreview($iId, $sIconImage = '', $sIcon = '')
     {
         $bIconImage = !empty($sIconImage);
-        $bIconFont = !empty($sIconFont);
-
+		$bIconSvg = !empty($sIcon) && strpos($sIcon, '<svg') !== false;
+		$bIconEmoji = !empty($sIcon) && preg_match('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', $sIcon, $a);
+        $bIconFont = !empty($sIcon) && !$bIconSvg && !$bIconEmoji;
+		
         return $this->_oTemplate->parseHtmlByName('nav_item_icon_preview.html', array(
             'id' => $iId,
             'bx_if:show_icon_empty' => array(
-                'condition' => !$bIconImage && !$bIconFont,
+                'condition' => !$bIconImage && !$bIconFont && !$bIconSvg && !$bIconEmoji,
                 'content' => array()
             ),
             'bx_if:show_icon_image' => array(
@@ -865,7 +869,19 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             'bx_if:show_icon_font' => array(
                 'condition' => $bIconFont,
                 'content' => array(
-                    'icon' => $sIconFont
+                    'icon' => $sIcon
+                )
+            ),
+			'bx_if:show_icon_svg' => array(
+                'condition' => $bIconSvg,
+                'content' => array(
+                    'icon' => $sIcon
+                )
+            ),
+			'bx_if:show_icon_emoji' => array(
+                'condition' => $bIconEmoji,
+                'content' => array(
+                    'icon' => $sIcon
                 )
             )
         ));

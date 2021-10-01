@@ -6,7 +6,8 @@ div.bx-grid-header div.bx-form-element-wrapper {
 }
 
 /*--- Levels page ---*/
-img.bx-prm-level-icon {
+img.bx-prm-level-icon,
+svg.bx-prm-level-icon{
     width: 32px;
     height: 32px;
 }
