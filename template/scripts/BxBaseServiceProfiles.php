@@ -65,6 +65,8 @@ class BxBaseServiceProfiles extends BxDol
 
         $sDisplayName = $oProfile->getDisplayName();
 
+        list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getIcon($aAclInfo['icon']);
+
         $aVars = array(
             'profile_id' => $oProfile->id(),
             'profile_url' => $oProfile->getUrl(),
@@ -77,7 +79,26 @@ class BxBaseServiceProfiles extends BxDol
                 'size' => 'thumb'
             ))),
             'profile_acl_title' => _t($aAclInfo['name']),
-            'profile_acl_icon' => $aAclInfo['icon'],
+            'bx_if:image' => array (
+                'condition' => (bool)$sIconUrl,
+                'content' => array('icon_url' => $sIconUrl),
+            ),
+            'bx_if:image_inline' => array (
+                'condition' => false,
+                'content' => array('image' => ''),
+            ),
+            'bx_if:icon' => array (
+                'condition' => (bool)$sIcon,
+                'content' => array('icon' => $sIcon),
+            ),
+            'bx_if:icon-a' => array (
+                'condition' => (bool)$sIconA,
+                'content' => array('icon-a' => $sIconA),
+            ),
+            'bx_if:icon-html' => array (
+                'condition' => (bool)$sIconHtml,
+                'content' => array('icon' => $sIconHtml),
+            ),
             'profile_switcher' => $sSwitcher
         );
 
@@ -107,8 +128,8 @@ class BxBaseServiceProfiles extends BxDol
         $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
         $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
 
-		list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getIcon($aAclInfo['icon']);
-		
+        list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getIcon($aAclInfo['icon']);
+
         $aVars = array(
             'profile_id' => $oProfile->id(),
             'profile_url' => $oProfile->getUrl(),
@@ -124,7 +145,7 @@ class BxBaseServiceProfiles extends BxDol
             'menu' => BxDolMenu::getObjectInstance('sys_profile_stats')->getCode(),
         );
 		
-		$aVars['bx_if:image'] = array (
+        $aVars['bx_if:image'] = array (
             'condition' => (bool)$sIconUrl,
             'content' => array('icon_url' => $sIconUrl),
         );
@@ -136,7 +157,7 @@ class BxBaseServiceProfiles extends BxDol
             'condition' => (bool)$sIcon,
             'content' => array('icon' => $sIcon),
         );
-		$a['bx_if:icon-html'] = array (
+        $aVars['bx_if:icon-html'] = array (
             'condition' => (bool)$sIconHtml,
             'content' => array('icon' => $sIconHtml),
         );
