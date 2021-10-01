@@ -14,6 +14,12 @@ import url(../../../../../../../template/css/menu.css);
     margin-top: 0px;
 }
 
+/* --- Horizontal, Custom Horizontal Menus --- */
+.bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item,
+.bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item a {
+    border-radius: 0;
+}
+
 /*--- Interactive Menu ---*/
 li.bx-menu-inter-hidden {
     display: none;

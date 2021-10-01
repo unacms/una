@@ -23,7 +23,7 @@ class BxTemplMenuCustom extends BxBaseMenuCustom
         if($aResult === false)
             return $aResult;
 
-        if((int)$a['primary'] != 0) {
+        if(!empty($a['primary'])) {
             if(!isset($aResult['class']))
                 $aResult['class'] = '';
 
