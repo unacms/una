@@ -30,7 +30,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 1),
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_alt'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 2),
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_width'), '', '240', 'digit', '', '', '', @iSystemCategoryOrder + 3),
-(@iSystemCategoryId, CONCAT(@sName, '_site_logo_height'), '', '48', 'digit', '', '', '', @iSystemCategoryOrder + 4);
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_height'), '', '32', 'digit', '', '', '', @iSystemCategoryOrder + 4);
 
 
 -- STUDIO PAGE & WIDGET
