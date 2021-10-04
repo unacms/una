@@ -1736,41 +1736,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function parseIcon($sName, $aAttrs = array())
     {
-		$sClass = '';
-        if(!empty($aAttrs['class'])) {
-            $sClass = ' ' . $aAttrs['class'] .' ';
-            unset($aAttrs['class']);
-        }
-
-        $sAttrs = '';
-        foreach($aAttrs as $sKey => $sValue)
-            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
-		
-		
-		if (strpos($sName, '&lt;svg') !== false){
-			$sSvg = htmlspecialchars_decode($sName);
-			$sClass .= 'sys-icon sys-icon-svg ';
-			if (strpos($sSvg, 'class="') !== false)
-				$sSvg = str_replace('class="', 'class="' . $sClass, $sSvg);
-			else
-				$sSvg = str_replace('<svg', '<svg class="' . $sClass . '" ', $sSvg);
-
-			if ($sAttrs != '')
-				$sSvg = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sSvg);
-			return htmlspecialchars_decode($sSvg);
-		}
-		// emoji
-		if(preg_match('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', $sName, $a)){
-			return '<i class="sys-icon sys-icon-emoji' . $sClass . '"' . $sAttrs . '>' . $sName . '</i>';
-		}
-		
-		// font
-		if(!empty($aAttrs['class'])) {
-			$sName .= ' ' . $aAttrs['class'];
-			unset($aAttrs['class']);
-		}
-		return '<i class="sys-icon ' . $sName .' ' . $sClass . '"' . $sAttrs . '></i>';
-
+		$aIcons = BxTemplFunctions::getInstance()->getIcon($sName, $aAttrs);
+        if ($aIcons[0] != '')
+            $aIcons[0] = '';
+		return implode($aIcons);
     }
 
     function getCacheFilePrefix($sType)

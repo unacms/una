@@ -264,44 +264,7 @@ class BxBaseMenu extends BxDolMenu
 
     protected function _getMenuIcon ($a)
     {
-        $sIcon = false;
-        $sIconA = false;
-        $sIconUrl = false;
-		$sIconHtml = false;
-		
-        if (!empty($a['icon'])) {
-            if ((int)$a['icon'] > 0 ) {
-                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-                $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$a['icon']) : false;
-            } else {
-				//svg
-				if (strpos($a['icon'], '<svg') !== false){
-					$sIconHtml = $a['icon'];
-					$sClass = 'sys-icon sys-icon-svg-inline ';
-					if ($sClass != '' && strpos($sIconHtml, 'class="') !== false)
-						$sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
-					else
-						$sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
-				}
-				else{
-					//emoji
-					if(preg_match('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', $a['icon'], $aTmp)){
-						$sIconHtml = $this->_oTemplate->parseHtmlByName('icon_emoji.html', array('icon' => $a['icon']));
-					}
-						else{
-						if (false === strpos($a['icon'], '.')) { 
-							if (0 === strncmp($a['icon'], 'a:', 2))
-								$sIconA = substr($a['icon'], 2); // animated icon
-							else
-								$sIcon = $a['icon']; // font icons
-						} else {
-							$sIconUrl = $this->_oTemplate->getIconUrl($a['icon']);
-						}
-					}
-				}
-            }
-        }
-        return array ($sIcon, $sIconUrl, $sIconA, $sIconHtml);
+        return BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon(!empty($a['icon']) ? $a['icon'] : '');
     }
 
     protected function _getMenuAddon ($aMenuItem)
