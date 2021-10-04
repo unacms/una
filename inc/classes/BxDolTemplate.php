@@ -206,6 +206,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected $_sCachePublicFolderUrl;
     protected $_sCachePublicFolderPath;
     protected $_sCacheFilePrefix;
+    protected $_aCacheExceptions;
 
     protected $_bImagesInline;
     protected $_iImagesMaxSize;
@@ -288,6 +289,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_sCachePublicFolderUrl = BX_DOL_URL_CACHE_PUBLIC;
         $this->_sCachePublicFolderPath = BX_DIRECTORY_PATH_CACHE_PUBLIC;
         $this->_sCacheFilePrefix = "bx_templ_";
+        $this->_aCacheExceptions = ['menu_icon.html'];
 
         $this->_bImagesInline = getParam('sys_template_cache_image_enable') == 'on';
         $this->_iImagesMaxSize = (int)getParam('sys_template_cache_image_max_size') * 1024;
@@ -1794,6 +1796,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(!$this->_bCacheEnable)
             return false;
 
+        if (in_array($sName, $this->_aCacheExceptions))
+           return false;
+        
         $sAbsolutePath = $this->_getAbsoluteLocation('path', $this->_sFolderHtml, $sName, $sCheckIn);
         if(empty($sAbsolutePath))
             return false;
