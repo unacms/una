@@ -20,6 +20,6 @@ import url(../../../../../../../template/css/general.css);
 
 
 /*--- Profile Avatar ---*/
-#bx-profile-switcher .bx-def-hr {
+#bx-profile-switcher .bx-pas-list .bx-def-hr:first-child {
     display: none;
 }

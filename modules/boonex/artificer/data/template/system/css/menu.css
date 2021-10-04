@@ -30,6 +30,11 @@ li.bx-menu-inter-hidden {
 .bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto {
     display: none;
 }
+.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item a.p-2,
+.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item a.px-2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 
 /*--- Page Main menu ---*/
 .bx-menu-main .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item,
@@ -44,7 +49,7 @@ li.bx-menu-inter-hidden {
 }
 .bx-menu-main-submenu .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item > a {
     width: 100%;
-    padding: 0.5rem; 
+    padding: 0.5rem 1.0rem; 
     text-align: left;
 }
 .bx-menu-main-submenu .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item .bx-mi-underline {
