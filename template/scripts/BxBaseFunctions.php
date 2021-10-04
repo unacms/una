@@ -19,9 +19,6 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
     protected function __construct($oTemplate)
     {
-        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
-            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
-
         parent::__construct();
 
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
@@ -46,10 +43,14 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
     public static function getInstanceWithTemplate($oTemplate)
     {
-        if(!isset($GLOBALS['bxDolClasses']['BxTemplFunctions']))
-            $GLOBALS['bxDolClasses']['BxTemplFunctions'] = new BxTemplFunctions($oTemplate);
+        $sClassName = 'BxTemplFunctions';
+        if ($oTemplate){
+            $sClassName .= get_class($oTemplate);
+        }
+        if(!isset($GLOBALS['bxDolClasses'][$sClassName]))
+            $GLOBALS['bxDolClasses'][$sClassName] = new BxTemplFunctions($oTemplate);
 
-        return $GLOBALS['bxDolClasses']['BxTemplFunctions'];
+        return $GLOBALS['bxDolClasses'][$sClassName];
     }
     
     public static function getInstance()
@@ -158,6 +159,68 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         return $this->_oTemplate->parseHtmlByName('popup_content_indent.html', array(
             'content' => $sContent
         ));
+    }
+    
+    function getIcon($sCode, $aAttrs = array())
+    {
+        $sIconFont = false;
+        $sIconA = false;
+        $sIconUrl = false;
+		$sIconHtml = false;
+        $sIconFontWithHtml = false;
+        
+        $sClass = '';
+        if(!empty($aAttrs['class'])) {
+            $sClass = ' ' . $aAttrs['class'] .' ';
+            unset($aAttrs['class']);
+        }
+
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+		
+        if (!empty($sCode)) {
+            if ((int)$sCode > 0 ) {
+                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+                $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$sCode) : false;
+            } else {
+				//svg
+                if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false){
+                    if (strpos($sCode, '&lt;svg') !== false)
+                        $sIconHtml = htmlspecialchars_decode($sCode);
+                    else
+                        $sIconHtml = $sCode;    
+					$sClass .= 'sys-icon sys-icon-svg ';
+					if ($sClass != '' && strpos($sIconHtml, 'class="') !== false)
+						$sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
+					else
+						$sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+                    
+                    if ($sAttrs != '')
+				        $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
+				}
+				else{
+					//emoji
+					if(preg_match('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', $sCode, $aTmp)){
+						$sIconHtml = $this->_oTemplate->parseHtmlByName('icon_emoji.html', array('icon' => $sCode, 'class' => $sClass, 'attrs' => $sAttrs));
+					}
+						else{
+						if (false === strpos($sCode, '.')) { 
+							if (0 === strncmp($sCode, 'a:', 2)){
+								$sIconA = substr($sCode, 2); // animated icon
+                            }
+							else{
+								$sIconFont = $sCode; // font icons
+                                $sIconFontWithHtml = '<i class="sys-icon ' . $sIconFont .' ' . $sClass . '"' . $sAttrs . '></i>';
+                            }
+						} else {
+							$sIconUrl = $this->_oTemplate->getIconUrl($sCode);
+						}
+					}
+				}
+            }
+        }
+        return array ($sIconFont, $sIconUrl, $sIconA, $sIconHtml, $sIconFontWithHtml);
     }
 
     function getTemplateIcon($sName)
