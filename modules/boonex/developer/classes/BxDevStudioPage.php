@@ -37,7 +37,7 @@ class BxDevStudioPage extends BxTemplStudioModule
                 'selected' => $aTool['name'] == $this->sPage
             );
 
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_main.html', 'menu_items' => $this->aMenuItems), $this->oModule->_oTemplate);
+        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_main_dev.html', 'menu_items' => $this->aMenuItems), $this->oModule->_oTemplate);
         return $oMenu->getCode();
     }
 
