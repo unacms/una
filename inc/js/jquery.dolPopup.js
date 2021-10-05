@@ -14,7 +14,7 @@
         removeOnClose: false,
         closeElement: '.bx-popup-element-close', // link to element which will close popup
         position: 'centered', // | 'absolute' | 'fixed' | event | element,
-        fog: {color: '#fff', opacity: .7}, // {color, opacity},
+        fog: true, // false | true | {color:string, opacity: float},
         pointer: false, // {el:(string_id|jquery_object), align: (left|right|center)},
         left: 0, // only for fixed or absolute
         top: 0, // only for fixed
@@ -99,21 +99,23 @@
         }
 
         if (o.fog && !$('#bx-popup-fog').length) {
-            $('<div id="bx-popup-fog" class="bx-def-z-index-overlay" style="display: none;">&nbsp;</div>')
-                .prependTo('body');
+            $('<div id="bx-popup-fog" class="bx-popup-fog bx-def-z-index-overlay" style="display: none;">&nbsp;</div>').prependTo('body');
         }
 
-        $('#bx-popup-fog').css({
-            position: 'fixed',
-            top: 0,
-            left: 0,
+        var oFogCss = {
             width: $(window).width(),
             height: $(window).height(),
-            opacity: o.fog.opacity,
-            backgroundColor: o.fog.color,
-            '-webkit-backface-visibility': 'hidden'
-        });
-        
+        };
+
+        if(typeof o.fog == 'object') {
+            if(o.fog.opacity != undefined)
+                oFogCss = $.extend({}, oFogCss, {opacity: o.fog.opacity});
+            if(o.fog.color != undefined)
+                oFogCss = $.extend({}, oFogCss, {backgroundColor: o.fog.color});
+        }
+
+        $('#bx-popup-fog').css(oFogCss);
+
         $(window).on('resize.popupFog', function () {
             $('#bx-popup-fog').css({
                 width: $(window).width(),

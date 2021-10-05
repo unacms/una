@@ -6,6 +6,16 @@ module.exports = {
         'inter': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
     },
     extend: {
+        width: {
+            112: '28rem',
+            128: '32rem',
+            144: '36rem'
+        },
+        height: {
+            112: '28rem',
+            128: '32rem',
+            144: '36rem'
+        },
         animation: {
           goo: "goo 8s infinite",
         },

@@ -327,6 +327,15 @@ body > .bx-popup-wrapper {
     background-color:#fff;
 }
 
+.bx-popup-fog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+    background-color: #ffffff;
+    -webkit-backface-visibility: hidden;
+}
+
 .bx-popup {    
     overflow:hidden;
 }

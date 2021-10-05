@@ -80,6 +80,28 @@
     }
 
 
+    /* Common elements: Popups */
+    .bx-popup-wrapper {
+        @apply overflow-visible;
+    }
+
+    .bx-popup-applied {
+        @apply rounded-lg;
+    }
+
+    .bx-popup-responsive {
+        @apply w-full md:w-auto;
+    }
+
+    .bx-popup-width {
+        @apply w-full md:w-128;
+    }
+
+    .bx-popup-fog {
+        @apply bg-white dark:bg-black opacity-70;
+    }
+
+
     /* Common elements: Menus */
     /* Horizontal menu */
     .bx-menu-hor li.bx-menu-tab-active a,
