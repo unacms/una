@@ -27,6 +27,10 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
             'tailwind.min.css',
             'main.css'
         ));
+        
+        $this->addJs(array(
+            'utils.js'
+        ));
 
     	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
         if(!empty($sCss))
