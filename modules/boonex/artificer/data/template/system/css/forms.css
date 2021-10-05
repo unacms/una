@@ -299,3 +299,14 @@ import url(../../../../../../../template/css/forms.css);
 .select2-container {
     width:100% !important;
 }
+/* tiny mce */
+.bx-form-input-wrapper-html .gray-theme.fr-toolbar.fr-top{
+   border-radius: .375rem .375rem 0 0 !important; 
+}
+.bx-form-input-wrapper-html .fr-wrapper{
+    border-radius: 0 0 .375rem .375rem !important; 
+    border-bottom-color: #CCCCCC !important;
+}
+.bx-form-input-wrapper-html .second-toolbar{
+    border-bottom:none !important;
+}
