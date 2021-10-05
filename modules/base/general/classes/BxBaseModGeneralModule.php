@@ -3002,7 +3002,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
 
-        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => true));
+        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false));
     }
 
     protected function _getFields($iContentId)
