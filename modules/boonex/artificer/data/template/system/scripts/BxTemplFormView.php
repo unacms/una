@@ -99,6 +99,30 @@ class BxTemplFormView extends BxBaseFormView
 
         return $aAttrs;
     }
+    
+    function genInputSwitcher(&$aInput)
+    {
+        $aInput['type'] = 'checkbox';
+        $sCheckbox = $this->genInputStandard($aInput);
+
+        $aInput['type'] = 'switcher';
+
+        $sClass = 'bg-gray-200';
+        $sClassDark = 'bg-gray-900';
+        $sClass2 = 'translate-x-0';
+        if(isset($aInput['checked']) && $aInput['checked']){
+            $sClass = 'bg-indigo-600';
+            $sClassDark = 'bg-indigo-600';
+            $sClass2 = 'translate-x-5';
+        }
+
+        return $this->oTemplate->parseHtmlByName('form_field_switcher.html', [
+            'class' => $sClass,
+            'class_dark' => $sClassDark,
+            'class2' => $sClass2,
+            'checkbox' => $sCheckbox
+        ]);
+    }
 }
 
 /** @} */
