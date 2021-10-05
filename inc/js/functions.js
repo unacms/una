@@ -396,7 +396,7 @@ function bx_center_content (sSel, sBlockStyle, bListenOnResize) {
 function bx_menu_popup (o, e, options, vars) {
     var options = options || {};
     var vars = vars || {};
-    var o = $.extend({}, $.fn.dolPopupDefaultOptions, {id: o, url: bx_append_url_params('menu.php', $.extend({o:o}, vars))}, options);
+    var o = $.extend({}, $.fn.dolPopupDefaultOptions, {id: o, url: bx_append_url_params('menu.php', $.extend({o:o}, vars)), cssClass: 'bx-popup-menu'}, options);
     if ('undefined' == typeof(e))
         e = window;
     $(e).dolPopupAjax(o);

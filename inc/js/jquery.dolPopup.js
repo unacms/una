@@ -466,7 +466,11 @@
                 $('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>').appendTo(options.parent).find(options.container).hide();
 
                 $('#' + sPopupId).addClass($('#bx-popup-loading').attr('class'));
-
+                
+                if (options.cssClass && options.cssClass != ''){
+                    $('#' + sPopupId).addClass(options.cssClass);
+                }
+                
                 var oLoading = $('#' + sPopupId + ' .bx-popup-loading-wrapped');
                 bx_loading_content(oLoading, true, true);
 
