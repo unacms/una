@@ -731,6 +731,7 @@ function bx_get_notes(oSource,  sModule, iContentId, oOptions, oVars) {
         sUrlRoot + 'modules/?r=' + sModule + '/get_notes/',
         $.extend({content_id: iContentId}, oVars),
         function(oData) {
+            console.log(oData);
             if(oData && oData.popup != undefined) {
                 if(typeof(oData.popup) == 'string')
                     oData.popup = {html: oData.popup, options: {}};

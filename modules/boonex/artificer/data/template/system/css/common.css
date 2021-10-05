@@ -168,10 +168,35 @@ import url(../../../../../../../template/css/common.css);
 
 
 /*--- Popup boxes ---*/
-body > .bx-popup-wrapper {
-    overflow: visible;
+.bx-popup-transitions {
+    -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.bx-popup-width {
-    width: 31.25rem;
+.bx-popup-inactive {
+    -webkit-opacity: 0;
+    opacity: 0;
+
+    -webkit-transform: scale(0.75);
+    transform: scale(0.75);
+}
+
+.bx-popup-active {
+    max-height:100%;
+    overflow-y:auto;
+
+    -webkit-opacity: 1;
+    opacity: 1;
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+
+    -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.bx-popup-fog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
 }
