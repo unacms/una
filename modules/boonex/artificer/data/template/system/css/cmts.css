@@ -2,39 +2,30 @@
 import url(../../../../../../../template/css/cmts.css);
 --*/
 
-
-/*--- Comment Actions ---*/
-.cmt-actions .bx-menu-custom.bx-menu-custom-hor {
-    justify-content: space-between;
-}
-
-
 /*--- Minified Post Form ---*/
 div.cmt-reply.cmt-reply-min div.cmt-body {
     display: none;
 }
-
-
-/* +++ Comment Element: Counter +++ */
-.cmt-counter > * {
-    position: relative;
+/*--- Munu action ---*/
+.bx-menu-object-sys_cmts_item_manage .bx-report .sys-action-element-holder{
+    padding: 0px !important;
 }
-.cmt-counter div.cmt-counter-icon,
-.cmt-counter div.bx-base-pofile-unit-wo-info {
-    margin-left: -0.5rem;
+.bx-menu-object-sys_cmts_item_manage span.bx-def-margin-thd-topbottom,
+.bx-menu-object-sys_cmts_item_manage .bx-report-element-holder,
+.bx-menu-object-sys_cmts_item_manage .sys-action.bx-report{
+    margin: 0px !important;
+    width:100%;
+    display: block;
 }
-.cmt-counter div.cmt-counter-icon:first-child,
-.cmt-counter div.bx-base-pofile-unit-wo-info:first-child {
-    margin-left: 0 !important;
+.bx-menu-object-sys_cmts_item_manage .sys-icon,
+.bx-menu-object-sys_cmts_item_actions .sys-icon{
+    width: 1.25rem;
+    display: inline-block;
+    height: 1.25rem;
+    text-align: center;
 }
-.bx-media-phone .cmt-counter div.cmt-counter-icon,
-.bx-media-phone .cmt-counter div.bx-base-pofile-unit-wo-info {
-    margin-left: -1.0rem;
+.bx-menu-object-sys_cmts_item_manage A{
+    width:100%;
+    display: block;
 }
-.bx-media-tablet .bx-layout-column-thin .cmt-counter div.bx-base-pofile-unit-wo-info,
-.bx-media-tablet .bx-layout-column-half .cmt-counter div.bx-base-pofile-unit-wo-info {
-    display: none;
-}
-.cmt-counter div.cmt-counter-icon {
-    z-index: 2;
-}
+.bx-menu-object-sys_cmts_item_actions
