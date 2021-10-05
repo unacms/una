@@ -132,23 +132,32 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     static public function getObjectInstance($sObject, $oTemplate = false)
     {
-        if (isset($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject];
+        $oMenu = false;
+        if (!isset($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject])) {
+            $aObject = BxDolMenuQuery::getMenuObject($sObject);
+            if (!$aObject || !is_array($aObject) || (int)$aObject['active'] == 0)
+                return false;
 
-        $aObject = BxDolMenuQuery::getMenuObject($sObject);
-        if (!$aObject || !is_array($aObject) || (int)$aObject['active'] == 0)
-            return false;
+            $sClass = 'BxTemplMenu';
+            if (!empty($aObject['override_class_name'])) {
+                $sClass = $aObject['override_class_name'];
+                if (!empty($aObject['override_class_file']))
+                    require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
+            }
 
-        $sClass = 'BxTemplMenu';
-        if (!empty($aObject['override_class_name'])) {
-            $sClass = $aObject['override_class_name'];
-            if (!empty($aObject['override_class_file']))
-                require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
+            $oMenu = new $sClass($aObject, $oTemplate);
+            $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject] = $oMenu;
         }
+        else
+            $oMenu = $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject];
 
-        $o = new $sClass($aObject, $oTemplate);
+        bx_alert('system', 'get_object', 0, false, array(
+            'type' => 'menu',
+            'name' => $sObject,
+            'object' => &$oMenu,
+        ));
 
-        return ($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject] = $o);
+        return $oMenu;
     }
 
     /**

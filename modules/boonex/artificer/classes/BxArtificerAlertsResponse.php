@@ -29,7 +29,25 @@ class BxArtificerAlertsResponse extends BxDolAlertsResponse
         if(!method_exists($this, $sMethod))
             return;
 
+        if(BxDolTemplate::getInstance()->getCode() != $this->_oModule->_oConfig->getUri())
+            return;
+
         $this->$sMethod($oAlert);
+    }
+
+    protected function _processSystemGetObject($oAlert)
+    {
+        if(empty($oAlert->aExtras['type']))
+            return;
+
+        switch($oAlert->aExtras['type']) {
+            case 'menu':
+                if(!($oAlert->aExtras['object'] instanceof BxBaseModGeneralMenuViewActions))
+                    break;
+
+                $oAlert->aExtras['object']->setShowAsButton(false);
+                break;
+        }
     }
 
     protected function _processProfileUnit($oAlert)

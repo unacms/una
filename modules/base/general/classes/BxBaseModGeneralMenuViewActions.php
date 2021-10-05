@@ -43,6 +43,8 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_oMenuActionsMore = null;
         $this->_oMenuSocialSharing = null;
 
+        $this->_sTmplContent = $this->_oTemplate->getHtml($this->getTemplateName('menu_custom_actions.html'));
+        $this->_sTmplContentItem = $this->_oTemplate->getHtml($this->getTemplateNameItem('menu_custom_item_actions.html'));
         $this->_bShowAsButton = true;
         $this->_bShowTitle = true;
         $this->_sClassMiSa = 'bx-base-general-ea-sa';
@@ -69,6 +71,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
         if($this->_aContentInfo)
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
+    }
+
+    public function setShowAsButton($bShowAsButton)
+    {
+        $this->_bShowAsButton = $bShowAsButton;
     }
 
     /**

@@ -21,8 +21,9 @@ import url(../../../../../../../template/css/menu.css);
 }
 
 /*--- Interactive Menu ---*/
-li.bx-menu-inter-hidden {
-    display: none;
+.bx-menu-inter li.bx-menu-inter-hidden,
+.bx-menu-inter-vert li.bx-menu-inter-hidden {
+    display: none !important;
 }
 
 /*--- Custom Menu with More Auto ---*/

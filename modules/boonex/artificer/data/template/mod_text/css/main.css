@@ -1,0 +1,6 @@
+/*-- Entry: Actions Menu --*/
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item {
+    width: 100%;
+    border-color: transparent;
+    border-radius: 0;
+}

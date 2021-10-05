@@ -120,9 +120,9 @@
     }
 
     .bx-popup .bx-menu-ver > li.bx-def-color-bg-active {
-        @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white rounded;
+        @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 shadow-sm text-gray-900 dark:text-white;
     }
-
+    
     /* Main menu */
     .bx-toolbar-item.bx-ti-menu .bx-menu-main .bx-menu-item.bx-menu-tab-active {
         @apply opacity-100 bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 shadow text-gray-900 dark:text-white;
