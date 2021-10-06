@@ -143,6 +143,9 @@
             if (false != o.pointer)
                 $el.addClass('bx-popup-with-pointer'); // to make all popups with pointer not responsive add: .removeClass('bx-popup-responsive')
 
+            if (o.cssClass && o.cssClass != '' && !$el.hasClass(o.cssClass))
+                $el.addClass(o.cssClass);
+
             // default style for correct positioning
             $el.css({
                 display: 'block',
@@ -441,6 +444,10 @@
 
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
+
+                if (options.cssClass && options.cssClass != '' && !$('#' + sPopupId).hasClass(options.cssClass)) {
+                    $('#' + sPopupId).addClass(options.cssClass);
+                }
 
                 var oPopupOptions = $.extend({}, options, {
                     pointer: oPointerOptions,

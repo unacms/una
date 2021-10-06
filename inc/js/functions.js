@@ -410,7 +410,7 @@ function bx_menu_popup (o, e, options, vars) {
  */
 function bx_menu_popup_inline (jSel, e, options) {
     var options = options || {};
-    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {pointer:{el:$(e)}});
+    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {pointer:{el:$(e)}, cssClass: 'bx-popup-menu'});
     if ($(jSel + ':visible').length) 
         $(jSel).dolPopupHide(); 
     else 
