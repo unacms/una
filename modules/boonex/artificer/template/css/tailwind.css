@@ -89,7 +89,7 @@
         @apply rounded-lg;
     }
 
-    .bx-popup-responsive {
+    .bx-popup-responsive:not(.bx-popup-menu) {
         @apply w-full md:w-auto;
     }
 

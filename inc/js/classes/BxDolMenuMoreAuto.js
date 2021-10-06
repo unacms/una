@@ -101,7 +101,8 @@ BxDolMenuMoreAuto.prototype.more = function(oElement)
         pointer: {
             el: oElement
         }, 
-        moveToDocRoot: false
+        moveToDocRoot: false,
+        cssClass: 'bx-popup-menu'
     });
 }
 

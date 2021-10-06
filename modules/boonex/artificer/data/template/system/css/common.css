@@ -200,6 +200,9 @@ import url(../../../../../../../template/css/common.css);
     left: 0;
     -webkit-backface-visibility: hidden;
 }
-.bx-popup-menu .bx-popup-content-indent{
+.bx-popup-menu .bx-popup-close-wrapper {
+    display: none;
+}
+.bx-popup-menu .bx-popup-content-indent {
     padding: 0px !important;
 }
