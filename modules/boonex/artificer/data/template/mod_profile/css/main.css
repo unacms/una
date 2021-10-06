@@ -140,6 +140,7 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     width: 100%;
     border-color: transparent;
     border-radius: 0;
+    box-shadow: none;
 }
 /* Cover block */
 .bx-base-profile-cover-block-wrapper .bx-base-pofile-cover-actions div.bx-base-general-entity-actions{

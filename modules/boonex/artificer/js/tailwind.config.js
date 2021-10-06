@@ -1,8 +1,13 @@
 module.exports = {
-  purge: [
-      './template/*.html',
-      './data/template/**/*.html',
-  ],
+  purge: {
+    enabled: true,
+    content: [
+        './js/*.js',
+        './template/*.html',
+        './data/template/**/*.html',
+    ],
+    safelist: []
+  },
   darkMode: 'media', // false or 'media' or 'class'
   theme: {
     fontFamily: {
