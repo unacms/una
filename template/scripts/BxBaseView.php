@@ -236,14 +236,14 @@ class BxBaseView extends BxDolView
                 'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDo()
+                    'name' => isset($aParams['custom_icon']) && $aParams['custom_icon'] != '' ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml($this->_getIconDo())
                 )
             ),
             'bx_if:show_text' => array(
                 'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'text' => _t('_view_counter', $iCount)
+                    'text' => _t(isset($aParams['caption']) ? $aParams['caption'] : '_view_counter', $iCount)
                 )
             )
         ));

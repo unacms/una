@@ -133,7 +133,7 @@ class BxBaseVoteLikes extends BxDolVoteLikes
                 'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDo($bVoted)
+                    'name' => isset($aParams['custom_icon']) && $aParams['custom_icon'] != '' ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml($this->_getIconDo($bVoted))
                 )
             ),
             'bx_if:show_text' => array(

@@ -211,7 +211,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                             }
 							else{
 								$sIconFont = $sCode; // font icons
-                                $sIconFontWithHtml = '<i class="sys-icon ' . $sIconFont .' ' . $sClass . '"' . $sAttrs . '></i>';
+                                $sIconFontWithHtml = $this->getFontIconAsHtml($sIconFont, $sClass, $sAttrs);
                             }
 						} else {
 							$sIconUrl = $this->_oTemplate->getIconUrl($sCode);
@@ -221,6 +221,17 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             }
         }
         return array ($sIconFont, $sIconUrl, $sIconA, $sIconHtml, $sIconFontWithHtml);
+    }
+    
+    function getFontIconAsHtml($sIconFont, $sClass = '', $sAttrs = '')
+    {
+        return  '<i class="sys-icon ' . $sIconFont .' ' . $sClass . '"' . $sAttrs . '></i>';
+    }
+    
+    function getIconAsHtml($sCode, $aAttrs = array())
+    {
+        $aIcons = $this->getIcon($sCode, $aAttrs);
+        return $aIcons[3] . $aIcons[4]; 
     }
 
     function getTemplateIcon($sName)

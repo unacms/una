@@ -747,12 +747,12 @@ class BxBaseCmts extends BxDolCmts
                     'onclick' => $sOnclick
                 )
             ),
-            'content' => $this->_getCounterLabel($iCount),
+            'content' => $this->_getCounterLabel($iCount, $aParams),
             'bx_repeat:profiles' => $aTmplVarsProfiles,
             'bx_if:show_icon' => array(
                 'condition' => $bShowEmpty || !empty($aTmplVarsProfiles),
                 'content' => array(
-                    'sp' => $this->_sStylePrefix
+                    'icon' => isset($aParams['custom_icon']) && $aParams['custom_icon'] != '' ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml('comment', $this->_sStylePrefix . '-counter-icon sys-icon')
                 )
             )
         ));
@@ -786,9 +786,9 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
-    protected function _getCounterLabel($iCount)
+    protected function _getCounterLabel($iCount, $aParams = array())
     {
-        return (int)$iCount != 0 ? _t('_cmt_txt_counter', $iCount) : _t('_cmt_txt_counter_empty');
+        return (int)$iCount != 0 ? _t(isset($aParams['caption']) ? $aParams['caption'] : '_cmt_txt_counter', $iCount) : _t('_cmt_txt_counter_empty');
     }
 
     protected function _getTmplElementBlock()

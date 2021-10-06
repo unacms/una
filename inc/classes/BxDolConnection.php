@@ -142,20 +142,20 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if (!$sObject)
             return false;
 
-        if (isset($GLOBALS['bxDolClasses']['BxDolConnection!'.$sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolConnection!'.$sObject];
+        if (isset($GLOBALS['bxDolClasses']['BxTemplConnection!'.$sObject]))
+            return $GLOBALS['bxDolClasses']['BxTemplConnection!'.$sObject];
 
         $aObject = BxDolConnectionQuery::getConnectionObject($sObject);
         if (!$aObject || !is_array($aObject))
             return false;
 
-        $sClass = empty($aObject['override_class_name']) ? 'BxDolConnection' : $aObject['override_class_name'];
+        $sClass = empty($aObject['override_class_name']) ? 'BxTemplConnection' : $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
 
         $o = new $sClass($aObject);
 
-        return ($GLOBALS['bxDolClasses']['BxDolConnection!'.$sObject] = $o);
+        return ($GLOBALS['bxDolClasses']['BxTemplConnection!'.$sObject] = $o);
     }
 
     /**
@@ -261,10 +261,14 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function outputActionResult ($mixed, $sFormat = 'json')
     {
         switch ($sFormat) {
+            case 'html':
+                echo $mixed;
+                break;
+                
             case 'json':
             default:
                 header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($mixed);
+                echo json_encode($mixed);     
         }
         exit;
     }
