@@ -97,7 +97,11 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if(empty($CNF['OBJECT_VIEWS']) || empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
             return false;
 
-        return $this->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
+        $oObject = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
+        
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+        
+        return $oObject ? $oObject->getCounter(['show_counter_empty' => false, 'show_counter_in_brackets' => false, 'dynamic_mode' => true, 'caption' => '_view_n_views', 'custom_icon' => $sIcon]) : '';
     }
 
     protected function _getMenuItemVotes($aItem)
@@ -107,7 +111,10 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if(empty($CNF['OBJECT_VOTES']) || empty($CNF['FIELD_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
             return false;
         
-        return $this->getUnitMetaItemText(_t('_vote_n_votes', $this->_aContentInfo[$CNF['FIELD_VOTES']]));
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+        
+        $oObject = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
+        return $oObject ? $oObject->getCounter(['show_counter_label_icon' => true, 'show_counter_empty' => false, 'dynamic_mode' => true, 'caption' => '_vote_n_votes', 'custom_icon' => $sIcon]) : '';
     }
 
     protected function _getMenuItemReactions($aItem)
@@ -148,10 +155,12 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
         if(!$oComments || !$oComments->isEnabled())
             return false;
+        
+        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
+        
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
-        return $this->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $this->_aContentInfo[$CNF['FIELD_COMMENTS']]), array(
-            'href' => $oComments->getListUrl()
-        ));
+        return $oObject ? $oObject->getCounter(['overwrite_counter_link_onclick' => 'javascript:', 'show_counter_empty' => false, 'dynamic_mode' => true, 'caption' => '_cmt_txt_n_comments', 'custom_icon' => $sIcon]) : '';
     }
 
     protected function _retrieveContentId()
