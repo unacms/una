@@ -127,7 +127,7 @@ import url(../../../../../../../template/css/common.css);
     -ms-flex:  0 1 auto; 
     flex:  0 1 auto;
 
-    padding: 0 0.5rem;
+    padding: 0 0.25rem;
 
     border-bottom: 1px solid transparent;
 }
@@ -146,7 +146,7 @@ import url(../../../../../../../template/css/common.css);
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li a > span {
     vertical-align: middle;
 }
-.bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .sys-icon {
+.bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .bx-mi-icon {
     display: none;
 }
 .bx-db-menu ul.bx-menu-submenu-more-auto {
