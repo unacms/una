@@ -111,18 +111,23 @@ class BxTemplFormView extends BxBaseFormView
         $sClassLight = 'bg-gray-200';
         $sClassDark = 'bg-gray-900';
         $sClass2 = 'translate-x-0';
+        $sClassLight2 = 'bg-white';
+        $sClassDark2 = 'bg-gray-500';
         if(isset($aInput['checked']) && $aInput['checked']){
             $sClass = 'on';
-            $sClassLight = 'bg-indigo-600';
-            $sClassDark = 'bg-indigo-600';
+            $sClassLight = 'bg-white';
+            $sClassDark = 'bg-gray-500';
             $sClass2 = 'translate-x-5';
-            
+            $sClassLight2 = 'bg-blue-500';
+            $sClassDark2 = 'bg-gray-900';
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_switcher.html', [
             'class' => $sClass,
             'class_light' => $sClassLight,
             'class_dark' => $sClassDark,
+            'class_light2' => $sClassLight2,
+            'class_dark2' => $sClassDark2,
             'class2' => $sClass2,
             'checkbox' => $sCheckbox
         ]);
