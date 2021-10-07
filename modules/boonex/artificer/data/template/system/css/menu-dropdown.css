@@ -37,7 +37,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  color: #ffffff;
   visibility: hidden;
   /* Force Hardware Acceleration */
   -webkit-backface-visibility: hidden;
