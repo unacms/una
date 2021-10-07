@@ -117,7 +117,7 @@ class BxTemplFunctions extends BxBaseFunctions
         return $sContent;
     }
 
-    protected function getInjFooterMenuDropdown() 
+    protected function getInjFooterSidebarSite() 
     {
         $oSearch = new BxTemplSearch();
         $oSearch->setLiveSearch(true);
@@ -130,7 +130,7 @@ class BxTemplFunctions extends BxBaseFunctions
         if(empty($sLogoText))
             $sLogoText = getParam('site_title');
 
-        return $this->_oTemplate->parsePageByName('menu_dropdown.html', array(
+        return $this->_oTemplate->parsePageByName('sidebar_site.html', array(
             'bx_if:show_logo_image' => array(
                 'condition' => $bLogoUrl,
                 'content' => array(
@@ -145,7 +145,7 @@ class BxTemplFunctions extends BxBaseFunctions
                 )
             ),
             'search_form' => $sSearch,
-        ));;
+        ));
     }
 }
 

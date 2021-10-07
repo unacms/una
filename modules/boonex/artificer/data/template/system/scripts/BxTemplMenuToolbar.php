@@ -44,7 +44,7 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
         $a['class_add_a'] = '';
         switch ($a['name']) {
             case 'main-menu':
-                $a['class_add_a'] = ' cd-dropdown-trigger';
+                $a['class_add_a'] = ' bx-sidebar-trigger';
                 $a['link'] = 'javascript:void(0)';
                 $a['onclick'] = '';
                 break;

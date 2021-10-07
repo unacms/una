@@ -1,0 +1,47 @@
+.bx-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+
+    -webkit-transition: -webkit-transform 0.5s 0s, opacity 0.3s 0s;
+    -moz-transition: -moz-transform 0.5s 0s, opacity 0.3s 0s;
+    transition: transform 0.5s 0s, opacity 0.3s 0s;
+}
+
+.bx-sidebar.bx-sidebar-active {
+    opacity: 1;
+    
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+
+    -webkit-transition: -webkit-transform 0.5s 0s, opacity 0.3s 0s;
+    -moz-transition: -moz-transform 0.5s 0s, opacity 0.3s 0s;
+    transition: transform 0.5s 0s, opacity 0.3s 0s;
+}
+
+.bx-sidebar-item.bx-si-dropdown-has .bx-si-dropdown-icon {
+    display: inline-block;
+}
+.bx-sidebar-item.bx-si-dropdown-open .bx-si-dropdown-icon {
+    
+}
+.bx-sidebar-item.bx-si-dropdown-open .bx-sidebar-dropdown-content {
+    display: block;
+}

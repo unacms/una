@@ -19,10 +19,12 @@
     <!-- Menus -->
     <string name="_bx_artificer_lmi_cpt_styles"><![CDATA[Styles]]></string>
 
-    <string name="_bx_artificer_menu_template_title_dropdown_site"><![CDATA[Site Dropdown Navigation]]></string>
-    <string name="_bx_artificer_menu_title_dropdown_site"><![CDATA[Site Dropdown Navigation]]></string>
+    <string name="_bx_artificer_menu_template_title_sidebar_site"><![CDATA[Site Sidebar Navigation]]></string>
+    <string name="_bx_artificer_menu_title_sidebar_site"><![CDATA[Site Sidebar Navigation]]></string>
 
     <!-- Other -->
+    <string name="_bx_artificer_txt_close_sidebar"><![CDATA[Close sidebar]]></string>
+
     <string name="_bx_artificer_txt_splash_welcome_l1"><![CDATA[Welcome to]]></string>
     <string name="_bx_artificer_txt_splash_welcome_l2"><![CDATA[the community]]></string>
     <string name="_bx_artificer_txt_splash_welcome_l3"><![CDATA[The social media network for people to connect, collaborate and share original content. Powered by <a class="text-blue-500 hover:text-blue-600" href="https://una.io">UNA Community Software</a>.]]></string>

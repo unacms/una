@@ -5,10 +5,11 @@ SET @sName = 'bx_artificer';
 DELETE FROM `sys_objects_page` WHERE `module` = @sName;
 DELETE FROM `sys_pages_blocks` WHERE `module` = @sName; -- OR `object` IN ();
 
--- MENUS: dropdown menu
-DELETE FROM `sys_menu_templates` WHERE `template`='menu_dropdown_site.html' AND `title`='_bx_artificer_menu_template_title_dropdown_site';
 
-DELETE FROM `sys_objects_menu` WHERE `object`='bx_artificer_dropdown_site';
+-- menu: dropdown menu
+DELETE FROM `sys_menu_templates` WHERE `template`='menu_sidebar_site.html' AND `title`='_bx_artificer_menu_template_title_sidebar_site';
+
+DELETE FROM `sys_objects_menu` WHERE `object`='bx_artificer_sidebar_site';
 
 
 -- alerts

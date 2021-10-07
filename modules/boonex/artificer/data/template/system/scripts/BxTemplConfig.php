@@ -48,7 +48,7 @@ class BxTemplConfig extends BxBaseConfig
         ));
 
         BxDolTemplate::getInstance()->addCss(array(
-            'menu-dropdown.css'
+            'menu-sidebar.css',
         ));
     }
 }
