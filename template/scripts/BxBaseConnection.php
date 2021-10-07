@@ -28,7 +28,7 @@ class BxBaseConnection extends BxDolConnection
     
     public function actionGetConnected ($iStart = 0, $iPerPage = 0)
     {
-        $sContentType = bx_get('content_type');
+        $sContentType = bx_process_input(bx_get('content_type'));
         $iProfileId = (int)bx_get('id');
         $bIsMutual = (bool)bx_get('mutual');
         return $this->_getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart, $iPerPage);
@@ -36,7 +36,7 @@ class BxBaseConnection extends BxDolConnection
     
     public function actionGetUsers ($iStart = 0, $iPerPage = 0)
     {
-        $sContentType = bx_get('content_type');
+        $sContentType = bx_process_input(bx_get('content_type'));
         $iProfileId = (int)bx_get('id');
         $bIsMutual = (bool)bx_get('mutual');
         $iStart = (int)bx_get('start');
@@ -175,11 +175,7 @@ class BxBaseConnection extends BxDolConnection
     }
     
     public function _getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart = 0, $iPerPage = 0)
-    {
-        $sContentType = bx_get('content_type');
-        $iProfileId = (int)bx_get('id');
-        $bIsMutual = (bool)bx_get('mutual');
-        
+    {   
         $aUsers = $this->getConnectionsAsArray($sContentType, $iProfileId, null, $bIsMutual);
         
         $oPaginate = new BxTemplPaginate(array(
@@ -190,14 +186,13 @@ class BxBaseConnection extends BxDolConnection
         $oPaginate->setNumFromDataArray($aUsers);
 
         foreach($aUsers as $iProfile) {
-            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit, $sUserUnitWoInfo) = $this->_getAuthorInfo($iProfile);
-
+            $oProfile = BxDolProfile::getInstanceMagic($iProfile);
             $aTmplUsers[] = array(
                 'style_prefix' => $this->_sStylePrefix,
-                'user_unit' => $sUserUnitWoInfo,
-                'user_url' => $sUserUrl,
-            	'user_title' => bx_html_attribute($sUserName),
-            	'user_name' => $sUserName
+                'user_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+                'user_url' => $oProfile->getUrl(),
+            	'user_title' => bx_html_attribute($oProfile->getDisplayName()),
+            	'user_name' => $oProfile->getDisplayName()
             );
         }
         
@@ -222,17 +217,5 @@ class BxBaseConnection extends BxDolConnection
             $oProfile->getUnit(),
             $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
         );
-    }
-
-    protected function _getAuthorObject($iAuthorId = 0)
-    {
-    	if($iAuthorId == 0)
-    		return BxDolProfileUndefined::getInstance();
-
-        $oProfile = BxDolProfile::getInstance($iAuthorId);
-        if(!$oProfile)
-			$oProfile = BxDolProfileUndefined::getInstance();
-
-        return $oProfile;
     }
 }

@@ -8,7 +8,7 @@
 
 function BxDolConnection(options)
 {
-    this._sObjName = undefined == options.sObjName ? 'oView' : options.sObjName; // javascript object name, to run current object instance from onTimer
+    this._sObjName = undefined == options.sObjName ? 'oConnection' : options.sObjName; // javascript object name, to run current object instance from onTimer
     this._sSystem = options.sSystem; // current comment system
     this._iObjId = options.iObjId; // this object id comments
     this._sContentType = options.sContentType; 
