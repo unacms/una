@@ -299,6 +299,10 @@ import url(../../../../../../../template/css/forms.css);
 .select2-container {
     width:100% !important;
 }
+.bx-form-input-select 
+{
+    -webkit-appearance:none;
+}
 /* tiny mce */
 .bx-form-input-wrapper-html .gray-theme.fr-toolbar.fr-top{
    border-radius: .375rem .375rem 0 0 !important; 
