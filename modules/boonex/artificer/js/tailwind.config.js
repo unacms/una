@@ -6,7 +6,10 @@ module.exports = {
         './template/*.html',
         './data/template/**/*.html',
     ],
-    safelist: []
+    safelist: [
+        'text-red-400', 
+        'bx-form-required', 'bx-form-warn'
+    ]
   },
   darkMode: 'media', // false or 'media' or 'class'
   theme: {

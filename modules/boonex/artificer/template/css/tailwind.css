@@ -75,6 +75,11 @@
 
 
     /* Common elements: Forms */
+    .bx-form-required,
+    .bx-form-warn {
+        @apply text-red-400;
+    }
+
     form .bx-form-element a {
         @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
