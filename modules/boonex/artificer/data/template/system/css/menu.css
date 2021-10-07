@@ -96,3 +96,24 @@ div.bx-popup-menu-main.sys-add-content ul {
 .bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-item-subitems {
     display: none;
 }
+
+/* Profiles meta menu */
+.sys-action-counter-icon .sys-icon{
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.1rem;
+    text-align: center;
+}
+.sys-action-counter-icon .sys-icon.sys-icon-emoji{
+    line-height: 1rem;
+}
+.sys-action-counter-iconset .bx-def-icon-size{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.sys-action-counter-iconset .bx-base-pofile-unit-wo-info,
+.sys-action-counter-iconset .sys-action-counter-icon
+{
+    margin-left: -.25rem;
+}

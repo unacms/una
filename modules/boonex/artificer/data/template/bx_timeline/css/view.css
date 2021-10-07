@@ -56,3 +56,22 @@ div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     flex-wrap: wrap;
 }
+
+.bx-menu-object-bx_timeline_menu_item_manage .menu_custom_item_hor{
+    margin: 0px !important;
+    width:100%;
+    display: block;
+}
+.bx-menu-object-bx_timeline_menu_item_manage .menu_custom_item_hor A,
+.bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder{
+    width:100%;
+    display: block;
+    padding: 0px !important;
+}
+.leading-5{
+    line-height: 1.25rem
+}
+.bx-tl-owner-avatar .bx-def-thumb-size{
+    width: 40px;
+    height: 40px;
+}
