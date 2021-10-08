@@ -203,6 +203,13 @@ import url(../../../../../../../template/css/common.css);
 .bx-popup-menu .bx-popup-close-wrapper {
     display: none;
 }
+.bx-popup-menu .bx-popup-content {
+    width: 14rem;
+}
 .bx-popup-menu .bx-popup-content-indent {
     padding: 0px !important;
+}
+.bx-popup-menu ul {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }

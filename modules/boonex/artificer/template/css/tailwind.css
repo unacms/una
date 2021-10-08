@@ -118,19 +118,18 @@
         @apply bg-white dark:ring-gray-800 dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-gray-200 shadow;
     }
 
-
     /* Vertical menu in Popup */
     .bx-popup .bx-menu-ver > li:hover {
-        @apply group hover:text-gray-900 dark:hover:text-gray-100;
+        @apply hover:text-gray-900 dark:hover:text-gray-100;
     }
 
     .bx-popup .bx-menu-ver > li.bx-def-color-bg-active {
-        @apply group bg-white ring-1 ring-gray-200 dark:ring-gray-700 dark:bg-gray-900 text-gray-900 dark:text-white shadow;
+        @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white;
     }
-    
+
     /* Main menu */
     .bx-toolbar-item.bx-ti-menu .bx-menu-main .bx-menu-item.bx-menu-tab-active {
-        @apply opacity-100 bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 text-gray-900 dark:text-white shadow;
+        @apply opacity-100 ring-1 ring-gray-200 dark:ring-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white shadow;
     }
 
     /* Main menu: Mobile */

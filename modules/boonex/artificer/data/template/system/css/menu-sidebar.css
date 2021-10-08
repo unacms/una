@@ -1,6 +1,7 @@
 .bx-sidebar {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
@@ -17,8 +18,6 @@
     transition: transform 0.5s 0s, opacity 0.3s 0s;
 }
 .bx-sidebar.bx-sidebar-site {
-    left: 0;
-    
     -webkit-transform: translateX(-100%);
     -moz-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
@@ -26,8 +25,6 @@
     transform: translateX(-100%);
 }
 .bx-sidebar.bx-sidebar-account {
-    left: 0;
-    
     -webkit-transform: translateX(100%);
     -moz-transform: translateX(100%);
     -ms-transform: translateX(100%);
