@@ -11,18 +11,28 @@
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
-    -webkit-transform: translateX(-100%);
-    -moz-transform: translateX(-100%);
-    -ms-transform: translateX(-100%);
-    -o-transform: translateX(-100%);
-    transform: translateX(-100%);
+    
 
     -webkit-transition: -webkit-transform 0.5s 0s, opacity 0.3s 0s;
     -moz-transition: -moz-transform 0.5s 0s, opacity 0.3s 0s;
     transition: transform 0.5s 0s, opacity 0.3s 0s;
 }
-
-.bx-sidebar.bx-sidebar-active {
+.bx-sidebar.bx-sidebar-site {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+.bx-sidebar.bx-sidebar-account {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+}
+.bx-sidebar.bx-sidebar-site.bx-sidebar-active,
+.bx-sidebar.bx-sidebar-account.bx-sidebar-active {
     opacity: 1;
     
     -webkit-transform: translateX(0);
@@ -44,4 +54,9 @@
 }
 .bx-sidebar-item.bx-si-dropdown-open .bx-sidebar-dropdown-content {
     display: block;
+}
+
+/*--- Account Sidebar ---*/
+.bx-sb-profile .bx-base-pofile-unit {
+    margin: 0;
 }

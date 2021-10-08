@@ -44,12 +44,17 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
         $a['class_add_a'] = '';
         switch ($a['name']) {
             case 'main-menu':
-                $a['class_add_a'] = ' bx-sidebar-trigger';
+                $a['class_add_a'] = ' bx-sidebar-site-trigger';
                 $a['link'] = 'javascript:void(0)';
                 $a['onclick'] = '';
                 break;
 
             case 'account':
+                $a['class_add_a'] = ' bx-sidebar-account-trigger';
+                $a['link'] = 'javascript:void(0)';
+                $a['onclick'] = '';
+                break;
+
             case 'add-content':
                 if(isset($a['onclick']))
                     $a['onclick'] = str_replace('bx_menu_slide_inline', 'bx_menu_popup_inline', $a['onclick']);

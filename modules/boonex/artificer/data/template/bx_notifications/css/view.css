@@ -1,0 +1,11 @@
+/*--
+import url(../../../../../notifications/template/css/view.css);
+--*/
+
+/*--- Preview Popup Style ---*/
+#bx_notifications_preview .bx-popup-close-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+}
