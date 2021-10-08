@@ -1,36 +1,41 @@
 <script language="javascript">
     $(document).ready(function () {
         bx_activate_anim_icons('#283C50');
-        
-        $('.bx-sidebar-trigger').on('click', function(event) {
-            event.preventDefault();
 
-            bx_sidebar_toggle();
-        });
+        var aSidebars = ['site', 'account'];
+        for(var i in aSidebars) {
+            $('.bx-sidebar-' + aSidebars[i] + '-trigger').on('click', function(event) {
+                event.preventDefault();
 
-        $('.bx-sidebar .bx-sidebar-close').on('click', function(event){
-            event.preventDefault();
+                var aMatches = $(this).attr('class').match(/bx-sidebar-(.*)-trigger/);
+                if(!aMatches || aMatches.length != 2)
+                    return;
 
-            bx_sidebar_toggle();
-        });
-    });
-    
-    function bx_sidebar_toggle() {
-        var bShow = !$('.bx-sidebar').hasClass('bx-sidebar-active') ? true : false;
+                bx_sidebar_toggle(aMatches[1]);
+            });
 
-        $('.bx-sidebar').toggleClass('bx-sidebar-active', bShow);
+            $('.bx-sidebar .bx-sidebar-' + aSidebars[i] + '-close').on('click', function(event){
+                event.preventDefault();
 
-        if(!bShow) {
-            $('.bx-sidebar').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',function(){
-                $('.has-children ul').addClass('is-hidden');
-                $('.move-out').removeClass('move-out');
-                $('.is-active').removeClass('is-active');
-            }); 
+                var aMatches = $(this).attr('class').match(/bx-sidebar-(.*)-close/);
+                if(!aMatches || aMatches.length != 2)
+                    return;
+
+                bx_sidebar_toggle(aMatches[1]);
+            });
         }
+    });
+
+    function bx_sidebar_toggle(sType) {
+        var oSidebar = $('.bx-sidebar.bx-sidebar-' + sType);
+        var bShow = !oSidebar.hasClass('bx-sidebar-active') ? true : false;
+console.log(sType);
+        oSidebar.toggleClass('bx-sidebar-active', bShow);
     }
 
     function bx_sidebar_dropdown_toggle(oLink) {
         $(oLink).parents('.bx-sidebar-item:first').toggleClass('bx-si-dropdown-open').find('.bx-si-dropdown-icon').toggleClass('rotate-0 rotate-90');
+
         return false;
     }
 

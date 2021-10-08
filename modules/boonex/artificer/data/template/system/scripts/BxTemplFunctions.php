@@ -147,6 +147,29 @@ class BxTemplFunctions extends BxBaseFunctions
             'search_form' => $sSearch,
         ));
     }
+
+    protected function getInjFooterSidebarAccount() 
+    {
+        $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return '';
+
+        $sSwitcher = '';
+        if(($aSwitcher = bx_srv('system', 'account_profile_switcher', [], 'TemplServiceProfiles')) !== false) 
+            $sSwitcher = $aSwitcher['content'];
+
+        return $this->_oTemplate->parsePageByName('sidebar_account.html', [
+            'active_profile' => $oProfile->getUnit(),
+            'menu_notifications' => BxDolMenu::getObjectInstance('sys_account_notifications')->getCode(),
+            'profile_switcher' => $sSwitcher,
+            'bx_if:multiple_profiles_mode' => [
+                'condition' => (int)getParam('sys_account_limit_profiles_number') != 1,
+                'content' => [
+                    'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
+        	]
+            ]
+        ]);
+    }
 }
 
 /** @} */
