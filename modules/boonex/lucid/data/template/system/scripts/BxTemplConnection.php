@@ -10,7 +10,7 @@
 /**
  * @see BxDolConnection
  */
-class BxTemplCmts extends BxBaseConnection
+class BxTemplConnection extends BxBaseConnection
 {
     function __construct($aObject)
     {
