@@ -115,7 +115,7 @@
     }
 
     .bx-db-header .bx-menu-custom-hor li.bx-menu-tab-active a {
-        @apply bg-white dark:ring-gray-800 dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-gray-200 shadow;
+        @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white;
     }
 
     /* Vertical menu in Popup */

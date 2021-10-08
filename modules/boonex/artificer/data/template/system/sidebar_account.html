@@ -1,7 +1,7 @@
 <div class="bx-sidebar bx-sidebar-account fixed inset-0 flex justify-end z-40" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
     <div class="flex-shrink-0 w-14" aria-hidden="true"></div>
-    <div class="relative flex-1 flex flex-col max-w-xs w-full py-4 bg-white dark:bg-black">
+    <div class="relative flex-1 flex flex-col max-w-xs w-full py-4 bg-white dark:bg-gray-900">
         <div class="absolute top-0 left-0 -ml-12 pt-2">
             <button type="button" class="bx-sidebar-account-close ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                 <span class="sr-only"><bx_text:_bx_artificer_txt_close_sidebar /></span>
@@ -13,7 +13,7 @@
         <div class="bx-sb-profile flex-shrink-0 px-4 pb-4">__active_profile__</div>
         <hr class="bx-def-hr" />
         <div class="bx-sb-menu flex-1 my-2">__menu_notifications__</div>
-        <div class="bx-sb-profile-switcher flex-1">__profile_switcher__</div>
+        <div class="bx-sb-profile-switcher flex-auto">__profile_switcher__</div>
         <bx_if:multiple_profiles_mode>
             <hr class="bx-def-hr" />
             <div class="bx-sb-profile-create flex-1 mt-4 mx-4">
