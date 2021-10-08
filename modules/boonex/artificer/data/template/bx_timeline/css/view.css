@@ -68,10 +68,11 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     display: block;
     padding: 0px !important;
 }
-.leading-5{
-    line-height: 1.25rem
-}
 .bx-tl-owner-avatar .bx-def-thumb-size{
     width: 40px;
     height: 40px;
+}
+.bx-tl-item-content video,
+.bx-tl-item-attachment img{
+    border-radius: .25rem;
 }
