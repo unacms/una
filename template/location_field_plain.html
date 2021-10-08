@@ -13,7 +13,7 @@
 <script>
 (function () {
     var getLocationString = function (sMode) {
-        var sCountry = $('select[name="__name___country"]').val();
+        var sCountry = $('select[name="__name___country"] :selected').text();
         var sZip = $('input[name="__name___zip"]').val();
         var sState = $('input[name="__name___state"]').val();
         var sCity = $('input[name="__name___city"]').val();
@@ -44,7 +44,7 @@
 
     var geocode = function (a, i) {
         var s = a[i];
-        $.getJSON('__nominatim_server__/search/' + encodeURIComponent(s) + '?format=json&limit=1&email=__nominatim_email__', function (oResult) {
+        $.getJSON('__nominatim_server__/search/?q=' + encodeURIComponent(s) + '&format=json&limit=1&email=__nominatim_email__', function (oResult) {
             glBxLocationFieldPlainGeocodingRequest = false;
             if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
                 $('input[name="__name___lat"]').val(oResult[0].lat);
