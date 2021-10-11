@@ -60,8 +60,8 @@ class BxBaseSearchResult extends BxDolSearchResult
             foreach ($aData as $aValue)
                 $sCode .= $this->displaySearchUnit($aValue);
 
-            $sSearchResultBlockId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
-            $sClasses = implode(' ', $this->aContainerClasses);
+            $sHtmlId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
+            $sClasses = $this->applyContainerClass();
 
             $sAttributes = '';
             if(is_array($this->aContainerAttrs) && !empty($this->aContainerAttrs))
@@ -69,14 +69,14 @@ class BxBaseSearchResult extends BxDolSearchResult
                     $sAttributes .= ' ' . $sName . '="' . $sValue . '"';
 
             $sCode = BxDolTemplate::getInstance()->parseHtmlByName('search_result_block.html', [
-                'html_id' => $sSearchResultBlockId,
+                'html_id' => $sHtmlId,
                 'class' => $sClasses,
                 'attrs' => $sAttributes,
                 'content' => $sCode,
                 'bx_if:do_center' => [
                     'condition' => !$this->_bLiveSearch && $this->sCenterContentUnitSelector,
                     'content' => [
-                        'html_id' => $sSearchResultBlockId,
+                        'html_id' => $sHtmlId,
                         'selector_content' => $this->sCenterContentUnitSelector
                     ]
                 ]
@@ -392,6 +392,15 @@ class BxBaseSearchResult extends BxDolSearchResult
         foreach ($mixed as $s)
             if (false !== ($i = array_search($s, $this->aContainerClasses)))
                 unset($this->aContainerClasses[$i]);
+    }
+
+    /**
+     * Apply class(es) for search result container 
+     * @return string with a list of classes.
+     */
+    function applyContainerClass ()
+    {
+        return implode(' ', $this->aContainerClasses);
     }
 
     /**

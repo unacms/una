@@ -103,7 +103,7 @@
     }
 
     .bx-popup-fog {
-        @apply bg-white dark:bg-black opacity-70;
+        @apply bg-gray-600 opacity-75;
     }
 
 
