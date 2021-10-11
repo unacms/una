@@ -8,7 +8,8 @@ module.exports = {
     ],
     safelist: [
         'text-red-400', 
-        'bx-form-required', 'bx-form-warn'
+        'bx-form-required', 'bx-form-warn',
+        'bx-popup-fog',
     ]
   },
   darkMode: 'media', // false or 'media' or 'class'
