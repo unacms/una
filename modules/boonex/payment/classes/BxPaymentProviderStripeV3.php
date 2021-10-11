@@ -230,16 +230,46 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         );
     }
 
+    /*
+     * Related Docs: https://stripe.com/docs/api/checkout/sessions/create
+     */
     protected function _createSession($sType, $aParams, &$aClient, &$aCartInfo)
     {
-        $fAmount = 100 * (float)$aCartInfo['items_price'];
+        $iAmountPrecision = 2;
+        $fAmount = 100 * round((float)$aCartInfo['items_price'], $iAmountPrecision);
 
+        $sMode = '';
         $aLineItems = array();
-        foreach($aCartInfo['items'] as $aItem) {
-            $aLineItems[] = array(
-                'price' => $aItem['name'],
-                'quantity' => $aItem['quantity'],
-            );
+
+        switch($sType) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $sMode = 'payment';
+
+                foreach($aCartInfo['items'] as $aItem) {
+                    $aLineItems[] = array(
+                        'price_data' => array(
+                            'currency' => $aCartInfo['vendor_currency_code'],
+                            'product_data' => array(
+                                'name' => $aItem['title'],
+                                'description' => bx_process_output(strip_tags($aItem['description']), BX_DATA_TEXT_MULTILINE, array('no_process_macros')),
+                            ),
+                            'unit_amount' => 100 * round($this->_oModule->_oConfig->getPrice($sType, $aItem), $iAmountPrecision),
+                        ),
+                        'quantity' => $aItem['quantity'],
+                    );
+                }
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                $sMode = 'subscription';
+
+                foreach($aCartInfo['items'] as $aItem) {
+                    $aLineItems[] = array(
+                        'price' => $aItem['name'],
+                        'quantity' => $aItem['quantity'],
+                    );
+                }
+                break;
         }
 
         $oSession = null;
@@ -247,7 +277,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'payment_method_types' => ['card'],
             'customer_email' => !empty($aClient['email']) ? $aClient['email'] : '',
             'line_items' => $aLineItems,
-            'mode' => '',
+            'mode' => $sMode,
             'success_url' => $aParams['success_url'],
             'cancel_url' => $aParams['cancel_url'],
             'metadata' => array(
@@ -256,16 +286,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
             )
         );
-
-        switch($sType) {
-            case BX_PAYMENT_TYPE_SINGLE:
-                $aSession['mode'] = 'payment';
-                break;
-            
-            case BX_PAYMENT_TYPE_RECURRING:
-                $aSession['mode'] = 'subscription';
-                break;
-        }
 
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_session', 0, false, array(
             'session_object' => &$oSession, 
