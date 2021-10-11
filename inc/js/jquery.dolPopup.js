@@ -786,7 +786,7 @@
             
             if (o.pointer != false) {                
                 
-                var yOffset = 3;
+                var yOffset = 8;
                 var ePointAt = typeof o.pointer.el == 'string' ? $(o.pointer.el) : o.pointer.el;
                 if (!ePointAt)
                     ePointAt = $('body');

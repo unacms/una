@@ -18,6 +18,15 @@ class BxArtificerModule extends BxBaseModTemplateModule
         parent::__construct($aModule);
     }
 
+    public function processReplacements($s)
+    {
+        $a = $this->_oConfig->getReplacements();
+        if(empty($a))
+            return $s;
+
+        return str_replace(array_keys($a), array_values($a), $s);
+    }
+
     public function serviceGetSafeServices()
     {
         return array_merge(parent::serviceGetSafeServices(), [

@@ -7,6 +7,9 @@ module.exports = {
         './data/template/**/*.html',
     ],
     safelist: [
+        'w-8', 'w-10', 'w-24', 'w-48', 
+        'h-8', 'h-10', 'h-24', 'h-48',
+        '-m-2',
         'text-red-400', 
         'bx-form-required', 'bx-form-warn',
         'bx-popup-fog',

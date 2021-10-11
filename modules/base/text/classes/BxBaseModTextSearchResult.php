@@ -28,7 +28,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 		$this->addContainerClass ('bx-def-margin-bottom-neg');
         if ('unit_gallery.html' == $this->sUnitTemplate){
 			$this->removeContainerClass ('bx-def-margin-bottom-neg');		
-            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper bx-def-margin-sec-bottom-neg'));
+            $this->addContainerClass (array('bx-base-text-unit-gallery-wrapper', 'bx-def-margin-sec-neg'));
 		}
 		if ('unit_showcase.html' == $this->sUnitTemplate){
 			$this->bShowcaseView = true;

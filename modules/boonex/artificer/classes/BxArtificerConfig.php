@@ -13,6 +13,8 @@ bx_import('BxBaseModTemplateConfig');
 
 class BxArtificerConfig extends BxBaseModTemplateConfig
 {
+    protected $_aReplacements;
+
     protected $_sThumbSizeDefault;
     protected $_aThumbSizes;
     protected $_aThumbSizeByTemplate;
@@ -25,6 +27,10 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
             'option' => 'bx_artificer_'
         ];
 
+        $this->_aReplacements = [
+            'bx-def-margin-sec-neg' => '-m-2',
+        ];
+                
         $this->_sThumbSizeDefault = 'thumb';
         $this->_aThumbSizes = [
             'icon' => 'h-8 w-8',
@@ -35,6 +41,13 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
         $this->_aThumbSizeByTemplate = [
             'unit_with_cover.html' => 'h-24 w-24' //--- 'ava' size
         ];
+        
+        
+    }
+
+    public function getReplacements()
+    {
+        return $this->_aReplacements;
     }
 
     public function getThumbSize($sName = '', $sTemplate = '')
