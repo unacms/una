@@ -42,6 +42,8 @@ class BxBaseVoteReactionsMenuDo extends BxTemplMenu
             if($sName == $sDefault)
                 continue;
 
+            $sEmoji = $this->_oObject->getEmoji($sName);
+            
             $aMenuItems[] = array(
                 'id' => $sName, 
                 'name' => $sName, 
@@ -50,7 +52,7 @@ class BxBaseVoteReactionsMenuDo extends BxTemplMenu
                 'onclick' => 'javascript:' . $this->_oObject->getJsClickDo($sName, $this->_iValue), 
                 'target' => '_self', 
                 'title' => _t($aReaction['title']), 
-                'icon' => $this->_oObject->getIcon($sName), 
+                'icon' => $sEmoji != '' ? $sEmoji : $this->_oObject->getIcon($sName), 
                 'active' => 1
             );
         }

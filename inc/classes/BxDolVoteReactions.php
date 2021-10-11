@@ -53,6 +53,7 @@ class BxDolVoteReactions extends BxTemplVote
                 'title' => $aReaction['LKey'],
                 'title_aux' => $aReaction['LKey2'],
                 'icon' => isset($aData['icon']) ? $aData['icon'] : '',
+                'emoji' => isset($aData['emoji']) ? $aData['emoji'] : '',
                 'color' => isset($aData['color']) ? $aData['color'] : '',
                 'weight' => isset($aData['weight']) ? $aData['weight'] : 1,
             );
@@ -99,6 +100,13 @@ class BxDolVoteReactions extends BxTemplVote
         $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
 
     	return $aReaction['icon'] . ($bWithColor && !empty($aReaction['color']) ? ' ' . $aReaction['color'] : '');
+    }
+    
+    public function getEmoji($sReaction, $bWithColor = true)
+    {
+        $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
+
+    	return $aReaction['emoji'];
     }
 
     /**
@@ -197,6 +205,7 @@ class BxDolVoteReactions extends BxTemplVote
             'count' => $iCount,
             'countf' => $iCount > 0 ? $this->_getCounterLabel($iCount, array('reaction' => $sReaction)) : '',
             'label_icon' => $this->_getIconDoWithTrack($bVoted, $aTrack),
+            'label_emoji' => $this->_getEmojiDoWithTrack($bVoted, $aTrack),
             'label_title' => _t($this->_getTitleDoWithTrack($bVoted, $aTrack)),
             'label_click' => $sJsClick,
             'disabled' => $bVoted && !$this->isUndo(),
@@ -215,6 +224,13 @@ class BxDolVoteReactions extends BxTemplVote
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
     	return $this->getIcon($sReaction);
+    }
+    
+    protected function _getEmojiDoWithTrack($bVoted, $aTrack = array())
+    {
+        $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
+
+    	return $this->getEmoji($sReaction);
     }
 
     protected function _getTitleDoWithTrack($bVoted, $aTrack = array())

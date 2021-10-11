@@ -83,8 +83,11 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
     //--- Update Do button.
     oLink.each(function() {
         if(oData && oData.label_icon)
-            $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
-
+            $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon).html('');
+        if(oData && oData.label_emoji){
+            $(this).find('.sys-action-do-icon .sys-icon').html(oData.label_emoji).attr('class', 'sys-icon ');
+        }
+        
         if(oData && oData.label_title) {
             $(this).attr('title', oData.label_title);
             $(this).find('.sys-action-do-text').html(oData.label_title);
