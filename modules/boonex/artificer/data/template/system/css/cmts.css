@@ -24,6 +24,9 @@ div.cmt-reply.cmt-reply-min div.cmt-body {
     height: 1.25rem;
     text-align: center;
 }
+.bx-menu-object-sys_cmts_item_actions li{
+    min-width: 40px;
+}
 .bx-menu-object-sys_cmts_item_manage A{
     width:100%;
     display: block;
