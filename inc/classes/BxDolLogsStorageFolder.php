@@ -75,7 +75,7 @@ class BxDolLogsStorageFolder extends BxDolFactory implements iBxDolSingleton
         else
             $s .= 'EMPTY';
 
-        $s .= ' ' . trim(is_array($mixed) ? print_r($mixed) : $mixed);
+        $s .= ' ' . trim(is_array($mixed) ? print_r($mixed, true) : $mixed);
 
         $s .= "\n";
 
