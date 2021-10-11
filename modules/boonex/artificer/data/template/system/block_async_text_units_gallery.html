@@ -1,0 +1,20 @@
+<div class="bx-cont-ph-profile-unit relative flex">
+    <div class="bx-base-text-unit bx-base-text-unit-gallery w-1/3">
+        <div class="bx-base-text-unit-cnt m-2 ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm overflow-hidden">
+            <div class="bx-base-text-unit-thumb bx-cont-ph h-48 rounded-t-md">&nbsp;</div>
+            <div class="bx-base-text-unit-text px-4 py-2 box-border">
+                <div class="bx-base-text-unit-title bx-cont-ph relative w-3/4 mb-1 leading-7">&nbsp;</div>
+                <div class="bx-base-text-unit-info bx-cont-ph w-28">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var iBlockID = '__id__';
+    var sTmpl = $('#bx-page-block-' + iBlockID + ' .bx-cont-ph-profile-unit').html();
+    $('#bx-page-block-' + iBlockID + ' .bx-cont-ph-profile-unit').append(sTmpl + sTmpl);
+    $(document).ready(function () {
+        getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(document.location.href, 'dynamic=tab&pageBlock=' + iBlockID), undefined, 'post', false, {includedCss: JSON.stringify(aIncludedCss), includedJs: JSON.stringify(aIncludedJs)}, false);
+    });
+</script>

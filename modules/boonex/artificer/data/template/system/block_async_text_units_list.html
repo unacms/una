@@ -1,0 +1,27 @@
+<div class="bx-base-text-units">
+    <div class="bx-base-text-unit bx-base-text-unit-ext mb-4 ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm overflow-hidden">
+        <div class="bx-base-text-unit-cover bx-base-text-unit-cover bx-cont-ph h-72 rounded-t-md"></div>
+        <div class="bx-base-text-unit-text p-4 box-border">
+            <div class="bx-base-text-unit-title bx-cont-ph-inline relative w-3/4 mb-2 leading-7">&nbsp;</div>           
+            <div class="bx-base-text-unit-info mb-2 leading-3">
+                <ul id="bx-posts-snippet-meta">
+                    <li class="bx-menu-item bx-menu-item-date bx-cont-ph w-40">&nbsp;</li>
+                </ul>
+            </div>
+            <div class="bx-base-text-unit-summary">
+                <div class="bx-cont-ph mb-1">&nbsp;</div>
+                <div class="bx-cont-ph mb-1">&nbsp;</div>
+                <div class="bx-cont-ph mb-1">&nbsp;</div>
+                <div class="bx-cont-ph mb-1">&nbsp;</div>
+            </div> 
+        </div>
+    </div>
+</div>
+<script>
+    var iBlockID = '__id__';
+    var sTmpl = $('#bx-page-block-' + iBlockID + ' .bx-base-text-units').html();
+    $('#bx-page-block-' + iBlockID + ' .bx-base-text-units').append(sTmpl + sTmpl);
+    $(document).ready(function () {
+        getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(document.location.href, 'dynamic=tab&pageBlock=' + iBlockID), undefined, 'post', false, {includedCss: JSON.stringify(aIncludedCss), includedJs: JSON.stringify(aIncludedJs)}, false);
+    });
+</script>
