@@ -39,6 +39,9 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
 
     public function getThumbSize($sName = '', $sTemplate = '')
     {
+        if (empty($sName))
+            $sName = 'thumb';
+        
         if(!empty($sName) && isset($this->_aThumbSizes[$sName]))
             return $this->_aThumbSizes[$sName];
 
