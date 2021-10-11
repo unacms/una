@@ -36,4 +36,5 @@
     <string name="_bx_artificer_txt_splash_login_title"><![CDATA[Log in to your account]]></string>
     <string name="_bx_artificer_txt_splash_login_join"><![CDATA[Create New Account]]></string>
     <string name="_bx_artificer_txt_splash_login_agreement"><![CDATA[By logging in, you agree to our <a href="{0}" class="font-medium text-gray-900 dark:text-white hover:underline">Terms of use</a> and <a href="{1}" class="dark:text-white font-medium text-gray-900 hover:underline">Privacy policy</a>.]]></string>
+    
 </resources>

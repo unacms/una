@@ -12,9 +12,32 @@
  */
 class BxTemplPageHome extends BxBasePageHome
 {
-    public function __construct($aObject, $oTemplate = false)
+    public function __construct($aObject, $oTemplate)
     {
         parent::__construct($aObject, $oTemplate);
+        $this->addMarkers(array('site_title' => getParam('site_title')));
+
+        $aCover = $this->getPageCoverImage();
+
+        $bTmplVarsCover = !empty($aCover['id']);
+        $aTmplVarsCover = $bTmplVarsCover ? array('image_url' => BxDolTranscoder::getObjectInstance($aCover['transcoder'])->getFileUrlById($aCover['id'])) : array();
+
+        BxDolCover::getInstance()->set(array(
+            'class' => 'bx-cover-homepage',
+            'title' => _t('_sys_txt_homepage_cover', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')),
+            'link_join' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'),
+            'link_login' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login'),
+            'bx_if:bg' => array (
+                'condition' => $bTmplVarsCover,
+                'content' => $aTmplVarsCover,
+            ),
+        ), 'cover_home.html');
+        
+        $sSelName = 'home';
+        if(bx_get('i') !== false)
+            $sSelName = bx_process_input(bx_get('i'));
+
+        BxDolMenu::setSelectedGlobal('system', $sSelName);
     }
 }
 
