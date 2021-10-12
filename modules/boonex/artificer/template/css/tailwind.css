@@ -35,7 +35,7 @@
     
     .bx-btn i, 
     .bx-btn img {
-        @apply w-5 h-5 text-gray-600 dark:text-gray-300;
+        @apply w-5 h-5 leading-5 text-gray-600 dark:text-gray-300;
     }
     
     .bx-btn:hover i, 
