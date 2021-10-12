@@ -246,13 +246,16 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $sMode = 'payment';
 
                 foreach($aCartInfo['items'] as $aItem) {
+                    $aProductData = array(
+                        'name' => $aItem['title']
+                    );
+                    if(!empty($aItem['description']))
+                        $aProductData['description'] = strmaxtextlen(strip_tags($aItem['description']), 60, '...');
+
                     $aLineItems[] = array(
                         'price_data' => array(
                             'currency' => $aCartInfo['vendor_currency_code'],
-                            'product_data' => array(
-                                'name' => $aItem['title'],
-                                'description' => bx_process_output(strip_tags($aItem['description']), BX_DATA_TEXT_MULTILINE, array('no_process_macros')),
-                            ),
+                            'product_data' => $aProductData,
                             'unit_amount' => 100 * round($this->_oModule->_oConfig->getPrice($sType, $aItem), $iAmountPrecision),
                         ),
                         'quantity' => $aItem['quantity'],
