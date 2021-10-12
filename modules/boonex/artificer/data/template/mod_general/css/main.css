@@ -97,3 +97,8 @@ div.bx-badge.bx-badge-compact img{
     width: 1.25rem;
     align-items: center;
     justify-content: center;
+}
+.sys-action-counter-holder .bx-view-counter-label {
+    padding: 0px;
+    
+}
