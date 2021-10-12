@@ -24,7 +24,7 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
 
     public function getUnitMetaItemLink($sContent, $aAttrs = array())
     {
-        return $this->getUnitMetaItem('a', $sContent, $aAttrs);
+        return $this->_getUnitMetaItemButtonOrLink($sContent, 'a', $aAttrs);
     }
 
     public function getUnitMetaItemText($sContent, $aAttrs = array())
@@ -34,12 +34,12 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
 
     public function getUnitMetaItemButton($sContent, $aAttrs = array())
     {
-        return $this->getUnitMetaItem('button', $sContent, $aAttrs);
+        return $this->_getUnitMetaItemButtonOrLink($sContent, 'button', $aAttrs);
     }
 
     public function getUnitMetaItemButtonSmall($sContent, $aAttrs = array())
     {
-        return $this->getUnitMetaItem('sbutton', $sContent, $aAttrs);
+        return $this->_getUnitMetaItemButtonOrLink($sContent, 'sbutton', $aAttrs);
     }
 
     public function getUnitMetaItemNl($sContent = '')
@@ -114,6 +114,14 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
             $sResult = $this->getUnitMetaItemText($aItem['title']);
         
         return $sResult;
+    }
+    
+    protected function _getUnitMetaItemButtonOrLink($sContent, $sName, $aAttrs = array())
+    {
+        if (!isset($aAttrs['href']))
+            $aAttrs['href'] = 'javascript:';
+        
+        return $this->getUnitMetaItem($sName, $sContent, $aAttrs);
     }
 }
 
