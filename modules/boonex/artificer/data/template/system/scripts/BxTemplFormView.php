@@ -20,6 +20,9 @@ class BxTemplFormView extends BxBaseFormView
 
         if(in_array($aInput['type'], ['password']))
             $this->_genWrapperInputAttrsPassword($aAttrs);
+        
+        if(in_array($aInput['type'], ['checkbox_set', 'radio_set', 'input_set']))
+            $this->_genWrapperInputAttrsSet($aAttrs);
 
         return $aAttrs;
     }
@@ -30,6 +33,16 @@ class BxTemplFormView extends BxBaseFormView
             $aAttrs['class'] = '';
 
         $aAttrs['class'] .= 'relative block w-full py-2 pl-3 pr-8 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300';
+
+        return $aAttrs;
+    }
+    
+    protected function _genWrapperInputAttrsSet(&$aAttrs)
+    {
+        if(!isset($aAttrs['class']))
+            $aAttrs['class'] = '';
+
+        $aAttrs['class'] .= 'bx-form-input-wrapper-set relative block w-full py-2 pl-3 pr-8 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400  dark:focus:text-gray-100 text-sm text-gray-700 dark:text-gray-300';
 
         return $aAttrs;
     }

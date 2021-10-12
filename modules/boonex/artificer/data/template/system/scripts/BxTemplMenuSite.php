@@ -16,6 +16,8 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
     protected $_oModule;
 
     protected $_bSiteMenu;
+    
+    protected $_aHideFromSiteMenu;
 
     public function __construct ($aObject, $oTemplate = false)
     {
@@ -23,6 +25,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
 
         $this->_sModule = 'bx_artificer';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
+        $this->_aHideFromSiteMenu = ['search'];
 
         $this->_sJsClassMoreAuto = 'BxArtificerMenuMoreAuto';
 
@@ -47,6 +50,15 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
             'style' => $sStyle,
             'content' => parent::getCode()
         ));
+    }
+    
+    protected function _getMenuItem ($a)
+    {
+    	//--- Hide '[Search]' from Site Menu
+        if( $this->_bSiteMenu && in_array($a['name'], $this->_aHideFromSiteMenu))
+            return false;
+        
+        return parent::_getMenuItem ($a);
     }
 }
 
