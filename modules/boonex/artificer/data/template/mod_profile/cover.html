@@ -13,9 +13,9 @@
                 </div>
             </div>
             <div class="bx-base-pofile-cover-info bx-def-page-width relative mx-auto px-6 lg:px-8">
-                <div class="bx-base-pofile-ci-cnt relative flex flex-col -mt-24 lg:-mt-16 lg:flex-row lg:items-center lg:space-x-6">
+                <div class="bx-base-pofile-ci-cnt relative flex flex-col -mt-24 lg:-mt-16 lg:flex-row lg:items-center">
                     <bx_if:show_avatar>
-                        <div class="bx-base-pofile-cover-thumb flex justify-center lg:flex-none">
+                        <div class="bx-base-pofile-cover-thumb lg:absolute flex justify-center lg:flex-none">
                             <a class="bx-base-pofile-cover-thumb" href="__picture_href__" onclick="$('#__picture_popup_id__').dolPopupImage('__picture_url__', $(this).parent()); event.stopPropagation();">
                                 <bx_if:show_ava_image>
                                     <img class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size rounded-full ring-4 mx-auto ring-white dark:ring-gray-900 h-48 w-48" src="__ava_url__" />
@@ -30,10 +30,10 @@
                         </div>
                     </bx_if:show_avatar>
                     <bx_if:show_avatar_placeholder>
-                        <div class="bx-base-pofile-cover-thumb-placeholder h-24 lg:h-36"></div>
+                        <div class="bx-base-pofile-cover-thumb-placeholder absolute h-48 lg:flex-none"></div>
                     </bx_if:show_avatar_placeholder>
-                    <div class="bx-base-pofile-cover-user relative flex flex-col lg:flex-row lg:flex-1 lg:items-start lg:justify-end lg:space-x-6 mt-6 sm:pb-1">
-                        <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 lg:mt-14 mb-2">
+                    <div class="bx-base-pofile-cover-user relative flex flex-col lg:flex-row lg:items-start lg:justify-end mt-6 sm:pb-1 lg:w-full lg:pl-52 box-border">
+                        <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 lg:mt-14 lg:mr-12 mb-2">
                             <h1 class="bx-def-unit-info text-gray-900 dark:text-gray-50 text-center lg:text-left text-4xl leading-14 font-bold truncate">__title__ </h1>
                             <div class="bx-base-profile-cover-meta-holder mt-2 lg:h-8">
                                 <div class="bx-base-profile-cover-meta lg:absolute flex flex-row flex-wrap justify-center lg:justify-start text-sm">__meta__</div>
