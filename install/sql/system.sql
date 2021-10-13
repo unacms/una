@@ -37,7 +37,8 @@ CREATE TABLE `sys_objects_editor` (
 
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
-('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', '');
+('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', ''),
+('sys_quill', 'Quill', 'snow', 'BxTemplEditorQuill', '');
 
 
 -- --------------------------------------------------------
@@ -340,7 +341,13 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_logs_storage_default', '_adm_stg_cpt_option_sys_logs_storage_default', 'Folder', 'select', 'Folder,PHPLog,STDErr', '', '', '', 130),
 
 (@iCategoryId, 'sys_default_curl_timeout', '_adm_stg_cpt_option_sys_default_curl_timeout', '300', 'digit', '', '', '', '', 140),
-(@iCategoryId, 'curl_ssl_allow_untrusted', '_adm_stg_cpt_option_sys_ssl_allow_untrusted', '', 'checkbox', '', '', '', '', 145);
+(@iCategoryId, 'curl_ssl_allow_untrusted', '_adm_stg_cpt_option_sys_ssl_allow_untrusted', '', 'checkbox', '', '', '', '', 145),
+
+(@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 150),
+(@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 153),
+(@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{ \'font\': [] }],[\'bold\',\'italic\',\'underline\',\'clean\'],
+  [{ \'align\': [] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[\'blockquote\'],[{ \'color\': [] }, { \'background\': [] }],[{ \'direction\': \'rtl\' }],[{ \'script\': \'sub\'}, { \'script\': \'super\' }],[\'link\',\'image\',\'code-block\']', 'digit', '', '', '', '', 156);
+
 
 --
 -- CATEGORY (HIDDEN): System
