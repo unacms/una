@@ -75,13 +75,17 @@
 
 
     /* Common elements: Forms */
+    form {
+        @apply text-sm font-normal text-gray-700 dark:text-gray-300;
+    }
+
+    form a {
+        @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+
     .bx-form-required,
     .bx-form-warn {
         @apply text-red-400;
-    }
-
-    form .bx-form-element a {
-        @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
 
 

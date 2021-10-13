@@ -494,6 +494,24 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'sClientEmail' => $sClientEmail,
         ), $aParams)), $sJsMethod);
     }
+
+    protected function _processException($sMessage, &$oException)
+    {
+        if(method_exists($oException, 'getError')) {
+            $sError = $oException->getError()->message;
+            $aError = $oException->getError()->toArray();
+        }
+        else { 
+            $sError = $oException->getMessage();
+            $aError = array();
+        }
+
+        $this->log($sMessage . $sError);
+        if(!empty($aError))
+            $this->log($aError);
+
+        return false;
+    }
 }
 
 /** @} */

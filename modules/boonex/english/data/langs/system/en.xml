@@ -3368,19 +3368,21 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Token expired. Please try again.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Unity is strength... when there is teamwork and collaboration, wonderful things can be achieved.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Join Now!</button>]]></string>
-	<string name="_sys_txt_login_2fa_description"><![CDATA[Two-factor authentication is enabled, please specify the phone number to send verification code to.]]></string>
+    <string name="_sys_txt_login_2fa_description"><![CDATA[Two-factor authentication is enabled, please specify the phone number to send verification code to.]]></string>
 	
-	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Your verification code is {0}.]]></string>
-	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[An error occurred, please report error to the site administrator.]]></string>
-    <string name="_sys_txt_join_description"><![CDATA[Already a member? <a href="{0}">Log in.</a>]]></string>
-	<string name="_sys_txt_login_description"><![CDATA[Not a member yet? <a href="{0}">Sign up.</a>]]></string>
-	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
-  <string name="_sys_txt_login_locked"><![CDATA[Your account is locked and needs to be unlocked using <a href="{0}">forgot password page</a>.]]></string>
+    <string name="_sys_txt_login_2fa_sms_text"><![CDATA[Your verification code is {0}.]]></string>
+    <string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[An error occurred, please report error to the site administrator.]]></string>
+    <string name="_sys_txt_join_description_question"><![CDATA[Already a member?]]></string>
+    <string name="_sys_txt_join_description_action"><![CDATA[Log in.]]></string>
+    <string name="_sys_txt_login_description_question"><![CDATA[Not a member yet?]]></string>
+    <string name="_sys_txt_login_description_action"><![CDATA[Sign up.]]></string>
+    <string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
+    <string name="_sys_txt_login_locked"><![CDATA[Your account is locked and needs to be unlocked using <a href="{0}">forgot password page</a>.]]></string>
   
     <string name="_sys_txt_following_counter"><![CDATA[Following: {0}]]></string>
     <string name="_sys_txt_followers_counter"><![CDATA[Followers: {0}]]></string>
     <string name="_sys_txt_friends_counter"><![CDATA[Friends: {0}]]></string>
-	<string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
+    <string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Create a new profile]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[New Picture]]></string>
     <string name="_sys_txt_not_found"><![CDATA[Not found]]></string>
