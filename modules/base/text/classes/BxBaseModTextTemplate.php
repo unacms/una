@@ -510,7 +510,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                'content_id' => $aData[$CNF['FIELD_ID']],
                'uploader' => $CNF['OBJECT_UPLOADERS'][0],
                'storage' => $CNF['OBJECT_STORAGE'],
-               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
+               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
                'field' => $CNF['FIELD_THUMB'],
                'is_background' => false,
                'add_class' => &$sAddClassPicture,
