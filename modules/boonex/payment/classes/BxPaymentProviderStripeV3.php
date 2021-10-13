@@ -275,6 +275,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         $sMode = '';
         $aLineItems = array();
+        $aMetaItems = array();
 
         switch($sType) {
             case BX_PAYMENT_TYPE_SINGLE:
@@ -295,6 +296,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         ),
                         'quantity' => $aItem['quantity'],
                     );
+
+                    $aMetaItems[] = array('m' => $aItem['module_id'], 'i' => $aItem['id']);
                 }
                 break;
 
@@ -306,6 +309,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'price' => $aItem['name'],
                         'quantity' => $aItem['quantity'],
                     );
+
+                    $aMetaItems[] = array('m' => $aItem['module_id'], 'i' => $aItem['id']);
                 }
                 break;
         }
@@ -321,6 +326,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'metadata' => array(
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
+                'type' => $sType, 
+                'items' => serialize($aMetaItems),
                 'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
             )
         );
@@ -332,7 +339,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         try {
             if(empty($oSession))
-                $oSession = \Stripe\Checkout\Session::create($aSession);
+                $oSession = $this->_getStripe()->checkout->sessions->create($aSession);
         }
         catch (Exception $oException) {
             return $this->_processException('Create Session Error: ', $oException);
