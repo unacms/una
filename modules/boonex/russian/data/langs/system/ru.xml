@@ -1588,7 +1588,8 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Задействовать уменьшение для файлов JS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
 	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
-	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[Таймаут для cURL по умолчанию]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - Таймаут по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - доверять неподписанным сертификатам или неподтвержденным хостам]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
