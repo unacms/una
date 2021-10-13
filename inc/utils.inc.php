@@ -907,6 +907,11 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_CONNECTTIMEOUT, $iTimeout);
             curl_setopt($rConnect, CURLOPT_TIMEOUT, $iTimeout);
         }
+        
+        if(getParam('curl_ssl_allow_untrusted') == 'on'){
+            curl_setopt($rConnect, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($rConnect, CURLOPT_SSL_VERIFYHOST, false);
+        }
 
         if (!ini_get('open_basedir'))
             curl_setopt($rConnect, CURLOPT_FOLLOWLOCATION, 1);
