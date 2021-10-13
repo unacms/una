@@ -339,7 +339,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                'content_id' => $aData[$CNF['FIELD_ID']],
                'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
                'storage' => $CNF['OBJECT_STORAGE'],
-               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'],
+               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'],
                'field' => $CNF['FIELD_PICTURE'],
                'is_background' => false,
                'add_class' => &$sAddClassPicture,
@@ -369,19 +369,18 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $aShowAvatar = array(
                 'add_class' => $sAddClassPicture,
+                'letter' => mb_substr($sTitle, 0, 1),
+                'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
+                'ava_url' => $sUrlAvatar,
+                'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
+                
                 'bx_if:show_ava_image' => array(
                     'condition' => $bUrlAvatar,
-                    'content' => array(
-                        'ava_url' => $sUrlAvatar,
-                        'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
-                    )
+                    'content' => array()
                 ),
                 'bx_if:show_ava_letter' => array(
                     'condition' => !$bUrlAvatar,
-                    'content' => array(
-                        'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
-                        'letter' => mb_substr($sTitle, 0, 1)
-                    )
+                    'content' => array()
                 ),
                 'bx_if:show_online' => array(
                     'condition' => $oProfile->isOnline(),
