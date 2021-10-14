@@ -1295,12 +1295,20 @@ BxDolDb::getInstance();
 
 function getParam($sParamName, $bUseCache = true)
 {
-    return BxDolDb::getInstance()->getParam($sParamName, $bUseCache);
+    $oObj = BxDolDb::getInstance();
+    if ($oObj === null)
+        return false;
+       
+     return $oObj->getParam($sParamName, $bUseCache);
 }
 
 function setParam($sParamName, $sParamVal)
 {
-    return BxDolDb::getInstance()->setParam($sParamName, $sParamVal);
+    $oObj = BxDolDb::getInstance();
+    if ($oObj === null)
+        return false;
+    
+    return $oObj->setParam($sParamName, $sParamVal);
 }
 
 /** @} */
