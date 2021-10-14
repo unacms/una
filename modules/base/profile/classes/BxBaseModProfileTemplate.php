@@ -298,9 +298,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             if(!empty($aCover))
                 $sUrlCover = BxDolCover::getCoverImageUrl($aCover);
         }
-
-        if(!$sUrlCover)
+        $bUrlCover = true;
+        if(!$sUrlCover){
             $sUrlCover = $this->getImageUrl('cover.svg');
+            $bUrlCover = false;
+        }
 		else
 			BxDolTemplate::getInstance()->addPageMetaImage($sUrlCover);
         
@@ -429,6 +431,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             ),
             'bx_if:show_avatar_placeholder' => array(
                 'condition' => !$bShowAvatar,
+                'content' => array()
+            ),
+            'bx_if:show_cover' => array(
+                'condition' => $bUrlCover,
+                'content' => $aShowAvatar
+            ),
+            'bx_if:show_cover_placeholder' => array(
+                'condition' => !$bUrlCover,
                 'content' => array()
             ),
             'picture_popup' => $sPicturePopup,
