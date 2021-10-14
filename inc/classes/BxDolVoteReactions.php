@@ -45,8 +45,12 @@ class BxDolVoteReactions extends BxTemplVote
 
         $aReactions = BxDolFormQuery::getDataItems($this->_sDataList, false, BX_DATA_VALUES_ALL);
 
+        $sDefault = '';
         foreach($aReactions as $sReaction => $aReaction) {
             $aData = !empty($aReaction['Data']) ? unserialize($aReaction['Data']) : array();
+
+            if(!empty($aData['default']))
+                $sDefault = $sReaction;
 
             $this->_aDataList[$sReaction] = array(
                 'name' => $sReaction,
@@ -56,13 +60,17 @@ class BxDolVoteReactions extends BxTemplVote
                 'emoji' => isset($aData['emoji']) ? $aData['emoji'] : '',
                 'color' => isset($aData['color']) ? $aData['color'] : '',
                 'weight' => isset($aData['weight']) ? $aData['weight'] : 1,
+                'default' => isset($aData['default']) ? $aData['default'] : '',
             );
         }
 
-        if(!empty($this->_aDataList)) {
-            $this->_aDataList[$this->_sDefault] = reset($this->_aDataList);
-            $this->_aDataList[$this->_sDefault]['color'] = '';
-        }
+        if(empty($sDefault) && !empty($this->_aDataList))
+            $sDefault = current(array_keys($this->_aDataList));
+
+        $this->_aDataList[$this->_sDefault] = $this->_aDataList[$sDefault];
+        $this->_aDataList[$this->_sDefault]['icon'] = $this->_aDataList[$sDefault]['default'];
+        $this->_aDataList[$this->_sDefault]['emoji'] = '';
+        $this->_aDataList[$this->_sDefault]['color'] = '';
     }
     /**
      * Interface functions for outer usage

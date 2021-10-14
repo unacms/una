@@ -37,8 +37,7 @@ CREATE TABLE `sys_objects_editor` (
 
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
-('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', ''),
-('sys_quill', 'Quill', 'snow', 'BxTemplEditorQuill', '');
+('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', '');
 
 
 -- --------------------------------------------------------
@@ -340,14 +339,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_logs_storage_default', '_adm_stg_cpt_option_sys_logs_storage_default', 'Folder', 'select', 'Folder,PHPLog,STDErr', '', '', '', 130),
 
-(@iCategoryId, 'sys_default_curl_timeout', '_adm_stg_cpt_option_sys_default_curl_timeout', '300', 'digit', '', '', '', '', 140),
-(@iCategoryId, 'curl_ssl_allow_untrusted', '_adm_stg_cpt_option_sys_ssl_allow_untrusted', '', 'checkbox', '', '', '', '', 145),
-
-(@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 150),
-(@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 153),
-(@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{ \'font\': [] }],[\'bold\',\'italic\',\'underline\',\'clean\'],
-  [{ \'align\': [] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[\'blockquote\'],[{ \'color\': [] }, { \'background\': [] }],[{ \'direction\': \'rtl\' }],[{ \'script\': \'sub\'}, { \'script\': \'super\' }],[\'link\',\'image\',\'code-block\']', 'digit', '', '', '', '', 156);
-
+(@iCategoryId, 'sys_default_curl_timeout', '_adm_stg_cpt_option_sys_default_curl_timeout', '300', 'digit', '', '', '', '', 140);
 
 --
 -- CATEGORY (HIDDEN): System
@@ -4006,12 +3998,12 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('sys_report_types', 'other', 5, '_sys_pre_lists_report_types_other', '');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
-('sys_vote_reactions', 'like', 1, '_sys_pre_lists_vote_reactions_like', '', 'a:3:{s:5:"emoji";s:4:"👍";s:5:"color";s:20:"sys-colored col-gray";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'love', 2, '_sys_pre_lists_vote_reactions_love', '', 'a:3:{s:5:"emoji";s:4:"💓";s:5:"color";s:20:"sys-colored col-red1";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'joy', 3, '_sys_pre_lists_vote_reactions_joy', '', 'a:3:{s:5:"emoji";s:4:"😆";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'surprise', 4, '_sys_pre_lists_vote_reactions_surprise', '', 'a:3:{s:5:"emoji";s:4:"😲";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'sadness', 5, '_sys_pre_lists_vote_reactions_sadness', '', 'a:3:{s:5:"emoji";s:4:"😥";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'anger', 6, '_sys_pre_lists_vote_reactions_anger', '', 'a:3:{s:5:"emoji";s:4:"😠";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}');
+('sys_vote_reactions', 'like', 1, '_sys_pre_lists_vote_reactions_like', '', 'a:5:{s:5:"emoji";s:4:"👍";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-gray";s:6:"weight";s:1:"1";s:7:"default";s:9:"thumbs-up";}'),
+('sys_vote_reactions', 'love', 2, '_sys_pre_lists_vote_reactions_love', '', 'a:4:{s:5:"emoji";s:4:"💓";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red1";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'joy', 3, '_sys_pre_lists_vote_reactions_joy', '', 'a:4:{s:5:"emoji";s:4:"😆";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'surprise', 4, '_sys_pre_lists_vote_reactions_surprise', '', 'a:4:{s:5:"emoji";s:4:"😲";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'sadness', 5, '_sys_pre_lists_vote_reactions_sadness', '', 'a:4:{s:5:"emoji";s:4:"😥";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'anger', 6, '_sys_pre_lists_vote_reactions_anger', '', 'a:4:{s:5:"emoji";s:4:"😠";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('sys_relations', '1', 1, '_sys_pre_lists_relations_husband', '', 'a:1:{i:0;s:1:"2";}'),
