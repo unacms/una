@@ -11,6 +11,7 @@ module.exports = {
         'h-8', 'h-10', 'h-24', 'h-48',
         '-m-2',
         'text-red-400', 
+        'bx-def-a-colored',
         'bx-form-required', 'bx-form-warn',
         'bx-popup-fog',
         'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',

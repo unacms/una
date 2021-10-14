@@ -25,6 +25,12 @@ import url(../../../../../../../template/css/general.css);
 }
 
 
+/*--- Author Info ---*/
+.sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li:first-child .bx-base-general-unit-meta-div {
+    display: none;
+}
+
+
 /* --- Content loader placeholder ---*/
 @-webkit-keyframes bxPlaceHolderShimmer {
   0% {

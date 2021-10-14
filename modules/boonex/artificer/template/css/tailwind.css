@@ -14,6 +14,10 @@
 
 @layer components {
     /* Defaults */
+    .bx-def-a-colored {
+        @apply no-underline text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+
     .bx-def-hr {
         @apply m-0 p-0 border-t border-gray-200 dark:border-gray-700;
     }
@@ -25,19 +29,19 @@
 
     /* Common elements: Buttons */
     .bx-btn {
-        @apply group relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+        @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md;
     }
 
     .bx-btn i, 
     .bx-btn u {
         @apply inline-block align-middle;
     }
-    
+
     .bx-btn i, 
     .bx-btn img {
         @apply w-5 h-5 leading-5 text-gray-600 dark:text-gray-300;
     }
-    
+
     .bx-btn:hover i, 
     .bx-btn:hover img {
         @apply text-gray-800 dark:text-gray-100;
@@ -46,7 +50,7 @@
     .bx-btn i {
         @apply text-center;
     }
-    
+
     .bx-btn u {
         @apply ml-2 first:ml-0 no-underline;
     }
@@ -71,6 +75,11 @@
 
     .bx-btn.bx-btn-small {
         @apply py-1 text-xs;
+    }
+
+    .bx-btn.bx-btn-small i, 
+    .bx-btn.bx-btn-small img {
+        @apply w-4 h-4 leading-4;
     }
 
 
