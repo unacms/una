@@ -92,7 +92,8 @@
         "recurly/recurly-client": "2.10.*",
         "stripe/stripe-php": "^7.95",
         "twilio/sdk": "^5.19",
-        "avto-dev/composer-cleanup-plugin": "dev-master"
+        "avto-dev/composer-cleanup-plugin": "dev-master",
+        "mpratt/embera": "~2.0"
     },
     "scripts": {
         "post-update-cmd": [
