@@ -1,0 +1,27 @@
+<div class="bx-messenger-right-column bx-form-input-autotoken bx-def-font-middle" id="bx-messenger-add-users">
+    <bx_repeat:participants_list>
+        <b class="bx-def-color-bg-hl bx-def-round-corners bx-def-font-middle">
+            <bx_if:avatars>
+                <img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="__thumb__">
+            </bx_if:avatars>
+            <bx_if:letters>
+                 <p class="bx-def-thumb bx-def-thumb-size bx-base-pofile-unit-thumb bx-def-ava bx-def-box-sizing" style="background-color:rgba(__color__)">__letter__</p>
+            </bx_if:letters>
+            <span>__name__</span>
+            <input type="hidden" name="users[]" value="__id__">
+        </b>
+    </bx_repeat:participants_list>
+    <!-- Semantic begin -->
+    <div class="ui search" style="float:left;">
+        <div class="ui input bx-def-font-middle">
+            <input class="prompt bx-def-font-inputs" type="text" placeholder="<bx_text:_bx_messenger_name_place_holder />" id="bx-messenger-add-users-input" autocomplete="off" autocapitalize="off" autocorrect="off">
+            <bx_if:edit_mode>
+                <a href="javascript:void(0);" onclick="oMessenger.onSaveParticipantsList(__lot__);" title="<bx_text:_bx_messenger_save_part_list />">
+                    <i class="sys-icon check-circle bx-def-font-large"></i>
+                </a>
+            </bx_if:edit_mode>
+        </div>
+        <div class="results bx-def-font-middle"></div>
+    </div>
+    <!-- Semantic end -->
+</div>
