@@ -26,3 +26,10 @@ div.bx-forum-participants.none .bx-forum-participant {
     float: none;
     margin-left: 0.75rem;
 }
+
+
+/*-- Grid: Preview --*/
+.bx-forum-grid-preview .bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li a {
+    display: -webkit-flex;
+    display: flex;
+}
