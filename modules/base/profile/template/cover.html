@@ -12,12 +12,8 @@
                     <bx_if:show_avatar>
                         <div class="bx-base-pofile-cover-thumb __add_class__">
                             <a class="bx-base-pofile-cover-thumb" href="__picture_href__" onclick="$('#__picture_popup_id__').dolPopupImage('__picture_url__', $(this).parent()); event.stopPropagation();">
-                                <bx_if:show_ava_image>
-                                    <img class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size __img_class__" src="__ava_url__" />
-                                </bx_if:show_ava_image>
-                                <bx_if:show_ava_letter>
-                                    <p class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size bx-def-border" style="background-color:rgba(__color__)">__letter__</p>
-                                </bx_if:show_ava_letter>
+                                <img class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size __img_class__" src="__ava_url__" <bx_if:show_ava_letter> style="display:none" </bx_if:show_ava_letter> />
+                                <p class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size bx-def-border" style="background-color:rgba(__color__);<bx_if:show_ava_image>display:none</bx_if:show_ava_image>">__letter__</p>
                             </a>
                             <bx_if:show_online>
                                 <div class="bx-base-pofile-unit-online"></div>

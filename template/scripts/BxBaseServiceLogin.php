@@ -161,41 +161,41 @@ class BxBaseServiceLogin extends BxDol
             elseif ('homepage' == $sForceRelocate)
                 $oForm->aInputs['relocate']['value'] = BX_DOL_URL_ROOT;
         }
-        
-        $sFormCode = '';
-        if (!(bool)getParam('sys_account_disable_login_form'))
-            $sFormCode = $oForm->getCode();
 
-        BxDolTemplate::getInstance()->addJs(array('jquery.form.min.js'));
-        
-        $sJoinText = '';
-        if (strpos($sParams, 'no_join_text') === false)
-            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
+        $aTmplVarsForm = [];
+        if(!(bool)getParam('sys_account_disable_login_form'))
+            $aTmplVarsForm['content'] = $oForm->getCode();
 
-        $sAuth = '';
-        if (strpos($sParams, 'no_auth_buttons') === false)
-            $sAuth = $this->serviceMemberAuthCode();
+        $aTmplVarsAuth = [];
+        if(strpos($sParams, 'no_auth_buttons') === false)
+            $aTmplVarsAuth['content'] = $this->serviceMemberAuthCode();
 
-        $sAjaxForm = '';
-        if (strpos($sParams, 'ajax_form') !== false)
-            $sAjaxForm = "<script>
-                (bx_login_init_ajax_form = function () {
-                    $('#sys-form-login').ajaxForm({
-                        dataType: 'json',
-                        success: function (oData) {
-                            if ('undefined' !== typeof(oData['res']) && 'OK' == oData['res']) {
-                                location.reload();
-                            }
-                            else if ('undefined' !== typeof(oData['form'])) {
-                                $('#sys-form-login').replaceWith(oData['form']);
-                                bx_login_init_ajax_form();
-                            }
-                        }
-                    });
-                })();
-            </script>";
-        
-        return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText . $sAjaxForm;
+        $aTmplVarsJoin = [];
+        if(strpos($sParams, 'no_join_text') === false)
+            $aTmplVarsJoin['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addJs(array('jquery.form.min.js'));        
+        return $oTemplate->parseHtmlByName('block_login.html', [
+            'custom_html_before' => $sCustomHtmlBefore,
+            'bx_if:show_auth' => [
+                'condition' => !empty($aTmplVarsAuth),
+                'content' => $aTmplVarsAuth
+            ],
+            'bx_if:show_form' => [
+                'condition' => !empty($aTmplVarsForm),
+                'content' => $aTmplVarsForm,
+            ],
+            'custom_html_after' => $sCustomHtmlAfter,
+            'bx_if:show_join' => [
+                'condition' => !empty($aTmplVarsJoin),
+                'content' => $aTmplVarsJoin
+            ],
+            'bx_if:show_js_code' => [
+                'condition' => strpos($sParams, 'ajax_form') !== false,
+                'content' => []
+            ]
+        ]);
 
     }
     

@@ -13,6 +13,8 @@ require_once('BxPaymentProviderStripeBasic.php');
 
 class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements iBxBaseModPaymentProvider
 {
+    protected $_oStripe;
+
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
@@ -20,6 +22,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         $this->_aIncludeJs = array(
             'stripe_v3.js'
         );
+
+        $this->_oStripe = null;
     }
 
     public function actionGetSessionRecurring()
@@ -230,6 +234,37 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         );
     }
 
+    protected function _getStripe()
+    {
+        if(empty($this->_oStripe))
+            $this->_oStripe = new \Stripe\StripeClient($this->_getSecretKey());
+
+        return $this->_oStripe;
+    }
+            
+    /*
+     * Related Docs: https://stripe.com/docs/api/customers/retrieve
+     */
+    protected function _retrieveCustomer($sType, $sId)
+    {
+        $oCustomer = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, array(
+            'type' => $sType,
+            'customer_id' => &$sId,
+            'customer_object' => &$oCustomer
+        ));
+
+        try {
+            if(empty($oCustomer))
+                $oCustomer = $this->_getStripe()->customers->retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Customer Error: ', $oException);
+        }
+
+        return $oCustomer;
+    }
+
     /*
      * Related Docs: https://stripe.com/docs/api/checkout/sessions/create
      */
@@ -240,6 +275,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         $sMode = '';
         $aLineItems = array();
+        $aMetaItems = array();
 
         switch($sType) {
             case BX_PAYMENT_TYPE_SINGLE:
@@ -260,6 +296,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         ),
                         'quantity' => $aItem['quantity'],
                     );
+
+                    $aMetaItems[] = array('m' => $aItem['module_id'], 'i' => $aItem['id']);
                 }
                 break;
 
@@ -271,6 +309,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'price' => $aItem['name'],
                         'quantity' => $aItem['quantity'],
                     );
+
+                    $aMetaItems[] = array('m' => $aItem['module_id'], 'i' => $aItem['id']);
                 }
                 break;
         }
@@ -286,6 +326,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'metadata' => array(
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
+                'type' => $sType, 
+                'items' => serialize($aMetaItems),
                 'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
             )
         );
@@ -297,7 +339,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         try {
             if(empty($oSession))
-                $oSession = \Stripe\Checkout\Session::create($aSession);
+                $oSession = $this->_getStripe()->checkout->sessions->create($aSession);
         }
         catch (Exception $oException) {
             return $this->_processException('Create Session Error: ', $oException);
@@ -344,6 +386,9 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         return $aResult;
     }
 
+    /*
+     * Related Docs: https://stripe.com/docs/api/checkout/sessions/retrieve
+     */
     protected function _retrieveSession($sId) {
         $oSession = null;
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_session', 0, false, array(
@@ -353,7 +398,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         try {
             if(empty($oSession))
-                $oSession = \Stripe\Checkout\Session::retrieve($sId);
+                $oSession = $this->_getStripe()->checkout->sessions->retrieve($sId);
         }
         catch (Exception $oException) {
             return $this->_processException('Retrieve Session Error: ', $oException);
@@ -362,6 +407,9 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         return $oSession;
     }
     
+    /*
+     * Related Docs: https://stripe.com/docs/api/payment_intents/retrieve
+     */
     protected function _retrievePaymentIntent($sId) {
         $oPaymentIntent = null;
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_payment_intent', 0, false, array(
@@ -371,13 +419,35 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         try {
             if(empty($oPaymentIntent))
-                $oPaymentIntent = \Stripe\PaymentIntent::retrieve($sId);
+                $oPaymentIntent = $this->_getStripe()->paymentIntents->retrieve($sId);
         }
         catch (Exception $oException) {
             return $this->_processException('Retrieve Payment Intent Error: ', $oException);
         }
 
         return $oPaymentIntent;
+    }
+    
+    /*
+     * Related Docs: https://stripe.com/docs/api/subscriptions/retrieve
+     */
+    protected function _retrieveSubscription($sCustomerId, $sSubscriptionId)
+    {
+        $oSubscription = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_subscription', 0, false, array(
+            'subscription_id' => &$sId,
+            'subscription_object' => &$oSubscription
+        ));
+
+        try {
+            if(empty($oSubscription))
+                $oSubscription = $this->_getStripe()->subscriptions->retrieve($sSubscriptionId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Subscription Error: ', $oException);
+        }
+
+        return $oSubscription;
     }
 
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
@@ -423,6 +493,24 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'sVendorIcon' => '',
             'sClientEmail' => $sClientEmail,
         ), $aParams)), $sJsMethod);
+    }
+
+    protected function _processException($sMessage, &$oException)
+    {
+        if(method_exists($oException, 'getError')) {
+            $sError = $oException->getError()->message;
+            $aError = $oException->getError()->toArray();
+        }
+        else { 
+            $sError = $oException->getMessage();
+            $aError = array();
+        }
+
+        $this->log($sMessage . $sError);
+        if(!empty($aError))
+            $this->log($aError);
+
+        return false;
     }
 }
 

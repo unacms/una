@@ -1,8 +1,33 @@
 /*-- Participants --*/
-.bx-forum-participant {
+.bx-forum-participants {
     position:relative;
-    display:block;
-    float:right;
+}
+.bx-forum-participants.left,
+.bx-forum-participants.none {
+    float: left;
+}
+.bx-forum-participants.right {
+    float: right;
+}
+.bx-forum-participant {
+    position: relative;
+    display: block;
+}
+.bx-forum-participants.left .bx-forum-participant,
+.bx-forum-participants.none .bx-forum-participant {
+    float: left;
+    margin-right: 0.5rem;
+}
+.bx-forum-participants.left .bx-forum-participant:last-child,
+.bx-forum-participants.none .bx-forum-participant:last-child {
+    margin-right: 0;
+}
+.bx-forum-participants.right .bx-forum-participant {
+    float: right;
+    margin-left: 0.5rem;
+}
+.bx-forum-participants.right .bx-forum-participant:last-child {
+    margin-left: 0;
 }
 
 .bx-forum-participant-alert-last-replier {
@@ -19,26 +44,26 @@
 
 /*-- Replies --*/
 .cmt.bx-def-box .cmts.cmts-margin {
-	margin-top: 0px;
+    margin-top: 0px;
 }
 .cmt-attached-preview.bx-forum-attached-preview {
-	display: block;
-	float: none;
+    display: block;
+    float: none;
 
-	width: auto;
-	height: 2rem;
-	line-height: 2rem;
-	white-space: nowrap;
+    width: auto;
+    height: 2rem;
+    line-height: 2rem;
+    white-space: nowrap;
 
-	overflow: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 .cmt-attached-preview.bx-forum-attached-preview img,
 .cmt-attached-preview.bx-forum-attached-preview .sys-icon {
-	display: inline-block;
-	vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 
-	width: 2rem;
+    width: 2rem;
     height: 2rem;
 }
 .cmt-attached-preview.bx-forum-attached-preview .sys-icon {

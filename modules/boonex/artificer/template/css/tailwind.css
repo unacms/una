@@ -14,6 +14,10 @@
 
 @layer components {
     /* Defaults */
+    .bx-def-a-colored {
+        @apply no-underline text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+
     .bx-def-hr {
         @apply m-0 p-0 border-t border-gray-200 dark:border-gray-700;
     }
@@ -25,19 +29,19 @@
 
     /* Common elements: Buttons */
     .bx-btn {
-        @apply group relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+        @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md;
     }
 
     .bx-btn i, 
     .bx-btn u {
         @apply inline-block align-middle;
     }
-    
+
     .bx-btn i, 
     .bx-btn img {
-        @apply w-5 h-5 text-gray-600 dark:text-gray-300;
+        @apply w-5 h-5 leading-5 text-gray-600 dark:text-gray-300;
     }
-    
+
     .bx-btn:hover i, 
     .bx-btn:hover img {
         @apply text-gray-800 dark:text-gray-100;
@@ -46,7 +50,7 @@
     .bx-btn i {
         @apply text-center;
     }
-    
+
     .bx-btn u {
         @apply ml-2 first:ml-0 no-underline;
     }
@@ -66,22 +70,31 @@
     }
     
     .bx-btn.bx-btn-disabled {
-        @apply bg-gray-50 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400;
+        @apply bg-gray-50 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400 !important;
     }
 
     .bx-btn.bx-btn-small {
         @apply py-1 text-xs;
     }
 
+    .bx-btn.bx-btn-small i, 
+    .bx-btn.bx-btn-small img {
+        @apply w-4 h-4 leading-4;
+    }
+
 
     /* Common elements: Forms */
+    form {
+        @apply text-sm font-normal text-gray-700 dark:text-gray-300;
+    }
+
+    form a {
+        @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+
     .bx-form-required,
     .bx-form-warn {
         @apply text-red-400;
-    }
-
-    form .bx-form-element a {
-        @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
 
 
@@ -149,6 +162,22 @@
     .bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor.bx-menu-hor-inline li.bx-mi-primary {
         @apply border-transparent text-gray-200 hover:text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
     }
+
+
+    /* Common elements: Alerts */
+    .bx-informer-msg a {
+        @apply text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+    .bx-informer-msg-info {
+        @apply bg-blue-50 text-blue-700;
+    }
+    .bx-informer-msg-alert {
+        @apply bg-yellow-50 text-yellow-700;
+    }
+    .bx-informer-msg-error {
+        @apply bg-red-50 text-red-700;
+    }
+
     
     /* Modules: Timeline */
     .bx-menu-custom-hor.bx-menu-object-bx_timeline_menu_view li.bx-menu-tab-active a {

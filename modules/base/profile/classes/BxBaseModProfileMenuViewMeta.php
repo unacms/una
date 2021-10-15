@@ -77,8 +77,12 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if(!$this->_bContentPublic || !$this->_oContentProfile)
             return false;
 
-        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_oContentProfile->id());
-        return $aMembership ? $this->getUnitMetaItemText(_t($aMembership['name'])) : false;
+        $oAcl = BxDolAcl::getInstance();
+        $oTemplate = BxDolTemplate::getInstance();
+        $aMembership =  $oAcl->getMemberMembershipInfo($this->_oContentProfile->id());
+        $aLevelInfo =  $oAcl->getMembershipInfo($aMembership['id']);
+        return $aMembership ? $this->getUnitMetaItemText($oTemplate->parseHtmlByName('menu_meta_item.html', ['icon' => $oTemplate->getImage($aLevelInfo['icon'], array('class' => 'bx-acl-m-thumbnail')), 'caption' => _t($aMembership['name'])])): false;
+                                                                                            
     }
     
     protected function _getMenuItemBadges($aItem)

@@ -138,7 +138,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
 	protected function _setAclConditions ($aParams)
     {
-        $oAcl =  BxDolAcl::getInstance();
+        $oAcl = BxDolAcl::getInstance();
         if(!$oAcl || empty($aParams['level']))
             return false;
 

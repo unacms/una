@@ -49,9 +49,8 @@ class BxBaseServiceAccount extends BxDol
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
         }
-        
+
         if (isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) { // remember referrer
-            
             $sJoinReferrer = $_SERVER['HTTP_REFERER'];
             $aNoRelocatePages = array('forgot-password', 'login', 'create-account', 'logout');
             foreach ($aNoRelocatePages as $s) {
@@ -64,19 +63,32 @@ class BxBaseServiceAccount extends BxDol
                 BxDolSession::getInstance()->setValue('join-referrer', $sJoinReferrer);
         }
 
-	    $sLoginText = '';
-        if (!isset($aParams['no_login_text']) || false === (bool)$aParams['no_login_text'])
-            $sLoginText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_join_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login')) . '</div>';
-        
-        $sAuth = '';
-        if (!isset($aParams['no_auth_buttons']) || false === (bool)$aParams['no_auth_buttons'])
-            $sAuth = BxDolService::call('system', 'member_auth_code', array(), 'TemplServiceLogin');
+        $aTmplVarsAuth = [];
+        if(!isset($aParams['no_auth_buttons']) || false === (bool)$aParams['no_auth_buttons'])
+            $aTmplVarsAuth['content'] = BxDolService::call('system', 'member_auth_code', array(), 'TemplServiceLogin');
 
-        $sFormCode = '';
-        if (!(bool)getParam('sys_account_disable_join_form'))
-            $sFormCode = $this->_oAccountForms->createAccountForm($aParams);
+        $aTmplVarsForm = [];
+        if(!(bool)getParam('sys_account_disable_join_form'))
+            $aTmplVarsForm['content'] = $this->_oAccountForms->createAccountForm($aParams);
+
+        $aTmplVarsLogin = [];
+        if(!isset($aParams['no_login_text']) || false === (bool)$aParams['no_login_text'])
+            $aTmplVarsLogin['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login');
         
-        return $sAuth . $sFormCode . $sLoginText;
+        return BxDolTemplate::getInstance()->parseHtmlByName('block_join.html', [
+            'bx_if:show_auth' => [
+                'condition' => !empty($aTmplVarsAuth),
+                'content' => $aTmplVarsAuth
+            ],
+            'bx_if:show_form' => [
+                'condition' => !empty($aTmplVarsForm),
+                'content' => $aTmplVarsForm,
+            ],
+            'bx_if:show_login' => [
+                'condition' => !empty($aTmplVarsLogin),
+                'content' => $aTmplVarsLogin
+            ],
+        ]);
     }
 
     public function serviceAccountSettingsEmail ($iAccountId = false)

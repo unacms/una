@@ -314,3 +314,8 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-input-wrapper-html .second-toolbar{
     border-bottom:none !important;
 }
+/* wrapper set */
+.bx-form-input-wrapper-set label{
+    margin-left: 0.5rem;
+    vertical-align: text-bottom;
+}

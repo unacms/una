@@ -1588,7 +1588,8 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Задействовать уменьшение для файлов JS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
 	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
-	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[Таймаут для cURL по умолчанию]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - Таймаут по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - доверять неподписанным сертификатам или неподтвержденным хостам]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
@@ -1598,6 +1599,9 @@
     <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_standard"><![CDATA[TinyMCE кнопки для стандартного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_tinymce_plugins_full"><![CDATA[TinyMCE компоненты для полного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_full"><![CDATA[TinyMCE кнопки для полного редактора]]></string>
+    <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill кнопки для мини редактора]]></string>
+    <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill кнопки для стандартного редактора]]></string>
+    <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons кнопки для полного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Максимальное число хэш-тагов в одной публикации]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Максимальное число упоминаний кого-либо в одной публикации]]></string>
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Скрыть из поля "Конфиденциальность" возможность добавления контента в контекст модулей]]></string>
@@ -3336,16 +3340,18 @@
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоединиться!</button>]]></string>
     <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к email-у и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
-	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
-	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
-	<string name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string>
-	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь.</a>]]></string>
-	<string name="_sys_txt_login_error"><![CDATA[Введённый email или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
-  <string name="_sys_txt_login_locked"><![CDATA[Ваш аккаунт заблокирован, для разблокировки, пожалуйста, используйте  <a href="{0}">страницу сброса пароля</a>.]]></string>
+    <string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
+    <string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
+    <string name="_sys_txt_join_description_question"><![CDATA[Уже зарегистрировались?]]></string>
+    <string name="_sys_txt_join_description_action"><![CDATA[Заходите.]]></string>
+    <string name="_sys_txt_login_description_question"><![CDATA[Ещё нет аккаунта?]]></string>
+    <string name="_sys_txt_login_description_action"><![CDATA[Зарегистрируйтесь.]]></string>
+    <string name="_sys_txt_login_error"><![CDATA[Введённый email или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
+    <string name="_sys_txt_login_locked"><![CDATA[Ваш аккаунт заблокирован, для разблокировки, пожалуйста, используйте  <a href="{0}">страницу сброса пароля</a>.]]></string>
     <string name="_sys_txt_following_counter"><![CDATA[Подписки: {0}]]></string>
     <string name="_sys_txt_followers_counter"><![CDATA[Подписчики: {0}]]></string>
     <string name="_sys_txt_friends_counter"><![CDATA[Друзья: {0}]]></string>
-	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
+    <string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая картинка]]></string>
     <string name="_sys_txt_not_found"><![CDATA[Не найдено]]></string>

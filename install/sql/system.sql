@@ -3999,12 +3999,12 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('sys_report_types', 'other', 5, '_sys_pre_lists_report_types_other', '');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
-('sys_vote_reactions', 'like', 1, '_sys_pre_lists_vote_reactions_like', '', 'a:3:{s:5:"emoji";s:4:"👍";s:5:"color";s:20:"sys-colored col-gray";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'love', 2, '_sys_pre_lists_vote_reactions_love', '', 'a:3:{s:5:"emoji";s:4:"💓";s:5:"color";s:20:"sys-colored col-red1";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'joy', 3, '_sys_pre_lists_vote_reactions_joy', '', 'a:3:{s:5:"emoji";s:4:"😆";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'surprise', 4, '_sys_pre_lists_vote_reactions_surprise', '', 'a:3:{s:5:"emoji";s:4:"😲";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'sadness', 5, '_sys_pre_lists_vote_reactions_sadness', '', 'a:3:{s:5:"emoji";s:4:"😥";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
-('sys_vote_reactions', 'anger', 6, '_sys_pre_lists_vote_reactions_anger', '', 'a:3:{s:5:"emoji";s:4:"😠";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}');
+('sys_vote_reactions', 'like', 1, '_sys_pre_lists_vote_reactions_like', '', 'a:5:{s:5:"emoji";s:4:"👍";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-gray";s:6:"weight";s:1:"1";s:7:"default";s:9:"thumbs-up";}'),
+('sys_vote_reactions', 'love', 2, '_sys_pre_lists_vote_reactions_love', '', 'a:4:{s:5:"emoji";s:4:"💓";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red1";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'joy', 3, '_sys_pre_lists_vote_reactions_joy', '', 'a:4:{s:5:"emoji";s:4:"😆";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'surprise', 4, '_sys_pre_lists_vote_reactions_surprise', '', 'a:4:{s:5:"emoji";s:4:"😲";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'sadness', 5, '_sys_pre_lists_vote_reactions_sadness', '', 'a:4:{s:5:"emoji";s:4:"😥";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'anger', 6, '_sys_pre_lists_vote_reactions_anger', '', 'a:4:{s:5:"emoji";s:4:"😠";s:4:"icon";s:0:"";s:5:"color";s:20:"sys-colored col-red3";s:6:"weight";s:1:"1";}');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('sys_relations', '1', 1, '_sys_pre_lists_relations_husband', '', 'a:1:{i:0;s:1:"2";}'),

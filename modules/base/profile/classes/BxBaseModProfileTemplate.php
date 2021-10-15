@@ -298,9 +298,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             if(!empty($aCover))
                 $sUrlCover = BxDolCover::getCoverImageUrl($aCover);
         }
-
-        if(!$sUrlCover)
+        $bUrlCover = true;
+        if(!$sUrlCover){
             $sUrlCover = $this->getImageUrl('cover.svg');
+            $bUrlCover = false;
+        }
 		else
 			BxDolTemplate::getInstance()->addPageMetaImage($sUrlCover);
         
@@ -339,7 +341,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                'content_id' => $aData[$CNF['FIELD_ID']],
                'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
                'storage' => $CNF['OBJECT_STORAGE'],
-               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'],
+               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'],
                'field' => $CNF['FIELD_PICTURE'],
                'is_background' => false,
                'add_class' => &$sAddClassPicture,
@@ -369,19 +371,18 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $aShowAvatar = array(
                 'add_class' => $sAddClassPicture,
+                'letter' => mb_substr($sTitle, 0, 1),
+                'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
+                'ava_url' => $sUrlAvatar,
+                'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
+                
                 'bx_if:show_ava_image' => array(
                     'condition' => $bUrlAvatar,
-                    'content' => array(
-                        'ava_url' => $sUrlAvatar,
-                        'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
-                    )
+                    'content' => array()
                 ),
                 'bx_if:show_ava_letter' => array(
                     'condition' => !$bUrlAvatar,
-                    'content' => array(
-                        'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
-                        'letter' => mb_substr($sTitle, 0, 1)
-                    )
+                    'content' => array()
                 ),
                 'bx_if:show_online' => array(
                     'condition' => $oProfile->isOnline(),
@@ -430,6 +431,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             ),
             'bx_if:show_avatar_placeholder' => array(
                 'condition' => !$bShowAvatar,
+                'content' => array()
+            ),
+            'bx_if:show_cover' => array(
+                'condition' => $bUrlCover,
+                'content' => $aShowAvatar
+            ),
+            'bx_if:show_cover_placeholder' => array(
+                'condition' => !$bUrlCover,
                 'content' => array()
             ),
             'picture_popup' => $sPicturePopup,

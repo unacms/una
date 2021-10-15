@@ -85,3 +85,20 @@ div.bx-badge.bx-badge-compact img{
 #bx-popup-ajax-wrapper-sys_set_badges li INPUT[type="checkbox"] {
     margin-right: 0.5rem;
 }
+
+/* more menu */
+.bx-menu-submenu-more-auto .bx-vote-do-icon,
+.bx-menu-submenu-more-auto .bx-favorite-do-icon,
+.bx-menu-submenu-more-auto .bx-feature-do-icon,
+.bx-menu-submenu-more-auto .bx-report-do-icon,
+.bx-menu-submenu-more-auto .bx-score-do-icon
+{
+    height: 1.25rem;
+    width: 1.25rem;
+    align-items: center;
+    justify-content: center;
+}
+.sys-action-counter-holder .bx-view-counter-label {
+    padding: 0px;
+    
+}
