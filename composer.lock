@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d1f04931a4d3d5f0352d496c7f93a9c",
+    "content-hash": "66416d9b669859af8845a58c1c602a16",
     "packages": [
         {
             "name": "achingbrain/php5-akismet",
@@ -798,6 +798,69 @@
             "time": "2019-02-05T23:41:09+00:00"
         },
         {
+            "name": "mpratt/embera",
+            "version": "2.0.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpratt/Embera.git",
+                "reference": "79a5b789a674b4fcab374e5669c0270b910f28a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/79a5b789a674b4fcab374e5669c0270b910f28a9",
+                "reference": "79a5b789a674b4fcab374e5669c0270b910f28a9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "suggest": {
+                "ext-curl": "Allow to fetch data using curl instead of using file_get_contents"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Embera\\": "src/Embera"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Pratt",
+                    "email": "yo@michael-pratt.com",
+                    "homepage": "http://www.michael-pratt.com",
+                    "role": "Author/Developer"
+                }
+            ],
+            "description": "Oembed consumer library. Converts urls into their html embed code. Supports 150+ sites, such as Youtube, Twitter, vimeo, Instagram etc.",
+            "homepage": "https://github.com/mpratt/Embera",
+            "keywords": [
+                "Auto embed",
+                "Embed Text",
+                "Responsive Embeds",
+                "Url Embed",
+                "embed",
+                "instagram",
+                "oembed",
+                "twitter",
+                "vimeo",
+                "vine",
+                "youtube"
+            ],
+            "support": {
+                "issues": "https://github.com/mpratt/Embera/issues",
+                "source": "https://github.com/mpratt/Embera/tree/2.0.22"
+            },
+            "time": "2021-09-29T00:42:12+00:00"
+        },
+        {
             "name": "paypal/paypal-checkout-sdk",
             "version": "1.0.1",
             "source": {
@@ -1473,7 +1536,9 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.6"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
 }
