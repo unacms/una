@@ -23,7 +23,7 @@ import url(../../../../../../../template/css/menu.css);
 /*--- Interactive Menu ---*/
 .bx-menu-inter li.bx-menu-inter-hidden,
 .bx-menu-inter-vert li.bx-menu-inter-hidden {
-    display: none !important;
+    display: none;
 }
 
 /*--- Custom Menu with More Auto ---*/
