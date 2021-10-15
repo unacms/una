@@ -18,8 +18,8 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         $CNF = &$this->_oModule->_oConfig->CNF;
         if (isset($CNF['OBJECT_CONNECTIONS'])){
             $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = array(
-			    'add' => 'checkAllowedFanAdd', 
-			    'remove' => 'checkAllowedFanRemove'
+                'add' => 'checkAllowedFanAdd', 
+                'remove' => 'checkAllowedFanRemove'
             );
 
             $this->_aConnectionToFunctionTitle[$CNF['OBJECT_CONNECTIONS']] = '_getMenuItemConnectionsTitle';
@@ -86,11 +86,16 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if(!$oConnection)
             return false;
 
-        $iFriends = $oConnection->getConnectedInitiatorsCount($this->_oContentProfile->id(), true);
-        if(!$iFriends)
+        $iMembers = $oConnection->getConnectedInitiatorsCount($this->_oContentProfile->id(), true);
+        if(!$iMembers && !$this->_bShowZeros)
             return false;
 
-        return $this->getUnitMetaItemText(_t(!empty($aItem['title']) ? $aItem['title'] : '_sys_menu_item_title_sm_members', $iFriends));
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+
+        return $this->getUnitMetaItemCustom($oConnection->getCounter($this->_oContentProfile->id(), true, [
+            'caption' => '_sys_menu_item_title_sm_members', 
+            'custom_icon' => $sIcon
+        ], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS));
     }
 
     protected function _getMenuItemConnectionsTitle($sAction, &$oConnection)

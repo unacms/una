@@ -107,12 +107,17 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
         if(!$oConnection)
             return false;
-            
+
         $iSubscribers = $oConnection->getConnectedInitiatorsCount($this->_oContentProfile->id());
         if(!$iSubscribers && !$this->_bShowZeros)
             return false;
 
-        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_subscribers', $iSubscribers));
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+
+        return $this->getUnitMetaItemCustom($oConnection->getCounter($this->_oContentProfile->id(), false, [
+            'caption' => '_sys_menu_item_title_sm_subscribers', 
+            'custom_icon' => $sIcon
+        ], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS));
     }
 
     protected function _getMenuItemConnection($sConnection, $sAction, &$aItem)
@@ -133,6 +138,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         return $this->getUnitMetaItemButtonSmall($sTitle, array(
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
             'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
         ));
     }
