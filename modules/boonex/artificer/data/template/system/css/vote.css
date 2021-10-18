@@ -23,6 +23,7 @@ import url(../../../../../../../template/css/vote.css);
     width: auto;
     height: auto;
     margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound a.bx-vote-counter.total-count .sys-action-counter-text:first-child,
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter.total-count .sys-action-counter-text:first-child {
@@ -35,6 +36,9 @@ import url(../../../../../../../template/css/vote.css);
 .bx-media-tablet .bx-layout-column-thin .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
 .bx-media-tablet .bx-layout-column-half .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) {
     margin-left: -1.0rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter-label {
+    padding: 0;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) span.bx-vote-counter-text {
     display: none;
