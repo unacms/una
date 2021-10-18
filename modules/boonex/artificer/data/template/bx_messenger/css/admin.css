@@ -1,0 +1,297 @@
+#bx-content-main .bx-messenger-block.jots
+{
+	border-radius: inherit;
+	border-bottom: 0;
+	border-right: 0;
+	border-top: 0;
+}
+
+#bx-page-messenger .bx-layout-cell {
+	margin: 0;
+	padding: 0;
+}
+
+#bx-page-messenger .bx-page-block-container {
+	margin: 0;
+	padding: 0;
+}
+
+#bx-messenger-block-head input{
+	border: 0px;
+	width: 100%;
+	outline: none;
+	background: rgba(0,0,0,0);
+}
+
+.bx-messenger-block{
+	overflow:hidden;
+	border-top:0px;
+}
+
+.bx-messenger-block-jots{
+	overflow:hidden;
+	width:100%;
+	display:table;
+}
+
+.bx-messenger-lots-menu{
+	display:none;
+}
+
+div.bx-messenger-lots-menu{
+	width: auto;
+	height: auto;
+	overflow: hidden;
+	position:absolute;
+	border-radius: 3px;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+	border: 1px #dfdfdf solid;
+	background: #ffffff;
+	padding: 5px 2px 5px 5px;
+	z-index:10001;
+}
+
+div.bx-messenger-lots-menu ul{
+	margin: 0px;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+div.bx-messenger-lots-menu li{
+	list-style-type: none;
+	margin: 2px;
+	padding-left: 5px;
+}
+
+div.bx-messenger-lots-menu ul span{
+	font-weight:700;
+}
+
+div.bx-messenger-lots-menu ul li a{
+	text-decoration:none;
+	text-transform:lowercase;
+}
+
+div.bx-messenger-lots-menu ul li a:hover,
+div.bx-messenger-lots-menu ul li a.active{
+	font-weight:bold;
+}
+
+#bx-menu-db-menu .bx-def-padding-sec-right{
+	padding-right:0px;
+}
+
+#bx-content-main .bx-layout-column-thin .bx-def-padding-sec-leftright{
+	padding-left:0px;
+	padding-right:0px;
+}
+#bx-content-main .bx-def-padding-sec-left{
+	padding-left:0px;
+}
+
+.bx-messenger-friends-list
+{
+	vertical-align:middle;
+	overflow:hidden;
+}
+
+.bx-messenger-friends-list > div
+{
+	width:100%;
+}
+
+.bx-messenger-friends-list a
+{
+	display: flex;
+	align-items: center;
+}
+
+.bx-messenger-main-block
+{
+	overflow:hidden;
+	position:relative;
+}
+
+.bx-messenger-block-jots  a,
+.bx-messenger-block-jots  a:hover,
+.bx-messenger-items-list a,
+.bx-messenger-items-list a:hover
+{
+	color:inherit;
+}
+
+
+.bx-messenger-jots-snip
+{
+	overflow:hidden;
+	min-height:50px;
+	display:flex;
+	cursor:pointer;
+}
+
+.bx-messenger-jots-snip-avatars
+{
+	height:auto;
+	text-align:center;
+	position:relative;
+	display: flex;
+	align-items: center;
+}
+
+.bx-messenger-jots-snip-info
+{
+	vertical-align: top;
+	width:calc(100% - 4.8rem);
+	position:relative;
+}
+
+/*.bx-messenger-jots-snip-info span
+{
+	opacity:0.7;
+}*/
+
+.bx-messenger-block-jots .bx-messenger-jots-snip-info
+{
+	padding-bottom:0.25rem;
+	vertical-align:top;
+}
+
+.bx-messenger-jots-snip-title
+{
+	position: relative;
+	width: 100%;
+	padding-bottom:0.1rem;
+	display: inline-flex;
+	white-space: nowrap;
+	align-items: baseline;
+}
+
+.bx-messenger-jots-snip-message
+{
+	position:relative;
+}
+
+.bx-messenger-jots-snip:hover
+{
+	background-color:rgba(0,0,0,0.02);
+}
+
+.bx-messenger-jots-snip.active
+{
+	background-color:rgba(0,0,0,0.03);
+}
+
+.bx-messenger-jots-snip-avatars-list
+{
+	position:relative;
+	overflow: hidden;
+	z-index:2;
+}
+
+.bx-messenger-jots-snip-avatars-list div
+{
+	position:relative;
+	z-index:1;
+	box-sizing: border-box;
+	float: left;
+	overflow: hidden;
+	/*line-height: 3rem;
+	height: 3rem;*/
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child
+{
+	border-right: 1px solid #fff;
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2),
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2) ~ div
+{
+	width: 50%;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(2) img,
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(1) img
+{
+	margin-left:-12px;
+	border-radius: 0;
+	align-items: center;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(2) p,
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(1) p
+{
+	margin-left:-12px;
+	border-radius: 0;
+	align-items: center;
+	font-size: x-large;
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(3) p
+{
+	justify-content: left;
+	padding-left: 0.2rem;
+	font-size: x-large;
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2) p
+{
+	font-size: x-large;
+	padding-left: 0.2rem;
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(3)
+{
+	width: 50%;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(3) img
+{
+	margin-left:-12px
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(2),
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1)
+{
+	height:50%;
+	width:50%;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(2) img,
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1) img
+{
+	height:100%;
+	width:100%;
+	margin-bottom:10px;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(2) p,
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1) p
+{
+	height: 100%;
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: initial;
+	border-radius: initial;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1)
+{
+	border-top: 1px solid #fff;
+}
+
+.bx-messenger-padding-lots-lefttopbottom
+{
+	padding:0.9rem;
+}
+
+.bx-messenger-padding-lots-topbottom
+{
+	padding-top:1rem;
+	padding-bottom:1rem;
+}
+.bx-messenger-jots-snip .unread-lot span
+{
+	opacity:1;
+}
+

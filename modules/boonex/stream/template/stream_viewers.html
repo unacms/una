@@ -1,0 +1,11 @@
+<div id="bx-stream-viewers-__suffix__" class="bx-stream-viewers">__viewers__</div>
+<script>
+    var fFunc = function () {
+        $.getJSON('__url__', function (oData) {
+            if ('undefined' !== typeof(oData.viewers))
+                $('#bx-stream-viewers-__suffix__').html(oData.viewers);
+            setTimeout(fFunc, 10000);
+        });
+    }
+    fFunc();
+</script>
