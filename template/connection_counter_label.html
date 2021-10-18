@@ -4,6 +4,13 @@
             __name__
         </span>
     </bx_if:show_icon>
+    <bx_if:show_profiles>
+        <span class="sys-action-counter-profiles __style_prefix__-counter-profiles">
+            <bx_repeat:profiles>
+                <span class="sys-action-counter-profile __style_prefix__-counter-profile">__unit__</span>
+            </bx_repeat:profiles>
+        </span>
+    </bx_if:show_profiles>
     <bx_if:show_text>
         <span class="sys-action-counter-text __style_prefix__-counter-text bx-def-margin-sec-left-auto">__text__</span>
     </bx_if:show_text>

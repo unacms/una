@@ -8,6 +8,11 @@
  */
 
 /**
+ * Default limit for connections list in Counter.
+ */
+define('BX_CONNECTIONS_LIST_COUNTER', 5);
+
+/**
  * Default limit for connections lists
  */
 define('BX_CONNECTIONS_LIST_LIMIT', 1000);

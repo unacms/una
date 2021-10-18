@@ -57,7 +57,10 @@ class BxBaseConnection extends BxDolConnection
     {
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
-        
+
+        if(empty($aParams))
+            $aParams = [];
+
         $this->_sStylePrefix = 'bx_conn_' . $this->_sObject;
         
         $aHtmlIds = array(
@@ -70,11 +73,12 @@ class BxBaseConnection extends BxDolConnection
             'dynamic_mode' => true,
             'show_do_as_button_small' => true,
             'show_do_as_button' => true,
+            'show_counter_label_with_profiles' => true,
             'show_script' => true,
         ];
         
         $aParams = array_merge($aParams, $aParamsDefault);
-        
+
         $iCount = $sContentType == BX_CONNECTIONS_CONTENT_TYPE_INITIATORS ? $this->getConnectedInitiatorsCount($iProfileId, $bIsMutual) : $this->getConnectedContentCount($iProfileId, $bIsMutual);
         
         if ($iCount > 0){   
@@ -91,8 +95,9 @@ class BxBaseConnection extends BxDolConnection
             if($bShowDoAsButton)
                 $sClass .= ' bx-btn-height';
         
-            $sContent =$this->_getCounterLabel($iCount, $aParams);
-            
+            $sContent = $this->_getCounterLabel($iCount, $iProfileId, $bIsMutual, $aParams, $sContentType);
+
+            $this->_oTemplate->addCss(array('connection.css'));
             return $this->_oTemplate->parseHtmlByName('connection_counter.html', array(
                 'html_id' => $aHtmlIds['counter'],
                 'style_prefix' => $this->_sStylePrefix,
@@ -144,16 +149,39 @@ class BxBaseConnection extends BxDolConnection
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
     
-    protected function _getCounterLabel($iCount, $aParams = array())
+    protected function _getCounterLabel($iCount, $iProfileId, $bIsMutual, $aParams, $sContentType)
     {
-       return $this->_oTemplate->parseHtmlByName('connection_counter_label.html', array(
+        $bShowWithProfiles = isset($aParams['show_counter_label_with_profiles']) && $aParams['show_counter_label_with_profiles'] === true;
+        $bShowWithIcon = (!isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true) && !$bShowWithProfiles;
+
+        $aTmplVarsWithProfiles = array();
+        if($bShowWithProfiles) {
+            $aTmplVarsWithProfiles = [
+                'style_prefix' => $this->_sStylePrefix,
+                'bx_repeat:profiles' => []
+            ];
+
+            $aIds = $this->{BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType ? 'getConnectedInitiators' : 'getConnectedContent'}($iProfileId, $bIsMutual, 0, BX_CONNECTIONS_LIST_COUNTER);
+            foreach($aIds as $iId)
+                if(($oProfile = BxDolProfile::getInstanceMagic($iId)) !== false)
+                    $aTmplVarsWithProfiles['bx_repeat:profiles'][] = [
+                        'style_prefix' => $this->_sStylePrefix,
+                        'unit' => $oProfile->getUnit(0, ['template' => ['name' => 'unit_wo_info_links', 'size' => 'icon']])
+                    ];
+        }
+
+        return $this->_oTemplate->parseHtmlByName('connection_counter_label.html', array(
             'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
-                'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
+                'condition' => $bShowWithIcon,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'name' => isset($aParams['custom_icon']) && $aParams['custom_icon'] != '' ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml($this->_getIconDo())
                 )
+            ),
+            'bx_if:show_profiles' => array(
+                'condition' => $bShowWithProfiles,
+                'content' => $aTmplVarsWithProfiles
             ),
             'bx_if:show_text' => array(
                 'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
