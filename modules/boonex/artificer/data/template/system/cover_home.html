@@ -5,41 +5,40 @@
     }
 </style>
 </bx_if:logged_in>
-<div class="relative bg-gradient-to-br from-gray-100 to-blue-100 dark:bg-gradient-to-r dark:from-gray-900 dark:to-black overflow-hidden">
+<div class="bx-cover-wrapper relative bg-gradient-to-br from-gray-100 to-blue-100 dark:bg-gradient-to-r dark:from-gray-900 dark:to-black overflow-hidden" <bx_if:bg>style="background-image:url(__image_url__)"</bx_if:bg>>
     <div class="relative py-16">
-      <main class="">
-        <div class="mx-auto max-w-7xl">
-          <div class="">
-            <div class="relative">
-              <div class="absolute top-0 -left-8 w-96 h-96 bg-purple-700 rounded-full  filter blur-3xl z-0 opacity-60 animate-goo"></div>
-              <div class="absolute top-12 -right-8 w-96 h-96 bg-red-700 rounded-full filter blur-3xl z-0 opacity-60 animate-goo animation-delay-2000"></div>  
-              <div class="absolute -bottom-12 left-1/3 w-96 h-96 bg-green-700 rounded-full filter blur-3xl z-0 opacity-60 animate-goo animation-delay-4000"></div> 
-            </div>
-            <div class=" relative  text-center md:max-w-2xl md:mx-auto">
-              <div>
-                <h1 class="text-4xl  sm:text-5xl xl:text-6xl tracking-tight  font-bold text-gray-800 dark:text-white ">
-                  <span class="block pb-1 relative"><bx_text:_bx_artificer_txt_splash_welcome_l1 /></span>
-                  <span class="block pb-1  bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-blue-500 "><bx_text:_bx_artificer_txt_splash_welcome_l2 /></span>
-                </h1>
-                <p class="p-8  font-light text-gray-700 dark:text-gray-300 text-base  sm:text-lg xl:text-xl">
-                  <span class="block"><bx_text:_bx_artificer_txt_splash_welcome_l3 /></span>
-                </p>
-
-               <div class=" w-full flex justify-center items-center">
-                  <button type="button" onclick="document.location='__link_join__'"  class=" group inline-flex items-center px-4 py-2 border border-transparent shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-200 hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ">
-                    Create Account
-                  </button>
-                  <button type="button"  onclick="document.location='__link_login__'" class="ml-3 group inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    Login
-                  </button>
+        <main class="">
+            <div class="mx-auto max-w-7xl">
+                <div class="">
+                    <div class="relative">
+                        <div class="absolute top-0 -left-8 w-96 h-96 bg-purple-700 rounded-full  filter blur-3xl z-0 opacity-60 animate-goo"></div>
+                        <div class="absolute top-12 -right-8 w-96 h-96 bg-red-700 rounded-full filter blur-3xl z-0 opacity-60 animate-goo animation-delay-2000"></div>  
+                        <div class="absolute -bottom-12 left-1/3 w-96 h-96 bg-green-700 rounded-full filter blur-3xl z-0 opacity-60 animate-goo animation-delay-4000"></div> 
+                    </div>
+                    <div class=" relative  text-center md:max-w-2xl md:mx-auto">
+                        <div>
+                            <h1 class="text-4xl  sm:text-5xl xl:text-6xl tracking-tight  font-bold text-gray-800 dark:text-white ">
+                                <span class="block pb-1 relative"><bx_text:_bx_artificer_txt_splash_welcome_l1 /></span>
+                                <span class="block pb-1  bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-blue-500 "><bx_text:_bx_artificer_txt_splash_welcome_l2 /></span>
+                            </h1>
+                            <p class="p-8  font-light text-gray-700 dark:text-gray-300 text-base  sm:text-lg xl:text-xl">
+                                <span class="block"><bx_text:_bx_artificer_txt_splash_welcome_l3 /></span>
+                            </p>
+                            <div class=" w-full flex justify-center items-center">
+                                <button type="button" onclick="document.location='__link_join__'"  class="group inline-flex items-center px-4 py-2 border border-transparent shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-200 hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ">
+                                    <bx_text:_bx_artificer_txt_splash_welcome_a1 />
+                                </button>
+                                <button type="button"  onclick="document.location='__link_login__'" class="ml-3 group inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm hover:shadow-md text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <bx_text:_bx_artificer_txt_splash_welcome_a2 />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </main>
+        </main>
     </div>
 </div>

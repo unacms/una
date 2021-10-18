@@ -13,11 +13,3 @@ import url(../../../../../../../template/css/cover.css);
     background-size: cover;
     overflow: hidden;
 }
-
-.bx-cover-homepage {
-    background-image: url(../images/cover-homepage.svg);
-}
-
-.bx-cover-title {
-    text-shadow:-1px 0px 0px rgba(0, 0, 0, .3), 1px 0px 0px rgba(0, 0, 0, .3), 0px -1px 0px rgba(0, 0, 0, .3), 0px 1px 0px rgba(0, 0, 0, .3);
-}

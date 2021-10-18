@@ -28,6 +28,8 @@
     <string name="_bx_artificer_txt_splash_welcome_l1"><![CDATA[Welcome to]]></string>
     <string name="_bx_artificer_txt_splash_welcome_l2"><![CDATA[the community]]></string>
     <string name="_bx_artificer_txt_splash_welcome_l3"><![CDATA[The social media network for people to connect, collaborate and share original content. Powered by <a class="text-blue-500 hover:text-blue-600" href="https://una.io">UNA Community Software</a>.]]></string>
+    <string name="_bx_artificer_txt_splash_welcome_a1"><![CDATA[Create Account]]></string>
+    <string name="_bx_artificer_txt_splash_welcome_a2"><![CDATA[Login]]></string>
     <string name="_bx_artificer_txt_splash_stats_l1"><![CDATA[We rise by helping others]]></string>
     <string name="_bx_artificer_txt_splash_stats_l2"><![CDATA[Make new friends, follow interesting creators and stay in touch with your community.]]></string>
     <string name="_bx_artificer_txt_splash_stats_c1"><![CDATA[members]]></string>
