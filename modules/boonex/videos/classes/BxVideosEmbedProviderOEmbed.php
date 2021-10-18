@@ -19,16 +19,13 @@ class BxVideosEmbedProviderOEmbed
         $this->_oModule = $oModule;
     }
 
-    public function updateEndpoints() {
-        $this->_oModule->_oDb->updateOEmbedProviders();
-    }
-
     public function parseLink($sLink) {
-        $sEndpointUrl = $this->_oModule->_oDb->getOEmbedEndpoint($sLink);
-        if (!$sEndpointUrl) return false;
+        bx_import('BxDolEmbed');
+        $oEmbed = BxDolEmbed::getObjectInstance('sys_oembed');
+        $aResponse = $oEmbed->getUrlData($sLink);
 
-        $aResponse = @json_decode(bx_file_get_contents(bx_append_url_params($sEndpointUrl, ['url' => $sLink])), true);
         if ($aResponse) {
+            $aResponse = $aResponse[$sLink];
             if (isset($aResponse['type']) && $aResponse['type'] == 'video' && isset($aResponse['html']) && !empty($aResponse['html']))
                 return [
                     'thumb' => isset($aResponse['thumbnail_url']) ? $aResponse['thumbnail_url'] : '',
