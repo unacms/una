@@ -2789,6 +2789,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    /**
+     * Delete content entry
+     * @param $iContentId content id 
+     * @return error message or empty string on success
+     */
+    public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData')
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return _t('_Empty');
+
+        if(!$this->deleteEvent($aEvent))
+            return _t('_bx_timeline_txt_err_cannot_perform_action');
+
+        $this->_oDb->deleteCache(array('event_id' => $iContentId));
+
+        return '';
+    }
+
     /*
      * COMMON METHODS
      */
