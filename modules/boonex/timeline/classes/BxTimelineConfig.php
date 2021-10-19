@@ -157,6 +157,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'txt_sample_with_link' => '_bx_timeline_txt_sample_with_link',
                 'txt_sample_with_image' => '_bx_timeline_txt_sample_with_image',
                 'txt_sample_with_video' => '_bx_timeline_txt_sample_with_video',
+                'txt_sample_with_file' => '_bx_timeline_txt_sample_with_file',
                 'txt_sample_with_media' => '_bx_timeline_txt_sample_with_media',
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',

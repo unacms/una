@@ -2961,17 +2961,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aLinkIds = $oForm->getCleanValue($CNF['FIELD_LINK']);
             $bLinkIds = !empty($aLinkIds) && is_array($aLinkIds);
 
-            //--- Process Media ---//
+            //--- Process Photos ---//
             $aPhotoIds = $oForm->getCleanValue($CNF['FIELD_PHOTO']);
             $bPhotoIds = !empty($aPhotoIds) && is_array($aPhotoIds);
 
+            //--- Process Videos ---//
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
-			
-			//--- Process Files ---//
-			$aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
+
+            //--- Process Files ---//
+            $aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
             $bFileIds = !empty($aFileIds) && is_array($aFileIds);
-			
 
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
