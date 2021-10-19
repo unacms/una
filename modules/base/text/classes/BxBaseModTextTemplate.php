@@ -503,21 +503,21 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         if(isset($CNF['FIELD_THUMB']) && isset($CNF['OBJECT_UPLOADERS']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'])){
             bx_alert('system', 'image_editor', 0, 0, array(
-               'module' => $oModule->getName(),
-               'image_type' => 'header_image',
-               'is_allow_edit' => $bIsAllowEditPicture,
-               'image_url' => $aData[$CNF['FIELD_THUMB']] ? $sImage : '',
-               'content_id' => $aData[$CNF['FIELD_ID']],
-               'uploader' => $CNF['OBJECT_UPLOADERS'][0],
-               'storage' => $CNF['OBJECT_STORAGE'],
-               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
-               'field' => $CNF['FIELD_THUMB'],
-               'is_background' => false,
-               'add_class' => &$sAddClassPicture,
-               'add_code' => &$sAddCode
+                'module' => $oModule->getName(),
+                'content_id' => $aData[$CNF['FIELD_ID']],
+                'image_type' => 'header_image',
+                'image_url' => $sImage,
+                'is_allow_edit' => $bIsAllowEditPicture,
+                'uploader' => !empty($CNF['OBJECT_UPLOADERS']) && is_array($CNF['OBJECT_UPLOADERS']) ? $CNF['OBJECT_UPLOADERS'][0] : '',
+                'storage' => isset($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
+                'transcoder' => isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER']) ? $CNF['OBJECT_IMAGES_TRANSCODER_COVER'] : '',
+                'field' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
+                'is_background' => false,
+                'add_class' => &$sAddClassPicture,
+                'add_code' => &$sAddCode
             )); 
         }
-        
+
         $aVars['content_description_before'] = '';
         $aVars['content_description_after'] = '';
         $aVars['bx_if:show_image'] = array(
