@@ -53,6 +53,10 @@ class BxStrmModule extends BxBaseModTextModule
         list($iContentId, $aContentInfo) = $mixedContent;
 
         $iNum = $this->getStreamEngine()->getViewersNum($aContentInfo[$CNF['FIELD_KEY']]);
+        if (false === $iNum)
+            $this->onStreamStopped($iContentId, $aContentInfo);
+        else
+            $this->onStreamStarted($iContentId, $aContentInfo);
         
         echo json_encode(['viewers' => $iNum !== false ? _t('_bx_stream_txt_viewers', (int)$iNum) : _t('_bx_stream_txt_wait_for_stream'), 'num' => $iNum]);
     }
@@ -148,6 +152,72 @@ class BxStrmModule extends BxBaseModTextModule
     {
         return CHECK_ACTION_RESULT_ALLOWED;
     }
+
+    public function serviceGetBadges($iContentId,  $bIsSingle = false, $bIsCompact  = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $s = parent::serviceGetBadges($iContentId,  $bIsSingle, $bIsCompact);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return $s;
+        return $s . $this->_oTemplate->getLiveBadge($aContentInfo);
+    }
+
+    public function onStreamStarted($iContentId, $aContentInfo = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if (!$aContentInfo)
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo || $aContentInfo[$CNF['FIELD_STATUS']] != 'awaiting')
+            return;
+
+        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId))) 
+            return;
+
+        $this->onPublished($iContentId);
+
+        bx_alert($this->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], array(
+            'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'privacy_view' => BX_DOL_PG_ALL,
+        ));
+    }
+
+    public function onStreamStopped($iContentId, $aContentInfo = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if (!$aContentInfo)
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        if (!$aContentInfo || $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return;
+
+        if (!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'awaiting'), array($CNF['FIELD_ID'] => $iContentId)))
+            return;
+
+        if (BxDolRequest::serviceExists('bx_timeline', 'get_all')) {
+            $a = BxDolService::call('bx_timeline', 'get_all', array(array(
+                'type' => 'conditions', 
+                'conditions' => array(
+                    'type' => 'bx_stream', 
+                    'action' => 'added', 
+                    'object_id' => $iContentId
+                )
+            )));
+
+            if ($a) {
+                $oTimeline = BxDolModule::getInstance('bx_timeline');
+                if ($oTimeline) {
+                    foreach ($a as $r) {
+                        $oTimeline->deleteEvent($r);
+                        $oTimeline->_oDb->deleteCache(array('event_id' => $r['id']));
+                        // BxDolService::call('bx_timeline', 'delete_entity', array($r['id']));
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 /** @} */

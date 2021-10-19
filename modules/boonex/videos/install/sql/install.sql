@@ -290,18 +290,6 @@ CREATE TABLE IF NOT EXISTS `bx_videos_embeds_providers` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `bx_videos_oembed_endpoints` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-
-CREATE TABLE IF NOT EXISTS `bx_videos_oembed_schemes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `endpoint_id` int(11) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);
 INSERT INTO `bx_videos_embeds_providers` (`object`, `module`, `params`, `class_name`, `class_file`) VALUES
 ('oembed', 'bx_videos', '', 'BxVideosEmbedProviderOEmbed', 'modules/boonex/videos/classes/BxVideosEmbedProviderOEmbed.php');
 

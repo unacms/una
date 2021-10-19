@@ -21,6 +21,17 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function getLiveBadge ($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        if (!$aContentInfo || $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return '';
+
+        return $this->parseHtmlByName('stream_badge.html', array(
+            'label' => _t('_bx_stream_txt_live_now'),
+        ));
+    }
+
     public function entryStreamViewers ($aContentInfo)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

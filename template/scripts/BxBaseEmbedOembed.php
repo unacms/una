@@ -83,16 +83,20 @@ class BxBaseEmbedOembed extends BxDolEmbed
     }
 
     public function getUrlData($sLink) {
-        $oEmbera = $this->getEmberaInstance();
+        $oEmbera = $this->getEmberaInstance(['responsive' => false]);
         return $oEmbera->getUrlData([$sLink]);
     }
 
-    protected function getEmberaInstance() {
+    protected function getEmberaInstance($aOptions = []) {
         static $oEmbera;
         if (!$oEmbera) {
             $oHttpCache = new Embera\Http\HttpClientCache(new Embera\Http\HttpClient());
             $oHttpCache->setCachingEngine(new Embera\Cache\Filesystem(BX_DIRECTORY_PATH_TMP, $this->_iCacheTTL));
-            $oEmbera = new Embera\Embera(['responsive' => true], null, $oHttpCache);
+
+            $aDefaultOptions = [
+                'responsive' => true,
+            ];
+            $oEmbera = new Embera\Embera(array_merge($aDefaultOptions, $aOptions), null, $oHttpCache);
         }
 
         return $oEmbera;

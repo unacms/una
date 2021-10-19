@@ -168,12 +168,6 @@ class BxVideosModule extends BxBaseModTextModule
             )
         );
     }
-
-    public function serviceUpdateOEmbedProviders() {
-        bx_import('EmbedProviderOEmbed', $this->_aModule);
-        $oLinkParser = new BxVideosEmbedProviderOEmbed($this);
-        $oLinkParser->updateEndpoints();
-    }
 }
 
 /** @} */
