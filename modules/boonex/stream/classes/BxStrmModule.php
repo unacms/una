@@ -209,9 +209,9 @@ class BxStrmModule extends BxBaseModTextModule
                 $oTimeline = BxDolModule::getInstance('bx_timeline');
                 if ($oTimeline) {
                     foreach ($a as $r) {
-                        $oTimeline->deleteEvent($r);
-                        $oTimeline->_oDb->deleteCache(array('event_id' => $r['id']));
-                        // BxDolService::call('bx_timeline', 'delete_entity', array($r['id']));
+                        // $oTimeline->deleteEvent($r);
+                        // $oTimeline->_oDb->deleteCache(array('event_id' => $r['id']));
+                        BxDolService::call('bx_timeline', 'delete_entity', array($r['id']));
                     }
                 }
             }
