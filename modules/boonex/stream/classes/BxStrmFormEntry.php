@@ -40,54 +40,6 @@ class BxStrmFormEntry extends BxBaseModTextFormEntry
             else
                 unset($this->aInputs[$CNF['FIELD_COVER']]);
         }
-
-        if(isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
-            $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE_PHOTOS'];
-            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_PHOTO']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_PHOTO']]['value']) : $CNF['OBJECT_UPLOADERS'];
-            $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS'];
-            $this->aInputs[$CNF['FIELD_PHOTO']]['storage_private'] = 0;
-            $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = true;
-            $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = 0;
-            $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
-            $this->aInputs[$CNF['FIELD_PHOTO']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
-        }
-
-        if(isset($this->aInputs[$CNF['FIELD_VIDEO']])) {
-            $this->aInputs[$CNF['FIELD_VIDEO']]['storage_object'] = $CNF['OBJECT_STORAGE_VIDEOS'];
-            $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_VIDEO']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_VIDEO']]['value']) : $CNF['OBJECT_UPLOADERS'];
-            $this->aInputs[$CNF['FIELD_VIDEO']]['images_transcoder'] = $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster_preview'];
-            $this->aInputs[$CNF['FIELD_VIDEO']]['storage_private'] = 0;
-            $this->aInputs[$CNF['FIELD_VIDEO']]['multiple'] = true;
-            $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = 0;
-            $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = '';
-            $this->aInputs[$CNF['FIELD_VIDEO']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
-        }
-        
-        if(isset($this->aInputs[$CNF['FIELD_SOUND']])) {
-            $this->aInputs[$CNF['FIELD_SOUND']]['storage_object'] = $CNF['OBJECT_STORAGE_SOUNDS'];
-            $this->aInputs[$CNF['FIELD_SOUND']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_SOUND']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_SOUND']]['value']) : $CNF['OBJECT_UPLOADERS'];
-            $this->aInputs[$CNF['FIELD_SOUND']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES'];
-            $this->aInputs[$CNF['FIELD_SOUND']]['storage_private'] = 0;
-            $this->aInputs[$CNF['FIELD_SOUND']]['multiple'] = true;
-            $this->aInputs[$CNF['FIELD_SOUND']]['content_id'] = 0;
-            $this->aInputs[$CNF['FIELD_SOUND']]['ghost_template'] = '';
-            $this->aInputs[$CNF['FIELD_SOUND']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
-        }
-
-        if (isset($CNF['FIELD_FILE']) && isset($this->aInputs[$CNF['FIELD_FILE']])) {
-            $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $CNF['OBJECT_STORAGE_FILES'];
-            $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_FILE']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_FILE']]['value']) : $CNF['OBJECT_UPLOADERS'];
-            $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES'];
-            $this->aInputs[$CNF['FIELD_FILE']]['storage_private'] = 0;
-            $this->aInputs[$CNF['FIELD_FILE']]['multiple'] = true;
-            $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = 0;
-            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = '';
-            $this->aInputs[$CNF['FIELD_FILE']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
-        }
-
-        if(isset($this->aInputs[$CNF['FIELD_POLL']])) {
-            $this->aInputs[$CNF['FIELD_POLL']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
-        }
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -137,7 +89,7 @@ class BxStrmFormEntry extends BxBaseModTextFormEntry
              $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
 
-        $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']] ? 'awaiting' : 'active';
+        $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting'; // streams are always in 'awaiting' status inless stream is live
 
         $aValsToAdd[$CNF['FIELD_KEY']] = genRndPwd(12, false);
 
@@ -176,17 +128,6 @@ class BxStrmFormEntry extends BxBaseModTextFormEntry
             'thumb_id' => isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
             'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : ''
         );
-    }
-
-    protected function _getPhotoGhostTmplVars($aContentInfo = array())
-    {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-    	return array (
-            'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
-            'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
-            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
-    	);
     }
 }
 

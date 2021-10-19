@@ -237,7 +237,7 @@
     <string name="_bx_stream_txt_sample_reaction_single"><![CDATA['{0}' reaction to stream]]></string>
     <string name="_bx_stream_txt_sample_score_up_single"><![CDATA[score up vote to stream]]></string>
     <string name="_bx_stream_txt_sample_score_down_single"><![CDATA[score down vote to stream]]></string>
-    <string name="_bx_stream_txt_scheduled_awaiting"><![CDATA[Stream publishing date is {date_publish_uf}]]></string>
+    <string name="_bx_stream_txt_processing_awaiting"><![CDATA[Waiting for live streaming...]]></string>
 
     <string name="_bx_stream_txt_msg_status_hidden"><![CDATA[This stream was hidden.]]></string>
     <string name="_bx_stream_txt_msg_status_pending"><![CDATA[This stream is pending approval.]]></string>
@@ -246,5 +246,6 @@
     <string name="_bx_stream_txt_viewers_loading"><![CDATA[Getting number of viewers...]]></string>
     <string name="_bx_stream_txt_no_config"><![CDATA[No configuration is defined]]></string>
     <string name="_bx_stream_txt_wait_for_stream"><![CDATA[Waiting for live streaming...]]></string>
+    <string name="_bx_stream_txt_live_now"><![CDATA[Live Now]]></string>
     <string name="_bx_stream_logs_ome_api"><![CDATA[OvenMediaEngine API Logs]]></string>
 </resources>
