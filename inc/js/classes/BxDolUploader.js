@@ -159,17 +159,24 @@ BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onCompl
             $('#' + $this._sResultContainerId).bx_show_more_check_overflow();
 
             if(bInitReordering) {
-                $('#' + $this._sResultContainerId).sortable({
-                    items: '.bx-uploader-ghost', 
-                    start: function(oEvent, oUi) {
-                        oUi.item.addClass('bx-uploader-ghost-dragging');
-                    },
-                    stop: function(oEvent, oUi) {
-                        oUi.item.removeClass('bx-uploader-ghost-dragging');
+                var fInitReordering = function() {
+                    $('#' + $this._sResultContainerId).sortable({
+                        items: '.bx-uploader-ghost', 
+                        start: function(oEvent, oUi) {
+                            oUi.item.addClass('bx-uploader-ghost-dragging');
+                        },
+                        stop: function(oEvent, oUi) {
+                            oUi.item.removeClass('bx-uploader-ghost-dragging');
 
-                        $this.reorderGhosts(oUi.item);
-                    }
-                });
+                            $this.reorderGhosts(oUi.item);
+                        }
+                    });
+                };
+
+                if($.sortable !== undefined)
+                    fInitReordering();
+                else
+                    setTimeout(fInitReordering, 2000);
             }
         }
 
