@@ -1,4 +1,11 @@
 .bx-stream-badge {
-    display:inline-block;
-    border:1px solid red;
+    display:inline-flex;
+    align-items:center;
+    border:2px solid red;
+    color:red;
+    padding:0 0.4rem;
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:0.7rem;
+    height:1.7rem;
 }

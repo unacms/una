@@ -260,7 +260,7 @@ UL.bx-base-general-lables-tree-parent-0{
 
 /* Badges */
 div.bx-badges-list {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content:center;
 }
