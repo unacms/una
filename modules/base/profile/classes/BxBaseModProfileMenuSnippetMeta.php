@@ -137,7 +137,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(empty($sTitle))
             return false;
 
-        return $this->getUnitMetaItemButtonSmall($sTitle, array(
+        return $this->getUnitMetaItemButton($sTitle, array(
             'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
             'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
         ));
