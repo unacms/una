@@ -1,6 +1,6 @@
 <ul class="bx-menu-floating-blocks-wide bx-menu-object-__object__">
-    <bx_repeat:menu_items><li class="bx-menu-item bx-menu-item-__name__ __class_add__ group relative flex justify-between items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 text-sm font-medium">
-        <a class="flex items-center" href="__link__" onclick="__onclick__"__attrs__>
+    <bx_repeat:menu_items><li class="bx-menu-item bx-menu-item-__name__ __class_add__ group relative flex justify-between items-center px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 font-normal">
+        <a class="flex flex-1 items-center py-2" href="__link__" onclick="__onclick__"__attrs__>
             <div class="bx-menu-floating-blocks-icon flex items-center justify-center h-5 w-5 mr-2">
                 <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
                 <bx_if:image><img class="h-5 w-5" style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
@@ -11,7 +11,6 @@
         <bx_if:addon>__addonf__</bx_if:addon>
     </li></bx_repeat:menu_items>
 </ul>
-
 <script language="javascript">
     $(document).ready(function () {
         // add default class to active menu items
