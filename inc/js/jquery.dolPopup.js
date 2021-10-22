@@ -20,6 +20,7 @@
         top: 0, // only for fixed
         bottom: 'auto', // only for fixed or absolute
         moveToDocRoot: true,
+        displayMode: 'trans', // trans | box | is needed for dynamic loading with dolPopupAjax
         onBeforeShow: function () {},
         onShow: function () {},
         onBeforeHide: function () {},
@@ -80,12 +81,15 @@
     };
 
     function _dolPopupLockScreen (bLock) {
-        var eBody = $(document.body),
-            eBodyHtml = $("html, body"),
-            iPaddingRight = parseInt(eBody.css("padding-right")) + ((bLock ? 1 : -1) * _getScrollbarWidth());
+        var eBody = $(document.body);
+        var eBodyHtml = $("html, body");
+        if((bLock && eBodyHtml.hasClass('bx-popup-lock')) || (!bLock && !eBodyHtml.hasClass('bx-popup-lock'))) 
+            return;
+
+        var iPaddingRight = parseInt(eBody.css("padding-right")) + ((bLock ? 1 : -1) * _getScrollbarWidth());
 
         eBody.css("padding-right", iPaddingRight + "px");
-        bLock ? eBodyHtml.addClass('bx-popup-lock') : eBodyHtml.removeClass('bx-popup-lock');
+        eBodyHtml.toggleClass('bx-popup-lock', bLock);
     };
 
     $.fn.dolPopup = function(options) {
@@ -384,15 +388,19 @@
         options = options || {};
         options = $.extend({}, $.fn.dolPopupDefaultOptions, options);
 
-        if ('undefined' == typeof(options.url))
+        if(!options.url)
             return;
 
-        if ('undefined' == typeof(options.container))
+        if(!options.container)
             options.container = '.bx-popup-content-wrapped';
 
+        var bDisplayModeBox = false;
+        if(options.displayMode && options.displayMode == 'box')
+            bDisplayModeBox = true;
+
         var bFullScreen = false;
-        if (typeof(options.fullScreen) != 'undefined')
-        	bFullScreen = options.fullScreen;
+        if(options.fullScreen !== undefined)
+            bFullScreen = options.fullScreen;
 
         var bx_menu_on = function (e, b) {
             var li = $(e).parents('li:first');   
@@ -424,23 +432,24 @@
             	sPopupId = sIdPrefix + e.attr('bx-popup-id');
             else if(typeof(options.id) != 'undefined')
             	switch(typeof(options.id)) {
-            		case 'string':
-            			sPopupId = sIdPrefix + options.id;
-            			break;
+                    case 'string':
+                        sPopupId = sIdPrefix + options.id;
+                        break;
 
-            		case 'object':
-            			sPopupId = typeof(options.id.force) != 'undefined' && options.id.force ? options.id.value : sIdPrefix + options.id.value;
-            			break;
-            	}
+                    case 'object':
+                        sPopupId = typeof(options.id.force) != 'undefined' && options.id.force ? options.id.value : sIdPrefix + options.id.value;
+                        break;
+                }
             else
             	sPopupId = sIdPrefix + parseInt(2147483647 * Math.random());
 
             var oPointerOptions = $.isWindow(e[0]) ? false : $.extend({}, {el:$(e), align:'center'}, options.pointer);
             if ($('#' + sPopupId + ':visible').length) { // if popup exists and is shown - hide it
-                
+
                 $('#' + sPopupId).dolPopupHide();
 
-            } else if ($('#' + sPopupId).length) { // if popup exists but not shown - unhide it
+            } 
+            else if ($('#' + sPopupId).length) { // if popup exists but not shown - unhide it
 
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
@@ -461,11 +470,12 @@
                 });
 
                 if(bFullScreen)
-                	$('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
+                    $('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
                 else
-                	$('#' + sPopupId).dolPopup(oPopupOptions);
+                    $('#' + sPopupId).dolPopup(oPopupOptions);
 
-            } else { // if popup doesn't exists - create new one from provided url
+            } 
+            else { // if popup doesn't exists - create new one from provided url
 
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
@@ -488,37 +498,51 @@
                             bx_menu_on(e, false);
 
                         if(typeof(options.onHide) == 'function')
-                        	options.onHide(oPopup);
+                            options.onHide(oPopup);
                     }
                 });
 
-                if(bFullScreen)
-                	$('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
+                if(bFullScreen && !bDisplayModeBox)
+                    $('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
                 else
-                	$('#' + sPopupId).dolPopup(oPopupOptions);
+                    $('#' + sPopupId).dolPopup(oPopupOptions);
 
                 var fOnLoad = function() {
-                	bx_loading_content(oLoading, false);
+                    bx_loading_content(oLoading, false);
 
-                	$('#' + sPopupId + ' ' + options.container).bxProcessHtml().show();
+                    $('#' + sPopupId + ' ' + options.container).bxProcessHtml().show();
 
-					$('#' + sPopupId)._dolPopupSetPosition({
-						pointer: oPointerOptions
-					});
+                    $('#' + sPopupId)._dolPopupSetPosition({
+                        pointer: oPointerOptions
+                    });
+                };
+
+                var fOnLoadImg = function () {
+                    if($('#' + sPopupId).find('img').length > 0 && !$('#' + sPopupId).find('img').get(0).complete)
+                        $('#' + sPopupId).find('img').load(fOnLoad);
+                    else
+                        fOnLoad();
                 };
 
                 var sUrl = (options.url.indexOf('http://') == 0 || options.url.indexOf('https://') == 0 || options.url.indexOf('/') == 0 ? '' : sUrlRoot) + options.url;
 
-                $('#' + sPopupId).find(options.container).load(sUrl, function () {
-                    var f = function () {
-                    	if($('#' + sPopupId).find('img').length > 0 && !$('#' + sPopupId).find('img').get(0).complete)
-                    	
-                    		$('#' + sPopupId).find('img').load(fOnLoad);
-                    	else
-                    		fOnLoad();
-                    };
-                    setTimeout(f, 100); // TODO: better way is to check if item is animating before positioning it in the code where popup is positioning
-                });
+                if(bDisplayModeBox) {
+                    options.container = '.bx-popup-content:first';
+
+                    $.get(sUrl, function(sData) {
+                        $('#' + sPopupId).replaceWith(sData);
+                        if(bFullScreen)
+                            $('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
+                        else
+                            $('#' + sPopupId).dolPopup(oPopupOptions);
+
+                        setTimeout(fOnLoadImg, 100); // TODO: better way is to check if item is animating before positioning it in the code where popup is positioning
+                    });
+                }
+                else
+                    $('#' + sPopupId).find(options.container).load(sUrl, function () {
+                        setTimeout(fOnLoadImg, 100); // TODO: better way is to check if item is animating before positioning it in the code where popup is positioning
+                    });
             }
         });
     };

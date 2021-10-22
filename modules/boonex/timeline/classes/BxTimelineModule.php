@@ -589,6 +589,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetItemBrief()
     {
+        $aParams = $this->_prepareParamsGet();
+
         $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
         if(empty($aEvent) || !is_array($aEvent)) {
@@ -601,7 +603,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return;
         }        
 
-        echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCodeDynamic();
+        $sName = $this->_oConfig->getHtmlIdView('item_popup', $aParams, array('whole' => false, 'hash' => false)) . $iEvent;
+        $sTitle = _t('_bx_timeline_page_title_item_brief');
+        $sContent = BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCodeDynamic();
+        echo PopupBox($sName, $sTitle, $sContent, true);
+                
     }
 
     public function actionGetJumpTo()

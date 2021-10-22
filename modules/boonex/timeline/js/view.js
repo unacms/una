@@ -552,7 +552,8 @@ BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams)
         url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
         closeOnOuterClick: false,
         removeOnClose: true,
-        fullScreen: true
+        fullScreen: true,
+        displayMode: 'box'
     });
 
     return false;
