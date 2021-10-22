@@ -113,8 +113,15 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
     
     protected function _getCellCmtText($mixedValue, $sKey, $aField, $aRow)
     {
-        $sTmp = strip_tags($aRow['cmt_text']);
-        return parent::_getCellDefault($sTmp, $sKey, $aField, $aRow);
+        $mixedValue = strmaxtextlen($aRow['cmt_text']);
+
+        if($this->_oCmts && $this->_oCmts->isEnabled()) {
+            $this->_oCmts->setId($aRow['cmt_object_id']);
+
+            $mixedValue = $this->_oTemplate->parseLink($this->_oCmts->getViewUrl($aRow['cmt_id']), $mixedValue, ['target' => '_blank']);
+        }
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
     
     protected function _getCellCmtAuthorId($mixedValue, $sKey, $aField, $aRow)
