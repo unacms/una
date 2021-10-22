@@ -46,6 +46,12 @@ class BxDolCronQuery extends BxDolDb implements iBxDolSingleton
     	return $this->fromCache('sys_cron_jobs', 'getAll', "SELECT * FROM `sys_cron_jobs`");
     }
 
+    public function updateJob($iId, $aFields = array())
+    {
+    	$sQuery = $this->prepare("UPDATE `sys_cron_jobs` SET " . $this->arrayToSQL($aFields) . " WHERE `id` = ?", $iId);
+        return $this->query($sQuery);
+    }
+
     public function addTransientJobClass($sName, $sClass, $sFile)
     {
     	$sQuery = $this->prepare("INSERT INTO `sys_cron_jobs` SET `name`=?, `time`='transient', `class`=?, `file`=?", $sName, $sClass, $sFile);
