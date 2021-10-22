@@ -436,9 +436,9 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-        $oTranscoderPreview = isset($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) && $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) : null;
+        $oTranscoderView = !empty($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) : null;
 
-        return array($oTranscoder, $oTranscoderPreview);
+        return array($oTranscoder, $oTranscoderView);
     }
 
     protected function getAttachmentsVideoTranscoders ($sStorage = '')

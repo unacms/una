@@ -643,27 +643,26 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     protected function getUnit ($aData, $aParams = array())
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
+        $oModule = $this->getModule();
 
         // get thumb url
         list($sPhotoThumb, $sPhotoGallery) = $this->getUnitThumbAndGallery($aData);
-		
-		if ($sPhotoGallery == '' && isset($CNF['PARAM_USE_GALERY_AS_COVER']) && getParam($CNF['PARAM_USE_GALERY_AS_COVER']) == 'on'){
-			if(!empty($CNF['OBJECT_STORAGE_PHOTOS'])){
-				$sStorage = $CNF['OBJECT_STORAGE_PHOTOS'];
-				$oStorage = BxDolStorage::getObjectInstance($sStorage); 
-				list($oTranscoder, $oTranscoderPreview) = $this->getAttachmentsImagesTranscoders($sStorage);
-				$aGhostFiles = $oStorage->getGhosts ($this->getModule()->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
-				if ($aGhostFiles){
-					foreach ($aGhostFiles as $k => $a) {
-						$sPhotoGallery = $oTranscoder->getFileUrl($a['id']);
-						$sPhotoThumb  = $oTranscoderPreview->getFileUrl($a['id']);
-						break; 
-					}
-				}
-			}
-		}
+
+        if ($sPhotoGallery == '' && isset($CNF['PARAM_USE_GALERY_AS_COVER']) && getParam($CNF['PARAM_USE_GALERY_AS_COVER']) == 'on'){
+            if(!empty($CNF['OBJECT_STORAGE_PHOTOS'])){
+                $sStorage = $CNF['OBJECT_STORAGE_PHOTOS'];
+                $oStorage = BxDolStorage::getObjectInstance($sStorage); 
+                list($oTranscoder, $oTranscoderView) = $this->getAttachmentsImagesTranscoders($sStorage);
+                $aGhostFiles = $oStorage->getGhosts($oModule->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
+                if(!empty($aGhostFiles) && is_array($aGhostFiles)) {
+                    $aGhostFile = array_shift($aGhostFiles);
+
+                    $sPhotoThumb = $oTranscoderView->getFileUrl($aGhostFile['id']);
+                    $sPhotoGallery = $oTranscoder->getFileUrl($aGhostFile['id']);
+                }
+            }
+        }
 
         // get entry url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
@@ -751,7 +750,9 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(isset($CNF['OBJECT_STORAGE_PHOTOS']) && $CNF['OBJECT_STORAGE_PHOTOS'] == $sStorage) {
             if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']))
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
-            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS']))
+                $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS']);
+            else if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
                 $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
         }
         else if(isset($CNF['OBJECT_STORAGE_FILES']) && $CNF['OBJECT_STORAGE_FILES'] == $sStorage) {
