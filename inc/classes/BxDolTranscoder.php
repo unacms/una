@@ -165,6 +165,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
                 $sFileData = bx_file_get_contents ($aQueue['file_url_result']);
                 if (false === $sFileData) {
                     $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_FAILED, "download file failed: {$aQueue['file_url_result']}\n");
+                    bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: processCompleted failed, get transcoded file from URL ({$aQueue['file_url_result']}) failed");
                     continue;   
                 }
                 
@@ -172,14 +173,17 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
                 if (!file_put_contents($sTmpFile, $sFileData)) {
                     $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_FAILED, "store downloaded file failed\n");
                     @unlink($sTmpFile);
+                    bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: processCompleted failed, store transcoded file to tmp file ({$sTmpFile}) failed");
                     continue;
                 }
                 
                 // store downloaded file in final storage
-                if ($o->storeTranscodedFile($aQueue['file_id_source'], $sTmpFile, $aQueue['profile_id']))
+                if ($o->storeTranscodedFile($aQueue['file_id_source'], $sTmpFile, $aQueue['profile_id'])) {
                    $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_DELETE); // mark to delete it (deletion is performed on the server where it was transcoded)
-                else
+                } else {
                     $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_FAILED, "store file failed:\n" . $o->getLog());
+                    bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: processCompleted failed, store transcoded file ({$aQueue['file_id_source']}) in final storage failed: " . $o->getLog());
+                }
 
                 // delete tmp local file
                 @unlink($sTmpFile);
@@ -285,13 +289,17 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
         // delete main file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
-        if ($iFileId && !$this->_oStorage->deleteFile($iFileId))
+        if ($iFileId && !$this->_oStorage->deleteFile($iFileId)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: onDeleteFileOrig failed for handler ({$mixedHandler}) delete failed");
             return false;
+        }
 
         // delete retina file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler . $this->_sRetinaSuffix);
-        if ($iFileId && !$this->_oStorage->deleteFile($iFileId))
+        if ($iFileId && !$this->_oStorage->deleteFile($iFileId)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: onDeleteFileOrig failed for handler ({$mixedHandler}) delete retina file failed");
             return false;
+        }
 
         return true;
     }
@@ -364,12 +372,16 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
             $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
 
             $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
-            if (!$iFileId)
+            if (!$iFileId) {
+                bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: getFileUrl failed for handler ({$mixedHandler}) source file id wasn't found");
                 return false;
+            }
 
             $aFile = $this->_oStorage->getFile($iFileId);
-            if (!$aFile)
+            if (!$aFile) {
+                bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: getFileUrl failed for handler ({$mixedHandler}) source file wasn't found in the source storage");
                 return false;
+            }
 
             if ($this->_aObject['atime_tracking'])
                 $this->_oDb->updateAccessTime($mixedHandler);
@@ -377,8 +389,10 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
             return $this->_oStorage->getFileUrlById($iFileId);
         }
 
-        if ($this->_sQueueTable && !$this->addToQueue($mixedHandler)) // add file to queue (when queue is enabled) if it isn't transcoded yet
+        if ($this->_sQueueTable && !$this->addToQueue($mixedHandler)) { // add file to queue (when queue is enabled) if it isn't transcoded yet
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: getFileUrl failed for handler ({$mixedHandler}), can't add file to queue");
             return false;
+        }
 
         return $this->getFileUrlNotReady($mixedHandler);
     }
@@ -589,6 +603,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
             $oStorage = BxDolStorage::getObjectInstance($this->_sQueueStorage);
             if (!$oStorage->deleteFile($a['file_id_result'])) {
                 $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, $sErrMsg . $this->getLog());
+                bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: deleteFromQueue failed for handler ({$mixedHandler}): " . $this->getLog());
                 return false;
             }
         }
@@ -603,6 +618,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         $iFileId = $this->_oStorage->storeFileFromPath ($sTmpFile, $isPrivate, $iProfileId);
         if (!$iFileId) {
             $this->addToLog($this->_oStorage->getErrorString());
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeTranscodedFile failed for handler ({$mixedHandler}): " . $this->_oStorage->getErrorString());
             return false;
         }
 
@@ -626,6 +642,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         $iFileIdResult = $oStorage->storeFileFromPath ($sTmpFile, 1, 0);
         if (!$iFileIdResult) {
             $this->addToLog($oStorage->getErrorString());
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeTranscodedFileInQueueStorage failed for handler ({$mixedHandler}): " . $oStorage->getErrorString());
             return false;
         }
 
@@ -663,6 +680,8 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
         if (IMAGE_ERROR_SUCCESS == $o->resize($sFile))
             return true;
+
+        bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: applyFilter_Resize failed for file ({$sFile}): " . $o->getError());
 
         return false;
     }
@@ -747,8 +766,10 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         if (!file_exists($sPath))
             $sPath = BX_DIRECTORY_PATH_ROOT . $sPath;
 
-        if (!file_exists($sPath))
+        if (!file_exists($sPath)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: getFilePath_Folder failed, file ({$sPath}) doesn't exist for handler ({$mixedHandler})");
             return false;
+        }
 
         return $sPath;
     }
@@ -756,12 +777,16 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     protected function storeFileLocally_Folder ($mixedHandler)
     {
         $sPath = $this->getFilePath_Folder($mixedHandler);
-        if (!$sPath)
+        if (!$sPath) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Folder failed, source file ({$sPath}) doesn't exist for handler ({$mixedHandler})");
             return false;
+        }
 
         $sTmpFile = $this->getTmpFilename ($mixedHandler);
-        if (!copy($sPath, $sTmpFile))
+        if (!copy($sPath, $sTmpFile)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Folder failed, copy from file ({$sPath}) to file ({$sTmpFile}) failed");
             return false;
+        }
 
         return $sTmpFile;
     }
@@ -769,24 +794,34 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     protected function storeFileLocally_Storage ($mixedHandler)
     {
         $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
-        if (!$oStorageOriginal)
+        if (!$oStorageOriginal) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Storage failed, source storage({$this->_aObject['source_params']['object']}) isn't available");
             return false;
+        }
 
         $aFile = $oStorageOriginal->getFile($mixedHandler);
-        if (!$aFile)
+        if (!$aFile) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Storage failed, file({$mixedHandler}) wasn't found in source storage ({$this->_aObject['source_params']['object']})");
             return false;
+        }
 
         $sUrl = $oStorageOriginal->getFileUrlById($mixedHandler);
-        if (!$sUrl)
+        if (!$sUrl) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Storage failed, file({$mixedHandler}) wasn't found in source storage ({$this->_aObject['source_params']['object']})");
             return false;
+        }
 
-        $sFileData = bx_file_get_contents ($sUrl);
-        if (false === $sFileData)
+        $sFileData = bx_file_get_contents ($sUrl, [], 'get', []);
+        if (false === $sFileData) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Storage failed, getting file from URL({$sUrl}) failed");
             return false;
+        }
 
         $sTmpFile = $this->getTmpFilename ($aFile['file_name']);
-        if (!file_put_contents($sTmpFile, $sFileData))
+        if (!file_put_contents($sTmpFile, $sFileData)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Storage failed, file save failed ({$sTmpFile})");
             return false;
+        }
 
         return $sTmpFile;
     }
@@ -794,16 +829,22 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     protected function storeFileLocally_Queue ($mixedHandler)
     {   
         $aQueue = $this->_oDb->getFromQueue($mixedHandler);
-        if (!$aQueue || !$aQueue['file_url_source'])
+        if (!$aQueue || !$aQueue['file_url_source']) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Queue failed, file ({$mixedHandler}) wasn't found in queue");
             return false;
+        }
 
-        $sFileData = bx_file_get_contents ($aQueue['file_url_source']);
-        if (false === $sFileData)
+        $sFileData = bx_file_get_contents ($aQueue['file_url_source'], [], 'get', []);
+        if (false === $sFileData) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Queue failed, getting file from URL({$aQueue['file_url_source']}) failed");
             return false;
+        }
 
         $sTmpFile = $this->getTmpFilename ($mixedHandler);
-        if (!file_put_contents($sTmpFile, $sFileData))
+        if (!file_put_contents($sTmpFile, $sFileData)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: storeFileLocally_Queue failed, file save failed ({$sTmpFile})");
             return false;
+        }
 
         return $sTmpFile;
     }
@@ -811,8 +852,10 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     protected function getOrigFileUrl_Folder ($mixedHandler)
     {
         $sPath = $this->_aObject['source_params']['path'] . $mixedHandler;
-        if (!file_exists(BX_DIRECTORY_PATH_ROOT . $sPath))
+        if (!file_exists(BX_DIRECTORY_PATH_ROOT . $sPath)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: getOrigFileUrl_Folder failed, source file ({$sPath}) doesn't exist");
             return false;
+        }
         
         return BX_DOL_URL_ROOT . $sPath;
     }
@@ -820,8 +863,10 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     protected function getOrigFileUrl_Storage ($mixedHandler)
     {
         $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
-        if (!$oStorageOriginal)
+        if (!$oStorageOriginal) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: getOrigFileUrl_Storage failed, source storage ({$this->_aObject['source_params']['object']}) doesn't exist");
             return false;
+        }
 
         return $oStorageOriginal->getFileUrlById($mixedHandler);
     }

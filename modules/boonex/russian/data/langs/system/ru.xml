@@ -2650,6 +2650,7 @@
     <string name="_sys_log_push"><![CDATA[Система: PUSH]]></string>
 	<string name="_sys_log_payments"><![CDATA[Система: Платежи]]></string>
 	<string name="_sys_log_cron_jobs"><![CDATA[System: Задания Cron]]></string>
+    <string name="_sys_log_transcoder"><![CDATA[System: Транскодер]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Ошибка: некорректный макрос]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Ошибка: небезопасный макрос]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Ошибка: некорректный вывод макроса]]></string>

@@ -5369,7 +5369,8 @@ INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `ac
 ('sys_twilio', 'system', 'Auto', '_sys_log_twilio', 1, '', ''),
 ('sys_push', 'system', 'Auto', '_sys_log_push', 1, '', ''),
 ('sys_payments', 'system', 'Auto', '_sys_log_payments', 1, '', ''),
-('sys_cron_jobs', 'system', 'Auto', '_sys_log_cron_jobs', 0, '', '');
+('sys_cron_jobs', 'system', 'Auto', '_sys_log_cron_jobs', 0, '', ''),
+('sys_transcoder', 'system', 'Auto', '_sys_log_transcoder', 1, '', '');
 
 
 -- --------------------------------------------------------

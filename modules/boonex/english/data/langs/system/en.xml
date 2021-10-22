@@ -2666,6 +2666,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_log_push"><![CDATA[System: PUSH]]></string>
 	<string name="_sys_log_payments"><![CDATA[System: Payments]]></string>
 	<string name="_sys_log_cron_jobs"><![CDATA[System: Cron jobs]]></string>
+	<string name="_sys_log_transcoder"><![CDATA[System: Transcoder]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Error: malformed macros]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Error: unsafe macros]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Error: output isn't displayable]]></string>
