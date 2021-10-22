@@ -107,12 +107,20 @@
         @apply rounded-lg;
     }
 
-    .bx-popup-responsive:not(.bx-popup-menu) {
+    .bx-popup-responsive:not(.bx-popup-full-screen):not(.bx-popup-menu) {
         @apply w-full md:w-auto;
+    }
+
+    .bx-popup-full-screen {
+        @apply w-full;
     }
 
     .bx-popup-width {
         @apply w-full md:w-128;
+    }
+
+    .bx-popup-full-screen .bx-popup-width {
+        @apply w-full md:w-full;
     }
 
     .bx-popup-fog {

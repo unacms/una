@@ -13,7 +13,7 @@ module.exports = {
         'text-red-400', 
         'bx-def-a-colored',
         'bx-form-required', 'bx-form-warn',
-        'bx-popup-fog',
+        'bx-popup-full-screen', 'bx-popup-fog',
         'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
     ]
   },

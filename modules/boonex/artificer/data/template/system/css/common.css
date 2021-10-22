@@ -168,6 +168,17 @@ import url(../../../../../../../template/css/common.css);
 
 
 /*--- Popup boxes ---*/
+html.bx-popup-lock,
+body.bx-popup-lock {
+    overflow: hidden;
+}
+
+body > .bx-popup-wrapper {
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 .bx-popup-transitions {
     -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
@@ -212,4 +223,40 @@ import url(../../../../../../../template/css/common.css);
 .bx-popup-menu ul {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+
+/*--- Loading indicator ---*/
+.bx-loading-ajax {
+    position: absolute;
+    width: 6rem;
+    height: 6rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: transparent;
+
+    border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+
+    text-align: center;
+    color: #CCCCCC;
+}
+.bx-loading-ajax.static {
+    position: static;
+}
+.bx-loading-ajax-btn {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+    min-width: 2.0rem;
+
+    margin-left: 0.25rem;
+}
+
+button.bx-btn:focus,
+button.bx-btn:focus .bx-loading-ajax-btn {
+    outline: 0;	
 }

@@ -13,6 +13,13 @@
     justify-content: flex-start;
 }
 
+.bx-base-pofile-units-wrapper .bx-base-pofile-unit-with-cover {
+    -webkit-flex: 0 0 100%;
+    flex: 0 0 100%;
+
+    overflow: hidden;
+}
+
 /*+++ MEDIA: tablet2 +++*/
 .bx-media-tablet2 .bx-layout-column-wide .bx-base-pofile-units-wrapper .bx-base-pofile-unit-with-cover,
 .bx-media-tablet2 #sys_search_results .bx-base-pofile-units-wrapper .bx-base-pofile-unit-with-cover,
