@@ -125,6 +125,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_forum_gallery_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_forum_preview_photos',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_forum_gallery_photos',
+            'OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS' => 'bx_forum_view_photos',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts', // for comments
             'OBJECT_VIDEOS_TRANSCODERS' => array(
                 'poster' => 'bx_forum_videos_poster', 

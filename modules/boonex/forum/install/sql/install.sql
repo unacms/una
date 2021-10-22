@@ -379,6 +379,7 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 
 ('bx_forum_preview_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_forum_gallery_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
+('bx_forum_view_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
 
 ('bx_forum_videos_poster', 'bx_forum_videos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 ('bx_forum_videos_poster_preview', 'bx_forum_videos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
@@ -398,6 +399,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 ('bx_forum_preview_photos', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_forum_gallery_photos', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0'),
+('bx_forum_view_photos', 'Resize',  'a:2:{s:1:"w";s:4:"2000";s:1:"h";s:4:"2000";}', '0'),
 
 ('bx_forum_videos_poster_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', 10),
 ('bx_forum_videos_poster_preview', 'Poster', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"jpg";}', 0),
