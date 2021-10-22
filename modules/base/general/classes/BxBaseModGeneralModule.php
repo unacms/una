@@ -2477,6 +2477,9 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
     }
 
+    /**
+     * Shows a list of profiles.
+     */
     protected function _serviceBrowseQuick($aProfiles, $iStart = 0, $iLimit = 4, $aAdditionalParams = array())
     {
         // get paginate object
@@ -2510,8 +2513,17 @@ class BxBaseModGeneralModule extends BxDolModule
             $s .= $oProfile->getUnit(0, $aUnitParams);
         }
 
-        // return profiles + paginate
-        return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
+        $aTmplVarsPaginate = [];
+        if($iStart || $oPaginate->getNum() > $iLimit)
+            $aTmplVarsPaginate = ['paginate' => $oPaginate->getSimplePaginate()];
+
+        return $this->_oTemplate->parseHtmlByName('browse_quick.html', array(
+            'code' => $s,
+            'bx_if:show_paginate' => [
+                'condition' => !empty($aTmplVarsPaginate),
+                'content' => $aTmplVarsPaginate
+            ]
+        ));
     }
 
     // ====== COMMON METHODS
