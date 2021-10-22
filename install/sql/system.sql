@@ -4660,7 +4660,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('sys_cmts_administration', 'Sql', '', '', 'cmt_id', 'cmt_time', '', '', 20, NULL, 'start', '', 'cmt_text,email', '', 'like', 'reports', '', 192, 'BxTemplCmtsGridAdministration', '');
+('sys_cmts_administration', 'Sql', '', 'sys_cmts_ids', 'cmt_id', 'cmt_time', '', '', 20, NULL, 'start', '', 'cmt_text,email', '', 'like', 'reports', '', 192, 'BxTemplCmtsGridAdministration', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('sys_cmts_administration', 'checkbox', '_sys_select', '2%', 0, '0', '', 1),

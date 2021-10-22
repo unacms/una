@@ -27,7 +27,7 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
             'sObjName' => $this->sJsObject,
             'aHtmlIds' => array(),
             'oRequestParams' => array(),
-        	'sObjNameGrid' => 'sys_cmts_administration'
+            'sObjNameGrid' => 'sys_cmts_administration'
         );
         return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->sJsObject . " = new BxDolCmtsManageTools(" . json_encode($aParams) . ");");
     }
@@ -73,12 +73,8 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
-        //todo
-		$CNF = &$this->_oModule->_oConfig->CNF;
-		
-
-		foreach($aFilterValues as $sKey => $sValue)
-			$aFilterValues[$sKey] = _t($sValue);
+        foreach($aFilterValues as $sKey => $sValue)
+            $aFilterValues[$sKey] = _t($sValue);
 
         $aInputModules = array(
             'type' => 'select',
@@ -88,13 +84,13 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
                 'onChange' => 'javascript:' . $this->sJsObject . '.onChangeFilter(this)'
             ),
             'value' => $sFilterValue,
-            'values' => array_merge(array('' => _t($CNF['T']['filter_item_select_one_' . $sFilterName])), $aFilterValues)
+            'values' => $aFilterValues
         );
 
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputModules);
     }
-    
+
     protected function _getSearchInput()
     {
         $aInputSearch = array(
@@ -126,13 +122,13 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
     	$oProfile = BxDolProfile::getInstance($aRow['cmt_author_id']);
     	$sProfile = $oProfile->getDisplayName();
 
-		$oAcl = BxDolAcl::getInstance();
+        $oAcl = BxDolAcl::getInstance();
 
     	$sAccountEmail = '';
     	$sManageAccountUrl = '';
     	if($oProfile && $oProfile instanceof BxDolProfile && $oAcl->isMemberLevelInSet(128)) {
-    		$sAccountEmail = $oProfile->getAccountObject()->getEmail();
-	    	$sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
+            $sAccountEmail = $oProfile->getAccountObject()->getEmail();
+            $sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
     	}
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('author_link.html', array(
@@ -140,12 +136,12 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
             'title' => $sProfile,
             'content' => $sProfile,
         	'bx_if:show_account' => array(
-        		'condition' => !empty($sManageAccountUrl), 
-        		'content' => array(
-        			'href' => $sManageAccountUrl,
-		        	'title' => _t('_sys_grid_txt_account_manager'),
-		        	'content' => $sAccountEmail
-        		)
+                    'condition' => !empty($sManageAccountUrl), 
+                    'content' => array(
+                        'href' => $sManageAccountUrl,
+                        'title' => _t('_sys_grid_txt_account_manager'),
+                        'content' => $sAccountEmail
+                    )
         	)
         ));
 
@@ -171,26 +167,24 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
     protected function _getManageAccountUrl($sFilter = '')
     {
     	$sModuleAccounts = 'bx_accounts';
     	if(!BxDolModuleQuery::getInstance()->isEnabledByName($sModuleAccounts))
-    		return '';
+            return '';
 
-		$sTypeUpc = strtoupper($this->_sManageType);
-		$oModuleAccounts = BxDolModule::getInstance($sModuleAccounts);
-		if(!$oModuleAccounts || empty($oModuleAccounts->_oConfig->CNF['URL_MANAGE_' . $sTypeUpc]))
-			return '';
+        $sTypeUpc = strtoupper($this->_sManageType);
+        $oModuleAccounts = BxDolModule::getInstance($sModuleAccounts);
+        if(!$oModuleAccounts || empty($oModuleAccounts->_oConfig->CNF['URL_MANAGE_' . $sTypeUpc]))
+            return '';
 
-		$sLink = $oModuleAccounts->_oConfig->CNF['URL_MANAGE_' . $sTypeUpc];
+        $sLink = $oModuleAccounts->_oConfig->CNF['URL_MANAGE_' . $sTypeUpc];
+        $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sLink);
+        if(!empty($sFilter))
+            $sLink = bx_append_url_params($sLink, array('filter' => $sFilter));
 
-		$sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sLink);
-		
-		if(!empty($sFilter))
-			$sLink = bx_append_url_params($sLink, array('filter' => $sFilter));
-
-		return $sLink;
+        return $sLink;
     }
 }
 
