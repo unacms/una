@@ -9,6 +9,8 @@
  * @{
  */
 
+define('BX_ORGANIZATIONS_ACTION_SWITCH_TO_PROFILE', 'switch_to_profile');
+
 /**
  * Organizations profiles module.
  */
@@ -95,6 +97,23 @@ class BxOrgsModule extends BxBaseModGroupsModule
             return false;
         $oAccount = $oProfile->getAccountObject();
         $oAccount->updateProfileContextAuto();
+    }
+
+    public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId)
+    {
+        $bResult = parent::isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId);
+        if(!$bResult)
+            return $bResult;
+
+        $iProfileRole = $this->_oDb->getRole($iGroupProfileId, $iProfileId);
+
+        switch($sAction) {
+            case BX_ORGANIZATIONS_ACTION_SWITCH_TO_PROFILE:
+                $bResult = $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR);
+                break;
+        }
+
+        return $bResult;
     }
 
     public function checkAllowedCompose (&$aDataEntry, $isPerformAction = false)

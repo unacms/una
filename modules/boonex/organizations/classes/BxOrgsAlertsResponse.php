@@ -40,7 +40,7 @@ class BxOrgsAlertsResponse extends BxBaseModGroupsAlertsResponse
         if(empty($aDataEntry) || !is_array($aDataEntry))
             return;
 
-        $oAlert->aExtras['override_result'] = $oAlert->iObject == $oAlert->aExtras['viewer_account'] || $this->_oModule->_oDb->isAdmin($iProfile, $oAlert->iSender, $aDataEntry);
+        $oAlert->aExtras['override_result'] = $oAlert->iObject == $oAlert->aExtras['viewer_account'] || $this->_oModule->isAllowedActionByRole(BX_ORGANIZATIONS_ACTION_SWITCH_TO_PROFILE, $aDataEntry, $iProfile, $oAlert->iSender);
     }
 }
 
