@@ -1305,7 +1305,7 @@ class BxDolFormChecker
                 !isset(BxDolForm::$FUNC_SKIP_DOMAIN_CHECK[$sCheckerFunc]) && 
                 (!isset($a['skip_domain_check']) || false == $a['skip_domain_check']) && 
                 isset(BxDolForm::$TYPES_TEXT[$a['type']]) && 
-                bx_is_url_in_content($val) && 
+                bx_is_url_in_content($val, true) && 
                 !isAdmin())
             {
                 $aCheck = checkActionModule(bx_get_logged_profile_id(), 'post links', 'system');
