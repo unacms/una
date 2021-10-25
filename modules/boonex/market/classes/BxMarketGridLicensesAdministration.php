@@ -78,6 +78,18 @@ class BxMarketGridLicensesAdministration extends BxTemplGrid
         return parent::_getCellDefault(_t('_bx_market_grid_txt_lcs_type_' . $mixedValue), $sKey, $aField, $aRow);
     }
 
+    protected function _getCellDomain($mixedValue, $sKey, $aField, $aRow)
+    {
+        $sModuleOAuth = 'bx_oauth';
+        if(!empty($mixedValue) && BxDolModuleQuery::getInstance()->isEnabledByName($sModuleOAuth)) {
+            $aClient = bx_srv($sModuleOAuth, 'get_clients_by', array(array('type' => 'client_id', 'client_id' => $mixedValue)));
+            if(!empty($aClient) && is_array($aClient) && !empty($aClient['title']))
+                $mixedValue .= ' (' . $aClient['title'] . ')';
+        }
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
