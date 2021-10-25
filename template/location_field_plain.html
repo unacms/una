@@ -14,16 +14,17 @@
 (function () {
     var getLocationString = function (sMode) {
         var sCountry = $('select[name="__name___country"] :selected').text();
+        var sCountryCode = $('select[name="__name___country"]').val();
         var sZip = $('input[name="__name___zip"]').val();
         var sState = $('input[name="__name___state"]').val();
         var sCity = $('input[name="__name___city"]').val();
         var sStreet = $('input[name="__name___street"]').val();
         var sNum = $('input[name="__name___street_number"]').val();
 
-        if (!sCountry || !sCountry.length)
+        if (!sCountryCode || !sCountryCode.length)
             return '';
 
-        sRet = (sZip.length ? sZip + ', ' : '') + sCountry;
+        sRet = sZip.length ? sZip : '';
         if ('undefined' !== typeof(sMode) && 'zip_only' == sMode) {
             return sZip.length ? sRet : '';
         }
@@ -36,19 +37,34 @@
             sRet = (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + sRet;
 
         if ('undefined' !== typeof(sMode) &&  'address_wo_zip' == sMode) {
-            return sCity.length && sStreet.length ? (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + (sCity.length ? sCity + ', ': '') + (sState.length ? sState + ', ': '') + sCountry : '';
+            return sCity.length && sStreet.length ? 
+                    (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + (sCity.length ? sCity + ', ': '') + (sState.length ? sState : '') : '';
         }
 
         return sRet;
     }
 
-    var geocode = function (a, i) {
+    var geocode = function (a, i, sCountryCode) {
         var s = a[i];
-        $.getJSON('__nominatim_server__/search/?q=' + encodeURIComponent(s) + '&format=json&limit=1&email=__nominatim_email__', function (oResult) {
+        $.getJSON('__nominatim_server__/search/?q=' + encodeURIComponent(s) + '&countrycodes=' + sCountryCode + '&addressdetails=1&format=json&limit=1&email=__nominatim_email__', function (oResult) {
             glBxLocationFieldPlainGeocodingRequest = false;
             if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
+
                 $('input[name="__name___lat"]').val(oResult[0].lat);
                 $('input[name="__name___lng"]').val(oResult[0].lon);
+                if ('undefined' !== typeof(oResult[0].address)) {
+                    if ('undefined' !== typeof(oResult[0].address.state) && 0 == $('input[name="__name___state"]').val().length)
+                        $('input[name="__name___state"]').val(oResult[0].address.state);
+
+                    if (0 == $('input[name="__name___city"]').val().length) {
+                        if ('undefined' !== typeof(oResult[0].address.city))
+                            $('input[name="__name___city"]').val(oResult[0].address.city);
+                        else if ('undefined' !== typeof(oResult[0].address.town))
+                            $('input[name="__name___city"]').val(oResult[0].address.town);
+                        else if ('undefined' !== typeof(oResult[0].address.village))
+                            $('input[name="__name___city"]').val(oResult[0].address.village);
+                    }
+                }
                 if ('undefined' !== typeof(oResult[0].licence))
                     $('.bx-form-input-location-__name__ .bx-form-input-location-copyright').html(oResult[0].licence);
                 setLocationStatus('ok');
@@ -56,7 +72,7 @@
             else {
                 i += 1;
                 if ('undefined' !== typeof(a[i])) {
-                    geocode(a, i);
+                    geocode(a, i, sCountryCode);
                 }
                 else {
                     $('input[name="__name___lat"]').val(0);
@@ -99,7 +115,7 @@
  
             glBxLocationFieldPlainGeocodingRequest = setTimeout(function () {
                 setLocationStatus('loading');
-                geocode(a, 0);
+                geocode(a, 0, $('select[name="__name___country"]').val());
             }, 1500);
         });
 
