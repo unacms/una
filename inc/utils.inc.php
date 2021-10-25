@@ -1984,8 +1984,11 @@ function bx_is_full_array ($a)
     return true;
 }
 
-function bx_is_url_in_content ($sContent)
+function bx_is_url_in_content ($sContent, $bSkipLocalUrls = false)
 {
+    if ($bSkipLocalUrls)
+        $sContent = str_replace(BX_DOL_URL_ROOT, '', $sContent);
+
     $a = array(
         'http://',
         'https://',
