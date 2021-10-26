@@ -58,7 +58,7 @@ class BxStrmEngineOvenMediaEngine extends BxDol
 
         $sBaseUrl = "rtmp://$sHost:1935/$sApp";
         if (!$sPolicySecret)
-            return [$sBaseUrl, $sStreamKey];
+            return ['server' => $sBaseUrl, 'key' => $sStreamKey];
 
         return ['server' => $sBaseUrl, 'key' => str_replace($sBaseUrl . '/', '', $this->_signUrl($sBaseUrl . '/' . $sStreamKey, $sPolicySecret))];
     }

@@ -93,13 +93,13 @@ class BxStrmModule extends BxBaseModTextModule
             'inputs' => array(
                 'url' => array(
                     'type' => 'text',
-                    'name' => 'url',
+                    'name' => 'url'.time(),
                     'caption' => _t('_bx_stream_form_entry_input_server'),
                     'value' => $a['server'],
                 ),
                 'key' => array(
                     'type' => 'password',
-                    'name' => 'key',
+                    'name' => 'key'.time(),
                     'caption' => _t('_bx_stream_form_entry_input_stream_key'),
                     'value' => $a['key'],
                 ),
