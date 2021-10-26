@@ -506,6 +506,9 @@ class BxForumModule extends BxBaseModTextModule
             $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
             unset($aParams['ajax_paginate']);
         }
+        
+        if(isset($aParams['unit_view']) && $aParams['unit_view'] != 'table')
+            return $this->_serviceBrowse('author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         return $this->_serviceBrowseTable(array(
         	'type' => 'author', 
@@ -513,7 +516,7 @@ class BxForumModule extends BxBaseModTextModule
         	'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '='), 
         	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
         	'empty_message' => $bEmptyMessage,
-                'ajax_paginate' => $bAjaxPaginate
+        	'ajax_paginate' => $bAjaxPaginate
         ), false);
     }
 
