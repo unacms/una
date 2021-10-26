@@ -3,6 +3,13 @@ import url(../../../../../../../template/css/vote.css);
 --*/
 
 
+.bx-vote .bx-vote-counter .bx-vote-counter-label {
+    padding: 0;
+}
+.bx-vote .bx-vote-counter .bx-vote-counter-label .bx-vote-counter-text {
+    margin: 0;
+}
+
 /*--------------------------------------*/
 /*--- Reactions based Element Styles ---*/
 /*--------------------------------------*/

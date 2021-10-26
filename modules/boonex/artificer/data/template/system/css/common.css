@@ -173,12 +173,6 @@ body.bx-popup-lock {
     overflow: hidden;
 }
 
-body > .bx-popup-wrapper {
-    max-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
 .bx-popup-transitions {
     -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;

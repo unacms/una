@@ -3456,9 +3456,9 @@
 	<string name="_view_do_view_by_counter"><![CDATA[{0} просмотров]]></string>
 	<string name="_view_n_views"><![CDATA[{0} просмотров]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
-	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
-	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
-	<string name="_vote_do_by"><![CDATA[Поблагодарили]]></string>
+	<string name="_vote_do_like"><![CDATA[Нравится]]></string>
+	<string name="_vote_do_unlike"><![CDATA[Не нравится]]></string>
+	<string name="_vote_do_by"><![CDATA[Проголосовали]]></string>
         <string name="_vote_do_by_reactions"><![CDATA[Отреагировали]]></string>
         <string name="_vote_do_by_x_reaction"><![CDATA["{0}" от]]></string>
         <string name="_vote_do_by_summary"><![CDATA[Все]]></string>

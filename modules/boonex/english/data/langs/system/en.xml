@@ -3491,9 +3491,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_view_do_view_by_counter"><![CDATA[{0} views]]></string>
 	<string name="_view_n_views"><![CDATA[{0} views]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
-	<string name="_vote_do_like"><![CDATA[Thank you!]]></string>
-	<string name="_vote_do_unlike"><![CDATA[No thank you]]></string>
-	<string name="_vote_do_by"><![CDATA[Thanked by]]></string>
+	<string name="_vote_do_like"><![CDATA[Like]]></string>
+	<string name="_vote_do_unlike"><![CDATA[Dislike]]></string>
+	<string name="_vote_do_by"><![CDATA[Liked by]]></string>
         <string name="_vote_do_by_reactions"><![CDATA[Reacted by]]></string>
         <string name="_vote_do_by_x_reaction"><![CDATA["{0}" by]]></string>
         <string name="_vote_do_by_summary"><![CDATA[All]]></string>

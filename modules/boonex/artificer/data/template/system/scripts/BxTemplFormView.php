@@ -21,7 +21,7 @@ class BxTemplFormView extends BxBaseFormView
         if(in_array($aInput['type'], ['password']))
             $this->_genWrapperInputAttrsPassword($aAttrs);
         
-        if(in_array($aInput['type'], ['checkbox_set', 'radio_set', 'input_set']))
+        if(in_array($aInput['type'], ['checkbox_set', 'radio_set']))
             $this->_genWrapperInputAttrsSet($aAttrs);
 
         return $aAttrs;

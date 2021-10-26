@@ -26,6 +26,94 @@
         @apply text-gray-700 dark:text-gray-500 text-opacity-60;
     }
 
+    /* Margins and Paddings */
+    .bx-def-margin {
+        @apply m-4;
+    }
+    .bx-def-margin-left {
+        @apply ml-4;
+    }
+    .bx-def-margin-left-auto {
+        @apply ml-4 first:ml-0;
+    }
+    .bx-def-margin-right {
+        @apply mr-4;
+    }
+    .bx-def-margin-top {
+        @apply mt-4;
+    }
+    .bx-def-margin-top-auto {
+        @apply mt-4 first:mt-0;
+    }
+    .bx-def-margin-bottom {
+        @apply mb-4;
+    }
+    
+    .bx-def-margin-sec {
+        @apply m-2;
+    }
+    .bx-def-margin-sec-left {
+        @apply ml-2;
+    }
+    .bx-def-margin-sec-left-auto {
+        @apply ml-2 first:ml-0;
+    }
+    .bx-def-margin-sec-right {
+        @apply mr-2;
+    }
+    .bx-def-margin-sec-top {
+        @apply mt-2;
+    }
+    .bx-def-margin-sec-top-auto {
+        @apply mt-2 first:mt-0;
+    }
+    .bx-def-margin-sec-bottom {
+        @apply mb-2;
+    }
+
+    .bx-def-padding {
+        @apply p-4;
+    }
+    .bx-def-padding-left {
+        @apply pl-4;
+    }
+    .bx-def-padding-left-auto {
+        @apply pl-4 first:pl-0;
+    }
+    .bx-def-padding-right {
+        @apply pr-4;
+    }
+    .bx-def-padding-top {
+        @apply pt-4;
+    }
+    .bx-def-padding-top-auto {
+        @apply pt-4 first:pt-0;
+    }
+    .bx-def-padding-bottom {
+        @apply pb-4;
+    }
+    
+    .bx-def-padding-sec {
+        @apply p-2;
+    }
+    .bx-def-padding-sec-left {
+        @apply pl-2;
+    }
+    .bx-def-padding-sec-left-auto {
+        @apply pl-2 first:pl-0;
+    }
+    .bx-def-padding-sec-right {
+        @apply pr-2;
+    }
+    .bx-def-padding-sec-top {
+        @apply pt-2;
+    }
+    .bx-def-padding-sec-top-auto {
+        @apply pt-2 first:pt-0;
+    }
+    .bx-def-padding-sec-bottom {
+        @apply pb-2;
+    }
 
     /* Common elements: Buttons */
     .bx-btn {
