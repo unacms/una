@@ -95,6 +95,14 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
     -webkit-justify-content: center;
     justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
+    margin-left: 1rem;
+}
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li:first-child {
+    margin-left: 0;
 }
 
 

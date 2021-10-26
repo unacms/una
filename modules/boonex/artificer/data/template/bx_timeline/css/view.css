@@ -57,20 +57,18 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     flex-wrap: wrap;
 }
 
-.bx-menu-object-bx_timeline_menu_item_manage .menu_custom_item_hor{
-    margin: 0px !important;
-    width:100%;
+.bx-menu-object-bx_timeline_menu_item_manage .menu-custom-item-ver,
+.bx-menu-object-bx_timeline_menu_item_manage .menu-custom-item-ver a,
+.bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder {
+    width: 100%;
     display: block;
 }
-.bx-menu-object-bx_timeline_menu_item_manage .menu_custom_item_hor A,
-.bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder{
-    width:100%;
-    display: block;
+.bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder {
     padding: 0px !important;
 }
 .bx-tl-owner-avatar .bx-def-thumb-size{
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 .bx-tl-item-content video,
 .bx-tl-item-attachment img{

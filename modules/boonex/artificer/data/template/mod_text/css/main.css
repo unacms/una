@@ -78,3 +78,15 @@
     border-radius: 0;
     box-shadow: none;
 }
+
+/*-- Entry: Author block --*/
+.sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor {
+    -webkit-align-items: center;
+    align-items: center;
+}
+.sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li {
+    margin-left: 1rem;
+}
+.sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li:first-child {
+    margin-left: 0;
+}
