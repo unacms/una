@@ -5486,6 +5486,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'css_system', '{dir_plugins_public}marka/|marka.min.css', 1, 1),
 ('system', 'css_system', '{dir_plugins_public}at.js/css/|jquery.atwho.min.css', 1, 2),
 ('system', 'css_system', '{dir_plugins_public}prism/|prism.css', 1, 3),
+('system', 'css_system', '{dir_plugins_public}tailwind/css/|tailwind.min.css', 1, 4),
 ('system', 'css_system', 'common.css', 1, 10),
 ('system', 'css_system', 'default.less', 1, 11),
 ('system', 'css_system', 'general.css', 1, 12),
