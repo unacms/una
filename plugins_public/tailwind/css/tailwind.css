@@ -115,6 +115,14 @@
         @apply pb-2;
     }
 
+    /* Blocks, Boxes, etc. */
+    .bx-artificer .bx-def-color-bg-block {
+        @apply bg-gray-50 dark:bg-gray-900;
+    }
+    .bx-artificer .bx-def-color-bg-box {
+        @apply bg-white dark:bg-gray-800;
+    }
+
     /* Common elements: Buttons */
     .bx-artificer .bx-btn {
         @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md;
