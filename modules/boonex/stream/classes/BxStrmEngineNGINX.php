@@ -19,7 +19,11 @@ class BxStrmEngineNGINX extends BxDol
         if (!$sHost || !$sApp)
             return false;
 
-        $sUrl = "http://{$sHost}/stat";
+        $sUrl = str_replace(
+            ['{host}', '{app}', '{key}'], 
+            [$sHost, $sApp, $sStreamKey], 
+            getParam('bx_stream_server_nginx_stats_url')
+        );
         $s = bx_file_get_contents($sUrl);
         if (!$s)
             return false;

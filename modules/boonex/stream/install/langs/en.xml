@@ -7,6 +7,7 @@
 
     <string name="_bx_stream_options_cat_streaming"><![CDATA[Streaming]]></string>
     <string name="_bx_stream_options_cat_engine_ome"><![CDATA[OvenMediaEngine]]></string>
+    <string name="_bx_stream_options_cat_engine_nginx"><![CDATA[NGINX]]></string>
     <string name="_bx_stream_options_cat_general"><![CDATA[General]]></string>
 
     <string name="_bx_stream_option_engine"><![CDATA[Server Software]]></string>
@@ -15,6 +16,7 @@
     <string name="_bx_stream_option_ome_policy_secret"><![CDATA[OvenMediaEngine Signed Policy Secret Key]]></string>
 
     <string name="_bx_stream_option_ome_api_port"><![CDATA[OvenMediaEngine API Port]]></string>
+    <string name="_bx_stream_option_nginx_stats_url"><![CDATA[NGINX Stats URL]]></string>
     <string name="_bx_stream_option_server_host"><![CDATA[Server Hostname]]></string>
     <string name="_bx_stream_option_app"><![CDATA[Application Name]]></string>
     <string name="_bx_stream_option_sources_pattern"><![CDATA[Sources Pattern]]></string>
