@@ -2862,7 +2862,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Account Dashboard]]></string>
     <string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
-    <string name="_sys_menu_set_title_account_settings_more"><![CDATA[Account Settings More]]></string>
     <string name="_sys_menu_set_title_account_notifications"><![CDATA[Notifications]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Content Manage]]></string>
@@ -2917,7 +2916,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_title_account_notifications"><![CDATA[Notifications Items]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Account Popup]]></string>
     <string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
-    <string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
     <string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
     <string name="_sys_menu_title_add_profile"><![CDATA[Add Profile Menu]]></string>
     <string name="_sys_menu_title_add_profile_vertical"><![CDATA[Add Profile Menu (vertical)]]></string>

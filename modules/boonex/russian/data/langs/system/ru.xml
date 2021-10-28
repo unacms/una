@@ -2843,7 +2843,6 @@
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Панель аккаунта]]></string>
     <string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Инструменты управления]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Аккаунт - Настройки]]></string>
-    <string name="_sys_menu_set_title_account_settings_more"><![CDATA[Аккаунт - Дополнительные настройки]]></string>
     <string name="_sys_menu_set_title_account_notifications"><![CDATA[Аккаунт - Уведомления]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Добавить содержимое]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Управление контентом]]></string>
@@ -2898,7 +2897,6 @@
     <string name="_sys_menu_title_account_notifications"><![CDATA[Меню с уведомлениями]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Аккаунт - Всплывающее меню]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Аккаунт - Меню настроек]]></string>
-	<string name="_sys_menu_title_account_settings_more"><![CDATA[Аккаунт - Меню дополнительных настроек]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Добавить содержимое - Меню]]></string>
 	<string name="_sys_menu_title_add_profile"><![CDATA[Добавить профиль - Меню]]></string>
 	<string name="_sys_menu_title_add_profile_vertical"><![CDATA[Добавить профиль - Меню вертикальное]]></string>
