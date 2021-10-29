@@ -4,7 +4,7 @@ DELETE FROM `top`, `toc`, `to` USING `sys_options_types` AS `top` LEFT JOIN `sys
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_stream';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_stream' OR `object` IN('bx_stream_create_entry', 'bx_stream_edit_entry', 'bx_stream_delete_entry', 'bx_stream_view_entry', 'bx_stream_view_entry_comments', 'bx_stream_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_stream' OR `object` IN('bx_stream_create_entry', 'bx_stream_edit_entry', 'bx_stream_delete_entry', 'bx_stream_view_entry', 'bx_stream_broadcast', 'bx_stream_view_entry_comments', 'bx_stream_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_stream';

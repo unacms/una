@@ -1,0 +1,113 @@
+<div class="bx-stream-broadcast-wrapper">
+    <video muted class="bx-stream-broadcast-preview" id="bx-stream-preview-__suffix__"></video>
+    <div class="bx-stream-broadcast-controls bx-def-margin-sec-top">
+        <button disabled id="bx-stream-start-__suffix__" class="bx-btn bx-btn-primary bx-btn-disabled"><bx_text:_bx_stream_start_streaming /></button>
+        <button disabled id="bx-stream-stop-__suffix__" class="bx-btn bx-btn-primary bx-btn-disabled bx-def-margin-sec-left"><bx_text:_bx_stream_stop_streaming /></button>
+        <button id="bx-stream-settings-__suffix__" class="bx-btn bx-def-margin-sec-left"><i class="sys-icon cog"></i></button>
+        <button id="bx-stream-share-__suffix__" class="bx-btn bx-def-margin-sec-left"><i class="sys-icon share"></i></button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ovenlivekit@latest/dist/OvenLiveKit.min.js"></script>
+<script>
+    $('#bx-stream-share-__suffix__').click(function() {
+        $('#bx-stream-popup-share').dolPopup();
+    });
+    $('#bx-stream-settings-__suffix__').click(function() {
+        $('#bx-stream-popup-settings').dolPopup({'closeElement': '.bx-stream-popup-close'});
+    });
+
+    let fOnStreamingStop = function () {
+        $('#bx-stream-preview-__suffix__').removeClass('bx-stream-broadcast-preview-live');
+        $('#bx-stream-start-__suffix__').attr('disabled', false).removeClass('bx-btn-disabled');
+        $('#bx-stream-stop-__suffix__').attr('disabled', true).addClass('bx-btn-disabled');
+    };
+    $('#bx-stream-stop-__suffix__').click(function() {
+        if ('undefined' === typeof(oOvenLivekit__suffix__) || !oOvenLivekit__suffix__)
+            return;
+        fInit();
+    });
+
+    let fOnStreamingStart = function () {
+        $('#bx-stream-preview-__suffix__').addClass('bx-stream-broadcast-preview-live');
+        $('#bx-stream-start-__suffix__').attr('disabled', true).addClass('bx-btn-disabled');
+        $('#bx-stream-stop-__suffix__').attr('disabled', false).removeClass('bx-btn-disabled');
+    };
+    $('#bx-stream-start-__suffix__').click(function() {
+        if ('undefined' === typeof(oOvenLivekit__suffix__) || !oOvenLivekit__suffix__)
+            return;
+
+        // Get media stream from user device
+        oOvenLivekit__suffix__.getUserMedia().then(function () {
+            const oConnectionConfig = {
+                iceServers : null ,
+                iceTransportPolicy: null,
+                maxBitrate: null // is Kbps
+            }
+            // Got device stream and start streaming to OvenMediaEngine
+            oOvenLivekit__suffix__.startStreaming('__broadcast_url__', oConnectionConfig);
+
+            fOnStreamingStart();
+
+        }).catch(function (error) {
+            // Failed to get device stream.
+            console.log(error);
+        });
+    });
+
+    let fInit = function () {
+        if ('undefined' !== typeof(oOvenLivekit__suffix__) && oOvenLivekit__suffix__)
+            oOvenLivekit__suffix__.remove();
+        
+        // Lists the available media input and output devices
+        OvenLiveKit.getDevices().then(function (devices) {
+            // Got a list of user devices
+            console.log(devices);
+        }).catch(function (error) {
+            // Failed to get a list of user devices
+            console.log(error);
+        });
+
+        // Configuration
+        var oConfig = {
+            callbacks: {
+                error: function (error) {
+                    console.log("Error ---------------- ");
+                    console.log(error);
+                },
+                connected: function (event) {
+                    console.log("Connected ---------------- ");
+                    console.log(event);
+                },
+                connectionClosed: function (type, event) {
+                    console.log("ConnectionClosed ---------------- ");
+                    console.log(type);
+                    console.log(event);
+                },
+                iceStateChange: function (state) {
+                    console.log("IceStateChange ---------------- ");
+                    console.log(state);
+                }
+            }
+        }
+
+        // Initialize OvenLiveKit
+        oOvenLivekit__suffix__ = OvenLiveKit.create(oConfig);
+
+        // Attaching video element for playing device stream
+        oOvenLivekit__suffix__.attachMedia(document.getElementById('bx-stream-preview-__suffix__'));
+
+        oOvenLivekit__suffix__.getUserMedia().then(function () {
+            fOnStreamingStop(); // instead of init
+        }).catch(function (error) {
+            // Failed to get device stream.
+            console.log(error);
+        });
+    };
+    
+    $(document).ready(fInit);
+    
+</script>
+
+__popup_share__
+__popup_settings__

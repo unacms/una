@@ -144,6 +144,9 @@
     <string name="_bx_stream_page_block_title_sys_entry_context"><![CDATA[Streamed in]]></string>
     <string name="_bx_stream_page_block_title_entry_context"><![CDATA[Streamed in]]></string>
 
+    <string name="_bx_stream_page_title_broadcast"><![CDATA[Broadcast with Webcam]]></string>
+    <string name="_bx_stream_page_block_title_broadcast"><![CDATA[Broadcast with Webcam]]></string>
+
     <string name="_bx_stream_menu_set_title_view_entry"><![CDATA[Stream Actions]]></string>
     <string name="_bx_stream_menu_title_view_entry"><![CDATA[Stream Actions]]></string>
     <string name="_bx_stream_menu_title_submenu"><![CDATA[Streams Submenu]]></string>
@@ -250,4 +253,15 @@
     <string name="_bx_stream_txt_wait_for_stream"><![CDATA[Waiting for live streaming...]]></string>
     <string name="_bx_stream_txt_live_now"><![CDATA[Live Now]]></string>
     <string name="_bx_stream_logs_ome_api"><![CDATA[OvenMediaEngine API Logs]]></string>
+    <string name="_bx_stream_from_webcam_not_supported"><![CDATA[Stream from webcam isn't supported in current streaming server]]></string>
+    <string name="_bx_stream_from_webcam"><![CDATA[Stream from Webcam]]></string>
+    <string name="_bx_stream_manual_settings_or_stream_from_webcam"><![CDATA[OR]]></string>
+    <string name="_bx_stream_start_streaming"><![CDATA[Start Streaming]]></string>
+    <string name="_bx_stream_stop_streaming"><![CDATA[Stop Streaming]]></string>
+
+    <string name="_bx_stream_popup_share"><![CDATA[Stream view URL]]></string>
+    <string name="_bx_stream_popup_settings"><![CDATA[Stream settings]]></string>
+    <string name="_bx_stream_field_audio_source"><![CDATA[Audio source]]></string>
+    <string name="_bx_stream_field_video_source"><![CDATA[Video source]]></string>
+    <string name="_bx_stream_field_video_resolution"><![CDATA[Video resolution]]></string>
 </resources>

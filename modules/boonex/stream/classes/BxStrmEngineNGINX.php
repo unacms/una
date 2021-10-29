@@ -11,6 +11,11 @@
 
 class BxStrmEngineNGINX extends BxDol
 {
+    public function isSreamFromBrowser()
+    {
+        return false;
+    }
+
     public function getViewersNum($sStreamKey)
     {
         $sHost = getParam('bx_stream_server_host');
@@ -58,6 +63,11 @@ class BxStrmEngineNGINX extends BxDol
             return false;
         list ($sBaseUrl, $sStreamKey) = $a;
         return $a['server'] . '/' . $a['key'];
+    }
+
+    public function getWebrtcIngestUrl($sStreamKey)
+    {
+        return false;
     }
 }
 

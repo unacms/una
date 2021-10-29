@@ -32,6 +32,96 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         ));
     }
 
+    public function entryStreamBroadcast ($aContentInfo)
+    {
+        $oEngine = $this->getModule()->getStreamEngine();
+        if (!$oEngine->isSreamFromBrowser()) 
+            return MsgBox(_t('_bx_stream_from_webcam_not_supported'));
+
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        return $this->parseHtmlByName('stream_broadcast_ome.html', array(
+            'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
+            'broadcast_url' => $oEngine->getWebrtcIngestUrl($aContentInfo[$CNF['FIELD_KEY']]),
+            'popup_share' => $this->popupShare($aContentInfo),
+            'popup_settings' => $this->popupSettings($aContentInfo),
+        ));
+    }
+
+    public function popupShare ($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sUrlViewStream = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . (int)$aContentInfo['id'];
+        $sUrlViewStream = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrlViewStream);
+        $aForm = array(
+            'form_attrs' => array(
+                'name' => 'bx-stream-form-share',
+                'class' => 'bx-def-margin',
+            ),
+            'inputs' => array(
+                'url' => array(
+                    'type' => 'text',
+                    'name' => 'url'.time(),
+                    'caption' => '',
+                    'value' => $sUrlViewStream,
+                    'attrs' => array('readonly' => 'readonly'),
+                ),
+            ),
+        );
+        $oForm = new BxTemplFormView ($aForm);
+
+        return BxTemplFunctions::getInstance()->popupBox('bx-stream-popup-share', _t('_bx_stream_popup_share'), $oForm->getCode(), true);
+    }
+
+    public function popupSettings ($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aForm = array(
+            'form_attrs' => array(
+                'name' => 'bx-stream-form-settings',
+            ),
+            'inputs' => array(
+                'audio' => array(
+                    'type' => 'select',
+                    'name' => 'audio',
+                    'caption' => _t('_bx_stream_field_audio_source'),
+                    'value' => '',
+                ),
+                'video' => array(
+                    'type' => 'select',
+                    'name' => 'video',
+                    'caption' => _t('_bx_stream_field_video_source'),
+                    'value' => '',
+                ),
+                'resolution' => array(
+                    'type' => 'select',
+                    'name' => 'resolution',
+                    'caption' => _t('_bx_stream_field_video_resolution'),
+                    'value' => '',
+                ),
+                'submit' => array(
+                    'type' => 'input_set',
+                    0 => array (
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_Submit'),
+                    ),
+                    1 => array (
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_Cancel'),
+                        'attrs' => array('class' => 'bx-stream-popup-close bx-def-margin-sec-left'),
+                    ),
+                ),
+            ),
+        );
+        $oForm = new BxTemplFormView ($aForm);
+
+        return BxTemplFunctions::getInstance()->popupBox('bx-stream-popup-settings', _t('_bx_stream_popup_settings'), $oForm->getCode(), true);
+    }
+
     public function entryStreamViewers ($aContentInfo)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

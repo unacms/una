@@ -61,6 +61,10 @@ class BxStrmModule extends BxBaseModTextModule
         echo json_encode(['viewers' => $iNum !== false ? _t('_bx_stream_txt_viewers', (int)$iNum) : _t('_bx_stream_txt_wait_for_stream'), 'num' => $iNum]);
     }
 
+    public function serviceStreamBroadcast ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryStreamBroadcast', $iContentId);
+    }
     public function serviceStreamViewers ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryStreamViewers', $iContentId);
@@ -96,16 +100,33 @@ class BxStrmModule extends BxBaseModTextModule
                     'name' => 'url'.time(),
                     'caption' => _t('_bx_stream_form_entry_input_server'),
                     'value' => $a['server'],
+                    'attrs' => array('readonly' => 'readonly'),
                 ),
                 'key' => array(
                     'type' => 'password',
                     'name' => 'key'.time(),
                     'caption' => _t('_bx_stream_form_entry_input_stream_key'),
                     'value' => $a['key'],
+                    'attrs' => array('readonly' => 'readonly'),
                 ),
             ),
         );
-        
+
+        if ($this->getStreamEngine()->isSreamFromBrowser()) {
+            $sUrl = 'page.php?i=broadcast-stream&id=' . (int)$iContentId;
+            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrl);
+            $aForm['inputs']['header_div'] = array (
+                'type' => 'custom',
+                'content' => _t('_bx_stream_manual_settings_or_stream_from_webcam'),
+            );
+            $aForm['inputs']['stream-from-webcam'] = array (
+                'type' => 'submit',
+                'name' => 'submit',
+                'value' => _t('_bx_stream_from_webcam'),
+                'attrs' => array('onclick' => 'document.location="' . bx_html_attribute($sUrl) . '"; return false;'),
+            );
+        }
+
         $oForm = new BxTemplFormView ($aForm);
         return $oForm->getCode();
     }

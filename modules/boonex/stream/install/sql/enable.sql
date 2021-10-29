@@ -102,6 +102,15 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_stream_view_entry', 2, 'bx_stream', '', '_bx_stream_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
 
 
+-- PAGE: broadcast
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_stream_broadcast', '', '_bx_stream_page_title_broadcast', 'bx_stream', 5, 2147483647, 1, 'broadcast-stream', '', '', '', '', 0, 1, 0, 'BxStrmPageEntry', 'modules/boonex/stream/classes/BxStrmPageEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_stream_broadcast', 1, 'bx_stream', '', '_bx_stream_page_block_title_viewers', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:14:\"stream_viewers\";}', 0, 0, 1, 1),
+('bx_stream_broadcast', 1, 'bx_stream', '', '_bx_stream_page_block_title_broadcast', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:16:\"stream_broadcast\";}', 0, 0, 1, 2);
+
 -- PAGE: view entry comments
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
