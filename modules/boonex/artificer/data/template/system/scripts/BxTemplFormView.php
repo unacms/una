@@ -131,8 +131,8 @@ class BxTemplFormView extends BxBaseFormView
             $sClassLight = 'bg-white';
             $sClassDark = 'bg-gray-500';
             $sClass2 = 'translate-x-5';
-            $sClassLight2 = 'bg-blue-500';
-            $sClassDark2 = 'bg-gray-900';
+            $sClassLight2 = 'bg-green-500';
+            $sClassDark2 = 'bg-green-500';
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_switcher.html', [
