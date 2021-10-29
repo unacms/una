@@ -1,4 +1,6 @@
-@import '../../../../../../../template/css/default.less';
+/*
+import '../../../../../../../template/css/default.less';
+*/
 
 /**
  * Is used for inputs and buttons. They should have the same value 
@@ -6,26 +8,36 @@
  */
 @base-input-box-sizing: border-box;
 
-
-/*--- Colors ---*/
-.bx-def-color-bg-hl,
-.bx-def-color-bg-hl-even:nth-child(even),
-.bx-def-color-bg-hl-hover:hover {
-    .background-color (transparent);
+.bx-def-page-width {
+    width: @bx-page-width;
 }
 
 /*--- Unit ---*/
 .bx-def-unit-alert,
 .bx-def-unit-alert-small,
 .bx-def-unit-alert-middle {
-    position: relative;
-    .font-size(@bx-font-size-small - 2);
+    font-size: @bx-font-size-small - 2;
 }
 
 
-/* image/thumbnail/gallery default styles */
+/*--- image/thumbnail/gallery ---*/
 .bx-def-unit .bx-def-unit-info,
 .bx-def-unit .bx-def-unit-img,
 .bx-def-unit img {
     display: inherit;
+}
+
+
+/*--- z-index ---*/
+.bx-def-z-index-front {
+    z-index:100;
+}
+.bx-def-z-index-nav {
+    z-index:5000;
+}
+.bx-def-z-index-overlay {
+    z-index:9700;
+}
+.bx-def-z-index-modal {
+    z-index:10000;
 }

@@ -27,14 +27,28 @@ module.exports = {
         'h-8', 'h-10', 'h-24', 'h-48',
         '-m-2',
         'text-red-400', 
+        'ring-blue-500', 'ring-opacity-20', 
+        'focus:ring-blue-500', 'focus:ring-opacity-20',
+        'border-blue-500', 'border-opacity-70', 
+        'focus:border-blue-500', 'focus:border-opacity-70',
+
+        'bx-def-box-sizing', 'bx-def-align-center',  'bx-def-valign-center', 'bx-def-centered', 
         'bx-def-margin', 'bx-def-margin-left', 'bx-def-margin-left-auto', 'bx-def-margin-right', 'bx-def-margin-top', 'bx-def-margin-top-auto', 'bx-def-margin-bottom',
         'bx-def-margin-sec', 'bx-def-margin-sec-left', 'bx-def-margin-sec-left-auto', 'bx-def-margin-sec-right', 'bx-def-margin-sec-top', 'bx-def-margin-sec-top-auto', 'bx-def-margin-sec-bottom',
+        'bx-def-margin-thd', 'bx-def-margin-thd-left', 'bx-def-margin-thd-left-auto', 'bx-def-margin-thd-right', 'bx-def-margin-thd-top', 'bx-def-margin-thd-top-auto', 'bx-def-margin-thd-bottom',
         'bx-def-padding', 'bx-def-padding-left', 'bx-def-padding-left-auto', 'bx-def-padding-right', 'bx-def-padding-top', 'bx-def-padding-top-auto', 'bx-def-padding-bottom',
         'bx-def-padding-sec', 'bx-def-padding-sec-left', 'bx-def-padding-sec-left-auto', 'bx-def-padding-sec-right', 'bx-def-padding-sec-top', 'bx-def-padding-sec-top-auto', 'bx-def-padding-sec-bottom',
+        'bx-def-padding-thd', 'bx-def-padding-thd-left', 'bx-def-padding-thd-left-auto', 'bx-def-padding-thd-right', 'bx-def-padding-thd-top', 'bx-def-padding-thd-top-auto', 'bx-def-padding-thd-bottom',
+        'bx-def-font-small', 'bx-def-font-middle', 'bx-def-font-large', 'bx-def-font-h3', 'bx-def-font-h2', 'bx-def-font-h1', 
         'bx-def-a-colored',
+
         'bx-form-required', 'bx-form-warn',
         'bx-popup-full-screen', 'bx-popup-fog',
         'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
+        'bx-def-unit-alert', 'bx-def-unit-alert-small', 'bx-def-unit-alert-middle',
+        'bx-def-label',
+
+        'bx-base-general-unit-meta-username',
     ]
   },
   darkMode: 'media', // false or 'media' or 'class'
@@ -50,6 +64,8 @@ module.exports = {
             144: '36rem'
         },
         minWidth: {
+            4: '1rem',
+            6: '1.5rem',
             88: '22rem'
         },
         height: {

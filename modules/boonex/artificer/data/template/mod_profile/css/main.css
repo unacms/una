@@ -76,7 +76,14 @@
     width:calc(10.0%);
 }
 
+
 /*--- Unit ---*/
+.bx-base-pofile-unit-with-cover.bx-bp-uc-empty .bx-base-pofile-unit-cover {
+    background-color: rgba(223, 219, 229, 0.5);
+    background-repeat: repeat;
+    background-size: auto;
+}
+
 p.bx-base-pofile-unit-thumb.bx-def-icon-size {
     font-size: 1.125rem;
 }
@@ -101,12 +108,18 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
     margin-left: 1rem;
 }
-.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li:first-child {
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li:first-child,
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl,
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl + li {
     margin-left: 0;
 }
 
 
 /*--- Profile Cover ---*/
+.bx-base-pofile-cover-image.bx-bpci-holder img.bx-base-pofile-cover-image {
+    background-size: auto;
+    background-color: rgba(223, 219, 229, 0.5);
+}
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor {
     -webkit-align-items: center;
     align-items: center;
