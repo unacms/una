@@ -474,10 +474,27 @@
     .bx-artificer .bx-informer-msg-error {
         @apply bg-red-50 text-red-700;
     }
+    .bx-artificer .bx-form-row-view-value {
+        @apply truncate;
+    }
 
     /* Common elements: Comments */
     .bx-artificer .cmt .bx-base-general-unit-meta-username {
         @apply text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
+    }
+
+    /* Common elements: Units */
+    .bx-artificer .bx-def-icon-size {
+        @apply h-8 w-8;
+    }
+    .bx-artificer .bx-def-thumb-size {
+        @apply h-10 w-10;
+    }
+    .bx-artificer .bx-def-ava-size {
+        @apply h-24 w-24;
+    }
+    .bx-artificer .bx-def-ava-big-size {
+        @apply w-48 h-48;
     }
 
     /* Modules: Timeline */

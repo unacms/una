@@ -11,6 +11,9 @@ module.exports = {
         './inc/js/*.js',
         './inc/js/classes/*.js',
 
+        './modules/base/**/js/*.js',
+        './modules/base/**/template/*.html',
+
         // Artificer
         './modules/boonex/artificer/js/*.js',
         './modules/boonex/artificer/data/template/**/*.html',
@@ -47,8 +50,11 @@ module.exports = {
         'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
         'bx-def-unit-alert', 'bx-def-unit-alert-small', 'bx-def-unit-alert-middle',
         'bx-def-label',
+        'bx-def-icon-size', 'bx-def-thumb-size', 'bx-def-ava-size', 'bx-def-ava-big-size',
 
         'bx-base-general-unit-meta-username',
+
+        'bx-base-pofile-unit-with-cover', 'bx-bp-uc-empty'
     ]
   },
   darkMode: 'media', // false or 'media' or 'class'
@@ -67,6 +73,9 @@ module.exports = {
             4: '1rem',
             6: '1.5rem',
             88: '22rem'
+        },
+        maxWidth: {
+            32: '8rem',
         },
         height: {
             112: '28rem',
