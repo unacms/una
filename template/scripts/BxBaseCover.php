@@ -32,35 +32,40 @@ class BxBaseCover extends BxDolCover
      */
     public function display ()
     {
-		if (getParam('sys_site_cover_disabled') == 'on')
-			return '';
-		
+        if (getParam('sys_site_cover_disabled') == 'on')
+            return '';
+
         $this->_addJsCss();
 
         if(!empty($this->_aOptions) && is_array($this->_aOptions))
-        	return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
+            return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
 
-		$oPage = BxDolPage::getObjectInstanceByURI();
-		if(empty($oPage) || !is_a($oPage, 'BxDolPage'))
-			return $this->displayEmpty();
+        $oPage = BxDolPage::getObjectInstanceByURI();
+        if(empty($oPage) || !is_a($oPage, 'BxDolPage'))
+            return $this->displayEmpty();
 
-		$mixedOptions = $oPage->getPageCoverParams();
-		if(empty($mixedOptions) || !is_array($mixedOptions))
-			return $this->displayEmpty();
+        $mixedOptions = $oPage->getPageCoverParams();
+        if(empty($mixedOptions) || !is_array($mixedOptions))
+            return $this->displayEmpty();
 
-		if(!$this->_sCoverImageUrl) {
-			$iId = (int)getParam('sys_site_cover_common');
-			if($iId != 0)
-				$this->setCoverImageUrl(array('id' => $iId, 'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER));
-		}
+        if(!$this->_sCoverImageUrl) {
+            $iId = (int)getParam('sys_site_cover_common');
+            if($iId != 0)
+                $this->setCoverImageUrl(array('id' => $iId, 'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER));
+        }
 
-		if($this->_sCoverImageUrl)
-			$mixedOptions['bx_if:bg'] = array (
-				'condition' => true,
-				'content' => array('image_url' => $this->_sCoverImageUrl),
-			);
+        if($this->_sCoverImageUrl)
+            $mixedOptions['bx_if:bg'] = array (
+                'condition' => true,
+                'content' => array('image_url' => $this->_sCoverImageUrl),
+            );
 
-		return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $mixedOptions));        
+        $mixedOptions['bx_if:empty_cover_class'] = array (
+            'condition' => empty($this->_sCoverImageUrl),
+            'content' => array(),
+        );
+
+        return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $mixedOptions));        
     }
     
     /**

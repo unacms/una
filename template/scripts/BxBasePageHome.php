@@ -25,6 +25,10 @@ class BxBasePageHome extends BxTemplPage
         BxDolCover::getInstance()->set(array(
             'class' => 'bx-cover-homepage',
             'title' => _t('_sys_txt_homepage_cover', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')),
+            'bx_if:empty_cover_class' => array (
+                'condition' => !$bTmplVarsCover,
+                'content' => array(),
+            ),
             'bx_if:bg' => array (
                 'condition' => $bTmplVarsCover,
                 'content' => $aTmplVarsCover,
