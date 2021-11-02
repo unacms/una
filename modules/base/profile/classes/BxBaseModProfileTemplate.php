@@ -184,7 +184,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
         return array_merge(array (
-            'class' => $this->_getUnitClass($aData, $sTemplate) . (!$bCoverUrl ? ' bx-bp-uc-empty' : ''),
+            'class' => $this->_getUnitClass($aData, $sTemplate) . (!$bCoverUrl ? ' bx-cover-empty' : ''),
             'id' => $iContentId,
             'public' => $bPublic,
             'bx_if:show_thumbnail' => array(

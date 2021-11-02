@@ -53,8 +53,6 @@ module.exports = {
         'bx-def-icon-size', 'bx-def-thumb-size', 'bx-def-ava-size', 'bx-def-ava-big-size',
 
         'bx-base-general-unit-meta-username',
-
-        'bx-base-pofile-unit-with-cover', 'bx-bp-uc-empty'
     ]
   },
   darkMode: 'media', // false or 'media' or 'class'

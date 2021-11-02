@@ -440,13 +440,7 @@
         @apply opacity-100 ring-0 bg-gray-50 dark:bg-gray-700 shadow-none;
     }
 
-    /* Page Cover */
-    .bx-artificer .bx-cover-wrapper.bx-cover-empty,
-    .bx-artificer .bx-base-pofile-cover-image.bx-bpci-holder img.bx-base-pofile-cover-image,
-    .bx-artificer .bx-base-pofile-unit-with-cover.bx-bp-uc-empty .bx-base-pofile-unit-cover {
-        @apply bg-gray-200 dark:bg-gray-900;
-    }
-    
+
     /* Page Submenu */
     .bx-artificer .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active a {
         @apply text-gray-900 dark:text-gray-100;
