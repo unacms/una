@@ -13,7 +13,7 @@ form.cmt-post-reply .bx-form-input-files-uploaders {
     margin-top: 0px;
 }
 
-a.cmts-uploader-button {
+form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {
     position: absolute;
     z-index: 1;
     right: 0px;

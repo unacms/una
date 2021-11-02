@@ -140,6 +140,8 @@
     <string name="_bx_stream_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_stream_page_block_title_sys_my_entries"><![CDATA[User Streams]]></string>
     <string name="_bx_stream_page_block_title_my_entries"><![CDATA[{display_name} Streams]]></string>
+    <string name="_bx_stream_page_block_title_sys_entries_in_context"><![CDATA[Streams in Context]]></string>
+    <string name="_bx_stream_page_block_title_my_entries"><![CDATA[Streams in {display_name}]]></string>
 
     <string name="_bx_stream_page_block_title_sys_entry_context"><![CDATA[Streamed in]]></string>
     <string name="_bx_stream_page_block_title_entry_context"><![CDATA[Streamed in]]></string>

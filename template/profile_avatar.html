@@ -1,5 +1,5 @@
 <div class="bx-profile-avatar bx-def-border-radius-block">
-    <a href="javascript:void(0)" onclick="javascript:$('#bx-profile-switcher').dolPopup({});">
+    <a href="__switcher_url__" onclick="__switcher_onclick__">
         <div class="bx-profile-avatar-cnt bx-def-padding-sec">
             <div class="bx-pa-img">__profile_unit__</div>
             <div class="bx-pa-info">
@@ -10,10 +10,12 @@
                     </div>
                 </div>
             </div>
-            <div class="bx-pa-actions">
-                <div class="bx-pa-action bx-def-margin-sec-left"><i class="sys-icon arrows-alt-v"></i></div>
-            </div>
+            <bx_if:show_switcher_icon>
+                <div class="bx-pa-actions">
+                    <div class="bx-pa-action bx-def-margin-sec-left"><i class="sys-icon arrows-alt-v"></i></div>
+                </div>
+            </bx_if:show_switcher_icon>
         </div>
     </a>
 </div>
-__profile_switcher__
+__switcher__

@@ -58,6 +58,23 @@ import url(../../../../../../../template/css/vote.css);
     font-size: 1.5rem;
 }
 
+/*----------------------------------*/
+/*--- Stars based Element Styles ---*/
+/*----------------------------------*/
+.bx-vote-stars .bx-vote-element-holder a.bx-vote-button,
+.bx-vote-stars .bx-vote-element-holder i.bx-vote-star,
+.bx-vote-stars .bx-vote-element-holder span.bx-vote-star {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 1rem;
+    width: 1rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
 /*--- Voted By ---*/
 div.bx-vote-by-list {}
 div.bx-vote-by-list-cnt {

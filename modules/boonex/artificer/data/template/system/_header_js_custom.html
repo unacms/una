@@ -40,8 +40,12 @@
     }
 
     function bx_site_search_complete(oContainer, oData) {
-        if(!oData)
+        if(!oData) {
+            if(oContainer.is(':visible'))
+                oContainer.hide();
+
             return;
+        }
 
         oContainer.show();
 

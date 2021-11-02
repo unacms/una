@@ -81,6 +81,8 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         $aForm = array(
             'form_attrs' => array(
                 'name' => 'bx-stream-form-settings',
+                'onsubmit' => 'return false',
+                'onreset' => 'return false',
             ),
             'inputs' => array(
                 'audio' => array(
@@ -94,26 +96,6 @@ class BxStrmTemplate extends BxBaseModTextTemplate
                     'name' => 'video',
                     'caption' => _t('_bx_stream_field_video_source'),
                     'value' => '',
-                ),
-                'resolution' => array(
-                    'type' => 'select',
-                    'name' => 'resolution',
-                    'caption' => _t('_bx_stream_field_video_resolution'),
-                    'value' => '',
-                ),
-                'submit' => array(
-                    'type' => 'input_set',
-                    0 => array (
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_Submit'),
-                    ),
-                    1 => array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_Cancel'),
-                        'attrs' => array('class' => 'bx-stream-popup-close bx-def-margin-sec-left'),
-                    ),
                 ),
             ),
         );

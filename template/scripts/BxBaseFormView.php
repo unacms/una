@@ -1567,7 +1567,7 @@ BLAH;
         
         $s = ''; 
         foreach ($aInput['value'] as $sLabel)
-            $s .= '<a href="' . $oMetatags->keywordsGetHashTagUrl($sLabel, $aInput['content_id']) . '"><b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sLabel) . '</b></a>';
+            $s .= '<a href="' . $oMetatags->keywordsGetHashTagUrl($sLabel, $aInput['content_id']) . '"><b class="bx-def-label val">' . trim($sLabel) . '</b></a>';
 
         return $this->oTemplate->parseHtmlByName('form_field_labels_view.html', array(
             'values' => $s,

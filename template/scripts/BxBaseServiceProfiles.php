@@ -46,26 +46,28 @@ class BxBaseServiceProfiles extends BxDol
         if(!$oProfile)
             return '';
 
-        $oAcl = BxDolAcl::getInstance();
-        $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
-        $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
-
         $oTemplate = BxDolTemplate::getInstance();
 
+        $sSwitcher = '';
         $aSwitcher = bx_srv('system', 'account_profile_switcher', array(false, null, '', true), 'TemplServiceProfiles');
-        $sSwitcher = $aSwitcher !== false ? BxTemplFunctions::getInstance()->transBox('bx-profile-switcher', $oTemplate->parseHtmlByName('profile_avatar_switcher.html', array(
-            'profile_switcher' => $aSwitcher['content'],
-            'bx_if:multiple_profiles_mode' => array(
-                'condition' => (int)getParam('sys_account_limit_profiles_number') != 1,
-                'content' => array(
-                    'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
+        if($aSwitcher !== false)
+            $sSwitcher = BxTemplFunctions::getInstance()->transBox('bx-profile-switcher', $oTemplate->parseHtmlByName('profile_avatar_switcher.html', array(
+                'profile_switcher' => $aSwitcher['content'],
+                'bx_if:multiple_profiles_mode' => array(
+                    'condition' => empty($aSwitcher['content']) || (int)getParam('sys_account_limit_profiles_number') != 1,
+                    'content' => array(
+                        'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
+                    )
                 )
-            )
-        )), true) : '';
+            )), true);
+        $bSwitcher = !empty($sSwitcher);
 
         $sDisplayName = $oProfile->getDisplayName();
 
-        list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getIcon($aAclInfo['icon']);
+        $oAcl = BxDolAcl::getInstance();
+        $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
+        $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
+        list($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getIcon($aAclInfo['icon']);
 
         $aVars = array(
             'profile_id' => $oProfile->id(),
@@ -99,7 +101,13 @@ class BxBaseServiceProfiles extends BxDol
                 'condition' => (bool)$sIconHtml,
                 'content' => array('icon' => $sIconHtml),
             ),
-            'profile_switcher' => $sSwitcher
+            'switcher_url' => $bSwitcher ? 'javascript:void(0)' : $oProfile->getUrl(),
+            'switcher_onclick' => $bSwitcher ? "javascript:$('#bx-profile-switcher').dolPopup({});" : "",
+            'bx_if:show_switcher_icon' => array(
+                'condition' => $bSwitcher,
+                'content' => array()
+            ),
+            'switcher' => $sSwitcher
         );
 
         return $oTemplate->parseHtmlByName('profile_avatar.html', $aVars);

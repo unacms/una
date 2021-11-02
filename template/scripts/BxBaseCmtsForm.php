@@ -33,8 +33,8 @@ class BxBaseCmtsForm extends BxTemplFormView
     	if(isset($this->aInputs['cmt_image'])) {
             $this->aInputs['cmt_image']['storage_object'] = 'sys_cmts_images';
             $this->aInputs['cmt_image']['images_transcoder'] = 'sys_cmts_images_preview';
-            $this->aInputs['cmt_image']['uploaders'] = !empty($this->aInputs['cmt_image']['value']) ? unserialize($this->aInputs['cmt_image']['value']) : array('sys_cmts_simple');
-            $this->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
+            $this->aInputs['cmt_image']['uploaders'] = !empty($this->aInputs['cmt_image']['value']) ? unserialize($this->aInputs['cmt_image']['value']) : array('sys_cmts_html5');
+            $this->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera', 'HTML5' => 'camera');
             $this->aInputs['cmt_image']['storage_private'] = 0;
             $this->aInputs['cmt_image']['multiple'] = true;
             $this->aInputs['cmt_image']['content_id'] = 0;
