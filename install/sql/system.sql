@@ -1459,6 +1459,38 @@ CREATE TABLE `sys_images_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE `sys_images_editor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE `sys_images_editor_resized` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
 -- --------------------------------------------------------
 
 
@@ -2081,7 +2113,9 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('sys_cmts_images', 'Local', '', 360, 2592000, 3, 'sys_cmts_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('sys_cmts_images_preview', 'Local', '', 360, 2592000, 3, 'sys_cmts_images_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('sys_transcoder_queue_files', 'Local', '', 3600, 2592000, 0, 'sys_transcoder_queue_files', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0),
-('sys_files', 'Local', '', 360, 2592000, 3, 'sys_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0);
+('sys_files', 'Local', '', 360, 2592000, 3, 'sys_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0),
+('sys_images_editor', 'Local', '', 360, 2592000, 3, 'sys_images_editor', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_images_editor_resized', 'Local', '', 360, 2592000, 3, 'sys_images_editor_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `profile_id` int(11) NOT NULL,
@@ -4848,7 +4882,8 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('sys_builder_page_preview', 'sys_images_resized', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '1', '2592000', '0', '', ''),
 ('sys_builder_page_embed', 'sys_images_resized', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '1', '2592000', '0', '', ''),
 ('sys_cmts_images_preview', 'sys_cmts_images_preview', 'Storage', 'a:1:{s:6:"object";s:15:"sys_cmts_images";}', 'no', '1', '2592000', '0', '', ''),
-('sys_custom_images', 'sys_images_resized', 'Storage', 'a:1:{s:6:"object";s:17:"sys_images_custom";}', 'no', '1', '2592000', '0', '', '');
+('sys_custom_images', 'sys_images_resized', 'Storage', 'a:1:{s:6:"object";s:17:"sys_images_custom";}', 'no', '1', '2592000', '0', '', ''),
+('sys_images_editor', 'sys_images_editor_resized', 'Storage', 'a:1:{s:6:"object";s:17:"sys_images_editor";}', 'no', '1', '2592000', '0', '', '');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
@@ -4904,7 +4939,8 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('sys_builder_page_preview', 'Resize', 'a:4:{s:1:"w";s:3:"128";s:1:"h";s:3:"128";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('sys_builder_page_embed', 'ResizeVar', '', '0'),
 ('sys_cmts_images_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
-('sys_custom_images', 'ResizeVar', '', '0');
+('sys_custom_images', 'ResizeVar', '', '0'),
+('sys_images_editor', 'Resize', 'a:2:{s:1:"w";s:4:"1600";s:1:"h";s:4:"1600";}', '0');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (

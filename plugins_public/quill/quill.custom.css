@@ -1,0 +1,27 @@
+.ql-editor{
+    background: #fff;
+}    
+.ql-container{
+    height: 150px;
+}
+@media (prefers-color-scheme: dark) {
+	.ql-stroke{
+		stroke: orange !important;
+	}
+	.ql-fill{
+		fill: orange !important;
+	}
+	.ql-picker{
+		color: orange !important;
+	}
+	.ql-toolbar{
+		background:#444;
+	}
+	.ql-editor{
+		background:#444;
+		color: #fff;
+	}
+	.ql-editor.ql-blank::before{
+	    color: rgba(255,255,255,0.6);
+	}
+}
