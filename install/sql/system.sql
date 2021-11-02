@@ -4991,10 +4991,10 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_dashboard_content', 'dashboard-content', '_sys_page_title_system_dashboard_content', '_sys_page_title_dashboard_content', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard-content', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
 ('sys_dashboard_reports', 'dashboard-reports', '_sys_page_title_system_dashboard_reports', '_sys_page_title_dashboard_reports', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard-reports', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
 ('sys_dashboard_audit', 'dashboard-audit', '_sys_page_title_system_dashboard_audit', '_sys_page_title_dashboard_audit', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=dashboard-audit', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', '', 0),
-('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', '', 0),
-('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', '', 0),
-('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', '', 0),
-('sys_login_step3', 'login-step3', '_sys_page_title_system_login_step3', '_sys_page_title_login_step3', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=login-step3', '', '', '', 0, 1, 0, '', '', 0),
+('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 1, 18, '', 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', '', 0),
+('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 1, 18, '', 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', '', 0),
+('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 1, 18, '', 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', '', 0),
+('sys_login_step3', 'login-step3', '_sys_page_title_system_login_step3', '_sys_page_title_login_step3', 'system', 1, 18, '', 2147483647, 1, 'page.php?i=login-step3', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_confirm_email', 'confirm-email', '_sys_page_title_system_confirm_email', '_sys_page_title_confirm_email', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=confirm-email', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_confirm_phone', 'confirm-phone', '_sys_page_title_system_confirm_phone', '_sys_page_title_confirm_phone', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=confirm-phone', '', '', '', 0, 1, 0, '', '', 0),
@@ -5053,7 +5053,9 @@ INSERT INTO `sys_pages_layouts` (`id`, `name`, `icon`, `title`, `template`, `cel
 (14, 'bar_content_bar', 'layout_bar_content_bar.png', '_sys_layout_bar_content_bar', 'layout_bar_content_bar.html', 3),
 (15, 'top_area_bar_content_bar', 'layout_top_area_bar_content_bar.png', '_sys_layout_top_area_bar_content_bar', 'layout_top_area_bar_content_bar.html', 4),
 (16, 'topbottom_area_col1_col3_col2', 'layout_topbottom_area_col1_col3_col2.png', '_sys_layout_topbottom_area_col1_col3_col2', 'layout_topbottom_area_col1_col3_col2.html', 5),
-(17, 'topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.png', '_sys_layout_topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.html', 4);
+(17, 'topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.png', '_sys_layout_topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.html', 4),
+(18, '1_column_thin', 'layout_1_column_thin.png', '_sys_layout_1_column_thin', 'layout_1_column_thin.html', 1),
+(19, '1_column_half', 'layout_1_column_half.png', '_sys_layout_1_column_half', 'layout_1_column_half.html', 1);
 
 CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
   `id` int(11) NOT NULL,

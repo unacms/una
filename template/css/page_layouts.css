@@ -19,6 +19,17 @@
     float:none;
 }
 
+/* layout 1 column thin */
+.bx-layout-1-column-thin-column1 {
+    float:none;
+    width:33.3%;
+}
+
+/* layout 1 column half */
+.bx-layout-1-column-half-column1 {
+    float:none;
+    width:50%;
+}
 
 /* layout 3 columns */
 .bx-layout-3-columns-column3,

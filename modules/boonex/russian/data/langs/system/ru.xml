@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+_sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 	<string name="_ADM_PROFILE_SEND_MSG"><![CDATA[Сообщение было удачно отправлено]]></string>
 	<string name="_ATT_ACTIVE_E"><![CDATA[Вы полноправный член нашего Сообщества. Но Вы можете заблокировать свой профиль, чтобы он был временно недоступен для других.]]></string>
@@ -2610,6 +2610,8 @@
 	<string name="_sys_inst_start_installation"><![CDATA[Начать установку]]></string>
 	<string name="_sys_inst_title"><![CDATA[Установка UNA {0}]]></string>
 	<string name="_sys_layout_1_column"><![CDATA[1 столбец]]></string>
+        <string name="_sys_layout_1_column_thin"><![CDATA[1 столбец (узкий)]]></string>
+        <string name="_sys_layout_1_column_half"><![CDATA[1 столбец (половина)]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 столбца]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 столбца]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[С левой линейкой]]></string>
