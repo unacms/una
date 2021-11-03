@@ -2651,11 +2651,12 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_location_country_city_street"><![CDATA[<i class="sys-icon location-arrow"></i> {4} {3}, {2}, {1}, {0} ]]></string>
 	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
-	<string name="_sys_location_undefined"><![CDATA[Location off]]></string>
+	<string name="_sys_location_undefined"><![CDATA[Location undefined]]></string>
 	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (Static)]]></string>
 	<string name="_sys_location_map_leaflet"><![CDATA[Leaflet (various free map providers)]]></string>
 	<string name="_sys_location_field_google"><![CDATA[Google autocomplete for addresses]]></string>
 	<string name="_sys_location_field_plain"><![CDATA[Plain address fields with Nominatim OSM geocoding]]></string>
+        <string name="_sys_location_field_label"><![CDATA[Show location]]></string>
     <string name="_sys_location_ph_number"><![CDATA[Number]]></string>
     <string name="_sys_location_ph_street"><![CDATA[Street]]></string>
     <string name="_sys_location_ph_city"><![CDATA[City / District]]></string>

@@ -2633,13 +2633,14 @@ _sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
 	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>
     <string name="_sys_location_country_city_street"><![CDATA[<i class="sys-icon location-arrow"></i> {4} {3}, {2}, {1}, {0} ]]></string>
-	<string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
-	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
-	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
-	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
+    <string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
+    <string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
+    <string name="_sys_location_undefined"><![CDATA[Местоположение не определено]]></string>
+    <string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
     <string name="_sys_location_map_leaflet"><![CDATA[Leaflet (разные бесплатные поставщики карт)]]></string>
-	<string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
-	<string name="_sys_location_field_plain"><![CDATA[Простые поля c Nominatim OSM геокодированием]]></string>
+    <string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
+    <string name="_sys_location_field_plain"><![CDATA[Простые поля c Nominatim OSM геокодированием]]></string>
+    <string name="_sys_location_field_label"><![CDATA[Показывать местоположение]]></string>
     <string name="_sys_location_ph_number"><![CDATA[Номер]]></string>
     <string name="_sys_location_ph_street"><![CDATA[Улица]]></string>
     <string name="_sys_location_ph_city"><![CDATA[Город]]></string>
@@ -2648,11 +2649,11 @@ _sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
     <string name="_sys_location_status_undef"><![CDATA[Адрес не задан]]></string>
     <string name="_sys_location_status_ok"><![CDATA[Адрес найден]]></string>
     <string name="_sys_location_status_fail"><![CDATA[Адрес не найден]]></string>
-	<string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
+    <string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
     <string name="_sys_log_twilio"><![CDATA[Система: Twilio]]></string>
     <string name="_sys_log_push"><![CDATA[Система: PUSH]]></string>
-	<string name="_sys_log_payments"><![CDATA[Система: Платежи]]></string>
-	<string name="_sys_log_cron_jobs"><![CDATA[System: Задания Cron]]></string>
+    <string name="_sys_log_payments"><![CDATA[Система: Платежи]]></string>
+    <string name="_sys_log_cron_jobs"><![CDATA[System: Задания Cron]]></string>
     <string name="_sys_log_transcoder"><![CDATA[System: Транскодер]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Ошибка: некорректный макрос]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Ошибка: небезопасный макрос]]></string>

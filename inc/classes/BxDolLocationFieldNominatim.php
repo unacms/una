@@ -23,14 +23,14 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
             foreach ($aLocationIndexes as $sKey)
                 $aVars[$sKey] = $this->getLocationVal($aInput, $sKey, $oForm);
 
-            $aInputField['caption'] = _t('_sys_location_undefined');
+            $aInputField['caption'] = _t('_sys_location_field_label');
 
             if ($this->getLocationVal($aInput, 'lat', $oForm) && $this->getLocationVal($aInput, 'lng', $oForm))
                 $aInputField['checked'] = true;
             else
                 $aInputField['checked'] = $oForm->getCleanValue($aInput['name'] . '_lat') && $oForm->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
 
-            $sLocationString = _t('_sys_location_undefined');
+            $sLocationString = _t($aInputField['checked'] ? '_sys_location_undefined' : '_sys_location_field_label');
             if ($aVars['country']) {
                 $aCountries = BxDolFormQuery::getDataItems('Country');
                 $sLocationString = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
