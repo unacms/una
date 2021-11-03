@@ -23,8 +23,8 @@
     <string name="_bx_spaces_form_profile_display_invite"><![CDATA[Приглашение в пространство]]></string>
     <string name="_bx_spaces_form_entry_input_author"><![CDATA[Автор]]></string>
     <string name="_bx_spaces_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_spaces_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
-    <string name="_bx_spaces_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение присоединения]]></string>
+    <string name="_bx_spaces_form_profile_input_join_confirm"><![CDATA[Для присоединения требуется разрешение]]></string>
     <string name="_bx_spaces_form_profile_input_sys_allow_view_to"><![CDATA[Доступно для]]></string>
     <string name="_bx_spaces_form_profile_input_allow_view_to"><![CDATA[Доступно для]]></string>
     <string name="_bx_spaces_form_profile_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>

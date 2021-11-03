@@ -27,8 +27,8 @@
     <string name="_bx_events_form_profile_display_invite"><![CDATA[Приглашение на событие]]></string>
     <string name="_bx_events_form_profile_input_author"><![CDATA[Автор]]></string>
     <string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
-    <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
+    <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение присоединения]]></string>
+    <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Для присоединения требуется разрешение]]></string>
     <string name="_bx_events_form_profile_input_sys_allow_view_to"><![CDATA[Доступено для]]></string>
     <string name="_bx_events_form_profile_input_allow_view_to"><![CDATA[Доступено для]]></string>
     <string name="_bx_events_form_profile_input_allow_view_to_desc"><![CDATA[Закрытое - все могут найти событие и видеть кто в нём состоит, только участники могут видеть сообщения. Секретное - только участники могут найти событие и видеть сообщения.]]></string>
