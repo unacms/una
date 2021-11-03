@@ -59,8 +59,8 @@
     <string name="_bx_reviews_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_reviews_form_entry_input_date_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_reviews_form_entry_input_sys_attachments"><![CDATA[Вложения]]></string>
-    <string name="_bx_reviews_form_entry_input_sys_disable_comments"><![CDATA[Запретить комментарии]]></string>
-    <string name="_bx_reviews_form_entry_input_disable_comments"><![CDATA[Запретить комментарии]]></string>
+    <string name="_bx_reviews_form_entry_input_sys_allow_comments"><![CDATA[Разрешить комментарии]]></string>
+    <string name="_bx_reviews_form_entry_input_allow_comments"><![CDATA[Разрешить комментарии]]></string>
 
     <string name="_bx_reviews_form_poll"><![CDATA[Голосования]]></string>
     <string name="_bx_reviews_form_poll_display_add"><![CDATA[Добавить голосование]]></string>

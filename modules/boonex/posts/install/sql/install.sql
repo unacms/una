@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
-  `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
+  `allow_comments` tinyint(4) NOT NULL DEFAULT '1',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -466,7 +466,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_posts', 'bx_posts', 'attachments', '', '', 0, 'custom', '_bx_posts_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_posts', 'bx_posts', 'disable_comments', '1', '', 0, 'switcher', '_bx_posts_form_entry_input_sys_disable_comments', '_bx_posts_form_entry_input_disable_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
+('bx_posts', 'bx_posts', 'allow_comments', '1', '', 1, 'switcher', '_bx_posts_form_entry_input_sys_allow_comments', '_bx_posts_form_entry_input_allow_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
 
 
 
@@ -485,7 +485,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_add', 'allow_view_to', 2147483647, 1, 12),
 ('bx_posts_entry_add', 'location', 2147483647, 1, 13),
 ('bx_posts_entry_add', 'published', 192, 1, 14),
-('bx_posts_entry_add', 'disable_comments', 192, 1, 15),
+('bx_posts_entry_add', 'allow_comments', 192, 1, 15),
 ('bx_posts_entry_add', 'do_publish', 2147483647, 1, 16),
 
 ('bx_posts_entry_delete', 'delete_confirm', 2147483647, 1, 1),
@@ -505,7 +505,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_edit', 'covers', 2147483647, 1, 12),
 ('bx_posts_entry_edit', 'allow_view_to', 2147483647, 1, 13),
 ('bx_posts_entry_edit', 'location', 2147483647, 1, 14),
-('bx_posts_entry_edit', 'disable_comments', 192, 1, 15),
+('bx_posts_entry_edit', 'allow_comments', 192, 1, 15),
 ('bx_posts_entry_edit', 'published', 192, 1, 16),
 ('bx_posts_entry_edit', 'do_submit', 2147483647, 1, 17),
 

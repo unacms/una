@@ -20,7 +20,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         $CNF = &$this->_oConfig->CNF;
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
             $CNF['FIELD_PUBLISHED'],
-            $CNF['FIELD_DISABLE_COMMENTS']
+            $CNF['FIELD_ALLOW_COMMENTS']
         ));
     }
 	
@@ -443,7 +443,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo[$CNF['FIELD_ALLOW_COMMENTS']] == 0)
             return false;
 
         return parent::serviceCheckAllowedCommentsTask($iContentId, $sObjectComments);
@@ -453,7 +453,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo[$CNF['FIELD_ALLOW_COMMENTS']] == 0)
             return false;
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);

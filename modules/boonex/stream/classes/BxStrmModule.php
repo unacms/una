@@ -24,7 +24,7 @@ class BxStrmModule extends BxBaseModTextModule
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
             $CNF['FIELD_PUBLISHED'],
             $CNF['FIELD_ANONYMOUS'],
-            $CNF['FIELD_DISABLE_COMMENTS']
+            $CNF['FIELD_ALLOW_COMMENTS']
         ));
     }
 
@@ -158,7 +158,7 @@ class BxStrmModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo && $aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo && $aContentInfo[$CNF['FIELD_ALLOW_COMMENTS']] == 0)
             return false;
         
         return parent::serviceCheckAllowedCommentsPost($iContentId, $sObjectComments);
@@ -168,7 +168,7 @@ class BxStrmModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo && $aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo && $aContentInfo[$CNF['FIELD_ALLOW_COMMENTS']] == 0)
             return false;
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);

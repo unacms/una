@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `bx_tasks_tasks` (
   `completed` tinyint(4) NOT NULL DEFAULT '0', 
   `expired` tinyint(4) NOT NULL DEFAULT '0', 
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
-  `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
+  `allow_comments` tinyint(4) NOT NULL DEFAULT '1',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -384,7 +384,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_tasks', 'bx_tasks', 'attachments', '', '', 0, 'custom', '_bx_tasks_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_tasks', 'bx_tasks', 'disable_comments', '1', '', 0, 'switcher', '_bx_tasks_form_entry_input_sys_disable_comments', '_bx_tasks_form_entry_input_disable_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
+('bx_tasks', 'bx_tasks', 'allow_comments', '1', '', 1, 'switcher', '_bx_tasks_form_entry_input_sys_allow_comments', '_bx_tasks_form_entry_input_allow_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_tasks_entry_add', 'delete_confirm', 2147483647, 0, 1),
