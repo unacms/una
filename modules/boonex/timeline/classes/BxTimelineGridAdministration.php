@@ -46,7 +46,7 @@ class BxTimelineGridAdministration extends BxBaseModGeneralGridAdministration
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
             $aContentInfo = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
-            if ($this->_oModule->deleteEvent($aContentInfo)){
+            if ($this->_oModule->isAllowedDelete($aRow) === true && $this->_oModule->deleteEvent($aContentInfo)){
                 $aIdsAffected[] = $iId;
                 $iAffected++;
             }
@@ -57,7 +57,7 @@ class BxTimelineGridAdministration extends BxBaseModGeneralGridAdministration
     
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->isAllowedDelete($aRow) !== true)
+        if($sType == 'single' && $this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->isAllowedDelete($aRow) !== true)
             return '';
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
