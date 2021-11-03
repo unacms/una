@@ -285,7 +285,7 @@
 
     /* Common Elements: HR */
     .bx-artificer .bx-def-hr {
-        @apply m-0 p-0 border-t border-gray-200 dark:border-gray-700;
+        @apply mx-0 p-0 border-t border-gray-200 dark:border-gray-700;
     }
 
     /* Common Elements: Labels */
@@ -365,7 +365,9 @@
         @apply text-sm font-normal text-gray-700 dark:text-gray-300;
     }
 
-    .bx-artificer form a {
+    .bx-artificer form a,
+    .bx-artificer .sys-jf-agreement a, 
+    .bx-artificer .sys-lf-agreement a {
         @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
 

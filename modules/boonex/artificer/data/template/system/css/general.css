@@ -34,6 +34,17 @@ import url(../../../../../../../template/css/general.css);
     display: none;
 }
 
+/*--- Join/Login Forms ---*/
+
+#sys_account .bx-form-element .bx-form-input-submit.bx-btn,
+#sys-form-login .bx-form-element .bx-form-input-submit.bx-btn {
+    width: 100%;
+    text-align: center;
+}
+#bx-form-element-submit_text .bx-form-value {
+    text-align: right;
+}
+
 
 /* --- Content loader placeholder ---*/
 @-webkit-keyframes bxPlaceHolderShimmer {
