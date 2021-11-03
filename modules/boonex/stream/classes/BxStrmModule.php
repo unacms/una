@@ -40,6 +40,11 @@ class BxStrmModule extends BxBaseModTextModule
         return $this->_oEngine;
     }
 
+    public function actionEmbedStream($iContentId = 0)
+    {
+        $this->_serviceTemplateFunc ('embedStream', $iContentId);
+    }
+
     public function actionStreamViewers ($iContentId = 0)
     {
         header('Content-Type:text/javascript; charset=utf-8');

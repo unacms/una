@@ -109,7 +109,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_stream_broadcast', 1, 'bx_stream', '', '_bx_stream_page_block_title_viewers', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:14:\"stream_viewers\";}', 0, 0, 1, 1),
-('bx_stream_broadcast', 1, 'bx_stream', '', '_bx_stream_page_block_title_broadcast', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:16:\"stream_broadcast\";}', 0, 0, 1, 2);
+('bx_stream_broadcast', 1, 'bx_stream', '', '_bx_stream_page_block_title_broadcast', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:16:\"stream_broadcast\";}', 0, 0, 1, 2);
 
 -- PAGE: view entry comments
 

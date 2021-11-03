@@ -261,7 +261,9 @@
     <string name="_bx_stream_start_streaming"><![CDATA[Start Streaming]]></string>
     <string name="_bx_stream_stop_streaming"><![CDATA[Stop Streaming]]></string>
 
-    <string name="_bx_stream_popup_share"><![CDATA[Stream view URL]]></string>
+    <string name="_bx_stream_popup_share"><![CDATA[Stream Share]]></string>
+    <string name="_bx_stream_field_link"><![CDATA[Stream URL]]></string>
+    <string name="_bx_stream_field_embed"><![CDATA[Stream Embed]]></string>
     <string name="_bx_stream_popup_settings"><![CDATA[Stream settings]]></string>
     <string name="_bx_stream_field_audio_source"><![CDATA[Audio source]]></string>
     <string name="_bx_stream_field_video_source"><![CDATA[Video source]]></string>

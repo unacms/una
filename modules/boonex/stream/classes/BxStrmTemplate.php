@@ -54,6 +54,8 @@ class BxStrmTemplate extends BxBaseModTextTemplate
 
         $sUrlViewStream = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . (int)$aContentInfo['id'];
         $sUrlViewStream = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrlViewStream);
+        $sUrlEmbed = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed_stream/' . (int)$aContentInfo['id'];
+
         $aForm = array(
             'form_attrs' => array(
                 'name' => 'bx-stream-form-share',
@@ -63,8 +65,15 @@ class BxStrmTemplate extends BxBaseModTextTemplate
                 'url' => array(
                     'type' => 'text',
                     'name' => 'url'.time(),
-                    'caption' => '',
+                    'caption' => _t('_bx_stream_field_link'),
                     'value' => $sUrlViewStream,
+                    'attrs' => array('readonly' => 'readonly'),
+                ),
+                'embed' => array(
+                    'type' => 'text',
+                    'name' => 'embed'.time(),
+                    'caption' => _t('_bx_stream_field_embed'),
+                    'value' => '<iframe width="560" height="315" frameborder="0" allow="autoplay; picture-in-picture" allowfullscreen src="' . $sUrlEmbed . '"></iframe>',
                     'attrs' => array('readonly' => 'readonly'),
                 ),
             ),
@@ -141,6 +150,28 @@ class BxStrmTemplate extends BxBaseModTextTemplate
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'sources' => $sSources,
         ));
+    }
+
+    public function embedStream($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        // TODO: visibility and other checks
+
+        $sCode = $this->parseHtmlByName('stream_embed.html', array(
+            'player' => $this->entryStreamPlayer ($aContentInfo),
+            'viewers' => $this->entryStreamViewers ($aContentInfo),
+        ));
+
+        $this->addCss('main.css');
+
+        // display page
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
+        $oTemplate->setPageHeader ($aContentInfo[$CNF['FIELD_TITLE']]);
+        $oTemplate->setPageContent ('page_main_code', $sCode);
+        $oTemplate->getPageCode();
+        exit;
     }
 
     /**
