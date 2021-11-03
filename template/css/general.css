@@ -397,6 +397,22 @@ div.bx-account-unit-online {
     text-overflow: ellipsis;
 }
 
+/* --------------- Join/Login Forms */
+
+#sys_account .bx-form-element .bx-form-input-submit.bx-btn,
+#sys-form-login .bx-form-element .bx-form-input-submit.bx-btn {
+    width: 100%;
+    text-align: center;
+}
+#bx-form-element-submit_text .bx-form-value {
+    text-align: right;
+}
+.sys-jf-login .bx-btn,
+.sys-lf-join .bx-btn {
+    float: none;
+}
+
+
 /* --------------- Create Post Form */
 
 .sys-create-post-form {

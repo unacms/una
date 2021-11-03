@@ -3455,8 +3455,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_login', 'ID', 2147483647, 1, 3),
 ('sys_login', 'Password', 2147483647, 1, 4),
 ('sys_login', 'rememberMe', 2147483647, 1, 5),
-('sys_login', 'login', 2147483647, 1, 6),
-('sys_login', 'submit_text', 2147483647, 1, 7),
+('sys_login', 'submit_text', 2147483647, 1, 6),
+('sys_login', 'login', 2147483647, 1, 7),
 
 ('sys_login_step2', 'phone', 2147483647, 1, 1),
 ('sys_login_step2', 'do_sendsms', 2147483647, 1, 2),
@@ -3473,7 +3473,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_account_create', 'password', 2147483647, 1, 4),
 ('sys_account_create', 'receive_news', 2147483647, 1, 5),
 ('sys_account_create', 'do_submit', 2147483647, 1, 6),
-('sys_account_create', 'agreement', 2147483647, 1, 7),
+('sys_account_create', 'agreement', 2147483647, 0, 7),
 
 ('sys_account_settings_email', 'email', 2147483647, 1, 1),
 ('sys_account_settings_email', 'password_current', 2147483647, 1, 2),

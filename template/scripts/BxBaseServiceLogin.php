@@ -149,6 +149,7 @@ class BxBaseServiceLogin extends BxDol
             exit;
         }
 
+        $oPemalink = BxDolPermalinks::getInstance();
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
 
         $sCustomHtmlBefore = '';
@@ -172,7 +173,7 @@ class BxBaseServiceLogin extends BxDol
 
         $aTmplVarsJoin = [];
         if(strpos($sParams, 'no_join_text') === false)
-            $aTmplVarsJoin['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+            $aTmplVarsJoin['url'] = BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=create-account');
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addJs(array('jquery.form.min.js'));        
@@ -191,6 +192,7 @@ class BxBaseServiceLogin extends BxDol
                 'condition' => !empty($aTmplVarsJoin),
                 'content' => $aTmplVarsJoin
             ],
+            'agreement' => _t('_sys_form_login_input_agreement_value', BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=terms'), BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=privacy')),
             'bx_if:show_js_code' => [
                 'condition' => strpos($sParams, 'ajax_form') !== false,
                 'content' => []
