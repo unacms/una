@@ -380,6 +380,19 @@
         @apply text-red-400;
     }
 
+    .bx-artificer .bx-switcher-cont.on button {
+        @apply bg-white dark:bg-gray-800;
+    }
+    .bx-artificer .bx-switcher-cont.on button span {
+        @apply bg-green-500 dark:bg-green-500 translate-x-5;
+    }
+    .bx-artificer .bx-switcher-cont.off button {
+        @apply bg-gray-200 dark:bg-gray-900;
+    }
+    .bx-artificer .bx-switcher-cont.off button span {
+        @apply bg-white dark:bg-gray-500 translate-x-0;
+    }
+
 
     /* Common elements: Popups */
     .bx-artificer .bx-popup-wrapper {

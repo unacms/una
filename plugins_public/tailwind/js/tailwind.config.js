@@ -45,7 +45,7 @@ module.exports = {
         'bx-def-font-small', 'bx-def-font-middle', 'bx-def-font-large', 'bx-def-font-h3', 'bx-def-font-h2', 'bx-def-font-h1', 
         'bx-def-a-colored',
 
-        'bx-form-required', 'bx-form-warn',
+        'bx-form-required', 'bx-form-warn', 'bx-switcher-cont', 
         'bx-popup-full-screen', 'bx-popup-fog',
         'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
         'bx-def-unit-alert', 'bx-def-unit-alert-small', 'bx-def-unit-alert-middle',

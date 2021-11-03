@@ -161,7 +161,7 @@ import url(../../../../../../../template/css/forms.css);
 
 
 /*-- Form field: Switcher --*/
-.bx-switcher-cont-alt input {
+.bx-switcher-cont input {
    display: none !important;
 }
 
