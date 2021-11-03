@@ -2276,7 +2276,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_file_handlers_code_viewer"><![CDATA[Code Viewer]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
-	<string name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">By signing up, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.</div>]]></string>
+	<string name="_sys_form_account_input_agreement_value"><![CDATA[By signing up, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Security Image]]></string>
 	<string name="_sys_form_account_input_captcha_error"><![CDATA[Security image input failed. Please, try again.]]></string>
 	<string name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Type the text:]]></string>
@@ -2425,6 +2425,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_sendsms"><![CDATA[Send SMS]]></string>
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Submit Text]]></string>
+        <string name="_sys_form_login_input_agreement_value"><![CDATA[By logging in, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Code from SMS]]></string>
 	<string name="_sys_form_login_input_back"><![CDATA[You didn't receive an SMS? <a href="/page/login-step2">Send SMS again</a>.]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Submit]]></string>
@@ -3378,10 +3379,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	
     <string name="_sys_txt_login_2fa_sms_text"><![CDATA[Your verification code is {0}.]]></string>
     <string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[An error occurred, please report error to the site administrator.]]></string>
-    <string name="_sys_txt_join_description_question"><![CDATA[Already a member?]]></string>
-    <string name="_sys_txt_join_description_action"><![CDATA[Log in.]]></string>
-    <string name="_sys_txt_login_description_question"><![CDATA[Not a member yet?]]></string>
-    <string name="_sys_txt_login_description_action"><![CDATA[Sign up.]]></string>
+    <string name="_sys_txt_join_description_action"><![CDATA[Log in]]></string>
+    <string name="_sys_txt_login_description_action"><![CDATA[Create New Account]]></string>
     <string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
     <string name="_sys_txt_login_locked"><![CDATA[Your account is locked and needs to be unlocked using <a href="{0}">forgot password page</a>.]]></string>
   
