@@ -45,8 +45,8 @@ BxDolMenuMoreAuto.prototype.init = function() {
     });
 
     var iParent = oMenu.parent().width();
-    var iItemMore = oItemMore.outerWidth(true);
-
+    var iItemMore = $this._getWidth(oItemMore);
+        
     oMenu.css('overflow', 'visible');
 
     if(iMenu >= iParent || this._bStaticMode)
