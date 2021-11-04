@@ -909,3 +909,10 @@ input.bx-btn {
 
     text-align: center
 }
+
+/* --------------- Flickity: Tailwind overwrite */
+.flickity-enabled .flickity-viewport .flickity-slider img,
+.flickity-enabled .flickity-viewport .flickity-slider video {
+    display: inline;
+    max-width: none;
+}

@@ -107,6 +107,10 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl + li {
     margin-left: 0;
 }
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-base-pofile-unit .bx-def-icon-size {
+    width: 1.5rem;
+    height: 1.5rem;
+}
 
 
 /*--- Profile Cover ---*/

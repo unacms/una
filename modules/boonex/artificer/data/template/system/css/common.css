@@ -254,3 +254,10 @@ button.bx-btn:focus,
 button.bx-btn:focus .bx-loading-ajax-btn {
     outline: 0;	
 }
+
+/*-- Flickity: Tailwind overwrite --*/
+.flickity-enabled .flickity-viewport .flickity-slider img,
+.flickity-enabled .flickity-viewport .flickity-slider video {
+    display: inline;
+    max-width: none;
+}
