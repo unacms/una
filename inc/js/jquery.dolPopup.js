@@ -515,6 +515,12 @@
                     $('#' + sPopupId)._dolPopupSetPosition({
                         pointer: oPointerOptions
                     });
+
+                    if (typeof (options.onLoad) == 'function')
+                        options.onLoad('#' + sPopupId);
+                    else if (typeof (options.onLoad) == 'string')
+                        eval(options.onLoad);
+
                 };
 
                 var fOnLoadImg = function () {
