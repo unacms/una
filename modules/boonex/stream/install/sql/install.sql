@@ -347,8 +347,7 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_stream', 'bx_stream_votes', 'bx_stream_votes_track', '604800', '1', '1', '0', '1', 'bx_stream_streams', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_stream_reactions', 'bx_stream_reactions', 'bx_stream_reactions_track', '604800', '1', '1', '1', '1', 'bx_stream_streams', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
-('bx_stream_poll_answers', 'bx_stream_polls_answers_votes', 'bx_stream_polls_answers_votes_track', '604800', '1', '1', '0', '1', 'bx_stream_polls_answers', 'id', 'author_id', 'rate', 'votes', 'BxStrmVotePollAnswers', 'modules/boonex/stream/classes/BxStrmVotePollAnswers.php');
+('bx_stream_reactions', 'bx_stream_reactions', 'bx_stream_reactions_track', '604800', '1', '1', '1', '1', 'bx_stream_streams', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
