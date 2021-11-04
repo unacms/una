@@ -292,6 +292,8 @@
     <string name="_bx_spaces_menu_item_title_manage_all"><![CDATA[Все пространства]]></string>
     <string name="_bx_spaces_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
     <string name="_bx_spaces_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
+    <string name="_bx_spaces_menu_item_title_system_sm_parent"><![CDATA[Предок]]></string>
+    <string name="_bx_spaces_menu_item_title_sm_parent"><![CDATA[Предок]]></string>
 
     <string name="_bx_spaces_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_spaces_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

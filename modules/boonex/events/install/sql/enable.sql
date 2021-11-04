@@ -414,22 +414,23 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_snippet_meta', 'bx_events', '_sys_menu_set_title_snippet_meta', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
-('bx_events_snippet_meta', 'bx_events', 'date-start', '_bx_events_menu_item_title_system_sm_date_start', '_bx_events_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, '', 0, 0, 1, 0),
-('bx_events_snippet_meta', 'bx_events', 'date-end', '_bx_events_menu_item_title_system_sm_date_end', '_bx_events_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, '', 0, 0, 1, 0),
 ('bx_events_snippet_meta', 'bx_events', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, '', 0, 0, 1, 1),
-('bx_events_snippet_meta', 'bx_events', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', 0, 0, 1, 2),
-('bx_events_snippet_meta', 'bx_events', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', 0, 0, 1, 3),
-('bx_events_snippet_meta', 'bx_events', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', 0, 0, 1, 4),
-('bx_events_snippet_meta', 'bx_events', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', 1, 0, 1, 5),
-('bx_events_snippet_meta', 'bx_events', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', 0, 0, 1, 6),
-('bx_events_snippet_meta', 'bx_events', 'country', '_sys_menu_item_title_system_sm_country', '_sys_menu_item_title_sm_country', '', '', '', '', '', 2147483647, '', 0, 0, 1, 7),
-('bx_events_snippet_meta', 'bx_events', 'country-city', '_sys_menu_item_title_system_sm_country_city', '_sys_menu_item_title_sm_country_city', '', '', '', '', '', 2147483647, '', 0, 0, 1, 8),
-('bx_events_snippet_meta', 'bx_events', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 9),
-('bx_events_snippet_meta', 'bx_events', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 10),
-('bx_events_snippet_meta', 'bx_events', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 11),
-('bx_events_snippet_meta', 'bx_events', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 0, 0, 1, 12),
-('bx_events_snippet_meta', 'bx_events', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 13),
-('bx_events_snippet_meta', 'bx_events', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 14);
+('bx_events_snippet_meta', 'bx_events', 'date-start', '_bx_events_menu_item_title_system_sm_date_start', '_bx_events_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, '', 0, 0, 1, 2),
+('bx_events_snippet_meta', 'bx_events', 'date-end', '_bx_events_menu_item_title_system_sm_date_end', '_bx_events_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, '', 0, 0, 1, 3),
+('bx_events_snippet_meta', 'bx_events', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, '', 0, 0, 1, 5),
+('bx_events_snippet_meta', 'bx_events', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', 0, 0, 1, 10),
+('bx_events_snippet_meta', 'bx_events', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', 0, 0, 1, 15),
+('bx_events_snippet_meta', 'bx_events', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', 0, 0, 1, 20),
+('bx_events_snippet_meta', 'bx_events', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', 1, 0, 1, 25),
+('bx_events_snippet_meta', 'bx_events', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', 0, 0, 1, 30),
+('bx_events_snippet_meta', 'bx_events', 'country', '_sys_menu_item_title_system_sm_country', '_sys_menu_item_title_sm_country', '', '', '', '', '', 2147483647, '', 0, 0, 1, 35),
+('bx_events_snippet_meta', 'bx_events', 'country-city', '_sys_menu_item_title_system_sm_country_city', '_sys_menu_item_title_sm_country_city', '', '', '', '', '', 2147483647, '', 0, 0, 1, 40),
+('bx_events_snippet_meta', 'bx_events', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 45),
+('bx_events_snippet_meta', 'bx_events', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 50),
+('bx_events_snippet_meta', 'bx_events', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 55),
+('bx_events_snippet_meta', 'bx_events', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 0, 0, 1, 60),
+('bx_events_snippet_meta', 'bx_events', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 65),
+('bx_events_snippet_meta', 'bx_events', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 70);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);

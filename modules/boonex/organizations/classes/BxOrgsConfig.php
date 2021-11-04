@@ -53,6 +53,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'FIELD_NAME' => 'org_name',
             'FIELD_TITLE' => 'org_name',
             'FIELD_TEXT' => 'org_desc',
+            'FIELD_CATEGORY' => 'org_cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
@@ -135,6 +136,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_NOTES' => 'bx_organizations_notes',
             'OBJECT_REPORTS' => 'bx_organizations',
             'OBJECT_METATAGS' => 'bx_organizations',
+            'OBJECT_CATEGORY' => 'bx_organizations_cats',
             'OBJECT_FORM_ENTRY' => 'bx_organization',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_organization_view',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_organization_view_full', // for "info" tab on view profile page

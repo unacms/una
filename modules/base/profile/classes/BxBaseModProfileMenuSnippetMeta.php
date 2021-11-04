@@ -36,7 +36,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         );
 
         $this->_aConnectionToFunctionTitle = array(
-        	'sys_profiles_friends' => '_getMenuItemProfilesFriendsTitle',
+            'sys_profiles_friends' => '_getMenuItemProfilesFriendsTitle',
             'sys_profiles_subscriptions' => '_getMenuItemProfilesSubscriptionsTitle'
         );
     }
@@ -48,7 +48,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!empty($this->_iContentId))
             $this->_oContentProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_sModule);
     }
-    
+
     protected function getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
     {
         return 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})';
@@ -137,10 +137,13 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(empty($sTitle))
             return false;
 
-        return $this->getUnitMetaItemButton($sTitle, array(
-            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-            'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
-        ));
+        return [
+            $this->getUnitMetaItemButton($sTitle, array(
+                'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+                'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
+            )),
+            'bx-menu-item-button'
+        ];
     }
 
     protected function _getMenuItemProfilesFriendsTitle($sAction, &$oConnection)

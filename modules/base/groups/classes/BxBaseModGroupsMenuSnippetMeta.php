@@ -41,18 +41,22 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if(empty($sTitle))
             return false;
 
-        return $this->getUnitMetaItemButtonSmall(_t('_bx_groups_menu_item_title_pay_and_join'), array(
-            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_JOIN_ENTRY'],
-                'profile_id' => $this->_oContentProfile->id()
-            ))
-        ));
+        return [
+            $this->getUnitMetaItemButtonSmall(_t('_bx_groups_menu_item_title_pay_and_join'), [
+                'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', [
+                    'i' => $CNF['URI_JOIN_ENTRY'], 
+                    'profile_id' => $this->_oContentProfile->id()
+                ])
+            ]),
+            'bx-menu-item-button'
+        ];
     }
 
     protected function _getMenuItemJoin($aItem)
     {
         if (isset($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']))
             return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
+
         return false;
     }
 

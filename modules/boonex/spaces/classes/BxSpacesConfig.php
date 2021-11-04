@@ -45,6 +45,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'FIELD_LEVEL' => 'level',
             'FIELD_TITLE' => 'space_name',
             'FIELD_TEXT' => 'space_desc',
+            'FIELD_CATEGORY' => 'space_cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
@@ -109,6 +110,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_NOTES' => 'bx_spaces_notes',
             'OBJECT_REPORTS' => 'bx_spaces',
             'OBJECT_METATAGS' => 'bx_spaces',
+            'OBJECT_CATEGORY' => 'bx_spaces_cats',
             'OBJECT_FORM_ENTRY' => 'bx_space',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_space_view',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_space_view_full', // for "info" tab on view space page
