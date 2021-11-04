@@ -29,7 +29,7 @@ DELETE FROM `sys_categories2objects` WHERE `module` = 'bx_stream';
 DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_stream%';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_stream', 'bx_stream_reactions', 'bx_stream_poll_answers');
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_stream', 'bx_stream_reactions');
 
 -- SCORES
 DELETE FROM `sys_objects_score` WHERE `name` = 'bx_stream';
