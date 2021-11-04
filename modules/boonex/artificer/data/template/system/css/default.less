@@ -20,13 +20,28 @@ import '../../../../../../../template/css/default.less';
 }
 
 
-/*--- image/thumbnail/gallery ---*/
+/*--- Image/thumbnail/gallery ---*/
 .bx-def-unit .bx-def-unit-info,
 .bx-def-unit .bx-def-unit-img,
 .bx-def-unit img {
     display: inherit;
 }
 
+/*--- Live Search ---*/
+.bx-def-unit-live-search .bx-def-unit-img:not(.empty) {
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+.bx-def-unit-live-search .bx-def-unit-img-empty {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bx-def-unit-live-search .bx-def-unit-img-empty i {
+    font-size: 1.2rem;
+}
 
 /*--- z-index ---*/
 .bx-def-z-index-front {
