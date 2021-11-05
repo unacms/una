@@ -8,35 +8,42 @@
  * @{
  */
 
-function BxAttendantPopupWithRecommendedOnProfileAdd(oOptions) {
-    this._sContainerId = oOptions.sContainerId == undefined ? 'oBxAttendantPopupWithRecommendedOnProfileAdd' : oOptions.sContainerId;
+function BxAttendant(oOptions) {
+    this._sContainerId = oOptions.sContainerId == undefined ? 'oBxAttendant' : oOptions.sContainerId;
     this._sUrlAfterShow = oOptions.sUrlAfterShow == undefined ? '' : oOptions.sUrlAfterShow;
+    this._sActionsUri = oOptions.sActionUri;
     var $this = this;
-    $(document).ready(function () {
-        $this.init();
-    });
 }
 
-BxAttendantPopupWithRecommendedOnProfileAdd.prototype.init = function () {
+BxAttendant.prototype.showPopupWithRecommended = function () {
     var $this = this;
-    $('.bx-pwropa-item-container').hide().first().show();
-    $('#' + $this._sContainerId).dolPopup({ position: 'centered', closeOnOuterClick: false, onShow: $this.Show });
-    $('.bx-pwropa-button').click(function () {
-        $oCurr = $('.bx-pwropa-item-container:visible').hide();
-        $oNext = $oCurr.next(); $oNext.show();
-        $this.ReInitFlickity();
-        if (!$oNext.length) {
-            $('#' + $this._sContainerId).dolPopupHide();
-            if ($this._sUrlAfterShow != '') {
-                location.href = $this._sUrlAfterShow;
-            }
+    
+    $(window).dolPopupAjax({
+        url: $this._sActionsUri + '/RecomendedPopup',
+        closeOnOuterClick: true,
+		removeOnClose: true,
+        onLoad: function(sPopupSelector){
+            $(sPopupSelector + ' .bx-pwropa-item-container').hide().first().show();
+            $this.reInitFlickity(sPopupSelector);
+            $(sPopupSelector + ' .bx-pwropa-button').click(function () {
+                $oCurr = $(sPopupSelector + ' .bx-pwropa-item-container:visible').hide();
+                $oNext = $oCurr.next(); 
+                $oNext.show();
+                $this.reInitFlickity(sPopupSelector);
+                if ($oNext.length == 0) {
+                    $(sPopupSelector).dolPopupHide();
+                    if ($this._sUrlAfterShow != '') {
+                        location.href = $this._sUrlAfterShow;
+                    }
+                }
+            });
         }
     });
 }
 
-BxAttendantPopupWithRecommendedOnProfileAdd.prototype.ReInitFlickity = function () {
+BxAttendant.prototype.reInitFlickity = function (sPopupSelector) {
     var $this = this;
-    $('#' + $this._sContainerId + ' .bx-pwropa-item-container:visible .bx-base-unit-showcase-wrapper').flickity({
+    $(sPopupSelector + ' .bx-pwropa-item-container:visible .bx-base-unit-showcase-wrapper').flickity({
         cellSelector: '.bx-base-unit-showcase',
         cellAlign: 'left',
         pageDots: false,
@@ -45,12 +52,7 @@ BxAttendantPopupWithRecommendedOnProfileAdd.prototype.ReInitFlickity = function 
     $('#' + $this._sContainerId)._dolPopupSetPosition();
 }
 
-BxAttendantPopupWithRecommendedOnProfileAdd.prototype.Show = function () {
-    var $this = oBxAttendantPopupWithRecommendedOnProfileAdd;
-    $this.ReInitFlickity();
-}
-
-BxAttendantPopupWithRecommendedOnProfileAdd.prototype.OnActionComplete = function (data, e) {
+BxAttendant.prototype.onActionComplete = function (data, e) {
     if (data.err == false) {
         var $e = $(e);
         $e.hide();
@@ -58,5 +60,5 @@ BxAttendantPopupWithRecommendedOnProfileAdd.prototype.OnActionComplete = functio
 }
 
 function bx_attendant_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
-    return bx_conn_action(e, sObj, sAction, iContentId, bConfirm, oBxAttendantPopupWithRecommendedOnProfileAdd.OnActionComplete)
+    return bx_conn_action(e, sObj, sAction, iContentId, bConfirm, oBxAttendant.onActionComplete)
 }

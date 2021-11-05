@@ -13,3 +13,8 @@ DELETE FROM `sys_injections` WHERE `name`= @sName;
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+
+-- MENU
+DELETE FROM `sys_objects_menu` WHERE `module` = @sName;
+DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
+DELETE FROM `sys_menu_items` WHERE `module` = @sName;

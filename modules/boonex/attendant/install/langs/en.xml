@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_attendant"><![CDATA[Attendant]]></string>
-  <string name="_bx_attendant_adm_stg_cpt_type"><![CDATA[Attendant]]></string>
-  <string name="_bx_attendant_adm_stg_cpt_category_on_profile_creation"><![CDATA[Popup with recomended profiles on profile add]]></string>
-  <string name="_bx_attendant_adm_stg_on_profile_creation_modules_list"><![CDATA[Modules list]]></string>
-  <string name="_bx_attendant_adm_stg_on_profile_after_action_url"><![CDATA[Url for redirect after shows]]></string>
-  <string name="_bx_attendant_adm_stg_on_profile_creation_event_list"><![CDATA[Show popup after]]></string>
-  <string name="_bx_attendant_popup_with_recommended_title_default"><![CDATA[Default title]]></string>
-  <string name="_bx_attendant_popup_with_recommended_description_default"><![CDATA[Default description]]></string>
-  <string name="_bx_attendant_popup_with_recommended_button_text"><![CDATA[Continue]]></string>
-  <string name="_bx_attendant_popup_event_after_registration"><![CDATA[sign-up]]></string>
-  <string name="_bx_attendant_popup_event_after_confirmation"><![CDATA[account confirmation]]></string>
+    <string name="_bx_attendant"><![CDATA[Attendant]]></string>
+    <string name="_bx_attendant_adm_stg_cpt_type"><![CDATA[Attendant]]></string>
+    <string name="_bx_attendant_adm_stg_cpt_category_on_profile_creation"><![CDATA[Popup with recomended profiles on profile add]]></string>
+    <string name="_bx_attendant_adm_stg_on_profile_creation_modules_list"><![CDATA[Modules list]]></string>
+    <string name="_bx_attendant_adm_stg_on_profile_after_action_url"><![CDATA[Url for redirect after shows]]></string>
+    <string name="_bx_attendant_adm_stg_on_profile_creation_event_list"><![CDATA[Show popup after]]></string>
+    <string name="_bx_attendant_popup_with_recommended_title_default"><![CDATA[Recommended {0}]]></string>
+    <string name="_bx_attendant_popup_with_recommended_description_default"><![CDATA[Default description]]></string>
+    <string name="_bx_attendant_popup_with_recommended_button_text"><![CDATA[Continue]]></string>
+    <string name="_bx_attendant_popup_event_after_registration"><![CDATA[sign-up]]></string>
+    <string name="_bx_attendant_popup_event_after_confirmation"><![CDATA[account confirmation]]></string>
+    
+    <string name="_bx_attendant_menu_item_title_system_attendant"><![CDATA[Attendant]]></string>    
+    <string name="_bx_attendant_menu_item_title_attendant"><![CDATA[Attendant]]></string>    
 </resources>

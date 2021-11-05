@@ -29,10 +29,10 @@ class BxAttendantConfig extends BxBaseModGeneralConfig
             'FIELD_OBJECT_ID' => 'object_id'
         );
         $this->_aJsClasses = array(
-           'main' => 'BxAttendantPopupWithRecommendedOnProfileAdd'
+           'main' => 'BxAttendant'
         );
         $this->_aJsObjects = array(
-            'main' => 'oBxAttendantPopupWithRecommendedOnProfileAdd'
+            'main' => 'oBxAttendant'
         );
     }
     
