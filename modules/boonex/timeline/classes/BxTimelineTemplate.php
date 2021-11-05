@@ -358,28 +358,54 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
      * @param string $sMode - 'photo' is only one mode which is available for now.
      */
     public function getItemBlockContent($iId, $sMode) {
-        $CNF = $this->_oConfig->CNF;
+        $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
-        if(empty($aEvent))
+        $aItemData = $oModule->getItemData($iId);
+        if(empty($aItemData) || $aItemData['code'] != 0)
             return '';
 
-        $aTmplVars = array(
-        	'style_prefix' => $sStylePrefix,
-            'bx_if:show_image' => array(
-                'condition' => false,
-                'content' => array()
-            )
-        );
+        $aEvent = $aItemData['event'];       
 
+        $aTmplVars = [];
         switch($sMode) {
             case 'photo':
-                $aTmplVars['bx_if:show_image']['condition'] = true;
-                $aTmplVars['bx_if:show_image']['content'] = array(
+                $aImages = [];
+                if(!empty($aEvent['content']['images']) && is_array($aEvent['content']['images']))
+                    $aImages = $aEvent['content']['images'];
+                else if(!empty($aEvent['content']['images_attach']) && is_array($aEvent['content']['images_attach']))
+                    $aImages = $aEvent['content']['images_attach'];
+
+                $bImageSingle = count($aImages) == 1;
+                $sImageSelected = base64_decode(bx_process_input(bx_get('src')));
+
+                $aTmplVarsImages = [];
+                if(!$bImageSingle)
+                    foreach($aImages['items'] as $aImage) 
+                        $aTmplVarsImages[] = [
+                            'style_prefix' => $sStylePrefix,
+                            'url' => $aImage['url'],
+                            'src' => $aImage[!empty($aImage['src_orig']) ? 'src_orig' : 'src']
+                        ];
+
+                $aTmplVars = [
                     'style_prefix' => $sStylePrefix,
-                    'src' => base64_decode(bx_process_input(bx_get('src'))),
-                );
+                    'bx_if:show_image' => [
+                        'condition' => $bImageSingle,
+                        'content' => [
+                            'style_prefix' => $sStylePrefix,
+                            'src' => $sImageSelected,
+                        ]
+                    ],
+                    'bx_if:show_images' => [
+                        'condition' => !$bImageSingle,
+                        'content' => [
+                            'style_prefix' => $sStylePrefix,
+                            'bx_repeat:images' => $aTmplVarsImages
+                        ]
+                    ]
+                ];
+
                 break;
         }
 

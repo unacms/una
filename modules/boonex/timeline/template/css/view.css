@@ -880,10 +880,18 @@ div.bx-tl-view-info .bx-base-pofile-unit {
 }
 
 /*--- Item Brief Style ---*/
-div.bx-tl-bview-image {
-    text-align: center;
+div.bx-tl-bview-images {
+    position: relative;
 }
-div.bx-tl-bview-image img {
+div.bx-tl-bview-image.bx-tl-bvi-single {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+div.bx-tl-bview-image.bx-tl-bvi-single img {
     max-width: 100%;
 }
 
