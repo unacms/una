@@ -23,33 +23,53 @@ class BxBaseEditorQuill extends BxDolEditor
                   languages: ['javascript', 'php', 'html', 'css']
                 });
     
-                $( "{bx_var_selector}" ).after( "<div id='editor_{bx_var_editor_name}' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html'>" + $( "{bx_var_selector}" ).val() + "</div>" );
-                $( "{bx_var_selector}" ).hide();
+                $( "{bx_var_selector}" ).after( "<div id='{bx_var_editor_name}' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill'>" + $( "{bx_var_selector}" ).val() + "</div>" );
+                /*$( "{bx_var_selector}" ).hide();*/
                 
                 if (typeof bQuillRegistred === 'undefined') {
                     Quill.register("modules/imageUploader", ImageUploader); 
-                    bQuillRegistred = true;
+                    bQuillRegistred = true; 
                 }
+                var Embed = Quill.import('blots/embed');
+                class ProcLink extends Embed {
+                    static create(value) {
+                        let node = super.create(value);
+                        // give it some margin
+                        node.setAttribute('href', value.id);
+                        node.innerHTML = '@' + value.value;
+                        return node;
+                    }
+                }
+                ProcLink.blotName = 'proc-link'; 
+                ProcLink.className = 'proc-link';
+                ProcLink.tagName = 'a';                
+                Quill.register({
+                    'formats/proc-link': ProcLink
+                });
                 
-                var quill_{bx_var_editor_name} = new Quill('#editor_{bx_var_editor_name}', {
+                {bx_var_editor_name} = new Quill('#{bx_var_editor_name}', {
                      theme: '{bx_var_skin}',
                      modules: {
                         syntax: true, 
+                        imageResize: {},
                         toolbar: [{toolbar}],
                         mention: {
-                           // allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+                            allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
                             mentionDenotationChars: ["@"],
+                            showDenotationChar: false,
+                            blotName: 'proc-link',
                             source: function (searchTerm, renderList, mentionChar) {
                               $.getJSON('{bx_url_root}searchExtended.php?action=get_authors&', { term: searchTerm}, function(data){
                                 renderList(data, searchTerm);
                               });
                             },
                             renderItem: function(item, searchTerm){
-                                item.value = '<a href="' + item.url + '" target="_blank" >' + item.label + '</a>';
-                                return '<a href="' + item.url + '" target="_blank" >@' + item.label + '</a>';
+                              item.id = item.url;
+                              item.value = item.label;
+                              return '@' + item.value;
                             },
                             onSelect: function(item, insertItem){
-                                insertItem(item)
+                                insertItem(item, false)
                             }
                         },
                         imageUploader: {
@@ -77,8 +97,8 @@ class BxBaseEditorQuill extends BxDolEditor
                     }
                 });
                 
-                quill_{bx_var_editor_name}.on('text-change', function(delta, oldDelta, source) {
-                    $('{bx_var_selector}').val(quill_{bx_var_editor_name}.container.firstChild.innerHTML);
+                {bx_var_editor_name}.on('text-change', function(delta, oldDelta, source) {
+                    $('{bx_var_selector}').val({bx_var_editor_name}.container.firstChild.innerHTML);
                 });
     EOS;
    
@@ -146,6 +166,9 @@ class BxBaseEditorQuill extends BxDolEditor
         	'path' => $this->_oTemplate->getCssPath($sCss),
         	'url' => $this->_oTemplate->getCssUrl($sCss)
         ));
+        
+        $sEditorName = 'quill_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
+        
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
@@ -153,7 +176,7 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_var_form_id' => $aAttrs['form_id'],
             'toolbar' => $sToolbarItems ? $sToolbarItems : "[]",
             'bx_var_element_name' => str_replace(['-', ' '], '_', $aAttrs['element_name']),
-            'bx_var_editor_name' => str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']),
+            'bx_var_editor_name' => $sEditorName,
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
@@ -179,7 +202,6 @@ class BxBaseEditorQuill extends BxDolEditor
                     });
                 } else {
                 	setTimeout(function () {
-                     console.log(999);
                     	$sInitEditor
                     }, 10); // wait while html is rendered in case of dynamic adding html with tinymce
                 } 
@@ -191,6 +213,7 @@ class BxBaseEditorQuill extends BxDolEditor
 
             $sScript = "
             <script>
+                var " . $sEditorName . ";
                 $(document).ready(function () {
                     $sInitEditor
                 });
@@ -231,7 +254,9 @@ class BxBaseEditorQuill extends BxDolEditor
             $sJsPrefix . 'highlight/' . $sJsSuffix . 'highlight.min.js',
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.min.js', 
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.mention.js',  
-            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.imageUploader.min.js'
+            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.imageUploader.min.js',
+            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.custom.js', 
+            $sJsPrefix . 'quill/' . $sJsSuffix . 'image-resize.min.js', 
         );
 
         $aCss = array(
