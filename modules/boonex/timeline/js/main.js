@@ -142,8 +142,8 @@ BxTimelineMain.prototype.reloadMasonry = function() {
     this.oView.find('.' + this.sClassItems).masonry('reloadItems').masonry('layout');
 };
 
-BxTimelineMain.prototype.initFlickityImages = function(oParent) {
-    var sItem = 'div.' + this.sClassItemImage;
+BxTimelineMain.prototype.initFlickityImages = function(oParent, sSelectorItemImage) {
+    var sItem = sSelectorItemImage ? sSelectorItemImage : 'div.' + this.sClassItemImage;
     if(oParent.find(sItem).length <= 1)
         return;
 

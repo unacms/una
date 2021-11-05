@@ -540,6 +540,7 @@ BxTimelineView.prototype.showMore = function(oLink)
 
 BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams)
 {
+    var $this = this;
     var oData = $.extend({}, this._getDefaultData(), {id: iId, mode: sMode}, (oParams != undefined ? oParams : {}));
 
     $(".bx-popup-full-screen.bx-popup-applied:visible").dolPopupHide();
@@ -553,7 +554,15 @@ BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams)
         closeOnOuterClick: false,
         removeOnClose: true,
         fullScreen: true,
-        displayMode: 'box'
+        displayMode: 'box',
+        onLoad: function(oPopup) {
+            var sClassImages = $this.sSP + '-bview-images';
+            var sClassImage = $this.sSP + '-bview-image';
+            var oParent = $(oPopup).find('.' + sClassImages);
+
+            if(oParent.length > 0 && oParent.find('.' + sClassImage).length > 1)
+                $this.initFlickityImages(oParent, '.' + sClassImage);
+        }
     });
 
     return false;
