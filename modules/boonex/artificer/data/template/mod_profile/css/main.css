@@ -1,5 +1,5 @@
 /*--- Units ---*/
-.bx-base-pofile-units-wrapper {
+.bx-base-pofile-units-wrapper:not(.bx-base-unit-showcase-wrapper) {
     display: -webkit-flex;
     display: flex;
 
@@ -18,6 +18,9 @@
     flex: 0 0 100%;
 
     overflow: hidden;
+}
+.bx-base-unit-showcase-wrapper.bx-sc-enabled .bx-base-pofile-unit-with-cover {
+    height: 100%;
 }
 
 /*+++ MEDIA: tablet2 +++*/
