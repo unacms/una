@@ -36,8 +36,7 @@ class BxAttendantModule extends BxDolModule
                 }
             }
         }
-        if (count($aModulteData) > 0)
-            $sRv = $this->_oTemplate->popupWithRecommendedOnProfileAdd($aModulteData);
+        $sRv = $this->_oTemplate->popupWithRecommendedOnProfileAdd($aModulteData);
         
         echo $sRv;
     }
@@ -76,6 +75,35 @@ class BxAttendantModule extends BxDolModule
         return $aResult;
     }
     
+    
+    /**
+     * @page service Service Calls
+     * @section bx_attendant Attendant
+     * @subsection bx_attendant-other Other
+     * @subsubsection bx_attendant-on-profile get_options_redirect_after_show
+     * 
+     * @code bx_srv('bx_attendant', 'get_options_redirect_after_show', [...]); @endcode
+     * 
+     * Get list avaliable redirct pages
+     * 
+     * @return an array with avaliable redirct pages. 
+     * 
+     * @see BxAttendantModule::serviceGetOptionsRedirectAfterShow
+     */
+    /** 
+     * @ref bx_attendant-get_options_redirect_after_show "get_options_redirect_after_show"
+     */
+    public function serviceGetOptionsRedirectAfterShow()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = [];
+        $aChoices = ['noredirect', 'homepage', 'profile', 'custom'];
+        foreach($aChoices as $sChoice) 
+            $aResult[] = array('key' => $sChoice, 'value' => _t('_bx_attendant_option_redirect_show_' . $sChoice));
+
+        return $aResult;
+    }
     
     /**
      * @page service Service Calls

@@ -50,17 +50,48 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
         }
         
         return $this->parseHtmlByName('popup_recommended.html', [
-                'bx_repeat:items' => $aVars, 
-                'button_text' => _t('_bx_attendant_popup_with_recommended_button_text')
+                'bx_if:data' => [
+                    'condition' => count($aVars) > 0,
+                    'content' => [
+                        'bx_repeat:items' => $aVars, 
+                        'button_text' => _t('_bx_attendant_popup_with_recommended_button_text')
+                    ]
+                ],
+                'bx_if:nodata' => [
+                    'condition' => count($aVars) == 0,
+                    'content' => [
+                    ]
+                ]
             ]
         );
     }
     
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
+        $sRedirectUrl = '';
+        switch (getParam('bx_attendant_on_profile_after_action_url')) {
+            case 'profile':
+                $sRedirectUrl = BxDolProfile::getInstance()->getUrl();
+                break;
+
+            case 'custom':
+                $sRedirectCustom = getParam('bx_attendant_on_profile_after_action_url_custom');
+                if($sRedirectCustom) {
+                    $sRedirectUrl = BxDolPermalinks::getInstance()->permalink($sRedirectCustom);
+
+                    if (false === strpos($sRedirectUrl, 'http://') && false === strpos($sRedirectUrl, 'https://'))
+                        $sRedirectUrl = BX_DOL_URL_ROOT . $sRedirectCustom;
+                }
+                break;
+                
+            case 'homepage':
+                $sRedirectUrl =  BX_DOL_URL_ROOT;  
+                break;
+        }
+        
         $aParams = array_merge(array(
             'sContainerId' => $this->sContainerId,
-            'sUrlAfterShow' => getParam('bx_attendant_on_profile_after_action_url')
+            'sUrlAfterShow' => $sRedirectUrl
         ), $aParams);
         
         return parent::getJsCode($sType, $aParams, $bWrap);

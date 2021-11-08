@@ -23,10 +23,10 @@ class BxBaseEditorQuill extends BxDolEditor
                   languages: ['javascript', 'php', 'html', 'css']
                 });
     
-                $( "{bx_var_selector}" ).after( "<div id='{bx_var_editor_name}' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill'>" + $( "{bx_var_selector}" ).val() + "</div>" );
-                /*$( "{bx_var_selector}" ).hide();*/
+                $( "{bx_var_selector}" ).after( "<div id='{bx_var_editor_name}' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill {bx_var_css_additional_class}'>" + $( "{bx_var_selector}" ).val() + "</div>" );
+                //$( "{bx_var_selector}" ).hide();
                 
-                if (typeof bQuillRegistred === 'undefined') {
+                if (typeof bQuillRegistred === 'undefined' && {toolbar}) {
                     Quill.register("modules/imageUploader", ImageUploader); 
                     bQuillRegistred = true; 
                 }
@@ -47,12 +47,12 @@ class BxBaseEditorQuill extends BxDolEditor
                     'formats/proc-link': ProcLink
                 });
                 
-                {bx_var_editor_name} = new Quill('#{bx_var_editor_name}', {
+                var oConfig = {              
                      theme: '{bx_var_skin}',
                      modules: {
                         syntax: true, 
                         imageResize: {},
-                        toolbar: [{toolbar}],
+                        toolbar: {toolbar},
                         mention: {
                             allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
                             mentionDenotationChars: ["@"],
@@ -72,31 +72,48 @@ class BxBaseEditorQuill extends BxDolEditor
                                 insertItem(item, false)
                             }
                         },
-                        imageUploader: {
-                            upload: file => {
-                                return new Promise((resolve, reject) => {
-                                    const formData = new FormData();
-                                    formData.append("file", file);
-                                    fetch("{bx_url_root}storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", {
-                                            method: "POST",
-                                            body: formData
-                                        }
-                                    )
-                                    .then(response => response.json())
-                                    .then(result => {
-                                        console.log(result);
-                                        resolve(result.link);
-                                    })
-                                    .catch(error => {
-                                        reject("Upload failed");
-                                        console.error("Error:", error);
-                                    });
+                    }
+                };
+                if ({toolbar}){
+                    oConfig.modules.imageUploader = {
+                        upload: file => {
+                            return new Promise((resolve, reject) => {
+                                const formData = new FormData();
+                                formData.append("file", file);
+                                fetch("{bx_url_root}storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", {
+                                        method: "POST",
+                                        body: formData
+                                    }
+                                )
+                                .then(response => response.json())
+                                .then(result => {
+                                    console.log(result);
+                                    resolve(result.link);
+                                })
+                                .catch(error => {
+                                    reject("Upload failed");
+                                    console.error("Error:", error);
                                 });
-                            }
+                            });
                         }
                     }
-                });
+                }
                 
+                {bx_var_editor_name} = new Quill('#{bx_var_editor_name}', oConfig);
+                {bx_var_editor_name}.keyboard.addBinding({
+                    key: ' ',
+                    handler: function(range, context) {
+                        bx_editor_on_space_enter ({bx_var_editor_name}, '{bx_var_selector}');
+                        return true;
+                    }
+                });
+                {bx_var_editor_name}.keyboard.bindings[13].unshift({
+                    key: 13,
+                    handler: (range, context) => {
+                        bx_editor_on_space_enter ({bx_var_editor_name}, '{bx_var_selector}')
+                        return true;
+                    }
+                });
                 {bx_var_editor_name}.on('text-change', function(delta, oldDelta, source) {
                     $('{bx_var_selector}').val({bx_var_editor_name}.container.firstChild.innerHTML);
                 });
@@ -174,7 +191,8 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_var_custom_init' => $sCustomInit,
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_var_form_id' => $aAttrs['form_id'],
-            'toolbar' => $sToolbarItems ? $sToolbarItems : "[]",
+            'toolbar' => $sToolbarItems ? '[' . $sToolbarItems . ']' : 'false',
+            'bx_var_css_additional_class' => $sToolbarItems ? '' : 'bx-form-input-html-quill-empty',
             'bx_var_element_name' => str_replace(['-', ' '], '_', $aAttrs['element_name']),
             'bx_var_editor_name' => $sEditorName,
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
