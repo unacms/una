@@ -1884,7 +1884,7 @@
 	<string name="_sys_acc_confirmation_type_phone"><![CDATA[phone is confirmed]]></string>
 	<string name="_sys_acc_confirmation_type_email_and_phone"><![CDATA[email and phone are confirmed]]></string>
   <string name="_sys_acc_confirmation_type_email_or_phone"><![CDATA[email or phone is confirmed]]></string>
-	<string name="_sys_acl_action_account"><![CDATA[You didn't created any profiles, so you can't '{1}'.]]></string>
+	<string name="_sys_acl_action_account"><![CDATA[You haven't created any profiles, so you can't '{1}'.]]></string>
 	<string name="_sys_acl_action_chart_view"><![CDATA[View charts]]></string>
 	<string name="_sys_acl_action_chart_view_desc"><![CDATA[View statistical charts]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Comments Edit All]]></string>

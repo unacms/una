@@ -271,3 +271,19 @@ div.bx-tl-view-outline div.bx-tl-il-embed iframe,
 div.bx-tl-view-timeline div.bx-tl-il-embed iframe {
     width: 100%;
 }
+
+/*--- Item Brief Style ---*/
+div.bx-tl-bview-images {
+    position: relative;
+}
+div.bx-tl-bview-image.bx-tl-bvi-single {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+div.bx-tl-bview-image.bx-tl-bvi-single img {
+    max-width: 100%;
+}

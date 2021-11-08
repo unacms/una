@@ -393,6 +393,10 @@
         @apply bg-white dark:bg-gray-500 translate-x-0;
     }
 
+    .bx-artificer .bx-form-input-autotoken b.val {
+        @apply bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600;
+    }
+
 
     /* Common elements: Popups */
     .bx-artificer .bx-popup-wrapper {
