@@ -2,6 +2,29 @@
 import url(../../../../../../../template/css/menu.css);
 --*/
 
+ul.bx-menu-hor,
+ul.bx-menu-custom-hor,
+ul.bx-menu-notif,
+ul.bx-menu-verlit,
+ul.bx-menu-ver,
+ul.bx-menu-custom-ver,
+ul.bx-menu-main-submenu,
+ul.bx-menu-toolbar,
+ul.bx-menu-floating-blocks-wide,
+ul.bx-menu-floating-blocks-big,
+ul.bx-menu-floating-blocks-dash,
+ul.bx-menu-floating-blocks,
+ul.bx-menu-inter,
+ul.bx-menu-inter-vert,
+ul.bx-menu-btns-ver,
+ul.bx-menu-btns-hor,
+ul.bx-menu-btns-icon-hor {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+
 /* --- Vertical, Vertical lite, Custom Vertical Menus ---*/
 .bx-menu-ver li,
 .bx-menu-verlit li,

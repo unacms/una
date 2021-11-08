@@ -329,13 +329,15 @@
 
 /* switcher */
 .bx-switcher-cont {
-	position:relative;
+    position:relative;
+    box-sizing: content-box;
+
     width:60px;
-	width:3.8rem;
+    width:3.8rem;
     height:24px;
-	height:1.5rem;
-	overflow:hidden;
-	cursor:pointer;
+    height:1.5rem;
+    overflow:hidden;
+    cursor:pointer;
 
     background-color:#fff;
 
@@ -351,9 +353,9 @@
     top:-2rem;
 }
 .bx-switcher-canvas {
-	position:relative;
-	width:90px;
-	width:5.7rem;
+    position:relative;
+    width:90px;
+    width:5.7rem;
 
     -webkit-transition: left 0.2s ease-in-out;
     -moz-transition: left 0.2s ease-in-out;
@@ -361,20 +363,20 @@
     -o-transition: left 0.2s ease-in-out;
 }
 .bx-switcher-cont.on .bx-switcher-canvas {
-	left:3px;
-	left:0.2rem;
+    left:3px;
+    left:0.2rem;
 }
 .bx-switcher-cont.off .bx-switcher-canvas {
-	left:-34px;
-	left:-2.1rem;
+    left:-34px;
+    left:-2.1rem;
 }
 .bx-switcher-on,
 .bx-switcher-off,
 .bx-switcher-handler {
     position:absolute;	
     top:0rem;
-	line-height:24px;
-	line-height:1.5rem;
+    line-height:24px;
+    line-height:1.5rem;
     color:#999;
 }
 .bx-switcher-on {
