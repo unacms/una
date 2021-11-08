@@ -120,6 +120,8 @@
 
 .bx-base-pofile-unit-with-cover .sys-author ul.bx-menu-custom.bx-menu-custom-hor,
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
+    -webkit-align-items: center;
+    align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
 }
