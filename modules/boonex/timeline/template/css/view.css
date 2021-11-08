@@ -883,6 +883,18 @@ div.bx-tl-view-info .bx-base-pofile-unit {
 div.bx-tl-bview-images {
     position: relative;
 }
+div.bx-tl-bview-images div.bx-tl-bview-image:not(.bx-tl-bvi-single) {
+    width: 100%;
+    height: 30rem;
+    text-align: center;
+}
+div.bx-tl-bview-images div.bx-tl-bview-image:not(.bx-tl-bvi-single) img {
+    position: relative;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
 div.bx-tl-bview-image.bx-tl-bvi-single {
     display: -webkit-flex;
     display: flex;
