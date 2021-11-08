@@ -24,7 +24,7 @@ class BxBaseEditorQuill extends BxDolEditor
                 });
     
                 $( "{bx_var_selector}" ).after( "<div id='{bx_var_editor_name}' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill'>" + $( "{bx_var_selector}" ).val() + "</div>" );
-                /*$( "{bx_var_selector}" ).hide();*/
+                $( "{bx_var_selector}" ).hide();
                 
                 if (typeof bQuillRegistred === 'undefined') {
                     Quill.register("modules/imageUploader", ImageUploader); 
