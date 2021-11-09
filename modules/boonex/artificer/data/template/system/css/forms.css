@@ -142,7 +142,7 @@ import url(../../../../../../../template/css/forms.css);
     height: 100%;
 
     margin: 0;
-    padding: 0;
+    padding: 0.5rem 2.125rem 0.5rem 0.75rem;
 
     border: 0;
     background-color: transparent;
@@ -153,10 +153,18 @@ import url(../../../../../../../template/css/forms.css);
     box-shadow: none;
 }
 
+
+/*-- Form field: Date/Time Pickers --*/
+.bx-form-datepicker-modal {
+    z-index: 10001 !important;
+}
+
+
 /*-- Form field: Switcher --*/
-.bx-switcher-cont-alt input {
+.bx-switcher-cont input {
    display: none !important;
 }
+
 
 /*--- Form field: File ---*/
 .bx-form-input-wrapper-file .bx-btn {
@@ -223,14 +231,14 @@ import url(../../../../../../../template/css/forms.css);
 
 
 /*--- Form field: Auto-siggestion ---*/
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) {
     float:left;
     padding:0px;
     height:auto;
     box-shadow: none;
     min-height: 2.8rem;
 }
-.bx-form-value .bx-form-input-autotoken b {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b {
     display: block;
     margin: 0.125rem;
     padding-right: 1.5rem; 
@@ -241,10 +249,10 @@ import url(../../../../../../../template/css/forms.css);
     font-weight: normal;    
     cursor: pointer;
 }
-.bx-form-value .bx-form-input-autotoken b:hover {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:hover {
     opacity: 0.7;
 }
-.bx-form-value .bx-form-input-autotoken b:after {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:after {
     font-family: 'sys-user', 'sys-user-fal';
     content: "\f00d";    
     position:absolute;    
@@ -253,13 +261,13 @@ import url(../../../../../../../template/css/forms.css);
     font-size:0.7em;
     font-weight:bold;
 }
-.bx-form-value .bx-form-input-autotoken.bx-form-input-disabled b {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels).bx-form-input-disabled b {
     cursor: default;
 }
-.bx-form-value .bx-form-input-autotoken.bx-form-input-disabled b:after{
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels).bx-form-input-disabled b:after{
     display: none;
 }
-.bx-form-value .bx-form-input-autotoken input {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) input {
     border:0;
     margin:0;
     padding:0 0 0 5px;
@@ -267,31 +275,28 @@ import url(../../../../../../../template/css/forms.css);
     float:left;
     box-shadow: none;
 }
-.bx-form-value .bx-form-input-autotoken .bx-base-pofile-unit-wo-info {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) .bx-base-pofile-unit-wo-info {
     display: inline-block;
     vertical-align: middle;
 
     margin-right: 8px;
     margin-right: 0.5rem;
 }
-.bx-form-value .bx-form-input-autotoken-labels b {
-    padding-left: 1em;
+.bx-form-value .bx-form-input-autotoken-labels > a {
+    margin-left: 0.5rem;
 }
-.bx-form-value .bx-form-input-autotoken-labels-show-more,
-.bx-form-value .bx-form-input-autotoken-labels-sel b {
+.bx-form-value .bx-form-input-autotoken-labels > a:first-child {
+    margin-left: 0;
+}
+.bx-form-value .bx-form-input-autotoken-labels-show-more {
     display:inline-block;
     line-height:1.5rem;
     font-size:85%;    
     padding-right:1em;
     margin-top:0.625rem;
-    font-style:normal;
-}
-.bx-form-value .bx-form-input-autotoken-labels-show-more {
     margin-left:0.1em;
     margin-right:0.1em;
-}
-.bx-form-value .bx-form-input-autotoken-labels-sel b:after {
-    display:none;
+    font-style:normal;
 }
 .bx-form-input-autotoken-labels-more {
     display:none;
@@ -299,10 +304,10 @@ import url(../../../../../../../template/css/forms.css);
 .select2-container {
     width:100% !important;
 }
-.bx-form-input-select 
-{
+.bx-form-input-select {
     -webkit-appearance:none;
 }
+
 /* tiny mce */
 .bx-form-input-wrapper-html .gray-theme.fr-toolbar.fr-top{
    border-radius: .375rem .375rem 0 0 !important; 

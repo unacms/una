@@ -34,6 +34,8 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
         if(empty($aLanguages) || !is_array($aLanguages) || count($aLanguages) < 2)
             return;
 
+        $oModuleQuery = BxDolModuleQuery::getInstance();
+
         $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
         $this->setSelected('', $sLanguage);
 
@@ -44,7 +46,15 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
         $aItems = array();
         foreach( $aLanguages as $sName => $sLang ) {
+            $aModule = $oModuleQuery->getModuleByUri($sName);
+            if(empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] == 0)
+                continue;
+
             $aPageParams['lang'] = $sName;
+
+            $sTitle = getParam($aModule['name'] . '_switcher_title');
+            if(!empty($sTitle))
+                $sLang = $sTitle;
 
             $aItems[] = array(
                 'id' => $sName,

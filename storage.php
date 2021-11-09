@@ -14,6 +14,31 @@ $sFile = bx_process_input(bx_get('f'));
 $sToken = bx_process_input(bx_get('t'));
 
 $oStorage = BxDolStorage::getObjectInstance($sStorageObject);
+// upload action implementation
+if ($oStorage && bx_get('a') == 'upload' && bx_get('t')) {
+    header('Content-Type: application/json; charset=utf-8');
+
+    $iProfileId = bx_get_logged_profile_id();
+
+    if (!($iId = $oStorage->storeFileFromForm($_FILES['file'], false, $iProfileId))) {
+        echo json_encode(array('error' => '1'));
+        exit;
+    }
+
+    $oStorage->afterUploadCleanup($iId, $iProfileId);
+
+    $aFileInfo = $oStorage->getFile($iId);
+    if ($aFileInfo && in_array($aFileInfo['ext'], array('jpg', 'jpeg', 'jpe', 'png'))) {
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance(bx_get('t'));
+        $sUrl = $oTranscoder->getFileUrl($iId);
+    }
+    else {
+        $sUrl = $oStorage->getFileUrlById($iId);
+    }
+
+    echo json_encode(array('link' => $sUrl));
+    exit;
+}
 
 if (!$oStorage || !method_exists($oStorage, 'download')) {
     ob_end_clean();

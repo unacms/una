@@ -24,7 +24,7 @@ class BxStrmModule extends BxBaseModTextModule
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
             $CNF['FIELD_PUBLISHED'],
             $CNF['FIELD_ANONYMOUS'],
-            $CNF['FIELD_DISABLE_COMMENTS']
+            $CNF['FIELD_ALLOW_COMMENTS']
         ));
     }
 
@@ -40,6 +40,11 @@ class BxStrmModule extends BxBaseModTextModule
         return $this->_oEngine;
     }
 
+    public function actionEmbedStream($iContentId = 0)
+    {
+        $this->_serviceTemplateFunc ('embedStream', $iContentId);
+    }
+
     public function actionStreamViewers ($iContentId = 0)
     {
         header('Content-Type:text/javascript; charset=utf-8');
@@ -53,10 +58,18 @@ class BxStrmModule extends BxBaseModTextModule
         list($iContentId, $aContentInfo) = $mixedContent;
 
         $iNum = $this->getStreamEngine()->getViewersNum($aContentInfo[$CNF['FIELD_KEY']]);
+        if (false === $iNum)
+            $this->onStreamStopped($iContentId, $aContentInfo);
+        else
+            $this->onStreamStarted($iContentId, $aContentInfo);
         
         echo json_encode(['viewers' => $iNum !== false ? _t('_bx_stream_txt_viewers', (int)$iNum) : _t('_bx_stream_txt_wait_for_stream'), 'num' => $iNum]);
     }
 
+    public function serviceStreamBroadcast ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryStreamBroadcast', $iContentId);
+    }
     public function serviceStreamViewers ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryStreamViewers', $iContentId);
@@ -89,19 +102,36 @@ class BxStrmModule extends BxBaseModTextModule
             'inputs' => array(
                 'url' => array(
                     'type' => 'text',
-                    'name' => 'url',
+                    'name' => 'url'.time(),
                     'caption' => _t('_bx_stream_form_entry_input_server'),
                     'value' => $a['server'],
+                    'attrs' => array('readonly' => 'readonly'),
                 ),
                 'key' => array(
                     'type' => 'password',
-                    'name' => 'key',
+                    'name' => 'key'.time(),
                     'caption' => _t('_bx_stream_form_entry_input_stream_key'),
                     'value' => $a['key'],
+                    'attrs' => array('readonly' => 'readonly'),
                 ),
             ),
         );
-        
+
+        if ($this->getStreamEngine()->isSreamFromBrowser()) {
+            $sUrl = 'page.php?i=broadcast-stream&id=' . (int)$iContentId;
+            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrl);
+            $aForm['inputs']['header_div'] = array (
+                'type' => 'custom',
+                'content' => _t('_bx_stream_manual_settings_or_stream_from_webcam'),
+            );
+            $aForm['inputs']['stream-from-webcam'] = array (
+                'type' => 'submit',
+                'name' => 'submit',
+                'value' => _t('_bx_stream_from_webcam'),
+                'attrs' => array('onclick' => 'document.location="' . bx_html_attribute($sUrl) . '"; return false;'),
+            );
+        }
+
         $oForm = new BxTemplFormView ($aForm);
         return $oForm->getCode();
     }
@@ -128,7 +158,7 @@ class BxStrmModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo && $aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo && $aContentInfo[$CNF['FIELD_ALLOW_COMMENTS']] == 0)
             return false;
         
         return parent::serviceCheckAllowedCommentsPost($iContentId, $sObjectComments);
@@ -138,7 +168,7 @@ class BxStrmModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if ($aContentInfo && $aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+        if ($aContentInfo && $aContentInfo[$CNF['FIELD_ALLOW_COMMENTS']] == 0)
             return false;
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
@@ -148,6 +178,73 @@ class BxStrmModule extends BxBaseModTextModule
     {
         return CHECK_ACTION_RESULT_ALLOWED;
     }
+
+    public function serviceGetBadges($iContentId,  $bIsSingle = false, $bIsCompact  = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $s = parent::serviceGetBadges($iContentId,  $bIsSingle, $bIsCompact);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return $s;
+        return $s . $this->_oTemplate->getLiveBadge($aContentInfo);
+    }
+
+    public function onStreamStarted($iContentId, $aContentInfo = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if (!$aContentInfo)
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo || $aContentInfo[$CNF['FIELD_STATUS']] != 'awaiting')
+            return;
+
+        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId))) 
+            return;
+
+        $this->onPublished($iContentId);
+
+        bx_alert($this->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], array(
+            'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'privacy_view' => BX_DOL_PG_ALL,
+        ));
+    }
+
+    public function onStreamStopped($iContentId, $aContentInfo = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if (!$aContentInfo)
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        if (!$aContentInfo || $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return;
+
+        if (!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'awaiting'), array($CNF['FIELD_ID'] => $iContentId)))
+            return;
+
+        if (BxDolRequest::serviceExists('bx_timeline', 'get_all')) {
+            $a = BxDolService::call('bx_timeline', 'get_all', array(array(
+                'type' => 'conditions', 
+                'conditions' => array(
+                    'type' => 'bx_stream', 
+                    'action' => 'added', 
+                    'object_id' => $iContentId
+                )
+            )));
+
+            if ($a) {
+                $oTimeline = BxDolModule::getInstance('bx_timeline');
+                if ($oTimeline) {
+                    foreach ($a as $r) {
+                        // TODO: use service call instead
+                        $oTimeline->deleteEvent($r); 
+                        $oTimeline->_oDb->deleteCache(array('event_id' => $r['id']));
+                        // BxDolService::call('bx_timeline', 'delete_entity', array($r['id']));
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 /** @} */

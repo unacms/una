@@ -21,6 +21,98 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function getLiveBadge ($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        if (!$aContentInfo || $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return '';
+
+        return $this->parseHtmlByName('stream_badge.html', array(
+            'label' => _t('_bx_stream_txt_live_now'),
+        ));
+    }
+
+    public function entryStreamBroadcast ($aContentInfo)
+    {
+        $oEngine = $this->getModule()->getStreamEngine();
+        if (!$oEngine->isSreamFromBrowser()) 
+            return MsgBox(_t('_bx_stream_from_webcam_not_supported'));
+
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        return $this->parseHtmlByName('stream_broadcast_ome.html', array(
+            'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
+            'broadcast_url' => $oEngine->getWebrtcIngestUrl($aContentInfo[$CNF['FIELD_KEY']]),
+            'popup_share' => $this->popupShare($aContentInfo),
+            'popup_settings' => $this->popupSettings($aContentInfo),
+        ));
+    }
+
+    public function popupShare ($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sUrlViewStream = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . (int)$aContentInfo['id'];
+        $sUrlViewStream = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrlViewStream);
+        $sUrlEmbed = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed_stream/' . (int)$aContentInfo['id'];
+
+        $aForm = array(
+            'form_attrs' => array(
+                'name' => 'bx-stream-form-share',
+                'class' => 'bx-def-margin',
+            ),
+            'inputs' => array(
+                'url' => array(
+                    'type' => 'text',
+                    'name' => 'url'.time(),
+                    'caption' => _t('_bx_stream_field_link'),
+                    'value' => $sUrlViewStream,
+                    'attrs' => array('readonly' => 'readonly'),
+                ),
+                'embed' => array(
+                    'type' => 'text',
+                    'name' => 'embed'.time(),
+                    'caption' => _t('_bx_stream_field_embed'),
+                    'value' => '<iframe width="560" height="315" frameborder="0" allow="autoplay; picture-in-picture" allowfullscreen src="' . $sUrlEmbed . '"></iframe>',
+                    'attrs' => array('readonly' => 'readonly'),
+                ),
+            ),
+        );
+        $oForm = new BxTemplFormView ($aForm);
+
+        return BxTemplFunctions::getInstance()->popupBox('bx-stream-popup-share', _t('_bx_stream_popup_share'), $oForm->getCode(), true);
+    }
+
+    public function popupSettings ($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aForm = array(
+            'form_attrs' => array(
+                'name' => 'bx-stream-form-settings',
+                'onsubmit' => 'return false',
+                'onreset' => 'return false',
+            ),
+            'inputs' => array(
+                'audio' => array(
+                    'type' => 'select',
+                    'name' => 'audio',
+                    'caption' => _t('_bx_stream_field_audio_source'),
+                    'value' => '',
+                ),
+                'video' => array(
+                    'type' => 'select',
+                    'name' => 'video',
+                    'caption' => _t('_bx_stream_field_video_source'),
+                    'value' => '',
+                ),
+            ),
+        );
+        $oForm = new BxTemplFormView ($aForm);
+
+        return BxTemplFunctions::getInstance()->popupBox('bx-stream-popup-settings', _t('_bx_stream_popup_settings'), $oForm->getCode(), true);
+    }
+
     public function entryStreamViewers ($aContentInfo)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -58,6 +150,28 @@ class BxStrmTemplate extends BxBaseModTextTemplate
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'sources' => $sSources,
         ));
+    }
+
+    public function embedStream($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        // TODO: visibility and other checks
+
+        $sCode = $this->parseHtmlByName('stream_embed.html', array(
+            'player' => $this->entryStreamPlayer ($aContentInfo),
+            'viewers' => $this->entryStreamViewers ($aContentInfo),
+        ));
+
+        $this->addCss('main.css');
+
+        // display page
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
+        $oTemplate->setPageHeader ($aContentInfo[$CNF['FIELD_TITLE']]);
+        $oTemplate->setPageContent ('page_main_code', $sCode);
+        $oTemplate->getPageCode();
+        exit;
     }
 
     /**

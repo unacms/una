@@ -589,6 +589,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetItemBrief()
     {
+        $aParams = $this->_prepareParamsGet();
+
         $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
         if(empty($aEvent) || !is_array($aEvent)) {
@@ -601,7 +603,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return;
         }        
 
-        echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCodeDynamic();
+        $sName = $this->_oConfig->getHtmlIdView('item_popup', $aParams, array('whole' => false, 'hash' => false)) . $iEvent;
+        $sTitle = _t('_bx_timeline_page_title_item_brief');
+        $sContent = BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCodeDynamic();
+        echo PopupBox($sName, $sTitle, $sContent, true);
+                
     }
 
     public function actionGetJumpTo()
@@ -2789,6 +2795,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    /**
+     * Delete content entry
+     * @param $iContentId content id 
+     * @return error message or empty string on success
+     */
+    public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData')
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return _t('_Empty');
+
+        if(!$this->deleteEvent($aEvent))
+            return _t('_bx_timeline_txt_err_cannot_perform_action');
+
+        $this->_oDb->deleteCache(array('event_id' => $iContentId));
+
+        return '';
+    }
+
     /*
      * COMMON METHODS
      */
@@ -2942,17 +2967,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aLinkIds = $oForm->getCleanValue($CNF['FIELD_LINK']);
             $bLinkIds = !empty($aLinkIds) && is_array($aLinkIds);
 
-            //--- Process Media ---//
+            //--- Process Photos ---//
             $aPhotoIds = $oForm->getCleanValue($CNF['FIELD_PHOTO']);
             $bPhotoIds = !empty($aPhotoIds) && is_array($aPhotoIds);
 
+            //--- Process Videos ---//
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
-			
-			//--- Process Files ---//
-			$aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
+
+            //--- Process Files ---//
+            $aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
             $bFileIds = !empty($aFileIds) && is_array($aFileIds);
-			
 
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds && !$bFileIds) {
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');

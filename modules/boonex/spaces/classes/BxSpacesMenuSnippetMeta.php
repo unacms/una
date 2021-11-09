@@ -20,6 +20,20 @@ class BxSpacesMenuSnippetMeta extends BxBaseModGroupsMenuSnippetMeta
         unset($this->_aConnectionToFunctionCheck['sys_profiles_friends']);
         unset($this->_aConnectionToFunctionTitle['sys_profiles_friends']);
     }
+
+    protected function _getMenuItemParent($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['FIELD_PARENT']) || empty($this->_aContentInfo[$CNF['FIELD_PARENT']]))
+            return false;
+
+        $oParent = BxDolProfile::getInstance((int)$this->_aContentInfo[$CNF['FIELD_PARENT']]);
+        if(!$oParent)
+            return false;
+
+        return $this->getUnitMetaItemCustom($oParent->getUnit(0, ['template' => ['name' => 'unit_wo_cover', 'size' => 'icon']]));
+    }
 }
 
 /** @} */

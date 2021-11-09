@@ -13,6 +13,7 @@ class BxBaseFormView extends BxDolForm
 
     protected static $_isCssJsAdded = false;
     protected static $_isCssJsUiAdded = false;
+    protected static $_isCssJsUiSortableAdded = false;
     protected static $_isCssJsMinicolorsAdded = false;
     protected static $_isCssJsLabelsAdded = false;
     protected static $_isCssJsTimepickerAdded = false;
@@ -1331,7 +1332,7 @@ BLAH;
         if (!$oEditor)
             return false;
 
-        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode);
+        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode, ['form_id' => $this->aFormAttrs['id'], 'element_name' => $aInput['name']]);
 
         return true;
     }
@@ -1386,6 +1387,9 @@ BLAH;
      */
     function genInputFiles(&$aInput, $sInfo = '', $sError = '')
     {
+        if(empty($aInput['uploaders']) || !is_array($aInput['uploaders']))
+            return '';
+
         $sUniqId = !empty($aInput['uploaders_id']) ? $aInput['uploaders_id'] : genRndPwd (8, false);
 
         $sUploaders = '';
@@ -1413,15 +1417,15 @@ BLAH;
 
             $sUploaders .= $oUploader->getUploaderButton($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParams, $this->_bDynamicMode);
         }
+        
+        if(!$oUploader)
+            return '';
 
-        $bInitReordering = $oUploader && !empty($aInput['init_reordering']);
-        if($bInitReordering)
-            $this->oTemplate->addJs(array(
-                'jquery-ui/jquery.ui.core.min.js',
-                'jquery-ui/jquery.ui.widget.min.js',
-                'jquery-ui/jquery.ui.mouse.min.js',
-                'jquery-ui/jquery.ui.sortable.min.js',
-            ));
+        $bInitReordering = !empty($aInput['init_reordering']);
+        if($bInitReordering) {
+            $this->addCssJsUi();
+            $this->addCssJsUiSortable();
+        }
 
         return $this->oTemplate->parseHtmlByName('form_field_uploader.html', array(
             'uploaders_buttons' => $sUploaders,
@@ -1563,7 +1567,7 @@ BLAH;
         
         $s = ''; 
         foreach ($aInput['value'] as $sLabel)
-            $s .= '<a href="' . $oMetatags->keywordsGetHashTagUrl($sLabel, $aInput['content_id']) . '"><b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sLabel) . '</b></a>';
+            $s .= '<a href="' . $oMetatags->keywordsGetHashTagUrl($sLabel, $aInput['content_id']) . '"><b class="bx-def-label val">' . trim($sLabel) . '</b></a>';
 
         return $this->oTemplate->parseHtmlByName('form_field_labels_view.html', array(
             'values' => $s,
@@ -2082,6 +2086,18 @@ BLAH;
         $this->_addCss('jquery-ui/jquery-ui.css');
 
         self::$_isCssJsUiAdded = true;
+    }
+    
+    function addCssJsUiSortable ()
+    {
+        if (self::$_isCssJsUiSortableAdded)
+            return;
+
+        $this->_addJs(array(
+            'jquery-ui/jquery.ui.sortable.min.js'
+        ), "'undefined' === typeof($.sortable)");
+
+        self::$_isCssJsUiSortableAdded = true;
     }
 
     function addCssJsTimepicker ()

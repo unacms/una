@@ -9,6 +9,8 @@
  * @{
  */
 
+require_once('BxTimelineModule.php');
+
 class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
 {
     function __construct($sMode = '', $aParams = array())

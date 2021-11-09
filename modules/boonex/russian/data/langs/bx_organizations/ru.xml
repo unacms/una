@@ -39,8 +39,8 @@
     <string name="_bx_orgs_form_profile_display_view_full"><![CDATA[Полный просмотр организации]]></string>
     <string name="_bx_orgs_form_profile_display_invite"><![CDATA[Приглашение в организацию]]></string>
     <string name="_bx_orgs_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_orgs_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
-    <string name="_bx_orgs_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение присоединения]]></string>
+    <string name="_bx_orgs_form_profile_input_join_confirm"><![CDATA[Для присоединения требуется разрешение]]></string>
     <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_to_info"><![CDATA[Закрытая - все могут найти группу и видеть кто в ней состоит, только участники могут видеть сообщения. Секретная - только участники могут найти группу и видеть сообщения.]]></string>

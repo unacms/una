@@ -43,6 +43,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'FIELD_NAME' => 'group_name',
             'FIELD_TITLE' => 'group_name',
             'FIELD_TEXT' => 'group_desc',
+            'FIELD_CATEGORY' => 'group_cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
@@ -109,6 +110,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_NOTES' => 'bx_groups_notes',
             'OBJECT_REPORTS' => 'bx_groups',
             'OBJECT_METATAGS' => 'bx_groups',
+            'OBJECT_CATEGORY' => 'bx_groups_cats',
             'OBJECT_FORM_ENTRY' => 'bx_group',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_group_view',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_group_view_full', // for "info" tab on view group page

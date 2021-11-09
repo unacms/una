@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+_sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 	<string name="_ADM_PROFILE_SEND_MSG"><![CDATA[Сообщение было удачно отправлено]]></string>
 	<string name="_ATT_ACTIVE_E"><![CDATA[Вы полноправный член нашего Сообщества. Но Вы можете заблокировать свой профиль, чтобы он был временно недоступен для других.]]></string>
@@ -2262,7 +2262,7 @@
 	<string name="_sys_file_handlers_code_viewer"><![CDATA[Просмотр програмного кода]]></string>
 	<string name="_sys_form_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
-	<string name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.</div>]]></string>
+	<string name="_sys_form_account_input_agreement_value"><![CDATA[Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_account_input_captcha_error"><![CDATA[Проверка CAPTCHA не удалась. Попытайтесь ещё раз.]]></string>
 	<string name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Введите текст:]]></string>
@@ -2411,6 +2411,7 @@
 	<string name="_sys_form_login_input_caption_system_sendsms"><![CDATA[Отправить SMS]]></string>
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Текст отправки]]></string>
+        <string name="_sys_form_login_input_agreement_value"><![CDATA[Заходя, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Код из SMS]]></string>
 	<string name="_sys_form_login_input_back"><![CDATA[Вы не получили SMS? <a href="javascript:history.back()">Отправить SMS ещё раз</a>]]></string>
@@ -2610,6 +2611,8 @@
 	<string name="_sys_inst_start_installation"><![CDATA[Начать установку]]></string>
 	<string name="_sys_inst_title"><![CDATA[Установка UNA {0}]]></string>
 	<string name="_sys_layout_1_column"><![CDATA[1 столбец]]></string>
+        <string name="_sys_layout_1_column_thin"><![CDATA[1 столбец (узкий)]]></string>
+        <string name="_sys_layout_1_column_half"><![CDATA[1 столбец (половина)]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 столбца]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 столбца]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[С левой линейкой]]></string>
@@ -2630,13 +2633,14 @@
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
 	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>
     <string name="_sys_location_country_city_street"><![CDATA[<i class="sys-icon location-arrow"></i> {4} {3}, {2}, {1}, {0} ]]></string>
-	<string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
-	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
-	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
-	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
+    <string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
+    <string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
+    <string name="_sys_location_undefined"><![CDATA[Местоположение не определено]]></string>
+    <string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
     <string name="_sys_location_map_leaflet"><![CDATA[Leaflet (разные бесплатные поставщики карт)]]></string>
-	<string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
-	<string name="_sys_location_field_plain"><![CDATA[Простые поля c Nominatim OSM геокодированием]]></string>
+    <string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
+    <string name="_sys_location_field_plain"><![CDATA[Простые поля c Nominatim OSM геокодированием]]></string>
+    <string name="_sys_location_field_label"><![CDATA[Показывать местоположение]]></string>
     <string name="_sys_location_ph_number"><![CDATA[Номер]]></string>
     <string name="_sys_location_ph_street"><![CDATA[Улица]]></string>
     <string name="_sys_location_ph_city"><![CDATA[Город]]></string>
@@ -2645,10 +2649,12 @@
     <string name="_sys_location_status_undef"><![CDATA[Адрес не задан]]></string>
     <string name="_sys_location_status_ok"><![CDATA[Адрес найден]]></string>
     <string name="_sys_location_status_fail"><![CDATA[Адрес не найден]]></string>
-	<string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
+    <string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
     <string name="_sys_log_twilio"><![CDATA[Система: Twilio]]></string>
     <string name="_sys_log_push"><![CDATA[Система: PUSH]]></string>
-	<string name="_sys_log_payments"><![CDATA[Система: Платежи]]></string>
+    <string name="_sys_log_payments"><![CDATA[Система: Платежи]]></string>
+    <string name="_sys_log_cron_jobs"><![CDATA[System: Задания Cron]]></string>
+    <string name="_sys_log_transcoder"><![CDATA[System: Транскодер]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Ошибка: некорректный макрос]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Ошибка: небезопасный макрос]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Ошибка: некорректный вывод макроса]]></string>
@@ -2841,7 +2847,6 @@
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Панель аккаунта]]></string>
     <string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Инструменты управления]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Аккаунт - Настройки]]></string>
-    <string name="_sys_menu_set_title_account_settings_more"><![CDATA[Аккаунт - Дополнительные настройки]]></string>
     <string name="_sys_menu_set_title_account_notifications"><![CDATA[Аккаунт - Уведомления]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Добавить содержимое]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Управление контентом]]></string>
@@ -2896,7 +2901,6 @@
     <string name="_sys_menu_title_account_notifications"><![CDATA[Меню с уведомлениями]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Аккаунт - Всплывающее меню]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Аккаунт - Меню настроек]]></string>
-	<string name="_sys_menu_title_account_settings_more"><![CDATA[Аккаунт - Меню дополнительных настроек]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Добавить содержимое - Меню]]></string>
 	<string name="_sys_menu_title_add_profile"><![CDATA[Добавить профиль - Меню]]></string>
 	<string name="_sys_menu_title_add_profile_vertical"><![CDATA[Добавить профиль - Меню вертикальное]]></string>
@@ -3342,10 +3346,8 @@
     <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к email-у и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
     <string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
     <string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
-    <string name="_sys_txt_join_description_question"><![CDATA[Уже зарегистрировались?]]></string>
-    <string name="_sys_txt_join_description_action"><![CDATA[Заходите.]]></string>
-    <string name="_sys_txt_login_description_question"><![CDATA[Ещё нет аккаунта?]]></string>
-    <string name="_sys_txt_login_description_action"><![CDATA[Зарегистрируйтесь.]]></string>
+    <string name="_sys_txt_join_description_action"><![CDATA[Войти]]></string>
+    <string name="_sys_txt_login_description_action"><![CDATA[Создать новый аккаунт]]></string>
     <string name="_sys_txt_login_error"><![CDATA[Введённый email или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
     <string name="_sys_txt_login_locked"><![CDATA[Ваш аккаунт заблокирован, для разблокировки, пожалуйста, используйте  <a href="{0}">страницу сброса пароля</a>.]]></string>
     <string name="_sys_txt_following_counter"><![CDATA[Подписки: {0}]]></string>
@@ -3454,9 +3456,9 @@
 	<string name="_view_do_view_by_counter"><![CDATA[{0} просмотров]]></string>
 	<string name="_view_n_views"><![CDATA[{0} просмотров]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
-	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
-	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
-	<string name="_vote_do_by"><![CDATA[Поблагодарили]]></string>
+	<string name="_vote_do_like"><![CDATA[Нравится]]></string>
+	<string name="_vote_do_unlike"><![CDATA[Не нравится]]></string>
+	<string name="_vote_do_by"><![CDATA[Проголосовали]]></string>
         <string name="_vote_do_by_reactions"><![CDATA[Отреагировали]]></string>
         <string name="_vote_do_by_x_reaction"><![CDATA["{0}" от]]></string>
         <string name="_vote_do_by_summary"><![CDATA[Все]]></string>

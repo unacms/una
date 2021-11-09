@@ -225,11 +225,15 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         $sOutput = `$sCommand`;
         $this->addToLog("\n---\n{$sCommand}\n{$sOutput}\n");
 
-        if (!file_exists($sFileOut) || 0 == filesize($sFileOut))
+        if (!file_exists($sFileOut) || 0 == filesize($sFileOut)) {
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: _convertVideo failed for file ({$sFile}):\n{$sCommand}\n{$sOutput}\n");
             return false;
+        }
 
-        if ($bRename && !rename($sFileOut, $sFile)) // rename tmp file, if tmp file was generated
+        if ($bRename && !rename($sFileOut, $sFile)) { // rename tmp file, if tmp file was generated
+            bx_log('sys_transcoder', "[{$this->_aObject['object']}] ERROR: _convertVideo failed, final rename from {$sFileOut} to {$sFile} failed");
             return false;
+        }
 
         return true;
     }

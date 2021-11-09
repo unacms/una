@@ -11,6 +11,11 @@
 
 class BxStrmEngineOvenMediaEngine extends BxDol
 {
+    public function isSreamFromBrowser()
+    {
+        return true;
+    }
+
     public function getViewersNum($sStreamKey)
     {
         $a = $this->getStreamStats($sStreamKey);
@@ -58,7 +63,7 @@ class BxStrmEngineOvenMediaEngine extends BxDol
 
         $sBaseUrl = "rtmp://$sHost:1935/$sApp";
         if (!$sPolicySecret)
-            return [$sBaseUrl, $sStreamKey];
+            return ['server' => $sBaseUrl, 'key' => $sStreamKey];
 
         return ['server' => $sBaseUrl, 'key' => str_replace($sBaseUrl . '/', '', $this->_signUrl($sBaseUrl . '/' . $sStreamKey, $sPolicySecret))];
     }
@@ -79,6 +84,19 @@ class BxStrmEngineOvenMediaEngine extends BxDol
             return false;
 
         $sBaseUrl = "rtmp://$sHost:1935/$sApp/$sStreamKey";
+        if (!$sPolicySecret)
+            return $sBaseUrl;
+
+        return $this->_signUrl($sBaseUrl, $sPolicySecret);
+    }
+
+    public function getWebrtcIngestUrl($sStreamKey)
+    {
+        $sHost = getParam('bx_stream_server_host');
+        $sApp = getParam('bx_stream_app');
+        $sPolicySecret = getParam('bx_stream_server_ome_policy_secret');
+
+        $sBaseUrl = "wss://$sHost:3334/$sApp/$sStreamKey?direction=send";
         if (!$sPolicySecret)
             return $sBaseUrl;
 

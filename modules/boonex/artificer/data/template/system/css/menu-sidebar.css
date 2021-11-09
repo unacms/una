@@ -73,6 +73,11 @@
 }
 
 /*--- Account Sidebar ---*/
-.bx-sb-profile .bx-base-pofile-unit {
+.bx-sidebar.bx-sidebar-account .bx-sb-profile .bx-base-pofile-unit {
     margin: 0;
+}
+.bx-sidebar.bx-sidebar-account .bx-sb-menu .bx-menu-item-addon.bx-def-unit-alert {
+    top: auto;
+    right: 0.5rem;
+    padding: 0 0.25rem;
 }

@@ -23,8 +23,6 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
     public function getIncludeCssJs()
     {
         $this->addCss(array(
-            //'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css', 
-            'tailwind.min.css',
             'main.css'
         ));
         

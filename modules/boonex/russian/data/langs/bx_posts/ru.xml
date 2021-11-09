@@ -65,8 +65,8 @@
     <string name="_bx_posts_form_entry_input_date_published"><![CDATA[Время публикации]]></string>
     <string name="_bx_posts_form_entry_input_date_published_info"><![CDATA[Оставьте пустым, чтобы опубликовать немедленно.]]></string>
     <string name="_bx_posts_form_entry_input_sys_attachments"><![CDATA[Вложения]]></string>
-    <string name="_bx_posts_form_entry_input_sys_disable_comments"><![CDATA[Запретить комментарии]]></string>
-    <string name="_bx_posts_form_entry_input_disable_comments"><![CDATA[Запретить комментарии]]></string>
+    <string name="_bx_posts_form_entry_input_sys_allow_comments"><![CDATA[Разрешить комментарии]]></string>
+    <string name="_bx_posts_form_entry_input_allow_comments"><![CDATA[Разрешить комментарии]]></string>
 
     <string name="_bx_posts_form_poll"><![CDATA[Голосования]]></string>
     <string name="_bx_posts_form_poll_display_add"><![CDATA[Добавить голосование]]></string>

@@ -109,14 +109,21 @@ function checkCronJob($sPeriods, $aDate = array())
 
 function runJob($aJob)
 {
+    $fStart = microtime(true);
+    $oDb = BxDolCronQuery::getInstance();
+    $oDb->updateJob($aJob['id'], array('ts' => time(), 'timing' => 0));
+
     if (!empty($aJob['file']) && !empty($aJob['class']) && file_exists(BX_DIRECTORY_PATH_ROOT . $aJob['file'])) {
         if (!class_exists($aJob['class'], false))
             require_once(BX_DIRECTORY_PATH_ROOT . $aJob['file']);
 
         $oHandler = new $aJob['class']();
         $oHandler->processing();
-    } else if (!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call']))
+    } else if (!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call'])) {
         BxDolService::callSerialized($aJob['service_call']);
+    }
+    bx_log('sys_cron_jobs', $aJob['name'] . ' / timing: ' . (microtime(true) - $fStart) . ' / memory: ' . memory_get_usage());
+    $oDb->updateJob($aJob['id'], array('timing' => microtime(true) - $fStart));
 }
 
 bx_import('BxDolCronQuery');

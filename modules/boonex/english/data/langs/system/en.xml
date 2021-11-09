@@ -1884,7 +1884,7 @@
 	<string name="_sys_acc_confirmation_type_phone"><![CDATA[phone is confirmed]]></string>
 	<string name="_sys_acc_confirmation_type_email_and_phone"><![CDATA[email and phone are confirmed]]></string>
   <string name="_sys_acc_confirmation_type_email_or_phone"><![CDATA[email or phone is confirmed]]></string>
-	<string name="_sys_acl_action_account"><![CDATA[You didn't created any profiles, so you can't '{1}'.]]></string>
+	<string name="_sys_acl_action_account"><![CDATA[You haven't created any profiles, so you can't '{1}'.]]></string>
 	<string name="_sys_acl_action_chart_view"><![CDATA[View charts]]></string>
 	<string name="_sys_acl_action_chart_view_desc"><![CDATA[View statistical charts]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Comments Edit All]]></string>
@@ -2276,7 +2276,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_file_handlers_code_viewer"><![CDATA[Code Viewer]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
-	<string name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">By signing up, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.</div>]]></string>
+	<string name="_sys_form_account_input_agreement_value"><![CDATA[By signing up, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Security Image]]></string>
 	<string name="_sys_form_account_input_captcha_error"><![CDATA[Security image input failed. Please, try again.]]></string>
 	<string name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Type the text:]]></string>
@@ -2425,6 +2425,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_sendsms"><![CDATA[Send SMS]]></string>
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Submit Text]]></string>
+        <string name="_sys_form_login_input_agreement_value"><![CDATA[By logging in, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Code from SMS]]></string>
 	<string name="_sys_form_login_input_back"><![CDATA[You didn't receive an SMS? <a href="/page/login-step2">Send SMS again</a>.]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Submit]]></string>
@@ -2626,6 +2627,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_start_installation"><![CDATA[Start installation]]></string>
 	<string name="_sys_inst_title"><![CDATA[UNA {0} Installation]]></string>
 	<string name="_sys_layout_1_column"><![CDATA[1 column]]></string>
+        <string name="_sys_layout_1_column_thin"><![CDATA[1 column (thin)]]></string>
+        <string name="_sys_layout_1_column_half"><![CDATA[1 column (half)]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 columns]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 columns]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[With left bar]]></string>
@@ -2648,11 +2651,12 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_location_country_city_street"><![CDATA[<i class="sys-icon location-arrow"></i> {4} {3}, {2}, {1}, {0} ]]></string>
 	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
-	<string name="_sys_location_undefined"><![CDATA[Location off]]></string>
+	<string name="_sys_location_undefined"><![CDATA[Location undefined]]></string>
 	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (Static)]]></string>
 	<string name="_sys_location_map_leaflet"><![CDATA[Leaflet (various free map providers)]]></string>
 	<string name="_sys_location_field_google"><![CDATA[Google autocomplete for addresses]]></string>
 	<string name="_sys_location_field_plain"><![CDATA[Plain address fields with Nominatim OSM geocoding]]></string>
+        <string name="_sys_location_field_label"><![CDATA[Show location]]></string>
     <string name="_sys_location_ph_number"><![CDATA[Number]]></string>
     <string name="_sys_location_ph_street"><![CDATA[Street]]></string>
     <string name="_sys_location_ph_city"><![CDATA[City / District]]></string>
@@ -2665,6 +2669,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_log_twilio"><![CDATA[System: Twilio]]></string>
     <string name="_sys_log_push"><![CDATA[System: PUSH]]></string>
 	<string name="_sys_log_payments"><![CDATA[System: Payments]]></string>
+	<string name="_sys_log_cron_jobs"><![CDATA[System: Cron jobs]]></string>
+	<string name="_sys_log_transcoder"><![CDATA[System: Transcoder]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Error: malformed macros]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Error: unsafe macros]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Error: output isn't displayable]]></string>
@@ -2860,7 +2866,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Account Dashboard]]></string>
     <string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
-    <string name="_sys_menu_set_title_account_settings_more"><![CDATA[Account Settings More]]></string>
     <string name="_sys_menu_set_title_account_notifications"><![CDATA[Notifications]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Content Manage]]></string>
@@ -2915,7 +2920,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_title_account_notifications"><![CDATA[Notifications Items]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Account Popup]]></string>
     <string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
-    <string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
     <string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
     <string name="_sys_menu_title_add_profile"><![CDATA[Add Profile Menu]]></string>
     <string name="_sys_menu_title_add_profile_vertical"><![CDATA[Add Profile Menu (vertical)]]></string>
@@ -3376,10 +3380,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	
     <string name="_sys_txt_login_2fa_sms_text"><![CDATA[Your verification code is {0}.]]></string>
     <string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[An error occurred, please report error to the site administrator.]]></string>
-    <string name="_sys_txt_join_description_question"><![CDATA[Already a member?]]></string>
-    <string name="_sys_txt_join_description_action"><![CDATA[Log in.]]></string>
-    <string name="_sys_txt_login_description_question"><![CDATA[Not a member yet?]]></string>
-    <string name="_sys_txt_login_description_action"><![CDATA[Sign up.]]></string>
+    <string name="_sys_txt_join_description_action"><![CDATA[Log in]]></string>
+    <string name="_sys_txt_login_description_action"><![CDATA[Create New Account]]></string>
     <string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
     <string name="_sys_txt_login_locked"><![CDATA[Your account is locked and needs to be unlocked using <a href="{0}">forgot password page</a>.]]></string>
   
@@ -3489,9 +3491,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_view_do_view_by_counter"><![CDATA[{0} views]]></string>
 	<string name="_view_n_views"><![CDATA[{0} views]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
-	<string name="_vote_do_like"><![CDATA[Thank you!]]></string>
-	<string name="_vote_do_unlike"><![CDATA[No thank you]]></string>
-	<string name="_vote_do_by"><![CDATA[Thanked by]]></string>
+	<string name="_vote_do_like"><![CDATA[Like]]></string>
+	<string name="_vote_do_unlike"><![CDATA[Dislike]]></string>
+	<string name="_vote_do_by"><![CDATA[Liked by]]></string>
         <string name="_vote_do_by_reactions"><![CDATA[Reacted by]]></string>
         <string name="_vote_do_by_x_reaction"><![CDATA["{0}" by]]></string>
         <string name="_vote_do_by_summary"><![CDATA[All]]></string>

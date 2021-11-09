@@ -44,6 +44,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELD_NAME' => 'event_name',
             'FIELD_TITLE' => 'event_name',
             'FIELD_TEXT' => 'event_desc',
+            'FIELD_CATEGORY' => 'event_cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_DATE_START' => 'date_start',
@@ -114,6 +115,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_NOTES' => 'bx_events_notes',
             'OBJECT_REPORTS' => 'bx_events',
             'OBJECT_METATAGS' => 'bx_events',
+            'OBJECT_CATEGORY' => 'bx_events_cats',
             'OBJECT_FORM_ENTRY' => 'bx_event',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_event_view',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_event_view_full', // for "info" tab on view group page

@@ -12,12 +12,13 @@ function bx_showcase_view_init() {
 
     $('.bx-base-unit-showcase-wrapper').each(function() {
         var sClassCell = 'bx-base-unit-showcase';
+        var sClassEnabled = 'bx-sc-enabled';
         var oShowcase = $(this);
         var oCells = oShowcase.find('.' + sClassCell);
 
         if(oCells.width() * oCells.length <= oShowcase.parent().width()) {
             if(oShowcase.hasClass('flickity-enabled'))
-                oShowcase.flickity('destroy');
+                oShowcase.flickity('destroy').removeClass(sClassEnabled);
 
             return;
         }
@@ -34,6 +35,8 @@ function bx_showcase_view_init() {
         if(iGroupCells != undefined)
             oShowcaseOptions.groupCells = parseInt(iGroupCells);
 
-        oShowcase.flickity(oShowcaseOptions);
+        oShowcase.on('ready.flickity', function() {
+            $(this).addClass(sClassEnabled);
+        }).flickity(oShowcaseOptions);
     });
 }

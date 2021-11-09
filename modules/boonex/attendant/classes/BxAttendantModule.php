@@ -19,6 +19,28 @@ class BxAttendantModule extends BxDolModule
         parent::__construct($aModule);
     }
 
+    
+    public function actionRecomendedPopup()
+    {
+        $aModules = explode(',', getParam('bx_attendant_on_profile_creation_modules'));
+        $aModulteData = array();
+        foreach($aModules as $sModuleName){
+
+            if(BxDolRequest::serviceExists($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD)){
+                $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, array('unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false));
+
+                if (isset($aTmp['content'])){
+                    $sTmp = $aTmp['content'];
+                    $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
+                    $aModulteData[$sModuleName] = $sTmp;
+                }
+            }
+        }
+        $sRv = $this->_oTemplate->popupWithRecommendedOnProfileAdd($aModulteData);
+        
+        echo $sRv;
+    }
+    
     /**
      * Service methods
      */
@@ -53,6 +75,35 @@ class BxAttendantModule extends BxDolModule
         return $aResult;
     }
     
+    
+    /**
+     * @page service Service Calls
+     * @section bx_attendant Attendant
+     * @subsection bx_attendant-other Other
+     * @subsubsection bx_attendant-on-profile get_options_redirect_after_show
+     * 
+     * @code bx_srv('bx_attendant', 'get_options_redirect_after_show', [...]); @endcode
+     * 
+     * Get list avaliable redirct pages
+     * 
+     * @return an array with avaliable redirct pages. 
+     * 
+     * @see BxAttendantModule::serviceGetOptionsRedirectAfterShow
+     */
+    /** 
+     * @ref bx_attendant-get_options_redirect_after_show "get_options_redirect_after_show"
+     */
+    public function serviceGetOptionsRedirectAfterShow()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = [];
+        $aChoices = ['noredirect', 'homepage', 'profile', 'custom'];
+        foreach($aChoices as $sChoice) 
+            $aResult[] = array('key' => $sChoice, 'value' => _t('_bx_attendant_option_redirect_show_' . $sChoice));
+
+        return $aResult;
+    }
     
     /**
      * @page service Service Calls
@@ -100,9 +151,11 @@ class BxAttendantModule extends BxDolModule
      */
     public function serviceHandleActionView()
     {
+        $sRv = $this->_oTemplate->init();
+        
         if (!isLogged())
             return;
-        $sRv = '';
+        
         $aEvents = $this->_oDb->getEvents(array('type' => 'active_by_action_and_object_id', 'action' => 'view', 'object_id' => bx_get_logged_profile_id()));
         foreach($aEvents as $aEvent){
             $oRv = call_user_func_array(array($this, $aEvent['method']), array($aEvent['object_id']));
@@ -111,6 +164,7 @@ class BxAttendantModule extends BxDolModule
                 $this->_oDb->setEventProcessed($aEvent['id']);
             }
         }
+        
         return $sRv;
     }
     
@@ -136,21 +190,7 @@ class BxAttendantModule extends BxDolModule
         $oProfile = BxDolProfile::getInstance($iProfileId);
         $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
         if ($sEvent == BX_ATTENDANT_ON_PROFILE_CREATION_EVENT_AFTER_REGISTRATION || ($sEvent == BX_ATTENDANT_ON_PROFILE_CREATION_EVENT_AFTER_CONFIRMATION  && $oAccount != null &&  $oAccount->isConfirmed())){
-            $aModules = explode(',', getParam('bx_attendant_on_profile_creation_modules'));
-            $aModulteData = array();
-            foreach($aModules as $sModuleName){
-                if(BxDolRequest::serviceExists($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD)){
-                    $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, array('unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false));
-                    if (isset($aTmp['content'])){
-                        $sTmp = $aTmp['content'];
-                        $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
-                        $aModulteData[$sModuleName] = $sTmp;
-                    }
-                }
-            }
-            if (count($aModulteData) > 0)
-                $sRv = $this->_oTemplate->popupWithRecommendedOnProfileAdd($aModulteData);
-            return $sRv;
+            return '<script>oBxAttendant.showPopupWithRecommended()</script>';
         }
         else{
             return false;

@@ -7,6 +7,7 @@
 
     <string name="_bx_stream_options_cat_streaming"><![CDATA[Streaming]]></string>
     <string name="_bx_stream_options_cat_engine_ome"><![CDATA[OvenMediaEngine]]></string>
+    <string name="_bx_stream_options_cat_engine_nginx"><![CDATA[NGINX]]></string>
     <string name="_bx_stream_options_cat_general"><![CDATA[General]]></string>
 
     <string name="_bx_stream_option_engine"><![CDATA[Server Software]]></string>
@@ -15,6 +16,7 @@
     <string name="_bx_stream_option_ome_policy_secret"><![CDATA[OvenMediaEngine Signed Policy Secret Key]]></string>
 
     <string name="_bx_stream_option_ome_api_port"><![CDATA[OvenMediaEngine API Port]]></string>
+    <string name="_bx_stream_option_nginx_stats_url"><![CDATA[NGINX Stats URL]]></string>
     <string name="_bx_stream_option_server_host"><![CDATA[Server Hostname]]></string>
     <string name="_bx_stream_option_app"><![CDATA[Application Name]]></string>
     <string name="_bx_stream_option_sources_pattern"><![CDATA[Sources Pattern]]></string>
@@ -68,8 +70,8 @@
     <string name="_bx_stream_form_entry_input_sys_date_published"><![CDATA[Publishing time]]></string>
     <string name="_bx_stream_form_entry_input_date_published"><![CDATA[Publishing time]]></string>
     <string name="_bx_stream_form_entry_input_date_published_info"><![CDATA[Leave empty to publish immediately.]]></string>
-    <string name="_bx_stream_form_entry_input_sys_disable_comments"><![CDATA[Disable comments]]></string>
-    <string name="_bx_stream_form_entry_input_disable_comments"><![CDATA[Disable comments]]></string>
+    <string name="_bx_stream_form_entry_input_sys_allow_comments"><![CDATA[Allow comments]]></string>
+    <string name="_bx_stream_form_entry_input_allow_comments"><![CDATA[Allow comments]]></string>
     <string name="_bx_stream_form_entry_input_server"><![CDATA[Server]]></string>
     <string name="_bx_stream_form_entry_input_stream_key"><![CDATA[Stream Key]]></string>
 
@@ -138,9 +140,14 @@
     <string name="_bx_stream_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_stream_page_block_title_sys_my_entries"><![CDATA[User Streams]]></string>
     <string name="_bx_stream_page_block_title_my_entries"><![CDATA[{display_name} Streams]]></string>
+    <string name="_bx_stream_page_block_title_sys_entries_in_context"><![CDATA[Streams in Context]]></string>
+    <string name="_bx_stream_page_block_title_my_entries"><![CDATA[Streams in {display_name}]]></string>
 
     <string name="_bx_stream_page_block_title_sys_entry_context"><![CDATA[Streamed in]]></string>
     <string name="_bx_stream_page_block_title_entry_context"><![CDATA[Streamed in]]></string>
+
+    <string name="_bx_stream_page_title_broadcast"><![CDATA[Broadcast with Webcam]]></string>
+    <string name="_bx_stream_page_block_title_broadcast"><![CDATA[Broadcast with Webcam]]></string>
 
     <string name="_bx_stream_menu_set_title_view_entry"><![CDATA[Stream Actions]]></string>
     <string name="_bx_stream_menu_title_view_entry"><![CDATA[Stream Actions]]></string>
@@ -237,7 +244,7 @@
     <string name="_bx_stream_txt_sample_reaction_single"><![CDATA['{0}' reaction to stream]]></string>
     <string name="_bx_stream_txt_sample_score_up_single"><![CDATA[score up vote to stream]]></string>
     <string name="_bx_stream_txt_sample_score_down_single"><![CDATA[score down vote to stream]]></string>
-    <string name="_bx_stream_txt_scheduled_awaiting"><![CDATA[Stream publishing date is {date_publish_uf}]]></string>
+    <string name="_bx_stream_txt_processing_awaiting"><![CDATA[Waiting for live streaming...]]></string>
 
     <string name="_bx_stream_txt_msg_status_hidden"><![CDATA[This stream was hidden.]]></string>
     <string name="_bx_stream_txt_msg_status_pending"><![CDATA[This stream is pending approval.]]></string>
@@ -246,5 +253,19 @@
     <string name="_bx_stream_txt_viewers_loading"><![CDATA[Getting number of viewers...]]></string>
     <string name="_bx_stream_txt_no_config"><![CDATA[No configuration is defined]]></string>
     <string name="_bx_stream_txt_wait_for_stream"><![CDATA[Waiting for live streaming...]]></string>
+    <string name="_bx_stream_txt_live_now"><![CDATA[Live Now]]></string>
     <string name="_bx_stream_logs_ome_api"><![CDATA[OvenMediaEngine API Logs]]></string>
+    <string name="_bx_stream_from_webcam_not_supported"><![CDATA[Stream from webcam isn't supported in current streaming server]]></string>
+    <string name="_bx_stream_from_webcam"><![CDATA[Stream from Webcam]]></string>
+    <string name="_bx_stream_manual_settings_or_stream_from_webcam"><![CDATA[OR]]></string>
+    <string name="_bx_stream_start_streaming"><![CDATA[Start Streaming]]></string>
+    <string name="_bx_stream_stop_streaming"><![CDATA[Stop Streaming]]></string>
+
+    <string name="_bx_stream_popup_share"><![CDATA[Stream Share]]></string>
+    <string name="_bx_stream_field_link"><![CDATA[Stream URL]]></string>
+    <string name="_bx_stream_field_embed"><![CDATA[Stream Embed]]></string>
+    <string name="_bx_stream_popup_settings"><![CDATA[Stream settings]]></string>
+    <string name="_bx_stream_field_audio_source"><![CDATA[Audio source]]></string>
+    <string name="_bx_stream_field_video_source"><![CDATA[Video source]]></string>
+    <string name="_bx_stream_field_video_resolution"><![CDATA[Video resolution]]></string>
 </resources>

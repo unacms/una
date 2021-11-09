@@ -748,8 +748,12 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         // keyword
         $sKeyword = bx_process_input(isset($this->_aCustomSearchCondition['keyword']) ? $this->_aCustomSearchCondition['keyword'] : bx_get('keyword'));
+
+        if ($this->_bLiveSearch && empty($sKeyword))
+            return;
+
         if ($sKeyword !== false) {
-            if(substr($sKeyword, 0, 1) == '@') {
+            if (substr($sKeyword, 0, 1) == '@') {
                 $sModule = $this->aCurrent['module_name'];
                 $sMethod = 'act_as_profile';
                 if(!bx_is_srv($sModule, $sMethod) || !bx_srv($sModule, $sMethod))
@@ -763,6 +767,7 @@ class BxDolSearchResult implements iBxDolReplaceable
                 'field' => '',
                 'operator' => 'against'
             );
+
             // for search results we need to show all items, not only public content
             $this->setProcessPrivateContent(true);
         }

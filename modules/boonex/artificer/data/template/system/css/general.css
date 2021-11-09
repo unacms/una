@@ -4,6 +4,10 @@ import url(../../../../../../../template/css/general.css);
 
 
 /*--- Toolbar ---*/
+.bx-toolbar-item.bx-ti-search .bx-form-advanced .bx-loading-ajax {
+    top: 0;
+    max-height: 100%;
+}
 .bx-toolbar-item.bx-ti-search .bx-form-advanced-wrapper .bx-form-section-wrapper:first-child {
     margin-top: 0;
 }
@@ -28,6 +32,17 @@ import url(../../../../../../../template/css/general.css);
 /*--- Author Info ---*/
 .sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li:first-child .bx-base-general-unit-meta-div {
     display: none;
+}
+
+/*--- Join/Login Forms ---*/
+
+#sys_account .bx-form-element .bx-form-input-submit.bx-btn,
+#sys-form-login .bx-form-element .bx-form-input-submit.bx-btn {
+    width: 100%;
+    text-align: center;
+}
+#bx-form-element-submit_text .bx-form-value {
+    text-align: right;
 }
 
 

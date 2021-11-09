@@ -43,6 +43,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'FIELD_NAME' => 'name',
             'FIELD_TITLE' => 'name',
             'FIELD_TEXT' => 'desc',
+            'FIELD_CATEGORY' => 'cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
@@ -108,6 +109,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_NOTES' => 'bx_courses_notes',
             'OBJECT_REPORTS' => 'bx_courses',
             'OBJECT_METATAGS' => 'bx_courses',
+            'OBJECT_CATEGORY' => 'bx_courses_cats',
             'OBJECT_FORM_ENTRY' => 'bx_course',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_course_view',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_course_view_full', // for "info" tab on view course page

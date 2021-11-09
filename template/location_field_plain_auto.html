@@ -22,7 +22,7 @@
         var callbackOnLocationReset = function (error) {
             $('[name="__name___lat"]').val('');
             $('[name="__name___lng"]').val('');
-            $('#__id_status__ span').html("<bx_text_js:_sys_location_undefined />");
+            $('#__id_status__ span').html("<bx_text_js:_sys_location_field_label />");
             $(_self).prop("checked", false);
             $(_self).parents('.bx-switcher-cont').removeClass('on').addClass('off');
         }

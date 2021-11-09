@@ -880,10 +880,30 @@ div.bx-tl-view-info .bx-base-pofile-unit {
 }
 
 /*--- Item Brief Style ---*/
-div.bx-tl-bview-image {
+div.bx-tl-bview-images {
+    position: relative;
+}
+div.bx-tl-bview-images div.bx-tl-bview-image:not(.bx-tl-bvi-single) {
+    width: 100%;
+    height: 30rem;
     text-align: center;
 }
-div.bx-tl-bview-image img {
+div.bx-tl-bview-images div.bx-tl-bview-image:not(.bx-tl-bvi-single) img {
+    position: relative;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.bx-tl-bview-image.bx-tl-bvi-single {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+div.bx-tl-bview-image.bx-tl-bvi-single img {
     max-width: 100%;
 }
 

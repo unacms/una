@@ -1080,14 +1080,20 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
      * Array keys are field names and array values are field values.
      * @param $a array
      * @param $sDiv fields separator, by default it is ',', another useful value is ' AND '
+     * @param $sOperator operator for comparision: '=' or 'LIKE'
+     * @param $bWildcardSpaceChars substiture any space and dash characters with single wildcard symbol
      * @return part of SQL query string
      */
-    public function arrayToSQL($a, $sDiv = ',')
+    public function arrayToSQL($a, $sDiv = ',', $sOperator = '=', $bWildcardSpaceChars = false)
     {
+        $aOperators = ['=', 'LIKE', 'like'];
+        $sOperator = in_array($sOperator, $aOperators) ? $sOperator : '=';
         $s = '';
-        foreach($a as $k => $v)
-            $s .= "`{$k}` = " . $this->escape($v) . $sDiv;
-
+        foreach($a as $k => $v) {
+            if ($bWildcardSpaceChars)
+                $v = preg_replace('/[\p{Zs}\p{Cc}\p{Pd}]/', '_', $v);
+            $s .= "`{$k}` {$sOperator} " . $this->escape($v) . $sDiv;
+        }
         return trim($s, $sDiv);
     }
 

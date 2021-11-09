@@ -24,7 +24,8 @@ class BxDevForms extends BxTemplStudioForms
 
         unset(
             $this->aMenuItems[BX_DOL_STUDIO_FORM_TYPE_LABELS],
-            $this->aMenuItems[BX_DOL_STUDIO_FORM_TYPE_CATEGORIES]
+            $this->aMenuItems[BX_DOL_STUDIO_FORM_TYPE_CATEGORIES],
+            $this->aMenuItems[BX_DOL_STUDIO_FORM_TYPE_GROUPS_ROLES]
         );
 
         $this->oModule = BxDolModule::getInstance('bx_developer');

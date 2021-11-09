@@ -818,6 +818,14 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 }
 
 /*--- Vertical (Vertical Custom) Menus (in Popup) ---*/
+.bx-popup .bx-menu-custom-ver li > span {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
 .bx-popup .bx-menu-custom-ver li a {
     position: relative;
     display: -webkit-flex;

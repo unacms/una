@@ -3,11 +3,15 @@ __custom_html_before__
 <bx_if:show_form>__content__</bx_if:show_form>
 __custom_html_after__
 <bx_if:show_join>
-    <hr class="bx-def-hr my-2" />
-    <div class="text-sm font-normal text-gray-700 dark:text-gray-300">
-        <bx_text:_sys_txt_login_description_question /> <a class="text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600" href="__url__"><bx_text:_sys_txt_login_description_action /></a>
+    <hr class="bx-def-hr my-4" />
+    <div class="sys-lf-join">
+        <a class="bx-btn w-full text-center" href="__url__"><bx_text:_sys_txt_login_description_action /></a>
     </div>
 </bx_if:show_join>
+<div class="sys-lf-agreement -mx-4">
+    <hr class="bx-def-hr mt-4" />
+    <div class="sys-jf-agreement-cnt pt-4 px-4 text-xs text-gray-500">__agreement__</div>
+</div>
 <bx_if:show_js_code>
     <script>
         (bx_login_init_ajax_form = function () {

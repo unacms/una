@@ -20,23 +20,78 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
     
+    public function init()
+    {
+        $this->addJs([
+                'main.js', 
+                'flickity/flickity.pkgd.min.js', 
+                'modules/base/general/js/|showcase.js'
+            ]
+        );
+        $this->addCss([
+                'main.css', 
+                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'
+            ]
+        );
+        
+        return $this->getJsCode('main') . BxBaseFunctions::getInstance()->transBox($this->sContainerId, '', true, true);
+    }
+    
     public function popupWithRecommendedOnProfileAdd($aModuleData)
     {
-        $this->addJs('main.js');
-        $this->addCss('main.css');
-        $aVars = array();
+        $aVars = [];
+        
         foreach ($aModuleData as $sModuleName => $sModuleData){            
-            array_push($aVars, array ('html' => $sModuleData, 'title' => $this->getStringValueByModuleOrDefault('_bx_attendant_popup_with_recommended_title_', $sModuleName) , 'description' => $this->getStringValueByModuleOrDefault('_bx_attendant_popup_with_recommended_description_', $sModuleName)));
+           $aVars[] = [
+               'html' => $sModuleData, 
+               'title' => $this->getStringValueByModuleOrDefault('_bx_attendant_popup_with_recommended_title_', $sModuleName) , 
+               'description' => $this->getStringValueByModuleOrDefault('_bx_attendant_popup_with_recommended_description_', $sModuleName)
+           ];
         }
-        $oBxBaseFunctions = BxBaseFunctions::getInstance();
-        return  $this->getJsCode('main') . $oBxBaseFunctions->transBox($this->sContainerId, $this->parseHtmlByName('popup_recommended.html', array ('bx_repeat:items' => $aVars, 'button_text' => _t('_bx_attendant_popup_with_recommended_button_text'))), true, true);
+        
+        return $this->parseHtmlByName('popup_recommended.html', [
+                'bx_if:data' => [
+                    'condition' => count($aVars) > 0,
+                    'content' => [
+                        'bx_repeat:items' => $aVars, 
+                        'button_text' => _t('_bx_attendant_popup_with_recommended_button_text')
+                    ]
+                ],
+                'bx_if:nodata' => [
+                    'condition' => count($aVars) == 0,
+                    'content' => [
+                    ]
+                ]
+            ]
+        );
     }
     
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
+        $sRedirectUrl = '';
+        switch (getParam('bx_attendant_on_profile_after_action_url')) {
+            case 'profile':
+                $sRedirectUrl = BxDolProfile::getInstance()->getUrl();
+                break;
+
+            case 'custom':
+                $sRedirectCustom = getParam('bx_attendant_on_profile_after_action_url_custom');
+                if($sRedirectCustom) {
+                    $sRedirectUrl = BxDolPermalinks::getInstance()->permalink($sRedirectCustom);
+
+                    if (false === strpos($sRedirectUrl, 'http://') && false === strpos($sRedirectUrl, 'https://'))
+                        $sRedirectUrl = BX_DOL_URL_ROOT . $sRedirectCustom;
+                }
+                break;
+                
+            case 'homepage':
+                $sRedirectUrl =  BX_DOL_URL_ROOT;  
+                break;
+        }
+        
         $aParams = array_merge(array(
             'sContainerId' => $this->sContainerId,
-            'sUrlAfterShow' => getParam('bx_attendant_on_profile_after_action_url')
+            'sUrlAfterShow' => $sRedirectUrl
         ), $aParams);
         
         return parent::getJsCode($sType, $aParams, $bWrap);
@@ -46,8 +101,10 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
     {
         $sFullKey = $sKey . $sModuleName;
         $sValue = _t($sFullKey);
-        if ($sValue == $sFullKey)
-            $sValue =_t($sKey . 'default');
+        if ($sValue == $sFullKey){
+            $oModule = BxDolModule::getInstance($sModuleName);
+            $sValue =_t($sKey . 'default', $oModule->_aModule['title']);
+        }
         return $sValue;
     }
     

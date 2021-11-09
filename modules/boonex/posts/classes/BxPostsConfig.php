@@ -58,7 +58,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
-            'FIELD_DISABLE_COMMENTS' => 'disable_comments',
+            'FIELD_ALLOW_COMMENTS' => 'allow_comments',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
             
@@ -103,6 +103,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_posts_gallery_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_posts_preview_photos',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_posts_gallery_photos',
+            'OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS' => 'bx_posts_view_photos',
             'OBJECT_SOUNDS_TRANSCODER' => 'bx_posts_sounds_mp3',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
                 'poster' => 'bx_posts_videos_poster', 

@@ -6,7 +6,25 @@ import url(../../../../../../../template/css/cmts.css);
 div.cmt-reply.cmt-reply-min div.cmt-body {
     display: none;
 }
-/*--- Munu action ---*/
+
+/*--- Add Comment/Reply Form Styles ---*/
+form.cmt-post-reply div#bx-form-element-cmt_image,
+form.cmt-post-reply .bx-form-input-files-uploaders {
+    margin-top: 0px;
+}
+
+form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+}
+
+/*--- Comment Body ---*/
+div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
+    margin-top: 0.5rem;
+}
+
+/*--- Menu action ---*/
 .bx-menu-object-sys_cmts_item_manage .bx-report .sys-action-element-holder{
     padding: 0px !important;
 }
@@ -24,10 +42,7 @@ div.cmt-reply.cmt-reply-min div.cmt-body {
     height: 1.25rem;
     text-align: center;
 }
-.bx-menu-object-sys_cmts_item_actions li{
-    min-width: 40px;
-}
-.bx-menu-object-sys_cmts_item_manage A{
+.bx-menu-object-sys_cmts_item_manage a {
     width:100%;
     display: block;
 }

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `bx_stream_streams` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
-  `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
+  `allow_comments` tinyint(4) NOT NULL DEFAULT '1',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -266,7 +266,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_stream', 'bx_stream', 'changed', '', '', 0, 'datetime', '_bx_stream_form_entry_input_sys_date_changed', '_bx_stream_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_stream', 'bx_stream', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_stream', 'bx_stream', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_stream', 'bx_stream', 'disable_comments', '1', '', 0, 'switcher', '_bx_stream_form_entry_input_sys_disable_comments', '_bx_stream_form_entry_input_disable_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
+('bx_stream', 'bx_stream', 'allow_comments', '1', '', 1, 'switcher', '_bx_stream_form_entry_input_sys_allow_comments', '_bx_stream_form_entry_input_allow_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
 
 
 
@@ -278,7 +278,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_stream_entry_add', 'covers', 2147483647, 1, 5),
 ('bx_stream_entry_add', 'allow_view_to', 2147483647, 1, 6),
 ('bx_stream_entry_add', 'location', 2147483647, 1, 7),
-('bx_stream_entry_add', 'disable_comments', 192, 1, 8),
+('bx_stream_entry_add', 'allow_comments', 192, 1, 8),
 ('bx_stream_entry_add', 'do_publish', 2147483647, 1, 9),
 
 ('bx_stream_entry_delete', 'delete_confirm', 2147483647, 1, 1),
@@ -292,7 +292,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_stream_entry_edit', 'covers', 2147483647, 1, 6),
 ('bx_stream_entry_edit', 'allow_view_to', 2147483647, 1, 7),
 ('bx_stream_entry_edit', 'location', 2147483647, 1, 8),
-('bx_stream_entry_edit', 'disable_comments', 192, 1, 9),
+('bx_stream_entry_edit', 'allow_comments', 192, 1, 9),
 ('bx_stream_entry_edit', 'do_submit', 2147483647, 1, 10),
 
 ('bx_stream_entry_view', 'cat', 2147483647, 1, 1),
@@ -347,8 +347,7 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_stream', 'bx_stream_votes', 'bx_stream_votes_track', '604800', '1', '1', '0', '1', 'bx_stream_streams', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_stream_reactions', 'bx_stream_reactions', 'bx_stream_reactions_track', '604800', '1', '1', '1', '1', 'bx_stream_streams', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
-('bx_stream_poll_answers', 'bx_stream_polls_answers_votes', 'bx_stream_polls_answers_votes_track', '604800', '1', '1', '0', '1', 'bx_stream_polls_answers', 'id', 'author_id', 'rate', 'votes', 'BxStrmVotePollAnswers', 'modules/boonex/stream/classes/BxStrmVotePollAnswers.php');
+('bx_stream_reactions', 'bx_stream_reactions', 'bx_stream_reactions_track', '604800', '1', '1', '1', '1', 'bx_stream_streams', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 

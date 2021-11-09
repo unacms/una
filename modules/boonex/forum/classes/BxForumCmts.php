@@ -90,7 +90,7 @@ class BxForumCmts extends BxTemplCmts
 
         $oResult->aInputs['cmt_image']['storage_object'] = $CNF['OBJECT_STORAGE_CMTS']; 
         $oResult->aInputs['cmt_image']['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS'];
-        $oResult->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'paperclip');
+        $oResult->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'paperclip', 'HTML5' => 'paperclip');
 
         return $oResult;
     }

@@ -29,6 +29,9 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
 
     protected function _getMenuItem ($a)
     {
+        if(in_array($a['hidden_on'], [7, 15])) 
+            return false;
+
     	//--- Hide '[Search]' from Site Toolbar
         if($this->_bSiteToolbar && in_array($a['name'], $this->_aHideFromSiteToolbar))
             return false;

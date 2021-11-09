@@ -36,7 +36,7 @@ class BxDolLocationFieldGoogle extends BxDolLocationField
                 'condition' => !$isManualInput,
                 'content' => array(
                     'id_status' => $sIdStatus,
-                    'location_string' => _t('_sys_location_undefined'),
+                    'location_string' => _t('_sys_location_field_label'),
                 ),
             ),
             'api_field_name_short' => 'short_name',
@@ -48,17 +48,11 @@ class BxDolLocationFieldGoogle extends BxDolLocationField
         foreach ($aLocationIndexes as $sKey)
             $aVars[$sKey] = $this->getLocationVal($aInput, $sKey, $oForm);
 
-        if ($aVars['country']) {
-            $aCountries = BxDolFormQuery::getDataItems('Country');
-            $s = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
-            $aVars['bx_if:auto_input']['content']['location_string'] = $s;
-        }
-
         if ($isManualInput) {
             $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
-			$aInput['type'] = 'text';
+            $aInput['type'] = 'text';
             $aInput['attrs']['id'] = $sIdInput;
-			$aInput['attrs'] = array_merge($aAttrs, $aInput['attrs']);
+            $aInput['attrs'] = array_merge($aAttrs, $aInput['attrs']);
             $aVars['input'] = $oForm->genInputStandard($aInput);
         } 
         else {
@@ -67,6 +61,13 @@ class BxDolLocationFieldGoogle extends BxDolLocationField
             else
                 $aInput['checked'] = $oForm->getCleanValue($aInput['name'] . '_lat') && $oForm->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
             $aVars['input'] = $oForm->genInputSwitcher($aInput);
+
+            $sLocationString = _t($aInput['checked'] ? '_sys_location_undefined' : '_sys_location_field_label');
+            if ($aVars['country']) {
+                $aCountries = BxDolFormQuery::getDataItems('Country');
+                $sLocationString = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
+            }
+            $aVars['bx_if:auto_input']['content']['location_string'] = $sLocationString;
         }
 
         return $aVars;

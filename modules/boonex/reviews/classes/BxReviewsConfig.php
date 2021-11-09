@@ -60,7 +60,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
-            'FIELD_DISABLE_COMMENTS' => 'disable_comments',
+            'FIELD_ALLOW_COMMENTS' => 'allow_comments',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
 

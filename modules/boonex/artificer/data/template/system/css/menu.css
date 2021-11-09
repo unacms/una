@@ -2,6 +2,30 @@
 import url(../../../../../../../template/css/menu.css);
 --*/
 
+ul.bx-menu-hor,
+ul.bx-menu-custom-hor,
+ul.bx-menu-notif,
+ul.bx-menu-verlit,
+ul.bx-menu-ver,
+ul.bx-menu-custom-ver,
+ul.bx-menu-main,
+ul.bx-menu-main-submenu,
+ul.bx-menu-toolbar,
+ul.bx-menu-floating-blocks-wide,
+ul.bx-menu-floating-blocks-big,
+ul.bx-menu-floating-blocks-dash,
+ul.bx-menu-floating-blocks,
+ul.bx-menu-inter,
+ul.bx-menu-inter-vert,
+ul.bx-menu-btns-ver,
+ul.bx-menu-btns-hor,
+ul.bx-menu-btns-icon-hor {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+
 /* --- Vertical, Vertical lite, Custom Vertical Menus ---*/
 .bx-menu-ver li,
 .bx-menu-verlit li,
@@ -14,9 +38,22 @@ import url(../../../../../../../template/css/menu.css);
     margin-top: 0px;
 }
 
+/*--- Vertical, Vertical lite, Custom Vertical Menus (in Popup) ---*/
+.bx-popup .bx-menu-custom-ver li > span {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 1.0rem;
+}
+
 /* --- Horizontal, Custom Horizontal Menus --- */
 .bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item,
-.bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item a {
+.bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item a,
+.bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item > span {
     border-radius: 0;
 }
 
@@ -62,11 +99,13 @@ import url(../../../../../../../template/css/menu.css);
     position: absolute;
     top: -0.375rem;
     right: -0.375rem;
+    padding: 0 0.25rem;
 }
 
 /*--- Account Popup ---*/
 #bx-sliding-menu-account .bx-menu-account-popup .bx-menu-item-addon.bx-def-unit-alert {
     position: relative;
+    padding: 0 0.25rem;
 }
 #bx-sliding-menu-account .bx-menu-account-popup-profile-switcher-link {
     display: -webkit-flex;
@@ -80,7 +119,7 @@ div.bx-popup-menu-main.sys-add-content ul {
     flex-direction: column;
 }
 
-/* --- Profile Followings Menu ---*/
+/*--- Profile Followings Menu ---*/
 .bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-show {
     display: none;
 }
@@ -97,7 +136,7 @@ div.bx-popup-menu-main.sys-add-content ul {
     display: none;
 }
 
-/* Profiles meta menu */
+/*--- Profiles meta menu ---*/
 .sys-action-counter-icon .sys-icon{
     width: 1rem;
     height: 1rem;

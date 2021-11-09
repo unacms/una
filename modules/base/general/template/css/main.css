@@ -195,6 +195,16 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
 
     white-space: nowrap;
 }
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor > li,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
+    margin-left: 0.25rem;
+}
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor > li:first-child,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li:first-child,
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor > .bx-menu-item-nl + li,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > .bx-menu-item-nl + li {
+    margin-left: 0;
+}
 .sys-author ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl,
 .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: none;
@@ -260,7 +270,7 @@ UL.bx-base-general-lables-tree-parent-0{
 
 /* Badges */
 div.bx-badges-list {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content:center;
 }

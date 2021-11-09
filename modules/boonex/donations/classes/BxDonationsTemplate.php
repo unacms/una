@@ -18,6 +18,11 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
         $this->aMethodsToCallAddJsCss[] = 'getBlockMake';
     }
 
+    public function displayEmptyOwner()
+    {
+    	return MsgBox(_t('_bx_donations_msg_empty_owner'));
+    }
+
     public function addCssJs()
     {
         parent::addCssJs();

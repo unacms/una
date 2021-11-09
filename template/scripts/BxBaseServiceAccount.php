@@ -50,6 +50,8 @@ class BxBaseServiceAccount extends BxDol
             exit;
         }
 
+        $oPemalink = BxDolPermalinks::getInstance();
+
         if (isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) { // remember referrer
             $sJoinReferrer = $_SERVER['HTTP_REFERER'];
             $aNoRelocatePages = array('forgot-password', 'login', 'create-account', 'logout');
@@ -73,7 +75,7 @@ class BxBaseServiceAccount extends BxDol
 
         $aTmplVarsLogin = [];
         if(!isset($aParams['no_login_text']) || false === (bool)$aParams['no_login_text'])
-            $aTmplVarsLogin['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login');
+            $aTmplVarsLogin['url'] = BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=login');
         
         return BxDolTemplate::getInstance()->parseHtmlByName('block_join.html', [
             'bx_if:show_auth' => [
@@ -88,6 +90,7 @@ class BxBaseServiceAccount extends BxDol
                 'condition' => !empty($aTmplVarsLogin),
                 'content' => $aTmplVarsLogin
             ],
+            'agreement' => _t('_sys_form_account_input_agreement_value', BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=terms'), BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=privacy')),
         ]);
     }
 

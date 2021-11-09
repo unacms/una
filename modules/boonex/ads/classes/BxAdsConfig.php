@@ -136,6 +136,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_ads_gallery_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_ads_preview_photos',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_ads_gallery_photos',
+            'OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS' => 'bx_ads_view_photos',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
                 'poster' => 'bx_ads_videos_poster', 
             	'poster_preview' => 'bx_ads_videos_poster_preview',

@@ -59,8 +59,8 @@
     <string name="_bx_reviews_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_reviews_form_entry_input_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_reviews_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
-    <string name="_bx_reviews_form_entry_input_sys_disable_comments"><![CDATA[Disable comments]]></string>
-    <string name="_bx_reviews_form_entry_input_disable_comments"><![CDATA[Disable comments]]></string>
+    <string name="_bx_reviews_form_entry_input_sys_allow_comments"><![CDATA[Allow comments]]></string>
+    <string name="_bx_reviews_form_entry_input_allow_comments"><![CDATA[Allow comments]]></string>
 
     <string name="_bx_reviews_form_poll"><![CDATA[Polls]]></string>
     <string name="_bx_reviews_form_poll_display_add"><![CDATA[Add Poll]]></string>

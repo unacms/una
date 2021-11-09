@@ -247,19 +247,21 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             if ('' == $aContentInfo['repeat_stop']) // don't display calendar for non repeating events
                 return '';
         } 
-        
-        
+
         if (isset($aData['context_id'])) {
             if (!$this->serviceIsEnableForContext($aData['context_id'])){
                 return '';
             }                
         } 
-        $o = new BxTemplCalendar(array(
+
+        $oCalendar = new BxTemplCalendar(array(
             'eventSources' => array (
                 bx_append_url_params(BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data', $aData),
             ),
         ), $this->_oTemplate);
-        return $o->display($sTemplate);
+
+        $this->_oTemplate->addCss(array('main.css'));
+        return $oCalendar->display($sTemplate);
     }
 
     /**

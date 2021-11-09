@@ -11,24 +11,29 @@ define('BX_DOL_MANAGE_TOOLS_ADMINISTRATION', 'administration');
 
 class BxDolCmtsGridAdministration extends BxTemplGrid
 {
+    protected $_oCmts;
+
     protected $_sManageType;
-	protected $_sParamsDivider;
-    
+    protected $_sParamsDivider;
+
     protected $_sFilter1Name;
-	protected $_sFilter1Value;
-	protected $_aFilter1Values;
-    
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
+        $this->_oCmts = null;
+
         $this->_sFilter1Name = 'filter1';
+        $this->_aFilter1Values = ['' => _t('_adm_txt_select_module')];
 
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
-        $this->_aFilter1Values[''] = _t('_adm_txt_select_module');
-        foreach($aModules as $aModule){
+        foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
-            if(isset($oModule->_oConfig->CNF['OBJECT_COMMENTS'])){
-                $this->_aFilter1Values[$aModule['name']] = $aModule['title'];
-            }
+            if(!$oModule || !isset($oModule->_oConfig->CNF['OBJECT_COMMENTS']))
+                continue;
+
+            $this->_aFilter1Values[$aModule['name']] = $aModule['title'];
         }
 
     	$sFilter1 = bx_get($this->_sFilter1Name);
@@ -38,7 +43,8 @@ class BxDolCmtsGridAdministration extends BxTemplGrid
         }
        
     	if(!$oTemplate)
-			$oTemplate = BxDolTemplate::getInstance();
+            $oTemplate = BxDolTemplate::getInstance();
+
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_sManageType = BX_DOL_MANAGE_TOOLS_ADMINISTRATION;
@@ -46,20 +52,24 @@ class BxDolCmtsGridAdministration extends BxTemplGrid
 
         $this->_sDefaultSortingOrder = 'DESC';
     }
-    
-	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
-    	if(!empty($this->_sFilter1Value)){
-            $oSelectedModule = BxDolModule::getInstance($this->_sFilter1Value);
-            $oCmts = BxDolCmts::getObjectInstance($oSelectedModule->_oConfig->CNF['OBJECT_COMMENTS'], 0, false);
-            $this->_aOptions['source'] = "SELECT  sys_cmts_ids.id, sys_cmts_ids.cmt_id, sys_cmts_ids.reports, cmts.*, sys_accounts.email FROM sys_cmts_ids INNER JOIN " . $oCmts->getCommentsTableName() . " cmts ON cmts.cmt_id = sys_cmts_ids.cmt_id INNER JOIN sys_profiles ON cmts.cmt_author_id=sys_profiles.id INNER JOIN sys_accounts ON sys_profiles.account_id=sys_accounts.id WHERE sys_cmts_ids.system_id = " . $oCmts->getSystemId();
-        }
-        else{
+    	if(empty($this->_sFilter1Value)) 
             return '';
-        }
+
+        $oModule = BxDolModule::getInstance($this->_sFilter1Value);
+        if(!$oModule)
+            return '';
+
+        $this->_oCmts = BxDolCmts::getObjectInstance($oModule->_oConfig->CNF['OBJECT_COMMENTS'], 0, false);
+        if(!$this->_oCmts || !$this->_oCmts->isEnabled())
+            return '';
+
+        $this->_aOptions['source'] = $oModule->_oDb->prepareAsString("SELECT `sys_cmts_ids`.`id`, `sys_cmts_ids`.`cmt_id`, `sys_cmts_ids`.`reports`, `cmts`.*, `sys_accounts`.`email` FROM `sys_cmts_ids` INNER JOIN " . $this->_oCmts->getCommentsTableName() . " AS `cmts` ON `cmts`.`cmt_id`=`sys_cmts_ids`.`cmt_id` INNER JOIN `sys_profiles` ON `cmts`.`cmt_author_id`=`sys_profiles`.`id` INNER JOIN `sys_accounts` ON `sys_profiles`.`account_id`=`sys_accounts`.`id` WHERE `sys_cmts_ids`.`system_id`=?", $this->_oCmts->getSystemId());
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

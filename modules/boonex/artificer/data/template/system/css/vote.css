@@ -3,6 +3,13 @@ import url(../../../../../../../template/css/vote.css);
 --*/
 
 
+.bx-vote .bx-vote-counter .bx-vote-counter-label {
+    padding: 0;
+}
+.bx-vote .bx-vote-counter .bx-vote-counter-label .bx-vote-counter-text {
+    margin: 0;
+}
+
 /*--------------------------------------*/
 /*--- Reactions based Element Styles ---*/
 /*--------------------------------------*/
@@ -50,6 +57,23 @@ import url(../../../../../../../template/css/vote.css);
 .bx-menu-object-sys_vote_reactions_do li .sys-icon {
     font-size: 1.5rem;
 }
+
+/*----------------------------------*/
+/*--- Stars based Element Styles ---*/
+/*----------------------------------*/
+.bx-vote-stars .bx-vote-element-holder a.bx-vote-button,
+.bx-vote-stars .bx-vote-element-holder i.bx-vote-star,
+.bx-vote-stars .bx-vote-element-holder span.bx-vote-star {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 1rem;
+    width: 1rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
 
 /*--- Voted By ---*/
 div.bx-vote-by-list {}

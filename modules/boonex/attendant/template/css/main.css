@@ -10,3 +10,6 @@
     width:100px;
     margin:0px auto;
 }
+.bx-pwropa-item-container .flickity-viewport{
+    width: 100%;
+}

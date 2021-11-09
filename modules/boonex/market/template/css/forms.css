@@ -1,9 +1,5 @@
-
-@import url(../../../../base/text/template/css/forms.css);
-
-.bx-form-value .bx-form-input-autotoken b 
-{
-	padding-left:0.5rem;
+.bx-form-value .bx-form-input-autotoken b {
+    padding-left:0.5rem;
 }
 
 /*--- Uploader Ghost ---*/
@@ -41,4 +37,3 @@
     -ms-transform: rotate(0deg);
     -o-transform: rotate(0deg);
 }
-

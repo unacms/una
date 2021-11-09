@@ -63,6 +63,8 @@ class BxEventsDb extends BxBaseModGroupsDb
         if ($oDateFrom > $oDateTo)
             return array();
 
+        $sModule = $this->_oConfig->getName();
+
         // increase start and end date to cover timezones
         $oDateFrom = $oDateFrom->sub(new DateInterval("P1D"));
         $oDateTo = $oDateTo->add(new DateInterval("P1D"));
@@ -166,6 +168,11 @@ class BxEventsDb extends BxBaseModGroupsDb
                 $a[$k]['start_utc'] = $oDateStart ? $oDateStart->getTimestamp() : 0;
                 $a[$k]['end_utc'] = $oDateEnd ? $oDateEnd->getTimestamp() : 0;
                 $a[$k]['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']);
+                if(($oEvent = BxDolProfile::getInstanceByContentAndType($r['id'], $sModule)) !== false)
+                    $a[$k]['extendedProps'] = [
+                        'class' => 'bx-events-calendar-unit',
+                        'card' => $oEvent->getUnit()
+                    ];
             }
 
             // merge with all other events

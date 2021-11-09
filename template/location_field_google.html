@@ -109,7 +109,7 @@
             for(var sKey in oBxLocationHashMap) 
                 $('[name="' + oBxLocationHashMap[sKey].html + '"]').val('');
 
-            $('#__id_status__').html("<bx_text_js:_sys_location_undefined />");
+            $('#__id_status__').html("<bx_text_js:_sys_location_field_label />");
 
             $(_self).prop("checked", false);
             $(_self).parents('.bx-switcher-cont').removeClass('on').addClass('off');
