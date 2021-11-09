@@ -13,6 +13,20 @@
 }
 
 @layer components {
+    /* Global: HTML tags */
+    ol, ul {
+        @apply pl-10 list-outside;
+    }
+
+    ul {
+        @apply list-disc;
+    }
+
+    ol {
+        @apply list-decimal;
+    }
+
+
     /* Defaults */
     .bx-artificer .bx-def-box-sizing {
         @apply box-border;

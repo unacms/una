@@ -15,59 +15,61 @@
     })
     </bx_if:not_preview>
 
-    var bx_help_tour_steps =  __steps__;
-    var bx_help_tour_steps_filtered = [];
-    for (i in bx_help_tour_steps) {
-        if (typeof bx_help_tour_steps[i].attachTo !== 'undefined' && bx_help_tour_steps[i].attachTo.element.length) {
-            //do not show help items for missing elements.
-            if (!$(bx_help_tour_steps[i].attachTo.element).length) continue;
-
-            // if this is a help for a field that is sitting inside a collapsed section then
-            // we are `uncollapsing` it on this page load
-            if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) {
-                var sect = $(bx_help_tour_steps[i].attachTo.element).closest('.bx-form-section-hidden');
-                if (sect.length && sect.hasClass('bx-form-section-hidden')) {
-                    $(sect).children('legend').trigger('click');
-                    sect.removeClass('bx-form-collapsed');
-                    sect.removeClass('bx-form-section-hidden');
-                }
-            }
-
-            //do not process hidden elements
-            if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) continue;
-        }
-
-        bx_help_tour_steps_filtered.push(bx_help_tour_steps[i]);
-    }
-    bx_help_tour_steps = bx_help_tour_steps_filtered;
-
-    if (bx_help_tour_steps_filtered) {
-        var bx_help_tour_steps_active = 0;
+    $(document).ready(function() {
+        var bx_help_tour_steps = __steps__;
+        var bx_help_tour_steps_filtered = [];
         for (i in bx_help_tour_steps) {
-            var aBtns = [];
-            if (i != (bx_help_tour_steps.length - 1)) {
-                aBtns.push({
-                    text: '<bx_text_js:_sys_exit />',
-                    action: __js_obj__.cancel,
-                    classes: 'shepherd-button-secondary'
-                });
-                aBtns.push({
-                    text: '<bx_text_js:_sys_next />',
-                    action: __js_obj__.next,
-                    classes: 'shepherd-button-primary'
-                });
-            } else {
-                aBtns.push({
-                    text: '<bx_text_js:_sys_done />',
-                    action: __js_obj__.cancel,
-                    classes: 'shepherd-button-primary'
-                });
+            if (typeof bx_help_tour_steps[i].attachTo !== 'undefined' && bx_help_tour_steps[i].attachTo.element.length) {
+                //do not show help items for missing elements.
+                if (!$(bx_help_tour_steps[i].attachTo.element).length) continue;
+
+                // if this is a help for a field that is sitting inside a collapsed section then
+                // we are `uncollapsing` it on this page load
+                if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) {
+                    var sect = $(bx_help_tour_steps[i].attachTo.element).closest('.bx-form-section-hidden');
+                    if (sect.length && sect.hasClass('bx-form-section-hidden')) {
+                        $(sect).children('legend').trigger('click');
+                        sect.removeClass('bx-form-collapsed');
+                        sect.removeClass('bx-form-section-hidden');
+                    }
+                }
+
+                //do not process hidden elements
+                if (!$(bx_help_tour_steps[i].attachTo.element).is(':visible')) continue;
             }
 
-            bx_help_tour_steps[i].buttons = aBtns;
-            __js_obj__.addStep(bx_help_tour_steps[i]);
-            bx_help_tour_steps_active++;
+            bx_help_tour_steps_filtered.push(bx_help_tour_steps[i]);
         }
-        if (bx_help_tour_steps_active) __js_obj__.start();
-    }
+        bx_help_tour_steps = bx_help_tour_steps_filtered;
+
+        if (bx_help_tour_steps_filtered) {
+            var bx_help_tour_steps_active = 0;
+            for (i in bx_help_tour_steps) {
+                var aBtns = [];
+                if (i != (bx_help_tour_steps.length - 1)) {
+                    aBtns.push({
+                        text: '<bx_text_js:_sys_exit />',
+                        action: __js_obj__.cancel,
+                        classes: 'shepherd-button-secondary'
+                    });
+                    aBtns.push({
+                        text: '<bx_text_js:_sys_next />',
+                        action: __js_obj__.next,
+                        classes: 'shepherd-button-primary'
+                    });
+                } else {
+                    aBtns.push({
+                        text: '<bx_text_js:_sys_done />',
+                        action: __js_obj__.cancel,
+                        classes: 'shepherd-button-primary'
+                    });
+                }
+
+                bx_help_tour_steps[i].buttons = aBtns;
+                __js_obj__.addStep(bx_help_tour_steps[i]);
+                bx_help_tour_steps_active++;
+            }
+            if (bx_help_tour_steps_active) __js_obj__.start();
+        }
+    });
 </script>

@@ -21,7 +21,7 @@ class BxBaseConnection extends BxDolConnection
     {
         parent::__construct($aObject);
         
-        $this->_sStylePrefix = 'bx_conn_' . $this->_sObject;
+        $this->_sStylePrefix = 'bx-conn';
         $this->_sJsObjName = 'oConn' . bx_gen_method_name($this->_sObject, array('_' , '-')) . '';
         $this->_oTemplate = BxDolTemplate::getInstance();
     }
@@ -61,7 +61,7 @@ class BxBaseConnection extends BxDolConnection
         if(empty($aParams))
             $aParams = [];
 
-        $this->_sStylePrefix = 'bx_conn_' . $this->_sObject;
+        $this->_sStylePrefix = 'bx-conn';
         
         $aHtmlIds = array(
             'main' => 'bx-conn-' . $this->_sObject . $iProfileId,

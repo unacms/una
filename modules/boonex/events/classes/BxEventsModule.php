@@ -438,7 +438,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oDateBegin->setTimestamp($aContentInfo['start_utc']);
         $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
         $sEntryBegin = $oDateBegin->format('r');
-        $sEntryBeginShort = $oDateBegin->format(getParam('bx_events_short_date_format'));
+        $sEntryBeginShort = strftime(getParam('bx_events_short_date_format'), $oDateBegin->getTimestamp());
         $oDateBegin->setTimezone(new DateTimeZone('UTC'));
         $sEntryBeginUTC = $oDateBegin->format('c');
 
@@ -454,7 +454,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
                 'EntryBegin' => $sEntryBegin,
                 'EntryBeginShort' => $sEntryBeginShort,
                 'EntryBeginUTC' => $sEntryBeginUTC,
-                'EntryLocation' => $sLocationString,
+                'EntryLocation' => $sLocationString ? _t('_bx_events_email_reminder_location', $sLocationString) : '',
             ), BX_EMAIL_NOTIFY);
 
             $iCounter += $b ? 1 : 0;

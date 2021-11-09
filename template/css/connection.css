@@ -13,8 +13,8 @@
     width: 1rem;
     height: 1rem;
 }
-.sys-action-counter-profile div.bx-def-unit-img, 
-.sys-action-counter-profile div.bx-def-unit-img img {
+.sys-action-counter-profiles .sys-action-counter-profile div.bx-def-unit-img, 
+.sys-action-counter-profiles .sys-action-counter-profile div.bx-def-unit-img img {
     display: block;
 }
 .sys-action-counter-profile div.bx-def-unit-img .bx-base-pofile-unit-thumb {
@@ -24,4 +24,23 @@
 }
 .sys-action-counter-profile .bx-base-pofile-unit-online {
     display: none;
+}
+
+/*--- Connected By ---*/
+div.bx-conn-by-list {}
+div.bx-conn-by-list-cnt {}
+div.bx-conn-by-items {
+    max-height: 200px;
+    max-height: 12.5rem;
+    min-width: 220px;
+    min-width: 13.75rem;
+    overflow: auto;
+}
+div.bx-conn-user {
+    position: relative;
+}
+div.bx-conn-user-avatar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
