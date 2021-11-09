@@ -7,7 +7,7 @@ DELETE FROM `top`, `toc`, `to` USING `sys_options_types` AS `top` LEFT JOIN `sys
 
 DELETE FROM `sys_objects_editor` WHERE `object` = 'bx_froala';
 
-UPDATE `sys_options` SET `value` = 'sys_tinymce' WHERE `name` = 'sys_editor_default';
+UPDATE `sys_options` SET `value` = 'sys_quill' WHERE `name` = 'sys_editor_default';
 
 -- Injections
 
