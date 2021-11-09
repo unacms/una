@@ -56,10 +56,6 @@ import url(../../../../../../../template/css/common.css);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-
-    line-height: 1.5;
-    font-size: 1.0rem;
-    font-weight: 600;
 }
 
 .bx-db-menu {
@@ -214,7 +210,8 @@ body.bx-popup-lock {
 .bx-popup-menu .bx-popup-content-indent {
     padding: 0px !important;
 }
-.bx-popup-menu ul {
+.bx-popup-menu ul.bx-menu-ver,
+.bx-popup-menu ul.bx-menu-custom-ver {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
