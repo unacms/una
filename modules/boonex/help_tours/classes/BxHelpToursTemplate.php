@@ -17,7 +17,7 @@ class BxHelpToursTemplate extends BxBaseModGeneralTemplate
     }
 
     public function getHelpTourCode($aTour, $aHelpTourItems) {
-        $this->addJs('shepherd/js/shepherd.min.js');
+        $this->addJs(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/js/|shepherd.min.js');
         $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd.css');
 
         $iShowOnlyItem = isAdmin() && bx_get('help_tour_item') ? intval(bx_get('help_tour_item')) : 0;
