@@ -149,7 +149,7 @@ class BxBasePage extends BxDolPage
         else {
             $oCache = $this->_getPageCacheObject();
             $sKey = $this->_getPageCacheKey();
-            $sKeyCssJs = $sKey . 'cssjs';
+            $sKeyCssJs = 'cssjs_' . $sKey;
 
             $mixedRet = $oCache->getData($sKey, $this->_aObject['cache_lifetime']);
             $aRetCssJs = $oCache->getData($sKeyCssJs, $this->_aObject['cache_lifetime']);
@@ -461,7 +461,7 @@ class BxBasePage extends BxDolPage
         else {
             $oCache = $this->_getBlockCacheObject();
             $sKey = $this->_getBlockCacheKey(false, $aBlock);
-            $sKeyCssJs = $sKey . 'cssjs';
+            $sKeyCssJs = 'cssjs_' . $sKey;
 
             $mixedRet = $oCache->getData($sKey, $aBlock['cache_lifetime']);
             $aRetCssJs = $oCache->getData($sKeyCssJs, $aBlock['cache_lifetime']);
