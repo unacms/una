@@ -111,9 +111,13 @@
     visibility: hidden;
 }
 
+/* unit meta */
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
+    margin-left: 0;
+}
+
 
 /* flexbox */
-
 .bx-base-text-unit-gallery-wrapper {
     display: -webkit-box;
     display: -webkit-flex;

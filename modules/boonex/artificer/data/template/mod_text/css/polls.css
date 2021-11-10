@@ -68,6 +68,11 @@
     width: 100%;
 }
 
+.bx-page-iframe .bx-base-text-polls-showcase {
+    margin-left: -0.4rem;
+    margin-right: -0.4rem;
+}
+
 /* Media: phone2 */
 .bx-media-phone2 .bx-layout-column-half .bx-base-text-polls.bx-base-text-autosizing .bx-base-text-poll,
 .bx-media-phone2 .bx-layout-column-thin .bx-base-text-polls.bx-base-text-autosizing .bx-base-text-poll {

@@ -9,15 +9,15 @@
         </bx_if:thumb>
         <bx_if:no_thumb>
             <div class="bx-def-gal-img-column flex-shrink-0 m-1">
-                <div class="bx-base-text-unit-no-thumb flex flex-col items-center justify-center h-48 p-4 bg-gray-100 dark:bg-gray-700 leading-8 text-sm text-gray-200 dark:text-gray-600 text-opacity-80 box-border rounded-md">__summary_plain__</div>
+                <div class="bx-base-text-unit-no-thumb flex flex-col items-center justify-center h-48 p-4 bg-gradient-to-b from-red-400 to-red-500 box-border rounded-md"></div>
             </div>
         </bx_if:no_thumb>
         <div class="bx-base-text-unit-text p-3 md:p-4 lg:p-6 pt-2 md:pt-3 lg:pt-5 box-border">
-            <div class="bx-base-text-unit-info flex space-x-1 text-sm text-gray-500 dark:text-gray-400 pb-2">
-                <bx_if:meta><div class="bx-base-general-unit-meta">__meta__</div></bx_if:meta>
+            <div class="bx-base-text-unit-info flex text-sm text-gray-500 dark:text-gray-400">
+                <bx_if:meta><div class="bx-base-general-unit-meta pb-2">__meta__</div></bx_if:meta>
             </div>
-            <div class="bx-base-text-unit-title">
-                <h2 class="text-left"><a href="__content_url__" class="text-lg lg:text-xl font-semibold text-gray-700 group-hover:text-gray-900 dark:text-gray-200 dark:group-hover:text-white">__title__</a></h2>
+            <div class="bx-base-text-unit-title flex items-center text-left">
+                <a href="__content_url__" class="text-lg lg:text-xl font-semibold text-gray-700 group-hover:text-gray-900 dark:text-gray-200 dark:group-hover:text-white">__title__</a>
                 __badges__
             </div>
         </div>
