@@ -530,6 +530,7 @@ _sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
 	<string name="_adm_bp_scs_save"><![CDATA[Изменения успешно сохранены]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Активный]]></string>
     <string name="_adm_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
+    <string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Кэш для блока (в секундах)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Вложения]]></string>
 	<string name="_adm_bp_txt_block_content_image_align"><![CDATA[Выравнивание]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_center"><![CDATA[по центру]]></string>

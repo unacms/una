@@ -495,17 +495,19 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $fFilterCss = function ($a) use ($aExcludeCss) {
             if (in_array($a['url'], $aExcludeCss))
                 return false;
-            foreach ($this->aPageSnapshot['css_compiled'] as $r)
-                if ($r['url'] == $a['url'])
-                    return false;
+            if (isset($this->aPageSnapshot['css_compiled']))
+                foreach ($this->aPageSnapshot['css_compiled'] as $r)
+                    if ($r['url'] == $a['url'])
+                        return false;
             return true;
         };
         $fFilterJs = function ($a) use ($aExcludeJs) {
             if (in_array($a['url'], $aExcludeJs))
                 return false;
-            foreach ($this->aPageSnapshot['js_compiled'] as $r)
-                if ($r['url'] == $a['url'])
-                    return false;
+            if (isset($this->aPageSnapshot['js_compiled']))
+                foreach ($this->aPageSnapshot['js_compiled'] as $r)
+                    if ($r['url'] == $a['url'])
+                        return false;
             return true;
         };    
 

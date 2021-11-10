@@ -417,6 +417,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tpb`.`title` AS `title`,
                 `tpb`.`designbox_id` AS `designbox_id`,
                 `tpb`.`async` AS `async`,
+                `tpb`.`cache_lifetime` AS `cache_lifetime`,
                 `tpb`.`submenu` AS `submenu`,
                 `tpb`.`tabs` AS `tabs`,
                 `tpb`.`hidden_on` AS `hidden_on`,
