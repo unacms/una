@@ -428,7 +428,8 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         $sExtChange = false;
         $bRet = true;
 
-        $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_PROCESSING, '', gethostname());
+        $iPID = function_exists('posix_getpid') ? posix_getpid() : 0;
+        $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_PROCESSING, '', gethostname(), '', '', '', $iPID);
 
         do {
 

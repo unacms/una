@@ -4946,6 +4946,7 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (
   `file_id_result` int(11) NOT NULL,
   `server` varchar(255) NOT NULL,
   `status` enum('pending','processing','complete','failed','delete') NOT NULL,
+  `pid` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `log` text NOT NULL,

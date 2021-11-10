@@ -150,6 +150,19 @@ class BxDolTranscoderQuery extends BxDolDb
     {
         $oDb = BxDolDb::getInstance();
 
+        // check if files which are processing are alive
+        if (function_exists('posix_kill')) {
+            $sQuery = $oDb->prepare("SELECT * FROM `" . self::TABLE_QUEUE . "` WHERE `server` = ? AND `status` = 'processing'", $sServer);
+            if ($a = $oDb->getAll($sQuery)) {
+                foreach ($a as $r) {
+                    $o = BxDolTranscoder::getObjectInstance($r['transcoder_object']);
+                    if ($o && $r['pid'] && !posix_kill($r['pid'], 0)) {
+                        $o->getDb()->updateQueueStatus($r['file_id_source'], BX_DOL_QUEUE_FAILED, "transcoding process died unexpectedly\n");
+                    }
+                }
+            }
+        }
+
         // delete items which are stuck in processing status
         $sQuery = $oDb->prepare("DELETE FROM `" . self::TABLE_QUEUE . "` WHERE `server` = ? AND `status` = ? AND `changed` < ? - ?", $sServer, BX_DOL_QUEUE_PROCESSING, time(), BX_DOL_QUEUE_PRUNE_PROCESSING);
         $oDb->query($sQuery);
@@ -210,12 +223,12 @@ class BxDolTranscoderQuery extends BxDolDb
     public function addToQueue ($mixedId, $sFileUrl, $iProfileId)
     {
         if (!$this->_sTableQueue)
-            return false;
+            return false;        
         $sQuery = $this->prepare("INSERT INTO `" . $this->_sTableQueue . "` SET `transcoder_object` = ?, `profile_id` = ?, `file_url_source` = ?, `file_id_source` = ?, `status` = ?, `added` = ?, changed = ?", $this->_aObject['object'], $iProfileId, $sFileUrl, $mixedId, BX_DOL_QUEUE_PENDING, time(), time());
         return $this->query($sQuery);
     }
 
-    public function updateQueueStatus ($mixedId, $sStatus, $sLog = '', $sServer = '', $mixedIdResult = '', $sFileUrlResult = '', $sFileExtResult = '')
+    public function updateQueueStatus ($mixedId, $sStatus, $sLog = '', $sServer = '', $mixedIdResult = '', $sFileUrlResult = '', $sFileExtResult = '', $iPID = 0)
     {
         if (!$this->_sTableQueue)
             return false;
@@ -229,6 +242,8 @@ class BxDolTranscoderQuery extends BxDolDb
 			$aSet['log'] = $sLog;
         if($sServer)
         	$aSet['server'] = $sServer;
+        if($iPID)
+            $aSet['pid'] = $iPID;
 		if($mixedIdResult && $sFileUrlResult)
 			$aSet = array_merge($aSet, array(
 				'file_id_result' => $mixedIdResult,
