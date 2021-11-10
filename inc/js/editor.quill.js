@@ -88,6 +88,26 @@ function bx_editor_init(oEditor, oParams){
     }
 
     oEditor = new Quill('#' + oParams.name, oConfig)
+    $(oParams.selector).next().find('button.ql-bold').attr('title', _t('_sys_txt_quill_tooltip_bold'));
+    $(oParams.selector).next().find('button.ql-italic').attr('title', _t('_sys_txt_quill_tooltip_italic'));
+    $(oParams.selector).next().find('button.ql-underline').attr('title', _t('_sys_txt_quill_tooltip_underline'));
+    $(oParams.selector).next().find('button.ql-clean').attr('title', _t('_sys_txt_quill_tooltip_clean'));
+    $(oParams.selector).next().find('button.ql-list[value = "ordered"]').attr('title', _t('_sys_txt_quill_tooltip_list_ordered'));
+    $(oParams.selector).next().find('button.ql-list[value = "bullet"]').attr('title', _t('_sys_txt_quill_tooltip_list_bullet'));
+    $(oParams.selector).next().find('button.ql-indent[value = "-1"]').attr('title', _t('_sys_txt_quill_tooltip_indent_1'));
+    $(oParams.selector).next().find('button.ql-indent[value = "+1"]').attr('title', _t('_sys_txt_quill_tooltip_indent_2'));
+    $(oParams.selector).next().find('button.ql-blockquote').attr('title', _t('_sys_txt_quill_tooltip_blockquote'));
+    $(oParams.selector).next().find('button.ql-direction').attr('title', _t('_sys_txt_quill_tooltip_direction'));
+    $(oParams.selector).next().find('button.ql-script[value="sub"]').attr('title', _t('_sys_txt_quill_tooltip_script_sub'));
+    $(oParams.selector).next().find('button.ql-script[value="super"]').attr('title', _t('_sys_txt_quill_tooltip_script_super'));
+    $(oParams.selector).next().find('button.ql-link').attr('title', _t('_sys_txt_quill_tooltip_link'));
+    $(oParams.selector).next().find('button.ql-image').attr('title', _t('_sys_txt_quill_tooltip_image'));
+    $(oParams.selector).next().find('button.ql-code-block').attr('title', _t('_sys_txt_quill_tooltip_code_block'));
+    $(oParams.selector).next().find('span.ql-color').attr('title', _t('_sys_txt_quill_tooltip_color'));
+    $(oParams.selector).next().find('span.ql-background').attr('title', _t('_sys_txt_quill_tooltip_background'));
+    $(oParams.selector).next().find('span.ql-align').attr('title', _t('_sys_txt_quill_tooltip_align'));
+    $(oParams.selector).next().find('span.ql-header').attr('title', _t('_sys_txt_quill_tooltip_header'));
+     
     
     oEditor.keyboard.addBinding({
         key: ' ',

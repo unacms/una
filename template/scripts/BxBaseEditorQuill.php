@@ -93,7 +93,27 @@ class BxBaseEditorQuill extends BxDolEditor
         ));
         
         $sEditorName = 'quill_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
-        
+        $this->_oTemplate->addJsTranslation([
+            '_sys_txt_quill_tooltip_bold',
+            '_sys_txt_quill_tooltip_italic',
+            '_sys_txt_quill_tooltip_underline',
+            '_sys_txt_quill_tooltip_clean',
+            '_sys_txt_quill_tooltip_list_ordered',
+            '_sys_txt_quill_tooltip_list_bullet',
+            '_sys_txt_quill_tooltip_indent_1',
+            '_sys_txt_quill_tooltip_indent_2',
+            '_sys_txt_quill_tooltip_blockquote',
+            '_sys_txt_quill_tooltip_direction',
+            '_sys_txt_quill_tooltip_script_sub',
+            '_sys_txt_quill_tooltip_script_super',
+            '_sys_txt_quill_tooltip_link',
+            '_sys_txt_quill_tooltip_image',
+            '_sys_txt_quill_tooltip_code_block',
+            '_sys_txt_quill_tooltip_color',
+            '_sys_txt_quill_tooltip_background',
+            '_sys_txt_quill_tooltip_align',
+            '_sys_txt_quill_tooltip_header',
+        ]);
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
