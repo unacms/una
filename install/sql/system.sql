@@ -37,7 +37,6 @@ CREATE TABLE `sys_objects_editor` (
 
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
-('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', ''),
 ('sys_quill', 'Quill', 'snow', 'BxTemplEditorQuill', '');
 
 
@@ -321,12 +320,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', '', 60),
 
-(@iCategoryId, 'sys_tinymce_plugins_mini', '_adm_stg_cpt_option_sys_tinymce_plugins_mini', 'autolink,image,link,lists,paste,fullscreen', 'digit', '', '', '', '', 70),
-(@iCategoryId, 'sys_tinymce_toolbar_mini', '_adm_stg_cpt_option_sys_tinymce_toolbar_mini', 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image | fullscreen', 'digit', '', '', '', '', 71),
-(@iCategoryId, 'sys_tinymce_plugins_standard', '_adm_stg_cpt_option_sys_tinymce_plugins_standard', 'advlist,autolink,autosave,code,hr,image,link,lists,media,paste,fullscreen', 'digit', '', '', '', '', 73),
-(@iCategoryId, 'sys_tinymce_toolbar_standard', '_adm_stg_cpt_option_sys_tinymce_toolbar_standard', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fullscreen', 'digit', '', '', '', '', 74),
-(@iCategoryId, 'sys_tinymce_plugins_full', '_adm_stg_cpt_option_sys_tinymce_plugins_full', 'advlist,anchor,autolink,autoresize,autosave,charmap,code,emoticons,hr,image,link,lists,media,nonbreaking,pagebreak,preview,paste,save,searchreplace,table,textcolor,visualblocks,fullscreen', 'digit', '', '', '', '', 76),
-(@iCategoryId, 'sys_tinymce_toolbar_full', '_adm_stg_cpt_option_sys_tinymce_toolbar_full', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image, preview media | forecolor emoticons | fullscreen', 'digit', '', '', '', '', 77),
+(@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 70),
+(@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 73),
+(@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[\'bold\',\'italic\',\'underline\',\'clean\'],
+  [{ \'align\': [] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[\'blockquote\'],[{ \'color\': [] }, { \'background\': [] }],[{ \'direction\': \'rtl\' }],[{ \'script\': \'sub\'}, { \'script\': \'super\' }],[\'link\',\'image\',\'code-block\']', 'digit', '', '', '', '', 76),
 
 (@iCategoryId, 'sys_search_keyword_min_len', '_adm_stg_cpt_option_sys_search_keyword_min_len', '1', 'digit', '', '', '', '', 80),
 
@@ -342,12 +339,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_logs_storage_default', '_adm_stg_cpt_option_sys_logs_storage_default', 'Folder', 'select', 'Folder,PHPLog,STDErr', '', '', '', 130),
 
 (@iCategoryId, 'sys_default_curl_timeout', '_adm_stg_cpt_option_sys_default_curl_timeout', '300', 'digit', '', '', '', '', 140),
-(@iCategoryId, 'curl_ssl_allow_untrusted', '_adm_stg_cpt_option_sys_ssl_allow_untrusted', '', 'checkbox', '', '', '', '', 145),
-
-(@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 150),
-(@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'}],[\'blockquote\'],[\'link\',\'image\']', 'digit', '', '', '', '', 153),
-(@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{ \'font\': [] }],[\'bold\',\'italic\',\'underline\',\'clean\'],
-  [{ \'align\': [] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[\'blockquote\'],[{ \'color\': [] }, { \'background\': [] }],[{ \'direction\': \'rtl\' }],[{ \'script\': \'sub\'}, { \'script\': \'super\' }],[\'link\',\'image\',\'code-block\']', 'digit', '', '', '', '', 156);
+(@iCategoryId, 'curl_ssl_allow_untrusted', '_adm_stg_cpt_option_sys_ssl_allow_untrusted', '', 'checkbox', '', '', '', '', 145);
 
 --
 -- CATEGORY (HIDDEN): System
@@ -5152,6 +5144,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `text` mediumtext NOT NULL,
   `text_updated` int(11) NOT NULL,
   `help` varchar(255) NOT NULL,
+  `cache_lifetime` int(11) NOT NULL DEFAULT '0',
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `active` tinyint(4) NOT NULL DEFAULT '1',

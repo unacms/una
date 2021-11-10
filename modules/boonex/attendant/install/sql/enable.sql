@@ -32,4 +32,4 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- MENU: notifications
 SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `order` < 9999);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_notifications', @sName, 'notifications-attendant', '_bx_attendant_menu_item_title_system_attendant', '_bx_attendant_menu_item_title_attendant', 'javascript:', 'oBxAttendant.showPopupWithRecommended()', '', '', '', '', 2147483646, 1, 0, @iMIOrder + 1);
+('sys_account_notifications', @sName, 'notifications-attendant', '_bx_attendant_menu_item_title_system_attendant', '_bx_attendant_menu_item_title_attendant', 'javascript:', 'oBxAttendant.showPopupWithRecommended()', '', 'fab buffer', '', '', 2147483646, 1, 0, @iMIOrder + 1);

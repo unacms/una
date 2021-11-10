@@ -530,6 +530,7 @@
 	<string name="_adm_bp_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Active]]></string>
 	<string name="_adm_bp_txt_block_async"><![CDATA[Asynchronous Mode]]></string>
+	<string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Block Cache Lifetime (in seconds)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Attachments]]></string>
 	<string name="_adm_bp_txt_block_content_image_align"><![CDATA[Alignment]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_center"><![CDATA[center]]></string>
@@ -1609,12 +1610,6 @@
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_plugins_mini"><![CDATA[TinyMCE plugins for mini editor]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_mini"><![CDATA[TinyMCE buttons for mini editor]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_plugins_standard"><![CDATA[TinyMCE plugins for standard editor]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_standard"><![CDATA[TinyMCE buttons for standard editor]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_plugins_full"><![CDATA[TinyMCE plugins for full editor]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_full"><![CDATA[TinyMCE buttons for full editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill buttons for mini editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill buttons for standard editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons for full editor]]></string>
@@ -3554,5 +3549,27 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_adm_form_txt_groups_role_edit_any"><![CDATA[Edit any entry]]></string>
 	<string name="_adm_form_txt_groups_role_delete_any"><![CDATA[Delete any entry]]></string>
 	<string name="_adm_form_txt_groups_role_pin"><![CDATA[Pin entry]]></string>
+    
+    <string name="_sys_txt_quill_tooltip_bold"><![CDATA[Add bold text <cmd+b>]]></string>
+    <string name="_sys_txt_quill_tooltip_italic"><![CDATA[Add italic text <cmd+i>]]></string>
+    <string name="_sys_txt_quill_tooltip_underline"><![CDATA[Add underline text <cmd+u>]]></string>
+    <string name="_sys_txt_quill_tooltip_clean"><![CDATA[Clear format]]></string>
+    <string name="_sys_txt_quill_tooltip_list_ordered"><![CDATA[Numbered list]]></string>
+    <string name="_sys_txt_quill_tooltip_list_bullet"><![CDATA[Bulleted list]]></string>
+    <string name="_sys_txt_quill_tooltip_indent_1"><![CDATA[Decrease indent]]></string>
+    <string name="_sys_txt_quill_tooltip_indent_2"><![CDATA[Increase indent]]></string>
+    <string name="_sys_txt_quill_tooltip_blockquote"><![CDATA[Add blockquote]]></string>
+    <string name="_sys_txt_quill_tooltip_direction"><![CDATA[Text direction]]></string>
+    <string name="_sys_txt_quill_tooltip_script_sub"><![CDATA[Subscript]]></string>
+    <string name="_sys_txt_quill_tooltip_script_super"><![CDATA[Superscript]]></string>
+    <string name="_sys_txt_quill_tooltip_link"><![CDATA[Insert a link]]></string>
+    <string name="_sys_txt_quill_tooltip_image"><![CDATA[Insert an image]]></string>
+    <string name="_sys_txt_quill_tooltip_code_block"><![CDATA[Add code]]></string>
+    
+    <string name="_sys_txt_quill_tooltip_color"><![CDATA[Select a text color]]></string>
+    <string name="_sys_txt_quill_tooltip_background"><![CDATA[Select a background color]]></string>
+    <string name="_sys_txt_quill_tooltip_align"><![CDATA[Text alignment]]></string>
+    <string name="_sys_txt_quill_tooltip_header"><![CDATA[Select the text style]]></string>
+    
 </resources>
 

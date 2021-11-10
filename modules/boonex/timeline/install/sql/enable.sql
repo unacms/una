@@ -13,7 +13,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_timeline_view_hot', '_bx_timeline_page_title_sys_view_hot', '_bx_timeline_page_title_view_hot', 'bx_timeline', 5, 2147483647, 1, 'timeline-view-hot', 'page.php?i=timeline-view-hot', '', '', '', 0, 1, 0, '', ''),
 
 ('bx_timeline_item', '_bx_timeline_page_title_sys_item', '_bx_timeline_page_title_item', 'bx_timeline', 2, 2147483647, 1, 'item', 'page.php?i=item', '', '', '', 0, 1, 0, 'BxTimelinePageViewItem', 'modules/boonex/timeline/classes/BxTimelinePageViewItem.php'),
-('bx_timeline_item_brief', '_bx_timeline_page_title_sys_item_brief', '_bx_timeline_page_title_item_brief', 'bx_timeline', 2, 2147483647, 1, 'item-quick', 'page.php?i=item-quick', '', '', '', 0, 1, 0, 'BxTimelinePageViewItem', 'modules/boonex/timeline/classes/BxTimelinePageViewItem.php'),
+('bx_timeline_item_brief', '_bx_timeline_page_title_sys_item_brief', '_bx_timeline_page_title_item_brief', 'bx_timeline', 5, 2147483647, 1, 'item-quick', 'page.php?i=item-quick', '', '', '', 0, 1, 0, 'BxTimelinePageViewItem', 'modules/boonex/timeline/classes/BxTimelinePageViewItem.php'),
 
 ('bx_timeline_manage', '_bx_timeline_page_title_sys_manage', '_bx_timeline_page_title_manage', 'bx_timeline', 5, 2147483647, 1, 'timeline-manage', 'page.php?i=timeline-manage', '', '', '', 0, 1, 0, '', '');
 
@@ -34,8 +34,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('bx_timeline_item', 2, 'bx_timeline', '', '_bx_timeline_page_block_title_item_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_item_info";}', 0, 0, 1, 1),
 
 ('bx_timeline_item_brief', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_item_content', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_item_content";}', 0, 0, 1, 1),
-('bx_timeline_item_brief', 2, 'bx_timeline', '', '_bx_timeline_page_block_title_item_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_item_info";}', 0, 0, 1, 1),
-('bx_timeline_item_brief', 2, 'bx_timeline', '', '_bx_timeline_page_block_title_item_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_item_comments";}', 0, 0, 1, 2),
+('bx_timeline_item_brief', 0, 'bx_timeline', '', '_bx_timeline_page_block_title_item_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_item_info";}', 0, 0, 1, 1),
+('bx_timeline_item_brief', 0, 'bx_timeline', '', '_bx_timeline_page_block_title_item_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_item_comments";}', 0, 0, 1, 2),
 
 ('bx_timeline_manage', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_muted', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:15:"get_block_muted";}', 0, 0, 1, 1);
 

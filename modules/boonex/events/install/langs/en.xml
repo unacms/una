@@ -571,7 +571,8 @@
 <p class="vevent">
     <a href="{EntryUrl}" class="summary">{EntryTitle}</a> event reminder:</a><br />
     Date: <abbr class="dtstart" title="{EntryBeginUTC}">{EntryBegin}</abbr><br />
-    Location: <span class="location">{EntryLocation}</span>
+    {EntryLocation}
 </p>
 {email_footer}]]></string>
+    <string name="_bx_events_email_reminder_location"><![CDATA[Location: <span class="location">{0}</span>]]></string>
 </resources>

@@ -65,6 +65,8 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
             if(!$this->_oModule->_oTemplate->getPost($aItem))
                 continue;
 
+            $aItem['name'] = 'event';
+
             $aResults[] = $aItem;
         }
 
@@ -72,15 +74,10 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
         if(count($aResults) > $iPerPage)
             $aResults = array_slice($aResults, 0, $iPerPage);
 
-        $bFirst = true;
-        foreach($aItems as $iKey => $aItem) {
-            if($bFirst)
-                $bFirst = !$this->_oModule->_oDb->markAsRead($this->_iOwnerId, $aItem['id']);
-
-            $aItems[$iKey]['name'] = 'event';
-        }
-
-        return array_merge($aItems, $this->_oQuery->getMenuItems());
+        $aFirst = array_shift($aItems);
+        $this->_oModule->_oDb->markAsRead($this->_iOwnerId, $aFirst['id']);
+        
+        return array_merge($aResults, $this->_oQuery->getMenuItems());
     }
 
     protected function _getMenuItemDefault ($aItem)

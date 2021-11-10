@@ -530,6 +530,7 @@ _sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
 	<string name="_adm_bp_scs_save"><![CDATA[Изменения успешно сохранены]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Активный]]></string>
     <string name="_adm_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
+    <string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Кэш для блока (в секундах)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Вложения]]></string>
 	<string name="_adm_bp_txt_block_content_image_align"><![CDATA[Выравнивание]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_center"><![CDATA[по центру]]></string>
@@ -1593,12 +1594,6 @@ _sys_layout_1_column<?xml version="1.0" encoding="utf-8"?>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_plugins_mini"><![CDATA[TinyMCE компоненты для мини редактора]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_mini"><![CDATA[TinyMCE кнопки для мини редактора]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_plugins_standard"><![CDATA[TinyMCE компоненты для стандартного редактора]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_standard"><![CDATA[TinyMCE кнопки для стандартного редактора]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_plugins_full"><![CDATA[TinyMCE компоненты для полного редактора]]></string>
-    <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_full"><![CDATA[TinyMCE кнопки для полного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill кнопки для мини редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill кнопки для стандартного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons кнопки для полного редактора]]></string>

@@ -17,109 +17,17 @@ class BxBaseEditorQuill extends BxDolEditor
      * Common initialization params
      */
     
-    protected static $CONF_COMMON = <<<EOS
-    
-                hljs.configure({   // optionally configure hljs
-                  languages: ['javascript', 'php', 'html', 'css']
-                });
-    
-                $( "{bx_var_selector}" ).after( "<div id='{bx_var_editor_name}' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill {bx_var_css_additional_class}'>" + $( "{bx_var_selector}" ).val() + "</div>" );
-                //$( "{bx_var_selector}" ).hide();
-                
-                if (typeof bQuillRegistred === 'undefined' && {toolbar}) {
-                    Quill.register("modules/imageUploader", ImageUploader); 
-                    bQuillRegistred = true; 
-                }
-                var Embed = Quill.import('blots/embed');
-                class ProcLink extends Embed {
-                    static create(value) {
-                        let node = super.create(value);
-                        // give it some margin
-                        node.setAttribute('href', value.id);
-                        node.innerHTML = '@' + value.value;
-                        return node;
-                    }
-                }
-                ProcLink.blotName = 'proc-link'; 
-                ProcLink.className = 'proc-link';
-                ProcLink.tagName = 'a';                
-                Quill.register({
-                    'formats/proc-link': ProcLink
-                });
-                
-                var oConfig = {              
-                     theme: '{bx_var_skin}',
-                     modules: {
-                        syntax: true, 
-                        imageResize: {},
-                        toolbar: {toolbar},
-                        mention: {
-                            allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-                            mentionDenotationChars: ["@"],
-                            showDenotationChar: false,
-                            blotName: 'proc-link',
-                            source: function (searchTerm, renderList, mentionChar) {
-                              $.getJSON('{bx_url_root}searchExtended.php?action=get_authors&', { term: searchTerm}, function(data){
-                                renderList(data, searchTerm);
-                              });
-                            },
-                            renderItem: function(item, searchTerm){
-                              item.id = item.url;
-                              item.value = item.label;
-                              return '@' + item.value;
-                            },
-                            onSelect: function(item, insertItem){
-                                insertItem(item, false)
-                            }
-                        },
-                    }
-                };
-                if ({toolbar}){
-                    oConfig.modules.imageUploader = {
-                        upload: file => {
-                            return new Promise((resolve, reject) => {
-                                const formData = new FormData();
-                                formData.append("file", file);
-                                fetch("{bx_url_root}storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", {
-                                        method: "POST",
-                                        body: formData
-                                    }
-                                )
-                                .then(response => response.json())
-                                .then(result => {
-                                    console.log(result);
-                                    resolve(result.link);
-                                })
-                                .catch(error => {
-                                    reject("Upload failed");
-                                    console.error("Error:", error);
-                                });
-                            });
-                        }
-                    }
-                }
-                
-                {bx_var_editor_name} = new Quill('#{bx_var_editor_name}', oConfig);
-                {bx_var_editor_name}.keyboard.addBinding({
-                    key: ' ',
-                    handler: function(range, context) {
-                        bx_editor_on_space_enter ({bx_var_editor_name}, '{bx_var_selector}');
-                        return true;
-                    }
-                });
-                {bx_var_editor_name}.keyboard.bindings[13].unshift({
-                    key: 13,
-                    handler: (range, context) => {
-                        bx_editor_on_space_enter ({bx_var_editor_name}, '{bx_var_selector}')
-                        return true;
-                    }
-                });
-                {bx_var_editor_name}.on('text-change', function(delta, oldDelta, source) {
-                    $('{bx_var_selector}').val({bx_var_editor_name}.container.firstChild.innerHTML);
-                });
-    EOS;
+    protected static $CONF_COMMON = "
+        var oParams = {              
+            skin: '{bx_var_skin}',
+            name: '{bx_var_editor_name}',
+            selector: '{bx_var_selector}',
+            css_class: '{bx_var_css_additional_class}',
+            toolbar: {toolbar},
+            root_url: '{bx_url_root}'
+        }
+        {bx_var_editor_name} = bx_editor_init({bx_var_editor_name}, oParams);";
    
-
     /**
      * Standard view initialization params
      */
@@ -185,7 +93,27 @@ class BxBaseEditorQuill extends BxDolEditor
         ));
         
         $sEditorName = 'quill_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
-        
+        $this->_oTemplate->addJsTranslation([
+            '_sys_txt_quill_tooltip_bold',
+            '_sys_txt_quill_tooltip_italic',
+            '_sys_txt_quill_tooltip_underline',
+            '_sys_txt_quill_tooltip_clean',
+            '_sys_txt_quill_tooltip_list_ordered',
+            '_sys_txt_quill_tooltip_list_bullet',
+            '_sys_txt_quill_tooltip_indent_1',
+            '_sys_txt_quill_tooltip_indent_2',
+            '_sys_txt_quill_tooltip_blockquote',
+            '_sys_txt_quill_tooltip_direction',
+            '_sys_txt_quill_tooltip_script_sub',
+            '_sys_txt_quill_tooltip_script_super',
+            '_sys_txt_quill_tooltip_link',
+            '_sys_txt_quill_tooltip_image',
+            '_sys_txt_quill_tooltip_code_block',
+            '_sys_txt_quill_tooltip_color',
+            '_sys_txt_quill_tooltip_background',
+            '_sys_txt_quill_tooltip_align',
+            '_sys_txt_quill_tooltip_header',
+        ]);
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
@@ -205,14 +133,8 @@ class BxBaseEditorQuill extends BxDolEditor
             list($aJs, $aCss) = $this->_getJsCss(true);
             $sCss = $this->_oTemplate->addCss($aCss, true);
             
-            $sCss = $this->_oTemplate->addCss([
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.' . $this->_aObject['skin'] . '.css', 
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.custom.css', 
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.mention.css', 
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'highlight/|default.min.css',
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/quill.imageUploader.min.css'
-            ], true);
             $sScript = $sCss . "<script>
+                var " . $sEditorName . ";
                 if (typeof bQuillEditorInited === 'undefined') {
                     bx_get_scripts(" . json_encode($aJs) . ", function () {
                         bQuillEditorInited = true;
@@ -221,7 +143,7 @@ class BxBaseEditorQuill extends BxDolEditor
                 } else {
                 	setTimeout(function () {
                     	$sInitEditor
-                    }, 10); // wait while html is rendered in case of dynamic adding html with tinymce
+                    }, 10); // wait while html is rendered in case of dynamic adding html with quill
                 } 
                 if (typeof bQuillEditorInited === 'undefined') 
                     bQuillEditorInited = true;
@@ -266,23 +188,24 @@ class BxBaseEditorQuill extends BxDolEditor
     protected function _getJsCss($bUseUrlsForJs = false)
     {
         $sJsPrefix = $bUseUrlsForJs ? BX_DOL_URL_PLUGINS_PUBLIC : BX_DIRECTORY_PATH_PLUGINS_PUBLIC;
+        $sJsPrefixRoot = $bUseUrlsForJs ? BX_DOL_URL_ROOT .'inc/js/' : BX_DIRECTORY_PATH_INC . 'js/';
         $sJsSuffix = $bUseUrlsForJs ? '' : '|';
         
         $aJs = array(
             $sJsPrefix . 'highlight/' . $sJsSuffix . 'highlight.min.js',
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.min.js', 
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.mention.js',  
-            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.imageUploader.min.js',
-            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.custom.js', 
+            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.imageUploader.min.js', 
             $sJsPrefix . 'quill/' . $sJsSuffix . 'image-resize.min.js', 
+            $sJsPrefixRoot  . $sJsSuffix . 'editor.quill.js',
         );
 
         $aCss = array(
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.' . $this->_aObject['skin'] . '.css', 
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.custom.css', 
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.' . $this->_aObject['skin'] . '.css',  
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.mention.css', 
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'highlight/|default.min.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/quill.imageUploader.min.css'
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/quill.imageUploader.min.css',
+            BX_DIRECTORY_PATH_BASE . 'css/|editor.quill.css',
         );
 
         return array($aJs, $aCss);
