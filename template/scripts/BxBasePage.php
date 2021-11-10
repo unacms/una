@@ -19,6 +19,7 @@ class BxBasePage extends BxDolPage
 
     protected $_sStorage; //--- Storage object for page's images like custom cover, HTML block attachments, etc.
     protected $_oPageCacheObject = null;
+    protected $_oBlockCacheObject = null;
     
     protected $_bStickyColumns = false;
 
@@ -148,7 +149,7 @@ class BxBasePage extends BxDolPage
         else {
             $oCache = $this->_getPageCacheObject();
             $sKey = $this->_getPageCacheKey();
-            $sKeyCssJs = $sKey . 'cssjs';
+            $sKeyCssJs = 'cssjs_' . $sKey;
 
             $mixedRet = $oCache->getData($sKey, $this->_aObject['cache_lifetime']);
             $aRetCssJs = $oCache->getData($sKeyCssJs, $this->_aObject['cache_lifetime']);
@@ -396,7 +397,7 @@ class BxBasePage extends BxDolPage
             foreach ($aCell as $aBlock) {
                 $this->processPageBlock($aBlock, false);
 
-                $sContentWithBox = $this->_getBlockCode($aBlock, $aBlock['async']);
+                $sContentWithBox = $this->_getBlockCodeWithCache($aBlock, $aBlock['async']);
 
             	$sHiddenOn = '';
                 if(!empty($aBlock['hidden_on']))
@@ -448,7 +449,41 @@ class BxBasePage extends BxDolPage
     {
         if (!($aBlock = $this->_oQuery->getPageBlock((int)$iBlockId)))
             return '';
-        return $this->_getBlockCode($aBlock, 0);
+        return $this->_getBlockCodeWithCache($aBlock, 0);
+    }
+
+
+    protected function _getBlockCodeWithCache($aBlock, $iAsync = 0)
+    {
+        if (!getParam('sys_pb_cache_enable') || !$aBlock['cache_lifetime'] || $iAsync) {
+            $sBlockCode = $this->_getBlockCode($aBlock, $iAsync);
+        }
+        else {
+            $oCache = $this->_getBlockCacheObject();
+            $sKey = $this->_getBlockCacheKey(false, $aBlock);
+            $sKeyCssJs = 'cssjs_' . $sKey;
+
+            $mixedRet = $oCache->getData($sKey, $aBlock['cache_lifetime']);
+            $aRetCssJs = $oCache->getData($sKeyCssJs, $aBlock['cache_lifetime']);
+
+            if ($mixedRet !== null && $aRetCssJs !== null) {
+                BxDolTemplate::getInstance()->collectingStart();
+                BxDolTemplate::getInstance()->collectingInject($aRetCssJs['css'], $aRetCssJs['js']);
+                $sBlockCode = BxDolTemplate::getInstance()->collectingEndGetCode();
+                $sBlockCode .= $mixedRet;
+            } else {
+                BxDolTemplate::getInstance()->collectingStart();
+
+                $sBlockCode = $this->_getBlockCode($aBlock, $iAsync);
+
+                $aBlockCssJs = BxDolTemplate::getInstance()->collectingEndGetCode(array(), array(), 'array');
+
+                $oCache->setData($sKey, $sBlockCode, $aBlock['cache_lifetime']);
+                $oCache->setData($sKeyCssJs, $aBlockCssJs, $aBlock['cache_lifetime']);
+            }
+        }
+
+        return $sBlockCode;
     }
 
     /**
@@ -774,14 +809,31 @@ class BxBasePage extends BxDolPage
      */
     protected function _getPageCacheObject ()
     {
-        if ($this->_oPageCacheObject != null) {
-            return $this->_oPageCacheObject;
+        return $this->_getCacheObject ();
+    }
+
+    /**
+     * Get block cache object.
+     * @return cache object instance
+     */
+    protected function _getBlockCacheObject ()
+    {
+        return $this->_getCacheObject ('Block', 'pb');
+    }
+
+    protected function _getCacheObject ($sSuffixObj = 'Page', $sSuffixParam = 'page')
+    {
+        $sObj = '_o' . $sSuffixObj . 'CacheObject';
+        $sParam = 'sys_' . $sSuffixParam . '_cache_engine';
+
+        if ($this->{$sObj} != null) {
+            return $this->{$sObj};
         } else {
-            $sEngine = getParam('sys_page_cache_engine');
-            $this->_oPageCacheObject = bx_instance ('BxDolCache' . $sEngine);
-            if (!$this->_oPageCacheObject->isAvailable())
-                $this->_oPageCacheObject = bx_instance ('BxDolCacheFile');
-            return $this->_oPageCacheObject;
+            $sEngine = getParam($sParam);
+            $this->{$sObj} = bx_instance ('BxDolCache' . $sEngine);
+            if (!$this->{$sObj}->isAvailable())
+                $this->{$sObj} = bx_instance ('BxDolCacheFile');
+            return $this->{$sObj};
         }
     }
 
@@ -796,6 +848,21 @@ class BxBasePage extends BxDolPage
         if ($isPrefixOnly)
             return $s;
         $s .= $this->_getPageCacheParams ();
+        $s .= bx_site_hash() . '.php';
+        return $s;
+    }
+
+    /**
+     * Get block cache key.
+     * @param $isPrefixOnly return key prefix only.
+     * @return string
+     */
+    protected function _getBlockCacheKey ($isPrefixOnly = false, $aBlock = array())
+    {
+        $s = $this->_getPageCacheKey(true) . 'block_';
+        if ($isPrefixOnly)
+            return $s;
+        $s .= ($aBlock ? $aBlock['id'] : 0) . '_' . $this->_getPageCacheParams ();
         $s .= bx_site_hash() . '.php';
         return $s;
     }
@@ -817,13 +884,18 @@ class BxBasePage extends BxDolPage
      */
     protected function cleanCache ($isDelAllWithPagePrefix = false)
     {
-        $oCache = $this->_getPageCacheObject ();
-        $sKey = $this->_getPageCacheKey($isDelAllWithPagePrefix);
+        $a = ['Page', 'Block'];
+        $bRet = false;
+        foreach ($a as $s) {
+            $oCache = $this->{'_get' . $s . 'CacheObject'} ();
+            $sKey = $this->{'_get'. $s . 'CacheKey'} ($isDelAllWithPagePrefix);
 
-        if ($isDelAllWithPagePrefix)
-            return $oCache->removeAllByPrefix($sKey);
-        else
-            return $oCache->delData($sKey);
+            if ($isDelAllWithPagePrefix)
+                $bRet = $bRet && $oCache->removeAllByPrefix($sKey);
+            else
+                $bRet = $bRet && $oCache->delData($sKey);
+        }
+        return $bRet;
     }
 }
 

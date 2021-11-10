@@ -795,6 +795,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Xss',
                     ),
                 ),
+                'cache_lifetime' => array(
+                    'type' => 'text',
+                    'name' => 'cache_lifetime',
+                    'caption' => _t('_adm_bp_txt_block_cache_lifetime'),
+                    'info' => '',
+                    'value' => isset($aBlock['cache_lifetime']) ? $aBlock['cache_lifetime'] : 0,
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
                 'active' => array(
                     'type' => 'switcher',
                     'name' => 'active',
