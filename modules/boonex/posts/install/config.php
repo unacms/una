@@ -83,7 +83,7 @@ $aConfig = array(
         'bx_posts_videos_mp4',
         'bx_posts_videos_mp4_hd',
         
-        'bx_classes_sounds_mp3',
+        'bx_posts_sounds_mp3',
 
         'bx_posts_preview_files',
         'bx_posts_gallery_files'
