@@ -216,7 +216,8 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
                 $oAccount->updateEmailConfirmed($this->_oConfig->isAlwaysConfirmEmail);
 
             // send email with password
-            sendMailTemplate($this->_oConfig->sEmailTemplatePasswordGenerated, $iAccountId, $iProfileId, array('password' => $aFieldsAccount['password']), BX_EMAIL_SYSTEM);
+            if ($this->_oConfig->bSendPasswordGenerated)
+                sendMailTemplate($this->_oConfig->sEmailTemplatePasswordGenerated, $iAccountId, $iProfileId, array('password' => $aFieldsAccount['password']), BX_EMAIL_SYSTEM);
         }
 
         // remember remote profile id for created member
