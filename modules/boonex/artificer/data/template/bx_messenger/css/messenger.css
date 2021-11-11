@@ -1,0 +1,19 @@
+@import url(../../../../../messenger/template/css/messenger.css);
+
+.bx-messenger-preview-lot div {
+	margin-top: 0;
+}
+
+.bx-messenger-jots-snip-info span.bubble {
+	position: relative;
+	border-radius: 1rem;
+	line-height: 1rem;
+	min-width: auto;
+	width: 1rem;
+	height: 1rem;
+	text-align: center;
+}
+
+.bx-messenger-history-arrow #unread-jots-counter {
+	padding:0;
+}

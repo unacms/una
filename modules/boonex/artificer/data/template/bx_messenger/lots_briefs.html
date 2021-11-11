@@ -1,38 +1,38 @@
 <div class="bx-messenger-jots-snip" onclick="oMessenger.loadTalk(__id__);" data-lot="__id__">
 		<div class="bx-messenger-jots-snip-avatars bx-messenger-padding-lots-lefttopbottom">
-			<div class="bx-messenger-jots-snip-avatars-list bx-def-thumb bx-def-thumb-size" >
+			<div class="bx-messenger-jots-snip-avatars-list bx-def-thumb bx-def-thumb-size rounded-full" >
 				<bx_repeat:avatars>
 					<bx_if:avatars>
 						<div>
-							<img title="__title__" src="__thumb__" class="bx-def-thumb-size" />
+							<img title="__title__" src="__thumb__" class="bx-def-thumb-size flex items-center justify-center" />
 						</div>
 					</bx_if:avatars>
 					<bx_if:letters>
 						<div>
-							<p class="bx-def-thumb-size text-white bx-base-pofile-unit-thumb bx-def-ava bx-def-box-sizing" style="background-color:rgba(__color__)">__letter__</p>
+							<p class="bx-def-thumb-size text-white bx-base-pofile-unit-thumb bx-def-ava bx-def-box-sizing flex items-center justify-center" style="background-color:rgba(__color__)">__letter__</p>
 						</div>
 					</bx_if:letters>
 				</bx_repeat:avatars>
 			</div>
 			__status__
 		</div>
-		<div class="bx-messenger-jots-snip-info bx-messenger-padding-lots-topbottom __class__ bx-def-font-middle">
+		<div class="bx-messenger-jots-snip-info bx-messenger-padding-lots-topbottom __class__ font-medium">
 			<div class="bx-messenger-jots-snip-title">
 				<div class="info"></div>
 				__number__
-				<div class="title bx-def-font-default bx-def-font-semibold __title_class__">
+				<div class="title text-sm font-semibold __title_class__">
 					__title__
 				</div>
 				<bx_if:show_time>
-					<div class="time bx-def-font-light bx-def-font-small bx-def-font-grayed">__time__</div>
+					<div class="time font-light text-xs bx-def-font-grayed">__time__</div>
 				</bx_if:show_time>
 			</div>
 			<div class="bx-messenger-preview-lot __message_class__ bx-def-font-grayed">
 				<div>
 					<span>__sender_username__</span>
-					<span calss="bx-def-font-middle">__message__</span>
+					<span calss="text-sm">__message__</span>
 				</div>
-				<span class="bubble bx-def-label __bubble_class__">__count__</span>
+				<span class="bubble __bubble_class__ text-xs font-light bg-gray-200 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">__count__</span>
 			</div>
 		</div>
 </div>

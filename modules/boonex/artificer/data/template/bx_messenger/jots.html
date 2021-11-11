@@ -1,31 +1,31 @@
 <bx_repeat:jots>
 	<div class="bx-messenger-jots<bx_if:blink-jot> bx-messenger-blink-jot</bx_if:blink-jot>" data-id="__id__" __display__ data-new="__new__" data-my="__my__">
-		<div class="bx-messenger-jots-avatars bx-def-padding-thd-right">
+		<div class="bx-messenger-jots-avatars bx-def-padding">
 			<a href="__url__" target="_blank">
 				<bx_if:avatars>
-					<img class="bx-def-thumb bx-def-thumb-size" title="__title__" src="__thumb__" />
+					<img class="bx-def-thumb bx-def-thumb-size rounded-full flex items-center justify-center" title="__title__" src="__thumb__" />
 				</bx_if:avatars>
 				<bx_if:letters>
-					<p class="bx-def-thumb text-white bx-def-thumb-size bx-base-pofile-unit-thumb bx-def-ava bx-def-box-sizing" style="background-color:rgba(__color__)">__letter__</p>
+					<p class="bx-def-thumb text-white bx-def-thumb-size rounded-full bx-base-pofile-unit-thumb bx-def-ava bx-def-box-sizing flex items-center justify-center" style="background-color:rgba(__color__)">__letter__</p>
 				</bx_if:letters>
 			</a>
 		</div>
-		<div class="bx-messenger-jots-info bx-def-font-middle">
-			<div class="bx-messenger-jots-title">
-				<div class="title bx-def-font-semibold bx-def-font-default" title="__title__">
+		<div class="bx-messenger-jots-info text-base">
+			<div class="bx-messenger-jots-title flex items-center justify-center">
+				<div class="title font-semibold text-sm" title="__title__">
 					__title__
 				</div>
-				<div class="time bx-def-font-light bx-def-font-grayed">__time__</div>
+				<div class="time font-light bx-def-font-grayed text-xs">__time__</div>
 				<div class="view">__views__</div>
 				<bx_if:jot_menu>
 					<div class="bx-messenger-jots-actions-list">
-						<i class="bx-def-label sys-icon ellipsis-v"></i>
+						<i class="bx-def-label sys-icon ellipsis-v rounded-full"></i>
 							__jot_menu__
 					</div>
 				</bx_if:jot_menu>
 			</div>
 			__reply__
-			<div class="bx-messenger-jots-message bx-def-font-middle" __display_message__>__message____edit_icon__</div>
+			<div class="bx-messenger-jots-message text-sm font-middle" __display_message__>__message____edit_icon__</div>
 			__attachment__
 			<bx_if:show_reactions_area>
 				<div class="bx-messenger-jot-reactions">

@@ -10,12 +10,12 @@
 				type="text" 
 				placeholder="<bx_text:_bx_messenger_title_search />">
 	</div>
-	<div class="bx-db-menu">
-			<a href="javascript:void(0);" onclick="oMessenger.showStarred(this);" title="__star_title__">
+	<div class="bx-db-menu flex justify-end">
+			<a href="javascript:void(0);" onclick="oMessenger.showStarred(this);" title="__star_title__" class="px-1 flex justify-center items-center text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
 				<i class="sys-icon star"></i>
 			</a>
 			<bx_if:create>
-				<a href="javascript:void(0);" onclick="oMessenger.createLot();" title="__create_lot_title__">
+				<a href="javascript:void(0);" onclick="oMessenger.createLot();" title="__create_lot_title__" class="flex justify-center items-center text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
 					<i class="sys-icon edit"></i>
 				</a>
 			</bx_if:create>

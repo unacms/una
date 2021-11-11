@@ -1,16 +1,15 @@
-<div class="bx-messenger-table-wrapper-rows text-area">
-    <div class="cell bx-def-hr">
+<div class="bx-messenger-table-wrapper-rows text-area bx-def-hr">
         <div class="bx-messenger-post-box bx-def-border-block">
             <div class="bx-messenger-reply-area">
-                <span class="bx-messenger-reply-area-message bx-def-font-small bx-def-border-left" onclick="oMessenger.jumpToParentMessage();"></span>
-                <a href="javascript:void(0);" onclick="oMessenger.onCleanReplayArea();" class="bx-def-font-medium">
+                <span class="bx-messenger-reply-area-message text-sm bx-def-border-left" onclick="oMessenger.jumpToParentMessage();"></span>
+                <a href="javascript:void(0);" onclick="oMessenger.onCleanReplayArea();" class="font-medium">
                     <i class="sys-icon times"></i>
                 </a>
             </div>
             <bx_if:text>
 				<div class="bx-messenger-post-box-set">
                     <div class="bx-messenger-post-box-send-area">
-                        <div id="bx-messenger-message-box" class="bx-form-input-text bx-messenger-text-box bx-def-font-middle w-full"></div>
+                        <div id="bx-messenger-message-box" class="bx-form-input-text bx-messenger-text-box font-middle w-full"></div>
                     </div>
                 </div>
             </bx_if:text>
@@ -21,28 +20,28 @@
                 <div class="bx-messenger-post-box-send-actions-items">
                     <ul class="mt-4 mb-4">
                         <bx_if:smiles>
-                            <li>
+                            <li class="text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
                                 <a class="smiles" title="<bx_text:_bx_messenger_post_emoji />">
                                     <i class="sys-icon smile"></i>
                                 </a>
                             </li>
                         </bx_if:smiles>
                         <bx_if:recording>
-                            <li class="video">
+                            <li class="video text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
                                 <a title="<bx_text:_bx_messenger_send_recorded_video />" onclick="oMessenger.getVideoRecording();">
                                     <i class="sys-icon file-video"></i>
                                 </a>
                             </li>
                         </bx_if:recording>
                         <bx_if:files>
-                            <li>
+                            <li class="text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
                                 <a title="<bx_text:_bx_messenger_post_attache_files />" class="attachefile">
                                     <i class="sys-icon paperclip"></i>
                                 </a>
                             </li>
                         </bx_if:files>
                         <bx_if:giphy>
-                            <li>
+                            <li class="text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
                                 <a title="<bx_text:_bx_messenger_giphy_gifs_button />" id="bx-messenger-send-area-giphy">
                                     <i class="sys-icon file-image"></i>
                                 </a>
@@ -51,12 +50,11 @@
                     </ul>
                     <div class="bx-messenger-post-box-send-button">
                         <a id="send-button" title="<bx_text:_bx_messenger_post_button_title />">
-                            <i class="sys-icon arrow-circle-up"></i>
+                            <i class="sys-icon arrow-circle-up text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
         __giphy__
-    </div>
 </div>
