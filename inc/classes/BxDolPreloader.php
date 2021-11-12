@@ -72,10 +72,14 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
             if(!in_array($sType, $aTypesAvail))
                 continue;
 
-            $sMethod = $this->_aTypes[$sType];
-            $sContent = bx_replace_markers($aEntry['content'], $this->_aMarkers);
+            if(BxDolService::isSerializedService($aEntry['content']))
+                $aEntry['content'] = BxDolService::callSerialized($aEntry['content']);
 
-            $oTemplateSystem->$sMethod($sContent);
+            $sContent = bx_replace_markers($aEntry['content'], $this->_aMarkers);
+            if(empty($sContent))
+                continue;
+
+            $oTemplateSystem->{$this->_aTypes[$sType]}($sContent);
         }
     }
 }

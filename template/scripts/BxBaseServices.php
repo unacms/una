@@ -70,6 +70,25 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         );
     }
 
+    public function serviceGetPreloaderContent($sName) {
+        $sResult = '';
+
+        switch($sName) {
+            case 'tailwind':
+                /**
+                 * Note. For now Tailwind isn't needed in Studio.
+                 */
+                list($sPageUrl, $sPageParams) = bx_get_base_url_inline();
+                if(!empty($sPageUrl) && strncmp($sPageUrl, BX_DOL_URL_STUDIO, strlen(BX_DOL_URL_STUDIO)) == 0)
+                    break;
+
+                $sResult = '{dir_plugins_public}tailwind/css/|tailwind.min.css';
+                break;
+        }
+
+        return $sResult;
+    }
+            
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
