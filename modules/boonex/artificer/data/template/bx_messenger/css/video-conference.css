@@ -1,0 +1,14 @@
+@import url(../../../../../messenger/template/css/video-conference.css);
+
+.bx-messenger-jots-message-vc-participants img{
+	width: 1rem !important;
+	height: 1rem !important;
+}
+
+button.bx-messenger-jots-message-vc-join-button {
+	max-height: 1.25rem;
+}
+
+div.bx-messenger-conference-call .bx-messenger-conference-call-buttons i{
+	line-height: 1.5rem;
+}

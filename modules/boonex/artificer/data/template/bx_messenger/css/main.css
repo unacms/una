@@ -1,0 +1,37 @@
+@import url(../../../../../messenger/template/css/main.css);
+
+p.bx-base-pofile-unit-thumb.bx-def-thumb-size {
+	line-height: inherit;
+}
+
+.bx-messenger-block div.bx-messenger-date-time-hr:first-child {
+	margin-top: 1.5rem !important;
+}
+
+.bx-messenger-date-time-value {
+	top: -1rem;
+}
+
+div.bx-messenger-jots-actions-list > i {
+	padding: 0 !important;
+	line-height: 1.5rem !important;
+}
+
+.bx-messenger-jots-title > div {
+	display: flex;
+	align-items: end;
+}
+
+.bx-messenger-date-time-value > span {
+	line-height: 1.5rem !important;
+}
+
+div.bx-messenger-attachment-header span.bx-messenger-attachment-author-icon img{
+	top: unset;
+	position: unset;
+}
+
+div.bx-messenger-attachment div.bx-messenger-attachment-author-message {
+	margin-top: 0;
+	margin-bottom: 0;
+}

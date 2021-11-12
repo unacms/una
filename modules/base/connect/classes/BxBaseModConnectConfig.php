@@ -22,6 +22,8 @@ class BxBaseModConnectConfig extends BxBaseModGeneralConfig
     public $sSessionProfile;
 
     public $sEmailTemplatePasswordGenerated;
+    public $bSendPasswordGenerated = true;
+    
     public $sDefaultTitleLangKey;
 
     function __construct($aModule)
