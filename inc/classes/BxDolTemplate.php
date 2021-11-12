@@ -9,11 +9,6 @@
 
 ini_set('pcre.backtrack_limit', 1000000);
 
-define('BX_DOL_TEMPLATE_CODE_KEY', 'skin');
-define('BX_DOL_TEMPLATE_MIX_KEY', 'mix');
-define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'protean');
-define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
-
 define('BX_DOL_TEMPLATE_INJECTIONS_CACHE', 'sys_injections.inc');
 
 define('BX_DOL_TEMPLATE_CHECK_IN_BOTH', 'both');
@@ -836,6 +831,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getCode()
     {
         return $this->_sCode;
+    }
+
+    /**
+     * Get code key.
+     *
+     * @return string template's code key.
+     */
+    function getCodeKey()
+    {
+        return $this->_sCodeKey;
     }
 
     /**

@@ -7,7 +7,6 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE', 'protean');
 define('BX_PAGE_COLUMN_DUAL', 3); ///< page, with 2 columns
 
 class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
@@ -25,7 +24,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         $this->_sInjectionsTable = 'sys_injections_admin';
         $this->_sInjectionsCache = 'sys_injections_admin.inc';
 
-        $this->_sCodeKey = 'sskin';
+        $this->_sCodeKey = BX_DOL_STUDIO_TEMPLATE_CODE_KEY;
         $this->_sCode = isset($_COOKIE[$this->_sCodeKey]) && preg_match('/^[A-Za-z0-9_-]+$/', $_COOKIE[$this->_sCodeKey]) ? $_COOKIE[$this->_sCodeKey] : BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE;
         $this->_sCode = isset($_GET[$this->_sCodeKey]) && preg_match('/^[A-Za-z0-9_-]+$/', $_GET[$this->_sCodeKey]) ? $_GET[$this->_sCodeKey] : $this->_sCode;
 

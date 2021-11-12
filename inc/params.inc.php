@@ -92,6 +92,15 @@ define('BX_ACCOUNT_CONFIRMATION_PHONE', 'phone');
 define('BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE', 'email_and_phone');
 define('BX_ACCOUNT_CONFIRMATION_EMAIL_OR_PHONE', 'email_or_phone');
 
+//--- Template settings ---//
+define('BX_DOL_TEMPLATE_CODE_KEY', 'skin');
+define('BX_DOL_TEMPLATE_MIX_KEY', 'mix');
+define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'protean');
+define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
+
+define('BX_DOL_STUDIO_TEMPLATE_CODE_KEY', 'sskin');
+define('BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE', 'protean');
+
 //--- Include files needed for basic functionality ---//
 require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDol.php');
 require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');

@@ -75,7 +75,8 @@ $aConfig = array(
         'bx_ads_cover',
 
         'bx_ads_preview_photos',
-        'bx_ads_gallery_photos', 
+        'bx_ads_gallery_photos',
+        'bx_ads_view_photos',
 
         'bx_ads_videos_poster',
         'bx_ads_videos_poster_preview',

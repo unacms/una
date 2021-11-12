@@ -350,7 +350,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_classes_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_classes_common', 'switcher', '_bx_classes_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_classes_common', 'title', '_bx_classes_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_classes_common', 'added', '_bx_classes_grid_column_title_adm_added', '150%', 1, '25', '', 4),
+('bx_classes_common', 'added', '_bx_classes_grid_column_title_adm_added', '15%', 1, '25', '', 4),
 ('bx_classes_common', 'status_admin', '_bx_classes_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
 ('bx_classes_common', 'actions', '', '20%', 0, '', '', 6);
 

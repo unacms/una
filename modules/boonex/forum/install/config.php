@@ -63,14 +63,27 @@ $aConfig = array(
     	'bx_forum_files'
     ),
 
-	/**
+    /**
      * Transcoders.
      */
     'transcoders' => array(
-		'bx_forum_preview',
-        'bx_forum_preview_cmts',
+        'bx_forum_preview',
         'bx_forum_gallery',
-        'bx_forum_cover'
+        'bx_forum_cover',
+        
+        'bx_forum_preview_photos',
+        'bx_forum_gallery_photos',
+        'bx_forum_view_photos',
+
+        'bx_forum_videos_poster',
+        'bx_forum_videos_poster_preview',
+        'bx_forum_videos_mp4',
+        'bx_forum_videos_mp4_hd',
+        
+        'bx_forum_preview_files',
+        'bx_forum_gallery_files',
+        
+        'bx_forum_preview_cmts',
     ),
 
     /**

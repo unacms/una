@@ -17,7 +17,11 @@ $sObject = bx_process_input(bx_get('o'));
 if (!$sObject)
     exit;
 
-$oGrid = BxDolGrid::getObjectInstance($sObject);
+$oTemplate = null;
+if(bx_get(BX_DOL_STUDIO_TEMPLATE_CODE_KEY) !== false)
+    $oTemplate = BxDolStudioTemplate::getInstance();
+
+$oGrid = BxDolGrid::getObjectInstance($sObject, $oTemplate);
 if (!$oGrid) {
     // no such grid object available
     exit;
