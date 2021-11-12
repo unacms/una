@@ -64,7 +64,6 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 
     public function perform($oTemplateSystem)
     {
-        $bStudio = $oTemplateSystem instanceof BxDolStudioTemplate;
         $aTypesAvail = array_keys($this->_aTypes);
 
         foreach($this->_aEntries as $aEntry) {
