@@ -3397,7 +3397,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_review', 'system', 'cmt_text', '', '', 0, 'textarea', '_sys_form_review_input_caption_system_cmt_text', '', '', 0, 0, 3, 'a:1:{s:12:"autocomplete";s:3:"off";}', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:5000;}', '_Please enter n1-n2 characters', 'XssHtml', '', 1, 0),
 ('sys_review', 'system', 'cmt_mood', '', '', 0, 'custom', '_sys_form_review_input_caption_system_cmt_mood', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('sys_review', 'system', 'cmt_anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('sys_review', 'system', 'cmt_image', 'a:1:{i:0;s:14:"sys_cmts_html5";}', 'a:1:{s:14:"sys_cmts_html5";s:26:"_sys_uploader_simple_title";}', 0, 'files', '_sys_form_review_input_caption_system_cmt_image', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('sys_review', 'system', 'cmt_image', 'a:1:{i:0;s:14:"sys_cmts_html5";}', 'a:1:{s:14:"sys_cmts_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_sys_form_review_input_caption_system_cmt_image', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_review', 'system', 'cmt_submit', '_sys_form_review_input_submit', '', 0, 'submit', '_sys_form_review_input_caption_system_cmt_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_report', 'system', 'sys', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
