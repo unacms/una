@@ -35,3 +35,21 @@ div.bx-messenger-attachment div.bx-messenger-attachment-author-message {
 	margin-top: 0;
 	margin-bottom: 0;
 }
+.bx-messenger-reaction {
+	padding: 0 0.2rem !important;
+	line-height: 1rem !important;
+}
+
+.bx-messenger-reactions-menu a {
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1rem !important;
+}
+
+.bx-messenger-post-box-send-actions ul li {
+	min-width: 0;
+}
+
+.bx-messenger-jots-title div.view {
+	display: flex;
+}

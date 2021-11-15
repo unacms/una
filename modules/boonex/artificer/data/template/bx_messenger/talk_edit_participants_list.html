@@ -12,16 +12,16 @@
         </b>
     </bx_repeat:participants_list>
     <!-- Semantic begin -->
-    <div class="ui search" style="float:left;">
-        <div class="ui input font-middle text-base">
-            <input class="prompt bx-def-font-inputs" type="text" placeholder="<bx_text:_bx_messenger_name_place_holder />" id="bx-messenger-add-users-input" autocomplete="off" autocapitalize="off" autocorrect="off">
+    <div class="ui search dark:ring-gray-700 bg-white dark:bg-gray-800" style="float:left;">
+        <div class="ui input font-middle text-base border border-gray-300 dark:border-gray-700 pr-2 pl-2">
+            <input class="prompt bx-def-font-inputs text-gray-800 dark:text-gray-100 align-middle" type="text" placeholder="<bx_text:_bx_messenger_name_place_holder />" id="bx-messenger-add-users-input" autocomplete="off" autocapitalize="off" autocorrect="off">
             <bx_if:edit_mode>
                 <a href="javascript:void(0);" onclick="oMessenger.onSaveParticipantsList(__lot__);" title="<bx_text:_bx_messenger_save_part_list />" class="text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">
                     <i class="sys-icon check-circle bx-def-font-large"></i>
                 </a>
             </bx_if:edit_mode>
         </div>
-        <div class="results text-sm font-middle"></div>
+        <div class="text-sm font-middle bx-popup bx-popup-color-bg bx-popup-border relative ring-1 ring-gray-200 rounded-md shadow results"></div>
     </div>
     <!-- Semantic end -->
 </div>

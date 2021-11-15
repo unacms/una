@@ -17,3 +17,11 @@
 .bx-messenger-history-arrow #unread-jots-counter {
 	padding:0;
 }
+
+#bx-messenger-add-users .ui.search.category.focus .ui.input {
+	line-height: inherit !important;
+}
+
+.bx-messenger-jots-snip-title div.status {
+	line-height: .825rem;
+}
