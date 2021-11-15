@@ -571,8 +571,7 @@ function clear_xss($val)
 {
     // HTML Purifier plugin
     global $oHtmlPurifier;
-    if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
-
+    if (!isset($oHtmlPurifier) /*&& !$GLOBALS['logged']['admin']*/) {
         HTMLPurifier_Bootstrap::registerAutoload();
 
         $oConfig = HTMLPurifier_Config::createDefault();
@@ -591,10 +590,18 @@ function clear_xss($val)
             $oConfig->set('HTML.Nofollow', 'true');
         }
 
-        $oConfig->set('Filter.Custom', array (new BxDolHTMLPurifierFilterYouTube(), new BxDolHTMLPurifierFilterYoutubeIframe(), new BxDolHTMLPurifierFilterAddBxLinksClass(), new BxDolHTMLPurifierFilterLocalIframe()));
-
+        $oConfig->set('Filter.Custom', array (
+            new BxDolHTMLPurifierFilterYouTube(), 
+            new BxDolHTMLPurifierFilterYoutubeIframe(), 
+            new BxDolHTMLPurifierFilterAddBxLinksClass(), 
+            new BxDolHTMLPurifierFilterLocalIframe(),
+            new BxDolHTMLPurifierFilterEmbed(),
+        ));
+   
+        $oConfig->set('Cache.DefinitionImpl', null); // chear cache
 	    $oConfig->set('HTML.DefinitionID', 'html5-definitions');
 		$oConfig->set('HTML.DefinitionRev', 1);
+      
 		if ($def = $oConfig->maybeGetRawHTMLDefinition()) {
 		    $def->addElement('section', 'Block', 'Flow', 'Common');
 		    $def->addElement('nav',     'Block', 'Flow', 'Common');
@@ -616,12 +623,13 @@ function clear_xss($val)
 		        'type' => 'Text',
             ));
             $def->addAttribute('a', 'data-profile-id', 'Number');
+            $def->addAttribute('div', 'source', 'Text');
 		}
 
         $oHtmlPurifier = new HTMLPurifier($oConfig);
     }
 
-    if (!$GLOBALS['logged']['admin'])
+    //if (!$GLOBALS['logged']['admin'])
         $val = $oHtmlPurifier->purify($val);
 
     bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'return_data' => &$val));
