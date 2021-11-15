@@ -598,7 +598,7 @@ function clear_xss($val)
             new BxDolHTMLPurifierFilterEmbed(),
         ));
    
-        $oConfig->set('Cache.DefinitionImpl', null); // chear cache
+        //$oConfig->set('Cache.DefinitionImpl', null); // chear cache
 	    $oConfig->set('HTML.DefinitionID', 'html5-definitions');
 		$oConfig->set('HTML.DefinitionRev', 1);
       
