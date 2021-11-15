@@ -24,6 +24,9 @@ INSERT INTO `sys_profiles` (`account_id`, `type`, `content_id`, `status`) VALUES
 
 SET @iProfileIdBot = LAST_INSERT_ID();
 
+-- install time
+
+UPDATE `sys_modules` SET `date` = {time} WHERE `name` = 'system' AND `date` = 0;
 
 -- site settings
 
