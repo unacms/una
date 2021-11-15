@@ -1,0 +1,5 @@
+@import url(../../../../../../../template/css/homepage.css);
+
+html .shepherd-element .shepherd-content footer.shepherd-footer button.shepherd-button-primary {
+    background: #55a892; 
+}
