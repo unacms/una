@@ -160,6 +160,9 @@
 	<string_add name="_sys_txt_quill_tooltip_background"><![CDATA[Select a background color]]></string_add>
 	<string_add name="_sys_txt_quill_tooltip_align"><![CDATA[Text alignment]]></string_add>
 	<string_add name="_sys_txt_quill_tooltip_header"><![CDATA[Select the text style]]></string_add>
+	<string_add name="_sys_txt_quill_tooltip_embed"><![CDATA[Insert an embed]]></string_add>
+	<string_add name="_sys_txt_quill_tooltip_embed_popup_header"><![CDATA[Paste an URL for embed]]></string_add>
+	<string_add name="_sys_txt_quill_tooltip_link_popup_header"><![CDATA[Paste an URL]]></string_add>
 
 	<string_upd name="_report_reported_as"><![CDATA[Reported as ]]></string_upd>
 	<string_upd name="_adm_form_dsc_badges_icon"><![CDATA[You may use: 1) font icon, 2) Inline SVG code, 3) Emoji]]></string_upd>
