@@ -3570,6 +3570,9 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_quill_tooltip_background"><![CDATA[Select a background color]]></string>
     <string name="_sys_txt_quill_tooltip_align"><![CDATA[Text alignment]]></string>
     <string name="_sys_txt_quill_tooltip_header"><![CDATA[Select the text style]]></string>
+    <string name="_sys_txt_quill_tooltip_embed"><![CDATA[Insert an embed]]></string>
+    <string name="_sys_txt_quill_tooltip_embed_popup_header"><![CDATA[Paste an URL for embed]]></string>
+    <string name="_sys_txt_quill_tooltip_link_popup_header"><![CDATA[Paste an URL]]></string>
     
 </resources>
 

@@ -10,7 +10,7 @@ function BxDolPage(oOptions) {
     this._sObject = oOptions.sObject; // page object
 
     this._sActionsUri = 'page.php';
-    this._sActionsUrl = oOptions.sRootUrl + this._sActionsUri; // actions url address
+    this._sActionsUrl = oOptions.sRootUrl; // actions url address
     this._aHtmlIds = oOptions.aHtmlIds;
 
     this._isStickyColumns = oOptions.isStickyColumns == undefined ? false : oOptions.isStickyColumns;
@@ -29,6 +29,18 @@ BxDolPage.prototype.init = function() {
             additionalMarginTop: 30
         });
     }
+    $(".bx-embed-link").each(function( index ) {
+        $obj =  $(this);
+        $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, function(aData){
+            
+            if ($obj.parents('.ql-editor').length == 0 || true){
+                console.log( $obj.html());
+                $obj.html(aData.code);
+                bx_embed_link();
+            }
+   
+        });
+    });
 };
 
 BxDolPage.prototype.showHelp = function(oLink, iBlockId)
