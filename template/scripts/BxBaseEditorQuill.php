@@ -113,6 +113,9 @@ class BxBaseEditorQuill extends BxDolEditor
             '_sys_txt_quill_tooltip_background',
             '_sys_txt_quill_tooltip_align',
             '_sys_txt_quill_tooltip_header',
+            '_sys_txt_quill_tooltip_embed',
+            '_sys_txt_quill_tooltip_embed_popup_header',
+            '_sys_txt_quill_tooltip_link_popup_header',
         ]);
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
