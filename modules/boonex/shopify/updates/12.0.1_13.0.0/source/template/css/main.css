@@ -1,0 +1,12 @@
+/*--- Cover ---*/
+.bx_shopify_cover .bx-cover-actions .bx-menu-btns-hor,
+.bx_shopify_cover .bx-cover-actions .bx-btn.bx-shopify-buy {
+	display: inline-block;
+	float: none;
+	vertical-align: top;
+}
+
+/*--- Attachment ---*/
+.bx-spf-attachment-sample {
+	display: none;
+}

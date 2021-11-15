@@ -3,78 +3,64 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Timeline Timeline
+ * @defgroup    Shopify Shopify
  * @ingroup     UnaModules
  *
  * @{
  */
 
 $aConfig = array(
+
     /**
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_timeline',
-    'title' => 'Timeline',
-    'note' => 'Timeline module.',
-    'version' => '12.0.9.DEV',
+    'name' => 'bx_shopify',
+    'title' => 'Shopify',
+    'note' => 'Shopify shopping module.',
+    'version' => '13.0.0',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '12.0.x'
+        '13.0.0-A1'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/timeline/',
-    'home_uri' => 'timeline',
+    'home_dir' => 'boonex/shopify/',
+    'home_uri' => 'shopify',
 
-    'db_prefix' => 'bx_timeline_',
-    'class_prefix' => 'BxTimeline',
+    'db_prefix' => 'bx_shopify_',
+    'class_prefix' => 'BxShopify',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Timeline',
+    'language_category' => 'Shopify',
 
     /**
      * List of page triggers.
      */
     'page_triggers' => array (
-        'trigger_page_profile_view_entry',
-        'trigger_page_group_view_entry',
+    	'trigger_page_profile_view_entry',
     ),
-
+    
     /**
      * Menu triggers.
      */
     'menu_triggers' => array(
     	'trigger_profile_view_submenu',
-    	'trigger_group_view_submenu',
+        'trigger_group_view_submenu'
     ),
 
-    /**
-     * Storage objects to automatically delete files from upon module uninstallation.
-     * Note. Don't add storage objects used in transcoder objects.
+	/**
+     * Extended Search Forms.
      */
-    'storages' => array(
-    	'bx_timeline_photos',
-    	'bx_timeline_videos',
-        'bx_timeline_files'
-    ),
-
-    /**
-     * Transcoders.
-     */
-    'transcoders' => array(
-    	'bx_timeline_photos_preview',
-    	'bx_timeline_photos_view',
-        'bx_timeline_photos_big',
-    	'bx_timeline_videos_poster',
-    	'bx_timeline_videos_mp4',
-    	'bx_timeline_videos_mp4_hd'
+    'esearches' => array(
+        'bx_shopify',
+    	'bx_shopify_cmts',
     ),
 
     /**
@@ -86,31 +72,29 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
+    	'process_esearches' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-    	'update_relations_for_all' => 1,
     	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable_success' => array(
-    	'process_page_triggers' => 1,
         'process_menu_triggers' => 1,
-    	'register_transcoders' => 1,
-    	'clear_db_cache' => 1,
+        'process_page_triggers' => 1,
+    	'process_esearches' => 1,
+        'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-    	'update_relations_for_all' => 1,
     	'update_relations' => 1,
-    	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
     'disable_failed' => array (
-    	'register_transcoders' => 1,
     	'clear_db_cache' => 1,
     ),
 
@@ -122,15 +106,11 @@ $aConfig = array(
     /**
      * Relations Section
      */
-    'relation_handlers' => array(
-    	'on_install' => '',
-    	'on_uninstall' => 'delete_module_events',
-	    'on_enable' => 'add_handlers',
-	    'on_disable' => 'delete_handlers',
-    ),
     'relations' => array(
+    	'bx_timeline',
     	'bx_notifications'
-    )
+    ),
+
 );
 
 /** @} */
