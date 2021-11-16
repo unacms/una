@@ -17,7 +17,7 @@ class BxAdsUpdater extends BxDolStudioUpdater
             if(!$this->oDb->isFieldExists('bx_ads_entries', 'sold'))
                 $this->oDb->query("ALTER TABLE `bx_ads_entries` ADD `sold` int(11) NOT NULL AFTER `changed`");
             if(!$this->oDb->isFieldExists('bx_ads_entries', 'shipped'))
-                $this->oDb->query("ALTER TABLE `bx_ads_entries` ADD `shipped` int(11) NOT NULL, AFTER `sold`");
+                $this->oDb->query("ALTER TABLE `bx_ads_entries` ADD `shipped` int(11) NOT NULL AFTER `sold`");
             if(!$this->oDb->isFieldExists('bx_ads_entries', 'received'))
                 $this->oDb->query("ALTER TABLE `bx_ads_entries` ADD `received` int(11) NOT NULL AFTER `shipped`");
             if(!$this->oDb->isFieldExists('bx_ads_entries', 'name'))
