@@ -331,5 +331,5 @@ UPDATE `sys_options` SET `value` = 'beta' WHERE `name` = 'sys_upgrade_channel';
 
 -- Last step is to update current version
 
-UPDATE `sys_modules` SET `version` = '13.0.0-A1' WHERE (`version` = '12.1.0.B1') AND `name` = 'system';
+UPDATE `sys_modules` SET `version` = '13.0.0-A1' WHERE (`version` = '12.1.0') AND `name` = 'system';
 
