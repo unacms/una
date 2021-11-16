@@ -61,9 +61,8 @@ $aConfig = array(
      */
     'storages' => array(
         'bx_posts_covers',
-    	'bx_posts_photos',
+        'bx_posts_photos',
         'bx_posts_videos',
-        'bx_classes_sounds',
         'bx_posts_files'
     ),
 
