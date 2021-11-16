@@ -12,9 +12,9 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 bx_import('BxDolEmbed');
 
 if (bx_get('a') == 'get_link'){
-    $sLink = bx_get('l');
+    $sLink = trim(bx_get('l'));
 
     $oEmbed = BxDolEmbed::getObjectInstance();
     if ($oEmbed)
-        echoJson(['code' => $oEmbed->getLinkHTML($sLink), 'js' => strip_tags($oEmbed->addProcessLinkMethod())]);
+        echoJson(['code' => $oEmbed->getLinkHTML($sLink), 'js' => strip_tags($oEmbed->addProcessLinkMethod()), 'link' => $sLink]);
 }

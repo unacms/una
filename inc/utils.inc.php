@@ -571,7 +571,7 @@ function clear_xss($val)
 {
     // HTML Purifier plugin
     global $oHtmlPurifier;
-    if (!isset($oHtmlPurifier) /*&& !$GLOBALS['logged']['admin']*/) {
+    if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
         HTMLPurifier_Bootstrap::registerAutoload();
 
         $oConfig = HTMLPurifier_Config::createDefault();
@@ -628,7 +628,7 @@ function clear_xss($val)
         $oHtmlPurifier = new HTMLPurifier($oConfig);
     }
 
-    //if (!$GLOBALS['logged']['admin'])
+    if (!$GLOBALS['logged']['admin'])
         $val = $oHtmlPurifier->purify($val);
 
     bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'return_data' => &$val));

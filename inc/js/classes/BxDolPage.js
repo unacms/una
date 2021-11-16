@@ -30,14 +30,21 @@ BxDolPage.prototype.init = function() {
         });
     }
     // process embeds
-    $(".bx-embed-link").each(function( index ) {
-        $obj =  $(this);
-        $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, function(aData){ 
-            $obj.html(aData.code);
-            bx_embed_link();
-        });
+    $(".bx-embed-link").each(function() {
+        $(this).html($(this).attr('source'));
+        $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, $this.embededCallback($(this)));
     });
 };
+
+BxDolPage.prototype.embededCallback = function(item)
+{
+    return function(oData) {
+        item.html(oData.code)
+        if (item.find('a').length > 0){
+            bx_embed_link(item.find('a')[0]);
+        }
+    };
+ }
 
 BxDolPage.prototype.showHelp = function(oLink, iBlockId)
 {

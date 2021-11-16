@@ -18,7 +18,10 @@ function bx_editor_init(oEditor, oParams){
                         sLink = $(oPopup).find("input[type = 'text']").val()
                         $.getJSON(oParams.root_url + 'embed.php?', {a: 'get_link', l: sLink}, function(aData){
                             oEditor.insertEmbed(100, 'embed-link', {source: sLink, inlinecode : aData.code});
-                            bx_embed_link();
+                            if ($(oParams.selector).next().next().find('.bx-embed-link a[href="' + aData.link + '"]').length > 0)
+                                bx_embed_link($(oParams.selector).next().next().find('.bx-embed-link a[href="' + aData.link + '"]')[0]);
+                            else
+                                bx_embed_link();
                         });
                     });
                 },
@@ -55,7 +58,6 @@ function bx_editor_init(oEditor, oParams){
             }
             
             format(name, value) {
-                console.log('format'+name+"!"+value)
                 if (name === 'href' || name === 'title') {
                     if (value) {
                         this.domNode.setAttribute(name, value);
@@ -72,7 +74,6 @@ function bx_editor_init(oEditor, oParams){
             };
                 
             static formats(node) {
-                console.log(node+"x");
                 let format = {};
                 if (node.hasAttribute('href')) {
                     format.href = node.getAttribute('href');
@@ -184,7 +185,6 @@ function bx_editor_init(oEditor, oParams){
                     })
                     .catch(error => {
                         reject("Upload failed");
-                        console.error("Error:", error);
                     });
                 });
             }
