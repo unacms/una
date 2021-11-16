@@ -29,16 +29,12 @@ BxDolPage.prototype.init = function() {
             additionalMarginTop: 30
         });
     }
+    // process embeds
     $(".bx-embed-link").each(function( index ) {
         $obj =  $(this);
-        $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, function(aData){
-            
-            if ($obj.parents('.ql-editor').length == 0 || true){
-                console.log( $obj.html());
-                $obj.html(aData.code);
-                bx_embed_link();
-            }
-   
+        $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, function(aData){ 
+            $obj.html(aData.code);
+            bx_embed_link();
         });
     });
 };

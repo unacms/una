@@ -23,6 +23,7 @@ class BxDolCacheUtilities extends BxDol
             'less' => array(),
             'css' => array('option' => 'sys_template_cache_css_enable'),
             'js' => array('option' => 'sys_template_cache_js_enable'),
+            'purifier' => array(),
             'custom' => array(),
         );
     }
@@ -94,6 +95,14 @@ class BxDolCacheUtilities extends BxDol
             case 'js':
                 $mixedResult = $this->$sFuncCacheFile($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
+                
+            case 'purifier':
+                HTMLPurifier_Bootstrap::registerAutoload();
+                $oConfig = HTMLPurifier_Config::createDefault();
+                $oConfig->set('Cache.DefinitionImpl', null);
+                $oHtmlPurifier = new HTMLPurifier($oConfig);
+                $oHtmlPurifier->purify('');
+                break;    
         }
 
         return $mixedResult;
