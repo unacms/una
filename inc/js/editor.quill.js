@@ -14,7 +14,7 @@ function bx_editor_init(oEditor, oParams){
             container: oParams.toolbar,
                 handlers: {
                 'embed': function(value) {
-                    bx_prompt(_t('_sys_txt_quill_tooltip_embed_popup_header'), 'https://yandex.ru/', function(oPopup){
+                    bx_prompt(_t('_sys_txt_quill_tooltip_embed_popup_header'), '', function(oPopup){
                         sLink = $(oPopup).find("input[type = 'text']").val()
                         $.getJSON(oParams.root_url + 'embed.php?', {a: 'get_link', l: sLink}, function(aData){
                             oEditor.insertEmbed(100, 'embed-link', {source: sLink, inlinecode : aData.code});

@@ -1,0 +1,16 @@
+@import url(../../../../../messenger/template/css/semantic-messenger.css);
+
+.ui.search > .results {
+	background: inherit;
+	border: inherit;
+	box-shadow: inherit;
+}
+
+.ui.category.search > .results .category > .name {
+	border: inherit;
+	background-color: inherit;
+}
+
+.ui.category.search > .results .category .results {
+	border: inherit;
+}
