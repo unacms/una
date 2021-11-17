@@ -55,7 +55,7 @@ DELETE FROM `sys_options` WHERE `name` IN('sys_site_cover_disabled');
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryIdSystem, 'sys_site_cover_disabled', '', '', 'checkbox', '', '', '', 29);
 
-UPDATE `sys_options` SET `value` = 'sys_oembed' WHERE `name` = 'sys_embed_default' AND `value` = '';
+UPDATE `sys_options` SET `value` = 'sys_iframely' WHERE `name` = 'sys_embed_default' AND `value` = '';
 
 -- ACL
 
