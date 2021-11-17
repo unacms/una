@@ -1,0 +1,26 @@
+{
+    "name": "snipe/banbuilder",
+    "description": "Library to easily handle profanity filtering in PHP projects.",
+	"keywords": ["profanity", "filter", "strings", "swear", "language"],
+	"license": "AGPL-3.0",
+    "homepage": "http://banbuilder.com",
+	"authors": [
+        {
+            "name": "snipe",
+            "email": "snipe@snipe.net",
+			"role": "Creator & Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Snipe\\BanBuilder\\": "src/"
+        }
+    }
+}

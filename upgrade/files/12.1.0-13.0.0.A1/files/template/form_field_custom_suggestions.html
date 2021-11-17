@@ -1,0 +1,17 @@
+<div __attrs__>
+    <bx_repeat:vals>
+        <b class="val bx-def-color-bg-hl bx-def-round-corners">__item_unit____item_name__<input type="hidden" name="__name__[]" value="__value__" /></b>
+    </bx_repeat:vals>
+    <bx_if:input>__input__</bx_if:input>
+</div>
+<bx_if:init>
+    <script language="javascript">
+        $(function(){
+            $('#__id__ input').on('focus', function () {
+                $(this).attr("placeholder", "__placeholder__");
+            });
+
+            bx_autocomplete_fields('__id__','__url_get_recipients__','__name__',__b_img__,__only_once__,__on_select__);
+        });
+    </script>
+</bx_if:init>
