@@ -1,0 +1,20 @@
+<div id="bx-dbd-version" class="bx-dbd-block-content bx-def-margin-bottom">
+    <div class="bx-dbd-virsion-image">
+        <img src="<bx_image_url:dbd_version.svg />"/>
+    </div>
+    <div class="bx-dbd-virsion-info">
+        <div class="bx-def-margin-thd-top"><bx_text:_adm_dbd_txt_script_on />&nbsp;<b>__domain__</b></div>
+        <div class="bx-def-margin-thd-top">
+			<bx_text:_adm_dbd_txt_version />&nbsp;<b>__version__</b>&nbsp;<bx_text:_adm_dbd_txt_installed />&nbsp;<b>__installed__</b>
+			<bx_if:show_update_info>
+				&nbsp;<bx_text:_adm_dbd_txt_updated />&nbsp;<b>__updated__</b>
+			</bx_if:show_update_info>
+		</div>
+        <div class="bx-dbd-version-available bx-def-margin-thd-top bx-clearfix"></div>
+    </div>
+    <script language="javascript">
+        $(document).ready(function() {
+            __js_object__.checkForUpgrade();
+        });
+    </script>
+</div>

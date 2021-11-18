@@ -18,12 +18,12 @@ $aConfig = array(
     'name' => 'bx_stream',
     'title' => 'Stream',
     'note' => 'Live streaming module.',
-    'version' => '12.0.0.DEV',
+    'version' => '13.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '12.1.x'
+        '13.0.x'
     ),
 
     /**

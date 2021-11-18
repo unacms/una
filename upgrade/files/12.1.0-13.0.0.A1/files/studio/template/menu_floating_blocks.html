@@ -1,0 +1,17 @@
+<ul class="bx-menu-floating-blocks bx-menu-object-__object__ bx-clearfix">
+    <bx_repeat:menu_items><li id="bx-menu-item-__name__" class="__class__ bx-def-color-bg-hl-hover bx-def-box-sizing __class_add__">
+        <a class="bx-def-box-sizing" href="__link__" onclick="__onclick__" title="__title_attr__"__attrs__>
+            <div class="bx-mi-icon">
+                <bx_include_auto:menu_icon.html />
+            </div>
+            <div class="bx-mi-title">__title__</div>
+        </a>
+    </li></bx_repeat:menu_items>
+</ul>
+
+<script language="javascript">
+    $(document).ready(function () {
+        // add default class to active menu items
+        $('.bx-menu-floating-blocks > li.bx-menu-tab-active').not('.bx-def-color-bg-active').addClass('bx-def-color-bg-active');
+    });
+</script>

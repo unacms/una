@@ -1,5 +1,30 @@
 <?php
 
+class BxDolEditorMock {
+    public function getObjectName () {
+        return '';
+    }    
+    public function setCustomConf ($s) {
+    }
+    public function setCustomPlugins ($sPlugins) {
+    }
+    public function setCustomToolbarButtons ($sButtons) {
+    }
+    public function getWidth ($iViewMode) {
+        return '';
+    }
+    public function getSkins($bFullInfo = false) {
+        return [];
+    }
+    public function setSkin($sSkin) {
+    }
+    public function attachEditor ($sSelector, $iViewMode, $bDynamicMode = false) {
+        return '';
+    }
+}
+
+    $GLOBALS['bxDolClasses']['BxDolEditor!sys_quill'] = new BxDolEditorMock();
+
     if (!$this->oDb->isFieldExists('sys_modules', 'updated'))
         $this->oDb->query("ALTER TABLE `sys_modules` ADD `updated` int(11) unsigned NOT NULL default '0' AFTER `hash`");
 
