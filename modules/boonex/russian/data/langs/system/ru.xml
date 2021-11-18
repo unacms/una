@@ -631,8 +631,9 @@
 	<string name="_adm_dbd_txt_c_clear_template"><![CDATA[Очистить кэш темы]]></string>
 	<string name="_adm_dbd_txt_c_css"><![CDATA[CSS]]></string>
 	<string name="_adm_dbd_txt_c_clear_css"><![CDATA[Очистить кэш CSS]]></string>
-        <string name="_adm_dbd_txt_c_less"><![CDATA[LESS]]></string>
-        <string name="_adm_dbd_txt_c_clear_less"><![CDATA[Очистить кэш LESS]]></string>
+  <string name="_adm_dbd_txt_c_less"><![CDATA[LESS]]></string>
+  <string name="_adm_dbd_txt_c_clear_less"><![CDATA[Очистить кэш LESS]]></string>
+  <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Очистить кэш Purifier]]></string>
 	<string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
 	<string name="_adm_dbd_txt_c_clear_js"><![CDATA[Очистить кэш JavaScript]]></string>
         <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Очистить специальный кэш]]></string>
@@ -3513,4 +3514,27 @@
 	<string name="_adm_form_txt_groups_role_edit_any"><![CDATA[Редактировать любое/все]]></string>
 	<string name="_adm_form_txt_groups_role_delete_any"><![CDATA[Удалять любое/все]]></string>
 	<string name="_adm_form_txt_groups_role_pin"><![CDATA[Заркепить любой пост]]></string>
+
+  <string name="_sys_txt_quill_tooltip_bold"><![CDATA[Добавить полужиржирный текст <cmd+b>]]></string>
+  <string name="_sys_txt_quill_tooltip_italic"><![CDATA[Добавить курсив <cmd+i>]]></string>
+  <string name="_sys_txt_quill_tooltip_underline"><![CDATA[Добавить подчернутый текст <cmd+u>]]></string>
+  <string name="_sys_txt_quill_tooltip_clean"><![CDATA[Убрать форматирование]]></string>
+  <string name="_sys_txt_quill_tooltip_list_ordered"><![CDATA[Маркированный список]]></string>
+  <string name="_sys_txt_quill_tooltip_list_bullet"><![CDATA[Нумерованный список]]></string>
+  <string name="_sys_txt_quill_tooltip_indent_1"><![CDATA[Уменьшить отступ]]></string>
+  <string name="_sys_txt_quill_tooltip_indent_2"><![CDATA[Увеличить отступ]]></string>
+  <string name="_sys_txt_quill_tooltip_blockquote"><![CDATA[Добавить цитату]]></string>
+  <string name="_sys_txt_quill_tooltip_direction"><![CDATA[Направление текста]]></string>
+  <string name="_sys_txt_quill_tooltip_script_sub"><![CDATA[Нижний индекс]]></string>
+  <string name="_sys_txt_quill_tooltip_script_super"><![CDATA[Верхний индекс]]></string>
+  <string name="_sys_txt_quill_tooltip_link"><![CDATA[Вставить ссылку]]></string>
+  <string name="_sys_txt_quill_tooltip_image"><![CDATA[Вставить картинку]]></string>
+  <string name="_sys_txt_quill_tooltip_code_block"><![CDATA[Вставить код]]></string>
+  <string name="_sys_txt_quill_tooltip_color"><![CDATA[Цвет текста]]></string>
+  <string name="_sys_txt_quill_tooltip_background"><![CDATA[Цвет фона]]></string>
+  <string name="_sys_txt_quill_tooltip_align"><![CDATA[Выравнивание текста]]></string>
+  <string name="_sys_txt_quill_tooltip_header"><![CDATA[Стиль текста]]></string>
+  <string name="_sys_txt_quill_tooltip_embed"><![CDATA[Вставить ембед]]></string>
+  <string name="_sys_txt_quill_tooltip_embed_popup_header"><![CDATA[Вставить адрес дла ембеда]]></string>
+  <string name="_sys_txt_quill_tooltip_link_popup_header"><![CDATA[Вставить адрес]]></string>
 </resources>
