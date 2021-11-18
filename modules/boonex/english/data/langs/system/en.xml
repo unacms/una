@@ -634,7 +634,7 @@
 	<string name="_adm_dbd_txt_c_clear_css"><![CDATA[Clear CSS cache]]></string>
         <string name="_adm_dbd_txt_c_less"><![CDATA[LESS]]></string>
         <string name="_adm_dbd_txt_c_clear_less"><![CDATA[Clear LESS cache]]></string>
-    <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear all Purifier cache]]></string>
+    <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear Purifier cache]]></string>
 	<string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
 	<string name="_adm_dbd_txt_c_clear_js"><![CDATA[Clear JavaScript cache]]></string>
         <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>

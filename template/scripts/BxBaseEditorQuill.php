@@ -141,6 +141,7 @@ class BxBaseEditorQuill extends BxDolEditor
                 if (typeof bQuillEditorInited === 'undefined') {
                     bx_get_scripts(" . json_encode($aJs) . ", function () {
                         bQuillEditorInited = true;
+                        Quill.register('modules/imageUploader', ImageUploader); 
                         $sInitEditor
                     });
                 } else {
@@ -158,6 +159,7 @@ class BxBaseEditorQuill extends BxDolEditor
             <script>
                 var " . $sEditorName . ";
                 $(document).ready(function () {
+                    Quill.register('modules/imageUploader', ImageUploader); 
                     $sInitEditor
                 });
             </script>";
