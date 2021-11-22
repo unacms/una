@@ -538,20 +538,110 @@ class BxAdsModule extends BxBaseModTextModule
 
         $aResult = parent::serviceGetNotificationsData();
         $aResult['handlers'] = array_merge($aResult['handlers'], array(
-            array('group' => $sModule . '_interest', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doInterest', 'module_name' => $sModule, 'module_method' => 'get_notifications_interest', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy)
+            array('group' => $sModule . '_interest', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doInterest', 'module_name' => $sModule, 'module_method' => 'get_notifications_interest', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_approved', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'approved', 'module_name' => $sModule, 'module_method' => 'get_notifications_approved', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_paid', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'license_register', 'module_name' => $sModule, 'module_method' => 'get_notifications_license_register', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            //---> To Buyer
+            array('group' => $sModule . '_shipped', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'shipped', 'module_name' => $sModule, 'module_method' => 'get_notifications_shipped', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            //<---
+            array('group' => $sModule . '_received', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'received', 'module_name' => $sModule, 'module_method' => 'get_notifications_received', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+
+            array('group' => $sModule . '_offer_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'offer_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_offer_added', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            //---> To Offerer
+            array('group' => $sModule . '_offer_accepted', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'offer_accepted', 'module_name' => $sModule, 'module_method' => 'get_notifications_offer_accepted', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_offer_declined', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'offer_declined', 'module_name' => $sModule, 'module_method' => 'get_notifications_offer_declined', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            //<---
+            array('group' => $sModule . '_offer_canceled', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'offer_canceled', 'module_name' => $sModule, 'module_method' => 'get_notifications_offer_canceled', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy)
         ));
 
         $aResult['settings'] = array_merge($aResult['settings'], array(
-            array('group' => 'interest', 'unit' => $sModule, 'action' => 'doInterest', 'types' => array('personal'))
+            array('group' => 'interest', 'unit' => $sModule, 'action' => 'doInterest', 'types' => array('personal')),
+
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'approved', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'license_register', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'shipped', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'received', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'offer_added', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'offer_accepted', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'offer_declined', 'types' => array('personal')),
+            array('group' => 'usage', 'unit' => $sModule, 'action' => 'offer_canceled', 'types' => array('personal')),
         ));
 
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
-            array('unit' => $sModule, 'action' => 'doInterest')
+            array('unit' => $sModule, 'action' => 'doInterest'),
+            array('unit' => $sModule, 'action' => 'approved'),
+            array('unit' => $sModule, 'action' => 'license_register'),
+            array('unit' => $sModule, 'action' => 'shipped'),
+            array('unit' => $sModule, 'action' => 'received'),
+            array('unit' => $sModule, 'action' => 'offer_added'),
+            array('unit' => $sModule, 'action' => 'offer_accepted'),
+            array('unit' => $sModule, 'action' => 'offer_declined'),
+            array('unit' => $sModule, 'action' => 'offer_canceled'),
         ));
 
         return $aResult; 
     }
-    
+
+    public function serviceGetNotificationsInsertData($oAlert, $aHandler, $aDataItems)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = [];
+        switch($oAlert->sAction) {
+            case 'license_register':
+                $aContentInfo = $this->_oDb->getContentInfoById($oAlert->aExtras['product_id']);
+                if(empty($aContentInfo) || !is_array($aContentInfo)) {
+                    $aResult = $aDataItems;
+                    break;
+                }
+
+                foreach($aDataItems as $aDataItem) {
+                    $aDataItem = array_merge($aDataItem, [
+                        'owner_id' => $oAlert->aExtras['profile_id'],
+                        'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                        'object_owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+                        'object_privacy_view' => BX_DOL_PG_ALL
+                    ]);
+
+                    $aResult[] = $aDataItem;
+                }
+                break;
+
+            case 'shipped':
+                foreach($aDataItems as $aDataItem) {
+                    $aLicense = $this->_oDb->getLicense(['type' => 'entry_id', 'entry_id' => $aDataItem['object_id'], 'newest' => true]);
+                    if(!empty($aLicense) && is_array($aLicense))
+                        $aDataItem['object_owner_id'] = $aLicense['profile_id'];
+
+                    $aResult[] = $aDataItem;
+                }
+                break;
+
+            case 'offer_added':
+            case 'offer_canceled':
+                foreach($aDataItems as $aDataItem) {
+                    $aDataItem['object_owner_id'] = $oAlert->aExtras['object_author_id'];
+
+                    $aResult[] = $aDataItem;
+                }
+                break;
+
+            case 'offer_accepted':
+            case 'offer_declined':
+                foreach($aDataItems as $aDataItem) {
+                    $aDataItem['object_owner_id'] = $oAlert->aExtras['offer_author_id'];
+
+                    $aResult[] = $aDataItem;
+                }
+                break;
+
+            default:
+                $aResult = $aDataItems;
+        }
+
+        return $aResult;
+    }
+
     public function serviceGetNotificationsInterest($aEvent)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -579,6 +669,105 @@ class BxAdsModule extends BxBaseModTextModule
         );
     }
 
+    public function serviceGetNotificationsApproved($aEvent)
+    {
+        return $this->_serviceGetNotificationsByEntryAndAction($aEvent, 'approved');
+    }
+
+    public function serviceGetNotificationsLicenseRegister($aEvent)
+    {
+        return $this->_serviceGetNotificationsByEntryAndAction($aEvent, 'license_register');
+    }
+
+    public function serviceGetNotificationsShipped($aEvent)
+    {
+        $aResult = $this->_serviceGetNotificationsByEntryAndAction($aEvent, 'shipped');
+        $aResult['entry_author'] = $aEvent['object_owner_id'];
+
+        return $aResult;
+    }
+
+    public function serviceGetNotificationsReceived($aEvent)
+    {
+        return $this->_serviceGetNotificationsByEntryAndAction($aEvent, 'received');
+    }
+
+    public function serviceGetNotificationsOfferAdded($aEvent)
+    {
+        return $this->_serviceGetNotificationsByOfferAndAction($aEvent, 'offer_added');
+    }
+
+    public function serviceGetNotificationsOfferAccepted($aEvent)
+    {
+        $aResult = $this->_serviceGetNotificationsByOfferAndAction($aEvent, 'offer_accepted');
+        $aResult['entry_author'] = $aEvent['object_owner_id'];
+
+        return $aResult;
+    }
+
+    public function serviceGetNotificationsOfferDeclined($aEvent)
+    {
+        $aResult = $this->_serviceGetNotificationsByOfferAndAction($aEvent, 'offer_declined');
+        $aResult['entry_author'] = $aEvent['object_owner_id'];
+
+        return $aResult;
+    }
+
+    public function serviceGetNotificationsOfferCanceled($aEvent)
+    {
+        return $this->_serviceGetNotificationsByOfferAndAction($aEvent, 'offer_canceled');
+    }
+
+    protected function _serviceGetNotificationsByEntryAndAction($aEvent, $sAction)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+    	$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'subentry_sample' => '',
+            'subentry_url' => '',
+            'lang_key' => '_bx_ads_txt_ntfs_object_' . $sAction, //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+
+    protected function _serviceGetNotificationsByOfferAndAction($aEvent, $sAction)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iOfferId = (int)$aEvent['object_id'];
+    	$aOfferInfo = $this->_oDb->getOffersBy(['type' => 'id', 'id' => $iOfferId]);
+        if(empty($aOfferInfo) || !is_array($aOfferInfo))
+            return array();
+
+        $iContentId = $aOfferInfo[$CNF['FIELD_OFR_CONTENT']];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+
+        return array(
+            'object_id' => $iContentId,
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'subentry_sample' => '',
+            'subentry_url' => '',
+            'lang_key' => '_bx_ads_txt_ntfs_' . $sAction, //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_ads Ads
@@ -1293,15 +1482,16 @@ class BxAdsModule extends BxBaseModTextModule
         $iViewer = bx_get_logged_profile_id();        
         $oViewer = BxDolProfile::getInstanceMagic($iViewer);
 
-        sendMailTemplate($CNF['ETEMPLATE_OFFER_ADDED'], 0, $aContentInfo[$CNF['FIELD_AUTHOR']], array(
-            'viewer_name' => $oViewer->getDisplayName(),
-            'viewer_url' => $oViewer->getUrl(),
-            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
-        ));
+        if(getParam($CNF['PARAM_USE_IIN']) == 'on')
+            sendMailTemplate($CNF['ETEMPLATE_OFFER_ADDED'], 0, $aContentInfo[$CNF['FIELD_AUTHOR']], array(
+                'viewer_name' => $oViewer->getDisplayName(),
+                'viewer_url' => $oViewer->getUrl(),
+                'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
         $aParams['override_result'] = &$aResult;
@@ -1327,15 +1517,16 @@ class BxAdsModule extends BxBaseModTextModule
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
 
-        sendMailTemplate($CNF['ETEMPLATE_OFFER_ACCEPTED'], 0, $iOfferer, array(
-            'offerer_name' => $oOfferer->getDisplayName(),
-            'offerer_url' => $oOfferer->getUrl(),
-            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
-        ));
+        if(getParam($CNF['PARAM_USE_IIN']) == 'on')
+            sendMailTemplate($CNF['ETEMPLATE_OFFER_ACCEPTED'], 0, $iOfferer, array(
+                'offerer_name' => $oOfferer->getDisplayName(),
+                'offerer_url' => $oOfferer->getUrl(),
+                'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
         bx_alert($this->getName(), 'offer_accepted', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
@@ -1357,15 +1548,16 @@ class BxAdsModule extends BxBaseModTextModule
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
 
-        sendMailTemplate($CNF['ETEMPLATE_OFFER_DECLINED'], 0, $iOfferer, array(
-            'offerer_name' => $oOfferer->getDisplayName(),
-            'offerer_url' => $oOfferer->getUrl(),
-            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
-        ));
+        if(getParam($CNF['PARAM_USE_IIN']) == 'on')
+            sendMailTemplate($CNF['ETEMPLATE_OFFER_DECLINED'], 0, $iOfferer, array(
+                'offerer_name' => $oOfferer->getDisplayName(),
+                'offerer_url' => $oOfferer->getUrl(),
+                'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
         bx_alert($this->getName(), 'offer_declined', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
@@ -1390,18 +1582,19 @@ class BxAdsModule extends BxBaseModTextModule
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
 
-        sendMailTemplate($CNF['ETEMPLATE_OFFER_CANCELED'], 0, (int)$aContentInfo[$CNF['FIELD_AUTHOR']], array(
-            'offerer_name' => $oOfferer->getDisplayName(),
-            'offerer_url' => $oOfferer->getUrl(),
-            'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
-        ));
+        if(getParam($CNF['PARAM_USE_IIN']) == 'on')
+            sendMailTemplate($CNF['ETEMPLATE_OFFER_CANCELED'], 0, (int)$aContentInfo[$CNF['FIELD_AUTHOR']], array(
+                'offerer_name' => $oOfferer->getDisplayName(),
+                'offerer_url' => $oOfferer->getUrl(),
+                'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
-        bx_alert($this->getName(), 'offer_canceled', $iOfferId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+        bx_alert($this->getName(), 'offer_canceled', $iOfferId, $aOfferInfo[$CNF['FIELD_OFR_AUTHOR']], $aParams);
     }
 
     /**
@@ -1426,7 +1619,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($iProfileDst) && $bOffer)
             $iProfileDst = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];        
 
-        if(!empty($oProfileSrc) && !empty($iProfileDst))
+        if(!empty($oProfileSrc) && !empty($iProfileDst) && getParam($CNF['PARAM_USE_IIN']) == 'on')
             sendMailTemplate($CNF['ETEMPLATE_SHIPPED'], 0, $iProfileDst, array(
                 'vendor_name' => $oProfileSrc->getDisplayName(),
                 'vendor_url' => $oProfileSrc->getUrl(),
@@ -1465,7 +1658,7 @@ class BxAdsModule extends BxBaseModTextModule
             $iProfileSrc = (int)$aOffer[$CNF['FIELD_OFR_AUTHOR']];
         $oProfileSrc = BxDolProfile::getInstanceMagic($iProfileSrc);
 
-        if(!empty($iProfileSrc) && !empty($iProfileDst))
+        if(!empty($iProfileSrc) && !empty($iProfileDst) && getParam($CNF['PARAM_USE_IIN']) == 'on')
             sendMailTemplate($CNF['ETEMPLATE_RECEIVED'], 0, $iProfileDst, array(
                 'client_name' => $oProfileSrc->getDisplayName(),
                 'client_url' => $oProfileSrc->getUrl(),

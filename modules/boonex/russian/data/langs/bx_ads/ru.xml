@@ -551,4 +551,28 @@
 
     <string name="_bx_ads_alert_action_doInterest_personal"><![CDATA[Кто-то заинтересовался вашим объявлением]]></string>
     <string name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_approved_personal"><![CDATA[Ваше объявление было активировано]]></string>
+    <string name="_bx_ads_txt_ntfs_object_approved"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> активировал ваше объявление <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_license_register_personal"><![CDATA[Ваш товар был куплен]]></string>
+    <string name="_bx_ads_txt_ntfs_object_license_register"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> купил ваш товар <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_shipped_personal"><![CDATA[Товар отправлен]]></string>
+    <string name="_bx_ads_txt_ntfs_object_shipped"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> отправил товар <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_received_personal"><![CDATA[Товар получен]]></string>
+    <string name="_bx_ads_txt_ntfs_object_received"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> получил товар <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_offer_added_personal"><![CDATA[Предложение было добавлено]]></string>
+    <string name="_bx_ads_txt_ntfs_offer_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> добавил предложение к вашему объявлению <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_offer_accepted_personal"><![CDATA[Предложение было принято]]></string>
+    <string name="_bx_ads_txt_ntfs_offer_accepted"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> принял ваше предложение к объявлению <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_offer_declined_personal"><![CDATA[Предложение было отклонено]]></string>
+    <string name="_bx_ads_txt_ntfs_offer_declined"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> отклонил ваше предложение к объявлению <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ads_alert_action_offer_canceled_personal"><![CDATA[Предложение было отменено]]></string>
+    <string name="_bx_ads_txt_ntfs_offer_canceled"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> отменил предложение к вашему объявлению <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>
