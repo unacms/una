@@ -45,11 +45,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
-            	$sMethod = 'getInsertData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
-            	if(!method_exists($this, $sMethod))
+                $sMethod = 'getInsertData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
+                if(!method_exists($this, $sMethod))
                     $sMethod = 'getInsertData';
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
+                if(BxDolRequest::serviceExists($oAlert->sUnit, 'get_notifications_insert_data')) 
+                    $aDataItems = bx_srv($oAlert->sUnit, 'get_notifications_insert_data', [$oAlert, $aHandler, $aDataItems]);
+
                 foreach($aDataItems as $aDataItem) {
                     $iId = $this->_oModule->_oDb->insertEvent($aDataItem);
                     if(empty($iId))
@@ -71,11 +74,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     break;
             	}
 
-            	$sMethod = 'getDeleteData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
-            	if(!method_exists($this, $sMethod))
+                $sMethod = 'getDeleteData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+                if(!method_exists($this, $sMethod))
                     $sMethod = 'getDeleteData';
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
+                if(BxDolRequest::serviceExists($oAlert->sUnit, 'get_notifications_delete_data')) 
+                    $aDataItems = bx_srv($oAlert->sUnit, 'get_notifications_delete_data', [$oAlert, $aHandler, $aDataItems]);
+
                 foreach($aDataItems as $aDataItem)
                     $this->_oModule->_oDb->deleteEvent($aDataItem);
                 break;
