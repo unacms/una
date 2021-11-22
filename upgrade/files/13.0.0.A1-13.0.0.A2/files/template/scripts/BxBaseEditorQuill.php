@@ -86,6 +86,12 @@ class BxBaseEditorQuill extends BxDolEditor
             $sToolbarItems = $this->_sButtonsCustom;
         }
         
+        $sCss = 'editor.less';
+        $aCss = BxDolTemplate::getInstance()->_lessCss(array(
+        	'path' => $this->_oTemplate->getCssPath($sCss),
+        	'url' => $this->_oTemplate->getCssUrl($sCss)
+        ));
+        
         $sEditorName = 'quill_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
         $this->_oTemplate->addJsTranslation([
             '_sys_txt_quill_tooltip_bold',
@@ -121,7 +127,8 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_var_element_name' => str_replace(['-', ' '], '_', $aAttrs['element_name']),
             'bx_var_editor_name' => $sEditorName,
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
-            'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS)
+            'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
+            'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
         ));
 
         if ($bDynamicMode) {
@@ -198,19 +205,13 @@ class BxBaseEditorQuill extends BxDolEditor
             $sJsPrefixRoot  . $sJsSuffix . 'editor.quill.js',
         );
 
-        $sCss = 'editor.less';
-        $aCss = BxDolTemplate::getInstance()->_lessCss(array(
-        	'path' => $this->_oTemplate->getCssPath($sCss),
-        	'url' => $this->_oTemplate->getCssUrl($sCss)
-        ));
-        
-        $aCss = array_merge($aCss, array(
+        $aCss = array(
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.' . $this->_aObject['skin'] . '.css',  
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.mention.css', 
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'highlight/|default.min.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/quill.imageUploader.min.css',
             BX_DIRECTORY_PATH_BASE . 'css/|editor.quill.css',
-        ));
+        );
 
         return array($aJs, $aCss);
     }
