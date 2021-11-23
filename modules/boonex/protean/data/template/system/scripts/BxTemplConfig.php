@@ -421,8 +421,6 @@ class BxTemplConfig extends BxBaseConfig
 
         if($this->_isModule) {
             $this->setPageWidth('bx_protean_page_width');
-
-            BxDolEditor::getObjectInstance()->setSkin($this->_setValue($sName . '_form_input_editor_skin', ''));
         }
     }
 }
