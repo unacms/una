@@ -152,6 +152,7 @@ class BxBaseEditorQuill extends BxDolEditor
             <script>
                 var " . $sEditorName . ";
                 $(document).ready(function () {
+                    bQuillEditorInited = true;
                     Quill.register('modules/imageUploader', ImageUploader); 
                     $sInitEditor
                 });
