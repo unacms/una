@@ -294,104 +294,104 @@ class BxMarketDb extends BxBaseModTextDb
     /**
      * Integration with Payment based modules.  
      */
-	public function getLicense($aParams = array())
+    public function getLicense($aParams = array())
     {
-    	$CNF = &$this->_oConfig->CNF;
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $CNF = &$this->_oConfig->CNF;
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
-    	$sSelectClause = "`tl`.*";
-    	$sJoinClause = $sWhereClause = $sLimitClause = "";
+        $sSelectClause = "`tl`.*";
+        $sJoinClause = $sWhereClause = $sLimitClause = "";
         switch($aParams['type']) {
             case 'id':
-            	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = array(
-                	'id' => $aParams['id']
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'id' => $aParams['id']
                 );
 
                 $sWhereClause = " AND `tl`.`id`=:id";
                 break;
 
             case 'new':
-				$aMethod['params'][1] = array(
-                	'profile_id' => $aParams['profile_id']
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
                 );
 
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`new`='1'";
                 break;
 
-			case 'unused':
-				$aMethod['params'][1] = array(
-                	'profile_id' => $aParams['profile_id']
+            case 'unused':
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
                 );
 
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`domain`=''";
                 break;
 
-			case 'expired':
-				$aMethod['params'][1] = array(
-                	'type' => BX_MARKET_LICENSE_TYPE_RECURRING
+            case 'expired':
+                $aMethod['params'][1] = array(
+                    'type' => BX_MARKET_LICENSE_TYPE_RECURRING
                 );
 
-				$sWhereClause = " AND `type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
-				break;
+                $sWhereClause = " AND `type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
+                break;
 
             case 'product_id':
-				$aMethod['params'][1] = array(
-                	'product_id' => $aParams['product_id']
+                $aMethod['params'][1] = array(
+                    'product_id' => $aParams['product_id']
                 );
 
-				$sWhereClause = " AND `tl`.`product_id`=:product_id";
+                $sWhereClause = " AND `tl`.`product_id`=:product_id";
 
-				if(!empty($aParams['profile_id'])) {
-					$aMethod['params'][1]['profile_id'] = $aParams['profile_id'];
-					$sWhereClause .= " AND `tl`.`profile_id`=:profile_id";
-				}
-				break;
+                if(!empty($aParams['profile_id'])) {
+                    $aMethod['params'][1]['profile_id'] = $aParams['profile_id'];
+                    $sWhereClause .= " AND `tl`.`profile_id`=:profile_id";
+                }
+                break;
 
-			case 'profile_id':
-				$aMethod['params'][1] = array(
-                	'profile_id' => $aParams['profile_id']
+            case 'profile_id':
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
                 );
 
-				$sWhereClause = " AND `tl`.`profile_id`=:profile_id";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id";
 
-				if(!empty($aParams['product_id'])) {
-					$aMethod['params'][1]['product_id'] = $aParams['product_id'];
-					$sWhereClause .= " AND `tl`.`product_id`=:product_id";
-				}
-				break;
+                if(!empty($aParams['product_id'])) {
+                    $aMethod['params'][1]['product_id'] = $aParams['product_id'];
+                    $sWhereClause .= " AND `tl`.`product_id`=:product_id";
+                }
+                break;
 
-			case 'profile_id_file_id_key':
-				$aMethod['name'] = "getRow";
-				$aMethod['params'][1] = array(
-                	'profile_id' => $aParams['profile_id'],
-					'key' => $aParams['key']
+            case 'profile_id_file_id_key':
+                $aMethod['name'] = "getRow";
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id'],
+                    'key' => $aParams['key']
                 );
 
-				$iProductId = $this->getOne("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_PACKAGE'] . "`=:file_id LIMIT 1", array(
-				    'file_id' => $aParams['file_id']
-				));
+                $iProductId = $this->getOne("SELECT `te`.`" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te` LEFT JOIN `" . $CNF['TABLE_FILES2ENTRIES'] . "` AS `tfe` ON `te`.`id`=`tfe`.`content_id` WHERE `tfe`.`file_id`=:file_id LIMIT 1", array(
+                    'file_id' => $aParams['file_id']
+                ));
 
-				if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
-				    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+                if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
+                    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
                     $aConnectionSql = $oConnnection->getConnectedInitiatorsAsSQLParts('tl', 'product_id', $iProductId);
 
                     $sJoinClause .= $aConnectionSql['join'];
-				}
-				else {
+                }
+                else {
                     $aMethod['params'][1]['product_id'] = $iProductId;
 
                     $sWhereClause .= " AND `tl`.`product_id`=:product_id";
-				}
+                }
 
-				$sWhereClause .= " AND `tl`.`profile_id`=:profile_id AND (`tl`.`domain`='' OR `tl`.`domain`=:key)";
-				$sLimitClause = "1";
-				break;
+                $sWhereClause .= " AND `tl`.`profile_id`=:profile_id AND (`tl`.`domain`='' OR `tl`.`domain`=:key)";
+                $sLimitClause = "1";
+                break;
 
-			case 'has_by':
-				$aMethod['name'] = "getOne";
-				$aMethod['params'][1] = array(
-                	'profile_id' => $aParams['profile_id']
+            case 'has_by':
+                $aMethod['name'] = "getOne";
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
                 );
 
                 $sSelectClause = "`tl`.`id`";
@@ -410,23 +410,23 @@ class BxMarketDb extends BxBaseModTextDb
                 }
 
                 if(!empty($aParams['domain'])) {
-                	$aMethod['params'][1]['domain'] = $aParams['domain'];
-                	$sWhereClause .= " AND `tl`.`domain`=:domain";
+                    $aMethod['params'][1]['domain'] = $aParams['domain'];
+                    $sWhereClause .= " AND `tl`.`domain`=:domain";
                 }
 
-		        if(!empty($aParams['order'])) {
-                	$aMethod['params'][1]['order'] = $aParams['order'];
-                	$sWhereClause .= " AND `tl`.`order`=:order";
+                if(!empty($aParams['order'])) {
+                    $aMethod['params'][1]['order'] = $aParams['order'];
+                    $sWhereClause .= " AND `tl`.`order`=:order";
                 }
 
                 $sLimitClause = "1";
-                break;
+            break;
         }
 
         $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
 
         $aMethod['params'][0] = "SELECT
-        		" . $sSelectClause . "
+                        " . $sSelectClause . "
             FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`" . $sJoinClause . "
             WHERE 1" . $sWhereClause . " " . $sLimitClause;
 
