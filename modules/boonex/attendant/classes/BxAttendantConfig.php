@@ -22,11 +22,13 @@ class BxAttendantConfig extends BxBaseModGeneralConfig
             
              // database fields
             'FIELD_ID' => 'id',
-            'FIELD_METHOD' => 'method',
+            'FIELD_MODULE' => 'module',
             'FIELD_ACTION' => 'action',
+            'FIELD_EVENT' => 'event',
             'FIELD_ADDED' => 'added',
             'FIELD_PROCESSED' => 'processed',
-            'FIELD_OBJECT_ID' => 'object_id'
+            'FIELD_OBJECT_ID' => 'object_id',
+            'FIELD_PROFILE_ID' => 'profile_id'
         );
         $this->_aJsClasses = array(
            'main' => 'BxAttendant'

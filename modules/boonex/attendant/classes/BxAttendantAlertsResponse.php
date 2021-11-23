@@ -18,10 +18,15 @@ class BxAttendantAlertsResponse extends BxDolAlertsResponse
     
     public function response($oAlert)
     {
+        $iObjectId  = $oAlert->iObject;
+        $iProfileId = bx_get_logged_profile_id();
+        
         if ($oAlert->sUnit == 'profile' && $oAlert->sAction == 'add'){
-            $oModule = BxDolModule::getInstance('bx_attendant');
-            $oModule->initPopupWithRecommendedOnProfileAdd($oAlert->iObject);
+            $iProfileId = $oAlert->iObject;
         }
+        
+        $oModule = BxDolModule::getInstance('bx_attendant');
+        $oModule->initPopupByEvent($iObjectId, $oAlert->sUnit, $oAlert->sAction, $iProfileId);
     }
 }
 

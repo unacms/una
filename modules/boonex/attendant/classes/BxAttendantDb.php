@@ -32,13 +32,13 @@ class BxAttendantDb extends BxBaseModGeneralDb
         $sSelectClause = "`{$this->_sTableEntries}`.*";
 
         switch($aParams['type']) {
-            case 'active_by_action_and_object_id':
+            case 'active_by_action_and_profile_id':
                 $aMethod['name'] = 'getAll';
                 $aMethod['params'][1] = array(
                     'action' => $aParams['action'],
-                    'object_id' => $aParams['object_id']
+                    'profile_id' => $aParams['profile_id']
                 );
-                $sWhereClause = "AND `{$this->_sTableEntries}`.`" . $CNF['FIELD_ACTION'] . "` =:action  AND `{$this->_sTableEntries}`.`" . $CNF['FIELD_OBJECT_ID'] . "` =:object_id AND `" . $CNF['FIELD_PROCESSED'] . "` IS NULL";
+                $sWhereClause = "AND `{$this->_sTableEntries}`.`" . $CNF['FIELD_ACTION'] . "` =:action  AND `{$this->_sTableEntries}`.`" . $CNF['FIELD_PROFILE_ID'] . "` =:profile_id AND `" . $CNF['FIELD_PROCESSED'] . "` IS NULL";
                 break;
             case 'all':
                 $aMethod['name'] = 'getAll';
@@ -62,16 +62,20 @@ class BxAttendantDb extends BxBaseModGeneralDb
         return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
     }
     
-    public function addEvent($sMethod, $sAction, $iObjectId)
+    public function addEvent($sAction, $iObjectId, $sModule, $sEvent, $iProfileId)
     {
         $CNF = &$this->_oConfig->CNF;
         $aBindings = array(
-            'method' => $sMethod,
+            'module' => $sModule,
+            'event' => $sEvent,
             'action' => $sAction,
             'added' => time(),
-            'object_id' => $iObjectId
+            'object_id' => $iObjectId,
+            'profile_id' => $iProfileId,
+            'event' => $sEvent
         );
-        $this->query("INSERT INTO `" . $CNF['TABLE_ENTRIES'] . "` (`" . $CNF['FIELD_METHOD'] . "`, `" . $CNF['FIELD_ACTION'] . "`, `" . $CNF['FIELD_ADDED'] . "`, `" . $CNF['FIELD_OBJECT_ID'] . "`) values (:method, :action, :added, :object_id)", $aBindings);
+        
+        $this->query("INSERT INTO `" . $CNF['TABLE_ENTRIES'] . "` (`" . $CNF['FIELD_MODULE'] . "`, `" . $CNF['FIELD_EVENT'] . "`, `" . $CNF['FIELD_ACTION'] . "`, `" . $CNF['FIELD_ADDED'] . "`, `" . $CNF['FIELD_OBJECT_ID'] . "`, `" . $CNF['FIELD_PROFILE_ID'] . "`) values (:module, :event, :action, :added, :object_id, :profile_id)", $aBindings);
     }
     
     public function setEventProcessed($id)
@@ -80,7 +84,7 @@ class BxAttendantDb extends BxBaseModGeneralDb
         $aBindings = array(
             'processed' => time()
         );
-        $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET   `" . $CNF['FIELD_PROCESSED'] . "` = :processed", $aBindings);
+       $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET   `" . $CNF['FIELD_PROCESSED'] . "` = :processed", $aBindings);
     }
 }
 

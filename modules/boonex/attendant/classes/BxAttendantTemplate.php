@@ -37,7 +37,7 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
         return $this->getJsCode('main') . BxBaseFunctions::getInstance()->transBox($this->sContainerId, '', true, true);
     }
     
-    public function popupWithRecommendedOnProfileAdd($aModuleData)
+    public function popup($aModuleData)
     {
         $aVars = [];
         

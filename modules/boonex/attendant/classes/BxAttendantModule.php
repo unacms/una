@@ -20,23 +20,27 @@ class BxAttendantModule extends BxDolModule
     }
 
     
-    public function actionRecomendedPopup()
+    public function actionRecomendedPopup($sModule, $sEvent, $iObjectId)
     {
+        $sRv = '';
         $aModules = explode(',', getParam('bx_attendant_on_profile_creation_modules'));
-        $aModulteData = array();
+        $aModuleData = array();
         foreach($aModules as $sModuleName){
 
             if(BxDolRequest::serviceExists($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD)){
-                $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, array('unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false));
+                $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, ['unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false]);
 
                 if (isset($aTmp['content'])){
                     $sTmp = $aTmp['content'];
                     $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
-                    $aModulteData[$sModuleName] = $sTmp;
+                    $aModuleData[$sModuleName] = $sTmp;
                 }
             }
         }
-        $sRv = $this->_oTemplate->popupWithRecommendedOnProfileAdd($aModulteData);
+        if ($aModuleData)
+            $sRv = $this->_oTemplate->popup($aModuleData);
+        
+        bx_alert('bx_attendant', 'show_popup', bx_get_logged_profile_id(), 0, ['module' => $sModule, 'event' => $sEvent, 'object_id' => $iObjectId, 'result' => &$sRv]);
         
         echo $sRv;
     }
@@ -156,9 +160,10 @@ class BxAttendantModule extends BxDolModule
         if (!isLogged())
             return;
         
-        $aEvents = $this->_oDb->getEvents(array('type' => 'active_by_action_and_object_id', 'action' => 'view', 'object_id' => bx_get_logged_profile_id()));
+        $aEvents = $this->_oDb->getEvents(array('type' => 'active_by_action_and_profile_id', 'action' => 'view', 'profile_id' => bx_get_logged_profile_id()));
         foreach($aEvents as $aEvent){
-            $oRv = call_user_func_array(array($this, $aEvent['method']), array($aEvent['object_id']));
+            //$oRv = call_user_func_array(array($this, $aEvent['method']), array($aEvent['object_id']));
+            $oRv = $this->processPopupOnEvent($aEvent);
             if ($oRv !== false){
                 $sRv .= $oRv;
                 $this->_oDb->setEventProcessed($aEvent['id']);
@@ -173,28 +178,35 @@ class BxAttendantModule extends BxDolModule
        //for some other actions fex cron - not implemented
     }
     
-    public function addEvent($sMethod, $sAction, $iObjectId)
+    public function addEvent($sAction, $iObjectId, $sModule, $sEvent, $iProfileId)
     {
-        $this->_oDb->addEvent($sMethod, $sAction, $iObjectId);
+        $this->_oDb->addEvent($sAction, $iObjectId, $sModule, $sEvent, $iProfileId);
     }
     
-    public function initPopupWithRecommendedOnProfileAdd($iProfileId)
+    public function initPopupByEvent($iObjectId, $sModule, $sEvent, $iProfileId)
     {
-        $this->addEvent('processPopupWithRecommendedOnProfileAdd', 'view', $iProfileId);
+        $this->addEvent('view', $iObjectId, $sModule, $sEvent, $iProfileId);
     }
     
-    public function processPopupWithRecommendedOnProfileAdd($iProfileId)
+    public function processPopupOnEvent($aEvent)
     {
         $sRv = '';
-        $sEvent = getParam('bx_attendant_on_profile_event_list');
-        $oProfile = BxDolProfile::getInstance($iProfileId);
+        $sDefaultEvent = getParam('bx_attendant_on_profile_event_list');
+        $oProfile = BxDolProfile::getInstance($aEvent['profile_id']);
         $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
-        if ($sEvent == BX_ATTENDANT_ON_PROFILE_CREATION_EVENT_AFTER_REGISTRATION || ($sEvent == BX_ATTENDANT_ON_PROFILE_CREATION_EVENT_AFTER_CONFIRMATION  && $oAccount != null &&  $oAccount->isConfirmed())){
-            return '<script>oBxAttendant.showPopupWithRecommended()</script>';
+        $bNeedRaiseEvent = false;
+        if ($aEvent['event'] == 'add' && $aEvent['module'] == 'profile'){
+            if (getParam('bx_attendant_on_profile_creation_modules') != '' && ($sDefaultEvent == BX_ATTENDANT_ON_PROFILE_CREATION_EVENT_AFTER_REGISTRATION || ($sDefaultEvent == BX_ATTENDANT_ON_PROFILE_CREATION_EVENT_AFTER_CONFIRMATION  && $oAccount != null &&  $oAccount->isConfirmed()))){
+                $bNeedRaiseEvent = true;
+            }
         }
         else{
-            return false;
+            bx_alert('bx_attendant', 'before_show_popup', bx_get_logged_profile_id(), 0, ['module' => $aEvent['module'], 'event' => $aEvent['event'], 'object_id' => $aEvent['object_id'], 'result' => &$bNeedRaiseEvent]);
         }
+        if ($bNeedRaiseEvent)
+            return getParam('bx_attendant_on_profile_creation_modules').'<script>oBxAttendant.showPopup("' . $aEvent['module'] . '", "' . $aEvent['event'] . '", ' . $aEvent['object_id'] . ')</script>';
+        else
+            return false;
     }
 }
 

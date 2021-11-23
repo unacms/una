@@ -4,10 +4,13 @@ SET @sName = 'bx_attendant';
 CREATE TABLE `bx_attendant_events` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `method` varchar(50) NOT NULL,
+  `event` varchar(50) NOT NULL,
   `added` int(11) DEFAULT NULL,
   `processed` int(11) DEFAULT NULL,
   `action` varchar(10) NOT NULL,
   `object_id` int(11) DEFAULT NULL,
+  `profile_id` int(11) DEFAULT NULL,
+  `module` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `object_id` (`object_id`),
   INDEX `action` (`action`)
