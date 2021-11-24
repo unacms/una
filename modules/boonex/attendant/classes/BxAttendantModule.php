@@ -19,7 +19,6 @@ class BxAttendantModule extends BxDolModule
         parent::__construct($aModule);
     }
 
-    
     public function actionRecomendedPopup($sModule, $sEvent, $iObjectId)
     {
         $sRv = '';
@@ -37,8 +36,7 @@ class BxAttendantModule extends BxDolModule
                 }
             }
         }
-        if ($aModuleData)
-            $sRv = $this->_oTemplate->popup($aModuleData);
+        $sRv = $this->_oTemplate->popup($aModuleData);
         
         bx_alert('bx_attendant', 'show_popup', bx_get_logged_profile_id(), 0, ['module' => $sModule, 'event' => $sEvent, 'object_id' => $iObjectId, 'result' => &$sRv]);
         
