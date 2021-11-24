@@ -441,7 +441,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             allowProcess: false,
             allowRevert: false,
             allowRemove: false,
-         //   imagePreviewHeight: 100,
+            imagePreviewHeight: 100,
             credits: {},
             allowMultiple: $this._isMultiple ? true : false,
             maxFiles: $this.isMultiple() ? 50 : 1,
