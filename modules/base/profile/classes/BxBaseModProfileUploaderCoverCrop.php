@@ -71,10 +71,10 @@ class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderCrop
         }
 
         if ('array' == $sFormat) {
-            return $a;
+            return $aResult;
         }
         else if ('json' == $sFormat) {
-            return json_encode($a);
+            return json_encode($aResult);
         } else { // html format is not suported for this data type
             return false;
         }
