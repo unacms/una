@@ -65,7 +65,7 @@ class BxBaseModProfileUploaderPictureCrop extends BxTemplUploaderCrop
         foreach ($a as $aFile) {
 
             // for profile pictures show only unassigned ghosts and currently set profile pictures
-            if ($sImagesTranscoder == $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'] && ($aFile['file_id'] == $aContentInfo[$CNF['FIELD_PICTURE']] || $aFile['file_id'] != $aContentInfo[$CNF['FIELD_COVER']]))
+            if (($aFile['file_id'] == $aContentInfo[$CNF['FIELD_PICTURE']] || $aFile['file_id'] != $aContentInfo[$CNF['FIELD_COVER']]))
                 $aResult[] = $aFile;            
         }
 
