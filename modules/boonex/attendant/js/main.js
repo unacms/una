@@ -15,11 +15,11 @@ function BxAttendant(oOptions) {
     var $this = this;
 }
 
-BxAttendant.prototype.showPopupWithRecommended = function () {
+BxAttendant.prototype.showPopup = function (sModule = 'default', sEvent = 'default', sObject = 0) {
     var $this = this;
     
     $(window).dolPopupAjax({
-        url: $this._sActionsUri + '/RecomendedPopup',
+        url: $this._sActionsUri + 'RecomendedPopup/' + sModule + '/' + sEvent + '/' + sObject + '/',
         closeOnOuterClick: true,
 		removeOnClose: true,
         onLoad: function(sPopupSelector){
@@ -37,6 +37,7 @@ BxAttendant.prototype.showPopupWithRecommended = function () {
                     }
                 }
             });
+            
         }
     });
 }

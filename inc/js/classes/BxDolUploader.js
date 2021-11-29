@@ -289,6 +289,127 @@ BxDolUploaderSimple.prototype._loading = function (bShowProgress, bShowForm) {
     bx_loading($('#' + this._sFormContainerId + ' .bx-uploader-loading').get(0), bShowProgress);
 }
 
+BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
+    var mimeTypes = 
+    {
+      'a'      : 'application/octet-stream',
+      'ai'     : 'application/postscript',
+      'aif'    : 'audio/x-aiff',
+      'aifc'   : 'audio/x-aiff',
+      'aiff'   : 'audio/x-aiff',
+      'au'     : 'audio/basic',
+      'avi'    : 'video/x-msvideo',
+      'bat'    : 'text/plain',
+      'bin'    : 'application/octet-stream',
+      'bmp'    : 'image/x-ms-bmp',
+      'c'      : 'text/plain',
+      'cdf'    : 'application/x-cdf',
+      'csh'    : 'application/x-csh',
+      'css'    : 'text/css',
+      'dll'    : 'application/octet-stream',
+      'doc'    : 'application/msword',
+      'dot'    : 'application/msword',
+      'dvi'    : 'application/x-dvi',
+      'eml'    : 'message/rfc822',
+      'eps'    : 'application/postscript',
+      'etx'    : 'text/x-setext',
+      'exe'    : 'application/octet-stream',
+      'gif'    : 'image/gif',
+      'gtar'   : 'application/x-gtar',
+      'h'      : 'text/plain',
+      'hdf'    : 'application/x-hdf',
+      'htm'    : 'text/html',
+      'html'   : 'text/html',
+      'jpe'    : 'image/jpeg',
+      'jpeg'   : 'image/jpeg',
+      'jpg'    : 'image/jpeg',
+      'js'     : 'application/x-javascript',
+      'ksh'    : 'text/plain',
+      'latex'  : 'application/x-latex',
+      'm1v'    : 'video/mpeg',
+      'man'    : 'application/x-troff-man',
+      'me'     : 'application/x-troff-me',
+      'mht'    : 'message/rfc822',
+      'mhtml'  : 'message/rfc822',
+      'mif'    : 'application/x-mif',
+      'mov'    : 'video/quicktime',
+      'movie'  : 'video/x-sgi-movie',
+      'mp2'    : 'audio/mpeg',
+      'mp3'    : 'audio/mpeg',
+      'mp4'    : 'video/mp4',
+      'mpa'    : 'video/mpeg',
+      'mpe'    : 'video/mpeg',
+      'mpeg'   : 'video/mpeg',
+      'mpg'    : 'video/mpeg',
+      'ms'     : 'application/x-troff-ms',
+      'nc'     : 'application/x-netcdf',
+      'nws'    : 'message/rfc822',
+      'o'      : 'application/octet-stream',
+      'obj'    : 'application/octet-stream',
+      'oda'    : 'application/oda',
+      'pbm'    : 'image/x-portable-bitmap',
+      'pdf'    : 'application/pdf',
+      'pfx'    : 'application/x-pkcs12',
+      'pgm'    : 'image/x-portable-graymap',
+      'png'    : 'image/png',
+      'pnm'    : 'image/x-portable-anymap',
+      'pot'    : 'application/vnd.ms-powerpoint',
+      'ppa'    : 'application/vnd.ms-powerpoint',
+      'ppm'    : 'image/x-portable-pixmap',
+      'pps'    : 'application/vnd.ms-powerpoint',
+      'ppt'    : 'application/vnd.ms-powerpoint',
+      'pptx'   : 'application/vnd.ms-powerpoint',
+      'ps'     : 'application/postscript',
+      'pwz'    : 'application/vnd.ms-powerpoint',
+      'py'     : 'text/x-python',
+      'pyc'    : 'application/x-python-code',
+      'pyo'    : 'application/x-python-code',
+      'qt'     : 'video/quicktime',
+      'ra'     : 'audio/x-pn-realaudio',
+      'ram'    : 'application/x-pn-realaudio',
+      'ras'    : 'image/x-cmu-raster',
+      'rdf'    : 'application/xml',
+      'rgb'    : 'image/x-rgb',
+      'roff'   : 'application/x-troff',
+      'rtx'    : 'text/richtext',
+      'sgm'    : 'text/x-sgml',
+      'sgml'   : 'text/x-sgml',
+      'sh'     : 'application/x-sh',
+      'shar'   : 'application/x-shar',
+      'snd'    : 'audio/basic',
+      'so'     : 'application/octet-stream',
+      'src'    : 'application/x-wais-source',
+      'swf'    : 'application/x-shockwave-flash',
+      't'      : 'application/x-troff',
+      'tar'    : 'application/x-tar',
+      'tcl'    : 'application/x-tcl',
+      'tex'    : 'application/x-tex',
+      'texi'   : 'application/x-texinfo',
+      'texinfo': 'application/x-texinfo',
+      'tif'    : 'image/tiff',
+      'tiff'   : 'image/tiff',
+      'tr'     : 'application/x-troff',
+      'tsv'    : 'text/tab-separated-values',
+      'txt'    : 'text/plain',
+      'ustar'  : 'application/x-ustar',
+      'vcf'    : 'text/x-vcard',
+      'wav'    : 'audio/x-wav',
+      'wiz'    : 'application/msword',
+      'wsdl'   : 'application/xml',
+      'xbm'    : 'image/x-xbitmap',
+      'xlb'    : 'application/vnd.ms-excel',
+      'xls'    : 'application/vnd.ms-excel',
+      'xlsx'    : 'application/vnd.ms-excel',
+      'xml'    : 'text/xml',
+      'xpdl'   : 'application/xml',
+      'xpm'    : 'image/x-xpixmap',
+      'xsl'    : 'application/xml',
+      'xwd'    : 'image/x-xwindowdump',
+      'zip'    : 'application/zip'
+    }
+    return mimeTypes[ext.replace('.', '')];
+}
+
 /**
  * HTML5 Uploader js class
  */
@@ -312,72 +433,153 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         if (null != this._uploader)
             this._uploader = null;
 
-        var _options = {
-            url: sUrlRoot + 'storage_uploader.php',
-            uploadMultiple: false,
-            timeout: 0,
-            maxFiles: $this.isMultiple() ? 50 : 1,
-            params: {
-                uo: this._sUploaderObject,
-                so: this._sStorageObject,
-                uid: this._sUniqId,
-                m: this._isMultiple ? 1 : 0,
-                c: this._iContentId,
-                p: this._isPrivate,
-                a: "upload"
-            },
-        };
-
-        this._uploader = new Dropzone('#' + this._sDivId, $.extend({}, _options, o));
+        var $this = this;
         
-        this._uploader.on('queuecomplete', function (file) {
-            $this.onUploadCompleted('');
-        });
-        this._uploader.on('addedfile', function (file) {
-            $this.onBeforeUpload('');
-        });        
-        this._uploader.on('totaluploadprogress', function (uploadProgress) {
-            $this.onProgress({
-                total: uploadProgress
-            });
-        });
-        this._uploader.on('success', function (oFile, sJSON) {
-            var o = null;
-            try {
-                o = JSON.parse(sJSON);
-            } 
-            catch (e) {}
+        console.log(o);
+        
+        var _options = {
+            allowProcess: false,
+            allowRevert: false,
+            allowRemove: false,
+            imagePreviewHeight: 100,
+            credits: {},
+            allowMultiple: $this._isMultiple ? true : false,
+            maxFiles: $this.isMultiple() ? 50 : 1,
+            maxFileSize: o.maxFilesize +'MB',
+            instantUpload: true,
+            onaddfile: (error, file) => { 
+                if (error){
+                    $this._uploader.removeFile(file);
+                    if($this._uploader.status != 3)
+                        $this.onUploadCompleted(''); 
+                }
+                else{
+                    $this.onBeforeUpload(''); 
+                }
+            },
+            onerror: (error) => { 
+                if (error.main)
+                    $this._showError(error.main + '. ' + error.sub, true);
+            },
+            onprocessfile: (error, file) => { 
+                if (error){
+                    $this._uploader.removeFile(file);
+                }
+                if($this._uploader.status != 3)
+                    $this.onUploadCompleted(''); 
+            },
+            onprocessfiles: (files) => { 
+                $this.onUploadCompleted(''); 
+            },
+            onprocessfileprogress(file, progress) {
+               
+            },
+            server: {
+				process: (fieldName, file, metadata, load, error, progress, abort) => {
+					const formData = new FormData();
+					formData.append('file', file, file.name);
+					formData.append('uo', this._sUploaderObject);
+					formData.append('so', this._sStorageObject);
+					formData.append('uid', this._sUniqId);
+					formData.append('m', this._isMultiple ? 1 : 0);
+					formData.append('c', this._iContentId);
+					formData.append('p', this._isPrivate);
+					formData.append('a', 'upload');
 
-            if (o && 'undefined' !== typeof(o.error)) {
-                $this._uploader.removeFile(oFile);
-                $this._showError(o.error, true);
-            }
-        });
-        this._uploader.on('error', function (oFile, sErrorMsg) {
-            $this._uploader.removeFile(oFile);
-            $this._showError(sErrorMsg, true);
-        });
+					const request = new XMLHttpRequest();
+					request.open('POST', sUrlRoot + 'storage_uploader.php');
+
+					request.upload.onprogress = (e) => {
+						progress(e.lengthComputable, e.loaded, e.total);
+					};
+
+					request.onload = function(res) {
+						if (request.status >= 200 && request.status < 300) {
+							var o = null;
+                            try {
+                                o = JSON.parse(request.responseText);
+                            } 
+                            catch (e) {}
+                            if (o && 'undefined' !== typeof(o.error)) {
+                                $this._showError(o.error, true);
+                                error('error');
+                            }
+                            
+                            load(request.responseText);
+						}
+						else {
+							error('error');
+						}
+					};
+					request.send(formData);
+				}
+			},
+        };
+        
+        aAcceptableFiles = [];
+        if (o.acceptedFiles && o.acceptedFiles != ''){
+            a = o.acceptedFiles.trim().split(/\s*,\s*/);
+            a.forEach(function(item, i, arr) {
+                if ($this.getMimeTypefromString(item))
+                    aAcceptableFiles.push($this.getMimeTypefromString(item));
+            });
+        }
+        if (aAcceptableFiles.length){
+            _options.acceptedFileTypes = aAcceptableFiles;
+        }
+        
+        if (o.resizeWidth || o.resizeHeight){
+            _options.allowImageResize = true;
+            _options.imageResizeTargetWidth = o.resizeWidth;
+            _options.imageResizeTargetHeight = o.resizeHeight;
+            _options.imageResizeMode = o.resizeMethod;
+        }
+        else{
+            _options.allowImageResize = false;
+        }
+        
+        FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginFileValidateType,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImageTransform,
+            FilePondPluginImageCrop,
+            FilePondPluginImageResize,
+            
+        );
+
+        this._uploader = FilePond.create(
+            document.querySelector('#' + this._sDivId),
+            $.extend({}, _options, o)
+        );    
 
         this.initPasteEditor();
     }
 
     this.onUploadCompleted = function (sErrorMsg) {        
-
         if (sErrorMsg.length)
             this._showError(sErrorMsg);        
         
-        if (0 == this._uploader.getQueuedFiles().length && 0 == this._uploader.getUploadingFiles().length) {
+        var $this = this;
+        if($this._uploader.status != 3){
             this._isUploadsInProgress = false;
             this.restoreGhosts();
             if (!this._isErrorShown) {
                 $('#' + this._sPopupContainerId).dolPopupHide({});
-                this._uploader.removeAllFiles();
+                this.removeFiles();
             }
         }
     }
 
+    this.removeFiles = function () {
+        oFiles = this._uploader.getFiles();
+        for (i = 0; i < oFiles.length; i++){
+            this._uploader.removeFile(i);
+        }
+    }
+
     this.cancelAll = function () {
-        this._uploader.removeAllFiles(true);
+        this.removeFiles();
     }
 
     this.onBeforeUpload = function (params) {
@@ -390,9 +592,19 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     }
 
     this.onClickCancel = function () {
-        this._uploader.removeAllFiles(true);
+        var $this = this;
+        if (this._isUploadsInProgress) {
+            bx_confirm(_t('_sys_uploader_confirm_close_popup'), function() {
+                $this.removeFiles();
+                $this.cancelAll();
+                $('#' + $this._sPopupContainerId).dolPopupHide({});
+            });
+        } else {
+            $this.removeFiles();
+            $('#' + this._sPopupContainerId).dolPopupHide();
+        }
+        
         BxDolUploaderSimple.prototype._clearErrors.call(this);
-        BxDolUploaderSimple.prototype.onClickCancel.call(this);
     }
 
     this.onShowPopup = function () {

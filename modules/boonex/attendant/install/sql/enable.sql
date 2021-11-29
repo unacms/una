@@ -27,8 +27,7 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('profile', 'add', @iHandler),
-('bx_spaces', 'fan_added', @iHandler);
+('profile', 'add', @iHandler);
 
 -- MENU: notifications
 SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `order` < 9999);

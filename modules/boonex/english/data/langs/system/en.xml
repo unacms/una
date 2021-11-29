@@ -1536,7 +1536,6 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
 	<string name="_adm_stg_cpt_option_sys_cron_time"><![CDATA[Last cron execution time]]></string>
-	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
 	<string name="_adm_stg_cpt_option_sys_update_time"><![CDATA[Last update]]></string>
 	<string name="_adm_stg_cpt_option_sys_upgrade_channel"><![CDATA[Update channel]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
