@@ -61,16 +61,6 @@ INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`
 ('comment', 'update', 'comment', 'edited', ''),
 ('comment', 'delete', 'comment', 'deleted', '');
 
-CREATE TABLE IF NOT EXISTS `bx_timeline_cache` (
-  `type` varchar(32) NOT NULL default '',
-  `context_id` int(11) NOT NULL default '0',
-  `profile_id` int(11) NOT NULL default '0',
-  `event_id` int(11) NOT NULL default '0',
-  `date` int(11) NOT NULL default '0',
-  `important` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY `item` (`type`, `context_id`, `profile_id`, `event_id`)
-);
-
 -- TABLE: mute
 CREATE TABLE IF NOT EXISTS `bx_timeline_mute` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

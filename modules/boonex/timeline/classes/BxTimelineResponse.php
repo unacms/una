@@ -104,24 +104,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
                 $this->_oModule->_oDb->updateEvent($aParamsSet, array('id' => $aEvent[$CNF['FIELD_ID']]));
 
-                //--- Delete feed cached
-                $this->_oModule->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
-                $this->_oModule->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
-                if(isset($aParamsSet['owner_id']))
-                    $this->_oModule->_oDb->deleteCache(array('context_id' => $aParamsSet['owner_id'])); //--- Delete cache for new context
-
                 //--- Delete item cache.
                 $oCacheItem = $this->_oModule->getCacheItemObject();
                 $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aEvent['id']));
 
+                //--- Delete item cache for repost.
                 $aReposts = $this->_oModule->_oDb->getReposts($aEvent[$CNF['FIELD_ID']]);
-                foreach($aReposts as $aRepost) {
-                    //--- Delete cache for reposter context
-                    $this->_oModule->_oDb->deleteCache(array('context_id' => $aRepost['author_id']));
-
-                    //--- Delete item cache for repost.
+                foreach($aReposts as $aRepost)
                     $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aRepost['event_id']));
-                }
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
@@ -130,15 +120,12 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     foreach($aEvents as $aEvent)
                         $this->_oModule->deleteEvent($aEvent);
 
-                    if(isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
-                        $aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
-                        foreach($aEvents as $aEvent)
-                            $this->_oModule->deleteEvent($aEvent);
-                    }
+                    if(!isset($oAlert->aExtras['delete_with_content']) || !$oAlert->aExtras['delete_with_content']) 
+                        break;
 
-                    //--- Delete cached
-                    $this->_oModule->_oDb->deleteCache(array('context_id' => $oAlert->iObject));
-                    $this->_oModule->_oDb->deleteCache(array('profile_id' => $oAlert->iObject));
+                    $aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
+                    foreach($aEvents as $aEvent)
+                        $this->_oModule->deleteEvent($aEvent);
                     break;
                 }
 
@@ -172,6 +159,32 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             return;
 
         $this->_clearCache();
+    }
+
+    protected function _processSystemEnable($oAlert)
+    {
+        $aModuleConfig = $oAlert->aExtras['config'];
+        if(empty($aModuleConfig) || !is_array($aModuleConfig))
+            return false;
+
+        $sName = $aModuleConfig['name'];
+        if(!bx_srv_ii('system', 'is_module_context', [$sName]))
+            return false;
+
+        return $this->_oModule->serviceFeedsMenuAdd($sName);
+    }
+
+    protected function _processSystemDisable($oAlert)
+    {
+        $aModuleConfig = $oAlert->aExtras['config'];
+        if(empty($aModuleConfig) || !is_array($aModuleConfig))
+            return false;
+
+        $sName = $aModuleConfig['name'];
+        if(!bx_srv_ii('system', 'is_module_context', [$sName]))
+            return false;
+
+        return $this->_oModule->serviceFeedsMenuDelete($sName);
     }
 
     protected function _processAccountConfirm($oAlert)
@@ -208,9 +221,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
     {
         //--- Clear item cache.
         $this->_oModule->getCacheItemObject()->removeAllByPrefix($this->_oModule->_oConfig->getPrefix('cache_item'));
-
-        //--- Clear feed cache.
-        $this->_oModule->_oDb->clearCache();
     }
 
     protected function _processBxTimelineVideosMp4Transcoded($oAlert)

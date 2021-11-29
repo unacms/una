@@ -399,6 +399,48 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     }
 
     /**
+     * Checks whether a module is a 'Content' module or not.
+     * 
+     * @param string $mixedModule - module name or an instance of Module class.
+     * @return boolean result of operation.
+     */
+    public function serviceIsModuleContent($mixedModule)
+    {
+        if(is_string($mixedModule))
+            $mixedModule = BxDolModule::getInstance($mixedModule);
+
+        return $mixedModule instanceof BxDolModule && $mixedModule instanceof iBxDolContentInfoService && !($mixedModule instanceof iBxDolProfileService);
+    }
+
+    /**
+     * Checks whether a module is a 'Context' module or not.
+     * 
+     * @param string $mixedModule - module name or an instance of Module class.
+     * @return boolean result of operation.
+     */
+    public function serviceIsModuleContext($mixedModule)
+    {
+        if(is_string($mixedModule))
+            $mixedModule = BxDolModule::getInstance($mixedModule);
+
+        return $mixedModule instanceof BxDolModule && $mixedModule instanceof iBxDolProfileService;
+    }
+
+    /**
+     * Checks whether a module is a 'Profile' module or not.
+     * 
+     * @param string $mixedModule - module name or an instance of Module class.
+     * @return boolean result of operation.
+     */
+    public function serviceIsModuleProfile($mixedModule)
+    {
+        if(is_string($mixedModule))
+            $mixedModule = BxDolModule::getInstance($mixedModule);
+
+        return $mixedModule instanceof BxDolModule && $mixedModule instanceof iBxDolProfileService && $mixedModule->serviceActAsProfile();
+    }
+
+    /**
      * Get modules by type. Available types are 'content', 'context', 'profile'.
      * 
      * @param type $sType - string with type.
@@ -414,13 +456,13 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             if(!$oModule)
                 continue;
 
-            if($sType == 'content' && (!($oModule instanceof iBxDolContentInfoService) || $oModule instanceof iBxDolProfileService))
+            if($sType == 'content' && !$this->serviceIsModuleContent($oModule))
                 continue;
 
-            if($sType == 'context' && !($oModule instanceof iBxDolProfileService))
+            if($sType == 'context' && !$this->serviceIsModuleContext($oModule))
                 continue;
 
-            if($sType == 'profile' && (!($oModule instanceof iBxDolProfileService) || !$oModule->serviceActAsProfile()))
+            if($sType == 'profile' && !$this->serviceIsModuleProfile($oModule))
                 continue;
 
             $aResults[] = $aModule;

@@ -11,8 +11,6 @@
 
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
-    protected $_sTableCache;
-
     protected $_sTableEvent2User;
     protected $_sTableRepostsTrack;
     protected $_sTableHotTrack;
@@ -28,8 +26,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         parent::__construct($oConfig);
 
         $CNF = &$this->_oConfig->CNF;
-
-        $this->_sTableCache = $this->_sPrefix . 'cache';
 
         $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
         $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
@@ -463,77 +459,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function updateHotTrack($aTrack)
     {
         return (int)$this->query("REPLACE INTO `" . $this->_sTableHotTrack . "` SET " . $this->arrayToSQL($aTrack)) > 0;
-    }
-
-    public function insertCache($aParamsSet)
-    {
-        if(empty($aParamsSet))
-            return false;
-
-        $iRet = (int)$this->query("REPLACE INTO `{$this->_sTableCache}` SET " . $this->arrayToSQL($aParamsSet)) > 0;
-        $this->setReadOnlyMode(true);
-        return $iRet;
-    }
-
-    public function deleteCache($aParamsWhere)
-    {
-        if(empty($aParamsWhere))
-            return false;
-
-        return (int)$this->query("DELETE FROM `{$this->_sTableCache}` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
-    }
-
-    public function clearCache()
-    {
-        return (int)$this->query("DELETE FROM `{$this->_sTableCache}` WHERE 1") > 0;
-    }
-
-    public function getCache($aParams)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        
-        $sFieldsClause = '*';
-        $sWhereClause = $sLimitClause = '';
-
-        if(isset($aParams['start']) && !empty($aParams['per_page']))
-            $sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
-
-        switch($aParams['browse']) {
-            case 'list': // by type + owner profile (context) + viewer profile
-                $aMethod['name'] = 'getAllWithKey';
-                $aMethod['params'][1] = 'event_id';
-                $aMethod['params'][2] = array(
-                    'type' => $aParams['type'],
-                    'context_id' => $aParams['context_id'],
-                    'profile_id' => $aParams['profile_id']
-                );
-
-                //--- Apply custom check depending on Type
-                switch($aParams['type']) {
-                    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
-                        $aMethod['params'][2]['context_id'] = 0;
-                        break;
-
-                    case BX_TIMELINE_TYPE_CHANNELS:
-                    case BX_TIMELINE_TYPE_FEED:
-                    case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
-                        $aMethod['params'][2]['context_id'] = $aParams['profile_id'];
-                        break;
-                }
-
-                $sWhereClause .= " AND `type`=:type AND `context_id`=:context_id  AND `profile_id`=:profile_id";
-                break;
-        }
-
-        $sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
-
-        $aMethod['params'][0] = "SELECT " . $sFieldsClause . " 
-        FROM `{$this->_sTableCache}` 
-        WHERE 1" . $sWhereClause . " ORDER BY `important` DESC, `date` DESC " . $sLimitClause;
-
-        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     public function getEvents($aParams)
@@ -976,6 +901,33 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //--- Select Promoted posts.
                 $mixedWhereSubclause['p4'] = "`{$this->_sTable}`.`promoted` <> '0'";
                 break;
+
+            //--- Feed: Profile Connections to contexts from Selected module
+            default:
+                if(empty($aParams['owner_id']))
+                    break;
+
+                $mixedJoinClause = [];
+                $mixedWhereSubclause = [];
+
+                $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+
+                //--- Join System posts received by following channels.
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
+                $aJoin1 = $aQueryParts['join'];
+
+                $mixedJoinClause['p1'] = "INNER JOIN `sys_profiles` AS `p` ON `" . $this->_sTable ."`.`owner_id`=`p`.`id` AND `p`.`type`='" . $aParams['type'] . "'";
+                $mixedJoinClause['p1'] .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+
+                $mixedWhereSubclause['p1'] = "NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+
+                //--- Exclude Own (Direct) posts on timelines of following members.
+                //--- Note. Disabled for now.
+                //$mixedWhereSubclause['p1'] = $this->prepareAsString(" AND IF(`{$this->_sTable}`.`system`='0', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
+
+                //--- Select Promoted posts.
+                $mixedWhereSubclause['p2'] = "`" . $this->_sTable . "`.`promoted` <> '0'";
+                break;
         }
 
         $aAlertParams = $aParams;
@@ -1018,6 +970,44 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
         return array($mixedJoinClause, $mixedWhereClause);
+    }
+
+    public function getMenuItemMaxOrder($sSetName)
+    {
+        return $this->getOne("SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`=:set_name LIMIT 1", [
+            'set_name' => $sSetName
+        ]);
+    }
+
+    public function getMenuItemId($sSetName, $sName)
+    {
+        return (int)$this->getOne("SELECT `id` FROM `sys_menu_items` WHERE `set_name`=:set_name AND `name`=:name LIMIT 1", [
+            'set_name' => $sSetName,
+            'name' => $sName
+        ]);
+    }
+
+    public function insertMenuItem($sSetName, $sModule, $sName, $sTitle, $iOrder)
+    {
+        return $this->query("INSERT INTO `sys_menu_items` SET " . $this->arrayToSQL([
+            'set_name' => $sSetName, 
+            'module' => $sModule, 
+            'name' => $sName, 
+            'title_system' => $sTitle,
+            'title' => $sTitle,
+            'link' => 'javascript:void(0)', 
+            'onclick' => "javascript:{js_object_view}.changeFeed(this, '" . $sModule . "')", 
+            'target' => '_self',
+            'order' => $iOrder
+        ]));
+    }
+    
+    public function deleteMenuItem($sSetName, $sName)
+    {
+        return $this->query("DELETE FROM `sys_menu_items` WHERE `set_name`=:set_name AND `name`=:name LIMIT 1", [
+            'set_name' => $sSetName,
+            'name' => $sName
+        ]);
     }
 }
 

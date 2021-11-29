@@ -198,6 +198,110 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
+    public function getViewsDbBlock($aParams)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+        $sJsContent = $this->getJsCodeView([
+            'sObjName' => $sJsObject,
+            'sName' => $aParams['name'],
+            'sView' => $aParams['view'],
+            'sType' => $aParams['type'],
+            'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
+            'oRequestParams' => $aParams
+        ], [
+            'wrap' => true,
+            'mask_markers' => ['object' => $sJsObject]
+        ]);
+
+        return array(
+            'content' => $this->parseHtmlByName('block_views_db.html', array(
+                'style_prefix' => $sStylePrefix,
+                'html_id' => $this->_oConfig->getHtmlIdView('views', $aParams, array('with_type' => false)),
+                'html_id_content' => $this->_oConfig->getHtmlIdView('views_content', $aParams, array('with_type' => false)),
+                'content' => $this->getViewBlock(array_merge($aParams, ['name' => ''])),
+                'js_content' => $sJsContent
+            )),
+            'buttons' => [
+                ['title' => _t('_bx_timeline_txt_filters'), 'href' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFeedFilters(this)']
+            ]
+        );
+    }
+
+    public function getViewFilters($aParams)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+
+        $aHandlers = $this->_oDb->getHandlers(['type' => 'by_type', 'value' => 'insert']);       
+
+        $aModules = [];
+        foreach($aHandlers as $aHandler) {
+            $sModule = $aHandler['alert_unit'];
+            if(isset($aModules[$sModule]))
+                continue;
+
+            $aModule = $this->_oDb->getModuleByName($sModule);
+            if(empty($aModule) || !is_array($aModule))
+                continue;
+
+            $sTitleKey = '_' . $sModule;
+            $sTitleValue = _t($sTitleKey);
+            if(strcmp($sTitleKey, $sTitleValue) == 0)
+                $sTitleValue = $aModule['title'];
+
+            $aModules[$sModule] = [
+                'key' => $aHandler['alert_unit'],
+                'value' => $sTitleValue
+            ];
+        }
+
+        uasort($aModules, function($aV1, $aV2) {
+            return strcmp($aV1['value'], $aV2['value']);
+        });
+
+        $aForm = [
+            'inputs' => [
+                'by_module' => [
+                    'name' => 'by_module',
+                    'type' => 'radio_set',
+                    'caption' => _t('_bx_timeline_form_filters_input_by_modules'),
+                    'values' => [
+                        ['key' => 'all', 'value' => _t('_bx_timeline_form_filters_input_by_modules_all')],
+                        ['key' => 'selected', 'value' => _t('_bx_timeline_form_filters_input_by_modules_selected')]
+                    ],
+                    'value' => 'all',
+                    'attrs' => ['onchange' => $sJsObject . '.onFilterByModuleChange(this)'],
+                    'dv_thd' => 1
+                ],
+                'modules' => [
+                    'name' => 'modules',
+                    'type' => 'checkbox_set',
+                    'values' => array_values($aModules),
+                    'tr_attrs' => ['class' => 'modules', 'style' => 'display:none']
+                ],
+                'apply' => [
+                    'name' => 'apply',
+                    'type' => 'button',
+                    'value' => _t('_bx_timeline_form_filters_input_do_apply'),
+                    'attrs' => ['onclick' => $sJsObject . '.onFilterApply(this)']
+                ]
+            ]
+        ];
+        $oForm = new BxTemplFormView($aForm);
+        
+
+        $sViewFiltersPopupId = $this->_oConfig->getHtmlIdView('filters_popup', $aParams);
+        $sViewFiltersPopupContent = $this->parseHtmlByName('block_view_filters.html', array(
+            'style_prefix' => $sStylePrefix,
+            'js_object' => $sJsObject,
+            'content' => $oForm->genRows()
+    	));
+
+    	return BxTemplFunctions::getInstance()->transBox($sViewFiltersPopupId, $sViewFiltersPopupContent, true);
+    }
+
     public function getViewBlock($aParams)
     {
         $oModule = $this->getModule();
@@ -254,7 +358,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'js_content' => &$sJsContent
         ));
 
-        return $sLiveUpdateCode . $this->parseHtmlByName('block_view.html', array(
+        return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'html_id' => $this->_oConfig->getHtmlIdView('main', $aParams),
             'view' => $aParams['view'],
@@ -266,6 +370,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'load_more' =>  $sLoadMore,
             'show_more' => $this->_getShowMore($aParams),
             'view_image_popup' => $this->_getImagePopup($aParams),
+            'live_update_code' => $sLiveUpdateCode,
             'js_content' => $sJsContent
         ));
     }
@@ -486,16 +591,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
             $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
-            if(!$oPrivacy->check($iEventId)) {
-                if($this->_oConfig->isCacheList())
-                    $this->_oDb->deleteCache(array(
-                        'type' => $aBrowseParams['type'], 
-                        'profile_id' => bx_get_logged_profile_id(),
-                        'event_id' => $iEventId
-                    ));
-
+            if(!$oPrivacy->check($iEventId))
                 return '';
-            }
         }
 
         $aResult = $this->getDataCached($aEvent, $aBrowseParams);
@@ -523,9 +620,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent[$sKey] = $this->_preparePrivacy($sKey, $aEvent, $aResult);
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';
-
-        if($this->_oConfig->isCacheList())
-            $this->_cacheEvent(bx_get_logged_profile_id(), $aEvent, $aBrowseParams);
 
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
         self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($sType, $aEvent, $aBrowseParams);
@@ -555,8 +649,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         //--- Before: Check for Next
         $aParamsDb['per_page'] += 1;
-
-        $aEvents = $this->_getPosts($aParamsDb);
+        $aEvents = $this->_oDb->getEvents($aParamsDb);
 
         //--- After: Check for Previous
         if($bPrevious) {
@@ -1438,97 +1531,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $aBrowseParams['type'],
             'bx_repeat:items' => $aTmplVarsItems
         ));
-    }
-
-    protected function _cacheEvent($iProfileId, &$aEvent, &$aParams)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $aParamsSet = array(
-            'type' => $aParams['type'],
-            'context_id' => is_array($aEvent[$CNF['FIELD_OWNER_ID']]) ? array_shift($aEvent[$CNF['FIELD_OWNER_ID']]) : $aEvent[$CNF['FIELD_OWNER_ID']],  
-            'profile_id' => $iProfileId, 
-            'event_id' => $aEvent[$CNF['FIELD_ID']], 
-            'date' => $aEvent[$CNF['FIELD_ADDED']]
-        );
-
-        //--- Process Context ID value.
-        if($aParams['type'] == BX_BASE_MOD_NTFS_TYPE_PUBLIC)
-            $aParamsSet['context_id'] = 0;
-        else if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_FEED, BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
-            $aParamsSet['context_id'] = $iProfileId;
-
-        //--- Process 'important' flag.
-        if($aParams['type'] == BX_BASE_MOD_NTFS_TYPE_OWNER && (int)$aEvent['pinned'] > 0) 
-            $aParamsSet['important'] = 1;
-        else if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_PUBLIC, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_FEED, BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)) && (int)$aEvent['sticked'] > 0)
-            $aParamsSet['important'] = 1;
-
-        return $this->_oDb->insertCache($aParamsSet);
-    }
-
-    protected function _cacheEvents($aParams)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $iPerPage = (int)$aParams['per_page'];
-        $aParamsCopy = $aParams;
-
-        $aIds = array();
-        while(count($aIds) < $iPerPage) {
-            $aEvents = $this->_oDb->getEvents($aParamsCopy);
-            if(empty($aEvents))
-                break;
-
-            foreach($aEvents as $aEvent) {
-                if($this->getPost($aEvent, $aParamsCopy) == '')
-                    continue;
-
-                $aIds[] = $aEvent[$CNF['FIELD_ID']];
-                if(count($aIds) == $iPerPage)
-                    break 2;
-            }
-
-            $aParamsCopy['start'] += $iPerPage;
-        }
-
-        return $aIds;
-    }
-
-    protected function _getCachedEvents($iProfileId, &$aParams)
-    {
-        return $this->_oDb->getCache(array(
-            'browse' => $aParams['browse'], 
-            'type' => $aParams['type'], 
-            'context_id' => $aParams['owner_id'], 
-            'profile_id' => $iProfileId, 
-            'start' => $aParams['start'], 
-            'per_page' => $aParams['per_page']
-        ));
-    }
-
-    protected function _getPosts($aParams)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        if(!$this->_oConfig->isCacheList() || $this->_oConfig->isCacheListException($aParams['type']))
-            return $this->_oDb->getEvents($aParams);
-
-        $iPerPage = (int)$aParams['per_page'];
-        $iProfileId = (int)bx_get_logged_profile_id(); 
-
-        /*
-         * Get cached data.
-         */
-        $aCache = $this->_getCachedEvents($iProfileId, $aParams);
-        if(!empty($aCache) && is_array($aCache) && count($aCache) == $iPerPage)
-            return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => array_keys($aCache)));
-
-        /*
-         * Cache data.
-         */
-        $aIds = $this->_cacheEvents($aParams);
-        return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => $aIds));
     }
 
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
@@ -2793,7 +2795,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 return (int)$aEvent[$CNF['FIELD_ID']];
 
         $aParams['start'] += $aParams['per_page'];
-        $aEvents = $this->_getPosts($aParams);
+        $aEvents = $this->_oDb->getEvents($aParams);
         if(!empty($aEvents) && is_array($aEvents))
             return $this->_getFirst($aEvents, $aParams);
 

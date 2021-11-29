@@ -85,13 +85,18 @@ SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' A
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `tabs`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_views_timeline', '_bx_timeline_page_block_title_views_timeline', 11, 1, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:24:"get_block_views_timeline";}', 0, 1, 1, @iPBOrderHome + 1),
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_views_outline', '_bx_timeline_page_block_title_views_outline', 11, 1, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_views_outline";}', 0, 1, 1, @iPBOrderHome + 2),
+
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_home', '_bx_timeline_page_block_title_view_home', 0, 0, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_view_home";}', 0, 1, 1, @iBlockOrder + 3),
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_home_outline', '_bx_timeline_page_block_title_view_home_outline', 0, 0, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_block_view_home_outline";}', 0, 1, 1, @iBlockOrder + 4),
+
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_account', '_bx_timeline_page_block_title_view_account', 0, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_account";}', 0, 1, 1, @iBlockOrder + 5),
-('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_account_outline', '_bx_timeline_page_block_title_view_account_outline', 0, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_block_view_account_outline";}', 0, 1, 1, @iBlockOrder + 6);
+('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_account_outline', '_bx_timeline_page_block_title_view_account_outline', 0, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_block_view_account_outline";}', 0, 1, 1, @iBlockOrder + 6),
+
+('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_menu_db', '_bx_timeline_page_block_title_menu_db', 11, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:17:"get_block_menu_db";}', 0, 1, 1, @iBlockOrder + 7),
+('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_views_db', '_bx_timeline_page_block_title_views_db', 11, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:18:"get_block_views_db";}', 0, 1, 1, @iBlockOrder + 8);
 
 
--- MENU: Feeds
+-- MENU: View
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_menu_view', '_bx_timeline_menu_title_view', 'bx_timeline_menu_view', 'bx_timeline', 15, 0, 1, 'BxTimelineMenuView', 'modules/boonex/timeline/classes/BxTimelineMenuView.php');
 
@@ -103,6 +108,19 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_view', 'bx_timeline', 'public', '_bx_timeline_menu_item_title_system_public', '_bx_timeline_menu_item_title_public', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''public'')', '_self', '', '', 2147483647, 1, 0, 2),
 ('bx_timeline_menu_view', 'bx_timeline', 'channels', '_bx_timeline_menu_item_title_system_channels', '_bx_timeline_menu_item_title_channels', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''channels'')', '_self', '', '', 2147483647, 0, 0, 3),
 ('bx_timeline_menu_view', 'bx_timeline', 'hot', '_bx_timeline_menu_item_title_system_hot', '_bx_timeline_menu_item_title_hot', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''hot'')', '_self', '', '', 2147483647, 1, 0, 4);
+
+-- MENU: Feeds
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_menu_feeds', '_bx_timeline_menu_title_feeds', 'bx_timeline_menu_feeds', 'bx_timeline', 20, 0, 1, 'BxTimelineMenuFeeds', 'modules/boonex/timeline/classes/BxTimelineMenuFeeds.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_timeline_menu_feeds', 'bx_timeline', '_bx_timeline_menu_set_title_feeds', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('bx_timeline_menu_feeds', 'bx_timeline', 'feed', '_bx_timeline_menu_item_title_system_feed', '_bx_timeline_menu_item_title_feed', 'javascript:void(0)', 'javascript:{js_object_view}.changeFeed(this, ''feed'')', '_self', '', '', 2147483647, 1, 0, 1),
+('bx_timeline_menu_feeds', 'bx_timeline', 'public', '_bx_timeline_menu_item_title_system_public', '_bx_timeline_menu_item_title_public', 'javascript:void(0)', 'javascript:{js_object_view}.changeFeed(this, ''public'')', '_self', '', '', 2147483647, 1, 0, 2),
+('bx_timeline_menu_feeds', 'bx_timeline', 'hot', '_bx_timeline_menu_item_title_system_hot', '_bx_timeline_menu_item_title_hot', 'javascript:void(0)', 'javascript:{js_object_view}.changeFeed(this, ''hot'')', '_self', '', '', 2147483647, 1, 0, 3),
+('bx_timeline_menu_feeds', 'bx_timeline', 'divider', '_bx_timeline_menu_item_title_system_divider', '', '', '', '', '', '', 2147483647, 1, 1, 4);
 
 -- MENU: Item Share (Repost, Send to Friend, etc)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -303,8 +321,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_timeline_enable_cache_item', 'on', @iCategId, '_bx_timeline_option_enable_cache_item', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_cache_item_engine', 'File', @iCategId, '_bx_timeline_option_cache_item_engine', 'select', '', '', '', 'File,Memcache,APC,XCache', 2),
-('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 3),
-('bx_timeline_enable_cache_list', 'on', @iCategId, '_bx_timeline_option_enable_cache_list', 'checkbox', '', '', '', '', 4);
+('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 3);
 
 -- Category: Post form
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
@@ -432,6 +449,8 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'clear_cache', @iHandler),
+('system', 'enable', @iHandler),
+('system', 'disable', @iHandler),
 
 ('account', 'confirm', @iHandler),
 ('account', 'unconfirm', @iHandler),

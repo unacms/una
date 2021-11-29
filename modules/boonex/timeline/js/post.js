@@ -336,7 +336,7 @@ BxTimelinePost.prototype._onGetPost = function(oData)
     var fContinue = function(oData) {
         if(!$.trim(oData.item).length) 
             return;
-
+console.log(oData); return;
         var aTypes = Array.isArray(oData.type) ? oData.type : new Array(oData.type);
         aTypes.forEach(function(sType) {
             oData['type'] = sType;

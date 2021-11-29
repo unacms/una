@@ -21,8 +21,11 @@ class BxTimelineInstaller extends BxBaseModNotificationsInstaller
     public function enable($aParams)
     {
         $aResult = parent::enable($aParams);
-        if($aResult['result'])
+        if($aResult['result']) {
             $this->updateParamAET(true);
+
+            $this->updateFeedsMenu();
+        }
 
         return $aResult;
     }
@@ -32,7 +35,7 @@ class BxTimelineInstaller extends BxBaseModNotificationsInstaller
         $aResult = parent::disable($aParams);
         if($aResult['result'])
             $this->updateParamAET(false);
-        
+
         return $aResult;
     }
 
@@ -57,6 +60,11 @@ class BxTimelineInstaller extends BxBaseModNotificationsInstaller
         }
 
         return setParam($sAetParam, $sAetParamValue);
+    }
+
+    protected function updateFeedsMenu()
+    {
+        return bx_srv_ii($this->_aConfig['name'], 'feeds_menu_add');
     }
 }
 

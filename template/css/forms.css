@@ -237,6 +237,17 @@
     height:auto;
 }
 
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set {
+    line-height: 1.25;
+}
+
+.bx-form-value .bx-form-input-radio_set label,
+.bx-form-value .bx-form-input-checkbox_set label {
+    padding-left: 0.25rem;
+}
+
+
 .bx-form-input-textarea {
     padding:0.5rem;
     height:150px;
