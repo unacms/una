@@ -1769,6 +1769,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $sMenu = $this->_oConfig->getObject('menu_feeds');
         $oMenu = BxDolMenu::getObjectInstance($sMenu);
+        if(!$oMenu)
+            return '';
 
         $sSelectedModule = $this->getName();
         $sSelectedName = $aParams['type'];
