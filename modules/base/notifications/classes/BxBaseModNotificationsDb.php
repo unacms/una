@@ -190,6 +190,14 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 
         if(!empty($aParams))
             switch($aParams['type']) {
+                case 'by_type':
+                    $aMethod['params'][1] = array(
+                        'type' => $aParams['value']
+                    );
+
+                    $sWhereClause = "AND `type`=:type";
+                    break;
+
                 case 'by_group_key_type':
                     $aMethod['name'] = 'getAllWithKey';
                     $aMethod['params'][1] = 'type';

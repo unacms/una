@@ -2,6 +2,19 @@
 import url(../../../../../timeline/template/css/view.css);
 --*/
 
+/*--- Filters Style ---*/
+div.bx-tl-view-filters {
+    min-width: 14rem;
+    max-width: 20rem;
+}
+div.bx-tl-view-filters div.bx-form-section-wrapper:first-child {
+    margin-top: 0;
+}
+div.bx-tl-view-filters div.bx-form-section-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 /*--- Item Style: Timeline ---*/
 div.bx-tl-view-timeline div.bx-tl-items,
 div.bx-tl-view-search div.bx-tl-items,

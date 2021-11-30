@@ -1815,11 +1815,12 @@ BLAH;
 
         // generate options
         $sDivider = isset($aInput['dv']) ? $aInput['dv'] : $this->_sDivider;
+        $iDividerThreshold = !empty($aInput['dv_thd']) ? (int)$aInput['dv_thd'] : 3;
 
         $sOptions = '';
 
         if (isset($aInput['values']) && is_array($aInput['values'])) {
-            if (count($aInput['values']) > 3 && $sDivider == $this->_sDivider)
+            if (count($aInput['values']) > $iDividerThreshold && $sDivider == $this->_sDivider)
                 $sDivider = $this->_sDividerAlt;
             
             // generate complex input using simple standard inputs

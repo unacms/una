@@ -42,6 +42,8 @@ function BxTimelineView(oOptions) {
 
     this._bLiveUpdatePaused = false;
 
+    this._oFiltersPopupOptions = {};
+
     if(typeof window.glBxTimelineVapPlayers === 'undefined')
         window.glBxTimelineVapPlayers = [];
 
@@ -397,6 +399,141 @@ BxTimelineView.prototype.reload = function(oSource)
 
         $this.init(true);
     });
+};
+
+BxTimelineView.prototype.changeFeed = function(oLink, sType, oRequestParams)
+{
+    var $this = this;
+    var oViews = $(this._getHtmlId('views_content', this._oRequestParams, {with_type: false})); 
+    var oViewActive = oViews.children(':visible');
+
+    if(this._sVideosAutoplay != 'off')
+        this.pauseVideos(oViewActive);
+
+    var sFilters = this._getHtmlId('filters_popup', jQuery.extend({}, this._oRequestParams, {name: ''}));
+    if($(sFilters).length)
+        $(sFilters).remove();
+
+    this._oRequestParams.type = sType;
+    oRequestParams = jQuery.extend({}, this._oRequestParams, {
+        name: '',
+        start: 0
+    }, oRequestParams);
+
+    var oData = this._getDefaultData(oLink);
+    oData = jQuery.extend({}, oData, oRequestParams);
+
+    var sView = $this._getHtmlId('main', oRequestParams);
+
+    var oTab = $(oLink);
+    var sTabActive = 'bx-menu-tab-active';
+    oTab.parents('ul:first').find('li.' + sTabActive).removeClass(sTabActive);
+    oTab.parents('li:first').addClass(sTabActive);
+
+    this.loadingIn(oLink, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'get_view',
+        oData,
+        function(oResponse) {
+            if(oLink)
+                $this.loadingIn(oLink, false);
+
+            if(!oResponse.content)
+                return;
+
+            oViewActive.hide('fast', function() {
+                oViews.html('').append(oResponse.content).find(sView).bxProcessHtml();
+            });
+        },
+        'json'
+    );
+};
+
+BxTimelineView.prototype.changeFeedFilters = function(oLink, oRequestParams)
+{
+    var $this = this;
+
+    oRequestParams = jQuery.extend({}, this._oRequestParams, {
+        name: '',
+        start: 0
+    }, oRequestParams);
+
+    var sFilters = this._getHtmlId('filters_popup', oRequestParams);
+    if($(sFilters).length)
+        return $(sFilters).dolPopup(this._oFiltersPopupOptions);
+
+    var oData = this._getDefaultData(oLink);
+    if(oRequestParams != undefined)
+        oData = jQuery.extend({}, oData, oRequestParams);
+
+    this.loadingIn(oLink, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'get_view_filters',
+        oData,
+        function(oResponse) {
+            if(oLink)
+                $this.loadingIn(oLink, false);
+
+            if(oResponse && oResponse.popup != undefined) {
+                $this._oFiltersPopupOptions = jQuery.extend({}, oResponse.popup.options, {
+                    pointer: { 
+                        el: $(oLink),
+                        align: 'right'
+                    }
+                });
+
+                oResponse.popup.options = $this._oFiltersPopupOptions;
+            }
+
+            processJsonData(oResponse);
+        },
+        'json'
+    );
+};
+
+BxTimelineView.prototype.onFilterByModuleChange = function(oSource)
+{
+    var oModules = $(oSource).parents('.bx-form-element-wrapper:first').siblings('.modules');
+    oModules.find("input[name='modules[]']:checked").removeAttr('checked');
+    oModules.bx_anim($(oSource).val() == 'selected' ? 'show' : 'hide');
+};
+
+BxTimelineView.prototype.onFilterApply = function(oSource)
+{
+    var $this = this;
+    var sView = this._getHtmlId('main', this._oRequestParams); 
+    var oFilters = $(oSource).parents('.bx-tl-view-filters:first');
+
+    this._oRequestParams.start = 0;
+    this._oRequestParams.modules = [];
+    if(oFilters.find("input[name='by_module']:checked").val() == 'selected')
+        oFilters.find("input[name='modules[]']:checked").each(function() {
+            $this._oRequestParams.modules.push($(this).val());
+        });
+
+    var oData = this._getDefaultData(oSource);
+
+    this.loadingIn(oSource, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'get_view',
+        oData,
+        function(oResponse) {
+            if(oSource)
+                $this.loadingIn(oSource, false);
+
+            if(!oResponse.content)
+                return;
+
+            $('.bx-popup-applied:visible').dolPopupHide();
+
+            $(sView).replaceWith(oResponse.content);
+            $(sView).bxProcessHtml();
+        },
+        'json'
+    );
 };
 
 BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)

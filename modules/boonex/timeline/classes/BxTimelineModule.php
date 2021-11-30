@@ -25,6 +25,8 @@ bx_import('BxBaseModNotificationsModule');
  */
 define('BX_TIMELINE_SLTMODE_ABSOLUTE', 21);
 
+define('BX_TIMELINE_NAME_VIEWS_DB', 'views_db'); //--- Dynamic browsing feeds.
+
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
 define('BX_TIMELINE_TYPE_CHANNELS', 'channels'); //--- Followed channels only.
@@ -188,8 +190,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$this->_oDb->updateEvent(array('pinned' => $aEvent['pinned']), array('id' => $iId)))
             return echoJson(array('code' => 3));
 
-        $this->_oDb->deleteCache(array('context_id' => $this->_iOwnerId)); //--- Delete cache for context
-
         echoJson(array(
             'code' => 0, 
             'id' => $iId, 
@@ -214,9 +214,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$aEvent['sticked'] = (int)$aEvent['sticked'] == 0 ? time() : 0;
     	if(!$this->_oDb->updateEvent(array('sticked' => $aEvent['sticked']), array('id' => $iId)))
             return echoJson(array('code' => 3));
-
-        $this->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
-        $this->_oDb->deleteCache(array('context_id' => $this->_iOwnerId)); //--- Delete cache for context
 
         bx_audit(
             $iId, 
@@ -248,9 +245,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aEvent['promoted'] = (int)$aEvent['promoted'] == 0 ? time() : 0;
         if(!$this->_oDb->updateEvent(array('promoted' => $aEvent['promoted']), array('id' => $iId)))
             return echoJson(array('code' => 2));
-
-        $this->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
-        $this->_oDb->deleteCache(array('context_id' => $this->_iOwnerId)); //--- Delete cache for context
 
         bx_alert($this->_oConfig->getObject('alert'), $sAction . 'd', $iId, (int)$this->getUserId(), array(
             'owner_id' => $aEvent['owner_id'],
@@ -291,9 +285,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$this->getConnectionMuteObject()->addConnection($this->_iProfileId, $iAuthor))
             return echoJson(array('code' => 2));
 
-        $this->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
-        $this->_oDb->deleteCache(array('context_id' => $this->_iOwnerId)); //--- Delete cache for context
-
         bx_alert($this->_oConfig->getObject('alert'), 'muted', $iAuthor, $this->_iProfileId, array(
             'owner_id' => $aEvent['owner_id'],
             'object_id' => $aEvent['object_id'],
@@ -319,8 +310,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         if(!$this->deleteEvent($aEvent))
             return echoJson(array('code' => 3));
-
-        $this->_oDb->deleteCache(array('event_id' => $iId));
 
         echoJson(array(
             'code' => 0, 
@@ -412,8 +401,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $aParams = $this->_prepareParamsGet();
 
-        $sConten = $this->_oTemplate->getViewBlock($aParams);
-        if(empty($sConten))
+        $sContent = $this->_oTemplate->getViewBlock($aParams);
+        if(empty($sContent))
             return echoJson(array());
 
         if(!empty($aParams['type']))
@@ -421,8 +410,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         echoJson(array(
             'code' => 0, 
-            'content' => $sConten,
+            'content' => $sContent,
         ));
+    }
+
+    function actionGetViewFilters()
+    {
+        $aParams = $this->_prepareParamsGet();
+
+        $sContent = $this->_oTemplate->getViewFilters($aParams);
+        if(empty($sContent))
+            return echoJson([]);
+
+        echoJson([
+            'code' => 0,
+            'popup' => [
+                'html' => $sContent,
+                'options' => [
+                    'closeOnOuterClick' => true,
+                    'removeOnClose' => false,
+                ]
+            ],
+        ]);
     }
 
     function actionGetPost()
@@ -741,6 +750,44 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
         ));
+    }
+
+    public function serviceFeedsMenuAdd($mixedModule = false)
+    {
+        $sSetName = $this->_oConfig->getObject('menu_set_feeds');
+
+        $iOrder = $this->_oDb->getMenuItemMaxOrder($sSetName);
+
+        $aModules = !empty($mixedModule) ? [$this->_oDb->getModuleByName($mixedModule)] : bx_srv('system', 'get_modules_by_type', ['context']);
+        foreach($aModules as $aModule) {
+            $sModuleName = $aModule['name'];
+            $sModuleUri = $aModule['uri'];
+            if($sModuleName == 'system' && $sModuleUri == 'system')
+                continue;
+
+            $iMenuItem = $this->_oDb->getMenuItemId($sSetName, $sModuleUri);
+            if(!empty($iMenuItem))
+                continue;
+
+            $sTitleKey = '_' . $sModuleName;
+            if(strcmp($sTitleKey, _t($sTitleKey)) == 0)
+                $sTitleKey = $aModule['title'];
+
+            $this->_oDb->insertMenuItem($sSetName, $sModuleName, $sModuleUri, $sTitleKey, ++$iOrder);
+        }
+
+        return true;
+    }
+
+    public function serviceFeedsMenuDelete($mixedModule = false)
+    {
+        $sSetName = $this->_oConfig->getObject('menu_set_feeds');
+
+        $aModules = !empty($mixedModule) ? [$this->_oDb->getModuleByName($mixedModule)] : bx_srv('system', 'get_modules_by_type', ['context']);
+        foreach($aModules as $aModule)
+            $this->_oDb->deleteMenuItem($sSetName, $aModule['uri']);
+
+        return true;
     }
 
     /**
@@ -1633,7 +1680,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $this->_serviceGetBlockViewByType(array(
             'view' => BX_TIMELINE_VIEW_TIMELINE, 
-            'type' => BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, 
+            'type' => BX_TIMELINE_TYPE_FEED, 
             'owner_id' => $iProfileId, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
@@ -1674,7 +1721,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $this->_serviceGetBlockViewByType(array(
             'view' => BX_TIMELINE_VIEW_OUTLINE, 
-            'type' => BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS,
+            'type' => BX_TIMELINE_TYPE_FEED,
             'owner_id' => $iProfileId, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
@@ -1706,6 +1753,50 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetBlockViewCustom($aParams = array())
     {
     	return $this->_serviceGetBlockViewByType($aParams);
+    }
+
+    public function serviceGetBlockMenuDb($aParams = array())
+    {
+        $aParams = $this->_prepareParams(array_merge($aParams, [
+            'name' => BX_TIMELINE_NAME_VIEWS_DB,
+            'view' => BX_TIMELINE_VIEW_TIMELINE,
+            'type' => BX_TIMELINE_TYPE_FEED,
+            'owner_id' => $this->getProfileId()
+        ]));
+
+        if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
+            $aParams['type'] = $sType;
+
+        $sMenu = $this->_oConfig->getObject('menu_feeds');
+        $oMenu = BxDolMenu::getObjectInstance($sMenu);
+
+        $sSelectedModule = $this->getName();
+        $sSelectedName = $aParams['type'];
+        if(($aModule = $this->_oDb->getModuleByName($aParams['type']))) {
+            $sSelectedModule = $aModule['name'];
+            $sSelectedName = $aModule['uri'];
+        }
+
+        $oMenu->setSelected($sSelectedModule, $sSelectedName);
+        $oMenu->setBrowseParams($aParams);
+        return $oMenu->getCode();
+    }
+
+    public function serviceGetBlockViewsDb($aParams = [])
+    {
+        $aParams = $this->_prepareParams(array_merge($aParams, [
+            'name' => BX_TIMELINE_NAME_VIEWS_DB,
+            'view' => BX_TIMELINE_VIEW_TIMELINE,
+            'type' => BX_TIMELINE_TYPE_FEED,
+            'owner_id' => $this->getProfileId()
+        ]));
+
+        if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
+            $aParams['type'] = $sType;
+
+        $this->_iOwnerId = $aParams['owner_id'];
+
+        return $this->_oTemplate->getViewsDbBlock($aParams);
     }
 
     /**
@@ -2809,8 +2900,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$this->deleteEvent($aEvent))
             return _t('_bx_timeline_txt_err_cannot_perform_action');
 
-        $this->_oDb->deleteCache(array('event_id' => $iContentId));
-
         return '';
     }
 
@@ -3177,7 +3266,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId);
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
-            $this->_oDb->deleteCache(array('event_id' => $iId));
 
             return array(
                 'id' => $iId
@@ -3810,10 +3898,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
         }
 
-        //--- Delete feed cached
-        $this->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
-        $this->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
-
         //--- Event -> Post/Defer for Alerts Engine ---//
         $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'defer' : 'post') . '_' . $sPostType;
         bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, array(
@@ -3826,15 +3910,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function onPublished($iContentId)
     {
-        $CNF = &$this->_oConfig->CNF;
-
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
-
         //--- Clear Item cache
         $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iContentId);
-        
-        //--- Clear Feed cache
-        $this->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']]));
 
         $this->onPost($iContentId);
     }
@@ -3949,9 +4026,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Delete associated meta.
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
         $oMetatags->onDeleteContent($aEvent[$CNF['FIELD_ID']]);
-
-        //--- Delete feed cache.
-        $this->_oDb->deleteCache(array('event_id' => $aEvent[$CNF['FIELD_ID']]));
         
         //--- Delete item cache.
         $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);

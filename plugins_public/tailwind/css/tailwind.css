@@ -453,6 +453,13 @@
         @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white;
     }
 
+    /* Vertical menu */
+    .bx-artificer .bx-menu-ver li.bx-menu-tab-active .bx-mi-highlight,
+    .bx-artificer .bx-menu-verlit li.bx-menu-tab-active .bx-mi-highlight,
+    .bx-artificer .bx-menu-custom-ver li.bx-menu-tab-active .bx-mi-highlight {
+        @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white font-medium;
+    }
+
     /* Vertical menu in Popup */
     .bx-artificer .bx-popup .bx-menu-ver > li:hover {
         @apply hover:text-gray-900 dark:hover:text-gray-100;

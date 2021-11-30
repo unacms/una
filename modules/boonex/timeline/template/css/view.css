@@ -1,5 +1,17 @@
 /*--- General section ---*/
 
+/*--- Dynamic Browsing: Menu ---*/
+.bx-menu-object-bx_timeline_menu_feeds .bx-menu-item > span {
+    display: block;
+    padding: 0;
+}
+.bx-menu-object-bx_timeline_menu_feeds .bx-menu-item > span > a {
+    display: block;
+    padding: 0.25rem 0.5rem;
+}
+.bx-menu-object-bx_timeline_menu_feeds .bx-menu-tab-active {
+    background-color: rgba(235, 240, 245, 0.8);
+}
 
 /*--- Views Block Style ---*/
 .bx-tl-views {
@@ -65,6 +77,19 @@ div.bx-tl-view {
 }
 div.bx-tl-items-wrapper {
 	position: relative;
+}
+
+/*--- Filters Style ---*/
+div.bx-tl-view-filters {
+    min-width: 14rem;
+    max-width: 20rem;
+}
+div.bx-tl-view-filters div.bx-form-section-wrapper:first-child {
+    margin-top: 0;
+}
+div.bx-tl-view-filters div.bx-form-section-content {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /*--- Back Style ---*/
