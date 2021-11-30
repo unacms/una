@@ -65,7 +65,7 @@ class BxBaseMenuInteractive extends BxTemplMenu
 
             $a = $this->_replaceMarkers($a);
 
-            list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
+            list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getMenuIcon($a);
 
             $a['class'] = 'bx-menu-item-inter';
             $a['class_wrp_act'] = 'bx-menu-inter-hidden';
@@ -92,6 +92,14 @@ class BxBaseMenuInteractive extends BxTemplMenu
             $a['bx_if:icon'] = array (
                 'condition' => (bool)$sIcon,
                 'content' => array('icon' => $sIcon),
+            );
+            $a['bx_if:icon-a'] = array (
+                'condition' => (bool)$sIconA,
+                'content' => array('icon-a' => $sIconA),
+            );
+            $a['bx_if:icon-html'] = array (
+                'condition' => (bool)$sIconHtml,
+                'content' => array('icon' => $sIconHtml),
             );
 
             $aRet[] = $a;
