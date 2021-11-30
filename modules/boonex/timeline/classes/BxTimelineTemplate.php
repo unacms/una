@@ -1922,9 +1922,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getTmplVarsMenuItemCounters(&$aEvent, $aBrowseParams = array())
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_counters'));
+        if(!$oMenu)
+            return array();
+
         $oMenu->setEvent($aEvent, $aBrowseParams);
         $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
-
         $sMenu = $oMenu->getCode();
         if(empty($sMenu))
             return array();
