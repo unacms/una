@@ -14,10 +14,18 @@ function bx_editor_init(oEditor, oParams){
             container: oParams.toolbar,
                 handlers: {
                 'embed': function(value) {
+                    var range = oEditor.getSelection();
                     bx_prompt(_t('_sys_txt_quill_tooltip_embed_popup_header'), '', function(oPopup){
                         sLink = $(oPopup).find("input[type = 'text']").val()
                         $.getJSON(oParams.root_url + 'embed.php?', {a: 'get_link', l: sLink}, function(aData){
-                            oEditor.insertEmbed(100, 'embed-link', {source: sLink, inlinecode : aData.code});
+                            if (range) {
+                                oEditor.clipboard.dangerouslyPasteHTML(range.index, "</p>&#8205; <p>&#8205; </p>", 'api');
+                                oEditor.insertEmbed(range.index+2, 'embed-link', {source: sLink, inlinecode : aData.code}, 'api');
+                            }
+                            else{
+                                 oEditor.insertEmbed(0, 'embed-link', {source: sLink, inlinecode : aData.code}, 'api');
+                            }
+                            
                             if ($(oParams.selector).next().next().find('.bx-embed-link a[href="' + aData.link + '"]').length > 0)
                                 bx_embed_link($(oParams.selector).next().next().find('.bx-embed-link a[href="' + aData.link + '"]')[0]);
                             else
