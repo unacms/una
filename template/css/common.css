@@ -890,6 +890,10 @@ input.bx-btn {
 
 
 /* --------------- Show More */
+.bx-overflow-ready {
+    max-height: 250px;
+    overflow: hidden;
+}
 .bx-overflow:before {
     position: absolute;
     bottom: 0;
