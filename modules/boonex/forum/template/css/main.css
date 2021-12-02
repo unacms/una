@@ -296,3 +296,45 @@
 .bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li .cmt-counter-holder {
     line-height: normal;
 }
+
+.bx-forum-category-list-item a{
+    display: flex;
+    align-items: center;
+}
+.bx-forum-category-list-item-selected{
+    background:  #ccc;
+}
+.bx-forum-icon{
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1.25rem;
+}
+.bx-forum-icon svg,
+.bx-forum-icon .sys-icon{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 2rem;
+}
+.bx-forum-thumb{
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 2rem;
+    line-height: 2.7rem;
+}
+.bx-forum-thumb img{
+    border-radius: 500px;
+}
+.bx-forum-thumb svg,
+.bx-forum-thumb .sys-icon{
+    width: 3rem;
+    height: 3rem;
+}
+.bx-forum-grid-status{
+    display: flex;
+}
+.bx-grid-table-cell-rating{
+    vertical-align: middle;
+}

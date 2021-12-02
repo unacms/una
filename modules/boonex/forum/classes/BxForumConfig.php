@@ -20,6 +20,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'unsubscribe-discussion' => 'checkAllowedUnsubscribe',
             'stick-discussion' => 'checkAllowedStickAnyEntry',
             'unstick-discussion' => 'checkAllowedUnstickAnyEntry',
+            'resolve-discussion' => 'checkAllowedResolveAnyEntry',
+            'unresolve-discussion' => 'checkAllowedUnresolveAnyEntry',
             'lock-discussion' => 'checkAllowedLockAnyEntry',
             'unlock-discussion' => 'checkAllowedUnlockAnyEntry',
             'hide-discussion' => 'checkAllowedHideAnyEntry',
@@ -65,6 +67,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STICK' => 'stick',
             'FIELD_LOCK' => 'lock',
+            'FIELD_RESOLVE' => 'resolved',
+            'FIELD_RESOLVABLE' => 'resolvable',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LABELS' => 'labels',
@@ -111,6 +115,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_GRID_FAVORITE' => 'bx_forum_favorite',
             'OBJECT_GRID_FEATURE' => 'bx_forum_feature',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
+            'OBJECT_GRID' => 'bx_forum',
             'OBJECT_GRID_COMMON' => 'bx_forum_common',
             'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
             'OBJECT_STORAGE' => 'bx_forum_covers',
@@ -242,6 +247,7 @@ class BxForumConfig extends BxBaseModTextConfig
         $this->_aGridObjects = array(
             'common' => $this->CNF['OBJECT_GRID_COMMON'],
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+            'main' => $this->CNF['OBJECT_GRID'],
         );
     }
 }

@@ -64,6 +64,8 @@
     <string name="_bx_forum_form_entry_input_sys_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_forum_form_entry_input_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_forum_form_entry_input_multicat_err"><![CDATA[Please select category]]></string>
+    <string name="_bx_forum_form_entry_input_resolvable"><![CDATA[Resolvable]]></string>
+    <string name="_bx_forum_form_entry_input_sys_resolvable"><![CDATA[Resolvable]]></string>
 
     <string name="_bx_forum_form_poll"><![CDATA[Polls]]></string>
     <string name="_bx_forum_form_poll_display_add"><![CDATA[Add Poll]]></string>
@@ -98,6 +100,7 @@
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Pin any discussion]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Lock any discussion]]></string>
 	<string name="_bx_forum_acl_action_hide_any_entry"><![CDATA[Hide any discussion]]></string>
+    <string name="_bx_forum_acl_action_resolve_any_entry"><![CDATA[Resolve any discussion]]></string>
 
 	<string name="_bx_forum_page_title_sys_create_entry"><![CDATA[New discussion]]></string>
 	<string name="_bx_forum_page_title_create_entry"><![CDATA[New discussion]]></string>
@@ -136,6 +139,9 @@
     <string name="_bx_forum_page_title_sys_home"><![CDATA[Discussions Home]]></string>
     <string name="_bx_forum_page_title_home"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_page_block_title_featured_entries"><![CDATA[Featured Discussions]]></string>
+    <string name="_bx_forum_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Discussions]]></string>
+    <string name="_bx_forum_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Discussions (Showcase view)]]></string>
+    
     <string name="_bx_forum_page_title_sys_entries_new"><![CDATA[New Discussions]]></string>
     <string name="_bx_forum_page_title_entries_new"><![CDATA[New Discussions]]></string>
     <string name="_bx_forum_page_title_sys_entries_top"><![CDATA[Top Discussions]]></string>
@@ -240,6 +246,10 @@
     <string name="_bx_forum_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_forum_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_forum_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
+    <string name="_bx_forum_menu_item_title_resolve_entry"><![CDATA[Resolve]]></string>
+    <string name="_bx_forum_menu_item_title_unresolve_entry"><![CDATA[Unresolve]]></string>
+    <string name="_bx_forum_menu_item_title_system_resolve_entry"><![CDATA[Resolve]]></string>
+    <string name="_bx_forum_menu_item_title_system_unresolve_entry"><![CDATA[Unresolve]]></string>
     <string name="_bx_forum_menu_item_title_system_stick_entry"><![CDATA[Pin]]></string>
     <string name="_bx_forum_menu_item_title_stick_entry"><![CDATA[Pin]]></string>
     <string name="_bx_forum_menu_item_title_system_unstick_entry"><![CDATA[Unpin]]></string>
@@ -314,6 +324,8 @@
     <string name="_bx_forum_grid_column_title_adm_author"><![CDATA[Author]]></string>
     <string name="_bx_forum_grid_column_title_title"><![CDATA[Category]]></string>
     <string name="_bx_forum_grid_column_title_visible_for_levels"><![CDATA[Visible For]]></string>
+    <string name="_bx_forum_grid_column_title_icon"><![CDATA[Icon]]></string>
+    <string name="_bx_forum_grid_action_title_edit"><![CDATA[Edit]]></string>
     <string name="_bx_forum_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
     <string name="_bx_forum_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_forum_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
@@ -332,6 +344,30 @@
     <string name="_bx_forum_grid_txt_visible_for_selected"><![CDATA[Selected levels]]></string>
     <string name="_bx_forum_grid_inf_visible_for_levels"><![CDATA[Select user levels that can view this category]]></string>
     <string name="_bx_forum_grid_err_show_to"><![CDATA[Cannot update category.]]></string>
+    <string name="_bx_forum_grid_edit_popup"><![CDATA[Edit category]]></string>
+    <string name="_bx_forum_grid_err_items_icon_image_remove"><![CDATA[Cannot remove icon image: ]]></string>
+    <string name="_bx_forum_grid_err_items_icon_image"><![CDATA[Cannot process image: ]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon"><![CDATA[Icon]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon_image"><![CDATA[]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon_image_new"><![CDATA[]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon_image_old"><![CDATA[Current Icon]]></string>
+    <string name="_bx_forum_grid_form_dsc_badges_icon"><![CDATA[You may use: 1) font icon, 2) Inline SVG code, 3) Emoji]]></string>
+    <string name="_bx_forum_grid_form_dsc_badges_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
+    <string name="_bx_forum_grid_form_dsc_badges_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
+    <string name="_bx_forum_grid_form_btn_badges_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_forum_grid_form_btn_badges_cancel"><![CDATA[Cancel]]></string>
+    
+    <string name="_bx_forum_grid_filter_resolved_all"><![CDATA[All]]></string>
+    <string name="_bx_forum_grid_filter_badges_all"><![CDATA[All]]></string>
+    <string name="_bx_forum_grid_filter_resolved_resolved"><![CDATA[Resolved]]></string>
+    <string name="_bx_forum_grid_filter_resolved_unresolved"><![CDATA[Unresolved]]></string>
+    
+    <string name="_bx_forum_grid_filter_order_recent"><![CDATA[Recent Posts]]></string>
+    <string name="_bx_forum_grid_filter_order_new"><![CDATA[New]]></string>
+    <string name="_bx_forum_grid_filter_order_top"><![CDATA[Top]]></string>
+    <string name="_bx_forum_grid_filter_order_updated"><![CDATA[Updated]]></string>
+    <string name="_bx_forum_grid_filter_order_popular"><![CDATA[Popular]]></string>
+    
     <string name="_bx_forum_grid_btn_save"><![CDATA[Save]]></string>
     <string name="_bx_forum_grid_btn_cancel"><![CDATA[Cancel]]></string>
 

@@ -133,7 +133,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
     	));
     }
 
-    function getEntryPreview($aRow)
+    function getEntryPreview($aRow, $aParams = [])
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
@@ -177,18 +177,29 @@ class BxForumTemplate extends BxBaseModTextTemplate
             'badges' => $oModule->serviceGetBadges($aRow[$CNF['FIELD_ID']], false, true),
             'text' => $sText,
             'bx_if:meta_main' => array(
-                'condition' => $aMetas['main'] !== false,
+                'condition' => $aMetas['main'] !== false && (!isset($aParams['show_meta_main']) || $aParams['show_meta_main']),
                 'content' => $aMetas['main']
             ),
             'bx_if:meta_counters' => array(
-                'condition' => $aMetas['counters'] !== false,
+                'condition' => $aMetas['counters'] !== false && (!isset($aParams['show_meta_counters']) || $aParams['show_meta_counters']),
                 'content' => $aMetas['counters']
             ),
             'bx_if:meta_reply' => array(
-                'condition' => $aMetas['reply'] !== false,
+                'condition' => $aMetas['reply'] !== false && (!isset($aParams['show_meta_reply']) || $aParams['show_meta_reply']),
                 'content' => $aMetas['reply']
             )
         ));
+    }
+    
+    public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+        if ($sType == 'main'){
+            $aParams = array_merge(array(
+                'sObjNameGrid' => $CNF['OBJECT_GRID'],
+            ), $aParams);
+        }
+        return parent::getJsCode($sType, $aParams);
     }
 
     function getAuthorDesc ($aData, $oProfile)

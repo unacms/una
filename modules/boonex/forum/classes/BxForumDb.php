@@ -105,6 +105,8 @@ class BxForumDb extends BxBaseModTextDb
 			'unstick' => array($CNF['FIELD_STICK'] => 0),
 			'lock' =>  array($CNF['FIELD_LOCK'] => 1),
 			'unlock' =>  array($CNF['FIELD_LOCK'] => 0),
+            'resolve' =>  array($CNF['FIELD_RESOLVE'] => 1),
+			'unresolve' =>  array($CNF['FIELD_RESOLVE'] => 0),
 			'hide' =>  array($CNF['FIELD_STATUS_ADMIN'] => 'hidden'),
 			'unhide' =>  array($CNF['FIELD_STATUS_ADMIN'] => 'active')
 		);

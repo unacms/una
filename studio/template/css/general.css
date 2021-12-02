@@ -184,7 +184,19 @@ div.bx-std-pmen-item:hover svg g,
 div.bx-std-pmen-item.bx-menu-tab-active svg g {
     opacity: 0.85;
 }
-
+/*--- Icons ---*/
+img.bx-item-icon,
+svg.bx-item-icon{
+    width: 32px;
+    height: 32px;
+}
+div.bx-item-icon-preview {}
+div.bx-item-icon-preview img,
+div.bx-item-icon-preview svg{
+	max-width:128px; 
+    max-height:128px;
+}
+div.adm-item-icon-preview-empty {}
 
 /**
  * Footer
