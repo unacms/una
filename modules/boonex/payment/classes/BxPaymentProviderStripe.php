@@ -159,6 +159,68 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
     	return $aParams;
     }
 
+    public function getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency)
+    {
+        $sCode = $this->_getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency);
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_charge', 0, false, array(
+            'provider' => $this,
+            'vendor_id' => $iVendorId, 
+            'customer_id' => $iCustomerId,
+            'amount' => $fAmount,
+            'currency' => $sCurrency,
+            'override_result' => &$sCode
+        ));
+
+        return $sCode;
+    }
+
+    public function checkVerificationCodeCharge($iVendorId, $iCustomerId, $aResult)
+    {
+        $bCheckResult = $this->_checkVerificationCodeCharge($iVendorId, $iCustomerId, $aResult);
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_charge', 0, false, array(
+            'provider' => $this,
+            'vendor_id' => $iVendorId, 
+            'customer_id' => $iCustomerId,
+            'result' => $aResult,
+            'override_result' => &$bCheckResult
+        ));
+
+        return $bCheckResult;
+    }
+
+    public function getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency)
+    {
+        $sCode = $this->_getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency);
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_subscription', 0, false, array(
+            'provider' => $this,
+            'vendor_id' => $iVendorId, 
+            'customer_id' => $iCustomerId,
+            'subscription' => $sSubscription,
+            'currency' => $sCurrency,
+            'override_result' => &$sCode
+        ));
+
+        return $sCode;
+    }
+    
+    public function checkVerificationCodeSubscription($iVendorId, $iCustomerId, $aResult)
+    {
+        $bCheckResult = $this->_checkVerificationCodeSubscription($iVendorId, $iCustomerId, $aResult);
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_subscription', 0, false, array(
+            'provider' => $this,
+            'vendor_id' => $iVendorId, 
+            'customer_id' => $iCustomerId,
+            'result' => $aResult,
+            'override_result' => &$bCheckResult
+        ));
+
+        return $bCheckResult;
+    }
+
     protected function _createToken($aCard)
     {
         try {
@@ -215,7 +277,7 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
                 'product' => $iPendingId,
-                'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
+                'verification' => $this->getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
             )
         );
 
@@ -237,7 +299,7 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
             return false;
 
         $aMetadata = $aResult['metadata'];
-        if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $aResult['amount'], $aResult['currency']))
+        if(!$this->checkVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $aResult))
             return false;
 
         return array(
@@ -270,7 +332,7 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
                 'product' => $iPendingId,
-                'verification' => $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
+                'verification' => $this->getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
             )
         );
 
@@ -292,8 +354,7 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
         if(empty($aResult) || !is_array($aResult) || (!$bTrial && $aResult['status'] != 'active') || ($bTrial && !in_array($aResult['status'], array('active', 'trialing'))))
             return false;
 
-        $aMetadata = $aResult['metadata'];
-        if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aResult['plan']['id'], $aResult['plan']['currency']))
+        if(!$this->checkVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aResult))
             return false;
 
         return array(
@@ -375,6 +436,36 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
             'sVendorIcon' => '',
             'sClientEmail' => $sClientEmail,
         ), $aParams)), $sJsMethod);
+    }
+    
+    protected function _getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency)
+    {
+        return md5(implode('#-#', array(
+            (int)$iVendorId,
+            (int)$iCustomerId,
+            (float)$fAmount,
+            strtoupper($sCurrency)
+        )));
+    }
+
+    protected function _checkVerificationCodeCharge($iVendorId, $iCustomerId, $aResult)
+    {
+        return !empty($aResult['metadata']['verification']) && $aResult['metadata']['verification'] == $this->getVerificationCodeCharge($iVendorId, $iCustomerId, $aResult['amount'], $aResult['currency']);
+    }
+
+    protected function _getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency)
+    {
+        return md5(implode('#-#', array(
+            (int)$iVendorId,
+            (int)$iCustomerId,
+            strtoupper($sSubscription),
+            strtoupper($sCurrency)
+        )));
+    }
+
+    protected function _checkVerificationCodeSubscription($iVendorId, $iCustomerId, $aResult)
+    {
+        return !empty($aResult['metadata']['verification']) && $aResult['metadata']['verification'] == $this->getVerificationCodeSubscription($iVendorId, $iCustomerId, $aResult['plan']['id'], $aResult['plan']['currency']);
     }
 }
 

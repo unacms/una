@@ -603,24 +603,6 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
         return $aResult;
     }
 
-    protected function _getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency) {
-        return md5(implode('#-#', array(
-            (int)$iVendorId,
-            (int)$iCustomerId,
-            (float)$fAmount,
-            strtoupper($sCurrency)
-        )));
-    }
-
-    protected function _getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency) {
-        return md5(implode('#-#', array(
-            (int)$iVendorId,
-            (int)$iCustomerId,
-            strtoupper($sSubscription),
-            strtoupper($sCurrency)
-        )));
-    }
-
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
     {
         list($sJsCode, $sJsMethod) = $this->_getButtonJs($sType, $iClientId, $iVendorId, $aParams);
