@@ -7,6 +7,13 @@
 .bx-page-html-container {
     overflow:hidden;
 }
+/* icons */
+.sys-icon-emoji{
+    font-weight: normal !important;
+}
+.sys-icon-svg{
+    color: transparent !important;
+}
 
 /* --------------- toolbar */
 
