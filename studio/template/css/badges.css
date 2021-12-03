@@ -68,10 +68,7 @@ img.bx-badge-icon,
 svg.bx-badge-icon{
     width: 16px;
     height: 16px;
-}
-div.bx-badge img{
-
-	margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 div.bx-badge span{
 	text-overflow: ellipsis; 

@@ -296,12 +296,9 @@ div.bx-badges-list div.bx-badge{
 
 img.bx-badge-icon,
 svg.bx-badge-icon{
-    width: 16px;
-    height: 16px;
-}
-div.bx-badge img,
-div.bx-badge svg{
-	margin-right: 0.5rem;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 0.5rem !important;
 }
 div.bx-badge span{
 	text-overflow: ellipsis; 
