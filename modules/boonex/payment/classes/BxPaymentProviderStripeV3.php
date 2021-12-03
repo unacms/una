@@ -234,6 +234,85 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         );
     }
 
+    public function createTax($sName, $fPercentage, $bInclusive = false)
+    {
+        $oTax = null;
+        $aTax = [
+            'display_name' => $sName,
+            'percentage' => $fPercentage,
+            'inclusive' => $bInclusive,
+        ];
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_tax', 0, false, array(
+            'tax_object' => &$oTax, 
+            'tax_params' => &$aTax
+        ));
+
+        try {
+            if(empty($oTax))
+                $oTax = $this->_getStripe()->taxRates->create($aTax);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Create Tax Error: ', $oException);
+        }
+
+        $aResult = $oTax->jsonSerialize();
+        if(empty($aResult) || !is_array($aResult))
+            return false;
+
+        return $aResult['id'];
+    }
+
+    public function retrieveTax($sId)
+    {
+        $oTax = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_tax', 0, false, array(
+            'tax_id' => &$sId,
+            'tax_object' => &$oTax
+        ));
+
+        try {
+            if(empty($oTax))
+                $oTax = $this->_getStripe()->taxRates->retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Tax Error: ', $oException);
+        }
+
+        return $oTax;
+    }
+
+    public function getVerificationCodeSession($iVendorId, $iCustomerId, $fAmount, $sCurrency)
+    {
+        $sCode = $this->_getVerificationCodeSession($iVendorId, $iCustomerId, $fAmount, $sCurrency);
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_code_session', 0, false, array(
+            'provider' => $this,
+            'vendor_id' => $iVendorId, 
+            'customer_id' => $iCustomerId,
+            'amount' => $fAmount,
+            'currency' => $sCurrency,
+            'override_result' => &$sCode
+        ));
+
+        return $sCode;
+    }
+
+    public function checkVerificationCodeSession($iVendorId, $iCustomerId, $aResult)
+    {
+        $bCheckResult = $this->_checkVerificationCodeSession($iVendorId, $iCustomerId, $aResult);
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_verify_session', 0, false, array(
+            'provider' => $this,
+            'vendor_id' => $iVendorId, 
+            'customer_id' => $iCustomerId,
+            'result' => $aResult,
+            'override_result' => &$bCheckResult
+        ));
+
+        return $bCheckResult;
+    }
+
     protected function _getStripe()
     {
         if(empty($this->_oStripe))
@@ -297,7 +376,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'quantity' => $aItem['quantity'],
                     );
 
-                    $aMetaItems[] = array('m' => $aItem['module_id'], 'i' => $aItem['id']);
+                    $aMetaItems[] = array('v' => $aCartInfo['vendor_id'], 'c' => $aClient['id'], 'm' => $aItem['module_id'], 'i' => $aItem['id']);
                 }
                 break;
 
@@ -310,7 +389,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'quantity' => $aItem['quantity'],
                     );
 
-                    $aMetaItems[] = array('m' => $aItem['module_id'], 'i' => $aItem['id']);
+                    $aMetaItems[] = array('v' => $aCartInfo['vendor_id'], 'c' => $aClient['id'], 'm' => $aItem['module_id'], 'i' => $aItem['id']);
                 }
                 break;
         }
@@ -328,7 +407,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 'client' => $aClient['id'],
                 'type' => $sType, 
                 'items' => serialize($aMetaItems),
-                'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
+                'verification' => $this->getVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
             )
         );
 
@@ -349,8 +428,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         if(empty($aResult) || !is_array($aResult))
             return false;
 
-        $aMetadata = $aResult['metadata'];
-        if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], (float)$aResult['amount_total'], $aResult['currency']))
+        if(!$this->checkVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $aResult))
             return false;
 
         return $aResult['id'];
@@ -493,6 +571,21 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'sVendorIcon' => '',
             'sClientEmail' => $sClientEmail,
         ), $aParams)), $sJsMethod);
+    }
+
+    protected function _getVerificationCodeSession($iVendorId, $iCustomerId, $fAmount, $sCurrency)
+    {
+        return md5(implode('#-#', array(
+            (int)$iVendorId,
+            (int)$iCustomerId,
+            (float)$fAmount,
+            strtoupper($sCurrency)
+        )));
+    }
+
+    protected function _checkVerificationCodeSession($iVendorId, $iCustomerId, $aResult)
+    {
+        return !empty($aResult['metadata']['verification']) && $aResult['metadata']['verification'] == $this->getVerificationCodeSession($iVendorId, $iCustomerId, $aResult['amount_total'], $aResult['currency']);
     }
 
     protected function _processException($sMessage, &$oException)
