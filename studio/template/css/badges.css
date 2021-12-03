@@ -64,9 +64,10 @@ div.bx-badge {
 	text-overflow: ellipsis; 
     overflow: hidden;
 }
-img.bx-badge-icon {
-    width: 14px;
-    height: 14px;
+img.bx-badge-icon,
+svg.bx-badge-icon{
+    width: 16px;
+    height: 16px;
 }
 div.bx-badge img{
 

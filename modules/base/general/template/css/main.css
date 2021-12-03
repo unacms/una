@@ -294,9 +294,10 @@ div.bx-badges-list div.bx-badge{
     margin:0 0.25rem;
 }
 
-img.bx-badge-icon {
-    width: 14px;
-    height: 14px;
+img.bx-badge-icon,
+svg.bx-badge-icon{
+    width: 16px;
+    height: 16px;
 }
 div.bx-badge img,
 div.bx-badge svg{

@@ -407,7 +407,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
     protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-nav-item-icon bx-def-border'));
+        $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-item-icon'));
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
