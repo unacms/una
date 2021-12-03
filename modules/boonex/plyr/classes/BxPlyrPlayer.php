@@ -199,7 +199,14 @@ class BxPlyrPlayer extends BxDolPlayer
             $sScript = "
             <script>
                 $(document).ready(function () {
-                    $sInitEditor
+                    if (bx_is_selector_in_stylesheet('.plyr')) {
+                        $sInitEditor
+                    } 
+                    else {
+                    	setTimeout(function () {
+                        	$sInitEditor
+                        }, 250);
+                    }
                 });
             </script>";
 

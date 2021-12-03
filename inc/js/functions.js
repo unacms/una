@@ -1255,4 +1255,12 @@ jQuery.bxGetCachedScript = function(sUrl, oOptions)
     return jQuery.ajax(oOptions);
 };
 
+function bx_is_selector_in_stylesheet(sSel)
+{
+    var o = [].slice.call(document.styleSheets)
+        .reduce( (prev, styleSheet) => [].slice.call(styleSheet.cssRules))
+        .reduce( (prev, cssRule) => prev + cssRule.cssText);
+    return jQuery.isFunction(o.includes) && o.includes('.plyr');
+}
+
 /** @} */
