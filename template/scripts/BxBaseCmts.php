@@ -693,6 +693,11 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
+    protected function _getCounterItems($iCmtsLimit, $iCmtsStart = 0)
+    {
+        return $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => $iCmtsStart, 'per_page' => $iCmtsLimit * 4));
+    }
+    
     public function getCounter($aParams = array())
     {
         $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
@@ -710,7 +715,7 @@ class BxBaseCmts extends BxDolCmts
             $sClass .= ' bx-btn-height';
 
         $iCmtsLimit = 5;
-        $aCmts = $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => 0, 'per_page' => $iCmtsLimit * 4));
+        $aCmts = $this->_getCounterItems($iCmtsLimit);
         $aCmts = array_reverse($aCmts);
 
         $aTmplVarsProfiles = array();
@@ -747,10 +752,11 @@ class BxBaseCmts extends BxDolCmts
                     'onclick' => $sOnclick
                 )
             ),
+            
             'content' => $this->_getCounterLabel($iCount, $aParams),
             'bx_repeat:profiles' => $aTmplVarsProfiles,
             'bx_if:show_icon' => array(
-                'condition' => $bShowEmpty || !empty($aTmplVarsProfiles),
+                'condition' => $bShowEmpty && (!isset($aParams['show_icon']) || $aParams['show_icon']),
                 'content' => array(
                     'icon' => isset($aParams['custom_icon']) && $aParams['custom_icon'] != '' ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml('comment', $this->_sStylePrefix . '-counter-icon sys-icon')
                 )
@@ -788,7 +794,7 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getCounterLabel($iCount, $aParams = array())
     {
-        return (int)$iCount != 0 ? _t(isset($aParams['caption']) ? $aParams['caption'] : '_cmt_txt_counter', $iCount) : _t('_cmt_txt_counter_empty');
+        return (int)$iCount != 0 ? _t(isset($aParams['caption']) ? $aParams['caption'] : '_cmt_txt_counter', $iCount) : _t(isset($aParams['caption_empty']) ? $aParams['caption_empty'] : '_cmt_txt_counter_empty').'';
     }
 
     protected function _getTmplElementBlock()

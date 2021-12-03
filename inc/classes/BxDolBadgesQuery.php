@@ -90,6 +90,17 @@ class BxDolBadgesQuery extends BxDolDb
                 );
                 break;
                 
+            case 'by_module&badge':
+                $aMethod['name'] = 'getColumn';
+                $sSelectClause = "`soc`.`object_id`";
+                $sJoinClause = "INNER JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` ";
+                $sWhereClause = " AND `sc`.`module` = :module  AND `sc`.`id` = :badge_id";
+                $aMethod['params'][1] = array(
+                    'badge_id' => $aParams['badge_id'],
+                    'module' => $aParams['module']
+                );
+                break;
+                
             case 'id':
             	$aMethod['name'] = 'getRow';
             	$aMethod['params'][1] = array(

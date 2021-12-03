@@ -91,14 +91,14 @@ class BxBaseSearchResult extends BxDolSearchResult
     function displaySearchBox ($sContent, $sPaginate = '')
     {
 		$sContent = BxDolTemplate::getInstance()->parseHtmlByName('paginate_block.html', array(
-			'bx_if:top' => array(
-				'condition' => isset($this->aCurrent['paginate']['on_top']) && $this->aCurrent['paginate']['on_top'] == true,
+			'bx_if:paginate_top' => array(
+				'condition' => (isset($this->aCurrent['paginate']['on_top']) && $this->aCurrent['paginate']['on_top'] == true) && $sPaginate != '',
 				'content' => array(
 					'paginate' => $sPaginate
 				),
 			),
-			'bx_if:bottom' => array(
-				'condition' => !isset($this->aCurrent['paginate']['on_bottom']) || $this->aCurrent['paginate']['on_bottom'] != false,
+			'bx_if:paginate_bottom' => array(
+				'condition' => (!isset($this->aCurrent['paginate']['on_bottom']) || $this->aCurrent['paginate']['on_bottom'] != false) && $sPaginate != '',
 				'content' => array(
 					'paginate' => $sPaginate
 				),

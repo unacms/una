@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `featured` int(11) NOT NULL default '0',
   `stick` tinyint(4) NOT NULL DEFAULT '0',
   `lock` tinyint(4) NOT NULL DEFAULT '0',
+  `resolvable` tinyint(4) NOT NULL DEFAULT '0',
+  `resolved` tinyint(4) NOT NULL DEFAULT '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
@@ -41,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
 CREATE TABLE IF NOT EXISTS `bx_forum_categories` (
   `category` int(11) NOT NULL default '0',
   `visible_for_levels` int(11) NOT NULL default '2147483647',
+  `icon` text NOT NULL,
   PRIMARY KEY (`category`)
 );
 
@@ -449,6 +452,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_forum_search', @sName, 'author', '', '', 0, 'custom', '_bx_forum_form_search_input_sys_author', '_bx_forum_form_search_input_author', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_forum_search', @sName, 'category', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_search_input_sys_category', '_bx_forum_form_search_input_category', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_forum_search', @sName, 'keyword', '', '', 0, 'text', '_bx_forum_form_search_input_sys_keyword', '_bx_forum_form_search_input_keyword', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+(@sName, @sName, 'resolvable', '', '1', 0, 'switcher', '_bx_forum_form_entry_input_sys_resolvable', '_bx_forum_form_entry_input_resolvable', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_forum_search', @sName, 'do_submit', '_bx_forum_form_search_input_do_submit', '', 0, 'submit', '_bx_forum_form_search_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
@@ -462,7 +466,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_add', 'polls', 2147483647, 1, 8),
 ('bx_forum_entry_add', 'covers', 2147483647, 1, 9),
 ('bx_forum_entry_add', 'allow_view_to', 2147483647, 1, 10),
-('bx_forum_entry_add', 'do_submit', 2147483647, 1, 11),
+('bx_forum_entry_add', 'resolvable', 2147483647, 1, 11),
+('bx_forum_entry_add', 'do_submit', 2147483647, 1, 12),
 
 ('bx_forum_entry_edit', 'title', 2147483647, 1, 1),
 ('bx_forum_entry_edit', 'cat', 2147483647, 1, 2),
@@ -474,7 +479,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_edit', 'polls', 2147483647, 1, 8),
 ('bx_forum_entry_edit', 'covers', 2147483647, 1, 9),
 ('bx_forum_entry_edit', 'allow_view_to', 2147483647, 1, 10),
-('bx_forum_entry_edit', 'do_submit', 2147483647, 1, 11),
+('bx_forum_entry_edit', 'resolvable', 2147483647, 1, 11),
+('bx_forum_entry_edit', 'do_submit', 2147483647, 1, 12),
 
 ('bx_forum_entry_view', 'title', 2147483647, 1, 1),
 ('bx_forum_entry_view', 'cat', 2147483647, 1, 2),
@@ -539,7 +545,7 @@ INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
-(@sName, @sName, 'bx_forum_scores', 'bx_forum_scores_track', '604800', '0', 'bx_forum_discussions', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
+(@sName, @sName, 'bx_forum_scores', 'bx_forum_scores_track', '604800', '1', 'bx_forum_discussions', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 
 -- FAVORITES

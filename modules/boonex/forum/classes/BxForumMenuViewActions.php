@@ -70,6 +70,16 @@ class BxForumMenuViewActions extends BxBaseModTextMenuViewActions
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
+    
+    protected function _getMenuItemResolveDiscussion($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+    
+    protected function _getMenuItemUnresolveDiscussion($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
 }
 
 /** @} */

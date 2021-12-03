@@ -11,16 +11,85 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
+define('BX_FORUM_FILTER_STATUS_RESOLVED', 1);
+define('BX_FORUM_FILTER_STATUS_UNRESOLVED', 0);
+
+define('BX_FORUM_FILTER_ORDER_RECENT', 'latest');
+define('BX_FORUM_FILTER_ORDER_NEW', 'new');
+define('BX_FORUM_FILTER_ORDER_TOP', 'top');
+define('BX_FORUM_FILTER_ORDER_UPDATED', 'updated');
+define('BX_FORUM_FILTER_ORDER_POPULAR', 'popular');
+
 class BxForumGrid extends BxTemplGrid
 {
     protected $_oModule;
     protected $_sDefaultSource; 
+    
+    protected $_sFilter1Name;
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
+    
+    protected $_sFilter2Name;
+    protected $_sFilter2Value;
+    protected $_aFilter2Values;
+    
+    protected $_sFilter3Name;
+    protected $_sFilter3Value;
+    protected $_aFilter3Values;
+    
+    protected $_sParamsDivider;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         $this->_oModule = BxDolModule::getInstance('bx_forum');
 
         parent::__construct ($aOptions, $oTemplate);
+        
+        $this->_sFilter1Name = 'filter1';
+        $this->_aFilter1Values = array(
+            '' => _t('_bx_forum_grid_filter_resolved_all'),
+            BX_FORUM_FILTER_STATUS_RESOLVED => _t('_bx_forum_grid_filter_resolved_resolved'),
+            BX_FORUM_FILTER_STATUS_UNRESOLVED => _t('_bx_forum_grid_filter_resolved_unresolved'),
+        );
+        
+        $sFilter1 = bx_get($this->_sFilter1Name);
+        if(!empty($sFilter1)) {
+            $this->_sFilter1Value = bx_process_input($sFilter1);
+            $this->_aQueryAppend['filter1'] = $this->_sFilter1Value;
+        }
+        
+        $this->_sFilter2Name = 'filter2';
+        $aBadges = BxDolBadges::getInstance()->getData(['type' => 'by_module', 'module' => $this->_oModule->_aModule['name']]);
+        $this->_aFilter2Values = array(
+            '' => _t('_bx_forum_grid_filter_badges_all'),
+        );
+        
+        foreach($aBadges as $aBadge) {
+            $this->_aFilter2Values[$aBadge['id']] = $aBadge['text'];
+        }
+        
+        $sFilter2 = bx_get($this->_sFilter1Name);
+        if(!empty($sFilter2)) {
+            $this->_sFilter2Value = bx_process_input($sFilter2);
+            $this->_aQueryAppend['filter2'] = $this->_sFilter2Value;
+        }
+        
+        $this->_sFilter3Name = 'filter3';
+        $this->_aFilter3Values = array(
+            BX_FORUM_FILTER_ORDER_RECENT => _t('_bx_forum_grid_filter_order_recent'),
+            BX_FORUM_FILTER_ORDER_NEW => _t('_bx_forum_grid_filter_order_new'),
+            BX_FORUM_FILTER_ORDER_TOP => _t('_bx_forum_grid_filter_order_top'),
+            BX_FORUM_FILTER_ORDER_UPDATED => _t('_bx_forum_grid_filter_order_updated'),
+            BX_FORUM_FILTER_ORDER_POPULAR => _t('_bx_forum_grid_filter_order_popular'),
+        );
+        
+        $sFilter3 = bx_get($this->_sFilter3Name);
+        if(!empty($sFilter3)) {
+            $this->_sFilter1Value = bx_process_input($sFilter3);
+            $this->_aQueryAppend['filter3'] = $this->_sFilter1Value;
+        }
+        
+        $this->_sParamsDivider = '#-#';
 
         $this->_sDefaultSortingOrder = 'DESC';
         $this->_sDefaultSource = $this->_aOptions['source'];
@@ -38,6 +107,9 @@ class BxForumGrid extends BxTemplGrid
 
             unset($aParams['ajax_paginate']);
         }
+        
+        if ($aParams['type'])
+            $this->_sFilter3Value = $aParams['type'];
 
         parent::setBrowseParams($aParams);
 
@@ -118,10 +190,64 @@ class BxForumGrid extends BxTemplGrid
 
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
+    
+    protected function _getCellCategory($mixedValue, $sKey, $aField, $aRow)
+    {
+        $sIcon = '';
+        $o = BxDolCategory::getObjectInstance('bx_forum_cats');
+        
+        $aCategoryData = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $aRow['cat']));
+
+        if(isset($aCategoryData['icon']))
+            $sIcon = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon'));
+        $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('thumb.html', ['icon' => $sIcon, 'title' => $o->getCategoryTitle($aRow['cat'])]);
+        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellRating($mixedValue, $sKey, $aField, $aRow)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oObject = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aRow[$CNF['FIELD_ID']]) : null;
+        $mixedValue = $oObject ? $oObject->getElementInline() : '';
+        
+        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellParticipants($mixedValue, $sKey, $aField, $aRow)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+    	$oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
+      
+        $mixedValue = $oObject ? $oObject->getCounter(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => true, 'caption' => '', 'show_icon' => false, 'caption_empty' => '']) : '';
+
+        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+     protected function _getCellStatus($mixedValue, $sKey, $aField, $aRow)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
+        $sIcon = '';
+        if ($aRow['resolvable']){
+            if ($aRow['resolved']){
+                $sIcon .= 'completed';
+            }
+            else{
+                $sIcon .= 'uncompleted';
+            }   
+        }
+        else{
+            $sIcon .= 'idea'; 
+        }
+        $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('status.html', ['icon' => BX_DOL_URL_MODULES . $this->_oModule->_aModule['path'] .'template/images/'. $sIcon . '.svg', 'counter' => (int)$oObject->getCommentsCountAll()]); 
+        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
 
     protected function _getCellText($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oModule->_oTemplate->getEntryPreview($aRow);
+        $mixedValue = $this->_oModule->_oTemplate->getEntryPreview($aRow, ['show_meta_counters' => false, 'show_meta_reply' => false]);
 
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -136,6 +262,8 @@ class BxForumGrid extends BxTemplGrid
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
+        $CNF = $this->_oModule->_oConfig->CNF;
+        
     	$sSelectClause = $sJoinClause = $sWhereClause = $sGroupByClause = '';
 
     	//--- Check status
@@ -182,7 +310,23 @@ class BxForumGrid extends BxTemplGrid
             if(!empty($sGroupByClauseBrowse))
                 $sGroupByClause .= " GROUP BY " . $sGroupByClauseBrowse;
         }
+        
+        if(strpos($sFilter, $this->_sParamsDivider) !== false)
+            list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+        
+        $sFilterSql = "";
 
+        // filter by resolved status
+        if(isset($this->_sFilter1Value) && $this->_sFilter1Value != ''){
+            $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVABLE'] . "` = 1 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVE'] . "` = " . $this->_sFilter1Value;
+        }
+        
+        // filter by badges
+        if(isset($this->_sFilter2Value) && $this->_sFilter2Value != ''){
+            $aObjects = BxDolBadges::getInstance()->getData(['type' => 'by_module&badge', 'badge_id' => $this->_sFilter2Value, 'module' => $this->_oModule->_aModule['name']]);
+            $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` IN (" . implode(',', $aObjects ) . ")";
+        }
+        
         $this->_aOptions['source'] = sprintf($this->_sDefaultSource, $sSelectClause, $sJoinClause, $sWhereClause, $sGroupByClause);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -191,7 +335,15 @@ class BxForumGrid extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if(isset($this->_sFilter3Value) && $this->_sFilter3Value != ''){
+            $sOrderField = $this->_aBrowseParams['type'] = $this->_sFilter3Value;
+            if (!empty($this->_aBrowseParams['type']) && $this->_aBrowseParams['type'] != 'partaken'){
+                $this->_aBrowseParams['type'] = $this->_aBrowseParams['type'] = $this->_sFilter3Value;
+            }
+        }
+        
     	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
+                
         if(!empty($this->_aBrowseParams['type']))
             switch($this->_aBrowseParams['type']) {
                 case 'top':
@@ -413,6 +565,55 @@ class BxForumGrid extends BxTemplGrid
             return array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
 
         return '';
+    }
+    
+    protected function _getFilterControls ()
+    {
+        parent::_getFilterControls();
+        return  $this->_getFilterSelectOne($this->_sFilter3Name, $this->_sFilter3Value, $this->_aFilter3Values) . $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getFilterSelectOne($this->_sFilter2Name, $this->_sFilter2Value, $this->_aFilter2Values) . $this->_getSearchInput();
+    }
+    
+    protected function _getSearchInput()
+    {
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
+        $aInputSearch = array(
+            'type' => 'text',
+            'name' => 'search',
+            'attrs' => array(
+                'id' => 'bx-grid-search-' . $this->_sObject,
+                'onKeyup' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter(this)',
+                'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter(this)',
+            )
+        );
+
+        $oForm = new BxTemplFormView(array());
+        return $oForm->genRow($aInputSearch);
+    }
+    
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
+    {
+        if(empty($sFilterName) || empty($aFilterValues))
+            return '';
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
+
+        foreach($aFilterValues as $sKey => $sValue)
+            $aFilterValues[$sKey] = _t($sValue);
+
+        $aInputModules = array(
+            'type' => 'select',
+            'name' => $sFilterName,
+            'attrs' => array(
+                'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
+                'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
+            ),
+            'value' => $sFilterValue,
+            'values' => $aFilterValues
+        );
+
+        $oForm = new BxTemplFormView(array());
+        return $oForm->genRow($aInputModules);
     }
 }
 

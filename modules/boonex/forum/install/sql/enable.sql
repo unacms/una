@@ -111,10 +111,11 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 -- PAGE: entries by category
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_category', 'discussions-category', '_bx_forum_page_title_sys_entries_by_category', '_bx_forum_page_title_entries_by_category', @sName, 5, 2147483647, 1, 'page.php?i=discussions-category', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
+('bx_forum_category', 'discussions-category', '_bx_forum_page_title_sys_entries_by_category', '_bx_forum_page_title_entries_by_category', @sName, 1, 2147483647, 1, 'page.php?i=discussions-category', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_forum_category', 1, @sName, '_bx_forum_page_block_title_sys_entries_by_category', '_bx_forum_page_block_title_entries_by_category', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_category";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 0, 1, 1);
+('bx_forum_category', 2, @sName, '_bx_forum_page_block_title_sys_entries_by_category', '_bx_forum_page_block_title_entries_by_category', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_category";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 0, 1, 1),
+('bx_forum_category', 1, @sName, '', '_bx_forum_page_block_title_cats', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"categories_list\";}', 0, 0, 1, 1);
 
 -- PAGE: entries by keyword
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -152,16 +153,17 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_forum_context', 1, @sName, '_bx_forum_page_block_title_sys_entries_in_context', '_bx_forum_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1);
 
 -- PAGE: module home
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_home', 'discussions-home', '_bx_forum_page_title_sys_home', '_bx_forum_page_title_home', @sName, 2, 2147483647, 1, 'page.php?i=discussions-home', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `cover`, `cover_image`, `type_id`, `layout_id`, `submenu`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `inj_head`, `inj_footer`, `sticky_columns`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_forum_home', 'discussions-home', '_bx_forum_page_title_sys_home', '_bx_forum_page_title_home', @sName, 1, 0, 1, 6, '', 2147483647, 1, 'page.php?i=discussions-home', '', '', '', 0, 1, '', '', 0, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('bx_forum_home', 1, @sName, '', '_bx_forum_page_block_title_featured_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_featured";s:6:"params";a:4:{i:0;s:5:"table";i:1;b:0;i:2;b:1;i:3;b:0;}}', 0, 1, 1, 0),
-('bx_forum_home', 1, @sName, '', '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_latest";s:6:"params";a:3:{i:0;s:5:"table";i:1;b:1;i:2;b:0;}}', 0, 1, 1, 1),
-('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:13:"bx_forum_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 0),
-('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:8:"bx_forum";i:1;s:8:"bx_forum";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 1),
-('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_browse_labels', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"browse_labels";s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 0, 0),
-('bx_forum_home', 2, @sName, '_bx_forum_page_block_title_sys_multicats', '_bx_forum_page_block_title_multicats', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"categories_multi_list";}', 0, 1, 0, 0);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `async`, `cache_lifetime`, `submenu`, `tabs`, `hidden_on`, `visible_for_levels`, `type`, `content`, `help`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_forum_home', 1, @sName, '_bx_forum_page_block_title_sys_featured_entries_view_showcase', '_bx_forum_page_block_title_featured_entries_view_showcase', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', NULL, 0, 1, 1, 0),
+('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_cats', 11, 0, NULL, '', 0, 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"categories_list\";}', NULL, 0, 1, 1, 0),
+('bx_forum_home', 2, @sName, '_bx_forum_page_block_title_sys_multicats', '_bx_forum_page_block_title_multicats', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:21:\"categories_multi_list\";}', NULL, 0, 1, 0, 1),
+('bx_forum_home', 3, @sName, '', '_bx_forum_page_block_title_latest_entries', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:13:\"browse_latest\";s:6:\"params\";a:3:{i:0;s:5:\"table\";i:1;b:1;i:2;b:0;}}', NULL, 0, 1, 1, 1),
+('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_browse_labels', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"browse_labels\";s:5:\"class\";s:20:\"TemplServiceMetatags\";}', NULL, 0, 1, 0, 2),
+('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:8:\"bx_forum\";i:1;s:8:\"bx_forum\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', NULL, 0, 1, 1, 3);
+
 
 -- PAGE: module search
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -253,6 +255,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 -- ('bx_forum_view', @sName, 'subscribe-discussion', '_bx_forum_menu_item_title_system_subscribe', '_bx_forum_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'bx_forum_subscribers\', \'add\', \'{content_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 1),
+('bx_forum_view', @sName, 'resolve-discussion', '_bx_forum_menu_item_title_system_resolve_entry', '_bx_forum_menu_item_title_resolve_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'resolve\', {content_id});', '', 'check-circle', '', 0, 2147483647, 1, 0, 1),
 ('bx_forum_view', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '_bx_forum_menu_item_title_stick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'stick\', {content_id});', '', 'thumbtack', '', 0, 2147483647, 1, 0, 2),
 ('bx_forum_view', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '_bx_forum_menu_item_title_lock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'lock\', {content_id});', '', 'lock', '', 0, 2147483647, 1, 0, 3),
 ('bx_forum_view', @sName, 'hide-discussion', '_bx_forum_menu_item_title_system_hide_entry', '_bx_forum_menu_item_title_hide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'hide\', {content_id});', '', 'stop-circle', '', 0, 2147483647, 1, 0, 4),
@@ -268,6 +271,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 -- ('bx_forum_view_more', @sName, 'unsubscribe-discussion', '_bx_forum_menu_item_title_system_unsubscribe', '_bx_forum_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'bx_forum_subscribers\', \'remove\', \'{content_id}\')', '', 'check', '', 2147483647, 1, 0, 1),
+('bx_forum_view_more', @sName, 'unresolve-discussion', '_bx_forum_menu_item_title_system_unresolve_entry', '_bx_forum_menu_item_title_unresolve_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unresolve\', {content_id});', '', 'check-circle', '', 2147483647, 1, 0, 1),
 ('bx_forum_view_more', @sName, 'unstick-discussion', '_bx_forum_menu_item_title_system_unstick_entry', '_bx_forum_menu_item_title_unstick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unstick\', {content_id});', '', 'thumbtack', '', 2147483647, 1, 0, 2),
 ('bx_forum_view_more', @sName, 'unlock-discussion', '_bx_forum_menu_item_title_system_unlock_entry', '_bx_forum_menu_item_title_unlock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unlock\', {content_id});', '', 'unlock', '', 2147483647, 1, 0, 3),
 ('bx_forum_view_more', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '_bx_forum_menu_item_title_unhide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unhide\', {content_id});', '', 'play-circle', '', 2147483647, 1, 0, 4),
@@ -284,6 +288,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 -- ('bx_forum_view_actions', @sName, 'subscribe-discussion', '_bx_forum_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 -- ('bx_forum_view_actions', @sName, 'unsubscribe-discussion', '_bx_forum_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_forum_view_actions', @sName, 'resolve-discussion', '_bx_forum_menu_item_title_system_resolve_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_forum_view_actions', @sName, 'unresolve-discussion', '_bx_forum_menu_item_title_system_unresolve_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 25),
 ('bx_forum_view_actions', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_forum_view_actions', @sName, 'unstick-discussion', '_bx_forum_menu_item_title_system_unstick_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
 ('bx_forum_view_actions', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50),
@@ -404,17 +410,17 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_forum_feature', 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` %s FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'title,text,text_comments', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-(@sName, 'author', '', '10%', '', 1),
-(@sName, 'text', '', '90%', '', 2),
+(@sName, 'rating', '', '10%', '', 1),
+(@sName, 'category', '', '10%', '', 2),
+(@sName, 'text', '', '60%', '', 3),
+(@sName, 'participants', '', '10%', '', 4),
+(@sName, 'status', '', '10%', '', 5),
 
 ('bx_forum_favorite', 'author', '', '10%', '', 1),
 ('bx_forum_favorite', 'text', '', '90%', '', 2),
 
 ('bx_forum_feature', 'author', '', '10%', '', 1),
 ('bx_forum_feature', 'text', '', '90%', '', 2);
-
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-(@sName, 'independent', 'add', '_bx_forum_grid_action_title_add', '', 0, 1);
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -456,11 +462,14 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_forum_categories', 'Array', '', '', 'category', '', '', 10, NULL, 'start', '', 'title', 'auto', '', 128, 'BxForumGridCategories', 'modules/boonex/forum/classes/BxForumGridCategories.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_forum_categories', 'title', '_bx_forum_grid_column_title_title', '60%', '', 1),
-('bx_forum_categories', 'visible_for_levels', '_bx_forum_grid_column_title_visible_for_levels', '40%', '', 2);
+('bx_forum_categories', 'icon', '_bx_forum_grid_column_title_icon', '10%', '', 1),
+('bx_forum_categories', 'title', '_bx_forum_grid_column_title_title', '50%', '', 2),
+('bx_forum_categories', 'visible_for_levels', '_bx_forum_grid_column_title_visible_for_levels', '20%', '', 3),
+('bx_forum_categories', 'actions', '', '20%', '', 4);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_forum_categories', 'single', 'show_to', '_bx_forum_grid_action_title_show_to', '', 0, 1);
+('bx_forum_categories', 'single', 'show_to', '_bx_forum_grid_action_title_show_to', '', 0, 1),
+('bx_forum_categories', 'single', 'edit', '_bx_forum_grid_action_title_adm_edit', 'pencil-alt', 0, 2);
 
 
 -- ACL
@@ -499,6 +508,10 @@ SET @iIdActionEntryLockAny = LAST_INSERT_ID();
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 (@sName, 'hide any entry', NULL, '_bx_forum_acl_action_hide_any_entry', '', 1, 3);
 SET @iIdActionEntryHideAny = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+(@sName, 'resolve any entry', NULL, '_bx_forum_acl_action_resolve_any_entry', '', 1, 3);
+SET @iIdActionEntryResolveAny = LAST_INSERT_ID();
 
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
@@ -557,7 +570,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- hide any entry
 (@iModerator, @iIdActionEntryHideAny),
-(@iAdministrator, @iIdActionEntryHideAny);
+(@iAdministrator, @iIdActionEntryHideAny),
+
+-- resolve any entry
+(@iModerator, @iIdActionEntryResolveAny),
+(@iAdministrator, @iIdActionEntryResolveAny);
 
 
 -- PRIVACY 

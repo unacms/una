@@ -157,6 +157,53 @@ class BxForumModule extends BxBaseModTextModule
 
         return $aContentInfo;
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions 
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-categories_list categories_list
+     * 
+     * @code bx_srv('bx_forum', 'categories_list', [...]); @endcode
+     * 
+     * Get reviews rating for particular content
+     * @param $aParams additional params array, such as 'show_empty'
+     * 
+     * @see BxForumModule::serviceCategoriesList
+     */
+    /** 
+     * @ref bx_forum-categories_list "categories_list"
+     */
+    public function serviceCategoriesList($aParams = array())
+    {
+        $aCategoriest = bx_srv('system', 'categories_list', ['bx_forum_cats', ['show_empty' => true]],'TemplServiceCategory');
+        
+        $bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
+    	$bShowEmptyCategories = isset($aParams['show_empty_categories']) ? (bool)$aParams['show_empty_categories'] : false;
+
+        if (!($o = BxDolCategory::getObjectInstance('bx_forum_cats')))
+            return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
+
+		$aCategories = $o->getCategoriesList($bShowEmptyCategories, true);
+      
+		if(!isset($aCategories['bx_repeat:cats']))
+			return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
+    
+        foreach ($aCategories['bx_repeat:cats'] as $sKey => $aCategory) {
+            $aCategories['bx_repeat:cats'][$sKey]['icon'] = '';
+            $aCategories['bx_repeat:cats'][$sKey]['class'] = $aCategory['value'] == bx_get('category') ? 'bx-forum-category-list-item-selected' : '';
+            $aCategoryData = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $aCategory['value']));
+            
+            if(isset($aCategoryData['icon']))
+               $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon sys-colored'));
+            
+            if(isset($aCategoryData['visible_for_levels']) && $aCategoryData['visible_for_levels'] != '' && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategoryData['visible_for_levels'])){
+                unset($aCategories['bx_repeat:cats'][$sKey]);
+            }    
+        }
+        
+        return $this->_oTemplate->parseHtmlByName('category_list.html', $aCategories);
+    }
 
     /**
      * @page service Service Calls
@@ -213,7 +260,7 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_latest "browse_latest"
      */
-    public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
+    public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
         $sType = 'latest';
 
@@ -286,7 +333,7 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_top "browse_top"
      */
-    public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
+    public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
         $sType = 'top';
 
@@ -627,7 +674,7 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_category "browse_category"
      */
-    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
+    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
         $sType = 'category';
         $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
@@ -949,6 +996,32 @@ class BxForumModule extends BxBaseModTextModule
 
     	return $this->_checkAllowedAction('stick any entry', $aDataEntry, $isPerformAction);
     }
+    
+    public function checkAllowedResolveAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	if((int)$aDataEntry[$CNF['FIELD_RESOLVABLE']] != 1 || (int)$aDataEntry[$CNF['FIELD_RESOLVE']] != 0)
+    		return false;
+
+        if($aDataEntry[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id())
+            return true;
+        
+		return $this->_checkAllowedAction('resolve any entry', $aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedUnresolveAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+        
+    	if((int)$aDataEntry[$CNF['FIELD_RESOLVABLE']] != 1 || (int)$aDataEntry[$CNF['FIELD_RESOLVE']] != 1)
+			return false;
+        
+        if($aDataEntry[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id())
+            return true;
+
+    	return $this->_checkAllowedAction('resolve any entry', $aDataEntry, $isPerformAction);
+    }
 
     public function checkAllowedLockAnyEntry($aDataEntry, $isPerformAction = false)
     {
@@ -1032,7 +1105,8 @@ class BxForumModule extends BxBaseModTextModule
             return false;
 
         $oGrid->setBrowseParams($aParams);
-
+        $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
+        $this->_oTemplate->addCss(array('grid_tools.css'));
         return $oGrid->getCode($isDisplayHeader);
     }
 

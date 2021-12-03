@@ -79,6 +79,13 @@ class BxForumCmts extends BxTemplCmts
             $mixedBlock['title'] = _t('_bx_forum_page_block_title_entry_comments', $this->getCommentsCount());
         return $mixedBlock;
     }
+    
+    protected function _getCounterItems($iCmtsLimit, $iCmtsStart = 0)
+    {
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iId);
+        $a = $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => $iCmtsStart, 'per_page' => $iCmtsLimit * 4));
+        return array_merge($a, [['cmt_author_id' => $aContentInfo['author']]]);
+    }
 
     protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
     {
