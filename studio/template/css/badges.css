@@ -48,10 +48,6 @@ div#bx-form-element-type .bx-menu-ver .bx-def-hr {
 div#bx-form-element-info textarea.bx-form-input-textarea {
 	height: 53px;
 }
-div.bx-badge-item-icon-preview img {
-    max-width: 128px;
-    max-height: 128px;
-}
 div.bx-badge {
 	display: flex;
     align-items:center;

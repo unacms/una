@@ -853,7 +853,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         $sIconHtml = $aIcons[2] . $aIcons[3] . $aIcons[4];
 		$bIconHtml = !empty($sIconHtml) && !$bIconImage;
 		
-        return $this->_oTemplate->parseHtmlByName('nav_item_icon_preview.html', array(
+        return $this->_oTemplate->parseHtmlByName('item_icon_preview.html', array(
             'id' => $iId,
             'bx_if:show_icon_empty' => array(
                 'condition' => !$bIconImage && !$bIconHtml,

@@ -1816,7 +1816,7 @@ CREATE TABLE `sys_badges` (
   `added` int(11) NOT NULL, 
   `module` varchar(32) NOT NULL default '',
   `text` varchar(255) NOT NULL default '',
-  `icon` varchar(255) NOT NULL default '',
+  `icon` text NOT NULL default '',
   `color` varchar(32) NOT NULL default '',
   `fontcolor` varchar(32) NOT NULL default '',
   `is_icon_only` tinyint(4) NOT NULL default '1',

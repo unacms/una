@@ -375,11 +375,12 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     )
                 ),
                 'icon' => array(
-                    'type' => 'text',
+                    'type' => 'textarea',
                     'name' => 'icon',
                     'caption' => _t('_adm_form_txt_badges_icon'),
                     'info' => _t('_adm_form_dsc_badges_icon'),
                     'value' => '',
+					'code' => 1,
                     'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
@@ -450,15 +451,18 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
         return new BxTemplStudioFormView($aForm);
     }
     
-    protected function _getIconPreview($iId, $sIconImage = '', $sIconFont = '')
+    protected function _getIconPreview($iId, $sIconImage = '', $sIcon = '')
     {
         $bIconImage = !empty($sIconImage);
-        $bIconFont = !empty($sIconFont);
-
-        return $this->_oTemplate->parseHtmlByName('badge_item_icon_preview.html', array(
+		
+        $aIcons = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon($sIcon);
+        $sIconHtml = $aIcons[2] . $aIcons[3] . $aIcons[4];
+		$bIconHtml = !empty($sIconHtml) && !$bIconImage;
+		
+        return $this->_oTemplate->parseHtmlByName('item_icon_preview.html', array(
             'id' => $iId,
             'bx_if:show_icon_empty' => array(
-                'condition' => !$bIconImage && !$bIconFont,
+                'condition' => !$bIconImage && !$bIconHtml,
                 'content' => array()
             ),
             'bx_if:show_icon_image' => array(
@@ -469,10 +473,10 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     'id' => $iId
                 )
             ),
-            'bx_if:show_icon_font' => array(
-                'condition' => $bIconFont,
+            'bx_if:show_icon_html' => array(
+                'condition' => $bIconHtml,
                 'content' => array(
-                    'icon' => $sIconFont
+                    'icon' => $sIconHtml
                 )
             )
         ));

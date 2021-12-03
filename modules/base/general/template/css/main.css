@@ -298,8 +298,8 @@ img.bx-badge-icon {
     width: 14px;
     height: 14px;
 }
-div.bx-badge img{
-
+div.bx-badge img,
+div.bx-badge svg{
 	margin-right: 0.5rem;
 }
 div.bx-badge span{
