@@ -452,7 +452,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_forum_search', @sName, 'author', '', '', 0, 'custom', '_bx_forum_form_search_input_sys_author', '_bx_forum_form_search_input_author', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_forum_search', @sName, 'category', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_search_input_sys_category', '_bx_forum_form_search_input_category', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_forum_search', @sName, 'keyword', '', '', 0, 'text', '_bx_forum_form_search_input_sys_keyword', '_bx_forum_form_search_input_keyword', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-(@sName, @sName, 'resolvable', '', '1', 0, 'switcher', '_bx_forum_form_entry_input_sys_resolvable', '_bx_forum_form_entry_input_resolvable', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+(@sName, @sName, 'resolvable', '1', '', 0, 'switcher', '_bx_forum_form_entry_input_sys_resolvable', '_bx_forum_form_entry_input_resolvable', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_forum_search', @sName, 'do_submit', '_bx_forum_form_search_input_do_submit', '', 0, 'submit', '_bx_forum_form_search_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
