@@ -91,7 +91,6 @@
 
 	<!-- Options -->
   <string name="_bx_invites_option_automatically_befriend"><![CDATA[Автоматическая дружба между приглашающим и приглашенным]]></string>
-  <string name="_bx_invites_option_count_per_user"><![CDATA[Сколько приглашений может послать один пользователь]]></string>
 	<string name="_bx_invites_option_key_lifetime"><![CDATA[Срок действия ключа приглашения (в днях)]]></string>
 	<string name="_bx_invites_option_enable_request_invite"><![CDATA[Разрешить запросы на приглашение]]></string>
 	<string name="_bx_invites_option_requests_email"><![CDATA[Эл. адреса для посылки запросов на приглашение (разделенение запятой)]]></string>

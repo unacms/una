@@ -50,7 +50,6 @@ VALUES (@iTypeId, @sName, '_bx_invites', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_invites_count_per_user', '5', @iCategId, '_bx_invites_option_count_per_user', 'digit', '', '', '', 1),
 ('bx_invites_key_lifetime', '7', @iCategId, '_bx_invites_option_key_lifetime', 'digit', '', '', '', 2),
 ('bx_invites_enable_request_invite', 'on', @iCategId, '_bx_invites_option_enable_request_invite', 'checkbox', '', '', '', 3),
 ('bx_invites_requests_email', '', @iCategId, '_bx_invites_option_requests_email', 'digit', '', '', '', 4),
@@ -96,18 +95,18 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- delete invite
 (@iModerator, @iIdActionDeleteInvite),
-(@iAdministrator, @iIdActionDeleteInvite),
+(@iAdministrator, @iIdActionDeleteInvite);
 
+INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`, `AllowedCOunt`) VALUES
 -- invite
-(@iAccount, @iIdActionInvite),
-(@iStandard, @iIdActionInvite),
-(@iUnconfirmed, @iIdActionInvite),
-(@iPending, @iIdActionInvite),
-(@iSuspended, @iIdActionInvite),
-(@iModerator, @iIdActionInvite),
-(@iAdministrator, @iIdActionInvite),
-(@iPremium, @iIdActionInvite);
-
+(@iAccount, @iIdActionInvite, 5),
+(@iStandard, @iIdActionInvite, 5),
+(@iUnconfirmed, @iIdActionInvite, 5),
+(@iPending, @iIdActionInvite, 5),
+(@iSuspended, @iIdActionInvite, 5),
+(@iModerator, @iIdActionInvite, 5),
+(@iAdministrator, @iIdActionInvite, 5),
+(@iPremium, @iIdActionInvite, 5);
 
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

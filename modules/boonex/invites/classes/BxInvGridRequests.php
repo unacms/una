@@ -171,7 +171,7 @@ class BxInvGridRequests extends BxTemplGrid
                 continue;
 
             $iInviteId = (int)array_shift($mixedResult);
-            $this->_oModule->isAllowedInvite($iProfileId, true);
+            $this->_oModule->onInvite($iProfileId);
             $this->_oModule->_oDb->attachInviteToRequest($iId, $iInviteId);
             $aIdsAffected[] = $iId;
             $iAffected++;

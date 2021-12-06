@@ -89,7 +89,6 @@
 
   <!-- Options -->
   <string name="_bx_invites_option_automatically_befriend"><![CDATA[Enable automatically befriend inviter and invited]]></string>
-	<string name="_bx_invites_option_count_per_user"><![CDATA[How many invitations one user can send]]></string>
 	<string name="_bx_invites_option_key_lifetime"><![CDATA[Invitation key lifetime (in days)]]></string>
 	<string name="_bx_invites_option_enable_request_invite"><![CDATA[Enable invitation requests by email]]></string>
   <string name="_bx_invites_option_requests_notifications"><![CDATA[Enable invitation requests in notifications]]></string>
