@@ -19,6 +19,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_groups_per_page_for_favorites_lists', '5', @iCategId, '_bx_groups_option_per_page_for_favorites_lists', 'digit', '', '', '', 17),
 ('bx_groups_searchable_fields', 'group_name,group_desc', @iCategId, '_bx_groups_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
 ('bx_groups_members_mode', '', @iCategId, '_bx_groups_option_members_mode', 'select', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:24:"get_options_members_mode";}', '', '', 40),
+('bx_groups_enable_subscribe_wo_join', '', @iCategId, '_bx_groups_option_enable_subscribe_wo_join', 'checkbox', '', '', '', 45),
 ('bx_groups_internal_notifications', '', @iCategId, '_bx_groups_option_internal_notifications', 'checkbox', '', '', '', 50);
 
 -- PAGES
