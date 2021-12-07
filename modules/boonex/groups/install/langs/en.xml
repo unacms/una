@@ -10,6 +10,7 @@
     <string name="_bx_groups_option_members_mode"><![CDATA[Special mode for group members]]></string>
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_groups_option_enable_subscribe_wo_join"><![CDATA[Allow to follow without join]]></string>
     <string name="_bx_groups_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
     <string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>

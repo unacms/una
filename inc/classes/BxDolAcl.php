@@ -416,6 +416,34 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
         return $aResult;
     }
+    
+    /**
+     * Get the number of allowed action
+     *
+     * @param  int     $iProfileId     ID of a profile that is going to perform an action
+     * @param  int     $iActionId      ID of the action itself
+     * @param  boolean $bPerformAction if true, then action information is updated, i.e. action is 'performed'
+     * @return int if the action is countable, or true if it's not countable
+     */
+    function getActionNumberLeft($iProfileId, $iActionId)
+    {
+        $aMembership = $this->getMemberMembershipInfo($iProfileId); // get current profile's membership information
+
+        $aAction = $this->oDb->getAction($aMembership['id'], $iActionId);
+        
+        $iAllowedCnt = (int)$aAction['allowed_count']; ///< Number of allowed actions. Unlimited if not specified or 0
+        
+        if($iAllowedCnt > 0) {
+            $aActionTrack = $this->oDb->getActionTrack($iActionId, $iProfileId);
+        
+            if(!$aActionTrack) 
+                return $iAllowedCnt;
+            
+           return (int)$aActionTrack['actions_left']; 
+        }
+        
+        return true;
+    }
 
     /**
      * Get the list of existing memberships
@@ -794,6 +822,17 @@ function checkActionModule($iProfileId, $sActionName, $sModuleName, $bPerformAct
         bx_trigger_error("Unknown action: '$sActionName' in module '$sModuleName'", 1);
 
     return $oACL->checkAction($iProfileId, $iActionId, $bPerformAction);
+}
+
+function getActionNumberLeftModule($iProfileId, $sActionName, $sModuleName)
+{
+    $oACL = BxDolAcl::getInstance();
+
+    $iActionId = $oACL->getMembershipActionId($sActionName, $sModuleName);
+    if (!$iActionId)
+        bx_trigger_error("Unknown action: '$sActionName' in module '$sModuleName'", 1);
+
+    return $oACL->getActionNumberLeft($iProfileId, $iActionId);
 }
 
 /** @} */

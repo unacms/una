@@ -201,10 +201,38 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 				}
 				else{
 					//emoji
-					if(preg_match('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', $sCode, $aTmp)){
+                
+                    $sEmojIsRegex =
+                        '/[\x{0080}-\x{02AF}'
+                        .'\x{0300}-\x{03FF}'
+                        .'\x{0600}-\x{06FF}'
+                        .'\x{0C00}-\x{0C7F}'
+                        .'\x{1DC0}-\x{1DFF}'
+                        .'\x{1E00}-\x{1EFF}'
+                        .'\x{2000}-\x{209F}'
+                        .'\x{20D0}-\x{214F}'
+                        .'\x{2190}-\x{23FF}'
+                        .'\x{2460}-\x{25FF}'
+                        .'\x{2600}-\x{27EF}'
+                        .'\x{2900}-\x{29FF}'
+                        .'\x{2B00}-\x{2BFF}'
+                        .'\x{2C60}-\x{2C7F}'
+                        .'\x{2E00}-\x{2E7F}'
+                        .'\x{3000}-\x{303F}'
+                        .'\x{A490}-\x{A4CF}'
+                        .'\x{E000}-\x{F8FF}'
+                        .'\x{FE00}-\x{FE0F}'
+                        .'\x{FE30}-\x{FE4F}'
+                        .'\x{1F000}-\x{1F02F}'
+                        .'\x{1F0A0}-\x{1F0FF}'
+                        .'\x{1F100}-\x{1F64F}'
+                        .'\x{1F680}-\x{1F6FF}'
+                        .'\x{1F910}-\x{1F96B}'
+                        .'\x{1F980}-\x{1F9E0}]/u';
+                    if(preg_match($sEmojIsRegex, $sCode, $aTmp)){
 						$sIconHtml = $this->_oTemplate->parseHtmlByName('icon_emoji.html', array('icon' => $sCode, 'class' => $sClass, 'attrs' => $sAttrs));
 					}
-						else{
+                    else{
 						if (false === strpos($sCode, '.')) { 
 							if (0 === strncmp($sCode, 'a:', 2)){
 								$sIconA = substr($sCode, 2); // animated icon
@@ -222,7 +250,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         }
         return array ($sIconFont, $sIconUrl, $sIconA, $sIconHtml, $sIconFontWithHtml);
     }
-    
+      
     function getFontIconAsHtml($sIconFont, $sClass = '', $sAttrs = '')
     {
         return  '<i class="sys-icon ' . $sIconFont .' ' . $sClass . '"' . $sAttrs . '></i>';

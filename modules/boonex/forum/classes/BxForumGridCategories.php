@@ -32,7 +32,7 @@ class BxForumGridCategories extends BxTemplStudioGrid
         if (isset($aData['icon']))
             $mixedValue = $aData['icon'];
         
-        $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-item-icon bx-def-border'));
+        $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-item-icon'));
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
@@ -336,7 +336,8 @@ class BxForumGridCategories extends BxTemplStudioGrid
                     'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
-                    )
+                    ),
+                    'attrs' => array('class' => 'bx-form-input-textarea-small'),
                 ),
                 'icon_image' => array(
                     'type' => 'file',

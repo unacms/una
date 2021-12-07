@@ -64,13 +64,11 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
     {
         $sInvitesRemain = '';
         if(!isAdmin($iAccountId)) {
-            $iInvites = $this->_oConfig->getCountPerUser();
-            $iInvited = $this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-
-            $sInvitesRemain = $iInvites - $iInvited;
+            $mInvitesRemain = $this->_oConfig->getCountPerUser();
+            if ($mInvitesRemain === true)
+                 $sInvitesRemain = _t('_bx_invites_txt_unlimited');
         }
-        else
-            $sInvitesRemain = _t('_bx_invites_txt_unlimited');
+           
 
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
 

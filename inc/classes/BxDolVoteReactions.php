@@ -107,7 +107,7 @@ class BxDolVoteReactions extends BxTemplVote
     {
         $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
 
-    	return $aReaction['icon'] . ($bWithColor && !empty($aReaction['color']) ? ' ' . $aReaction['color'] : '');
+    	return $aReaction['icon'] . ($bWithColor && !empty($aReaction['color']) ? ' sys-icon-emoji ' . $aReaction['color'] : ' sys-icon-emoji ');
     }
     
     public function getEmoji($sReaction, $bWithColor = true)

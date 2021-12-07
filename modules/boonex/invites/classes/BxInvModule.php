@@ -39,8 +39,7 @@ class BxInvModule extends BxDolModule
             return echoJson(array('message' => $mixedAllowed));
 
         if(!isAdmin($iAccountId)) {
-            $iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-            if(($this->_oConfig->getCountPerUser() - $iInvited) <= 0)
+            if($this->_oConfig->getCountPerUser() <= 0)
                 return echoJson(array('message' => _t('_bx_invites_err_limit_reached')));
         }
 
@@ -58,6 +57,7 @@ class BxInvModule extends BxDolModule
             'email' => '',
             'date' => time()
         ));
+        $this->onInvite($iProfileId);
 
         echoJson(array('popup' => $this->_oTemplate->getLinkPopup(
             $this->getJoinLink($sKey)
@@ -132,8 +132,7 @@ class BxInvModule extends BxDolModule
         if($mixedAllowed !== true)
             return '';
 
-        $iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-        if(!isAdmin($iAccountId) && $iInvited >= $this->_oConfig->getCountPerUser())
+        if(!isAdmin($iAccountId) && $this->_oConfig->getCountPerUser() <= 0)
             return '';
 
         return array(
@@ -419,7 +418,7 @@ class BxInvModule extends BxDolModule
                     $iInviteId = (int)$this->_oDb->insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate);
                     array_push($aAccountIds, $iInviteId);
                     
-                    $this->onInvite($iAccountId, $iProfileId);
+                    $this->onInvite($iProfileId);
                     
                     if($mixedLimit !== false)
                         $mixedLimit -= 1;
@@ -440,15 +439,14 @@ class BxInvModule extends BxDolModule
 
         $mixedInvites = false;
         if(!isAdmin($iAccountId)) {
-            $iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-            $mixedInvites = $this->_oConfig->getCountPerUser() - $iInvited;
-            if($mixedInvites <= 0)
+            if( $this->_oConfig->getCountPerUser() <= 0)
                 return _t('_bx_invites_err_limit_reached');
         }
         
         $sEmails = bx_process_input($oForm->getCleanValue('emails'));
         $sText = bx_process_pass($oForm->getCleanValue('text'));
         $mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $mixedInvites, $oForm);
+        $this->onInvite($iProfileId);
         if($mixedResult !== false)
             $sResult = _t('_bx_invites_msg_invitation_sent', count($mixedResult));
         else
@@ -541,7 +539,7 @@ class BxInvModule extends BxDolModule
        );
     }
 
-    protected function onInvite($iAccountId, $iProfileId)
+    protected function onInvite($iProfileId)
     {
         $this->isAllowedInvite($iProfileId, true);
 

@@ -91,7 +91,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
 
     public function getCountPerUser()
     {
-        return $this->_iCountPerUser;
+        return getActionNumberLeftModule(bx_get_logged_profile_id(), 'invite', $this->_sName);
     }
 
     public function getKeyCode()

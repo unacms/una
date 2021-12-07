@@ -48,10 +48,6 @@ div#bx-form-element-type .bx-menu-ver .bx-def-hr {
 div#bx-form-element-info textarea.bx-form-input-textarea {
 	height: 53px;
 }
-div.bx-badge-item-icon-preview img {
-    max-width: 128px;
-    max-height: 128px;
-}
 div.bx-badge {
 	display: flex;
     align-items:center;
@@ -68,13 +64,11 @@ div.bx-badge {
 	text-overflow: ellipsis; 
     overflow: hidden;
 }
-img.bx-badge-icon {
-    width: 14px;
-    height: 14px;
-}
-div.bx-badge img{
-
-	margin-right: 0.5rem;
+img.bx-badge-icon,
+svg.bx-badge-icon{
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
 }
 div.bx-badge span{
 	text-overflow: ellipsis; 

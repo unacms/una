@@ -24,20 +24,6 @@ div.bx-grid-header div#bx-form-element-keyword {
     margin-top: 0px;
 }
 
-/*--- Items page ---*/
-img.bx-nav-item-icon,
-svg.bx-nav-item-icon{
-    width: 32px;
-    height: 32px;
-}
-div.bx-nav-item-icon-preview {}
-div.bx-nav-item-icon-preview img,
-div.bx-nav-item-icon-preview svg{
-	max-width:128px; 
-    max-height:128px;
-}
-div.adm-nav-item-icon-preview-empty {}
-
 /*--- Items page -> Add Item block ---*/
 div.bx-nav-add-item {}
 div.bx-nav-add-item-cnt {}
