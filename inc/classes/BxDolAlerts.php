@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolDb');
+
 /**
  * Alert/Handler engine.
  *
@@ -38,9 +40,6 @@
  * no alerts available
  *
  */
-
-bx_import('BxDolDb');
-
 class BxDolAlerts extends BxDol
 {
     public $sUnit;
