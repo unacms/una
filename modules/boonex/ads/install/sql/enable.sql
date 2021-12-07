@@ -24,7 +24,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 
 ('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30),
 
-('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40);
+('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40),
+('bx_ads_offer_lifetime', '72', @iCategId, '_bx_ads_option_offer_lifetime', 'digit', '', '', '', '', 41);
 
 
 -- PAGE: create entry
@@ -625,6 +626,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_ads_offers', '0 * * * *', 'BxAdsCronOffers', 'modules/boonex/ads/classes/BxAdsCronOffers.php', ''),
 ('bx_ads_pruning', '0 0 * * *', 'BxAdsCronPruning', 'modules/boonex/ads/classes/BxAdsCronPruning.php', ''),
 ('bx_ads_publishing', '* * * * *', 'BxAdsCronPublishing', 'modules/boonex/ads/classes/BxAdsCronPublishing.php', '');
 

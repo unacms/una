@@ -12,6 +12,7 @@
     <string name="_bx_ads_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Deactivate automatically after (in days)]]></string>
+    <string name="_bx_ads_option_offer_lifetime"><![CDATA[Decline offers automatically after (in hours)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Use internal notification about Interested action]]></string>
     <string name="_bx_ads_option_enable_auction"><![CDATA[Enable Auction mode]]></string>
 

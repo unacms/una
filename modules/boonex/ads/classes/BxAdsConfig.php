@@ -120,6 +120,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_ads_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_ads_per_page_browse_showcase',
             'PARAM_LIFETIME' => 'bx_ads_lifetime',
+            'PARAM_LIFETIME_OFFERS' => 'bx_ads_offer_lifetime',
             'PARAM_USE_IIN' => 'bx_ads_internal_interested_notification',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
             'PARAM_USE_AUCTION' => 'bx_ads_enable_auction',

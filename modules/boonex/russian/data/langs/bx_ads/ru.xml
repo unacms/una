@@ -12,6 +12,7 @@
     <string name="_bx_ads_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Автоматически деактивировать по истечении (в днях)]]></string>
+    <string name="_bx_ads_option_offer_lifetime"><![CDATA[Автоматически отклонять предложения по истечении (в часах)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string>
     <string name="_bx_ads_option_enable_auction"><![CDATA[Включить режим аукциона]]></string>
 

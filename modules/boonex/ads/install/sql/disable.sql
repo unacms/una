@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_ads' OR `object` IN ('bx_ads
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_ads';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_ads';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_ads' OR `set_name` IN ('bx_ads_create_post_attachments', 'bx_ads_view', 'bx_ads_view_actions', 'bx_ads_submenu', 'bx_ads_view_submenu', 'bx_ads_snippet_meta', 'bx_ads_my', 'bx_ads_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_ads' OR `set_name` IN ('bx_ads_create_post_attachments', 'bx_ads_view', 'bx_ads_view_actions', 'bx_ads_submenu', 'bx_ads_view_submenu', 'bx_ads_snippet_meta', 'bx_ads_licenses_submenu', 'bx_ads_my', 'bx_ads_menu_manage_tools');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_ads_allow_view_to';

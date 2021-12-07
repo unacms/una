@@ -583,7 +583,14 @@ class BxAdsDb extends BxBaseModTextDb
                     }
 
                     $sOrderClause = "`to`.`added` DESC";
-                    break;    
+                    break;
+
+                case 'expired':
+                    $aMethod['params'][1]['status'] = BX_ADS_OFFER_STATUS_AWAITING;
+                    $aMethod['params'][1]['hours'] = 3600 * (int)$aParams['hours'];
+
+                    $sWhereClause .= " AND `to`.`" . $CNF['FIELD_OFR_STATUS'] . "`=:status AND UNIX_TIMESTAMP() - `to`.`" . $CNF['FIELD_OFR_ADDED'] . "` > :hours";
+                    break;
             }
 
         if(!empty($sGroupClause))
