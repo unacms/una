@@ -240,6 +240,115 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return true;
     }
 
+	/**
+     * Process SEO links. It takes request part from SEO link and process it 
+     * to make it work as regular page link
+     * @param $sRequest request URI with SEO link
+     * @return true - if page was found and processed correctly, false - if page wasn't found
+     */
+    static public function processSeoLink ($sRequest)
+    {
+        $a = explode('/', trim($sRequest, '/'));
+        if (!$a || empty($a[0]))
+            return false;
+
+        $sPageName = BxDolPageQuery::getPageObjectNameByURI($a[0]);
+        $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
+        if (!$aPage)
+            return false;
+
+        if (!empty($a[1])) { // page with params
+            $r = BxDolPageQuery::getSeoLink($aPage['module'], $a[0], ['uri' => $a[1]]);
+            if ($r)
+                $_GET[$r['param_name']] = $_REQUEST[$r['param_name']] = $r['param_value'];
+        }
+
+        $_REQUEST['i'] = $_GET['i'] = $a[0];
+        $oPage = BxDolPage::getObjectInstanceByURI($a[0], false, true);
+        $oPage->displayPage();
+
+        return true;
+    }
+
+	/**
+     * Transform regular link to SEO link. It takes regular list as param and return SEO link.
+     * @param $sLink regular link
+     * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
+     * @param $aParams additional GET params
+     * @return SEO link string on success, false if transform failed
+     */
+    static public function transformSeoLink ($sLink, $sPrefix, $aParams = array())
+    {
+        if (0 !== strncmp('page.php', $sLink, 8)) // only page.php links are supported
+            return false;
+
+        $sQuery = parse_url($sLink, PHP_URL_QUERY);
+        if (false === $sQuery)
+            return false;
+
+        parse_str($sQuery, $aQueryParams);
+
+        $sPageUri = !empty($aQueryParams['i']) ? $aQueryParams['i'] : false;
+        unset($aQueryParams['i']);
+
+        if (!$sPageUri) // page URI wasn't found
+            return false;
+
+        $aSeoParams = array('id', 'profile_id'); // supported SEO params which are transformed to SEO strings
+        $sSeoParamName = '';
+        $sSeoParamValue = '';
+        foreach ($aSeoParams as $k) {
+            if (empty($k) || empty($aQueryParams[$k]))
+                continue;
+            $sSeoParamName = $k;
+            $sSeoParamValue = $aQueryParams[$k];
+            unset($aQueryParams[$k]);
+            break; // only 1 SEO param will be transformed
+        }
+
+        $sSeoPageUri = $sPageUri;
+
+        if ($sSeoParamName && $sSeoParamValue) { // process page with SEO param
+            $sPageName = BxDolPageQuery::getPageObjectNameByURI($sPageUri);
+            $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
+            if ($aPage) {
+                $sModule = $aPage['module'];
+                if ('id' == $sSeoParamName) {
+                    $oContentInfo = BxDolContentInfo::getObjectInstance($sModule);
+                    $sSeoTitle = $oContentInfo ? $oContentInfo->getContentTitle($sSeoParamValue) : '';
+                    if (!$sSeoTitle) 
+                        $sSeoTitle = base_convert(substr(md5($sSeoParamValue), -8), 16, 36);
+                }
+                elseif ('profile_id' == $sSeoParamName) {
+                    $oProfile = BxDolProfile::getInstance($sSeoParamValue);
+                    $sSeoTitle = $oProfile ? $oProfile->getDisplayName() : '';
+                }
+                
+                $r = BxDolPageQuery::getSeoLink($sModule, $sPageUri, ['param_value' => $sSeoParamValue]);
+                if (!$r) {
+                    $sUri = uriGenerate ($sSeoTitle, 'sys_seo_links', 'uri', '-', '-', ['module' => $sModule, 'page_uri' => $sPageUri]);
+                    BxDolPageQuery::insertSeoLink($sModule, $sPageUri, $sSeoParamName, $sSeoParamValue, $sUri);
+                }
+                elseif ($r['param_name'] == $sSeoParamName) {
+                    $sUri = $r['uri'];
+                } 
+                else {
+                    $sUri = false;
+                }
+
+                if ($sUri)
+                    $sSeoPageUri .= '/' . $sUri;
+                else
+                    $sSeoPageUri = false;
+            }
+        }
+
+        if (!$sSeoPageUri)
+            return false;
+
+        return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams));
+    }
+
     /**
      * Display complete page
      */

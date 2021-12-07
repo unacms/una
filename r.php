@@ -27,6 +27,8 @@ foreach ($aRewriteRules as $a) {
     }
 }
 
-BxDolTemplate::getInstance()->displayPageNotFound();
+if (!BxDolPage::processSeoLink($sRequest)) {
+    BxDolTemplate::getInstance()->displayPageNotFound();
+}
 
 /** @} */

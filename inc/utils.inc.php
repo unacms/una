@@ -638,27 +638,24 @@ function clear_xss($val)
 
 //--------------------------------------- friendly permalinks --------------------------------------//
 //------------------------------------------- main functions ---------------------------------------//
-function uriGenerate ($s, $sTable, $sField, $sEmpty = '-', $sDivider = '-')
+function uriGenerate ($sValue, $sTable, $sField, $sEmpty = '-', $sDivider = '-', $aCond = [])
 {
-    $s = uriFilter($s, $sEmpty, $sDivider);
-    if(uriCheckUniq($s, $sTable, $sField))
-        return $s;
+    $sValue = uriFilter($sValue, $sEmpty, $sDivider);
+    if(uriCheckUniq($sValue, $sTable, $sField, $aCond))
+        return $sValue;
 
     // cut off redundant part
-    if(get_mb_len($s) > 240)
-        $s = get_mb_substr($s, 0, 240);
-
-    // try to add date
-    $s .= $sDivider . date('Y-m-d');
-    if(uriCheckUniq($s, $sTable, $sField))
-        return $s;
+    if(get_mb_len($sValue) > 240)
+        $sValue = get_mb_substr($sValue, 0, 240);
 
     // try to add number
-    for($i = 0 ; $i < 999 ; ++$i)
-        if(uriCheckUniq($s . $sDivider . $i, $sTable, $sField))
-            return ($s . $sDivider . $i);
+    for($i = 0 ; $i < 999 ; ++$i) {
+        $iRnd = mt_rand(1000, 9999);
+        if(uriCheckUniq($sValue . $sDivider . $iRnd, $sTable, $sField, $aCond))
+            return ($sValue . $sDivider . $iRnd);
+    }
 
-    return rand(0, 999999999);
+    return rand(0, PHP_INT_MAX);
 }
 
 function uriFilter ($s, $sEmpty = '-', $sDivider = '-')
@@ -671,14 +668,15 @@ function uriFilter ($s, $sEmpty = '-', $sDivider = '-')
     $s = get_mb_replace ('/([' . $sDivider . '^]+)/', $sDivider, $s);
     $s = get_mb_replace ('/([' . $sDivider . ']+)$/', '', $s); // remove trailing dash
     if (!$s) $s = $sEmpty;
-    return $s;
+    return mb_strtolower($s);
 }
 
-function uriCheckUniq ($s, $sTable, $sField)
+function uriCheckUniq ($sValue, $sTable, $sField, $aCond = [])
 {
     $oDb = BxDolDb::getInstance();
 
-    $sSql = $oDb->prepare("SELECT 1 FROM `$sTable` WHERE `$sField`=? LIMIT 1", $s);
+    $sWhere = $aCond ? $oDb->arrayToSQL($aCond, ' AND ') : '1';
+    $sSql = $oDb->prepare("SELECT 1 FROM `$sTable` WHERE $sWhere AND `$sField`=? LIMIT 1", $sValue);
     return !$oDb->query($sSql);
 }
 
