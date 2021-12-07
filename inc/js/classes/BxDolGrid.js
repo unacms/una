@@ -13,7 +13,7 @@ function BxDolGrid (sObject, oOptions) {
     this._sIdContainer = 'bx-grid-cont-' + sObject;
     this._sIdTable = 'bx-grid-table-' + sObject;
     this._oOptions = oOptions;
-    this._sFilter = undefined == oOptions.filter ? '' : oOptions.filter;
+    
     this._sOrderField = undefined == oOptions.order_field ? '' : oOptions.order_field;
     this._sOrderDir = undefined == oOptions.order_dir ? 'ASC' : oOptions.order_dir;
     this._sSearchInputText = undefined == oOptions.text_search_input ? '' : oOptions.text_search_input;
@@ -25,16 +25,23 @@ function BxDolGrid (sObject, oOptions) {
     this._oQueryAppend = oOptions.query_append;
     this._oConfirmMessages = oOptions.confirm_messages;
 
+    this.init(oOptions);
+}
+
+BxDolGrid.prototype.init = function (oOptions) {
+    this._sFilter = undefined == oOptions.filter ? '' : oOptions.filter;
     if (this._sFilter.length)
         this._sSearchInputText = this._sFilter;
 
     $('#bx-grid-search-' + this._sObject).val(this._sSearchInputText);
 
+    this._oQueryAppend = oOptions.query_append;
+
     this._onDataReloaded();
 
     if (this._sOrderField.length)
         this.setSorting (this._sOrderField, this._sOrderDir, true);
-}
+};
 
 BxDolGrid.prototype.resetSorting = function (sField, sDir) {
     this._sOrderField = '';

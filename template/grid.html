@@ -91,6 +91,13 @@
                 columns: __columns__
             });
         }
+        else
+            glGrids.__object__.init({
+                start: __start__,
+                per_page: __per_page__,
+                filter: '__filter__',
+                query_append: __query_append__
+            });
     });
 </script>
 
