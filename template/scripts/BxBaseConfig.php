@@ -10,7 +10,7 @@
 class BxBaseConfig extends BxDol implements iBxDolSingleton
 {
     protected $_aConfig = array (
-        'bAllowUnicodeInPreg' => false, ///< allow unicode in regular expressions
+        'bAllowUnicodeInPreg' => true, ///< allow unicode in regular expressions
         'aLessConfig' => array (
             'bx-page-width' => '1000px',
 

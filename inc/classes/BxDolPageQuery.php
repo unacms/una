@@ -110,6 +110,30 @@ class BxDolPageQuery extends BxDolDb
         $sQuery = $this->prepare("SELECT `id`, `module`, `template` FROM `sys_pages_content_placeholders` WHERE `id` = ?", $iId);
         return $this->getRow($sQuery);
     }
+
+    static public function getSeoLink($sModule, $sPageUri, $aCond = [])
+    {
+        $oDb = BxDolDb::getInstance();
+        $sWhere = " 1 ";
+        if ($aCond)
+            $sWhere = $oDb->arrayToSQL($aCond, " AND ");
+        return $oDb->getRow("SELECT `uri`, `param_name`, `param_value` FROM `sys_seo_links` WHERE " . $sWhere . " AND `module` = :module AND `page_uri` = :page_uri", [
+            'module' => $sModule,
+            'page_uri' => $sPageUri,
+        ]);
+    }
+
+    static public function insertSeoLink($sModule, $sPageUri, $sSeoParamName, $sSeoParamValue, $sUri)
+    {
+        return BxDolDb::getInstance()->query("INSERT INTO `sys_seo_links` SET `module` = :module, `page_uri` = :page_uri, `param_name` = :param_name, `param_value` = :param_value, `uri` = :uri, `added` = :ts", [
+            'module' => $sModule,
+            'page_uri' => $sPageUri,
+            'param_name' => $sSeoParamName,
+            'param_value' => $sSeoParamValue,
+            'uri' => $sUri,
+            'ts' => time(),
+        ]);
+    }
 }
 
 /** @} */
