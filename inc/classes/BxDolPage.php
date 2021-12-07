@@ -35,6 +35,8 @@
  *      - user level id = 4 -> 2^(4-1) = 8
  * - visible_for_levels_editable: it determines if 'visible_for_levels' field is editable from page builder, visibility options can be overriden by custom class and shouldn't be editable in this case.
  * - url: the page url, if it is static page.
+ * - content_info: content info object name related to the content on the page,
+ *                 if different from module name
  * - meta_description: meta description of the page.
  * - meta_keywords: meta keywords of the page.
  * - meta_robots: instructions for search bots.
@@ -313,8 +315,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
             if ($aPage) {
                 $sModule = $aPage['module'];
+                $sContentInfo = !empty($aPage['content_info']) ? $aPage['content_info'] : $aPage['module'];
                 if ('id' == $sSeoParamName) {
-                    $oContentInfo = BxDolContentInfo::getObjectInstance($sModule);
+                    $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfo);
                     $sSeoTitle = $oContentInfo ? $oContentInfo->getContentTitle($sSeoParamValue) : '';
                     if (!$sSeoTitle) 
                         $sSeoTitle = base_convert(substr(md5($sSeoParamValue), -8), 16, 36);
