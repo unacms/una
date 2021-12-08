@@ -352,6 +352,44 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams));
     }
 
+	/**
+     * Transform SEO regular link into regular link with permalinks off.
+     * @param $sSeoLink SEO link
+     * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
+     * @return unSEO link string on success, false if no transform is needed
+     */
+    static public function untransformSeoLink ($sSeoLink, $sPrefix)
+    {
+        // check for standard links first
+        if (preg_match('/^(page\/|s\/|m\/|modules\/|page\.php|storage\.php)/', $sSeoLink))
+            return false;
+
+        // parse link
+        $aParts = parse_url($sSeoLink);
+        if (!$aParts || empty($aParts['path']))
+            return false;
+
+        $aUris = explode('/', trim($aParts['path'], '/'));
+
+        // check if link starts with page URI and page with this URI exists 
+        if (!$aUris || empty($aUris[0]) || !($sPageName = BxDolPageQuery::getPageObjectNameByURI($aUris[0])))
+            return false;
+
+        // make final URL
+        $s = 'page.php?i=' . $aUris[0];
+
+        // add params
+        if (!empty($aUris[1])) {
+            $aPage = BxDolPageQuery::getPageObject($sPageName);
+            if ($aPage) {
+                $r = BxDolPageQuery::getSeoLink($aPage['module'], $aUris[0], ['uri' => $aUris[1]]);
+                $s .= '&' . $r['param_name'] . '=' .  $r['param_value'];
+            }
+        }
+
+        return $s . (!empty($aParts['query']) ? '&' . $aParts['query'] : '');
+    }
+
     /**
      * Display complete page
      */

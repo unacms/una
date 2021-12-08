@@ -216,6 +216,9 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
         if(strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) === 0)
             $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
 
+        if ($sUnSeoLink = BxDolPage::untransformSeoLink ($sLink, $sPrefix))
+            return $sUnSeoLink;
+
         foreach ($this->aPrefixesPermalink as $sKey => $iLength) {
 
             if (strncmp($sLink, $sKey, $iLength) !== 0)
