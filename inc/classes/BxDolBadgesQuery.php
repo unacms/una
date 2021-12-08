@@ -170,6 +170,14 @@ class BxDolBadgesQuery extends BxDolDb
                     'object_id' => $aParams['object_id'],
                 );
                 break;
+                
+            case 'by_module':
+                $sQuery = " WHERE `module` = :module";
+                $aBindings = array(
+                    'module' => $aParams['module'],
+                );
+                break;
+                
             case 'by_module&object&badge':   
                 $sQuery = " WHERE `module` = :module AND object_id = :object_id AND badge_id = :badge_id";
                 $aBindings = array(
@@ -180,8 +188,13 @@ class BxDolBadgesQuery extends BxDolDb
                 break;
         }
         
-        $sQuery = "DELETE FROM `sys_badges2objects`" . $sQuery;
-        $this->query($sQuery, $aBindings);
+        $sQuery1 = "DELETE FROM `sys_badges2objects`" . $sQuery;
+        $this->query($sQuery1, $aBindings);
+        
+        if ($aParams['type'] == 'by_module'){
+            $sQuery1 = "DELETE FROM `sys_badges`" . $sQuery;
+            $this->query($sQuery1, $aBindings);
+        }
     }
 }
 

@@ -46,6 +46,13 @@ class BxDolBadges extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_oDb->add($iBadgeId, $iObjectId, $sModule);
     }
+    
+    public static function onModuleUninstall ($sModuleName, &$iFiles = null)
+    {
+        $oBadges = BxDolBadges::getInstance();
+        $oBadges->_oDb->delete(['type' => 'by_module', 'module' => $sModuleName]);
+        return true;
+    }
 }
 
 /** @} */
