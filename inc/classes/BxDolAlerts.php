@@ -10,35 +10,30 @@
 bx_import('BxDolDb');
 
 /**
- * Alert/Handler engine.
+ * # Alert/Handler/Hooks engine.
  *
  * Is needed to fire some alert(event) in one place and caught it with a handler somewhere else.
  *
  * Related classes:
  *  BxDolAlertsResponse - abstract class for all response classes.
- *  BxDolAlertsResponseUser - response class to process standard profile related alerts.
  *
- * Example of usage:
- * 1. Fire an alert
+ * ### Example of usage:
+ * 
+ * **First** Fire an alert
  *
  * @code
- * $oZ = new BxDolAlerts('unit_name', 'action', 'object_id', 'sender_id', 'extra_params');
+ * $oZ = new BxDolAlerts('unit_name', 'action', 'object_id', 'sender_id', array('of_extra_params'));
  * $oZ->alert();
  * @endcode
+ * or
+ * @code
+ * bx_alert('unit_name', 'action', 'object_id', 'sender_id', ['extra', 'params']);
+ * @endcode
  *
- * 2. Add handler and caught alert(s) @see BxDolAlertsResponseUser
- *  a. Create Response class extending BxDolAlertsResponse class. It should process all necessary alerts which are passed to it.
- *  b. Register your handler in the database by adding it in `sys_alerts_handlers` table.
- *  c. Associate necessary alerts with the handler by adding them in the `sys_alerts` table.
- *
- *
- * Memberships/ACL:
- * Doesn't depend on user's membership.
- *
- *
- * Alerts:
- * no alerts available
- *
+ * **Second** Add handler and caught alert(s)
+ *  a. Create Response class by extending BxDolAlertsResponse class. It should process all necessary alerts which are passed to it.    
+ *  b. Register your handler in the database by adding it in `sys_alerts_handlers` table.   
+ *  c. Associate necessary alerts with the handler by adding them in the `sys_alerts` table.  
  */
 class BxDolAlerts extends BxDol
 {
