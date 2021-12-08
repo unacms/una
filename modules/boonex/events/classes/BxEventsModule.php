@@ -59,6 +59,15 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         // get entries
         $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), bx_get('event'), $aSQLPart);
         
+        bx_alert($this->getName(), 'calendar_data', 0, false, array(
+            'event' => $iContentId,
+            'context_id' => $iContextId,
+            'start' => bx_get('start'),
+            'end' =>  bx_get('end'),
+            'sql_part' => &$aSQLPart,
+            'data' => &$aEntries,
+        ));
+        
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($aEntries);
     }
