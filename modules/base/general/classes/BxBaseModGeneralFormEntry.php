@@ -566,6 +566,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if ($o) $o->onDeleteContent($iContentId);
         }
 
+        // delete SEO links
+
+        BxDolPage::deleteSeoLink ($this->_oModule->getName(), $this->_oModule->getName(), $iContentId);
+
         // delete db record
         
         BxDolFormQuery::removeFormField($this->id, $iContentId);

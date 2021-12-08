@@ -134,6 +134,23 @@ class BxDolPageQuery extends BxDolDb
             'ts' => time(),
         ]);
     }
+
+    static public function deleteSeoLink($sModule, $sContentInfoObject, $sId)
+    {
+        return BxDolDb::getInstance()->query("DELETE FROM `sys_seo_links` WHERE `module` = :module AND `page_uri` IN (SELECT `uri` FROM `sys_objects_page` WHERE `module` = :content_info OR `content_info` = :content_info) AND `param_value` = :param_value", [
+            'module' => $sModule,
+            'content_info' => $sContentInfoObject,
+            'param_value' => $sId,
+        ]);
+    }
+
+    static public function deleteSeoLinkByParam($sParamName, $sId)
+    {
+        return BxDolDb::getInstance()->query("DELETE FROM `sys_seo_links` WHERE `param_name` = :param_name AND `param_value` = :param_value", [
+            'param_name' => $sParamName,
+            'param_value' => $sId,
+        ]);
+    }
 }
 
 /** @} */

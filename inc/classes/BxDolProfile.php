@@ -454,6 +454,9 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         // delete profile's acl levels
         BxDolAcl::getInstance()->onProfileDelete($ID);
 
+        // delete SEO links
+        BxDolPage::deleteSeoLinkByParam ('profile_id', $ID);
+
         // delete profile
         if (!$this->_oQuery->delete($ID))
             return false;

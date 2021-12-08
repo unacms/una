@@ -243,6 +243,29 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
 	/**
+     * Delete SEO link
+     * @param $sModule module name
+     * @param $sContentInfoObject content info object
+     * @param $sId content id
+     * @return number of affected rows
+     */
+    static public function deleteSeoLink ($sModule, $sContentInfoObject, $sId)
+    {
+        return BxDolPageQuery::deleteSeoLink($sModule, $sContentInfoObject, $sId);
+    }
+
+	/**
+     * Delete SEO link by param
+     * @param $sParamName GET param name
+     * @param $sId content id
+     * @return number of affected rows
+     */
+    static public function deleteSeoLinkByParam ($sParamName, $sId)
+    {
+        return BxDolPageQuery::deleteSeoLinkByParam($sParamName, $sId);
+    }
+
+	/**
      * Process SEO links. It takes request part from SEO link and process it 
      * to make it work as regular page link
      * @param $sRequest request URI with SEO link
@@ -382,7 +405,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (!empty($aUris[1])) {
             $aPage = BxDolPageQuery::getPageObject($sPageName);
             if ($aPage) {
-                $r = BxDolPageQuery::getSeoLink($aPage['module'], $aUris[0], ['uri' => $aUris[1]]);
+                $r = BxDolPageQuery::getSeoLink($aPage['module'], $aUris[0], ['uri' => urldecode($aUris[1])]);     
+                if (!$r)
+                    return false;
                 $s .= '&' . $r['param_name'] . '=' .  $r['param_value'];
             }
         }
