@@ -2851,8 +2851,10 @@ class BxBaseModGeneralModule extends BxDolModule
 
         list($iContentId, $aContentInfo) = $mixedContent;
 
-        if (isset($aParams['template_name']) && !empty($aParams['template_name']))
-            return $this->_oTemplate->$sFunc($aContentInfo, array('template_name' => $aParams['template_name']));
+        unset($aParams['function_get_content']);
+        
+        if (!empty($aParams))
+            return $this->_oTemplate->$sFunc($aContentInfo, $aParams);
         else
             return $this->_oTemplate->$sFunc($aContentInfo);
     }
