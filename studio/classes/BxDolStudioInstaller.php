@@ -948,6 +948,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         // delete badges data
         BxDolBadges::onModuleUninstall($this->_aConfig['name'], $iFiles);
         
+        // delete SEO links
+        BxDolPage::deleteSeoLinkByModule($this->_aConfig['name']);
+
         // queue for deletion storage files
         if(!empty($this->_aConfig['storages']) && is_array($this->_aConfig['storages']))        
             foreach($this->_aConfig['storages'] as $s)

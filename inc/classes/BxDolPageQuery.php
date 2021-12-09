@@ -151,6 +151,13 @@ class BxDolPageQuery extends BxDolDb
             'param_value' => $sId,
         ]);
     }
+
+    static public function deleteSeoLinkByModule($sModule)
+    {
+        return BxDolDb::getInstance()->query("DELETE FROM `sys_seo_links` WHERE `module` = :module", [
+            'module' => $sModule,
+        ]);
+    }
 }
 
 /** @} */

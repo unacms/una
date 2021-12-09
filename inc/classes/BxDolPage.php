@@ -255,7 +255,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
 	/**
-     * Delete SEO link by param
+     * Delete SEO links by param
      * @param $sParamName GET param name
      * @param $sId content id
      * @return number of affected rows
@@ -263,6 +263,16 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     static public function deleteSeoLinkByParam ($sParamName, $sId)
     {
         return BxDolPageQuery::deleteSeoLinkByParam($sParamName, $sId);
+    }
+
+	/**
+     * Delete SEO links by module
+     * @param $sModule module name
+     * @return number of affected rows
+     */
+    static public function deleteSeoLinkByModule ($sModule)
+    {
+        return BxDolPageQuery::deleteSeoLinkByModule($sModule);
     }
 
 	/**
