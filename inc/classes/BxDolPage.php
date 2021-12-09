@@ -359,6 +359,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             break; // only 1 SEO param will be transformed
         }
 
+        if (!empty($sSeoParamValue) && 0 === strpos($sSeoParamValue, '{'))
+            return false;
+
         $sSeoPageUri = $sPageUri;
 
         if ($sSeoParamName && $sSeoParamValue) { // process page with SEO param
@@ -371,11 +374,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                     $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfo);
                     $sSeoTitle = $oContentInfo ? $oContentInfo->getContentTitle($sSeoParamValue) : '';
                     if (!$sSeoTitle) 
-                        $sSeoTitle = base_convert(substr(md5($sSeoParamValue), -8), 16, 36);
+                        $sSeoTitle = self::getSeoHash($sSeoParamValue);
                 }
                 elseif ('profile_id' == $sSeoParamName) {
                     $oProfile = BxDolProfile::getInstance($sSeoParamValue);
-                    $sSeoTitle = $oProfile ? $oProfile->getDisplayName() : '';
+                    $sSeoTitle = $oProfile ? $oProfile->getDisplayName() : self::getSeoHash($sSeoParamValue);
                 }
                 
                 $r = BxDolPageQuery::getSeoLink($sModule, $sPageUri, ['param_value' => $sSeoParamValue]);
@@ -474,6 +477,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             header("Location:{$sSeoLink}", true, 301);
             exit;
         }
+    }
+
+    static public function getSeoHash($s)
+    {
+        return base_convert(substr(md5($s), -8), 16, 36);
     }
 
     /**
