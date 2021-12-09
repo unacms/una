@@ -116,7 +116,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_videos_context', 'videos-context', '_bx_videos_page_title_sys_entries_in_context', '_bx_videos_page_title_entries_in_context', 'bx_videos', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxVideosPageAuthor', 'modules/boonex/videos/classes/BxVideosPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_videos_context', 1, 'bx_videos', '_bx_videos_page_block_title_sys_entries_in_context', '_bx_videos_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1);
+('bx_videos_context', 1, 'bx_videos', '_bx_videos_page_block_title_sys_entries_in_context', '_bx_videos_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1),
+('bx_videos_context', 1, 'bx_videos', '_bx_videos_page_block_title_sys_multi_categories_in_context', '_bx_videos_page_block_title_multi_categories_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:29:\"categories_multi_list_context\";}', 0, 0, 0, 2);
 
 
 -- PAGE: module home

@@ -166,6 +166,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'EntityLocation' => '',
             'EntityComments' => '',
             'EntityAttachments' => '',
+            'CategoriesMultiList' => '',
             // menu
             'EntityAllActions' => '',
             'EntityActions' => '',
@@ -2138,7 +2139,7 @@ class BxBaseModGeneralModule extends BxDolModule
     
     /**
      * @page service Service Calls
-     * @section bx_base_general Base Text
+     * @section bx_base_general Base General
      * @subsection bx_base_general-page_blocks Page Blocks
      * @subsubsection bx_base_general-categories_multi_list categories_multi_list
      * 
@@ -2172,7 +2173,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!$aVars['bx_repeat:cats'])
             return '';
 
-        return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
+        return $this->_oTemplate->parseHtmlByName('category_list_multi.html', $aVars);
     }
 
     /**

@@ -47,9 +47,9 @@ class BxDolCategories extends BxDolFactory implements iBxDolSingleton
         return $this->_oDb->add($sModule, $iProfileId, $sValue, $iObject, $bAutoActivation);
     }
     
-    public function getUrl ($sModule, $sValue)
+    public function getUrl ($sModule, $sValue, $sAddParams = '')
     {
-        return  BX_DOL_URL_ROOT . 'searchKeyword.php?keyword=' . rawurlencode($sValue) . '&cat=multi&section=' . $sModule;
+        return  BX_DOL_URL_ROOT . 'searchKeyword.php?keyword=' . rawurlencode($sValue) . '&cat=multi&section=' . $sModule . $sAddParams;
     }
 }
 

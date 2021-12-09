@@ -168,8 +168,55 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             'BrowseTop' => '',
             'BrowseUpdated' => '',
             'BrowseAuthor' => '',
-            'CategoriesMultiList' => ''
+            'CategoriesMultiListContext' => ''
         ));
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-categories_multi_list_context categories_multi_list_context
+     * 
+     * @code bx_srv('bx_posts', 'categories_multi_list_context', [...]); @endcode
+     * 
+     * Display multi-categorories block with number of posts in each category for current context
+     * @param $bDisplayEmptyCats display empty categories
+     * 
+     * @see BxBaseModGeneralModule::serviceCategoriesMultiListContext
+     */
+    /** 
+     * @ref bx_base_general-categories_multi_list_context "categories_multi_list_context"
+     */
+    public function serviceCategoriesMultiListContext($iProfileId = 0, $bDisplayEmptyCats = true)
+    {
+        if ($iProfileId == 0)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        
+		$oCategories = BxDolCategories::getInstance();
+        $aCats = $oCategories->getData([
+                'type' => 'by_module&context_with_num', 
+                'module' => $this->getName(), 
+                'context_id' => $iProfileId
+            ]
+        );
+        $aVars = array('bx_repeat:cats' => array());
+        foreach ($aCats as $oCat) {
+            $sValue = $oCat['value'];
+            $iNum = $oCat['num'];
+            
+            $aVars['bx_repeat:cats'][] = array(
+                'url' => $oCategories->getUrl($this->getName(), $sValue, '&context_id=' . $iProfileId),
+                'name' => _t($sValue),
+                'value' => $sValue,
+                'num' => $iNum,
+            );
+        }
+        
+        if (!$aVars['bx_repeat:cats'])
+            return '';
+
+        return $this->_oTemplate->parseHtmlByName('category_list_multi.html', $aVars);
     }
 
     /**

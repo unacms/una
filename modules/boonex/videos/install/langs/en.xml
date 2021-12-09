@@ -146,6 +146,8 @@
     <string name="_bx_videos_page_block_title_sys_entries_of_author"><![CDATA[Videos of author]]></string>
     <string name="_bx_videos_page_block_title_entries_in_context"><![CDATA[Videos in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_videos_page_block_title_sys_entries_in_context"><![CDATA[Videos in context]]></string>
+    <string name="_bx_videos_page_block_title_sys_multi_categories_in_context"><![CDATA[Multi categories in context]]></string>
+    <string name="_bx_videos_page_block_title_multi_categories_in_context"><![CDATA[Categories in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_videos_page_block_title_entries_actions"><![CDATA[Videos actions]]></string>
     <string name="_bx_videos_page_block_title_browse_cmts"><![CDATA[Videos' Comments]]></string>
     <string name="_bx_videos_page_title_sys_manage"><![CDATA[Manage Own]]></string>

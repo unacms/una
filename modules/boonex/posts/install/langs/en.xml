@@ -94,7 +94,7 @@
     <string name="_bx_posts_acl_action_view_entry"><![CDATA[View Post]]></string>
     <string name="_bx_posts_acl_action_set_thumb"><![CDATA[Set Post Header Image]]></string>
     <string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Edit Any Post]]></string>
-    <string name="_bx_posts_acl_action_delete_any_entry"><![CDATA[Delete Any Account]]></string>
+    <string name="_bx_posts_page_block_title_sys_entries_in_context"><![CDATA[Delete Any Post]]></string>
 
     <string name="_bx_posts_page_title_sys_create_entry"><![CDATA[New Post]]></string>
     <string name="_bx_posts_page_title_create_entry"><![CDATA[New Post]]></string>
@@ -168,6 +168,8 @@
     <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
     <string name="_bx_posts_page_block_title_entries_in_context"><![CDATA[Posts in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_posts_page_block_title_sys_entries_in_context"><![CDATA[Posts in context]]></string>
+    <string name="_bx_posts_page_block_title_sys_multi_categories_in_context"><![CDATA[Multi categories in context]]></string>
+    <string name="_bx_posts_page_block_title_multi_categories_in_context"><![CDATA[Categories in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>
     <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Posts' Comments]]></string>
     <string name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Own]]></string>
