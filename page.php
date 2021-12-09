@@ -27,6 +27,8 @@ if(($sObject = bx_get('o')) !== false && ($sAction = bx_get('a')) !== false) {
     }
 }
 
+BxDolPage::seoRedirect();
+
 $oPage = BxDolPage::getObjectInstanceByURI('', false, true);
 if ($oPage) {
 

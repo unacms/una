@@ -431,6 +431,28 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return $s . (!empty($aParts['query']) ? '&' . $aParts['query'] : '');
     }
 
+	/**
+     * Perform SEO redorect from regular pages if needed
+     * @param $sSeoLink SEO link
+     * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
+     * @return unSEO link string on success, false if no transform is needed
+     */
+    static public function seoRedirect ()
+    {
+        if (!getParam('permalinks_seo_links'))
+            return;
+
+        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+        $sLink = bx_append_url_params($sPageLink, $aPageParams);
+        if (0 === strpos($sLink, BX_DOL_URL_ROOT))
+            $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
+
+        if ($sSeoLink = self::transformSeoLink ($sLink, BX_DOL_URL_ROOT)) {
+            header("Location:{$sSeoLink}", true, 301);
+            exit;
+        }
+    }
+
     /**
      * Display complete page
      */
