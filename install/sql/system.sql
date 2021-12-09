@@ -5507,11 +5507,12 @@ CREATE TABLE `sys_seo_links` (
   `page_uri` varchar(255) NOT NULL,
   `param_name` varchar(32) NOT NULL,
   `param_value` varchar(32) NOT NULL,
-  `uri` varchar(255) NOT NULL,
-  `added` int(11) NOT NULL,
+  `uri` varchar(50) NOT NULL,
+  `added` int(48) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `module_page_param` (`module`,`page_uri`(48),`param_value`),
-  UNIQUE KEY `module_page_uri` (`module`,`page_uri`(48),`uri`(111))
+  UNIQUE KEY `module_page_param` (`module`,`page_uri`(109),`param_value`),
+  UNIQUE KEY `module_page_uri` (`module`,`page_uri`(109),`uri`),
+  UNIQUE KEY `param_name_value` (`param_name`,`param_value`)
 );
 
 -- --------------------------------------------------------
