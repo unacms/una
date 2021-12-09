@@ -451,7 +451,9 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'permalinks_pages', '_adm_stg_cpt_option_permalinks_pages', 'on', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'permalinks_modules', '_adm_stg_cpt_option_permalinks_modules', 'on', 'checkbox', '', '', '', 2),
-(@iCategoryId, 'permalinks_storage', '_adm_stg_cpt_option_permalinks_storage', 'on', 'checkbox', '', '', '', 3);
+(@iCategoryId, 'permalinks_storage', '_adm_stg_cpt_option_permalinks_storage', 'on', 'checkbox', '', '', '', 3),
+(@iCategoryId, 'permalinks_seo_links', '_adm_stg_cpt_option_permalinks_seo_links', 'on', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'permalinks_seo_links_redirects', '_adm_stg_cpt_option_permalinks_seo_links_redirects', 'on', 'checkbox', '', '', '', 12);
 
 
 --

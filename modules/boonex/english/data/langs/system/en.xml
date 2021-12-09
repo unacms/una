@@ -1477,6 +1477,8 @@
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
     <string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Enable friendly permalinks for local Storage]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_seo_links"><![CDATA[Enable SEO links]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_seo_links_redirects"><![CDATA[Enable redirect from regular to SEO links]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Email to receive critical site notifications]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email to send site messages from]]></string>
 	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Email template header]]></string>

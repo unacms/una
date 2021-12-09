@@ -283,6 +283,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     static public function processSeoLink ($sRequest)
     {
+        if (!getParam('permalinks_seo_links'))
+            return false;
+
         $a = explode('/', trim($sRequest, '/'));
         if (!$a || empty($a[0]))
             return false;
@@ -310,10 +313,13 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      * @param $sLink regular link
      * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
      * @param $aParams additional GET params
-     * @return SEO link string on success, false if transform failed
+     * @return SEO link string on success, false if transform failed or not necessary
      */
     static public function transformSeoLink ($sLink, $sPrefix, $aParams = array())
     {
+        if (!getParam('permalinks_seo_links'))
+            return false;
+
         if (0 !== strncmp('page.php', $sLink, 8)) // only page.php links are supported
             return false;
 
