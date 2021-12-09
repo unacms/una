@@ -283,24 +283,36 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     static public function processSeoLink ($sRequest)
     {
-        if (!getParam('permalinks_seo_links'))
+        if (!$sRequest || '/' === $sRequest || !getParam('permalinks_seo_links'))
             return false;
 
-        $a = explode('/', trim($sRequest, '/'));
+        // redirect to the correct URL
+        if ('/' === $sRequest[-1] || $sRequest != mb_strtolower($sRequest)) {
+            unset($_GET['_q']);
+            $sUrl = BX_DOL_URL_ROOT . bx_append_url_params(mb_strtolower(trim($sRequest, '/')), $_GET);
+            header('Location:' . $sUrl, true, 301);
+            exit;            
+        }
+
+        // parse URL
+        $a = explode('/', $sRequest);
         if (!$a || empty($a[0]))
             return false;
 
+        // get page
         $sPageName = BxDolPageQuery::getPageObjectNameByURI($a[0]);
         $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
         if (!$aPage)
             return false;
 
-        if (!empty($a[1])) { // page with params
+        // page with params
+        if (!empty($a[1])) { 
             $r = BxDolPageQuery::getSeoLink($aPage['module'], $a[0], ['uri' => $a[1]]);
             if ($r)
                 $_GET[$r['param_name']] = $_REQUEST[$r['param_name']] = $r['param_value'];
         }
 
+        // display page
         $_REQUEST['i'] = $_GET['i'] = $a[0];
         $oPage = BxDolPage::getObjectInstanceByURI($a[0], false, true);
         $oPage->displayPage();
