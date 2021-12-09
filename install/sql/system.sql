@@ -5512,7 +5512,7 @@ CREATE TABLE `sys_seo_links` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `module_page_param` (`module`,`page_uri`(109),`param_value`),
   UNIQUE KEY `module_page_uri` (`module`,`page_uri`(109),`uri`),
-  UNIQUE KEY `param_name_value` (`param_name`,`param_value`)
+  KEY `param_name_value` (`param_name`,`param_value`)
 );
 
 -- --------------------------------------------------------
