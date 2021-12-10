@@ -25,7 +25,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30),
 
 ('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40),
-('bx_ads_offer_lifetime', '72', @iCategId, '_bx_ads_option_offer_lifetime', 'digit', '', '', '', '', 41);
+('bx_ads_offer_lifetime', '72', @iCategId, '_bx_ads_option_offer_lifetime', 'digit', '', '', '', 41);
 
 
 -- PAGE: create entry
