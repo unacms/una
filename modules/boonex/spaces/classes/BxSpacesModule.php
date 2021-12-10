@@ -42,14 +42,14 @@ class BxSpacesModule extends BxBaseModGroupsModule
         return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
     }
     
-    public function serviceEntityParent ($iContentId = 0)
+    public function serviceEntityParent ($iContentId = 0, $aParams = [])
     {
-        return $this->_serviceTemplateFunc ('entryParent', $iContentId);
+        return $this->_serviceTemplateFuncEx ('entryParent', $iContentId, $aParams);
     }
     
-    public function serviceEntityChilds ($iContentId = 0)
+    public function serviceEntityChilds ($iContentId = 0, $aParams = [])
     {
-        return $this->_serviceTemplateFunc ('entryChilds', $iContentId);
+        return $this->_serviceTemplateFuncEx ('entryChilds', $iContentId, $aParams);
     }
     
     public function serviceBrowseTopLevel ($bDisplayEmptyMsg = false)

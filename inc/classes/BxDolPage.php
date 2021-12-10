@@ -35,6 +35,8 @@
  *      - user level id = 4 -> 2^(4-1) = 8
  * - visible_for_levels_editable: it determines if 'visible_for_levels' field is editable from page builder, visibility options can be overriden by custom class and shouldn't be editable in this case.
  * - url: the page url, if it is static page.
+ * - content_info: content info object name related to the content on the page,
+ *                 if different from module name
  * - meta_description: meta description of the page.
  * - meta_keywords: meta keywords of the page.
  * - meta_robots: instructions for search bots.
@@ -241,6 +243,39 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
 	/**
+     * Delete SEO link
+     * @param $sModule module name
+     * @param $sContentInfoObject content info object
+     * @param $sId content id
+     * @return number of affected rows
+     */
+    static public function deleteSeoLink ($sModule, $sContentInfoObject, $sId)
+    {
+        return BxDolPageQuery::deleteSeoLink($sModule, $sContentInfoObject, $sId);
+    }
+
+	/**
+     * Delete SEO links by param
+     * @param $sParamName GET param name
+     * @param $sId content id
+     * @return number of affected rows
+     */
+    static public function deleteSeoLinkByParam ($sParamName, $sId)
+    {
+        return BxDolPageQuery::deleteSeoLinkByParam($sParamName, $sId);
+    }
+
+	/**
+     * Delete SEO links by module
+     * @param $sModule module name
+     * @return number of affected rows
+     */
+    static public function deleteSeoLinkByModule ($sModule)
+    {
+        return BxDolPageQuery::deleteSeoLinkByModule($sModule);
+    }
+
+	/**
      * Process SEO links. It takes request part from SEO link and process it 
      * to make it work as regular page link
      * @param $sRequest request URI with SEO link
@@ -248,21 +283,36 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     static public function processSeoLink ($sRequest)
     {
-        $a = explode('/', trim($sRequest, '/'));
+        if (!$sRequest || '/' === $sRequest || !getParam('permalinks_seo_links'))
+            return false;
+
+        // redirect to the correct URL
+        if ('/' === $sRequest[-1] || $sRequest != mb_strtolower($sRequest)) {
+            unset($_GET['_q']);
+            $sUrl = BX_DOL_URL_ROOT . bx_append_url_params(mb_strtolower(trim($sRequest, '/')), $_GET);
+            header('Location:' . $sUrl, true, 301);
+            exit;            
+        }
+
+        // parse URL
+        $a = explode('/', $sRequest);
         if (!$a || empty($a[0]))
             return false;
 
+        // get page
         $sPageName = BxDolPageQuery::getPageObjectNameByURI($a[0]);
         $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
         if (!$aPage)
             return false;
 
-        if (!empty($a[1])) { // page with params
+        // page with params
+        if (!empty($a[1])) { 
             $r = BxDolPageQuery::getSeoLink($aPage['module'], $a[0], ['uri' => $a[1]]);
             if ($r)
                 $_GET[$r['param_name']] = $_REQUEST[$r['param_name']] = $r['param_value'];
         }
 
+        // display page
         $_REQUEST['i'] = $_GET['i'] = $a[0];
         $oPage = BxDolPage::getObjectInstanceByURI($a[0], false, true);
         $oPage->displayPage();
@@ -275,10 +325,13 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      * @param $sLink regular link
      * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
      * @param $aParams additional GET params
-     * @return SEO link string on success, false if transform failed
+     * @return SEO link string on success, false if transform failed or not necessary
      */
     static public function transformSeoLink ($sLink, $sPrefix, $aParams = array())
     {
+        if (!getParam('permalinks_seo_links'))
+            return false;
+
         if (0 !== strncmp('page.php', $sLink, 8)) // only page.php links are supported
             return false;
 
@@ -306,6 +359,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             break; // only 1 SEO param will be transformed
         }
 
+        if (!empty($sSeoParamValue) && 0 === strpos($sSeoParamValue, '{'))
+            return false;
+
         $sSeoPageUri = $sPageUri;
 
         if ($sSeoParamName && $sSeoParamValue) { // process page with SEO param
@@ -313,20 +369,32 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
             if ($aPage) {
                 $sModule = $aPage['module'];
+                $sContentInfo = !empty($aPage['content_info']) ? $aPage['content_info'] : $aPage['module'];
                 if ('id' == $sSeoParamName) {
-                    $oContentInfo = BxDolContentInfo::getObjectInstance($sModule);
+                    $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfo);
                     $sSeoTitle = $oContentInfo ? $oContentInfo->getContentTitle($sSeoParamValue) : '';
                     if (!$sSeoTitle) 
-                        $sSeoTitle = base_convert(substr(md5($sSeoParamValue), -8), 16, 36);
+                        $sSeoTitle = self::getSeoHash($sSeoParamValue);
                 }
                 elseif ('profile_id' == $sSeoParamName) {
                     $oProfile = BxDolProfile::getInstance($sSeoParamValue);
-                    $sSeoTitle = $oProfile ? $oProfile->getDisplayName() : '';
+                    $sSeoTitle = $oProfile ? $oProfile->getDisplayName() : self::getSeoHash($sSeoParamValue);
                 }
                 
                 $r = BxDolPageQuery::getSeoLink($sModule, $sPageUri, ['param_value' => $sSeoParamValue]);
                 if (!$r) {
-                    $sUri = uriGenerate ($sSeoTitle, 'sys_seo_links', 'uri', '-', '-', ['module' => $sModule, 'page_uri' => $sPageUri]);
+                    $sSeoTitleLimited = BxTemplFunctions::getInstance()->getStringWithLimitedLength($sSeoTitle, 45);
+                    $sUri = uriGenerate ($sSeoTitleLimited, 'sys_seo_links', 'uri', '-', '-', ['module' => $sModule, 'page_uri' => $sPageUri]);
+
+                    bx_alert('system', 'uri-generate', 0, false, [
+                        'module' => $sModule,
+                        'page_uri' =>$sPageUri,
+                        'param_name' => $sSeoParamName,
+                        'param_value' => $sSeoParamValue,
+                        'title' => $sSeoTitle,
+                        'uri' => &$sUri,
+                    ]);
+
                     BxDolPageQuery::insertSeoLink($sModule, $sPageUri, $sSeoParamName, $sSeoParamValue, $sUri);
                 }
                 elseif ($r['param_name'] == $sSeoParamName) {
@@ -347,6 +415,73 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return false;
 
         return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams));
+    }
+
+	/**
+     * Transform SEO regular link into regular link with permalinks off.
+     * @param $sSeoLink SEO link
+     * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
+     * @return unSEO link string on success, false if no transform is needed
+     */
+    static public function untransformSeoLink ($sSeoLink, $sPrefix)
+    {
+        // check for standard links first
+        if (preg_match('/^(page\/|s\/|m\/|modules\/|page\.php|storage\.php)/', $sSeoLink))
+            return false;
+
+        // parse link
+        $aParts = parse_url($sSeoLink);
+        if (!$aParts || empty($aParts['path']))
+            return false;
+
+        $aUris = explode('/', trim($aParts['path'], '/'));
+
+        // check if link starts with page URI and page with this URI exists 
+        if (!$aUris || empty($aUris[0]) || !($sPageName = BxDolPageQuery::getPageObjectNameByURI($aUris[0])))
+            return false;
+
+        // make final URL
+        $s = 'page.php?i=' . $aUris[0];
+
+        // add params
+        if (!empty($aUris[1])) {
+            $aPage = BxDolPageQuery::getPageObject($sPageName);
+            if ($aPage) {
+                $r = BxDolPageQuery::getSeoLink($aPage['module'], $aUris[0], ['uri' => urldecode($aUris[1])]);     
+                if (!$r)
+                    return false;
+                $s .= '&' . $r['param_name'] . '=' .  $r['param_value'];
+            }
+        }
+
+        return $s . (!empty($aParts['query']) ? '&' . $aParts['query'] : '');
+    }
+
+	/**
+     * Perform SEO redorect from regular pages if needed
+     * @param $sSeoLink SEO link
+     * @param $sPrefix prefix to add to the final URL, usually BX_DOL_URL_ROOT
+     * @return unSEO link string on success, false if no transform is needed
+     */
+    static public function seoRedirect ()
+    {
+        if (!getParam('permalinks_seo_links'))
+            return;
+
+        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+        $sLink = bx_append_url_params($sPageLink, $aPageParams);
+        if (0 === strpos($sLink, BX_DOL_URL_ROOT))
+            $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
+
+        if ($sSeoLink = self::transformSeoLink ($sLink, BX_DOL_URL_ROOT)) {
+            header("Location:{$sSeoLink}", true, 301);
+            exit;
+        }
+    }
+
+    static public function getSeoHash($s)
+    {
+        return base_convert(substr(md5($s), -8), 16, 36);
     }
 
     /**

@@ -188,6 +188,8 @@
     <string name="_bx_forum_page_block_title_sys_entries_of_author"><![CDATA[Discussions of author]]></string>
     <string name="_bx_forum_page_block_title_entries_in_context"><![CDATA[Discussions in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_in_context"><![CDATA[Discussions in context]]></string>
+    <string name="_bx_forum_page_block_title_sys_multi_categories_in_context"><![CDATA[Multi categories in context]]></string>
+    <string name="_bx_forum_page_block_title_multi_categories_in_context"><![CDATA[Categories in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Discussions actions]]></string>
     <string name="_bx_forum_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_forum_page_block_title_entry_context"><![CDATA[Posted in]]></string>

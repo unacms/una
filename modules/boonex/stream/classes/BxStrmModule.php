@@ -40,6 +40,22 @@ class BxStrmModule extends BxBaseModTextModule
         return $this->_oEngine;
     }
 
+    public function actionNginxOnPublish()
+    {
+        $sKey = bx_get('name');
+        $sSecret = bx_get('s');
+        if (empty($sKey) || empty($sSecret) || !($aContentInfo = $this->_oDb->getEntriesBy(['type' => 'conditions', 'conditions' => ['key' => $sKey]]))) {
+            header('HTTP/1.0 404 Not Found');
+        }
+        elseif ($sSecret != base_convert(substr(md5(BX_DOL_SECRET . $sKey), -4), 16, 36)) {
+            header('HTTP/1.0 403 Forbidden');
+        }
+        else {
+            header('HTTP/1.0 201 Created');
+        }
+        exit;
+    }
+
     public function actionEmbedStream($iContentId = 0)
     {
         $this->_serviceTemplateFunc ('embedStream', $iContentId);

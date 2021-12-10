@@ -36,8 +36,8 @@ VALUES (@iTypeId, 'bx_stream_engine_nginx', '_bx_stream_options_cat_engine_nginx
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-
-('bx_stream_server_nginx_stats_url', 'http://{host}/stat', @iCategId, '_bx_stream_option_nginx_stats_url', 'digit', '', '', '', 10);
+('bx_stream_server_nginx_stats_url', 'https://{host}/stat', @iCategId, '_bx_stream_option_nginx_stats_url', 'digit', '', '', '', 10),
+('bx_stream_server_nginx_auth', 'on', @iCategId, '_bx_stream_option_nginx_auth', 'checkbox', '', '', '', 12);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_stream_general', '_bx_stream_options_cat_general', 4);

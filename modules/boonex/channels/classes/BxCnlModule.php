@@ -202,16 +202,15 @@ class BxCnlModule extends BxBaseModGroupsModule
      * 
      * Display block with parent channel
      * @param $iContentId channel content ID
-     * @param $sTemplateName html template name
      * 
      * @see BxCnlModule::serviceEntityParent
      */
     /** 
      * @ref bx_channels-entity_parent "entity_parent"
      */
-    public function serviceEntityParent($iContentId = 0, $sTemplateName = '')
+    public function serviceEntityParent($iContentId = 0)
     {
-        return $this->_serviceTemplateFuncEx('entryParent', $iContentId, array('template_name' =>$sTemplateName));
+        return $this->_serviceTemplateFunc('entryParent', $iContentId);
     }
 
     /**
@@ -224,16 +223,15 @@ class BxCnlModule extends BxBaseModGroupsModule
      * 
      * Display block with child channels
      * @param $iContentId channel content ID
-     * @param $sTemplateName html template name
      * 
      * @see BxCnlModule::serviceEntityChilds
      */
     /** 
      * @ref bx_channels-entity_childs "entity_childs"
      */
-    public function serviceEntityChilds($iContentId = 0, $sTemplateName = '')
+    public function serviceEntityChilds($iContentId = 0)
     {
-        return $this->_serviceTemplateFuncEx('entryChilds', $iContentId, array('template_name' =>$sTemplateName));
+        return $this->_serviceTemplateFunc('entryChilds', $iContentId);
     }
 
     /**

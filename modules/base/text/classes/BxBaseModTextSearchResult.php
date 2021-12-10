@@ -35,6 +35,14 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 		}
     }
 
+    protected function checkRestrictionsForContext($sMode, $aParams, $oProfileAuthor){
+        if(bx_get('context_id')){
+            $aParams['context'] = bx_get('context_id');
+            $oProfileAuthor = null;
+            $this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor);
+        }
+    }
+    
     function getAlterOrder()
     {
         $CNF = &$this->oModule->_oConfig->CNF;

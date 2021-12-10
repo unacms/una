@@ -152,6 +152,8 @@
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[{display_name} - Публикации]]></string>
     <string name="_bx_posts_page_title_sys_entries_in_context"><![CDATA[Публикации в контексте]]></string>
     <string name="_bx_posts_page_title_entries_in_context"><![CDATA[Публикации в контексте - {display_name}]]></string>
+    <string name="_bx_posts_page_block_title_sys_multi_categories_in_context"><![CDATA[Категории публикаций в контексте(Мульти)]]></string>
+    <string name="_bx_posts_page_block_title_multi_categories_in_context"><![CDATA[Категории в <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_posts_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_posts_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Публикации]]></string>   

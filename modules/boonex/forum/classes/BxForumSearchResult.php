@@ -169,6 +169,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case '': // search results
+                $this->checkRestrictionsForContext($sMode, $aParams, $oProfileAuthor);
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_forum');
                 unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);

@@ -8,6 +8,9 @@
  * @page objects Objects
  * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms.
  *
+ * @section alerts Alerts(hooks)
+ * @ref BxDolAlerts
+ *
  * @section captcha CAPTCHA
  * @ref BxDolCaptcha
  *

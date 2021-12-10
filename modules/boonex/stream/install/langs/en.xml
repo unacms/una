@@ -17,6 +17,7 @@
 
     <string name="_bx_stream_option_ome_api_port"><![CDATA[OvenMediaEngine API Port]]></string>
     <string name="_bx_stream_option_nginx_stats_url"><![CDATA[NGINX Stats URL]]></string>
+    <string name="_bx_stream_option_nginx_auth"><![CDATA[NGINX Authentication (on_publish need to be set to http://site/m/stream/nginx_on_publish/)]]></string>
     <string name="_bx_stream_option_server_host"><![CDATA[Server Hostname]]></string>
     <string name="_bx_stream_option_app"><![CDATA[Application Name]]></string>
     <string name="_bx_stream_option_sources_pattern"><![CDATA[Sources Pattern]]></string>

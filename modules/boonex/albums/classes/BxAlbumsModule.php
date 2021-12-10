@@ -152,6 +152,8 @@ class BxAlbumsModule extends BxBaseModTextModule
             $oMetatags->onDeleteContent($aMediaInfo['id']);
         }
 
+        BxDolPage::deleteSeoLink ($this->getName(), 'bx_albums_media', $aMediaInfo['id']);
+
         return true;
     }
 

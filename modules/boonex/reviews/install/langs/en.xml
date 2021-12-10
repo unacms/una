@@ -163,6 +163,8 @@
     <string name="_bx_reviews_page_block_title_sys_entries_of_author"><![CDATA[Reviews of author]]></string>
     <string name="_bx_reviews_page_block_title_entries_in_context"><![CDATA[Reviews in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_reviews_page_block_title_sys_entries_in_context"><![CDATA[Reviews in context]]></string>
+    <string name="_bx_reviews_page_block_title_sys_multi_categories_in_context"><![CDATA[Multi categories in context]]></string>
+    <string name="_bx_reviews_page_block_title_multi_categories_in_context"><![CDATA[Categories in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_reviews_page_block_title_entries_actions"><![CDATA[Reviews actions]]></string>
     <string name="_bx_reviews_page_block_title_browse_cmts"><![CDATA[Reviews' Comments]]></string>
     <string name="_bx_reviews_page_title_sys_manage"><![CDATA[Manage Own]]></string>

@@ -163,6 +163,8 @@
     <string name="_bx_reviews_page_block_title_sys_entries_of_author"><![CDATA[Отзывы автора]]></string>
     <string name="_bx_reviews_page_block_title_entries_in_context"><![CDATA[Отзывы в контексте <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_reviews_page_block_title_sys_entries_in_context"><![CDATA[Отзывы в контексте]]></string>
+    <string name="_bx_reviews_page_block_title_sys_multi_categories_in_context"><![CDATA[Категории отзывов в контексте(Мульти)]]></string>
+    <string name="_bx_reviews_page_block_title_multi_categories_in_context"><![CDATA[Категории в <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_reviews_page_block_title_entries_actions"><![CDATA[Отзывы - Действия]]></string>
     <string name="_bx_reviews_page_block_title_browse_cmts"><![CDATA[Отзывы - Комментарии]]></string>
     <string name="_bx_reviews_page_title_sys_manage"><![CDATA[Управление собственными отзывами]]></string>

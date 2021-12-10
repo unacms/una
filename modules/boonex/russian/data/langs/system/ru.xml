@@ -1461,6 +1461,8 @@
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Задействовать дружественные ссылки для модулей]]></string>
     <string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Задействовать дружественные ссылки для страниц]]></string>
     <string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Задействовать дружественные ссылки для локального хранилища]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_seo_links"><![CDATA[Включить ссылки оптимизированные для поисковых систем]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_seo_links_redirects"><![CDATA[Включить перенаправление с обычных ссылок на оптимизированные]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Email для получения критических уведомлений от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email, с которого будут посылаться сообщения от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок HTML шаблона email сообщения]]></string>

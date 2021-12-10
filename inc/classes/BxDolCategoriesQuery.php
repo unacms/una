@@ -63,8 +63,7 @@ class BxDolCategoriesQuery extends BxDolDb
             case 'by_module_with_num':
                 $aMethod['name'] = 'getAll';
                 $aMethod['params'][1] = array(
-                    'module' => $aParams['module'],
-
+                    'module' => $aParams['module']
                 );
                 
                 $oModule = BxDolModule::getInstance($aParams['module']);
@@ -74,6 +73,26 @@ class BxDolCategoriesQuery extends BxDolDb
                 $sJoinClause = "INNER JOIN `sys_categories2objects` `soc` ON `sc`.`id` =  `soc`.`category_id`";
                 if (isset($CNF['FIELD_STATUS']))
                     $sJoinClause .= "INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` `data` ON `soc`.`object_id` =  `data`.`id` AND `data`.`" . $CNF['FIELD_STATUS'] . "` = 'active'";
+                $sWhereClause = " AND `sc`.`status` = 'active' AND `soc`.`module` = :module";
+                $sGroupClause = "`sc`.`id`";
+                $sOrderClause = "`num` DESC";
+                break;
+                
+            case 'by_module&context_with_num':
+                $aMethod['name'] = 'getAll';
+                $aMethod['params'][1] = array(
+                    'module' => $aParams['module'],
+                    'context_id' => -$aParams['context_id'],
+                );
+                
+                $oModule = BxDolModule::getInstance($aParams['module']);
+                $CNF = $oModule->_oConfig->CNF;
+                
+                $sSelectClause = "`sc`.`value`, COUNT(`sc`.`id`) as `num`";
+                $sJoinClause = " INNER JOIN `sys_categories2objects` `soc` ON `sc`.`id` =  `soc`.`category_id`";
+                $sJoinClause .= " INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` `data` ON `soc`.`object_id` =  `data`.`id` AND `data`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "` = :context_id";
+                if (isset($CNF['FIELD_STATUS']))
+                    $sJoinClause .= " AND `data`.`" . $CNF['FIELD_STATUS'] . "` = 'active' ";
                 $sWhereClause = " AND `sc`.`status` = 'active' AND `soc`.`module` = :module";
                 $sGroupClause = "`sc`.`id`";
                 $sOrderClause = "`num` DESC";
