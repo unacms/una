@@ -54,7 +54,8 @@ class BxStrmEngineNGINX extends BxDol
             return false;
 
         $sBaseUrl = "rtmp://$sHost:1935/$sApp";
-        return ['server' => $sBaseUrl, 'key' => $sStreamKey];
+        $sStreamSecret = base_convert(substr(md5(BX_DOL_SECRET . $sStreamKey), -4), 16, 36);
+        return ['server' => $sBaseUrl, 'key' => $sStreamKey . '?s=' . $sStreamSecret];
     }
 
     public function getRtmpIngestUrl($sStreamKey)
