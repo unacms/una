@@ -163,7 +163,7 @@ class BxTemplFunctions extends BxBaseFunctions
             'menu_notifications' => BxDolMenu::getObjectInstance('sys_account_notifications')->getCode(),
             'profile_switcher' => $sSwitcher,
             'bx_if:multiple_profiles_mode' => [
-                'condition' => (int)getParam('sys_account_limit_profiles_number') != 1,
+                'condition' => BxDolAccount::isAllowedCreateMultiple($oProfile->id()),
                 'content' => [
                     'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
         	]
