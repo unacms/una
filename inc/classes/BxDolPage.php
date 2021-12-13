@@ -351,11 +351,12 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $sSeoParamName = '';
         $sSeoParamValue = '';
         foreach ($aSeoParams as $k) {
-            if (empty($k) || empty($aQueryParams[$k]))
+            if (empty($aQueryParams[$k]) && empty($aParams[$k]))
                 continue;
             $sSeoParamName = $k;
-            $sSeoParamValue = $aQueryParams[$k];
+            $sSeoParamValue = !empty($aParams[$k]) ? $aParams[$k] : $aQueryParams[$k];
             unset($aQueryParams[$k]);
+            unset($aParams[$k]);
             break; // only 1 SEO param will be transformed
         }
 
