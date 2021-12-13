@@ -726,6 +726,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             return MsgBox($aCheck[CHECK_ACTION_MESSAGE]);
         return CHECK_ACTION_RESULT_ALLOWED;
     }
+    
+    static public function isAllowedCreateMultiple ($iProfileId, $isPerformAction = false)
+    {
+        $bResult = false;
+        if ((int)getParam('sys_account_limit_profiles_number') != 1)
+            $bResult = true;
+        
+        bx_alert('profile', 'allow_create_another_profile', $iProfileId, 0, array('override_result' => &$bResult));
+        
+        return $bResult;
+    }
 
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.

@@ -54,7 +54,7 @@ class BxBaseServiceProfiles extends BxDol
             $sSwitcher = BxTemplFunctions::getInstance()->transBox('bx-profile-switcher', $oTemplate->parseHtmlByName('profile_avatar_switcher.html', array(
                 'profile_switcher' => $aSwitcher['content'],
                 'bx_if:multiple_profiles_mode' => array(
-                    'condition' => empty($aSwitcher['content']) || (int)getParam('sys_account_limit_profiles_number') != 1,
+                    'condition' => empty($aSwitcher['content']) || BxDolAccount::isAllowedCreateMultiple($oProfile->id()),
                     'content' => array(
                         'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
                     )
