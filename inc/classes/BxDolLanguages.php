@@ -268,13 +268,18 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
         return strftime($sFormat, $iTime);
     }
 
-    function _t_format_currency ($fPrice, $iPrecision = 2)
+    function _t_format_currency ($fPrice, $iPrecision = 2, $bFormatThousands = false)
     {
         $sSign = BxDolPayments::getInstance()->getOption('default_currency_sign');
         if(empty($sSign))
             $sSign = getParam('currency_sign');
 
-        return $this->_t('_sys_currency', $sSign, sprintf("%." . $iPrecision . "f", (float)$fPrice));
+        if($bFormatThousands)
+            $fPrice = number_format((float)$fPrice, $iPrecision);
+        else
+            $fPrice = sprintf("%." . $iPrecision . "f", (float)$fPrice);
+
+        return $this->_t('_sys_currency', $sSign, $fPrice);
     }
 
     function _t_format_extensions ($mixedExtensions)
@@ -428,9 +433,9 @@ function _t_format_duration($iTime)
     return BxDolLanguages::getInstance()->_t_format_duration($iTime);
 }
 
-function _t_format_currency($fPrice, $iPrecision = 2)
+function _t_format_currency($fPrice, $iPrecision = 2, $bFormatThousands = false)
 {
-    return BxDolLanguages::getInstance()->_t_format_currency($fPrice, $iPrecision);
+    return BxDolLanguages::getInstance()->_t_format_currency($fPrice, $iPrecision, $bFormatThousands);
 }
 
 function _t_format_extensions($mixedExtensions)
