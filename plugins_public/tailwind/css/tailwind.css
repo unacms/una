@@ -28,6 +28,10 @@
 
 
     /* Defaults */
+    .bx-artificer .bx-menthion-link {
+        @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+
     .bx-artificer .bx-def-box-sizing {
         @apply box-border;
     }
@@ -77,6 +81,12 @@
     .bx-artificer .bx-def-margin-topbottom-neg {
         @apply -my-4;
     }
+    .bx-artificer .bx-def-margin-lefttopright {
+        @apply mx-4 mt-4;
+    }
+    .bx-artificer .bx-def-margin-rightbottomleft {
+        @apply mx-4 mb-4;
+    }
     
     .bx-artificer .bx-def-margin-sec {
         @apply m-2;
@@ -111,7 +121,13 @@
     .bx-artificer .bx-def-margin-sec-topbottom-neg {
         @apply -my-2;
     }
-    
+    .bx-artificer .bx-def-margin-sec-lefttopright {
+        @apply mx-2 mt-2;
+    }
+    .bx-artificer .bx-def-margin-sec-rightbottomleft {
+        @apply mx-2 mb-2;
+    }
+
     .bx-artificer .bx-def-margin-thd {
         @apply m-1;
     }
@@ -144,6 +160,12 @@
     }
     .bx-artificer .bx-def-margin-thd-topbottom-neg {
         @apply -my-1;
+    }
+    .bx-artificer .bx-def-margin-thd-lefttopright {
+        @apply mx-1 mt-1;
+    }
+    .bx-artificer .bx-def-margin-thd-rightbottomleft {
+        @apply mx-1 mb-1;
     }
 
     .bx-artificer .bx-def-padding {
@@ -286,7 +308,7 @@
 
     .bx-artificer h1,
     .bx-artificer .bx-def-font-h1 {
-        @apply text-4xl;
+        @apply text-4xl leading-10;
     }
 
     /* Common elements: Blocks, Boxes, etc. */
@@ -361,7 +383,7 @@
     }
     
     .bx-artificer .bx-btn.bx-btn-disabled {
-        @apply bg-gray-50 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400 !important;
+        @apply bg-gray-50 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400 focus:ring-0 focus:ring-offset-0 cursor-default !important;
     }
 
     .bx-artificer .bx-btn.bx-btn-small {
