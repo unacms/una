@@ -497,17 +497,27 @@ class BxBasePage extends BxDolPage
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
 
+        $aDbNoTitle = [BX_DB_CONTENT_ONLY, BX_DB_PADDING_CONTENT_ONLY, BX_DB_NO_CAPTION, BX_DB_PADDING_NO_CAPTION];
+
         $sTitle = $this->getBlockTitle($aBlock);
         $sHelp = $this->getBlockHelp($aBlock);
 
         $sFunc = '_getBlock' . ucfirst($aBlock['type']);
         $bBlockVisible = $this->_isVisibleBlock($aBlock);
-        if ($iAsync && $bBlockVisible) {    
+        if ($iAsync && $bBlockVisible) {
+            $iDesignboxId = $aBlock['designbox_id'];
+
+            $sHelpTitle = $sHelpContent = '';
+            if(!in_array($iDesignboxId, $aDbNoTitle))
+                $sHelpTitle = $sHelp;
+            else
+                $sHelpContent = $sHelp;
+
             $sContent = $this->getBlockAsyncCode($aBlock, $iAsync);
             $aParams = array(
-                $sTitle . $sHelp,
-                $sContent,
-                $aBlock['designbox_id']
+                $sTitle . $sHelpTitle,
+                $sContent . $sHelpContent,
+                $iDesignboxId
             );
             $sContentWithBox = call_user_func_array(array($oFunctions, 'designBoxContent'), $aParams);
         } 
@@ -517,10 +527,18 @@ class BxBasePage extends BxDolPage
             $this->_oQuery->setReadOnlyMode(true);
 
             if(is_array($mixedContent) && !empty($mixedContent['content'])) {
+                $iDesignboxId = isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'];
+
+                $sHelpTitle = $sHelpContent = '';
+                if(!in_array($iDesignboxId, $aDbNoTitle))
+                    $sHelpTitle = $sHelp;
+                else
+                    $sHelpContent = $sHelp;
+
                 $aParams = array(
-                    (isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle) . $sHelp,
-                    $mixedContent['content'],
-                    isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id']
+                    (isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle) . $sHelpTitle,
+                    $mixedContent['content'] . $sHelpContent,
+                    $iDesignboxId
                 );
 
                 $mixedMenu = false;
@@ -536,10 +554,18 @@ class BxBasePage extends BxDolPage
                     $aParams[] = (int)$aBlock['tabs'] == 1 ? true : array();
             }
             else if(is_string($mixedContent) && !empty($mixedContent)) {
+                $iDesignboxId = $aBlock['designbox_id'];
+
+                $sHelpTitle = $sHelpContent = '';
+                if(!in_array($iDesignboxId, $aDbNoTitle))
+                    $sHelpTitle = $sHelp;
+                else
+                    $sHelpContent = $sHelp;
+
                 $aParams = array(
-                    $sTitle . $sHelp,
-                    $mixedContent,
-                    $aBlock['designbox_id']
+                    $sTitle . $sHelpTitle,
+                    $mixedContent . $sHelpContent,
+                    $iDesignboxId
                 );
 
                 $mixedMenu = !empty($aBlock['submenu']) ? $aBlock['submenu'] : false;
