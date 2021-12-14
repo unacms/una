@@ -95,6 +95,22 @@ import url(../../../../../../../template/css/common.css);
     text-align: left;
 }
 
+.bx-db-content {
+    position: relative;
+}
+
+.bx-db-content .bx-db-help {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.0rem;
+    height: 2.0rem;
+    border-radius: 2rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    line-height: 2rem;
+    text-align: center;
+}
+
 .bx-db-help-popup {
     max-width: 25rem;
     max-height: 25rem;
