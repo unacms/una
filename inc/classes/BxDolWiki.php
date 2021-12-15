@@ -128,7 +128,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, $iRevision);
         $aWikiLatest = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
         if ($aWikiVer) {
-            $oParsedown = new Parsedown();
+            $oParsedown = new BxDolParsedown();
             $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
             $s = $oParsedown->text($aWikiVer['content']);
         }
@@ -795,6 +795,25 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             $aVars['bx_repeat:revisions'][] = $r;
         }
         return $aVars;
+    }
+}
+
+class BxDolParsedown extends Parsedown
+{
+    protected function inlineImage($Excerpt)
+    {
+        $a = parent::inlineImage($Excerpt);
+
+        if (@isset($a['element']['attributes']['src']) && preg_match('#^([a-zA-Z0-9_]+)/([a-zA-Z0-9]+)$#', $a['element']['attributes']['src'], $aMatches) && is_array($aMatches) && 3 == count($aMatches)) {
+
+            $oStorage = BxDolStorage::getObjectInstance($aMatches[1]);
+            if ($oStorage) {
+                $sUrl = $oStorage->getFileUrlByRemoteId($aMatches[2]);
+                if ($sUrl)
+                    $a['element']['attributes']['src'] = $sUrl;
+            }
+        }
+        return $a;
     }
 }
 

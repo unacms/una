@@ -335,6 +335,7 @@ abstract class BxDolUploader extends BxDolFactory
                 'file_title' => $oStorage->getFileTitle($aFile['file_name']),
                 'file_icon' => $sFileIcon,
                 'file_url' => $oStorage->getFileUrlById($aFile['id']),
+                'file_remote_id' => $aFile['remote_id'],
                 'js_instance_name' => $this->_sUploaderJsInstance,
             );
 

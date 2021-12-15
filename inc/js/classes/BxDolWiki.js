@@ -187,4 +187,36 @@ function bx_wiki_add_block(e, sPage, iCellId, sActionUri) {
     }, 'json');
 }
 
+function bx_wiki_insert_img (sEditorId, sImgUrl, sImgName) {
+    var s = "![" + sImgName + "](" + sImgUrl + ")";
+    var e = $(sEditorId).size() ? $(sEditorId).get(0) : false;
+    
+    if (!e)
+        return;
+
+    if (e.setRangeText) {
+        e.setRangeText(s);
+    } 
+    else {
+        e.focus();
+        document.execCommand('insertText', false, s);
+    }
+}
+
+function bx_wiki_remove_img (sEditorId, sImgUrl, sImgName) {
+    var sVal = $(sEditorId).val();
+    if (!sVal)
+        return;
+
+    var sImg = "![IMGNAMEHERE](" + sImgUrl + ")";
+    sImg = sImg.replace(/[|\\{}()[\]^$+*?.]/mg, '\\$&').replace(/-/mg, '\\x2d'); // escape special chars
+    sImg = sImg.replace(/IMGNAMEHERE/, '(.*?)');
+
+    var re = new RegExp(sImg, 'gm');
+    sVal = sVal.replace(re, '');
+
+    $(sEditorId).val(sVal);
+}
+
+
 /** @} */

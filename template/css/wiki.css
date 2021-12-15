@@ -64,3 +64,32 @@
     -ms-transition: background-color 1500ms linear;
     transition: background-color 1500ms linear;
 }
+
+.wiki-uploader-file {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.wiki-uploader-file-preview > img {
+    height:3.25rem;
+    width:3.25rem;
+}
+
+.bx-page-wiki-container ol,
+.bx-page-wiki-container ul {
+    list-style: none;
+    padding: 0;
+}
+.bx-page-wiki-container ol li,
+.bx-page-wiki-container ul li {
+    margin: 0.625rem 0;
+}
+
+.bx-page-wiki-container ol li::before,
+.bx-page-wiki-container ul li::before {
+  content: "‣";
+  display: inline-block;
+  margin-right: 0.4rem;
+}
+
