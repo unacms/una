@@ -94,8 +94,29 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         }
     });
 
-    if(typeof window.glOnSpaceEnterInEditor === 'undefined')
+    if (typeof window.glOnSpaceEnterInEditor === 'undefined') {
         window.glOnSpaceEnterInEditor = [];
+        window.glOnInsertImageInEditor = [];
+    }
+
+    window.glOnInsertImageInEditor.push(function (oFile) {
+        console.log(oFile);
+        const formData = new FormData();
+        formData.append("file", oFile);
+        fetch("/storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", {
+                method: "POST",
+                body: formData
+            }
+        )
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            //process success url in result.link
+        })
+        .catch(error => {
+            //process error
+        });
+    });
 
     window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
         if(!oTextarea.is(sSelector))
