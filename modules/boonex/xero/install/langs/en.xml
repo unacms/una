@@ -5,6 +5,7 @@
     <!-- Options -->
     <string name="_bx_xero_options_category_hidden"><![CDATA[Hidden]]></string>
     <string name="_bx_xero_options_category_general"><![CDATA[General]]></string>
+    <string name="_bx_xero_options_category_invoice"><![CDATA[Invoices]]></string>
 
     <string name="_bx_xero_option_token"><![CDATA[Access token]]></string>
     <string name="_bx_xero_option_expires"><![CDATA[Access token expiration time]]></string>
@@ -17,7 +18,10 @@
     <string name="_bx_xero_option_redirect_url"><![CDATA[Redirect URL]]></string>
     <string name="_bx_xero_option_webhook_url"><![CDATA[Webhook URL]]></string>
     <string name="_bx_xero_option_webhook_key"><![CDATA[Webhook Key]]></string>
+    
+    <string name="_bx_xero_option_invoice_send"><![CDATA[Send an invoice via email just after creation.]]></string>
 
+    <!-- Pages -->
     <!--
     <string name="_bx_xero_page_block_title_system_"><![CDATA[]]></string>
     <string name="_bx_xero_page_block_title_"><![CDATA[]]></string>

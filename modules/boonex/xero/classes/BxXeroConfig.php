@@ -55,8 +55,9 @@ class BxXeroConfig extends BxBaseModGeneralConfig
             'PARAM_CLIENT_SECRET' => 'bx_xero_client_secret',
             'PARAM_REDIRECT_URL' => 'bx_xero_redirect_url',
             'PARAM_WEBHOOK_KEY' => 'bx_xero_webhook_key',
+            'PARAM_INVOICE_SEND' => 'bx_xero_invoice_send',
         );
-        
+
         $this->_aJsClasses = array(
             'main' => 'BxXeroMain',
         );

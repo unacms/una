@@ -30,6 +30,13 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_xero_webhook_url', '{site_url}m/xero/webhook', @iCategId, '_bx_xero_option_webhook_url', 'value', '', '', '', 40),
 ('bx_xero_webhook_key', '', @iCategId, '_bx_xero_option_webhook_key', 'digit', '', '', '', 42);
 
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_xero_invoice', '_bx_xero_options_category_invoice', 20);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+('bx_xero_invoice_send', 'on', @iCategId, '_bx_xero_option_invoice_send', 'checkbox', '', '', '', 10);
+
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

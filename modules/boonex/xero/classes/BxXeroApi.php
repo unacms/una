@@ -264,10 +264,11 @@ class BxXeroApi extends BxDol
             $aLineItems = [$oLineItem];		
 
             $oContact = $this->actionGetContact($sProfileEmail);
-            $sContactId = $oContact->getContactId();
+            if(!$oContact)
+                return false;
 
             $oInvoiceContact = new XeroAPI\XeroPHP\Models\Accounting\Contact;
-            $oInvoiceContact->setContactId($sContactId);
+            $oInvoiceContact->setContactId($oContact->getContactId());
 
             $oInvoice = new XeroAPI\XeroPHP\Models\Accounting\Invoice;
             $oInvoice->setReference('Ref-' . $this->_getRandNum())
@@ -332,6 +333,28 @@ class BxXeroApi extends BxDol
         }
 
         return $mixedResult;
+    }
+
+    public function sendInvoice($sInvoiceId)
+    {
+        $mixedApi = $this->_getApiObject();
+        if($mixedApi === false)
+            return false;
+
+        list($sTenantId, $oXeroApi) = $mixedApi;
+
+        $bResult = true;
+        try {
+            $oRequestEmpty = new XeroAPI\XeroPHP\Models\Accounting\RequestEmpty;
+
+            $oXeroApi->emailInvoice($sTenantId, $sInvoiceId, $oRequestEmpty);            
+        } 
+        catch (Exception $oException) {
+            $this->_oLog->write('Send Invoice: ' . $oException->getMessage());
+            $bResult = false;
+        }
+
+        return $bResult;
     }
 
     protected function _getProvider()

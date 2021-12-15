@@ -131,17 +131,17 @@ class BxXeroModule extends BxDolModule
         return $this->_oApi->actionAddContact($iProfileId, $sProfileName, $sProfileEmail);
     }
 
-    public function serviceAddInvoce($iProfileId, $sName, $fAmount, $iQuantity = 1, $sDueDate = false)
+    public function serviceAddInvoce($iProfileId, $sName, $mixedAmount, $iQuantity = 1, $mixedDueDate = false)
     {
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
             return false;
 
         $sProfileEmail = $oProfile->getAccountObject()->getEmail();
-        return $this->_oApi->actionAddInvoice($sProfileEmail, $sName, $fAmount, $iQuantity, $sDueDate);
+        return $this->addInvoice($sProfileEmail, $sName, $mixedAmount, $iQuantity, $mixedDueDate);
     }
 
-    public function serviceAddInvoceAuto($iProfileId, $sName, $fAmount, $iQuantity = 1, $mixedDueDate = false)
+    public function serviceAddInvoceAuto($iProfileId, $sName, $mixedAmount, $iQuantity = 1, $mixedDueDate = false)
     {
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
@@ -156,7 +156,7 @@ class BxXeroModule extends BxDolModule
                 return false;
         }
 
-        return $this->_oApi->actionAddInvoice($sProfileEmail, $sName, $fAmount, $iQuantity, $mixedDueDate);
+        return $this->addInvoice($sProfileEmail, $sName, $mixedAmount, $iQuantity, $mixedDueDate);
     }
 
 
@@ -174,6 +174,20 @@ class BxXeroModule extends BxDolModule
             return true;
 
         return $this->_oApi->actionIsContact($sProfileEmail);
+    }
+    
+    public function addInvoice($sProfileEmail, $sName, $fAmount, $iQuantity, $mixedDueDate)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedInvoiceId = $this->_oApi->actionAddInvoice($sProfileEmail, $sName, $fAmount, $iQuantity, $mixedDueDate);
+        if(!$mixedInvoiceId)
+            return $mixedInvoiceId;
+
+        if(getParam($CNF['PARAM_INVOICE_SEND']) == 'on')
+            $this->_oApi->sendInvoice($mixedInvoiceId);
+
+        return $mixedInvoiceId;
     }
 
 
