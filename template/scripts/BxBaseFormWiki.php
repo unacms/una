@@ -25,6 +25,7 @@ class BxBaseFormWiki extends BxTemplFormView
 
     	if(isset($this->aInputs['files'])) {
             $this->aInputs['files']['storage_object'] = 'sys_wiki_files';
+            $this->aInputs['files']['images_transcoder'] = 'sys_wiki_images_preview';
             $this->aInputs['files']['uploaders'] = !empty($this->aInputs['files']['value']) ? unserialize($this->aInputs['files']['value']) : array('sys_html5');
             $this->aInputs['files']['storage_private'] = 0;
             $this->aInputs['files']['multiple'] = true;
