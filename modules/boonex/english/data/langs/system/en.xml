@@ -2539,6 +2539,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Notes]]></string>
 	<string name="_sys_form_wiki_input_caption_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_wiki_input_caption_close"><![CDATA[Close]]></string>
+	<string name="_sys_form_wiki_input_caption_files"><![CDATA[Images]]></string>
 	<string name="_sys_form_wiki_buttons"><![CDATA[Buttons]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} bytes]]></string>
 	<string name="_sys_format_size_gb"><![CDATA[{0} GB]]></string>
@@ -3536,6 +3537,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_wiki_title_content"><![CDATA[{0} content]]></string>
     <string name="_sys_wiki_title_time"><![CDATA[{0} updated]]></string>
     <string name="_sys_wiki_orig"><![CDATA[Orig.]]></string>
+    <string name="_sys_wiki_copy"><![CDATA[Copy to clipboard]]></string>
 
 	<string name="_adm_lmi_cpt_groups_roles"><![CDATA[Roles]]></string>
 	<string name="_adm_form_txt_groups_roles_add_popup"><![CDATA[Create role]]></string>

@@ -1484,6 +1484,22 @@ CREATE TABLE `sys_images_editor_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `sys_wiki_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
 -- --------------------------------------------------------
 
 
@@ -2108,7 +2124,8 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('sys_transcoder_queue_files', 'Local', '', 3600, 2592000, 0, 'sys_transcoder_queue_files', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0),
 ('sys_files', 'Local', '', 360, 2592000, 3, 'sys_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0),
 ('sys_images_editor', 'Local', '', 360, 2592000, 3, 'sys_images_editor', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('sys_images_editor_resized', 'Local', '', 360, 2592000, 3, 'sys_images_editor_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('sys_images_editor_resized', 'Local', '', 360, 2592000, 3, 'sys_images_editor_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_wiki_files', 'Local', '', 360, 2592000, 3, 'sys_wiki_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `profile_id` int(11) NOT NULL,
@@ -3444,6 +3461,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_wiki', 'system', 'content_main', '', '', 0, 'custom', '', '_sys_form_wiki_input_caption_content_main', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_wiki', 'system', 'content', '', '', 0, 'textarea', '', '_sys_form_wiki_input_caption_content', '_sys_form_wiki_input_caption_content_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'notes', '', '', 0, 'text', '', '_sys_form_wiki_input_caption_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_wiki', 'system', 'files', 'a:1:{i:0;s:9:"sys_html5";}', 'a:1:{s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '', '_sys_form_wiki_input_caption_files', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_wiki', 'system', 'do_submit', '_sys_submit', '', 0, 'submit', '_sys_form_wiki_input_caption_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_wiki', 'system', 'close', '_sys_close', '', 0, 'reset', '_sys_form_wiki_input_caption_close', '', '', 0, 0, 0, 'a:2:{s:7:\"onclick\";s:46:\"$(\'.bx-popup-applied:visible\').dolPopupHide();\";s:5:\"class\";s:22:\"bx-def-margin-sec-left\";}', '', '', '', '', '', '', '', 1, 0),
 ('sys_wiki', 'system', 'buttons', '', 'do_submit,close', 0, 'input_set', '_sys_form_wiki_buttons', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -3638,19 +3656,21 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_wiki_edit', 'block_id', 2147483647, 1, 1),
 ('sys_wiki_edit', 'language', 2147483647, 1, 2),
 ('sys_wiki_edit', 'content', 2147483647, 1, 3),
-('sys_wiki_edit', 'notes', 2147483647, 1, 4),
-('sys_wiki_edit', 'do_submit', 2147483647, 1, 5),
-('sys_wiki_edit', 'close', 2147483647, 1, 6),
-('sys_wiki_edit', 'buttons', 2147483647, 1, 7),
+('sys_wiki_edit', 'files', 2147483647, 1, 4),
+('sys_wiki_edit', 'notes', 2147483647, 1, 5),
+('sys_wiki_edit', 'do_submit', 2147483647, 1, 6),
+('sys_wiki_edit', 'close', 2147483647, 1, 7),
+('sys_wiki_edit', 'buttons', 2147483647, 1, 8),
 
 ('sys_wiki_translate', 'block_id', 2147483647, 1, 1),
 ('sys_wiki_translate', 'content_main', 2147483647, 1, 2),
 ('sys_wiki_translate', 'language', 2147483647, 1, 3),
 ('sys_wiki_translate', 'content', 2147483647, 1, 4),
-('sys_wiki_translate', 'notes', 2147483647, 1, 5),
-('sys_wiki_translate', 'do_submit', 2147483647, 1, 6),
-('sys_wiki_translate', 'close', 2147483647, 1, 7),
-('sys_wiki_translate', 'buttons', 2147483647, 1, 8),
+('sys_wiki_translate', 'files', 2147483647, 1, 5),
+('sys_wiki_translate', 'notes', 2147483647, 1, 6),
+('sys_wiki_translate', 'do_submit', 2147483647, 1, 7),
+('sys_wiki_translate', 'close', 2147483647, 1, 8),
+('sys_wiki_translate', 'buttons', 2147483647, 1, 9),
 
 ('sys_manage_approve', 'content_id', 2147483647, 1, 1),
 ('sys_manage_approve', 'notes', 2147483647, 1, 2),

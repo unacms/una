@@ -1263,4 +1263,36 @@ function bx_is_selector_in_stylesheet(sSel)
     return jQuery.isFunction(o.includes) && o.includes('.plyr');
 }
 
+function bx_copy_to_clipboard(s, onSuccess, onFail)
+{
+    if ("undefined" === typeof(onSuccess))
+        onSuccess = function (){};
+    if ("undefined" === typeof(onFail))
+        onFail = function (){};
+
+    const oClip = navigator.clipboard;
+    if ("undefined" !== typeof(oClip)) {
+        navigator.clipboard.writeText(s).then(onSuccess, onFail);
+    } 
+    else {
+        if (document.execCommand) {
+            const el = document.createElement("input");
+            el.value = s;
+            document.body.append(el);
+
+            el.select();
+            el.setSelectionRange(0, s.length);
+
+            if (document.execCommand("copy")) {
+                onSuccess();
+            }
+
+            el.remove();
+        }
+        else {
+            onFail();
+        }
+    }
+}
+
 /** @} */

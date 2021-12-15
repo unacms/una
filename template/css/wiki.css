@@ -64,3 +64,14 @@
     -ms-transition: background-color 1500ms linear;
     transition: background-color 1500ms linear;
 }
+
+.wiki-uploader-file {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.wiki-uploader-file-preview > img {
+    height:3.3rem;
+    width:auto;
+}
