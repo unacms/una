@@ -87,6 +87,16 @@ class BxBaseCmts extends BxDolCmts
     {
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
         $oForm->addCssJs();
+
+        $this->_oTemplate->addCss(array(
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/|photoswipe.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'photo-swipe/default-skin/|default-skin.css',
+        ));
+
+        $this->_oTemplate->addJs(array(
+            'photo-swipe/photoswipe.min.js',
+            'photo-swipe/photoswipe-ui-default.min.js',
+        ));
     }
 
     public function getJsObjectName()
@@ -182,9 +192,10 @@ class BxBaseCmts extends BxDolCmts
             'content_after' => $sContentAfter,
             'post_form_top' => $sPostFormTop,
             'post_form_bottom'  => $sPostFormBottom,
-            'view_image_popup' => $this->_getViewImagePopup(),
             'script' => $sJsContent
         ));
+
+        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
 
         return $aDp['in_designbox'] ? DesignBoxContent($sBlockTitle, $sContent, BX_DB_DEF, $sBlockMenu) : array(
             'title' => $sBlockTitle,
@@ -276,11 +287,12 @@ class BxBaseCmts extends BxDolCmts
         if (!$sComment)
             return '';
 
+        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oModule->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
+
         return $this->_oTemplate->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
             'id' => $this->getId(),
             'comment' => $sComment,
-            'view_image_popup' => $this->_getViewImagePopup(), 
             'script' => $this->getJsScript($aBp, $aDp)
         ));
     }
@@ -442,9 +454,10 @@ class BxBaseCmts extends BxDolCmts
         if(empty($sAddon))
             $sAddon = $this->getJsScript($aBp, $aDp);
 
+        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
+
         return $this->_oTemplate->parseHtmlByName('comment_search.html', array(
             'comment' => $this->getComment($iCmtId, $aBp, $aDp),
-            'view_image_popup' => $this->_getViewImagePopup(), 
         )); 
     }
 
@@ -1324,16 +1337,6 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
-    protected function _getViewImagePopup()
-    {
-    	$sViewImagePopupId = 'cmts-box-' . $this->_sSystem . '-' . $this->getId() . '-view-image-popup' ;
-        $sViewImagePopupContent = $this->_oTemplate->parseHtmlByName('popup_image.html', array(
-            'image_url' => ''
-    	));
-
-    	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
-    }
-
     protected function _getAttachments($aCmt)
     {
         $aTmplImages = array();
@@ -1346,11 +1349,22 @@ class BxBaseCmts extends BxDolCmts
             $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
             foreach($aFiles as $aFile) {
+                $sFile = $oStorage->getFileUrlById($aFile['image_id']);
                 $bImage = $oTranscoder && $oTranscoder->isMimeTypeSupported($aFile['mime_type']);
 
                 $sPreview = '';
-                if($oTranscoder && $bImage)
-                    $sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
+                $iWidth = $iHeight = 0;
+
+                if($bImage) {
+                    if($oTranscoder)
+                        $sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
+
+                    $aImageInfo = BxDolImageResize::getInstance()->getImageSize($sFile);
+                    if(isset($aImageInfo['w']))
+                        $iWidth = (int)$aImageInfo['w'];
+                    if(isset($aImageInfo['h']))
+                        $iHeight = (int)$aImageInfo['h'];
+                }
 
                 if(!$sPreview)
                     $sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
@@ -1358,10 +1372,13 @@ class BxBaseCmts extends BxDolCmts
                 $aTmplVarsFile = array(
                     'js_object' => $this->_sJsObjName,
                     'preview' => $sPreview,
-                    'file' => $oStorage->getFileUrlById($aFile['image_id']),
+                    'file' => $sFile,
+                    'file_id' => $aFile['id'],
                     'file_name' => $aFile['file_name'],
                     'file_icon' => $oStorage->getFontIconNameByFileName($aFile['file_name']),
                     'file_size' => _t_format_size($aFile['size']),
+                    'w' => $iWidth, 
+                    'h' => $iHeight
                 );
 
                 $aTmplImages[] = array(

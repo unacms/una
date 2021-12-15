@@ -1341,6 +1341,57 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	BxDolSession::getInstance()->setValue($sKey, 1);
     }
 
+    public function actionGetSiblingFiles()
+    {
+        $iFileId = 0;
+        if(bx_get('file_id') !== false)
+            $iFileId = bx_process_input(bx_get('file_id'), BX_DATA_INT);
+
+        if(!($aFileInfo = $this->_oQuery->getFileInfoById((int)$iFileId))) 
+            return echoJson(['error' => _t('_sys_txt_error_occured')]);
+
+        $aSiblings = [];
+        $aFiles = $this->_oQuery->getFiles($aFileInfo['system_id'], $aFileInfo['cmt_id']);
+        foreach($aFiles as $iIndex => $aFile) {
+            if($aFile['id'] != $iFileId)
+                continue;
+
+            $aSiblings['prev'] = isset($aFiles[$iIndex - 1]) ? $aFiles[$iIndex - 1] : false;
+            $aSiblings['next'] = isset($aFiles[$iIndex + 1]) ? $aFiles[$iIndex + 1] : false;
+        }
+
+        $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
+
+        foreach($aSiblings as $sSibling => $aSibling) {
+            if(!$aSibling)
+                continue;
+
+            $sFile = '';
+            if($oTranscoder && $oTranscoder->isMimeTypeSupported($aSibling['mime_type']))
+                $sFile = $oStorage->getFileUrlById($aSibling['image_id']);
+            else
+                $sFile = $oStorage->getFontIconNameByFileName($aFile['file_name']);
+
+            $aImageInfo = BxDolImageResize::getInstance()->getImageSize($sFile);
+
+            $iWidth = $iHeight = 0;
+            if(isset($aImageInfo['w']))
+                $iWidth = (int)$aImageInfo['w'];
+            if(isset($aImageInfo['h']))
+                $iHeight = (int)$aImageInfo['h'];
+
+            $aSiblings[$sSibling] = array_merge($aSibling, [
+                'file' => $sFile,
+                'file_id' => $aSibling['id'],
+                'w' => $iWidth, 
+                'h' => $iHeight
+            ]);
+        }
+
+        return echoJson($aSiblings);
+    }
+
     public function onPostAfter($iCmtId)
     {
         $iObjId = (int)$this->getId();

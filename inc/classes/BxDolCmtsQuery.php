@@ -579,6 +579,22 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->getAll($sQuery, $aBindings);
     }
 
+    public function getFileInfoById($iFileId)
+    {
+        $sQuery = "SELECT 
+                `tf2e`.*,
+                `tf`.`file_name` AS `file_name`,
+                `tf`.`mime_type` AS `mime_type`,
+                `tf`.`size` AS `size` 
+            FROM `{$this->_sTableFiles2Entries}` AS `tf2e` 
+            LEFT JOIN `{$this->_sTableFiles}` AS `tf` ON (`tf2e`.`image_id` = `tf`.`id`) 
+            WHERE `tf2e`.`id`=:id ";
+
+        return $this->getRow($sQuery, array(
+            'id' => $iFileId
+    	));
+    }
+
     function deleteImages($iSystemId, $iCmtId, $iImageId = false)
     {
         $sWhereAddon = "";
