@@ -3503,6 +3503,7 @@
     <string name="_sys_wiki_title_time"><![CDATA[{0} обновлен]]></string>
     <string name="_sys_wiki_orig"><![CDATA[Ориг.]]></string>
     <string name="_sys_wiki_copy"><![CDATA[Копировать в буфер обмена]]></string>
+    <string name="_sys_wiki_open_in_editor"><![CDATA[Открыть в редакторе]]></string>
 
 	<string name="_adm_lmi_cpt_groups_roles"><![CDATA[Роли]]></string>
 	<string name="_adm_form_txt_groups_roles_add_popup"><![CDATA[Создать роль]]></string>

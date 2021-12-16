@@ -209,7 +209,7 @@ function bx_wiki_remove_img (sEditorId, sImgUrl, sImgName) {
         return;
 
     var sImg = "![IMGNAMEHERE](" + sImgUrl + ")";
-    sImg = sImg.replace(/[|\\{}()[\]^$+*?.]/mg, '\\$&').replace(/-/mg, '\\x2d'); // escape special chars
+    sImg = bx_regexp_escape(sImg);
     sImg = sImg.replace(/IMGNAMEHERE/, '(.*?)');
 
     var re = new RegExp(sImg, 'gm');
@@ -218,5 +218,39 @@ function bx_wiki_remove_img (sEditorId, sImgUrl, sImgName) {
     $(sEditorId).val(sVal);
 }
 
+function bx_wiki_open_editor(sSel, bBackground) {
+    const e = $(sSel).size() ? $(sSel)[0] : false;
+    if (!e)
+        return;
+
+    bx_wiki_open_editor_convert_links(e.value, function (s) {
+        // Open the iframe
+        const oStackedit = new Stackedit();
+        oStackedit.openFile({
+            content: {
+                text: s // and the Markdown content.
+            }
+        }, 'undefined' === typeof(bBackground) ? false : bBackground);
+
+        // Listen to StackEdit events and apply the changes to the textarea.
+        oStackedit.on('fileChange', (file) => {
+            e.value = bx_wiki_open_editor_convert_links_back(file.content.text);
+        });
+    });
+}
+
+function bx_wiki_open_editor_convert_links(s, onSuccess) {
+    var sActionUrl = sUrlRoot + 'r.php?_q=wiki-action/';
+    $.post(sActionUrl + 'convert-links', {s: s}, function (oData) {
+        if ('undefined' !== typeof(oData.s))
+            onSuccess(oData.s);
+    }, 'json');
+}
+
+function bx_wiki_open_editor_convert_links_back(s) {
+    
+    var re = new RegExp('\\\(' + bx_regexp_escape(sUrlRoot) + 's/([a-zA-Z0-9_]+)/([a-zA-Z0-9]+)[^\\\)]*\\\)', 'gm');
+    return  s.replace(re, "($1/$2)");
+}
 
 /** @} */

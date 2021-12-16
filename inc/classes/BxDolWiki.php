@@ -277,6 +277,10 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      */
     public function isAllowed ($sType, $iProfileId = false)
     {
+        if ('convert-links' == $sType) {
+            return isLogged();
+        }
+
         // translate isn't allowed when only one language on the site
         if ('translate' == $sType) {
             $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
@@ -405,6 +409,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 'block_id' => $iBlockId,
                 'wiki_action_uri' => $this->getWikiUri(),
                 'action' => 'delete-version',
+                'txt_open_editor' => bx_js_string(_t('_sys_wiki_open_in_editor')),
             ));
         }
     }
@@ -635,6 +640,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 'block_id' => $iBlockId,
                 'wiki_action_uri' => $this->getWikiUri(),
                 'action' => $bTranslate ? 'translate' : 'edit',
+                'txt_open_editor' => bx_js_string(_t('_sys_wiki_open_in_editor')),
             ));
         } 
         else {
@@ -692,6 +698,26 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
             return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $iBlockId);
         }
+    }
+
+    public function actionConvertLinks ()
+    {
+        $s = bx_get('s');
+        if (!$s)
+            return ['s' => ''];
+
+        $s = preg_replace_callback('#\((([a-zA-Z0-9_]+)/([a-zA-Z0-9]+))\)#', function ($aMatches) {
+            $oStorage = BxDolStorage::getObjectInstance($aMatches[2]);
+            if ($oStorage) {
+                $sUrl = $oStorage->getFileUrlByRemoteId($aMatches[3]);
+                if ($sUrl)
+                    return '(' . $sUrl . ')';
+            }
+
+            return '(' . $aMatches[0] . ')';
+        }, $s);
+
+        return ['s' => $s];
     }
 
     protected function updateBlockIndexingData($iBlockId)

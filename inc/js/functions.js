@@ -1295,4 +1295,11 @@ function bx_copy_to_clipboard(s, onSuccess, onFail)
     }
 }
 
+function bx_regexp_escape(s) 
+{
+    return s
+        .replace(/[|\\{}()[\]^$+*?.]/mg, '\\$&')
+        .replace(/-/mg, '\\x2d');
+}
+
 /** @} */
