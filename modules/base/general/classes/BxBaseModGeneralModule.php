@@ -97,6 +97,18 @@ class BxBaseModGeneralModule extends BxDolModule
         }
         $this->$sMethodName();
     }
+    
+    public function actionEmbed($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return '';
+
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit_gallery.html';
+
+        echo $this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate);
+    }
    
 	public function subactionDelete()
     {
@@ -267,6 +279,16 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $mixedResult;
     }
+    
+    public function serviceGetEmbed ($iContentId)
+    {
+        $sTitle = $this->_getFieldValue('FIELD_TITLE', $iContentId);
+        return $this->_oTemplate->parseHtmlByName('embed.html', [
+            'title' => $sTitle,
+            'url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed/' . $iContentId . '/'
+        ]);
+    }
+    
 
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
     {
