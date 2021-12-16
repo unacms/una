@@ -38,8 +38,14 @@
     <string name="_bx_timeline_option_attachments_layout"><![CDATA[Показывать вложения как]]></string>
     <string name="_bx_timeline_option_attachments_layout_gallery"><![CDATA[Галерея]]></string>
     <string name="_bx_timeline_option_attachments_layout_showcase"><![CDATA[Витрина]]></string>
-    <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для листа 'горячих' сообщений]]></string>
-    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' сообщений]]></string>
+    <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для 'горячей' хроники]]></string>
+    <string name="_bx_timeline_option_hot_sources"><![CDATA[Использовать следующие действия для появления контента в 'горячей' хронике]]></string>
+    <string name="_bx_timeline_option_hot_sources_content"><![CDATA[Добавление контента]]></string>
+    <string name="_bx_timeline_option_hot_sources_comment"><![CDATA[Добавление комментария]]></string>
+    <string name="_bx_timeline_option_hot_sources_vote"><![CDATA[Добавление голоса]]></string>
+    <string name="_bx_timeline_option_hot_threshold_comment"><![CDATA[Минимальное количество комментариев, необходимое для появления контента в 'горячей' хронике]]></string>
+    <string name="_bx_timeline_option_hot_threshold_vote"><![CDATA[Минимальное количество голосов, необходимое для появления контента в 'горячей' хронике]]></string>
+    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' событий]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Механизм кэширования элемента (отличный от FileHtml может потребовать дополнительную настройку сервера)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Время жизни кэша элемента]]></string>

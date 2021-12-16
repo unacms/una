@@ -38,7 +38,13 @@
     <string name="_bx_timeline_option_attachments_layout"><![CDATA[Show attachments as]]></string>
     <string name="_bx_timeline_option_attachments_layout_gallery"><![CDATA[Gallery]]></string>
     <string name="_bx_timeline_option_attachments_layout_showcase"><![CDATA[Showcase]]></string>
-    <string name="_bx_timeline_option_enable_hot"><![CDATA[Enable Hot list aggregation]]></string>
+    <string name="_bx_timeline_option_enable_hot"><![CDATA[Enable Hot feed aggregation]]></string>
+    <string name="_bx_timeline_option_hot_sources"><![CDATA[Use the following actions for content to appear in Hot feed]]></string>
+    <string name="_bx_timeline_option_hot_sources_content"><![CDATA[Add content]]></string>
+    <string name="_bx_timeline_option_hot_sources_comment"><![CDATA[Add comment]]></string>
+    <string name="_bx_timeline_option_hot_sources_vote"><![CDATA[Add vote]]></string>
+    <string name="_bx_timeline_option_hot_threshold_comment"><![CDATA[Minimum number of comments for content to appear in Hot feed]]></string>
+    <string name="_bx_timeline_option_hot_threshold_vote"><![CDATA[Minimum number of votes for content to appear in Hot feed]]></string>
     <string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Enable item cache]]></string>
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Item cache engine (other than File option may require custom server setup)]]></string>

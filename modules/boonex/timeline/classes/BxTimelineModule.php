@@ -68,6 +68,11 @@ define('BX_TIMELINE_ML_SHOWCASE', 'showcase');
 //--- Default Attachments Media Layout
 define('BX_TIMELINE_AML_DEFAULT', BX_TIMELINE_ML_GALLERY);
 
+//--- Hot Feed sources
+define('BX_TIMELINE_HFS_CONTENT', 'content');
+define('BX_TIMELINE_HFS_COMMENT', 'comment');
+define('BX_TIMELINE_HFS_VOTE', 'vote');
+
 class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolContentInfoService
 {
     protected $_sJsPostObject;
@@ -750,6 +755,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
         ));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_hot_sources_checklist get_hot_sources_checklist
+     * 
+     * @code bx_srv('bx_timeline', 'get_hot_sources_checklist', [...]); @endcode
+     * 
+     * Get a list of available sources for Hot feed. Is used in module settings in Studio.
+     *
+     * @return an array with available sources represented as key => value pairs.
+     * 
+     * @see BxTimelineModule::serviceGetHotSourcesChecklist
+     */
+    /** 
+     * @ref bx_timeline-get_hot_sources_checklist "get_hot_sources_checklist"
+     */
+    function serviceGetHotSourcesChecklist()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aSources = $this->_oConfig->getHotSourcesList();
+
+        $aResults = [];
+        foreach($aSources as $sSource) 
+            $aResults[$sSource] = _t($CNF['T']['option_hs_' . $sSource]);
+
+        return $aResults;
     }
 
     public function serviceFeedsMenuAdd($mixedModule = false)

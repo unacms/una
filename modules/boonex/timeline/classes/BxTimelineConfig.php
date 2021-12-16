@@ -44,6 +44,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_bHot;
     protected $_iHotInterval;
+    protected $_iHotThresholdComment;
+    protected $_iHotThresholdVote;
+    protected $_aHotSources;
+    protected $_aHotSourcesList;
     protected $_aHotList;
 
     protected $_bEditorToolbar;
@@ -167,7 +171,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'option_vap_on_mute' => '_bx_timeline_option_videos_autoplay_on_mute',
                 'option_vap_on' => '_bx_timeline_option_videos_autoplay_on',
                 'option_al_gallery' => '_bx_timeline_option_attachments_layout_gallery',
-                'option_al_showcase' => '_bx_timeline_option_attachments_layout_showcase'
+                'option_al_showcase' => '_bx_timeline_option_attachments_layout_showcase',
+                'option_hs_content' => '_bx_timeline_option_hot_sources_content',
+                'option_hs_comment' => '_bx_timeline_option_hot_sources_comment',
+                'option_hs_vote' => '_bx_timeline_option_hot_sources_vote',
             ),
         );
 
@@ -337,6 +344,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aBriefCardsTags = array('a', 'b', 'i');
 
         $this->_sSessionKeyType = $this->_sName . '_type_';
+
+        $this->_aHotSourcesList = [
+            BX_TIMELINE_HFS_CONTENT, 
+            BX_TIMELINE_HFS_COMMENT,
+            BX_TIMELINE_HFS_VOTE
+        ];
     }
 
     public function init(&$oDb)
@@ -384,7 +397,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_sAttachmentsLayout = getParam($sOptionPrefix . 'attachments_layout');
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
+        $this->_iHotThresholdComment = (int)getParam($sOptionPrefix . 'hot_threshold_comment');
+        $this->_iHotThresholdVote = (int)getParam($sOptionPrefix . 'hot_threshold_vote');
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
+        $this->_aHotSources = explode(',', getParam($sOptionPrefix . 'hot_sources'));
         $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : array();
 
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
@@ -486,6 +502,29 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isHot()
     {
         return $this->_bHot;
+    }
+
+    public function getHotSourcesList()
+    {
+        return $this->_aHotSourcesList;
+    }
+
+    public function getHotSources()
+    {
+        return $this->_aHotSources;
+    }
+
+    public function isHotSource($sName)
+    {
+        return in_array($sName, $this->_aHotSources);
+    }
+
+    public function getHotThreshold($sSource)
+    {
+        if(!in_array($sSource, [BX_TIMELINE_HFS_COMMENT, BX_TIMELINE_HFS_VOTE]))
+            return false;
+
+        return $this->{'_iHotThreshold' . ucfirst($sSource)};
     }
 
     public function isHotEvent($iEventId)
@@ -741,7 +780,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->getName() . '_live_update_' . $this->getNameView($aParams, array('with_owner' => true));
     }
 
-    //TODO: isCommon and isSystem can be updated to use new 'system' db field.
     public function isCommon($sType, $sAction)
     {
         return !$this->isSystem($sType, $sAction);
