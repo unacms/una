@@ -2749,6 +2749,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if(empty($aReposted) || !is_array($aReposted))
                     return array();
 
+                $aEventReposted['content'] = $aReposted['content'];
+
                 $aResult['content'] = array_merge($aContent, $aReposted['content']);
                 $aResult['content']['parse_type'] = !empty($aReposted['content_type']) ? $aReposted['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
 

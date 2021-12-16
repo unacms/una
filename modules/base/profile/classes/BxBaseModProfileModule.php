@@ -1191,18 +1191,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /**
      * Entry post for Timeline module
      */
-    public function serviceGetTimelineProfilePicture($aEvent, $aBrowseParams = array())
+    public function serviceGetTimelineProfilePicture($aEvent, $aBrowseParams = [])
     {
-        $aResult = $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
+        $aResult = $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, [
             'stg' => 'OBJECT_STORAGE',
-            'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_AVATAR'),
-            'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_PICTURE', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
+            'trans' => ['OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_AVATAR'],
+            'trans_orig' => ['OBJECT_IMAGES_TRANSCODER_PICTURE', 'OBJECT_IMAGES_TRANSCODER_GALLERY'],
             'txt_ss' => 'txt_sample_pp_single',
             'txt_sswa' => 'txt_sample_pp_single_with_article',
             'txt_sa' => 'txt_sample_pi_action',
             'txt_sau' => 'txt_sample_pi_action_user'
-        ));
-        $aResult['allowed_view'] = array('module' => $this->_oConfig->getName(), 'method' => 'get_timeline_profile_picture_allowed_view');
+        ]);
+
+        if($aResult !== false)
+            $aResult['allowed_view'] = ['module' => $this->_oConfig->getName(), 'method' => 'get_timeline_profile_picture_allowed_view'];
 
         return $aResult;
     }
@@ -1212,18 +1214,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceGetTimelineProfileImageAllowedView($aEvent);
     }
 
-    public function serviceGetTimelineProfileCover($aEvent, $aBrowseParams = array())
+    public function serviceGetTimelineProfileCover($aEvent, $aBrowseParams = [])
     {
-        $aResult = $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
+        $aResult = $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, [
             'stg' => 'OBJECT_STORAGE_COVER',
-            'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_COVER_THUMB'),
-            'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
+            'trans' => ['OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_COVER_THUMB'],
+            'trans_orig' => ['OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY'],
             'txt_ss' => 'txt_sample_pc_single',
             'txt_sswa' => 'txt_sample_pc_single_with_article',
             'txt_sa' => 'txt_sample_pi_action',
             'txt_sau' => 'txt_sample_pi_action_user'
-        ));
-        $aResult['allowed_view'] = array('module' => $this->_oConfig->getName(), 'method' => 'get_timeline_profile_cover_allowed_view');
+        ]);
+
+        if($aResult !== false)
+            $aResult['allowed_view'] = ['module' => $this->_oConfig->getName(), 'method' => 'get_timeline_profile_cover_allowed_view'];
 
         return $aResult;
     }
