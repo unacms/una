@@ -19,6 +19,9 @@ define('BX_FORUM_FILTER_ORDER_NEW', 'new');
 define('BX_FORUM_FILTER_ORDER_TOP', 'top');
 define('BX_FORUM_FILTER_ORDER_UPDATED', 'updated');
 define('BX_FORUM_FILTER_ORDER_POPULAR', 'popular');
+define('BX_FORUM_FILTER_ORDER_FEATURED', 'featured');
+define('BX_FORUM_FILTER_ORDER_FAVORITE', 'favorite');
+define('BX_FORUM_FILTER_ORDER_PARTAKEN', 'partaken');
 
 class BxForumGrid extends BxTemplGrid
 {
@@ -81,6 +84,9 @@ class BxForumGrid extends BxTemplGrid
             BX_FORUM_FILTER_ORDER_TOP => _t('_bx_forum_grid_filter_order_top'),
             BX_FORUM_FILTER_ORDER_UPDATED => _t('_bx_forum_grid_filter_order_updated'),
             BX_FORUM_FILTER_ORDER_POPULAR => _t('_bx_forum_grid_filter_order_popular'),
+            BX_FORUM_FILTER_ORDER_FEATURED => _t('_bx_forum_grid_filter_order_featured'),
+            BX_FORUM_FILTER_ORDER_FAVORITE => _t('_bx_forum_grid_filter_order_favorite'),
+            BX_FORUM_FILTER_ORDER_PARTAKEN => _t('_bx_forum_grid_filter_order_partaken'),
         );
         
         $sFilter3 = bx_get($this->_sFilter3Name);
@@ -223,27 +229,6 @@ class BxForumGrid extends BxTemplGrid
 
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
-    
-     protected function _getCellStatus($mixedValue, $sKey, $aField, $aRow)
-    {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
-        $sIcon = '';
-        if ($aRow['resolvable']){
-            if ($aRow['resolved']){
-                $sIcon .= 'completed';
-            }
-            else{
-                $sIcon .= 'uncompleted';
-            }   
-        }
-        else{
-            $sIcon .= 'idea'; 
-        }
-        $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('status.html', ['icon' => BX_DOL_URL_MODULES . $this->_oModule->_aModule['path'] .'template/images/'. $sIcon . '.svg', 'counter' => (int)$oObject->getCommentsCountAll()]); 
-        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
-    }
 
     protected function _getCellText($mixedValue, $sKey, $aField, $aRow)
     {
@@ -262,6 +247,90 @@ class BxForumGrid extends BxTemplGrid
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(strpos($sFilter, $this->_sParamsDivider) !== false)
+            list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+        
+
+        // featured
+        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FEATURED){
+            $this->_aBrowseParams['where'] = ['fld' => 'featured', 'val' => 0, 'opr' => '<>'];
+        }
+        
+        // partaken
+        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_PARTAKEN){
+            $this->_aBrowseParams['select'] = array(
+                'tbla' => 'tco', 
+                'fld' => 'cmt_author_id',
+            );
+
+            $this->_aBrowseParams['join'] = array(
+                'tp' => 'INNER',
+                'tbl1' => 'bx_forum_cmts',
+                'tbl1a' => 'tco',
+                'fld1' => 'cmt_object_id',
+                'tbl2' => 'bx_forum_discussions',
+                'fld2' => 'id'
+            );
+
+            $this->_aBrowseParams['where'] = array(
+                'tbl' => 'tco', 
+                'fld' => 'cmt_author_id', 
+                'val' => bx_get_logged_profile_id(), 
+                'opr' => '='
+            );
+
+            $this->_aBrowseParams['group_by'] = array(
+                'tbl' => 'bx_forum_discussions', 
+                'fld' => 'id',
+            );
+        }
+        
+        //FAVORITE
+        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FAVORITE){
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+            if(!$oProfile)
+                $oProfile = BxDolProfile::getInstance();
+            if(!$oProfile)
+                return '';
+            
+            $iProfileId = $oProfile->id();
+            $iProfileAuthor = $oProfile->id();
+            $oFavorite = $this->_oModule->getObjectFavorite();
+            if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())
+                return '';
+            
+            $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
+            if(empty($aConditions) || !is_array($aConditions)) 
+                return '';
+
+            $aJoinGroup = array('grp' => true, 'cnds' => array());
+            if(!empty($aConditions['join']))
+                foreach($aConditions['join'] as $aCondition)
+                    $aJoinGroup['cnds'][] = array(
+                        'tp' => $aCondition['type'],
+                        'tbl1' => $aCondition['table'],
+                        'fld1' => $aCondition['onField'],
+                        'tbl2' => $aCondition['mainTable'],
+                        'fld2' => $aCondition['mainField']
+                    );
+
+            $aWhereGroup = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
+            if(!empty($aConditions['restriction']))
+                foreach($aConditions['restriction'] as $aCondition)
+                    $aWhereGroup['cnds'][] = array(
+                        'tbl' => (!empty($aCondition['table']) ? $aCondition['table'] : ''), 
+                        'fld' => $aCondition['field'], 
+                        'val' => $aCondition['value'], 
+                        'opr' => $aCondition['operator']
+                    );
+            
+            $this->_aBrowseParams['author'] = $iProfileId; 
+            $this->_aBrowseParams['join'] = $aJoinGroup;
+            $this->_aBrowseParams['where'] = $aWhereGroup; 
+        }
+        
         $CNF = $this->_oModule->_oConfig->CNF;
         
     	$sSelectClause = $sJoinClause = $sWhereClause = $sGroupByClause = '';
@@ -311,9 +380,6 @@ class BxForumGrid extends BxTemplGrid
                 $sGroupByClause .= " GROUP BY " . $sGroupByClauseBrowse;
         }
         
-        if(strpos($sFilter, $this->_sParamsDivider) !== false)
-            list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
-        
         $sFilterSql = "";
 
         // filter by resolved status
@@ -326,7 +392,6 @@ class BxForumGrid extends BxTemplGrid
             $aObjects = BxDolBadges::getInstance()->getData(['type' => 'by_module&badge', 'badge_id' => $this->_sFilter2Value, 'module' => $this->_oModule->_aModule['name']]);
             $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` IN (" . implode(',', $aObjects ) . ")";
         }
-        
         $this->_aOptions['source'] = sprintf($this->_sDefaultSource, $sSelectClause, $sJoinClause, $sWhereClause, $sGroupByClause);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

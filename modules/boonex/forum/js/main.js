@@ -42,9 +42,17 @@ BxForumMain.prototype.init = function() {
 	        var iInnerWidth = oTable.parent().innerWidth();
 	        oTable.find('.bx-forum-grid-preview').each(function () {
 	            var eWrapper = $(this).parent();
-	            var w = iInnerWidth - iCalcWidth - parseInt(eWrapper.css('padding-left')) - parseInt(eWrapper.css('padding-right'));
-	            $(this).width(w + 'px');
+	           // var w = iInnerWidth - iCalcWidth - parseInt(eWrapper.css('padding-left')) - parseInt(eWrapper.css('padding-right'));
+	           // $(this).width(w + 'px');
 	        }); 
+            
+            oTable.find('tr').each(function () {
+	            $(this).click(function() {
+                    location = $(this).find('.bx-forum-gp-title A').attr('href');
+                })
+	        }); 
+            
+            
     	});
     };
 

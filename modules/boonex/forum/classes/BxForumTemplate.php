@@ -140,8 +140,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
-        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 100);
-        $sText = strmaxtextlen($aRow[$CNF['FIELD_TEXT']], 100);
+        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 120);
 
         $aMetas = array('main' => false, 'counters' => false, 'reply' => false);
         foreach(array_keys($aMetas) as $sMeta) {
@@ -174,8 +173,6 @@ class BxForumTemplate extends BxBaseModTextTemplate
             ),
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]),
             'title' => $sTitle ? $sTitle : _t('_Empty'),
-            'badges' => $oModule->serviceGetBadges($aRow[$CNF['FIELD_ID']], false, true),
-            'text' => $sText,
             'bx_if:meta_main' => array(
                 'condition' => $aMetas['main'] !== false && (!isset($aParams['show_meta_main']) || $aParams['show_meta_main']),
                 'content' => $aMetas['main']

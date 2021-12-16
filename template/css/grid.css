@@ -72,15 +72,21 @@
 .bx-media-phone .bx-grid-header-cnt {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
 }
-.bx-media-phone div.bx-grid-header div.bx-form-element-wrapper {
-    float: none;
-    margin-right: 0;
+.bx-media-phone .bx-grid-header-controls-filter{
+    margin: 0px !important;
+}
+.bx-media-phone .bx-grid-header-controls-filter .bx-form-element-wrapper{
+    width: calc(50% - 0.5rem);
 }
 .bx-media-phone div.bx-grid-header div.bx-form-element-wrapper:last-child {
     margin-bottom: 0; 
 }
-
+.bx-media-phone .bx-grid-header-controls-counter{
+    text-align: left;
+}
 .bx-grid-table .bx-grid-table-row-hr td:first-child,
 .bx-grid-table .bx-grid-table-row-hr td {
     padding:0;

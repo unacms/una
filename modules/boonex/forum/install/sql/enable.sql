@@ -161,7 +161,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_forum_home', 1, @sName, '_bx_forum_page_block_title_sys_featured_entries_view_showcase', '_bx_forum_page_block_title_featured_entries_view_showcase', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', NULL, 0, 1, 1, 0),
 ('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_cats', 11, 0, NULL, '', 0, 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"categories_list\";}', NULL, 0, 1, 1, 0),
 ('bx_forum_home', 2, @sName, '_bx_forum_page_block_title_sys_multicats', '_bx_forum_page_block_title_multicats', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:21:\"categories_multi_list\";}', NULL, 0, 1, 0, 1),
-('bx_forum_home', 3, @sName, '', '_bx_forum_page_block_title_latest_entries', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:13:\"browse_latest\";s:6:\"params\";a:3:{i:0;s:5:\"table\";i:1;b:1;i:2;b:0;}}', NULL, 0, 1, 1, 1),
+('bx_forum_home', 3, @sName, '', '_bx_forum_page_block_title_home', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:13:\"browse_latest\";s:6:\"params\";a:3:{i:0;s:5:\"table\";i:1;b:1;i:2;b:0;}}', NULL, 0, 1, 1, 1),
 ('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_browse_labels', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"browse_labels\";s:5:\"class\";s:20:\"TemplServiceMetatags\";}', NULL, 0, 1, 0, 2),
 ('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:8:\"bx_forum\";i:1;s:8:\"bx_forum\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', NULL, 0, 1, 1, 3);
 
@@ -336,11 +336,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_forum_submenu', @sName, 'discussions-home', '_bx_forum_menu_item_title_system_entries_public', '_bx_forum_menu_item_title_entries_public', 'page.php?i=discussions-home', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_forum_submenu', @sName, 'discussions-new', '_bx_forum_menu_item_title_system_entries_new', '_bx_forum_menu_item_title_entries_new', 'page.php?i=discussions-new', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_forum_submenu', @sName, 'discussions-top', '_bx_forum_menu_item_title_system_entries_top', '_bx_forum_menu_item_title_entries_top', 'page.php?i=discussions-top', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_forum_submenu', @sName, 'discussions-categories', '_bx_forum_menu_item_title_system_entries_categories', '_bx_forum_menu_item_title_entries_categories', 'page.php?i=discussions-categories', '', '', '', '', 2147483647, 1, 1, 4),
 ('bx_forum_submenu', @sName, 'discussions-search', '_bx_forum_menu_item_title_system_entries_search', '_bx_forum_menu_item_title_entries_search', 'page.php?i=discussions-search', '', '', '', '', 2147483647, 1, 1, 5),
-('bx_forum_submenu', @sName, 'discussions-partaken', '_bx_forum_menu_item_title_system_entries_partaken', '_bx_forum_menu_item_title_entries_partaken', 'page.php?i=discussions-partaken', '', '', '', '', 2147483646, 1, 1, 6),
 ('bx_forum_submenu', @sName, 'discussions-manage', '_bx_forum_menu_item_title_system_entries_manage', '_bx_forum_menu_item_title_entries_manage', 'page.php?i=discussions-manage', '', '', '', '', 2147483646, 1, 1, 7);
 
 -- MENU: custom menu for 'main' snippet meta info
@@ -353,7 +349,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_forum_snippet_meta_main', 'bx_forum', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
-('bx_forum_snippet_meta_main', 'bx_forum', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3);
+('bx_forum_snippet_meta_main', 'bx_forum', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3),
+('bx_forum_snippet_meta_main', 'bx_forum', 'status', '_sys_menu_item_title_system_sm_status', '_sys_menu_item_title_sm_status', '', '', '', '', '', 2147483647, 1, 0, 1, 4),
+('bx_forum_snippet_meta_main', 'bx_forum', 'badges', '_sys_menu_item_title_system_sm_badges', '_sys_menu_item_title_sm_badges', '', '', '', '', '', 2147483647, 1, 0, 1, 5);
 
 -- MENU: custom menu for 'counters' snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -411,11 +409,10 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_forum_feature', 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` %s FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'title,text,text_comments', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-(@sName, 'rating', '', '10%', '', 1),
+(@sName, 'rating', '', '5%', '', 1),
 (@sName, 'category', '', '10%', '', 2),
-(@sName, 'text', '', '60%', '', 3),
+(@sName, 'text', '', '75%', '', 3),
 (@sName, 'participants', '', '10%', '', 4),
-(@sName, 'status', '', '10%', '', 5),
 
 ('bx_forum_favorite', 'author', '', '10%', '', 1),
 ('bx_forum_favorite', 'text', '', '90%', '', 2),

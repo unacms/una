@@ -1017,7 +1017,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if ($aBadge['fontcolor'] == '')
 			$aBadge['fontcolor'] = '#ffffff';
 		
-        if ($bIsCompact){
+        if ($bIsCompact && $aBadge['icon'] != ''){
             $aBadge['is_icon_only'] = 1;
 			$sClass .= ' bx-badge-compact-to';
 			$sStyleFont = 'color: ' . $aBadge['color'];
