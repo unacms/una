@@ -299,7 +299,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_auto_preloads', '10', @iCategId, '_bx_timeline_option_auto_preloads', 'digit', '', '', '', '', 22),
 
 ('bx_timeline_enable_hot', 'on', @iCategId, '_bx_timeline_option_enable_hot', 'checkbox', '', '', '', '', 30),
-('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 31);
+('bx_timeline_hot_sources', 'content,comment,vote', @iCategId, '_bx_timeline_option_hot_sources', 'list', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:25:"get_hot_sources_checklist";}', 31),
+('bx_timeline_hot_threshold_comment', '3', @iCategId, '_bx_timeline_option_hot_threshold_comment', 'digit', '', '', '', '', 32),
+('bx_timeline_hot_threshold_vote', '5', @iCategId, '_bx_timeline_option_hot_threshold_vote', 'digit', '', '', '', '', 33),
+('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 34);
 
 -- Category: Card
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
