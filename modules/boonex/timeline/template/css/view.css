@@ -908,12 +908,14 @@ div.bx-tl-view-info .bx-base-pofile-unit {
 div.bx-tl-bview-images {
     position: relative;
 }
-div.bx-tl-bview-images div.bx-tl-bview-image:not(.bx-tl-bvi-single) {
+div.bx-tl-bview-image.bx-tl-bvi-single,
+div.bx-tl-bview-images div.bx-tl-bview-image {
     width: 100%;
     height: calc(100vh - 7rem);
     text-align: center;
 }
-div.bx-tl-bview-images div.bx-tl-bview-image:not(.bx-tl-bvi-single) img {
+div.bx-tl-bview-image.bx-tl-bvi-single img,
+div.bx-tl-bview-images div.bx-tl-bview-image img {
     position: relative;
     max-width: 100% !important;
     max-height: 100% !important;
@@ -927,9 +929,6 @@ div.bx-tl-bview-image.bx-tl-bvi-single {
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
-}
-div.bx-tl-bview-image.bx-tl-bvi-single img {
-    max-width: 100%;
 }
 
 
