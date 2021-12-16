@@ -154,6 +154,7 @@
     <string name="_bx_forum_page_block_title_new_entries_view_extended"><![CDATA[New Discussions (Extended View)]]></string>
     <string name="_bx_forum_page_block_title_new_entries_view_full"><![CDATA[New Discussions (Full View)]]></string>
     <string name="_bx_forum_page_block_title_latest_entries"><![CDATA[Discussions With Recent Posts]]></string>
+    <string name="_bx_forum_page_block_title_home"><![CDATA[Discussions List]]></string>
     <string name="_bx_forum_page_block_title_latest_entries_view_extended"><![CDATA[Discussions With Recent Posts (Extended View)]]></string>
     <string name="_bx_forum_page_block_title_latest_entries_view_full"><![CDATA[Discussions With Recent Posts (Full View)]]></string>
     <string name="_bx_forum_page_block_title_top_entries"><![CDATA[Top Discussions]]></string>
@@ -274,8 +275,8 @@
     <string name="_bx_forum_menu_item_title_entries_home"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_partaken"><![CDATA[Partaken]]></string>
     <string name="_bx_forum_menu_item_title_entries_partaken"><![CDATA[Partaken]]></string>
-    <string name="_bx_forum_menu_item_title_system_entries_public"><![CDATA[Latest]]></string>
-    <string name="_bx_forum_menu_item_title_entries_public"><![CDATA[Latest]]></string>
+    <string name="_bx_forum_menu_item_title_system_entries_public"><![CDATA[Home]]></string>
+    <string name="_bx_forum_menu_item_title_entries_public"><![CDATA[Home]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_forum_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_new"><![CDATA[New]]></string>
@@ -369,6 +370,9 @@
     <string name="_bx_forum_grid_filter_order_top"><![CDATA[Top]]></string>
     <string name="_bx_forum_grid_filter_order_updated"><![CDATA[Updated]]></string>
     <string name="_bx_forum_grid_filter_order_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_forum_grid_filter_order_featured"><![CDATA[Featured]]></string>
+    <string name="_bx_forum_grid_filter_order_favorite"><![CDATA[Favorite]]></string>
+    <string name="_bx_forum_grid_filter_order_partaken"><![CDATA[Partaken]]></string>
     
     <string name="_bx_forum_grid_btn_save"><![CDATA[Save]]></string>
     <string name="_bx_forum_grid_btn_cancel"><![CDATA[Cancel]]></string>

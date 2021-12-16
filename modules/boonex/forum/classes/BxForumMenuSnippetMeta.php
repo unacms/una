@@ -95,6 +95,32 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         return $this->getUnitMetaItemText(strmaxtextlen($aComment['cmt_text'], 100), array('class' => $this->_sModule . '-gpm-reply-text'));
     }
+    
+    protected function _getMenuItemStatus($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
+        $sIcon = '';
+        if ($this->_aContentInfo['resolvable']){
+            if ($this->_aContentInfo['resolved']){
+                $sIcon .= 'checked-circle';
+            }
+            else{
+                $sIcon .= 'question-circle';
+            }   
+        }
+        else{
+            $sIcon .= 'comment-alt'; 
+        }
+        return $this->getUnitMetaItemCustom($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['icon' => $sIcon , 'counter' => (int)$oObject->getCommentsCountAll()])); 
+    }
+    
+    protected function _getMenuItemBadges($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        return $this->getUnitMetaItemCustom($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true)); 
+    }
 }
 
 /** @} */

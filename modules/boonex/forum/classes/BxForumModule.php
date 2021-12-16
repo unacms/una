@@ -305,9 +305,7 @@ class BxForumModule extends BxBaseModTextModule
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         return $this->_serviceBrowseTable(array(
-            'grid' => $CNF['OBJECT_GRID_FEATURE'],
             'type' => $sType, 
-            'where' => array('fld' => 'featured', 'val' => 0, 'opr' => '<>'),
             'empty_message' => $bEmptyMessage,
             'ajax_paginate' => $bAjaxPaginate
         ), $bShowHeader);
@@ -435,45 +433,15 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_partaken "browse_partaken"
      */
-    public function serviceBrowsePartaken ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
+    public function serviceBrowsePartaken ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
         $sType = 'partaken';
 
         if($sUnitView != 'table')
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        $aSelect = array(
-            'tbla' => 'tco', 
-            'fld' => 'cmt_author_id',
-        );
-
-        $aJoin = array(
-            'tp' => 'INNER',
-            'tbl1' => 'bx_forum_cmts',
-            'tbl1a' => 'tco',
-            'fld1' => 'cmt_object_id',
-            'tbl2' => 'bx_forum_discussions',
-            'fld2' => 'id'
-        );
-
-        $aWhere = array(
-            'tbl' => 'tco', 
-            'fld' => 'cmt_author_id', 
-            'val' => bx_get_logged_profile_id(), 
-            'opr' => '='
-        );
-
-        $aGroupBy = array(
-            'tbl' => 'bx_forum_discussions', 
-            'fld' => 'id',
-        );
-
         return $this->_serviceBrowseTable(array(
             'type' => $sType,
-            'select' => $aSelect,
-            'join' => $aJoin,
-            'where' => $aWhere,
-            'group_by' => $aGroupBy,
             'empty_message' => $bEmptyMessage,
             'ajax_paginate' => $bAjaxPaginate
         ), $bShowHeader);
@@ -590,21 +558,6 @@ class BxForumModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $oProfile = null;
-        if((int)$iProfileId)
-            $oProfile = BxDolProfile::getInstance($iProfileId);
-        if(!$oProfile && bx_get('profile_id') !== false)
-            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
-        if(!$oProfile)
-            $oProfile = BxDolProfile::getInstance();
-        if(!$oProfile)
-            return '';
-
-        $iProfileAuthor = $oProfile->id();
-        $oFavorite = $this->getObjectFavorite();
-        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())
-            return '';
-
         $bEmptyMessage = false;
         if(isset($aParams['empty_message'])) {
             $bEmptyMessage = (bool)$aParams['empty_message'];
@@ -617,37 +570,8 @@ class BxForumModule extends BxBaseModTextModule
             unset($aParams['ajax_paginate']);
         }
 
-        $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
-        if(empty($aConditions) || !is_array($aConditions)) 
-            return '';
-
-        $aJoinGroup = array('grp' => true, 'cnds' => array());
-        if(!empty($aConditions['join']))
-            foreach($aConditions['join'] as $aCondition)
-                $aJoinGroup['cnds'][] = array(
-                    'tp' => $aCondition['type'],
-                    'tbl1' => $aCondition['table'],
-                    'fld1' => $aCondition['onField'],
-                    'tbl2' => $aCondition['mainTable'],
-                    'fld2' => $aCondition['mainField']
-                );
-
-        $aWhereGroup = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
-        if(!empty($aConditions['restriction']))
-            foreach($aConditions['restriction'] as $aCondition)
-                $aWhereGroup['cnds'][] = array(
-                    'tbl' => (!empty($aCondition['table']) ? $aCondition['table'] : ''), 
-                    'fld' => $aCondition['field'], 
-                    'val' => $aCondition['value'], 
-                    'opr' => $aCondition['operator']
-                );
-
         return $this->_serviceBrowseTable(array(
-            'grid' => $CNF['OBJECT_GRID_FAVORITE'],
             'type' => 'favorite', 
-            'author' => $iProfileId, 
-            'join' => $aJoinGroup,
-            'where' => $aWhereGroup, 
             'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
             'empty_message' => $bEmptyMessage,
             'ajax_paginate' => $bAjaxPaginate
@@ -1103,10 +1027,12 @@ class BxForumModule extends BxBaseModTextModule
         $oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid)
             return false;
-
+        
         $oGrid->setBrowseParams($aParams);
+        
         $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
         $this->_oTemplate->addCss(array('grid_tools.css'));
+       
         return $oGrid->getCode($isDisplayHeader);
     }
 

@@ -88,16 +88,6 @@
     background-color: transparent;
 }
 
-.bx-forum-grid .bx-grid-table tr th:first-child,
-.bx-forum-grid .bx-grid-table tr td:first-child {
-    padding-left: 0;
-}
-
-.bx-forum-grid .bx-grid-table tr th:last-child,
-.bx-forum-grid .bx-grid-table tr td:last-child {
-    padding-right: 0;
-}
-
 .bx-forum-grid-field-replies .bx-def-unit-alert-middle {
     position:static;
     display:inline-block;
@@ -121,6 +111,10 @@
     right: 0;
     top: 0;
 }
+.bx-forum-gpm-main .bx-base-general-unit-meta-item{
+    font-size: 0.875rem !important; 
+    color:rgb(107,114,128) !important;
+}
 
 .bx-forum-preview .bx-def-unit-info {
     line-height:1.15em;
@@ -139,8 +133,6 @@
     display: flex;
     -webkit-align-items: center;
     align-items: center;
-
-    white-space: nowrap;
 }
 
 .bx-forum-grid-preview .bx-forum-gp-title a {
@@ -149,9 +141,10 @@
 
 .bx-forum-grid-preview .bx-forum-gp-title a,
 .bx-forum-grid-preview .bx-forum-gp-text {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    font-size: 1rem; 
+    line-height: 1.5; 
+    font-weight: 500; 
+    color:rgb(17,24,29)
 }
 
 .bx-forum-grid-preview .bx-forum-gp-title .sys-icon,
@@ -322,19 +315,122 @@
     height: 3rem;
     text-align: center;
     font-size: 2rem;
-    line-height: 2.7rem;
+    line-height: 2.9rem;
+    background: rgb(107,114,120);
+    border-radius: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 11px;
 }
 .bx-forum-thumb img{
     border-radius: 500px;
 }
-.bx-forum-thumb svg,
 .bx-forum-thumb .sys-icon{
     width: 3rem;
     height: 3rem;
 }
+.bx-forum-thumb .sys-icon-svg{
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
 .bx-forum-grid-status{
     display: flex;
 }
-.bx-grid-table-cell-rating{
-    vertical-align: middle;
+.bx-grid-table-cell-rating .sys-action-cnt{
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgb(209,213,219) !important;
+    border-radius: 0.75rem;
 }
+.bx-grid-table-cell-rating .sys-action-cnt > SPAN{
+    margin-left: 0px !important;
+    text-align: center;
+    border-collapse: collapse;
+}
+.bx-grid-table-cell-rating .bx-score{
+    display: block;
+    margin: 0px !important;
+}
+.bx-grid-table-cell-participants .cmt-counter{
+    float: right;
+}
+.bx-forum-grid td{
+    vertical-align: top;
+}
+.bx-forum-grid tr:hover{
+    background: rgb(243,244,246) !important;
+    cursor: pointer;
+}
+.bx-forum-grid tr td:first-child{
+    padding-left: 0.5rem;
+}
+.bx-forum-grid tr td:last-child{
+    padding-right: 0.5rem;
+}
+.bx-forum-grid tr:hover td:first-child{
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+.bx-forum-grid tr:hover td:last-child{
+    border-radius: 0 0.375rem 0.375rem 0;
+}
+.bx-media-phone .bx-forum-grid {
+    width: 100%;
+    min-width:inherit !important;
+}
+.bx-media-phone .bx-forum-grid tr{
+    display: grid;
+	grid-template-areas:
+    "rating text"
+	"rating participants";
+	
+    grid-template-rows: auto auto;
+	grid-template-columns: 34px 1fr;
+    margin-bottom: 1rem;
+}
+
+.bx-media-phone .bx-forum-grid table{
+    width: 100% !important;
+    min-width: inherit !important;
+}
+.bx-media-phone .bx-forum-grid td{
+    width: auto !important;
+}
+.bx-media-phone .bx-forum-grid .bx-grid-table-cell-rating{
+    grid-area: rating;
+    padding-left: 0px;
+}
+.bx-media-phone .bx-forum-grid .bx-grid-table-cell-category{
+    grid-area: category;
+    display: none;
+}
+.bx-media-phone .bx-forum-grid .bx-grid-table-cell-text{
+    grid-area: text;
+    padding-bottom: 0px;
+}
+.bx-media-phone .bx-forum-grid .bx-grid-table-cell-participants{
+    grid-area: participants;
+    padding-top: 0px;
+}
+.bx-media-phone .bx-grid-table-cell-participants .cmt-counter{
+    float:none
+}
+/* unit */
+.bx-forum-unit .bx-base-text-unit-title h2{
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgb(17,24,29);
+}
+.bx-forum-unit .bx-base-general-unit-meta-item{
+    font-size: 0.875rem !important; 
+    color:rgb(107,114,128) !important;
+}
+.bx-forum-unit .bx-base-text-unit-no-thumb{
+    background: linear-gradient(to bottom, #356699 0%,#b1cee2 100%);
+    text-align: left;
+    color:#fff;
+    border-radius: 7px 7px 0 0;
+}
+
