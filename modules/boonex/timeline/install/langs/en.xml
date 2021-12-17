@@ -50,6 +50,7 @@
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Item cache engine (other than File option may require custom server setup)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Item cache lifetime]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Enable post form editor toolbar]]></string>
+    <string name="_bx_timeline_option_editor_auto_attach_insertion"><![CDATA[Treat images inserted in the editor as attachments]]></string>
     <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Limit number of attached links (0 - no limit)]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
@@ -322,6 +323,7 @@
     <string name="_bx_timeline_txt_msg_performed_action"><![CDATA[The action was successfully performed.]]></string>
     <string name="_bx_timeline_txt_msg_posted"><![CDATA[Posted successfully.]]></string>
     <string name="_bx_timeline_grid_action_err_delete"><![CDATA[Cannot delete the selected timeline events(s).]]></string>
+    <string name="_bx_timeline_txt_err_cannot_perform_insertion"><![CDATA[Cannot perform insertion.]]></string>
     <string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
     <string name="_bx_timeline_txt_err_empty_post"><![CDATA[The post is empty.]]></string>
     <string name="_bx_timeline_txt_err_attach_links"><![CDATA[The maximum allowed number of attached links has been reached.]]></string>

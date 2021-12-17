@@ -594,6 +594,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echoJson($this->getFormAttachLink());
     }
 
+    public function actionAutoAttachInsertion()
+    {
+        $sTxtError = _t('_bx_timeline_txt_err_cannot_perform_insertion');
+
+        $sUploader = bx_process_input(bx_get('u'));
+        $sResultContainerId = bx_process_input(bx_get('uid'));
+
+        $sStorage = $this->_oConfig->getObject('storage_photos');
+        $oUploader = BxDolUploader::getObjectInstance($sUploader, $sStorage, $sResultContainerId, $this->_oTemplate);
+        if(!$oUploader)
+            return echoJson(['code' => 1, 'msg' => $sTxtError]);
+
+        ob_start();
+        $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['file']) ? $_FILES['file'] : null, false, false, false);
+        ob_end_clean();
+
+        $sError = $oUploader->getUploadErrorMessages();
+        if(!empty($sError))
+            return echoJson(['code' => 2, 'msg' => $sError]);
+
+        return echoJson(['code' => 0, 'eval' => $oUploader->getNameJsInstanceUploader() . '.restoreGhosts()']);
+    }
+
     public function actionGetRepostedBy()
     {
         $iRepostedId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -3168,7 +3191,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return $this->_prepareResponse(array('message' => _t('_bx_timeline_txt_err_cannot_perform_action')), $bAjaxMode);
         }
 
-        return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode && $oForm->isSubmitted());
+        $mixedResult = $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode && $oForm->isSubmitted());
+        if(is_array($mixedResult))
+            $mixedResult['form_object'] = $oForm;
+
+        return $mixedResult;
     }
 
     public function getFormEdit($iId, $aParams = array(), $aBrowseParams = array())

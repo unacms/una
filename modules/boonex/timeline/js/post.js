@@ -16,6 +16,9 @@ function BxTimelinePost(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._bEmoji = oOptions.bEmoji == undefined ? false : oOptions.bEmoji;
+    this._bAutoAttach = oOptions.bAutoAttach == undefined ? false : oOptions.bAutoAttach;
+    this._sAutoUploader = oOptions.sAutoUploader == undefined ? '' : oOptions.sAutoUploader;
+    this._sAutoUploaderId = oOptions.sAutoUploaderId == undefined ? '' : oOptions.sAutoUploaderId;
     this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
     this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
     this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
@@ -94,29 +97,8 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         }
     });
 
-    if (typeof window.glOnSpaceEnterInEditor === 'undefined') {
-        window.glOnSpaceEnterInEditor = [];
-        window.glOnInsertImageInEditor = [];
-    }
-
-    window.glOnInsertImageInEditor.push(function (oFile) {
-        console.log(oFile);
-        const formData = new FormData();
-        formData.append("file", oFile);
-        fetch("/storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", {
-                method: "POST",
-                body: formData
-            }
-        )
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            //process success url in result.link
-        })
-        .catch(error => {
-            //process error
-        });
-    });
+    if (typeof window.glOnSpaceEnterInEditor === 'undefined')
+        window.glOnSpaceEnterInEditor = [];    
 
     window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
         if(!oTextarea.is(sSelector))
@@ -142,6 +124,24 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
             $this.addAttachLink(oForm, sUrl);
         }
     });
+
+    if(this._bAutoAttach) {
+        if (typeof window.glOnInsertImageInEditor === 'undefined')
+            window.glOnInsertImageInEditor = [];
+
+        window.glOnInsertImageInEditor.push(function (oFile) {
+            const oFormData = new FormData();
+            oFormData.append('file', oFile);
+            oFormData.append('u', $this._sAutoUploader);
+            oFormData.append('uid', $this._sAutoUploaderId);
+
+            fetch($this._sActionsUrl + 'auto_attach_insertion/', {method: "POST", body: oFormData})
+            .then(response => response.json())
+            .then(result => {
+                processJsonData(result)
+            });
+        });
+   }
 };
 
 BxTimelinePost.prototype.beforeFormPostSubmit = function(oForm)

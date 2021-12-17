@@ -333,7 +333,8 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_timeline_enable_editor_toolbar', '', @iCategId, '_bx_timeline_option_enable_editor_toolbar', 'checkbox', '', '', '', '', 1),
-('bx_timeline_limit_attach_links', '0', @iCategId, '_bx_timeline_option_limit_attach_links', 'digit', '', '', '', '', 2);
+('bx_timeline_editor_auto_attach_insertion', '', @iCategId, '_bx_timeline_option_editor_auto_attach_insertion', 'checkbox', '', '', '', '', 2),
+('bx_timeline_limit_attach_links', '0', @iCategId, '_bx_timeline_option_limit_attach_links', 'digit', '', '', '', '', 10);
 
 
 -- PRIVACY 

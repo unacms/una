@@ -132,8 +132,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getJsCodePost($iOwnerId, $aParams = array(), $bWrap = true, $bDynamic = false)
     {
-        return $this->getJsCode('post', array(
+        $aGeneralParams = [];
+        $aRequestParams = $aParams;
+        if(isset($aParams['gparams'], $aParams['rparams'])) {
+            $aGeneralParams = $aParams['gparams'];
+            $aRequestParams = $aParams['rparams'];
+        }
+
+        return $this->getJsCode('post', array_merge(array(
             'bEmoji' => $this->_oConfig->isEmoji(),
+            'bAutoAttach' => $this->_oConfig->isEditorAutoAttach(),
             'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
             'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),
             'oAttachedLinks' => $this->_oDb->getLinksBy(array(
@@ -143,15 +151,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             )),
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             'oRequestParams' => array_merge(array(
-                'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
+                'type' => isset($aRequestParams['type']) ? $aRequestParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
                 'owner_id' => $iOwnerId
-            ), $aParams)
-        ), $bWrap, $bDynamic);
+            ), $aRequestParams)
+        ), $aGeneralParams), $bWrap, $bDynamic);
     }
 
     public function getPostBlock($iOwnerId, $aParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $aForm = $this->getModule()->getFormPost($aParams);
+
+        if($this->_oConfig->isEditorAutoattach() && !empty($aForm['form_object'])) {
+            $aUploadersInfo = $aForm['form_object']->getUploadersInfo($CNF['FIELD_PHOTO']);
+            if(!empty($aUploadersInfo) && is_array($aUploadersInfo))
+                $aParams = [
+                    'gparams' => ['sAutoUploader' => $aUploadersInfo['name'], 'sAutoUploaderId' => $aUploadersInfo['id']],
+                    'rparams' => $aParams
+                ];
+        }
 
         return $this->parseHtmlByName('block_post.html', array (
             'style_prefix' => $this->_oConfig->getPrefix('style'),

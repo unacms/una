@@ -39,7 +39,17 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $this->_aUploadersInfo = array();
     }
 
-    function initChecker($aValues = array (), $aSpecificValues = array())
+    public function getUploadersInfo($sField = '')
+    {
+        if(empty($sField))
+            return $this->_aUploadersInfo;
+
+        $aUploaders = !empty($this->aInputs[$sField]['value']) ? unserialize($this->aInputs[$sField]['value']) : $this->_oModule->_oConfig->getUploaders($sField);
+
+        return $this->_aUploadersInfo[array_shift($aUploaders)];
+    }
+
+    public function initChecker($aValues = array (), $aSpecificValues = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         
@@ -187,6 +197,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             foreach($aUploaders as $sUploader)
                 $this->_aUploadersInfo[$sUploader] = array(
                     'id' => $sUploadersId, 
+                    'name' => $sUploader,
                     'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
                 );
 
@@ -207,7 +218,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
             foreach($aUploaders as $sUploader)
                 $this->_aUploadersInfo[$sUploader] = array(
-                    'id' => $sUploadersId, 
+                    'id' => $sUploadersId,
+                    'name' => $sUploader,
                     'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
                 );
 
@@ -228,7 +240,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
           
             foreach($aUploaders as $sUploader){
                 $this->_aUploadersInfo[$sUploader] = array(
-                    'id' => $sUploadersId, 
+                    'id' => $sUploadersId,
+                    'name' => $sUploader,
                     'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
                 );
             }
