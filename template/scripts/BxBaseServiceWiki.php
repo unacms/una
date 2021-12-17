@@ -218,7 +218,7 @@ class BxBaseServiceWiki extends BxDol
             return false;
 
         $o = BxDolTemplate::getInstance();
-        $o->addCss('wiki.css');
+        $o->addCss(['wiki.css', 'wiki-github-markdown.css']);
         $o->addJs('BxDolWiki.js');
         $o->addJsTranslation('_sys_wiki_external_editor_references_comment');
         if ($bAddPage)

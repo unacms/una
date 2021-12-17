@@ -76,21 +76,8 @@
     width:3.25rem;
 }
 
-.bx-page-wiki-container ol,
-.bx-page-wiki-container ul {
-    list-style: none;
-    padding: 0;
-}
-.bx-page-wiki-container ol li,
-.bx-page-wiki-container ul li {
-    margin: 0.625rem 0;
-}
-
-.bx-page-wiki-container ol li::before,
-.bx-page-wiki-container ul li::before {
-  content: "‣";
-  display: inline-block;
-  margin-right: 0.4rem;
+#bx-form-element-content .bx-form-value {
+    position: relative;
 }
 .bx-wiki-open-editor {
     position: absolute;
