@@ -177,7 +177,7 @@ function bx_editor_init(oEditor, oParams){
     oConfig.modules.imageUploader = {
         upload: file => {
             return new Promise((resolve, reject) => {
-                if (typeof glOnInsertImageInEditor !== 'undefined' && glOnInsertImageInEditor instanceof Array) {
+                if (typeof glOnInsertImageInEditor !== 'undefined' && glOnInsertImageInEditor instanceof Array && glOnInsertImageInEditor.length > 0) {
                     for (var i = 0; i < glOnInsertImageInEditor.length; i++) {
                         if (typeof glOnInsertImageInEditor[i] === "function") {
                             glOnInsertImageInEditor[i](file);
