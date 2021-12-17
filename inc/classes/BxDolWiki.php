@@ -706,6 +706,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (!$s)
             return ['s' => ''];
 
+        // convert links to be viewable in external editor
         $s = preg_replace_callback('#\((([a-zA-Z0-9_]+)/([a-zA-Z0-9]+))\)#', function ($aMatches) {
             $oStorage = BxDolStorage::getObjectInstance($aMatches[2]);
             if ($oStorage) {
@@ -716,6 +717,15 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
             return '(' . $aMatches[0] . ')';
         }, $s);
+
+        // add references to existing pages, so short references will work in external editor
+        $s .= "\n<!-- " . _t("_sys_wiki_external_editor_references_comment") . " -->\n";
+
+        $this->_aPages = BxDolWikiQuery::getAllPages ();
+        if ($this->_aPages) {
+            foreach ($this->_aPages as $sUri => $r)
+                $s .= "[{$sUri}]: " . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($r['url']) . "\n";
+        }        
 
         return ['s' => $s];
     }
@@ -826,6 +836,46 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
 class BxDolParsedown extends Parsedown
 {
+    protected $_aPages;
+
+    protected function textElements($text)
+    {
+        $res = parent::textElements($text);
+
+        // add all available pages as references
+        $this->_aPages = BxDolWikiQuery::getAllPages ();
+        if ($this->_aPages) {
+            foreach ($this->_aPages as $sUri => $r) {
+                $aData = array(
+                    // real link URL is set later when link is referenced
+                    'url' => 'bx-internal-page://' . $sUri, 
+                    'title' => !empty($r['title']) ? $r['title'] : null,
+                );
+                $this->DefinitionData['Reference'][$sUri] = $aData;
+            }
+        }
+
+        return $res;
+    }
+
+    protected function inlineLink($Excerpt)
+    {
+        $a = parent::inlineLink($Excerpt);
+
+        if (@isset($a['element']['attributes']['href']) && 0 === strncmp($a['element']['attributes']['href'], 'bx-internal-page://', 19)) {
+            $sUri = substr($a['element']['attributes']['href'], 19);
+            if (isset($this->_aPages[$sUri])) {
+                $sHref = BxDolPermalinks::getInstance()->permalink($this->_aPages[$sUri]['url']);
+                $a['element']['attributes']['href'] = $sHref;
+            }
+            else {
+                $a['element']['attributes']['href'] = $sUri;
+            }
+        }
+
+        return $a;
+    }
+
     protected function inlineImage($Excerpt)
     {
         $a = parent::inlineImage($Excerpt);

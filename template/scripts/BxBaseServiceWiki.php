@@ -220,6 +220,7 @@ class BxBaseServiceWiki extends BxDol
         $o = BxDolTemplate::getInstance();
         $o->addCss('wiki.css');
         $o->addJs('BxDolWiki.js');
+        $o->addJsTranslation('_sys_wiki_external_editor_references_comment');
         if ($bAddPage)
             $o->addJs('studio/js/|forms.js');
         $this->_bJsCssAdded = true;

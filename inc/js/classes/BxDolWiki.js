@@ -250,7 +250,14 @@ function bx_wiki_open_editor_convert_links(s, onSuccess) {
 function bx_wiki_open_editor_convert_links_back(s) {
     
     var re = new RegExp('\\\(' + bx_regexp_escape(sUrlRoot) + 's/([a-zA-Z0-9_]+)/([a-zA-Z0-9]+)[^\\\)]*\\\)', 'gm');
-    return  s.replace(re, "($1/$2)");
+    s = s.replace(re, "($1/$2)");
+
+    var sRefs = '<!-- ' + $('<textarea />').html(_t('_sys_wiki_external_editor_references_comment')).text() + ' -->';
+    var i = s.indexOf(sRefs);
+    if (-1 !== i)
+        s = s.substring(0, i);
+
+    return s;
 }
 
 /** @} */

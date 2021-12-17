@@ -42,6 +42,12 @@ class BxDolWikiQuery extends BxDolDb
         return $aObject;
     }
 
+    static public function getAllPages ()
+    {
+        $sQuery = "SELECT `uri`, `title`, `url` FROM `sys_objects_page` WHERE `url` != '' ORDER BY `uri`";
+        return BxDolDb::getInstance()->getAllWithKey($sQuery, 'uri');
+    }
+
     /**
      * Get wiki block
      * @param $iBlockId block ID
