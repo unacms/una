@@ -849,7 +849,7 @@ class BxDolParsedown extends Parsedown
                 $aData = array(
                     // real link URL is set later when link is referenced
                     'url' => 'bx-internal-page://' . $sUri, 
-                    'title' => !empty($r['title']) ? $r['title'] : null,
+                    'title' => !empty($r['title']) ? _t($r['title']) : null,
                 );
                 $this->DefinitionData['Reference'][$sUri] = $aData;
             }
@@ -865,7 +865,7 @@ class BxDolParsedown extends Parsedown
         if (@isset($a['element']['attributes']['href']) && 0 === strncmp($a['element']['attributes']['href'], 'bx-internal-page://', 19)) {
             $sUri = substr($a['element']['attributes']['href'], 19);
             if (isset($this->_aPages[$sUri])) {
-                $sHref = BxDolPermalinks::getInstance()->permalink($this->_aPages[$sUri]['url']);
+                $sHref = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_aPages[$sUri]['url']);
                 $a['element']['attributes']['href'] = $sHref;
             }
             else {
