@@ -3538,6 +3538,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_wiki_title_time"><![CDATA[{0} updated]]></string>
     <string name="_sys_wiki_orig"><![CDATA[Orig.]]></string>
     <string name="_sys_wiki_copy"><![CDATA[Copy to clipboard]]></string>
+    <string name="_sys_wiki_open_in_editor"><![CDATA[Open in editor]]></string>
+    <string name="_sys_wiki_external_editor_references_comment"><![CDATA[NOTE: don't modify this comment and lines below]]></string>
 
 	<string name="_adm_lmi_cpt_groups_roles"><![CDATA[Roles]]></string>
 	<string name="_adm_form_txt_groups_roles_add_popup"><![CDATA[Create role]]></string>

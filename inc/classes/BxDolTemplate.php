@@ -2919,7 +2919,13 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sReturn = substr($sReturn, 0, -1);
         }
 
-        return '<script language="javascript">var aDolLang = {' . $sReturn . '};</script>';
+        return '
+<script language="javascript">
+    if (\'undefined\' === typeof(aDolLang)) 
+        var aDolLang = {' . $sReturn . '};
+    else
+        $.extend(aDolLang, {' . $sReturn . '});
+</script>';
     }
     /**
      * Process all added options and return them as a string.

@@ -277,6 +277,10 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      */
     public function isAllowed ($sType, $iProfileId = false)
     {
+        if ('convert-links' == $sType) {
+            return isLogged();
+        }
+
         // translate isn't allowed when only one language on the site
         if ('translate' == $sType) {
             $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
@@ -405,6 +409,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 'block_id' => $iBlockId,
                 'wiki_action_uri' => $this->getWikiUri(),
                 'action' => 'delete-version',
+                'txt_open_editor' => bx_js_string(_t('_sys_wiki_open_in_editor')),
             ));
         }
     }
@@ -635,6 +640,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 'block_id' => $iBlockId,
                 'wiki_action_uri' => $this->getWikiUri(),
                 'action' => $bTranslate ? 'translate' : 'edit',
+                'txt_open_editor' => bx_js_string(_t('_sys_wiki_open_in_editor')),
             ));
         } 
         else {
@@ -692,6 +698,36 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
             return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $iBlockId);
         }
+    }
+
+    public function actionConvertLinks ()
+    {
+        $s = bx_get('s');
+        if (!$s)
+            return ['s' => ''];
+
+        // convert links to be viewable in external editor
+        $s = preg_replace_callback('#\((([a-zA-Z0-9_]+)/([a-zA-Z0-9]+))\)#', function ($aMatches) {
+            $oStorage = BxDolStorage::getObjectInstance($aMatches[2]);
+            if ($oStorage) {
+                $sUrl = $oStorage->getFileUrlByRemoteId($aMatches[3]);
+                if ($sUrl)
+                    return '(' . $sUrl . ')';
+            }
+
+            return '(' . $aMatches[0] . ')';
+        }, $s);
+
+        // add references to existing pages, so short references will work in external editor
+        $s .= "\n<!-- " . _t("_sys_wiki_external_editor_references_comment") . " -->\n";
+
+        $this->_aPages = BxDolWikiQuery::getAllPages ();
+        if ($this->_aPages) {
+            foreach ($this->_aPages as $sUri => $r)
+                $s .= "[{$sUri}]: " . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($r['url']) . "\n";
+        }        
+
+        return ['s' => $s];
     }
 
     protected function updateBlockIndexingData($iBlockId)
@@ -800,6 +836,46 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
 class BxDolParsedown extends Parsedown
 {
+    protected $_aPages;
+
+    protected function textElements($text)
+    {
+        $res = parent::textElements($text);
+
+        // add all available pages as references
+        $this->_aPages = BxDolWikiQuery::getAllPages ();
+        if ($this->_aPages) {
+            foreach ($this->_aPages as $sUri => $r) {
+                $aData = array(
+                    // real link URL is set later when link is referenced
+                    'url' => 'bx-internal-page://' . $sUri, 
+                    'title' => !empty($r['title']) ? _t($r['title']) : null,
+                );
+                $this->DefinitionData['Reference'][$sUri] = $aData;
+            }
+        }
+
+        return $res;
+    }
+
+    protected function inlineLink($Excerpt)
+    {
+        $a = parent::inlineLink($Excerpt);
+
+        if (@isset($a['element']['attributes']['href']) && 0 === strncmp($a['element']['attributes']['href'], 'bx-internal-page://', 19)) {
+            $sUri = substr($a['element']['attributes']['href'], 19);
+            if (isset($this->_aPages[$sUri])) {
+                $sHref = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_aPages[$sUri]['url']);
+                $a['element']['attributes']['href'] = $sHref;
+            }
+            else {
+                $a['element']['attributes']['href'] = $sUri;
+            }
+        }
+
+        return $a;
+    }
+
     protected function inlineImage($Excerpt)
     {
         $a = parent::inlineImage($Excerpt);

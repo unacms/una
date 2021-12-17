@@ -92,4 +92,11 @@
   display: inline-block;
   margin-right: 0.4rem;
 }
-
+.bx-wiki-open-editor {
+    position: absolute;
+    top: -1.5rem;
+    right: 0;
+}
+html .stackedit-container {
+    z-index:99999;
+}
