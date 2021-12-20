@@ -107,7 +107,8 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_gallery.html';
 
-        echo $this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate);
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate));
     }
    
 	public function subactionDelete()

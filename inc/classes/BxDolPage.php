@@ -525,6 +525,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     	return $this->_sObject;
     }
     
+    public function getObject ()
+    {
+    	return $this->_aObject;
+    }
+    
     public function getInjections()
     {
         $aResult = array();
