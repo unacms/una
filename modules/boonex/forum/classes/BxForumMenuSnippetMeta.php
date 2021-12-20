@@ -104,14 +104,14 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         $sIcon = '';
         if ($this->_aContentInfo['resolvable']){
             if ($this->_aContentInfo['resolved']){
-                $sIcon .= 'checked-circle';
+                $sIcon .= 'check-circle';
             }
             else{
                 $sIcon .= 'question-circle';
             }   
         }
         else{
-            $sIcon .= 'comment-alt'; 
+            $sIcon .= 'comment'; 
         }
         return $this->getUnitMetaItemCustom($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['icon' => $sIcon , 'counter' => (int)$oObject->getCommentsCountAll()])); 
     }

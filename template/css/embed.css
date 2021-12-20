@@ -1,0 +1,7 @@
+body,
+.bx-embed{
+    background-color: transparent !important;
+}
+.bx-embed{
+    width:calc(100% - 2px);
+}

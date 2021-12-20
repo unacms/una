@@ -832,6 +832,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_sCode;
     }
+    
+    /**
+     * Get embed code.
+     *
+     * @return string embed's code.
+     */
+    function getEmbed($sContent)
+    {
+        $this->addJs(['inc/js/|embed.js']);
+        $this->addCss(['embed.css']);
+        
+        $this->setPageNameIndex (BX_PAGE_EMBED);
+        $this->setPageContent('page_main_code', '<div class="bx-embed">' . $sContent . '</div>');
+        $this->getPageCode();
+        
+    }
 
     /**
      * Get code key.
@@ -1173,7 +1189,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';
 
-        $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."oembed.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
+        $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."em.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
         
         return $sRet;
     }

@@ -199,13 +199,14 @@ class BxForumGrid extends BxTemplGrid
     
     protected function _getCellCategory($mixedValue, $sKey, $aField, $aRow)
     {
-        $sIcon = '';
+        $sIcon = $this->_oModule->_oTemplate->parseHtmlByName('default_category.html', []);
         $o = BxDolCategory::getObjectInstance('bx_forum_cats');
         
         $aCategoryData = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $aRow['cat']));
 
         if(isset($aCategoryData['icon']))
             $sIcon = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon'));
+      //  echo $sIcon;
         $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('thumb.html', ['icon' => $sIcon, 'title' => $o->getCategoryTitle($aRow['cat'])]);
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

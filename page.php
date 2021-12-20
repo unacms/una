@@ -31,11 +31,9 @@ BxDolPage::seoRedirect();
 
 $oPage = BxDolPage::getObjectInstanceByURI('', false, true);
 if ($oPage) {
-
     $oPage->displayPage();
 
 } else {
-
     $oTemplate = BxDolTemplate::getInstance();
     $oTemplate->displayPageNotFound();
 }

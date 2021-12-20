@@ -319,10 +319,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', '', 60),
 
-(@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'}],[\'blockquote\'],[\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 70),
-(@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\'],[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'}],[\'blockquote\'],[\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 73),
-(@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] }],[\'bold\',\'italic\',\'underline\',\'clean\'],
-  [{ \'align\': [] }],[{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'}],[\'blockquote\'],[{ \'color\': [] }, { \'background\': [] }],[{ \'direction\': \'rtl\' }],[{ \'script\': \'sub\'}, { \'script\': \'super\' }],[\'link\',\'image\',\'embed\',\'code-block\']', 'digit', '', '', '', '', 76),
+(@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\',{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},\'blockquote\',\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 70),
+(@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\',{ \'header\': [1, 2, 3, 4, 5, 6, false] },{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'},{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'},\'blockquote\',\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 73),
+(@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] },\'bold\',\'italic\',\'underline\',\'clean\'],
+  [{ \'align\': [] },{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'},\'blockquote\',{ \'color\': [] }, { \'background\': [] },{ \'direction\': \'rtl\' },\'link\',\'image\',\'embed\',\'code-block\']', 'digit', '', '', '', '', 76),
 
 (@iCategoryId, 'sys_search_keyword_min_len', '_adm_stg_cpt_option_sys_search_keyword_min_len', '1', 'digit', '', '', '', '', 80),
 
