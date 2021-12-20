@@ -350,8 +350,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_forum_snippet_meta_main', 'bx_forum', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3),
-('bx_forum_snippet_meta_main', 'bx_forum', 'status', '_sys_menu_item_title_system_sm_status', '_sys_menu_item_title_sm_status', '', '', '', '', '', 2147483647, 1, 0, 1, 4),
-('bx_forum_snippet_meta_main', 'bx_forum', 'badges', '_sys_menu_item_title_system_sm_badges', '_sys_menu_item_title_sm_badges', '', '', '', '', '', 2147483647, 1, 0, 1, 5);
+('bx_forum_snippet_meta_main', 'bx_forum', 'status', '_bx_forum_menu_item_title_system_sm_status', '_bx_forum_menu_item_title_sm_status', '', '', '', '', '', 2147483647, 1, 0, 1, 4),
+('bx_forum_snippet_meta_main', 'bx_forum', 'badges', '_bx_forum_menu_item_title_system_sm_badges', '_bx_forum_menu_item_title_sm_badges', '', '', '', '', '', 2147483647, 1, 0, 1, 5);
 
 -- MENU: custom menu for 'counters' snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

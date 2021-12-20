@@ -100,7 +100,7 @@
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Pin any discussion]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Lock any discussion]]></string>
 	<string name="_bx_forum_acl_action_hide_any_entry"><![CDATA[Hide any discussion]]></string>
-    <string name="_bx_forum_acl_action_resolve_any_entry"><![CDATA[Resolve any discussion]]></string>
+    <string name="_bx_forum_acl_action_resolve_any_entry"><![CDATA[Mark as answered any discussion]]></string>
 
 	<string name="_bx_forum_page_title_sys_create_entry"><![CDATA[New discussion]]></string>
 	<string name="_bx_forum_page_title_create_entry"><![CDATA[New discussion]]></string>
@@ -249,10 +249,10 @@
     <string name="_bx_forum_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_forum_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_forum_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
-    <string name="_bx_forum_menu_item_title_resolve_entry"><![CDATA[Resolve]]></string>
-    <string name="_bx_forum_menu_item_title_unresolve_entry"><![CDATA[Unresolve]]></string>
-    <string name="_bx_forum_menu_item_title_system_resolve_entry"><![CDATA[Resolve]]></string>
-    <string name="_bx_forum_menu_item_title_system_unresolve_entry"><![CDATA[Unresolve]]></string>
+    <string name="_bx_forum_menu_item_title_resolve_entry"><![CDATA[Mark as Answered]]></string>
+    <string name="_bx_forum_menu_item_title_unresolve_entry"><![CDATA[Mark as Unanswered]]></string>
+    <string name="_bx_forum_menu_item_title_system_resolve_entry"><![CDATA[Mark as Answered]]></string>
+    <string name="_bx_forum_menu_item_title_system_unresolve_entry"><![CDATA[Mark as Unanswered]]></string>
     <string name="_bx_forum_menu_item_title_system_stick_entry"><![CDATA[Pin]]></string>
     <string name="_bx_forum_menu_item_title_stick_entry"><![CDATA[Pin]]></string>
     <string name="_bx_forum_menu_item_title_system_unstick_entry"><![CDATA[Unpin]]></string>
@@ -316,6 +316,11 @@
     <string name="_bx_forum_menu_set_title_snippet_meta_reply"><![CDATA[Snippet Meta Info: Reply]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_reply_text"><![CDATA[Reply text]]></string>
     <string name="_bx_forum_menu_item_title_sm_reply_text"><![CDATA[Reply text]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_status"><![CDATA[Status]]></string>
+    <string name="_bx_forum_menu_item_title_sm_status"><![CDATA[Status]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_badges"><![CDATA[Badges]]></string>
+    <string name="_bx_forum_menu_item_title_sm_badges"><![CDATA[Badges]]></string>
+  
 
     <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -362,8 +367,8 @@
     
     <string name="_bx_forum_grid_filter_resolved_all"><![CDATA[All]]></string>
     <string name="_bx_forum_grid_filter_badges_all"><![CDATA[All]]></string>
-    <string name="_bx_forum_grid_filter_resolved_resolved"><![CDATA[Resolved]]></string>
-    <string name="_bx_forum_grid_filter_resolved_unresolved"><![CDATA[Unresolved]]></string>
+    <string name="_bx_forum_grid_filter_resolved_resolved"><![CDATA[Answered]]></string>
+    <string name="_bx_forum_grid_filter_resolved_unresolved"><![CDATA[Unanswered]]></string>
     
     <string name="_bx_forum_grid_filter_order_recent"><![CDATA[Recent Posts]]></string>
     <string name="_bx_forum_grid_filter_order_new"><![CDATA[New]]></string>

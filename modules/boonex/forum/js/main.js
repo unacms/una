@@ -42,13 +42,21 @@ BxForumMain.prototype.init = function() {
 	        var iInnerWidth = oTable.parent().innerWidth();
 	        oTable.find('.bx-forum-grid-preview').each(function () {
 	            var eWrapper = $(this).parent();
-	           // var w = iInnerWidth - iCalcWidth - parseInt(eWrapper.css('padding-left')) - parseInt(eWrapper.css('padding-right'));
-	           // $(this).width(w + 'px');
 	        }); 
             
-            oTable.find('tr').each(function () {
-	            $(this).click(function() {
-                    location = $(this).find('.bx-forum-gp-title A').attr('href');
+	        oTable.find('tr').each(function () {
+	            $(this).removeClass('bx-def-color-bg-hl')
+	            $(this).click(function (evt) {
+	                console.log(event.srcElement.localName);
+	                if (!event.srcElement.closest('a')) {
+                        location = $(this).find('.bx-forum-gp-title A').attr('href');
+                    }
+                })
+                $(this).mouseover(function (evt) {
+                    $(this).addClass('bx-def-color-bg-box')
+                })
+                $(this).mouseout(function (evt) {
+                    $(this).removeClass('bx-def-color-bg-box')
                 })
 	        }); 
             

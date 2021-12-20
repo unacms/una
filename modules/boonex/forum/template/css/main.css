@@ -144,7 +144,6 @@
     font-size: 1rem; 
     line-height: 1.5; 
     font-weight: 500; 
-    color:rgb(17,24,29)
 }
 
 .bx-forum-grid-preview .bx-forum-gp-title .sys-icon,
@@ -329,6 +328,8 @@
 .bx-forum-thumb .sys-icon{
     width: 3rem;
     height: 3rem;
+    color: #fff;
+    font-size: 1.75rem;
 }
 .bx-forum-thumb .sys-icon-svg{
     width: 2.4rem;
@@ -360,7 +361,6 @@
     vertical-align: top;
 }
 .bx-forum-grid tr:hover{
-    background: rgb(243,244,246) !important;
     cursor: pointer;
 }
 .bx-forum-grid tr td:first-child{

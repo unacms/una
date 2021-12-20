@@ -195,7 +195,9 @@ class BxForumModule extends BxBaseModTextModule
             $aCategoryData = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $aCategory['value']));
             
             if(isset($aCategoryData['icon']))
-               $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon sys-colored'));
+                $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon sys-colored'));
+            else
+                $aCategories['bx_repeat:cats'][$sKey]['icon'] =  $this->_oTemplate->parseHtmlByName('default_category.html', []);
             
             if(isset($aCategoryData['visible_for_levels']) && $aCategoryData['visible_for_levels'] != '' && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategoryData['visible_for_levels'])){
                 unset($aCategories['bx_repeat:cats'][$sKey]);
