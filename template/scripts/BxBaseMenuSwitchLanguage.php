@@ -83,12 +83,18 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
     protected function getItemTitlePopup($sName, $sTitle)
     {
-    	return genFlag($sName) . ' ' . $sTitle;
+        return $this->_oTemplate->parseHtmlByName('menu_switch_language_title.html', [
+            'icon' => genFlag($sName),
+            'title' => $sTitle
+        ]);
     }
 
     protected function getItemTitleInline($sName, $sTitle)
     {
-    	return genFlag($sName);
+        return $this->_oTemplate->parseHtmlByName('menu_switch_language_title.html', [
+            'icon' => genFlag($sName),
+            'title' => ''
+        ]);
     }
 }
 
