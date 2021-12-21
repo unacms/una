@@ -1649,6 +1649,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     }
         }
 
+        $sIcon = !empty($aEvent['icon']) ? $aEvent['icon'] : $CNF['ICON'];
+
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
@@ -1665,7 +1667,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => $bTmplVarsOwnerActions,
                 'content' => $aTmplVarsOwnerActions
             ),
-            'item_icon' => !empty($aEvent['icon']) ? $aEvent['icon'] : $CNF['ICON'],
+            'item_icon' => $sIcon,
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName .' '. $sAuthorBadges,
@@ -1698,6 +1700,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) || $bTmplVarsTimelineOwner,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
+                    'item_icon' => $sIcon,
                     'item_owner_action' => $sAuthorAction,
                     'bx_if:show_timeline_owner' => array(
                         'condition' => $bTmplVarsTimelineOwner,
