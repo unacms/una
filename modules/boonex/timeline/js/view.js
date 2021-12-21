@@ -68,9 +68,6 @@ BxTimelineView.prototype.init = function(bForceInit)
         //-- Check content to show 'See More'
         this.initSeeMore(this.oView, true);
 
-        //--- Hide timeline Events which are outside the viewport
-        this.hideEvents(this.oView.find('.' + this.sClassItem), this._fOutsideOffset);
-
         //--- Init Video Autoplay
         if(this._sVideosAutoplay != 'off') {
             this.initVideosAutoplay(this.oView);
@@ -268,59 +265,6 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent)
 
         window.glBxTimelineVapPlayers[sPlayer] = oPlayer;
     });
-};
-
-BxTimelineView.prototype.hideEvents = function(oEvents, fOffset)
-{
-    var $this = this;
-
-    oEvents.each(function(iIndex, oEvent) {
-        $this.hideEvent($(oEvent), fOffset, iIndex, false);
-    });
-
-    //--- on scolling, show/animate timeline Events when enter the viewport
-    $(window).on('scroll', function() {
-        if(!window.requestAnimationFrame) 
-            setTimeout(function() {
-                $this.showEvents(oEvents, $this._fOutsideOffset);
-            }, 100);
-        else
-            window.requestAnimationFrame(function() {
-                $this.showEvents(oEvents, $this._fOutsideOffset);
-            });
-    });
-};
-
-BxTimelineView.prototype.hideEvent = function(oEvent, fOffset, iIndex, bInitAutoShow)
-{
-    var $this = this;
-
-    iIndex >=3 && oEvent.offset().top > ($(window).scrollTop() + $(window).height() * fOffset) && oEvent.find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
-
-    if(bInitAutoShow)
-        $(window).on('scroll', function() {
-            if(!window.requestAnimationFrame) 
-                setTimeout(function() {
-                    $this.showEvent(oEvent, $this._fOutsideOffset);
-                }, 100);
-            else
-                window.requestAnimationFrame(function() {
-                    $this.showEvent(oEvent, $this._fOutsideOffset);
-                });
-        });
-};
-
-BxTimelineView.prototype.showEvents = function(oEvents, fOffset)
-{
-    var $this = this;
-    oEvents.each(function() {
-        $this.showEvent($(this), fOffset);
-    });
-};
-
-BxTimelineView.prototype.showEvent = function(oEvent, fOffset)
-{
-    oEvent.offset().top <= ($(window).scrollTop() + $(window).height() * fOffset) && oEvent.find('.bx-tl-item-type').hasClass('is-hidden') && oEvent.find('.bx-tl-item-type, .bx-tl-item-cnt').removeClass('is-hidden').addClass('bounce-in');
 };
 
 BxTimelineView.prototype.autoplayVideos = function(oView, fOffsetStart, fOffsetStop)

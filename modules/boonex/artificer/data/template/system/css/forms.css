@@ -233,14 +233,14 @@ import url(../../../../../../../template/css/forms.css);
 /*--- Form field: Auto-siggestion ---*/
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) {
     float:left;
-    padding:0px;
+    padding: 0.25rem 0;
     height:auto;
     box-shadow: none;
     min-height: 2.8rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b {
     display: block;
-    margin: 0.125rem;
+    margin: 0.25rem;
     padding-right: 1.5rem; 
     border-radius: 1.25rem;
 
@@ -248,6 +248,9 @@ import url(../../../../../../../template/css/forms.css);
     white-space: nowrap;
     font-weight: normal;    
     cursor: pointer;
+}
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:first-child {
+    margin-left: 0.75rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:hover {
     opacity: 0.7;

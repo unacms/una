@@ -176,11 +176,11 @@ class BxXeroModule extends BxDolModule
         return $this->_oApi->actionIsContact($sProfileEmail);
     }
     
-    public function addInvoice($sProfileEmail, $sName, $fAmount, $iQuantity, $mixedDueDate)
+    public function addInvoice($sProfileEmail, $sName, $mixedAmount, $iQuantity, $mixedDueDate)
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $mixedInvoiceId = $this->_oApi->actionAddInvoice($sProfileEmail, $sName, $fAmount, $iQuantity, $mixedDueDate);
+        $mixedInvoiceId = $this->_oApi->actionAddInvoice($sProfileEmail, $sName, $mixedAmount, $iQuantity, $mixedDueDate);
         if(!$mixedInvoiceId)
             return $mixedInvoiceId;
 

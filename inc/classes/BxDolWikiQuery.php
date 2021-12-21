@@ -44,7 +44,7 @@ class BxDolWikiQuery extends BxDolDb
 
     static public function getAllPages ()
     {
-        $sQuery = "SELECT `uri`, `title`, `url` FROM `sys_objects_page` WHERE `url` != '' ORDER BY `uri`";
+        $sQuery = "SELECT LOWER(`uri`) as `uri`, `title`, `url` FROM `sys_objects_page` WHERE `url` != '' ORDER BY `uri`";
         return BxDolDb::getInstance()->getAllWithKey($sQuery, 'uri');
     }
 

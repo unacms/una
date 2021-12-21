@@ -3,6 +3,8 @@ import url(../../../../../../../template/css/cmts.css);
 --*/
 
 ul.cmts {
+    margin: 0px;
+    padding: 0px;
     list-style: none;
 }
 

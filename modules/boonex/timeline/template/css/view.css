@@ -617,16 +617,6 @@ div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.b
 
 
 /*--- Item Style: Timeline ---*/
-div.bx-tl-view-timeline div.bx-tl-items:before {
-    content: '';
-    position: absolute;
-    top: 0px;
-    left: 0.875rem;
-    width: 4px;
-    height: 100%;
-
-    background: #dddddd;
-}
 div.bx-tl-view-timeline div.bx-tl-items,
 div.bx-tl-view-search div.bx-tl-items,
 div.bx-tl-view-item div.bx-tl-items {

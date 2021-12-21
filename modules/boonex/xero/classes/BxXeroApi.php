@@ -249,17 +249,32 @@ class BxXeroApi extends BxDol
                 $mixedDueDate = new DateTime($mixedDueDate);
 
             $fAmount = $mixedAmount;
-            $fTaxAmount = false;
+            $fTaxAmount = $sTaxType = false;
             if(is_array($mixedAmount))
-                list($fAmount, $fTaxAmount) = $mixedAmount;
+                switch(count($mixedAmount)) {
+                    case 2:
+                        list($fAmount, $fTaxAmount) = $mixedAmount;
+                        break;
+
+                    case 3:
+                        list($fAmount, $fTaxAmount, $sTaxType) = $mixedAmount;
+                        break;
+                }
+
+            $sLineAmountType = \XeroAPI\XeroPHP\Models\Accounting\LineAmountTypes::NO_TAX;
 
             $oLineItem = new XeroAPI\XeroPHP\Models\Accounting\LineItem;
             $oLineItem->setDescription($sName)
                 ->setUnitAmount($fAmount)
                 ->setQuantity($iQuantity)
                 ->setAccountCode($sAccount);
-            if($fTaxAmount !== false)
+            if($fTaxAmount !== false) {
+                $sLineAmountType = \XeroAPI\XeroPHP\Models\Accounting\LineAmountTypes::EXCLUSIVE;
+
                 $oLineItem->setTaxAmount($fTaxAmount);
+            }
+            if($sTaxType !== false)
+                $oLineItem->setTaxType($sTaxType);
 
             $aLineItems = [$oLineItem];		
 
@@ -277,7 +292,7 @@ class BxXeroApi extends BxDol
                 ->setLineItems($aLineItems)
                 ->setStatus(XeroAPI\XeroPHP\Models\Accounting\Invoice::STATUS_AUTHORISED)
                 ->setType(XeroAPI\XeroPHP\Models\Accounting\Invoice::TYPE_ACCREC)
-                ->setLineAmountTypes(\XeroAPI\XeroPHP\Models\Accounting\LineAmountTypes::EXCLUSIVE);
+                ->setLineAmountTypes($sLineAmountType);
 
             $oXeroResponse = $oXeroApi->createInvoices($sTenantId, $oInvoice); 
             if(count($oXeroResponse->getInvoices()) == 1)
