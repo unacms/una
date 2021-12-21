@@ -44,7 +44,20 @@ BxDolPage.prototype.embededCallback = function(item)
             bx_embed_link(item.find('a')[0]);
         }
     };
- }
+}
+
+BxDolPage.prototype.share = function(oLink, sUrl)
+{
+    var oData = this._getDefaultParams();
+    oData['a'] = 'get_share';
+    oData['url'] = sUrl;
+    
+    $(window).dolPopupAjax({
+        url: bx_append_url_params(this._sActionsUri, oData),
+        closeOnOuterClick: true,
+        removeOnClose: true,
+    });
+}
 
 BxDolPage.prototype.showHelp = function(oLink, iBlockId)
 {
@@ -62,7 +75,6 @@ BxDolPage.prototype.showHelp = function(oLink, iBlockId)
         }
     });
 };
-
 BxDolPage.prototype._getDefaultParams = function() 
 {
     var oDate = new Date();
