@@ -215,7 +215,7 @@ class BxForumGrid extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aRow[$CNF['FIELD_ID']]) : null;
+        $oObject = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aRow[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate) : null;
         $mixedValue = $oObject ? $oObject->getElementInline() : '';
         
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
