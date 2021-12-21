@@ -51,6 +51,7 @@ module.exports = {
         'bx-def-unit-alert', 'bx-def-unit-alert-small', 'bx-def-unit-alert-middle',
         'bx-def-label',
         'bx-def-icon-size', 'bx-def-thumb-size', 'bx-def-ava-size', 'bx-def-ava-big-size',
+        'bx-def-color-bg-box-active', 
 
         'bx-base-general-unit-meta-username',
     ]
