@@ -318,6 +318,9 @@
     .bx-artificer .bx-def-color-bg-box {
         @apply bg-white dark:bg-gray-800;
     }
+    .bx-artificer .bx-def-color-bg-box-active {
+        @apply bg-gray-100 dark:bg-gray-700;
+    }
 
     /* Common Elements: HR */
     .bx-artificer .bx-def-hr {
