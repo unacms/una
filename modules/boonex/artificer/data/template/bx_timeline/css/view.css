@@ -22,43 +22,6 @@ div.bx-tl-view-item div.bx-tl-items {
     margin-left: 0px;
     margin-right: 0px;
 }
-div.bx-tl-view-timeline div.bx-tl-items:before {
-    content: '';
-    position: absolute;
-    top: 0px;
-    left: 0.875rem;
-    width: 4px;
-    height: 100%;
-}
-
-div.bx-tl-view-timeline div.bx-tl-item-type {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-div.bx-tl-view-timeline div.bx-tl-item-circle {
-    position: relative;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-
-    width: 2rem;
-    height: 2rem;
-
-    background-clip: padding-box;
-    border-radius: 2rem;
-
-    text-align: center;
-
-    overflow: hidden;
-}
-div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
-    font-size: 1.0rem;
-}
 
 /*--- Item Meta Info Style ---*/
 .bx-tl-item-meta ul.bx-menu-custom li:first-child .bx-tl-item-meta-div {
