@@ -325,6 +325,12 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function addPage ($sPageUri, $sTitleLangKey)
+    {
+        $sUrl = $this->getPageUrl($sPageUri, false, false);
+        return $this->_oQuery->insertPage ($sPageUri, $sUrl, $sTitleLangKey);
+    }
+
     public function actionGetTranslation ()
     {
         $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_get('language'), false, false);
@@ -500,8 +506,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
             // insert page
             $sLangKey = '_' . $this->_aObject['module'] . '_' . str_replace('-', '_', $sPageUri) . '_' . time();
-            $sUrl = $this->getPageUrl($sPageUri, false, false);
-            $iPageId = $this->_oQuery->insertPage ($sPageUri, $sUrl, $sLangKey);
+            $iPageId = $this->addPage ($sPageUri, $sLangKey);
             if (!$iPageId)
                 return array('code' => 10, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_wiki_error_occured', 10));
 
@@ -730,7 +735,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         return ['s' => $s];
     }
 
-    protected function updateBlockIndexingData($iBlockId)
+    public function updateBlockIndexingData($iBlockId)
     {
         if (!($aLangs = $this->_oQuery->getBlockLangs ($iBlockId)))
             return false;
@@ -862,8 +867,8 @@ class BxDolParsedown extends Parsedown
     {
         $a = parent::inlineLink($Excerpt);
 
-        if (@isset($a['element']['attributes']['href']) && 0 === strncmp($a['element']['attributes']['href'], 'bx-internal-page://', 19)) {
-            $sUri = substr($a['element']['attributes']['href'], 19);
+        if ($a && @isset($a['element']['attributes']['href']) && 0 === strncmp($a['element']['attributes']['href'], 'bx-internal-page://', 19)) {
+            $sUri = strtolower(substr($a['element']['attributes']['href'], 19));
             if (isset($this->_aPages[$sUri])) {
                 $sHref = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_aPages[$sUri]['url']);
                 $a['element']['attributes']['href'] = $sHref;

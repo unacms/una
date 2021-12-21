@@ -2726,6 +2726,11 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[Share in Facebook]]></string>
     <string name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[Share in Twitter]]></string>
     <string name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[Share in Pinterest]]></string>
+    <string name="_sys_menu_item_title_social_sharing_linked_in"><![CDATA[Share in LinkedIn]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_linked_in"><![CDATA[Share in LinkedIn]]></string>
+    <string name="_sys_menu_item_title_social_sharing_whatsapp"><![CDATA[Share in Whatsapp]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_whatsapp"><![CDATA[Share in Whatsapp]]></string>
+    
     <string name="_sys_menu_item_title_sm_in_reply_to"><![CDATA[In reply to]]></string>
     <string name="_sys_menu_item_title_sm_author"><![CDATA[Author]]></string>
     <string name="_sys_menu_item_title_sm_date"><![CDATA[Date]]></string>
@@ -2831,7 +2836,9 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_menu_item_title_va_notes"><![CDATA[Notes]]></string>
         <string name="_sys_menu_item_title_va_audit"><![CDATA[Audit]]></string>
         <string name="_sys_menu_item_title_va_more_auto"><![CDATA[More]]></string>
-	<string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Share in Facebook]]></string>
+    <string name="_sys_menu_item_title_social_sharing"><![CDATA[Share]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing"><![CDATA[Share]]></string>
+	  <string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Share in Facebook]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Share in Twitter]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Share in Pinterest]]></string>
     <string name="_sys_menu_item_title_system_sm_in_reply_to"><![CDATA[In reply to]]></string>
@@ -3429,6 +3436,9 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_txt_user_n"><![CDATA[User #{0}]]></string>
         <string name="_sys_txt_reports_title"><![CDATA[Reports]]></string>
         <string name="_sys_txt_reports_grid_view_notes"><![CDATA[View notes]]></string>
+        <string name="_sys_txt_share_popup_header"><![CDATA[Share]]></string>
+        <string name="_sys_txt_share_popup_url"><![CDATA[URL]]></string>
+        <string name="_sys_txt_share_popup_embeded_code"><![CDATA[Embeded code]]></string>
         <string name="_sys_unconfirmed"><![CDATA[Unconfirmed]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Important info:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[Database and files versions are different, probably previous patch wasn't applied correctly.]]></string>

@@ -142,8 +142,6 @@ class BxBaseEditorQuill extends BxDolEditor
                     	$sInitEditor
                     }, 10); // wait while html is rendered in case of dynamic adding html with quill
                 } 
-                if (typeof bQuillEditorInited === 'undefined') 
-                    bQuillEditorInited = true;
             </script>";
 
         } else {

@@ -484,6 +484,48 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
         return base_convert(substr(md5($s), -8), 16, 36);
     }
+    
+    /**
+     * Static method to Get embed code
+     * @return string.
+     */
+    static public function getEmbedData ($sUrl)
+    {
+        $sUrl = urldecode($sUrl);
+        $aUrl = parse_url($sUrl);
+        $aUri = explode('/', $aUrl['path']);
+        $aParams = [];
+        
+        if (isset($aUrl['query']))
+            parse_str($aUrl['query'], $aParams);
+        
+        if (!$aUri || empty($aUri[2]))
+            return [];
+        
+        $sAuthorName = $sAuthorUrl = $sThumb = '';
+        if (isset($aParams['id'])){
+            $sContentInfoObject = BxDolPageQuery::getContentInfoObjectNameByURI($aUri[2]);
+            $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfoObject);
+            
+            $sTitle = $oContentInfo->getContentTitle($aParams['id']);
+            $iAuthor = $oContentInfo->getContentAuthor($aParams['id']);
+            $sAuthorName = BxDolProfile::getInstance()->getDisplayName($iAuthor);
+            $sAuthorUrl = BxDolProfile::getInstance()->getUrl($iAuthor);
+            $sThumb = $oContentInfo->getContentThumb($aParams['id']);
+            $sHtml = $oContentInfo->getContentEmbed($aParams['id']);
+            
+        }
+        else{
+            $oPage = BxDolPage::getObjectInstanceByURI($aUri[2], false, true);
+            $aPage = $oPage->getObject();
+            $sTitle = _t($aPage['title']);
+            $sHtml = BxDolTemplate::getInstance()->parseHtmlByName('embed.html', [
+                'title' => $sTitle,
+                'url' => BX_DOL_URL_ROOT . 'page.php?a=embed&o=' . $oPage->getName()
+            ]);
+        }
+        return ['url' => $sUrl, 'title' => $sTitle, 'author_name' => $sAuthorName, 'author_url' => $sAuthorUrl, 'thumbnail_url' => $sThumb, 'html' => $sHtml];
+    }
 
     /**
      * Display complete page

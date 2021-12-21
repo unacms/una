@@ -60,6 +60,16 @@ class BxBasePage extends BxDolPage
         ));
     }
     
+    public function performActionGetShare ()
+    {
+        $aEmbedData = BxDolPage::getEmbedData(bx_get('url'));
+        
+        echo $this->_oTemplate->parseHtmlByName('designbox_share_popup.html', array(
+            'url' => $aEmbedData['url'],
+            'code' => htmlspecialchars($aEmbedData['html']),
+        ));
+    }
+    
     public function performActionEmbed ()
     {
         $aCover = $this->getPageCoverImage();
