@@ -68,7 +68,7 @@ class BxBaseServiceLogin extends BxDol
             $sTitle = _t($aItems['Title']);
 
             $aTmplButtons[] = array( 
-            	'class' => ($bCompact ? 'sys-auth-compact bx-def-margin-sec-left-auto ' : '') . $aItems['Name'],
+            	'class' => ($bCompact ? 'sys-auth-compact ' : '') . $aItems['Name'],
                 'href' => !empty($aItems['Link']) ? BX_DOL_URL_ROOT . $aItems['Link'] : 'javascript:void(0)',
                 'title_alt' => bx_html_attribute($sTitle),
                 'bx_if:show_onclick' => array(

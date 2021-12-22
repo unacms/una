@@ -44,16 +44,18 @@ module.exports = {
         'bx-def-padding-thd', 'bx-def-padding-thd-left', 'bx-def-padding-thd-left-auto', 'bx-def-padding-thd-right', 'bx-def-padding-thd-top', 'bx-def-padding-thd-top-auto', 'bx-def-padding-thd-bottom', 'bx-def-padding-thd-leftright', 'bx-def-padding-thd-topbottom', 'bx-def-padding-thd-lefttopright', 'bx-def-padding-thd-rightbottomleft', 
         'bx-def-font-small', 'bx-def-font-middle', 'bx-def-font-large', 'bx-def-font-h3', 'bx-def-font-h2', 'bx-def-font-h1', 
         'bx-def-a-colored',
-
-        'bx-form-required', 'bx-form-warn', 'bx-switcher-cont', 
-        'bx-popup-full-screen', 'bx-popup-fog',
-        'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
         'bx-def-unit-alert', 'bx-def-unit-alert-small', 'bx-def-unit-alert-middle',
         'bx-def-label',
         'bx-def-icon-size', 'bx-def-thumb-size', 'bx-def-ava-size', 'bx-def-ava-big-size',
         'bx-def-color-bg-box-active', 
 
+        'bx-form-required', 'bx-form-warn', 'bx-switcher-cont', 
+        'bx-popup-full-screen', 'bx-popup-fog',
+        'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
+
         'bx-base-general-unit-meta-username',
+
+        'sys-auth-block', 'sys-auth-compact-container',
     ]
   },
   darkMode: 'media', // false or 'media' or 'class'
