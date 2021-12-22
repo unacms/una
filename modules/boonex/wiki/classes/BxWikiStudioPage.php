@@ -120,6 +120,7 @@ class BxWikiStudioPage extends BxTemplStudioModule
             ];
             $sErrorMsg = '';
             $b = $this->import($aParams, $sErrorMsg);
+            self::removeTmpFolder();
             if ($b)
                 return _t('_bx_wiki_import_success');
             else
@@ -141,7 +142,7 @@ class BxWikiStudioPage extends BxTemplStudioModule
 
         // empty directory to clone repository to
         $sDir = BX_DIRECTORY_PATH_TMP . 'bx_wiki_import';
-        if (file_exists($sDir) && !bx_rrmdir($sDir)) {
+        if (!self::removeTmpFolder()) {
             $sErrorMsg = "$sDir can't be removed";
             return false;
         }
@@ -151,7 +152,7 @@ class BxWikiStudioPage extends BxTemplStudioModule
         $aOutput = null;
         $iRetVal = null;
         if (false === exec(escapeshellcmd($sCmd), $aOutput, $iRetVal) || (null !== $iRetVal && $iRetVal)) {
-            $sErrorMsg = "Command($sCmd) execution failed";
+            $sErrorMsg = "Command($sCmd) execution failed: <pre>" . implode("\n", $aOutput) . "</pre>";
             return false;
         }
 
@@ -350,6 +351,11 @@ class BxWikiStudioPage extends BxTemplStudioModule
         return $sContents;
     }
 
+    static public function removeTmpFolder() 
+    {
+        $sDir = BX_DIRECTORY_PATH_TMP . 'bx_wiki_import';
+        return !file_exists($sDir) || bx_rrmdir($sDir);
+    }
 }
 
 /** @} */
