@@ -64,10 +64,12 @@ class BxBasePage extends BxDolPage
     {
         $aEmbedData = BxDolPage::getEmbedData(bx_get('url'));
         
-        echo $this->_oTemplate->parseHtmlByName('designbox_share_popup.html', array(
-            'url' => $aEmbedData['url'],
-            'code' => htmlspecialchars($aEmbedData['html']),
-        ));
+        echo PopupBox('sys_share_popup', _t('_sys_txt_share_popup_header'), 
+            $this->_oTemplate->parseHtmlByName('designbox_share_popup.html', [
+                'url' => $aEmbedData['url'],
+                'code' => htmlspecialchars($aEmbedData['html']),
+            ]
+        ), true);
     }
     
     public function performActionEmbed ()
