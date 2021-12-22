@@ -1177,12 +1177,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }      
 
-        if(empty($aTmplVarsModules))
-            $aTmplVarsModules = MsgBox(_t('_Empty'));
-
         return $this->parseHtmlByName('repost_to_list.html', array(
             'style_prefix' => $sStylePrefix,
-            'bx_repeat:modules' => array_values($aTmplVarsModules)
+            'bx_repeat:modules' => !empty($aTmplVarsModules)? array_values($aTmplVarsModules) : MsgBox(_t('_Empty'))
         ));
     }
 
