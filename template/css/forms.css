@@ -663,11 +663,7 @@
     margin-right: 8px;
     margin-right: 0.5rem;
 }
-.bx-form-value .bx-form-input-autotoken-labels b {
-    padding-left: 1em;
-}
-.bx-form-value .bx-form-input-autotoken-labels-show-more,
-.bx-form-value .bx-form-input-autotoken-labels-sel b {
+.bx-form-value .bx-form-input-labels-sel b {
     display:inline-block;
     line-height:1.5rem;
     font-size:85%;    
@@ -675,14 +671,7 @@
     margin-top:0.625rem;
     font-style:normal;
 }
-.bx-form-value .bx-form-input-autotoken-labels-show-more {
-    margin-left:0.1em;
-    margin-right:0.1em;
-}
-.bx-form-value .bx-form-input-autotoken-labels-sel b:after {
-    display:none;
-}
-.bx-form-input-autotoken-labels-more {
+.bx-form-value .bx-form-input-labels-sel b:after {
     display:none;
 }
 .select2-container {

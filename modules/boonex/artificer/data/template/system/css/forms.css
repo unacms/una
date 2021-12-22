@@ -231,14 +231,14 @@ import url(../../../../../../../template/css/forms.css);
 
 
 /*--- Form field: Auto-siggestion ---*/
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
     float:left;
     padding: 0.25rem 0;
     height:auto;
     box-shadow: none;
     min-height: 2.8rem;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b {
     display: block;
     margin: 0.25rem;
     padding-right: 1.5rem; 
@@ -249,13 +249,13 @@ import url(../../../../../../../template/css/forms.css);
     font-weight: normal;    
     cursor: pointer;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:first-child {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:first-child {
     margin-left: 0.75rem;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:hover {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:hover {
     opacity: 0.7;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) b:after {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:after {
     font-family: 'sys-user', 'sys-user-fal';
     content: "\f00d";    
     position:absolute;    
@@ -264,13 +264,13 @@ import url(../../../../../../../template/css/forms.css);
     font-size:0.7em;
     font-weight:bold;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels).bx-form-input-disabled b {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels).bx-form-input-disabled b {
     cursor: default;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels).bx-form-input-disabled b:after{
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels).bx-form-input-disabled b:after{
     display: none;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) input {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) input {
     border:0;
     margin:0;
     padding:0 0 0 5px;
@@ -278,31 +278,18 @@ import url(../../../../../../../template/css/forms.css);
     float:left;
     box-shadow: none;
 }
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-autotoken-labels) .bx-base-pofile-unit-wo-info {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-base-pofile-unit-wo-info {
     display: inline-block;
     vertical-align: middle;
 
     margin-right: 8px;
     margin-right: 0.5rem;
 }
-.bx-form-value .bx-form-input-autotoken-labels > a {
+.bx-form-value .bx-form-input-labels > a {
     margin-left: 0.5rem;
 }
-.bx-form-value .bx-form-input-autotoken-labels > a:first-child {
+.bx-form-value .bx-form-input-labels > a:first-child {
     margin-left: 0;
-}
-.bx-form-value .bx-form-input-autotoken-labels-show-more {
-    display:inline-block;
-    line-height:1.5rem;
-    font-size:85%;    
-    padding-right:1em;
-    margin-top:0.625rem;
-    margin-left:0.1em;
-    margin-right:0.1em;
-    font-style:normal;
-}
-.bx-form-input-autotoken-labels-more {
-    display:none;
 }
 .select2-container {
     width:100% !important;

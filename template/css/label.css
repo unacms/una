@@ -20,12 +20,19 @@
     height: 1.625rem;
     margin: 0.125rem;
 
-    line-height: 1.625rem;    
+    line-height: 1.625rem;
 }
 .sys-labels .bx-form-input-text.bx-form-input-autotoken b {
     padding-left: 0.5rem;
+    
+    border-radius: 1.25rem;
 
+    font-weight: normal;
     white-space: nowrap;
+    cursor: pointer;
+}
+.sys-labels .bx-form-input-text.bx-form-input-autotoken b:first-child {
+    margin-left: 0.75rem;
 }
 .sys-labels .bx-form-input-text.bx-form-input-autotoken b:after {
     top: -1px;

@@ -44,6 +44,13 @@
         </bx_repeat:links>
     </div>
 </bx_if:show_links>
+<bx_if:show_attachments_files>
+    <div class="__style_prefix__-item-attachments __style_prefix__-iaf-__display__ __style_prefix__-iaf-i__count__ bx-def-margin-top bx-def-margin-leftright">
+        <bx_repeat:items>
+            <div class="__style_prefix__-item-attachment__class__">__item__</div>
+        </bx_repeat:items>
+    </div>
+</bx_if:show_attachments_files>
 <bx_if:show_raw>
     <div class="__style_prefix__-item-raw bx-def-margin-top bx-def-margin-leftright">__item_content_raw__</div>
 </bx_if:show_raw>

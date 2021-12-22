@@ -560,7 +560,15 @@
     .bx-artificer .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-base-pofile-unit {
         @apply p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700;
     }
-    
+
+    /* Common elements: Auth */
+    .sys-auth-block {
+        @apply grid-cols-2;
+    }
+    .sys-auth-block.sys-auth-compact-container {
+        @apply grid-cols-4;
+    }
+
     /* Modules: Timeline */
     .bx-artificer .bx-menu-custom-hor.bx-menu-object-bx_timeline_menu_view li.bx-menu-tab-active a {
         @apply bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 text-gray-900 dark:text-white shadow;

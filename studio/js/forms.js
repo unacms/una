@@ -37,7 +37,7 @@ function fviuDelete(sName, oLink) {
  * Functions for "Form View Translatable" fields. 
  */
 function fvtTogglePopup(sName, oLink) {
-	var oPopup = $(oLink).parents('.bx-form-input-translator:first').find('#bx-form-field-translator-popup-' + sName);
+    var oPopup = $(oLink).parents('.bx-form-input-translator:first').find('#bx-form-field-translator-popup-' + sName);
     if(oPopup.filter(':visible').length > 0) {
         oPopup.dolPopupHide();
         return;
@@ -65,7 +65,6 @@ function fvtSelectLanguage(sName, sLangName, oLink) {
     oTranslator.find('#bx-form-field-translator-popup-' + sName).dolPopupHide();
 
     //--- Update inputs
-    $(oLink).parents('#bx-form-element-' + sName + ':first').find('.bx-form-input-text:visible').hide().siblings('#bx-form-input-' + sName + '-' + sLangName + ':hidden').show();
     $(oLink).parents('#bx-form-element-' + sName + ':first').find('.bx-form-input-translation:visible').hide().siblings('.bx-form-input-translation-' + sName + '-' + sLangName + ':hidden').show();
 };
 
