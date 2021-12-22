@@ -82,17 +82,18 @@ class BxInvGridRequests extends BxTemplGrid
         $oForm = $this->_oModule->getFormObjectInvite();
         if (!$oForm)
             return '';
+
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r'));
         $oForm->initChecker();
-        
+
         if($oForm->isSubmittedAndValid()) {
             $sResult = $this->_oModule->processFormObjectInvite($oForm);
             $aRes = array('msg' => $sResult);
             echoJson($aRes);
         }
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('_bx_invites_form_invite', _t('_bx_invites_form_invite'), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
+            $sContent = BxTemplFunctions::getInstance()->popupBox('_bx_invites_form_invite', _t('_bx_invites_form_invite'), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
                 'form_id' => $oForm->id,
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
