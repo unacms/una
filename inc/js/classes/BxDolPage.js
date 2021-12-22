@@ -51,11 +51,13 @@ BxDolPage.prototype.share = function(oLink, sUrl)
     var oData = this._getDefaultParams();
     oData['a'] = 'get_share';
     oData['url'] = sUrl;
-    
+    $(".bx-popup-applied:visible").dolPopupHide();
     $(window).dolPopupAjax({
         url: bx_append_url_params(this._sActionsUri, oData),
-        closeOnOuterClick: true,
+        displayMode: 'box',
+        closeOnOuterClick: false,
         removeOnClose: true,
+        id: {value: 'sys_share_popup', force: true}
     });
 }
 

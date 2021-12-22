@@ -488,7 +488,6 @@ class BxMassMailerModule extends BxBaseModGeneralModule
           
     public function sendAll($iCampaignId)
     {
-        $aEmails = array();
         $aTmp = $this->getDataForCampaign($iCampaignId);
         $aTemplate = $aTmp[0];
         $aCustomHeaders = $aTmp[1];
@@ -496,14 +495,15 @@ class BxMassMailerModule extends BxBaseModGeneralModule
               
         if (!$aTemplate)
             return false;
+        
         $this->_oDb->deleteCampaignData($iCampaignId);
         $aAccounts = $this->getEmailsBySegment($aCampaign['segments'], $aCampaign['is_one_per_account']);
         foreach ($aAccounts as $aAccountInfo){
-            array_push($aEmails, $aAccountInfo['email']);
             $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['profile_id'], $aTemplate, true);
+            $this->_oDb->addEmailToSentListForCampaign($iCampaignId, $aAccountInfo['email']);
         }
               
-        $this->_oDb->sendCampaign($iCampaignId, implode(',', $aEmails));
+        $this->_oDb->sendCampaign($iCampaignId);
         return true;
     }
     

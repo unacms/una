@@ -112,14 +112,42 @@ class BxMassMailerTemplate extends BxBaseModGeneralTemplate
         $aSegments = $this->_oModule->getSegments();
         $aTmp = array();
         foreach($aSegments as $sKey => $aSegment){
-            $aTmp[] = array('value' => $sKey, 'title' => $aSegment);
+            $aTmp[$sKey] = $aSegment;
         }
         
+        $oForm = new BxTemplFormView(array());
+        
+        $aInputReport = array(
+            'type' => 'select',
+            'name' => 'report',
+            'attrs' => ['class' => 'bx_massmailer_report_selector'],
+            'value' => 'content_total',
+            'values' => [
+                'content_total' => _t('_bx_massmailer_txt_title_content_total'), 
+                'content_speed' => _t('_bx_massmailer_txt_title_content_speed')
+            ]
+        );
+        
+        $aInputSegments = array(
+            'type' => 'select',
+            'name' => 'segments',
+            'attrs' => ['class' => 'bx_massmailer_report_selector'],
+            'value' => 'content_total',
+            'values' => $aTmp
+        );
+        
+        $aInputInterval = array(
+            'type' => 'text',
+            'name' => 'interval',
+            'attrs' => ['class' => 'bx_massmailer_date_picker'],
+            'value' => $sDate
+        );
+        
+
         return $this->getJsCode('chart', array('sChartName' => 'SUBSCRIBERS_INFO')) . $this->parseHtmlByName('subscribers_info.html', array(
-            'interval' => $sDate,
-            'bx_repeat:items' => $aTmp,
-            'title_content_total' => _t('_bx_massmailer_txt_title_content_total'),
-            'title_content_speed' => _t('_bx_massmailer_txt_title_content_speed')
+            'report' => $oForm->genInput($aInputReport),
+            'segments' => $oForm->genInput($aInputSegments),
+            'interval' => $oForm->genInput($aInputInterval),
         ));
     }
     

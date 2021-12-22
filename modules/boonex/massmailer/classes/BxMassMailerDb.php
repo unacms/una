@@ -28,15 +28,24 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         return $this->lastId();
     }
         
-    public function sendCampaign($iCampaignId, $sEmailList)
+    public function sendCampaign($iCampaignId)
     {
         $CNF = &$this->_oConfig->CNF;
         $aBindings = array(
             'campaign_id' => $iCampaignId,
-            'email_list' => $sEmailList,
             'date_sent' => time()
         );
-        $this->query("UPDATE `" . $CNF['TABLE_CAMPAIGNS'] . "` SET `" . $CNF['FIELD_EMAIL_LIST'] . "` = :email_list, `" . $CNF['FIELD_DATE_SENT'] . "` = :date_sent WHERE `" . $CNF['FIELD_ID'] . "` = :campaign_id", $aBindings);
+        $this->query("UPDATE `" . $CNF['TABLE_CAMPAIGNS'] . "` SET `" . $CNF['FIELD_DATE_SENT'] . "` = :date_sent WHERE `" . $CNF['FIELD_ID'] . "` = :campaign_id", $aBindings);
+    }
+    
+    public function addEmailToSentListForCampaign($iCampaignId, $sEmailList)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aBindings = array(
+            'campaign_id' => $iCampaignId,
+            'email_list' => $sEmailList
+        );
+        $this->query("UPDATE `" . $CNF['TABLE_CAMPAIGNS'] . "` SET `" . $CNF['FIELD_EMAIL_LIST'] . "` = CONCAT(IFNULL(`" . $CNF['FIELD_EMAIL_LIST'] . "`, ''), ',', :email_list) WHERE `" . $CNF['FIELD_ID'] . "` = :campaign_id", $aBindings);
     }
     
     public function getCampaignInfoById ($iCampaignId)

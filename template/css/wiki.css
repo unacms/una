@@ -84,6 +84,10 @@
     top: -1.5rem;
     right: 0;
 }
+html .bx-page-wiki-container pre {
+    background-color:#fff;
+    border:1px solid #888;
+}
 html .stackedit-container {
     z-index:99999;
 }
