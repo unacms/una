@@ -2214,6 +2214,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(!empty($aFilesAttach)) {
                 $aTmplVarsAttachmentsFiles = array(
                     'style_prefix' => $sStylePrefix,
+                    'display' => BX_TIMELINE_ML_GALLERY,
+                    'count' => count($aFilesAttach['items']),
                     'bx_repeat:items' => $aFilesAttach['items']
                 );
             }
@@ -2283,7 +2285,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsVideos),
                 'content' => $aTmplVarsVideos
             ),
-			 'bx_if:show_files' => array(
+            'bx_if:show_files' => array(
                 'condition' => !empty($aTmplVarsFiles),
                 'content' => $aTmplVarsFiles
             ),
@@ -2295,6 +2297,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'count' => count($aTmplVarsAttachments),
                     'bx_repeat:items' => $aTmplVarsAttachments
                 )
+            ),
+            'bx_if:show_attachments_files' => array(
+                'condition' => !empty($aTmplVarsAttachmentsFiles),
+                'content' => $aTmplVarsAttachmentsFiles
             )
         );
     }
