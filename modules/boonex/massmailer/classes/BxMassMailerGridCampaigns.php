@@ -78,7 +78,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
             echoJson($aRes);
         }
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_massmailer_campaign_send_all', _t('_bx_massmailer_campaign_form_send_all_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
+            $sContent = BxTemplFunctions::getInstance()->popupBox('bx_massmailer_campaign_send_all', _t('_bx_massmailer_campaign_form_send_all_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
                 'form_id' => $oForm->id,
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,

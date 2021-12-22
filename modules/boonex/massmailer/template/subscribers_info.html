@@ -1,15 +1,8 @@
 <div id="bx_massmailer_chart_container">
     <div class="bx_massmailer_filters">
-        <select class="bx-def-font-inputs bx-form-input-select bx_massmailer_segments_selector">
-            <bx_repeat:items>
-                <option value="__value__">__title__</option>
-            </bx_repeat:items>
-        </select>
-        <select class="bx-def-font-inputs bx-form-input-select bx_massmailer_report_selector">
-            <option value="content_total">__title_content_total__</option>
-            <option value="content_speed">__title_content_speed__</option>
-        </select>
-        <input type="text" class="bx-def-font-inputs bx-form-input-select bx_massmailer_date_picker" value="__interval__" />
+        __segments__
+        __report__
+        __interval__
     </div>
     <div class="bx_massmailer_chart_cnt bx-def-margin-top">
         <canvas class="bx_massmailer_chart"></canvas>
