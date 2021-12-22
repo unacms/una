@@ -4253,6 +4253,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `visibility_custom` text NOT NULL,
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `primary` tinyint(4) NOT NULL DEFAULT '0',
+  `collapsed` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `editable` tinyint(4) NOT NULL DEFAULT '1',

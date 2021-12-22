@@ -267,8 +267,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: profile followings
 SET @iFollowingsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_profile_followings' LIMIT 1);
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_profile_followings', 'bx_channels', 'channels', '_bx_channels_menu_item_title_system_followings', '_bx_channels_menu_item_title_followings', 'javascript:void(0)', '', '_self', 'hashtag col-red2', '', '', 2147483647, 1, 0, @iFollowingsMenuOrder + 1);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `collapsed`, `active`, `copyable`, `order`) VALUES 
+('sys_profile_followings', 'bx_channels', 'channels', '_bx_channels_menu_item_title_system_followings', '_bx_channels_menu_item_title_followings', 'javascript:void(0)', '', '_self', 'hashtag col-red2', '', '', 2147483647, 1, 1, 0, @iFollowingsMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 

@@ -1166,6 +1166,7 @@
 	<string name="_adm_nav_err_sets_edit"><![CDATA[Невозможно обновить набор]]></string>
 	<string name="_adm_nav_err_sets_title"><![CDATA[Необходимо указать заголовок из как минимум 3 символов.]]></string>
 	<string name="_adm_nav_txt_all_modules"><![CDATA[Все модули]]></string>
+        <string name="_adm_nav_txt_items_collapsed"><![CDATA[Свёрнуто]]></string>
 	<string name="_adm_nav_txt_items_create_popup"><![CDATA[Добавить новый элемент]]></string>
 	<string name="_adm_nav_txt_items_edit_popup"><![CDATA[Редактировать {0} элемент]]></string>
 	<string name="_adm_nav_txt_items_gl_icon"><![CDATA[Иконка]]></string>

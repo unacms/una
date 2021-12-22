@@ -766,6 +766,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Int',
                     )
                 ),
+                'collapsed' => array(
+                    'type' => 'switcher',
+                    'name' => 'collapsed',
+                    'caption' => _t('_adm_nav_txt_items_collapsed'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aItem['collapsed']) && (int)$aItem['collapsed'] == 1,
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
                 'controls' => array(
                     'name' => 'controls',
                     'type' => 'input_set',

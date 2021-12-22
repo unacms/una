@@ -236,6 +236,9 @@ class BxBaseMenu extends BxDolMenu
         $aTmplVarsSubitems = array('subitems' => '');
         $bTmplVarsSubitems = $this->_bMultilevel && !empty($a['subitems']);
         if($bTmplVarsSubitems) {
+            if(isset($a['collapsed']) && $a['collapsed'])
+                $a['class_add'] .= ' bx-menu-item-collapsed';
+
             $aSubitems = array();
             foreach($a['subitems'] as $aSubitem) {
                 $aSubitem = $this->_getMenuItem($aSubitem);

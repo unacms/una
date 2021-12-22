@@ -283,6 +283,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 `tmi`.`visible_for_levels` AS `visible_for_levels`,
                 `tmi`.`visibility_custom` AS `visibility_custom`,
                 `tmi`.`primary` AS `primary`,
+                `tmi`.`collapsed` AS `collapsed`,
                 `tmi`.`active` AS `active`,
                 `tmi`.`copyable` AS `copyable`,
                 `tmi`.`editable` AS `editable`,

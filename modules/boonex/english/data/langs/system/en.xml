@@ -1182,6 +1182,7 @@
 	<string name="_adm_nav_err_sets_edit"><![CDATA[Cannot update set]]></string>
 	<string name="_adm_nav_err_sets_title"><![CDATA[A title with at least 3 characters is required.]]></string>
 	<string name="_adm_nav_txt_all_modules"><![CDATA[All Modules]]></string>
+        <string name="_adm_nav_txt_items_collapsed"><![CDATA[Collapsed]]></string>
 	<string name="_adm_nav_txt_items_create_popup"><![CDATA[Add New Item]]></string>
 	<string name="_adm_nav_txt_items_edit_popup"><![CDATA[Edit {0} Item]]></string>
 	<string name="_adm_nav_txt_items_gl_icon"><![CDATA[Icon]]></string>
