@@ -87,6 +87,7 @@
 html .bx-page-wiki-container pre {
     background-color:#fff;
     border:1px solid #888;
+    color:#333;
 }
 html .stackedit-container {
     z-index:99999;
