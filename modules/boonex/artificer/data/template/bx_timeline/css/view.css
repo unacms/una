@@ -28,6 +28,11 @@ div.bx-tl-view-item div.bx-tl-items {
     display: none;
 }
 
+/*--- Item Content Style ---*/
+div.bx-tl-item-content form {
+    padding: 1rem 1rem 0 1rem;
+}
+
 /*--- Item Activity (Actions and Manage are different menus) ---*/
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     flex-wrap: wrap;
@@ -165,6 +170,13 @@ div.bx-tl-item-attachment .bx-tl-iv-duration {
     right: 0.25rem;
     bottom: 0.25rem;
     background-color: rgba(255, 255, 255, 0.8);
+}
+
+/*+++ Files +++*/
+div.bx-tl-view-timeline div.bx-tl-item-attachments.bx-tl-iaf-gallery div.bx-tl-item-attachment,
+div.bx-tl-view-item div.bx-tl-item-attachments.bx-tl-iaf-gallery div.bx-tl-item-attachment,
+div.bx-tl-view-search div.bx-tl-item-attachments.bx-tl-iaf-gallery div.bx-tl-item-attachment {
+    width: auto;
 }
 
 /*+++ Showcase Layout +++*/

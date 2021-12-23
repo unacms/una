@@ -2662,23 +2662,28 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sFileSrc))
                 continue;
 
-            $sImage = $this->parseImage($sFileSrc, array(
-                'class' => $sStylePrefix . '-item-file'
-            ));
-
-            $aAttrs = array();
+            $aAttrs = ['target' => '_blank'];
             if(isset($aFile['onclick']))
                 $aAttrs['onclick'] = $aFile['onclick'];
             else if(!$bViewItem && !empty($aFile['src_orig']))
                 $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aFile['src_orig']))) . ')'; 
+            if(isset($aFile['title']))
+                $aAttrs['title'] = $aFile['title'];
 
-            $sImage = $this->parseLinkByName('file_link.html', isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)', $sImage, $aAttrs);
+            $sAttrs = '';
+            foreach($aAttrs as $sKey => $sValue)
+                $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
-            $aTmplVarsFiles[] = array(
+            $aTmplVarsFiles[] = [
                 'style_prefix' => $sStylePrefix,
                 'class' => '',
-                'item' => $sImage
-            );
+                'item' => $this->parseHtmlByName('file_link.html', [
+                    'href' => isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)',
+                    'attrs' => $sAttrs,
+                    'icon_src' => $sFileSrc,
+                    'icon_class' => $sStylePrefix . '-item-file'
+                ])
+            ];
         }
 
         return array(
@@ -2753,7 +2758,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['content']['links'] = $oModule->getEventLinks($aEvent['id']);
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
                 $aResult['content']['videos_attach'] = $oModule->getEventVideos($aEvent['id']);
-				$aResult['content']['files_attach'] = $oModule->getEventFiles($aEvent['id']);
+                $aResult['content']['files_attach'] = $oModule->getEventFiles($aEvent['id']);
                 break;
 
             case BX_TIMELINE_PARSE_TYPE_REPOST:

@@ -232,10 +232,12 @@ BxTimelineMain.prototype.initFlickity = function(oView) {
         $this.initFlickityAttachments($(this));
     });
 
-    //--- init Flickity for attachments (files in attachments seation)
-    oView.find('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-iaf-gallery').each(function() {
-        $this.initFlickityAttachments($(this));
-    });
+    //--- init Flickity for attachments (files in attachments seation) - DISABLED for now
+    if(this._bScrollForFiles) {
+        oView.find('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-iaf-gallery').each(function() {
+            $this.initFlickityAttachments($(this));
+        });
+    }
 };
 
 BxTimelineMain.prototype.initFlickityByItem = function(oItem) {

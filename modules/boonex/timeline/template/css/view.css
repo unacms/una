@@ -779,6 +779,15 @@ div.bx-tl-item-attachment .bx-tl-iv-duration {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
+/*+++ Files +++*/
+div.bx-tl-view-timeline div.bx-tl-item-attachments.bx-tl-iaf-gallery div.bx-tl-item-attachment,
+div.bx-tl-view-item div.bx-tl-item-attachments.bx-tl-iaf-gallery div.bx-tl-item-attachment,
+div.bx-tl-view-search div.bx-tl-item-attachments.bx-tl-iaf-gallery div.bx-tl-item-attachment {
+    display: inline-block;
+    width: auto;
+}
+
+
 /*+++ Showcase Layout +++*/
 div.bx-tl-item-attachments.bx-tl-ia-showcase {
     display: -webkit-flex;

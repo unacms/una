@@ -4295,29 +4295,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aResult;
     }
 	
-	public function getEventFiles($iEventId)
+    public function getEventFiles($iEventId)
     {
         $CNF = &$this->_oConfig->CNF;
 
         $aFiles = $this->_oDb->getMedia($CNF['FIELD_FILE'], $iEventId);
 		
         if(empty($aFiles) || !is_array($aFiles))
-            return array();
+            return [];
 
         $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_files'));
 		
-        $aResult = array();
+        $aResult = [];
         foreach($aFiles as $iFileId) {
             $sFileUrl = $oStorage->getFileUrlById($iFileId);
             $aFileFile = $oStorage->getFile($iFileId);
 
-            $aResult[$iFileId] = array(
+            $aResult[$iFileId] = [
                 'id' => $iFileId,
                 'src' => $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFileFile['file_name'])),
                 'src_medium' => '',
                 'src_orig' => '',
-                'url' => $sFileUrl
-            );
+                'url' => $sFileUrl,
+                'title' => $aFileFile['file_name']
+            ];
         }
 
         return $aResult;
