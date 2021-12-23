@@ -15,6 +15,12 @@ class BxWikiInstaller extends BxDolStudioInstaller
     {
         parent::__construct($aConfig);
     }
+
+    public function uninstall($aParams, $bAutoDisable = false)
+    {
+        BxDolWiki::onModuleUninstall($this->_aConfig['name']);
+        return parent::uninstall($aParams, $bAutoDisable);
+    }
 }
 
 /** @} */

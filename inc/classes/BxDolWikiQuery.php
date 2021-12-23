@@ -21,6 +21,12 @@ class BxDolWikiQuery extends BxDolDb
         $this->_aObject = $aObject;
     }
 
+    static public function getWikiBlocks ($sModule)
+    {
+        $oDb = BxDolDb::getInstance();
+        return $oDb->getColumn("SELECT `id` FROM `sys_pages_blocks` WHERE `module` = :module", ['module' => $sModule]);
+    }
+
     static public function getWikiObjectByUri ($sUri)
     {
         return self::getWikiObjectByField ('uri', $sUri);

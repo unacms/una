@@ -486,7 +486,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         $sSql = "DELETE FROM `tpb` USING `sys_pages_blocks` AS `tpb` WHERE 1 " . $sWhereClause;
         $b = ((int)$this->query($sSql, $aBindings) > 0);
         if ($b && $aBlockIds)
-            BxDolWikiQuery::deleteAllRevisions($aBlockIds);
+            BxDolWiki::onBlockDelete($aBlockIds);
         return $b;
     }
 

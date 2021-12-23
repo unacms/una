@@ -13,6 +13,8 @@ DELETE FROM `wb`, `wc`
 USING `sys_pages_blocks` AS `wb`, `sys_pages_wiki_blocks` AS `wc`
 WHERE `wb`.`id` = `wc`.`block_id` AND `wb`.`module` = 'bx_wiki';
 
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_wiki';
+
 -- Studio page and widget
 
 DELETE FROM `tp`, `tw`, `twb`, `tpw` 
