@@ -127,6 +127,18 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         return $this->getOne($sQuery);
     }
     
+    public function getEntriesNumByParams ($aParams = [])
+    {
+        $sSql = "SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE 1";
+        
+        foreach($aParams as $aValue){
+            $sSql .= ' AND `' . $aValue['key'] ."` " . $aValue['operator'] . " '" . $aValue['value'] . "'";
+        }
+        
+        $sQuery = $this->prepare($sSql);
+        return $this->getOne($sQuery);
+    }
+    
     public function updateEntriesBy($aParamsSet, $aParamsWhere)
     {
         $CNF = &$this->_oConfig->CNF;

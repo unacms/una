@@ -61,8 +61,8 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 			'type' => $this->_oConfig->getName(),
 			'status' => BX_PROFILE_STATUS_ACTIVE
 		);
-
         $sSelect = "`c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` ";
+        
         $sJoin = "INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` =  `p`.`account_id`)";
         
         $sWhere = '';
@@ -109,6 +109,22 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
         }
 
         parent::_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);        
+    }
+    
+    public function getEntriesNumByParams ($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $sSql = "SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` 
+            INNER JOIN `sys_profiles` ON `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`=`sys_profiles`.`content_id` AND `sys_profiles`.`type`=?
+            WHERE 1";
+        
+        foreach($aParams as $aValue){
+            $sSql .= ' AND ' . (isset($aValue['table'])? '`' . $aValue['table'] .'`.' : '') . '`' . $aValue['key'] ."` " . $aValue['operator'] . " '" . $aValue['value'] . "'";
+        }
+        
+        $sQuery = $this->prepare($sSql, $this->_oConfig->getName());
+        return $this->getOne($sQuery);
     }
 }
 

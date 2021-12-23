@@ -30,6 +30,20 @@ class BxAccntDb extends BxBaseModGeneralDb
     {
     	return (int)$this->query("UPDATE `sys_accounts` SET " . $this->arrayToSQL($aSet) . " WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
     }
+    
+    public function getEntriesNumByParams ($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $sSql = "SELECT COUNT(*) FROM `sys_accounts` WHERE 1";
+        
+        foreach($aParams as $aValue){
+            $sSql .= ' AND ' . (isset($aValue['table'])? '`' . $aValue['table'] .'`.' : '') . '`' . $aValue['key'] ."` " . $aValue['operator'] . " '" . $aValue['value'] . "'";
+        }
+        
+        $sQuery = $this->prepare($sSql, $this->_oConfig->getName());
+        return $this->getOne($sQuery);
+    }
 }
 
 /** @} */

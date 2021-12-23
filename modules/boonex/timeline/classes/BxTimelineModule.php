@@ -2877,20 +2877,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetMenuAddonManageTools()
     {
-        $CNF = &$this->_oConfig->CNF;
-
-        bx_import('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $oSearch = new $sClass();
-        $oSearch->unsetPaginate();
-
-        $oSearch->fillFilters(array('status' => BX_TIMELINE_STATUS_HIDDEN));
-        $iNum1 = $oSearch->getNum();
-
-        $oSearch->fillFilters(array('status' => ''));
-        $oSearch->fillFiltersByObjects(array('reported' => array('value' => '0', 'field' => 'reports', 'operator' => '>')));
-        $iNum2 = $oSearch->getNum();
-
+        $iNum1 = $this->_oDb->getEntriesNumByParams([
+            [
+                'key' => 'status', 
+                'value' => BX_TIMELINE_STATUS_HIDDEN, 
+                'operator' => '='
+            ]
+        ]);
+        
+        $iNum2 = $this->_oDb->getEntriesNumByParams([
+            [
+                'key' => 'reports',
+                'value' => '0', 
+                'operator' => '>'
+            ]
+        ]);
+        
         return array(
             'counter1_value' => $iNum1, 
             'counter2_value' => $iNum2, 
