@@ -19,6 +19,23 @@
 
     overflow:hidden;
 }
+.bx-base-unit-showcase-wrapper .flickity-slider {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
+.bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
+    margin: 0;
+    padding: 0.25rem;
+}
+.bx-base-unit-showcase-wrapper.bx-sc-enabled .bx-base-text-unit-showcase {
+    height: 100%;
+}
 
 /*-- MEDIA: phone2 --*/
 .bx-media-phone2 .bx-layout-column-half .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery,

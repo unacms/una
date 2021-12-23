@@ -56,6 +56,8 @@ module.exports = {
         'bx-base-general-unit-meta-username',
 
         'sys-auth-block', 'sys-auth-compact-container',
+        
+        'flickity-button',
     ]
   },
   darkMode: 'media', // false or 'media' or 'class'

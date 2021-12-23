@@ -577,4 +577,9 @@
     .bx-artificer .bx-tl-view.bx-tl-view-timeline .bx-tl-cnt .bx-tl-items:before {
         @apply bg-gray-200 dark:bg-gray-700;
     }
+
+    /* 3d Party: Flickity */
+    .bx-artificer .flickity-button {
+        @apply text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 opacity-75 hover:opacity-100;
+    }
 }

@@ -690,12 +690,15 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             }
         }
 
+        $bBadgesSingle = isset($aParams['badges_single']) ? $aParams['badges_single'] : false;
+        $bBadgesCompact = isset($aParams['badges_compact']) ? $aParams['badges_compact'] : true;
+
         $aTmplVars = array (
             'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
-            'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']], false, true),
+            'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']], $bBadgesSingle, $bBadgesCompact),
             'title_attr' => bx_html_attribute($sTitle),
             'summary' => $sSummary,
             'text' => $sText,
@@ -765,6 +768,11 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             list($oTranscoder, $oTranscoderView) = parent::getAttachmentsImagesTranscoders($sStorage);
 
         return array($oTranscoder, $oTranscoderView);
+    }
+
+    protected function _getUnitName($aData, $sTemplateName = 'unit.html')
+    {
+        return trim(str_replace('.html', '', $sTemplateName));
     }
 
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')

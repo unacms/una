@@ -21,6 +21,15 @@ class BxPostsTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    protected function getUnit ($aData, $aParams = array())
+    {
+        $sUnitName = $this->_getUnitName($aData, isset($aParams['template_name']) ? $aParams['template_name'] : '');
+        if(in_array($sUnitName, ['unit_gallery', 'unit_showcase']))
+            $aParams['badges_compact'] = false;
+
+        return parent::getUnit($aData, $aParams);
+    }
+
     /**
      * Use Gallery image for both because currently there is no Unit types with small thumbnails.
      */

@@ -41,10 +41,12 @@ div.bx-badge {
 	text-overflow: ellipsis; 
     overflow: hidden;
 }
-div.bx-badges-list div.bx-badge{
+div.bx-badges-list div.bx-badge {
     margin:0 0.25rem;
 }
-
+div.bx-badges-list div.bx-badge:first-child {
+    margin-left: 0;
+}
 img.bx-badge-icon,
 svg.bx-badge-icon{
     width: 16px !important;
