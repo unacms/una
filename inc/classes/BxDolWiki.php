@@ -96,6 +96,27 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         return ($GLOBALS['bxDolClasses']['BxDolWiki!'.$sObject] = $o);
     }
 
+    static public function onModuleUninstall($sModule)
+    {
+        $aBlockIds = BxDolWikiQuery::getWikiBlocks ($sModule);
+        if ($aBlockIds && is_array($aBlockIds))
+            self::onBlockDelete($aBlockIds);
+    }
+
+    static public function onBlockDelete($mixedBlockIds)
+    {
+        BxDolWikiQuery::deleteAllRevisions($mixedBlockIds);
+
+        $aBlockIds = is_array($mixedBlockIds) ? $mixedBlockIds : [$mixedBlockIds];
+        $oStorage = BxDolStorage::getObjectInstance('sys_wiki_files');
+        if ($oStorage) {
+            foreach ($aBlockIds as $iBlockId) {
+                $aFiles = $oStorage->getGhosts(0, $iBlockId, false, true);
+                $oStorage->queueFiles($aFiles);
+            }
+        }
+    }
+
     /**
      * Get object name
      */
@@ -571,7 +592,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (!$oQueryPageBuilder->deleteBlocks(array('type' => 'by_id', 'value' => $iBlockId)))
             return array('code' => 3, 'actions' => array('ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_error_occured', 3));
 
-        $this->_oQuery->deleteAllRevisions($iBlockId);
+        self::onBlockDelete($iBlockId);
 
         return array('code' => 0, 'actions' => array('DeleteBlock', 'ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_block_deleted'));
     }

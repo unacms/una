@@ -1248,7 +1248,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         return in_array ($sExt, $this->_aObject[$sExtMode]);
     }
 
-    protected function queueFiles($aFiles)
+    public function queueFiles($aFiles)
     {
         if (!$aFiles)
             return 0;
