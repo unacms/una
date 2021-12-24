@@ -92,6 +92,7 @@ bx_import('BxDolPrivacy');
  *      - doublerange - select range values within the range using slider control.
  *      - datepicker - date selection control.
  *      - datetime - date/time selection control.
+ *      - dateselect - date selection control (alternative).
  *      - captcha - image captcha.
  *      - hidden - hidden input field.
  *      - file - file upload input.

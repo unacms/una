@@ -928,6 +928,7 @@
 	<string name="_adm_form_txt_field_type_checkbox_set"><![CDATA[набор флажков]]></string>
 	<string name="_adm_form_txt_field_type_custom"><![CDATA[индивидуальный]]></string>
 	<string name="_adm_form_txt_field_type_datepicker"><![CDATA[дата]]></string>
+    <string name="_adm_form_txt_field_type_dateselect"><![CDATA[выбор даты]]></string>
 	<string name="_adm_form_txt_field_type_datepicker_range"><![CDATA[диапазон даты]]></string>
 	<string name="_adm_form_txt_field_type_datepicker_range_age"><![CDATA[диапазон возраста]]></string>
 	<string name="_adm_form_txt_field_type_datetime"><![CDATA[дата и время]]></string>

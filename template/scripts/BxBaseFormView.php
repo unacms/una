@@ -691,6 +691,7 @@ BLAH;
                 $sValue = $this->genViewRowValueForSelect($aInput);
             break;
 
+            case 'dateselect':    
             case 'datepicker':
                 $sValue = null;
                 if (empty($aInput['value']) || !$aInput['value'] || '0000-00-00' == $aInput['value'])
@@ -1017,6 +1018,7 @@ BLAH;
             // standard inputs (and non-standard, interpreted as standard)
             case 'text':
             case 'datepicker':
+            case 'dateselect':
             case 'date_time':
             case 'datetime':
             case 'number':
@@ -1202,6 +1204,11 @@ BLAH;
             case 'doublerange':
             case 'datepicker':
                 $this->addCssJsUi ();
+                break;
+            case 'dateselect':
+                $this->_addJs(array(
+                    'combodate/combodate.js',
+                ), "'undefined' === typeof($.combodate)");
                 break;
             case 'text':
                 if (isset($aAttrs['class']) && false !== strpos($aAttrs['class'], 'bx-form-input-rgb'))

@@ -68,8 +68,9 @@ class BxDolStudioFormsField extends BxDol
             'select' => array('types' => array('select', 'radio_set'), 'reload_on_change' => 0),
             'radio_set' => array('types' => array('select', 'radio_set'), 'reload_on_change' => 0),
 
-            'datepicker' => array('types' => array('datepicker', 'datetime'), 'reload_on_change' => 1),
-            'datetime' => array('types' => array('datepicker', 'datetime'), 'reload_on_change' => 1),
+            'datepicker' => array('types' => array('datepicker', 'datetime', 'dateselect'), 'reload_on_change' => 1),
+            'datetime' => array('types' => array('datepicker', 'datetime', 'dateselect'), 'reload_on_change' => 1),
+            'dateselect' => array('types' => array('datepicker', 'datetime', 'dateselect'), 'reload_on_change' => 1),
 
             'checkbox' => array('types' => array('checkbox', 'switcher'), 'reload_on_change' => 0),
             'switcher' => array('types' => array('checkbox', 'switcher'), 'reload_on_change' => 0),
