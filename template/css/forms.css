@@ -260,6 +260,13 @@
     width:7.5rem;
 }
 
+.bx-form-input-wrapper-dateselect select{
+    min-width:70px;
+}
+.bx-form-input-wrapper-dateselect select.month{
+    min-width:120px;
+}
+
 .bx-form-input-datetime {
     width:10.2rem;
 }

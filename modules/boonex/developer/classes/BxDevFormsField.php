@@ -109,6 +109,16 @@ class BxDevFormsFieldDatepicker extends BxTemplStudioFormsFieldDatepicker
     }
 }
 
+class BxDevFormsFieldDateselect extends BxTemplStudioFormsFieldDateselect
+{
+    public function init()
+	{
+		parent::init();
+
+        BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+    }
+}
+
 class BxDevFormsFieldDatetime extends BxTemplStudioFormsFieldDatetime
 {
     public function init()

@@ -935,6 +935,7 @@
 	<string name="_adm_form_txt_field_type_checkbox_set"><![CDATA[checkbox set]]></string>
 	<string name="_adm_form_txt_field_type_custom"><![CDATA[custom]]></string>
 	<string name="_adm_form_txt_field_type_datepicker"><![CDATA[date]]></string>
+    <string name="_adm_form_txt_field_type_dateselect"><![CDATA[date select]]></string>
 	<string name="_adm_form_txt_field_type_datepicker_range"><![CDATA[date range]]></string>
 	<string name="_adm_form_txt_field_type_datepicker_range_age"><![CDATA[age range]]></string>
 	<string name="_adm_form_txt_field_type_datetime"><![CDATA[date time]]></string>

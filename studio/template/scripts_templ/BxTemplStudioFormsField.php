@@ -53,6 +53,10 @@ class BxTemplStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldDatepicker
 {
 }
 
+class BxTemplStudioFormsFieldDateselect extends BxBaseStudioFormsFieldDateselect
+{
+}
+
 class BxTemplStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatetime
 {
 }

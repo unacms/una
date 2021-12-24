@@ -1406,6 +1406,51 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
     }
 }
 
+class BxBaseStudioFormsFieldDateselect extends BxBaseStudioFormsFieldText
+{
+    protected $sType = 'dateselect';
+    protected $aCheckFunctions = array('date','date_range');
+    protected $sDbPass = 'DateTs';
+    protected $aDbPassDependency = array(
+        'Date' => array('alter' => 'date'),
+    	'DateTs' => array('alter' => 'int(11)'),
+    	'DateUtc' => array('alter' => 'int(11)'),
+    );
+
+    public function init()
+	{
+		parent::init();
+
+        $this->aParams['table_field_type'] = 'int(11)';
+
+        $this->aForm['inputs']['value']['type'] = $this->sType;
+        $this->aForm['inputs']['value']['db']['pass'] = $this->sDbPass;
+
+        $aFields = array(
+            'db_pass' => array(
+                'type' => 'select',
+                'name' => 'db_pass',
+                'caption' => _t('_adm_form_txt_field_db_pass'),
+                'info' => _t('_adm_form_dsc_field_db_pass'),
+                'value' => $this->sDbPass,
+                'values' => array(
+                    array('key' => '', 'value' => _t('_adm_form_txt_field_db_pass_select_value')),
+                    array('key' => 'Date', 'value' => _t('_adm_form_txt_field_db_pass_date')),
+                    array('key' => 'DateTs', 'value' => _t('_adm_form_txt_field_db_pass_date_ts')),
+                    array('key' => 'DateUtc', 'value' => _t('_adm_form_txt_field_db_pass_date_utc')),
+                ),
+                'required' => '0',
+                'db' => array (
+                    'pass' => 'Xss',
+                )
+            ),
+        );
+
+        unset($this->aForm['inputs']['db_pass']);
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'controls', $aFields, false);
+    }
+}
+
 class BxBaseStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatepicker
 {
     protected $sType = 'datetime';

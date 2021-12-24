@@ -247,7 +247,7 @@
             }
 
 			// Date/Time pickers
-			if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time" || this.getAttribute("type") == "datepicker") {
+			if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time" || this.getAttribute("type") == "datepicker" || this.getAttribute("type") == "dateselect") {
                 if ($(this).hasClass('bx-form-datepicker-processed'))
                     return;
                 $(this).addClass('bx-form-datepicker-processed');
@@ -299,6 +299,18 @@
                     }
                     
                     $(this).datetimepicker(oPickerOptions);
+                } else if(this.getAttribute("type") == "dateselect") { // DateTime selector
+                    moment.locale(sLang);
+                    $(this).combodate({
+                        minYear: iYearMin,
+                        maxYear: iYearMax,
+                        format: 'YYYY-MM-DD',
+                        template: 'DD MMMM YYYY',
+                        firstItem: 'none',
+                        'smartDays': true,
+                        customClass: 'bx-def-font-inputs bx-form-input-select block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 appearance-none',
+                    });  
+                    console.log('xxxx'+iYearMin);
                 }
 
                 if (window.navigator.appVersion.search(/Chrome\/(.*?) /) == -1 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 24)
