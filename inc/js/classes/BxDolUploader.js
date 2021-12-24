@@ -299,6 +299,7 @@ BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
       'aiff'   : 'audio/x-aiff',
       'au'     : 'audio/basic',
       'avi'    : 'video/x-msvideo',
+      'avi'    : 'video/avi',
       'bat'    : 'text/plain',
       'bin'    : 'application/octet-stream',
       'bmp'    : 'image/x-ms-bmp',
@@ -524,6 +525,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                     aAcceptableFiles.push($this.getMimeTypefromString(item));
             });
         }
+        
         if (aAcceptableFiles.length){
             _options.acceptedFileTypes = aAcceptableFiles;
         }

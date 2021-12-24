@@ -291,23 +291,27 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
     public function serviceGetMenuAddonManageTools()
     {
-        bx_import('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass();
-        $o->unsetPaginate();
-        $iNumTotal = $o->getNum();
+        $CNF = &$this->_oConfig->CNF;
         
-        $o->fillFilters(array(
-			'status' => 'hidden'
-        )); 
-        $iNum1 = $o->getNum();
+        $iNumTotal = $this->_oDb->getEntriesNumByParams();
+
+        $iNum1 = $this->_oDb->getEntriesNumByParams([
+            [
+                'key' => $CNF['FIELD_STATUS'], 
+                'value' => 'hidden', 
+                'operator' => '='
+            ]
+        ]);
         
         $iNum2 = 0;
-        $CNF = &$this->_oConfig->CNF;
         if (isset($CNF['OBJECT_REPORTS'])){
-            $o->fillFilters(array('status' => ''));
-            $o->fillFiltersByObjects(array('reported' => array('value' => '0', 'field' => 'reports', 'operator' => '>')));
-            $iNum2 = $o->getNum();
+            $iNum2 = $this->_oDb->getEntriesNumByParams([
+                [
+                    'key' => 'reports',
+                    'value' => '0', 
+                    'operator' => '>'
+                ]
+            ]);
         }
         return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter3_value' => $iNumTotal );
 	}

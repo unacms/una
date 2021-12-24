@@ -72,19 +72,38 @@ class BxAccntModule extends BxBaseModGeneralModule
      * @ref bx_accounts-get_menu_addon_manage_tools "get_menu_addon_manage_tools"
      */
     public function serviceGetMenuAddonManageTools()
-    {
-        bx_import('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass();
-        $o->unsetPaginate();
-        $iNumTotal = $o->getNum();
+    {   
+        $iNumTotal = $this->_oDb->getEntriesNumByParams();
+
+        $aConfirmed = array();
+        $aUnConfirmed = array();
+        $sCnfnType = getParam('sys_account_confirmation_type');
+        $aFilter = [ 
+            [
+                'key' => 'name', 
+                'value' => 'Robot', 
+                'operator' => '<>'
+            ]
+        ];
         
-        $o->fillFilters(array(
-            'unconfirmed' => 1,
-            'non_robot' => 'Robot'
-        ));
-      
-        return array('counter1_value' => $o->getNum(),'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
+        switch($sCnfnType) {
+            case 'email':
+                $aFilter[] = array('value' => '', 'key' => 'email_confirmed', 'operator' => '=');
+                $aFilter[] = array('value' => '', 'key' => 'email_confirmed', 'operator' => '<>');
+                break;
+            case 'phone':
+                $aFilter[] = array('value' => '', 'key' => 'phone_confirmed', 'operator' => '=');
+                $aFilter[] = array('value' => '', 'key' => 'phone_confirmed', 'operator' => '<>');
+                break;
+            case 'email_and_phone':
+                $aFilter[] = array('value' => '', 'key' => 'phone_confirmed` * `email_confirmed', 'operator' => '=');
+                $aFilter[] = array('value' => '', 'key' => 'phone_confirmed` * `email_confirmed', 'operator' => '<>');
+                break;
+        }
+
+        $iNum1 = $this->_oDb->getEntriesNumByParams($aFilter);      
+        
+        return array('counter1_value' => $iNum1,'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
     }
     
     public function checkAllowedConfirm(&$aDataEntry, $isPerformAction = false)

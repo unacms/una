@@ -231,24 +231,30 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
 	public function serviceGetMenuAddonManageTools()
 	{
-		bx_import('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass();
-        $o->unsetPaginate();
-        $iNumTotal = $o->getNum();
+        $CNF = &$this->_oConfig->CNF;
         
-        $o->fillFilters(array(
-			'perofileStatus' => BX_PROFILE_STATUS_PENDING
-        ));
-        $iNum1 = $o->getNum();
+		$iNumTotal = $this->_oDb->getEntriesNumByParams();
+
+        $iNum1 = $this->_oDb->getEntriesNumByParams([
+            [
+                'key' => 'status', 
+                'table' => 'sys_profiles',
+                'value' => BX_PROFILE_STATUS_PENDING, 
+                'operator' => '='
+            ]
+        ]);
         
         $iNum2 = 0;
-        $CNF = &$this->_oConfig->CNF;
         if (isset($CNF['OBJECT_REPORTS'])){
-            $o->fillFilters(array('perofileStatus' => ''));
-            $o->fillFiltersByObjects(array('reported' => array('value' => '0', 'field' => 'reports', 'operator' => '>', 'table' => $CNF['TABLE_ENTRIES'])));
-            $iNum2 = $o->getNum();
+            $iNum2 = $this->_oDb->getEntriesNumByParams([
+                [
+                    'key' => 'reports',
+                    'value' => '0', 
+                    'operator' => '>'
+                ]
+            ]);
         }
+        
         return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default'));
 	}
 
