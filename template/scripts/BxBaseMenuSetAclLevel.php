@@ -12,24 +12,57 @@
  */
 class BxBaseMenuSetAclLevel extends BxTemplMenu
 {
-	protected $mixedProfileId;
+    protected $bWithDuration;
+    protected $mixedProfileId;
 
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+        
+        $this->bWithDuration = true;
     }
 
     public function getCode ($mixedProfileId = 0)
     {
     	$this->mixedProfileId = $mixedProfileId;
 
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && ($mixedProfileId = bx_get('profile_id', 'post')) && ($iAclLevelId = bx_get('acl_level_id', 'post'))) {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && ($mixedProfileId = bx_get('profile_id', 'post')) && ($iAclLevelId = bx_get('level_id', 'post'))) {
             $mixedProfileId = urldecode($mixedProfileId);
             if(!is_numeric($mixedProfileId))
                 $mixedProfileId = unserialize($mixedProfileId);
 
-            echoJson($this->setMembership($mixedProfileId, $iAclLevelId, (int)bx_get('acl_card', 'post') > 0));
+            echoJson($this->setMembership($mixedProfileId, $iAclLevelId, bx_get('duration', 'post') !== false ? (int)bx_get('duration', 'post') : 0, (int)bx_get('card', 'post') > 0));
             exit;
+        }
+
+        $mixedProfileId = $this->mixedProfileId;
+        if(bx_get('profile_id') !== false)
+            $mixedProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        if($this->bWithDuration && !is_array($mixedProfileId)) {
+            $oForm = BxDolForm::getObjectInstance('sys_acl', 'sys_acl_set');
+            if($oForm) {
+                $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params('menu.php', [
+                    'o' => 'sys_set_acl_level', 
+                ]);
+
+                $oForm->aInputs['profile_id']['value'] = $mixedProfileId;
+                $oForm->aInputs['card']['value'] = 0;
+
+                $oAcl = BxDolAcl::getInstance();
+                $aAclLevels = $oAcl->getMembershipsBy(array('type' => 'all_active_not_automatic_pair'));
+		foreach ($aAclLevels as $k => $s)
+                    $oForm->aInputs['level_id']['values'][] = ['key' => $k, 'value' => _t($s)];
+
+                $aProfileAclLevel = $oAcl->getMemberMembershipInfo($mixedProfileId);
+                $oForm->aInputs['level_id']['value'] = $aProfileAclLevel['id'];
+
+                return PopupBox('sys_acl_set_' . $mixedProfileId, _t('_sys_form_popup_acl_set'), $this->_oTemplate->parseHtmlByName('acl_set.html', [
+                    'form' => $oForm->getCode(),
+                    'form_id' => $oForm->getId(),
+                    'profile_id' => $mixedProfileId,
+                ]), true);
+            }
         }
 
         return parent::getCode ();
@@ -77,14 +110,14 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
         $this->_aObject['menu_items'] = $aItems;
     }
 
-    protected function setMembership($mixedProfileId, $iAclLevelId, $bAclCard = false)
+    protected function setMembership($mixedProfileId, $iAclLevelId, $iAclLevelDuration = 0, $bAclCard = false)
     {
         bx_import('BxDolAcl');
 
         if(!is_array($mixedProfileId))
             $mixedProfileId = array($mixedProfileId);
 
-		$iPerformerId = bx_get_logged_profile_id();
+        $iPerformerId = bx_get_logged_profile_id();
         $aCheck = checkActionModule($iPerformerId, 'set acl level', 'system', false);
         if(!isAdmin() && $aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return array('code' => 1, 'msg' => $aCheck[CHECK_ACTION_MESSAGE]);
@@ -93,7 +126,7 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
         $aCards = array();
         $oAcl = BxDolAcl::getInstance();
         foreach($mixedProfileId as $iProfileId) {
-            if(!$oAcl->setMembership($iProfileId, $iAclLevelId, 0, true))
+            if(!$oAcl->setMembership($iProfileId, $iAclLevelId, $iAclLevelDuration, true))
                 continue;
 
             $iSet += 1;

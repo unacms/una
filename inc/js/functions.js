@@ -669,28 +669,32 @@ function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
     if(bLoading)
         bx_loading($(mixedLoadingElement), true);
 
-    $.post(sUrlRoot + 'menu.php', {o:'sys_set_acl_level', profile_id: iProfileId, acl_level_id: iAclLevel, acl_card:iAclCard}, function(oData) {
-        if(bLoading)
-            bx_loading($(mixedLoadingElement), false);
-
-        if(oData.msg != undefined && oData.msg.length) {
-            bx_alert(oData.msg);
-            return;
-        }
-
-        if($(mixedLoadingElement).hasClass('bx-popup-applied'))
-            $(mixedLoadingElement).dolPopupHide().remove();
-
-        if(typeof(oData.card) == 'object')
-            for(var iField in oData.card) {
-                var oCard = $(oData.card[iField]);
-                $('#' + oCard.attr('id')).replaceWith(oCard.bxTime());
-            }
+    $.post(sUrlRoot + 'menu.php', {o:'sys_set_acl_level', profile_id: iProfileId, level_id: iAclLevel, card:iAclCard}, function(oData) {
+        bx_on_set_acl_level(oData, mixedLoadingElement);
     }, 'json');
 }
 
+function bx_on_set_acl_level(oData, oLoadingElement) {
+    if(typeof(oLoadingElement) != 'undefined')
+        bx_loading($(oLoadingElement), false);
+
+    if(oData.msg != undefined && oData.msg.length) {
+        bx_alert(oData.msg);
+        return;
+    }
+
+    if($(oLoadingElement).hasClass('bx-popup-applied'))
+        $(oLoadingElement).dolPopupHide().remove();
+
+    if(typeof(oData.card) == 'object')
+        for(var iField in oData.card) {
+            var oCard = $(oData.card[iField]);
+            $('#' + oCard.attr('id')).replaceWith(oCard.bxTime());
+        }
+}
+
 /**
- * Set ACL badge for specified content
+ * Set badge for specified content
  * @param sModule - current module for content
  * @param iContentId - content id to set badge for
  * @param iBadgeId - badge id to assign to a given content

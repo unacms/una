@@ -3287,7 +3287,8 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_privacy_group_custom', 'system', '_sys_form_ps_group_custom', 'privacy.php', '', 'do_submit', 'sys_privacy_groups_custom', 'id', '', '', '', 0, 1, 'BxTemplPrivacyFormGroupCustom', ''),
 ('sys_labels', 'system', '_sys_form_labels', 'label.php', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTemplLabelForm', ''),
 ('sys_wiki', 'system', '_sys_form_wiki', '', '', 'do_submit', 'sys_pages_wiki_blocks', 'id', '', '', '', 0, 1, 'BxTemplFormWiki', ''),
-('sys_manage', 'system', '_sys_form_manage', '', '', 'a:2:{i:0;s:7:"do_send";i:1;s:9:"do_submit";}', '', '', '', '', '', 0, 1, '', '');
+('sys_manage', 'system', '_sys_form_manage', '', '', 'a:2:{i:0;s:7:"do_send";i:1;s:9:"do_submit";}', '', '', '', '', '', 0, 1, '', ''),
+('sys_acl', 'system', '_sys_form_acl', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', '');
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3327,7 +3328,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_labels_select', 'system', 'sys_labels', '_sys_form_labels_display_select', 0),
 ('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0),
 ('sys_wiki_translate', 'system', 'sys_wiki', '_sys_form_display_wiki_translate', 0),
-('sys_manage_approve', 'system', 'sys_manage', '_sys_form_display_manage_approve', 0);
+('sys_manage_approve', 'system', 'sys_manage', '_sys_form_display_manage_approve', 0),
+('sys_acl_set', 'system', 'sys_acl', '_sys_form_display_acl_set', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
@@ -3488,7 +3490,17 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_manage', 'system', 'controls', '', 'do_send,do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_manage', 'system', 'do_send', '_sys_form_manage_input_do_send', '', 0, 'submit', '_sys_form_manage_input_sys_do_send', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_manage', 'system', 'do_submit', '_sys_form_manage_input_do_submit', '', 0, 'submit', '_sys_form_manage_input_sys_do_submit', '', '', 0, 0, 0, 'a:1:{s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
-('sys_manage', 'system', 'do_cancel', '_sys_form_manage_input_do_cancel', '', 0, 'button', '_sys_form_manage_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:5:"class";s:22:"bx-def-margin-sec-left";s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";}', '', '', '', '', '', '', '', 0, 0);
+('sys_manage', 'system', 'do_cancel', '_sys_form_manage_input_do_cancel', '', 0, 'button', '_sys_form_manage_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:5:"class";s:22:"bx-def-margin-sec-left";s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";}', '', '', '', '', '', '', '', 0, 0),
+
+('sys_acl', 'system', 'profile_id', '', '', 0, 'hidden', '_sys_form_acl_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_acl', 'system', 'card', '', '', 0, 'hidden', '_sys_form_acl_input_sys_card', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_acl', 'system', 'level_id', '', '', 0, 'radio_set', '_sys_form_acl_input_sys_level_id', '_sys_form_acl_input_level_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('sys_acl', 'system', 'duration', '', '', 0, 'text', '_sys_form_acl_input_sys_duration', '_sys_form_acl_input_duration', '_sys_form_acl_input_duration_inf', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('sys_acl', 'system', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_acl', 'system', 'do_submit', '_sys_form_acl_input_do_submit', '', 0, 'submit', '_sys_form_acl_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_acl', 'system', 'do_cancel', '_sys_form_acl_input_do_cancel', '', 0, 'button', '_sys_form_acl_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:5:"class";s:22:"bx-def-margin-sec-left";s:7:"onclick";s:65:"$(this).parents(''.bx-popup-applied:visible:first'').dolPopupHide()";}', '', '', '', '', '', '', '', 0, 0);
+
+
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs_privacy` (
@@ -3694,7 +3706,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_manage_approve', 'controls', 2147483647, 1, 3),
 ('sys_manage_approve', 'do_send', 2147483647, 1, 4),
 ('sys_manage_approve', 'do_submit', 2147483647, 1, 5),
-('sys_manage_approve', 'do_cancel', 2147483647, 1, 6);
+('sys_manage_approve', 'do_cancel', 2147483647, 1, 6),
+
+('sys_acl_set', 'profile_id', 2147483647, 1, 1),
+('sys_acl_set', 'card', 2147483647, 1, 2),
+('sys_acl_set', 'level_id', 2147483647, 1, 3),
+('sys_acl_set', 'duration', 2147483647, 1, 4),
+('sys_acl_set', 'controls', 2147483647, 1, 5),
+('sys_acl_set', 'do_submit', 2147483647, 1, 6),
+('sys_acl_set', 'do_cancel', 2147483647, 1, 7);
 
 
 CREATE TABLE `sys_form_fields_ids` (
