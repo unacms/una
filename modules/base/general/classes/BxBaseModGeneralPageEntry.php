@@ -142,9 +142,10 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
 
     protected function _getPageCacheParams ()
     {
+        $s = parent::_getPageCacheParams ();
         if (!$this->_aContentInfo)
-            return '';
-        return $this->_aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ID']]; // cache is different for every entry
+            return $s;
+        return $s . $this->_aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ID']]; // cache is different for every entry
     }
 }
 
