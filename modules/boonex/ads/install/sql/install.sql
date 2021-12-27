@@ -653,7 +653,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_ads', 'bx_ads', 'text', '', '', 0, 'textarea', '_bx_ads_form_entry_input_sys_text', '_bx_ads_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_ads', 'bx_ads', 'title', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_title', '_bx_ads_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'name', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_name', '_bx_ads_form_entry_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_name_err', 'Xss', '', 1, 0),
-('bx_ads', 'bx_ads', 'price', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_price', '_bx_ads_form_entry_input_price', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_ads', 'bx_ads', 'price', '', '', 0, 'price', '_bx_ads_form_entry_input_sys_price', '_bx_ads_form_entry_input_price', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'auction', 1, '', 0, 'checkbox', '_bx_ads_form_entry_input_sys_auction', '_bx_ads_form_entry_input_auction', '_bx_ads_form_entry_input_auction_info', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_ads', 'bx_ads', 'quantity', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_quantity', '_bx_ads_form_entry_input_quantity', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_quantity_err', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'year', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_year', '_bx_ads_form_entry_input_year', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
