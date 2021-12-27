@@ -75,13 +75,14 @@ class BxBasePage extends BxDolPage
     public function performActionEmbed ()
     {
         $aCover = $this->getPageCoverImage();
+        $sTitle = $this->_getPageTitle();
         $this->_oTemplate->getEmbed($this->_oTemplate->parseHtmlByName('embed_card.html', [
-            'title' => _t($this->_aObject['title']),
+            'title' => $sTitle,
             'url' => BxDolPermalinks::getInstance()->permalink($this->_aObject['url']),
             'bx_if:thumb' => [
                 'condition' => $this->isPageCover() && count($aCover) > 0,
                 'content' => [
-                    'title' => _t($this->_aObject['title']),
+                    'title' => $sTitle,
                     'url' => BxDolPermalinks::getInstance()->permalink($this->_aObject['url']),
                     'background' => BxDolCover::getInstance(BxDolTemplate::getInstance())->getCoverImageUrl($aCover)
                 ],
@@ -89,7 +90,7 @@ class BxBasePage extends BxDolPage
             'bx_if:no_thumb' => [
                 'condition' => count($aCover) == 0 || !$this->isPageCover(),
                 'content' => [
-                    'title' => _t($this->_aObject['title']),
+                    'title' => $sTitle,
                     'url' => BxDolPermalinks::getInstance()->permalink($this->_aObject['url']),
                 ]
             ]

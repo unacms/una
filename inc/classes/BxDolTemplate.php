@@ -840,13 +840,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getEmbed($sContent)
     {
+        header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors')) ;
+        
         $this->addJs(['inc/js/|embed.js']);
         $this->addCss(['embed.css']);
         
         $this->setPageNameIndex (BX_PAGE_EMBED);
         $this->setPageContent('page_main_code', '<div class="bx-embed">' . $sContent . '</div>');
         $this->getPageCode();
-        
     }
 
     /**
