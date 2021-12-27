@@ -730,11 +730,15 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     static public function isAllowedCreateMultiple ($iProfileId, $isPerformAction = false)
     {
         $bResult = false;
-        if ((int)getParam('sys_account_limit_profiles_number') != 1)
+        if((int)getParam('sys_account_limit_profiles_number') != 1)
             $bResult = true;
-        
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if($oProfile && $oProfile->getAccountId() != getLoggedId())
+            $bResult = false;
+
         bx_alert('profile', 'allow_create_another_profile', $iProfileId, 0, array('override_result' => &$bResult));
-        
+
         return $bResult;
     }
 

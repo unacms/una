@@ -94,7 +94,8 @@ class BxBasePageAccount extends BxTemplPage
 
     protected function _getPageCacheParams ()
     {
-        return getLoggedId(); // cache is different for every account
+        $s = parent::_getPageCacheParams ();
+        return $s . getLoggedId(); // cache is different for every account
     }
 }
 
