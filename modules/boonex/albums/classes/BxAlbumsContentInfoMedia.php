@@ -30,6 +30,19 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
 
         return $aMedia['author'];
     }
+    
+    public function getContentEmbed ($iContentId)
+    {
+        $aMedia = $this->_oModule->_oDb->getMediaInfoById($iContentId);
+        if(empty($aMedia) || !is_array($aMedia))
+            return '';
+        
+        $sTitle = $this->getContentTitle($iContentId);
+        return $this->_oModule->_oTemplate->parseHtmlByName('embed.html', [
+            'title' => $sTitle,
+            'url' => BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'embed_media/' . $iContentId . '/'
+        ]);
+    }
 
     public function getContentDateAdded ($iContentId)
     {
