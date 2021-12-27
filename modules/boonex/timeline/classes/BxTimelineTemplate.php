@@ -500,12 +500,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 else if(!empty($aEvent['content']['images_attach']) && is_array($aEvent['content']['images_attach']))
                     $aImages = $aEvent['content']['images_attach'];
 
+                if(isset($aImages['total']) && isset($aImages['items']))
+                    $aImages = $aImages['items'];
+
                 $bImageSingle = count($aImages) == 1;
                 $sImageSelected = base64_decode(bx_process_input(bx_get('src')));
 
                 $aTmplVarsImages = [];
                 if(!$bImageSingle)
-                    foreach($aImages['items'] as $aImage) 
+                    foreach($aImages as $aImage) 
                         $aTmplVarsImages[] = [
                             'style_prefix' => $sStylePrefix,
                             'url' => $aImage['url'],
