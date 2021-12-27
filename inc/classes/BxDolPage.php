@@ -495,16 +495,28 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $aUrl = parse_url($sUrl);
         $aUri = explode('/', $aUrl['path']);
         $aParams = [];
+        $sUri = $aUri[2];
+        
+        if ('/' !== $aUrl['path'] && getParam('permalinks_seo_links')){
+            $sUri = $aUri[1];
+            $sPageName = BxDolPageQuery::getPageObjectNameByURI($sUri);
+            $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
+            if (!empty($aUri[2])) { 
+                $r = BxDolPageQuery::getSeoLink($aPage['module'], $sUri, ['uri' => $aUri[2]]);
+                if ($r)
+                    $aParams[$r['param_name']] = $r['param_value'];    
+            }
+        }
         
         if (isset($aUrl['query']))
             parse_str($aUrl['query'], $aParams);
         
-        if (!$aUri || empty($aUri[2]))
+        if (!$aUri || empty($sUri))
             return [];
         
         $sAuthorName = $sAuthorUrl = $sThumb = '';
         if (isset($aParams['id'])){
-            $sContentInfoObject = BxDolPageQuery::getContentInfoObjectNameByURI($aUri[2]);
+            $sContentInfoObject = BxDolPageQuery::getContentInfoObjectNameByURI($sUri);
             $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfoObject);
             
             $sTitle = $oContentInfo->getContentTitle($aParams['id']);
@@ -516,7 +528,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             
         }
         else{
-            $oPage = BxDolPage::getObjectInstanceByURI($aUri[2], false, true);
+            $oPage = BxDolPage::getObjectInstanceByURI($sUri, false, true);
             $aPage = $oPage->getObject();
             $sTitle = _t($aPage['title']);
             $sHtml = BxDolTemplate::getInstance()->parseHtmlByName('embed.html', [

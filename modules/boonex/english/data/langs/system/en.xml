@@ -1611,6 +1611,7 @@
   	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Session lifetime (min)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
+    <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
@@ -3452,6 +3453,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_txt_reports_grid_view_notes"><![CDATA[View notes]]></string>
         <string name="_sys_txt_share_popup_header"><![CDATA[Share]]></string>
         <string name="_sys_txt_share_popup_url"><![CDATA[URL]]></string>
+        <string name="_sys_txt_share_popup_copy_to_clipboard_text"><![CDATA[Click for copy to the clipboard]]></string>
         <string name="_sys_txt_share_popup_embeded_code"><![CDATA[Embeded code]]></string>
         <string name="_sys_unconfirmed"><![CDATA[Unconfirmed]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Important info:</h3><p>{0}</p>]]></string>
