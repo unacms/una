@@ -618,6 +618,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         switch($sTemplateName) {
             case 'unit_with_cover.html':
+            case 'unit_with_cover_showcase.html':
                 $sResult = 'ava';
                 break;
 
