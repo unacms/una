@@ -679,6 +679,20 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $aRet;
     }
     
+    static public function getMetatagsDataByTerm($sMeta, $sMetaItem, $sTerm)
+    {
+        $aValues = [];
+        $aObjects = BxDolMetatagsQuery::getMetatagsObjects();
+        foreach ($aObjects as $aObject) {
+            $oObject = BxDolMetatags::getObjectInstance($aObject['object']);
+            $aData = call_user_func_array(array($oObject->_oQuery, $sMeta . 'GetByTerm'), [$sTerm]);
+            foreach ($aData as $aMeta) {
+                $aValues[$aMeta[$sMetaItem]] = ['id' => $aMeta['object_id'], 'meta' => $aMeta[$sMetaItem], 'url' => $oObject->keywordsGetHashTagUrl($aMeta[$sMetaItem], $aMeta['object_id'])];
+            }
+        }
+        return $aValues;
+    }
+    
     /**
      * Add location for the content from POST data
      * @param $iId content id

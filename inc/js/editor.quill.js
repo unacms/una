@@ -60,18 +60,20 @@ function bx_editor_init(oEditor, oParams){
                 let node = super.create(value);
                 if (value.id && value.value){
                     node.setAttribute('href', value.id);
-                    node.innerHTML = '@' + value.value;
-                    node.setAttribute('title', '@' + value.value);
+                    node.innerHTML = value.denotationChar + value.value;
+                    node.setAttribute('title', value.value);
+                    node.setAttribute('dchar', value.denotationChar);
                 }
                 return node;
             }
             
             format(name, value) {
-                if (name === 'href' || name === 'title') {
+                console.log('1',name, value)
+                if (name === 'href' || name === 'title' || name === 'dchar') {
                     if (value) {
                         this.domNode.setAttribute(name, value);
-                        if (name === 'title'){
-                            this.domNode.innerHTML = value;
+                        if (name === 'dchar'){
+                            this.domNode.innerHTML = value + this.domNode.getAttribute('title');
                         }
                     } else {
                         this.domNode.removeAttribute(name, value);
@@ -83,12 +85,16 @@ function bx_editor_init(oEditor, oParams){
             };
                 
             static formats(node) {
+                console.log('2',node)
                 let format = {};
                 if (node.hasAttribute('href')) {
                     format.href = node.getAttribute('href');
                 }
                 if (node.hasAttribute('title')) {
                     format.title = node.getAttribute('title');
+                }
+                if (node.hasAttribute('dchar')) {
+                    format.dchar = node.getAttribute('dchar');
                 }
                 return format;
             }  
@@ -154,18 +160,18 @@ function bx_editor_init(oEditor, oParams){
             toolbar: oParams.toolbar,
             mention: {
                 allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-                mentionDenotationChars: ["@"],
-                showDenotationChar: false,
+                mentionDenotationChars: ["@", "#"],
+                showDenotationChar: true,
                 blotName: 'menthion-link',
                 source: function (searchTerm, renderList, mentionChar) {
-                  $.getJSON(oParams.root_url + 'searchExtended.php?action=get_authors&', { term: searchTerm}, function(data){
-                    renderList(data, searchTerm);
+                  $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention&', { symbol: mentionChar, term: searchTerm}, function(data){
+                      renderList(data, searchTerm);
                   });
                 },
                 renderItem: function(item, searchTerm){
-                  item.id = item.url;
-                  item.value = item.label;
-                  return '@' + item.value;
+                    item.id = item.url;
+                    item.value = item.label;
+                    return item.symbol + item.value;
                 },
                 onSelect: function(item, insertItem){
                     insertItem(item, false)
