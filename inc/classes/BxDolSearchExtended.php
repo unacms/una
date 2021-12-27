@@ -107,9 +107,33 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
     static public function actionGetAuthors()
     {
         $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
-
+        foreach ($aResult as &$aItem) {
+            $aItem['symbol'] = bx_get('symbol');
+        }
         header('Content-Type:text/javascript; charset=utf-8');
         echo json_encode($aResult);
+    }
+    
+    static public function actionGetHashtags()
+    {
+        $aResult = [];
+        if (bx_get('term')){
+            $aData = BxDolMetatags::getMetatagsDataByTerm('keywords', 'keyword', bx_get('term'));
+            foreach ($aData as $aItem) {
+                $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => $aItem['url'], 'symbol' => bx_get('symbol')];
+            }
+        }
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo json_encode($aResult);
+    }
+    
+    static public function actionGetMention()
+    {
+        if(bx_get('symbol') == '@')
+            self::actionGetAuthors();
+        
+        if(bx_get('symbol') == '#')
+            self::actionGetHashtags();
     }
 
     public function isEnabled()

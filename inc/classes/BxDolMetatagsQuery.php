@@ -32,6 +32,17 @@ class BxDolMetatagsQuery extends BxDolDb
         return $aObject;
     }
     
+    static public function getMetatagsObjects ()
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_metatags`");
+        $aObject = $oDb->getAll($sQuery);
+        if (!$aObject || !is_array($aObject))
+            return false;
+
+        return $aObject;
+    }
+
     public function mentionsAdd($mixedContentId, $aMentions, $bDeletePrevious = true)
     {
         return $this->metaAdd($mixedContentId, $aMentions, $bDeletePrevious, 'mentionsDelete', $this->_aObject['table_mentions'], 'profile_id');
@@ -65,6 +76,12 @@ class BxDolMetatagsQuery extends BxDolDb
     {
         $sQuery = $this->prepare("SELECT `keyword` FROM `{$this->_aObject['table_keywords']}` WHERE `object_id` = ? ORDER BY CHAR_LENGTH(`keyword`) DESC LIMIT ?", $mixedContentId, (int)getParam('sys_metatags_hashtags_max'));
         return $this->getColumn($sQuery);
+    }
+    
+    public function keywordsGetByTerm($sTerm)
+    {
+        $sQuery = $this->prepare("SELECT `object_id`, `keyword` FROM `{$this->_aObject['table_keywords']}`  WHERE `keyword` LIKE ? ORDER BY CHAR_LENGTH(`keyword`) DESC", $sTerm . '%');
+        return $this->getAll($sQuery);
     }
 
     public function keywordsGetSQLParts($sContentTable, $sContentField, $mixedKeyword)
