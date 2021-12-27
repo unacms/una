@@ -16,6 +16,11 @@
 	transition: all .3s;
 	padding: 4px 8px !important;
 }
+.bx-form-value .bx-form-input-price,
+.bx-form-value .bx-form-input-wrapper-price span {
+    border-radius: 2px;
+    transition: all .3s;
+}
 .bx-form-value .bx-form-input-autotoken{
 	min-height: inherit !important;
 	padding: 0px !important;

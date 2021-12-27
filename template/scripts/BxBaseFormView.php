@@ -1035,6 +1035,10 @@ BLAH;
             case 'password':
             	$sInput = $this->genInputPassword($aInput);
             	break;
+            
+            case 'price':
+            	$sInput = $this->genInputPrice($aInput);
+            	break;
 
             case 'file':
             	$sInput = $this->genInputFile($aInput);
@@ -1907,7 +1911,45 @@ BLAH;
     {
         return $this->oTemplate->parseHtmlByName('form_field_password.html', array('input' => $this->genInputStandard($aInput)));
     }
-    
+
+    function genInputPrice(&$aInput)
+    {
+        /*
+        if(!isset($aInput['attrs_wrapper']['class'])) {
+            if(!isset($aInput['attrs_wrapper'])) 
+                $aInput['attrs_wrapper'] = [];
+            $aInput['attrs_wrapper']['class'] = '';
+        }
+        $aInput['attrs_wrapper']['class'] .= 'bx-form-input-wrapper-text';
+
+        if(!isset($aInput['attrs']['class'])) {
+            if(!isset($aInput['attrs'])) 
+                $aInput['attrs'] = [];
+            $aInput['attrs']['class'] = '';
+        }
+        $aInput['attrs']['class'] .= 'bx-form-input-text';
+         */
+
+        $sCurrency = '';
+        if(!isset($aInput['value_currency'])) {
+            $sCurrency = BxDolPayments::getInstance()->getOption('default_currency_code');
+            if(empty($sCurrency))
+                $sCurrency = getParam('currency_code');
+        }
+        else
+            $sCurrency = $aInput['value_currency'];
+
+        return $this->oTemplate->parseHtmlByName('form_field_price.html', array(
+            'bx_if:show_currency' => [
+                'condition' => !empty($sCurrency),
+                'content' => [
+                    'currency' => $sCurrency,
+                ]
+            ],
+            'input' => $this->genInputStandard($aInput)
+        ));
+    }
+
     function genInputNestedForm(&$aInput)
     {
         return '';

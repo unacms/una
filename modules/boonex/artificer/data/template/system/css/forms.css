@@ -154,6 +154,30 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 
+/*-- Form field: Price --*/
+.bx-form-element .bx-form-value .bx-form-input-wrapper-price {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+}
+.bx-form-element .bx-form-value .bx-form-input-wrapper-price span {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    width: auto;
+    border-right-width: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.bx-form-element .bx-form-value .bx-form-input-price:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
 /*-- Form field: Date/Time Pickers --*/
 .bx-form-datepicker-modal {
     z-index: 10001 !important;

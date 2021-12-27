@@ -15,7 +15,9 @@
 .bx-form-value .bx-form-input-datetime,
 .bx-form-value .bx-form-input-textarea,
 .bx-form-value .bx-form-input-wrapper-password,
-.bx-form-value .bx-form-input-text {
+.bx-form-value .bx-form-input-text,
+.bx-form-value .bx-form-input-price,
+.bx-form-value .bx-form-input-wrapper-price span {
     height: 36px;
     height: 2.4rem;
     box-sizing: border-box;
@@ -57,6 +59,7 @@
 .bx-form-value .bx-form-input-datetime:focus,
 .bx-form-value .bx-form-input-textarea:focus,
 .bx-form-value .bx-form-input-text:focus,
+.bx-form-value .bx-form-input-price:focus,
 .bx-form-value .bx-form-input-wrapper-password.bx-form-input-focus {
     border-color: rgba(136, 143, 153, 1);
     background-color: rgba(255, 255, 255, 1);
