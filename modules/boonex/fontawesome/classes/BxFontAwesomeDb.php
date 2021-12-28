@@ -23,9 +23,9 @@ class BxFontAwesomeDb extends BxDolModuleDb
 
     function switchFont($sFont)
     {
-        $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'fonts-light.css'", array('active' => 'light' == $sFont ? 1 : 0));
-        $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'fonts-duotone.css'", array('active' => 'duotone' == $sFont ? 1 : 0));
-        $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'fonts-all.css'", array('active' => 'default' == $sFont ? 1 : 0));
+        $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'modules/boonex/fontawesome/template/css/|fonts-light.css'", array('active' => 'light' == $sFont ? 1 : 0));
+        $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'modules/boonex/fontawesome/template/css/|fonts-duotone.css'", array('active' => 'duotone' == $sFont ? 1 : 0));
+        $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'modules/boonex/fontawesome/template/css/|fonts-all.css'", array('active' => 'default' == $sFont ? 1 : 0));
     }
 }
 
