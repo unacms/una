@@ -37,6 +37,19 @@ class BxAlbumsModule extends BxBaseModTextModule
         ));
     }
 
+    public function actionEmbedMedia($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getMediaInfoById($iContentId);
+        if(empty($aContentInfo))
+            return '';
+
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit_media_gallery.html';
+
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate));
+    }
+    
     /**
      * Entry actions and social sharing block
      */
