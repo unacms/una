@@ -189,6 +189,7 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             return array('code' => 2, 'message' => $this->_sLangsPrefix . 'pp_api_err_no_subscription');
 
         $aSubscriber = $this->_getClientInfo($aSubscription['subscriber']);
+        list($bPaid, $bTrial) = $this->_getBillingStatus($aSubscription['billing_info']);
 
         $aResult = array(
             'code' => BX_PAYMENT_RESULT_SUCCESS, 
@@ -197,7 +198,9 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             'customer_id' => $aSubscription['subscriber']['payer_id'], 
             'subscription_id' => $sSubscription,
             'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $aSubscriber['client_first_name'], $aSubscriber['client_last_name']),
-            'client_email' => $aSubscriber['client_email']
+            'client_email' => $aSubscriber['client_email'],
+            'paid' => $bPaid,
+            'trial' => $bTrial,
         );
 
         if($aSubscription['status'] == PP_API_SBS_STATUS_APPROVAL_PENDING)       
@@ -710,28 +713,70 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         $this->_oSession->setValue($this->_sSessionKeySubscription, $sValue);
     }
 
+    /**
+     * Retrieve 'Client Info' from a 'getSubscription' call's response.
+     */
     protected function _getClientInfo($mixedClient)
     {
-        $sName = 'name';
-        $sFirst = 'given_name';
-        $sLast = 'surname';
-        $sEmail = 'email_address';
+        $_sName = 'name';
+        $_sFirst = 'given_name';
+        $_sLast = 'surname';
+        $_sEmail = 'email_address';
 
-        $aResult = array();
+        $aResult = [];
         if(is_object($mixedClient))
-            $aResult = array(
-                'client_first_name' => $mixedClient->$sName->$sFirst,
-                'client_last_name' => $mixedClient->$sName->$sLast,
-                'client_email' => $mixedClient->$sEmail,
-            );
+            $aResult = [
+                'client_first_name' => $mixedClient->$_sName->$_sFirst,
+                'client_last_name' => $mixedClient->$_sName->$_sLast,
+                'client_email' => $mixedClient->$_sEmail,
+            ];
         else
-            $aResult = array(
-                'client_first_name' => $mixedClient[$sName][$sFirst],
-                'client_last_name' => $mixedClient[$sName][$sLast],
-                'client_email' => $mixedClient[$sEmail],
-            );
+            $aResult = [
+                'client_first_name' => $mixedClient[$_sName][$_sFirst],
+                'client_last_name' => $mixedClient[$_sName][$_sLast],
+                'client_email' => $mixedClient[$_sEmail],
+            ];
 
         return $aResult;
+    }
+
+    /**
+     * Retrieve 'Billing Status' from a 'getSubscription' call's response.
+     */
+    protected function _getBillingStatus($mixedBillingInfo)
+    {
+        $bTrial = $bPaid = false;
+
+        $_sCycles = 'cycle_executions';
+        $_sCycleType = 'tenure_type';
+        $_sCyclesCompleted = 'cycles_completed';
+        $_sCyclesTotal = 'total_cycles';
+
+        $bByObject = is_object($mixedBillingInfo);
+        $aCycles = $bByObject ? $mixedBillingInfo->$_sCycles : $mixedBillingInfo[$_sCycles];
+        if(empty($aCycles) || !is_array($aCycles))
+            return [$bPaid, $bTrial];
+
+        foreach($aCycles as $mixedCycle) {
+            $sCycleType = $bByObject ? $mixedCycle->$_sCycleType : $mixedCycle[$_sCycleType];
+            $iCyclesCompleted = $bByObject ? $mixedCycle->$_sCyclesCompleted : (int)$mixedCycle[$_sCyclesCompleted];
+            $iCyclesTotal = $bByObject ? $mixedCycle->$_sCyclesTotal : (int)$mixedCycle[$_sCyclesTotal];
+
+            switch($sCycleType) {
+                case 'TRIAL':
+                    if($iCyclesCompleted < $iCyclesTotal) {
+                        $bTrial = true;
+                        break 2;
+                    }
+                    break;
+                
+                case 'REGULAR':
+                    $bPaid = true;
+                    break 2;
+            }
+        }
+
+        return [$bPaid, $bTrial];
     }
 }
 
