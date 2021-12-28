@@ -32,19 +32,27 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     public function addCssJs ($bDynamic = false)
     {
         $s = parent::addCssJs ($bDynamic);
-        $s .= $this->_oTemplate->addJs([
-                'filepond/filepond.min.js',
-                'filepond/filepond-plugin-image-preview.min.js',
-                'filepond/filepond-plugin-image-transform.min.js',
-                'filepond/filepond-plugin-image-crop.min.js',
-                'filepond/filepond-plugin-image-resize.min.js',
-                'filepond/filepond-plugin-file-validate-size.min.js',
-                'filepond/filepond-plugin-file-validate-type.js',
-            ], $bDynamic);
+
+        $aJs = [
+            'filepond/filepond.min.js',
+            'filepond/filepond-plugin-image-preview.min.js',
+            'filepond/filepond-plugin-image-transform.min.js',
+            'filepond/filepond-plugin-image-crop.min.js',
+            'filepond/filepond-plugin-image-resize.min.js',
+            'filepond/filepond-plugin-file-validate-size.min.js',
+            'filepond/filepond-plugin-file-validate-type.js',
+        ];
+
+        if($bDynamic)
+            $s .= $this->_oTemplate->addJsPreloadedWrapped($aJs);
+        else
+            $this->_oTemplate->addJs($aJs);
+        
         $s .= $this->_oTemplate->addCss([
                 BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'filepond/|filepond.min.css',
                 BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'filepond/|filepond-plugin-image-preview.min.css',
             ], $bDynamic);
+
         return $bDynamic ? $s : '';
     }
 
