@@ -369,7 +369,20 @@ class BxBaseModGeneralModule extends BxDolModule
         
         $aSortableFields = [];
         
-        $aInputs = BxDolFormQuery::getFormInputs($CNF['OBJECT_FORM_ENTRY']);
+        $aDisplays = [];
+        if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])) {
+            $aDisplays[] = $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'];
+        }
+        if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'])) {
+            $aDisplays[] = $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];
+        }
+        
+        $aInputsAll = BxDolFormQuery::getFormInputs($CNF['OBJECT_FORM_ENTRY']);    
+        foreach($aInputsAll as $aInput){
+            $aInputsAll[$aInput['name']] = $aInput;
+        }
+        
+        $aInputs = BxDolFormQuery::getFormInputs($CNF['OBJECT_FORM_ENTRY'],  $aDisplays);
         foreach($aInputs as $aInput){
             $aInputs[$aInput['name']] = $aInput;
             if ($aInput['type'] == 'text'){
@@ -388,13 +401,13 @@ class BxBaseModGeneralModule extends BxDolModule
         foreach($aSortableFields as $sSortableField){
              $aResult[$sSortableField . '_asc'] = [
                 'name' => $sSortableField,
-                'caption' => $aInputs[$sSortableField]['caption'],
+                'caption' => $aInputsAll[$sSortableField]['caption'],
                 'direction' => 'asc'
             ];
             
             $aResult[$sSortableField . '_desc']  = [
                 'name' => $sSortableField,
-                'caption' => $aInputs[$sSortableField]['caption'],
+                'caption' => $aInputsAll[$sSortableField]['caption'],
                 'direction' => 'desc'
             ];
         }

@@ -346,11 +346,23 @@ class BxDolFormQuery extends BxDolDb
         $oDb->query("DELETE FROM `sys_form_fields_ids` WHERE  `module` = :module", $aBindings);
     }
 
-    static public function getFormInputs($sObject)
+    static public function getFormInputs($sObject, $mDisplay = '')
     {
         $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT * FROM `sys_form_inputs` WHERE `object` = ?", $sObject);
-        return $oDb->getAll($sQuery);
+        if ($mDisplay == ''){
+            $sQuery = $oDb->prepare("SELECT * FROM `sys_form_inputs` WHERE `object` = ?", $sObject);
+            return $oDb->getAll($sQuery);
+        }
+        else{
+            if (!is_array($mDisplay))
+                $mDisplay = [$mDisplay];
+            $sQuery = $oDb->prepare("
+            SELECT DISTINCT `sys_form_inputs`.* FROM `sys_form_inputs`  
+            INNER JOIN `sys_form_display_inputs` ON `sys_form_display_inputs`.`input_name` =`sys_form_inputs`.`name`
+            WHERE `sys_form_display_inputs`.`display_name` IN (" . $oDb->implode_escape($mDisplay) . ")
+            AND `sys_form_inputs`.`object` = ? AND `sys_form_display_inputs`.`active` = 1", $sObject);
+            return $oDb->getAll($sQuery);
+        }
     }
 }
 
