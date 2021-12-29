@@ -359,6 +359,49 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oDb->getEntriesByAuthor((int)$iProfileId);
     }
 
+    public function serviceGetSortableFieldsExtended($aInputsAdd = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_FORM_ENTRY']))
+            return array();
+        
+        $aResult = array();
+        
+        $aSortableFields = [];
+        
+        $aInputs = BxDolFormQuery::getFormInputs($CNF['OBJECT_FORM_ENTRY']);
+        foreach($aInputs as $aInput){
+            $aInputs[$aInput['name']] = $aInput;
+            if ($aInput['type'] == 'text'){
+                $aSortableFields[] = $aInput['name'];
+            }
+        }
+        
+        if(!empty($CNF['FIELD_ADDED'])){
+           $aSortableFields[] = $CNF['FIELD_ADDED'];
+        }
+        
+        if(!empty($CNF['FIELD_CHANGED'])){
+           $aSortableFields[] = $CNF['FIELD_CHANGED'];
+        }     
+        
+        foreach($aSortableFields as $sSortableField){
+             $aResult[$sSortableField . '_asc'] = [
+                'name' => $sSortableField,
+                'caption' => $aInputs[$sSortableField]['caption'],
+                'direction' => 'asc'
+            ];
+            
+            $aResult[$sSortableField . '_desc']  = [
+                'name' => $sSortableField,
+                'caption' => $aInputs[$sSortableField]['caption'],
+                'direction' => 'desc'
+            ];
+        }
+        
+        return $aResult;
+    }
+    
     public function serviceGetSearchableFieldsExtended($aInputsAdd = array())
     {
         $CNF = &$this->_oConfig->CNF;

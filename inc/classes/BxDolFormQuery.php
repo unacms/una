@@ -346,10 +346,11 @@ class BxDolFormQuery extends BxDolDb
         $oDb->query("DELETE FROM `sys_form_fields_ids` WHERE  `module` = :module", $aBindings);
     }
 
-    public function getFormInputs()
+    static public function getFormInputs($sObject)
     {
-        $sQuery = $this->prepare("SELECT * FROM `sys_form_inputs` WHERE `object` = ? ORDER BY `order` ASC", $this->_aObject['object']);
-        return $this->getAll($sQuery);
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_form_inputs` WHERE `object` = ?", $sObject);
+        return $oDb->getAll($sQuery);
     }
 }
 

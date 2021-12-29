@@ -98,6 +98,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return '';
 
         $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aObject['object_content_info']);
+        
         if(!$oContentInfo)
             return '';
 
@@ -144,7 +145,14 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         }
 
         $aResults = false;
+        
+        if (bx_get('sort')){
+            $aTmp = explode(':', bx_get('sort'));
+            $aParamsSearch['order'] = [['field' => $aTmp[0], 'direction' => $aTmp[1]]];
+        }
+        
         bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => &$aParamsSearch, 'search_results' => &$aResults));
+
     	if($aResults === false)
     	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1, $this->_bFilterMode);
 
@@ -173,9 +181,56 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
     	$sResults = '';
     	foreach($aResults as $iId)
-    	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);   	
+    	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate); 
+        
+        $sSort = '';
+        if ($sResults != ''){
+
+            $aData = $this->_aObject['sortable_fields'];
+            $aValues = [];
+            foreach($aData as $aField) {
+                if ($aField['active'] == 1)
+                    $aValues[$aField['name'] . ':' . $aField['direction']] = _t($aField['caption']) . ' ' . $aField['direction'];
+            }
+            
+            if (!empty($aValues)){
+                $aValues = array_merge(['' => _t('_sys_txt_search_sort_by_default')], $aValues);
+            }
+            $oForm = new BxTemplFormView(array());
+            
+            $sOnChange = '';
+            if(!$bJsMode) {
+                unset($aParams['start']);
+                unset($aParams['per_page']);
+                list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
+                $sOnChange = "bx_search_extnded_sort(this,'" . BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams)) . "')";
+            }
+            else{
+                $sOnChange = "return !loadDynamicBlockAutoSort(this, $(this).val()," . bx_js_string(json_encode($aParams)) . ");";
+            }
+            
+            $sSort = '';
+            if (!empty($aValues)){
+                $aInputSort = array(
+                    'type' => 'select',
+                    'name' => 'sort',
+                    'value' =>  bx_get('sort') ? bx_get('sort') : '',
+                    'values' => $aValues,
+                    'caption' => _t('_sys_txt_search_sort_by'),
+                    'attrs' => array(
+                        'onChange' => $sOnChange,
+                    ),
+                    'tr_attrs' => array(
+                        'class' => 'sort'
+                    )
+                );
+                $sSort = $oForm->genRow($aInputSort);
+            }
+            
+        }
 
         return $this->_oTemplate->parseHtmlByName('search_extended_results.html', array(
+            'sort' => $sSort,
             'code' => $sResults,
             'bx_if:show_paginate' => array(
                 'condition' => $bTmplVarsPaginate,

@@ -25,9 +25,37 @@ class BxDolSearchExtendedQuery extends BxDolDb
             return false;
 
         $aObject['fields'] = self::getSearchFields($aObject);
+        $aObject['sortable_fields'] = self::getSearchSortableFields($aObject);
         return $aObject;
     }
 
+    static public function getSearchSortableFields($aObject)
+    {
+        $oDb = BxDolDb::getInstance();
+        
+        $sQueryFields = "SELECT * FROM `sys_search_extended_sorting_fields` WHERE `object` = :object ORDER BY `order`";
+        $aQueryFieldsBindings = array('object' => $aObject['object']);
+        $aFields = $oDb->getAll($sQueryFields, $aQueryFieldsBindings);
+
+        //--- Get fields
+        if(empty($aFields) || !is_array($aFields)) {
+        
+            $aFields = BxDolContentInfo::getObjectInstance($aObject['object_content_info'])->getSortableFieldsExtended();
+            $iOrder = 0;
+            foreach($aFields as $sField => $aField) {
+                $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_sorting_fields`(`object`, `name`, `direction`, `caption`, `active`, `order`) VALUES(:object, :name, :direction, :caption, :active, :order)", array(
+                        'object' => $aObject['object'], 
+                        'name' => $aField['name'],
+                        'direction' => $aField['direction'],
+                        'caption' => isset($aField['caption']) ? $aField['caption'] : 'none',
+                        'active' => 1,
+                        'order' => $iOrder++
+                    )) > 0;
+            }
+        }
+        return $aFields;
+    }
+    
     static public function getSearchFields($aObject)
     {
         $oDb = BxDolDb::getInstance();
@@ -142,6 +170,16 @@ class BxDolSearchExtendedQuery extends BxDolDb
         }
 
         return $this->query("DELETE FROM `sys_search_extended_fields` WHERE " . $sWhereClause);
+    }
+    
+    public function deleteSortableFields($aWhere)
+    {
+        if(empty($aWhere))
+    		return false;
+
+        $sWhereClause = $this->arrayToSQL($aWhere, ' AND ');
+        
+        return $this->query("DELETE FROM `sys_search_extended_sorting_fields` WHERE " . $sWhereClause);
     }
 }
 
