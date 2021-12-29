@@ -124,37 +124,21 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS)
         ));
 
-        if ($bDynamicMode) {
+        $sInitCallBack = "
+            bQuillEditorInited = true;
+            Quill.register('modules/imageUploader', ImageUploader);
+        " . $sInitEditor;
 
+        if ($bDynamicMode) {
             list($aJs, $aCss) = $this->_getJsCss(true);
-            $sCss = $this->_oTemplate->addCss($aCss, true);
-            
-            $sScript = $sCss . "<script>
-                var " . $sEditorName . ";
-                if (typeof bQuillEditorInited === 'undefined') {
-                    bx_get_scripts(" . json_encode($aJs) . ", function () {
-                        bQuillEditorInited = true;
-                        Quill.register('modules/imageUploader', ImageUploader); 
-                        $sInitEditor
-                    });
-                } else {
-                	setTimeout(function () {
-                    	$sInitEditor
-                    }, 10); // wait while html is rendered in case of dynamic adding html with quill
-                } 
-            </script>";
+
+            $sScript = "var " . $sEditorName . "; " . $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bQuillEditorInited === 'undefined'", $sInitEditor);
+            $sScript = $this->_oTemplate->_wrapInTagJsCode($sScript);
+            $sScript = $this->_oTemplate->addCss($aCss, true) . $sScript;
 
         } else {
-
-            $sScript = "
-            <script>
-                var " . $sEditorName . ";
-                $(document).ready(function () {
-                    bQuillEditorInited = true;
-                    Quill.register('modules/imageUploader', ImageUploader); 
-                    $sInitEditor
-                });
-            </script>";
+            $sScript = "var " . $sEditorName . "; " . $this->_oTemplate->addJsCodeOnLoad($sInitCallBack);
+            $sScript = $this->_oTemplate->_wrapInTagJsCode($sScript);
         }
 
         return $this->_addJsCss($bDynamicMode) . $sScript;

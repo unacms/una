@@ -950,6 +950,13 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     public function onProfileDelete($iProfileId)
     {
+        //--- Cancel subscriptions
+        $aSubscriptions = $this->_oDb->getSubscription(['type' => 'mixed_ext', 'conditions' => ['client_id' => $iProfileId]]);
+        if(!empty($aSubscriptions) && is_array($aSubscriptions)) 
+            foreach($aSubscriptions as $aSubscription)
+                $this->getObjectSubscriptions()->cancel($aSubscription['pending_id']);
+
+        //--- Clean DB
         $this->_oDb->onProfileDelete($iProfileId);
     }
 

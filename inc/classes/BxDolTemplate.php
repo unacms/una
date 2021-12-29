@@ -1890,6 +1890,73 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $this->_processFiles('js', 'add', $mixedFiles, $bDynamic);
     }
 
+    function addJsPreloaded($aFiles, $sCallback = false, $sCondition = false, $sConditionElseCallback = false)
+    {
+        if(!$aFiles)
+            return '';
+
+        if(!is_array($aFiles))
+            $aFiles = [$aFiles];
+
+        $sMaskLoad = "bx_get_scripts(%s);";
+        $sMaskLoadWithCallback = "bx_get_scripts(%s, function() {%s});";
+
+        $sMaskCondition = "if(%s) {%s}";
+        $sMaskConditionWithElse = "if(%s) {%s} else {setTimeout(function() {%s}, 10);}";
+
+        $iRev = (int)getParam('sys_revision');
+
+        $aFilesLocated = [];
+        foreach($aFiles as $sFile) {
+            $mixedFile = $this->_locateFile('js', $sFile);
+            if($mixedFile === false)
+                continue;
+
+            list($sUrl) = $mixedFile;
+
+            $aFilesLocated[] = bx_append_url_params($sUrl, ['rev' => $iRev]);
+        }
+        $sFilesLocated = json_encode($aFilesLocated);
+
+        if($sCallback !== false)
+            $sResult = sprintf($sMaskLoadWithCallback, $sFilesLocated, $sCallback);
+        else
+            $sResult = sprintf($sMaskLoad, $sFilesLocated);
+
+        if($sCondition === false)
+            return $sResult;
+
+        if($sConditionElseCallback !== false)
+            $sResult = sprintf($sMaskConditionWithElse, $sCondition, $sResult, $sConditionElseCallback);
+        else
+            $sResult = sprintf($sMaskCondition, $sCondition, $sResult);
+
+        return $sResult;
+    }
+
+    function addJsPreloadedWrapped($aFiles, $sCallback = false, $sCondition = false, $sConditionElseCallback = false)
+    {
+        $sCode = $this->addJsPreloaded($aFiles, $sCallback, $sCondition, $sConditionElseCallback);
+        if(!$sCode)
+            return '';
+
+        return $this->_wrapInTagJsCode($sCode);
+    }
+
+    function addJsCodeOnLoad($sCallback)
+    {
+        $sMaskLoad = "$(document).ready(function() {%s});";
+
+        return sprintf($sMaskLoad, $sCallback);
+    }
+    
+    function addJsCodeOnLoadWrapped($sCallback)
+    {
+        $sCode = $this->addJsCodeOnLoad($sCallback);
+
+        return $this->_wrapInTagJsCode($sCode); 
+    }
+    
     /**
      * get added js files
      */ 
@@ -1897,7 +1964,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         return $this->aPage['js_compiled'];
     }
-    
+
     /**
      * Add System JS file(s) to global output.
      * System JS files are the files which are attached to all pages. They will be cached separately from the others.
@@ -2418,27 +2485,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
         $sResult = '';
         foreach($mixedFiles as $sFile) {
-            //--- Process 3d Party CSS/JS file ---//
-            if(strpos($sFile, "http://") !== false || strpos($sFile, "https://") !== false) {
-                $sUrl = $sFile;
-                $sPath = $sFile;
-            }
-            //--- Process Custom CSS/JS file ---//
-            else if(strpos($sFile, "|") !== false) {
-                $sFile = implode('', explode("|", $sFile));
-                $sFile = bx_ltrim_str($sFile, BX_DIRECTORY_PATH_ROOT);
-
-                $sUrl = BX_DOL_URL_ROOT . $sFile;
-                $sPath = realpath(BX_DIRECTORY_PATH_ROOT . $sFile);
-            }
-            //--- Process Common CSS/JS file(check in default locations) ---//
-            else {
-                $sUrl = $this->$sMethodLocate('url', $sFile);
-                $sPath = $this->$sMethodLocate('path', $sFile);
-            }
-
-            if(empty($sPath) || empty($sUrl))
+            $mixedFile = $this->_locateFile($sType, $sFile);
+            if($mixedFile === false)
                 continue;
+
+            list($sUrl, $sPath) = $mixedFile;
 
             $sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
             switch($sAction) {
@@ -2472,6 +2523,32 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         return $bDynamic ? $sResult : true;
+    }
+
+    function _locateFile($sType, $sFile)
+    {
+        //--- Process 3d Party CSS/JS file ---//
+        if(strpos($sFile, "http://") !== false || strpos($sFile, "https://") !== false) {
+            $sUrl = $sFile;
+            $sPath = $sFile;
+        }
+        //--- Process Custom CSS/JS file ---//
+        else if(strpos($sFile, "|") !== false) {
+            $sFile = implode('', explode("|", $sFile));
+            $sFile = bx_ltrim_str($sFile, BX_DIRECTORY_PATH_ROOT);
+
+            $sUrl = BX_DOL_URL_ROOT . $sFile;
+            $sPath = realpath(BX_DIRECTORY_PATH_ROOT . $sFile);
+        }
+        //--- Process Common CSS/JS file(check in default locations) ---//
+        else {
+            $sMethodLocate = '_getAbsoluteLocation' . ucfirst($sType);
+
+            $sUrl = $this->$sMethodLocate('url', $sFile);
+            $sPath = $this->$sMethodLocate('path', $sFile);
+        }
+
+        return !empty($sUrl) && !empty($sPath) ? [$sUrl, $sPath] : false;
     }
 
     /**
