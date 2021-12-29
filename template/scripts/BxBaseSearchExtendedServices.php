@@ -61,7 +61,7 @@ class BxBaseSearchExtendedServices extends BxDol
             $aParams['template'] = bx_process_input(bx_get('template'), BX_DATA_TEXT);
 
         if(empty($aParams['cond']) && bx_get('cond') !== false)
-            $aParams['cond'] = unserialize(urldecode(bx_process_input(bx_get('cond'), BX_DATA_TEXT)));
+            $aParams['cond'] = BxDolSearchExtended::decodeConditions(bx_process_input(bx_get('cond'), BX_DATA_TEXT));
 
         if(!isset($aParams['start']) && bx_get('start') !== false)
             $aParams['start'] = (int)bx_get('start');

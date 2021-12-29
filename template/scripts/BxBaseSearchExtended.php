@@ -160,7 +160,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     	    return '';
 
         if(!empty($aParams['cond']) && is_array($aParams['cond']))
-            $aParams['cond'] = urlencode(serialize($aParams['cond']));
+            $aParams['cond'] = self::encodeConditions($aParams['cond']);
 
         $aPaginate = array('start' => $iStart, 'per_page' => $iPerPage);
         if(!$bJsMode) {

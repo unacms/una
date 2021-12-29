@@ -136,6 +136,16 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
             self::actionGetHashtags();
     }
 
+    static public function encodeConditions($aConditions) 
+    {
+        return urlencode(base64_encode(serialize($aConditions)));
+    }
+
+    static public function decodeConditions($sConditions) 
+    {
+        return unserialize(base64_decode(urldecode($sConditions)));
+    }
+
     public function isEnabled()
     {
         return isset($this->_aObject['active']) && (int)$this->_aObject['active'] != 0;
