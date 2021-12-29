@@ -435,9 +435,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             this._uploader = null;
 
         var $this = this;
-        
-        console.log(o);
-        
+
         var _options = {
             allowProcess: false,
             allowRevert: false,

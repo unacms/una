@@ -16,19 +16,17 @@ define('BX_UPLOADER_VIDEO_BITRATE', 1000000); //1Mbit for video
 
 class BxBaseUploaderRecordVideo extends BxBaseUploaderSimple
 {
-    protected $_sUploaderFormTemplate = 'uploader_form_record_video.html';
-
-    function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
+    public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
-        $this->_sButtonTemplate = 'uploader_button_record_video.html';
-    }
 
-    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false) {
-        if (!$aParams) $aParams = [];
-        $aParams['audio_bitrate'] = BX_UPLOADER_AUDIO_BITRATE;
-        $aParams['video_bitrate'] = BX_UPLOADER_VIDEO_BITRATE;
-        return parent::getUploaderButton($mixedGhostTemplate, $isMultiple, $aParams, $bDynamic);
+        $this->_sButtonTemplate = 'uploader_button_record_video.html';
+        $this->_sJsTemplate = 'uploader_button_record_video_js.html';
+        $this->_sUploaderFormTemplate = 'uploader_form_record_video.html';
+
+        $this->addJs([
+            'RecordRTC.min.js'
+        ]);
     }
 
     public function getUploaderButtonTitle($mixed = false)
@@ -36,14 +34,26 @@ class BxBaseUploaderRecordVideo extends BxBaseUploaderSimple
         return _t('_sys_uploader_record_video_button_name');
     }
 
-    public function addCssJs ($bDynamic = false) {
-        $sAddon = $this->_oTemplate->addJs('RecordRTC.min.js', $bDynamic);
-        $sAddon .= $this->_oTemplate->addJsTranslation([
+    public function getUploaderJs($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false)
+    {
+        if(!$aParams) 
+            $aParams = [];
+
+        return parent::getUploaderJs($mixedGhostTemplate, $isMultiple, array_merge($aParams, [
+            'audio_bitrate' => BX_UPLOADER_AUDIO_BITRATE,
+            'video_bitrate' => BX_UPLOADER_VIDEO_BITRATE
+        ]), $bDynamic);
+    }
+
+    public function addCssJs ($bDynamic = false)
+    {
+        $s = parent::addCssJs($bDynamic);
+        $s .= $this->_oTemplate->addJsTranslation([
             '_sys_uploader_camera_capture_failed',
             '_sys_uploader_record_video_mb',
             '_sys_uploader_unsupported_browser',
         ], $bDynamic);
-        return parent::addCssJs($bDynamic).($bDynamic ? $sAddon : '');
+        return $bDynamic ? $s : '';
     }
 
     protected function getRestrictionsText ()

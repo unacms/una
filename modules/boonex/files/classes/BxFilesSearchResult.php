@@ -409,19 +409,14 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             $sUniqId = genRndPwd (8, false);
             $oUploader = BxDolUploader::getObjectInstance('bx_files_html5', $this->oModule->_oConfig->CNF['OBJECT_STORAGE'], $sUniqId, $this->oModule->_oTemplate);
 
-            $aUploaderParams = array(
-                'button_title' => '',
-                'storage_private' => '0',
-                'images_transcoder' => 'bx_files_preview',
-                'content_id' => 0,
-                'attrs' => bx_convert_array2attrs(['style' => 'display:none;']),
-                'btn_class' => '',
-            );
-
             $iMaxNestingLevel = intval(getParam($this->oModule->_oConfig->CNF['PARAM_MAX_NESTING_LEVEL']));
             $aUploadButtonParams = [
                 'js_object' => $sJsObject,
-                'uploader_code' => $oUploader->getUploaderButton('', true, $aUploaderParams, true),
+                'uploader_code' => $oUploader->getUploaderJs('', true, [
+                    'storage_private' => '0',
+                    'images_transcoder' => 'bx_files_preview',
+                    'content_id' => 0,
+                ], true),
                 'uploader_js_object' => $oUploader->getNameJsInstanceUploader(),
                 'uploader_click_handler' => $oUploader->getNameJsInstanceUploader() . '.showUploaderForm();',
                 'bx_if:create_folder_allowed' => [

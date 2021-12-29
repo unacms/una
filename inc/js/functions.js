@@ -1094,11 +1094,6 @@ function bx_activate_anim_icons(sColor)
     });
 }
 
-function bx_get_style(sUrl)
-{
-	$("head").append($("<link rel='stylesheet' href='" + sUrl + "' type='text/css' />"));
-}
-
 function bx_get_param(s) {
     if (!window.aDolOptions || !aDolOptions[s])
         return false;
@@ -1215,11 +1210,27 @@ function bx_check_mq()
 }
 
 /**
+ * This function loads the passed list of CSS files. In case when this function is called for dynamic loading 
+ * of the same file but many times it allows to avoid multiply loadings of the same file.
+ */
+function bx_get_style(mixedUrl)
+{
+    if(typeof(mixedUrl) === 'string')
+        mixedUrl = new Array(mixedUrl);
+
+    for(let i = 0; i < mixedUrl.length; i++) {
+        if(mixedUrl[i] === undefined || !mixedUrl[i].length || $("link[href = '" + mixedUrl[i] + "']").length > 0)
+            continue;
+
+        $("head").append($("<link rel='stylesheet' href='" + mixedUrl[i] + "' type='text/css' />"));
+    }
+}
+
+/**
  * This function loads the passed list of js files and executes callback function when the all files are loaded.
  * In case when this function is called for dynamic loading of the same file but many times (like Plyr video init)
  * it allows to avoid multiply loadings of the same file.
  */
-
 function bx_get_scripts (aFiles, fCallback)
 {
     let iCounter = 0;

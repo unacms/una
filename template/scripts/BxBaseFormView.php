@@ -1402,51 +1402,60 @@ BLAH;
             return '';
 
         $sUniqId = !empty($aInput['uploaders_id']) ? $aInput['uploaders_id'] : genRndPwd (8, false);
+        $bInitGhosts = isset($aInput['init_ghosts']) && !$aInput['init_ghosts'] ? 0 : 1;
+        $bInitReordering = empty($aInput['init_reordering']) ? 0 : 1;
 
-        $sUploaders = '';
         $oUploader = null;
+        $sUploadersButtons = $sUploadersJs = '';
         foreach ($aInput['uploaders'] as $sUploaderObject) {
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], $sUniqId, $this->oTemplate);
-            if (!$oUploader)
+            if(!$oUploader)
                 continue;
 
-            $sGhostTemplate = $this->genGhostTemplate($aInput);
-
+            //--- Get Button code.
             $aAttrs = !empty($aInput['attrs']) ? $aInput['attrs'] : array();
-            if (empty($aInput['attrs']['disabled']))
+            if(empty($aInput['attrs']['disabled']))
                 $aAttrs = array_merge($aAttrs, array('onclick' => $oUploader->getNameJsInstanceUploader() . '.showUploaderForm();'));
-                
-            $aParams = array(
-                'button_title' => bx_js_string($oUploader->getUploaderButtonTitle(isset($aInput['upload_buttons_titles']) ? $aInput['upload_buttons_titles'] : false)),
-                'content_id' => isset($aInput['content_id']) ? $aInput['content_id'] : '',
-                'storage_private' => isset($aInput['storage_private']) ? $aInput['storage_private'] : '1',
+
+            $aParamsButtons = [
                 'attrs' => bx_convert_array2attrs($aAttrs),
                 'btn_class' => !empty($aInput['attrs']['disabled']) ? 'bx-btn-disabled' : '',
-            );
-            if (isset($aInput['images_transcoder']) && $aInput['images_transcoder'])
-                $aParams['images_transcoder'] = bx_js_string($aInput['images_transcoder']);
+                'button_title' => bx_js_string($oUploader->getUploaderButtonTitle(isset($aInput['upload_buttons_titles']) ? $aInput['upload_buttons_titles'] : false)),
+            ];
 
-            $sUploaders .= $oUploader->getUploaderButton($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParams, $this->_bDynamicMode);
+            $sUploadersButtons .= $oUploader->getUploaderButton($aParamsButtons);
+
+            //--- Get JS code.
+            $sGhostTemplate = $this->genGhostTemplate($aInput);
+
+            $aParamsJs = [
+                'content_id' => isset($aInput['content_id']) ? $aInput['content_id'] : '',
+                'storage_private' => isset($aInput['storage_private']) ? $aInput['storage_private'] : '1',
+                'is_init_ghosts' => $bInitGhosts,
+                'is_init_reordering' => $bInitReordering
+            ];
+            if(isset($aInput['images_transcoder']) && $aInput['images_transcoder'])
+                $aParamsJs['images_transcoder'] = bx_js_string($aInput['images_transcoder']);
+
+            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParamsJs, $this->_bDynamicMode);
         }
-        
+
         if(!$oUploader)
             return '';
 
-        $bInitReordering = !empty($aInput['init_reordering']);
         if($bInitReordering) {
             $this->addCssJsUi();
             $this->addCssJsUiSortable();
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_uploader.html', array(
-            'uploaders_buttons' => $sUploaders,
+            'uploaders_buttons' => $sUploadersButtons,
             'info' => $sInfo,
             'error' => $sError,
             'id_container_errors' => $oUploader ? $oUploader->getIdContainerErrors() : '',
             'id_container_result' => $oUploader ? $oUploader->getIdContainerResult() : '',
             'uploader_instance_name' => $oUploader ? $oUploader->getNameJsInstanceUploader() : '',
-            'is_init_ghosts' => isset($aInput['init_ghosts']) && !$aInput['init_ghosts'] ? 0 : 1,
-            'is_init_reordering' => !$bInitReordering ? 0 : 1
+            'uploaders_js' => $sUploadersJs,
         ));
     }
 

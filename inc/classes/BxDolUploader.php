@@ -115,6 +115,11 @@ abstract class BxDolUploader extends BxDolFactory
     protected $_sUploadErrorMessages; ///< upload error message
 
     protected $_sButtonTemplate; ///< template name for displaying upload button
+    protected $_sJsTemplate; ///< template name for displaying upload JS
+    protected $_sUploaderFormTemplate; ///< template name for displaying uploader form
+
+    protected $_aJs;
+    protected $_aCss;
 
     /**
      * constructor
@@ -136,6 +141,9 @@ abstract class BxDolUploader extends BxDolFactory
         $this->_sResultContainerId = 'bx-form-input-files-' . $sUniqId . '-upload-result';
         $this->_sErrorsContainerId = 'bx-form-input-files-' . $sUniqId . '-errors';
         $this->_sFormContainerId = 'bx-form-input-files-' . $sUniqId . '-form-cont';
+
+        $this->_aJs = ['BxDolUploader.js'];
+        $this->_aCss = ['uploaders.css'];
     }
 
     static public function getObjectInstance($sObject, $sStorageObject, $sResultContainerId, $oTemplate = false)
@@ -160,7 +168,7 @@ abstract class BxDolUploader extends BxDolFactory
      * Is uploader available?
      * @return boolean
      */
-    function isAvailable()
+    public function isAvailable()
     {
         return $this->_aObject['active'] ? true : false;
     }
@@ -239,22 +247,26 @@ abstract class BxDolUploader extends BxDolFactory
      * Show uploader button.
      * @return HTML string
      */
-    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false)
+    public function getUploaderButton($aParams = array())
+    {
+        return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+    }
+
+    /**
+     * Show uploader JS.
+     * @return HTML string
+     */
+    public function getUploaderJs($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false)
     {
         $sJsValue = '';
-        if (is_array($mixedGhostTemplate)) {
-            $sJsValue = "{\n";
-            foreach ($mixedGhostTemplate as $iFileId => $s) {
-                $sJsValue .= $iFileId . ':' . "'" . bx_js_string($s, BX_ESCAPE_STR_APOS) . "',\n";
-            }
-            $sJsValue = substr($sJsValue, 0, -2);
-            $sJsValue .= "}\n";
-        } else {
+        if(is_array($mixedGhostTemplate))
+            $sJsValue = json_encode($mixedGhostTemplate);
+        else
             $sJsValue = "'" . bx_js_string($mixedGhostTemplate, BX_ESCAPE_STR_APOS) . "'";
-        }
 
-        $aParamsDefault = array (
-            'uploader_instance_name' => $this->getNameJsInstanceUploader(),
+        $sJsObject = $this->getNameJsInstanceUploader();
+        $sJsCode = $this->_oTemplate->parseHtmlByName($this->_sJsTemplate, array_merge([
+            'uploader_instance_name' => $sJsObject,
             'engine' => $this->_aObject['object'],
             'storage_object' => $this->_sStorageObject,
             'images_transcoder' => '',
@@ -262,25 +274,58 @@ abstract class BxDolUploader extends BxDolFactory
             'template_ghost' => $sJsValue,
             'multiple' => $isMultiple ? 1 : 0,
             'storage_private' => isset($aParams['storage_private']) ? $aParams['storage_private'] : 1,
-        );
-        $aParams = array_merge($aParamsDefault, $aParams);
-        return $this->addCssJs ($bDynamic) . $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+            'bx_if:restore_ghosts' => [
+                'condition' => isset($aParams['is_init_ghosts']) ? $aParams['is_init_ghosts'] : 1,
+                'content' => [
+                    'uploader_instance_name' => $sJsObject,
+                    'is_init_reordering' => isset($aParams['is_init_reordering']) ? $aParams['is_init_reordering'] : 0,
+                ]
+            ]
+        ], $aParams));
+
+        if(!$bDynamic) {
+            $this->_oTemplate->addJs($this->_aJs);
+            $sJsCode = $this->_oTemplate->addJsCodeOnLoadWrapped($sJsCode);
+        }
+        else 
+            $sJsCode = $this->_oTemplate->addJsPreloadedWrapped($this->_aJs, $sJsCode);
+
+        return $this->addCssJs($bDynamic) . $sJsCode;
     }
 
     /**
      * add necessary js, css files and js translations
      */ 
-    public function addCssJs ($bDynamic = false)
+    public function addCssJs($bDynamic = false)
     {
         $s = '';
-        $s .= $this->_oTemplate->addCss('uploaders.css', $bDynamic);
-        $s .= $this->_oTemplate->addJs('BxDolUploader.js', $bDynamic);
-        $s .= $this->_oTemplate->addJsTranslation(array(
+        $s .= $this->_oTemplate->addCss($this->_aCss, $bDynamic);
+        $s .= $this->_oTemplate->addJsTranslation([
             '_sys_uploader_confirm_leaving_page',
             '_sys_uploader_confirm_close_popup',
             '_sys_uploader_upload_canceled',
-        ), $bDynamic);
+        ], $bDynamic);
         return $bDynamic ? $s : '';
+    }
+
+    public function addJs($mixedFile)
+    {
+        if(!is_array($mixedFile))
+            $mixedFile = [$mixedFile];
+
+        foreach($mixedFile as $sFile)
+            if(!in_array($sFile, $this->_aJs))
+                $this->_aJs[] = $sFile;
+    }
+
+    public function addCss($mixedFile)
+    {
+        if(!is_array($mixedFile))
+            $mixedFile = [$mixedFile];
+
+        foreach($mixedFile as $sFile)
+            if(!in_array($sFile, $this->_aCss))
+                $this->_aCss[] = $sFile;
     }
 
     /**
@@ -467,7 +512,7 @@ abstract class BxDolUploader extends BxDolFactory
             return null;
         return $oStorage->getAllowedExtensions();
     }
-    
+
     protected function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
     {
         return array();

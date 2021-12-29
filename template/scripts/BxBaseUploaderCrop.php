@@ -13,12 +13,21 @@
  */
 class BxBaseUploaderCrop extends BxDolUploader
 {
-    protected $_sUploaderFormTemplate = 'uploader_form_crop.html';
-    
-    function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
+    public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
+
         $this->_sButtonTemplate = 'uploader_button_crop.html';
+        $this->_sJsTemplate = 'uploader_button_crop_js.html';
+        $this->_sUploaderFormTemplate = 'uploader_form_crop.html';
+
+        $this->addJs([
+            'croppie/croppie.min.js'
+        ]);
+
+        $this->addCss([
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'croppie/|croppie.css'
+        ]);
     }
 
     /**
@@ -37,12 +46,13 @@ class BxBaseUploaderCrop extends BxDolUploader
     /**
      * add necessary js, css files and js translations
      */ 
-    public function addCssJs ($bDynamic = false)
+    public function addCssJs($bDynamic = false)
     {
-        $s = parent::addCssJs ($bDynamic);
-        $s .= $this->_oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'croppie/|croppie.css', $bDynamic);
-        $s .= $this->_oTemplate->addJs('croppie/croppie.min.js', $bDynamic);
-        $s .= $this->_oTemplate->addJsTranslation(array('_sys_uploader_crop_err_upload', '_sys_uploader_crop_wrong_ext'), $bDynamic);
+        $s = parent::addCssJs($bDynamic);
+        $s .= $this->_oTemplate->addJsTranslation([
+            '_sys_uploader_crop_err_upload', 
+            '_sys_uploader_crop_wrong_ext'
+        ], $bDynamic);
         return $bDynamic ? $s : '';
     }
     

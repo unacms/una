@@ -15,25 +15,20 @@
 class BxBaseUploaderHTML5 extends BxDolUploader
 {
     protected $_sDivId; ///< div id where upload button will be placed
-    protected $_sUploaderFormTemplate = 'uploader_form_html5.html';
+    protected $_sFocusDivId;
 
-    function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
+    public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
         $this->_sFocusDivId = 'bx-form-input-files-' . $sUniqId . '-focus-' . $this->_aObject['object'];
+
         $this->_sButtonTemplate = 'uploader_button_html5.html';
-    }
+        $this->_sJsTemplate = 'uploader_button_html5_js.html';
+        $this->_sUploaderFormTemplate = 'uploader_form_html5.html';
 
-    /**
-     * add necessary js, css files and js translations
-     */ 
-    public function addCssJs ($bDynamic = false)
-    {
-        $s = parent::addCssJs ($bDynamic);
-
-        $aJs = [
+        $this->addJs([
             'filepond/filepond.min.js',
             'filepond/filepond-plugin-image-preview.min.js',
             'filepond/filepond-plugin-image-transform.min.js',
@@ -41,19 +36,12 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             'filepond/filepond-plugin-image-resize.min.js',
             'filepond/filepond-plugin-file-validate-size.min.js',
             'filepond/filepond-plugin-file-validate-type.js',
-        ];
+        ]);
 
-        if($bDynamic)
-            $s .= $this->_oTemplate->addJsPreloadedWrapped($aJs);
-        else
-            $this->_oTemplate->addJs($aJs);
-        
-        $s .= $this->_oTemplate->addCss([
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'filepond/|filepond.min.css',
-                BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'filepond/|filepond-plugin-image-preview.min.css',
-            ], $bDynamic);
-
-        return $bDynamic ? $s : '';
+        $this->addCss([
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'filepond/|filepond.min.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'filepond/|filepond-plugin-image-preview.min.css',
+        ]);
     }
 
     /**

@@ -14,13 +14,15 @@
 class BxBaseUploaderSimple extends BxDolUploader
 {
     protected $_sIframeId;
-    protected $_sUploaderFormTemplate = 'uploader_form_simple.html';
 
-    function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
+    public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
+
         $this->_sIframeId = 'bx-form-input-files-' . $sUniqId . '-iframe';
         $this->_sButtonTemplate = 'uploader_button_simple.html';
+        $this->_sJsTemplate = 'uploader_button_simple_js.html';
+        $this->_sUploaderFormTemplate = 'uploader_form_simple.html';
     }
 
     /**
@@ -56,7 +58,6 @@ class BxBaseUploaderSimple extends BxDolUploader
             'storage_private' => $isPrivate,
         ));
     }
-
 }
 
 /** @} */

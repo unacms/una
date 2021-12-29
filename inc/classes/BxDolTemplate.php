@@ -1904,7 +1904,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sMaskCondition = "if(%s) {%s}";
         $sMaskConditionWithElse = "if(%s) {%s} else {setTimeout(function() {%s}, 10);}";
 
-        $iRev = (int)getParam('sys_revision');
+        $iRev = $this->_getRevision();
 
         $aFilesLocated = [];
         foreach($aFiles as $sFile) {
@@ -2081,7 +2081,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _wrapInTagJsCode($sCode)
     {
-        return "<script language=\"javascript\">\n<!--\n" . $sCode . "\n-->\n</script>";
+        return "<script language=\"javascript\">\n" . $sCode . "\n</script>";
     }
 
     /**
@@ -2093,7 +2093,46 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function addCss($mixedFiles, $bDynamic = false)
     {
-        return $this->_processFiles('css', 'add', $mixedFiles, $bDynamic);
+        if($bDynamic)
+            return $this->addCssPreloadedWrapped($mixedFiles);
+        else
+            return $this->_processFiles('css', 'add', $mixedFiles, $bDynamic);
+    }
+
+    function addCssPreloaded($aFiles)
+    {
+        if(!$aFiles)
+            return '';
+
+        if(!is_array($aFiles))
+            $aFiles = [$aFiles];
+
+        $sMaskLoad = "bx_get_style(%s);";
+
+        $iRev = $this->_getRevision();
+
+        $aFilesLocated = [];
+        foreach($aFiles as $sFile) {
+            $mixedFile = $this->_locateFile('css', $sFile);
+            if($mixedFile === false)
+                continue;
+
+            list($sUrl) = $mixedFile;
+
+            $aFilesLocated[] = bx_append_url_params($sUrl, ['rev' => $iRev]);
+        }
+        $sFilesLocated = json_encode($aFilesLocated);
+
+        return sprintf($sMaskLoad, $sFilesLocated);
+    }
+
+    function addCssPreloadedWrapped($aFiles)
+    {
+        $sCode = $this->addCssPreloaded($aFiles);
+        if(!$sCode)
+            return '';
+
+        return $this->_wrapInTagJsCode($sCode);
     }
 
     /**
@@ -2440,7 +2479,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _includeFiles($sType, &$aFiles)
     {
-        $iRev = (int)getParam('sys_revision');
+        $iRev = $this->_getRevision();
         $sUpcaseType = ucfirst($sType);
 
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
@@ -2478,7 +2517,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(is_string($mixedFiles))
             $mixedFiles = array($mixedFiles);
 
-        $iRev = (int)getParam('sys_revision');
+        $iRev = $this->_getRevision();
 
         $sUpcaseType = ucfirst($sType);
         $sMethodLocate = '_getAbsoluteLocation' . $sUpcaseType;
@@ -3066,6 +3105,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function _getLoaderUrl($sType, $sName)
     {
         return BX_DOL_URL_ROOT . 'gzip_loader.php?file=' . $sName . '.' . $sType;
+    }
+
+    /**
+     * Get current revision number.
+     * 
+     * @return integer number
+     */
+    function _getRevision()
+    {
+        return (int)getParam('sys_revision');
     }
 
     /**
