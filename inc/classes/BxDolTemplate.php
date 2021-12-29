@@ -1943,6 +1943,20 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $this->_wrapInTagJsCode($sCode);
     }
 
+    function addJsCodeOnLoad($sCallback)
+    {
+        $sMaskLoad = "$(document).ready(function() {%s});";
+
+        return sprintf($sMaskLoad, $sCallback);
+    }
+    
+    function addJsCodeOnLoadWrapped($sCallback)
+    {
+        $sCode = $this->addJsCodeOnLoad($sCallback);
+
+        return $this->_wrapInTagJsCode($sCode); 
+    }
+    
     /**
      * get added js files
      */ 
