@@ -746,6 +746,57 @@ class BxDolStudioFormsQuery extends BxDolDb
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
+    
+    function getSortableFields($aParams, &$aItems, $bReturnCount = true)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sFromClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+
+        if(!isset($aParams['order']) || empty($aParams['order']))
+           $sOrderClause = "ORDER BY `tfld`.`order` ASC";
+
+        switch($aParams['type']) {
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tfld`.`id`=:id ";
+                break;
+
+            case 'by_object':
+            	$aMethod['params'][1] = array(
+                	'object' => $aParams['object']
+                );
+
+                $sWhereClause = "AND `tfld`.`object`=:object";
+                break;
+
+            case 'counter_by_modules':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'module';
+                $aMethod['params'][2] = 'counter';
+                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sGroupClause = "GROUP BY `tfld`.`module`";
+                $sOrderClause = "";
+                break;
+
+            case 'all':
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+            	`tfld`.*" . $sSelectClause . "
+            FROM `sys_search_extended_sorting_fields` AS `tfld` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
+        if(!$bReturnCount)
+            return !empty($aItems);
+
+        return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
 
     function alterAdd($sTable, $sField, $sType)
     {

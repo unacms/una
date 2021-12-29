@@ -28,6 +28,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_SORTABLE_FIELDS => array('icon' => 'sort'),
             BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
             BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => array('icon' => 'folder'),
             BX_DOL_STUDIO_FORM_TYPE_GROUPS_ROLES => array('icon' => 'user'),
@@ -41,6 +42,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             'pre_values' => 'sys_studio_forms_pre_values',
             'search_forms' => 'sys_studio_search_forms',
             'search_fields' => 'sys_studio_search_forms_fields',
+            'search_sortable_fields' => 'sys_studio_search_forms_sortable_fields',
             'labels' => 'sys_studio_labels',
             'categories' => 'sys_studio_categories',
             'groups_roles' => 'sys_studio_groups_roles',
@@ -182,6 +184,11 @@ class BxBaseStudioForms extends BxDolStudioForms
     protected function getSearchFields()
     {
         return $this->getGrid($this->aGridObjects['search_fields']);
+    }
+    
+    protected function getSearchSortableFields()
+    {
+        return $this->getGrid($this->aGridObjects['search_sortable_fields']);
     }
 
     protected function getSearchFieldsObject()

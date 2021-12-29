@@ -167,7 +167,7 @@ class BxBaseStudioFormsSearchFields extends BxDolStudioFormsSearchFields
 
     public function performActionReset()
     {
-        $mixedResult = BxDolSearchExtended::getObjectInstance($this->sForm)->reset();
+        $mixedResult = BxDolSearchExtended::getObjectInstance($this->sForm)->resetFields();
         if($mixedResult === false)
             return echoJson(array('msg' => _t('_adm_from_err_search_forms_fields_reset')));
 

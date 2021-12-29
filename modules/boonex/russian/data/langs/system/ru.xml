@@ -748,6 +748,7 @@
 	<string name="_adm_form_btn_search_forms_edit"><![CDATA[Редактировать форму поиска]]></string>
     <string name="_adm_form_btn_search_forms_fields_edit"><![CDATA[Редактировать поле формы поиска]]></string>
     <string name="_adm_form_btn_search_forms_fields_reset"><![CDATA[Сбросить]]></string>
+    <string name="_adm_form_btn_search_forms_sortable_fields_reset"><![CDATA[Сбросить]]></string>
     <string name="_adm_form_btn_search_forms_save"><![CDATA[Сохранить]]></string>
     <string name="_adm_form_btn_search_forms_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_form_dsc_displays_title"><![CDATA[Название режима отображения Формы. Видимо только в Студии.]]></string>
@@ -816,6 +817,7 @@
 	<string name="_adm_form_err_search_forms_essential"><![CDATA[Это важное поле. Заполните его, пожалуйста.]]></string>
     <string name="_adm_form_err_search_forms_fields_edit"><![CDATA[Не могу обновить поле формы поиска.]]></string>
     <string name="_adm_from_err_search_forms_fields_reset"><![CDATA[Не могу сбросить форму поиска.]]></string>
+    <string name="_adm_from_err_search_forms_sortable_fields_reset"><![CDATA[Не могу сбросить форму поиска.]]></string>
     <string name="_adm_form_err_search_forms_edit"><![CDATA[Не могу обновить выбранную форму поиска.]]></string>
     <string name="_adm_form_err_search_forms_title"><![CDATA[Введите имя, более 3 символов]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[Все модули]]></string>
@@ -1026,6 +1028,7 @@
 	<string name="_adm_form_txt_pre_values_gl_lkey"><![CDATA[Заголовок]]></string>
 	<string name="_adm_form_txt_pre_values_lkey"><![CDATA[Заголовок]]></string>
 	<string name="_adm_form_txt_search_forms_edit_popup"><![CDATA[Редактировать "{0}" форму поиска]]></string>
+    <string name="_adm_form_txt_search_forms_sortable_fields"><![CDATA[Поля для сортировки]]></string>
     <string name="_adm_form_txt_search_forms_fields"><![CDATA[Поля]]></string>
     <string name="_adm_form_txt_search_forms_fields_type"><![CDATA[Тип]]></string>
     <string name="_adm_form_txt_search_forms_fields_caption"><![CDATA[Заголовок]]></string>
@@ -1033,6 +1036,9 @@
     <string name="_adm_form_txt_search_forms_fields_search_type"><![CDATA[Тип поиска]]></string>
     <string name="_adm_form_txt_search_forms_fields_select_object"><![CDATA[Выбрать форму...]]></string>
     <string name="_adm_form_txt_search_forms_fields_edit_popup"><![CDATA[Редактировать "{0}" поле формы поиска]]></string>
+    <string name="_adm_form_txt_search_forms_sortable_fields"><![CDATA[Поля для сортировки]]></string>
+    <string name="_adm_form_txt_search_forms_sortable_fields_caption"><![CDATA[Заголовок]]></string>
+    <string name="_adm_form_txt_search_forms_sortable_fields_direction"><![CDATA[Направление]]></string>
     <string name="_adm_form_txt_search_forms_manage_fields"><![CDATA[Управление полями]]></string>
     <string name="_adm_form_txt_search_forms_module"><![CDATA[Модуль]]></string>
     <string name="_adm_form_txt_search_forms_n_fields"><![CDATA[{0} полей]]></string>
@@ -1058,6 +1064,7 @@
 	<string name="_adm_lmi_cpt_search"><![CDATA[Поиск]]></string>
 	<string name="_adm_lmi_cpt_search_forms"><![CDATA[Формы поиска]]></string>
     <string name="_adm_lmi_cpt_search_fields"><![CDATA[Поля поиска]]></string>
+    <string name="_adm_lmi_cpt_search_sortable_fields"><![CDATA[Поля сортироски поиска]]></string>
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Заставка]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
@@ -3414,6 +3421,8 @@
         <string name="_sys_txt_share_popup_url"><![CDATA[URL]]></string>
         <string name="_sys_txt_share_popup_copy_to_clipboard_text"><![CDATA[Кликните чтобы скопировать]]></string>
         <string name="_sys_txt_share_popup_embeded_code"><![CDATA[Код для вставки]]></string>
+        <string name="_sys_txt_search_sort_by"><![CDATA[Сортировать по]]></string>
+        <string name="_sys_txt_search_sort_by_default"><![CDATA[Умолчанию]]></string>
         <string name="_sys_unconfirmed"><![CDATA[Неподтвержденный]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Важная информация:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[База данных и версии файлов отличаются, возможно, предыдущий патч не был правильно применён.]]></string>

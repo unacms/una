@@ -135,6 +135,24 @@ function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams
     return loadDynamicBlockAuto(e, sUrl);
 }
 
+function loadDynamicBlockAutoSort (e, sort, sAdditionalUrlParams) {
+
+    sUrl = location.href;
+    console.log(sort);
+
+    sUrl = sUrl.replace(/sort=\d+/, '').replace(/[&\?]+$/, '');
+    sUrl = bx_append_url_params(sUrl, 'sort' + '=' + sort);
+    if ('undefined' != typeof(sAdditionalUrlParams))
+        sUrl = bx_append_url_params(sUrl, sAdditionalUrlParams);
+
+    if ($(e).parents('.bx-search-result-block-pagination').length > 0){
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(e).parents('.bx-search-result-block-pagination').first().offset().top
+        }, 500);
+    }
+    return loadDynamicBlockAuto(e, sUrl);
+}
+
 /**
  * This function reloads page block automatically, 
  * just provide any element inside the block and this function will reload the block.
@@ -986,6 +1004,10 @@ function bx_append_url_params (sUrl, mixedParams) {
         sParams += mixedParams;
 
     return sUrl + sParams + sHash;
+}
+
+function bx_search_extnded_sort(obj, url){
+    location.href = url + '&sort=' +$(obj).val();
 }
 
 function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, iMinLen, onComplete) {

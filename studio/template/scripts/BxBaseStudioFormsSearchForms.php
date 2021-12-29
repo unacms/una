@@ -19,6 +19,8 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_search_forms_edit');
 
         $this->sUrlViewFields = BX_DOL_URL_STUDIO . 'builder_forms.php?page=search_fields&module=%s&form=%s';
+        
+        $this->sUrlViewSortableFields = BX_DOL_URL_STUDIO . 'builder_forms.php?page=search_sortable_fields&module=%s&form=%s';
     }
 
     public function performActionEdit()
@@ -167,6 +169,19 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
         $this->oDb->getSearchFields(array('type' => 'by_object', 'object' => $aRow['object']), $aFields, false);
 
         $sLink = sprintf($this->sUrlViewFields, $aRow['module'], $aRow['object']);
+        $mixedValue = $this->_oTemplate->parseLink($sLink, _t('_adm_form_txt_search_forms_n_fields', count($aFields)), array(
+            'title' => _t('_adm_form_txt_search_forms_manage_fields')
+        ));
+
+        return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellSortableFields ($mixedValue, $sKey, $aField, $aRow)
+    {
+        $aFields = array();
+        $this->oDb->getSortableFields(array('type' => 'by_object', 'object' => $aRow['object']), $aFields, false);
+
+        $sLink = sprintf($this->sUrlViewSortableFields, $aRow['module'], $aRow['object']);
         $mixedValue = $this->_oTemplate->parseLink($sLink, _t('_adm_form_txt_search_forms_n_fields', count($aFields)), array(
             'title' => _t('_adm_form_txt_search_forms_manage_fields')
         ));

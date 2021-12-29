@@ -296,6 +296,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
     {
         return $this->_call('get_searchable_fields_extended');
     }
+    
+    public function getSortableFieldsExtended ()
+    {
+        return $this->_call('get_sortable_fields_extended');
+    }
 
     public function getSearchResultExtended ($aParams, $iStart = 0, $iPerPage = 0, $bFilterMode = false)
     {

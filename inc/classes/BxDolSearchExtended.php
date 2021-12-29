@@ -143,15 +143,41 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 
     public function clean()
     {
+        return $this->cleanFields() & $this->cleanSortableFields();
+    }
+    
+    public function cleanFields()
+    {
         return $this->_oDb->deleteFields(array('object' => $this->_sObject)) !== false;
+    }
+    
+    public function cleanSortableFields()
+    {
+        return $this->_oDb->deleteSortableFields(array('object' => $this->_sObject)) !== false;
     }
 
     public function reset()
+    {   
+        $this->resetFields();
+        $this->resetSortableFields();
+        return true;
+    }
+    
+    public function resetFields()
     {
-        if(!$this->clean())
+        if(!$this->cleanFields())
             return false;
-
+        
         $this->_aObject['fields'] = BxDolSearchExtendedQuery::getSearchFields($this->_aObject);
+        return true;
+    }
+    
+    public function resetSortableFields()
+    {
+        if(!$this->cleanSortableFields())
+            return false;
+        
+        $this->_aObject['fields'] = BxDolSearchExtendedQuery::getSearchSortableFields($this->_aObject);
         return true;
     }
 }
