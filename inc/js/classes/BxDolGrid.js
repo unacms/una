@@ -298,6 +298,9 @@ BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
         if (oData && oData.redirect != undefined && oData.redirect.length != 0) {
             document.location = oData.redirect;
         }
+        if (oData && oData.open_url != undefined && oData.open_url.length != 0) {
+            window.open(oData.open_url, '_blank');
+        }
         if (oData && undefined != oData.eval) {
             eval(oData.eval);
         }

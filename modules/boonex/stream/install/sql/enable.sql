@@ -18,7 +18,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stream_app', '', @iCategId, '_bx_stream_option_app', 'digit', '', '', '', 22),
 ('bx_stream_sources_pattern', '', @iCategId, '_bx_stream_option_sources_pattern', 'text', '', '', '', 24),
 ('bx_stream_dash_enabled', '', @iCategId, '_bx_stream_option_dash_enabled', 'checkbox', '', '', '', 26),
-('bx_stream_hls_enabled', '', @iCategId, '_bx_stream_option_hls_enabled', 'checkbox', '', '', '', 28);
+('bx_stream_hls_enabled', '', @iCategId, '_bx_stream_option_hls_enabled', 'checkbox', '', '', '', 28),
+('bx_stream_recordings_url', '', @iCategId, '_bx_stream_option_recordings_url', 'digit', '', '', '', 30),
+('bx_stream_recordings_source', '', @iCategId, '_bx_stream_option_recordings_source', 'digit', '', '', '', 32);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_stream_engine_ome', '_bx_stream_options_cat_engine_ome', 2);
@@ -93,6 +95,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_stream_view_entry', 3, 'bx_stream', '', '_bx_stream_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
 ('bx_stream_view_entry', 3, 'bx_stream', '', '_bx_stream_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 3),
 ('bx_stream_view_entry', 3, 'bx_stream', '', '_bx_stream_page_block_title_entry_rtmp_settings', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:20:\"stream_rtmp_settings\";}', 0, 0, 1, 4),
+('bx_stream_view_entry', 3, 'bx_stream', '', '_bx_stream_page_block_title_entry_recordings', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:17:\"stream_recordings\";}', 0, 0, 1, 5),
 ('bx_stream_view_entry', 3, 'bx_stream', '', '_bx_stream_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 0),
 ('bx_stream_view_entry', 2, 'bx_stream', '', '_bx_stream_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 3),
 ('bx_stream_view_entry', 4, 'bx_stream', '', '_bx_stream_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_stream\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 0),
@@ -249,6 +252,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_stream', 'record', NULL, '_bx_stream_acl_action_record', '', 1, 3);
+SET @iIdActionRecord = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_stream', 'delete entry', NULL, '_bx_stream_acl_action_delete_entry', '', 1, 3);
 SET @iIdActionEntryDelete = LAST_INSERT_ID();
 
@@ -357,6 +364,20 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_stream_common', 'single', 'edit', '_bx_stream_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_stream_common', 'single', 'delete', '_bx_stream_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_stream_common', 'single', 'settings', '_bx_stream_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+
+-- GRIDS: recordings
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `show_total_count`, `override_class_name`, `override_class_file`) VALUES
+('bx_stream_recordings', 'Sql', 'SELECT `bx_stream_recordings`.* FROM `bx_stream_recordings` INNER JOIN `sys_storage_ghosts` USING (`id`) WHERE `sys_storage_ghosts`.`object` = "bx_stream_recordings"', 'bx_stream_recordings', 'id', 'added', '', '', 16, NULL, 'start', '', '', '', 'auto', 'size,added', '', 2147483647, 0, 'BxStrmGridRecordings', 'modules/boonex/stream/classes/BxStrmGridRecordings.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_stream_recordings', 'size', '_bx_stream_field_size', '20%', 0, 0, '', 1),
+('bx_stream_recordings', 'added', '_bx_stream_field_added', '20%', 0, 0, '', 2),
+('bx_stream_recordings', 'actions', '_sys_actions', '60%', 0, 0, '', 3);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_stream_recordings', 'single', 'download', '', 'download', 0, 1),
+('bx_stream_recordings', 'single', 'publish', '', 'upload', 1, 2),
+('bx_stream_recordings', 'single', 'delete', '', 'remove',  1, 3);
 
 -- UPLOADERS
 

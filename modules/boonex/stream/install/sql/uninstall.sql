@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_stream_streams`, `bx_stream_covers`, `bx_stream_photos_resized`, `bx_stream_cmts`, `bx_stream_cmts_notes`, `bx_stream_votes`, `bx_stream_votes_track`, `bx_stream_reactions`, `bx_stream_reactions_track`, `bx_stream_views_track`, `bx_stream_meta_keywords`, `bx_stream_meta_locations`, `bx_stream_meta_mentions`, `bx_stream_reports`, `bx_stream_reports_track`, `bx_stream_scores`, `bx_stream_scores_track`, `bx_stream_polls`, `bx_stream_polls_answers`, `bx_stream_polls_answers_votes`, `bx_stream_polls_answers_votes_track`;
+DROP TABLE IF EXISTS `bx_stream_streams`, `bx_stream_covers`, `bx_stream_photos_resized`, `bx_stream_recordings`, `bx_stream_recordings_seq`, `bx_stream_cmts`, `bx_stream_cmts_notes`, `bx_stream_votes`, `bx_stream_votes_track`, `bx_stream_reactions`, `bx_stream_reactions_track`, `bx_stream_views_track`, `bx_stream_meta_keywords`, `bx_stream_meta_locations`, `bx_stream_meta_mentions`, `bx_stream_reports`, `bx_stream_reports_track`, `bx_stream_scores`, `bx_stream_scores_track`, `bx_stream_polls`, `bx_stream_polls_answers`, `bx_stream_polls_answers_votes`, `bx_stream_polls_answers_votes_track`;
 
 -- STORAGES & TRANSCODERS
 DELETE FROM `sys_objects_storage` WHERE `object` LIKE 'bx_stream_%';

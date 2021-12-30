@@ -65,6 +65,30 @@ CREATE TABLE IF NOT EXISTS `bx_stream_photos_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_stream_recordings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_stream_recordings_seq` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_id` int(10) unsigned NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `content_id` (`content_id`)
+);
+
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_stream_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -227,7 +251,9 @@ SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_sto
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_stream_covers', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_covers', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 
-('bx_stream_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('bx_stream_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+
+('bx_stream_recordings', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_recordings', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc,ts', '', 0, 0, 0, 0, 0, 0);
 
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 

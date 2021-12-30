@@ -96,6 +96,12 @@ class BxStrmModule extends BxBaseModTextModule
         return $this->_serviceTemplateFunc ('entryStreamPlayer', $iContentId);
     }
 
+    public function serviceStreamRecordings ($iContentId = 0)
+    {
+        $oGrid = BxDolGrid::getObjectInstance('bx_stream_recordings');
+        return $oGrid ? $oGrid->getCode() : false;
+    }
+
     public function serviceStreamRtmpSettings ($iContentId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -216,6 +222,12 @@ class BxStrmModule extends BxBaseModTextModule
         if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId))) 
             return;
 
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedRecord()) {
+            $iRecordingId = $this->_oDb->getNewRecordingId($iContentId);
+            $this->getStreamEngine()->startRecording($iRecordingId, $aContentInfo[$CNF['FIELD_KEY']]);
+            BxDolSession::getInstance()->setValue('bx-stream-rec-' . $iContentId, $iRecordingId);
+        }
+
         $this->onPublished($iContentId);
 
         bx_alert($this->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], array(
@@ -237,6 +249,33 @@ class BxStrmModule extends BxBaseModTextModule
         if (!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'awaiting'), array($CNF['FIELD_ID'] => $iContentId)))
             return;
 
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedRecord(true)) {
+            $iRecordingId = BxDolSession::getInstance()->getValue('bx-stream-rec-' . $iContentId);
+            if (!$iRecordingId)
+                $iRecordingId = $this->_oDb->getRecordingId($iContentId);
+            if ($iRecordingId) {
+
+                $aRecordings = $this->getStreamEngine()->stopRecording($iRecordingId);
+                foreach ($aRecordings as $a) {
+                    if ($a && !empty($a['filePath']) && $oStorage = BxDolStorage::getObjectInstance('bx_stream_recordings')) {
+                        $iFileId = $oStorage->storeFileFromUrl(getParam('bx_stream_recordings_url') . $a['filePath'], true, 0, $iContentId);
+                        if ($iFileId) {
+                            $this->_oDb->deleteRecording($iRecordingId);
+                        }
+                        else {
+                            bx_log('bx_stream', "Store recording from URL(" . getParam('bx_stream_recordings_url') . $a['filePath'] . ") failed");
+                        }
+                    }
+                }
+
+                BxDolSession::getInstance()->unsetValue('bx-stream-rec-' . $iContentId);
+
+            }
+            else {
+                bx_log('bx_stream', "No recording ID defined for content ID($iContentId)");
+            }
+        }
+
         if (BxDolRequest::serviceExists('bx_timeline', 'get_all')) {
             $a = BxDolService::call('bx_timeline', 'get_all', array(array(
                 'type' => 'conditions', 
@@ -251,16 +290,26 @@ class BxStrmModule extends BxBaseModTextModule
                 $oTimeline = BxDolModule::getInstance('bx_timeline');
                 if ($oTimeline) {
                     foreach ($a as $r) {
-                        // TODO: use service call instead
-                        $oTimeline->deleteEvent($r); 
-                        $oTimeline->_oDb->deleteCache(array('event_id' => $r['id']));
-                        // BxDolService::call('bx_timeline', 'delete_entity', array($r['id']));
+                        // $oTimeline->deleteEvent($r); 
+                        // $oTimeline->_oDb->deleteCache(array('event_id' => $r['id']));
+                        BxDolService::call('bx_timeline', 'delete_entity', array($r['id']));
                     }
                 }
             }
         }
     }
 
+    public function checkAllowedRecord ($isPerformAction = false)
+    {
+        if (!getParam('bx_stream_recordings_url'))
+            return _t('_sys_txt_access_denied');
+
+        // check ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'record', $this->getName(), $isPerformAction);
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
 }
 
 /** @} */

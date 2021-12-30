@@ -31,9 +31,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_stream%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_stream%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_stream_administration', 'bx_stream_common');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_stream_administration', 'bx_stream_common');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_stream_administration', 'bx_stream_common');
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_stream%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_stream%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_stream%';
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_stream_%';

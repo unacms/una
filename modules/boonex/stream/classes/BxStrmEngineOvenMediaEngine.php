@@ -27,29 +27,42 @@ class BxStrmEngineOvenMediaEngine extends BxDol
 
     public function getStreamStats($sStreamKey)
     {
-        $sApiProtocol = getParam('bx_stream_server_ome_api_protocol');
-        $sHost = getParam('bx_stream_server_host');
-        $iApiPort = (int)getParam('bx_stream_server_ome_api_port');
         $sApp = getParam('bx_stream_app');
-        $sApiKey = getParam('bx_stream_server_ome_api_key');
-
-        if (!$sApiProtocol || !$sHost || !$iApiPort || !$sApp || !$sApiKey)
+        if (!$sApp)
             return false;
 
-        $sUrl = "http://{$sHost}:$iApiPort/v1/stats/current/vhosts/default/apps/{$sApp}/streams/{$sStreamKey}";
-        $s = bx_file_get_contents($sUrl, [], 'get', ['Authorization: Basic ' . $sApiKey]);
-        bx_log('bx_stream_ome_api', $sUrl . "\n" . $s);
-        if (!$s)
+        return $this->_apiRequest("/stats/current/vhosts/default/apps/{$sApp}/streams/{$sStreamKey}");
+    }
+
+    public function startRecording($iRecordingId, $sStreamKey)
+    {
+        $sApp = getParam('bx_stream_app');
+        $sSourceName = getParam('bx_stream_recordings_source');
+        if (!$sApp)
             return false;
 
-        $a = @json_decode($s, true);
-        if (null === $a)
+        if (!$sSourceName)
+            $sSourceName = $sStreamKey;
+        else
+            $sSourceName = str_replace('{key}', $sStreamKey, $sSourceName);
+
+        return $this->_apiRequest("/vhosts/default/apps/{$sApp}:startRecord", 'post-json', [
+            "id" => "{$iRecordingId}",
+            "stream" => [
+                "name" => $sSourceName,
+            ],
+        ]);
+    }
+
+    public function stopRecording($iRecordingId)
+    {
+        $sApp = getParam('bx_stream_app');
+        if (!$sApp)
             return false;
 
-        if (!isset($a['response']))
-            return false;
-
-        return $a['response'];
+        return $this->_apiRequest("/vhosts/default/apps/{$sApp}:stopRecord", 'post-json', [
+            "id" => "{$iRecordingId}",
+        ]);
     }
 
     public function getRtmpSettings($sStreamKey)
@@ -128,6 +141,32 @@ class BxStrmEngineOvenMediaEngine extends BxDol
     protected function _base64URLEncode($s)
     {
         return trim(strtr(base64_encode($s), '+/', '-_'), '=');
+    }
+
+    protected function _apiRequest($sUri, $sMethod = 'get', $aBody = [])
+    {
+        $sApiProtocol = getParam('bx_stream_server_ome_api_protocol');
+        $sHost = getParam('bx_stream_server_host');
+        $iApiPort = (int)getParam('bx_stream_server_ome_api_port');
+        $sApiKey = getParam('bx_stream_server_ome_api_key');
+
+        if (!$sApiProtocol || !$sHost || !$iApiPort || !$sApiKey)
+            return false;
+
+        $sUrl = "http://{$sHost}:$iApiPort/v1{$sUri}";
+        $s = bx_file_get_contents($sUrl, $aBody, $sMethod, ['Authorization: Basic ' . $sApiKey]);
+        bx_log('bx_stream_ome_api', $sUrl . "\n" . $s);
+        if (!$s)
+            return false;
+
+        $a = @json_decode($s, true);
+        if (null === $a)
+            return false;
+
+        if (!isset($a['response']))
+            return false;
+
+        return $a['response'];
     }
 }
 
