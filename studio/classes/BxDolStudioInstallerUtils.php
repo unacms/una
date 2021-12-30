@@ -413,6 +413,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
         $aItem = $this->getAccessObject(true)->loadItems(array(
             'method' => 'download_file', 
+            'version' => bx_get_ver(),
             'file_id' => $iFileId
         ));
 
@@ -529,7 +530,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             return _t('_adm_str_err_cannot_write');
         }
 
-        $sContent = urldecode($aItem['content']);
+        $sContent = base64_decode(urldecode($aItem['content']));
         if(!fwrite($rHandler, $sContent, strlen($sContent))) {
             umask($iUmaskSave);
             return _t('_adm_str_err_cannot_write');

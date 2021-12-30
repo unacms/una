@@ -402,9 +402,14 @@ class BxDolStudioStore extends BxTemplStudioWidget
 
     protected function loadProduct($sModuleName)
     {
-        $oJson = BxDolStudioJson::getInstance();
+        $sVersion = bx_get_ver();
 
-        return $oJson->load($this->sStoreDataUrlPublic . 'json_get_product_by_name', array('value' => $sModuleName, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_get_product_by_name', array(
+            'value' => $sModuleName, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey,
+            'version' => $sVersion
+        ));
     }
 
     /*
