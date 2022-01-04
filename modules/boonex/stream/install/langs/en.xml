@@ -93,6 +93,7 @@
     <string name="_bx_stream_acl_action_set_thumb"><![CDATA[Set Stream Header Image]]></string>
     <string name="_bx_stream_acl_action_edit_any_entry"><![CDATA[Edit Any Stream]]></string>
     <string name="_bx_stream_acl_action_delete_any_entry"><![CDATA[Delete Any Account]]></string>
+    <string name="_bx_stream_acl_action_record"><![CDATA[Record Stream]]></string>
 
     <string name="_bx_stream_page_title_sys_create_entry"><![CDATA[New Stream]]></string>
     <string name="_bx_stream_page_title_create_entry"><![CDATA[New Stream]]></string>
