@@ -36,6 +36,15 @@ class BxDolStudioOAuth extends BxDolFactory
         $this->sErrorMessage = 'oauth_err_message';
     }
 
+    static function unsetAuthorized()
+    {
+        $oSession = BxDolSession::getInstance();
+        $oSession->unsetValue(self::$sSessionKeyToken);
+        $oSession->unsetValue(self::$sSessionKeyAuthorized);
+        $oSession->unsetValue(self::$sSessionKeyAuthorizedUser);
+        $oSession->unsetValue(self::$sSessionKeyAuthorizedOwner);
+    }
+
     static function isAuthorizedClient()
     {
         return (int)BxDolSession::getInstance()->getValue(self::$sSessionKeyAuthorized) == 1;
@@ -109,10 +118,7 @@ class BxDolStudioOAuth extends BxDolFactory
 
     protected function unsetAuthorizedUser()
     {
-        $this->oSession->unsetValue(self::$sSessionKeyToken);
-        $this->oSession->unsetValue(self::$sSessionKeyAuthorized);
-        $this->oSession->unsetValue(self::$sSessionKeyAuthorizedUser);
-        $this->oSession->unsetValue(self::$sSessionKeyAuthorizedOwner);
+        self::unsetAuthorized();
     }
 
     protected function isServerError($aResult)
