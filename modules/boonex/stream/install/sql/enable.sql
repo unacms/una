@@ -19,8 +19,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stream_sources_pattern', '', @iCategId, '_bx_stream_option_sources_pattern', 'text', '', '', '', 24),
 ('bx_stream_dash_enabled', '', @iCategId, '_bx_stream_option_dash_enabled', 'checkbox', '', '', '', 26),
 ('bx_stream_hls_enabled', '', @iCategId, '_bx_stream_option_hls_enabled', 'checkbox', '', '', '', 28),
-('bx_stream_recordings_url', '', @iCategId, '_bx_stream_option_recordings_url', 'digit', '', '', '', 30),
-('bx_stream_recordings_source', '', @iCategId, '_bx_stream_option_recordings_source', 'digit', '', '', '', 32);
+('bx_stream_recordings_url', '', @iCategId, '_bx_stream_option_recordings_url', 'digit', '', '', '', 30);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_stream_engine_ome', '_bx_stream_options_cat_engine_ome', 2);
@@ -31,7 +30,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stream_server_ome_api_key', '', @iCategId, '_bx_stream_option_ome_api_key', 'digit', '', '', '', 10),
 ('bx_stream_server_ome_api_protocol', 'http', @iCategId, '_bx_stream_option_ome_api_protocol', 'select', '', '', 'http,https', 12),
 ('bx_stream_server_ome_api_port', '8081', @iCategId, '_bx_stream_option_ome_api_port', 'digit', '', '', '', 14),
-('bx_stream_server_ome_policy_secret', '', @iCategId, '_bx_stream_option_ome_policy_secret', 'digit', '', '', '', 20);
+('bx_stream_server_ome_policy_secret', '', @iCategId, '_bx_stream_option_ome_policy_secret', 'digit', '', '', '', 20),
+('bx_stream_server_ome_recordings_source', '', @iCategId, '_bx_stream_option_ome_recordings_source', 'digit', '', '', '', 30);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_stream_engine_nginx', '_bx_stream_options_cat_engine_nginx', 3);
@@ -39,7 +39,8 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_stream_server_nginx_stats_url', 'https://{host}/stat', @iCategId, '_bx_stream_option_nginx_stats_url', 'digit', '', '', '', 10),
-('bx_stream_server_nginx_auth', 'on', @iCategId, '_bx_stream_option_nginx_auth', 'checkbox', '', '', '', 12);
+('bx_stream_server_nginx_auth', 'on', @iCategId, '_bx_stream_option_nginx_auth', 'checkbox', '', '', '', 12),
+('bx_stream_server_nginx_recording_base_path', '', @iCategId, '_bx_stream_option_nginx_recording_base_path', 'checkbox', '', '', '', 20);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_stream_general', '_bx_stream_options_cat_general', 4);

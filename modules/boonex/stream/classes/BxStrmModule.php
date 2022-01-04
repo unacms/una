@@ -40,6 +40,33 @@ class BxStrmModule extends BxBaseModTextModule
         return $this->_oEngine;
     }
 
+    public function actionNginxOnRecordDone()
+    {
+        $sKey = bx_get('name');
+        $sSecret = bx_get('s');
+        $sPath = bx_get('path');
+        $sBasePath = getParam('bx_stream_server_nginx_recording_base_path');
+        if (empty($sBasePath) || empty($sPath) || empty($sKey) || empty($sSecret) || 'NGINX' != getParam('bx_stream_engine') || !($aContentInfo = $this->_oDb->getEntriesBy(['type' => 'conditions', 'conditions' => ['key' => $sKey]]))) {
+            header('HTTP/1.0 404 Not Found');
+        }
+        elseif ($sSecret != base_convert(substr(md5(BX_DOL_SECRET . $sKey), -4), 16, 36)) {
+            header('HTTP/1.0 403 Forbidden');
+        }
+        elseif (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedRecord(true)) {
+            header('HTTP/1.0 403 Forbidden');
+        }
+        else {
+            $sBaseUrl = rtrim(getParam('bx_stream_recordings_url'), '/');
+            $sUrl = str_replace($sBasePath, $sBaseUrl, $sPath);
+            if ($oStorage = BxDolStorage::getObjectInstance('bx_stream_recordings')) {
+                $iFileId = $oStorage->storeFileFromUrl($sUrl, true, 0, $aContentInfo['id']);
+                if (!$iFileId) {
+                    bx_log('bx_stream', "Store recording from URL(" . $sUrl . ") failed for content id({$aContentInfo['id']})");
+                }
+            }
+        }
+    }
+
     public function actionNginxOnPublish()
     {
         $sKey = bx_get('name');
@@ -222,7 +249,7 @@ class BxStrmModule extends BxBaseModTextModule
         if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId))) 
             return;
 
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedRecord()) {
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedRecord() && 'OvenMediaEngine' == getParam('bx_stream_engine')) {
             $iRecordingId = $this->_oDb->getNewRecordingId($iContentId);
             $this->getStreamEngine()->startRecording($iRecordingId, $aContentInfo[$CNF['FIELD_KEY']]);
             BxDolSession::getInstance()->setValue('bx-stream-rec-' . $iContentId, $iRecordingId);
@@ -249,7 +276,7 @@ class BxStrmModule extends BxBaseModTextModule
         if (!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'awaiting'), array($CNF['FIELD_ID'] => $iContentId)))
             return;
 
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedRecord(true)) {
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedRecord(true) && 'OvenMediaEngine' == getParam('bx_stream_engine')) {
             $iRecordingId = BxDolSession::getInstance()->getValue('bx-stream-rec-' . $iContentId);
             if (!$iRecordingId)
                 $iRecordingId = $this->_oDb->getRecordingId($iContentId);
@@ -263,7 +290,7 @@ class BxStrmModule extends BxBaseModTextModule
                             $this->_oDb->deleteRecording($iRecordingId);
                         }
                         else {
-                            bx_log('bx_stream', "Store recording from URL(" . getParam('bx_stream_recordings_url') . $a['filePath'] . ") failed");
+                            bx_log('bx_stream', "Store recording from URL(" . getParam('bx_stream_recordings_url') . $a['filePath'] . ") failed for content id($iContentId)");
                         }
                     }
                 }

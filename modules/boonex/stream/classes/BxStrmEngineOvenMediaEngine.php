@@ -37,7 +37,7 @@ class BxStrmEngineOvenMediaEngine extends BxDol
     public function startRecording($iRecordingId, $sStreamKey)
     {
         $sApp = getParam('bx_stream_app');
-        $sSourceName = getParam('bx_stream_recordings_source');
+        $sSourceName = getParam('bx_stream_server_ome_recordings_source');
         if (!$sApp)
             return false;
 

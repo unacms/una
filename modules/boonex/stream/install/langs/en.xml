@@ -16,15 +16,16 @@
     <string name="_bx_stream_option_ome_policy_secret"><![CDATA[OvenMediaEngine Signed Policy Secret Key]]></string>
 
     <string name="_bx_stream_option_ome_api_port"><![CDATA[OvenMediaEngine API Port]]></string>
+    <string name="_bx_stream_option_ome_recordings_source"><![CDATA[Recording source (experimental)]]></string>
     <string name="_bx_stream_option_nginx_stats_url"><![CDATA[NGINX Stats URL]]></string>
     <string name="_bx_stream_option_nginx_auth"><![CDATA[NGINX Authentication (on_publish need to be set to http://site/m/stream/nginx_on_publish/)]]></string>
+    <string name="_bx_stream_option_nginx_recording_base_path"><![CDATA[NGINX recording folder path]]></string>
     <string name="_bx_stream_option_server_host"><![CDATA[Server Hostname]]></string>
     <string name="_bx_stream_option_app"><![CDATA[Application Name]]></string>
     <string name="_bx_stream_option_sources_pattern"><![CDATA[Sources Pattern]]></string>
     <string name="_bx_stream_option_dash_enabled"><![CDATA[Enable MPEG-DASH streaming]]></string>
     <string name="_bx_stream_option_hls_enabled"><![CDATA[Enable HLS streaming]]></string>
     <string name="_bx_stream_option_recordings_url"><![CDATA[Base URL for recordings (experimental)]]></string>
-    <string name="_bx_stream_option_recordings_source"><![CDATA[Recording source (experimental)]]></string>
     <string name="_bx_stream_option_enable_auto_approve"><![CDATA[Auto approve a stream after creation]]></string>
     <string name="_bx_stream_option_summary_chars"><![CDATA[Number of characters in auto-cropped stream summary]]></string>
     <string name="_bx_stream_option_plain_summary_chars"><![CDATA[Number of characters in plain stream description when stream hasn't thumb]]></string>
