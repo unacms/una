@@ -61,6 +61,12 @@ import url(../../../../../../../template/css/vote.css);
 /*----------------------------------*/
 /*--- Stars based Element Styles ---*/
 /*----------------------------------*/
+.bx-vote-stars {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+}
 .bx-vote-stars .bx-vote-element-holder a.bx-vote-button,
 .bx-vote-stars .bx-vote-element-holder i.bx-vote-star,
 .bx-vote-stars .bx-vote-element-holder span.bx-vote-star {
