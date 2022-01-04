@@ -353,55 +353,58 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     protected function getAttachments($sStorage, $aData, $aParams = array())
     {
-        $aFiles = $this->_oDb->getFile(array('type' => 'content_id_key_file_id', 'content_id' => $aData['id']));
+        $mixedAttachments = parent::getAttachments($sStorage, $aData, $aParams);
+        if(empty($mixedAttachments) || !is_array($mixedAttachments))
+            return $mixedAttachments;
 
-        $aAttachments_ = parent::getAttachments($sStorage, $aData, $aParams);
-        $aAttachments = array();
-        foreach($aAttachments_ as $aAttachment) {
-            $aAttachments[(int)$aAttachment['id']] = $aAttachment;
-        }
-        
-        if(empty($aAttachments) || !is_array($aAttachments))
-            return $aAttachments;
+        $aAttachments = [];
+        foreach($mixedAttachments as $aAttachment)
+            $aAttachments[(int)$aAttachment['id']] = $aAttachment;       
 
-        $aResults = array();
+        $aFiles = $this->_oDb->getFile(['type' => 'content_id_key_file_id', 'content_id' => $aData['id']]);
+
+        $aResults = [];
         $sCaptionType = "";
         foreach($aFiles as $iAttachmentId => $aFile) {
             $aAttachments[$iAttachmentId]['class'] = (int)$aData['package'] == $iAttachmentId ? ' bx-market-attachment-main' : '';
-            $aAttachments[$iAttachmentId]['bx_if:main'] = array(
+            $aAttachments[$iAttachmentId]['bx_if:main'] = [
                 'condition' => (int)$aData['package'] == $iAttachmentId,
-                'content' => array()
-            );
-            
+                'content' => []
+            ];
+
             $bSeparatorNeeded = false;
             if ($aFiles[$iAttachmentId]['type'] != $sCaptionType){
                 $bSeparatorNeeded = true;
                 $sCaptionType = $aFiles[$iAttachmentId]['type'];
-                
-
             }
+
             if ((int)$aData['package'] == $iAttachmentId){
                 $bSeparatorNeeded = true;
                 $sCaptionType = 'latest';
             }
             
             $bAttachment = !empty($aFiles[$iAttachmentId]);
-            $aAttachments[$iAttachmentId]['bx_if:not_image']['content'] = array_merge($aAttachments[$iAttachmentId]['bx_if:not_image']['content'], array(
+            $aAttachments[$iAttachmentId]['bx_if:not_image']['content'] = array_merge($aAttachments[$iAttachmentId]['bx_if:not_image']['content'], [
                 'file_type' => $bAttachment ? _t('_bx_market_form_entry_input_files_type_' . $aFiles[$iAttachmentId]['type']) : '',
-                'bx_if:show_version' => array(
+                'bx_if:show_version' => [
                     'condition' => $bAttachment && $aFiles[$iAttachmentId]['type'] == BX_MARKET_FILE_TYPE_VERSION,
-                    'content' => array(
+                    'content' => [
                         'file_version' => $bAttachment ? $aFiles[$iAttachmentId]['version'] : ''
-                    )
-                ),
-                'bx_if:show_update' => array(
+                    ]
+                ],
+                'bx_if:show_update' => [
                     'condition' => $bAttachment && $aFiles[$iAttachmentId]['type'] == BX_MARKET_FILE_TYPE_UPDATE,
-                    'content' => array(
+                    'content' => [
                         'file_version_from_to' => $bAttachment ? _t('_bx_market_form_entry_input_files_version_from_x_to_y', $aFiles[$iAttachmentId]['version'], $aFiles[$iAttachmentId]['version_to']) : ''
-                    )
-                )
-            ));
-            $aAttachments[$iAttachmentId]['bx_if:show_separator'] = array('condition' => $bSeparatorNeeded, 'content' => array('type' => _t('_bx_market_form_entry_input_files_version_caption_' . $sCaptionType)));
+                    ]
+                ]
+            ]);
+            $aAttachments[$iAttachmentId]['bx_if:show_separator'] = [
+                'condition' => $bSeparatorNeeded, 
+                'content' => [
+                    'type' => _t('_bx_market_form_entry_input_files_version_caption_' . $sCaptionType)
+                ]
+            ];
 
             $aFiles[$iAttachmentId] = $aAttachments[$iAttachmentId];
             $aResults[$iAttachmentId] = $aAttachments[$iAttachmentId];
