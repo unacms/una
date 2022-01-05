@@ -454,6 +454,10 @@
         @apply w-full;
     }
 
+    .bx-artificer .bx-popup {
+        @apply relative ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 rounded-md shadow;
+    }
+
     .bx-artificer .bx-popup-width {
         @apply w-full md:w-128;
     }
@@ -581,5 +585,10 @@
     /* 3d Party: Flickity */
     .bx-artificer .flickity-button {
         @apply text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 opacity-75 hover:opacity-100;
+    }
+
+    /* 3d Party: Quill */
+    .bx-artificer .ql-mention-list li {
+        @apply flex items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 text-sm font-normal;
     }
 }
