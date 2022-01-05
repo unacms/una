@@ -142,6 +142,9 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 		foreach($aFiles as $aFile)
 			$this->oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
 
+        if (function_exists('opcache_reset'))
+            opcache_reset();
+
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
