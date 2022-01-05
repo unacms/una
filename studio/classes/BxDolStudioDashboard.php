@@ -32,6 +32,7 @@ class BxDolStudioDashboard extends BxTemplStudioWidget
             array('name' => 'css'),
             array('name' => 'js'),
             array('name' => 'purifier'),
+            array('name' => 'opcache'),
             array('name' => 'custom')
         );
 

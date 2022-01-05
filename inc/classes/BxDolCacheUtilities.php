@@ -24,6 +24,7 @@ class BxDolCacheUtilities extends BxDol
             'css' => array('option' => 'sys_template_cache_css_enable'),
             'js' => array('option' => 'sys_template_cache_js_enable'),
             'purifier' => array(),
+            'opcache' => array(),
             'custom' => array(),
         );
     }
@@ -43,6 +44,9 @@ class BxDolCacheUtilities extends BxDol
     {
         if(!isset($this->_aCacheTypes[$sCache]))
             return false;
+
+        if ('opcache' == $sCache)
+            return function_exists('opcache_reset');
 
         return !isset($this->_aCacheTypes[$sCache]['option']) || getParam($this->_aCacheTypes[$sCache]['option']) == 'on';
     }
@@ -102,7 +106,13 @@ class BxDolCacheUtilities extends BxDol
                 $oConfig->set('Cache.DefinitionImpl', null);
                 $oHtmlPurifier = new HTMLPurifier($oConfig);
                 $oHtmlPurifier->purify('');
-                break;    
+                $mixedResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
+                break;
+            case 'opcache':
+                if (function_exists('opcache_reset'))
+                    opcache_reset();
+                $mixedResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
+                break;
         }
 
         return $mixedResult;

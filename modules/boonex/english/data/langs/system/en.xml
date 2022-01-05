@@ -637,7 +637,8 @@
     <string name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Clear Purifier cache]]></string>
 	<string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
 	<string name="_adm_dbd_txt_c_clear_js"><![CDATA[Clear JavaScript cache]]></string>
-        <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>
+    <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Clear Custom cache]]></string>
+    <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Clear Opcache]]></string>
 	<string name="_adm_dbd_err_c_clean_failed"><![CDATA[Failed to clean cache]]></string>
 	<string name="_adm_dbd_msg_c_clean_success"><![CDATA[Cache was successfully cleaned]]></string>
 	<string name="_adm_dbd_msg_c_all_disabled"><![CDATA[All caches are disabled]]></string>
