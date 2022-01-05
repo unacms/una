@@ -233,7 +233,7 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
     /**
      * Internal functions
      */
-	protected function _getAuthorId ()
+    protected function _getAuthorId ()
     {
         return isMember() ? bx_get_logged_profile_id() : 0;
     }
@@ -276,7 +276,7 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
     /**
      * Update Trigger table using data which is automatically gotten from object's internal table.
      */
-	protected function _trigger()
+    protected function _trigger()
     {
         if(!$this->_aSystem['trigger_table'])
             return false;
@@ -313,14 +313,29 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return bx_replace_markers($mixed, $this->_aMarkers);
     }
 
-    
+    protected function _prepareParamsData($aParams)
+    {
+        $aParams = array_merge([
+            'sSystem' => $this->getSystemName(),
+            'iObjId' => $this->getId(),
+            'iAuthorId' => $this->_getAuthorId(),
+            'sRootUrl' => BX_DOL_URL_ROOT,
+        ], $aParams);
+
+        foreach($aParams as $sKey => $mixedValue)
+            if(is_bool($mixedValue))
+                $aParams[$sKey] = (int)$mixedValue;
+
+        return $aParams;
+    }
+
     protected function _getRequestParamsData($aKeys = array())
     {
         $sParams = bx_get('params');
         if($sParams === false)
-            return array();
+            return [];
 
-        $aParams = array();
+        $aParams = [];
         parse_str(bx_process_input($sParams), $aParams);
 
         return $aParams;

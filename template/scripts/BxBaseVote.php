@@ -66,16 +66,9 @@ class BxBaseVote extends BxDolVote
 
         $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
 
-        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
-            'sObjName' => $sJsObjName,
-            'sSystem' => $this->getSystemName(),
-            'iAuthorId' => $this->_getAuthorId(),
-            'iObjId' => $this->getId(),
-            'sRootUrl' => BX_DOL_URL_ROOT,
-            'sStylePrefix' => $this->_sStylePrefix,
-            'aHtmlIds' => $this->_aHtmlIds,
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode($this->_prepareParamsData([
             'aRequestParams' => $this->_prepareRequestParamsData($aParams)
-        )) . ");";
+        ])) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -177,7 +170,17 @@ class BxBaseVote extends BxDolVote
 
     /**
      * Internal methods.
-     * 
+     */
+    protected function _prepareParamsData($aParams)
+    {
+        return parent::_prepareParamsData(array_merge([
+            'sObjName' => $this->getJsObjectName(),
+            'sStylePrefix' => $this->_sStylePrefix,
+            'aHtmlIds' => $this->_aHtmlIds,
+        ], $aParams));
+    }
+
+    /*
      * This method should be overwritten by subclass.
      */
     protected function _getTmplVarsElement($aParams = array())

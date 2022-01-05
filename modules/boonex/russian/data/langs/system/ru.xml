@@ -1615,6 +1615,7 @@
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Минимальная длина слова в поиске по сайту]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[Профиль системного бота]]></string>
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Система логирования по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Включить режим 'Быстрых реакций' - голосовать при клике, используя реакцию по умолчанию]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>

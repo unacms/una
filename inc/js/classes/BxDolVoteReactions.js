@@ -9,6 +9,7 @@
 function BxDolVoteReactions(oOptions)
 {
     BxDolVote.call(this, oOptions);
+    this._bQuickMode = oOptions.bQuickMode === undefined ? 0 : oOptions.bQuickMode; // enable 'quick' mode - vote with default reaction when clicked.
 
     this._iTimeoutShowId = 0;
     this._iTimeoutShowDelay = 750;
@@ -34,16 +35,18 @@ BxDolVoteReactions.prototype.constructor = BxDolVoteReactions;
 BxDolVoteReactions.prototype.initVote = function()
 {
     var $this = this;
+    var bMobile = bx_check_mq() == 'mobile';
 
-    this._fOnVoteIn = function() {
-        $this.onVoteIn(this);
-    };
-
-    this._fOnVoteOut = function() {
-        $this.onVoteOut(this);
-    };
-
-    $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).hover(this._fOnVoteIn, this._fOnVoteOut);
+    if(!this._bQuickMode || !bMobile)
+        $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).hover(function() {
+            $this.onVoteIn(this);
+        }, function() {
+            $this.onVoteOut(this);
+        });
+    else
+        $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo).onLongTouch(function(oElement) {
+            $this.onTouch(oElement);
+        });
 };
 
 BxDolVoteReactions.prototype.vote = function(oLink, iValue, sReaction, onComplete)
@@ -53,6 +56,9 @@ BxDolVoteReactions.prototype.vote = function(oLink, iValue, sReaction, onComplet
     oParams['action'] = 'Vote';
     oParams['value'] = iValue;
     oParams['reaction'] = sReaction;
+
+    if(this._iTimeoutShowId)
+        clearTimeout(this._iTimeoutShowId);
 
     $('#' + this._aHtmlIds['do_popup']).dolPopupHide({});
 
@@ -80,7 +86,6 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
     oLink = $('.' + this._aHtmlIds['main'] + ' .' + this._sClassDo);
 
-    console.log(oData);
     //--- Update Do button.
     oLink.each(function() {
         if(oData && oData.label_icon){
@@ -130,6 +135,8 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
 BxDolVoteReactions.prototype.onVoteIn = function(oLink)
 {
+    var $this = this;
+
     if($(oLink).hasClass(this._sClassDoVoted))
         return;
 
@@ -141,7 +148,7 @@ BxDolVoteReactions.prototype.onVoteIn = function(oLink)
         return;
 
     this._iTimeoutShowId = setTimeout(function() {
-        $(oLink).click();
+        $this.toggleDoPopup(oLink, $(oLink).attr('bx-vote-value'));
     }, this._iTimeoutShowDelay);
 };
 
@@ -156,13 +163,24 @@ BxDolVoteReactions.prototype.onVoteOut = function(oLink)
     this.hideDoPopup();
 };
 
+BxDolVoteReactions.prototype.onTouch = function(oLink)
+{
+    var oPopup = this.getDoPopup();
+    if(oPopup !== false)
+        return;
+
+    this.toggleDoPopup(oLink, $(oLink).attr('bx-vote-value'), {
+        closeOnOuterClick: false
+    });
+};
+
 BxDolVoteReactions.prototype.getDoPopup = function()
 {
     var oPopup = $('#' + this._aHtmlIds['do_popup'] + ':visible');
     return oPopup.length > 0 && oPopup.hasClass('bx-popup-applied') ? oPopup : false;
 };
 
-BxDolVoteReactions.prototype.toggleDoPopup = function(oLink, iValue)
+BxDolVoteReactions.prototype.toggleDoPopup = function(oLink, iValue, oOptions)
 {
     var $this = this;
     var oParams = this._getDefaultParams();
@@ -171,7 +189,8 @@ BxDolVoteReactions.prototype.toggleDoPopup = function(oLink, iValue)
     if(this._iTimeoutShowId)
         clearTimeout(this._iTimeoutShowId);
 
-    $(oLink).dolPopupAjax({
+    oOptions = oOptions || {};
+    oOptions = $.extend({}, {
         id: {value: this._aHtmlIds['do_popup'], force: true}, 
         url: bx_append_url_params(this._sActionsUri, oParams),
         value: iValue,
@@ -181,7 +200,9 @@ BxDolVoteReactions.prototype.toggleDoPopup = function(oLink, iValue)
         onHide: function(oPopup) {
             $this.onDoPopupHide(oPopup);
         }
-    });
+    }, oOptions);
+
+    $(oLink).dolPopupAjax(oOptions);
 };
 
 BxDolVoteReactions.prototype.hideDoPopup = function()
@@ -255,5 +276,35 @@ BxDolVoteReactions.prototype._getCounter = function(oElement)
 
     return $('.' + this._aHtmlIds['counter']).find('.' + this._sSP + '-counter');
 };
+
+(function($) {
+    $.fn.onLongTouch = function(fCallback) {
+        return this.each(function() {
+            var iTimeoutId;
+
+            this.addEventListener('touchstart', function(e) {
+                iTimeoutId = setTimeout(function() {
+                    iTimeoutId = null;
+                    e.stopPropagation();
+                    fCallback(e.target);
+                }, 500);
+            });
+
+            this.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            this.addEventListener('touchend', function () {
+                if(iTimeoutId) 
+                    clearTimeout(iTimeoutId);
+            });
+
+            this.addEventListener('touchmove', function () {
+                if(iTimeoutId) 
+                    clearTimeout(iTimeoutId);
+            });
+        });
+    };
+})(jQuery);
 
 /** @} */

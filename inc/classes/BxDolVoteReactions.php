@@ -23,6 +23,8 @@ class BxDolVoteReactions extends BxTemplVote
 
     protected $_sDefault; //--- Default reaction name.
 
+    protected $_bQuickMode; //--- Give 'default' reaction when clicked.
+
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -36,6 +38,8 @@ class BxDolVoteReactions extends BxTemplVote
         $this->_aDataList = array();
 
         $this->_sDefault = 'default';
+
+        $this->_bQuickMode = getParam('sys_vote_reactions_quick_mode') == 'on';
     }
 
     public function init($iId)

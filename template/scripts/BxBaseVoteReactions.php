@@ -53,7 +53,13 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         if(empty($iValue))
             $iValue = $this->getValue();
 
-        return $this->getJsObjectName() . '.toggleDoPopup(this, ' . $iValue . ')';
+        $sResult = '';
+        if($this->_bQuickMode)
+            $sResult = $this->getJsClickDo($this->_aDataList[$this->_sDefault]['name'], $iValue);
+        else
+            $sResult = $this->getJsObjectName() . '.toggleDoPopup(this, ' . $iValue . ')';
+
+        return $sResult;
     }
 
     public function getJsClickDo($sReaction, $iValue = 0)
@@ -298,6 +304,13 @@ class BxBaseVoteReactions extends BxDolVoteReactions
     /**
      * Internal methods.
      */
+    protected function _prepareParamsData($aParams)
+    {
+        return parent::_prepareParamsData(array_merge([
+            'bQuickMode' => $this->_bQuickMode
+        ], $aParams));
+    }
+
     protected function _isShowDoVote($aParams, $isAllowedVote, $bCount)
     {
         $bResult = parent::_isShowDoVote($aParams, $isAllowedVote, $bCount);
@@ -321,14 +334,22 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         else if ($bShowDoVoteAsButtonSmall)
             $sClass = ' bx-btn bx-btn-small';
 
+        $iValue = 0;
+        $sReaction = '';
         $sJsClick = '';
         if(!$bDisabled) {
             if($bVoted && $bUndo) {
                 $sClass = ' ' . $this->_sStylePrefix . '-voted' . $sClass;
-                $sJsClick = $this->getJsClickDo($aParams['track']['reaction']);
+
+                $iValue = $aParams['track']['value'];
+                $sReaction = $aParams['track']['reaction'];
+                $sJsClick = $this->getJsClickDo($sReaction, $iValue);
             }
-            else 
-                $sJsClick = $this->getJsClick();
+            else {
+                $iValue = $this->getValue();
+                $sReaction = $this->_aDataList[$this->_sDefault]['name'];
+                $sJsClick = $this->getJsClick($iValue);
+            }
         }
         else
             $sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : ' ' . $this->_sStylePrefix . '-disabled';
@@ -337,6 +358,8 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'class' => $this->_sStylePrefix . '-do-vote' . $sClass,
             'title' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track'])),
             'onclick' => $sJsClick,
+            'bx-vote-reaction' => $sReaction,
+            'bx-vote-value' => $iValue,
         ));
     }
 
