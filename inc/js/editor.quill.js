@@ -68,7 +68,6 @@ function bx_editor_init(oEditor, oParams){
             }
             
             format(name, value) {
-                console.log('1',name, value)
                 if (name === 'href' || name === 'title' || name === 'dchar') {
                     if (value) {
                         this.domNode.setAttribute(name, value);
@@ -85,7 +84,6 @@ function bx_editor_init(oEditor, oParams){
             };
                 
             static formats(node) {
-                console.log('2',node)
                 let format = {};
                 if (node.hasAttribute('href')) {
                     format.href = node.getAttribute('href');
@@ -163,6 +161,7 @@ function bx_editor_init(oEditor, oParams){
                 mentionDenotationChars: ["@", "#"],
                 showDenotationChar: true,
                 blotName: 'menthion-link',
+                mentionContainerClass: 'bx-popup bx-popup-trans bx-popup-border bx-popup-color-bg',
                 source: function (searchTerm, renderList, mentionChar) {
                   $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention&', { symbol: mentionChar, term: searchTerm}, function(data){
                       renderList(data, searchTerm);
