@@ -10,3 +10,11 @@
 .ql-container.ql-snow{
     border-radius: 0 0 0.3rem 0.3rem;
 }
+.ql-mention-list li{
+    padding: 0.5rem;
+    min-width: 200px;
+}
+.ql-mention-list li:hover{
+    cursor: pointer;
+    
+}
