@@ -162,6 +162,8 @@ function bx_editor_init(oEditor, oParams){
                 showDenotationChar: true,
                 blotName: 'menthion-link',
                 mentionContainerClass: 'bx-popup bx-popup-trans bx-popup-border bx-popup-color-bg',
+                mentionListClass: 'ql-mention-list bx-menu-ver',
+                listItemClass: 'bx-menu-item bx-def-color-bg-hl-hover',
                 source: function (searchTerm, renderList, mentionChar) {
                   $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention&', { symbol: mentionChar, term: searchTerm}, function(data){
                       renderList(data, searchTerm);
