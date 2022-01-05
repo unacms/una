@@ -34,7 +34,7 @@ class BxTemplVoteReactionsMenuDo extends BxBaseVoteReactionsMenuDo
                 'id' => $sName, 
                 'name' => $sName, 
                 'class' => 'group inline-flex items-center border border-transparent rounded-md space-x-1 text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-1', 
-                'link' => 'javascript:void(0)123', 
+                'link' => 'javascript:void(0)', 
                 'onclick' => 'javascript:' . $this->_oObject->getJsClickDo($sName, $this->_iValue), 
                 'target' => '_self', 
                 'title' => _t($aReaction['title']), 
