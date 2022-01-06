@@ -492,27 +492,12 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     static public function getEmbedData ($sUrl)
     {
         $sUrl = urldecode($sUrl);
-        $aUrl = parse_url(str_replace(BX_DOL_URL_ROOT, '', $sUrl));
-        $aUri = explode('/', $aUrl['path']);
         $aParams = [];
-        $sUri = $aUri[1];
         
-        if ('/' !== $aUrl['path'] && getParam('permalinks_seo_links')){
-            $sUri = $aUri[0];
-            $sPageName = BxDolPageQuery::getPageObjectNameByURI($sUri);
-            $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
-            if (!empty($aUri[1])) { 
-                $r = BxDolPageQuery::getSeoLink($aPage['module'], $sUri, ['uri' => $aUri[1]]);
-                if ($r)
-                    $aParams[$r['param_name']] = $r['param_value'];    
-            }
-        }
-        
-        if (isset($aUrl['query']))
-            parse_str($aUrl['query'], $aParams);
-        
-        if (!$aUri || empty($sUri))
-            return [];
+        $aUrl = bx_get_base_url($sUrl);
+        $sUri = $aUrl[1]['i'];
+        unset($aUrl[1]['i']);
+        $aParams = $aUrl[1];
         
         $sAuthorName = $sAuthorUrl = $sThumb = '';
         if (isset($aParams['id'])){
