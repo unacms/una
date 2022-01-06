@@ -513,12 +513,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups', 'bx_groups_meta_keywords', 'bx_groups_meta_locations', 'bx_groups_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_groups', 'bx_groups', 'bx_groups_meta_keywords', 'bx_groups_meta_locations', 'bx_groups_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups_cats', 'bx_groups', 'bx_group', 'bx_groups_cats', 'bx_groups_data', 'group_cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`content_id` = `bx_groups_data`.`id` AND `sys_profiles`.`type` = ''bx_groups'')', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_groups_cats', 'bx_groups', 'bx_groups', 'bx_group', 'bx_groups_cats', 'bx_groups_data', 'group_cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`content_id` = `bx_groups_data`.`id` AND `sys_profiles`.`type` = ''bx_groups'')', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);

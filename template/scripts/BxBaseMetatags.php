@@ -63,9 +63,9 @@ class BxBaseMetatags extends BxDolMetatags
         return $this->_oTemplate->parseHtmlByName('metatags_keywords_list.html', $aVars);
     }
 
-    public function getKeywordsCloud($mixedSection, $iMaxCount, $bAsArray = false)
+    public function getKeywordsCloud($mixedSection, $iMaxCount, $bAsArray = false, $aParams = [])
     {
-        $aKeywords = $this->keywordsPopularList($iMaxCount);
+        $aKeywords = $this->keywordsPopularList($iMaxCount, isset($aParams['context_id']) ? $aParams['context_id'] : 0);
         if(!$aKeywords)
             return $bAsArray ? array() : '';
 

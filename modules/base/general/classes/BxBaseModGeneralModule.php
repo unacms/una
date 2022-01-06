@@ -2234,15 +2234,32 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
     {
+        $aContextInfo = bx_get_page_info();
+        $mProfileContextId = false;
+        if (isset($aContextInfo['context_module']) && isset($aContextInfo['profile_context_id'])){
+            $mProfileContextId = $aContextInfo['profile_context_id'];
+        }
+        
 		$oCategories = BxDolCategories::getInstance();
-        $aCats = $oCategories->getData(array('type' => 'by_module_with_num', 'module' => $this->getName()));
+        if ($mProfileContextId)
+            $aCats = $oCategories->getData([
+                'type' => 'by_module&context_with_num', 
+                'module' => $this->getName(), 
+                'context_id' => $mProfileContextId
+            ]);
+        else{
+            $aCats = $oCategories->getData([
+                'type' => 'by_module_with_num', 
+                'module' => $this->getName()
+            ]);
+        }
         $aVars = array('bx_repeat:cats' => array());
         foreach ($aCats as $oCat) {
             $sValue = $oCat['value'];
             $iNum = $oCat['num'];
             
             $aVars['bx_repeat:cats'][] = array(
-                'url' => $oCategories->getUrl($this->getName(), $sValue),
+                'url' => $oCategories->getUrl($this->getName(), $sValue, $mProfileContextId ? '&context_id=' . $mProfileContextId : ''),
                 'name' => _t($sValue),
                 'value' => $sValue,
                 'num' => $iNum,

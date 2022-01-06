@@ -252,8 +252,8 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class
 ('bx_tasks_assignments', 'bx_tasks_assignments', 'one-way', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_tasks_cats', 'bx_tasks', 'bx_tasks', 'bx_tasks_cats', 'bx_tasks_tasks', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = ABS(`bx_tasks_tasks`.`author`))', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_tasks_cats', 'bx_tasks', 'bx_tasks', 'bx_tasks', 'bx_tasks_cats', 'bx_tasks_tasks', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = ABS(`bx_tasks_tasks`.`author`))', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

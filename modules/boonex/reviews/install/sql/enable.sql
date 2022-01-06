@@ -453,12 +453,12 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_reviews_cmts', '_bx_reviews_cmts', @iSearchOrder + 3, 'BxReviewsCmtsSearchResult', 'modules/boonex/reviews/classes/BxReviewsCmtsSearchResult.php');
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_reviews', 'bx_reviews_meta_keywords', 'bx_reviews_meta_locations', 'bx_reviews_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_reviews', 'bx_reviews', 'bx_reviews_meta_keywords', 'bx_reviews_meta_locations', 'bx_reviews_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_reviews_cats', 'bx_reviews', 'bx_reviews', 'bx_reviews_cats', 'bx_reviews_reviews', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = ABS(`bx_reviews_reviews`.`author`))', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_reviews_cats', 'bx_reviews' , 'bx_reviews', 'bx_reviews', 'bx_reviews_cats', 'bx_reviews_reviews', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = ABS(`bx_reviews_reviews`.`author`))', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

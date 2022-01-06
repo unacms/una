@@ -513,8 +513,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline', 'bx_timeline_meta_keywords', 'bx_timeline_meta_locations', 'bx_timeline_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline', 'bx_timeline', 'bx_timeline_meta_keywords', 'bx_timeline_meta_locations', 'bx_timeline_meta_mentions', '', '');
 
 
 -- CONNECTIONS

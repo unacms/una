@@ -323,12 +323,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     public function keywordsAddOne($iId, $s, $bDeletePreviousKeywords = true)
     {
         if ($iRet = $this->_oQuery->keywordsAdd($iId, array($s), $bDeletePreviousKeywords)) {
-            /*
-             * TODO: Module name should be passed in Extras, because for now 'object' is used as module name.
-             * So, module field should be added in sys_objects_metatags table.
-             * This should be changed in Ticket #1596
-             */
-            bx_alert($this->_sObject, 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId));
+            bx_alert($this->_aObject['module'], 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId));
             bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'object' => $this->_sObject));
         }
         return $iRet;
@@ -547,9 +542,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return call_user_func_array(array($this->_oQuery, 'keywordsGetSQLParts'), func_get_args());
     }
 
-    public function keywordsPopularList($iLimit)
+    public function keywordsPopularList($iLimit, $mContextId = false)
     {
-        return $this->_oQuery->keywordsPopularList($iLimit);
+        return $this->_oQuery->keywordsPopularList($iLimit, $mContextId);
     }
 
 

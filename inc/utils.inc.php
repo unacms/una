@@ -1316,6 +1316,24 @@ function bx_get_base_url($sPageLink)
     return array($sPageLink, $aPageParams);
 }
 
+function bx_get_page_info()
+{
+    $a = bx_get_base_url_inline();
+    $oPage = BxDolPage::getObjectInstanceByURI($a[1]['i']);
+    $oServ = bx_instance('BxTemplServices');
+    if ($oServ->serviceIsModuleContext($oPage->getModule())){
+        $oProfile = BxDolProfile::getInstanceByContentAndType($a[1]['id'], $oPage->getModule());
+        return ['context_module' => $oPage->getModule(), 'context_id' => isset($a[1]['id']) ? $a[1]['id'] : '', 'profile_context_id' => $oProfile->id()];
+    }
+    
+    if (isset($a[1]['profile_id'])){
+        $oProfile = BxDolProfile::getInstance($a[1]['profile_id']);
+        if($oProfile  && $oServ->serviceIsModuleContext($oProfile->getModule())){
+            return ['context_module' => $oProfile->getModule(), 'context_id' => $oProfile->getContentId(), 'profile_context_id' => $a[1]['profile_id']];
+        }
+    }
+}
+
 function bx_get_location_bounds_latlng($fLatitude, $fLongitude, $iRadiusInKm)
 {
     $fEquatorLatInKm = 111.321;

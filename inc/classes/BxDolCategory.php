@@ -113,9 +113,9 @@ class BxDolCategory extends BxDolFactory implements iBxDolFactoryObject
      * @param $sCategoryValue category value
      * @return number
      */
-    public function getItemsNum($sCategoryValue)
+    public function getItemsNum($sCategoryValue, $aParams = [])
     {
-        return BxDolCategoryQuery::getItemsNumInCategory ($this->_aObject, $sCategoryValue);
+        return BxDolCategoryQuery::getItemsNumInCategory ($this->_aObject, $sCategoryValue, true, $aParams);
     }
 }
 

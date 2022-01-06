@@ -317,8 +317,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_classes_cmts', '_bx_classes_cmts', @iSearchOrder + 2, 'BxClssCmtsSearchResult', 'modules/boonex/classes/classes/BxClssCmtsSearchResult.php');
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_classes', 'bx_classes_meta_keywords', 'bx_classes_meta_locations', 'bx_classes_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_classes', 'bx_classes', 'bx_classes_meta_keywords', 'bx_classes_meta_locations', 'bx_classes_meta_mentions', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

@@ -5389,6 +5389,7 @@ CREATE TABLE `sys_labels` (
 CREATE TABLE `sys_objects_metatags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL,
   `table_keywords` varchar(255) NOT NULL,
   `table_locations` varchar(255) NOT NULL,
   `table_mentions` varchar(255) NOT NULL,
@@ -5406,6 +5407,7 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 CREATE TABLE `sys_objects_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL,
   `search_object` varchar(64) NOT NULL,
   `form_object` varchar(64) NOT NULL,
   `list_name` varchar(255) NOT NULL,

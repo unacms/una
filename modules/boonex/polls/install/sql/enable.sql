@@ -412,12 +412,12 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_polls_cmts', '_bx_polls_cmts', @iSearchOrder + 2, 'BxPollsCmtsSearchResult', 'modules/boonex/polls/classes/BxPollsCmtsSearchResult.php');
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_polls', 'bx_polls_meta_keywords', 'bx_polls_meta_locations', 'bx_polls_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_polls', 'bx_polls', 'bx_polls_meta_keywords', 'bx_polls_meta_locations', 'bx_polls_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_polls_cats', 'bx_polls', 'bx_polls', 'bx_polls_cats', 'bx_polls_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_polls_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_polls_cats', 'bx_polls', 'bx_polls', 'bx_polls', 'bx_polls_cats', 'bx_polls_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_polls_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

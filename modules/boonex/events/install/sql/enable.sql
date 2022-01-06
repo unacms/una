@@ -551,12 +551,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionProfileDeleteInvites);
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_events', 'bx_events_meta_keywords', 'bx_events_meta_locations', 'bx_events_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_events', 'bx_events', 'bx_events_meta_keywords', 'bx_events_meta_locations', 'bx_events_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_events_cats', 'bx_events', 'bx_event', 'bx_events_cats', 'bx_events_data', 'event_cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`content_id` = `bx_events_data`.`id` AND `sys_profiles`.`type` = ''bx_events'')', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_events_cats', 'bx_events', 'bx_events', 'bx_event', 'bx_events_cats', 'bx_events_data', 'event_cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`content_id` = `bx_events_data`.`id` AND `sys_profiles`.`type` = ''bx_events'')', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);

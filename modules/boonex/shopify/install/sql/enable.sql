@@ -374,13 +374,13 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_shopify', 'bx_shopify_meta_keywords', 'bx_shopify_meta_locations', 'bx_shopify_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_shopify', 'bx_shopify', 'bx_shopify_meta_keywords', 'bx_shopify_meta_locations', 'bx_shopify_meta_mentions', '', '');
 
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_shopify_cats', 'bx_shopify', 'bx_shopify', 'bx_shopify_cats', 'bx_shopify_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_shopify_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_shopify_cats', 'bx_shopify', 'bx_shopify' , 'bx_shopify', 'bx_shopify_cats', 'bx_shopify_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_shopify_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 
 -- STATS

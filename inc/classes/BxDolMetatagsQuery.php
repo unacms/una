@@ -95,13 +95,23 @@ class BxDolMetatagsQuery extends BxDolDb
         );
     }
 
-    public function keywordsPopularList($iLimit)
-    {
-        $sQuery = $this->prepare("SELECT `keyword`, COUNT(*) as `count` FROM `{$this->_aObject['table_keywords']}` GROUP BY `keyword` ORDER BY `count` DESC LIMIT ?", $iLimit);
-        return $this->getPairs($sQuery, 'keyword', 'count');
+    public function keywordsPopularList($iLimit, $mContextId = false)
+    {   
+        if ($mContextId){
+            $oModule = BxDolModule::getInstance($this->_aObject['module']);
+            $CNF = $oModule->_oConfig->CNF;
+            if (isset($CNF['TABLE_ENTRIES']) && isset($CNF['FIELD_ID']) && isset($CNF['FIELD_ALLOW_VIEW_TO'])){
+                $sQuery = $this->prepare("SELECT `keyword`, COUNT(*) as `count` FROM `{$this->_aObject['table_keywords']}` INNER JOIN `{$CNF['TABLE_ENTRIES']}` ON `{$this->_aObject['table_keywords']}`.`object_id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}` AND `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ALLOW_VIEW_TO']}` = ? GROUP BY `keyword` ORDER BY `count` DESC LIMIT ?", -$mContextId,  $iLimit);
+                return $this->getPairs($sQuery, 'keyword', 'count');
+            }
+            else
+                return [];
+        }
+        else{
+            $sQuery = $this->prepare("SELECT `keyword`, COUNT(*) as `count` FROM `{$this->_aObject['table_keywords']}` GROUP BY `keyword` ORDER BY `count` DESC LIMIT ?", $iLimit);
+            return $this->getPairs($sQuery, 'keyword', 'count');
+        }
     }    
-
-
 
     public function locationsAdd($mixedContentId, $fLat, $fLng, $sCountryCode, $sState, $sCity, $sZip, $sStreet, $sStreetNumber)
     {

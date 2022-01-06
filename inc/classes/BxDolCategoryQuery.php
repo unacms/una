@@ -43,18 +43,22 @@ class BxDolCategoryQuery extends BxDolDb
         return $aObject;
     }
 
-    static public function getItemsNumInCategory ($aObject, $sCategoryValue, $bPublicOnly = true)
+    static public function getItemsNumInCategory ($aObject, $sCategoryValue, $bPublicOnly = true, $aParams = [])
     {
         $oDb = BxDolDb::getInstance();
         $sWhere = '';
-        // TODO: in the future add 'module' field to categories object
-        if ($bPublicOnly && ($oModule = BxDolModule::getInstance($aObject['search_object'])) && isset($oModule->_oConfig->CNF)) {
+        if ($bPublicOnly && ($oModule = BxDolModule::getInstance($aObject['module'])) && isset($oModule->_oConfig->CNF)) {
             $CNF = &$oModule->_oConfig->CNF;
 
             if(isset($CNF['FIELD_ALLOW_VIEW_TO'])) {
-                bx_import('BxDolPrivacy');
-                $a = isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : array(BX_DOL_PG_ALL);
-                $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . $oDb->implode_escape($a) . ') ';
+                if (isset($aParams['context_id'])){
+                    $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . -$aParams['context_id'] . ') ';
+                }
+                else{
+                    bx_import('BxDolPrivacy');
+                    $a = isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : array(BX_DOL_PG_ALL);
+                    $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . $oDb->implode_escape($a) . ') ';
+                }
             }
 
             if(isset($CNF['FIELD_STATUS']))

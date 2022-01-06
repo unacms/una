@@ -40,7 +40,7 @@ class BxBaseServiceCategory extends BxDol
 
         if (!($o = BxDolCategory::getObjectInstance($sObject)))
             return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
-
+        
 		$sResult = $o->getCategoriesList($bShowEmptyCategories);
 		if(empty($sResult))
 			return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
