@@ -74,32 +74,47 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sRv = '';
-        $sKey = '';
-        if(!empty($CNF['TABLE_INVITES']) && ($sKey = bx_get('key')) !== false) {
-            $sId = $this->_oModule->getName() . '_popup_invite';
+        $sInvitation = '';
+        if(!empty($CNF['TABLE_INVITES'])) {
+            $sKey = '';
+            $iProfileId = bx_get_logged_profile_id();
+            $iGroupProfileId = $this->_oProfile->id();
 
-            $mixedInvited = $this->_oModule->isInvited($sKey, $this->_oProfile->id());
+            if(($sKey = bx_get('key')) !== false) {
+                $sKey = bx_process_input($sKey);
+                $mixedInvited = $this->_oModule->isInvited($sKey, $iGroupProfileId);
+            }
+            else if($iProfileId !== false)
+                $mixedInvited = $this->_oModule->isInvitedByProfileId($iProfileId, $iGroupProfileId);
+
             if ($mixedInvited === true) {
-                $sRv = $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
+                $sId = $this->_oModule->getName() . '_popup_invite';
+
+                if(empty($sKey)) {
+                    $aInvite = $this->_oModule->_oDb->getInviteByInvited($iProfileId, $iGroupProfileId);
+                    if(!empty($aInvite) && is_array($aInvite))
+                        $sKey = $aInvite['key'];
+                }
+
+                $this->_oTemplate->addJs(array('invite_popup.js'));
+
+                $sInvitation .= $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
+                    'sPopupId' => $sId,
+                    'sKey' => $sKey,
+                    'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
+                    'sDeclineUrl' => BX_DOL_URL_ROOT,
+                    'iGroupProfileId' => $this->_oProfile->id(),
+                ));
+                $sInvitation .= BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
                     'popup_id' => $sId,
                     'text' => _t($CNF['T']['txt_invitation_popup_text']),
                     'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
                     'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
-                ));
+                )), true);
             }
-            else
-                $sRv = $mixedInvited;
         }
 
-        $this->_oTemplate->addJs(array('invite_popup.js'));
-        return ($sRv != '' ? $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
-            'sPopupId' => $sId,
-            'sKey' => $sKey,
-            'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
-            'sDeclineUrl' => BX_DOL_URL_ROOT,
-            'iGroupProfileId' => $this->_oProfile->id(),
-        )) .  BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $sRv, true) : '') . parent::getCode();
+        return $sInvitation . parent::getCode();
     }
 }
 

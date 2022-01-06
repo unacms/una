@@ -2093,7 +2093,8 @@ INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VA
 ('6', '_sys_ps_group_title_friends_selected', '@friends_selected_by_object', 1, 1),
 ('7', '_sys_ps_group_title_relations', '@relations', 1, 1),
 ('8', '_sys_ps_group_title_relations_selected', '@relations_selected_by_object', 1, 1),
-('9', '_sys_ps_group_title_custom', '@custom_by_object', 0, 0);
+('9', '_sys_ps_group_title_acl_selected', '@acl_selected_by_object', 1, 1),
+('99', '_sys_ps_group_title_custom', '@custom_by_object', 0, 0);
 
 CREATE TABLE `sys_privacy_groups_custom` (
   `id` int(11) unsigned NOT NULL auto_increment,
