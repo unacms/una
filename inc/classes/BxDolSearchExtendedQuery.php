@@ -32,26 +32,25 @@ class BxDolSearchExtendedQuery extends BxDolDb
     static public function getSearchSortableFields($aObject)
     {
         $oDb = BxDolDb::getInstance();
-        
         $sQueryFields = "SELECT * FROM `sys_search_extended_sorting_fields` WHERE `object` = :object ORDER BY `order`";
         $aQueryFieldsBindings = array('object' => $aObject['object']);
         $aFields = $oDb->getAll($sQueryFields, $aQueryFieldsBindings);
-
         //--- Get fields
         if(empty($aFields) || !is_array($aFields)) {
-        
-            $aFields = BxDolContentInfo::getObjectInstance($aObject['object_content_info'])->getSortableFieldsExtended();
-            $iOrder = 0;
-            foreach($aFields as $sField => $aField) {
-                $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_sorting_fields`(`object`, `name`, `direction`, `caption`, `active`, `order`) VALUES(:object, :name, :direction, :caption, :active, :order)", array(
-                        'object' => $aObject['object'], 
-                        'name' => $aField['name'],
-                        'direction' => $aField['direction'],
-                        'caption' => isset($aField['caption']) ? $aField['caption'] : 'none',
-                        'active' => 1,
-                        'order' => $iOrder++
-                    )) > 0;
-            }
+            $mFields = BxDolContentInfo::getObjectInstance($aObject['object_content_info'])->getSortableFieldsExtended();
+            if (!empty($mFields)){
+                $iOrder = 0;
+                foreach($mFields as $sField => $aField) {
+                    $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_sorting_fields`(`object`, `name`, `direction`, `caption`, `active`, `order`) VALUES(:object, :name, :direction, :caption, :active, :order)", array(
+                            'object' => $aObject['object'], 
+                            'name' => $aField['name'],
+                            'direction' => $aField['direction'],
+                            'caption' => isset($aField['caption']) ? $aField['caption'] : 'none',
+                            'active' => 1,
+                            'order' => $iOrder++
+                        )) > 0;
+                }
+            }    
         }
         return $aFields;
     }
