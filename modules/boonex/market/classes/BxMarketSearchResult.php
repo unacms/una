@@ -124,6 +124,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
         $this->processReplaceableMarkers($oProfileAuthor);
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
     }
 
     public function setMetaType($s)

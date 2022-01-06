@@ -55,6 +55,32 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return parent::rss();
     }
 
+    protected function addCustomConditions($CNF, $oProfile, $sMode, $aParams)
+    {
+        $this->addConditionsForAuthorStatus($CNF);
+    }
+
+    protected function addConditionsForAuthorStatus($CNF)
+    {
+        if (empty($CNF['FIELD_AUTHOR']))
+            return;
+
+        $this->aCurrent['restriction']['statusAuthor'] = [
+            'value' => 'active',
+            'field' => 'status',
+            'operator' => '=',
+            'table' => 'sys_profiles',
+        ];
+
+        $this->aCurrent['join']['statusAuthor'] = [
+            'type' => 'INNER',
+            'table' => 'sys_profiles',
+            'mainField' => $CNF['FIELD_AUTHOR'],
+            'onField' => 'id',
+            'joinFields' => array(),
+        ];
+    }
+
     /**
      * Add conditions for private content
      */

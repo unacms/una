@@ -130,6 +130,8 @@ class BxReviewsSearchResult extends BxBaseModTextSearchResult
         } else {
             $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
         }
+
+        $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
     }
 }
 
