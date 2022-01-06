@@ -3191,6 +3191,7 @@
             <li><b>{0}</b> всего</li>
             <li><b>{1}</b> удалено</li>
         </ul>]]></string>
+    <string name="_sys_ps_group_title_acl_selected"><![CDATA[Избранные уровни членства...]]></string>
     <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
     <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
     <string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>

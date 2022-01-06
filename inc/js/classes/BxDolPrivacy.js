@@ -84,7 +84,11 @@ BxDolPrivacy.prototype.selectGroup = function(oElement)
     if(!this._aGroupSettings[iGroupId])
         return;
 
-    this.selectUsers(oElement, iGroupId);
+    var sMethodCreateGroup = 'selectUsers';
+    if(this._aGroupSettings[iGroupId]['js_method_create_group'])
+        sMethodCreateGroup = this._aGroupSettings[iGroupId]['js_method_create_group'];
+
+    this[sMethodCreateGroup](oElement, iGroupId);
 };
 
 BxDolPrivacy.prototype.onSelectGroup = function(oData)

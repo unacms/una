@@ -15,7 +15,8 @@ define('BX_DOL_PG_FRIENDS', '5');
 define('BX_DOL_PG_FRIENDS_SELECTED', '6');
 define('BX_DOL_PG_RELATIONS', '7');
 define('BX_DOL_PG_RELATIONS_SELECTED', '8');
-define('BX_DOL_PG_CUSTOM', '9');
+define('BX_DOL_PG_ACL', '9');
+define('BX_DOL_PG_CUSTOM', '99');
 
 define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
 
@@ -87,10 +88,16 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $this->_oDb = new BxDolPrivacyQuery();
         $this->_oDb->init($this->_aObject);
 
-        $this->_aGroupsSettings = array(
-            BX_DOL_PG_FRIENDS_SELECTED => array('connection' => 'sys_profiles_friends'),
-            BX_DOL_PG_RELATIONS_SELECTED => array('connection' => 'sys_profiles_relations')
-        );
+        $this->_aGroupsSettings = [
+            BX_DOL_PG_FRIENDS_SELECTED => [
+                'connection' => 'sys_profiles_friends', 
+                'js_method_create_group' => 'selectUsers'
+            ],
+            BX_DOL_PG_RELATIONS_SELECTED => [
+                'connection' => 'sys_profiles_relations', 
+                'js_method_create_group' => 'selectUsers'
+            ]
+        ];
 
         $this->_aGroupsExclude = array();
 
