@@ -147,6 +147,8 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
         $this->removeContainerClass('bx-def-margin-bottom-neg');
         $this->addContainerClass(array('bx-def-margin-sec-lefttopright-neg', 'bx-def-margin-sec-bottom-neg', 'bx-albums-medias-wrapper'));
+
+        $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
     }
 
     function getAlterOrder()
