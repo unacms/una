@@ -84,7 +84,7 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
             if(!$oConnection->isConnected($iInviter, $oAlert->iSender))
                 return;
 
-            if($this->_oModule->_oDb->getInviteByInvited($iInvited, $oAlert->iSender) != 0)
+            if($this->_oModule->_oDb->isInviteByInvited($iInvited, $oAlert->iSender))
                 return;
 
             $sKey = BxDolKey::getInstance()->getNewKey(false, $CNF["INVITES_KEYS_LIFETIME"]);

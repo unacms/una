@@ -370,24 +370,30 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
     
     public function getInviteByKey($sKey, $iGroupProfileId)
     {
-        $aBindings = array(
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->getRow("SELECT * FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `key` = :key AND group_profile_id = :group_profile_id", [
             'key' => $sKey,
             'group_profile_id' => $iGroupProfileId
-        );
-        $CNF = $this->_oConfig->CNF; 
-        return $this->getRow("SELECT * FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `key` = :key AND group_profile_id = :group_profile_id", $aBindings);
+        ]);
     }
-    
+
     public function getInviteByInvited($iInvitedProfileId, $iGroupProfileId)
     {
-        $aBindings = array(
+        $CNF = &$this->_oConfig->CNF; 
+
+        return $this->getRow("SELECT * FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `invited_profile_id` = :invited_profile_id AND group_profile_id = :group_profile_id", [
             'invited_profile_id' => $iInvitedProfileId,
             'group_profile_id' => $iGroupProfileId
-        );
-        $CNF = $this->_oConfig->CNF; 
-        return $this->getOne("SELECT COUNT(*) FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `invited_profile_id` = :invited_profile_id AND group_profile_id = :group_profile_id", $aBindings);
+        ]);
     }
-    
+
+    public function isInviteByInvited($iInvitedProfileId, $iGroupProfileId)
+    {
+        $aInvite = $this->getInviteByInvited($iInvitedProfileId, $iGroupProfileId);
+        return !empty($aInvite) && is_array($aInvite);
+    }
+
     public function updateInviteByKey($sKey, $iGroupProfileId, $sColumn, $sValue)
     {
         $aBindings = array(

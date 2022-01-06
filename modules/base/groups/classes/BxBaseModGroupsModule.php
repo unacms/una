@@ -1514,16 +1514,30 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return false;
     }
 
-    public function isInvited ($sKey, $iProfileId) 
+    public function isInvited ($sKey, $iGroupProfileId) 
     {
         $CNF = &$this->_oConfig->CNF;
-        $aData = $this->_oDb->getInviteByKey($sKey,  $iProfileId);
+        $aData = $this->_oDb->getInviteByKey($sKey,  $iGroupProfileId);
         if (!isset($aData['invited_profile_id']))
             return _t($CNF['T']['txt_invitation_popup_error_invitation_absent']);
         
         if ($aData['invited_profile_id'] != bx_get_logged_profile_id())
-            return  _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
+            return _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
         
+        return true;
+    }
+
+    public function isInvitedByProfileId ($iProfileId, $iGroupProfileId) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aData = $this->_oDb->getInviteByInvited($iProfileId,  $iGroupProfileId);
+        if (!isset($aData['invited_profile_id']))
+            return _t($CNF['T']['txt_invitation_popup_error_invitation_absent']);
+
+        if ($aData['invited_profile_id'] != bx_get_logged_profile_id())
+            return _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
+
         return true;
     }
 
