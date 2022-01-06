@@ -77,15 +77,24 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         $sInvitation = '';
         if(!empty($CNF['TABLE_INVITES'])) {
             $sKey = '';
+            $iProfileId = bx_get_logged_profile_id();
             $iGroupProfileId = $this->_oProfile->id();
 
-            if(($sKey = bx_get('key')) !== false)
+            if(($sKey = bx_get('key')) !== false) {
+                $sKey = bx_process_input($sKey);
                 $mixedInvited = $this->_oModule->isInvited($sKey, $iGroupProfileId);
-            else if(($iProfileId = bx_get_logged_profile_id()) !== false)
+            }
+            else if($iProfileId !== false)
                 $mixedInvited = $this->_oModule->isInvitedByProfileId($iProfileId, $iGroupProfileId);
 
             if ($mixedInvited === true) {
                 $sId = $this->_oModule->getName() . '_popup_invite';
+
+                if(empty($sKey)) {
+                    $aInvite = $this->_oModule->_oDb->getInviteByInvited($iProfileId, $iGroupProfileId);
+                    if(!empty($aInvite) && is_array($aInvite))
+                        $sKey = $aInvite['key'];
+                }
 
                 $this->_oTemplate->addJs(array('invite_popup.js'));
 
