@@ -64,6 +64,17 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$CNF['FIELD_LOCATION_PREFIX']])) {
             $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = true;
         }
+        
+        if ($this->_oModule->checkAllowedEditAnyEntry(false) === CHECK_ACTION_RESULT_ALLOWED && isset($CNF['FIELD_AUTHOR']) && isset($this->aParams['view_mode']) && $this->aParams['view_mode'] != 1){
+            $this->aInputs = array_merge([
+                $CNF['FIELD_AUTHOR'] => [
+                    'type' => 'custom',
+                    'name' => $CNF['FIELD_AUTHOR'],
+                    'db' => ['pass' => 'Xss'],
+                    'caption' => '_sys_form_input_caption_author'
+                ],
+            ], $this->aInputs);
+        }
 
         if (isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE'];
@@ -333,7 +344,14 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $aPrivacyFields = $this->_getPrivacyFields();
         foreach($aPrivacyFields as $sField => $sObject)
             $this->_preloadPrivacyField($sField, $sObject, $aValues);
-
+        
+        if (isset($CNF['FIELD_AUTHOR']) && isset($this->aInputs[$CNF['FIELD_AUTHOR']])){
+            if (isset($aValues[$CNF['FIELD_AUTHOR']]))
+                $aValues[$CNF['FIELD_AUTHOR']] = [$aValues[$CNF['FIELD_AUTHOR']]];
+            else
+                $aValues[$CNF['FIELD_AUTHOR']] = [bx_get_logged_profile_id()];
+        }
+        
         parent::initChecker ($aValues, $aSpecificValues);
 
         foreach($aPrivacyFields as $sField => $sObject)
@@ -344,7 +362,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['FIELD_AUTHOR']) && empty($aValsToAdd[$CNF['FIELD_AUTHOR']]))
+        if (isset($CNF['FIELD_AUTHOR']) && empty($aValsToAdd[$CNF['FIELD_AUTHOR']]) && (!isset($this->aInputs[$CNF['FIELD_AUTHOR']]) || empty($this->getCleanValue($CNF['FIELD_AUTHOR']))))
             $aValsToAdd[$CNF['FIELD_AUTHOR']] = (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * bx_get_logged_profile_id ();
 
         if (isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']]) && empty($this->getCleanValue($CNF['FIELD_ADDED'])))
@@ -971,6 +989,16 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $aInput['attrs']['class'] = 'bx-def-margin-sec-top';
         $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('categories') . ".categoryAddNew(this, '" . $sName . "');";
         return $this->genInputButton($aInput);
+    }
+    
+    protected function genCustomInputAuthor ($aInput)
+    {
+        if(empty($aInput['custom']) || !is_array($aInput['custom']))
+            $aInput['custom'] = array();
+        $aInput['custom']['only_once'] = 1;
+        
+        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . "modules/?r=" . $this->_oModule->_oConfig->getUri() . "/ajax_get_profiles";
+        return $this->genCustomInputUsernamesSuggestions($aInput);
     }
     
     protected function _isMulticatEnabled(){
