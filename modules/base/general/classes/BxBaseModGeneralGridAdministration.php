@@ -120,6 +120,13 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 		if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && !$this->_oModule->_isAdministrator())
 			return '';
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (isset($aRow[$CNF['FIELD_ID']])){
+            $aContentInfo = $this->_getContentInfo($aRow[$CNF['FIELD_ID']]);
+            if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+                return '';
+        }
+        
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
@@ -259,7 +266,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     protected function _onDelete($iId, $aParams = array())
     {
-    	return true;
+    	return false;
     }
 
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
