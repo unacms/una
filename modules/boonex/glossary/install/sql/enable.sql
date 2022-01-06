@@ -420,12 +420,12 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_glossary_cmts', '_bx_glossary_cmts', @iSearchOrder + 2, 'BxGlsrCmtsSearchResult', 'modules/boonex/glossary/classes/BxGlsrCmtsSearchResult.php');
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_glossary', 'bx_glossary_meta_keywords', '', 'bx_glossary_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_glossary', 'bx_glossary', 'bx_glossary_meta_keywords', '', 'bx_glossary_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_glossary_cats', 'bx_glossary', 'bx_glossary', 'bx_glossary_cats', 'bx_glossary_terms', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_glossary_terms`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_glossary_cats', 'bx_glossary', 'bx_glossary', 'bx_glossary', 'bx_glossary_cats', 'bx_glossary_terms', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_glossary_terms`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

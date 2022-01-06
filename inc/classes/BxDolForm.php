@@ -1039,6 +1039,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     {
         // TODO: remove
     }
+    
     public static function getCsrfToken()
     {
         if (getParam('sys_security_form_token_enable') != 'on')
@@ -1049,6 +1050,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         return $oKeys->getNewKey (false, (int)getParam('sys_security_form_token_lifetime'));
     }
+    
     public static function isCsrfTokenValid($s)
     {
         if (getParam('sys_security_form_token_enable') != 'on')

@@ -116,6 +116,15 @@ class BxBaseStudioForms extends BxDolStudioForms
         $sModule = bx_process_input($sModule);
         return array('code' => 0, 'message' => '', 'content' => $this->getSearchFieldsObject()->getFormsSelector($sModule));
     }
+    
+    function actionGetSearchSortableForms()
+    {
+        if(($sModule = bx_get('form_module')) === false)
+            return array('code' => 2, 'message' => _t('_adm_form_err_missing_params'));
+
+        $sModule = bx_process_input($sModule);
+        return array('code' => 0, 'message' => '', 'content' => $this->getSearchSortableFieldsObject()->getFormsSelector($sModule));
+    }
 
     function actionGetLabels()
     {
@@ -194,6 +203,11 @@ class BxBaseStudioForms extends BxDolStudioForms
     protected function getSearchFieldsObject()
     {
         return $this->getGridObject($this->aGridObjects['search_fields']);
+    }
+    
+    protected function getSearchSortableFieldsObject()
+    {
+        return $this->getGridObject($this->aGridObjects['search_sortable_fields']);
     }
 
     protected function getLabels()

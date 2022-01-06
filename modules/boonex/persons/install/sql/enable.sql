@@ -468,8 +468,8 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionProfileDeleteAny);
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_persons', 'bx_persons_meta_keywords', 'bx_persons_meta_locations', 'bx_persons_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_persons', 'bx_persons', 'bx_persons_meta_keywords', 'bx_persons_meta_locations', 'bx_persons_meta_mentions', '', '');
 
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);

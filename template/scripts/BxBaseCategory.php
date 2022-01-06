@@ -28,7 +28,7 @@ class BxBaseCategory extends BxDolCategory
 		$this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', array(
 			'cat' => '{category}',
 			'keyword' => '{keyword}'
-		)) . '{sections}';
+		)) . '{sections}' . '{context}';
     }
 
     public function getCategoryTitle($sValue)
@@ -40,12 +40,13 @@ class BxBaseCategory extends BxDolCategory
 		return $a[$sValue];
     }
 
-    public function getCategoryUrl($sValue)
+    public function getCategoryUrl($sValue, $aParams = [])
     {
         return BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
         	'category' => rawurlencode($this->getObjectName()),
         	'keyword' => rawurlencode($sValue),
-    		'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : ''
+    		'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : '',
+            'context' => isset($aParams['context_id']) ? '&context_id=' . $aParams['context_id'] : ''
         ));
     }
 
@@ -68,6 +69,12 @@ class BxBaseCategory extends BxDolCategory
      */
     public function getCategoriesList($bDisplayEmptyCats = true, $bAsArray = false)
     {
+        $aContextInfo = bx_get_page_info();
+        $mProfileContextId = false;
+        if (isset($aContextInfo['context_module']) && isset($aContextInfo['profile_context_id'])){
+            $mProfileContextId = $aContextInfo['profile_context_id'];
+        }
+        
         $a = BxDolForm::getDataItems($this->_aObject['list_name']);
         if (!$a)
             return $bAsArray ? array() : '';
@@ -76,11 +83,13 @@ class BxBaseCategory extends BxDolCategory
         foreach ($a as $sValue => $sName) {
             if (!is_numeric($sValue) && !$sValue)
                 continue;
-            $iNum = $this->getItemsNum($sValue);
+            
+            $iNum = $this->getItemsNum($sValue, ['context_id' => $mProfileContextId]);
             if (!$bDisplayEmptyCats && !$iNum)
                 continue;
+            
             $aVars['bx_repeat:cats'][] = array(
-                'url' => $this->getCategoryUrl($sValue),
+                'url' => $mProfileContextId? $this->getCategoryUrl($sValue, ['context_id' => $mProfileContextId]) : $this->getCategoryUrl($sValue),
                 'name' => $sName,
                 'value' => $sValue,
                 'num' => $iNum,

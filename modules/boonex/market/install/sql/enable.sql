@@ -557,12 +557,12 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class
 ('bx_market_subentries', 'bx_market_subproducts', 'one-way', '', '');
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_market', 'bx_market_meta_keywords', 'bx_market_meta_locations', 'bx_market_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_market', 'bx_market', 'bx_market_meta_keywords', 'bx_market_meta_locations', 'bx_market_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_market_cats', 'bx_market', 'bx_market', 'bx_market_cats', 'bx_market_products', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_market_products`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_market_cats', 'bx_market', 'bx_market', 'bx_market', 'bx_market_cats', 'bx_market_products', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_market_products`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

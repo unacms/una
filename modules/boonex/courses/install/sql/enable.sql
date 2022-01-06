@@ -498,12 +498,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_courses', 'bx_courses_meta_keywords', 'bx_courses_meta_locations', 'bx_courses_meta_mentions', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_courses', 'bx_courses', 'bx_courses_meta_keywords', 'bx_courses_meta_locations', 'bx_courses_meta_mentions', '', '');
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_courses_cats', 'bx_courses', 'bx_course', 'bx_courses_cats', 'bx_courses_data', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`content_id` = `bx_courses_data`.`id` AND `sys_profiles`.`type` = ''bx_courses'')', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_courses_cats', 'bx_courses',  'bx_courses', 'bx_course', 'bx_courses_cats', 'bx_courses_data', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`content_id` = `bx_courses_data`.`id` AND `sys_profiles`.`type` = ''bx_courses'')', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);

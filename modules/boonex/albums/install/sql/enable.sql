@@ -484,10 +484,10 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `GlobalSearch`
 
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_albums', 'bx_albums_meta_keywords', 'bx_albums_meta_locations', 'bx_albums_meta_mentions', '', ''),
-('bx_albums_media', 'bx_albums_meta_keywords_media', '', '', '', ''),
-('bx_albums_media_camera', 'bx_albums_meta_keywords_media_camera', '', '', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_albums', 'bx_albums', 'bx_albums_meta_keywords', 'bx_albums_meta_locations', 'bx_albums_meta_mentions', '', ''),
+('bx_albums_media', 'bx_albums', 'bx_albums_meta_keywords_media', '', '', '', ''),
+('bx_albums_media_camera', 'bx_albums', 'bx_albums_meta_keywords_media_camera', '', '', '', '');
 
 
 -- STATS

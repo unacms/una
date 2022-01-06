@@ -402,14 +402,14 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_photos', 'bx_photos_meta_keywords', 'bx_photos_meta_locations', 'bx_photos_meta_mentions', '', ''),
-('bx_photos_camera', 'bx_photos_meta_keywords_camera', '', '', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_photos', 'bx_photos', 'bx_photos_meta_keywords', 'bx_photos_meta_locations', 'bx_photos_meta_mentions', '', ''),
+('bx_photos_camera', 'bx_photos', 'bx_photos_meta_keywords_camera', '', '', '', '');
 
 
 -- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_photos_cats', 'bx_photos', 'bx_photos', 'bx_photos_cats', 'bx_photos_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_photos_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
+('bx_photos_cats', 'bx_photos', 'bx_photos', 'bx_photos', 'bx_photos_cats', 'bx_photos_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_photos_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 
 -- STATS
