@@ -210,12 +210,16 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
 
         $aMembers2 = $oConn->getConnectedContent($iContentId);
 
-        $aToAdd = array_diff($aMembers, $aMembers2);
-        $aToRemove = array_diff($aMembers2, $aMembers);
+        $aMembersToAdd = [];
+        $aMembersToRemove = $aMembers2;
+        if (is_array($aMembers)){
+            $aMembersToAdd = array_diff($aMembers, $aMembers2);
+            $aMembersToRemove = array_diff($aMembers2, $aMembers);
+        }    
 
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
-        foreach($aToAdd as $iProfileId){
+        foreach($aMembersToAdd as $iProfileId){
             $oConn->actionAdd($iProfileId, $iContentId);
 
             bx_alert($this->MODULE, 'assigned', $iContentId, false, array(
@@ -224,7 +228,7 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
             ));
         }
 
-        foreach($aToRemove as $iProfileId){
+        foreach($aMembersToRemove as $iProfileId){
             $oConn->actionRemove($iProfileId, $iContentId);
 
             bx_alert($this->MODULE, 'unassigned', $iContentId, false, array(
