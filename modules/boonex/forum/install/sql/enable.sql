@@ -588,8 +588,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_forum_subscribers', 'bx_forum_subscribers', 'one-way', '', '');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_forum_subscribers', 'bx_forum_subscribers', 1, 0, 'one-way', '', '');
 
 
 -- METATAGS

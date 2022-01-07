@@ -518,8 +518,8 @@ INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table
 
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline_mute', 'bx_timeline_mute', 'one-way', '', '');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_mute', 'bx_timeline_mute', 1, 1, 'one-way', '', '');
 
 
 -- EMAIL TEMPLATES
