@@ -143,25 +143,32 @@ function PageCompMainCode()
             $f($oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $iProfileId, 0));
 
         break;
-        case 'search-results':
+        case 'search-results': 
 
             echo "<h2>Common Content (like mutual Friends between two initiators)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'common', 1, BX_DB_CONTENT_ONLY, $iProfileId2));
+            $a = bx_srv('bx_persons', 'browse_connections', [$iProfileId, 'sys_profiles_friends', 'common', 1, BX_DB_CONTENT_ONLY, $iProfileId2]);
+            echo (isset($a['content']) ? $a['content'] : '');
 
             echo "<h2>Mutual Content (like Friends)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', 1, BX_DB_CONTENT_ONLY));
+            $a = bx_srv('bx_persons', 'browse_connections', [$iProfileId, 'sys_profiles_friends', 'content', 1, BX_DB_CONTENT_ONLY]);
+            echo (isset($a['content']) ? $a['content'] : '');
 
             echo "<h2>Connected Content</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', false, BX_DB_CONTENT_ONLY));
+
+            $a = bx_srv('bx_persons', 'browse_connections', [$iProfileId, 'sys_profiles_friends', 'content', false, BX_DB_CONTENT_ONLY]);
+            echo (isset($a['content']) ? $a['content'] : '');
 
             echo "<h2>Connected Initiators</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'initiators', false, BX_DB_CONTENT_ONLY));
+            $a = bx_srv('bx_persons', 'browse_connections', [$iProfileId, 'sys_profiles_friends', 'initiators', false, BX_DB_CONTENT_ONLY]);
+            echo (isset($a['content']) ? $a['content'] : '');
 
             echo "<h2>Connected Content without mutual content (like Friend Requests sent)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', 0, BX_DB_CONTENT_ONLY));
+            $a = bx_srv('bx_persons', 'browse_connections', [$iProfileId, 'sys_profiles_friends', 'content', 0, BX_DB_CONTENT_ONLY]);
+            echo (isset($a['content']) ? $a['content'] : '');
 
             echo "<h2>Connected Initiators without mutual content (like Friend Requests received)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'initiators', 0, BX_DB_CONTENT_ONLY));
+            $a = BxDolService::call('bx_persons', 'browse_connections', [$iProfileId, 'sys_profiles_friends', 'initiators', 0, BX_DB_CONTENT_ONLY]);
+            echo (isset($a['content']) ? $a['content'] : '');
 
         break;
     }

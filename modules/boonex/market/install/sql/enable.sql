@@ -553,8 +553,9 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_market_cmts', '_bx_market_cmts', @iSearchOrder + 2, 'BxMarketCmtsSearchResult', 'modules/boonex/market/classes/BxMarketCmtsSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_market_subentries', 'bx_market_subproducts', 'one-way', '', '');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_market_subentries', 'bx_market_subproducts', 0, 0, 'one-way', '', '');
+
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `module`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES

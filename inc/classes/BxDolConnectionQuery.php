@@ -44,10 +44,13 @@ class BxDolConnectionQuery extends BxDolDb
             $sWhereJoin1 .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
             $sWhereJoin2 .= $this->prepareAsString(" AND `c2`.`mutual` = ?", $isMutual);
         }
+
+        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')" : '';
+
         return array(
             'join' => "
                 INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sWhereJoin1)
-                INNER JOIN `{$this->_sTable}` AS `c2` ON (`c2`.`content` = `c`.`content` $sWhereJoin2)",
+                INNER JOIN `{$this->_sTable}` AS `c2` ON (`c2`.`content` = `c`.`content` $sWhereJoin2)" . $sJoin,
         );
     }
 
@@ -59,9 +62,11 @@ class BxDolConnectionQuery extends BxDolDb
         foreach($aResult['fields'] as $sFieldAlias => $aField)
             $aFields[$sFieldAlias] = "`" . $aField['table_alias'] . "`.`" . $aField['name'] . "`";
 
+        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `{$aResult['join']['table_alias']}`.`content` AND `p`.`status` = 'active')" : '';
+
         return array(
             'fields' => $aFields,
-            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")",
+            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ") " . $sJoin,
         );
     }
 
@@ -98,8 +103,11 @@ class BxDolConnectionQuery extends BxDolDb
     public function getConnectedInitiatorsSQLParts ($sInitiatorTable, $sInitiatorField, $iContent, $isMutual = false)
     {
         $aResult = $this->getConnectedInitiatorsSQLPartsExt($sInitiatorTable, $sInitiatorField, $iContent, $isMutual);
+
+        $sJoin = $this->_aObject['profile_initiator'] ? "INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `{$aResult['join']['table_alias']}`.`initiator` AND `sys_profiles`.`status` = 'active')" : '';
+
         return array(
-            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")",
+            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ") " . $sJoin,
         );
     }
 
@@ -136,6 +144,8 @@ class BxDolConnectionQuery extends BxDolDb
         $sWhereJoin = (false !== $isMutual) ? " AND `c2`.`mutual` = :mutual" : "";
         $sJoin = "INNER JOIN `" . $this->_sTable . "` AS `c2` ON (`c2`.`initiator` = :initiator2 AND `c`.`content` = `c2`.`content` $sWhereJoin)";
 
+        $sJoin .= $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')" : '';
+
         $sWhere = " AND `c`.`initiator` = :initiator1";
         $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
 
@@ -149,7 +159,10 @@ class BxDolConnectionQuery extends BxDolDb
     public function getConnectedContent ($iInitiator, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
         $sWhere = " AND `c`.`initiator` = :initiator";
-        $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = 'active'" : '';
+
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
 
         return $this->getColumn($sQuery, array(
         	'initiator' => $iInitiator
@@ -161,7 +174,10 @@ class BxDolConnectionQuery extends BxDolDb
         $mixedType = is_array($mixedType) ? $mixedType : array($mixedType);
 
         $sWhere = " AND `c`.`initiator` = :initiator";
-        $sQuery = $this->_getConnectionsQuery($sWhere, 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`type` IN (' . $this->implode_escape($mixedType) . ')', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        $sJoin = $this->_aObject['profile_content'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = \'active\' AND `p`.`type` IN (' . $this->implode_escape($mixedType) . ')' : '';
+
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
 
         return $this->getColumn($sQuery, array(
             'initiator' => $iInitiator,
@@ -171,7 +187,10 @@ class BxDolConnectionQuery extends BxDolDb
     public function getConnectedInitiators ($iContent, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
         $sWhere = " AND `c`.`content` = :content";
-        $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`initiator` AND `p`.`status` = \'active\'' : ''; 
+
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
 
         return $this->getColumn($sQuery, array(
             'content' => $iContent
@@ -183,7 +202,10 @@ class BxDolConnectionQuery extends BxDolDb
         $mixedType = is_array($mixedType) ? $mixedType : array($mixedType);
 
         $sWhere = " AND `c`.`content` = :content";
-        $sQuery = $this->_getConnectionsQuery($sWhere, 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`initiator` AND `p`.`type` IN (' . $this->implode_escape($mixedType) . ')', '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`initiator` AND `p`.`status` = \'active\' AND `p`.`type` IN (' . $this->implode_escape($mixedType) . ')' : ''; 
+
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
 
         return $this->getColumn($sQuery, array(
             'content' => $iContent,
