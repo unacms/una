@@ -136,7 +136,7 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         if($iLimit > 0)
             $sLimitClause = " LIMIT " . (int)$iStart . ", " . (int)$iLimit;
 
-        return $this->getColumn("SELECT `fan_id` FROM `" . $CNF['TABLE_ADMINS'] . "` WHERE 1" . $sWhereClause . $sLimitClause, $aBindings);
+        return $this->getColumn("SELECT `fan_id` FROM `" . $CNF['TABLE_ADMINS'] . "` INNER JOIN `sys_profiles` as `p` ON (`p`.`id` = `fan_id` AND `p`.`status` = 'active') WHERE 1" . $sWhereClause . $sLimitClause, $aBindings);
     }
 
     public function getRole($iGroupProfileId, $iProfileId)
