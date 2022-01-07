@@ -176,6 +176,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $this->processReplaceableMarkers($oProfileAuthor);
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
 
         if ($this->bFileManagerMode) {
             $this->addContainerClass('bx-files-with-toolbar');
