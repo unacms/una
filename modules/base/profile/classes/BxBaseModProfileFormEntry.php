@@ -18,7 +18,10 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     protected $_aImageFields = array ();
 
     public function __construct($aInfo, $oTemplate = false)
-    {
+    {   
+        if (!isset($this->_bAllowChangeUserForAdmins))
+            $this->_bAllowChangeUserForAdmins = false;
+        
         parent::__construct($aInfo, $oTemplate);
 
         $this->_sAuthorKey = 'profile_id';

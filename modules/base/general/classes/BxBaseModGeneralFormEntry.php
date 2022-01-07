@@ -29,9 +29,14 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     protected $_aTrackFieldsChanges;
     
     protected $_iContentId;
+    
+    protected $_bAllowChangeUserForAdmins;
 
     public function __construct($aInfo, $oTemplate = false)
     {
+        if (!isset($this->_bAllowChangeUserForAdmins))
+            $this->_bAllowChangeUserForAdmins = true;
+        
         parent::__construct($aInfo, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
@@ -65,8 +70,16 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = true;
         }
         
-        if ($this->_oModule->checkAllowedEditAnyEntry(false) === CHECK_ACTION_RESULT_ALLOWED && isset($CNF['FIELD_AUTHOR']) && isset($this->aParams['view_mode']) && $this->aParams['view_mode'] != 1){
-            $this->aInputs = array_merge([
+        // add ability to change author by admins in some apps
+        if (
+            $this->_oModule->checkAllowedEditAnyEntry(false) === CHECK_ACTION_RESULT_ALLOWED &&
+            isset($CNF['FIELD_AUTHOR']) && 
+            (
+                (isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) && $this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) ||
+                (isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']) && $this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])
+            ) && 
+            $this->_bAllowChangeUserForAdmins){
+                $this->aInputs = array_merge([
                 $CNF['FIELD_AUTHOR'] => [
                     'type' => 'custom',
                     'name' => $CNF['FIELD_AUTHOR'],

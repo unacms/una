@@ -16,6 +16,8 @@ class BxOrgsFormEntry extends BxBaseModGroupsFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {
+        $this->_bAllowChangeUserForAdmins = true;
+        
         $this->MODULE = 'bx_organizations';
         parent::__construct($aInfo, $oTemplate);
     }
