@@ -359,10 +359,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->_preloadPrivacyField($sField, $sObject, $aValues);
         
         if (isset($CNF['FIELD_AUTHOR']) && isset($this->aInputs[$CNF['FIELD_AUTHOR']])){
-            if (isset($aValues[$CNF['FIELD_AUTHOR']]))
-                $aValues[$CNF['FIELD_AUTHOR']] = [$aValues[$CNF['FIELD_AUTHOR']]];
+            if (isset($aValues[$CNF['FIELD_AUTHOR']]) && $aValues[$CNF['FIELD_AUTHOR']])
+                $aValues[$CNF['FIELD_AUTHOR']] = $aValues[$CNF['FIELD_AUTHOR']];
             else
-                $aValues[$CNF['FIELD_AUTHOR']] = [bx_get_logged_profile_id()];
+                $aValues[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id();
         }
         
         parent::initChecker ($aValues, $aSpecificValues);
@@ -374,9 +374,22 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if (isset($CNF['FIELD_AUTHOR']) && empty($aValsToAdd[$CNF['FIELD_AUTHOR']]) && (!isset($this->aInputs[$CNF['FIELD_AUTHOR']]) || empty($this->getCleanValue($CNF['FIELD_AUTHOR']))))
+        
+        $iAuthor = -1;
+        
+        if (isset($CNF['FIELD_AUTHOR']) && empty($aValsToAdd[$CNF['FIELD_AUTHOR']]) && (!isset($this->aInputs[$CNF['FIELD_AUTHOR']]) || empty($this->getCleanValue($CNF['FIELD_AUTHOR'])))){
             $aValsToAdd[$CNF['FIELD_AUTHOR']] = (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * bx_get_logged_profile_id ();
+            $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']] ;
+        }
+        else{
+            if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
+                 $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id();
+                 $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']];
+            }
+            if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && !empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
+                $iAuthor = $this->getCleanValue($CNF['FIELD_AUTHOR']);
+            }
+        }
 
         if (isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']]) && empty($this->getCleanValue($CNF['FIELD_ADDED'])))
             $aValsToAdd[$CNF['FIELD_ADDED']] = time();
@@ -434,7 +447,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         if ($bMulticatEnabled)
             $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
-        
+
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         
         if(!empty($iContentId)){
@@ -444,7 +457,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 				        foreach ($aInput['ghost_template'] as $oFormNested) {
 					        $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
                             if ($aInput['rateable']){
-                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']], $this->_oModule->getName(), $iNestedContentId);
+                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName(), $iNestedContentId);
                             }
 				        }
 			        }
@@ -458,7 +471,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         foreach($this->aInputs as $aInput) {
             if (isset($aInput['rateable']) && $aInput['rateable'] && $aInput['type'] != 'nested_form'){
-                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']], $this->_oModule->getName());
+                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName());
             }
         }
         
@@ -470,10 +483,26 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        $iAuthor = -1;
+        
+        if(isset($CNF['FIELD_AUTHOR']) && isset($aContentInfo[$CNF['FIELD_AUTHOR']])){
+            $iAuthor = $aContentInfo[$CNF['FIELD_AUTHOR']];
+        }
 
-        if(isset($CNF['FIELD_AUTHOR']) && isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]))
+        if(isset($CNF['FIELD_AUTHOR']) && isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']])){
             $aValsToAdd[$CNF['FIELD_AUTHOR']] = ($this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * abs($aContentInfo[$CNF['FIELD_AUTHOR']]);
-
+            $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']];
+        }
+        else{
+             if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
+                 $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id();
+                 $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']];
+            }
+            if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && !empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
+                 $iAuthor = $this->getCleanValue($CNF['FIELD_AUTHOR']);
+            }
+        }
+        
         if(isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
@@ -504,7 +533,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                         if (empty($iNestedContentId)){
                             $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
                             if ($aInput['rateable']){
-                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $this->_oModule->getName(), $iNestedContentId);
+                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName(), $iNestedContentId);
                             }
                         }
                         else{
@@ -520,7 +549,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
 		foreach($this->aInputs as $aInput) {
             if (isset($aInput['rateable']) && $aInput['rateable'] && $aInput['type'] != 'nested_form'){
-                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $this->_oModule->getName());
+                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName());
             }
         }
 		

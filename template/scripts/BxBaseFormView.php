@@ -1497,7 +1497,11 @@ BLAH;
 
         $aTmplVarsVals = [];
         if(!empty($aInput['value'])) {
-            if(is_array($aInput['value'])) {
+            if(is_array($aInput['value']) || (is_numeric($aInput['value']) && $aInput['custom']['only_once'] == 1)) {
+                
+                if (!is_array($aInput['value']))
+                    $aInput['value'] = [$aInput['value']];
+                    
                 foreach($aInput['value'] as $sVal) {
                     if(!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                         continue;
@@ -1528,7 +1532,7 @@ BLAH;
         $this->addCssJsUi();
 
         return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
-            'name' => $aInput['name'],
+            'name' => $aInput['name'] . (isset($aInput['custom']['only_once']) && $aInput['custom']['only_once'] == 1 ? '[]' : ''),
             'attrs' => bx_convert_array2attrs($aAttrs),
             'bx_repeat:vals' => $aTmplVarsVals,
             'bx_if:input' => array(

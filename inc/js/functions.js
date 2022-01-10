@@ -1150,7 +1150,7 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect)
 			else if(bShowImg && item.thumb != undefined)
 				sImage = '<img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="' + item.thumb + '">';
 
-			$(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">' + sImage + item.label + '<input type="hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="' + sName + (bOnlyOnce ? '' : '[]') + '" value="' + item.value + '" /></b>');
+			$(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">' + sImage + item.label + '<input type="hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="' + sName + '" value="' + item.value + '" /></b>');
 		}
 
 		if (!bOnlyOnce)
