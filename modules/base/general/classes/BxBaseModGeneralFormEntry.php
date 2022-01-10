@@ -84,7 +84,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                     'type' => 'custom',
                     'name' => $CNF['FIELD_AUTHOR'],
                     'db' => ['pass' => 'Xss'],
-                    'caption' => '_sys_form_input_caption_author'
+                    'caption' => _t('_sys_form_input_caption_author')
                 ],
             ], $this->aInputs);
         }
