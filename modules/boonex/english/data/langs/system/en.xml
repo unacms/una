@@ -1925,8 +1925,8 @@
         <string name="_sys_acl_action_use_macros_desc"><![CDATA[Use special constructions to insert dynamic content almost anywhere]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
-        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Show membership levels in privacy groups]]></string>
-        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Show membership levels in privacy groups]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Use membership level(s) in privacy fields]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Allow to limit access by membership level(s) in privacy fields]]></string>
         <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Show membership private info]]></string>
         <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Show membership private info]]></string>
         <string name="_sys_acl_action_set_badge"><![CDATA[Set badge]]></string>
@@ -2474,7 +2474,8 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_form_acl_input_do_cancel"><![CDATA[Cancel]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Type name here...]]></string>
         <string name="_sys_form_ps_group_custom"><![CDATA[Privacy: Custom group]]></string>
-        <string name="_sys_form_display_ps_gc_manage"><![CDATA[Privacy: Manage custom group display]]></string>
+        <string name="_sys_form_display_ps_gc_members"><![CDATA[Privacy: Profiles based custom group display]]></string>
+        <string name="_sys_form_display_ps_gc_memberships"><![CDATA[Privacy: Memberships based custom group display]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_profile_id"><![CDATA[Profile ID]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_content_id"><![CDATA[Content ID]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_object"><![CDATA[Object]]></string>
@@ -2484,6 +2485,8 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_form_ps_gc_input_caption_search"><![CDATA[Search]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_list"><![CDATA[List]]></string>
         <string name="_sys_form_ps_gc_input_caption_list"><![CDATA[or select]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_memberships"><![CDATA[Memberships List]]></string>
+        <string name="_sys_form_ps_gc_input_caption_memberships"><![CDATA[Select]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_do_submit"><![CDATA[Submit]]></string>
         <string name="_sys_form_ps_gc_input_caption_do_submit"><![CDATA[Submit]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_do_cancel"><![CDATA[Cancel]]></string>
@@ -3226,7 +3229,7 @@ If it is not enabled then please consider implement this optimization, since it 
             <li><b>{0}</b> total</li>
             <li><b>{1}</b> deleted</li>
         </ul>]]></string>
-    <string name="_sys_ps_group_title_acl_selected"><![CDATA[Selected Membership Levels...]]></string>
+    <string name="_sys_ps_group_title_memberships_selected"><![CDATA[Selected Membership Levels...]]></string>
     <string name="_sys_ps_group_title_custom"><![CDATA[Custom]]></string>
     <string name="_sys_ps_group_title_followers"><![CDATA[Followers]]></string>
     <string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>

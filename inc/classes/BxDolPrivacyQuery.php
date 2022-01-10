@@ -193,8 +193,8 @@ class BxDolPrivacyQuery extends BxDolDb
                     'id' => $aParams['id']
                 );
 
-                $sSelectClause .= ", GROUP_CONCAT(`tgm`.`member_id` SEPARATOR  '" . $sDiv . "') AS `members`";
-                $sJoinClause = "LEFT JOIN `sys_privacy_groups_custom_members` AS `tgm` ON `tg`.`id`=`tgm`.`group_id`";
+                $sSelectClause .= ", GROUP_CONCAT(`tgm`.`" . $aParams['group_items_field'] . "` SEPARATOR  '" . $sDiv . "') AS `items`";
+                $sJoinClause = "LEFT JOIN `" . $aParams['group_items_table'] . "` AS `tgm` ON `tg`.`id`=`tgm`.`group_id`";
                 $sWhereClause = " AND `tg`.`id`=:id";
                 $sGroupClause = "`tg`.`id`";
                 break;
@@ -219,8 +219,8 @@ class BxDolPrivacyQuery extends BxDolDb
                     'group_id' => $aParams['group_id'],
                 );
 
-                $sSelectClause .= ", GROUP_CONCAT(`tgm`.`member_id` SEPARATOR  '" . $sDiv . "') AS `members`";
-                $sJoinClause = "LEFT JOIN `sys_privacy_groups_custom_members` AS `tgm` ON `tg`.`id`=`tgm`.`group_id`";
+                $sSelectClause .= ", GROUP_CONCAT(`tgi`.`" . $aParams['group_items_field'] . "` SEPARATOR  '" . $sDiv . "') AS `items`";
+                $sJoinClause = "LEFT JOIN `" . $aParams['group_items_table'] . "` AS `tgi` ON `tg`.`id`=`tgi`.`group_id`";
                 $sWhereClause = " AND `tg`.`profile_id`=:profile_id AND (`tg`.`content_id`=:content_id" . (!empty($aParams['content_id']) ? " OR `tg`.`content_id`='0'" : "") . ") AND `tg`.`object`=:object AND `tg`.`group_id`=:group_id";
                 $sGroupClause = "`tg`.`id`";
                 break;
@@ -245,7 +245,7 @@ class BxDolPrivacyQuery extends BxDolDb
 
         $aResult = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
         if(in_array($aParams['type'], array('id_ext', 'pcog_ext')) && !empty($aResult) && is_array($aResult))
-            $aResult['members'] = explode($sDiv, $aResult['members']);
+            $aResult['items'] = explode($sDiv, $aResult['items']);
 
         return $aResult;
     }
@@ -289,21 +289,25 @@ class BxDolPrivacyQuery extends BxDolDb
 
     public function insertGroupCustomMember($aParamsSet)
     {
-        if(empty($aParamsSet))
-            return false;
-
-        return $this->query("INSERT IGNORE INTO `sys_privacy_groups_custom_members` SET " . $this->arrayToSQL($aParamsSet));
+        return $this->_insertGroupCustomItem('sys_privacy_groups_custom_members', $aParamsSet);
     }
 
     public function deleteGroupCustomMember($aParamsWhere)
     {
-        if(empty($aParamsWhere))
-            return false;
-
-        return $this->query("DELETE FROM `sys_privacy_groups_custom_members` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+        return $this->_deleteGroupCustomItem('sys_privacy_groups_custom_members', $aParamsWhere);
     }
 
-    function getContentByGroupAsSQLPart($sField, $mixedGroupId)
+    public function insertGroupCustomMembership($aParamsSet)
+    {
+        return $this->_insertGroupCustomItem('sys_privacy_groups_custom_memberships', $aParamsSet);
+    }
+
+    public function deleteGroupCustomMembership($aParamsWhere)
+    {
+        return $this->_deleteGroupCustomItem('sys_privacy_groups_custom_memberships', $aParamsWhere);
+    }
+
+    public function getContentByGroupAsSQLPart($sField, $mixedGroupId)
     {
         if(is_array($mixedGroupId))
             $sWhere = " AND `" . $this->_sTable . "`.`" . $sField . "` IN (" . $this->implode_escape($mixedGroupId) . ")";
@@ -329,6 +333,22 @@ class BxDolPrivacyQuery extends BxDolDb
 
         $sCacheKey = $this->_sCachePrivacyObject . $sModule . '_' . $sAction;
         return $this->fromCache($sCacheKey, 'getRow', $sQuery);
+    }
+
+    protected function _insertGroupCustomItem($sTable, $aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return $this->query("INSERT IGNORE INTO `" . $sTable . "` SET " . $this->arrayToSQL($aParamsSet));
+    }
+
+    protected function _deleteGroupCustomItem($sTable, $aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return $this->query("DELETE FROM `" . $sTable . "` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
     }
 }
 

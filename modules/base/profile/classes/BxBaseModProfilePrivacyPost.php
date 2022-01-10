@@ -33,7 +33,17 @@ class BxBaseModProfilePrivacyPost extends BxTemplPrivacy
         return $a;
     }
 
-    protected function isSelectGroupCustom($aParams)
+    protected function isSelectGroupCustomUsers($aParams)
+    {
+        return $this->_isSelectGroupCustomItems($aParams);
+    }
+
+    protected function isSelectGroupCustomMemberships($aParams)
+    {
+        return $this->_isSelectGroupCustomItems($aParams);
+    }
+
+    protected function _isSelectGroupCustomItems($aParams)
     {
         if($this->_oModule->serviceActAsProfile() && empty($aParams['content_id']))
             return _t('_sys_ps_ferr_incorrect_gc_not_allowed');

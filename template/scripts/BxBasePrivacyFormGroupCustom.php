@@ -38,8 +38,12 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
         $this->_aGroupCustomInfo = array();
 
         switch($this->aParams['display']) {
-            case 'sys_privacy_group_custom_manage':
-                $this->aInputs['action']['value'] = 'select_group';
+            case 'sys_privacy_group_custom_members':
+                $this->aInputs['action']['value'] = 'select_members';
+                break;
+
+            case 'sys_privacy_group_custom_memberships':
+                $this->aInputs['action']['value'] = 'select_memberships';
                 break;
         }
     }
@@ -47,6 +51,21 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
     public function initChecker($aValues = array(), $aSpecificValues = array())
     {
         $this->initData($aValues);
+
+        if(isset($this->aInputs['memberships']) && $this->_oObject->isAllowedMemberships($this->_iProfileId)) {
+            $aSelected = array();
+            if(!empty($this->_aGroupCustomInfo) && is_array($this->_aGroupCustomInfo))
+                $this->aInputs['memberships']['value'] = $this->_aGroupCustomInfo['items'];
+
+            $aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
+            if(!empty($aLevels) && is_array($aLevels)) {
+                $aLevelsValues = [];
+                foreach($aLevels as $iId => $sTitle)
+                    $aLevelsValues[] = array('key' => $iId, 'value' => $sTitle);
+
+                $this->aInputs['memberships']['values'] = $aLevelsValues;
+            }
+        }
 
         return parent::initChecker($aValues, $aSpecificValues);
     }
@@ -67,11 +86,17 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
 
         $sName = 'sys-pgc-' . str_replace('_', '-', $this->_sObject);
         $iValue = !empty($aParams['value']) ? (int)$aParams['value'] : $this->_iGroupCustomId;
-        $aValueMembers = array();
-        if(!empty($aParams['value_members']) && is_array($aParams['value_members']))
-            $aValueMembers = $aParams['value_members'];
+
+        $sItemsName = $sName . '-items';
+        $aItemsValue = array();
+        if(!empty($aParams['value_items']) && is_array($aParams['value_items']))
+            $aItemsValue = $aParams['value_items'];
         else if($this->_iGroupCustomId)
-            $aValueMembers = $this->_aGroupCustomInfo['members'];
+            $aItemsValue = $this->_aGroupCustomInfo['items'];
+
+        $sMethodItemsValue = 'getElementGroupCustomValue' . bx_gen_method_name($this->_aGroupSettings['name']);
+        if(!empty($aItemsValue) && method_exists($this, $sMethodItemsValue))
+            $aItemsValue = $this->$sMethodItemsValue($sItemsName, $aItemsValue);
 
         $aInput = array(
             'type' => 'hidden',
@@ -83,14 +108,14 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
             )
         );
 
-        $aInputMembers = array(
+        $aInputItems = array(
             'type' => 'custom',
-            'name' => $sName . '-members',
+            'name' => $sItemsName,
             'caption' => '',
-            'value' => $aValueMembers,
+            'value' => $aItemsValue,
             'ajax_get_suggestions' => BX_DOL_URL_ROOT . bx_append_url_params('privacy.php', array(
                 'object' => $this->_sObject,
-                'action' => 'users_list',
+                'action' => $this->_aGroupSettings['uri_get_items'],
                 'group' => $this->_iGroupId
             )),
             'attrs' => array(
@@ -98,12 +123,34 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
             )
         );
 
-        return $this->oTemplate->parseHtmlByName('privacy_group_custom.html', array(
+        return $this->oTemplate->parseHtmlByName('privacy_group_custom.html', [
             'js_object' => $this->_oObject->getJsObjectName(),
             'html_id' => $sName,
             'input_id' => $this->genInputStandard($aInput),
-            'input_members' => $this->genCustomInputUsernamesSuggestions($aInputMembers)
-        ));
+            'input_items' => $this->genCustomInputUsernamesSuggestions($aInputItems)
+        ]);
+    }
+
+    protected function getElementGroupCustomValueMemberships($sName, $aItems)
+    {
+        $oAcl = BxDolAcl::getInstance();
+
+        $aTmplVarsItems = [];
+        foreach($aItems as $iItem) {
+            $aItemInfo = $oAcl->getMembershipInfo($iItem);
+            if(empty($aItemInfo) || !is_array($aItemInfo))
+                continue;
+
+            $aTmplVarsItems[] = [
+                'name' => $sName,
+                'value' => $iItem,
+                'title' => _t($aItemInfo['name'])
+            ];
+        }
+
+        return $this->oTemplate->parseHtmlByName('privacy_memberships_value.html', [
+            'bx_repeat:vals' => $aTmplVarsItems
+        ]);
     }
 
     protected function genCustomInputSearch($aInput)
@@ -129,7 +176,7 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
 
         $aSelected = array();
         if(!empty($this->_aGroupCustomInfo) && is_array($this->_aGroupCustomInfo))
-            $aSelected = $this->_aGroupCustomInfo['members'];
+            $aSelected = $this->_aGroupCustomInfo['items'];
 
         $aTmplVarsUsers = array();
         if(!empty($aConnectedIds) && is_array($aConnectedIds)) {
@@ -184,7 +231,9 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
                 'profile_id' => $this->_iProfileId,
                 'content_id' => $this->_iContentId,
                 'object' => $this->_sObject,
-                'group_id' => $this->_iGroupId
+                'group_id' => $this->_iGroupId,
+                'group_items_table' => $this->_aGroupSettings['db_table_items'],
+                'group_items_field' => $this->_aGroupSettings['db_field_item']
             ));
 
             if(!empty($this->_aGroupCustomInfo) && is_array($this->_aGroupCustomInfo))

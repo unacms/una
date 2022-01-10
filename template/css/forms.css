@@ -660,6 +660,9 @@
     font-weight:normal;
 	border-radius: 1.25rem;
 }
+.bx-form-value .bx-form-input-autotoken b.val-wo-icon {
+    padding-left: 1.5em;
+}
 .bx-form-value .bx-form-input-autotoken b:hover {
     opacity:0.7;
 }

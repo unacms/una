@@ -4,7 +4,7 @@
 
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_player`, `sys_objects_embeds`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_cmts_reactions`, `sys_cmts_reactions_track`, `sys_cmts_reports`, `sys_cmts_reports_track`, `sys_cmts_scores`, `sys_cmts_scores_track`, `sys_email_templates`, `sys_queue_push`, `sys_queue_email`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_search_extended_sorting_fields`, `sys_statistics`, `sys_audit`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_groups_custom`, `sys_privacy_groups_custom_members`, `sys_objects_auths`, `sys_objects_score`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_audio_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_inputs_privacy`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_relations`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_types`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_content_placeholders`, `sys_pages_blocks`, `sys_labels`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_images_editor`, `sys_images_editor_resized`, `sys_wiki_files`, `sys_wiki_images_resized`, `sys_rewrite_rules`, `sys_seo_links`, `sys_preloader`, `sys_std_roles`, `sys_std_roles_actions`, `sys_std_roles_actions2roles`, `sys_std_roles_members`, `sys_std_pages`, `sys_std_widgets`, `sys_std_widgets_bookmarks`, `sys_std_pages_widgets`, `sys_categories`, `sys_categories2objects`, `sys_objects_logs`, `sys_objects_location_field`, `sys_objects_location_map`, `sys_objects_wiki`, `sys_pages_wiki_blocks`, `sys_badges`, `sys_badges2objects`, `sys_form_fields_reaction`, `sys_form_fields_reaction_track`, `sys_form_fields_votes`, `sys_form_fields_votes_track`, `sys_form_fields_ids`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_player`, `sys_objects_embeds`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_cmts_reactions`, `sys_cmts_reactions_track`, `sys_cmts_reports`, `sys_cmts_reports_track`, `sys_cmts_scores`, `sys_cmts_scores_track`, `sys_email_templates`, `sys_queue_push`, `sys_queue_email`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_search_extended_sorting_fields`, `sys_statistics`, `sys_audit`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_groups_custom`, `sys_privacy_groups_custom_members`, `sys_privacy_groups_custom_memberships`, `sys_objects_auths`, `sys_objects_score`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_audio_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_inputs_privacy`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_relations`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_types`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_content_placeholders`, `sys_pages_blocks`, `sys_labels`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_images_editor`, `sys_images_editor_resized`, `sys_wiki_files`, `sys_wiki_images_resized`, `sys_rewrite_rules`, `sys_seo_links`, `sys_preloader`, `sys_std_roles`, `sys_std_roles_actions`, `sys_std_roles_actions2roles`, `sys_std_roles_members`, `sys_std_pages`, `sys_std_widgets`, `sys_std_widgets_bookmarks`, `sys_std_pages_widgets`, `sys_categories`, `sys_categories2objects`, `sys_objects_logs`, `sys_objects_location_field`, `sys_objects_location_map`, `sys_objects_wiki`, `sys_pages_wiki_blocks`, `sys_badges`, `sys_badges2objects`, `sys_form_fields_reaction`, `sys_form_fields_reaction_track`, `sys_form_fields_votes`, `sys_form_fields_votes_track`, `sys_form_fields_ids`;
 
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
@@ -2093,7 +2093,7 @@ INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VA
 ('6', '_sys_ps_group_title_friends_selected', '@friends_selected_by_object', 1, 1),
 ('7', '_sys_ps_group_title_relations', '@relations', 1, 1),
 ('8', '_sys_ps_group_title_relations_selected', '@relations_selected_by_object', 1, 1),
-('9', '_sys_ps_group_title_acl_selected', '@acl_selected_by_object', 1, 1),
+('9', '_sys_ps_group_title_memberships_selected', '@memberships_selected_by_object', 1, 1),
 ('99', '_sys_ps_group_title_custom', '@custom_by_object', 0, 0);
 
 CREATE TABLE `sys_privacy_groups_custom` (
@@ -2110,6 +2110,12 @@ CREATE TABLE `sys_privacy_groups_custom_members` (
   `group_id` int(11) NOT NULL default '0',
   `member_id` int(11) NOT NULL default '0',
   PRIMARY KEY (`group_id`, `member_id`)
+);
+
+CREATE TABLE `sys_privacy_groups_custom_memberships` (
+  `group_id` int(11) NOT NULL default '0',
+  `membership_id` int(11) NOT NULL default '0',
+  PRIMARY KEY (`group_id`, `membership_id`)
 );
 
 -- --------------------------------------------------------
@@ -3355,7 +3361,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_report_post', 'system', 'sys_report', '_sys_form_display_report_post', 0),
 ('sys_favorite_add', 'system', 'sys_favorite', '_sys_form_display_favorite_add', 0),
 ('sys_favorite_list_edit', 'system', 'sys_favorite', '_sys_form_display_favorite_list_edit', 0),
-('sys_privacy_group_custom_manage', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_manage', 0),
+('sys_privacy_group_custom_members', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_members', 0),
+('sys_privacy_group_custom_memberships', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_memberships', 0),
 ('sys_labels_select', 'system', 'sys_labels', '_sys_form_labels_display_select', 0),
 ('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0),
 ('sys_wiki_translate', 'system', 'sys_wiki', '_sys_form_display_wiki_translate', 0),
@@ -3494,6 +3501,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_privacy_group_custom', 'system', 'group_id', '', '', 0, 'hidden', '_sys_form_ps_gc_input_caption_system_group_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'search', '', '', 0, 'custom', '_sys_form_ps_gc_input_caption_system_search', '_sys_form_ps_gc_input_caption_search', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'list', '', '', 0, 'custom', '_sys_form_ps_gc_input_caption_system_list', '_sys_form_ps_gc_input_caption_list', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_privacy_group_custom', 'system', 'memberships', '', '', 0, 'checkbox_set', '_sys_form_ps_gc_input_caption_system_memberships', '_sys_form_ps_gc_input_caption_memberships', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'do_submit', '_sys_form_ps_gc_input_caption_do_submit', '', 0, 'submit', '_sys_form_ps_gc_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'do_cancel', '_sys_form_ps_gc_input_caption_do_cancel', '', 0, 'button', '_sys_form_ps_gc_input_caption_system_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
@@ -3694,16 +3702,26 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_favorite_list_edit', 'allow_view_favorite_list_to', 2147483647, 1, 6),
 ('sys_favorite_list_edit', 'submit', 2147483647, 1, 7),
 
-('sys_privacy_group_custom_manage', 'profile_id', 2147483647, 1, 1),
-('sys_privacy_group_custom_manage', 'content_id', 2147483647, 1, 2),
-('sys_privacy_group_custom_manage', 'object', 2147483647, 1, 3),
-('sys_privacy_group_custom_manage', 'action', 2147483647, 1, 4),
-('sys_privacy_group_custom_manage', 'group_id', 2147483647, 1, 5),
-('sys_privacy_group_custom_manage', 'search', 2147483647, 1, 6),
-('sys_privacy_group_custom_manage', 'list', 2147483647, 1, 7),
-('sys_privacy_group_custom_manage', 'controls', 2147483647, 1, 8),
-('sys_privacy_group_custom_manage', 'do_submit', 2147483647, 1, 9),
-('sys_privacy_group_custom_manage', 'do_cancel', 2147483647, 1, 10),
+('sys_privacy_group_custom_members', 'profile_id', 2147483647, 1, 1),
+('sys_privacy_group_custom_members', 'content_id', 2147483647, 1, 2),
+('sys_privacy_group_custom_members', 'object', 2147483647, 1, 3),
+('sys_privacy_group_custom_members', 'action', 2147483647, 1, 4),
+('sys_privacy_group_custom_members', 'group_id', 2147483647, 1, 5),
+('sys_privacy_group_custom_members', 'search', 2147483647, 1, 6),
+('sys_privacy_group_custom_members', 'list', 2147483647, 1, 7),
+('sys_privacy_group_custom_members', 'controls', 2147483647, 1, 8),
+('sys_privacy_group_custom_members', 'do_submit', 2147483647, 1, 9),
+('sys_privacy_group_custom_members', 'do_cancel', 2147483647, 1, 10),
+
+('sys_privacy_group_custom_memberships', 'profile_id', 2147483647, 1, 1),
+('sys_privacy_group_custom_memberships', 'content_id', 2147483647, 1, 2),
+('sys_privacy_group_custom_memberships', 'object', 2147483647, 1, 3),
+('sys_privacy_group_custom_memberships', 'action', 2147483647, 1, 4),
+('sys_privacy_group_custom_memberships', 'group_id', 2147483647, 1, 5),
+('sys_privacy_group_custom_memberships', 'memberships', 2147483647, 1, 6),
+('sys_privacy_group_custom_memberships', 'controls', 2147483647, 1, 7),
+('sys_privacy_group_custom_memberships', 'do_submit', 2147483647, 1, 8),
+('sys_privacy_group_custom_memberships', 'do_cancel', 2147483647, 1, 9),
 
 ('sys_labels_select', 'name', 2147483647, 1, 1),
 ('sys_labels_select', 'action', 2147483647, 1, 2),

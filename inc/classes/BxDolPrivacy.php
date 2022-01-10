@@ -15,7 +15,7 @@ define('BX_DOL_PG_FRIENDS', '5');
 define('BX_DOL_PG_FRIENDS_SELECTED', '6');
 define('BX_DOL_PG_RELATIONS', '7');
 define('BX_DOL_PG_RELATIONS_SELECTED', '8');
-define('BX_DOL_PG_ACL', '9');
+define('BX_DOL_PG_MEMBERSHIPS_SELECTED', '9');
 define('BX_DOL_PG_CUSTOM', '99');
 
 define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
@@ -71,8 +71,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     protected $_aGroupsSettings;
     protected $_aGroupsExclude;
     
-    protected $_sFormUsers;
-    protected $_sFormDisplayUsersSelect;
+    protected $_sFormGroupCustom;
+    protected $_sFormDisplayGcMembers;
+    protected $_sFormDisplayGcMemberships;
 
     /**
      * Constructor
@@ -90,19 +91,39 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_aGroupsSettings = [
             BX_DOL_PG_FRIENDS_SELECTED => [
+                'name' => 'friends',
+                'is_allowed' => '',
                 'connection' => 'sys_profiles_friends', 
-                'js_method_create_group' => 'selectUsers'
+                'js_method_create_group' => 'selectMembers',
+                'db_table_items' => 'sys_privacy_groups_custom_members',
+                'db_field_item' => 'member_id',
+                'uri_get_items' => 'users_list',
             ],
             BX_DOL_PG_RELATIONS_SELECTED => [
+                'name' => 'relations',
+                'is_allowed' => '',
                 'connection' => 'sys_profiles_relations', 
-                'js_method_create_group' => 'selectUsers'
+                'js_method_create_group' => 'selectMembers',
+                'db_table_items' => 'sys_privacy_groups_custom_members',
+                'db_field_item' => 'member_id',
+                'uri_get_items' => 'users_list',
+            ],
+            BX_DOL_PG_MEMBERSHIPS_SELECTED => [
+                'name' => 'memberships',
+                'is_allowed' => 'isAllowedMemberships',
+                'connection' => '',
+                'js_method_create_group' => 'selectMemberships',
+                'db_table_items' => 'sys_privacy_groups_custom_memberships',
+                'db_field_item' => 'membership_id',
+                'uri_get_items' => 'memberships_list',
             ]
         ];
 
         $this->_aGroupsExclude = array();
 
-        $this->_sFormUsers = 'sys_privacy_group_custom';
-        $this->_sFormDisplayUsersSelect = 'sys_privacy_group_custom_manage';
+        $this->_sFormGroupCustom = 'sys_privacy_group_custom';
+        $this->_sFormDisplayGcMembers = 'sys_privacy_group_custom_members';
+        $this->_sFormDisplayGcMemberships = 'sys_privacy_group_custom_memberships';
     }
 
     /**
@@ -154,11 +175,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if(empty($sValue))
             $sValue = $oPrivacy->_oDb->getDefaultGroup($sModule, $sAction);
 
-        $aValues = $oPrivacy->getGroups();
+        $aValues = $oPrivacy->getGroups($iOwnerId, $aParams);
 
         $aValues = $oPrivacy->addDynamicGroups($aValues, $iOwnerId, $aParams);
-
-        $aValues = $oPrivacy->addAclGroups($aValues, $iOwnerId, $aParams);
 
         $aValues = $oPrivacy->addSpaces($aValues, $iOwnerId, $aParams);
 
@@ -230,7 +249,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $iContentId = (int)bx_get('content_id');
         $iGroupId = (int)bx_get('group_id');
 
-        $oForm = BxDolForm::getObjectInstance($this->_sFormUsers, $this->_sFormDisplayUsersSelect);
+        $oForm = BxDolForm::getObjectInstance($this->_sFormGroupCustom, $this->_sFormDisplayGcMembers);
         return echoJson(array('eval' => $this->getJsObjectName() . '.onSelectGroup(oData);', 'content' => $oForm->getElementGroupCustom(array(
             'profile_id' => $iProfileId, 
             'content_id' => $iContentId, 
@@ -239,7 +258,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         ))));
     }
 
-    public function actionSelectGroup()
+    public function actionSelectMembers()
     {
         $aValues = array(
             'profile_id' => (int)bx_get('profile_id'),
@@ -258,10 +277,35 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if($aValues['profile_id'] != bx_get_logged_profile_id())
             return echoJson(array('msg' => _t('_sys_ps_ferr_incorrect_gc_owner')));
 
-        if(($mixedResult = $this->isSelectGroupCustom($aValues)) !== true)
+        if(($mixedResult = $this->isSelectGroupCustomUsers($aValues)) !== true)
             return echoJson(array('msg' => $mixedResult));
 
         return echoJson($this->getSelectGroup($aValues, $aParams));
+    }
+
+    public function actionSelectMemberships()
+    {
+        $aValues = array(
+            'profile_id' => (int)bx_get('profile_id'),
+            'content_id' => (int)bx_get('content_id'),
+            'object' => $this->_sObject,
+            'group_id' => (int)bx_get('group_id')
+        );
+
+        $aParams = array(
+            'popup_only' => (bool)bx_get('popup_only')
+        );
+
+        if(!isset($this->_aGroupsSettings[$aValues['group_id']]))
+            return echoJson(array());
+
+        if($aValues['profile_id'] != bx_get_logged_profile_id())
+            return echoJson(array('msg' => _t('_sys_ps_ferr_incorrect_gc_owner')));
+
+        if(($mixedResult = $this->isSelectGroupCustomMemberships($aValues)) !== true)
+            return echoJson(array('msg' => $mixedResult));
+
+        return echoJson($this->getSelectMemberships($aValues, $aParams));
     }
 
     public function actionUsersList()
@@ -304,7 +348,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     {
         $aGroups = $this->_oDb->getGroupsBy(array('type' => 'active_list'));
 
-        return in_array(BX_DOL_PG_FRIENDS_SELECTED, $aGroups) || in_array(BX_DOL_PG_RELATIONS_SELECTED, $aGroups);                
+        return in_array(BX_DOL_PG_FRIENDS_SELECTED, $aGroups) || in_array(BX_DOL_PG_RELATIONS_SELECTED, $aGroups) || in_array(BX_DOL_PG_MEMBERSHIPS_SELECTED, $aGroups);
     }
         
     public function getGroupsBy($aParams)
@@ -374,24 +418,6 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     {
         if (isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
             $aValues = array_merge($aValues, $aParams['dynamic_groups']);
-
-        return $aValues;
-    }
-
-    public function addAclGroups($aValues, $iOwnerId, $aParams)
-    {
-        $aCheck = checkActionModule($iOwnerId, 'show membership levels in privacy groups', 'system', false);
-        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aValues;
-
-        $aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
-        if(empty($aLevels) || !is_array($aLevels))
-            return $aValues;
-
-        $aValues[] = array('type' => 'group_header', 'value' => mb_strtoupper(_t('_sys_privacy_groups_acl')));
-        foreach($aLevels as $iId => $sTitle)
-            $aValues[] = array('key' => 'ml' . $iId, 'value' => $sTitle);
-        $aValues[] = array('type' => 'group_end');
 
         return $aValues;
     }
@@ -599,10 +625,12 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             'profile_id' => $aObject['owner_id'], 
             'content_id' => $aObject['id'], 
             'object' => $this->_sObject, 
-            'group_id' => $aObject['group_id']
+            'group_id' => $aObject['group_id'],
+            'group_items_table' => $this->_aGroupsSettings[$aObject['group_id']]['db_table_items'],
+            'group_items_field' => $this->_aGroupsSettings[$aObject['group_id']]['db_field_item']
         ));
 
-        return !empty($aGroupCustom['members']) && is_array($aGroupCustom['members']) && in_array($iViewerId, $aGroupCustom['members']);
+        return !empty($aGroupCustom['items']) && is_array($aGroupCustom['items']) && in_array($iViewerId, $aGroupCustom['items']);
     }
 
     public function checkRelations($iOwnerId, $iViewerId)
@@ -620,10 +648,27 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             'profile_id' => $aObject['owner_id'], 
             'content_id' => $aObject['id'], 
             'object' => $this->_sObject, 
-            'group_id' => $aObject['group_id']
+            'group_id' => $aObject['group_id'],
+            'group_items_table' => $this->_aGroupsSettings[$aObject['group_id']]['db_table_items'],
+            'group_items_field' => $this->_aGroupsSettings[$aObject['group_id']]['db_field_item']
         ));
 
-        return !empty($aGroupCustom['members']) && is_array($aGroupCustom['members']) && in_array($iViewerId, $aGroupCustom['members']);
+        return !empty($aGroupCustom['items']) && is_array($aGroupCustom['items']) && in_array($iViewerId, $aGroupCustom['items']);
+    }
+
+    public function checkMembershipsSelectedByObject($aObject, $iViewerId)
+    {
+        $aGroupCustom = $this->getGroupCustom(array(
+            'type' => 'pcog_ext', 
+            'profile_id' => $aObject['owner_id'], 
+            'content_id' => $aObject['id'], 
+            'object' => $this->_sObject, 
+            'group_id' => $aObject['group_id'],
+            'group_items_table' => $this->_aGroupsSettings[$aObject['group_id']]['db_table_items'],
+            'group_items_field' => $this->_aGroupsSettings[$aObject['group_id']]['db_field_item']
+        ));
+
+        return !empty($aGroupCustom['items']) && is_array($aGroupCustom['items']) && BxDolAcl::getInstance()->isMemberLevelInSet($aGroupCustom['items'], $iViewerId);
     }
 
     public function checkCustomByObject($aObject, $iViewerId)
@@ -688,31 +733,59 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     /**
      * get privacy groups for getGroupChooser
      */ 
-    protected function getGroups() 
+    protected function getGroups($iOwnerId = 0, $aParams = []) 
     {
         $aValues = array();
+
         $aGroups = $this->_oDb->getGroupsBy(array('type' => 'active'));
         foreach($aGroups as $aGroup) {
-            if((int)$aGroup['active'] == 0 || in_array($aGroup['id'], $this->_aGroupsExclude))
+            $iGroupId = (int)$aGroup['id'];
+
+            if((int)$aGroup['active'] == 0 || in_array($iGroupId, $this->_aGroupsExclude))
                continue;
+
+            if(isset($this->_aGroupsSettings[$iGroupId]) && !empty($this->_aGroupsSettings[$iGroupId]['is_allowed'])) {
+                $sMethodIsAllowed = $this->_aGroupsSettings[$iGroupId]['is_allowed'];
+                if(method_exists($this, $sMethodIsAllowed) && $this->$sMethodIsAllowed($iOwnerId) !== true)
+                    continue;
+            }
 
             $aValues[] = array('key' => $aGroup['id'], 'value' => _t($aGroup['title']));
         }
+
         return $aValues;
     }
 
     /**
-     * Check whethere custom group is allowed in current circumstances.
+     * Check whethere a custom group (based on users list) is allowed in current circumstances.
      * NOTE. Can be overwritten if it's needed.
      * 
      * @param type $aParams an array of parameters.
      * @return boolean result of operation.
      */
-    protected function isSelectGroupCustom($aParams)
+    protected function isSelectGroupCustomUsers($aParams)
     {
         return true;
     }
-    
+
+    /**
+     * Check whethere a custom group (based on memberships list) is allowed in current circumstances.
+     * NOTE. Can be overwritten if it's needed.
+     * 
+     * @param type $aParams an array of parameters.
+     * @return boolean result of operation.
+     */
+    protected function isSelectGroupCustomMemberships($aParams)
+    {
+        return true;
+    }
+
+    public function isAllowedMemberships($iUserId)
+    {
+        $aCheck = checkActionModule($iUserId, 'show membership levels in privacy groups', 'system', false);
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * Check whether the viewer can make requested action.
      *

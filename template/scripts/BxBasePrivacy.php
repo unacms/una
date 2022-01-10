@@ -34,7 +34,7 @@ class BxBasePrivacy extends BxDolPrivacy
         $this->_aHtmlIds = array(
             'group_element' => 'bx-form-element-' . $this->convertActionToField($this->_aObject['action']),
             'group_custom_element' => 'sys-pgc-' . $sHtmlId,
-            'users_select_popup' => 'sys-privacy-usp-' . $sHtmlId . '-'
+            'group_custom_select_popup' => 'sys-privacy-gcsp-' . $sHtmlId . '-'
         );
     }
 
@@ -104,7 +104,7 @@ class BxBasePrivacy extends BxDolPrivacy
     {
         $sJsObject = $this->getJsObjectName();
 
-        $oForm = BxDolForm::getObjectInstance($this->_sFormUsers, $this->_sFormDisplayUsersSelect);
+        $oForm = BxDolForm::getObjectInstance($this->_sFormGroupCustom, $this->_sFormDisplayGcMembers);
         $oForm->initChecker($aValues);
 
         if($oForm->isSubmittedAndValid()) {
@@ -141,12 +141,68 @@ class BxBasePrivacy extends BxDolPrivacy
 
             return array('eval' => $sJsObject . '.onSelectUsers(oData);', 'content' => $oForm->getElementGroupCustom(array(
                 'value' => $iGroupCustomId, 
-                'value_members' => $aMembers
+                'value_items' => $aMembers
             )));
         }
 
         $iGroupId = $oForm->getGroupId();
-        $sContent = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['users_select_popup'] . $iGroupId, $this->_oTemplate->parseHtmlByName('privacy_users_select_popup.html', array(
+        $sContent = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['group_custom_select_popup'] . $iGroupId, $this->_oTemplate->parseHtmlByName('privacy_group_custom_select_popup.html', array(
+            'js_object' => $sJsObject,
+            'group' => $iGroupId,
+            'form' => $oForm->getCode(),
+            'form_id' => $oForm->getId()
+        )));
+
+        $aResult = array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false)));
+        if(isset($aParams['popup_only']) && (bool)$aParams['popup_only'] === true)
+            return $aResult;
+
+        return array_merge($aResult, array(
+            'eval' => $sJsObject . '.onSelectGroup(oData);', 
+            'content' => $oForm->getElementGroupCustom()
+        ));
+    }
+
+    protected function getSelectMemberships($aValues = array(), $aParams = array())
+    {
+        $sJsObject = $this->getJsObjectName();
+
+        $oForm = BxDolForm::getObjectInstance($this->_sFormGroupCustom, $this->_sFormDisplayGcMemberships);
+        $oForm->initChecker($aValues);
+
+        if($oForm->isSubmittedAndValid()) {
+            $aMemberships = $oForm->getCleanValue('memberships');
+
+            $iGroupCustomId = $oForm->getGroupCustomId();
+            if(!$iGroupCustomId) {
+                if(empty($aMemberships) || !is_array($aMemberships))
+                    return array();
+
+                $this->deleteGroupCustom(array(
+                    'profile_id' => $oForm->getCleanValue('profile_id'),
+                    'content_id' => $oForm->getCleanValue('content_id'),
+                    'object' => $oForm->getCleanValue('object')
+                ));
+
+                $iGroupCustomId = $oForm->insert();
+                foreach($aMemberships as $iMembershipId)
+                    $this->_oDb->insertGroupCustomMembership(array('group_id' => $iGroupCustomId, 'membership_id' => $iMembershipId));
+            }
+            else {
+                $this->_oDb->deleteGroupCustomMembership(array('group_id' => $iGroupCustomId));
+
+                foreach($aMemberships as $iMembershipId)
+                    $this->_oDb->insertGroupCustomMembership(array('group_id' => $iGroupCustomId, 'membership_id' => $iMembershipId));
+            }
+
+            return array('eval' => $sJsObject . '.onSelectMemberships(oData);', 'content' => $oForm->getElementGroupCustom(array(
+                'value' => $iGroupCustomId, 
+                'value_items' => $aMemberships
+            )));
+        }
+
+        $iGroupId = $oForm->getGroupId();
+        $sContent = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['group_custom_select_popup'] . $iGroupId, $this->_oTemplate->parseHtmlByName('privacy_group_custom_select_popup.html', array(
             'js_object' => $sJsObject,
             'group' => $iGroupId,
             'form' => $oForm->getCode(),

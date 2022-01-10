@@ -1910,8 +1910,8 @@
         <string name="_sys_acl_action_use_macros_desc"><![CDATA[Использовать специально сконструированный вызов, для вставки динамического контента практически в любой текст]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Назначить членство для профилей]]></string>
-        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
-        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Использовать уровни членства в полях конфиденциальности]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Разрешить ограничивать доступ по уровню(ям) членства в полях конфиденциальности]]></string>
         <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
         <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
         <string name="_sys_acl_action_set_badge"><![CDATA[Назначение бейджей]]></string>
@@ -2461,7 +2461,8 @@
         <string name="_sys_form_acl_input_do_cancel"><![CDATA[Отмена]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>
         <string name="_sys_form_ps_group_custom"><![CDATA[Конфиденциальность: Пользовательская группа]]></string>
-        <string name="_sys_form_display_ps_gc_manage"><![CDATA[Конфиденциальность: Управлять пользовательской группой]]></string>
+        <string name="_sys_form_display_ps_gc_members"><![CDATA[Конфиденциальность: Пользовательская группа на основании профилей]]></string>
+        <string name="_sys_form_display_ps_gc_memberships"><![CDATA[Конфиденциальность: Пользовательская группа на основании членств]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_profile_id"><![CDATA[ID профиля]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_content_id"><![CDATA[ID контента]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_object"><![CDATA[Объект]]></string>
@@ -2471,6 +2472,8 @@
         <string name="_sys_form_ps_gc_input_caption_search"><![CDATA[Найти]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_list"><![CDATA[Список]]></string>
         <string name="_sys_form_ps_gc_input_caption_list"><![CDATA[или выбрать]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_memberships"><![CDATA[Список членств]]></string>
+        <string name="_sys_form_ps_gc_input_caption_memberships"><![CDATA[Выбрать]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_do_submit"><![CDATA[Отправить]]></string>
         <string name="_sys_form_ps_gc_input_caption_do_submit"><![CDATA[Отправить]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_do_cancel"><![CDATA[Отменить]]></string>
@@ -3191,7 +3194,7 @@
             <li><b>{0}</b> всего</li>
             <li><b>{1}</b> удалено</li>
         </ul>]]></string>
-    <string name="_sys_ps_group_title_acl_selected"><![CDATA[Избранные уровни членства...]]></string>
+    <string name="_sys_ps_group_title_memberships_selected"><![CDATA[Избранные уровни членства...]]></string>
     <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
     <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
     <string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>

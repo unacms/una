@@ -265,13 +265,16 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b {
     display: block;
     margin: 0.25rem;
-    padding-right: 1.5rem; 
+    padding-right: 1.5rem;
     border-radius: 1.25rem;
 
     line-height: 2.5rem;
     white-space: nowrap;
     font-weight: normal;    
     cursor: pointer;
+}
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b.val-wo-icon {
+    padding-left: 1.5rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:first-child {
     margin-left: 0.75rem;

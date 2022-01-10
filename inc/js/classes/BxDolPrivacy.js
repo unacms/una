@@ -84,7 +84,7 @@ BxDolPrivacy.prototype.selectGroup = function(oElement)
     if(!this._aGroupSettings[iGroupId])
         return;
 
-    var sMethodCreateGroup = 'selectUsers';
+    var sMethodCreateGroup = 'selectMembers';
     if(this._aGroupSettings[iGroupId]['js_method_create_group'])
         sMethodCreateGroup = this._aGroupSettings[iGroupId]['js_method_create_group'];
 
@@ -103,15 +103,19 @@ BxDolPrivacy.prototype.editGroup = function(oElement)
 {
     var iGroupId = parseInt($(oElement).parents('.bx-form-element:first').find('.sys-privacy-group').val());
 
-    this.selectUsers(oElement, iGroupId, {
+    var sMethodCreateGroup = 'selectMembers';
+    if(this._aGroupSettings[iGroupId]['js_method_create_group'])
+        sMethodCreateGroup = this._aGroupSettings[iGroupId]['js_method_create_group'];
+
+    this[sMethodCreateGroup](oElement, iGroupId, {
         popup_only: 1
     });
 };
 
-BxDolPrivacy.prototype.selectUsers = function(oElement, iGroupId, aParams)
+BxDolPrivacy.prototype.selectMembers = function(oElement, iGroupId, aParams)
 {
     var $this = this;
-    var oData = $.extend({}, $this._getDefaultParams(), {action: 'select_group', group_id: iGroupId}, (aParams || {}));
+    var oData = $.extend({}, $this._getDefaultParams(), {action: 'select_members', group_id: iGroupId}, (aParams || {}));
 
     this._loadingInFormElement(oElement, true);
 
@@ -128,6 +132,32 @@ BxDolPrivacy.prototype.selectUsers = function(oElement, iGroupId, aParams)
 };
 
 BxDolPrivacy.prototype.onSelectUsers = function(oData)
+{
+    $('#' + this._aHtmlIds['group_custom_element']).remove();
+
+    this.onSelectGroup(oData);
+};
+
+BxDolPrivacy.prototype.selectMemberships = function(oElement, iGroupId, aParams)
+{
+    var $this = this;
+    var oData = $.extend({}, $this._getDefaultParams(), {action: 'select_memberships', group_id: iGroupId}, (aParams || {}));
+
+    this._loadingInFormElement(oElement, true);
+
+    $.get(
+        this._sActionsUrl, 
+        oData,
+        function(oData) {
+            $this._loadingInFormElement(oElement, false);
+
+            processJsonData(oData);
+        }, 
+        'json'
+    );
+};
+
+BxDolPrivacy.prototype.onSelectMemberships = function(oData)
 {
     $('#' + this._aHtmlIds['group_custom_element']).remove();
 
