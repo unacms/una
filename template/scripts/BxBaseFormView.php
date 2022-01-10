@@ -1497,8 +1497,7 @@ BLAH;
 
         $aTmplVarsVals = [];
         if(!empty($aInput['value'])) {
-            if(is_array($aInput['value']) || (is_numeric($aInput['value']) && $aInput['custom']['only_once'] == 1)) {
-                
+            if(is_array($aInput['value']) || (is_numeric($aInput['value']))) {
                 if (!is_array($aInput['value']))
                     $aInput['value'] = [$aInput['value']];
                     
@@ -1509,7 +1508,7 @@ BLAH;
                    $aTmplVarsVals[] = [
                        'item_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
                        'item_name' => $oProfile->getDisplayName(),
-                       'name' => $aInput['name'],
+                       'name' => $aInput['name'] . (isset($aInput['custom']['only_once']) && $aInput['custom']['only_once'] == 1 ? '' : '[]'),
                        'value' => $sVal
                    ];
                 }
@@ -1532,7 +1531,7 @@ BLAH;
         $this->addCssJsUi();
 
         return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
-            'name' => $aInput['name'] . (isset($aInput['custom']['only_once']) && $aInput['custom']['only_once'] == 1 ? '[]' : ''),
+            'name' => $aInput['name'],
             'attrs' => bx_convert_array2attrs($aAttrs),
             'bx_repeat:vals' => $aTmplVarsVals,
             'bx_if:input' => array(
