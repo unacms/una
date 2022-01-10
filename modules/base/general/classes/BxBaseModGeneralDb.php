@@ -352,7 +352,21 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
         $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
 
+        $this->_addCustomConditions($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
+
         $this->_getEntriesBySearchIdsOrder($aParams, $sOrderClause);
+    }
+
+    protected function _addCustomConditions($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if (empty($CNF['FIELD_AUTHOR']))
+            return;
+
+        if (!empty($aParams['show_all_content']))
+            return;
+
+        $sJoinClause .= " INNER JOIN `sys_profiles` as `p` ON (`p`.`id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') ";
     }
 
     protected function _getEntriesBySearchIdsOrder($aParams, &$sOrderClause)

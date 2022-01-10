@@ -337,8 +337,8 @@ class BxForumGrid extends BxTemplGrid
     	$sSelectClause = $sJoinClause = $sWhereClause = $sGroupByClause = '';
 
     	//--- Check status
-    	$sWhereClause .= " AND `" . $this->_oModule->_oConfig->CNF['FIELD_STATUS'] . "`='active'";
-    	$sWhereClause .= " AND `" . $this->_oModule->_oConfig->CNF['FIELD_STATUS_ADMIN'] . "`='active'";
+    	$sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $this->_oModule->_oConfig->CNF['FIELD_STATUS'] . "`='active'";
+    	$sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $this->_oModule->_oConfig->CNF['FIELD_STATUS_ADMIN'] . "`='active'";
 
     	//--- Check privacy
     	$iAuthorId = 0;
@@ -388,6 +388,9 @@ class BxForumGrid extends BxTemplGrid
             $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVABLE'] . "` = 1 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVE'] . "` = " . $this->_sFilter1Value;
         }
         
+        // filter out posts of suspended members
+        $sJoinClause .= " INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') ";
+
         // filter by badges
         if(isset($this->_sFilter2Value) && $this->_sFilter2Value != ''){
             $aObjects = BxDolBadges::getInstance()->getData(['type' => 'by_module&badge', 'badge_id' => $this->_sFilter2Value, 'module' => $this->_oModule->_aModule['name']]);
