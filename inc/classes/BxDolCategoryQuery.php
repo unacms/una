@@ -51,7 +51,7 @@ class BxDolCategoryQuery extends BxDolDb
             $CNF = &$oModule->_oConfig->CNF;
 
             if(isset($CNF['FIELD_ALLOW_VIEW_TO'])) {
-                if (isset($aParams['context_id'])){
+                if (isset($aParams['context_id']) && !empty($aParams['context_id'])){
                     $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . -$aParams['context_id'] . ') ';
                 }
                 else{
