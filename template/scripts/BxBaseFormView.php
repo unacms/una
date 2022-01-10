@@ -1497,7 +1497,10 @@ BLAH;
 
         $aTmplVarsVals = [];
         if(!empty($aInput['value'])) {
-            if(is_array($aInput['value'])) {
+            if(is_array($aInput['value']) || (is_numeric($aInput['value']))) {
+                if (!is_array($aInput['value']))
+                    $aInput['value'] = [$aInput['value']];
+                    
                 foreach($aInput['value'] as $sVal) {
                     if(!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                         continue;
@@ -1505,7 +1508,7 @@ BLAH;
                    $aTmplVarsVals[] = [
                        'item_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
                        'item_name' => $oProfile->getDisplayName(),
-                       'name' => $aInput['name'],
+                       'name' => $aInput['name'] . (isset($aInput['custom']['only_once']) && $aInput['custom']['only_once'] == 1 ? '' : '[]'),
                        'value' => $sVal
                    ];
                 }

@@ -16,6 +16,9 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {
+        if (!isset($this->_bAllowChangeUserForAdmins))
+            $this->_bAllowChangeUserForAdmins = true;
+        
         parent::__construct($aInfo, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;

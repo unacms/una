@@ -2318,6 +2318,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[No]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Yes]]></string>
+    <string name="_sys_form_input_caption_author"><![CDATA[Author]]></string>
 	<string name="_sys_form_comment"><![CDATA[Comment]]></string>
 	<string name="_sys_form_comment_input_caption_cmt_author_id"><![CDATA[Author]]></string>
 	<string name="_sys_form_comment_input_caption_cmt_text"><![CDATA[Text]]></string>

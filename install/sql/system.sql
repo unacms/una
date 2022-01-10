@@ -4918,6 +4918,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_connection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(64) NOT NULL,
   `table` varchar(255) NOT NULL,
+  `profile_initiator` tinyint(4) NOT NULL DEFAULT '1',
+  `profile_content` tinyint(4) NOT NULL DEFAULT '0',
   `type` enum('one-way','mutual') NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
@@ -4925,10 +4927,10 @@ CREATE TABLE IF NOT EXISTS `sys_objects_connection` (
   UNIQUE KEY `object` (`object`)
 );
 
-INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('sys_profiles_friends', 'sys_profiles_conn_friends', 'mutual', '', ''),
-('sys_profiles_subscriptions', 'sys_profiles_conn_subscriptions', 'one-way', '', ''),
-('sys_profiles_relations', 'sys_profiles_conn_relations', 'mutual', 'BxDolRelation', '');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
+('sys_profiles_friends', 'sys_profiles_conn_friends', 1, 1, 'mutual', '', ''),
+('sys_profiles_subscriptions', 'sys_profiles_conn_subscriptions', 1, 1, 'one-way', '', ''),
+('sys_profiles_relations', 'sys_profiles_conn_relations', 1, 1, 'mutual', 'BxDolRelation', '');
 
 CREATE TABLE IF NOT EXISTS `sys_profiles_conn_relations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

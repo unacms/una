@@ -2306,6 +2306,7 @@
 	<string name="_sys_form_account_input_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[Нет]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Да]]></string>
+    <string name="_sys_form_input_caption_author"><![CDATA[Автор]]></string>
 	<string name="_sys_form_comment"><![CDATA[Комментарий]]></string>
 	<string name="_sys_form_comment_input_caption_cmt_author_id"><![CDATA[Автор]]></string>
 	<string name="_sys_form_comment_input_caption_cmt_text"><![CDATA[Текст]]></string>

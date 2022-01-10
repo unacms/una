@@ -82,7 +82,7 @@ class BxBaseStudioFormsSearchSortableFields extends BxDolStudioFormsSearchFields
     {
         parent::_addJsCss();
         $this->_oTemplate->addCss(array('menu.css'));
-        $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_search_fields.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_sortable_fields.js'));
 
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();

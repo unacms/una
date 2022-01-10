@@ -214,7 +214,7 @@ class BxClssDb extends BxBaseModTextDb
         if (!$aContentInfo)
             return array();
 
-        $a = $this->getColumn("SELECT `student_profile_id` FROM `bx_classes_statuses` WHERE `class_id` = :class AND `completed` != 0 LIMIT :start, :limit", array(
+        $a = $this->getColumn("SELECT `student_profile_id` FROM `bx_classes_statuses` INNER JOIN `sys_profiles` AS `p` ON(`p`.`id` = `student_profile_id` AND `p`.`status` = 'active') WHERE `class_id` = :class AND `completed` != 0 LIMIT :start, :limit", array(
             'class' => $aContentInfo['id'],
             'start' => (int)$iStart,
             'limit' => (int)$iLimit,

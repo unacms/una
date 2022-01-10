@@ -146,6 +146,19 @@ class BxBaseModGeneralModule extends BxDolModule
             echo 'ok';
         }
     }
+    
+    /**
+     * Get possible recipients for start conversation form
+     */
+    public function actionAjaxGetProfiles ()
+    {
+        $sTerm = bx_get('term');
+
+        $a = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo(json_encode($a));
+    }
 
     // ====== SERVICE METHODS
     

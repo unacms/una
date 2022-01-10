@@ -248,8 +248,9 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_tasks_cmts', '_bx_tasks_cmts', @iSearchOrder + 2, 'BxTasksCmtsSearchResult', 'modules/boonex/tasks/classes/BxTasksCmtsSearchResult.php');
 
 -- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_tasks_assignments', 'bx_tasks_assignments', 'one-way', '', '');
+INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_tasks_assignments', 'bx_tasks_assignments', 0, 1, 'one-way', '', '');
+
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `module`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
