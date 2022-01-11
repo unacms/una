@@ -2811,7 +2811,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         $aKeys = array_merge($aKeys, array(
-            "'<bx_injection:([^\s]+) />'s",
             "'<bx_menu:([^\s]+) \/>'s",
             "'<bx_url_root />'",
             "'<bx_url_studio />'"
