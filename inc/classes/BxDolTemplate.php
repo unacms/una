@@ -2816,7 +2816,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             "'<bx_url_studio />'"
         ));
         $aValues = array_merge($aValues, array(
-            "<?php echo \$this->processInjection(\$this->aPage['name_index'], '\\1'); ?>",
             "<?php echo \$this->getMenu('\\1'); ?>",
             BX_DOL_URL_ROOT,
             BX_DOL_URL_STUDIO
