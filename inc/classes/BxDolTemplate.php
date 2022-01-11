@@ -1531,6 +1531,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(empty($sContent))
             $sContent = $this->parseHtmlByName('default.html', $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
 
+        //---Process injection at the very last ---//
+        $oTemplate = &$this;
+        $sContent = preg_replace_callback("'<bx_injection:([^\s]+) />'s", function($aMatches) use($oTemplate) {
+            return $oTemplate->processInjection($oTemplate->getPageNameIndex(), $aMatches[1]);
+        }, $sContent);
+
         //--- Add CSS and JS at the very last ---//
         if(strpos($sContent, '<bx_include_css_styles />') !== false) {
             $aStyles = array(
@@ -2680,11 +2686,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 }, $sContent);
 
             $sContent = $this->_parseContentKeys($sContent, array(
-                "'<bx_injection:([^\s]+) />'s" => 'get_injection',
                 "'<bx_menu:([^\s]+) \/>'s" => 'get_menu',
             ));
         }
-            catch(Exception $oException) {
+        catch(Exception $oException) {
             return '';
         }
 
