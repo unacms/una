@@ -377,19 +377,22 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         $iAuthor = -1;
         
-        if (isset($CNF['FIELD_AUTHOR']) && empty($aValsToAdd[$CNF['FIELD_AUTHOR']]) && (!isset($this->aInputs[$CNF['FIELD_AUTHOR']]) || empty($this->getCleanValue($CNF['FIELD_AUTHOR'])))){
-            $aValsToAdd[$CNF['FIELD_AUTHOR']] = (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * bx_get_logged_profile_id ();
-            $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']] ;
-        }
-        else{
-            if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
-                 $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id();
-                 $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']];
+        if (isset($CNF['FIELD_AUTHOR'])){
+            if (empty($aValsToAdd[$CNF['FIELD_AUTHOR']]) && (!isset($this->aInputs[$CNF['FIELD_AUTHOR']]) || empty($this->getCleanValue($CNF['FIELD_AUTHOR'])))){
+                $aValsToAdd[$CNF['FIELD_AUTHOR']] = (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * bx_get_logged_profile_id ();
+                $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']] ;
             }
-            if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && !empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
-                $iAuthor = $this->getCleanValue($CNF['FIELD_AUTHOR']);
+            else{
+                if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
+                     $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id();
+                     $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']];
+                }
+                if(isset($this->aInputs[$CNF['FIELD_AUTHOR']]) && !empty($this->getCleanValue($CNF['FIELD_AUTHOR']))){
+                    $iAuthor = $this->getCleanValue($CNF['FIELD_AUTHOR']);
+                }
             }
         }
+            
 
         if (isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']]) && empty($this->getCleanValue($CNF['FIELD_ADDED'])))
             $aValsToAdd[$CNF['FIELD_ADDED']] = time();
