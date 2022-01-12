@@ -199,7 +199,8 @@ BxDolVoteReactions.prototype.toggleDoPopup = function(oLink, iValue, oOptions)
         },
         onHide: function(oPopup) {
             $this.onDoPopupHide(oPopup);
-        }
+        },
+        cssClass: 'bx-popup-vote-reactions'
     }, oOptions);
 
     $(oLink).dolPopupAjax(oOptions);
