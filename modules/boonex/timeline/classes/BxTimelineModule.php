@@ -1991,6 +1991,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module'),
                 array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
 
+                array('group' => $sModule . '_reply', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'replyPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_reply', 'module_class' => 'Module'),
+                array('group' => $sModule . '_reply', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'replyRemoved'),
+
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
 
@@ -2007,6 +2010,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'reply', 'unit' => $sModule, 'action' => 'replyPost', 'types' => array('personal')),
                 array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'vote', 'unit' => $sModule . '_reactions', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => array('personal', 'follow_member', 'follow_context')),
@@ -2023,7 +2027,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 
                 array('unit' => $sModule, 'action' => 'commentPost'),
                 array('unit' => $sModule, 'action' => 'commentRemoved'),
-                
+
+                array('unit' => $sModule, 'action' => 'replyPost'),
+                array('unit' => $sModule, 'action' => 'replyRemoved'),
+
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
 
@@ -2144,6 +2151,52 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
+            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_reply get_notifications_reply
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_reply', [...]); @endcode
+     * 
+     * Get data for Reply to Comment event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsReply
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_reply "get_notifications_reply"
+     */
+    public function serviceGetNotificationsReply($aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], 0, false);
+        if(!$oComment || !$oComment->isEnabled())
+            return array();
+
+        $iParentId = (int)$aEvent['object_id'];
+        $aParentInfo = $oComment->getQueryObject()->getCommentsBy(array('type' => 'id', 'id' => $iParentId));
+        if(empty($aParentInfo) || !is_array($aParentInfo))
+            return array();
+
+        $iObjectId = (int)$aParentInfo['cmt_object_id'];
+        $oComment->init($iObjectId);
+
+        return array(
+            'object_id' => $iObjectId,
+            'entry_sample' => '_cmt_txt_sample_comment_single',
+            'entry_url' => $oComment->getViewUrl($iParentId),
+            'entry_caption' => strmaxtextlen($aParentInfo['cmt_text'], 20, '...'),
+            'entry_author' => (int)$aParentInfo['cmt_author_id'],
+            'subentry_sample' => '_cmt_txt_sample_reply_to',
             'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
