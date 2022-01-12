@@ -287,7 +287,7 @@ class BxBaseCmts extends BxDolCmts
         if (!$sComment)
             return '';
 
-        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oModule->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
+        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
 
         return $this->_oTemplate->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
