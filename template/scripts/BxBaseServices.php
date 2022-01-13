@@ -651,7 +651,35 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'menu' => $oMenu
         );
     }
-    
+
+    public function serviceGetBlockAuthor($sModule, $iContentId = 0)
+    {
+        if(!$iContentId && bx_get('id') !== false)
+            $iContentId = (int)bx_get('id');
+
+        $sMethodGetAuthor = 'get_author';
+        if(!$sModule || !$iContentId || !BxDolRequest::serviceExists($sModule, $sMethodGetAuthor))
+            return '';
+
+        $iAuthor = bx_srv($sModule, $sMethodGetAuthor, [$iContentId]);
+        if(!$iAuthor)
+            return '';
+
+        $oAuthor = BxDolProfile::getInstance($iAuthor);
+        if(!$oAuthor)
+            return '';
+
+        $sModuleAuthor = $oAuthor->getModule();
+        $sMethodGetCover = 'entity_cover';
+        if(!BxDolRequest::serviceExists($sModuleAuthor, $sMethodGetCover))
+            return '';
+
+        return bx_srv($sModuleAuthor, $sMethodGetCover, [$oAuthor->getContentId(), [
+            'use_as_author' => true,
+            'show_cover' => false
+        ]]);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 

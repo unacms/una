@@ -250,34 +250,45 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         return $aTmplVarsMeta;
     }
-    
-    function getBlockCover ($aData)
+
+    function getBlockCover($aData, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
+
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
         if(!$oProfile)
             return '';
-        
-        $aVars = $this->prepareCover($aData, false);
-        
-        $aVars2 = [
-            'info' => isset($CNF['FIELD_TEXT']) ? strmaxtextlen(strip_tags($aData[$CNF['FIELD_TEXT']]), 150) : ''
-        ];
-        return $this->parseHtmlByName('cover_block.html', array_merge($aVars, $aVars2));
+
+        $aTmplVars = $this->prepareCover($aData, array_merge($aParams, [
+            'use_as_block' => true
+        ]));
+
+        return $this->parseHtmlByName('cover_block.html', $aTmplVars);
     }
-    function prepareCover($aData, $oPage)
+
+    function prepareCover($aData, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
         $oModule = $this->getModule();
 
-        BxDolTemplate::getInstance()->addInjection('injection_main_class', 'text', 'bx-base-profile-view');
+        $sClass = isset($aParams['class']) ? $aParams['class'] : '';
+        $sShowData = isset($aParams['show_data']) ? $aParams['show_data'] : '';
+        $bShowCover = !isset($aParams['show_cover']) || $aParams['show_cover'] === true;
+        $bShowAvatar = !isset($aParams['show_avatar']) || $aParams['show_avatar'] === true;
+        $sAddCode = "";
 
-        $bProfileViewAllowed = CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedView($aData);
+        $bUseAsAuthor = isset($aParams['use_as_author']) && $aParams['use_as_author'] === true;
+        $bUseAsBlock = $bUseAsAuthor || (isset($aParams['use_as_block']) && $aParams['use_as_block'] === true);
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $oModule->checkAllowedViewProfileImage($aData))
+        if(!$bUseAsAuthor)
+            BxDolTemplate::getInstance()->addInjection('injection_main_class', 'text', 'bx-base-profile-view');
+
+        $bProfileViewAllowed = $oModule->checkAllowedView($aData) === CHECK_ACTION_RESULT_ALLOWED;
+
+        if($oModule->checkAllowedViewProfileImage($aData) !== CHECK_ACTION_RESULT_ALLOWED)
             $aData[$CNF['FIELD_PICTURE']] = 0;
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $oModule->checkAllowedViewCoverImage($aData))
+        if($oModule->checkAllowedViewCoverImage($aData) !== CHECK_ACTION_RESULT_ALLOWED)
             $aData[$CNF['FIELD_COVER']] = 0;
 
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
@@ -286,90 +297,113 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
         $sTitle = bx_process_output($oProfile->getDisplayName());
 
+        //--- Process Cover
+        $bTmplVarsShowCover = $bShowCover;
+        $aTmplVarsShowCover = [];
+        $sCoverPopup = '';
+
+        if($bTmplVarsShowCover) {
+            $sCoverPopupId = $this->MODULE . '-popup-cover';
+            $bIsAllowEditCover = $oModule->checkAllowedChangeCover($aData) === CHECK_ACTION_RESULT_ALLOWED;
+
+            $oPage = false;
+            if(isset($aParams['page']) && is_a($aParams['page'], 'BxDolPage'))
+                $oPage = $aParams['page'];
+
+            $bUrlCover = false;
+            $sUrlCover = $this->urlCover($aData, false);
+            if(!$sUrlCover && $oPage !== false && $oPage->isPageCover()) {
+                $aCover = $oPage->getPageCoverImage();
+                if(!empty($aCover))
+                    $sUrlCover = BxDolCover::getCoverImageUrl($aCover);
+            }
+
+            if(!empty($sUrlCover)) {
+                if(!$bUseAsAuthor)
+                    BxDolTemplate::getInstance()->addPageMetaImage($sUrlCover);
+
+                $bUrlCover = true;
+            }
+            else
+                $sUrlCover = $this->getImageUrl('cover.svg');
+
+            $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+
+            $sAddClassCover = "";
+            if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
+                bx_alert('system', 'image_editor', 0, 0, array(
+                   'module' => $oModule->getName(),
+                   'image_type' => 'cover',
+                   'is_allow_edit' => $bIsAllowEditCover,
+                   'image_url' => $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
+                   'content_id' => $aData[$CNF['FIELD_ID']],
+                   'uploader' => $CNF['OBJECT_UPLOADERS_COVER'][0],
+                   'storage' => $CNF['OBJECT_STORAGE_COVER'],
+                   'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
+                   'field' => $CNF['FIELD_COVER'],
+                   'is_background' => true,
+                   'add_class' => &$sAddClassCover,
+                   'add_code' => &$sAddCode
+                ));
+            }
+
+            $aTmplVarsShowCover = [
+                'cover_popup_id' => $sCoverPopupId,
+                'cover_url' => $sUrlCover,
+                'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
+                'add_class' => $sAddClassCover,
+                'img_class' => $sAddClassCover != '' ? 'bx-media-editable-src' : '',
+            ];
+
+            if($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
+                $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
+                    'image_url' => $sUrlCover,
+                    'bx_if:owner' => array (
+                        'condition' => $bIsAllowEditCover && empty($sAddClassCover),
+                        'content' => array (
+                            'change_image_url' => $sUrlCoverChange,
+                        ),
+                    ),
+                )), true, true);
+            }
+        }
+        else
+            $sClass .= ' bx-no-cover';
+
+        //--- Process Avatar
         $sUrlAvatar = $this->urlAvatarBig($aData, false);
         $bUrlAvatar = !empty($sUrlAvatar);
 
-        $sUrlPicture = $this->urlPicture ($aData);
-        $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
-
-        $sUrlCover = $this->urlCover ($aData, false);
-        if(!$sUrlCover && $oPage !== false && $oPage->isPageCover()) {
-            $aCover = $oPage->getPageCoverImage();
-            if(!empty($aCover))
-                $sUrlCover = BxDolCover::getCoverImageUrl($aCover);
-        }
-        $bUrlCover = true;
-        if(!$sUrlCover){
-            $sUrlCover = $this->getImageUrl('cover.svg');
-            $bUrlCover = false;
-        }
-		else
-			BxDolTemplate::getInstance()->addPageMetaImage($sUrlCover);
-        
-        $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
-
-        $bIsAllowEditCover = CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData);
-        $bIsAllowEditPicture =  CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData);
-        
-        $sAddClassCover = "";
-        $sAddClassPicture = "";
-        $sAddCode = "";
-
-        if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
-            bx_alert('system', 'image_editor', 0, 0, array(
-               'module' => $oModule->getName(),
-               'image_type' => 'cover',
-               'is_allow_edit' => $bIsAllowEditCover,
-               'image_url' => $aData[$CNF['FIELD_COVER']] ? $sUrlCover : '',
-               'content_id' => $aData[$CNF['FIELD_ID']],
-               'uploader' => $CNF['OBJECT_UPLOADERS_COVER'][0],
-               'storage' => $CNF['OBJECT_STORAGE_COVER'],
-               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER'],
-               'field' => $CNF['FIELD_COVER'],
-               'is_background' => true,
-               'add_class' => &$sAddClassCover,
-               'add_code' => &$sAddCode
-            ));
-        }
-        
-        if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
-            bx_alert('system', 'image_editor', 0, 0, array(
-               'module' => $oModule->getName(),
-               'image_type' => 'avatar',
-               'is_allow_edit' => $bIsAllowEditPicture,
-               'image_url' =>  $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
-               'content_id' => $aData[$CNF['FIELD_ID']],
-               'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
-               'storage' => $CNF['OBJECT_STORAGE'],
-               'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'],
-               'field' => $CNF['FIELD_PICTURE'],
-               'is_background' => false,
-               'add_class' => &$sAddClassPicture,
-               'add_code' => &$sAddCode
-            )); 
-        }
-        
-        $sCoverPopup = '';
-        $sCoverPopupId = $this->MODULE . '-popup-cover';
-        if($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
-            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
-                'image_url' => $sUrlCover,
-                'bx_if:owner' => array (
-                    'condition' => $bIsAllowEditCover && empty($sAddClassCover),
-                    'content' => array (
-                        'change_image_url' => $sUrlCoverChange,
-                    ),
-                ),
-            )), true, true);
-        }
-
-        $bShowAvatar = $bUrlAvatar || $this->_bLetterAvatar;
-        $aShowAvatar = array();
+        $bTmplVarsShowAvatar = $bShowAvatar && ($bUrlAvatar || $this->_bLetterAvatar);
+        $aTmplVarsShowAvatar = [];
         $sPicturePopup = '';
-        if($bShowAvatar) {
-            $sPicturePopupId = $this->MODULE . '-popup-picture';
 
-            $aShowAvatar = array(
+        if($bTmplVarsShowAvatar) {
+            $sPicturePopupId = $this->MODULE . '-popup-picture';
+            $bIsAllowEditPicture = $oModule->checkAllowedEdit($aData) === CHECK_ACTION_RESULT_ALLOWED;
+
+            $sUrlPicture = $this->urlPicture ($aData);
+            $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+
+            $sAddClassPicture = "";
+            if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
+                bx_alert('system', 'image_editor', 0, 0, array(
+                   'module' => $oModule->getName(),
+                   'image_type' => 'avatar',
+                   'is_allow_edit' => $bIsAllowEditPicture,
+                   'image_url' =>  $aData[$CNF['FIELD_PICTURE']] ? $sUrlPicture : '',
+                   'content_id' => $aData[$CNF['FIELD_ID']],
+                   'uploader' => $CNF['OBJECT_UPLOADERS_PICTURE'][0],
+                   'storage' => $CNF['OBJECT_STORAGE'],
+                   'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'],
+                   'field' => $CNF['FIELD_PICTURE'],
+                   'is_background' => false,
+                   'add_class' => &$sAddClassPicture,
+                   'add_code' => &$sAddCode
+                )); 
+            }
+
+            $aTmplVarsShowAvatar = array(
                 'add_class' => $sAddClassPicture,
                 'letter' => mb_substr($sTitle, 0, 1),
                 'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
@@ -407,60 +441,81 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             }
         }
 
-        $sActionsMenu = $oModule->serviceEntityAllActions();
-        if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'], $this)) !== false)
-            $sActionsMenu = $oMenu->getCode();
-
-        $sMetaMenu = '';
-        if(!empty($CNF['OBJECT_MENU_VIEW_ENTRY_META']) && ($oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META'])) !== false) {
-            $oMetaMenu->setContentId($aData[$CNF['FIELD_ID']]);
-            $oMetaMenu->setContentPublic($this->isProfilePublic($aData));
-            $sMetaMenu = $oMetaMenu->getCode();
+        //--- Process Actions menu
+        $sActionsMenu = '';
+        if(!isset($aParams['show_menu_actions']) || $aParams['show_menu_actions'] === true) {
+            $sActionsMenu = $oModule->serviceEntityAllActions([$aData[$CNF['FIELD_ID']], $aData]);
+            if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'], $this)) !== false)
+                $sActionsMenu = $oMenu->getCode();
         }
 
-        // generate html
-        $aVars = array (
+        //--- Process Meta menu
+        $sMetaMenu = '';
+        if((!isset($aParams['show_menu_meta']) || $aParams['show_menu_meta'] === true) && !empty($CNF['OBJECT_MENU_VIEW_ENTRY_META'])) {
+            $oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META']);
+            if($oMetaMenu !== false) {
+                $oMetaMenu->setContentId($aData[$CNF['FIELD_ID']]);
+                $oMetaMenu->setContentPublic($this->isProfilePublic($aData));
+                $sMetaMenu = $oMetaMenu->getCode();
+            }
+        }
+
+        $aTmplVars = [
             'module' => $this->_oConfig->getName(),
+            'class' => $sClass,
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
+            'bx_if:show_avatar' => [
+                'condition' => $bTmplVarsShowAvatar,
+                'content' => $aTmplVarsShowAvatar
+            ],
+            'bx_if:show_avatar_placeholder' => [
+                'condition' => !$bTmplVarsShowAvatar,
+                'content' => []
+            ],
+            'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
             'action_menu' => $sActionsMenu,
-            'bx_if:show_avatar' => array(
-                'condition' => $bShowAvatar,
-                'content' => $aShowAvatar
-            ),
-            'bx_if:show_avatar_placeholder' => array(
-                'condition' => !$bShowAvatar,
-                'content' => array()
-            ),
-            'bx_if:show_cover' => array(
-                'condition' => $bUrlCover,
-                'content' => $aShowAvatar
-            ),
-            'bx_if:show_cover_placeholder' => array(
-                'condition' => !$bUrlCover,
-                'content' => array()
-            ),
+            'meta' => $sMetaMenu,
+            'show_data' => $sShowData,
             'picture_popup' => $sPicturePopup,
             'cover_popup' => $sCoverPopup,
-            'cover_popup_id' => $sCoverPopupId,
-            'cover_url' => $sUrlCover,
-            'add_class' => $sAddClassCover,
-            'img_class' => $sAddClassCover != '' ? 'bx-media-editable-src' : '',
             'additional_code' => $sAddCode,
-            'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
-            'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']]),
-            'meta' => $sMetaMenu,
-        );
-        
-        return $aVars;
+        ];
+
+        if($bUseAsBlock)
+            $aTmplVars = array_merge($aTmplVars, [
+                'bx_if:show_cover' => [
+                    'condition' => $bTmplVarsShowCover,
+                    'content' => $aTmplVarsShowCover
+                ],
+                'bx_if:show_text' => [
+                    'condition' => !isset($aParams['show_text']) || $aParams['show_text'] === true,
+                    'content' => [
+                        'text' => isset($CNF['FIELD_TEXT']) ? strmaxtextlen(strip_tags($aData[$CNF['FIELD_TEXT']]), 150) : ''
+                    ]
+                ]
+            ]);
+        else
+            $aTmplVars = array_merge($aTmplVars, $aTmplVarsShowCover, [
+                'bx_if:show_cover' => [
+                    'condition' => $bUrlCover,
+                    'content' => []
+                ],
+                'bx_if:show_cover_placeholder' => [
+                    'condition' => !$bUrlCover,
+                    'content' => []
+                ],
+            ]);
+
+        return $aTmplVars;
     }
     /**
      * Get profile cover
      */
     function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
     {
-        BxDolCover::getInstance($this)->set($this->prepareCover($aData, $oPage), $sTemplateName);
+        BxDolCover::getInstance($this)->set($this->prepareCover($aData, ['page' => $oPage]), $sTemplateName);
     }
 
     /**

@@ -30,6 +30,10 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         parent::__construct($aObject, $oTemplate ? $oTemplate : $this->_oModule->_oTemplate);
 
         $this->_sCoverClass = $this->_oModule->getName() . '_cover';
+
+        $this->addMarkers([
+            'module' => $this->MODULE,
+        ]);
     }
 
     public function isActive()

@@ -218,6 +218,11 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
 
 
 /* --- Profile Cover --- */
+.bx-base-pofile-cover-wrapper.bx-no-cover div.bx-base-pofile-cover-thumb {
+    height: auto;
+    margin: 1rem 0 0 0;
+}
+
 .bx-media-phone .bx-base-pofile-cover-wrapper {
     padding-left: 0;
     padding-right: 0;
@@ -229,6 +234,9 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
 .bx-media-phone .bx-base-pofile-cover {
     border-left-width: 0;
     border-right-width: 0;
+}
+.bx-db-content  .bx-base-pofile-cover {
+    border-width: 0;
 }
 div.bx-base-pofile-cover-image {
     position: relative;
@@ -453,15 +461,19 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-profile-cover-block-wrapper .bx-base-pofile-cover-image{
     max-height: 15rem;
 }
-
 .bx-base-profile-cover-block-wrapper .bx-base-pofile-ci-cnt{
-    justify-content: center
+    -webkit-justify-content: center;
+    justify-content: center;
 }
+.bx-base-profile-cover-block-wrapper .bx-base-profile-cover-title-bages {
+    -webkit-align-self: center;
+    align-self: center;
 
-.bx-base-profile-cover-block-wrapper .bx-base-pofile-cover-user{
-    align-items: center
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 .bx-base-profile-cover-block-wrapper .bx-menu-custom.bx-menu-custom-hor{
+    -webkit-justify-content: center;
     justify-content: center;
 }
 .bx-base-profile-cover-block-wrapper div.bx-base-pofile-cover{
