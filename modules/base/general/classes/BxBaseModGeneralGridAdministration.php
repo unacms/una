@@ -117,11 +117,11 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-		if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && !$this->_oModule->_isAdministrator())
-			return '';
+        if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && !$this->_oModule->_isAdministrator())
+            return '';
 
         $CNF = &$this->_oModule->_oConfig->CNF;
-        if (isset($aRow[$CNF['FIELD_ID']])){
+        if(isset($CNF['FIELD_ID']) && isset($aRow[$CNF['FIELD_ID']])){
             $aContentInfo = $this->_getContentInfo($aRow[$CNF['FIELD_ID']]);
             if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';

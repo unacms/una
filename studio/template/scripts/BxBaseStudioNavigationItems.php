@@ -30,7 +30,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         if(!$oGrid)
             return '';
 
-        $sContent = BxTemplFunctions::getInstance()->popupBox('adm-nav-item-import-popup', _t('_adm_nav_txt_items_import_popup'), $this->_oTemplate->parseHtmlByName('nav_import_item.html', array(
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-item-import-popup', _t('_adm_nav_txt_items_import_popup'), $this->_oTemplate->parseHtmlByName('nav_import_item.html', array(
             'grid' => $oGrid->getCode()
         )));
 
