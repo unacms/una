@@ -41,7 +41,17 @@ class BxBaseCmtsForm extends BxTemplFormView
             $this->aInputs['cmt_image']['ghost_template'] = '';
         }
     }
-
+    
+    function getHtmlEditorQueryParams($aInput)
+    {
+        $aQueryParams = parent::getHtmlEditorQueryParams($aInput);
+        if (isset($this->aInputs['id'])){
+            $aQueryParams['cid'] = $this->aInputs['id']['value'];
+        }
+        $aQueryParams['m'] ='sys_cmts';
+        return $aQueryParams;
+    }
+    
     public function getAttributeMask($sAttribute)
     {
         $sName = '_sAttributeMask' . bx_gen_method_name($sAttribute);

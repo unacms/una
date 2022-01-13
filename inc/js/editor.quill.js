@@ -10,7 +10,10 @@ function bx_editor_init(oEditor, oParams){
         languages: ['javascript', 'php', 'html', 'css']
     });
 
-    bEmptyToolbar = oParams.toolbar == false ? true : false
+    bEmptyToolbar = oParams.toolbar == false ? true : false;
+    
+    if (oParams.query_params == undefined)
+        oParams.query_params = {};
 
     oParams.toolbar = {
         container: bEmptyToolbar ? [] : oParams.toolbar,
@@ -165,7 +168,7 @@ function bx_editor_init(oEditor, oParams){
                 mentionListClass: 'ql-mention-list bx-menu-ver',
                 listItemClass: 'bx-menu-item bx-def-color-bg-hl-hover',
                 source: function (searchTerm, renderList, mentionChar) {
-                  $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention&', { symbol: mentionChar, term: searchTerm}, function(data){
+                  $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention', $.extend({}, {symbol: mentionChar, term: searchTerm}, oParams.query_params), function(data){
                       renderList(data, searchTerm);
                   });
                 },

@@ -110,8 +110,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         foreach ($aResult as &$aItem) {
             $aItem['symbol'] = bx_get('symbol');
         }
-        header('Content-Type:text/javascript; charset=utf-8');
-        echo json_encode($aResult);
+        
+        return $aResult;
     }
     
     static public function actionGetHashtags()
@@ -123,17 +123,25 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
                 $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => $aItem['url'], 'symbol' => bx_get('symbol')];
             }
         }
-        header('Content-Type:text/javascript; charset=utf-8');
-        echo json_encode($aResult);
+        
+        return $aResult;
     }
     
     static public function actionGetMention()
     {
+        $a = bx_get_base_url_inline();
+        $aResult = [];
+        
         if(bx_get('symbol') == '@')
-            self::actionGetAuthors();
+            $aResult = self::actionGetAuthors();
         
         if(bx_get('symbol') == '#')
-            self::actionGetHashtags();
+            $aResult = self::actionGetHashtags();
+        
+        bx_alert('search', 'get_mention', 0, 0, array('params' => $a[1], 'override_result' => &$aResult));
+        
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo json_encode($aResult);
     }
 
     static public function encodeConditions($aConditions) 

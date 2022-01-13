@@ -1343,9 +1343,23 @@ BLAH;
         if (!$oEditor)
             return false;
 
-        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode, ['form_id' => $this->aFormAttrs['id'], 'element_name' => $aInput['name']]);
+        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode, ['form_id' => $this->aFormAttrs['id'], 'element_name' => $aInput['name'], 'query_params' => $this->getHtmlEditorQueryParams($aInput)]);
 
         return true;
+    }
+    
+    function getHtmlEditorQueryParams($aInput)
+    {
+        $aQueryParams = ['i' => $aInput['name'], 'f' => $this->aFormAttrs['id']];
+        if (isset($this->MODULE)){
+            $aQueryParams['m'] = $this->MODULE;
+        }
+
+        if (isset($this->_iContentId) && $this->_iContentId){
+            $aQueryParams['cid'] = $this->_iContentId;
+        }
+        
+        return $aQueryParams;
     }
 
     /**

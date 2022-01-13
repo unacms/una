@@ -24,7 +24,8 @@ class BxBaseEditorQuill extends BxDolEditor
             selector: '{bx_var_selector}',
             css_class: '{bx_var_css_additional_class}',
             toolbar: {toolbar},
-            root_url: '{bx_url_root}'
+            root_url: '{bx_url_root}',
+            query_params: {bx_var_query_params},
         }
         {bx_var_editor_name} = bx_editor_init({bx_var_editor_name}, oParams);";
    
@@ -115,6 +116,7 @@ class BxBaseEditorQuill extends BxDolEditor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
+            'bx_var_query_params' => isset($aAttrs['query_params']) ? json_encode($aAttrs['query_params']) : "''",
             'bx_var_form_id' => $aAttrs['form_id'],
             'toolbar' => $sToolbarItems ? '[' . $sToolbarItems . ']' : 'false',
             'bx_var_css_additional_class' => $sToolbarItems ? '' : 'bx-form-input-html-quill-empty',
