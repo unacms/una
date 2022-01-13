@@ -117,6 +117,9 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 
 
 /*--- Profile Cover ---*/
+.bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-ci-cnt {
+    margin-top: 0;
+}
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor {
     -webkit-align-items: center;
     align-items: center;

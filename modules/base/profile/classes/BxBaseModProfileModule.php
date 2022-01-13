@@ -901,16 +901,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /** 
      * @ref bx_base_general-entity_cover "entity_cover"
      */
-    public function serviceEntityCover ($iContentId = 0)
+    public function serviceEntityCover ($iContentId = 0, $aParams = [])
     {
-        $iContentId = $this->_getContent($iContentId, false);
-        if($iContentId === false)
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
             return false;
-        
-        $sModule = $this->_oConfig->getName();
-        $aData = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
-        
-        return $this->_oTemplate->getBlockCover($aData, $sModule);
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        return $this->_oTemplate->getBlockCover($aContentInfo, $aParams);
     }
     
 	/**
