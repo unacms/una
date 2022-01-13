@@ -395,7 +395,7 @@ class BxBaseCmts extends BxDolCmts
 
         $sContent = $this->_getContent($aCmt);
 
-        $sResult = $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, array_merge(array(
+        $aVars = array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,
@@ -420,9 +420,11 @@ class BxBaseCmts extends BxDolCmts
             'content' => $sContent,
             'actions' => $sActions,
             'replies' =>  $sReplies,
-        ), $this->_getTmplVarsAuthor($aCmt)));
+        ), $this->_getTmplVarsAuthor($aCmt));
         
-        bx_alert('system', 'view_comment', $aCmt['cmt_id'], 0, array('comment' => $aCmt, 'system' => $this->_sSystem, 'override_result' => &$sResult));
+        $sResult = $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, $aVars);
+        
+        bx_alert('system', 'view_comment', $aCmt['cmt_id'], 0, array('comment' => $aCmt, 'system' => $this->_sSystem, 'tmpl_name' => $this->_sTmplNameItem, 'tmpl_vars' => $aVars, 'override_result' => &$sResult));
         
         return $sResult;
     }
