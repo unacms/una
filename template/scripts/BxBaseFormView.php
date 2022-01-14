@@ -1350,16 +1350,7 @@ BLAH;
     
     function getHtmlEditorQueryParams($aInput)
     {
-        $aQueryParams = ['i' => $aInput['name'], 'f' => $this->aFormAttrs['id']];
-        if (isset($this->MODULE)){
-            $aQueryParams['m'] = $this->MODULE;
-        }
-
-        if (isset($this->_iContentId) && $this->_iContentId){
-            $aQueryParams['cid'] = $this->_iContentId;
-        }
-        
-        return $aQueryParams;
+        return ['i' => $aInput['name'], 'f' => $this->aFormAttrs['id']];
     }
 
     /**

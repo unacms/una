@@ -561,6 +561,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         return $mixedResult;
     }
+    
+    function getHtmlEditorQueryParams($aInput)
+    {
+        $aQueryParams = parent::getHtmlEditorQueryParams($aInput);
+        if (isset($this->MODULE)){
+            $aQueryParams['m'] = $this->MODULE;
+        }
+        if (isset($this->_iContentId) && $this->_iContentId){
+            $aQueryParams['cid'] = $this->_iContentId;
+        }
+        return $aQueryParams;
+    }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
