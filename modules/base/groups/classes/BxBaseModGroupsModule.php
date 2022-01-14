@@ -1541,6 +1541,47 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return true;
     }
 
+    public function serviceIsInvited($iGroupProfileId, $iProfileId = false, $sKey = '')
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        if(empty($sKey) && ($sKey = bx_get('key')) !== false)
+            $sKey = bx_process_input($sKey);
+
+        if(!empty($sKey))
+            $mixedInvited = $this->isInvited($sKey, $iGroupProfileId);
+        else if($iProfileId !== false)
+            $mixedInvited = $this->isInvitedByProfileId($iProfileId, $iGroupProfileId);
+
+        return $mixedInvited === true;
+    }
+
+    public function serviceIsNotInvited($iGroupProfileId, $iProfileId = false, $sKey = '')
+    {
+        return !$this->serviceIsInvited($iGroupProfileId, $iProfileId, $sKey);
+    }
+
+    public function serviceGetInvitedKey($iGroupProfileId, $iProfileId = false)
+    {
+        $sKey = '';
+        if(($sKey = bx_get('key')) !== false)
+            $sKey = bx_process_input($sKey);
+
+        if(!$sKey) {
+            if(!$iProfileId)
+                $iProfileId = bx_get_logged_profile_id();
+
+            if($iProfileId !== false) {
+                $aInvite = $this->_oDb->getInviteByInvited($iProfileId, $iGroupProfileId);
+                if(!empty($aInvite) && is_array($aInvite))
+                    $sKey = $aInvite['key'];
+            }
+        }
+
+        return $sKey;
+    }
+
     public function getRole($iGroupProfileId, $iFanProfileId)
     {
         if(!$this->isFanByGroupProfileId($iGroupProfileId, $iFanProfileId))
