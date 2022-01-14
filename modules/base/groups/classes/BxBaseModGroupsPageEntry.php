@@ -70,51 +70,44 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         $this->_oModule->checkAllowedView($this->_aContentInfo, true);
     }
     
-    public function getCode ()
+    protected function _getInvitationCode($aParams = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sInvitation = '';
-        if(!empty($CNF['TABLE_INVITES'])) {
-            $sKey = '';
-            $iProfileId = bx_get_logged_profile_id();
-            $iGroupProfileId = $this->_oProfile->id();
+        if(empty($CNF['TABLE_INVITES']))
+            return '';
 
-            if(($sKey = bx_get('key')) !== false) {
-                $sKey = bx_process_input($sKey);
-                $mixedInvited = $this->_oModule->isInvited($sKey, $iGroupProfileId);
-            }
-            else if($iProfileId !== false)
-                $mixedInvited = $this->_oModule->isInvitedByProfileId($iProfileId, $iGroupProfileId);
+        $iProfileId = bx_get_logged_profile_id();
+        $iGroupProfileId = $this->_oProfile->id();
+        if(!$this->_oModule->serviceIsInvited($iGroupProfileId, $iProfileId)) 
+            return '';
 
-            if ($mixedInvited === true) {
-                $sId = $this->_oModule->getName() . '_popup_invite';
+        $sId = $this->_oModule->getName() . '_popup_invite';
+        $sKey = $this->_oModule->serviceGetInvitedKey($iGroupProfileId, $iProfileId);
 
-                if(empty($sKey)) {
-                    $aInvite = $this->_oModule->_oDb->getInviteByInvited($iProfileId, $iGroupProfileId);
-                    if(!empty($aInvite) && is_array($aInvite))
-                        $sKey = $aInvite['key'];
-                }
+        $sCode = $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
+            'sPopupId' => $sId,
+            'sKey' => $sKey,
+            'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
+            'sDeclineUrl' => BX_DOL_URL_ROOT,
+            'iGroupProfileId' => $this->_oProfile->id(),
+        ));
 
-                $this->_oTemplate->addJs(array('invite_popup.js'));
+        if(!isset($aParams['use_invitation_popup']) || $aParams['use_invitation_popup'] === true)
+            $sCode .= BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
+                'popup_id' => $sId,
+                'text' => _t($CNF['T']['txt_invitation_popup_text']),
+                'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
+                'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
+            )), true);
 
-                $sInvitation .= $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
-                    'sPopupId' => $sId,
-                    'sKey' => $sKey,
-                    'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
-                    'sDeclineUrl' => BX_DOL_URL_ROOT,
-                    'iGroupProfileId' => $this->_oProfile->id(),
-                ));
-                $sInvitation .= BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
-                    'popup_id' => $sId,
-                    'text' => _t($CNF['T']['txt_invitation_popup_text']),
-                    'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
-                    'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
-                )), true);
-            }
-        }
+        $this->_oTemplate->addJs(array('invite_popup.js'));        
+        return $sCode;
+    }
 
-        return $sInvitation . parent::getCode();
+    public function getCode ()
+    {
+        return $this->_getInvitationCode() . parent::getCode();
     }
 }
 
