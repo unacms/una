@@ -451,7 +451,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-        return bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
+        
+        $sDisplayName = bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
+        bx_alert($this->getName(), 'profile_name', $aContentInfo['profile_id'], 0, array('info' => $aContentInfo, 'display_name' => &$sDisplayName));
+        
+        return $sDisplayName;
     }
 
     public function serviceProfileCreateUrl ($bAbsolute = true)
