@@ -9,15 +9,11 @@
  * @{
  */
 
-class BxNtfsStudioPage extends BxTemplStudioModule
+class BxNtfsStudioPage extends BxBaseModNotificationsStudioPage
 {
-    protected $_sModule;
-    protected $_oModule;
-
-    function __construct($sModule, $mixedPageName, $sPage = "")
+    public function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_notifications';
-    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($sModule, $mixedPageName, $sPage);
 
