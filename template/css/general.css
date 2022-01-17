@@ -255,14 +255,21 @@ div.bx-account-unit-online {
 
 /* --------------- Mentions */
 
+.bx-mention-row{
+    display: flex !important;
+    align-items: center;
+}
+
 .bx-mention-row img {
     width:1rem;
     height:1rem;
     vertical-align:middle;
+ 
 }
 
 .bx-mention-row span {
     vertical-align:middle;
+    margin-right: 10px;
 }
 
 /* --------------- Profile Avatar */
