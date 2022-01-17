@@ -106,38 +106,38 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 
     static public function actionGetAuthors()
     {
-        $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
-        foreach ($aResult as &$aItem) {
-            $aItem['symbol'] = bx_get('symbol');
-        }
-        
-        return $aResult;
+        self::getMention("@");
     }
     
     static public function actionGetHashtags()
     {
+        self::getMention("#");
+    }
+    
+    static public function actionGetMention()
+    {
+        self::getMention(bx_get('symbol'));
+    }
+    
+    static function getMention($sSymbol)
+    {
+        $a = bx_get_base_url_inline();
         $aResult = [];
-        if (bx_get('term')){
+        
+        if($sSymbol == '@'){
+            $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
+            foreach ($aResult as &$aItem) {
+                $aItem['symbol'] = bx_get('symbol');
+            }
+        }
+
+        if($sSymbol == '#'){
             $aData = BxDolMetatags::getMetatagsDataByTerm('keywords', 'keyword', bx_get('term'));
             foreach ($aData as $aItem) {
                 $aResult[] = ['label' => $aItem['meta'], 'value' => $aItem['id'], 'url' => $aItem['url'], 'symbol' => bx_get('symbol')];
             }
         }
-        
-        return $aResult;
-    }
-    
-    static public function actionGetMention()
-    {
-        $a = bx_get_base_url_inline();
-        $aResult = [];
-        
-        if(bx_get('symbol') == '@')
-            $aResult = self::actionGetAuthors();
-        
-        if(bx_get('symbol') == '#')
-            $aResult = self::actionGetHashtags();
-        
+
         bx_alert('search', 'get_mention', 0, 0, array('params' => $a[1], 'override_result' => &$aResult));
         
         header('Content-Type:text/javascript; charset=utf-8');
