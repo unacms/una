@@ -276,7 +276,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'condition' => $bManage,
                 'content' => array(
                     'js_object' => $sJsObject,
-                    'id' => $iPollId
+                    'id' => $iPollId,
+                    'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
                 )
             ),
             'text' => bx_process_output($aPoll[$CNF['FIELD_POLL_TEXT']], BX_DATA_TEXT),
