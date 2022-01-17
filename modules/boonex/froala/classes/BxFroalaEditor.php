@@ -51,7 +51,7 @@ class BxFroalaEditor extends BxDolEditor
                         insertTpl: '<a class="bx-mention" data-profile-id="\${value}" href="\${url}">\${label}</a>',
                         callbacks: {
                             remoteFilter: function(query, callback) {
-                                $.getJSON("{bx_url_root}searchExtended.php?action=get_authors", {term: query}, function(data) {
+                                $.getJSON("{bx_url_root}searchExtended.php?action=get_mention&symbol=@", {term: query}, function(data) {
                                     callback(data);
                                 });
                             }

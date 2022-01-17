@@ -259,6 +259,8 @@ div.bx-account-unit-online {
     width:1rem;
     height:1rem;
     vertical-align:middle;
+    float:left;
+    margin-right: 5px;
 }
 
 .bx-mention-row span {
