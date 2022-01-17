@@ -1192,11 +1192,13 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $oFunctions = BxTemplFunctions::getInstance();
         $sRet .= $oFunctions->getManifests();
         $sRet .= $oFunctions->getMetaIcons();
-
+        
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';
 
         $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."em.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
+        
+        $sRet .= "<link rel=\"canonical\" href=\"" . BX_DOL_URL_ROOT . substr($_SERVER["REQUEST_URI"], 1) . "\" />";
         
         return $sRet;
     }
