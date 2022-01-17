@@ -104,10 +104,10 @@ BxBaseModTextPolls.prototype.embedPoll = function(oLink, iId)
     var sEmbedUrl = this._sActionsUrl + 'embed_poll/' + iId;
     var sHtmlId = 'bx-base-general-poll-' + iId;
 
-    bx_editor_insert_html (this._sEditorId, sHtmlId, '<iframe src="' + sEmbedUrl + '" frameborder="0" width="100%" height="240px"></iframe>');
+    bx_editor_insert_html (this._sEditorId, sHtmlId, '<iframe id="bx-base-text-embed-poll-' + iId + '" src="' + sEmbedUrl + '" frameborder="0" width="100%" height="240px"></iframe>');
 };
 
-BxBaseModTextPolls.prototype.deletePoll = function(oLink, iId)
+BxBaseModTextPolls.prototype.deletePoll = function(oLink, iId, aEditors)
 {
     var $this = this;
 
@@ -118,6 +118,13 @@ BxBaseModTextPolls.prototype.deletePoll = function(oLink, iId)
         var oPoll = $('#' + $this._aHtmlIds['poll'] + iId);
 
         bx_loading(oPoll, true);
+
+        if(typeof(bx_editor_remove_img) !== 'undefined') {
+            bx_editor_remove_img (
+                aEditors,
+                ['iframe[src="' + $this._sActionsUrl + 'embed_poll/' + iId + '"]', '#bx-base-text-embed-poll-' + iId]
+            );
+        }
 
         jQuery.post (
             $this._sActionsUrl + 'delete_poll/',
