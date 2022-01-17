@@ -97,7 +97,7 @@ class BxDolObjectQuery extends BxDolDb
         if(!empty($iPerPage))
             $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
 
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ?" . $sLimitClause, $iObjectId);
+        $sQuery = $this->prepare("SELECT `tt`.`author_id` FROM `{$this->_sTableTrack}` AS `tt` INNER JOIN `sys_profiles` AS `tp` ON `tt`.`author_id`=`tp`.`id` AND `tp`.`status`='active' WHERE `tt`.`object_id` = ?" . $sLimitClause, $iObjectId);
         return $this->getColumn($sQuery);
     }
     

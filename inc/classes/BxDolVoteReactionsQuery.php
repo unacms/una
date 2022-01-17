@@ -96,8 +96,8 @@ class BxDolVoteReactionsQuery extends BxDolVoteQuery
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $aBindings = array();
 
-    	$sSelectClause = '*';
-    	$sWhereClause = '';
+    	$sSelectClause = '`tt`.*';
+    	$sJoinClause = $sWhereClause = '';
     	$sLimitClause = isset($aParams['start']) && !empty($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
 
     	if(!empty($aParams['type']))
@@ -105,24 +105,25 @@ class BxDolVoteReactionsQuery extends BxDolVoteQuery
                 case 'by':
                     $aBindings['object_id'] = $aParams['object_id'];
 
-                    $sWhereClause = 'AND `object_id` = :object_id';
+                    $sJoinClause = "INNER JOIN `sys_profiles` AS `tp` ON `tt`.`author_id`=`tp`.`id` AND `tp`.`status`='active'";
+                    $sWhereClause = "AND `tt`.`object_id` = :object_id";
 
                     if(!empty($aParams['reaction'])) {
                         $aMethod['name'] = 'getColumn';
                         $aBindings['reaction'] = $aParams['reaction'];
 
-                        $sSelectClause = '`author_id`';
-                        $sWhereClause .= ' AND `reaction`=:reaction';
+                        $sSelectClause = "`tt`.`author_id`";
+                        $sWhereClause .= " AND `tt`.`reaction`=:reaction";
                     }
                     else {
                         $aMethod['name'] = 'getAll';
 
-                        $sSelectClause = '`author_id`, `reaction`';
+                        $sSelectClause = "`tt`.`author_id`, `tt`.`reaction`";
                     }
                     break;
             }
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $this->_sTableTrack . "` WHERE 1 " . $sWhereClause . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $this->_sTableTrack . "` AS `tt` " . $sJoinClause . " WHERE 1 " . $sWhereClause . $sLimitClause;
         $aMethod['params'][] = $aBindings;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
