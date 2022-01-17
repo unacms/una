@@ -74,7 +74,7 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['TABLE_INVITES']))
+        if(empty($CNF['TABLE_INVITES']) || !$this->_oProfile)
             return '';
 
         $iProfileId = bx_get_logged_profile_id();
