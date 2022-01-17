@@ -36,17 +36,23 @@ class BxAlbumsModule extends BxBaseModTextModule
             'BrowseFavoriteMedia' => '',
         ));
     }
+    
+    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    {
+        return $this->_oTemplate->getJsCode('main') . parent::actionEmbed($iContentId);
+    }
 
     public function actionEmbedMedia($iContentId)
     {
+        $oTemplate = BxDolTemplate::getInstance();
+        
         $aContentInfo = $this->_oDb->getMediaInfoById($iContentId);
         if(empty($aContentInfo))
-            return '';
+            $oTemplate->displayPageNotFound();
 
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_media_gallery.html';
 
-        $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate));
     }
     

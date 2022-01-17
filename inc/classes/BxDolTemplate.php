@@ -626,6 +626,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'location' => array(),
             'description'  => '',
             'robots' => '',
+            'base' => ['href' =>  BX_DOL_URL_ROOT],
             'css_name' => array(),
             'css_compiled' => array(),
             'css_system' => array(),
@@ -840,11 +841,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getEmbed($sContent)
     {
+        if ($sContent == ''){
+            header('HTTP/1.0 404 Not Found');
+            header('Status: 404 Not Found');
+            exit();
+        }
         header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors')) ;
         
         $this->addJs(['inc/js/|embed.js']);
         $this->addCss(['embed.css']);
-        
+        $this->aPage['base']['target'] = '_blank';
         $this->setPageNameIndex (BX_PAGE_EMBED);
         $this->setPageContent('page_main_code', '<div class="bx-embed">' . $sContent . '</div>');
         $this->getPageCode();
@@ -1684,6 +1690,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
             case 'included_js':
                 $sRet = json_encode($this->getIncludedUrls('js_compiled'));
+                break;
+            case 'base':
+                $sRet = bx_convert_array2attrs($this->aPage['base']);
                 break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];

@@ -98,16 +98,17 @@ class BxBaseModGeneralModule extends BxDolModule
         $this->$sMethodName();
     }
     
-    public function actionEmbed($iContentId)
+    public function actionEmbed($iContentId, $sUnitTemplate = '')
     {
+        $oTemplate = BxDolTemplate::getInstance();
+        
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
-            return '';
+            $oTemplate->displayPageNotFound();
 
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_gallery.html';
 
-        $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate));
     }
    
