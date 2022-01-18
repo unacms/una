@@ -288,9 +288,26 @@ class BxAdsModule extends BxBaseModTextModule
     	);
     }
 
-    public function serviceUpdateCategoriesStats()
+    public function serviceUpdateCategoriesStats($mixedContentInfo = false)
     {
-        $aStats = $this->_oDb->getCategories(array('type' => 'collect_stats'));
+        $aContentInfo = [];
+        if(!empty($mixedContentInfo))
+            $aContentInfo = !is_array($mixedContentInfo) ? $this->_oDb->getContentInfoById((int)$mixedContentInfo) : $mixedContentInfo;
+
+        $iCategoryId = 0;
+        if($aContentInfo && !empty($aContentInfo['category']))
+            $iCategoryId = (int)$aContentInfo['category'];
+
+        return $this->serviceUpdateCategoriesStatsByCategory($iCategoryId);
+    }
+
+    public function serviceUpdateCategoriesStatsByCategory($iCategoryId = 0)
+    {
+        $aParams = ['type' => 'collect_stats'];
+        if($iCategoryId)
+            $aParams['category_id'] = (int)$iCategoryId;
+
+        $aStats = $this->_oDb->getCategories($aParams);
         if(empty($aStats) || !is_array($aStats))
             return true;
 
@@ -1465,7 +1482,14 @@ class BxAdsModule extends BxBaseModTextModule
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
-    
+
+    public function onPublished($iContentId)
+    {
+        $this->serviceUpdateCategoriesStats($iContentId);
+
+        parent::onPublished($iContentId);
+    }
+
     public function onOfferAdded($iOfferId, &$aResult)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1823,6 +1847,8 @@ class BxAdsModule extends BxBaseModTextModule
 
         if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => $sStatus), array($CNF['FIELD_ID'] => $iContentId)))
             return array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+
+        $this->serviceUpdateCategoriesStats($aContentInfo);
 
         return array(
             'reload' => 1

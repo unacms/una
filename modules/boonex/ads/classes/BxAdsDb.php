@@ -222,9 +222,16 @@ class BxAdsDb extends BxBaseModTextDb
                 break;
 
             case 'collect_stats':
-                $sCountClause = "SELECT COUNT(`te`.`id`) FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te` INNER JOIN `sys_profiles` AS `p` ON(`p`.`id` = `te`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') WHERE `tc`.`id`=`te`.`category` AND `te`.`status`='active' AND `te`.`status_admin`='active' AND (`te`.`allow_view_to`=" . BX_DOL_PG_ALL . " OR `te`.`allow_view_to`<0)";
+                $aMethod['params'][1] = [];
+
+                $sCountClause = "SELECT COUNT(`te`.`id`) FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te` INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `te`.`" . $CNF['FIELD_AUTHOR'] . "` AND `p`.`status` = 'active') WHERE `tc`.`id`=`te`.`" . $CNF['FIELD_CATEGORY'] . "` AND `te`.`" . $CNF['FIELD_STATUS'] . "`='active' AND `te`.`" . $CNF['FIELD_STATUS_ADMIN'] . "`='active' AND (`te`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "`=" . BX_DOL_PG_ALL . " OR `te`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "`<0)";
                 $sSelectClause = "`tc`.`id`, (" . $sCountClause . ") AS `count`";
-                $sGroupClause = "`tc`.`id`";
+
+                if(isset($aParams['category_id'])) {
+                    $aMethod['params'][1]['category_id'] = $aParams['category_id'];
+
+                    $sWhereClause = " AND `tc`.`id`=:category_id";
+                }
                 break;
         }
 

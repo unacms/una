@@ -59,7 +59,7 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         if(!empty($s))
             return $s;
 
-        $this->_oModule->serviceUpdateCategoriesStats();
+        $this->_oModule->serviceUpdateCategoriesStats($iContentId);
 
         return '';
     }
@@ -70,7 +70,7 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         if(!empty($s))
             return $s;
 
-        $this->_oModule->serviceUpdateCategoriesStats();
+        $this->_oModule->serviceUpdateCategoriesStats($aContentInfo);
 
         return '';
     }
@@ -81,7 +81,7 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         if(!empty($s))
             return $s;
 
-        $this->_oModule->serviceUpdateCategoriesStats();
+        $this->_oModule->serviceUpdateCategoriesStats($aContentInfo);
 
         return '';
     }

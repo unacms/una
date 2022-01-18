@@ -617,6 +617,10 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
+('profile', 'approve', @iHandler),
+('profile', 'activate', @iHandler),
+('profile', 'disapprove', @iHandler),
+('profile', 'suspend', @iHandler),
 ('profile', 'delete', @iHandler),
 
 ('bx_ads_videos_mp4', 'transcoded', @iHandler);
