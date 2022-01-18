@@ -841,12 +841,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getEmbed($sContent)
     {
-        if ($sContent == ''){
-            header('HTTP/1.0 404 Not Found');
-            header('Status: 404 Not Found');
-            exit();
-        }
         header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors')) ;
+        if ($sContent == ''){
+            $this->displayPageNotFound('', BX_PAGE_EMBED);
+            exit;
+        }
         
         $this->addJs(['inc/js/|embed.js']);
         $this->addCss(['embed.css']);
@@ -1195,7 +1194,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';
-
+        
         $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."em.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
         
         $sRet .= "<link rel=\"canonical\" href=\"" . BX_DOL_URL_ROOT . substr($_SERVER["REQUEST_URI"], 1) . "\" />";

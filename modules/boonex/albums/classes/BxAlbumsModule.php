@@ -48,7 +48,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         
         $aContentInfo = $this->_oDb->getMediaInfoById($iContentId);
         if(empty($aContentInfo))
-            $oTemplate->displayPageNotFound();
+            $oTemplate->getEmbed(false);
 
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_media_gallery.html';

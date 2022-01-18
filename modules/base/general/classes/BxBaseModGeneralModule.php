@@ -104,7 +104,7 @@ class BxBaseModGeneralModule extends BxDolModule
         
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
-            $oTemplate->displayPageNotFound();
+            $oTemplate->getEmbed(false);
 
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_gallery.html';
