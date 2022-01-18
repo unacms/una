@@ -620,6 +620,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,
         	'type' => BX_PAGE_TYPE_DEFAULT,
+            'url' => '',
             'header' => '',
             'header_text' => '',
             'keywords' => array(),
@@ -703,9 +704,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * Set page type
      * @param int $i page type
      */
-    function setPageType($a)
+    function setPageType($i)
     {
-        $this->aPage['type'] = $a;
+        $this->aPage['type'] = $i;
+    }
+    
+    /**
+     * Set page url
+     * @param string $s page url
+     */
+    function setPageUrl($s)
+    {
+        $this->aPage['url'] = $s;
     }
 
     /**
@@ -1197,7 +1207,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         
         $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."em.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
         
-        $sRet .= "<link rel=\"canonical\" href=\"" . BX_DOL_URL_ROOT . substr($_SERVER["REQUEST_URI"], 1) . "\" />";
+        if (!empty($this->aPage['url'])){
+            $sRet .= "<link rel=\"canonical\" href=\"" . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->aPage['url']). "\" />";
+        }
         
         return $sRet;
     }
