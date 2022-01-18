@@ -538,3 +538,8 @@ div.cmt-mood-buttons i.cmt-mood-star {
     width: 24px;
     font-size: 20px;
 }
+
+.cmt-author-not-active > .cmt-cnt .cmt-cont-cnt {
+    color:#888;
+    font-size:80%;
+}
