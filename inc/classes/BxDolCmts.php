@@ -1611,6 +1611,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $iUserId = $this->_getAuthorId();
         $iAuthorId = (int)$iAuthorId;
         $oProfile = $this->_getAuthorObject($iAuthorId);
+        if (!$oProfile->isActive() && !isAdmin() && !BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR)))
+            $oProfile = BxDolProfileUndefined::getInstance();
 
         return array(
             $oProfile->getDisplayName(),
