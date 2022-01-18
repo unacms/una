@@ -5,3 +5,6 @@ body,
 .bx-embed{
     width:calc(100% - 2px);
 }
+.bx-embed .bx-base-pofile-unit-with-cover{
+    display: block;
+}

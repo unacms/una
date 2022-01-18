@@ -37,7 +37,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         ));
     }
 
-    public function entryVideo ($aContentInfo, $mixedContext = false)
+    public function entryVideo ($aContentInfo, $mixedContext = false, $aAttrs = false, $sStyles = false)
     {
         $aTmplVars = array(
             'video_title' => bx_process_output($aContentInfo['title']),
@@ -53,7 +53,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
             }
         }
 
-        $mixedVideo = $this->getVideo($aContentInfo);
+        $mixedVideo = $this->getVideo($aContentInfo, $aAttrs, $sStyles);
         if($mixedVideo !== false)
             $aTmplVars = array_merge($aTmplVars, array(
                 'video_poster_url' => $mixedVideo['poster_url'],
@@ -80,7 +80,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
     	return $sVotes; 
     }
 
-    public function getVideo($aContentInfo)
+    public function getVideo($aContentInfo, $aAttrs = false, $sStyles = false)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -132,7 +132,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
             'player' => BxTemplFunctions::getInstance()->videoPlayer(
                 $sPoster, 
                 $aTranscodersVideo['mp4']->getFileUrl($iFile), 
-                $sVideoUrlHd, false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
+                $sVideoUrlHd, $aAttrs, $sStyles ? $sStyles : 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
             )
         );
     }
@@ -178,6 +178,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
                 'duration' => _t_format_duration($aData[$CNF['FIELD_DURATION']]),
             ]
         ];
+        $aUnit['bx_if:thumb']['content']['entry_video'] = $this->entryVideo($aData, false, ['muted' => 'muted', 'autoplay' => 'autoplay'], 'height:100%');
 
         return $aUnit;
     }

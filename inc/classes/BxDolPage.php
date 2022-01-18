@@ -495,22 +495,26 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $aParams = [];
         
         $aUrl = bx_get_base_url($sUrl);
+        if (!isset($aUrl[1]['i'])){
+            return [];
+        }
+            
         $sUri = $aUrl[1]['i'];
         unset($aUrl[1]['i']);
         $aParams = $aUrl[1];
-        
+
         $sAuthorName = $sAuthorUrl = $sThumb = '';
         if (isset($aParams['id'])){
             $sContentInfoObject = BxDolPageQuery::getContentInfoObjectNameByURI($sUri);
             $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfoObject);
-            
+
             $sTitle = $oContentInfo->getContentTitle($aParams['id']);
             $iAuthor = $oContentInfo->getContentAuthor($aParams['id']);
             $sAuthorName = BxDolProfile::getInstance()->getDisplayName($iAuthor);
             $sAuthorUrl = BxDolProfile::getInstance()->getUrl($iAuthor);
             $sThumb = $oContentInfo->getContentThumb($aParams['id']);
             $sHtml = $oContentInfo->getContentEmbed($aParams['id']);
-            
+
         }
         else{
             $oPage = BxDolPage::getObjectInstanceByURI($sUri, false, true);
@@ -533,6 +537,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $oTemplate = BxDolTemplate::getInstance();
 
         $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+        $oTemplate->setPageUrl($this->_aObject['url']);
         $oTemplate->setPageType ($this->getType());
         $oTemplate->setPageInjections ($this->getInjections());
         $oTemplate->setPageContent ('page_main_code', $this->getCode());

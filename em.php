@@ -9,7 +9,11 @@
 require_once('./inc/header.inc.php');
 
 $aEmbedData = BxDolPage::getEmbedData(bx_get('url'));
-    
+if(empty($aEmbedData)){
+    header('HTTP/1.0 404 Not Found');
+    header('Status: 404 Not Found');
+    exit();
+}    
 $aResult = [
     'version' => '1.0',
     'type' => 'rich',

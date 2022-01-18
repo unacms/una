@@ -88,6 +88,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($aEntries);
     }
+    
+    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    {
+        return parent::actionEmbed($iContentId, 'unit_with_cover.html');
+    }
 
     // ====== SERVICE METHODS
 

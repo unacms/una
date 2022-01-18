@@ -620,12 +620,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,
         	'type' => BX_PAGE_TYPE_DEFAULT,
+            'url' => '',
             'header' => '',
             'header_text' => '',
             'keywords' => array(),
             'location' => array(),
             'description'  => '',
             'robots' => '',
+            'base' => ['href' =>  BX_DOL_URL_ROOT],
             'css_name' => array(),
             'css_compiled' => array(),
             'css_system' => array(),
@@ -702,9 +704,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * Set page type
      * @param int $i page type
      */
-    function setPageType($a)
+    function setPageType($i)
     {
-        $this->aPage['type'] = $a;
+        $this->aPage['type'] = $i;
+    }
+    
+    /**
+     * Set page url
+     * @param string $s page url
+     */
+    function setPageUrl($s)
+    {
+        $this->aPage['url'] = $s;
     }
 
     /**
@@ -841,10 +852,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getEmbed($sContent)
     {
         header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors')) ;
+        if ($sContent == ''){
+            $this->displayPageNotFound('', BX_PAGE_EMBED);
+            exit;
+        }
         
         $this->addJs(['inc/js/|embed.js']);
         $this->addCss(['embed.css']);
-        
+        $this->aPage['base']['target'] = '_blank';
         $this->setPageNameIndex (BX_PAGE_EMBED);
         $this->setPageContent('page_main_code', '<div class="bx-embed">' . $sContent . '</div>');
         $this->getPageCode();
@@ -1186,11 +1201,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $oFunctions = BxTemplFunctions::getInstance();
         $sRet .= $oFunctions->getManifests();
         $sRet .= $oFunctions->getMetaIcons();
-
+        
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';
-
+        
         $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."em.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
+        
+        if (!empty($this->aPage['url'])){
+            $sRet .= "<link rel=\"canonical\" href=\"" . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->aPage['url']). "\" />";
+        }
         
         return $sRet;
     }
@@ -1684,6 +1703,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
             case 'included_js':
                 $sRet = json_encode($this->getIncludedUrls('js_compiled'));
+                break;
+            case 'base':
+                $sRet = bx_convert_array2attrs($this->aPage['base']);
                 break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];

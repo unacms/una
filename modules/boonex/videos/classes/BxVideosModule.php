@@ -24,6 +24,11 @@ class BxVideosModule extends BxBaseModTextModule
         $aRes = $this->parseEmbedLink($sCode);
         if ($aRes) echo $aRes['embed'];
     }
+    
+    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    {
+        return parent::actionEmbed($iContentId, 'unit_gallery_embed.html');
+    }
 
     public function parseEmbedLink($sLink) {
         $aEmbedProviders = $this->_oDb->getEmbedProviders();
