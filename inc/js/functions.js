@@ -1129,6 +1129,10 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect)
 	
 	$('#' + iId + ' input[type=text]').autocomplete({
 		source: sUrl,
+        focus: function(e, ui ) {
+            $(this).val(ui.item.label); 
+            e.preventDefault();
+        },
 		select: function(e, ui) {
 			$(this).val(ui.item.label);
 			$(this).trigger('superselect', ui.item);
