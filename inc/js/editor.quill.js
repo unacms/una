@@ -299,4 +299,18 @@ function bx_editor_on_space_enter (oEditor, sEditorId)
     }, 800);
 }
 
+function bx_editor_remove_img (aEditorIds, aMarkers) 
+{
+    for (var i = 0; i < aEditorIds.length; i++) {
+        var eEditor = $('#' + $('#' + aEditorIds[i]).attr('object_editor'));
+        // delete images in html editor
+        for (var k = 0; k < aMarkers.length; k++) {
+            var jFiles = eEditor.find(aMarkers[k]);
+            jFiles.each(function () {
+                $(this).remove(); 
+            });
+        }
+    }
+}
+
 /** @} */
