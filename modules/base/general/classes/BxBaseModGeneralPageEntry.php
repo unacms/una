@@ -102,7 +102,9 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
                 'method' => 'entity_social_sharing',
             ));
         }
-
+        
+        BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]);
+        
         return parent::getCode ();
     }
 
