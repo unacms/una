@@ -76,6 +76,9 @@
 .bx-sidebar.bx-sidebar-account .bx-sb-profile .bx-base-pofile-unit {
     margin: 0;
 }
+.bx-sidebar .bx-sb-theme-switcher .sys-icon{
+    font-size: 24px;
+}
 .bx-sidebar.bx-sidebar-account .bx-sb-menu .bx-menu-item-addon.bx-def-unit-alert {
     top: auto;
     right: 0.5rem;
