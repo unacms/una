@@ -16,8 +16,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     protected $_aSocialSharingService = false;
     protected $_sObjectActionsMenu = false;
     protected $_sObjectSubmenu = false;
+    protected $_oObjectSubmenu = null;
     protected $_mixedMainMenuItemSelected = false;
-    protected $_sTemplateWrapper = 'menu_main_submenu_bar.html';
 
     protected $_sJsObject;
 
@@ -30,6 +30,21 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $this->_sJsObject = 'o' . bx_gen_method_name($this->_sObject);
 
         $this->_iContentId = 0;
+    }
+
+    public function isVisible()
+    {
+        if((int)$this->_aObject['active'] == 0)
+            return false;
+
+        $aMenuItemSelected = $this->getSelectedMenuItem();
+        if(isset($aMenuItemSelected['set_name']) && $aMenuItemSelected['set_name'] == 'sys_site' && $aMenuItemSelected['name'] == 'home')
+            return false;
+
+        if(!$this->_oObjectSubmenu || !$this->_oObjectSubmenu->isVisible())
+            return false;
+        
+        return true;
     }
 
     public function setContentId($iContentId)
@@ -54,6 +69,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function setObjectSubmenu ($sMenuObject, $sForceMainMenuSelection = false)
     {
         $this->_sObjectSubmenu = $sMenuObject;
+        $this->_oObjectSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
+
         $this->_mixedMainMenuItemSelected = $sForceMainMenuSelection;
     }
 
@@ -94,49 +111,37 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     }
 
     /**
-     * Get template wrapper
-     * @return template wrapper
+     * Get class
+     * @return class
      */
-    public function getTemplateWrapper ()
+    public function getClass ()
     {
-        return $this->_sTemplateWrapper;
+        return $this->isVisible() && $this->_oObjectSubmenu->getTemplateId() == BX_MENU_TEMPLATE_SUBMENU_MORE_AUTO ? 'bx-menu-more-auto' : '';
     }
     
     /**
-     * Set template wrapper
-     * @param $s template wrapper
+     * Get class
+     * @return class
      */
-    public function setTemplateWrapper ($s)
+    public function getClassHidden ()
     {
-        $this->_sTemplateWrapper = $s;
+        return !$this->isVisible() ? 'bx-menu-main-bar-hidden' : '';
     }
-    
+
     /**
      * Get menu code.
      * @return string
      */
     public function getCode ()
     {
-        $aMenuItemSelected = $this->getSelectedMenuItem ();
-        if(isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
+        if(!$this->isVisible())
             return '';
 
-        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
-        if(!$oMenuSubmenu || !$oMenuSubmenu->isVisible())
-            return '';
-
-        if(!empty($this->_iContentId) && method_exists($oMenuSubmenu, 'setContentId'))
-            $oMenuSubmenu->setContentId($this->_iContentId);
-
-        $sCode = $oMenuSubmenu->getCode();
-        if(empty($sCode))
-            return '';
+        if(!empty($this->_iContentId) && method_exists($this->_oObjectSubmenu, 'setContentId'))
+            $this->_oObjectSubmenu->setContentId($this->_iContentId);
 
         $this->_addJsCss();
-        return $this->_oTemplate->parseHtmlByName($this->_sTemplateWrapper, array(
-            'class' => $oMenuSubmenu->getTemplateId() == BX_MENU_TEMPLATE_SUBMENU_MORE_AUTO ? 'bx-menu-more-auto' : '',
-            'code' => $sCode
-        ));
+        return $this->_oObjectSubmenu->getCode();
     }
 
     public function getPageCoverParams ()

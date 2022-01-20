@@ -389,7 +389,10 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1);
+(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1),
+
+(@iCategoryId, 'sys_pt_default_visitor', '_adm_stg_cpt_option_sys_pt_default_visitor', '3', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:14:"get_page_types";s:5:"class";s:21:"TemplTemplateServices";}', '', '', 10),
+(@iCategoryId, 'sys_pt_default_member', '_adm_stg_cpt_option_sys_pt_default_member', '3', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:14:"get_page_types";s:5:"class";s:21:"TemplTemplateServices";}', '', '', 11);
 
 --
 -- CATEGORY: Cache
@@ -4209,7 +4212,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (26, 'menu_block_submenu_ver.html', '_sys_menu_template_title_block_submenu_ver', 1),
 (27, 'menu_profile_followings.html', '_sys_menu_template_title_profile_followings', 0),
 (28, 'menu_main.html', '_sys_menu_template_title_main', 0),
-(29, 'menu_add_content.html', '_sys_menu_template_title_add_content', 0);
+(29, 'menu_add_content.html', '_sys_menu_template_title_add_content', 0),
+(30, 'menu_panel.html', '_sys_menu_template_title_panel', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4231,6 +4235,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 7, 0, 1, 'BxTemplMenuHomepage', ''),
 ('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
+('sys_site_panel', '_sys_menu_title_panel', 'sys_site_panel', 'system', 30, 0, 1, 'BxTemplMenuPanel', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, 'BxTemplMenuFooter', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
@@ -4277,6 +4282,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_site', 'system', '_sys_menu_set_title_site', 0),
 ('sys_homepage', 'system', '_sys_menu_set_title_homepage', 0),
 ('sys_homepage_submenu', 'system', '_sys_menu_set_title_homepage_submenu', 0),
+('sys_site_panel', 'system', '_sys_menu_set_title_panel', 0),
 ('sys_footer', 'system', '_sys_menu_set_title_footer', 0),
 ('sys_toolbar_site', 'system', '_sys_menu_set_title_toolbar_site', 0),
 ('sys_toolbar_member', 'system', '_sys_menu_set_title_toolbar_member', 0),
@@ -4321,6 +4327,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `visibility_custom` text NOT NULL,
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
+  `hidden_on_pt` int(11) NOT NULL DEFAULT '0',
   `primary` tinyint(4) NOT NULL DEFAULT '0',
   `collapsed` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
@@ -4336,6 +4343,12 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2),
 ('sys_site', 'system', 'search', '_sys_menu_item_title_system_search', '_sys_menu_item_title_search', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-search\', this, \'site\');', '', 'search', '', 2147483647, 1, 1, 3),
 ('sys_site', 'system', 'more-auto', '_sys_menu_item_title_system_more_auto', '_sys_menu_item_title_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', 2147483647, 1, 0, 9999);
+
+-- panel menu
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_site_panel', 'system', 'member-avatar', '_sys_menu_item_title_system_member_avatar', '', '', '', '', '', '', 2147483646, 1, 0, 1),
+('sys_site_panel', 'system', 'member-menu', '_sys_menu_item_title_system_member_menu', '', '', '', '', '', 'sys_profile_stats', 2147483646, 1, 0, 2),
+('sys_site_panel', 'system', 'member-followings', '_sys_menu_item_title_system_member_followings', '', '', '', '', '', 'sys_profile_followings', 2147483646, 1, 0, 3);
 
 -- homepage submenu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
@@ -4360,10 +4373,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_toolbar_site', 'system', 'search', '_sys_menu_item_title_system_search', '', 'javascript:void(0);', 'bx_menu_slide_inline(''#bx-sliding-menu-search'', this, ''site'');', '', 'search', '', 2147483647, 1, 1, 2);
 
 -- member toolbar menu
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-sys_add_content\', this, \'site\');', '', 'plus', '', '', 0, 2147483646, 1, 1, 0),
-('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_slide_inline(''#bx-sliding-menu-account'', this, ''site'');', '', 'user',  'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_notifications";s:5:"class";s:20:"TemplServiceProfiles";}', 'sys_account_popup', 1, 2147483646, 1, 0, 1),
-('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user',  '', '', 0, 1, 1, 0, 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `hidden_on_pt`, `active`, `copyable`, `order`) VALUES 
+('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-sys_add_content\', this, \'site\');', '', 'plus', '', '', 0, 2147483646, 0, 1, 1, 0),
+('sys_toolbar_member', 'system', 'apps', '_sys_menu_item_title_system_apps', '', 'javascript:void(0);', 'bx_menu_popup(''sys_homepage'', this);', '', 'qrcode', '', 'sys_homepage', 1, 2147483646, 3, 1, 1, 0),
+('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_slide_inline(''#bx-sliding-menu-account'', this, ''site'');', '', 'user',  'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_notifications";s:5:"class";s:20:"TemplServiceProfiles";}', 'sys_account_popup', 1, 2147483646, 0, 1, 0, 1),
+('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user',  '', '', 0, 1, 0, 1, 0, 2);
 
 -- notifications menu in account popup
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -5176,8 +5190,10 @@ CREATE TABLE IF NOT EXISTS `sys_pages_types` (
 );
 
 INSERT INTO `sys_pages_types` (`id`, `title`, `template`, `order`) VALUES
-(1, '_sys_page_type_default', 'default.html', 1),
-(2, '_sys_page_type_default_wo_hf', 'page_2.html', 2);
+(1, '_sys_page_type_default', '', 1),
+(2, '_sys_page_type_wo_hf', 'pt_wo_hf.html', 2),
+(3, '_sys_page_type_standard', 'pt_standard.html', 3),
+(4, '_sys_page_type_application', 'pt_application.html', 4);
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_layouts` (

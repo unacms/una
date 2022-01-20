@@ -90,9 +90,14 @@ class BxDolPageQuery extends BxDolDb
 
     static public function getPageType($iId)
     {
-        return BxDolDb::getInstance()->getRow("SELECT * FROM `sys_pages_types` WHERE `id`=:id LIMIT 1", array(
-        	'id' => $iId
-        ));
+        return BxDolDb::getInstance()->getRow("SELECT * FROM `sys_pages_types` WHERE `id`=:id LIMIT 1", [
+            'id' => $iId
+        ]);
+    }
+
+    static public function getPageTypes()
+    {
+        return BxDolDb::getInstance()->getAll("SELECT * FROM `sys_pages_types` WHERE 1");
     }
 
     public function getPageBlocks()

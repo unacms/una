@@ -698,8 +698,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceGetSiteSubmenu()
     {
         $oMenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenu->setTemplateWrapper('menu_main_submenu_empty.html');
-        return $oMenu ? $oMenu->getCode () : '';
+        return $oMenu ? $oMenu->getCode() : '';
     }
     
     /**

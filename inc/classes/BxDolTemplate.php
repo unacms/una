@@ -41,8 +41,10 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  * which are registered in 'sys_objects_page' table.
  * Changeable in Studio -> Pages Builder -> Settings. 
  */
-define('BX_PAGE_TYPE_DEFAULT', 1); ///< default, regular page
+define('BX_PAGE_TYPE_DEFAULT', 1); ///< default, depends on the settins
 define('BX_PAGE_TYPE_DEFAULT_WO_HF', 2); ///< clear page, without any headers and footers
+define('BX_PAGE_TYPE_STANDARD', 3); ///< regular page divided on columns
+define('BX_PAGE_TYPE_APPLICATION', 4); ///< regular page divided on columns with left vertical menu(s) column
 
 /**
  * Template engine.
@@ -724,7 +726,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getPageType()
     {
-        return isset($this->aPage['type']) ? (int)$this->aPage['type'] : BX_PAGE_TYPE_DEFAULT;
+        $iType = BX_PAGE_TYPE_DEFAULT;
+        if(isset($this->aPage['type']))
+            $iType = (int)$this->aPage['type'];
+
+        if($iType == BX_PAGE_TYPE_DEFAULT) 
+            $iType = (int)getParam('sys_pt_default_' . (isLogged() ? 'member' : 'visitor'));
+
+        return $iType;
     }
 
     /**
@@ -1543,9 +1552,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $sContent = $this->parseHtmlByName($sName, $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
         if(empty($sContent)) {
-        	$aType = BxDolPageQuery::getPageType($this->getPageType());
-        	if(!empty($aType) && is_array($aType))
-        		$sContent = $this->parseHtmlByName($aType['template'], $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
+            $aType = BxDolPageQuery::getPageType($this->getPageType());
+            if(!empty($aType) && is_array($aType))
+                $sContent = $this->parseHtmlByName($aType['template'], $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
         }
         if(empty($sContent))
             $sContent = $this->parseHtmlByName('default.html', $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
@@ -1673,6 +1682,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             	}
 
                 $sRet = $bCover ? $oCover->display() : $oCover->displayEmpty();
+                break;
+            case 'site_submenu_class':
+                $oMenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+                if($oMenu)
+                    $sRet = $oMenu->getClass();
+                break;
+            case 'site_submenu_hidden':
+                $oMenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+                if($oMenu)
+                    $sRet = $oMenu->getClassHidden();
                 break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();

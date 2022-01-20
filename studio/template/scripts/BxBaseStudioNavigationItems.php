@@ -719,6 +719,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Set',
                     )
                 ),
+                'hidden_on_pt' => array(
+                    'type' => 'select_multiple',
+                    'name' => 'hidden_on_pt',
+                    'caption' => _t('_adm_nav_txt_block_hidden_on_pt'),
+                    'info' => '',
+                    'value' => isset($aItem['hidden_on_pt']) ? (int)$aItem['hidden_on_pt'] : '',
+                    'values' => array(),
+                    'db' => array (
+                        'pass' => 'Set',
+                    )
+                ),
                 'icon' => array(
                     'type' => 'textarea',
                     'name' => 'icon',
@@ -810,6 +821,15 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
         asort($aForm['inputs']['submenu_object']['values']);
         $aForm['inputs']['submenu_object']['values'] = array_merge(array('' => _t('_adm_nav_txt_items_submenu_empty')), $aForm['inputs']['submenu_object']['values']);
+
+        $aPageTypes = BxDolPageQuery::getPageTypes();
+        foreach($aPageTypes as $aPageType) {
+            $iPageType = (int)$aPageType['id'];
+            if($iPageType == 1)
+                continue;
+
+            $aForm['inputs']['hidden_on_pt']['values'][$iPageType - 1] = _t($aPageType['title']);
+        }
 
         switch($sAction) {
             case 'add':

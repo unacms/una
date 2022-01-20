@@ -21,6 +21,9 @@ import url(../../../../../../../template/css/common.css);
     clear:both;
 }
 
+.bx-main-content .bx-main-column .bx-def-page-width {
+    width: 100%;
+}
 
 /*--- Design Boxes ---*/
 .bx-db-container {

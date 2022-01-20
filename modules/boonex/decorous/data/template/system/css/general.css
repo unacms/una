@@ -3,7 +3,7 @@
 
 /*--- Overwrite Defaults ---*/
 #bx-toolbar {
-	z-index: 500;
+    z-index: 500;
 }
 .bx-media-phone #bx-toolbar-content{
     display: flex;
@@ -12,11 +12,11 @@
 #bx-logo-container {
     margin: 0.5rem 1.2rem;
     text-align: left;
-	height: auto;
-	flex-grow: 3
+    height: auto;
+    flex-grow: 3
 }
 .bx-media-phone #bx-logo-container {
-	 margin: 0;
+    margin: 0;
 }
 #bx-logo-container a {
 	color: #595959;
