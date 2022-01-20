@@ -1,7 +1,9 @@
 //for custom JS
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) 
+        $('html').addClass('dark')
+
 $(document).ready(function() {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        $('html').addClass('dark')
         $('.bx-sb-theme-switcher .sys-icon').addClass('moon');
     } else {
         document.documentElement.classList.remove('dark');
