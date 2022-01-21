@@ -74,9 +74,9 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
         if(count($aResults) > $iPerPage)
             $aResults = array_slice($aResults, 0, $iPerPage);
 
-        $aFirst = array_shift($aItems);
+        $aFirst = reset($aItems);
         $this->_oModule->_oDb->markAsRead($this->_iOwnerId, $aFirst['id']);
-        
+
         return array_merge($aResults, $this->_oQuery->getMenuItems());
     }
 

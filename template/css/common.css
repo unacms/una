@@ -56,14 +56,37 @@ blockquote {
 }
 
 .bx-main {
-	position: relative;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: column;
-	flex-direction: column;
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 
-	min-height: 100%;
-	min-height: 100vh;
+    min-height: 100%;
+    min-height: 100vh;
+}
+
+.bx-main-content {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+}
+.bx-main-column.narrow {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+
+    width: 25%;
+}
+.bx-main-column.wide {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+
+    width: 75%;
+}
+.bx-main-content .bx-main-column .bx-def-page-width {
+    width: 100%;
 }
 
 .bx-clear {

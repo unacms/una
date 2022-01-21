@@ -16,6 +16,7 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 class BxBaseMenu extends BxDolMenu
 {
     protected $_oTemplate;
+    protected $_iPageType; 
     protected $_aOptionalParams = array('target' => '', 'onclick' => '');
     protected $_bDisplayAddons = false;
 
@@ -27,6 +28,8 @@ class BxBaseMenu extends BxDolMenu
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+        $this->_iPageType = false;
     }
 
     public function getDisplayAddons()
@@ -49,6 +52,9 @@ class BxBaseMenu extends BxDolMenu
     {
         $sMenuTitle = isset($this->_aObject['title']) ? _t($this->_aObject['title']) : 'Menu-' . rand(0, PHP_INT_MAX);
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginMenu($sMenuTitle);
+
+        if(!$this->_iPageType)
+            $this->_iPageType = BxDolTemplate::getInstance()->getPageType();
 
         $s = '';
         $aVars = $this->_getTemplateVars ();
@@ -155,6 +161,9 @@ class BxBaseMenu extends BxDolMenu
             return false;
 
         if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
+            return false;
+
+        if($this->_iPageType && !empty($a['hidden_on_pt']) && ((1 << ($this->_iPageType - 2)) & (int)$a['hidden_on_pt']))
             return false;
 
         $a['title'] = _t($a['title']);

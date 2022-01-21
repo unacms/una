@@ -18,7 +18,7 @@
                             <bx_injection:injection_logo_after />
                         </div>
                         <div id="bx-menu-main-container" class="bx-toolbar-item bx-ti-menu bx-ti-stretcher">
-                                                    <bx_menu:sys_site />
+                            <bx_menu:sys_site />
                         </div>
                         <div id="bx-menu-toolbar-2-container" class="bx-toolbar-item bx-ti-right cd-nav">
                             <bx_menu:sys_toolbar_member />
@@ -36,7 +36,15 @@
                     __cover__
                     <bx_injection:injection_between_cover_top_menu />
 
-                    <bx_menu:sys_site_submenu />
+                    <div class="bx-menu-main-bar-gap bx-def-centered bx-def-padding-leftright bx-def-page-width bx-def-box-sizing __site_submenu_hidden__">
+                        <div id="bx-menu-main-bar-wrapper" class="bx-menu-main-bar-wrapper bx-def-color-bg-sec">
+                            <div id="bx-menu-main-bar" class="bx-menu-main-bar __site_submenu_class__">
+                                <bx_injection:injection_top_menu_before />
+                                <bx_menu:sys_site_submenu />
+                                <bx_injection:injection_top_menu_after />
+                            </div>
+                        </div>
+                    </div>
 
                     <bx_injection:injection_between_content_menu />
 
