@@ -271,9 +271,9 @@
     }
 
     /* Fonts */
-    .bx-artificer .bx-def-font,
+    .bx-def-font,
     .bx-artificer .bx-def-font-inputs {
-        @apply font-inter;
+        @apply font-inter text-gray-500 dark:text-gray-400;
     }
 
     .bx-artificer .bx-def-font-grayed {
@@ -309,6 +309,11 @@
     .bx-artificer h1,
     .bx-artificer .bx-def-font-h1 {
         @apply text-4xl leading-10;
+    }
+
+    /* Common elements: Pages. */
+    .bx-def-color-bg-page{
+	@apply bg-gray-100 dark:bg-black;
     }
 
     /* Common elements: Blocks, Boxes, etc. */
