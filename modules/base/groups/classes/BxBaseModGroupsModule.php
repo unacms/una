@@ -1549,6 +1549,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(empty($sKey) && ($sKey = bx_get('key')) !== false)
             $sKey = bx_process_input($sKey);
 
+        $mixedInvited = false;
         if(!empty($sKey))
             $mixedInvited = $this->isInvited($sKey, $iGroupProfileId);
         else if($iProfileId !== false)
