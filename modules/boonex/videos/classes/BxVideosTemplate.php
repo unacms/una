@@ -178,7 +178,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
                 'duration' => _t_format_duration($aData[$CNF['FIELD_DURATION']]),
             ]
         ];
-        $aUnit['bx_if:thumb']['content']['entry_video'] = $this->entryVideo($aData, false, ['muted' => 'muted', 'autoplay' => 'autoplay'], 'height:100%');
+        $aUnit['bx_if:thumb']['content']['entry_video'] = $this->entryVideo($aData, false, ['muted' => 'muted'], 'height:100%');
 
         return $aUnit;
     }

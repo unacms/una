@@ -62,7 +62,7 @@ class BxDolConnectionQuery extends BxDolDb
         foreach($aResult['fields'] as $sFieldAlias => $aField)
             $aFields[$sFieldAlias] = "`" . $aField['table_alias'] . "`.`" . $aField['name'] . "`";
 
-        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `{$aResult['join']['table_alias']}`.`content` AND `p`.`status` = 'active')" : '';
+        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `{$aResult['join']['table_alias']}`.`content` AND `sys_profiles`.`status` = 'active')" : '';
 
         return array(
             'fields' => $aFields,

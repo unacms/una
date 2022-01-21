@@ -8,3 +8,6 @@ body,
 .bx-embed .bx-base-pofile-unit-with-cover{
     display: block;
 }
+.bx-embed > div{
+    padding: 0px !important;
+}

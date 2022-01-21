@@ -12,6 +12,8 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
     protected $_aConfig = array (
         'bAllowUnicodeInPreg' => true, ///< allow unicode in regular expressions
         'aLessConfig' => array (
+            'bx-root-class-name' => '',
+            
             'bx-page-width' => '1000px',
 
             'bx-margin' => '16px',
@@ -69,6 +71,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
     function __construct()
     {
         parent::__construct();
+        $this->_aConfig['aLessConfig']['bx-root-class-name'] =  BxDolTemplate::getInstance()->getCssClassName();
     }
 
     public static function getInstance()

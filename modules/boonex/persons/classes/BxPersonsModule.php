@@ -70,6 +70,10 @@ class BxPersonsModule extends BxBaseModProfileModule
         return false;
     }
     
+    public function getProfileName ($aContentInfo)
+    {
+        return bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']] . ($aContentInfo[$this->_oConfig->CNF['FIELD_LAST_NAME']] != '' ? ' ' . $aContentInfo[$this->_oConfig->CNF['FIELD_LAST_NAME']] : ''));
+    }
     
 }
 
