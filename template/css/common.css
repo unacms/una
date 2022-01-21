@@ -751,7 +751,7 @@ svg .gray .outer .p2 {
 	
 /* --------------- button */
 
-/*.bx-btn {
+.bx-btn {
     position:relative;
     display:block;	
     float:left;
@@ -782,8 +782,8 @@ svg .gray .outer .p2 {
     cursor: pointer;
     font-size:1rem;
     color:#fff;
-}*/
-
+}
+/* ARTI
 .bx-btn {
     position: relative;
     display: inline-flex;
@@ -807,6 +807,7 @@ svg .gray .outer .p2 {
     --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
 }
+*/
 
 .bx-btn-height {
 	height: 36px;
@@ -848,7 +849,7 @@ input.bx-btn {
 .bx-btn .sys-icon-bigger {
     font-size:1.4em;
 }
-/* OLD
+
 .bx-btn.bx-btn-small {
     height:24px; 
     height:1.6rem; 
@@ -858,14 +859,15 @@ input.bx-btn {
     line-height:1.5rem;
     font-size:0.9rem;
 }
-*/
 
+/* ARTI
 .bx-btn.bx-btn-small {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     font-size: .75rem;
     line-height: 1rem;
 }
+*/
 
 .bx-btn-small-height {
 	height: 24px; 
