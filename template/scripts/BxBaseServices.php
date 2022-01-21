@@ -82,7 +82,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
                 if(!empty($sPageUrl) && strncmp($sPageUrl, BX_DOL_URL_STUDIO, strlen(BX_DOL_URL_STUDIO)) == 0)
                     break;
 
-                $sResult = '{dir_plugins_public}tailwind/css/|tailwind_class.min.css';
+                $sResult = '{dir_plugins_public}tailwind/css/|tailwind.min.css';
                 break;
         }
 

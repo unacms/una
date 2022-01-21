@@ -1,61 +1,65 @@
 <bx_include_auto:_header.html />
 
 <div class="bx-main <bx_injection:injection_main_class />">
+    <bx_injection:top />
 
-	<bx_injection:top />
+    <div id="bx-toolbar" class="bx-header bx-def-z-index-nav bg-white dark:bg-gray-800 shadow-sm">
+        <div class="bx-header-cnt bx-def-page-width mx-auto px-3 md:px-4 lg:px-6 box-border">
+            <div class="bx-toolbar-content-wrapper">
+                <div id="bx-toolbar-content" class="bx-toolbar-content relative flex items-center justify-start h-16">
+                    <!-- Mobile: Hamburger -->
+                    <div class="flex-none items-center lg:hidden mr-4">
+                        <bx_menu:sys_toolbar_site />
+                    </div>
 
-	<div id="bx-toolbar" class="bx-def-z-index-nav">
-	
-	    <div class="bx-def-centered bx-def-padding-sec-leftright bx-def-page-width bx-def-box-sizing">
-	
-	        <div id="bx-toolbar-content" class="bx-clearfix">
-	
-	            <div id="bx-menu-toolbar-1-container">
-	                <bx_menu:sys_toolbar_site />
-	            </div>
-	
-	            <div id="bx-logo-container">
-	
-	                <bx_injection:injection_logo_before />
-	                    __main_logo__
-	                <bx_injection:injection_logo_after />
-	
-	            </div>
-	
-	            <div id="bx-menu-toolbar-2-container">
-	                <bx_menu:sys_toolbar_member />
-	            </div>
-	
-	        </div>
-	
-	    </div>
-	
-	</div>
+                    <!-- Logo -->
+                    <div id="bx-logo-container" class="bx-toolbar-item bx-ti-left bx-ti-logo flex-none items-center">
+                        <bx_injection:injection_logo_before />
+                        __main_logo__
+                        <bx_injection:injection_logo_after />
+                    </div>
+                    <!-- Menu -->
+                    <div class="bx-toolbar-item bx-ti-menu flex-2 hidden lg:block w-64 ml-4">
+                        <div id="bx-menu-toolbar-1-container" class="bx-toolbar-item bx-ti-menu w-full">
+                            <bx_menu:sys_site />
+                        </div>
+                    </div>
+                    <!-- Search -->
+                    <div class="bx-toolbar-item bx-ti-search flex flex-1 items-center justify-end ml-4 md:min-w-88">
+                        <div class="flex items-start w-full hidden md:block">
+                            <div class="relative w-full">__sys_site_search__</div>
+                        </div>
+                    </div>
+                    <!-- Members Toolbar -->
+                    <div id="bx-menu-toolbar-2-container" class="bx-toolbar-item bx-ti-right flex-none ml-4">
+                        <bx_menu:sys_toolbar_member />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<bx_injection:injection_between_cover_logo />
-        __cover__
-	<bx_injection:injection_between_cover_top_menu />
+    <bx_injection:injection_between_cover_logo />
+    __cover__
+    <bx_injection:injection_between_cover_top_menu />
 
-        <div id="bx-menu-main-bar-wrapper" class="bx-menu-main-bar-wrapper __site_submenu_hidden__">
-            <div id="bx-menu-main-bar" class="bx-menu-main-bar __site_submenu_class__ bx-def-color-bg-sec">
-                <div class="bx-def-centered bx-def-padding-sec-leftright bx-def-box-sizing">
+    <div id="bx-menu-main-bar-wrapper" class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 __site_submenu_hidden__">
+        <div id="bx-menu-main-bar" class="bx-menu-main-bar __site_submenu_class__ bx-def-page-width mx-auto px-4 sm:px-6 lg:px-8 box-border">
+            <div class="bx-menu-main-bar-cnt relative -mb-px">
+                <div class="absolute w-full">
                     <bx_injection:injection_top_menu_before />
                     <bx_menu:sys_site_submenu />
                     <bx_injection:injection_top_menu_after />
                 </div>
             </div>
         </div>
+    </div>
 
-	<bx_injection:injection_between_content_menu />
+    <bx_injection:injection_between_content_menu />
 
-	<div id="bx-content-wrapper">
-
-		__informer__
-		
-		<div class="bx-page-wrapper bx-def-centered bx-def-padding-sec-leftright bx-def-page-width bx-def-box-sizing">
-		
-		    <div id="bx-content-container" class="bx-def-padding-sec-left bx-def-padding-sec-right">
-		
-		        <bx_injection:injection_content_before />
-		
-		        <div id="bx-content-main" class="bx-def-margin-top">
+    <div id="bx-content-wrapper">
+        __informer__
+        <div class="bx-page-wrapper bx-def-page-width mx-auto px-3 md:px-4 lg:px-6 box-border">
+            <div id="bx-content-container" class="bx-content-container">
+                <bx_injection:injection_content_before />
+                <div id="bx-content-main" class="bx-content-main my-2 lg:my-3">
