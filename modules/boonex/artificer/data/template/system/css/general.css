@@ -22,6 +22,12 @@ import url(../../../../../../../template/css/general.css);
     height: 3.25rem;
 }
 
+.bx-menu-main-bar-gap.bx-menu-main-bar-hidden,
+.bx-menu-main-bar-wrapper.bx-menu-main-bar-hidden,
+.bx-menu-main-bar.bx-menu-main-bar-hidden {
+    display: none;
+}
+
 
 /*--- Profile Avatar ---*/
 #bx-profile-switcher .bx-pas-list .bx-def-hr:first-child {
