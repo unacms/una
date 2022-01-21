@@ -842,6 +842,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_sName;
     }
+    
+    /**
+     * Get currently active template name.
+     *
+     * @return string template's name.
+     */
+    function getCssClassName()
+    {
+        return str_replace('_', '-', $this->_sName);
+    }
 
     /**
      * Get currently active template code.
@@ -1725,6 +1735,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
             case 'base':
                 $sRet = bx_convert_array2attrs($this->aPage['base']);
+                break;
+            case 'class_name':
+                $sRet = $this->getCssClassName();
                 break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
