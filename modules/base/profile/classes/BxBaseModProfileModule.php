@@ -457,7 +457,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if (!$aContentInfo)
             return false;
         
-        $sDisplayName = bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
+        $sDisplayName = $this->getProfileName($aContentInfo);
         bx_alert($this->getName(), 'profile_name', $aContentInfo['profile_id'], 0, array('info' => $aContentInfo, 'display_name' => &$sDisplayName));
         
         return $sDisplayName;
@@ -1443,6 +1443,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         $this->_oTemplate->setCover($oPage,$aProfileInfo);
     }
+    
+    /** 
+     * Returns list of members by mode with limited number of records for React Jot
+     * @param string $sMode
+     * @param int $iStart
+     * @param int $iPerPage
+     * @return mixed
+     */
+    public function serviceGetMembers($sMode = 'active', $iStart = 0, $iPerPage = 10){
+        bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass($sMode);
+
+        $o -> aCurrent['paginate'] = array('perPage' => $iPerPage, 'forceStart' => $iStart);
+        return $o -> getSearchData();
+    }
 
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
@@ -1807,6 +1823,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         return parent::getEntryImageData($aContentInfo, $sField, $aTranscoders);
     }
+    
+    public function getProfileName ($aContentInfo)
+    {
+        return bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
+    }
 
 
     // ====== PROTECTED METHODS
@@ -1967,22 +1988,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         }
 
         return parent::_getContent($iContentId, $sFuncGetContent);
-    }
-
-    /** 
-     * Returns list of members by mode with limited number of records for React Jot
-     * @param string $sMode
-     * @param int $iStart
-     * @param int $iPerPage
-     * @return mixed
-     */
-    public function serviceGetMembers($sMode = 'active', $iStart = 0, $iPerPage = 10){
-        bx_import('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass($sMode);
-
-        $o -> aCurrent['paginate'] = array('perPage' => $iPerPage, 'forceStart' => $iStart);
-        return $o -> getSearchData();
     }
 }
 
