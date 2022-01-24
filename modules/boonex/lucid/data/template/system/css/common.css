@@ -6,13 +6,6 @@
     border-bottom: 1px solid transparent;
 }
 
-/* --- Buttons --- */
-.bx-btn i,
-.bx-btn u {
-    display: inline-block;
-    vertical-align: top !important;
-}
-
 /* --- Popup boxes --- */
 .bx-popup {    
 	-moz-box-shadow: none;

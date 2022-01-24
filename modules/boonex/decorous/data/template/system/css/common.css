@@ -31,7 +31,6 @@
 }
 .bx-btn .sys-icon {
     font-size: 0.875rem !important;
-    line-height: 1.9rem !important;
 }
 
 @keyframes loadingCircle{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}[bx-click-animating='true']{position:relative}html{--bx-wave-shadow-color:#1890ff}

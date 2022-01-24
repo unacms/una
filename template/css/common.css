@@ -758,10 +758,6 @@ svg .gray .outer .p2 {
     background-color: #79bd9a;
     text-decoration:none;
 }
-.bx-btn{
-	padding-top:0px;
-	padding-bottom:0px;    
-}
 A.bx-btn{
     display: inline-block
 }
@@ -772,6 +768,9 @@ A.bx-btn{
     vertical-align:middle;
     background-size:1.2em 1.2em;
     background-position:center center;
+}
+.bx-btn .bx-def-valign-center{
+    height: 100%;
 }
 .bx-btn u {
     margin-left: 10px;
