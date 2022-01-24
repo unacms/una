@@ -19,7 +19,7 @@ ul.bx-menu-custom-hor {
     text-decoration:none;
 }
 
-.bx-menu-hor-inline li a {
+.bx-menu-hor-inline li a:not(.bx-btn) {
     display:inline;
 }
 
