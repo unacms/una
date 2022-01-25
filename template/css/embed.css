@@ -3,7 +3,7 @@ body,
     background-color: transparent !important;
 }
 .bx-embed{
-    width:calc(100% - 2px);
+    width:100%;
 }
 .bx-embed .bx-base-pofile-unit-with-cover{
     display: block;

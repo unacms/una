@@ -53,3 +53,7 @@ ul.bx-menu-toolbar li a .sys-icon-a {
 .bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
     color: #29789c;
 }
+
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto a, .bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto a {
+    padding: 0.5rem;
+}

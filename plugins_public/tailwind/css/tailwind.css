@@ -349,57 +349,57 @@
     }
 
     /* Common elements: Buttons */
-    .bx-btn {
+    .bx-artificer .bx-btn {
         @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md cursor-pointer;
     }
 
-    .bx-btn i, 
-    .bx-btn u {
+    .bx-artificer .bx-btn i, 
+    .bx-artificer .bx-btn u {
         @apply inline-block align-middle;
     }
 
-    .bx-btn i, 
-    .bx-btn img {
+    .bx-artificer .bx-btn i, 
+    .bx-artificer .bx-btn img {
         @apply w-5 h-5 leading-5 text-gray-600 dark:text-gray-300;
     }
 
-    .bx-btn:hover i, 
-    .bx-btn:hover img {
+    .bx-artificer .bx-btn:hover i, 
+    .bx-artificer .bx-btn:hover img {
         @apply text-gray-800 dark:text-gray-100;
     }
 
-    .bx-btn i {
+    .bx-artificer .bx-btn i {
         @apply text-center;
     }
 
-    .bx-btn u {
+    .bx-artificer .bx-btn u {
         @apply ml-2 first:ml-0 no-underline;
     }
 
-    .bx-btn.bx-btn-primary {
+    .bx-artificer .bx-btn.bx-btn-primary {
         @apply border-transparent text-white hover:text-white dark:hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
     }
 
-    .bx-btn.bx-btn-primary i, 
-    .bx-btn.bx-btn-primary img {
+    .bx-artificer .bx-btn.bx-btn-primary i, 
+    .bx-artificer .bx-btn.bx-btn-primary img {
         @apply text-gray-300;
     }
     
-    .bx-btn.bx-btn-primary:hover i, 
-    .bx-btn.bx-btn-primary:hover img {
+    .bx-artificer .bx-btn.bx-btn-primary:hover i, 
+    .bx-artificer .bx-btn.bx-btn-primary:hover img {
         @apply text-gray-100;
     }
     
-    .bx-btn.bx-btn-disabled {
+    .bx-artificer .bx-btn.bx-btn-disabled {
         @apply bg-gray-50 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-400 dark:hover:text-gray-400 focus:ring-0 focus:ring-offset-0 shadow-none cursor-default !important;
     }
 
-    .bx-btn.bx-btn-small {
+    .bx-artificer .bx-btn.bx-btn-small {
         @apply py-1 text-xs;
     }
 
-    .bx-btn.bx-btn-small i, 
-    .bx-btn.bx-btn-small img {
+    .bx-artificer .bx-btn.bx-btn-small i, 
+    .bx-artificer .bx-btn.bx-btn-small img {
         @apply w-4 h-4 leading-4;
     }
 

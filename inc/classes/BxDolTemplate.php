@@ -3315,7 +3315,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         header( 'Content-type: text/html; charset=utf-8' );
         header( 'X-Frame-Options: sameorigin' );
         if (BX_PAGE_EMBED == $oTemplate->getPageNameIndex())
-            header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors')) ;
+            header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors'));
 
         echo $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
     }
