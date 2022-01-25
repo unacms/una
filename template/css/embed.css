@@ -1,9 +1,18 @@
 body,
 .bx-embed{
     background-color: transparent !important;
+    height: 100% !important;
+}
+.bx-videos-iframe-aspect-ratio{
+    height: 100% !important;
 }
 .bx-embed{
-    width:100%;
+    width: 100%;
+    height: 100% !important;
+}
+.bx-embed iframe{
+    width: 100%;
+    height: 100% !important
 }
 .bx-embed .bx-base-pofile-unit-with-cover{
     display: block;

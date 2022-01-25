@@ -38,7 +38,7 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
             return '';
         
         $sTitle = $this->getContentTitle($iContentId);
-        return $this->_oModule->_oTemplate->parseHtmlByName('embed.html', [
+        return $this->_oModule->_oTemplate->parseHtmlByName('embed_media.html', [
             'title' => $sTitle,
             'url' => BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'embed_media/' . $iContentId . '/'
         ]);

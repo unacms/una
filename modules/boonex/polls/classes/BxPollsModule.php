@@ -45,6 +45,11 @@ class BxPollsModule extends BxBaseModTextModule
         	'content' => $aBlock['content']
         ));
     }
+    
+    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    {
+        return parent::actionEmbed($iContentId, 'unit_embed_common.html');
+    }
 
     public function actionEmbedEntry($iId = 0)
     {
