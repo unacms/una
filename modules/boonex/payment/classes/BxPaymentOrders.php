@@ -217,15 +217,20 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     {
     	$sMethodName = 'getOrder' . bx_gen_method_name($sType);
     	$aOrder = $this->_oModule->_oDb->$sMethodName(array('type' => 'id', 'id' => $iOrderId));
-		if(empty($aOrder) || !is_array($aOrder))
-	    	return true;
+        if(empty($aOrder) || !is_array($aOrder))
+            return true;
 
-		if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED && !$this->_oModule->callUnregisterCartItem((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aOrder['order'], $aOrder['license'])))
-			return false;
+        if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED && !$this->_oModule->callUnregisterCartItem((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aOrder['order'], $aOrder['license'])))
+            return false;
 
-		$sMethodName = 'deleteOrder' . bx_gen_method_name($sType);
-		if(!$this->_oModule->_oDb->$sMethodName($iOrderId))
-			return false;
+        $sMethodName = 'deleteOrder' . bx_gen_method_name($sType);
+        if(!$this->_oModule->_oDb->$sMethodName($iOrderId))
+            return false;
+
+        $this->_oModule->alert('cancel_order', $aOrder['id'], $aOrder['seller_id'], array(
+            'type' => $sType,
+            'order' => $aOrder
+        ));
 
         return true;
     }
