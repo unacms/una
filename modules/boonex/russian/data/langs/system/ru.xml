@@ -2713,6 +2713,7 @@
     <string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
     <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Аккаунт]]></string>
     <string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Пароль]]></string>
+    <string name="_sys_menu_item_title_profile_settings_cfilter"><![CDATA[Фильтр контента]]></string>
     <string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
     <string name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string>
     <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Комментарии]]></string>
@@ -2789,12 +2790,12 @@
     <string name="_sys_menu_item_title_account_dashboard_reports"><![CDATA[Жалобы]]></string>
     <string name="_sys_menu_item_title_system_account_dashboard_audit"><![CDATA[Аудит]]></string>
     <string name="_sys_menu_item_title_account_dashboard_audit"><![CDATA[Аудит]]></string>
-
     <string name="_sys_menu_item_title_system_account_settings"><![CDATA[Настройки]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Удалить]]></string>
     <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
     <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Аккаунт]]></string>
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Пароль]]></string>
+    <string name="_sys_menu_item_title_system_profile_settings_cfilter"><![CDATA[Фильтр контента]]></string>
     <string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
     <string name="_sys_menu_item_title_system_apps"><![CDATA[Приложения]]></string>
     <string name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
@@ -3030,6 +3031,7 @@
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Аккаунт - Настройки]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
+        <string name="_sys_page_block_title_profile_settings_cfilter"><![CDATA[Фильтр контента]]></string>
         <string name="_sys_page_block_title_add_content"><![CDATA[Добавить содержимое]]></string>
         <string name="_sys_page_block_title_chart_growth"><![CDATA[Диаграммы развития]]></string>
         <string name="_sys_page_block_title_chart_stats"><![CDATA[Содержимое]]></string>    
@@ -3089,6 +3091,7 @@
 	<string name="_sys_page_title_account_settings_email"><![CDATA[Настройки email-а]]></string>
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
+        <string name="_sys_page_title_profile_settings_cfilter"><![CDATA[Фильтр контента]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Добавить содержимое]]></string>
         <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
         <string name="_sys_page_title_audit_administration"><![CDATA[Аудит]]></string>
@@ -3112,6 +3115,7 @@
 	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Email настройки]]></string>
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
+        <string name="_sys_page_title_system_profile_settings_cfilter"><![CDATA[Фильтр контента]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Добавить содержимое]]></string>
         <string name="_sys_page_title_system_cmts_view"><![CDATA[Просмотр комментария]]></string>
         <string name="_sys_page_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
@@ -3151,6 +3155,12 @@
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[Просмотреть все]]></string>
 	<string name="_sys_please_select"><![CDATA[Пожалуйста, выберите...]]></string>
+        <string name="_sys_pre_lists_content_filter"><![CDATA[Фильтр контента]]></string>
+        <string name="_sys_pre_lists_content_filter_g"><![CDATA[G]]></string>
+        <string name="_sys_pre_lists_content_filter_pg"><![CDATA[PG]]></string>
+        <string name="_sys_pre_lists_content_filter_pg13"><![CDATA[PG-13]]></string>
+        <string name="_sys_pre_lists_content_filter_r"><![CDATA[R]]></string>
+        <string name="_sys_pre_lists_content_filter_x"><![CDATA[X]]></string>
         <string name="_sys_pre_lists_relations"><![CDATA[Отношения]]></string>
         <string name="_sys_pre_lists_relations_husband"><![CDATA[муж]]></string>
         <string name="_sys_pre_lists_relations_wife"><![CDATA[жена]]></string>

@@ -495,7 +495,22 @@ class BxBaseServiceProfiles extends BxDol
         );
     }
 
-	protected function _getIcon ($sIcon)
+    public function serviceProfileSettingsCfilter()
+    {
+        // set settings submenu
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if ($oMenuSubmenu) {
+            $oMenuSubmenu->setObjectSubmenu('sys_account_settings_submenu', array (
+                'title' => _t('_sys_menu_item_title_account_settings'),
+                'link' => BX_DOL_URL_ROOT . 'member.php',
+                'icon' => '',
+            ));
+        }
+
+        return 'Filter would be here!';
+    }
+
+    protected function _getIcon ($sIcon)
     {
         return BxTemplFunctions::getInstance()->getIcon($sIcon);
     }
