@@ -268,7 +268,7 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
         return strftime($sFormat, $iTime);
     }
 
-    function _t_format_currency ($fPrice, $iPrecision = 2, $bFormatThousands = false)
+    function _t_format_currency ($fPrice, $iPrecision = 2, $bFormatThousands = true)
     {
         $sSign = BxDolPayments::getInstance()->getOption('default_currency_sign');
         if(empty($sSign))
@@ -433,7 +433,7 @@ function _t_format_duration($iTime)
     return BxDolLanguages::getInstance()->_t_format_duration($iTime);
 }
 
-function _t_format_currency($fPrice, $iPrecision = 2, $bFormatThousands = false)
+function _t_format_currency($fPrice, $iPrecision = 2, $bFormatThousands = true)
 {
     return BxDolLanguages::getInstance()->_t_format_currency($fPrice, $iPrecision, $bFormatThousands);
 }

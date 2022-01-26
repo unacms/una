@@ -2099,7 +2099,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_connect_option_approve"><![CDATA[Always approve profiles when joined using this module]]></string>
     <string name="_sys_connect_option_privacy"><![CDATA[Default privacy for created profiles]]></string>
 
-	<string name="_sys_currency"><![CDATA[{0}{1}]]></string>
+	<string name="_sys_currency"><![CDATA[{0} {1}]]></string>
         <string name="_sys_decline"><![CDATA[Decline]]></string>
 	<string name="_sys_designbox_0"><![CDATA[Content]]></string>
 	<string name="_sys_designbox_1"><![CDATA[Content + Title + Background]]></string>
@@ -2727,6 +2727,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
     <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
+    <string name="_sys_menu_item_title_profile_settings_cfilter"><![CDATA[Content Filter]]></string>
     <string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
     <string name="_sys_menu_item_title_cart"><![CDATA[Shopping Cart]]></string>
     <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Comments]]></string>
@@ -2816,6 +2817,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
     <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
+    <string name="_sys_menu_item_title_system_profile_settings_cfilter"><![CDATA[Content Filter]]></string>
     <string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_item_title_system_apps"><![CDATA[Apps]]></string>
     <string name="_sys_menu_item_title_system_cart"><![CDATA[Shopping Cart]]></string>
@@ -3062,6 +3064,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Account Settings]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+        <string name="_sys_page_block_title_profile_settings_cfilter"><![CDATA[Content Filter]]></string>
 	<string name="_sys_page_block_title_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_page_block_title_chart_growth"><![CDATA[Growth Charts]]></string>
 	<string name="_sys_page_block_title_chart_stats"><![CDATA[Content]]></string>
@@ -3124,6 +3127,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+        <string name="_sys_page_title_profile_settings_cfilter"><![CDATA[Content Filter]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Add Content]]></string>
         <string name="_sys_page_title_cmts_administration"><![CDATA[Manage Comments]]></string>
         <string name="_sys_page_title_audit_administration"><![CDATA[Audit]]></string>
@@ -3147,6 +3151,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
+        <string name="_sys_page_title_system_profile_settings_cfilter"><![CDATA[Content Filter]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Add Content]]></string>
         <string name="_sys_page_title_system_cmts_view"><![CDATA[View Comment]]></string>
         <string name="_sys_page_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
@@ -3186,6 +3191,12 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
 	<string name="_sys_please_select"><![CDATA[Please select...]]></string>
+        <string name="_sys_pre_lists_content_filter"><![CDATA[Content filter]]></string>
+        <string name="_sys_pre_lists_content_filter_g"><![CDATA[G]]></string>
+        <string name="_sys_pre_lists_content_filter_pg"><![CDATA[PG]]></string>
+        <string name="_sys_pre_lists_content_filter_pg13"><![CDATA[PG-13]]></string>
+        <string name="_sys_pre_lists_content_filter_r"><![CDATA[R]]></string>
+        <string name="_sys_pre_lists_content_filter_x"><![CDATA[X]]></string>
         <string name="_sys_pre_lists_relations"><![CDATA[Relationships]]></string>
         <string name="_sys_pre_lists_relations_husband"><![CDATA[husband]]></string>
         <string name="_sys_pre_lists_relations_wife"><![CDATA[wife]]></string>

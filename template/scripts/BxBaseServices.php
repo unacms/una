@@ -1073,7 +1073,12 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             )
     	);
     }
-    
+
+    public function serviceIsAllowedContentFilter($sAction, $iValue)
+    {
+        
+    }
+
     private function _getSearchObject()
     {
         $sClass = 'BxTemplSearch';

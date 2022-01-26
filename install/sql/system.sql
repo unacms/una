@@ -1165,6 +1165,9 @@ CREATE TABLE IF NOT EXISTS `sys_profiles` (
   `account_id` int(10) unsigned NOT NULL,
   `type` varchar(32) NOT NULL,
   `content_id` int(10) unsigned NOT NULL,
+  `cfw_value` int(10) unsigned NOT NULL DEFAULT '0',
+  `cfw_items` int(10) unsigned NOT NULL DEFAULT '0',
+  `cfu_items` int(10) unsigned NOT NULL DEFAULT '0',
   `status` enum('active','pending','suspended') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_type_content` (`account_id`,`type`,`content_id`),
@@ -3805,6 +3808,7 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `exte
 ('sys_report_types', '_sys_pre_lists_report_types', 'system', '0', '0'),
 ('sys_vote_reactions', '_sys_pre_lists_vote_reactions', 'system', '0', '0'),
 ('sys_relations', '_sys_pre_lists_relations', 'system', '0', '1'),
+('sys_content_filter', '_sys_pre_lists_content_filter', 'system', '1', '0'),
 
 ('sys_studio_widget_types', '_sys_pre_lists_studio_widget_types', 'system', '0', '0');
 
@@ -4163,6 +4167,13 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 ('sys_relations', '8', 8, '_sys_pre_lists_relations_sister', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
+('sys_content_filter', 1, 1, '_sys_pre_lists_content_filter_g', '', ''),
+('sys_content_filter', 2, 2, '_sys_pre_lists_content_filter_pg', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}'),
+('sys_content_filter', 3, 3, '_sys_pre_lists_content_filter_pg13', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}'),
+('sys_content_filter', 4, 4, '_sys_pre_lists_content_filter_r', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}'),
+('sys_content_filter', 5, 5, '_sys_pre_lists_content_filter_x', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('sys_studio_widget_types', '', 1, '_sys_pre_lists_studio_widget_types_library', '', 'a:1:{s:4:"icon";s:15:"lmi-library.svg";}'),
 ('sys_studio_widget_types', 'appearance', 2, '_sys_pre_lists_studio_widget_types_appearance', '', 'a:1:{s:4:"icon";s:18:"lmi-appearance.svg";}'),
 ('sys_studio_widget_types', 'structure', 3, '_sys_pre_lists_studio_widget_types_structure', '', 'a:1:{s:4:"icon";s:17:"lmi-structure.svg";}'),
@@ -4397,6 +4408,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_settings', 'system', 'account-settings-info', '_sys_menu_item_title_system_account_settings_info', '_sys_menu_item_title_account_settings_info', 'page.php?i=account-settings-info', '', '', 'info-circle', '', 2147483646, 1, 1, 2),
 ('sys_account_settings', 'system', 'account-settings-email', '_sys_menu_item_title_system_account_settings_email', '_sys_menu_item_title_account_settings_email', 'page.php?i=account-settings-email', '', '', 'envelope', '', 2147483646, 1, 1, 3),
 ('sys_account_settings', 'system', 'account-settings-password', '_sys_menu_item_title_system_account_settings_pwd', '_sys_menu_item_title_account_settings_pwd', 'page.php?i=account-settings-password', '', '', 'key', '', 2147483646, 1, 1, 4),
+('sys_account_settings', 'system', 'profile-settings-cfilter', '_sys_menu_item_title_system_profile_settings_cfilter', '_sys_menu_item_title_profile_settings_cfilter', 'page.php?i=profile-settings-cfilter', '', '', 'filter', '', 2147483646, 1, 1, 5),
 ('sys_account_settings', 'system', 'account-settings-delete', '_sys_menu_item_title_system_account_settings_delete', '_sys_menu_item_title_account_settings_delete', 'page.php?i=account-settings-delete', '', '', 'remove', '', 2147483646, 1, 1, 9999);
 
 -- account dashboard
@@ -5172,6 +5184,7 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_account_settings_info', 'account-settings-info', '_sys_page_title_system_account_settings_info', '_sys_page_title_account_settings_info', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=account-settings-info', '', '', '', 0, 1, 0, 'BxTemplPageAccount', '', 0),
 ('sys_account_settings_delete', 'account-settings-delete', '_sys_page_title_system_account_settings_delete', '_sys_page_title_account_settings_delete', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=account-settings-delete', '', '', '', 0, 1, 0, 'BxTemplPageAccount', '', 0),
 ('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', '', 0),
+('sys_profile_settings_cfilter', 'profile-settings-cfilter', '_sys_page_title_system_profile_settings_cfilter', '_sys_page_title_profile_settings_cfilter', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=profile-settings-cfilter', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_unsubscribe_notifications', 'unsubscribe-notifications', '_sys_page_title_system_unsubscribe_notifications', '_sys_page_title_unsubscribe_notifications', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=unsubscribe-notifications', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_std_dashboard', '', '_sys_page_title_system_studio_dashboard', '_sys_page_title_studio_dashboard', 'system', 1, 4, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0),
@@ -5388,6 +5401,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('sys_account_profile_switcher', 1, 'system', '', '_sys_page_block_title_account_profile_create', 11, 0, 0, 2147483647, 'menu', 'sys_add_profile', 0, 1, 1, 1),
 
 ('sys_account_profile_switcher', 1, 'system', '', '_sys_page_block_title_account_profile_switcher', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:24:"account_profile_switcher";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 2),
+
+('sys_profile_settings_cfilter', 1, 'system', '', '_sys_page_block_title_profile_settings_cfilter', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:24:"profile_settings_cfilter";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 2),
 
 ('sys_unsubscribe_notifications', 1, 'system', '', '_sys_page_block_title_unsubscribe_notifications', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"unsubscribe_notifications";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1, 1),
 

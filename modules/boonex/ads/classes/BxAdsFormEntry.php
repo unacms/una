@@ -185,11 +185,6 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         return $this->_oModule->_oTemplate->parseLink($sLink, bx_process_output(_t($aCategory['title'])));
     }
 
-    protected function genCustomViewRowValuePrice(&$aInput)
-    {
-        return isset($aInput['value']) && $aInput['value'] !== '' ? _t_format_currency(bx_process_output($aInput['value'])) : null;
-    }
-
     protected function genCustomViewRowValueQuantity(&$aInput)
     {
         return (int)$aInput['value'] > 0 ? (int)$aInput['value'] : 0;
