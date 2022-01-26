@@ -25,7 +25,7 @@ class BxVideosModule extends BxBaseModTextModule
         if ($aRes) echo $aRes['embed'];
     }
     
-    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
     {
         return parent::actionEmbed($iContentId, 'unit_gallery_embed.html');
     }

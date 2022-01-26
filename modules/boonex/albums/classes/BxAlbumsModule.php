@@ -37,7 +37,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         ));
     }
     
-    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
     {
         return $this->_oTemplate->getJsCode('main') . parent::actionEmbed($iContentId);
     }

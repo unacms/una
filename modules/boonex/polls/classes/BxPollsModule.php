@@ -46,9 +46,11 @@ class BxPollsModule extends BxBaseModTextModule
         ));
     }
     
-    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
     {
-        return parent::actionEmbed($iContentId, 'unit_embed_common.html');
+        $this->_oTemplate->addJs(array('entry.js'));
+        $this->_oTemplate->addCss(array('entry.css'));
+        return parent::actionEmbed($iContentId, 'unit_embed_common.html', $this->_oTemplate->getJsCode('entry'));
     }
 
     public function actionEmbedEntry($iId = 0)
@@ -61,7 +63,7 @@ class BxPollsModule extends BxBaseModTextModule
         array_walk($aParams, function(&$sValue) {
             $sValue = bx_process_input($sValue);
         });
-
+        
         $this->_oTemplate->embedEntry($aContentInfo, $aParams);
     }
 

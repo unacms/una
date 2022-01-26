@@ -98,7 +98,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $this->$sMethodName();
     }
     
-    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
     {
         $oTemplate = BxDolTemplate::getInstance();
         
@@ -109,7 +109,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_gallery.html';
 
-        $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate));
+        $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate) . $sAddCode);
     }
    
 	public function subactionDelete()

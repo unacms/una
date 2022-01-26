@@ -89,7 +89,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         echo json_encode($aEntries);
     }
     
-    public function actionEmbed($iContentId, $sUnitTemplate = '')
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
     {
         return parent::actionEmbed($iContentId, 'unit_with_cover.html');
     }
