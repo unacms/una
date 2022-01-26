@@ -871,6 +871,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getEmbed($sContent)
     {
         if ($sContent == ''){
+            header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors')) ;
             $this->displayPageNotFound('', BX_PAGE_EMBED);
             exit;
         }
