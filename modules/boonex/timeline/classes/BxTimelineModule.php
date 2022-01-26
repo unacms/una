@@ -2641,6 +2641,38 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-delete delete
+     * 
+     * @code bx_srv('bx_timeline', 'delete', [...]); @endcode
+     * 
+     * Delete timeline event by ID.
+     * 
+     * @param $iId integer value with event ID.
+     * @return boolean value with the result of operation.
+     * 
+     * @see BxTimelineModule::serviceDelete
+     */
+    /** 
+     * @ref bx_timeline-delete "delete"
+     */
+    public function serviceDelete($iId)
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return true;
+
+        if($this->isAllowedDelete($aEvent, true) !== true || !$this->deleteEvent($aEvent))
+            return false;
+
+        $this->_oDb->deleteCache(array('event_id' => $iId));
+
+        return true;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_menu_item_addon_comment get_menu_item_addon_comment
      * 
      * @code bx_srv('bx_timeline', 'get_menu_item_addon_comment', [...]); @endcode
