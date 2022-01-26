@@ -2084,7 +2084,7 @@
     <string name="_sys_connect_option_approve"><![CDATA[Всегда одобрять профиль, когда заходят через это соединение]]></string>
     <string name="_sys_connect_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
 
-	<string name="_sys_currency"><![CDATA[{0}{1}]]></string>
+	<string name="_sys_currency"><![CDATA[{0} {1}]]></string>
         <string name="_sys_decline"><![CDATA[Отклонить]]></string>
 	<string name="_sys_designbox_0"><![CDATA[Содержимое]]></string>
 	<string name="_sys_designbox_1"><![CDATA[Содержимое + заголовок + фон]]></string>

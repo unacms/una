@@ -745,6 +745,13 @@ BLAH;
                     $sValue = null;
                 break;
 
+            case 'price':
+                if(isset($aInput['value']) && $aInput['value'] !== '')
+                    $sValue = _t_format_currency(bx_process_output($aInput['value']));
+                else
+                    $sValue = null;
+                break;
+
             default:
                 if(isset($aInput['value']) && '' !== $aInput['value']) {
                     $sValue = $aInput['value'];
