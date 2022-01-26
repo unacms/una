@@ -1379,37 +1379,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-page_blocks Page Blocks
-     * @subsubsection bx_timeline-get_block_post_account get_block_post_account
-     * 
-     * @code bx_srv('bx_timeline', 'get_block_post_account', [...]); @endcode
-     * 
-     * Get Post block for the Dashboard page.
-     *
-     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
-     * 
-     * @see BxTimelineModule::serviceGetBlockPostAccount
-     */
-    /** 
-     * @ref bx_timeline-get_block_post_account "get_block_post_account"
-     */
-    public function serviceGetBlockPostAccount()
-    {
-        if(!isLogged())
-            return '';
-
-        $iProfileId = $this->getProfileId();
-        $sType = BX_TIMELINE_TYPE_FEED;
-        return $this->_getBlockPost($iProfileId, array(
-            'type' => $sType,
-            'form_display' => $this->_oConfig->getPostFormDisplay($sType),
-            'name' => 'home'
-        ));
-    }
-    
-    /**
-     * @page service Service Calls
-     * @section bx_timeline Timeline
-     * @subsection bx_timeline-page_blocks Page Blocks
      * @subsubsection bx_timeline-get_block_post_custom get_block_post_custom
      * 
      * @code bx_srv('bx_timeline', 'get_block_post_custom', [...]); @endcode
