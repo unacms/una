@@ -357,7 +357,7 @@ class BxDolCmtsQuery extends BxDolDb
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id) 
             INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$this->_sTable}`.`cmt_author_id` AND (`p`.`status` = 'active' OR `{$this->_sTable}`.`cmt_replies` != 0))";
            
-        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'select_clause' => &$sQuery, 'join_clause' => &$sJoin, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrder, 'limit_clause' => &$sLimit)); 
+        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'select_clause' => &$sQuery, 'join_clause' => &$sJoin, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrder, 'limit_clause' => &$sLimit, 'params' => &$aBindings)); 
         $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause . $sOrder . $sLimit;
         
         return $this->getAll($sQuery, $aBindings);

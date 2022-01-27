@@ -1374,6 +1374,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'form_display' => $this->_oConfig->getPostFormDisplay($sType)
         ));
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_post_custom get_block_post_custom
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_post_custom', [...]); @endcode
+     * 
+     * Get Post block for the Custom timeline.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockPostCustom
+     */
+    /** 
+     * @ref bx_timeline-get_block_post_custom "get_block_post_custom"
+     */
+    public function serviceGetBlockPostCustom($aParams)
+    {
+        if(!isLogged())
+            return '';
+
+        $iProfileId = $this->getProfileId();
+
+        if (!isset($aParams['form_display']))
+            $aParams['form_display'] = $this->_oConfig->getPostFormDisplay($aParams['type']);
+        
+        return $this->_getBlockPost($iProfileId, $aParams);
+    }
 
     /**
      * @page service Service Calls
