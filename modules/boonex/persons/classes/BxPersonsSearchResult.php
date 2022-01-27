@@ -38,7 +38,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                     'table' => 'bx_persons_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'fullname', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
+                    'joinFields' => array('id', 'fullname', 'last_name', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
