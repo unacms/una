@@ -39,10 +39,8 @@
     <string name="_bx_persons_form_profile_input_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_contact_to"><![CDATA[Писать мне могут]]></string>
     <string name="_bx_persons_form_profile_input_allow_contact_to"><![CDATA[Писать мне могут]]></string>
-	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Имя]]></string>
-	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Имя]]></string>
-    <string name="_bx_persons_form_profile_input_sys_last_name"><![CDATA[Фамилия]]></string>
-	<string name="_bx_persons_form_profile_input_last_name"><![CDATA[Фамилия]]></string>
+	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Полное имя]]></string>
+	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[Имя профиля обязательно для заполнения и не должно начинаться с @.]]></string>
 	<string name="_bx_persons_form_profile_input_sys_desc"><![CDATA[Описание]]></string>
 	<string name="_bx_persons_form_profile_input_desc"><![CDATA[Описание]]></string>
@@ -201,6 +199,8 @@
     <string name="_bx_persons_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_persons_menu_item_title_system_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_persons_menu_item_title_clear_reports"><![CDATA[Очистить жалобы]]></string>
+    <string name="_bx_persons_menu_item_title_system_manage_cf"><![CDATA[Управлять аудиторией]]></string>
+    <string name="_bx_persons_menu_item_title_manage_cf"><![CDATA[Управлять аудиторией]]></string>
     <string name="_bx_persons_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_persons_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_persons_menu_item_title_system_edit_profile"><![CDATA[Редактировать персону]]></string>
@@ -302,6 +302,7 @@
     <string name="_bx_persons_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_persons_grid_action_title_adm_audit_content"><![CDATA[Аудит действий над профилем]]></string>
     <string name="_bx_persons_grid_action_title_adm_audit_profile"><![CDATA[Аудит действий профиля]]></string>
+    <string name="_bx_persons_grid_action_title_adm_manage_cf"><![CDATA[Управлять аудиторией]]></string>
     <string name="_bx_persons_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) персону(ны).]]></string>
     <string name="_bx_persons_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 

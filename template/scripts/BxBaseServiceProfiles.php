@@ -495,7 +495,7 @@ class BxBaseServiceProfiles extends BxDol
         );
     }
 
-    public function serviceProfileSettingsCfilter()
+    public function serviceProfileSettingsCfilter($iProfileId = false)
     {
         // set settings submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
@@ -507,7 +507,77 @@ class BxBaseServiceProfiles extends BxDol
             ));
         }
 
-        return 'Filter would be here!';
+        if($iProfileId === false)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
+        if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            return MsgBox(_t('_sys_txt_error_profile_is_not_defined'));
+
+        $sForm = 'sys_profile';
+        $sFormDisplay = 'sys_profile_cf_set';
+        $oForm = BxDolForm::getObjectInstance($sForm, $sFormDisplay);
+        if(!$oForm)
+            return MsgBox(_t('_sys_txt_error_occured'));
+
+        $oForm->initChecker($aProfileInfo);
+        if(!$oForm->isSubmittedAndValid())
+            return $sCode = $oForm->getCode();
+
+        if(!$oForm->update($iProfileId)) {
+            if (!$oForm->isValid())
+                return $oForm->getCode();
+            else
+                return MsgBox(_t('_sys_txt_error_profile_update'));
+        }
+
+        // display result message
+        $sMsg = MsgBox(_t('_' . $sFormDisplay . '_successfully_submitted'));
+        return $sMsg . $oForm->getCode();
+    }
+
+    public function serviceIsAllowedCfilter($sAction, $iValue, $aProfileInfo)
+    {
+        if(!in_array($sAction, ['watch', 'use']) || !isset($aProfileInfo['birthday']))
+            return false;
+
+        $iResult = 0;
+        if(empty($aProfileInfo['birthday']) || in_array($aProfileInfo['birthday'], array('0000-00-00', '0000-00-00 00:00:00'))) 
+            return $iResult;
+
+        $iAge = bx_birthday2age($aProfileInfo['birthday']);
+
+        switch($iValue) {
+            case 1:
+                $iResult = $iValue;
+                break;
+
+            case 2: 
+                if($iAge >= 6)
+                   $iResult = $iValue;
+                break;
+
+            case 3:
+                if($iAge >= 13)
+                   $iResult = $iValue;
+                break;
+
+            case 4:
+                if($iAge >= 17)
+                   $iResult = $iValue;
+                break;
+
+            case 5:
+                if($iAge >= 21)
+                   $iResult = $iValue;
+                break;
+        }
+
+        if($iResult != 0)
+            $iResult = 1 << ($iResult - 1);
+
+        return $iResult;
     }
 
     protected function _getIcon ($sIcon)

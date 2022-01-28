@@ -473,7 +473,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_recaptcha_key_public', '_adm_stg_cpt_option_sys_recaptcha_key_public', '', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_recaptcha_key_private', '_adm_stg_cpt_option_sys_recaptcha_key_private', '', 'digit', '', '', '', 21),
 (@iCategoryId, 'sys_add_nofollow', '_adm_stg_cpt_option_sys_add_nofollow', 'on', 'checkbox', '', '', '', 30),
-(@iCategoryId, 'sys_security_block_content_after_n_reports', '_adm_stg_cpt_option_sys_security_block_content_after_n_reports', '0', 'digit', '', '', '', 35);
+(@iCategoryId, 'sys_security_block_content_after_n_reports', '_adm_stg_cpt_option_sys_security_block_content_after_n_reports', '0', 'digit', '', '', '', 35),
+(@iCategoryId, 'sys_cf_prohibited', '_adm_stg_cpt_option_sys_cf_prohibited', '', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_cf_prohibited";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', '', '', 40);
 
 --
 -- CATEGORY: Site Settings
@@ -1168,6 +1169,7 @@ CREATE TABLE IF NOT EXISTS `sys_profiles` (
   `cfw_value` int(10) unsigned NOT NULL DEFAULT '0',
   `cfw_items` int(10) unsigned NOT NULL DEFAULT '0',
   `cfu_items` int(10) unsigned NOT NULL DEFAULT '0',
+  `cfu_locked` tinyint(4) NOT NULL DEFAULT '0',
   `status` enum('active','pending','suspended') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_type_content` (`account_id`,`type`,`content_id`),
@@ -2142,6 +2144,7 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 ('pruning', '0 0 * * *', 'BxDolCronPruning', 'inc/classes/BxDolCronPruning.php', ''),
 ('sys_acl', '0 0 * * *', 'BxDolCronAcl', 'inc/classes/BxDolCronAcl.php', ''),
 ('sys_account', '0 0 * * *', 'BxDolCronAccount', 'inc/classes/BxDolCronAccount.php', ''),
+('sys_profile', '0 0 * * *', 'BxDolCronProfile', 'inc/classes/BxDolCronProfile.php', ''),
 ('sys_upgrade', '0 3 * * *', 'BxDolCronUpgradeCheck', 'inc/classes/BxDolCronUpgradeCheck.php', ''),
 ('sys_upgrade_modules', '30 2 * * *', 'BxDolCronUpgradeModulesCheck', 'inc/classes/BxDolCronUpgradeModulesCheck.php', ''),
 ('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', ''),
@@ -3319,6 +3322,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_form` (
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_login', 'system', '_sys_form_login', 'member.php', 'a:3:{s:2:"id";s:14:"sys-form-login";s:6:"action";s:10:"member.php";s:8:"onsubmit";s:31:"return validateLoginForm(this);";}', 'a:3:{i:0;s:4:"role";i:1;s:10:"do_sendsms";i:2;s:12:"do_checkcode";}', '', '', '', '', 'a:1:{s:14:"checker_helper";s:24:"BxFormLoginCheckerHelper";}', 0, 1, 'BxTemplFormLogin', ''),
 ('sys_account', 'system', '_sys_form_account', '', '', 'do_submit', 'sys_accounts', 'id', '', '', 'a:1:{s:14:"checker_helper";s:26:"BxFormAccountCheckerHelper";}', 0, 1, 'BxTemplFormAccount', ''),
+('sys_profile', 'system', '_sys_form_profile', '', '', 'do_submit', 'sys_profiles', 'id', '', '', '', 0, 1, 'BxTemplFormProfile', ''),
 ('sys_forgot_password', 'system', '_sys_form_forgot_password', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:33:"BxFormForgotPasswordCheckerHelper";}', 0, 1, 'BxTemplFormForgotPassword', ''),
 ('sys_confirm_email', 'system', '_sys_form_confirm_email', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmEmailCheckerHelper";}', 0, 1, 'BxTemplFormConfirmEmail', ''),
 ('sys_confirm_phone', 'system', '_sys_form_confirm_phone', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_sendsms";}', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmPhoneCheckerHelper";}', 0, 1, 'BxTemplFormConfirmPhone', ''),
@@ -3353,6 +3357,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_account_settings_pwd', 'system', 'sys_account', '_sys_form_display_account_settings_password', 0),
 ('sys_account_settings_info', 'system', 'sys_account', '_sys_form_display_account_settings_info', 0),
 ('sys_account_settings_del_account', 'system', 'sys_account', '_sys_form_display_account_settings_delete', 0),
+('sys_profile_cf_set', 'system', 'sys_profile', '_sys_form_display_profile_cf_set', 0),
+('sys_profile_cf_manage', 'system', 'sys_profile', '_sys_form_display_profile_cf_manage', 0),
 ('sys_forgot_password', 'system', 'sys_forgot_password', '_sys_form_display_forgot_password', 0),
 ('sys_forgot_password_reset', 'system', 'sys_forgot_password', '_sys_form_display_forgot_password_reset', 0),
 ('sys_confirm_phone_set_phone', 'system', 'sys_confirm_phone', '_sys_form_display_confirm_phone_set_phone', 0),
@@ -3436,6 +3442,13 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_account', 'system', 'receive_updates', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_updates', '_sys_form_account_input_receive_updates', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_account', 'system', 'receive_news', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_news', '_sys_form_account_input_receive_news', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('sys_account', 'system', 'agreement', '', '', 0, 'custom', '_sys_form_login_input_caption_system_agreement', '_sys_form_account_input_agreement', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+
+('sys_profile', 'system', 'cfw_value', '', '#!sys_content_filter', 0, 'checkbox_set', '_sys_form_profile_input_sys_cfw_value', '_sys_form_profile_input_cfw_value', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 1, 0),
+('sys_profile', 'system', 'cfu_items', '', '#!sys_content_filter', 0, 'checkbox_set', '_sys_form_profile_input_sys_cfu_items', '_sys_form_profile_input_cfu_items', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 1, 0),
+('sys_profile', 'system', 'cfu_locked', '1', '', 0, 'switcher', '_sys_form_profile_input_sys_cfu_locked', '_sys_form_profile_input_cfu_locked', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('sys_profile', 'system', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_profile', 'system', 'do_submit', '_sys_form_profile_input_do_submit', '', 0, 'submit', '_sys_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_profile', 'system', 'do_cancel', '_sys_form_profile_input_do_cancel', '', 0, 'button', '_sys_form_profile_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:5:"class";s:22:"bx-def-margin-sec-left";s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";}', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_forgot_password', 'system', 'key', '', '', 0, 'hidden', '_sys_form_forgot_password_input_caption_system_key', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_forgot_password', 'system', 'password', '', '', 0, 'password', '_sys_form_forgot_password_input_caption_system_password', '_sys_form_forgot_password_input_caption_password', '', 1, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:38:"~^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}~";}', '_sys_form_account_input_password_error', 'Xss', '', 1, 0),
@@ -3612,6 +3625,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 ('sys_account_settings_info', 'name', 2147483647, 1, 1),
 ('sys_account_settings_info', 'do_submit', 2147483647, 1, 2),
+
+('sys_profile_cf_set', 'cfw_value', 2147483647, 1, 1),
+('sys_profile_cf_set', 'do_submit', 2147483647, 1, 2),
+
+('sys_profile_cf_manage', 'cfu_items', 2147483647, 1, 1),
+('sys_profile_cf_manage', 'cfu_locked', 2147483647, 1, 2),
+('sys_profile_cf_manage', 'controls', 2147483647, 1, 3),
+('sys_profile_cf_manage', 'do_submit', 2147483647, 1, 4),
+('sys_profile_cf_manage', 'do_cancel', 2147483647, 1, 5),
 
 ('sys_forgot_password', 'email', 2147483647, 1, 1),
 ('sys_forgot_password', 'phone', 2147483647, 1, 2),
@@ -4168,10 +4190,10 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('sys_content_filter', 1, 1, '_sys_pre_lists_content_filter_g', '', ''),
-('sys_content_filter', 2, 2, '_sys_pre_lists_content_filter_pg', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}'),
-('sys_content_filter', 3, 3, '_sys_pre_lists_content_filter_pg13', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}'),
-('sys_content_filter', 4, 4, '_sys_pre_lists_content_filter_r', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}'),
-('sys_content_filter', 5, 5, '_sys_pre_lists_content_filter_x', '', 'a:2:{s:16:"is_allowed_watch";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:5:"watch";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}s:14:"is_allowed_use";a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"is_allowed_content_filter";s:6:"params";a:2:{i:0;s:3:"use";i:1;s:7:"{value}";}s:5:"class";s:12:"BaseServices";}}');
+('sys_content_filter', 2, 2, '_sys_pre_lists_content_filter_pg', '', ''),
+('sys_content_filter', 3, 3, '_sys_pre_lists_content_filter_pg13', '', ''),
+('sys_content_filter', 4, 4, '_sys_pre_lists_content_filter_r', '', ''),
+('sys_content_filter', 5, 5, '_sys_pre_lists_content_filter_x', '', '');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('sys_studio_widget_types', '', 1, '_sys_pre_lists_studio_widget_types_library', '', 'a:1:{s:4:"icon";s:15:"lmi-library.svg";}'),

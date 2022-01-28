@@ -1033,7 +1033,12 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         return $aResults;
     }
-    
+
+    public function serviceGetOptionsCfProhibited()
+    {
+        return BxDolFormQuery::getDataItems('sys_content_filter');
+    }
+
     public function serviceGetBadge($aBadge, $bIsCompact = false)
     {
         $sClass = '';
@@ -1072,11 +1077,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'class' => $sClass,
             )
     	);
-    }
-
-    public function serviceIsAllowedContentFilter($sAction, $iValue)
-    {
-        
     }
 
     private function _getSearchObject()

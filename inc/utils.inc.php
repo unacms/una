@@ -2099,4 +2099,23 @@ function bx_log($sObject, $mixed)
         return false;
 }
 
+function bx_birthday2age($sBirthday)
+{
+    $iPosSpace = strpos($sBirthday, ' ');
+    if($iPosSpace !== false)
+        $sBirthday = trim(substr($sBirthday, 0, $iPosSpace));
+
+    $aDate = explode('-', $sBirthday);
+
+    $iCdYear = (int)date('Y');
+    $iCdMonth = (int)date('n');
+    $iCdDay = (int)date('j');
+
+    $iResult = $iCdYear - (int)$aDate[0];
+    if($iCdMonth < (int)$aDate[1] || ($iCdMonth == (int)$aDate[1] && $iCdDay < (int)$aDate[2]))
+        $iResult -= 1;
+
+    return $iResult;
+}
+
 /** @} */

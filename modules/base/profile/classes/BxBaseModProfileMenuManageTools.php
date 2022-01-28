@@ -31,26 +31,34 @@ class BxBaseModProfileMenuManageTools extends BxBaseModGeneralMenuManageTools
             return false;
 
         if(empty($this->_aContentInfo) || !is_array($this->_aContentInfo))
-        	return false;
+            return false;
 
         $sCheckFuncName = '';
+        $aCheckFuncParams = [];
         switch ($a['name']) {
+            case 'clear-reports':
+            case 'manage-cf':
+                $sCheckFuncName = 'checkAllowedEditAnyEntry';
+                break;
+
             case 'delete':
             case 'delete-with-content':
             	if($this->_oModule->checkMyself($this->_iContentId))
-            		return false;
+                    return false;
+
                 $oProfile = $this->_oModule->getProfileObject(($this->_iContentId));
                 if (!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $oProfile->id()))
                     return false;
-                
+
                 $sCheckFuncName = 'checkAllowedDelete';
+                $aCheckFuncParams = [&$this->_aContentInfo];
                 break;
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))
             return true;
 
-        return $this->_oModule->{$sCheckFuncName}($this->_aContentInfo) === CHECK_ACTION_RESULT_ALLOWED;
+        return call_user_func_array([$this->_oModule, $sCheckFuncName], $aCheckFuncParams) === CHECK_ACTION_RESULT_ALLOWED;
     }
 }
 

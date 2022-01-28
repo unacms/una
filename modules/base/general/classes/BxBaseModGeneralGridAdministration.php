@@ -150,33 +150,37 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues, $bAddSelectOne = true)
     {
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
-		$CNF = &$this->_oModule->_oConfig->CNF;
-		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
-		foreach($aFilterValues as $sKey => $sValue)
-			$aFilterValues[$sKey] = _t($sValue);
+        $aInputValues = [];
+        if($bAddSelectOne)
+            $aInputValues[''] = _t($CNF['T']['filter_item_select_one_' . $sFilterName]);
 
-        $aInputModules = array(
+        foreach($aFilterValues as $sKey => $sValue)
+            $aInputValues[$sKey] = _t($sValue);
+
+        $aInputModules = [
             'type' => 'select',
             'name' => $sFilterName,
-            'attrs' => array(
+            'attrs' => [
                 'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
                 'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
-            ),
+            ],
             'value' => $sFilterValue,
-            'values' => array_merge(array('' => _t($CNF['T']['filter_item_select_one_' . $sFilterName])), $aFilterValues)
-        );
+            'values' => $aInputValues
+        ];
 
-        $oForm = new BxTemplFormView(array());
+        $oForm = new BxTemplFormView([]);
         return $oForm->genRow($aInputModules);
     }
 
-	protected function _getSearchInput()
+    protected function _getSearchInput()
     {
         $sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 

@@ -58,6 +58,46 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     }
 
     /**
+     * Get profile(s) by params
+     * @param  array   $aParams browse params
+     * @return array with profile(s)
+     */
+    public function getProfiles($aParams)
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+    	$sFieldsClause = "`tp`.*"; 
+    	$sJoinClause = $sWhereClause = $sGroupClause = "";
+        $sOrderClause = "`tp`.`id` ASC";
+
+    	switch($aParams['type']) {
+            case 'active':
+                $sWhereClause = " AND `tp`.`status`='active'";
+
+                if(isset($aParams['types'])) {
+                    if(!is_array($aParams['types']))
+                        $aParams['types'] = [$aParams['types']];
+
+                    $sWhereClause .= " AND `tp`.`type` IN (" . $this->implode_escape($aParams['types']) . ")";
+                }
+                break;
+
+            case 'all':
+                break;
+    	}
+
+    	$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
+        $sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
+
+        $aMethod['params'][0] = "SELECT
+            " . $sFieldsClause . "
+            FROM `sys_profiles` AS `tp`" . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    /**
      * Get profile by content id, type and account.
      * @param  string $iAccountId account id
      * @return array  if aprofile ids, key is profile id
@@ -146,6 +186,39 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     public function changeStatus ($iProfileId, $sStatus)
     {
         return $this->_updateField ($iProfileId, 'status', $sStatus);
+    }
+
+    /**
+     * Update profile's content filter value (watch)
+     * @param $iProfileId profile id
+     * @param $iValue bitmask of selected items 
+     * @return true on success or false otherwise
+     */
+    public function changeCfwValue ($iProfileId, $iValue)
+    {
+        return $this->_updateField ($iProfileId, 'cfw_value', $iValue);
+    }
+
+    /**
+     * Update profile's content filter items (watch)
+     * @param $iProfileId profile id
+     * @param $iValue bitmask of available items 
+     * @return true on success or false otherwise
+     */
+    public function changeCfwItems ($iProfileId, $iValue)
+    {
+        return $this->_updateField ($iProfileId, 'cfw_items', $iValue);
+    }
+
+    /**
+     * Update profile's content filter items (use)
+     * @param $iProfileId profile id
+     * @param $iValue bitmask of available items 
+     * @return true on success or false otherwise
+     */
+    public function changeCfuItems ($iProfileId, $iValue)
+    {
+        return $this->_updateField ($iProfileId, 'cfu_items', $iValue);
     }
 
     /**

@@ -58,6 +58,9 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     protected function addCustomConditions($CNF, $oProfile, $sMode, $aParams)
     {
         $this->addConditionsForAuthorStatus($CNF);
+
+        $this->addConditionsForProhibitedCf($CNF);
+        $this->addConditionsForViewerCf($CNF);
     }
 
     protected function addConditionsForAuthorStatus($CNF)
@@ -78,6 +81,43 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
             'mainField' => $CNF['FIELD_AUTHOR'],
             'onField' => 'id',
             'joinFields' => array(),
+        ];
+    }
+
+    protected function addConditionsForProhibitedCf($CNF)
+    {
+        if(empty($CNF['FIELD_CF']))
+            return;
+
+        $sValues = getParam('sys_cf_prohibited');
+        if(!$sValues)
+            return;
+
+        $aValues = explode(',', $sValues);
+        if(!$aValues)
+            return;
+
+        $this->aCurrent['restriction']['prohibited_cf'] = [
+            'value' => $aValues,
+            'field' => $CNF['FIELD_CF'],
+            'operator' => 'not in',
+        ];
+    }
+
+    protected function addConditionsForViewerCf($CNF)
+    {
+        if(empty($CNF['FIELD_CF']) || !isLogged())
+            return;
+
+        $iViewer = bx_get_logged_profile_id();
+        $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewer);
+        if(empty($aViewerInfo) || !is_array($aViewerInfo))
+            return;
+
+        $this->aCurrent['restriction']['viewer_cf'] = [
+            'value' => $aViewerInfo['cfw_value'],
+            'field' => $CNF['FIELD_CF'],
+            'operator' => 'in_set',
         ];
     }
 

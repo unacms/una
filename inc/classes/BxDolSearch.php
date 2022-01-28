@@ -876,6 +876,9 @@ class BxDolSearchResult implements iBxDolReplaceable
                             $sValuesString = $this->getMultiValues($aValue['value']);
                             $sqlCondition .= strtoupper($aValue['operator']) . '(' . $sValuesString . ')';
                             break;
+                       case 'in_set':
+                           $sqlCondition = "1 << (" . $sqlCondition . " - 1) & " . (int)$aValue['value'];
+                           break;
                        default:
                                $sqlCondition .= $aValue['operator'] . (isset($aValue['no_quote_value']) && $aValue['no_quote_value'] ?  $aValue['value'] : $oDb->escape($aValue['value']));
                        break;

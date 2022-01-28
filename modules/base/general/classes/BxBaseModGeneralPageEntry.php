@@ -48,10 +48,31 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
     
     public function getCode ()
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         // check if content exists
         if (!$this->_aContentInfo || !$this->isActive()) { // if entry is not found - display standard "404 page not found" page
             $this->_oTemplate->displayPageNotFound();
             exit;
+        }
+
+        if(!empty($CNF['FIELD_CF'])) {
+            // check global content filter
+            $sValues = getParam('sys_cf_prohibited');
+            if(!empty($sValues)) {
+                $aValues = explode(',', $sValues);
+                if(!empty($aValues) && is_array($aValues) && in_array($this->_aContentInfo[$CNF['FIELD_CF']], $aValues)) {
+                    $this->_oTemplate->displayPageNotFound();
+                    exit;
+                }
+            }
+
+            // check Viewer's content filter
+            $oViewer = BxDolProfile::getInstance();
+            if($oViewer && !$oViewer->checkContentFilter($this->_aContentInfo[$CNF['FIELD_CF']])) {
+                $this->_oTemplate->displayPageNotFound();
+                exit;
+            }
         }
 
         $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);        
@@ -62,7 +83,6 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         $this->_processPermissionsCheck ();
 
         // count views
-        $CNF = &$this->_oModule->_oConfig->CNF;
         if(!empty($CNF['OBJECT_VIEWS'])) {
             $oView = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
             if($oView && $oView->isEnabled())

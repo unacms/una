@@ -14,6 +14,10 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     protected $_sFilter1Name;
     protected $_sFilter1Value;
     protected $_aFilter1Values;
+    protected $_sFilter2Name;
+    protected $_sFilter2Value;
+    protected $_aFilter2Values;
+    protected $_bContentFilter;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -37,6 +41,16 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
             $this->_sFilter1Value = bx_process_input($sFilter1);
             $this->_aQueryAppend['filter1'] = $this->_sFilter1Value;
         }
+
+        if(($this->_bContentFilter = !empty($CNF['FIELD_CF'])) !== false) {
+            $this->_sFilter2Name = 'filter2';
+            $this->_aFilter2Values = BxDolFormQuery::getDataItems('sys_content_filter');
+
+            if(($sFilter2 = bx_get($this->_sFilter2Name)) !== false) {
+                $this->_sFilter2Value = bx_process_input($sFilter2);
+                $this->_aQueryAppend[$this->_sFilter2Name] = $this->_sFilter2Value;
+            }
+        }
     }
 
     protected function _switcherChecked2State($isChecked)
@@ -51,11 +65,21 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-        if(strpos($sFilter, $this->_sParamsDivider) !== false)
-            list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(strpos($sFilter, $this->_sParamsDivider) !== false) {
+            $aFilters = explode($this->_sParamsDivider, $sFilter);
+            if($this->_bContentFilter)
+                list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = $aFilters;
+            else
+                list($this->_sFilter1Value, $sFilter) = $aFilters;
+        }
 
     	if(!empty($this->_sFilter1Value))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $this->_sStatusField . "`=?", $this->_sFilter1Value);
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $this->_sStatusField . "`=?", $this->_sFilter1Value);
+
+        if(!empty($this->_sFilter2Value))
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $CNF['FIELD_CF'] . "`=?", $this->_sFilter2Value);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -65,7 +89,12 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         parent::_getFilterControls();
 
-        return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
+        $sContent = $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values);
+        if($this->_bContentFilter)
+            $sContent .= $this->_getFilterSelectOne($this->_sFilter2Name, $this->_sFilter2Value, $this->_aFilter2Values);
+        $sContent .= $this->_getSearchInput();
+
+        return $sContent;
     }
 
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)

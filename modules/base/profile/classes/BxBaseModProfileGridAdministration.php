@@ -52,11 +52,11 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
         $aIdsResult = array();
         foreach($aIds as $iId) {
-        	$aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
-	    	if($this->_oModule->checkAllowedSetMembership($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
-	    		continue;
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+            if($this->_oModule->checkAllowedSetMembership($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+                continue;
 
-        	$aIdsResult[] = $this->_getProfileId($iId);
+            $aIdsResult[] = $this->_getProfileId($iId);
         }
 
         if(empty($aIdsResult)) {
@@ -64,19 +64,67 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
             return;
         }
 
-		if(count($aIdsResult) == 1)
-			$aIdsResult = $aIdsResult[0];
+        if(count($aIdsResult) == 1)
+            $aIdsResult = $aIdsResult[0];
 
-		$sContent = $this->_oTemplate->parseHtmlByName('set_acl_popup.html', array(
-			'content' => $oMenu->getCode($aIdsResult)
-		));
-
-		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
+        $sContent = $this->_oTemplate->parseHtmlByName('set_acl_popup.html', array(
+            'content' => $oMenu->getCode($aIdsResult)
+        ));
+        $sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
 
     	echoJson(array('popup' => $sContent));
     }
 
-	public function performActionDeleteWithContent()
+    public function performActionManageCf()
+    {
+        if(!$this->_oModule->_isModerator())
+            return echoJson([]);
+
+        $sModule = $this->_oModule->_oConfig->getName();
+
+        $iContentId = $this->_getId();
+        if($iContentId === false)
+            return echoJson([]);
+
+        $aProfileInfo = BxDolProfileQuery::getInstance()->getProfileByContentAndType($iContentId, $sModule, true);
+        if(!$aProfileInfo || !is_array($aProfileInfo))
+            return echoJson([]);
+
+        $sAction = 'manage_cf';
+
+        $sForm = 'sys_profile';
+        $sFormDisplay = 'sys_profile_cf_manage';
+        $oForm = BxDolForm::getObjectInstance($sForm, $sFormDisplay);
+        if(!$oForm)
+            return echoJson([]);
+
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php', ['o' => $this->_sObject, 'a' => $sAction, 'id' => $iContentId]);
+        $oForm->initChecker($aProfileInfo);
+        if($oForm->isSubmittedAndValid()) {
+            if(!$oForm->update($aProfileInfo['id']))
+                $aResult = ['msg' => _t('_sys_txt_error_profile_update')];
+            else
+                $aResult = ['msg' => _t('_' . $sFormDisplay . '_successfully_submitted')];
+
+            return echoJson($aResult);
+        }
+
+        $sPopupTitle = _t('_' . $sFormDisplay . '_popup');
+        $sPopupContent = $this->_oTemplate->parseHtmlByName('content_filter_manage_popup.html', [
+            'form_id' => $oForm->getId(),
+            'form' => $oForm->getCode()
+        ]);
+
+        echoJson(['popup' => [
+            'html' => BxTemplFunctions::getInstance()->popupBox($sModule . '_manage_cf_popup',  $sPopupTitle, $sPopupContent),
+            'options' => [
+                'closeOnOuterClick' => false,
+                'removeOnClose' => true
+            ]
+        ]]);
+    }
+
+    public function performActionDeleteWithContent()
     {
     	$this->performActionDelete(array('with_content' => true));
     }
@@ -84,11 +132,16 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     protected function _getActionSetAclLevel($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
     	if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->checkAllowedSetMembership($aRow) !== CHECK_ACTION_RESULT_ALLOWED)
-			return '';
+            return '';
 
-		return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);	
+        return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);	
     }
-    
+
+    protected function _getActionManageCf($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return '';
+    }
+
     protected function _getActionAuditProfile($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!getParam('sys_audit_enable') || getParam('sys_audit_acl_levels') == '')
@@ -109,10 +162,10 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-	protected function _getActionDeleteWithContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    protected function _getActionDeleteWithContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-		if($this->_sManageType != BX_DOL_MANAGE_TOOLS_ADMINISTRATION || !$this->_oModule->_isAdministrator())
-			return '';
+        if($this->_sManageType != BX_DOL_MANAGE_TOOLS_ADMINISTRATION || !$this->_oModule->_isAdministrator())
+            return '';
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -240,6 +293,19 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	}
 
     	return parent::_doDelete($iId, $aParams);
+    }
+
+    protected function _getId()
+    {
+        $aIds = bx_get('ids');
+        if(!empty($aIds) && is_array($aIds)) 
+            return (int)reset($aIds);
+
+        $iId = bx_get('id');
+        if($iId !== false) 
+            return (int)$iId;
+
+        return false;
     }
 }
 

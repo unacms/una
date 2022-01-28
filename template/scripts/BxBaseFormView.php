@@ -792,23 +792,7 @@ BLAH;
         if(!isset($aInput['value']) || !$aInput['value'] || in_array($aInput['value'], array('0000-00-00', '0000-00-00 00:00:00')))
             return null;
 
-        $sValue = $aInput['value'];
-
-        $iPosSpace = strpos($sValue, ' ');
-        if($iPosSpace !== false)
-            $sValue = trim(substr($sValue, 0, $iPosSpace));
-
-        $aDate = explode('-', $sValue);
-
-        $iCdYear = (int)date('Y');
-        $iCdMonth = (int)date('n');
-        $iCdDay = (int)date('j');
-
-        $iResult = $iCdYear - (int)$aDate[0];
-        if($iCdMonth < (int)$aDate[1] || ($iCdMonth == (int)$aDate[1] && $iCdDay < (int)$aDate[2]))
-            $iResult -= 1;           
-
-        return $iResult;
+        return bx_birthday2age($aInput['value']);
     }
 
     /**
@@ -1651,7 +1635,24 @@ BLAH;
             'input_labels' => $this->genCustomInputUsernamesSuggestions($aInputLabels)
         ));
     }
-    
+
+    protected function genCustomInputCf (&$aInput)
+    {
+        $iProfileId = bx_get_logged_profile_id();
+        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
+
+        if(!empty($aProfileInfo) && isset($aProfileInfo['cfu_items'])) {
+            $aCfuValues = [];
+            foreach($aInput['values'] as $iValue => $sTitle)
+                if((1 << ($iValue - 1)) & (int)$aProfileInfo['cfu_items'])
+                    $aCfuValues[$iValue] = $sTitle;
+
+            $aInput['values'] = $aCfuValues;
+        }
+
+        return $this->genInputSelect($aInput);
+    }
+
     /**
      * Generate Select Element	
      *
