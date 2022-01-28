@@ -3100,6 +3100,7 @@
 	<string name="_sys_page_block_title_std_dash_space"><![CDATA[Использование дискового пространства]]></string>
 	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Инструменты хоста]]></string>
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Кэш]]></string>
+    <string name="_sys_page_block_title_std_dash_queues"><![CDATA[Очереди]]></string>
 	<string name="_sys_page_block_title_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_lang_block_about"><![CDATA[Этот сайт сделан на UNA. Остальное - тайна, покрытая мраком.]]></string>
 	<string name="_sys_page_lang_block_terms"><![CDATA[Правила пользования нашим сайтом.]]></string>
@@ -3622,4 +3623,8 @@
   <string name="_sys_txt_quill_tooltip_embed"><![CDATA[Вставить ембед]]></string>
   <string name="_sys_txt_quill_tooltip_embed_popup_header"><![CDATA[Вставить адрес дла ембеда]]></string>
   <string name="_sys_txt_quill_tooltip_link_popup_header"><![CDATA[Вставить адрес]]></string>
+  <string name="_sys_queue_emails"><![CDATA[Emails]]></string>
+  <string name="_sys_queue_push"><![CDATA[PUSH]]></string>
+  <string name="_sys_queue_transcoding"><![CDATA[Транскодирование видео]]></string>
+  <string name="_sys_queue_storage"><![CDATA[Хранилище файлов]]></string>
 </resources>
