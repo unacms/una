@@ -98,6 +98,26 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
                     $this->aCurrent['rss']['link'] = 'modules/?r=channels/rss/' . $sMode . '/' . $aParams['object'] . '/' . $aParams['type'] . '/' . (int)$aParams['profile'] . '/' . (int)$aParams['profile2'] . '/' . (int)$aParams['mutual'];
                 }
                 break;
+                
+            case 'followed_entries':
+                $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['joined_profile']);
+                if (!$oJoinedProfile) {
+                    $this->isError = true;
+                    break;
+                }
+
+                $bProcessConditionsForPrivateContent = false;
+
+                $this->aCurrent['join']['subscriptions'] = array(
+                    'type' => 'INNER',
+                    'table' => 'sys_profiles_conn_subscriptions',
+                    'mainField' => 'id',
+                    'onField' => 'content',
+                    'joinFields' => array('initiator'),
+                );
+
+                $this->aCurrent['restriction']['subscriptions'] = array('value' => $oJoinedProfile->id(), 'field' => 'initiator', 'operator' => '=', 'table' => 'sys_profiles_conn_subscriptions');
+                break;
 
             case 'favorite':
                 if(!$this->_setFavoriteConditions($sMode, $aParams, $oJoinedProfile)) {

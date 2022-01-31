@@ -414,6 +414,11 @@ class BxCnlModule extends BxBaseModGroupsModule
         return $this->_serviceBrowse ('level', array('level' => $iLevelId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
     
+    public function serviceBrowseFollowed($iProfileId = 0, $aParams = array())
+    {
+        return $this->_serviceBrowseWithParam ('followed_entries', 'profile_id', $iProfileId, $aParams);
+    }
+    
     public function serviceBrowseAuthor($iProfileId = 0, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
