@@ -25,14 +25,14 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
             'ownFields' => array(),
             'searchFields' => array(),
             'restriction' => array(
-        		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
+                'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_groups', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_groups_data'),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_groups_data'),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_groups_data'),
             ),
             'join' => array (
-				'profile' => array(
+                'profile' => array(
                     'type' => 'INNER',
                     'table' => 'bx_groups_data',
                     'mainField' => 'content_id',
@@ -177,8 +177,11 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                 $this->isError = true;
         }
 
-        if ($bProcessConditionsForPrivateContent)
+        if ($bProcessConditionsForPrivateContent) {
             $this->addConditionsForPrivateContent($CNF, $oJoinedProfile);
+
+            $this->addCustomConditions($CNF, $oJoinedProfile, $sMode, $aParams);
+        }
 
         $this->sCenterContentUnitSelector = false;
     }

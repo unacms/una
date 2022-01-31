@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `bx_cnl_data` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(255) DEFAULT '3',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -220,6 +221,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_channel', 'bx_channel_view_full', 'bx_channels', 1, '_bx_channels_form_profile_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_channel', 'bx_channels', 'cf', '1', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_channel', 'bx_channels', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_channels_form_profile_input_sys_delete_confirm', '_bx_channels_form_profile_input_delete_confirm', '_bx_channels_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_channels_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
@@ -228,13 +230,15 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_channel_add', 'channel_name', 2147483647, 1, 1),
-('bx_channel_add', 'do_submit', 2147483647, 1, 2),
+('bx_channel_add', 'cf', 2147483647, 1, 2),
+('bx_channel_add', 'do_submit', 2147483647, 1, 3),
 
 ('bx_channel_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_channel_delete', 'do_submit', 2147483647, 1, 1),
 
 ('bx_channel_edit', 'channel_name', 2147483647, 1, 1),
-('bx_channel_edit', 'do_submit', 2147483647, 1, 2),
+('bx_channel_edit', 'cf', 2147483647, 1, 2),
+('bx_channel_edit', 'do_submit', 2147483647, 1, 3),
 
 ('bx_channel_edit_cover', 'cover', 2147483647, 1, 1),
 ('bx_channel_edit_cover', 'do_submit', 2147483647, 1, 2),

@@ -51,6 +51,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
+            'FIELD_CF' => 'cf',
             'FIELD_VIEWS' => 'views',
             'FIELD_VOTES' => 'votes',
             'FIELD_STATUS' => 'status',
@@ -213,6 +214,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
                 'filter_item_pending' => '_bx_spaces_grid_filter_item_title_adm_pending',
                 'filter_item_suspended' => '_bx_spaces_grid_filter_item_title_adm_suspended',
                 'filter_item_select_one_filter1' => '_bx_spaces_grid_filter_item_title_adm_select_one_filter1',
+                'filter_item_select_one_filter2' => '_bx_spaces_grid_filter_item_title_adm_select_one_filter2',
                 'menu_item_manage_my' => '_bx_spaces_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_spaces_menu_item_title_manage_all',
                 'menu_item_title_become_fan_sent' => '_bx_spaces_menu_item_title_become_fan_sent',
@@ -222,10 +224,10 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
                 'txt_all_entries_by_author' => '_bx_spaces_page_title_browse_by_author',
                 'txt_invitation_popup_title' => '_bx_spaces_txt_invite_popup_title',
                 'txt_invitation_popup_text' => '_bx_spaces_txt_invite_popup_text',
-				'txt_invitation_popup_accept_button' => '_bx_spaces_txt_invite_popup_button_accept',
-				'txt_invitation_popup_decline_button' => '_bx_spaces_txt_invite_popup_button_decline',
+                'txt_invitation_popup_accept_button' => '_bx_spaces_txt_invite_popup_button_accept',
+                'txt_invitation_popup_decline_button' => '_bx_spaces_txt_invite_popup_button_decline',
                 'txt_invitation_popup_error_invitation_absent' => '_bx_spaces_txt_invite_popup_error_invitation_absent',
-				'txt_invitation_popup_error_wrong_user' => '_bx_spaces_txt_invite_popup_error_invitation_wrong_user',
+                'txt_invitation_popup_error_wrong_user' => '_bx_spaces_txt_invite_popup_error_invitation_wrong_user',
                 'txt_n_unit' => '_bx_spaces_txt_n_unit',
                 'txt_buy_title' => '_bx_spaces_grid_action_title_buy_title',
                 'txt_cart_item_title' => '_bx_spaces_txt_cart_item_title',
@@ -237,7 +239,6 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
                 'err_price_duplicate' => '_bx_spaces_err_price_duplicate',
                 'err_cannot_perform' => '_bx_spaces_err_cannot_perform',
             ),
-
         );
 
         $this->_aJsClasses = array(

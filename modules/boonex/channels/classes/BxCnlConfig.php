@@ -43,6 +43,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+            'FIELD_CF' => 'cf',
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
@@ -155,6 +156,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
                 'filter_item_pending' => '_bx_channels_grid_filter_item_title_adm_pending',
                 'filter_item_suspended' => '_bx_channels_grid_filter_item_title_adm_suspended',
                 'filter_item_select_one_filter1' => '_bx_channels_grid_filter_item_title_adm_select_one_filter1',
+                'filter_item_select_one_filter2' => '_bx_channels_grid_filter_item_title_adm_select_one_filter2',
                 'menu_item_manage_my' => '_bx_channels_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_channels_menu_item_title_manage_all',
                 'txt_all_entries_by_author' => '_bx_channels_page_title_browse_by_author'

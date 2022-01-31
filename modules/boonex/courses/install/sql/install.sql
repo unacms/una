@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `bx_courses_data` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
@@ -308,6 +309,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_course', 'bx_course_invite', 'bx_courses', 0, '_bx_courses_form_profile_display_invite');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_course', 'bx_courses', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_course', 'bx_courses', 'allow_view_to', 3, '', 0, 'custom', '_bx_courses_form_profile_input_sys_allow_view_to', '_bx_courses_form_profile_input_allow_view_to', '_bx_courses_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_course', 'bx_courses', 'allow_post_to', 3, '', 0, 'custom', '_bx_courses_form_profile_input_sys_allow_post_to', '_bx_courses_form_profile_input_allow_post_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_course', 'bx_courses', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_courses_form_profile_input_sys_delete_confirm', '_bx_courses_form_profile_input_delete_confirm', '_bx_courses_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_courses_form_profile_input_delete_confirm_error', '', '', 1, 0),
@@ -331,7 +333,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_course_add', 'join_confirmation', 2147483647, 1, 6),
 ('bx_course_add', 'allow_view_to', 2147483647, 1, 7),
 ('bx_course_add', 'allow_post_to', 2147483647, 1, 8),
-('bx_course_add', 'do_submit', 2147483647, 1, 9),
+('bx_course_add', 'cf', 2147483647, 1, 9),
+('bx_course_add', 'do_submit', 2147483647, 1, 10),
 
 ('bx_course_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_course_invite', 'do_submit', 2147483647, 1, 2),
@@ -346,7 +349,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_course_edit', 'join_confirmation', 2147483647, 1, 5),
 ('bx_course_edit', 'allow_view_to', 2147483647, 1, 6),
 ('bx_course_edit', 'allow_post_to', 2147483647, 1, 7),
-('bx_course_edit', 'do_submit', 2147483647, 1, 8),
+('bx_course_edit', 'cf', 2147483647, 1, 8),
+('bx_course_edit', 'do_submit', 2147483647, 1, 9),
 
 ('bx_course_edit_cover', 'cover', 2147483647, 1, 1),
 ('bx_course_edit_cover', 'do_submit', 2147483647, 1, 2),

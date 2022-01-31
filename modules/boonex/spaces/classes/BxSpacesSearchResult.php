@@ -175,8 +175,11 @@ class BxSpacesSearchResult extends BxBaseModGroupsSearchResult
                 $this->isError = true;
         }
 
-        if ($bProcessConditionsForPrivateContent)
+        if ($bProcessConditionsForPrivateContent) {
             $this->addConditionsForPrivateContent($CNF, $oJoinedProfile);
+
+            $this->addCustomConditions($CNF, $oJoinedProfile, $sMode, $aParams);
+        }
 
         $this->sCenterContentUnitSelector = false;
     }

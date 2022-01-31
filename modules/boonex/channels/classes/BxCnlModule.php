@@ -63,7 +63,7 @@ class BxCnlModule extends BxBaseModGroupsModule
                     $iProfileId = BxDolProfile::getInstanceByAccount(array_shift($aOperators))->id();
             }
 
-            $aContent = $this->serviceEntityAdd($iProfileId, array($CNF['FIELD_NAME'] => $sHashtag));
+            $aContent = $this->serviceEntityAdd($iProfileId, array($CNF['FIELD_NAME'] => $sHashtag, $CNF['FIELD_CF'] => 1));
             checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), true);
             if(isset($aContent['content']) && isset($aContent['content']['id']))
                 $mixedCnlId = $aContent['content']['id'];

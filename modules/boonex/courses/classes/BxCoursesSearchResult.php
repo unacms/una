@@ -32,7 +32,7 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_courses_data'),
             ),
             'join' => array (
-                    'profile' => array(
+                'profile' => array(
                     'type' => 'INNER',
                     'table' => 'bx_courses_data',
                     'mainField' => 'content_id',
@@ -171,8 +171,11 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                 $this->isError = true;
         }
 
-        if ($bProcessConditionsForPrivateContent)
+        if ($bProcessConditionsForPrivateContent) {
             $this->addConditionsForPrivateContent($CNF, $oJoinedProfile);
+
+            $this->addCustomConditions($CNF, $oJoinedProfile, $sMode, $aParams);
+        }
 
         $this->sCenterContentUnitSelector = false;
     }

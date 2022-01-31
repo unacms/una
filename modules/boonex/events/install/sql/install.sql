@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '0',
   `reminder` int(11) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
@@ -327,6 +328,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_event', 'bx_event_invite', 'bx_events', 0, '_bx_events_form_profile_display_invite');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_event', 'bx_events', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_event', 'bx_events', 'allow_view_to', 3, '', 0, 'custom', '_bx_events_form_profile_input_sys_allow_view_to', '_bx_events_form_profile_input_allow_view_to', '_bx_events_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'allow_post_to', 'p', '', 0, 'custom', '_bx_events_form_profile_input_sys_allow_post_to', '_bx_events_form_profile_input_allow_post_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'cover', 'a:1:{i:0;s:20:\"bx_events_cover_crop\";}', 'a:1:{s:20:\"bx_events_cover_crop\";s:24:\"_sys_uploader_crop_title\";}', 0, 'files', '_bx_events_form_profile_input_sys_cover', '_bx_events_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -368,8 +370,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_add', 'reminder', 2147483647, 1, 15),
 ('bx_event_add', 'allow_view_to', 2147483647, 1, 16),
 ('bx_event_add', 'allow_post_to', 2147483647, 1, 17),
-('bx_event_add', 'published', 192, 1, 18),
-('bx_event_add', 'do_submit', 2147483647, 1, 19),
+('bx_event_add', 'cf', 2147483647, 1, 18),
+('bx_event_add', 'published', 192, 1, 19),
+('bx_event_add', 'do_submit', 2147483647, 1, 20),
 
 ('bx_event_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_event_invite', 'do_submit', 2147483647, 1, 2),
@@ -398,8 +401,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_edit', 'reminder', 2147483647, 1, 15),
 ('bx_event_edit', 'allow_view_to', 2147483647, 1, 16),
 ('bx_event_edit', 'allow_post_to', 2147483647, 1, 17),
-('bx_event_edit', 'published', 192, 1, 18),
-('bx_event_edit', 'do_submit', 2147483647, 1, 19),
+('bx_event_edit', 'cf', 2147483647, 1, 18),
+('bx_event_edit', 'published', 192, 1, 19),
+('bx_event_edit', 'do_submit', 2147483647, 1, 20),
 
 ('bx_event_edit_cover', 'allow_view_to', 2147483647, 0, 1),
 ('bx_event_edit_cover', 'time', 2147483647, 0, 2),
