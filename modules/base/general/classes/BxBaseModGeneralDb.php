@@ -360,9 +360,8 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     protected function _addCustomConditions($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
     {
         $this->_addConditionsForAuthorStatus($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
-        
-        $this->_addConditionsForProhibitedCf($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
-        $this->_addConditionsForViewerCf($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
+
+        $this->_addConditionsForCf($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
     
     protected function _addConditionsForAuthorStatus($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
@@ -377,35 +376,17 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         $sJoinClause .= " INNER JOIN `sys_profiles` as `p` ON (`p`.`id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') ";
     }
 
-    protected function _addConditionsForProhibitedCf($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
+    protected function _addConditionsForCf($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
     {
         $CNF = &$this->_oConfig->CNF;
         if(empty($CNF['FIELD_CF']))
             return;
 
-        $sValues = getParam('sys_cf_prohibited');
-        if(!$sValues)
+        $oCf = BxDolContentFilter::getInstance();
+        if(!$oCf->isEnabled()) 
             return;
 
-        $aValues = explode(',', $sValues);
-        if(!$aValues)
-            return;
-
-        $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_CF'] . "` NOT IN (" . $this->implode_escape($aValues) . ")";
-    }
-
-    protected function _addConditionsForViewerCf($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
-    {
-        $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['FIELD_CF']))
-            return;
-
-        $iViewer = bx_get_logged_profile_id();
-        $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewer);
-        if(empty($aViewerInfo) || !is_array($aViewerInfo))
-            return;
-
-        $sWhereClause .= " AND 1 << (`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_CF'] . "` - 1) & " . $aViewerInfo['cfw_value'];
+        $sWhereClause .= $oCf->getSQLParts($CNF['TABLE_ENTRIES'], $CNF['FIELD_CF']);
     }
 
     protected function _getEntriesBySearchIdsOrder($aParams, &$sOrderClause)

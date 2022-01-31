@@ -171,7 +171,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             'CategoriesMultiListContext' => ''
         ));
     }
-    
+
+    public function serviceManageTools($sType = 'common')
+    {
+        $sResult = parent::serviceManageTools($sType);
+        if(!empty($sResult))
+            $this->_oTemplate->addJsSystem(['modules/base/text/js/|manage_tools.js']);
+
+        return $sResult;
+    }
+
     /**
      * @page service Service Calls
      * @section bx_base_text Base Text

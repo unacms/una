@@ -57,19 +57,8 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         }
 
         if(!empty($CNF['FIELD_CF'])) {
-            // check global content filter
-            $sValues = getParam('sys_cf_prohibited');
-            if(!empty($sValues)) {
-                $aValues = explode(',', $sValues);
-                if(!empty($aValues) && is_array($aValues) && in_array($this->_aContentInfo[$CNF['FIELD_CF']], $aValues)) {
-                    $this->_oTemplate->displayPageNotFound();
-                    exit;
-                }
-            }
-
-            // check Viewer's content filter
-            $oViewer = BxDolProfile::getInstance();
-            if($oViewer && !$oViewer->checkContentFilter($this->_aContentInfo[$CNF['FIELD_CF']])) {
+            $oCf = BxDolContentFilter::getInstance();
+            if($oCf->isEnabled() && !$oCf->isAllowed($this->_aContentInfo[$CNF['FIELD_CF']])) {
                 $this->_oTemplate->displayPageNotFound();
                 exit;
             }

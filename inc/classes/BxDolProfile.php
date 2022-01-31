@@ -603,15 +603,6 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         }
     }
 
-    public function checkContentFilter($iValue, $iProfileId = 0)
-    {
-        $aProfileInfo = $this->getInfo($iProfileId);
-        if(!$aProfileInfo)
-            return false;
-
-        return (1 << ($iValue - 1)) & $aProfileInfo['cfw_value'];
-    }
-            
     /**
      * Add permament messages.
      */
