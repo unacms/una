@@ -471,7 +471,6 @@ body > .bx-popup-wrapper {
 .popup_confirm_actions .bx-btn,
 .popup_prompt_actions .bx-btn {
     float: none;
-    display: inline-block;
 }
 
 /* --------------- full screen popup */
