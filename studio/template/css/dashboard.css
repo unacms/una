@@ -58,3 +58,8 @@ div.bx-dbd-htools .bx-dbd-htools-item {
     float: left;
     width: 50%;
 }
+
+/*--- Queues block ---*/
+#bx-grid-table-sys_queues {
+    width:100%;
+}

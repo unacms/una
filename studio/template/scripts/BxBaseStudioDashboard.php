@@ -298,6 +298,12 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
             return array('content' => $sContent, 'menu' => $aMenu);
 	}
 
+	public function serviceGetBlockQueues()
+    {
+        $o = BxDolGrid::getObjectInstance('sys_queues', BxDolStudioTemplate::getInstance());
+        return $o->getCode();
+    }
+
     private function getVersionUpgradeAvailable()
     {
     	$oUpgrader = bx_instance('BxDolUpgrader'); 
