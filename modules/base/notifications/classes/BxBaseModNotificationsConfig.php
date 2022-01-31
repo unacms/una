@@ -27,6 +27,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     protected $_iAnimationSpeed;
 
     protected $_aPrivacyViewDefault;
+    protected $_aCfDefault;
 
     function __construct($aModule)
     {
@@ -58,6 +59,12 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         $this->_aPrivacyViewDefault = array(
             'object' => BX_DOL_PG_ALL,
             'event' => BX_DOL_PG_ALL
+        );
+
+        $iCfDefault = BxDolContentFilter::getInstance()->getDefaultValue();
+        $this->_aCfDefault = array(
+            'object' => $iCfDefault,
+            'event' => $iCfDefault
         );
     }
 
@@ -184,6 +191,11 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     public function getPrivacyViewDefault($sType)
     {
         return isset($this->_aPrivacyViewDefault[$sType]) ? (int)$this->_aPrivacyViewDefault[$sType] : (int)BX_DOL_PG_ALL;
+    }
+
+    public function getCfDefault($sType)
+    {
+        return isset($this->_aCfDefault[$sType]) ? (int)$this->_aCfDefault[$sType] : BxDolContentFilter::getInstance()->getDefaultValue();
     }
 }
 

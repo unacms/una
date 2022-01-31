@@ -663,6 +663,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
 
+        if(!empty($CNF['FIELD_CF']) && isset($aContentInfo[$CNF['FIELD_CF']]))
+            $aParams['cf'] = $aContentInfo[$CNF['FIELD_CF']];
+
         return $aParams;
     }
 

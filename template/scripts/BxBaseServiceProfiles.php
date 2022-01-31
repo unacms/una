@@ -497,6 +497,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceProfileSettingsCfilter($iProfileId = false)
     {
+        if(!BxDolContentFilter::getInstance()->isEnabled()) {
+            BxDolTemplate::getInstance()->displayPageNotFound();
+            exit;
+        }
+
         // set settings submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if ($oMenuSubmenu) {
@@ -578,6 +583,11 @@ class BxBaseServiceProfiles extends BxDol
             $iResult = 1 << ($iResult - 1);
 
         return $iResult;
+    }
+
+    public function serviceIsEnabledCfilter()
+    {
+        return BxDolContentFilter::getInstance()->isEnabled();
     }
 
     protected function _getIcon ($sIcon)

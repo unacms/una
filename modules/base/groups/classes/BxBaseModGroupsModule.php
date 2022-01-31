@@ -105,6 +105,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     	));
     }
 
+    public function serviceManageTools($sType = 'common')
+    {
+        $sResult = parent::serviceManageTools($sType);
+        if(!empty($sResult))
+            $this->_oTemplate->addJsSystem(['modules/base/groups/js/|manage_tools.js']);
+
+        return $sResult;
+    }
+
     public function serviceGetOptionsMembersMode()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1478,6 +1487,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        if(!empty($CNF['FIELD_CF']) && isset($aContentInfo[$CNF['FIELD_CF']]))
+            $aParams['cf'] = $aContentInfo[$CNF['FIELD_CF']];
 
         return $aParams;
     }

@@ -11,6 +11,9 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oDb;
 
+    protected $_sDataList;
+    protected $_iDefaultValue;
+
     protected $_iViewerId;
 
     protected function __construct()
@@ -18,6 +21,9 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
         parent::__construct();
 
         $this->_oDb = BxDolDb::getInstance();
+
+        $this->_sDataList = 'sys_content_filter';
+        $this->_iDefaultValue = 1; //--- Means G (ID = 1) - content available to everybody
 
         $this->_iViewerId = bx_get_logged_profile_id();
     }
@@ -52,6 +58,38 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
             return [];
 
         return $aValues;
+    }
+
+    public function getDefaultValue()
+    {
+        return $this->_iDefaultValue;
+    }
+            
+    public function getInputByProfileId($aInput, $iProfileId = 0)
+    {
+        if(!$this->isEnabled())
+            return array_merge($aInput, [
+                'type' => 'hidden',
+                'value' => 1
+            ]);
+
+        if(!$aInput['values'])
+            $aInput['values'] = BxDolFormQuery::getDataItems($this->_sDataList);
+
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
+        if(empty($aProfileInfo) || !isset($aProfileInfo['cfu_items']))
+            return $aInput;
+
+        $aCfuValues = [];
+        foreach($aInput['values'] as $iValue => $sTitle)
+            if((1 << ($iValue - 1)) & (int)$aProfileInfo['cfu_items'])
+                $aCfuValues[$iValue] = $sTitle;
+
+        $aInput['values'] = $aCfuValues;
+        return $aInput;
     }
 
     public function isAllowed($iValue, $iViewerId = 0)

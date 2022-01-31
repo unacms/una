@@ -30,6 +30,25 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         parent::addConditionsForPrivateContent($CNF, $oProfile, array_merge($aCustomGroup, $oPrivacy->getPartiallyVisiblePrivacyGroups()));
     }
 
+    protected function addConditionsForAuthorStatus($CNF)
+    {
+        return;
+    }
+
+    protected function addConditionsForCf($CNF)
+    {
+        if(empty($CNF['FIELD_CF']))
+            return;
+
+        $oCf = BxDolContentFilter::getInstance();
+        if(!$oCf->isEnabled()) 
+            return;
+
+        $aConditions = $oCf->getConditions($this->aCurrent['join']['profile']['table'], $CNF['FIELD_CF']);
+        if(!empty($aConditions) && is_array($aConditions))
+            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aConditions);
+    }
+
     protected function _setAuthorConditions($sMode, $aParams, &$oProfileAuthor)
     {
         $CNF = &$this->oModule->_oConfig->CNF;

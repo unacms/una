@@ -1638,17 +1638,9 @@ BLAH;
 
     protected function genCustomInputCf (&$aInput)
     {
-        $iProfileId = bx_get_logged_profile_id();
-        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
-
-        if(!empty($aProfileInfo) && isset($aProfileInfo['cfu_items'])) {
-            $aCfuValues = [];
-            foreach($aInput['values'] as $iValue => $sTitle)
-                if((1 << ($iValue - 1)) & (int)$aProfileInfo['cfu_items'])
-                    $aCfuValues[$iValue] = $sTitle;
-
-            $aInput['values'] = $aCfuValues;
-        }
+        $aInput = BxDolContentFilter::getInstance()->getInputByProfileId($aInput);
+        if($aInput['type'] == 'hidden')
+            return $this->genInputStandard($aInput);
 
         return $this->genInputSelect($aInput);
     }

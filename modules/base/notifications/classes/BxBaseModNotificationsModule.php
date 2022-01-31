@@ -193,6 +193,14 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
         return is_array($aData) && isset($aData['privacy_view']) ? $aData['privacy_view'] : $this->_oConfig->getPrivacyViewDefault('object');
     }
 
+    /*
+     * Retrieve the Content Filter from an array (Alert's Extras or Content field from DB) 
+     */
+    public function getObjectCf($aData)
+    {
+        return is_array($aData) && isset($aData['cf']) ? $aData['cf'] : $this->_oConfig->getCfDefault('object');
+    }
+
     protected function _updateModuleData($sAction, $sModuleUri)
     {
         $sMethod = $this->_oConfig->getHandlersMethod();

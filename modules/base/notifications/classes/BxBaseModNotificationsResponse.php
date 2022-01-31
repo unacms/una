@@ -41,6 +41,11 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
         return $this->_oModule->getObjectPrivacyView($aExtras);
     }
 
+    protected function _getObjectCf($aExtras)
+    {
+        return $this->_oModule->getObjectCf($aExtras);
+    }
+
     /**
      * Note. Check priority is NOT IMPORTANT!
      */
