@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `bx_photos_entries` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
+  `cf` int(11) NOT NULL default '1',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   `exif` text NOT NULL,
@@ -296,6 +297,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_photos', 'bx_photos_entry_view', 'bx_photos', 1, '_bx_photos_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_photos', 'bx_photos', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_photos', 'bx_photos', 'allow_view_to', '', '', 0, 'custom', '_bx_photos_form_entry_input_sys_allow_view_to', '_bx_photos_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_photos', 'bx_photos', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_photos_form_entry_input_sys_delete_confirm', '_bx_photos_form_entry_input_delete_confirm', '_bx_photos_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_photos_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_photos', 'bx_photos', 'do_publish', '_bx_photos_form_entry_input_do_publish', '', 0, 'submit', '_bx_photos_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -311,6 +313,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 ('bx_photos_upload', 'bx_photos', 'pictures', 'a:1:{i:0;s:15:"bx_photos_html5";}', 'a:2:{s:16:"bx_photos_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_photos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_photos_form_entry_input_sys_pictures', '_bx_photos_form_entry_input_pictures', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_photos_form_entry_input_pictures_err', '', '', 1, 0),
 ('bx_photos_upload', 'bx_photos', 'cat', '', '#!bx_photos_cats', 0, 'select', '_bx_photos_form_entry_input_sys_cat', '_bx_photos_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_photos_form_entry_input_cat_err', 'Xss', '', 1, 0),
+('bx_photos_upload', 'bx_photos', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_photos_upload', 'bx_photos', 'allow_view_to', '', '', 0, 'custom', '_bx_photos_form_entry_input_sys_allow_view_to', '_bx_photos_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_photos_upload', 'bx_photos', 'do_submit', '_bx_photos_form_entry_input_do_submit', '', 0, 'submit', '_bx_photos_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_photos_upload', 'bx_photos', 'profile_id', '0', '', 0, 'hidden', '_bx_photos_form_entry_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
@@ -320,7 +323,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_photos_entry_upload', 'pictures', 2147483647, 1, 2),
 ('bx_photos_entry_upload', 'cat', 2147483647, 1, 3),
 ('bx_photos_entry_upload', 'allow_view_to', 2147483647, 1, 4),
-('bx_photos_entry_upload', 'do_submit', 2147483647, 1, 5),
+('bx_photos_entry_upload', 'cf', 2147483647, 1, 5),
+('bx_photos_entry_upload', 'do_submit', 2147483647, 1, 6),
 
 ('bx_photos_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_photos_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -330,8 +334,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_photos_entry_edit', 'text', 2147483647, 1, 3),
 ('bx_photos_entry_edit', 'pictures', 2147483647, 1, 4),
 ('bx_photos_entry_edit', 'allow_view_to', 2147483647, 1, 5),
-('bx_photos_entry_edit', 'location', 2147483647, 1, 6),
-('bx_photos_entry_edit', 'do_submit', 2147483647, 1, 7),
+('bx_photos_entry_edit', 'cf', 2147483647, 1, 6),
+('bx_photos_entry_edit', 'location', 2147483647, 1, 7),
+('bx_photos_entry_edit', 'do_submit', 2147483647, 1, 8),
 
 ('bx_photos_entry_view', 'cat', 2147483647, 1, 2),
 ('bx_photos_entry_view', 'added', 2147483647, 1, 3),

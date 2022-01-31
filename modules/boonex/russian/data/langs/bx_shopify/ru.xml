@@ -185,9 +185,9 @@
     <string name="_bx_shopify_menu_item_title_view_entries_author"><![CDATA[Товары]]></string>
     <string name="_bx_shopify_menu_item_title_system_view_entries_in_context"><![CDATA[Товары]]></string>
     <string name="_bx_shopify_menu_item_title_view_entries_in_context"><![CDATA[Товары]]></string>
-  <string name="_bx_shopify_menu_title_entries_my"><![CDATA[Мои Товары - Меню действий]]></string>
+    <string name="_bx_shopify_menu_title_entries_my"><![CDATA[Мои Товары - Меню действий]]></string>
     <string name="_bx_shopify_menu_set_title_entries_my"><![CDATA[Мои Товары - Меню]]></string>
-	<string name="_bx_shopify_menu_item_title_system_manage_my_entries"><![CDATA[Мои товары]]></string>
+    <string name="_bx_shopify_menu_item_title_system_manage_my_entries"><![CDATA[Мои товары]]></string>
     <string name="_bx_shopify_menu_item_title_manage_my_entries"><![CDATA[Товаров]]></string>
     <string name="_bx_shopify_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_shopify_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
@@ -200,6 +200,7 @@
     <string name="_bx_shopify_menu_item_title_buy_for"><![CDATA[Купить за {price}]]></string>
 
     <string name="_bx_shopify_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_shopify_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
     <string name="_bx_shopify_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_shopify_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_shopify_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>

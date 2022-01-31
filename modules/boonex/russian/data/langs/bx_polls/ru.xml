@@ -185,9 +185,9 @@
     <string name="_bx_polls_menu_item_title_view_entries_author"><![CDATA[Голосования]]></string>
     <string name="_bx_polls_menu_item_title_system_view_entries_in_context"><![CDATA[Голосования]]></string>
     <string name="_bx_polls_menu_item_title_view_entries_in_context"><![CDATA[Голосования]]></string>
-  <string name="_bx_polls_menu_title_entries_my"><![CDATA[Мои Голосования - Меню действий]]></string>
+    <string name="_bx_polls_menu_title_entries_my"><![CDATA[Мои Голосования - Меню действий]]></string>
     <string name="_bx_polls_menu_set_title_entries_my"><![CDATA[Мои Голосования - Меню]]></string>
-	<string name="_bx_polls_menu_item_title_system_manage_my_polls"><![CDATA[Мои голосования]]></string>
+    <string name="_bx_polls_menu_item_title_system_manage_my_polls"><![CDATA[Мои голосования]]></string>
     <string name="_bx_polls_menu_item_title_manage_my_polls"><![CDATA[Голосования]]></string>
     <string name="_bx_polls_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_polls_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
@@ -201,6 +201,7 @@
     <string name="_bx_polls_menu_item_view_results"><![CDATA[Показать результаты]]></string>
 
     <string name="_bx_polls_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_polls_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
     <string name="_bx_polls_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_polls_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_polls_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>

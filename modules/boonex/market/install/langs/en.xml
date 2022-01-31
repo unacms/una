@@ -308,19 +308,19 @@
     <string name="_bx_market_menu_item_title_view_entries_in_context"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_title_entries_my"><![CDATA[My Products Action Menu]]></string>
     <string name="_bx_market_menu_set_title_entries_my"><![CDATA[My Products Menu]]></string>
-	<string name="_bx_market_menu_item_title_system_manage_my_products"><![CDATA[My products]]></string>
+    <string name="_bx_market_menu_item_title_system_manage_my_products"><![CDATA[My products]]></string>
     <string name="_bx_market_menu_item_title_manage_my_products"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_market_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_market_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
-	<string name="_bx_market_menu_item_title_system_admt_products"><![CDATA[Products]]></string>
-	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Products]]></string>
-	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[My Products]]></string>
-	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[All Products]]></string>
-	<string name="_bx_market_menu_item_title_system_licenses"><![CDATA[Licenses]]></string>
-	<string name="_bx_market_menu_item_title_licenses"><![CDATA[Licenses]]></string>
-	<string name="_bx_market_menu_title_snippet"><![CDATA[Snippet Actions]]></string>
+    <string name="_bx_market_menu_item_title_system_admt_products"><![CDATA[Products]]></string>
+    <string name="_bx_market_menu_item_title_admt_products"><![CDATA[Products]]></string>
+    <string name="_bx_market_menu_item_title_manage_my"><![CDATA[My Products]]></string>
+    <string name="_bx_market_menu_item_title_manage_all"><![CDATA[All Products]]></string>
+    <string name="_bx_market_menu_item_title_system_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_menu_item_title_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_menu_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[More Actions]]></string>
     <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[More Actions]]></string>
@@ -336,6 +336,7 @@
     
 
     <string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_market_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Any Audience]]></string>
     <string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_market_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
     <string name="_bx_market_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>

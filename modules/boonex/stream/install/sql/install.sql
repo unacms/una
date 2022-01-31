@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `bx_stream_streams` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_comments` tinyint(4) NOT NULL DEFAULT '1',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
@@ -278,6 +279,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_stream', 'bx_stream_entry_view', 'bx_stream', 1, '_bx_stream_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_stream', 'bx_stream', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_stream', 'bx_stream', 'allow_view_to', '', '', 0, 'custom', '_bx_stream_form_entry_input_sys_allow_view_to', '_bx_stream_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_stream', 'bx_stream', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_stream_form_entry_input_sys_delete_confirm', '_bx_stream_form_entry_input_delete_confirm', '_bx_stream_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_stream_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_stream', 'bx_stream', 'do_publish', '_bx_stream_form_entry_input_do_publish', '', 0, 'submit', '_bx_stream_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -303,9 +305,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_stream_entry_add', 'text', 2147483647, 1, 4),
 ('bx_stream_entry_add', 'covers', 2147483647, 1, 5),
 ('bx_stream_entry_add', 'allow_view_to', 2147483647, 1, 6),
-('bx_stream_entry_add', 'location', 2147483647, 1, 7),
-('bx_stream_entry_add', 'allow_comments', 192, 1, 8),
-('bx_stream_entry_add', 'do_publish', 2147483647, 1, 9),
+('bx_stream_entry_add', 'cf', 2147483647, 1, 7),
+('bx_stream_entry_add', 'location', 2147483647, 1, 8),
+('bx_stream_entry_add', 'allow_comments', 192, 1, 9),
+('bx_stream_entry_add', 'do_publish', 2147483647, 1, 10),
 
 ('bx_stream_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_stream_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -317,9 +320,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_stream_entry_edit', 'text', 2147483647, 1, 5),
 ('bx_stream_entry_edit', 'covers', 2147483647, 1, 6),
 ('bx_stream_entry_edit', 'allow_view_to', 2147483647, 1, 7),
-('bx_stream_entry_edit', 'location', 2147483647, 1, 8),
-('bx_stream_entry_edit', 'allow_comments', 192, 1, 9),
-('bx_stream_entry_edit', 'do_submit', 2147483647, 1, 10),
+('bx_stream_entry_edit', 'cf', 2147483647, 1, 8),
+('bx_stream_entry_edit', 'location', 2147483647, 1, 9),
+('bx_stream_entry_edit', 'allow_comments', 192, 1, 10),
+('bx_stream_entry_edit', 'do_submit', 2147483647, 1, 11),
 
 ('bx_stream_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_stream_entry_view', 'added', 2147483647, 1, 2),

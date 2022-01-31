@@ -190,24 +190,25 @@
     <string name="_bx_files_menu_item_title_view_entries_in_context"><![CDATA[Files]]></string>
     <string name="_bx_files_menu_title_entries_my"><![CDATA[My Files Action Menu]]></string>
     <string name="_bx_files_menu_set_title_entries_my"><![CDATA[My Files Menu]]></string>
-	<string name="_bx_files_menu_item_title_system_manage_my_files"><![CDATA[My files]]></string>
+    <string name="_bx_files_menu_item_title_system_manage_my_files"><![CDATA[My files]]></string>
     <string name="_bx_files_menu_item_title_manage_my_files"><![CDATA[Files]]></string>
     <string name="_bx_files_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_files_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_files_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_files_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
-	<string name="_bx_files_menu_item_title_system_admt_files"><![CDATA[Files]]></string>
-	<string name="_bx_files_menu_item_title_admt_files"><![CDATA[Files]]></string>
-	<string name="_bx_files_menu_item_title_manage_my"><![CDATA[My Files]]></string>
-	<string name="_bx_files_menu_item_title_manage_all"><![CDATA[All Files]]></string>
-	<string name="_bx_files_menu_item_title_system_download_file"><![CDATA[Download]]></string>
-	<string name="_bx_files_menu_item_title_download_file"><![CDATA[Download]]></string>
+    <string name="_bx_files_menu_item_title_system_admt_files"><![CDATA[Files]]></string>
+    <string name="_bx_files_menu_item_title_admt_files"><![CDATA[Files]]></string>
+    <string name="_bx_files_menu_item_title_manage_my"><![CDATA[My Files]]></string>
+    <string name="_bx_files_menu_item_title_manage_all"><![CDATA[All Files]]></string>
+    <string name="_bx_files_menu_item_title_system_download_file"><![CDATA[Download]]></string>
+    <string name="_bx_files_menu_item_title_download_file"><![CDATA[Download]]></string>
 
-	<string name="_bx_files_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
-	<string name="_bx_files_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
-	<string name="_bx_files_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
-        <string name="_bx_files_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
-	<string name="_bx_files_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_files_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_files_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Any Audience]]></string>
+    <string name="_bx_files_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_files_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_files_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
+    <string name="_bx_files_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_files_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_files_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_files_grid_column_title_adm_author"><![CDATA[Author]]></string>
@@ -217,7 +218,7 @@
     <string name="_bx_files_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_files_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_files_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
-  <string name="_bx_files_grid_action_err_delete"><![CDATA[Cannot delete the selected file(s).]]></string>
+    <string name="_bx_files_grid_action_err_delete"><![CDATA[Cannot delete the selected file(s).]]></string>
     <string name="_bx_files_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
     <string name="_bx_files_chart_growth"><![CDATA[Files: Growth]]></string>

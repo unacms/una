@@ -237,26 +237,27 @@
     <string name="_bx_tasks_menu_item_title_view_entries_in_context"><![CDATA[Задания]]></string>
     <string name="_bx_tasks_menu_title_entries_my"><![CDATA[Мои Задания  - Меню действий]]></string>
     <string name="_bx_tasks_menu_set_title_entries_my"><![CDATA[Мои Задания Меню]]></string>
-	<string name="_bx_tasks_menu_item_title_system_manage_my_tasks"><![CDATA[Мои Задания]]></string>
+    <string name="_bx_tasks_menu_item_title_system_manage_my_tasks"><![CDATA[Мои Задания]]></string>
     <string name="_bx_tasks_menu_item_title_manage_my_tasks"><![CDATA[Задания]]></string>
     <string name="_bx_tasks_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_tasks_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_tasks_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_tasks_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_tasks_menu_item_title_system_admt_tasks"><![CDATA[Задания]]></string>
-	<string name="_bx_tasks_menu_item_title_admt_tasks"><![CDATA[Задания]]></string>
-	<string name="_bx_tasks_menu_item_title_manage_my"><![CDATA[Мои Задания]]></string>
-	<string name="_bx_tasks_menu_item_title_manage_all"><![CDATA[Все Задания]]></string>
-	
-	<string name="_bx_tasks_menu_item_title_system_set_completed"><![CDATA[Завершить]]></string>
-	<string name="_bx_tasks_menu_item_title_set_completed"><![CDATA[Завершить]]></string>
-	<string name="_bx_tasks_menu_item_title_system_set_uncompleted"><![CDATA[Открыть заново]]></string>
-	<string name="_bx_tasks_menu_item_title_set_uncompleted"><![CDATA[Открыть заново]]></string>
+    <string name="_bx_tasks_menu_item_title_system_admt_tasks"><![CDATA[Задания]]></string>
+    <string name="_bx_tasks_menu_item_title_admt_tasks"><![CDATA[Задания]]></string>
+    <string name="_bx_tasks_menu_item_title_manage_my"><![CDATA[Мои Задания]]></string>
+    <string name="_bx_tasks_menu_item_title_manage_all"><![CDATA[Все Задания]]></string>
 
-	<string name="_bx_tasks_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
-	<string name="_bx_tasks_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
-	<string name="_bx_tasks_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
-	<string name="_bx_tasks_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_tasks_menu_item_title_system_set_completed"><![CDATA[Завершить]]></string>
+    <string name="_bx_tasks_menu_item_title_set_completed"><![CDATA[Завершить]]></string>
+    <string name="_bx_tasks_menu_item_title_system_set_uncompleted"><![CDATA[Открыть заново]]></string>
+    <string name="_bx_tasks_menu_item_title_set_uncompleted"><![CDATA[Открыть заново]]></string>
+
+    <string name="_bx_tasks_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_tasks_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
+    <string name="_bx_tasks_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_tasks_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_tasks_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_tasks_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_tasks_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_tasks_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>

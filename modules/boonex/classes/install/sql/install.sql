@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `bx_classes_classes` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
@@ -461,6 +462,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_classes', 'bx_classes_entry_view', 'bx_classes', 1, '_bx_classes_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_classes', 'bx_classes', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'allow_view_to', '', '', 0, 'custom', '_bx_classes_form_entry_input_sys_allow_view_to', '_bx_classes_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_classes_form_entry_input_sys_delete_confirm', '_bx_classes_form_entry_input_delete_confirm', '_bx_classes_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_classes_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'do_publish', '_bx_classes_form_entry_input_do_publish', '', 0, 'submit', '_bx_classes_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -505,7 +507,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_add', 'avail', 2147483647, 1, 14),
 ('bx_classes_entry_add', 'cmts', 2147483647, 1, 15),
 ('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 16),
-('bx_classes_entry_add', 'do_publish', 2147483647, 1, 17),
+('bx_classes_entry_add', 'cf', 2147483647, 1, 17),
+('bx_classes_entry_add', 'do_publish', 2147483647, 1, 18),
 
 ('bx_classes_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_classes_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -526,7 +529,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_edit', 'avail', 2147483647, 1, 14),
 ('bx_classes_entry_edit', 'cmts', 2147483647, 1, 15),
 ('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 16),
-('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 17),
+('bx_classes_entry_edit', 'cf', 2147483647, 1, 17),
+('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 18),
 
 ('bx_classes_entry_view', 'module_id', 2147483647, 1, 1),
 ('bx_classes_entry_view', 'completed_when', 2147483647, 1, 2),

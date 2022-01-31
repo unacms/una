@@ -391,6 +391,11 @@ class BxForumGrid extends BxTemplGrid
         // filter out posts of suspended members
         $sJoinClause .= " INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}` AND `p`.`status` = 'active') ";
 
+        // filter out posts by content filter
+        $oCf = BxDolContentFilter::getInstance();
+        if($oCf->isEnabled())
+            $sWhereClause .= $oCf->getSQLParts ($CNF['TABLE_ENTRIES'], $CNF['FIELD_CF']);
+
         // filter by badges
         if(isset($this->_sFilter2Value) && $this->_sFilter2Value != ''){
             $aObjects = BxDolBadges::getInstance()->getData(['type' => 'by_module&badge', 'badge_id' => $this->_sFilter2Value, 'module' => $this->_oModule->_aModule['name']]);

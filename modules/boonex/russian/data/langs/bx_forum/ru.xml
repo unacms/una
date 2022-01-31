@@ -305,6 +305,7 @@
     <string name="_bx_forum_menu_item_title_sm_reply_text"><![CDATA[Текст ответа]]></string>
 
     <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>

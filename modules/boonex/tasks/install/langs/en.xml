@@ -239,26 +239,27 @@
     <string name="_bx_tasks_menu_item_title_view_entries_in_context"><![CDATA[Tasks]]></string>
     <string name="_bx_tasks_menu_title_entries_my"><![CDATA[My Tasks Action Menu]]></string>
     <string name="_bx_tasks_menu_set_title_entries_my"><![CDATA[My Tasks Menu]]></string>
-	<string name="_bx_tasks_menu_item_title_system_manage_my_tasks"><![CDATA[My tasks]]></string>
+    <string name="_bx_tasks_menu_item_title_system_manage_my_tasks"><![CDATA[My tasks]]></string>
     <string name="_bx_tasks_menu_item_title_manage_my_tasks"><![CDATA[Tasks]]></string>
     <string name="_bx_tasks_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_tasks_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_tasks_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_tasks_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
-	<string name="_bx_tasks_menu_item_title_system_admt_tasks"><![CDATA[Tasks]]></string>
-	<string name="_bx_tasks_menu_item_title_admt_tasks"><![CDATA[Tasks]]></string>
-	<string name="_bx_tasks_menu_item_title_manage_my"><![CDATA[My Tasks]]></string>
-	<string name="_bx_tasks_menu_item_title_manage_all"><![CDATA[All Tasks]]></string>
-	
-	<string name="_bx_tasks_menu_item_title_system_set_completed"><![CDATA[Complete]]></string>
-	<string name="_bx_tasks_menu_item_title_set_completed"><![CDATA[Complete]]></string>
-	<string name="_bx_tasks_menu_item_title_system_set_uncompleted"><![CDATA[Re-open]]></string>
-	<string name="_bx_tasks_menu_item_title_set_uncompleted"><![CDATA[Re-open]]></string>
+    <string name="_bx_tasks_menu_item_title_system_admt_tasks"><![CDATA[Tasks]]></string>
+    <string name="_bx_tasks_menu_item_title_admt_tasks"><![CDATA[Tasks]]></string>
+    <string name="_bx_tasks_menu_item_title_manage_my"><![CDATA[My Tasks]]></string>
+    <string name="_bx_tasks_menu_item_title_manage_all"><![CDATA[All Tasks]]></string>
 
-	<string name="_bx_tasks_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
-	<string name="_bx_tasks_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
-	<string name="_bx_tasks_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
-	<string name="_bx_tasks_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_tasks_menu_item_title_system_set_completed"><![CDATA[Complete]]></string>
+    <string name="_bx_tasks_menu_item_title_set_completed"><![CDATA[Complete]]></string>
+    <string name="_bx_tasks_menu_item_title_system_set_uncompleted"><![CDATA[Re-open]]></string>
+    <string name="_bx_tasks_menu_item_title_set_uncompleted"><![CDATA[Re-open]]></string>
+
+    <string name="_bx_tasks_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_tasks_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Any Audience]]></string>
+    <string name="_bx_tasks_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_tasks_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_tasks_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_tasks_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_tasks_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_tasks_grid_column_title_adm_added"><![CDATA[Added]]></string>

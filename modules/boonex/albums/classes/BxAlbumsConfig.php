@@ -45,6 +45,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'album-desc',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+            'FIELD_CF' => 'cf',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
             'FIELD_VIEWS' => 'views',
@@ -140,8 +141,8 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SNIPPET_META' => 'bx_albums_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_albums_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_albums_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_albums_common',
-        	'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop'),
+            'OBJECT_GRID_COMMON' => 'bx_albums_common',
+            'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop'),
             
             'FUNCTION_FOR_GET_ITEM_INFO' => 'getMediaInfoById',
 
@@ -194,6 +195,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             	'filter_item_hidden' => '_bx_albums_grid_filter_item_title_adm_hidden',
                 'filter_item_pending' => '_bx_albums_grid_filter_item_title_adm_pending',
             	'filter_item_select_one_filter1' => '_bx_albums_grid_filter_item_title_adm_select_one_filter1',
+                'filter_item_select_one_filter2' => '_bx_albums_grid_filter_item_title_adm_select_one_filter2',
             	'menu_item_manage_my' => '_bx_albums_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_albums_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_albums_txt_all_entries_by',

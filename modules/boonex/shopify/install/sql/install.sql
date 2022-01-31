@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `bx_shopify_entries` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
@@ -219,6 +220,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_shopify_settings', 'bx_shopify_settings_edit', 'bx_shopify', 0, '_bx_shopify_form_settings_display_edit');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_shopify', 'bx_shopify', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'allow_view_to', '', '', 0, 'custom', '_bx_shopify_form_entry_input_sys_allow_view_to', '_bx_shopify_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_shopify_form_entry_input_sys_delete_confirm', '_bx_shopify_form_entry_input_delete_confirm', '_bx_shopify_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_shopify_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'do_publish', '_bx_shopify_form_entry_input_do_publish', '', 0, 'submit', '_bx_shopify_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -239,8 +241,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_shopify_entry_add', 'title', 2147483647, 1, 2),
 ('bx_shopify_entry_add', 'cat', 2147483647, 1, 3),
 ('bx_shopify_entry_add', 'allow_view_to', 2147483647, 1, 4),
-('bx_shopify_entry_add', 'location', 2147483647, 1, 5),
-('bx_shopify_entry_add', 'do_publish', 2147483647, 1, 6),
+('bx_shopify_entry_add', 'cf', 2147483647, 1, 5),
+('bx_shopify_entry_add', 'location', 2147483647, 1, 6),
+('bx_shopify_entry_add', 'do_publish', 2147483647, 1, 7),
 
 ('bx_shopify_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_shopify_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -249,8 +252,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_shopify_entry_edit', 'title', 2147483647, 1, 2),
 ('bx_shopify_entry_edit', 'cat', 2147483647, 1, 3),
 ('bx_shopify_entry_edit', 'allow_view_to', 2147483647, 1, 4),
-('bx_shopify_entry_edit', 'location', 2147483647, 1, 5),
-('bx_shopify_entry_edit', 'do_submit', 2147483647, 1, 6),
+('bx_shopify_entry_edit', 'cf', 2147483647, 1, 5),
+('bx_shopify_entry_edit', 'location', 2147483647, 1, 6),
+('bx_shopify_entry_edit', 'do_submit', 2147483647, 1, 7),
 
 ('bx_shopify_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_shopify_entry_view', 'added', 2147483647, 1, 2),

@@ -755,6 +755,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         //--- Apply unpublished (date in future) filter
         $sWhereClauseUnpublished = $this->prepareAsString("AND IF(`{$this->_sTable}`.`system`='0' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
 
+        //--- Apply content filter
+        $oCf = BxDolContentFilter::getInstance();
+        $sWhereClauseCf = $oCf->isEnabled() ? $oCf->getSQLParts($this->_sTable, 'object_cf') . ' ' : '';
+
         //--- Check type
         $mixedWhereSubclause = "";
         switch($aParams['type']) {
@@ -999,6 +1003,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'where_clause_hidden' => &$sWhereClauseHidden,
             'where_clause_muted' => &$sWhereClauseMuted,
             'where_clause_unpublished' => &$sWhereClauseUnpublished,
+            'where_clause_cf' => &$sWhereClauseCf,
             'where_subclause' => &$mixedWhereSubclause
         ));
 
@@ -1009,6 +1014,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $mixedWhereClause .= $sWhereClauseHidden;
         $mixedWhereClause .= $sWhereClauseMuted;
         $mixedWhereClause .= $sWhereClauseUnpublished;
+        $mixedWhereClause .= $sWhereClauseCf;
 
         if(!empty($mixedWhereSubclause)) {
             if(is_array($mixedWhereSubclause)) {

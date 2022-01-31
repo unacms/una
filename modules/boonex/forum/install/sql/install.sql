@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `resolvable` tinyint(4) NOT NULL DEFAULT '0',
   `resolved` tinyint(4) NOT NULL DEFAULT '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
+  `cf` int(11) NOT NULL default '1',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -431,6 +432,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_forum_search', 'bx_forum_search_full', @sName, 0, '_bx_forum_form_search_display_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+(@sName, @sName, 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 (@sName, @sName, 'allow_view_to', '', '', 0, 'custom', '_bx_forum_form_entry_input_sys_allow_view_to', '_bx_forum_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 (@sName, @sName, 'delete_confirm', 1, '', 0, 'checkbox', '_bx_forum_form_entry_input_sys_delete_confirm', '_bx_forum_form_entry_input_delete_confirm', '_bx_forum_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_forum_form_entry_input_delete_confirm_error', '', '', 1, 0),
 (@sName, @sName, 'do_submit', '_bx_forum_form_entry_input_do_submit', '', 0, 'submit', '_bx_forum_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -466,8 +468,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_add', 'polls', 2147483647, 1, 8),
 ('bx_forum_entry_add', 'covers', 2147483647, 1, 9),
 ('bx_forum_entry_add', 'allow_view_to', 2147483647, 1, 10),
-('bx_forum_entry_add', 'resolvable', 2147483647, 1, 11),
-('bx_forum_entry_add', 'do_submit', 2147483647, 1, 12),
+('bx_forum_entry_add', 'cf', 2147483647, 1, 11),
+('bx_forum_entry_add', 'resolvable', 2147483647, 1, 12),
+('bx_forum_entry_add', 'do_submit', 2147483647, 1, 13),
 
 ('bx_forum_entry_edit', 'title', 2147483647, 1, 1),
 ('bx_forum_entry_edit', 'cat', 2147483647, 1, 2),
@@ -479,8 +482,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_edit', 'polls', 2147483647, 1, 8),
 ('bx_forum_entry_edit', 'covers', 2147483647, 1, 9),
 ('bx_forum_entry_edit', 'allow_view_to', 2147483647, 1, 10),
-('bx_forum_entry_edit', 'resolvable', 2147483647, 1, 11),
-('bx_forum_entry_edit', 'do_submit', 2147483647, 1, 12),
+('bx_forum_entry_edit', 'cf', 2147483647, 1, 11),
+('bx_forum_entry_edit', 'resolvable', 2147483647, 1, 12),
+('bx_forum_entry_edit', 'do_submit', 2147483647, 1, 13),
 
 ('bx_forum_entry_view', 'title', 2147483647, 1, 1),
 ('bx_forum_entry_view', 'cat', 2147483647, 1, 2),

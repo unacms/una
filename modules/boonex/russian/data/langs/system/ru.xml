@@ -1518,6 +1518,7 @@
     <string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached - адрес сервера]]></string>
     <string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
     <string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[CAPTCHA по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_cf_enable"><![CDATA[Включить контентные фильтры]]></string>
     <string name="_adm_stg_cpt_option_sys_cf_prohibited"><![CDATA[Запрещенный контент]]></string>
     <string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых email темплейтов]]></string>
     <string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>

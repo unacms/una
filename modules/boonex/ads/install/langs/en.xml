@@ -360,6 +360,7 @@
     <string name="_bx_ads_grid_action_err_edit_category"><![CDATA[Cannot edit the category.]]></string>
 
     <string name="_bx_ads_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_ads_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Any Audience]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>

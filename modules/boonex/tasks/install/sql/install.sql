@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `bx_tasks_tasks` (
   `tasks_list` int(11) NOT NULL,	
   `completed` tinyint(4) NOT NULL DEFAULT '0', 
   `expired` tinyint(4) NOT NULL DEFAULT '0', 
+  `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_comments` tinyint(4) NOT NULL DEFAULT '1',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
@@ -362,6 +363,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_tasks', 'bx_tasks_entry_view', 'bx_tasks', 1, '_bx_tasks_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_tasks', 'bx_tasks', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'allow_view_to', '', '', 0, 'custom', '_bx_tasks_form_entry_input_sys_allow_view_to', '_bx_tasks_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_tasks_form_entry_input_sys_delete_confirm', '_bx_tasks_form_entry_input_delete_confirm', '_bx_tasks_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_tasks_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'do_publish', '_bx_tasks_form_entry_input_do_publish', '', 0, 'submit', '_bx_tasks_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -408,10 +410,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_tasks_entry_edit', 'videos', 2147483647, 1, 7),
 ('bx_tasks_entry_edit', 'files', 2147483647, 1, 8),
 ('bx_tasks_entry_edit', 'allow_view_to', 2147483647, 1, 9),
-('bx_tasks_entry_edit', 'tasks_list', 192, 1, 10),
-('bx_tasks_entry_edit', 'initial_members', 192, 1, 11),
-('bx_tasks_entry_edit', 'due_date', 192, 1, 12),
-('bx_tasks_entry_edit', 'do_submit', 2147483647, 1, 13),
+('bx_tasks_entry_edit', 'cf', 2147483647, 1, 10),
+('bx_tasks_entry_edit', 'tasks_list', 192, 1, 11),
+('bx_tasks_entry_edit', 'initial_members', 192, 1, 12),
+('bx_tasks_entry_edit', 'due_date', 192, 1, 13),
+('bx_tasks_entry_edit', 'do_submit', 2147483647, 1, 14),
 
 ('bx_tasks_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_tasks_entry_view', 'added', 2147483647, 1, 2),

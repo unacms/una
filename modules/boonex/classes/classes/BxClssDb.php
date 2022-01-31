@@ -57,8 +57,17 @@ class BxClssDb extends BxBaseModTextDb
 
     public function getEntriesByModule ($iModuleId)
     {
-        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `module_id` = ? ORDER BY `order`", $iModuleId);
-        return $this->getAll($sQuery);
+        $CNF = &$this->_oConfig->CNF;
+
+        $aBindings = ['module_id' => $iModuleId];
+        
+        $sWhereClause = " AND `module_id` = :module_id";
+
+        $oCf = BxDolContentFilter::getInstance();
+        if($oCf->isEnabled())
+            $sWhereClause .= $oCf->getSQLParts($CNF['TABLE_ENTRIES'], $CNF['FIELD_CF']);
+
+        return $this->getAll("SELECT * FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE 1" . $sWhereClause . " ORDER BY `order`", $aBindings);
     }
 
     public function getEntriesModulesByContext ($iProfileConextId, $bAsPairs = false)

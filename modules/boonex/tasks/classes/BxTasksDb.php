@@ -45,15 +45,25 @@ class BxTasksDb extends BxBaseModTextDb
         $this->query($sQuery);
     }
 	
-	public function getTasks ($iContextId = 0, $iListId = 0)
+    public function getTasks ($iContextId = 0, $iListId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sQuery = $this->prepare ("SELECT * FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE  `" . $CNF['FIELD_ALLOW_VIEW_TO'] . "` = ? AND `" . $CNF['FIELD_TASKLIST'] . "` = ?", $iContextId, $iListId);
-        return $this->getAll($sQuery);
+        $aBindings = [
+            $CNF['FIELD_ALLOW_VIEW_TO'] => $iContextId,
+            $CNF['FIELD_TASKLIST'] => $iListId
+        ];
+
+        $sWhereClause = " AND `" . $CNF['FIELD_ALLOW_VIEW_TO'] . "` = :" . $CNF['FIELD_ALLOW_VIEW_TO'] . " AND `" . $CNF['FIELD_TASKLIST'] . "` = :" . $CNF['FIELD_TASKLIST'];
+
+        $oCf = BxDolContentFilter::getInstance();
+        if($oCf->isEnabled())
+            $sWhereClause .= $oCf->getSQLParts($CNF['TABLE_ENTRIES'], $CNF['FIELD_CF']);
+
+        return $this->getAll("SELECT * FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE 1" . $sWhereClause, $aBindings);
     }
 	
-	public function getEntriesByDate($sDateFrom, $sDateTo, $aSQLPart = array())
+    public function getEntriesByDate($sDateFrom, $sDateTo, $aSQLPart = array())
     {
         // validate input data
         if (false === ($oDateFrom = date_create($sDateFrom, new DateTimeZone('UTC'))))
