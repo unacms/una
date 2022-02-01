@@ -205,7 +205,10 @@ function bx_editor_init(oEditor, oParams){
                     )
                     .then(response => response.json())
                     .then(result => {
-                        resolve(result.link);
+                        if ('undefined' != typeof(result.link))
+                            resolve(result.link);
+                        else
+                            reject("Upload failed");
                     })
                     .catch(error => {
                         reject("Upload failed");
@@ -214,7 +217,6 @@ function bx_editor_init(oEditor, oParams){
             });
         }
     }
-
 
     oEditor = new Quill('#' + oParams.name, oConfig)
     $(oParams.selector).next().find('button.ql-bold').attr('title', _t('_sys_txt_quill_tooltip_bold'));
@@ -270,7 +272,7 @@ function bx_editor_insert_html (sEditorId, sImgId, sHtml)
         if (oEditor.getSelection())
             oEditor.clipboard.dangerouslyPasteHTML(oEditor.getSelection().index, sHtml, 'api');
         else
-             oEditor.clipboard.dangerouslyPasteHTML(0, sHtml, 'api');
+            oEditor.clipboard.dangerouslyPasteHTML(0, sHtml, 'api');
     }
 }
 
