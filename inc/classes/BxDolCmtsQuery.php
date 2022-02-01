@@ -189,51 +189,54 @@ class BxDolCmtsQuery extends BxDolDb
     	$this->_sTableFiles2Entries = $sTable;
     }
 
-    function getCommentsCountAll ($iId)
+    function getCommentsCountAll ($iId, $bForceCalculate = false)
     {
         $iCount = false;
-		bx_alert('comment', 'get_comments_count', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'object_id' => $iId, 'result' => &$iCount));
-		if ($iCount !== false)
-			return $iCount;
-        
-        if ($this->_sTriggerFieldComments) {
-            $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldComments}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ?", $iId);
-            return (int)$this->getOne($sQuery);
-        }
-        else {
+        bx_alert('comment', 'get_comments_count', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'object_id' => $iId, 'result' => &$iCount));
+        if ($iCount !== false)
+            return $iCount;
+
+        if ($this->_sTriggerFieldComments && !$bForceCalculate)
+            return (int)$this->getOne("SELECT `{$this->_sTriggerFieldComments}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = :id", [
+                'id' => $iId
+            ]);
+        else
             return $this->getCommentsCount($iId);
-        }
     }
 
     function getCommentsCount ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {
     	$aBindings = array(
-    		'cmt_object_id' => $iId
+            'cmt_object_id' => $iId
     	);
 
         $sWhereClause = '';
         if((int)$iCmtVParentId >= 0) {
-        	$aBindings['cmt_vparent_id'] = $iCmtVParentId;
+            $aBindings['cmt_vparent_id'] = $iCmtVParentId;
 
             $sWhereClause .= " AND `{$this->_sTable}`.`cmt_vparent_id` = :cmt_vparent_id";
         }
 
         $sJoinClause = '';
         switch($sFilter) {
-        	case BX_CMT_FILTER_FRIENDS:
-        	case BX_CMT_FILTER_SUBSCRIPTIONS:
-	            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
-	
-	            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
-	            $sJoinClause .= ' ' . $aQueryParts['join'];
-	            break;
+            case BX_CMT_FILTER_FRIENDS:
+            case BX_CMT_FILTER_SUBSCRIPTIONS:
+                $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
 
-        	case BX_CMT_FILTER_OTHERS:
-        		$aBindings['cmt_author_id'] = $iAuthorId;
+                $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+                $sJoinClause .= ' ' . $aQueryParts['join'];
+                break;
 
-        		$sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` <> :cmt_author_id";
-        		break;
+            case BX_CMT_FILTER_OTHERS:
+                $aBindings['cmt_author_id'] = $iAuthorId;
+
+                $sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` <> :cmt_author_id";
+                break;
         }
+
+        $oCf = BxDolContentFilter::getInstance();
+        if($oCf->isEnabledForComments())
+            $sWhereClause .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
         $sQuery = "SELECT COUNT(*) FROM `{$this->_sTable}` $sJoinClause WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
         return (int)$this->getOne($sQuery, $aBindings);
@@ -320,6 +323,11 @@ class BxDolCmtsQuery extends BxDolDb
                 break;
         }
 
+        $sWhereCf = '';
+        $oCf = BxDolContentFilter::getInstance();
+        if($oCf->isEnabledForComments())
+            $sWhereCf = $oCf->getSQLParts($this->_sTable, 'cmt_cf');
+
         $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, `{$this->_sTable}`.`cmt_time` ASC";
         if(isset($aOrder['by']) && isset($aOrder['way'])) {
             $aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
@@ -347,7 +355,7 @@ class BxDolCmtsQuery extends BxDolDb
         
        	$sLimit = $iCount != -1 ? $this->prepareAsString(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
-        $sWhereClause = $sWhereParent . $sWhereFilter;
+        $sWhereClause = $sWhereParent . $sWhereFilter . $sWhereCf;
            
         $sQuery = "SELECT
                 `{$this->_sTable}`.*,
@@ -474,6 +482,10 @@ class BxDolCmtsQuery extends BxDolDb
 
                     $sWhereConditions .= " AND `{$this->_sTable}`.`" . $sSearchParam . "`" . $sSearchValue;
                 }
+
+                $oCf = BxDolContentFilter::getInstance();
+                if($oCf->isEnabledForComments())
+                    $sWhereConditions .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
                 $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
 

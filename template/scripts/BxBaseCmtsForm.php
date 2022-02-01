@@ -135,6 +135,17 @@ class BxBaseCmtsForm extends BxTemplFormView
         return true;
     }
 
+    protected function genCustomRowCmtCf(&$aInput)
+    {
+        $aInput = BxDolContentFilter::getInstance()->getInputForComments($aInput);
+        if($aInput['type'] == 'hidden') {
+            $this->_sCodeAdd .= $this->genInput($aInput);
+            return '';
+        }
+
+        return $this->genRowStandard($aInput);
+    }
+
     protected function _getObject($sSystem, $iId)
     {
         if(empty($this->_oObject))

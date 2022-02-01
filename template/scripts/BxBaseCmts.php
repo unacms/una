@@ -158,7 +158,7 @@ class BxBaseCmts extends BxDolCmts
         $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)));
         $sJsContent = $this->getJsScript($aBp, $aDp);
 
-        $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll());
+        $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll(0, true));
         $sBlockMenu = $this->_getControlsBox();
 
         bx_alert('system', 'view_comments', 0, 0, array(

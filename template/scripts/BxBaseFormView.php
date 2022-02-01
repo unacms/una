@@ -787,6 +787,17 @@ BLAH;
         return $this->genViewRowWrapped($aInput);
     }
 
+    protected function genCustomRowCf(&$aInput)
+    {
+        $aInput = BxDolContentFilter::getInstance()->getInput($aInput);
+        if($aInput['type'] == 'hidden') {
+            $this->_sCodeAdd .= $this->genInput($aInput);
+            return '';
+        }
+
+        return $this->genRowStandard($aInput);
+    }
+
     protected function genCustomViewRowValueBirthday(&$aInput)
     {
         if(!isset($aInput['value']) || !$aInput['value'] || in_array($aInput['value'], array('0000-00-00', '0000-00-00 00:00:00')))
@@ -1634,15 +1645,6 @@ BLAH;
             'name' => $sName,
             'input_labels' => $this->genCustomInputUsernamesSuggestions($aInputLabels)
         ));
-    }
-
-    protected function genCustomInputCf (&$aInput)
-    {
-        $aInput = BxDolContentFilter::getInstance()->getInputByProfileId($aInput);
-        if($aInput['type'] == 'hidden')
-            return $this->genInputStandard($aInput);
-
-        return $this->genInputSelect($aInput);
     }
 
     /**

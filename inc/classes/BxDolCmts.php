@@ -712,9 +712,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return BX_DOL_PG_ALL;
     }
 
-    public function getCommentsCountAll ($iObjectId = 0)
+    public function getCommentsCountAll ($iObjectId = 0, $bForceCalculate = false)
     {
-        return $this->_oQuery->getCommentsCountAll ($iObjectId ? $iObjectId : $this->getId());
+        return $this->_oQuery->getCommentsCountAll ($iObjectId ? $iObjectId : $this->getId(), $bForceCalculate);
     }
 
     public function getCommentsCount ($iObjectId = 0, $iCmtVParentId = -1, $sFilter = '')
@@ -1701,6 +1701,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $iCmtId = (int)$aCmt['cmt_id'];
         $iCmtUniqId = $this->getCommentUniqId($iCmtId);
+        $iCmtCf = isset($aCmt['cmt_cf']) ? (int)$aCmt['cmt_cf'] : BxDolContentFilter::getInstance()->getDefaultValue();
 
         return array(
             'object_system' => $this->_sSystem, 
@@ -1713,6 +1714,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'comment_text' => $aCmt['cmt_text'],
 
             'privacy_view' => $iObjAthrPrivacyView,
+            'cf' => $iCmtCf
         );
     }
 

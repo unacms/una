@@ -46,7 +46,12 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
     {
         return getParam('sys_cf_enable') == 'on';
     }
-    
+
+    public function isEnabledForComments()
+    {
+        return getParam('sys_cf_enable_comments') == 'on';
+    }
+
     public function getProhibited()
     {
         $sValues = getParam('sys_cf_prohibited');
@@ -65,9 +70,19 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
         return $this->_iDefaultValue;
     }
             
-    public function getInputByProfileId($aInput, $iProfileId = 0)
+    public function getInput($aInput, $iProfileId = 0)
     {
-        if(!$this->isEnabled())
+        return $this->_getInput('content', $aInput, $iProfileId);
+    }
+
+    public function getInputForComments($aInput, $iProfileId = 0)
+    {
+        return $this->_getInput('comments', $aInput, $iProfileId);
+    }
+
+    protected function _getInput($sType, $aInput, $iProfileId = 0)
+    {
+        if(!$this->{'isEnabled' . ($sType == 'comments' ? 'ForComments' : '')}())
             return array_merge($aInput, [
                 'type' => 'hidden',
                 'value' => 1

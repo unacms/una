@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS `bx_files_cmts` (
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
   `cmt_pinned` int(11) NOT NULL default '0',
+  `cmt_cf` int(11) NOT NULL default '1',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)

@@ -22,7 +22,7 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_files';
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_files_cats');
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_files';
+DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_files%';
 
 -- VOTES
 DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_files', 'bx_files_reactions');
