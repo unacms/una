@@ -242,7 +242,7 @@
     <string name="_bx_reviews_menu_item_title_view_entries_in_context"><![CDATA[Reviews]]></string>
     <string name="_bx_reviews_menu_title_entries_my"><![CDATA[My Reviews Action Menu]]></string>
     <string name="_bx_reviews_menu_set_title_entries_my"><![CDATA[My Reviews Menu]]></string>
-	<string name="_bx_reviews_menu_item_title_system_manage_my_reviews"><![CDATA[My reviews]]></string>
+    <string name="_bx_reviews_menu_item_title_system_manage_my_reviews"><![CDATA[My reviews]]></string>
     <string name="_bx_reviews_menu_item_title_manage_my_reviews"><![CDATA[Reviews]]></string>
     <string name="_bx_reviews_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_reviews_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
@@ -254,6 +254,7 @@
     <string name="_bx_reviews_menu_item_title_manage_all"><![CDATA[All Reviews]]></string>
 
     <string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Any Audience]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>

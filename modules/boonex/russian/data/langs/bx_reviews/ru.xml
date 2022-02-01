@@ -254,6 +254,7 @@
     <string name="_bx_reviews_menu_item_title_manage_all"><![CDATA[Все отзывы]]></string>
 
     <string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_reviews_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_reviews_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>

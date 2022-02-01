@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_reviews` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `reviewed_profile` int(11) NOT NULL DEFAULT '0',
   `product` varchar(255) NOT NULL,
@@ -439,6 +440,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_reviews', 'bx_reviews_entry_view', 'bx_reviews', 1, '_bx_reviews_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_reviews', 'bx_reviews', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_reviews', 'bx_reviews', 'allow_view_to', '', '', 0, 'custom', '_bx_reviews_form_entry_input_sys_allow_view_to', '_bx_reviews_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_reviews', 'bx_reviews', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_reviews_form_entry_input_sys_delete_confirm', '_bx_reviews_form_entry_input_delete_confirm', '_bx_reviews_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_reviews_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_reviews', 'bx_reviews', 'do_submit', '_bx_reviews_form_entry_input_do_submit', '', 0, 'submit', '_bx_reviews_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -478,9 +480,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_reviews_entry_add', 'polls', 2147483647, 1, 11),
 ('bx_reviews_entry_add', 'covers', 2147483647, 1, 12),
 ('bx_reviews_entry_add', 'allow_view_to', 2147483647, 1, 13),
-('bx_reviews_entry_add', 'location', 2147483647, 0, 14),
-('bx_reviews_entry_add', 'allow_comments', 192, 0, 15),
-('bx_reviews_entry_add', 'do_submit', 2147483647, 1, 20),
+('bx_reviews_entry_add', 'cf', 2147483647, 1, 14),
+('bx_reviews_entry_add', 'location', 2147483647, 0, 15),
+('bx_reviews_entry_add', 'allow_comments', 192, 0, 16),
+('bx_reviews_entry_add', 'do_submit', 2147483647, 1, 17),
 
 ('bx_reviews_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_reviews_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -498,8 +501,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_reviews_entry_edit', 'polls', 2147483647, 1, 11),
 ('bx_reviews_entry_edit', 'covers', 2147483647, 1, 12),
 ('bx_reviews_entry_edit', 'allow_view_to', 2147483647, 1, 13),
-('bx_reviews_entry_edit', 'location', 2147483647, 0, 14),
-('bx_reviews_entry_edit', 'allow_comments', 192, 0, 15),
+('bx_reviews_entry_edit', 'cf', 2147483647, 1, 14),
+('bx_reviews_entry_edit', 'location', 2147483647, 0, 15),
+('bx_reviews_entry_edit', 'allow_comments', 192, 0, 16),
 ('bx_reviews_entry_edit', 'do_submit', 2147483647, 1, 17),
 
 ('bx_reviews_entry_view', 'cat', 2147483647, 1, 1),
