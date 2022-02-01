@@ -1778,18 +1778,26 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     // ====== COMMON METHODS
+    protected function _alertParams($aContentInfo)
+    {
+        $aParams = parent::_alertParams($aContentInfo);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        return $aParams;
+    }
+
     public function alertAfterAdd($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sModule = $this->getName();
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
-        $aParams = array();        
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-
-        bx_alert($sModule, 'added', $iContentId, false, $aParams);
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->getName(), 'added', $iContentId, false, $aParams);
     }
 
     public function alertAfterEdit($aContentInfo)
@@ -1799,9 +1807,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $sModule = $this->getName();
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
-        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule);
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($sModule, 'edited', $iContentId, false, $aParams);
 
-        bx_alert($sModule, 'edited', $iContentId);
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule);
         bx_alert('profile', 'edit', $oProfile->id(), 0, array('content' => $iContentId, 'module' => $sModule));
     }
 

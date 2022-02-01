@@ -1476,17 +1476,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
 
     // ====== COMMON METHODS
-    /**
-     * Get array of params to be passed in Add/Edit Alert.
-     */
     protected function _alertParams($aContentInfo)
     {
         $aParams = parent::_alertParams($aContentInfo);
 
         $CNF = &$this->_oConfig->CNF;
-
-        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
 
         if(!empty($CNF['FIELD_CF']) && isset($aContentInfo[$CNF['FIELD_CF']]))
             $aParams['cf'] = $aContentInfo[$CNF['FIELD_CF']];
