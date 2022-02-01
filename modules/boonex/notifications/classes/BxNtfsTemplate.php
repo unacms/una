@@ -200,7 +200,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         }
 
     	$bEventParsed = false;
-        bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, array('event' => &$aEvent, 'event_parsed' => &$bEventParsed, 'owner' => &$oOwner));
+        
+        $sOwnerUnit = $this->_isInContext($aEvent) && $oObjectOwner ? $oObjectOwner->getUnit(0, array('template' => 'unit_wo_info_links')) : $oOwner->getUnit(0, array('template' => 'unit_wo_info_links'));
+        
+        bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, array('event' => &$aEvent, 'event_parsed' => &$bEventParsed, 'owner' => &$oOwner, 'owner_unit' => &$sOwnerUnit, 'browse_params' => $aBrowseParams));
+        
         if(!$bEventParsed) {
             $mLk = '';
             if(!empty($aEvent['content']['lang_key'])) {
@@ -229,7 +233,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             'js_object' => $this->_oConfig->getJsObject('view'),
             'class' => !empty($aBrowseParams['last_read']) && $aEvent['id'] > $aBrowseParams['last_read'] ? ' bx-def-color-bg-box-active' : '', 
             'id' => $aEvent['id'],
-            'author_unit' => $this->_isInContext($aEvent) && $oObjectOwner ? $oObjectOwner->getUnit(0, array('template' => 'unit_wo_info_links')) : $oOwner->getUnit(0, array('template' => 'unit_wo_info_links')),
+            'author_unit' => $sOwnerUnit,
             'link' => $this->_getContentLink($aEvent),
             'content' => is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['site']) ? $aEvent['content_parsed']['site'] : $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
