@@ -71,7 +71,9 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
     function __construct()
     {
         parent::__construct();
-        $this->_aConfig['aLessConfig']['bx-root-class-name'] =  BxDolTemplate::getInstance()->getCssClassName();
+        
+        if (class_exists('BxDolTemplate'))
+            $this->_aConfig['aLessConfig']['bx-root-class-name'] =  BxDolTemplate::getInstance()->getCssClassName();
     }
 
     public static function getInstance()
