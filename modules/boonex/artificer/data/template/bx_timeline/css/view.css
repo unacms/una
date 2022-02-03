@@ -2,6 +2,32 @@
 import url(../../../../../timeline/template/css/view.css);
 --*/
 
+/*--- Dynamic Browsing: Menu ---*/
+.bx-tl-menu-feeds.bx-menu-ver li img, 
+.bx-tl-menu-feeds.bx-menu-ver li .sys-icon {
+    display: inline-block;
+    vertical-align: top;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 1.0rem;
+}
+.bx-tl-menu-feeds.bx-menu-ver li .bx-menu-show {
+    display: none;
+}
+.bx-tl-menu-feeds.bx-menu-ver li .bx-menu-hide {
+    display: inline;
+}
+.bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-show {
+    display: inline;
+}
+.bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-hide {
+    display: none;
+}
+.bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-item-subitems {
+    display: none;
+}
+
 /*--- Filters Style ---*/
 div.bx-tl-view-filters {
     min-width: 14rem;

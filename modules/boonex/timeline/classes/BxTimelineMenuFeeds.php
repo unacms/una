@@ -97,7 +97,10 @@ class BxTimelineMenuFeeds extends BxTemplMenu
             return $this->_oModule->_oTemplate->parseHtmlByName('menu_item_divider.html', []);
 
         $aResult = parent::_getMenuItem($a);
-        $aResult = array_merge($aResult, [
+        if(!$aResult)
+            return $aResult;
+
+        return array_merge($aResult, [
             'js_object' => $this->_sJsObject,
             'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_toggle' => [
@@ -108,8 +111,6 @@ class BxTimelineMenuFeeds extends BxTemplMenu
                 ]
             ]
         ]);
-
-        return $aResult;
     }
 }
 
