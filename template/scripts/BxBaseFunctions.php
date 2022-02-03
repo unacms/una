@@ -160,15 +160,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             'content' => $sContent
         ));
     }
-    
+
     function getIcon($sCode, $aAttrs = array())
     {
         $sIconFont = false;
         $sIconA = false;
         $sIconUrl = false;
-		$sIconHtml = false;
+        $sIconHtml = false;
         $sIconFontWithHtml = false;
-        
+
         $sClass = '';
         if(!empty($aAttrs['class'])) {
             $sClass = ' ' . $aAttrs['class'] .' ';
@@ -178,30 +178,30 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         $sAttrs = '';
         foreach($aAttrs as $sKey => $sValue)
             $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
-		
+
         if (!empty($sCode)) {
-            if ((int)$sCode > 0 ) {
+            if ((int)$sCode > 0) {
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$sCode) : false;
-            } else {
-				//svg
-                if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false){
-                    if (strpos($sCode, '&lt;svg') !== false)
+            } 
+            else {
+                //--- Process Inline SVG
+                if (strpos($sCode, '&lt;svg') !== false || strpos($sCode, '<svg') !== false) {
+                    if(strpos($sCode, '&lt;svg') !== false)
                         $sIconHtml = htmlspecialchars_decode($sCode);
                     else
                         $sIconHtml = $sCode;    
-					$sClass .= 'sys-icon sys-icon-svg ';
-					if ($sClass != '' && strpos($sIconHtml, 'class="') !== false)
-						$sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
-					else
-						$sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
-                    
+
+                    $sClass .= 'sys-icon sys-icon-svg ';
+                    if ($sClass != '' && strpos($sIconHtml, 'class="') !== false)
+                        $sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
+                    else
+                        $sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);
+
                     if ($sAttrs != '')
-				        $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
-				}
-				else{
-					//emoji
-                
+                        $sIconHtml = str_replace('<svg', '<svg ' . $sAttrs . ' ', $sIconHtml);
+                }
+                else {
                     $sEmojIsRegex =
                         '/[\x{0080}-\x{02AF}'
                         .'\x{0300}-\x{03FF}'
@@ -229,33 +229,45 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                         .'\x{1F680}-\x{1F6FF}'
                         .'\x{1F910}-\x{1F96B}'
                         .'\x{1F980}-\x{1F9E0}]/u';
-                    if(preg_match($sEmojIsRegex, $sCode, $aTmp)){
-						$sIconHtml = $this->_oTemplate->parseHtmlByName('icon_emoji.html', array('icon' => $sCode, 'class' => $sClass, 'attrs' => $sAttrs));
-					}
-                    else{
-						if (false === strpos($sCode, '.')) { 
-							if (0 === strncmp($sCode, 'a:', 2)){
-								$sIconA = substr($sCode, 2); // animated icon
-                            }
-							else{
-								$sIconFont = $sCode; // font icons
+
+                    //--- Process Emoji
+                    if(preg_match($sEmojIsRegex, $sCode, $aTmp))
+                        $sIconHtml = $this->_oTemplate->parseHtmlByName('icon_emoji.html', array(
+                            'icon' => $sCode, 
+                            'class' => $sClass, 
+                            'attrs' => $sAttrs
+                        ));
+                    else {
+                        if (strpos($sCode, '.') === false) {
+                            //--- Process animated icon
+                            if (strncmp($sCode, 'a:', 2) === 0)
+                                $sIconA = substr($sCode, 2);
+                            //--- Process font icons
+                            else {
+                                $sIconFont = $sCode;
                                 $sIconFontWithHtml = $this->getFontIconAsHtml($sIconFont, $sClass, $sAttrs);
                             }
-						} else {
-							$sIconUrl = $this->_oTemplate->getIconUrl($sCode);
-						}
-					}
-				}
+                        } 
+                        else {
+                            //--- Process common image
+                            if((!preg_match('/^https?:\/\//', $sCode)))
+                                $sIconUrl = $this->_oTemplate->getIconUrl($sCode);
+                            else
+                                $sIconUrl = $sCode;
+                        }
+                    }
+                }
             }
         }
+
         return array ($sIconFont, $sIconUrl, $sIconA, $sIconHtml, $sIconFontWithHtml);
     }
-      
+
     function getFontIconAsHtml($sIconFont, $sClass = '', $sAttrs = '')
     {
         return  '<i class="sys-icon ' . $sIconFont .' ' . $sClass . '"' . $sAttrs . '></i>';
     }
-    
+
     function getIconAsHtml($sCode, $aAttrs = array())
     {
         $aIcons = $this->getIcon($sCode, $aAttrs);

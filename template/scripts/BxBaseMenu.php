@@ -255,7 +255,7 @@ class BxBaseMenu extends BxDolMenu
                     $aSubitems[] = $aSubitem;
             }
 
-            $aTmplVarsSubitems['subitems'] = $this->_oTemplate->parseHtmlByName(str_replace('.html', '_subitems.html', $this->_aObject['template']), array(
+            $aTmplVarsSubitems['subitems'] = $this->_oTemplate->parseHtmlByName(str_replace('.html', '_subitems.html', $this->getTemplateName()), array(
                 'bx_repeat:menu_items' => $aSubitems,
             ));
         }

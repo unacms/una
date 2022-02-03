@@ -12,6 +12,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_timeline' OR `object` IN('bx
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_timeline';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_timeline';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_timeline' OR `set_name` IN('bx_timeline_menu_view', 'bx_timeline_menu_feeds', 'bx_timeline_menu_item_share', 'bx_timeline_menu_item_manage', 'bx_timeline_menu_item_actions', 'bx_timeline_menu_item_actions', 'bx_timeline_menu_item_counters', 'bx_timeline_menu_item_meta', 'bx_timeline_menu_post_attachments');
+DELETE FROM `sys_menu_templates` WHERE `template`='menu_feeds.html' AND `title`='_bx_timeline_menu_template_title_feeds';
 
 
 -- SETTINGS

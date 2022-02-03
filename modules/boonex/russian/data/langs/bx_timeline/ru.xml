@@ -197,6 +197,11 @@
     <string name="_bx_timeline_menu_item_title_system_hot"><![CDATA[Популярное]]></string>
     <string name="_bx_timeline_menu_item_title_hot"><![CDATA[Популярное]]></string>
 
+    <string name="_bx_timeline_menu_title_feeds"><![CDATA[Хроники]]></string>
+    <string name="_bx_timeline_menu_set_title_feeds"><![CDATA[Хроники]]></string>
+    <string name="_bx_timeline_menu_template_title_feeds"><![CDATA[Хроники]]></string>
+    <string name="_bx_timeline_menu_item_title_system_divider"><![CDATA[Разделитель]]></string>
+
     <string name="_bx_timeline_menu_item_view_all"><![CDATA[Все сообщения]]></string>
     <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Сообщения от {0}]]></string>
     <string name="_bx_timeline_menu_item_view_other"><![CDATA[Сообщения от других]]></string>

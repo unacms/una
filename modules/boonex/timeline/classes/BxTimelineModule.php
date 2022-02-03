@@ -1374,36 +1374,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'form_display' => $this->_oConfig->getPostFormDisplay($sType)
         ));
     }
-    
-    /**
-     * @page service Service Calls
-     * @section bx_timeline Timeline
-     * @subsection bx_timeline-page_blocks Page Blocks
-     * @subsubsection bx_timeline-get_block_post_custom get_block_post_custom
-     * 
-     * @code bx_srv('bx_timeline', 'get_block_post_custom', [...]); @endcode
-     * 
-     * Get Post block for the Custom timeline.
-     *
-     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
-     * 
-     * @see BxTimelineModule::serviceGetBlockPostCustom
-     */
-    /** 
-     * @ref bx_timeline-get_block_post_custom "get_block_post_custom"
-     */
-    public function serviceGetBlockPostCustom($aParams)
-    {
-        if(!isLogged())
-            return '';
-
-        $iProfileId = $this->getProfileId();
-
-        if (!isset($aParams['form_display']))
-            $aParams['form_display'] = $this->_oConfig->getPostFormDisplay($aParams['type']);
-        
-        return $this->_getBlockPost($iProfileId, $aParams);
-    }
 
     /**
      * @page service Service Calls
@@ -1856,6 +1826,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['type'] = $sType;
 
         $sMenu = $this->_oConfig->getObject('menu_feeds');
+        if(isset($aParams['menu_feeds'])) {
+            $sMenu = $aParams['menu_feeds'];
+            unset($aParams['menu_feeds']);
+        }
         $oMenu = BxDolMenu::getObjectInstance($sMenu);
         if(!$oMenu)
             return '';
@@ -4817,6 +4791,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['modules']) || !is_array($aParams['modules']))
             $aParams['modules'] = array();
 
+        if(empty($aParams['context']))
+            $aParams['context'] = 0;
+
         if(empty($aParams['blink']) || !is_array($aParams['blink']))
             $aParams['blink'] = array();
 
@@ -4859,6 +4836,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams['modules'] = bx_get('modules');
         $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : array();
+
+        $aParams['context'] = bx_get('context');
+        $aParams['context'] = $aParams['context'] !== false ? bx_process_input($aParams['context'], BX_DATA_INT) : 0;
 
         $aParams['blink'] = bx_get('blink');
         $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();

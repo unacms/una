@@ -2691,7 +2691,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 if(isset($aMatches[1]) && !empty($aMatches[1])) {
                     if(is_array($aValuesSrc[$i]))
                         foreach($aValuesSrc[$i] as $aValue)
-                            $sValue .= $this->parseHtmlByContent($aMatches[1], $aValue, $mixedKeyWrapperHtml);
+                            if(is_array($aValue))
+                                $sValue .= $this->parseHtmlByContent($aMatches[1], $aValue, $mixedKeyWrapperHtml);
+                            else if(is_string($aValue))
+                                $sValue .= $aValue;
                     else if(is_string($aValuesSrc[$i]))
                         $sValue = $aValuesSrc[$i];
                 }

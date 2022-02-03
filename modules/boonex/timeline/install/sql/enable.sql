@@ -112,8 +112,12 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_view', 'bx_timeline', 'hot', '_bx_timeline_menu_item_title_system_hot', '_bx_timeline_menu_item_title_hot', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''hot'')', '_self', '', '', 2147483647, 1, 0, 4);
 
 -- MENU: Feeds
+INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
+(ROUND(RAND()*(9999 - 1000) + 1000), 'menu_feeds.html', '_bx_timeline_menu_template_title_feeds', 1);
+SET @iTemplId = (SELECT `id` FROM `sys_menu_templates` WHERE `template`='menu_feeds.html' AND `title`='_bx_timeline_menu_template_title_feeds' LIMIT 1);
+
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_timeline_menu_feeds', '_bx_timeline_menu_title_feeds', 'bx_timeline_menu_feeds', 'bx_timeline', 20, 0, 1, 'BxTimelineMenuFeeds', 'modules/boonex/timeline/classes/BxTimelineMenuFeeds.php');
+('bx_timeline_menu_feeds', '_bx_timeline_menu_title_feeds', 'bx_timeline_menu_feeds', 'bx_timeline', @iTemplId, 0, 1, 'BxTimelineMenuFeeds', 'modules/boonex/timeline/classes/BxTimelineMenuFeeds.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_timeline_menu_feeds', 'bx_timeline', '_bx_timeline_menu_set_title_feeds', 0);

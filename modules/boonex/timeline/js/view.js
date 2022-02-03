@@ -374,8 +374,9 @@ BxTimelineView.prototype.changeFeed = function(oLink, sType, oRequestParams)
 
     var oTab = $(oLink);
     var sTabActive = 'bx-menu-tab-active';
-    oTab.parents('ul:first').find('li.' + sTabActive).removeClass(sTabActive);
-    oTab.parents('li:first').addClass(sTabActive);
+    var sTabActiveBg = 'bx-def-color-bg-active';
+    oTab.parents('ul.' + this.sSP + '-menu-feeds').find('li.' + sTabActive).removeClass(sTabActive + ' ' + sTabActiveBg);
+    oTab.parents('li:first').addClass(sTabActive + ' ' + sTabActiveBg);
 
     this.loadingIn(oLink, true);
 
@@ -395,6 +396,8 @@ BxTimelineView.prototype.changeFeed = function(oLink, sType, oRequestParams)
         },
         'json'
     );
+
+    return false;
 };
 
 BxTimelineView.prototype.changeFeedFilters = function(oLink, oRequestParams)
@@ -438,6 +441,11 @@ BxTimelineView.prototype.changeFeedFilters = function(oLink, oRequestParams)
         },
         'json'
     );
+};
+
+BxTimelineView.prototype.toggleMenuItemFeeds = function(oSource)
+{
+    $(oSource).parents('li:first').toggleClass('bx-menu-item-collapsed');
 };
 
 BxTimelineView.prototype.onFilterByModuleChange = function(oSource)

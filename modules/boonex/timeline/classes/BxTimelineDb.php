@@ -976,6 +976,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedJoinClause['p1'] .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
 
                 $mixedWhereSubclause['p1'] = "NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+                if(!empty($aParams['context']))
+                    $mixedWhereSubclause['p1'] .= $this->prepareAsString(" AND `" . $aJoin1['table_alias'] . "`.`content`=?", $aParams['context']);
 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now.
@@ -1056,6 +1058,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'link' => 'javascript:void(0)', 
             'onclick' => "javascript:{js_object_view}.changeFeed(this, '" . $sModule . "')", 
             'target' => '_self',
+            'collapsed' => 1,
             'order' => $iOrder
         ]));
     }

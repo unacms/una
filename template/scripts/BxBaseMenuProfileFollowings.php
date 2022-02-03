@@ -64,16 +64,6 @@ class BxBaseMenuProfileFollowings extends BxTemplMenu
         return $aMenuItems;
     }
 
-    protected function _getMenuIcon ($a)
-    {
-        list($sIcon, $sIconUrl, $sIconA, $sIconHtml) = parent::_getMenuIcon($a);
-
-        if(!$sIcon && !$sIconUrl && !$sIconA && !$sIconHtml && !empty($a['icon']) && strpos($a['icon'], '.') !== false)
-            $sIconUrl = $a['icon'];
-
-        return array($sIcon, $sIconUrl, $sIconA, $sIconHtml);
-    }
-
     protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
     {
         $aAddon = parent::_getTmplVarsAddon($mixedAddon, $aMenuItem);
