@@ -93,7 +93,7 @@ class BxTimelineMenuFeeds extends BxTemplMenu
     
     protected function _getMenuItem ($a)
     {
-        if($a['name'] == 'divider')
+        if($a['name'] == 'divider' && parent::_getMenuItem($a) !== false) 
             return $this->_oModule->_oTemplate->parseHtmlByName('menu_item_divider.html', []);
 
         $aResult = parent::_getMenuItem($a);
