@@ -1,5 +1,4 @@
-.@{bx-root-class-name}{
-
+.@{bx-root-class-name} {
     @import '../../../../../../../template/css/default.less';
 
     /**
@@ -7,16 +6,6 @@
      * because Input and Button can be positioned in one line.
      */
     @base-input-box-sizing: border-box;
-
-
-    /* viewport */
-    html.bx-media-tablet {
-        font-size: @bx-viewport-font-tablet !important;
-    }
-
-    html.bx-media-phone {
-        font-size: @bx-viewport-font-mobile !important;
-    }
 
     /* height */
     .bx-header {
@@ -1194,7 +1183,6 @@
         transition: background-color 0.2s ease-in-out;
     }
 
-
     /* grid */
     .bx-def-color-bg-page .bx-grid-table-wrapper2:before {
         background: @bx-color-page-gradient-left;
@@ -1209,4 +1197,13 @@
     .bx-def-color-bg-block .bx-grid-table-wrapper2:after {
         background: @bx-color-block-gradient-right;
     }
+}
+
+/* viewport */
+html.@{bx-root-class-name}.bx-media-tablet {
+    font-size: @bx-viewport-font-tablet;
+}
+
+html.@{bx-root-class-name}.bx-media-phone {
+    font-size: @bx-viewport-font-mobile;
 }

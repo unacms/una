@@ -1,5 +1,4 @@
-.@{bx-root-class-name}{
-
+.@{bx-root-class-name} {
     @import '../../../../../../../template/css/default.less';
 
     /**
@@ -8,15 +7,6 @@
      */
     @base-input-box-sizing: border-box;
 
-
-    /* viewport */
-    html.bx-media-tablet {
-        font-size: @bx-viewport-font-tablet !important;
-    }
-
-    html.bx-media-phone {
-        font-size: @bx-viewport-font-mobile !important;
-    }
 
     /* height */
     .bx-header {
@@ -1311,5 +1301,13 @@
     div.bx-tl-item-comments-holder div.bx-tl-item-comments .cmts.cmts-margin {
         .font-size(@bx-font-size-default);
     }
+}
 
+/* viewport */
+html.@{bx-root-class-name}.bx-media-tablet {
+    font-size: @bx-viewport-font-tablet;
+}
+
+html.@{bx-root-class-name}.bx-media-phone {
+    font-size: @bx-viewport-font-mobile;
 }
