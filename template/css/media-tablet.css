@@ -42,6 +42,9 @@ html.bx-media-tablet {
     width:auto;
 }
 
+.bx-media-tablet .bx-pt-application .bx-main-content.bx-def-page-width {
+    width: 100%;
+}
 
 /* page layouts */
 .bx-media-tablet .bx-layout-wrapper.bx-layout-top-area-bcb .bx-layout-col {
@@ -49,7 +52,7 @@ html.bx-media-tablet {
     width:auto !important;
 }
 .bx-media-tablet .bx-layout-wrapper.bx-layout-top-area-bcb .bx-layout-col .bx-layout-cell {
-	padding-left: 0 !important;
-	padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 

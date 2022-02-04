@@ -34,12 +34,12 @@ class BxArtificerModule extends BxBaseModTemplateModule
         ]);
     }
 
-    public function serviceIncludeCssJs()
+    public function serviceIncludeCssJs($sType)
     {
         if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
             return '';
 
-        return $this->_oTemplate->getIncludeCssJs();
+        return $this->_oTemplate->getIncludeCssJs($sType);
     }
 
     public function serviceGetSplashMarker($sName)

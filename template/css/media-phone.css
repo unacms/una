@@ -42,7 +42,11 @@ html.bx-media-phone {
 /* default.css */ 
 
 .bx-media-phone .bx-def-page-width {
-    width:auto;
+    width: auto;
+}
+
+.bx-media-phone .bx-pt-application .bx-main-content.bx-def-page-width {
+    width: 100%;
 }
 
 .bx-media-phone .bx-page-wrapper.bx-def-padding-sec-leftright {

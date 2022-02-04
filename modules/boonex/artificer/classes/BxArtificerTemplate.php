@@ -20,21 +20,35 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function getIncludeCssJs()
+    public function getIncludeCssJs($sType)
     {
-        $this->addCss(array(
-            'main.css'
-        ));
-        
-        $this->addJs(array(
-            'utils.js'
-        ));
+        $sResult = '';
 
-    	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
-        if(!empty($sCss))
-            $sCss = $this->_wrapInTagCssCode($sCss);
+        switch($sType) {
+            case 'head':
+                $this->addCss([
+                    'main.css'
+                ]);
 
-        return $sCss;
+                $this->addJs([
+                    'utils.js'
+                ]);
+
+                $sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
+                if(!empty($sCss))
+                    $sCss = $this->_wrapInTagCssCode($sCss);
+                
+                $sResult .= $sCss;
+                break;
+
+            case 'footer':
+                $sResult .= $this->addJs([
+                    'sidebar.js'
+                ], true);
+                break;
+        }
+
+        return $sResult;
     }
 
     public function getHeader()

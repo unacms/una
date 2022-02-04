@@ -29,4 +29,5 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 -- injections
 INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
-(@sName, 0, 'injection_head', 'service', 'a:2:{s:6:"module";s:12:"bx_artificer";s:6:"method";s:14:"include_css_js";}', 0, 1);
+('bx_artificer_head', 0, 'injection_head', 'service', 'a:3:{s:6:"module";s:12:"bx_artificer";s:6:"method";s:14:"include_css_js";s:6:"params";a:1:{i:0;s:4:"head";}}', 0, 1),
+('bx_artificer_footer', 0, 'injection_footer', 'service', 'a:3:{s:6:"module";s:12:"bx_artificer";s:6:"method";s:14:"include_css_js";s:6:"params";a:1:{i:0;s:6:"footer";}}', 0, 1);

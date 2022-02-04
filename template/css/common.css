@@ -65,20 +65,38 @@ blockquote {
 }
 
 .bx-main-content {
+    -webkit-flex-grow: 3;
+    flex-grow: 3;
+
     position: relative;
     display: -webkit-flex;
     display: flex;
+
+    height: 100%;
 }
 .bx-main-column.narrow {
+    display: none;
+
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
-    width: 25%;
+    
+    width: 0;
 }
 .bx-main-column.wide {
+    display: block;
+
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
+
+    width: 100%;
+}
+.bx-media-desktop .bx-main-column.narrow {
+    display: block;
+    width: 25%;
+}
+.bx-media-desktop .bx-main-column.wide {
     width: 75%;
 }
 .bx-main-content .bx-main-column .bx-def-page-width {
