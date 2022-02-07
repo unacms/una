@@ -2,19 +2,20 @@ div.bx-std-page {
 
 }
 div.bx-std-login-form {
-	width: 595px;
+	width: 635px;
 	height: auto;
+}
+form.bx-std-login-form {
+    display: flex;
 }
 div.bx-std-login-form {}
 div.bx-std-lf-input {
 	position: relative;
-	float: left;
 	width: 225px;
 	margin-right: 10px;
 }
 div.bx-std-lf-submit {
 	position: relative;
-    float: left;
     width: 125px;
 }
 div.bx-std-lf-submit .bx-btn {
