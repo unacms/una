@@ -57,7 +57,7 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         if(!$oComments || !$oComments->isEnabled())
             return false;
 
-        return $this->getUnitMetaItemCustom($oComments->getElementInline(array('show_counter' => true)));
+        return $this->getUnitMetaItemCustom('<i class="sys-icon comment "></i> ' . $oComments->getCommentsCountAll());
     }
 
     protected function _getMenuItemReplyAuthor($aItem)
@@ -100,20 +100,18 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
-        $sIcon = '';
+        $sStatus = '';
         if ($this->_aContentInfo['resolvable']){
             if ($this->_aContentInfo['resolved']){
-                $sIcon .= 'check-circle';
+                $sStatus .= _t('_bx_forum_grid_filter_resolved_resolved');
             }
             else{
-                $sIcon .= 'question-circle';
-            }   
+                $sStatus .= _t('_bx_forum_grid_filter_resolved_unresolved');
+            }  
+            
+            return $this->getUnitMetaItemCustom($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['status' => $sStatus, 'status_class' => $this->_aContentInfo['resolved']])); 
         }
-        else{
-            $sIcon .= 'comment'; 
-        }
-        return $this->getUnitMetaItemCustom($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['icon' => $sIcon , 'counter' => (int)$oObject->getCommentsCountAll()])); 
+        return '';
     }
     
     protected function _getMenuItemBadges($aItem)
