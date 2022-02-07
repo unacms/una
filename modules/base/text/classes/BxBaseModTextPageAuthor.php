@@ -31,24 +31,33 @@ class BxBaseModTextPageAuthor extends BxTemplPage
         if (!$this->_aProfileInfo || !$this->_oProfile)
             return;
 
-        //set cover
-        $sProfileModule = $this->_oProfile->getModule();
-        if(BxDolRequest::serviceExists($sProfileModule, 'set_view_profile_cover')) {
-            $aProfileInfoFull = BxDolService::call($sProfileModule, 'get_all', array(array('type' => 'id', 'id' => $this->_oProfile->getContentId())));
-
-            BxDolService::call($sProfileModule, 'set_view_profile_cover', array($this, $aProfileInfoFull));
+        if(bx_process_input(bx_get('owner'), BX_DATA_INT) == 1) {
+            // select item in Profile Stats menu
+            $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
+            if($oMenu && isset($this->_aObject['module']) && ($oModuleContent = BxDolModule::getInstance($this->_aObject['module']))) {
+                $oMenu->setSelected($this->_aObject['module'], 'profile-stats-my-' . $oModuleContent->_oConfig->getUri());
+            }
         }
+        else {
+            //set cover
+            $sProfileModule = $this->_oProfile->getModule();
+            if(BxDolRequest::serviceExists($sProfileModule, 'set_view_profile_cover')) {
+                $aProfileInfoFull = BxDolService::call($sProfileModule, 'get_all', array(array('type' => 'id', 'id' => $this->_oProfile->getContentId())));
 
-        // select view profile submenu
-        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        if ($oMenuSubmenu) {
-            $sProfileObject = BxDolService::call($this->_oProfile->getModule(), 'get_submenu_object');
-            if ($sProfileObject)
-                $oMenuSubmenu->setObjectSubmenu($sProfileObject, array (
-                    'title' => $this->_oProfile->getDisplayName(),
-                    'link' => $this->_oProfile->getUrl(),
-                    'icon' => $this->_oProfile->getIconModule(),
-                ));
+                BxDolService::call($sProfileModule, 'set_view_profile_cover', array($this, $aProfileInfoFull));
+            }
+
+            // select view profile submenu
+            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+            if ($oMenuSubmenu) {
+                $sProfileObject = BxDolService::call($this->_oProfile->getModule(), 'get_submenu_object');
+                if ($sProfileObject)
+                    $oMenuSubmenu->setObjectSubmenu($sProfileObject, array (
+                        'title' => $this->_oProfile->getDisplayName(),
+                        'link' => $this->_oProfile->getUrl(),
+                        'icon' => $this->_oProfile->getIconModule(),
+                    ));
+            }
         }
 
         // add replaceable markers

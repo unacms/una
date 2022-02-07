@@ -100,6 +100,16 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
 
         return $aResult;
     }
+    
+    protected function _getMenuItem($a)
+    {
+        if(isset($a['link']))
+            $a['link'] = bx_append_url_params($a['link'], [
+                'owner' => 1
+            ]);
+
+        return parent::_getMenuItem($a);
+    }
 }
 
 /** @} */
