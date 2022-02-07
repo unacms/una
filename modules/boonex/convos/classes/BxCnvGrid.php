@@ -32,9 +32,9 @@ class BxCnvGrid extends BxBaseModGeneralGridAdministration
         
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
-        	'' => _t('_bx_cnv_grid_filter_item_title_adm_all'),
+            '' => _t('_bx_cnv_grid_filter_item_title_adm_all'),
             'unread' => _t('_bx_cnv_grid_filter_item_title_adm_unread'),
-		);
+        );
         
     	$sFilter1 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter1)) {
@@ -65,16 +65,16 @@ class BxCnvGrid extends BxBaseModGeneralGridAdministration
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
     
-    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues, $bAddSelectOne = true)
     {
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
-		$CNF = &$this->_oModule->_oConfig->CNF;
-		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
-		foreach($aFilterValues as $sKey => $sValue)
-			$aFilterValues[$sKey] = _t($sValue);
+        foreach($aFilterValues as $sKey => $sValue)
+            $aFilterValues[$sKey] = _t($sValue);
 
         $aInputModules = array(
             'type' => 'select',

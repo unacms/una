@@ -260,7 +260,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: profile stats
 SET @iPStatsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'bx_timeline', 'profile-stats-manage-timeline', '_bx_timeline_menu_item_title_system_manage_my_timeline', '_bx_timeline_menu_item_title_manage_my_timeline', 'page.php?i=timeline-manage', '', '_self', 'far clock col-green1', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:28:"get_menu_addon_profile_stats";}', '', 2147483646, 1, 0, @iPStatsMenuOrder + 2);
+('sys_profile_stats', 'bx_timeline', 'profile-stats-my-timeline', '_bx_timeline_menu_item_title_system_manage_my_timeline', '_bx_timeline_menu_item_title_manage_my_timeline', 'page.php?i=timeline-view?profile_id={member_id}', '', '_self', 'far clock col-green1', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:28:"get_menu_addon_profile_stats";}', '', 2147483646, 1, 0, @iPStatsMenuOrder + 2);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);

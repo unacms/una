@@ -1,3 +1,10 @@
+/* --------------- general */
+
+li.bx-mi-aux {}
+li.bx-mi-hidden {
+    display: none;
+}
+
 /* --------------- horizontal menu */
 
 ul.bx-menu-hor,

@@ -34,6 +34,14 @@ import url(../../../../../../../template/css/general.css);
     display: none;
 }
 
+/*--- Profile Stats ---*/
+.bx-menu-profile-stats li.bx-psmi-show-more:hover {
+    background-color: transparent;
+}
+.bx-menu-profile-stats li.bx-psmi-show-more .bx-menu-item-icon {
+    display: none;
+}
+
 
 /*--- Author Info ---*/
 .sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li:first-child .bx-base-general-unit-meta-div {

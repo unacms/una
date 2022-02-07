@@ -410,6 +410,17 @@ div.bx-account-unit-online {
     text-overflow: ellipsis;
 }
 
+.bx-menu-profile-stats li.bx-psmi-show-more:hover {
+    background-color: transparent;
+}
+.bx-menu-profile-stats li.bx-psmi-show-more .bx-menu-item-icon {
+    display: none;
+}
+.bx-menu-profile-stats li.bx-psmi-show-more .bx-menu-item-title {
+    margin-left: 0;
+}
+
+
 /* --------------- Join/Login Forms */
 
 #sys_account .bx-form-element .bx-form-input-submit.bx-btn,
