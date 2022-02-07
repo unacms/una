@@ -208,6 +208,28 @@ class BxForumTemplate extends BxBaseModTextTemplate
     {
         return '';
     }
+    
+    protected function getUnit ($aData, $aParams = array())
+    {
+        $aTmplVars = parent::getUnit($aData, $aParams);
+        
+        $CNF = $this->_oModule->_oConfig->CNF;
+        
+        $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+        
+        $sIcon = $this->_oModule->_oTemplate->parseHtmlByName('default_category.html', []);
+        
+        $aCategoryData = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $aData[$CNF['FIELD_CATEGORY']]));
+
+        if(isset($aCategoryData['icon']))
+            $sIcon = $this->getImage($aCategoryData['icon'], array('class' => 'sys-icon'));
+        
+        $aTmplVars['category'] = $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]);
+        $aTmplVars['category_icon'] = $sIcon;
+        
+
+        return $aTmplVars;
+    }
 }
 
 /** @} */

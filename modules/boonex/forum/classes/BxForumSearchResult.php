@@ -21,7 +21,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_forum',
             'title' => _t('_bx_forum_page_title_browse'),
             'table' => 'bx_forum_discussions',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'comments', 'lr_profile_id'),
+            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'comments', 'lr_profile_id', 'cat'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

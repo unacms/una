@@ -20,3 +20,13 @@ body,
 .bx-embed > div{
     padding: 0px !important;
 }
+
+.bx-embed #bx-logo{
+    max-height: 2rem !important;
+}
+.bx-embed-video-caption{
+    background: rgba(0, 0 ,0, 0.7);
+}
+.bx-embed-video-caption A{
+    color:white;
+}

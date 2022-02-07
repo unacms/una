@@ -349,7 +349,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_forum_snippet_meta_main', 'bx_forum', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'status', '_bx_forum_menu_item_title_system_sm_status', '_bx_forum_menu_item_title_sm_status', '', '', '', '', '', 2147483647, 1, 0, 1, 4),
-('bx_forum_snippet_meta_main', 'bx_forum', 'badges', '_bx_forum_menu_item_title_system_sm_badges', '_bx_forum_menu_item_title_sm_badges', '', '', '', '', '', 2147483647, 1, 0, 1, 5);
+('bx_forum_snippet_meta_main', 'bx_forum', 'badges', '_bx_forum_menu_item_title_system_sm_badges', '_bx_forum_menu_item_title_sm_badges', '', '', '', '', '', 2147483647, 1, 0, 1, 5),
+('bx_forum_snippet_meta_main', 'bx_forum', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 1, 0, 1, 6);
 
 -- MENU: custom menu for 'counters' snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -407,10 +408,10 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_forum_feature', 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` %s FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'title,text,text_comments', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-(@sName, 'rating', '', '5%', '', 1),
-(@sName, 'category', '', '10%', '', 2),
-(@sName, 'text', '', '75%', '', 3),
-(@sName, 'participants', '', '10%', '', 4),
+(@sName, 'category', '', '10%', '', 1),
+(@sName, 'text', '', '75%', '', 2),
+(@sName, 'participants', '', '10%', '', 3),
+(@sName, 'rating', '', '5%', '', 4),
 
 ('bx_forum_favorite', 'author', '', '10%', '', 1),
 ('bx_forum_favorite', 'text', '', '90%', '', 2),
