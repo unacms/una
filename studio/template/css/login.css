@@ -1,6 +1,3 @@
-div.bx-std-page {
-
-}
 div.bx-std-login-form {
 	width: 635px;
 	height: auto;
@@ -20,7 +17,6 @@ div.bx-std-lf-submit {
 }
 div.bx-std-lf-submit .bx-btn {
 	width: 125px;
-
 	-moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;

@@ -25,8 +25,8 @@ body,
     max-height: 2rem !important;
 }
 .bx-embed-video-caption{
-    background: rgba(0, 0 ,0, 0.7);
+    background: linear-gradient(rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
 }
 .bx-embed-video-caption A{
-    color:white;
+    color: #fff;
 }
