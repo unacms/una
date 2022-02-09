@@ -725,6 +725,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     protected $oTemplate;
 
     protected $_isValid = true;
+    protected $_bForceSetToPending = false;
     protected $_sChecker;
     protected $_sCheckerHelper;
     protected $_aSpecificValues;
@@ -858,6 +859,10 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 $this->_isValid = false;
 
         }
+
+        bx_alert('system', 'form_check', 0, 0, array(
+            'object' => &$this,
+        ));
     }
 
     function getKeyValuesPair ()
@@ -873,25 +878,71 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function insert ($aValsToAdd = array(), $isIgnore = false)
     {
+        $this->autoSetToPending($aValsToAdd);
+
         $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbInsert($this->aParams['db'], $this->aInputs, $aValsToAdd, $isIgnore);
         if (!$sSql)
             return false;
         $oDb = BxDolDb::getInstance();
-        if ($oDb->query($sSql))
-            return $oDb->lastId();
+        if ($oDb->query($sSql)) {
+            $iRes = $oDb->lastId();
+
+            bx_alert('system', 'form_submitted', $iRes, bx_get_logged_profile_id(), array(
+                'module' => isset($this->aParams['module']) ? $this->aParams['module'] : '',
+                'entry_id' => $iRes,
+                'action' => 'insert',
+                'form_object' => &$this,
+            ));
+
+            return $iRes;
+        }
         return false;
     }
 
     function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
+        $this->autoSetToPending($aValsToAdd);
+
         $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbUpdate($val, $this->aParams['db'], $this->aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
         if (!$sSql)
             return false;
-        return BxDolDb::getInstance()->query($sSql);
+        $bRes = BxDolDb::getInstance()->query($sSql);
+
+        bx_alert('system', 'form_submitted', $val, bx_get_logged_profile_id(), array(
+            'module' => isset($this->aParams['module']) ? $this->aParams['module'] : '',
+            'entry_id' => $val,
+            'action' => 'update',
+            'form_object' => &$this,
+        ));
+
+        return $bRes;
+    }
+
+    function isStatusFieldSupported() {
+        // check whether we have a status field available for this type of content
+        if (isset($this->aParams['module']) && $this->aParams['module'] && $oModule = BxDolModule::getInstance($this->aParams['module'])) {
+            $CNF = &$oModule->_oConfig->CNF;
+            if ((isset($CNF['FIELD_STATUS_ADMIN']) || isset($CNF['FIELD_STATUS'])) &&
+                isset($this->aParams['db']['table']) && isset($CNF['TABLE_ENTRIES']) && $this->aParams['db']['table'] == $CNF['TABLE_ENTRIES']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function autoSetToPending(&$aValsToAdd) {
+        if ($this->isStatusFieldSupported() && $this->_bForceSetToPending) {
+            $oModule = BxDolModule::getInstance($this->aParams['module']);
+            $CNF = &$oModule->_oConfig->CNF;
+
+            if (isset($CNF['FIELD_STATUS_ADMIN'])) $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_TEXT_STATUS_HIDDEN;
+            elseif (isset($CNF['FIELD_STATUS'])) $aValsToAdd[$CNF['FIELD_STATUS']] = BX_BASE_MOD_TEXT_STATUS_AWAITING;
+        }
     }
 
     function delete ($val)
@@ -954,6 +1005,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function setName($sName)
     {
         $this->aFormAttrs['name'] = $sName;
+    }
+
+    function setForceSetToPending ($isValid)
+    {
+        $this->_bForceSetToPending = $isValid;
     }
 
     function setValid ($isValid)

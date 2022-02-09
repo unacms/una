@@ -11,6 +11,8 @@
 
 class BxAntispamModule extends BxDolModule
 {
+    private $_bLastSubmittedFormWasToxic;
+
     public function __construct(&$aModule)
     {
         parent::__construct($aModule);
@@ -132,6 +134,160 @@ class BxAntispamModule extends BxDolModule
             return true;
 
         return false;
+    }
+
+    /**
+     * Check text for toxicity.
+     * It can send report if toxic content is found or tries to inform caller to block the content (depending on configuration).
+     *
+     * @param $sContent content to check for spam
+     * @param $sIp IP address of content poster
+     * @param $isStripSlashes slashes parameter:
+     *          BX_SLASHES_AUTO - automatically detect magic_quotes_gpc setting
+     *          BX_SLASHES_NO_ACTION - do not perform any action with slashes
+     * @return true if spam detected and content shouln't be recorded, false if content should be processed as usual.
+     */
+    public function serviceIsToxic ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
+    {
+        if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
+            return false;
+
+        static $aQuickCache;
+        $key = md5($sContent);
+        if (isset($aQuickCache[$key]))
+            return $aQuickCache[$key];
+
+        $aQuickCache[$key] = false;
+
+        if (!$this->serviceIsIpWhitelisted($sIp)) {
+            if (version_compare(phpversion(), '7.4.0', '<') && function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)
+                $sContent = stripslashes($sContent);
+
+            if ('on' == $this->_oConfig->getAntispamOption('toxicity_enable')) {
+                $oPerspectiveAPI = bx_instance('BxAntispamPerspectiveAPI', array(), $this->_aModule);
+                if ($oPerspectiveAPI->isToxic($sContent)) {
+                    $oPerspectiveAPI->onPositiveDetection($sContent);
+                    $aQuickCache[$key] = true;
+                }
+            }
+        }
+
+        return $aQuickCache[$key];
+    }
+
+    public function serviceCheckFormForToxicity(&$oForm) {
+        $this->_bLastSubmittedFormWasToxic = false;
+
+        if (!$oForm->isValid() || !$oForm->isSubmitted()) return false;
+
+        $sSubmitName = false;
+        $sFormText = '';
+        foreach ($oForm->aInputs as $k => $a) {
+            if (isset($a['visible_for_levels']) && !BxDolForm::isVisible($a))
+                continue;
+
+            if (empty($a['name']) || 'submit' == $a['type'] || 'reset' == $a['type'] || 'button' == $a['type'] || 'value' == $a['type']) {
+                if (isset($a['type']) && 'submit' == $a['type'])
+                    $sSubmitName = $k;
+                continue;
+            }
+
+            if ('input_set' == $a['type'])
+                foreach ($a as $r)
+                    if (isset($r['type']) && 'submit' == $r['type'])
+                        $sSubmitName = $k;
+
+            $a['name'] = str_replace('[]', '', $a['name']);
+
+            if ($a['type'] != 'textarea' && $a['type'] != 'text')
+                continue;
+
+            $val = BxDolForm::getSubmittedValue($a['name'], $oForm->aFormAttrs['method']);
+            if (!$val)
+                continue;
+
+            $sFormText .= " ".$val; // collect all text fields into a single text
+        }
+
+        if ($this->serviceIsToxic($sFormText)) {
+            $this->_bLastSubmittedFormWasToxic = true;
+
+            $sActionrequired = $this->_oConfig->getAntispamOption('toxicity_action');
+
+            if ($sActionrequired == 'block' || $sActionrequired == 'disapprove' && !$oForm->isStatusFieldSupported()) {
+                $oForm->setValid(false);
+                $this->serviceOnToxicContentBlocked($sFormText);
+
+                if ($sSubmitName)
+                    $oForm->aInputs[$sSubmitName]['error'] = _t('_bx_antispam_form_submission_error');
+            } elseif ($sActionrequired == 'disapprove' && $oForm->isStatusFieldSupported()) {
+                $oForm->setForceSetToPending(true);
+                return false;
+            }
+        }
+    }
+
+    public function serviceOnFormSubmitted($sModule, $iEntry) {
+        if ($this->_bLastSubmittedFormWasToxic) {
+            $this->serviceOnToxicContentPosted($sModule, $iEntry);
+        }
+    }
+
+    public function serviceOnToxicContentBlocked(&$sText) {
+        if ('on' == $this->_oConfig->getAntispamOption('toxicity_report')) {
+            $oProfile = BxDolProfile::getInstance();
+            if (!$oProfile) return;
+            $aPlus = array(
+                'AuthorUrl' => $oProfile->getUrl(),
+                'AuthorNickName' => $oProfile->getDisplayName(),
+                'Page' => htmlspecialchars_adv($_SERVER['PHP_SELF']),
+                'Content' => htmlspecialchars_adv(strip_tags($sText)),
+            );
+
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_antispam_toxicity_blocked_report', $aPlus);
+            if (!$aTemplate)
+                trigger_error('Email template or translation missing: bx_antispam_toxicity_blocked_report', E_USER_ERROR);
+
+            sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
+        }
+    }
+
+    public function serviceOnToxicContentPosted($sModule, $iContentId) {
+        if ('on' == $this->_oConfig->getAntispamOption('toxicity_report') && $sModule) {
+            $oModule = BxDolModule::getInstance($sModule);
+            $CNF = &$oModule->_oConfig->CNF;
+            $sContentUrl = isset($CNF['URI_VIEW_ENTRY']) ? BX_DOL_URL_ROOT.BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId) : false;
+            $sManageContentUrl = isset($CNF['URL_MANAGE_ADMINISTRATION']) ? BX_DOL_URL_ROOT.BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URL_MANAGE_ADMINISTRATION']) : false;
+
+            $oProfile = BxDolProfile::getInstance();
+            if (!$oProfile) return;
+
+            $aPlus = array(
+                'AuthorUrl' => $oProfile->getUrl(),
+                'AuthorNickName' => $oProfile->getDisplayName(),
+                'Page' => htmlspecialchars_adv($_SERVER['PHP_SELF']),
+                'bx_if:content_url' => [
+                    'condition' => boolval($sContentUrl),
+                    'content' => ['c_url' => $sContentUrl],
+                ],
+                'bx_if:manage_content_url' => [
+                    'condition' => boolval($sManageContentUrl),
+                    'content' => ['m_url' => $sManageContentUrl],
+                ],
+            );
+
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_antispam_toxicity_posted_report', $aPlus);
+            if (!$aTemplate)
+                trigger_error('Email template or translation missing: bx_antispam_toxicity_posted_report', E_USER_ERROR);
+
+            sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
+
+            bx_alert('bx_antispam', 'toxic_content_posted', $iContentId, bx_get_logged_profile_id(), array(
+                'module' => $sModule,
+                'entry_id' => $iContentId,
+                'etrny_url' => $sContentUrl,
+            ));
+        }
     }
 
     /**
@@ -317,6 +473,18 @@ class BxAntispamModule extends BxDolModule
     {
         $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
         return $oProfanityFilter->getDicts(); 
+    }
+
+    /**
+     * @return array with avaliable toxicity filter actions
+     */
+    public function serviceGetToxicityFilterActions ()
+    {
+        return [
+            'none' => _t('_bx_antispam_option_toxicity_filter_action_none'),
+            'block' => _t('_bx_antispam_option_toxicity_filter_action_block'),
+            'disapprove' => _t('_bx_antispam_option_toxicity_filter_action_disapprove'),
+        ];
     }
 
     protected function getErrorMessageIpBlocked ()

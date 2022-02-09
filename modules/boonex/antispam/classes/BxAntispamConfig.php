@@ -25,6 +25,9 @@ class BxAntispamConfig extends BxDolModuleConfig
         'disposable_email_domains_mode' => 'bx_antispam_disposable_email_domains_mode',
         'disposable_email_domains_behaviour_join' => 'bx_antispam_disposable_email_domains_behaviour_join',
         'profanity_enable' => 'bx_antispam_profanity_filter_enable',
+        'toxicity_enable' => 'bx_antispam_toxicity_filter_enable',
+        'toxicity_action' => 'bx_antispam_toxicity_filter_action',
+        'toxicity_report' => 'bx_antispam_toxicity_filter_report',
     );
     /**
      * default local options, it is filled in with real system options in class contructor, @see restoreAntispamOptions
@@ -38,6 +41,9 @@ class BxAntispamConfig extends BxDolModuleConfig
         'dnsbl_behaviour_join' => 'approval',
         'akismet_enable' => '',
         'profanity_enable' => '',
+        'toxicity_enable' => '',
+        'toxicity_action' => '',
+        'toxicity_report' => '',
     );
 
     public function __construct($aModule)
