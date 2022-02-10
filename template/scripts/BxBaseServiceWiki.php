@@ -137,7 +137,8 @@ class BxBaseServiceWiki extends BxDol
             $sInfo = _t('_sys_wiki_view_rev', $aWikiVer['revision'], $oProfile->getUrl(), $oProfile->getDisplayName(), bx_time_js($aWikiVer['added']));
         }
 
-        $o = BxDolTemplate::getInstance();        
+        $o = BxDolTemplate::getInstance();
+        $o->addJs('stackedit.js/stackedit.min.js');
         return $o->parseHtmlByName('wiki_controls.html', array(
             'obj' => $oWikiObject->getObjectName(),
             'block_id' => $sBlockId,
