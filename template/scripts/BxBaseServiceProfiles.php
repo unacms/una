@@ -60,9 +60,12 @@ class BxBaseServiceProfiles extends BxDol
                     )
                 )
             )), true);
-        $bSwitcher = !empty($sSwitcher);
+        $bSwitcher = !empty($sSwitcher);        
+        $sSwitcherUrl = $bSwitcher ? 'javascript:void(0)' : $sUrl;
+        $sSwitcherOnclick = $bSwitcher ? "javascript:$('#bx-profile-switcher').dolPopup({});" : "";
 
         $sDisplayName = $oProfile->getDisplayName();
+        $sUrl = $oProfile->getUrl();
 
         $oAcl = BxDolAcl::getInstance();
         $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
@@ -71,7 +74,7 @@ class BxBaseServiceProfiles extends BxDol
 
         $aVars = array(
             'profile_id' => $oProfile->id(),
-            'profile_url' => $oProfile->getUrl(),
+            'profile_url' => $sUrl,
             'profile_edit_url' => $oProfile->getEditUrl(),
             'profile_title' => $sDisplayName,
             'profile_title_attr' => bx_html_attribute($sDisplayName),
@@ -101,11 +104,14 @@ class BxBaseServiceProfiles extends BxDol
                 'condition' => (bool)$sIconHtml,
                 'content' => array('icon' => $sIconHtml),
             ),
-            'switcher_url' => $bSwitcher ? 'javascript:void(0)' : $oProfile->getUrl(),
-            'switcher_onclick' => $bSwitcher ? "javascript:$('#bx-profile-switcher').dolPopup({});" : "",
+            'switcher_url' => $sSwitcherUrl,
+            'switcher_onclick' => $sSwitcherOnclick,
             'bx_if:show_switcher_icon' => array(
                 'condition' => $bSwitcher,
-                'content' => array()
+                'content' => array(
+                    'switcher_url' => $sSwitcherUrl,
+                    'switcher_onclick' => $bSwitcher ? "javascript:$('#bx-profile-switcher').dolPopup({});" : "",
+                )
             ),
             'switcher' => $sSwitcher
         );

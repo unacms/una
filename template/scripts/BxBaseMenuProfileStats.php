@@ -36,38 +36,44 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
         for($i = $this->_iMenuItemsMin; $i < $iMaxNum; $i++)
             $aItems[$i]['class_add'] .= ' bx-mi-aux bx-mi-hidden';
 
-        $aItems[] = array(
-            'class_add' => ' bx-psmi-show-more',
-            'name' => 'show_more',
-            'title' => '<span class="bx-mi-sm">' . _t('_sys_show_more') . '</span><span class="bx-mi-sl" style="display:none">' . _t('_sys_show_less') . '</span>',
-            'link' => 'javascript:void(0)',
-            'onclick' => "bx_menu_show_more(this, '.bx-menu-profile-stats')",
-            'attrs' => '',
-            'bx_if:image' => [
-                'condition' => false,
-                'content' => ['icon_url' => ''],
-            ],
-            'bx_if:image_inline' => [
-                'condition' => false,
-                'content' => ['image' => ''],
-            ],
-            'bx_if:icon' => [
-                'condition' => false,
-                'content' => ['icon' => ''],
-            ],
-            'bx_if:icon-html' => [
-                'condition' => false,
-                'content' => ['icon-a' => ''],
-            ],
-            'bx_if:icon-a' => [
-                'condition' => false,
-                'content' => ['icon-a' => ''],
-            ],
-            'bx_if:addon' => [
-                'condition' => false,
-                'content' => []
-            ]
-        );
+        $aShowMoreLinks = [
+            'more' => ['title' => '_sys_show_more', 'icon' => 'chevron-down', 'class' => ''],
+            'less' => ['title' => '_sys_show_less', 'icon' => 'chevron-up', 'class' => 'bx-mi-hidden']
+        ];
+
+        foreach($aShowMoreLinks as $sLink => $aLink)
+            $aItems[] = array(
+                'class_add' => 'bx-psmi-show-' . $sLink . ' ' . $aLink['class'],
+                'name' => 'show-' . $sLink,
+                'title' => _t($aLink['title']),
+                'link' => 'javascript:void(0)',
+                'onclick' => 'bx_menu_show_more_less(this, \'.bx-menu-profile-stats\')',
+                'attrs' => '',
+                'bx_if:image' => [
+                    'condition' => false,
+                    'content' => ['icon_url' => ''],
+                ],
+                'bx_if:image_inline' => [
+                    'condition' => false,
+                    'content' => ['image' => ''],
+                ],
+                'bx_if:icon' => [
+                    'condition' => true,
+                    'content' => ['icon' => $aLink['icon']],
+                ],
+                'bx_if:icon-html' => [
+                    'condition' => false,
+                    'content' => ['icon-a' => ''],
+                ],
+                'bx_if:icon-a' => [
+                    'condition' => false,
+                    'content' => ['icon-a' => ''],
+                ],
+                'bx_if:addon' => [
+                    'condition' => false,
+                    'content' => []
+                ]
+            );
 
         return $aItems;
     }

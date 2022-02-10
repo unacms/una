@@ -675,12 +675,11 @@ function bx_menu_show_live_update(oData) {
 	}
 }
 
-function bx_menu_show_more(oLink, sSelectorParent) {
+function bx_menu_show_more_less(oLink, sSelectorParent) {
     if(!sSelectorParent)
         sSelectorParent = 'ul';
 
-    $(oLink).parents(sSelectorParent + ':first').find('.bx-mi-aux').toggle('bx-mi-hidden');
-    $(oLink).find('.bx-mi-sm').toggle().siblings('.bx-mi-sl').toggle();
+    $(oLink).parents(sSelectorParent + ':first').find('.bx-mi-aux, .bx-psmi-show-more, .bx-psmi-show-less').toggle('bx-mi-hidden');
 }
 
 /**
