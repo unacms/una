@@ -59,6 +59,15 @@ import url(../../../../../../../template/css/general.css);
 }
 
 /*--- Page Type: Application ---*/
-.bx-menu-panel-item .bx-profile-avatar-cnt {
-    padding: 0;
+.bx-menu-panel-item .bx-profile-avatar .bx-profile-avatar-cnt {
+    min-height: 2rem;
+
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.bx-menu-panel-item .bx-profile-avatar .bx-base-pofile-unit-wo-info,
+.bx-menu-panel-item .bx-profile-avatar .bx-def-unit-img,
+.bx-menu-panel-item .bx-profile-avatar .bx-def-thumb-size {
+    width: 2rem;
+    height: 2rem;
 }
