@@ -33,7 +33,7 @@ DELETE FROM `sys_objects_score` WHERE `name` LIKE 'bx_albums%';
 
 
 -- REPORTS
-DELETE FROM `sys_objects_report` WHERE `name` = 'bx_albums';
+DELETE FROM `sys_objects_report` WHERE `name` LIKE 'bx_albums%';
 
 
 -- VIEWS

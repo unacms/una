@@ -175,7 +175,12 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
 
     protected function _getMenuItemReport($aItem, $aParams = array())
     {
-        return '';
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return parent::_getMenuItemReport($aItem, array(
+            'object' => $CNF['OBJECT_REPORTS_MEDIA'],
+            'id' => $this->_iMediaId
+        ));
     }
 }
 
