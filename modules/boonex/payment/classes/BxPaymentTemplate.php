@@ -411,7 +411,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                     'value' => 1
                 );
 
-                $aTmplVarsItems[$aItem['title']] = array(
+                $aTmplVarsItems[$aItem['name']] = array(
                     'id' => $aItem['id'],
                     'price' => $fPrice,
                     'bx_if:link' => array(
