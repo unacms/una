@@ -925,10 +925,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function isStatusFieldSupported() {
         // check whether we have a status field available for this type of content
         if (isset($this->aParams['module']) && $this->aParams['module'] && $oModule = BxDolModule::getInstance($this->aParams['module'])) {
-            $CNF = &$oModule->_oConfig->CNF;
-            if ((isset($CNF['FIELD_STATUS_ADMIN']) || isset($CNF['FIELD_STATUS'])) &&
-                isset($this->aParams['db']['table']) && isset($CNF['TABLE_ENTRIES']) && $this->aParams['db']['table'] == $CNF['TABLE_ENTRIES']) {
-                return true;
+            if (isset($oModule->_oConfig->CNF)) {
+                $CNF = &$oModule->_oConfig->CNF;
+                if (isset($CNF['FIELD_STATUS_ADMIN']) &&
+                    isset($this->aParams['db']['table']) && isset($CNF['TABLE_ENTRIES']) && $this->aParams['db']['table'] == $CNF['TABLE_ENTRIES']) {
+                    return true;
+                }
             }
         }
 
@@ -940,8 +942,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             $oModule = BxDolModule::getInstance($this->aParams['module']);
             $CNF = &$oModule->_oConfig->CNF;
 
-            if (isset($CNF['FIELD_STATUS_ADMIN'])) $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_TEXT_STATUS_HIDDEN;
-            elseif (isset($CNF['FIELD_STATUS'])) $aValsToAdd[$CNF['FIELD_STATUS']] = BX_BASE_MOD_TEXT_STATUS_AWAITING;
+            if (isset($oModule->_oConfig->CNF) && isset($CNF['FIELD_STATUS_ADMIN'])) $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_TEXT_STATUS_HIDDEN;
         }
     }
 
