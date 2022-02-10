@@ -35,6 +35,12 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
                     if ((!isset($oAlert->aExtras['type']) || 'textarea' == $oAlert->aExtras['type']) && is_string($oAlert->aExtras['content']))
                         $oAlert->aExtras['is_spam'] = BxDolService::call('bx_antispam', 'is_spam', array(&$oAlert->aExtras['content']));
                     break;
+                case 'form_check':
+                    BxDolService::call('bx_antispam', 'check_form_for_toxicity', array(&$oAlert->aExtras['object']));
+                    break;
+                case 'form_submitted':
+                    BxDolService::call('bx_antispam', 'on_form_submitted', array($oAlert->aExtras['module'], $oAlert->aExtras['entry_id']));
+                    break;
             }
         }
     }

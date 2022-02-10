@@ -895,7 +895,7 @@ function bx_php_string_quot ($mixedInput)
  */
 function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0, $aCustomCurlParams = array())
 {
-    if ('post' != $sMethod && 'post-json' != $sMethod)
+    if ('post' != $sMethod && 'post-json' != $sMethod && 'post-json-object' != $sMethod)
     	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
     $sResult = '';
@@ -931,6 +931,11 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         elseif ('post-json' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aParams));
+            $aHeaders[] = 'Content-Type: application/json';
+        }
+        elseif ('post-json-object' == $sMethod) {
+            curl_setopt($rConnect, CURLOPT_POST, true);
+            curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aParams, JSON_FORCE_OBJECT));
             $aHeaders[] = 'Content-Type: application/json';
         }
 
