@@ -674,6 +674,14 @@ function bx_menu_show_live_update(oData) {
 			oMenuItemAddon.hide();
 	}
 }
+
+function bx_menu_show_more_less(oLink, sSelectorParent) {
+    if(!sSelectorParent)
+        sSelectorParent = 'ul';
+
+    $(oLink).parents(sSelectorParent + ':first').find('.bx-mi-aux, .bx-psmi-show-more, .bx-psmi-show-less').toggle('bx-mi-hidden');
+}
+
 /**
  * Set ACL level for specified profile
  * @param iProfileId - profile id to set acl level for

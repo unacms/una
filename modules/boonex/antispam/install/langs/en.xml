@@ -12,6 +12,7 @@
     <li><b>Akismet</b> - automatic spam content blocking using <a target="_blank" href="http://akismet.com">Akismet service</a></li>
     <li><b>StopForumSpam</b> - automatic spam content blocking using <a target="_blank" href="http://www.stopforumspam.com">StopForumSpam service</a></li>
     <li><b>Profanity filter</b> - profanity filter, based on a predefined list of words with the ability to add to words this list</a></li>
+    <li><b>Toxicity filter</b> - toxicity filter, based on a <a target="_blank" href="https://www.perspectiveapi.com/">Perspective API</a> provided by Google</a></li>
 </ul>
 ]]></string>
     <string name="_bx_antispam_help_dnsbl"><![CDATA[
@@ -166,5 +167,41 @@ This antispam method scan submitted content for the URLs and check them if any o
 <pre>
 {SpamContent}
 </pre>
+{email_footer}]]></string>
+
+	<string name="_bx_antispam_type_toxicity_filter"><![CDATA[Toxicity Filter]]></string>
+	<string name="_bx_antispam_adm_stg_cpt_category_toxicity_filter"><![CDATA[Toxicity filter]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_enable"><![CDATA[Enable toxicity filter]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_action"><![CDATA[Action]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_action_none"><![CDATA[None]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_action_block"><![CDATA[Block all toxic content]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_action_disapprove"><![CDATA[Disapprove all toxic content if possible, block the rest]]></string>
+	<string name="_bx_antispam_option_toxicity_report"><![CDATA[Send report to admin if toxic content discovered]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_api_key"><![CDATA[Perspective API key (see <a href="https://developers.perspectiveapi.com/s/docs-get-started">this</a> page on how obtain it)]]></string>
+	<string name="_bx_antispam_option_toxicity_filter_threshold"><![CDATA[Toxicity threshold to consider a text as toxic (0 - 100)]]></string>
+	<string name="_bx_antispam_form_submission_error"><![CDATA[Incorrect info. The form seems to contain some toxic content. Please, check your inputs and try to submit again.]]></string>
+
+	<string name="_bx_antispam_toxicity_blocked_report_name"><![CDATA[Toxicity blocked report message]]></string>
+    <string name="_bx_antispam_toxicity_blocked_report_subject"><![CDATA[Toxic content has been blocked]]></string>
+    <string name="_bx_antispam_toxicity_blocked_report_body"><![CDATA[{email_header}
+<b>Profile:</b> <a href="{AuthorUrl}">{AuthorNickName}</a><br />
+<b>Page:</b> {Page}<br /><br />
+<b>Content:</b>
+<pre>
+{Content}
+</pre>
+{email_footer}]]></string>
+
+	<string name="_bx_antispam_toxicity_posted_report_name"><![CDATA[Toxicity posted report message]]></string>
+    <string name="_bx_antispam_toxicity_posted_report_subject"><![CDATA[Toxic content has been posted]]></string>
+    <string name="_bx_antispam_toxicity_posted_report_body"><![CDATA[{email_header}
+<b>Profile:</b> <a href="{AuthorUrl}">{AuthorNickName}</a><br />
+<b>Page:</b> {Page}<br /><br />
+<bx_if:content_url>
+	<b>Content:</b> <a href="{c_url}">{c_url}</a><br /><br />
+</bx_if:content_url>
+<bx_if:manage_content_url>
+	<b>Manage:</b> <a href="{m_url}">{m_url}</a><br /><br />
+</bx_if:manage_content_url>
 {email_footer}]]></string>
 </resources>

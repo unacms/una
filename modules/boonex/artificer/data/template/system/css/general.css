@@ -34,6 +34,18 @@ import url(../../../../../../../template/css/general.css);
     display: none;
 }
 
+/*--- Profile Stats ---*/
+.bx-menu-profile-stats li.bx-psmi-show-more,
+.bx-menu-profile-stats li.bx-psmi-show-less {
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.bx-menu-profile-stats  li.bx-psmi-show-more:hover,
+.bx-menu-profile-stats  li.bx-psmi-show-less:hover {
+    background-color: transparent;
+}
 
 /*--- Author Info ---*/
 .sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li:first-child .bx-base-general-unit-meta-div {
@@ -51,6 +63,6 @@ import url(../../../../../../../template/css/general.css);
 }
 
 /*--- Page Type: Application ---*/
-.bx-menu-panel-item .bx-profile-avatar-cnt {
-    padding: 0;
+.bx-menu-panel-item .bx-profile-avatar .bx-profile-avatar-cnt {
+    min-height: 2.5rem;
 }

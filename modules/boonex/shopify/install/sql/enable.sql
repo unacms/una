@@ -267,7 +267,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'bx_shopify', 'profile-stats-manage-shopify', '_bx_shopify_menu_item_title_system_manage_my_entries', '_bx_shopify_menu_item_title_manage_my_entries', 'page.php?i=shopify-manage', '', '_self', 'shopping-cart col-green1', 'a:2:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 1);
+('sys_profile_stats', 'bx_shopify', 'profile-stats-my-shopify', '_bx_shopify_menu_item_title_system_manage_my_entries', '_bx_shopify_menu_item_title_manage_my_entries', 'page.php?i=shopify-author&profile_id={member_id}', '', '_self', 'shopping-cart col-green1', 'a:2:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 1);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

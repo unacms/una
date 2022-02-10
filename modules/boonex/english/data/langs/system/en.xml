@@ -2862,13 +2862,14 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_logout"><![CDATA[Log out]]></string>
     <string name="_sys_menu_item_title_system_main_menu"><![CDATA[Main Menu]]></string>
     <string name="_sys_menu_item_title_system_member_avatar"><![CDATA[Member Avatar]]></string>
-    <string name="_sys_menu_item_title_system_member_followings"><![CDATA[Member Followed Contexts]]></string>
+    <string name="_sys_menu_item_title_system_member_followings"><![CDATA[Member Following]]></string>
     <string name="_sys_menu_item_title_system_member_menu"><![CDATA[Member Menu]]></string>
     <string name="_sys_menu_item_title_system_more"><![CDATA[More]]></string>
     <string name="_sys_menu_item_title_system_more_auto"><![CDATA[More]]></string>
     <string name="_sys_menu_item_title_system_orders"><![CDATA[Orders]]></string>
     <string name="_sys_menu_item_title_system_powered_by"><![CDATA[Powered By]]></string>
     <string name="_sys_menu_item_title_system_profile"><![CDATA[Profile]]></string>
+    <string name="_sys_menu_item_title_system_public_menu"><![CDATA[Public Menu]]></string>
     <string name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string>
     <string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Set membership]]></string>
     <string name="_sys_menu_item_title_system_set_badges"><![CDATA[Set badges]]></string>
@@ -2970,6 +2971,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>
     <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Site Navigation Submenu (with Auto More)]]></string>
     <string name="_sys_menu_template_title_panel"><![CDATA[Site Panel Menu]]></string>
+    <string name="_sys_menu_template_title_main_in_panel"><![CDATA[Site Navigation Menu in Panel]]></string>
     <string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
     <string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>
     <string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>
@@ -2977,7 +2979,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_template_title_account_popup"><![CDATA[Account popup]]></string>
     <string name="_sys_menu_template_title_custom_hor"><![CDATA[Horizontal menu with custom items]]></string>
     <string name="_sys_menu_template_title_custom_ver"><![CDATA[Vertical menu with custom items]]></string>
-    <string name="_sys_menu_template_title_profile_followings"><![CDATA[Profile Followings Menu]]></string>
+    <string name="_sys_menu_template_title_profile_followings"><![CDATA[Profile Following Menu]]></string>
     <string name="_sys_menu_template_title_profile_stats"><![CDATA[Profile Stats Menu]]></string>
     <string name="_sys_menu_title_account_dashboard"><![CDATA[Account Dashboard Menu]]></string>
     <string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools Menu]]></string>
@@ -2992,6 +2994,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_title_cmts_item_meta"><![CDATA[Comment Meta Info]]></string>
     <string name="_sys_menu_title_footer"><![CDATA[Footer Links]]></string>
     <string name="_sys_menu_title_main"><![CDATA[Site Navigation]]></string>
+    <string name="_sys_menu_title_main_in_panel"><![CDATA[Site Navigation in Panel]]></string>
     <string name="_sys_menu_title_homepage"><![CDATA[Homepage Menu]]></string>
     <string name="_sys_menu_title_homepage_submenu"><![CDATA[Homepage Submenu]]></string>
     <string name="_sys_menu_set_title_homepage_submenu"><![CDATA[Homepage Submenu]]></string>
@@ -3002,7 +3005,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_trends"><![CDATA[Trends]]></string>
     <string name="_sys_menu_item_title_trends"><![CDATA[Trends]]></string>
     <string name="_sys_menu_title_profiles_create"><![CDATA[Create Profiles]]></string>
-    <string name="_sys_menu_title_profile_followings"><![CDATA[Profile Followings]]></string>
+    <string name="_sys_menu_title_profile_followings"><![CDATA[Profile Following]]></string>
     <string name="_sys_menu_title_profile_stats"><![CDATA[Profile Stats]]></string>
     <string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
     <string name="_sys_menu_title_set_acl_level"><![CDATA[ACL Levels]]></string>
@@ -3317,7 +3320,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_select"><![CDATA[Select]]></string>
 	<string name="_sys_send"><![CDATA[Send]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Search...]]></string>
-	<string name="_sys_show_more"><![CDATA[Show more]]></string>    
+	<string name="_sys_show_less"><![CDATA[Show less]]></string>    
+        <string name="_sys_show_more"><![CDATA[Show more]]></string>    
 	<string name="_sys_spam_detected"><![CDATA[Your activity triggered automated block]]></string>
 	<string name="_sys_spam_detected_contact"><![CDATA[Your activity triggered automated block, please contact us to investigate: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Start]]></string>

@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
   `sc_down` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL,
+  `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `cf` int(11) NOT NULL default '1',
   `data` text NOT NULL,
@@ -274,6 +275,26 @@ CREATE TABLE IF NOT EXISTS `bx_albums_reports` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_albums_reports_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `type` varchar(32) NOT NULL default '',
+  `text` text NOT NULL default '',
+  `date` int(11) NOT NULL default '0',
+  `checked_by` int(11) NOT NULL default '0',
+  `status` tinyint(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `report` (`object_id`, `author_nip`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_albums_reports_media` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_albums_reports_media_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
@@ -498,7 +519,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 
 -- REPORTS
 INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_albums', 'bx_albums', 'bx_albums_reports', 'bx_albums_reports_track', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_notes', 'bx_albums_albums', 'id', 'author', 'reports', '', '');
+('bx_albums', 'bx_albums', 'bx_albums_reports', 'bx_albums_reports_track', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_notes', 'bx_albums_albums', 'id', 'author', 'reports', '', ''),
+('bx_albums_media', 'bx_albums', 'bx_albums_reports_media', 'bx_albums_reports_media_track', '1', 'page.php?i=view-album-media&id={object_id}', '', 'bx_albums_files2albums', 'id', 'author', 'reports', '', '');
 
 
 -- VIEWS

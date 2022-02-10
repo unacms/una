@@ -4255,7 +4255,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (27, 'menu_profile_followings.html', '_sys_menu_template_title_profile_followings', 0),
 (28, 'menu_main.html', '_sys_menu_template_title_main', 0),
 (29, 'menu_add_content.html', '_sys_menu_template_title_add_content', 0),
-(30, 'menu_panel.html', '_sys_menu_template_title_panel', 0);
+(30, 'menu_panel.html', '_sys_menu_template_title_panel', 0),
+(31, 'menu_main_in_panel.html', '_sys_menu_template_title_main_in_panel', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4274,6 +4275,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 28, 0, 1, 'BxTemplMenuSite', ''),
+('sys_site_in_panel', '_sys_menu_title_main_in_panel', 'sys_site', 'system', 31, 0, 1, '', ''),
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 7, 0, 1, 'BxTemplMenuHomepage', ''),
 ('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
@@ -4389,8 +4391,9 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- panel menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_site_panel', 'system', 'member-avatar', '_sys_menu_item_title_system_member_avatar', '', '', '', '', '', '', 2147483646, 1, 0, 1),
-('sys_site_panel', 'system', 'member-menu', '_sys_menu_item_title_system_member_menu', '', '', '', '', '', 'sys_profile_stats', 2147483646, 1, 0, 2),
-('sys_site_panel', 'system', 'member-followings', '_sys_menu_item_title_system_member_followings', '', '', '', '', '', 'sys_profile_followings', 2147483646, 1, 0, 3);
+('sys_site_panel', 'system', 'public-menu', '_sys_menu_item_title_system_public_menu', '', '', '', '', '', 'sys_site_in_panel', 2147483647, 0, 0, 2),
+('sys_site_panel', 'system', 'member-menu', '_sys_menu_item_title_system_member_menu', '', '', '', '', '', 'sys_profile_stats', 2147483646, 1, 0, 3),
+('sys_site_panel', 'system', 'member-followings', '_sys_menu_item_title_system_member_followings', '', '', '', '', '', 'sys_profile_followings', 2147483646, 1, 0, 4);
 
 -- homepage submenu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES

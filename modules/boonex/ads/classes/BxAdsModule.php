@@ -975,7 +975,10 @@ class BxAdsModule extends BxBaseModTextModule
         $aItems = $this->_oDb->getEntriesByAuthor($iSellerId);
 
         $aResult = array();
-        foreach($aItems as $aItem)
+        foreach($aItems as $aItem) {
+            if($aItem[$CNF['FIELD_STATUS']] != BX_BASE_MOD_TEXT_STATUS_ACTIVE || empty($aItem[$CNF['FIELD_QUANTITY']]))
+                continue;
+
             $aResult[] = array(
                 'id' => $aItem[$CNF['FIELD_ID']],
                 'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
@@ -989,6 +992,7 @@ class BxAdsModule extends BxBaseModTextModule
                 'period_unit_recurring' => '',
                 'trial_recurring' => ''
             );
+        }
 
         return $aResult;
     }

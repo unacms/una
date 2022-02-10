@@ -334,6 +334,12 @@ div.bx-account-unit-online {
     text-overflow: ellipsis;
 }
 
+.bx-profile-avatar .bx-pa-action {
+    width: 2rem;
+    height: 2rem;
+
+    border-radius: 2rem;
+}
 .bx-profile-avatar .bx-pa-action .sys-icon {
     display: inline-block;
     text-align: center;
@@ -409,6 +415,12 @@ div.bx-account-unit-online {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.bx-menu-profile-stats li.bx-psmi-show-more:hover,
+.bx-menu-profile-stats li.bx-psmi-show-less:hover {
+    background-color: transparent;
+}
+
 
 /* --------------- Join/Login Forms */
 

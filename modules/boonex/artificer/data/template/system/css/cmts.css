@@ -54,7 +54,7 @@ div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
 }
 .bx-menu-object-sys_cmts_item_manage a {
     width:100%;
-    display: block;
+    display: flex;
 }
 
 /*--- Menu meta ---*/

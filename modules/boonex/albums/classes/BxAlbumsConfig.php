@@ -102,6 +102,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_TRANSCODER_BROWSE' => 'bx_albums_proxy_browse',
             'OBJECT_TRANSCODER_COVER' => 'bx_albums_proxy_cover',
             'OBJECT_REPORTS' => 'bx_albums',
+            'OBJECT_REPORTS_MEDIA' => 'bx_albums_media',
             'OBJECT_VIEWS' => 'bx_albums',
             'OBJECT_VIEWS_MEDIA' => 'bx_albums_media',
             'OBJECT_VOTES' => 'bx_albums',

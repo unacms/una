@@ -25,6 +25,10 @@ ul.bx-menu-btns-icon-hor {
     list-style: none;
 }
 
+li.bx-mi-aux {}
+li.bx-mi-hidden {
+    display: none;
+}
 
 /* --- Vertical, Vertical lite, Custom Vertical Menus ---*/
 .bx-menu-ver li,
