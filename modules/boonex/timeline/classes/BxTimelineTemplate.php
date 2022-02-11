@@ -631,6 +631,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($aResult['sample_action_custom']))
             $aEvent['sample_action_custom'] = $aResult['sample_action_custom'];
         $aEvent['content'] = $aResult['content'];
+        $aEvent['content_type'] = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['reactions'] = $aResult['reactions'];
@@ -643,8 +644,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';
 
-        $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
-        self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($sType, $aEvent, $aBrowseParams);
+        self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($aEvent['content_type'], $aEvent, $aBrowseParams);
         self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey] = $aEvent;
 
         return self::$_aMemoryCacheItems[$sMemoryCacheItemsKey];
@@ -1125,6 +1125,39 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getRepostWith($oForm)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObject('repost');
+
+        return $this->parseHtmlByName('repost_with_popup.html', array(
+            'style_prefix' => $sStylePrefix,
+            'js_object' => $sJsObject,
+            'form' => $oForm->getCode(),
+            'form_id' => $oForm->getId()
+        ));
+    }
+
+    public function getRepostWithFieldReposted($oForm, $aInput)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $aBrowseParams = $this->getModule()->getParams();
+
+        $aReposted = $oForm->getReposted();
+        $sReposted = $this->getPost($aReposted, $aBrowseParams);
+
+        $sContent = '';
+        if(!empty($sReposted))
+            $sContent = $this->_getContent($aReposted['content_type'], $aReposted, $aBrowseParams);
+        else
+            $sContent = MsgBox(_t('_Empty'));
+
+        return $this->parseHtmlByName('repost_with_reposted.html', array(
+            'style_prefix' => $sStylePrefix,
+            'content' => $sContent
+        ));
+    }
+
     public function getRepostTo($oForm)
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
@@ -1226,6 +1259,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
         else
             $sResult = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+
+        return $sResult;
+    }
+
+    public function getRepostWithJsClick($iReposterId, $sType, $sAction, $iObjectId)
+    {
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
+            return '';
+
+        $sResult = '';
+        $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+        if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+            $aRepostedData = unserialize($aReposted['content']);
+
+            $sResult = $this->_getRepostWithJsClick($iReposterId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+        }
+        else
+            $sResult = $this->_getRepostWithJsClick($iReposterId, $sType, $sAction, $iObjectId);
 
         return $sResult;
     }
@@ -1768,11 +1820,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!method_exists($this, $sMethod))
             return '';
 
+        $aTmplVars = $this->$sMethod($aEvent, $aBrowseParams);
+
         $sVariable = '_sTmplContentType' . bx_gen_method_name($sType);
         if(empty(self::$$sVariable))
             self::$$sVariable = $this->getHtml('type_' . $sType . '.html');
 
-		return $this->parseHtmlByContent(self::$$sVariable, $this->$sMethod($aEvent, $aBrowseParams));
+        $sTmplCode = self::$$sVariable;
+        bx_alert($this->_oConfig->getName(), 'get_post_content', 0, 0, array(
+            'type' => $sType,
+            'event' => $aEvent,
+            'browse_params' => $aBrowseParams,
+            'tmpl_code' => &$sTmplCode,
+            'tmpl_vars' => &$aTmplVars
+        ));
+
+        return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
     }
 
     protected function _getComments($aComments, $aBrowseParams = array())
@@ -1810,6 +1873,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getModule()->getUserId(); //--- in whose timeline the content will be reposted
         return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
+    }
+
+    protected function _getRepostWithJsClick($iReposterId, $sType, $sAction, $iObjectId)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('repost');
+        $sFormat = "%s.repostItemWith(this, %d, '%s', '%s', %d);";
+
+        $iReposterId = !empty($iReposterId) ? (int)$iReposterId : $this->getModule()->getUserId();
+        return sprintf($sFormat, $sJsObject, $iReposterId, $sType, $sAction, (int)$iObjectId);
     }
 
     protected function _getRepostToJsClick($iReposterId, $sType, $sAction, $iObjectId)
@@ -2077,7 +2149,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         //--- Process Links ---//
         $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
 
-        $aTmplVarsLinks = array();
+        $aTmplVarsLinks = [];
         if(!empty($aContent['links']))
             foreach($aContent['links'] as $aLink) {
                 $sLink = '';
@@ -2105,32 +2177,32 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         $sLinkAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
                     $sLink = $this->parseHtmlByName('link_embed_common.html', array(
-                        'bx_if:show_thumbnail' => array(
+                        'bx_if:show_thumbnail' => [
                             'condition' => !empty($aLink['thumbnail']),
-                            'content' => array(
+                            'content' => [
                                 'style_prefix' => $sStylePrefix,
                                 'thumbnail' => $aLink['thumbnail'],
                                 'link' => !empty($aLink['url']) ? $aLink['url'] : 'javascript:void(0)',
                                 'attrs' => $sLinkAttrs
-                            )
-                        ),
+                            ]
+                        ],
                         'link' => !empty($aLink['url']) ? $aLink['url'] : 'javascript:void(0)',
                         'attrs' => $sLinkAttrs,
                         'content' => $aLink['title'],
-                        'bx_if:show_text' => array(
+                        'bx_if:show_text' => [
                             'condition' => !empty($aLink['text']),
-                            'content' => array(
+                            'content' => [
                                 'style_prefix' => $sStylePrefix,
                                 'text' => $aLink['text']
-                            )
-                        )
+                            ]
+                        ]
                     ));
                 }
 
-                $aTmplVarsLinks[] = array(
+                $aTmplVarsLinks[] = [
                     'style_prefix' => $sStylePrefix,
                     'link' => $sLink
-                );
+                ];
             }
 
         /*
@@ -2156,7 +2228,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
         $bImagesAttach = !empty($aContent['images_attach']) && is_array($aContent['images_attach']);
         if($bImagesAttach) {
-            $aImagesAttach = $this->_getTmplVarsImages($aContent['images_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
+            $aImagesAttach = $this->_getTmplVarsImages($aContent['images_attach'], ['layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)], $aEvent, $aBrowseParams);
             if(!empty($aImagesAttach)) {
                 $iAttachmentsTotal += $aImagesAttach['total'];
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aImagesAttach['items']);
@@ -2180,16 +2252,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bVideos) {
             $aVideos = $this->_getTmplVarsVideos($aContent['videos'], true, $aEvent, $aBrowseParams);
             if(!empty($aVideos))
-                $aTmplVarsVideos = array(
+                $aTmplVarsVideos = [
                     'style_prefix' => $sStylePrefix,
                     'display' => $aVideos['display'],
                     'bx_repeat:items' => $aVideos['items']
-                );
+                ];
         }
 
         $bVideosAttach = !empty($aContent['videos_attach']) && is_array($aContent['videos_attach']);
         if($bVideosAttach) {
-            $aVideosAttach = $this->_getTmplVarsVideos($aContent['videos_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
+            $aVideosAttach = $this->_getTmplVarsVideos($aContent['videos_attach'], ['layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)], $aEvent, $aBrowseParams);
             if(!empty($aVideosAttach)) {
                 $iAttachmentsTotal += $aVideosAttach['total'];
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aVideosAttach['items']);
@@ -2201,23 +2273,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bFiles) {
             $aFiles = $this->_getTmplVarsFiles($aContent['files'], $aEvent, $aBrowseParams);
             if(!empty($aFiles))
-                $aTmplVarsFiles = array(
+                $aTmplVarsFiles = [
                     'style_prefix' => $sStylePrefix,
                     'display' => $aFiles['display'],
                     'bx_repeat:items' => $aFiles['items']
-                );
+                ];
         }
 
         $bFilesAttach = !empty($aContent['files_attach']) && is_array($aContent['files_attach']);
         if($bFilesAttach) {
             $aFilesAttach = $this->_getTmplVarsFiles($aContent['files_attach'], $aEvent, $aBrowseParams);
             if(!empty($aFilesAttach)) {
-                $aTmplVarsAttachmentsFiles = array(
+                $aTmplVarsAttachmentsFiles = [
                     'style_prefix' => $sStylePrefix,
                     'display' => BX_TIMELINE_ML_GALLERY,
                     'count' => count($aFilesAttach['items']),
                     'bx_repeat:items' => $aFilesAttach['items']
-                );
+                ];
             }
         }
 
@@ -2233,76 +2305,76 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aTmplVarsAttachments = array_slice($aTmplVarsAttachments, 0, $iAttachmentsShow);
 
             if($iAttachmentsTotal > $iAttachmentsShow)
-                $aTmplVarsAttachments[$iAttachmentsShow - 1]['item'] .= $this->parseHtmlByName('attach_more.html', array(
+                $aTmplVarsAttachments[$iAttachmentsShow - 1]['item'] .= $this->parseHtmlByName('attach_more.html', [
                     'style_prefix' => $sStylePrefix,
                     'link' => $this->_oConfig->getItemViewUrl($aEvent),
                     'more' => $iAttachmentsTotal - $iAttachmentsShow
-                ));
+                ]);
         }
 
-        return array(
+        return [
             'style_prefix' => $sStylePrefix,
-            'bx_if:show_title' => array(
+            'bx_if:show_title' => [
                 'condition' => !empty($sTitle),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'title' => $sTitle,
-                )
-            ),
-            'bx_if:show_content' => array(
+                ]
+            ],
+            'bx_if:show_content' => [
                 'condition' => !empty($sText),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'item_content' => $sText
-                )
-            ),
-            'bx_if:show_top_raw' => array(
+                ]
+            ],
+            'bx_if:show_top_raw' => [
                 'condition' => !empty($sTopRaw),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'item_content_top_raw' => $sTopRaw
-                )
-            ),
-            'bx_if:show_raw' => array(
+                ]
+            ],
+            'bx_if:show_raw' => [
                 'condition' => !empty($sRaw),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'item_content_raw' => $sRaw
-                )
-            ),
-            'bx_if:show_links' => array(
+                ]
+            ],
+            'bx_if:show_links' => [
                 'condition' => !empty($aTmplVarsLinks),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'bx_repeat:links' => $aTmplVarsLinks
-                )
-            ),
-            'bx_if:show_images' => array(
+                ]
+            ],
+            'bx_if:show_images' => [
                 'condition' => !empty($aTmplVarsImages),
                 'content' => $aTmplVarsImages
-            ),
-            'bx_if:show_videos' => array(
+            ],
+            'bx_if:show_videos' => [
                 'condition' => !empty($aTmplVarsVideos),
                 'content' => $aTmplVarsVideos
-            ),
-            'bx_if:show_files' => array(
+            ],
+            'bx_if:show_files' => [
                 'condition' => !empty($aTmplVarsFiles),
                 'content' => $aTmplVarsFiles
-            ),
-            'bx_if:show_attachments' => array(
+            ],
+            'bx_if:show_attachments' => [
                 'condition' => !empty($aTmplVarsAttachments),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'display' => $sAttachmentsLayout,
                     'count' => count($aTmplVarsAttachments),
                     'bx_repeat:items' => $aTmplVarsAttachments
-                )
-            ),
-            'bx_if:show_attachments_files' => array(
+                ]
+            ],
+            'bx_if:show_attachments_files' => [
                 'condition' => !empty($aTmplVarsAttachmentsFiles),
                 'content' => $aTmplVarsAttachmentsFiles
-            )
-        );
+            ]
+        ];
     }
 
     protected function _getTmplVarsContentRepost(&$aEvent, $aBrowseParams = array())
@@ -2315,19 +2387,33 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSample = _t($aContent['sample']);
         $sSampleLink = empty($aContent['url']) ? $sSample : $this->parseLink($aContent['url'], $sSample);
 
+        $aTmplVarsData = [];
+        if(!empty($aContent['rdata']) && is_array($aContent['rdata'])) {
+            $aData = $aContent['rdata'];
+
+            $aTmplVarsData['style_prefix'] = $sStylePrefix;
+
+            if(isset($aData['text']))
+                $aTmplVarsData['text'] = $this->_prepareTextForOutput($aData['text'], $aEvent['id']);
+        }
+
         $sContent = $this->_getContent($aContent['parse_type'], $aEvent, $aBrowseParams);
 
-        return array(
+        return [
             'style_prefix' => $sStylePrefix,
             'item_owner_action' => _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink),
-            'bx_if:show_content' => array(
+            'bx_if:show_data' => [
+                'condition' => !empty($aTmplVarsData),
+                'content' => $aTmplVarsData
+            ],
+            'bx_if:show_content' => [
                 'condition' => !empty($sContent),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $sStylePrefix,
                     'content' => $sContent,
-                )
-            )
-        );
+                ]
+            ]
+        ];
     }
 
     protected function _getTmplVarsNote(&$aEvent)

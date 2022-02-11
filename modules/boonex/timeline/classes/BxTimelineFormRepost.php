@@ -9,10 +9,12 @@
  * @{
  */
 
-class BxTimelineFormRepostTo extends BxTemplFormView
+class BxTimelineFormRepost extends BxTemplFormView
 {
     protected $_sModule;
     protected $_oModule;
+
+    protected $_aReposted;
 
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -21,7 +23,28 @@ class BxTimelineFormRepostTo extends BxTemplFormView
 
         parent::__construct($aInfo, $oTemplate);
 
-        $this->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'repost_to/';
+        $sAction = trim(str_replace($this->_sModule, '', $this->aParams['display']), "_");
+        $this->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . $sAction . '/';
+
+        $this->_aReposted = [];
+    }
+
+    public function getReposted()
+    {
+        return $this->_aReposted;
+    }
+
+    public function initChecker($aValues = [], $aSpecificValues = [])
+    {
+        if(isset($aValues['type'], $aValues['action'], $aValues['object_id']))
+            $this->_aReposted = $this->_oModule->_oDb->getReposted($aValues['type'], $aValues['action'], $aValues['object_id']);
+
+        return parent::initChecker($aValues, $aSpecificValues);
+    }
+
+    protected function genCustomInputReposted($aInput)
+    {
+        return $this->_oModule->_oTemplate->getRepostWithFieldReposted($this, $aInput);
     }
 
     protected function genCustomInputSearch($aInput)

@@ -331,7 +331,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sAction = bx_process_input(bx_get('action'), BX_DATA_TEXT);
         $iObjectId = bx_process_input(bx_get('object_id'), BX_DATA_INT);
 
-        $aResult = $this->serviceRepost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId);
+        $aResult = $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId);
         if(!empty($aResult) && is_array($aResult))
             return echoJson($aResult);
 
@@ -348,6 +348,51 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    public function actionRepostWith()
+    {
+        if(($iReposterId = bx_get('reposter_id')) !== false)
+            $iReposterId = bx_process_input($iReposterId, BX_DATA_INT);
+        if(!$iReposterId)
+            $iReposterId = $this->getUserId();
+
+        $iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+        $sType = bx_process_input(bx_get('type'), BX_DATA_TEXT);
+        $sAction = bx_process_input(bx_get('action'), BX_DATA_TEXT);
+        $iObjectId = bx_process_input(bx_get('object_id'), BX_DATA_INT);
+
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_repost'), $this->_oConfig->getObject('form_display_repost_with'));
+        $oForm->initChecker(array(
+            'reposter_id' => $iReposterId,
+            'owner_id' => $iOwnerId,
+            'type' => $sType,
+            'action' => $sAction, 
+            'object_id' => $iObjectId
+        ));
+
+        if($oForm->isSubmitted()) {
+            if(!$oForm->isValid())
+                return echoJson(array('popup' => array(
+                    'html' => BxTemplFunctions::getInstance()->transBox($this->_oConfig->getHtmlIds('repost', 'with_popup'), $this->_oTemplate->getRepostWith($oForm)), 
+                    'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true)
+                )));
+
+            $this->repost($iReposterId, $iOwnerId, $sType, $sAction, $iObjectId, ['text' => $oForm->getCleanValue('text')]);
+
+            $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+            $sCounter = $this->_oTemplate->getRepostCounter($aReposted);
+
+            return echoJson(array(
+                'code' => 0, 
+                'message' => _t('_bx_timeline_txt_msg_success_repost'), 
+                'count' => $aReposted['reposts'], 
+                'countf' => (int)$aReposted['reposts'] > 0 ? $this->_oTemplate->getRepostCounterLabel($aReposted['reposts']) : '',
+                'counter' => $sCounter,
+            ));
+        }
+
+        echo $this->_oTemplate->getRepostTo($oForm);
+    }
+
     public function actionRepostTo()
     {
         $iReposterId = bx_process_input(bx_get('reposter_id'), BX_DATA_INT);
@@ -358,7 +403,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sAction = bx_process_input(bx_get('action'), BX_DATA_TEXT);
         $iObjectId = bx_process_input(bx_get('object_id'), BX_DATA_INT);
 
-        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_repost_to'), $this->_oConfig->getObject('form_display_repost_to_browse'));
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_repost'), $this->_oConfig->getObject('form_display_repost_to'));
         $oForm->initChecker(array(
             'reposter_id' => $iReposterId,
             'type' => $sType,
@@ -385,7 +430,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return echoJson(array());
 
             foreach($aContexts as $iContextId)
-                $this->serviceRepost($iReposterId, $iContextId, $sType, $sAction, $iObjectId);
+                $this->repost($iReposterId, $iContextId, $sType, $sAction, $iObjectId);
 
             $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
             $sCounter = $this->_oTemplate->getRepostCounter($aReposted);
@@ -2505,7 +2550,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $this->_oTemplate->getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
     }
-    
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_with_js_click get_repost_with_js_click
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_with_js_click', [...]); @endcode
+     * 
+     * Get 'repost with' JavaScript code for OnClick event.
+     * 
+     * @param $iReposterId integer value with reposter profile ID.
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @return HTML string with JavaScript code to display in OnClick events of HTML elements.
+     * 
+     * @see BxTimelineModule::serviceGetRepostWithJsClick
+     */
+    /** 
+     * @ref bx_timeline-get_repost_with_js_click "get_repost_with_js_click"
+     */
+    public function serviceGetRepostWithJsClick($iReposterId, $sType, $sAction, $iObjectId)
+    {
+    	if(!$this->isEnabled())
+            return '';
+
+        return $this->_oTemplate->getRepostWithJsClick($iReposterId, $sType, $sAction, $iObjectId);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline
@@ -2560,41 +2634,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceRepost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $bForce = false)
     {
-        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
-        if(empty($aReposted) || !is_array($aReposted))
-            return array('code' => 1, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
-
-        $mixedAllowed = $this->isAllowedRepost($aReposted, true);
-        if(!$bForce && $mixedAllowed !== true)
-            return array('code' => 2, 'message' => strip_tags($mixedAllowed));
-
-        $bReposted = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $iAuthorId);
-        if($bReposted)
-            return array('code' => 3, 'message' => _t('_bx_timeline_txt_err_already_reposted'));
-
-        $iId = $this->_oDb->insertEvent(array(
-            'owner_id' => $iOwnerId,
-            'system' => 0,
-            'type' => $this->_oConfig->getPrefix('common_post') . 'repost',
-            'action' => '',
-            'object_id' => $iAuthorId,
-            'object_owner_id' => $iAuthorId,
-            'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
-            'content' => serialize(array(
-                'type' => $sType,
-                'action' => $sAction,
-                'object_id' => $iObjectId,
-            )),
-            'title' => '',
-            'description' => ''
-        ));
-
-        if(empty($iId))
-            return array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
-
-        $this->onRepost($iId, $aReposted);
-
-        return $iId;
+        return $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, false, $bForce);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-repost_with repost_with
+     * 
+     * @code bx_srv('bx_timeline', 'repost_with', [...]); @endcode
+     * 
+     * Perform repost action passing additional data.
+     * 
+     * @param $iAuthorId integer value with performer profile ID.
+     * @param $iOwnerId integer value with repost event owner profile ID.
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @param $mixedData array with some data to attach to repost event or false. 
+     * @parem $bForce boolean value force reposting without ACL check.
+     * @return an array with error (code and message) or integer with newly created repost event ID.
+     * 
+     * @see BxTimelineModule::serviceRepostWith
+     */
+    /** 
+     * @ref bx_timeline-repost_with "repost_with"
+     */
+    public function serviceRepostWith($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $mixedData = false, $bForce = false)
+    {
+        return $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $mixedData, $bForce);
     }
 
     /**
@@ -2641,9 +2710,49 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iObjectId = $aRepostedData['object_id'];
         }
 
-        return $this->serviceRepost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $bForce);
+        return $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, false, $bForce);
     }
 
+    public function repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $mixedData = false, $bForce = false)
+    {
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
+            return array('code' => 1, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
+
+        $mixedAllowed = $this->isAllowedRepost($aReposted, true);
+        if(!$bForce && $mixedAllowed !== true)
+            return array('code' => 2, 'message' => strip_tags($mixedAllowed));
+
+        $bReposted = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $iAuthorId);
+        if($bReposted)
+            return array('code' => 3, 'message' => _t('_bx_timeline_txt_err_already_reposted'));
+
+        $iId = $this->_oDb->insertEvent(array(
+            'owner_id' => $iOwnerId,
+            'system' => 0,
+            'type' => $this->_oConfig->getPrefix('common_post') . 'repost',
+            'action' => '',
+            'object_id' => $iAuthorId,
+            'object_owner_id' => $iAuthorId,
+            'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
+            'content' => serialize(array(
+                'type' => $sType,
+                'action' => $sAction,
+                'object_id' => $iObjectId,
+                'rdata' => $mixedData
+            )),
+            'title' => '',
+            'description' => ''
+        ));
+
+        if(empty($iId))
+            return array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
+
+        $this->onRepost($iId, $aReposted);
+
+        return $iId;
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline

@@ -517,32 +517,47 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 -- Forms -> Repost To
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline_repost_to', @sName, '_bx_timeline_form_repost_to', '', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTimelineFormRepostTo', 'modules/boonex/timeline/classes/BxTimelineFormRepostTo.php');
+('bx_timeline_repost', @sName, '_bx_timeline_form_repost', '', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTimelineFormRepost', 'modules/boonex/timeline/classes/BxTimelineFormRepost.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('bx_timeline_repost_to_browse', @sName, 'bx_timeline_repost_to', '_bx_timeline_form_repost_to_display_browse', 0);
+('bx_timeline_repost_with', @sName, 'bx_timeline_repost', '_bx_timeline_form_repost_display_with', 0),
+('bx_timeline_repost_to', @sName, 'bx_timeline_repost', '_bx_timeline_form_repost_display_to', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('bx_timeline_repost_to', @sName, 'reposter_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_reposter_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'type', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'object_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_to_input_sys_object_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'search', '', '', 0, 'custom', '_bx_timeline_form_repost_to_input_sys_search', '_bx_timeline_form_repost_to_input_search', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'list', '', '', 0, 'custom', '_bx_timeline_form_repost_to_input_sys_list', '_bx_timeline_form_repost_to_input_list', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'do_submit', '_bx_timeline_form_repost_to_input_do_submit', '', 0, 'submit', '_bx_timeline_form_repost_to_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_timeline_repost_to', @sName, 'do_cancel', '_bx_timeline_form_repost_to_input_do_cancel', '', 0, 'button', '_bx_timeline_form_repost_to_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+('bx_timeline_repost', @sName, 'reposter_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_input_sys_reposter_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_repost', @sName, 'owner_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_repost', @sName, 'type', '', '', 0, 'hidden', '_bx_timeline_form_repost_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_repost', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_repost_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_repost', @sName, 'object_id', '', '', 0, 'hidden', '_bx_timeline_form_repost_input_sys_object_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_repost', @sName, 'search', '', '', 0, 'custom', '_bx_timeline_form_repost_input_sys_search', '_bx_timeline_form_repost_input_search', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost', @sName, 'list', '', '', 0, 'custom', '_bx_timeline_form_repost_input_sys_list', '_bx_timeline_form_repost_input_list', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_repost_input_sys_text', '_bx_timeline_form_repost_input_text', '', 0, 0, 0, 'a:1:{s:12:"autocomplete";s:3:"off";}', '', '', '', '', '', 'XssHtml', '', 1, 0),
+('bx_timeline_repost', @sName, 'reposted', '', '', 0, 'custom', '_bx_timeline_form_repost_input_sys_reposted', '_bx_timeline_form_repost_input_reposted', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost', @sName, 'do_submit', '_bx_timeline_form_repost_input_do_submit', '', 0, 'submit', '_bx_timeline_form_repost_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_repost', @sName, 'do_cancel', '_bx_timeline_form_repost_input_do_cancel', '', 0, 'button', '_bx_timeline_form_repost_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_timeline_repost_to_browse', 'reposter_id', 2147483647, 1, 1),
-('bx_timeline_repost_to_browse', 'type', 2147483647, 1, 2),
-('bx_timeline_repost_to_browse', 'action', 2147483647, 1, 3),
-('bx_timeline_repost_to_browse', 'object_id', 2147483647, 1, 4),
-('bx_timeline_repost_to_browse', 'search', 2147483647, 1, 5),
-('bx_timeline_repost_to_browse', 'list', 2147483647, 1, 6),
-('bx_timeline_repost_to_browse', 'controls', 2147483647, 1, 7),
-('bx_timeline_repost_to_browse', 'do_submit', 2147483647, 1, 8),
-('bx_timeline_repost_to_browse', 'do_cancel', 2147483647, 1, 9);
+('bx_timeline_repost_with', 'reposter_id', 2147483647, 1, 1),
+('bx_timeline_repost_with', 'owner_id', 2147483647, 1, 2),
+('bx_timeline_repost_with', 'type', 2147483647, 1, 3),
+('bx_timeline_repost_with', 'action', 2147483647, 1, 4),
+('bx_timeline_repost_with', 'object_id', 2147483647, 1, 5),
+('bx_timeline_repost_with', 'text', 2147483647, 1, 6),
+('bx_timeline_repost_with', 'reposted', 2147483647, 1, 7),
+('bx_timeline_repost_with', 'controls', 2147483647, 1, 8),
+('bx_timeline_repost_with', 'do_submit', 2147483647, 1, 9),
+('bx_timeline_repost_with', 'do_cancel', 2147483647, 1, 10),
+
+('bx_timeline_repost_to', 'reposter_id', 2147483647, 1, 1),
+('bx_timeline_repost_to', 'type', 2147483647, 1, 2),
+('bx_timeline_repost_to', 'action', 2147483647, 1, 3),
+('bx_timeline_repost_to', 'object_id', 2147483647, 1, 4),
+('bx_timeline_repost_to', 'search', 2147483647, 1, 5),
+('bx_timeline_repost_to', 'list', 2147483647, 1, 6),
+('bx_timeline_repost_to', 'controls', 2147483647, 1, 7),
+('bx_timeline_repost_to', 'do_submit', 2147483647, 1, 8),
+('bx_timeline_repost_to', 'do_cancel', 2147483647, 1, 9);
 
 
 -- COMMENTS

@@ -230,16 +230,18 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'menu_item_meta' => $this->_sName . '_menu_item_meta',
             'menu_post_attachments' => $this->CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'],
 
+            //TODO: Continue from here.
             'form_post' => $this->_sName . '_post',
             'form_attach_link' => $this->_sName . '_attach_link',
-            'form_repost_to' => $this->_sName . '_repost_to',
+            'form_repost' => $this->_sName . '_repost',
             'form_display_post_add' => $this->_sName . '_post_add',
             'form_display_post_add_public' => $this->_sName . '_post_add_public',
             'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
             'form_display_post_edit' => $this->_sName . '_post_edit',
             'form_display_post_view' => $this->_sName . '_post_view',
             'form_display_attach_link_add' => $this->_sName . '_attach_link_add',
-            'form_display_repost_to_browse' => $this->_sName . '_repost_to_browse',
+            'form_display_repost_with' => $this->_sName . '_repost_with',
+            'form_display_repost_to' => $this->_sName . '_repost_to',
 
             'grid_mute' => $this->CNF['OBJECT_GRID_MUTE'],
 
@@ -309,6 +311,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'main' => $sHp . '-repost-',
                 'counter' => $sHp . '-repost-counter-',
                 'by_popup' => $sHp . '-repost-by-',
+                'with_popup' => $sHp . '-repost-with',
                 'to_popup' => $sHp . '-repost-to',
             )
         );

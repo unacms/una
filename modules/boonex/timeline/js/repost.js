@@ -22,48 +22,73 @@ function BxTimelineRepost(oOptions) {
 BxTimelineRepost.prototype = new BxTimelineMain();
 
 BxTimelineRepost.prototype.repostItem = function(oLink, iOwnerId, sType, sAction, iId) {
-	var $this = this;
-	var oDate = new Date();
-	var oParams = {
-		owner_id: iOwnerId,
-		type: sType,
-		action: sAction,
-		object_id: iId,
-		_t: oDate.getTime()	
-	};
+    var $this = this;
+    var oDate = new Date();
+    var oParams = {
+        owner_id: iOwnerId,
+        type: sType,
+        action: sAction,
+        object_id: iId,
+        _t: oDate.getTime()	
+    };
 
-	this.loadingIn(oLink, true);
+    this.loadingIn(oLink, true);
 
-	jQuery.post(
+    jQuery.post(
         this._sActionsUrl + 'repost/',
         oParams,
         function(oData) {
-        	$this.loadingIn(oLink, false);
+            $this.loadingIn(oLink, false);
 
-        	var oPopup = $(oLink).parents('.bx-popup-applied:visible:first');
-        	if(oPopup.length >0)
-        		oPopup.dolPopupHide();
+            var oPopup = $(oLink).parents('.bx-popup-applied:visible:first');
+            if(oPopup.length >0)
+                oPopup.dolPopupHide();
 
-        	var oCounter = $this._getCounter(oLink);
-        	var bCounter = oCounter && oCounter.length > 0;
-        	var fContinue = function() {
-                    if(oData && oData.count != undefined && bCounter) {
-                        oCounter.html(oData.countf);
+            var oCounter = $this._getCounter(oLink);
+            var bCounter = oCounter && oCounter.length > 0;
+            var fContinue = function() {
+                if(oData && oData.count != undefined && bCounter) {
+                    oCounter.html(oData.countf);
 
-                        oCounter.parents('.' + $this.sSP + '-repost-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
-                    }
+                    oCounter.parents('.' + $this.sSP + '-repost-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
+                }
 
-                    if(oData && oData.disabled)
-                        $(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : $this.sSP + '-repost-disabled');
-        	};
+                if(oData && oData.disabled)
+                    $(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : $this.sSP + '-repost-disabled');
+            };
 
-        	if(oData && oData.message != undefined && oData.message.length > 0 && !bCounter)
+            if(oData && oData.message != undefined && oData.message.length > 0 && !bCounter)
                 bx_alert(oData.message, fContinue);
-        	else
-        		fContinue();
+            else
+                fContinue();
         },
         'json'
     );
+};
+
+BxTimelineRepost.prototype.repostItemWith = function(oLink, iOwnerId, sType, sAction, iId) {
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData = jQuery.extend({}, oData, {
+        owner_id: iOwnerId,
+        type: sType,
+        action: sAction,
+        object_id: iId
+    });   
+
+    $(window).dolPopupAjax({
+        id: {value: this._aHtmlIds['with_popup'], force: true}, 
+        url: bx_append_url_params(this._sActionsUri + 'repost_with/', oData),
+        closeOnOuterClick: false,
+        removeOnClose: true,
+        onBeforeShow: function() {
+            $this.loadingIn(oLink, false);
+
+            $(oLink).parents(".bx-popup-applied:visible:first").dolPopupHide();
+        }
+    });
+
+    return false;
 };
 
 BxTimelineRepost.prototype.repostItemTo = function(oLink, iReposterId, sType, sAction, iId) {
