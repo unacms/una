@@ -270,6 +270,14 @@
         @apply px-1 pb-1;
     }
 
+    /* Borders */
+    .bx-artificer .bx-def-border {
+        @apply border border-gray-200 dark:border-gray-700;
+    }
+    .bx-artificer .bx-def-round-corners {
+        @apply rounded-md;
+    }
+
     /* Fonts */
     .bx-def-font,
     .bx-artificer .bx-def-font-inputs {
