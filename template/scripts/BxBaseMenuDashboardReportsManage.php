@@ -13,8 +13,6 @@
  */
 class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
 {
-    protected $_aModulesList;
-
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject);
@@ -25,34 +23,40 @@ class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
         $this->_bDisplayAddons = true;
     }
 
-    public function setMenuData ($aModulesList)
-    {
-        $this->_aModulesList = $aModulesList;
-    }
     
     protected function getMenuItemsRaw ()
     {
         $aResult = array();
         $aUrl = bx_get_base_url_inline();
+        
+        $aSystems = BxDolReport::getSystems();
+        
+        $sSelected = bx_get('object');
+        
+        if ($sSelected == ''){
+            $sSelected = reset($aSystems)['name'];
+        }
        
-        foreach($this->_aModulesList as $aModule){
-            $aResult[$aModule['name']] = array(
-                'name' => $aModule['name'],
-                'title' => $aModule['title'],
-                'link' => bx_append_url_params($aUrl[0], array_merge($aUrl[1], array('module' => $aModule['uri']))),
+        foreach($aSystems as $aSystem){
+            $sName = $aSystem['name'];
+            $aResult[$sName] = array(
+                'name' => $sName,
+                'title' => _t('_' . $sName),
+                'link' => bx_append_url_params($aUrl[0], array_merge($aUrl[1], array('object' => $sName))),
                 'active' => true,
                 'addon' =>  serialize([
                     'module' => 'system',
                     'method' => 'get_reports_count',
                     'params' => [
-                        'module' => $aModule['name'],
+                        'module' => $sName,
                         'status' => BX_DOL_REPORT_STASUS_NEW
                     ],
                     'class' => 'TemplDashboardServices'
                     ]),
-                'selected' => $aModule['selected']
-            );                
+                'selected' => $sSelected == $sName ? true : false
+            );   
     	}
+        
         if(!empty($aResult) && is_array($aResult)){
             $aResult['more-auto'] = array(
                 'module' => 'system', 
@@ -64,6 +68,7 @@ class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
                 'icon' => 'ellipsis-v',
             );
         }
+        
         return $aResult;
     }
     

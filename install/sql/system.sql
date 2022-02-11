@@ -1715,6 +1715,8 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_reports_track` (
   `type` varchar(32) NOT NULL default '',
   `text` text NOT NULL default '',
   `date` int(11) NOT NULL default '0',
+  `checked_by` int(11) NOT NULL default '0',    
+  `status` tinyint(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `report` (`object_id`, `author_nip`)
 );

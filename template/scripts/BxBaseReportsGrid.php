@@ -40,8 +40,8 @@ class BxBaseReportsGrid extends BxTemplGrid
             $this->_aQueryAppend[$this->_sFilter1Name] = $this->_sFilter1Value;
         }
 
-        if (bx_get('module_name')){
-            $this->setModule(bx_get('module_name'));
+        if (bx_get('object')){
+            $this->setObject(bx_get('object'));
         }
     }
     
@@ -50,14 +50,12 @@ class BxBaseReportsGrid extends BxTemplGrid
         return $this->getJsCode() . parent::getCode($isDisplayHeader);
     }
     
-    public function setModule($sModuleName)
+    public function setObject($sObjectName)
     {
-        $oModule = BxDolModule::getInstance($sModuleName);
-        $CNF = $oModule->_oConfig->CNF;
-        $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], -1, false);
+        $oReport = BxDolReport::getObjectInstance($sObjectName, -1, false);
         $this->_aReportSystemInfo = $oReport->getSystemInfo();
         $this->_aOptions['table'] = $this->_aReportSystemInfo['table_track'];
-        $this->_aQueryAppend['module_name'] = $sModuleName;
+        $this->_aQueryAppend['object'] = $sObjectName;
     }
     
     public function getJsCode()
@@ -84,14 +82,11 @@ class BxBaseReportsGrid extends BxTemplGrid
     private function _performActionStatus($iStatus, $sCmtsText)
     {
         $aIds = bx_get('ids');
-
-        $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['module_name']);
-        $CNF = $oModule->_oConfig->CNF;
-
+        
         $iAffected = 0;
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
-            $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iId, true);
+            $oReport = BxDolReport::getObjectInstance($this->_aReportSystemInfo['name'], $iId, true);
             $oReport->changeStatusReport($iStatus, bx_get_logged_profile_id(), _t($sCmtsText));
             $aIdsAffected[] = $iId;
             $iAffected++;
@@ -109,12 +104,9 @@ class BxBaseReportsGrid extends BxTemplGrid
     protected function _getCellNotes($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = '';
-        
-        $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['module_name']);
-        $CNF = $oModule->_oConfig->CNF;
-        if (isset($CNF) && isset($CNF['OBJECT_NOTES'])){
-            $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_NOTES'], $aRow['object_id']);
-            $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $oModule->_aModule['uri'] . "', '" . $aRow['object_id'] . "')"));   
+        if ($this->_aReportSystemInfo['object_comment'] && $this->_aReportSystemInfo['object_comment'] != ''){
+            $oCmts = BxDolCmts::getObjectInstance($this->_aReportSystemInfo['object_comment'], $aRow['object_id']);
+            $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $this->_aReportSystemInfo['name'] . "', '" . $aRow['object_id'] . "')"));   
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -124,11 +116,9 @@ class BxBaseReportsGrid extends BxTemplGrid
     {
         $mixedValue = '';
         
-        $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['module_name']);
-        $CNF = $oModule->_oConfig->CNF;
-        if (isset($CNF) && isset($CNF['OBJECT_NOTES'])){
-            $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_NOTES'], -$aRow['id']);
-            $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $oModule->_aModule['uri'] . "', '" . -$aRow['id'] . "')"));  
+        if ($this->_aReportSystemInfo['object_comment'] && $this->_aReportSystemInfo['object_comment'] != ''){
+            $oCmts = BxDolCmts::getObjectInstance($this->_aReportSystemInfo['object_comment'], -$aRow['id']);
+            $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $this->_aReportSystemInfo['name'] . "', '" . - $aRow['id'] . "')"));  
         }
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -137,14 +127,30 @@ class BxBaseReportsGrid extends BxTemplGrid
     protected function _getCellObject ($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = '';
-        $sTitle = bx_srv($this->_aReportSystemInfo['module_name'], 'get_title', array(0 => $aRow['object_id'])); 
-        if ($sTitle != ''){
-            $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
-                'href' => bx_srv($this->_aReportSystemInfo['module_name'], 'get_link', array(0 => $aRow['object_id'])),
-                'title' =>  $sTitle,
-                'content' =>  $sTitle
-            ));
+        $sTitle = '';
+        $sUrl = '';
+        if ($this->_aReportSystemInfo['name'] == 'sys_cmts'){
+            $oCmts = BxDolCmts::getObjectInstanceByUniqId($aRow['object_id']);
+            $aCmts = BxDolCmtsQuery::getCommentByUniq($aRow['object_id']);
+            $sTitle = $oCmts->getViewText($aCmts['cmt_id']);
+            $sUrl = $oCmts->getViewUrl($aCmts['cmt_id']);
         }
+        else{
+            $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aReportSystemInfo['name']);
+            $sTitle = $oContentInfo ? $oContentInfo->getContentTitle($aRow['object_id']) : '';
+            
+            $oReport = BxDolReport::getObjectInstance($this->_aReportSystemInfo['name'], $aRow['object_id']);
+            $sUrl = BxDolPermalinks::getInstance()->permalink($oReport->getBaseUrl());
+        }
+ 
+        if ($sTitle == '')
+             $sTitle = _t('_Empty');
+        
+        $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
+            'href' => $sUrl,
+            'title' =>  $sTitle,
+            'content' =>  $sTitle
+        ));
         
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
