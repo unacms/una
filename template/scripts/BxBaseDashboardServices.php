@@ -18,41 +18,16 @@ class BxBaseDashboardServices extends BxDol
         $oMenu = BxDolMenu::getObjectInstance('sys_dashboard_reports');
         if(!$oMenu)
             return '';
-
-        $BxDolModuleQuery = BxDolModuleQuery::getInstance();
-        $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
-    	$aModulesList = array();
-        foreach($aModules as $iKey => $aModule){
-            $oModule = BxDolModule::getInstance($aModule['name']);
-            if ($oModule instanceof iBxDolContentInfoService){
-                $CNF = $oModule->_oConfig->CNF;
-                if (isset($CNF['OBJECT_REPORTS'])){
-                    $aModule['selected'] = false;
-                    $aModulesList[$aModule['uri']] = $aModule;
-                }
-                else{
-                    unset($aModules[$iKey]);
-                }
-            }
-            else{
-                unset($aModules[$iKey]);
-            }
-        }
-        $aModules = array_values($aModules);
-        $sSelected = bx_get('module');
+        
+        $aSystems = BxDolReport::getSystems();
+        $sSelected = bx_get('object');
         
         if ($sSelected == ''){
-            $aModulesList[$aModules[0]['uri']]['selected'] = true; 
-            $sSelected = $aModules[0]['uri'];
+            $sSelected = reset($aSystems)['name'];
         }
-        else{
-            $aModulesList[$sSelected]['selected'] = true;
-        }
-        
-        $oMenu->setMenuData($aModulesList);
         
         $oGrid = BxDolGrid::getObjectInstance('sys_reports_administration');
-        $oGrid->setModule($aModulesList[$sSelected]['name']);
+        $oGrid->setObject($aSystems[$sSelected]['name']);
         
         if(!$oGrid)
             return '';
@@ -61,25 +36,23 @@ class BxBaseDashboardServices extends BxDol
         $oTemplate->addJs(array('BxDolReportsManageTools.js', 'BxDolGrid.js'));
 		$oTemplate->addCss(array('manage_tools.css'));
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
-
+        
     	return array(
-            'content' => $oGrid->getCode(),
+            'content' =>$oGrid->getCode(),
             'menu' => $oMenu
         );
     }
     
-    public function serviceGetReportsCount($sModule, $iStatus)
+    public function serviceGetReportsCount($sObjectReposrt, $iStatus)
     {
-        $iCount = 0;
-        $oModule = BxDolModule::getInstance($sModule);
-        if ($oModule instanceof iBxDolContentInfoService){
-            $CNF = $oModule->_oConfig->CNF;
-            if (isset($CNF['OBJECT_REPORTS']))
-                $iCount = BxDolService::call($sModule, 'reports_count_by_status', array($iStatus));
-        }
+        $oReport = BxDolReport::getObjectInstance($sObjectReposrt, 0, false);
+        $iCount = $oReport->getCountByStatus($iStatus);
+        
         if ($iCount > 0)
             return $iCount;
+        
         return ;
+
     }
     
     public function serviceManageAudit()

@@ -2057,6 +2057,7 @@
 	<string name="_sys_block_types_skeletons"><![CDATA[Скелеты]]></string>
 	<string name="_sys_block_types_system"><![CDATA[Система]]></string>
   
+  <string name="_sys_cmts"><![CDATA[комментарии]]></string>
   <string name="_sys_cmts_administration_grid_column_title_adm_cmt_text"><![CDATA[Текст]]></string>
   <string name="_sys_cmts_administration_grid_column_title_adm_cmt_time"><![CDATA[Добавлено]]></string>
   <string name="_sys_cmts_administration_grid_column_title_adm_cmt_author_id"><![CDATA[Автор]]></string>
