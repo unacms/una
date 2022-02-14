@@ -1537,6 +1537,26 @@ BLAH;
 
         $this->addCssJsUi();
 
+        $sJsCode = '';
+        if(!$bDisabled) {
+            $sJsCode = $this->oTemplate->parseHtmlByName('form_field_custom_suggestions_js.html', [
+                'id' => $aAttrs['id'],
+                'name' => $aInput['name'],
+                'url_get_recipients' => $aInput['ajax_get_suggestions'],
+                'b_img' => isset($aInput['custom']['b_img']) ? (int)$aInput['custom']['b_img'] : 1,
+                'only_once' => isset($aInput['custom']['only_once']) ? 1 : 0,
+                'on_select' => isset($aInput['custom']['on_select']) ? $aInput['custom']['on_select']: 'null',
+                'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
+            ]);
+
+            if($this->_bDynamicMode)
+                $sJsCode = $this->oTemplate->addJsPreloadedWrapped([
+                    'jquery-ui/jquery-ui.custom.min.js'
+                ], $sJsCode);
+            else 
+                $sJsCode = $this->oTemplate->addJsCodeOnLoadWrapped($sJsCode);
+        }       
+
         return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
             'name' => $aInput['name'],
             'attrs' => bx_convert_array2attrs($aAttrs),
@@ -1545,18 +1565,7 @@ BLAH;
                 'condition' => !$bDisabled,
                 'content' => $aTmplVarsInputText
             ),
-            'bx_if:init' => array(
-                'condition' => !$bDisabled,
-                'content' => array(
-                    'id' => $aAttrs['id'],
-                    'name' => $aInput['name'],
-                    'url_get_recipients' => $aInput['ajax_get_suggestions'],
-                    'b_img' => isset($aInput['custom']['b_img']) ? (int)$aInput['custom']['b_img'] : 1,
-                    'only_once' => isset($aInput['custom']['only_once']) ? 1 : 0,
-                    'on_select' => isset($aInput['custom']['on_select']) ? $aInput['custom']['on_select']: 'null',
-                    'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
-                )
-            )
+            'js_code' => $sJsCode
         ));
     }
 
