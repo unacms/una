@@ -109,12 +109,14 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
     
     protected function _getMenuItem($a)
     {
-        if(isset($a['link']))
-            $a['link'] = bx_append_url_params($a['link'], [
+        $mixedResult = parent::_getMenuItem($a);
+
+        if($mixedResult !== false && !empty($mixedResult['link']) && strpos($mixedResult['link'], 'javascript:') === false)
+            $mixedResult['link'] = bx_append_url_params($mixedResult['link'], [
                 'owner' => 1
             ]);
 
-        return parent::_getMenuItem($a);
+        return $mixedResult;
     }
 }
 

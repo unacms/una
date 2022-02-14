@@ -3477,6 +3477,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_friends_counter"><![CDATA[Friends: {0}]]></string>
     <string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Create a new profile]]></string>
+    <string name="_sys_txt_switch_profiles"><![CDATA[Switch to]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[New Picture]]></string>
     <string name="_sys_txt_not_found"><![CDATA[Not found]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[No picture uploaded]]></string>

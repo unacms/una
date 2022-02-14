@@ -3435,6 +3435,7 @@
     <string name="_sys_txt_friends_counter"><![CDATA[Друзья: {0}]]></string>
     <string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
+    <string name="_sys_txt_switch_profiles"><![CDATA[Переключиться в]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая картинка]]></string>
     <string name="_sys_txt_not_found"><![CDATA[Не найдено]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[Картинка не загружена]]></string>

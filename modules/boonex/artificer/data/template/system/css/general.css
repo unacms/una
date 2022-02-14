@@ -39,7 +39,6 @@ import url(../../../../../../../template/css/general.css);
 .bx-menu-profile-stats li.bx-psmi-show-less {
     text-transform: uppercase;
     font-size: 0.875rem;
-    color: rgba(0, 0, 0, 0.5);
 }
 
 .bx-menu-profile-stats  li.bx-psmi-show-more:hover,

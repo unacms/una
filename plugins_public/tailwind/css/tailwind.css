@@ -532,8 +532,13 @@
 
     /* Profile Stats menu */
     .bx-artificer .bx-menu-profile-stats.bx-menu-ver li.bx-menu-tab-active {
-        @apply bg-gray-900/[.08] dark:bg-gray-900 ring-1 ring-gray-200 dark:ring-gray-800 text-gray-900 dark:text-white;
+        @apply bg-slate-900/[.08] dark:bg-slate-900 ring-1 ring-gray-200 dark:ring-gray-800 text-gray-900 dark:text-white;
     }
+    .bx-artificer .bx-menu-profile-stats.bx-menu-ver li.bx-psmi-show-more,
+    .bx-artificer .bx-menu-profile-stats.bx-menu-ver li.bx-psmi-show-less {
+        @apply text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300
+    }
+
 
     /* Profile Cover Actions */
     .bx-artificer .bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor.bx-menu-hor-inline li.bx-mi-primary {
