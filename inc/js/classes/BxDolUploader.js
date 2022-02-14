@@ -423,7 +423,7 @@ BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
         'xvid'   : 'video/xvid',
         
         'xwd'    : 'image/x-xwindowdump',
-        'zip'    : 'application/zip',
+        'zip'    : ['application/zip', 'application/x-zip-compressed']
        
     }
     return mimeTypes[ext.replace('.', '')];
@@ -537,8 +537,18 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         if (o.acceptedFiles && o.acceptedFiles != ''){
             a = o.acceptedFiles.trim().split(/\s*,\s*/);
             a.forEach(function(item, i, arr) {
-                if ($this.getMimeTypefromString(item))
-                    aAcceptableFiles.push($this.getMimeTypefromString(item));
+                if ($this.getMimeTypefromString(item)){
+                    oT = $this.getMimeTypefromString(item);
+                    if (Array.isArray(oT)){
+                        oT.forEach(function(oTs, j, ar) {
+                            aAcceptableFiles.push(oTs);
+                        });
+                    }
+                    else{
+                        aAcceptableFiles.push(oT);
+                    }
+                }
+                    
             });
         }
         
