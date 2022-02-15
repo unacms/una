@@ -50,6 +50,7 @@ define('BX_TIMELINE_PARSE_TYPE_REPOST', 'repost');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
 define('BX_TIMELINE_STATUS_ACTIVE', 'active');
+define('BX_TIMELINE_STATUS_PENDING', 'pending');
 define('BX_TIMELINE_STATUS_AWAITING', 'awaiting');
 define('BX_TIMELINE_STATUS_FAILED', 'failed');
 define('BX_TIMELINE_STATUS_HIDDEN', 'hidden');
@@ -2742,7 +2743,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'rdata' => $mixedData
             )),
             'title' => '',
-            'description' => ''
+            'description' => '',
+            'status_admin' => $this->getStatusAdmin()
         ));
 
         if(empty($iId))
@@ -3196,6 +3198,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /*
      * COMMON METHODS
      */
+    public function getStatusAdmin()
+    {
+        return $this->isModerator() || $this->_oConfig->isAutoApprove() ? BX_TIMELINE_STATUS_ACTIVE : BX_TIMELINE_STATUS_PENDING;
+    }
+
     public function getItemData($iId, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -3296,24 +3303,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-    public function getFormPost($aParams = array())
+    public function getFormPost($aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
 
         $iUserId = $this->getUserId();
 
         $oForm = $this->getFormPostObject($aParams);
-        $aFormInitCheckerParams = array();
+        $aFormInitCheckerParams = [];
 
         $bValues = !empty($aParams['values']) && is_array($aParams['values']);
         if($bValues) {
             $this->_prepareFormForAutoSubmit($oForm, $aParams['values']);
 
-            $aFormInitCheckerParams = array(array(), $aParams['values']);
+            $aFormInitCheckerParams = [[], $aParams['values']];
             unset($aParams['values']);
         }
 
-        call_user_func_array(array($oForm, 'initChecker'), $aFormInitCheckerParams);
+        call_user_func_array([$oForm, 'initChecker'], $aFormInitCheckerParams);
 
         $bAjaxMode = $oForm->isAjaxMode();
         $bDynamicMode = $bAjaxMode;
@@ -3323,7 +3330,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $sType = $this->_oConfig->getPrefix('common_post') . $sType;
             BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
 
-            $aContent = array();
+            $aContent = [];
 
             //--- Process Text ---//
             $sText = $oForm->getCleanValue('text');
@@ -3362,7 +3369,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-            	return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode);
+            	return $this->_prepareResponse([
+                    'form' => $oForm->getCode($bDynamicMode), 
+                    'form_id' => $oForm->id
+                ], $bAjaxMode);
             }
 
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oConfig->getTitleDefault($bLinkIds, $bPhotoIds, $bVideoIds, $bFileIds);
@@ -3375,24 +3385,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
              */
             unset($oForm->aInputs['text']);
 
-            $iId = $oForm->insert(array(
+            $iId = $oForm->insert([
                 'owner_id' => $iOwnerId,
                 'object_id' => $iUserId,
                 'object_owner_id' => $iUserId,
                 'object_privacy_view' => $iObjectPrivacyView,
                 'content' => serialize($aContent),
                 'title' => $sTitle,
-                'description' => $sDescription
-            ));
+                'description' => $sDescription,
+                'status_admin' => $this->getStatusAdmin()
+            ]);
 
             if(!empty($iId)) {
-                $aContent = array_merge($aContent, array(
-                    'timeline_group' => array(
+                $aContent = array_merge($aContent, [
+                    'timeline_group' => [
                         'by' => $this->getName() . '_' . $iUserId . '_' . $iId,
                         'field' => 'owner_id'
-                    )
-                ));
-                $this->_oDb->updateEvent(array('content' => serialize($aContent)), array('id' => $iId));
+                    ]
+                ]);
+                $this->_oDb->updateEvent(['content' => serialize($aContent)], ['id' => $iId]);
 
                 //--- Process Meta ---//
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
@@ -3408,36 +3419,39 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 //--- Process Media ---//
                 $this->_saveMedia($CNF['FIELD_PHOTO'], $iId, $aPhotoIds, $iUserId, true);
                 $this->_saveMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId, true);
-				$this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId, true);
-				
+                $this->_saveMedia($CNF['FIELD_FILE'], $iId, $aFileIds, $iUserId, true);
 
                 $this->onPost($iId);
 
-                return $this->_prepareResponse(array('id' => $iId), $bAjaxMode, array(
-                    'redirect' => $this->_oConfig->getItemViewUrl(array('id' => $iId))
-                ));
+                return $this->_prepareResponse(['id' => $iId], $bAjaxMode, [
+                    'redirect' => $this->_oConfig->getItemViewUrl(['id' => $iId])
+                ]);
             }
 
-            return $this->_prepareResponse(array('message' => _t('_bx_timeline_txt_err_cannot_perform_action')), $bAjaxMode);
+            return $this->_prepareResponse(['message' => _t('_bx_timeline_txt_err_cannot_perform_action')], $bAjaxMode);
         }
 
-        $mixedResult = $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode && $oForm->isSubmitted());
+        $mixedResult = $this->_prepareResponse([
+            'form' => $oForm->getCode($bDynamicMode), 
+            'form_id' => $oForm->id
+        ], $bAjaxMode && $oForm->isSubmitted());
+
         if(is_array($mixedResult))
             $mixedResult['form_object'] = $oForm;
 
         return $mixedResult;
     }
 
-    public function getFormEdit($iId, $aParams = array(), $aBrowseParams = array())
+    public function getFormEdit($iId, $aParams = [], $aBrowseParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
         $sJsObjectView = $this->_oConfig->getJsObjectView($aBrowseParams);
 
         $iUserId = $this->getUserId();
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
         if(empty($aEvent) || !is_array($aEvent))
-            return array();
+            return [];
 
         $aContent = unserialize($aEvent['content']);
         if(is_array($aContent) && !empty($aContent['text']))
@@ -3450,13 +3464,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $oForm = $this->getFormPostObject($aParams);
         $oForm->setId($this->_oConfig->getHtmlIds('view', 'edit_form') . $iId);
-        $aFormInitCheckerParams = array();
+        $aFormInitCheckerParams = [];
 
         $bValues = !empty($aParams['values']) && is_array($aParams['values']);
         if($bValues) {
             $this->_prepareFormForAutoSubmit($oForm, $aParams['values']);
 
-            $aFormInitCheckerParams = array(array(), array_merge($aEvent, $aParams['values']));
+            $aFormInitCheckerParams = [[], array_merge($aEvent, $aParams['values'])];
             unset($aParams['values']);
         }
         else {
@@ -3468,16 +3482,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 if(!is_numeric($mixedIndex))
                     continue;
 
-                $oForm->aInputs[$CNF['FIELD_CONTROLS']][$mixedIndex]['attrs'] = bx_replace_markers($aInput['attrs'], array(
+                $oForm->aInputs[$CNF['FIELD_CONTROLS']][$mixedIndex]['attrs'] = bx_replace_markers($aInput['attrs'], [
                     'js_object_view' => $sJsObjectView,
                     'content_id' => $iId
-                ));
+                ]);
             }
 
-            $aFormInitCheckerParams = array($aEvent);
+            $aFormInitCheckerParams = [$aEvent];
         }
 
-        call_user_func_array(array($oForm, 'initChecker'), $aFormInitCheckerParams);
+        call_user_func_array([$oForm, 'initChecker'], $aFormInitCheckerParams);
 
         $bAjaxMode = $oForm->isAjaxMode();
         $bDynamicMode = $bAjaxMode || bx_is_dynamic_request();
@@ -3485,11 +3499,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sCodeAdd = '';
         if($bDynamicMode) {
             $sCodeAdd .= $this->_oTemplate->getAddedJs('post', $bDynamicMode);
-            $sCodeAdd .= $this->_oTemplate->getJsCode('post', array(), true, $bDynamicMode);
+            $sCodeAdd .= $this->_oTemplate->getJsCode('post', [], true, $bDynamicMode);
         }
 
         if($oForm->isSubmittedAndValid()) {
-            $aContent = array();
+            $aContent = [];
 
             //--- Process Text ---//
             $sText = $oForm->getCleanValue('text');
@@ -3500,22 +3514,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if($bText)
             	$aContent['text'] = $sText;
 
-            $aValsToAdd = array(
-            	'content' => serialize($aContent)
-            );
+            $aValsToAdd = [
+            	'content' => serialize($aContent),
+                'status_admin' => $this->getStatusAdmin()
+            ];
 
             //--- Process Privacy ---//
             if(isset($oForm->aInputs[$CNF['FIELD_OBJECT_PRIVACY_VIEW']])) {
                 $iObjectPrivacyView = (int)$oForm->getCleanValue('object_privacy_view');
                 $iObjectPrivacyViewDefault = $this->_oConfig->getPrivacyViewDefault('object');
                 if(empty($iObjectPrivacyView))
-                    $aValsToAdd = array_merge($aValsToAdd, array(
+                    $aValsToAdd = array_merge($aValsToAdd, [
                         'object_privacy_view' => $iObjectPrivacyViewDefault
-                    ));
+                    ]);
                 else if($iObjectPrivacyView < 0) 
-                    $aValsToAdd = array_merge($aValsToAdd, array(
+                    $aValsToAdd = array_merge($aValsToAdd, [
                         'owner_id' => abs($iObjectPrivacyView)
-                    ));
+                    ]);
             }
 
             //--- Process Link ---//
@@ -3538,11 +3553,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-            	return $this->_prepareResponse(array('form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode);
+            	return $this->_prepareResponse([
+                    'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
+                    'form_id' => $oForm->id
+                ], $bAjaxMode);
             }
 
             if($oForm->update($iId, $aValsToAdd) === false)
-                return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+                return ['message' => _t('_bx_timeline_txt_err_cannot_perform_action')];
 
             $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
             if($bText)
@@ -3561,17 +3579,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
 
-            return array(
+            return [
                 'id' => $iId
-            );
+            ];
         }
 
-        return array(
+        return [
             'id' => $iId, 
             'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
             'form_id' => $oForm->id,
             'eval' => $sJsObjectView . '.onEditPost(oData)'
-        );
+        ];
     }
 
     public function getFormPostObject($aParams)
@@ -3653,7 +3671,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oScore;
     }
 
-	public function getReportObject($sSystem, $iId)
+    public function getReportObject($sSystem, $iId)
     {
         if(empty($sSystem) || (int)$iId == 0)
             return false;

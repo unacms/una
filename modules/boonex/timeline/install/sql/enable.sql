@@ -280,6 +280,7 @@ VALUES (@iTypeId, 'bx_timeline_general', '_bx_timeline_options_category_general'
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_enable_auto_approve', 'on', @iCategId, '_bx_timeline_option_enable_auto_approve', 'checkbox', '', '', '', '', 0),
 ('bx_timeline_enable_edit', 'on', @iCategId, '_bx_timeline_option_enable_edit', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_enable_count_all_views', '', @iCategId, '_bx_timeline_option_enable_count_all_views', 'checkbox', '', '', '', '', 3),
@@ -500,7 +501,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline_administration', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 AND `active`=''1'' ', 'bx_timeline_events', 'id', 'date', 'status', '', 20, NULL, 'start', '', 'title,description', '', 'like', 'reports', '', 192, 'BxTimelineGridAdministration', 'modules/boonex/timeline/classes/BxTimelineGridAdministration.php');
+('bx_timeline_administration', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 AND `active`=''1'' ', 'bx_timeline_events', 'id', 'date', 'status_admin', '', 20, NULL, 'start', '', 'title,description', '', 'like', 'reports', '', 192, 'BxTimelineGridAdministration', 'modules/boonex/timeline/classes/BxTimelineGridAdministration.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_timeline_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),

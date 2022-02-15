@@ -715,6 +715,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sWhereClauseStatus = "AND `{$this->_sTable}`.`active`='1' ";
         $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`status`=? ", isset($aParams['status']) ? $aParams['status'] : BX_TIMELINE_STATUS_ACTIVE);
+        $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`status_admin`=? ", isset($aParams['status_admin']) ? $aParams['status_admin'] : BX_TIMELINE_STATUS_ACTIVE);
 
         //--- Apply filter
         $sWhereClauseFilter = "";

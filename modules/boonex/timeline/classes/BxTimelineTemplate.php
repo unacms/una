@@ -2428,17 +2428,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
             if(!$oConnection->isConnected($iUser, $iOwner))
-                $aTmplVars[] = array(
+                $aTmplVars[] = [
                     'style_prefix' => $sStylePrefix,
                     'class' => '',
-                    'bx_if:show_note_color' => array(
+                    'bx_if:show_note_color' => [
                         'condition' => false,
-                        'content' => array(
-                            'item_note_color' => 'red1',
-                        )
-                    ),
+                        'content' => []
+                    ],
                     'item_note' => _t('_bx_timeline_txt_promoted')
-                );
+                ];
         }
 
         //--- Awaiting status related notes.
@@ -2449,35 +2447,48 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             else
                 $sNote = _t('_bx_timeline_txt_note_processing_awaiting');
 
-            $aTmplVars[] = array(
+            $aTmplVars[] = [
                 'style_prefix' => $sStylePrefix,
-                'bx_if:show_note_color' => array(
+                'bx_if:show_note_color' => [
                     'condition' => true,
-                    'content' => array(
+                    'content' => [
                         'item_note_color' => 'red3'
-                    )
-                ),
+                    ]
+                ],
                 'item_note' => $sNote
-            );
+            ];
         }
 
         //--- Failed status related notes.
         if($aEvent['status'] == BX_TIMELINE_STATUS_FAILED)
-            $aTmplVars[] = array(
+            $aTmplVars[] = [
                 'style_prefix' => $sStylePrefix,
-                'bx_if:show_note_color' => array(
+                'bx_if:show_note_color' => [
                     'condition' => true,
-                    'content' => array(
+                    'content' => [
                         'item_note_color' => 'red2'
-                    )
-                ),
+                    ]
+                ],
                 'item_note' => _t('_bx_timeline_txt_note_processing_failed')
-            );
+            ];
 
-        return empty($aTmplVars) ? array() : array(
+        //--- Pending status related notes.
+        if($aEvent['status_admin'] == BX_TIMELINE_STATUS_PENDING)
+            $aTmplVars[] = [
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_note_color' => [
+                    'condition' => true,
+                    'content' => [
+                        'item_note_color' => 'red3'
+                    ]
+                ],
+                'item_note' => _t('_bx_timeline_txt_note_approve_pending')
+            ];
+
+        return empty($aTmplVars) ? [] : [
             'style_prefix' => $sStylePrefix,
             'bx_repeat:notes' => $aTmplVars
-        );
+        ];
     }
 
     protected function _getTmplVarsOwnerActions(&$aEvent, $aBrowseParams = array())

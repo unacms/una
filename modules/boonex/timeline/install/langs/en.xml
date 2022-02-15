@@ -10,6 +10,7 @@
     <string name="_bx_timeline_options_category_cache"><![CDATA[Cache]]></string>
     <string name="_bx_timeline_options_category_post"><![CDATA[Post]]></string>
 
+    <string name="_bx_timeline_option_enable_auto_approve"><![CDATA[Auto approve an update after creation]]></string>
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Allow user to edit his items]]></string>
     <string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>
     <string name="_bx_timeline_option_enable_show_all"><![CDATA[Show all items in Public Feed including ones which were posted in personal Feeds]]></string>
@@ -349,6 +350,7 @@
     <string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
     <string name="_bx_timeline_txt_sticked"><![CDATA[Pinned for all post]]></string>
     <string name="_bx_timeline_txt_promoted"><![CDATA[Promoted]]></string>
+    <string name="_bx_timeline_txt_note_approve_pending"><![CDATA[Update will be published as soon as it's approved by moderator]]></string>
     <string name="_bx_timeline_txt_note_scheduled_awaiting"><![CDATA[Update publishing date is {0}]]></string>
     <string name="_bx_timeline_txt_note_processing_awaiting"><![CDATA[Update will be published as soon as video is converted]]></string>
     <string name="_bx_timeline_txt_note_processing_failed"><![CDATA[Update isn't published because video conversion failed, edit video to fix the issue.]]></string>

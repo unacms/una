@@ -3,11 +3,13 @@
     <div class="__style_prefix__-item-cnt bx-def-box bx-def-padding-topbottom bx-def-round-corners __class_content__">
         <div class="__style_prefix__-blink-plate"></div>
         <bx_if:show_note>
-            <bx_repeat:notes>
-                <div class="__style_prefix__-item-note">
-                    <div class="__style_prefix__-in-text bx-def-margin-leftright bx-def-font-grayed<bx_if:show_note_color> col-__item_note_color__</bx_if:show_note_color>">__item_note__</div>
-                </div>
-            </bx_repeat:notes>
+            <div class="__style_prefix__-item-notes">
+                <bx_repeat:notes>
+                    <div class="__style_prefix__-item-note bx-def-margin-sec-top-auto bx-def-margin-leftright bx-def-font-grayed">
+                        <div class="__style_prefix__-in-text<bx_if:show_note_color> col-__item_note_color__</bx_if:show_note_color>">__item_note__</div>
+                    </div>
+                </bx_repeat:notes>
+            </div>
             <div class="__style_prefix__-in-divider bx-def-hr bx-def-margin-topbottom"></div>
         </bx_if:show_note>
         <div class="__style_prefix__-item-owner bx-def-margin-leftright __class_owner__"> 

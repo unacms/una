@@ -10,6 +10,7 @@
     <string name="_bx_timeline_options_category_cache"><![CDATA[Кэш]]></string>
     <string name="_bx_timeline_options_category_post"><![CDATA[Создание сообщения]]></string>
 
+    <string name="_bx_timeline_option_enable_auto_approve"><![CDATA[Автоматически активировать сообщение после создания]]></string>
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Разрешить пользователю изменять собственные сообщения]]></string>
     <string name="_bx_timeline_option_enable_delete"><![CDATA[Разрешить владельцу ленты удалять сообщения]]></string>
     <string name="_bx_timeline_option_enable_show_all"><![CDATA[Показывать все сообщения в 'Общей хронике', включая те, что были написаны в персональных Хрониках]]></string>
@@ -335,8 +336,9 @@
     <string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
     <string name="_bx_timeline_txt_sticked"><![CDATA[Событие приколотое для всех]]></string>
     <string name="_bx_timeline_txt_promoted"><![CDATA[Рекламируемое]]></string>
+    <string name="_bx_timeline_txt_note_approve_pending"><![CDATA[Обновление будет опубликовано, как только пройдет проверку модератором.]]></string>
     <string name="_bx_timeline_txt_note_scheduled_awaiting"><![CDATA[Дата публикации: {0}]]></string>
-    <string name="_bx_timeline_txt_note_processing_awaiting"><![CDATA[Обновление будет опубликована как только сконвертируется видео.]]></string>
+    <string name="_bx_timeline_txt_note_processing_awaiting"><![CDATA[Обновление будет опубликовано, как только сконвертируется видео.]]></string>
     <string name="_bx_timeline_txt_note_processing_failed"><![CDATA[Обновление не было опубликовано, тк произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
     <string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
     <string name="_bx_timeline_txt_added_sample"><![CDATA[Добавил {0}]]></string>
