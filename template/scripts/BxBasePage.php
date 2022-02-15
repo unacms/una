@@ -23,6 +23,8 @@ class BxBasePage extends BxDolPage
     
     protected $_bStickyColumns = false;
 
+    protected $_bSubPage = false;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject);
@@ -175,11 +177,13 @@ class BxBasePage extends BxDolPage
 
         $this->_addJsCss();
 
-        $this->_addSysTemplateVars();
+        if (!$this->_bSubPage) {
+            $this->_addSysTemplateVars();
 
-        $this->_selectMenu();
+            $this->_selectMenu();
 
-        $this->_setSubmenu(array());
+            $this->_setSubmenu(array());
+        }
 
         if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'] || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')) {
             $sPageCode = $this->_getPageCode();
@@ -215,6 +219,7 @@ class BxBasePage extends BxDolPage
             'page_object' => $this,
             'page_query' => $this->_oQuery,
             'page_code' => &$sPageCode,
+            'sub_page' => $this->_bSubPage,
         ));
 
         $sPageCode .= $this->getJsScript();
@@ -274,6 +279,11 @@ class BxBasePage extends BxDolPage
         }
 
     	return $bResult;
+    }
+
+    public function setSubPage($b = true)
+    {
+        $this->_bSubPage = $b;
     }
 
     public function setPageCover($bCover = true)

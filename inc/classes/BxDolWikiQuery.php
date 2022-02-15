@@ -158,7 +158,7 @@ class BxDolWikiQuery extends BxDolDb
         return $this->getAll("SELECT `title`, `uri`, `object` FROM `sys_objects_page` WHERE `module` = ?" . $sWhere, array($this->_aObject['module']));
     }
 
-    public function insertPage ($sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 5, $iVisibleForLevels = 2147483647, $sClass = 'BxTemplPageWiki')
+    public function insertPage ($sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 20, $iVisibleForLevels = 2147483647, $sClass = 'BxTemplPageWiki')
     {
         $oQueryPageBuilder = new BxDolStudioBuilderPageQuery();
         return $oQueryPageBuilder->insertPage($this->_aObject['module'] . '_' . str_replace('-', '_', $sUri), $this->_aObject['module'], $sUri, $sUrl, $sTitleLangKey, $iType, $iLayoutId, $iVisibleForLevels, $sClass);

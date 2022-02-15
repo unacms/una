@@ -175,6 +175,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     public function getContents ($sAllExceptSpecified = '', $sOnlySpecified = '')
     {
         $aAllExceptSpecified = $sAllExceptSpecified ? explode(',', $sAllExceptSpecified) : array();
+        $aAllExceptSpecified = array_merge($aAllExceptSpecified, ['wiki-pages-list', 'wiki-page-contents']);
         $aOnlySpecified = $sOnlySpecified ? explode(',', $sOnlySpecified) : array();
         if (!($a = $this->_oQuery->getPages($aAllExceptSpecified, $aOnlySpecified)))
             return '';
@@ -540,6 +541,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 $oLang->addLanguageString($sLangKey, $sVal, $iLangId, $iLangCat);
             }
 
+            $sUrl = $this->getPageUrl($sPageUri, false, false);
             return array('code' => 0, 'url' => BxDolPermalinks::getInstance()->permalink($sUrl));
         }
         else {
@@ -917,6 +919,36 @@ class BxDolParsedown extends Parsedown
         }
         return $a;
     }
+
+	protected function blockHeader($Excerpt) {
+		$a = parent::blockHeader($Excerpt);
+
+		if (isset($a)) {
+			$sText = trim($a['element']['handler']['argument'], '#');
+			$sText = trim($sText, ' ');
+			$sLink = preg_replace('/[^\p{L}\p{N}\p{M}-]+/u', '', mb_strtolower(mb_ereg_replace(' ','-', $sText)));
+			$aAttr = array();
+
+			if (!empty($sLink)) {
+				$aAttr = isset($a['element']['attributes']) ? $a['element']['attributes'] : [];
+				$aAttr['id'] = $sLink;
+
+				$aHandler = array(
+					'function' => 'lineElements',
+					'argument' => $sText,
+					'destination' => 'elements',
+				);
+
+				$a['element']['attributes'] = $aAttr;
+				$a['element']['handler'] = $aHandler;
+			}
+		} 
+        else {
+			$a = null;
+		}
+
+        return $a;
+	}
 }
 
 /** @} */

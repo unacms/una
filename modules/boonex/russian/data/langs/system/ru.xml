@@ -3108,6 +3108,8 @@
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Кэш]]></string>
     <string name="_sys_page_block_title_std_dash_queues"><![CDATA[Очереди]]></string>
 	<string name="_sys_page_block_title_terms"><![CDATA[Правила пользования]]></string>
+    <string name="_sys_page_block_title_wiki_pages_list"><![CDATA[Список страниц]]></string>
+    <string name="_sys_page_block_title_wiki_page_contents"><![CDATA[Содержание страницы]]></string>
 	<string name="_sys_page_lang_block_about"><![CDATA[Этот сайт сделан на UNA. Остальное - тайна, покрытая мраком.]]></string>
 	<string name="_sys_page_lang_block_terms"><![CDATA[Правила пользования нашим сайтом.]]></string>
 	<string name="_sys_page_lang_block_privacy"><![CDATA[Политика конфиденциальности нашего сайта.]]></string>
@@ -3174,6 +3176,8 @@
 	<string name="_sys_page_title_unsubscribe_news"><![CDATA[Отписаться от новостей сайта]]></string>
 	<string name="_sys_page_title_unsubscribe_notifications"><![CDATA[Отписаться от уведомлений сайта]]></string>
 	<string name="_sys_page_title_studio_dashboard"><![CDATA[Студия - Панель]]></string>
+	<string name="_sys_page_title_wiki_pages_list"><![CDATA[Список страниц]]></string>
+	<string name="_sys_page_title_wiki_page_contents"><![CDATA[Содержание страницы]]></string>
         <string name="_sys_page_type_application"><![CDATA[Приложение]]></string>
 	<string name="_sys_page_type_default"><![CDATA[Тип по умолчанию]]></string>
         <string name="_sys_page_type_standard"><![CDATA[Стандартная]]></string>

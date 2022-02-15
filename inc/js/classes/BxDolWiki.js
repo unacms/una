@@ -148,7 +148,11 @@ BxDolWiki.prototype.actionClosePopup = function (oResponce) {
 }
 BxDolWiki.prototype.actionReload = function (oResponce) {
     var l = document.location;
-    loadDynamicBlock(oResponce.block_id, l.hash.length ? l.href.replace(l.hash, '') : l.href);
+    var ePage = $('#bx-page-block-' + oResponce.block_id).parents('.bx-layout-wrapper:first');
+    var sUrl = l.hash.length ? l.href.replace(l.hash, '') : l.href;
+    if (ePage.size())
+        sUrl = sUrlRoot + 'page.php?i=' + ePage.attr('id').replace('bx-page-', ''); 
+    loadDynamicBlock(oResponce.block_id, sUrl);
 }
 
 BxDolWiki.prototype.actionDeleteBlock = function (oResponce) {

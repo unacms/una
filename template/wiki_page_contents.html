@@ -1,0 +1,14 @@
+<div id="bx_wiki_toc" class="markdown-body"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    if ("undefined" != typeof($("#bx_wiki_toc").toc))
+        $("#bx_wiki_toc").toc({
+            title:"", 
+            noBackToTopLinks: true, 
+            minimumHeaders: 2, 
+            showSpeed: 0, 
+            headers: ".bx-page-wiki-container h2, .bx-page-wiki-container h3, .bx-page-wiki-container h4, .bx-page-wiki-container h5, .bx-page-wiki-container h6" 
+        });
+});
+</script>
