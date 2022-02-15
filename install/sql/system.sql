@@ -5240,7 +5240,9 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_cmts_view' ,'cmts-view', '_sys_page_title_system_cmts_view', '_cmt_page_view_header', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=cmts-view', '', '', '', 0, 1, 0, 'BxTemplCmtsPageView', '', 0),
 ('sys_cmts_administration' ,'cmts-administration', '_sys_page_title_system_cmts_administration', '_sys_page_title_cmts_administration', 'system', 1, 5, '', 192, 1, 'page.php?i=cmts-administration', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_audit' ,'audit-administration', '_sys_page_title_system_audit_administration', '_sys_page_title_audit_administration', 'system', 1, 5, '', 192, 1, 'page.php?i=audit-administration', '', '', '', 0, 1, 0, '', '', 0),
-('sys_search_keyword', 'search-keyword', '_sys_page_title_system_search_keyword', '_sys_page_title_search_keyword', 'system', 1, 5, '', 2147483647, 1, 'searchKeyword.php', '', '', '', 0, 1, 0, '', '', 0);
+('sys_search_keyword', 'search-keyword', '_sys_page_title_system_search_keyword', '_sys_page_title_search_keyword', 'system', 1, 5, '', 2147483647, 1, 'searchKeyword.php', '', '', '', 0, 1, 0, '', '', 0),
+('sys_sub_wiki_pages_list', 'wiki-pages-list', '', '_sys_page_title_wiki_pages_list', 'system', 1, 5, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0),
+('sys_sub_wiki_page_contents', 'wiki-page-contents', '', '_sys_page_title_wiki_page_contents', 'system', 1, 5, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_types` (
@@ -5288,7 +5290,8 @@ INSERT INTO `sys_pages_layouts` (`id`, `name`, `icon`, `title`, `template`, `cel
 (16, 'topbottom_area_col1_col3_col2', 'layout_topbottom_area_col1_col3_col2.png', '_sys_layout_topbottom_area_col1_col3_col2', 'layout_topbottom_area_col1_col3_col2.html', 5),
 (17, 'topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.png', '_sys_layout_topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.html', 4),
 (18, '1_column_thin', 'layout_1_column_thin.png', '_sys_layout_1_column_thin', 'layout_1_column_thin.html', 1),
-(19, '1_column_half', 'layout_1_column_half.png', '_sys_layout_1_column_half', 'layout_1_column_half.html', 1);
+(19, '1_column_half', 'layout_1_column_half.png', '_sys_layout_1_column_half', 'layout_1_column_half.html', 1),
+(20, '1_column_wiki', 'layout_1_column_wiki.png', '_sys_layout_1_column_wiki', 'layout_1_column_wiki.html', 1);
 
 CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
   `id` int(11) NOT NULL,
@@ -5465,6 +5468,10 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 ('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_form', 13, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:19:"search_keyword_form";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
 ('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_result', 0, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"search_keyword_result";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
+
+('sys_sub_wiki_pages_list', 1, 'system', '', '_sys_page_block_title_wiki_pages_list', 0, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:10:"pages_list";s:6:"params";a:0:{}s:5:"class";s:16:"TemplServiceWiki";}', 0, 1, 1, 1),
+('sys_sub_wiki_page_contents', 1, 'system', '', '_sys_page_block_title_wiki_page_contents', 0, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"page_contents";s:6:"params";a:0:{}s:5:"class";s:16:"TemplServiceWiki";}', 0, 1, 1, 1),
+
 -- studio dashboard blocks
 ('sys_std_dashboard', 1, 'system', '', '_sys_page_block_title_std_dash_version', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_block_version";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1, 1),
 

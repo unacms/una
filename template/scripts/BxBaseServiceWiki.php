@@ -43,6 +43,8 @@ class BxBaseServiceWiki extends BxDol
         $oPage = BxDolPage::getObjectInstanceByModuleAndURI($oWiki->getObjectName(), $sUri);
         if ($oPage) {
 
+            $_GET['i'] = $sUri;
+
             $oPage->displayPage();
 
         } else {
@@ -211,6 +213,53 @@ class BxBaseServiceWiki extends BxDol
         foreach($aItems as $r)
             $a[$r['id']] = _t($r['title']);
         return $a;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-pages_list pages_list
+     * 
+     * Get list of pages in current module
+     * 
+     * @see BxBaseServiceWiki::servicePagesList
+     */
+    /** 
+     * @ref bx_system_general-pages_list "pages_list"
+     */
+    public function servicePagesList ()
+    {
+        if (!($sPageObject = BxDolPageQuery::getPageObjectNameByURI(bx_get('i'))))
+            return '';
+        if (!($aPage = BxDolPageQuery::getPageObject ($sPageObject)))
+            return '';
+        if (!($oWiki = BxDolWiki::getObjectInstance($aPage['module'])))
+            return '';
+
+        BxDolTemplate::getInstance()->addCss(['wiki.css', 'wiki-github-markdown.css']);
+
+        return $oWiki->getContents();
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-page_contents page_contents
+     * 
+     * Get table of contents for current page, generated automatically from paragraphs headers
+     * 
+     * @see BxBaseServiceWiki::servicePageContents
+     */
+    /** 
+     * @ref bx_system_general-page_contents "page_contents"
+     */
+    public function servicePageContents ()
+    {
+        $o = BxDolTemplate::getInstance();
+        $o->addJs('toc.js');
+        return $o->parseHtmlByName('wiki_page_contents.html', []);
     }
 
     protected function _addCssJs ($bAddPage = false)

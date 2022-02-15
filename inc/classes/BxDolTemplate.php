@@ -2895,6 +2895,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s" => "get_text",
             "'<bx_text_js:([^\s]+) \/>'s" => "get_text_js",
             "'<bx_text_attribute:([^\s]+) \/>'s" => "get_text_attribute",
+            "'<bx_page:([^\s]+) \/>'s" => "get_page",
         ));
 
         foreach($aCallbackPatterns as $sPattern => $sAction)
@@ -2922,6 +2923,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     break;
                 case 'get_menu':
                     $sResult = $oTemplate->getMenu($aMatches[1]);
+                    break;
+                case 'get_page':
+                    $oPage = BxDolPage::getObjectInstanceByURI($aMatches[1], false, true);
+                    $oPage->setSubPage(true);
+                    $sResult = $oPage ? $oPage->getCode() : '';
                     break;
             }
 
