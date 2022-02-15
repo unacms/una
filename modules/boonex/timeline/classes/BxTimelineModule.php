@@ -4147,6 +4147,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
+        if(($mixedResult = $this->isAllowedDelete($aDataEntry, $isPerformAction)) !== true)
+            return is_string($mixedResult) ? $mixedResult : _t('_sys_txt_access_denied');
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
     {
         $CNF = $this->_oConfig->CNF;

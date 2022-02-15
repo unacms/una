@@ -37,7 +37,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('bx_timeline_item_brief', 0, 'bx_timeline', '', '_bx_timeline_page_block_title_item_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_item_info";}', 0, 0, 1, 1),
 ('bx_timeline_item_brief', 0, 'bx_timeline', '', '_bx_timeline_page_block_title_item_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_item_comments";}', 0, 0, 1, 2),
 
-('bx_timeline_manage', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_muted', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:15:"get_block_muted";}', 0, 0, 1, 1);
+('bx_timeline_manage', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_manage_own', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:12:"manage_tools";}', 0, 0, 1, 1),
+('bx_timeline_manage', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_muted', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:15:"get_block_muted";}', 0, 0, 1, 2);
 
 
 -- PAGES: add page block on dashboard
@@ -501,7 +502,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline_administration', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 AND `active`=''1'' ', 'bx_timeline_events', 'id', 'date', 'status_admin', '', 20, NULL, 'start', '', 'title,description', '', 'like', 'reports', '', 192, 'BxTimelineGridAdministration', 'modules/boonex/timeline/classes/BxTimelineGridAdministration.php');
+('bx_timeline_administration', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 AND `active`=''1'' ', 'bx_timeline_events', 'id', 'date', 'status_admin', '', 20, NULL, 'start', '', 'title,description', '', 'like', 'reports', '', 192, 'BxTimelineGridAdministration', 'modules/boonex/timeline/classes/BxTimelineGridAdministration.php'),
+('bx_timeline_common', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 AND `active`=''1'' ', 'bx_timeline_events', 'id', 'date', 'status', '', 20, NULL, 'start', '', 'title,description', '', 'like', '', '', 2147483647, 'BxTimelineGridCommon', 'modules/boonex/timeline/classes/BxTimelineGridCommon.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_timeline_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -510,12 +512,22 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_timeline_administration', 'description', '_bx_timeline_grid_column_title_adm_description', '25%', 0, '25', '', 4),
 ('bx_timeline_administration', 'date', '_bx_timeline_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_timeline_administration', 'owner_id', '_bx_timeline_grid_column_title_adm_author', '20%', 0, '25', '', 6),
-('bx_timeline_administration', 'actions', '', '20%', 0, '', '', 7);
+('bx_timeline_administration', 'actions', '', '20%', 0, '', '', 7),
+
+('bx_timeline_common', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
+('bx_timeline_common', 'switcher', '_bx_timeline_grid_column_title_adm_active', '8%', 0, 0, '', 2),
+('bx_timeline_common', 'description', '_bx_timeline_grid_column_title_adm_description', '30%', 0, 25, '', 3),
+('bx_timeline_common', 'date', '_bx_timeline_grid_column_title_adm_added', '20%', 1, 25, '', 4),
+('bx_timeline_common', 'status_admin', '_bx_posts_grid_column_title_adm_status_admin', '20%', 0, 16, '', 5),
+('bx_timeline_common', 'actions', '', '20%', 0, 0, '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_timeline_administration', 'bulk', 'delete', '_bx_timeline_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_timeline_administration', 'single', 'delete', '_bx_timeline_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_timeline_administration', 'single', 'audit_content', '_bx_timeline_grid_action_title_adm_audit_content', 'search', 1, 0, 4);
+('bx_timeline_administration', 'single', 'audit_content', '_bx_timeline_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
+
+('bx_timeline_common', 'bulk', 'delete', '_bx_timeline_grid_action_title_adm_delete', '', 0, 1, 1),
+('bx_timeline_common', 'single', 'delete', '_bx_timeline_grid_action_title_adm_delete', 'remove', 1, 1, 2);
 
 
 -- METATAGS

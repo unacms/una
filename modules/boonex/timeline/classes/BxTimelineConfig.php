@@ -138,6 +138,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_UPLOADER_FILE_HTML5' => $this->_sName . '_html5_file',
             'OBJECT_UPLOADER_FILE_SIMPLE' => $this->_sName . '_simple_file',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
+            'OBJECT_GRID_COMMON' => $this->_sName . '_common',
             'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
             'OBJECT_METATAGS' => $this->_sName,
@@ -167,6 +168,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'txt_sample_with_media' => '_bx_timeline_txt_sample_with_media',
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
+                'filter_item_active' => '_bx_timeline_grid_filter_item_title_adm_active',
+            	'filter_item_hidden' => '_bx_timeline_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_timeline_grid_filter_item_title_adm_pending',
+            	'filter_item_select_one_filter1' => '_bx_timeline_grid_filter_item_title_adm_select_one_filter1',
                 'form_input_title_object_privacy_view' => '_bx_timeline_form_post_input_object_privacy_view',
                 'option_vp_auto' => '_bx_timeline_option_videos_preload_auto',
                 'option_vp_metadata' => '_bx_timeline_option_videos_preload_metadata',
@@ -282,7 +287,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         );
 
         $this->_aGridObjects = array(
-            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+            'common' => $this->CNF['OBJECT_GRID_COMMON']
         );
 
         $sHp = str_replace('_', '-', $this->_sName);

@@ -186,6 +186,7 @@
     <string name="_bx_timeline_page_block_title_system_manage"><![CDATA[Управление]]></string>
     <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Управление всеми событями ленты]]></string>
     <string name="_bx_timeline_page_block_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_timeline_page_block_title_manage_own"><![CDATA[Управление]]></string>
     <string name="_bx_timeline_page_block_title_muted"><![CDATA[Отключенные]]></string>
 
     <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Лента: c заполнителем в виде ленты]]></string>
@@ -295,6 +296,10 @@
     <string name="_bx_timeline_menu_item_title_system_manage_my_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_manage_my_timeline"><![CDATA[Лента]]></string>
 
+    <string name="_bx_timeline_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_timeline_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_timeline_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_timeline_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
     <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Событие]]></string>
     <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>

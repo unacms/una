@@ -197,6 +197,7 @@
     <string name="_bx_timeline_page_block_title_system_manage"><![CDATA[Manage]]></string>
     <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Manage All]]></string>
     <string name="_bx_timeline_page_block_title_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_timeline_page_block_title_manage_own"><![CDATA[Manage]]></string>
     <string name="_bx_timeline_page_block_title_muted"><![CDATA[Muted]]></string>
 
     <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Timeline: with timeline placeholder]]></string>
@@ -309,6 +310,10 @@
     <string name="_bx_timeline_menu_item_title_manage_my_timeline"><![CDATA[Timeline]]></string>
 
     <!-- Grids -->
+    <string name="_bx_timeline_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+    <string name="_bx_timeline_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_timeline_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+    <string name="_bx_timeline_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
     <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Event]]></string>
     <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Added]]></string>
