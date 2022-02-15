@@ -856,6 +856,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aResults;
     }
 
+    public function serviceManageTools($sType = 'common')
+    {
+        $sResult = parent::serviceManageTools($sType);
+        if(!empty($sResult))
+            $this->_oTemplate->addJsSystem(['modules/base/text/js/|manage_tools.js']);
+
+        return $sResult;
+    }
+
     public function serviceFeedsMenuAdd($mixedModule = false)
     {
         $sSetName = $this->_oConfig->getObject('menu_set_feeds');
