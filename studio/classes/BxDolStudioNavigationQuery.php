@@ -289,6 +289,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 `tmi`.`editable` AS `editable`,
                 `tmi`.`hidden_on` AS `hidden_on`,
                 `tmi`.`hidden_on_pt` AS `hidden_on_pt`,
+                `tmi`.`hidden_on_col` AS `hidden_on_col`,
                 `tmi`.`order` AS `order`" . $sSelectClause . "
             FROM `sys_menu_items` AS `tmi` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
@@ -340,6 +341,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
     {
         $sSql = "UPDATE `sys_menu_items` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
+        echo $sSql;
         return $this->query($sSql);
     }
 

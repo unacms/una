@@ -730,6 +730,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Set',
                     )
                 ),
+                'hidden_on_col' => array(
+                    'type' => 'select_multiple',
+                    'name' => 'hidden_on_col',
+                    'caption' => _t('_adm_nav_txt_block_hidden_on_col'),
+                    'info' => '',
+                    'value' => isset($aItem['hidden_on_col']) ? (int)$aItem['hidden_on_col'] : '',
+                    'values' => array(),
+                    'db' => array (
+                        'pass' => 'Set',
+                    )
+                ),
                 'icon' => array(
                     'type' => 'textarea',
                     'name' => 'icon',
@@ -830,6 +841,11 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
             $aForm['inputs']['hidden_on_pt']['values'][$iPageType - 1] = _t($aPageType['title']);
         }
+        
+        $aForm['inputs']['hidden_on_col']['values'][1] = _t('_adm_nav_txt_block_hidden_on_col_thin');
+        $aForm['inputs']['hidden_on_col']['values'][2] = _t('_adm_nav_txt_block_hidden_on_col_half');
+        $aForm['inputs']['hidden_on_col']['values'][3] = _t('_adm_nav_txt_block_hidden_on_col_wide');
+        $aForm['inputs']['hidden_on_col']['values'][4] = _t('_adm_nav_txt_block_hidden_on_col_full');
 
         switch($sAction) {
             case 'add':

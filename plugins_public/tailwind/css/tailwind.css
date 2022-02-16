@@ -356,6 +356,19 @@
         min-width: 1rem;
     }
 
+    /* Common elements: Menu visibility */
+    .bx-layout-column-thin .bx-def-thin-col-hide{
+        @apply hidden;
+    }
+    .bx-layout-column-half .bx-def-half-col-hide{
+        @apply hidden;
+    }
+    .bx-layout-column-wide .bx-def-wide-col-hide{
+        @apply hidden;
+    }
+    .bx-layout-column-full .bx-def-full-col-hide{
+        @apply hidden;
+    }
     /* Common elements: Buttons */
     .bx-btn {
         @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md cursor-pointer;

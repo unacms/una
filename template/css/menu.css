@@ -695,14 +695,13 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
 /* --------------- custom menu */
 
-.bx-menu-custom > li > span,
+.bx-menu-custom > li > span:not(.bx-menu-meta-item-ex),
 .bx-menu-custom > li > a {
     display:inline-block;
 }
 
 .bx-menu-custom.bx-menu-custom-hor > li > span {
-    margin-right: 20px;
-    margin-right: 1.25rem;
+    margin-right: 1rem;
 }
 
 
@@ -1003,4 +1002,8 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 /* --------------- switch template menu (popup) */
 .bx-popup .bx-menu-ver.bx-menu-object-sys_switch_template li a div > span {
     margin-left: 0;
+}
+
+.bx-menu-meta-item-ex A{
+    display: flex !important;
 }
