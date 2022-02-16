@@ -249,10 +249,10 @@
     <string name="_bx_forum_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_forum_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_forum_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
-    <string name="_bx_forum_menu_item_title_resolve_entry"><![CDATA[Mark as Answered]]></string>
-    <string name="_bx_forum_menu_item_title_unresolve_entry"><![CDATA[Mark as Unanswered]]></string>
-    <string name="_bx_forum_menu_item_title_system_resolve_entry"><![CDATA[Mark as Answered]]></string>
-    <string name="_bx_forum_menu_item_title_system_unresolve_entry"><![CDATA[Mark as Unanswered]]></string>
+    <string name="_bx_forum_menu_item_title_resolve_entry"><![CDATA[Mark as Resolved]]></string>
+    <string name="_bx_forum_menu_item_title_unresolve_entry"><![CDATA[Mark as Unresolved]]></string>
+    <string name="_bx_forum_menu_item_title_system_resolve_entry"><![CDATA[Mark as Resolved]]></string>
+    <string name="_bx_forum_menu_item_title_system_unresolve_entry"><![CDATA[Mark as Unresolved]]></string>
     <string name="_bx_forum_menu_item_title_system_stick_entry"><![CDATA[Pin]]></string>
     <string name="_bx_forum_menu_item_title_stick_entry"><![CDATA[Pin]]></string>
     <string name="_bx_forum_menu_item_title_system_unstick_entry"><![CDATA[Unpin]]></string>
@@ -366,10 +366,10 @@
     <string name="_bx_forum_grid_form_btn_badges_submit"><![CDATA[Submit]]></string>
     <string name="_bx_forum_grid_form_btn_badges_cancel"><![CDATA[Cancel]]></string>
     
-    <string name="_bx_forum_grid_filter_resolved_all"><![CDATA[All]]></string>
-    <string name="_bx_forum_grid_filter_badges_all"><![CDATA[All]]></string>
-    <string name="_bx_forum_grid_filter_resolved_resolved"><![CDATA[Answered]]></string>
-    <string name="_bx_forum_grid_filter_resolved_unresolved"><![CDATA[Unanswered]]></string>
+    <string name="_bx_forum_grid_filter_resolved_all"><![CDATA[Any status]]></string>
+    <string name="_bx_forum_grid_filter_badges_all"><![CDATA[All badges]]></string>
+    <string name="_bx_forum_grid_filter_resolved_resolved"><![CDATA[Resolved]]></string>
+    <string name="_bx_forum_grid_filter_resolved_unresolved"><![CDATA[Unresolved]]></string>
     
     <string name="_bx_forum_grid_filter_order_recent"><![CDATA[Recent Posts]]></string>
     <string name="_bx_forum_grid_filter_order_new"><![CDATA[New]]></string>
@@ -392,6 +392,7 @@
     <string name="_bx_forum_search_extended"><![CDATA[Discussions Search]]></string>
     <string name="_bx_forum_search_extended_cmts"><![CDATA[Discussions Comments Search]]></string>
 
+    <string name="_bx_forum_txt_all_categories"><![CDATA[All Categories]]></string>
     <string name="_bx_forum_txt_msg_status_hidden"><![CDATA[This discussion was hidden.]]></string>
     <string name="_bx_forum_txt_msg_status_pending"><![CDATA[This discussion is pending approval.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Discussion wasn't found.]]></string>

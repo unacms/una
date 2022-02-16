@@ -1,31 +1,29 @@
-<div class="__class__ bx-base-text-unit bx-forum-unit bx-base-text-unit-gallery bx-def-gal-unit-size bx-def-padding-sec relative" >
-    <div class="bx-forum-category rounded-md bg-gray-100 absolute py-1 px-2 ml-3 mt-3" >
-        <div class="bx-forum-icon bx-def-margin-sec-right">__category_icon__</div>
+<div class="__class__ bx-base-text-unit bx-forum-unit bx-base-text-unit-gallery bx-def-gal-unit-size flex flex-col w-full p-2 box-border relative">
+    <div class="bx-forum-category rounded-lg bg-gray-100 absolute py-1 px-2 ml-3 mt-3" >
+        <div class="bx-forum-icon bx-def-margin-sec-right ">__category_icon__</div>
         <div>__category__</div>
     </div>
-    <div class="bx-base-text-unit-cnt bx-def-box bx-def-round-corners bx-def-color-bg-box bx-def-box-sizing">
+    <div class="bx-base-text-unit-text p-3 md:p-2 lg:p-2 pt-2 md:pt-3 lg:pt-5 box-border absolute bottom-0 max-w-full">
+            <div class="bx-base-text-unit-title flex items-center text-left mb-2">
+                <a href="__content_url__" class="text-ellipsis whitespace-nowrap overflow-hidden text-xl font-bold text-white group-hover:text-gray-900 dark:group-hover:text-white">__title__</a>
+            </div>
+            <div class="bx-base-text-unit-info">
+                __author__
+            </div>
+        </div>
+    <div class="bx-base-text-unit-cnt rounded-lg ring-1 ring-gray-200 dark:ring-gray-700 overflow-hidden bg-white dark:bg-gray-800">
         <bx_if:thumb>
             <a href="__content_url__" title="__summary_attr__">
-                <div class="bx-base-text-unit-thumb bx-def-gal-div-size bx-def-round-corners bx-def-font-middle" style="background-image:url(__gallery_url__)">
-                    <div class="bx-base-text-unit-strecher"></div>
+                <div class="flex-shrink-0">
+                    <img class="h-48 w-full object-cover rounded-lg" src="__gallery_url__" alt="">
                 </div>
             </a>
         </bx_if:thumb>
         <bx_if:no_thumb>
-            <div class="bx-def-gal-img-column">
-                <div class="bx-base-text-unit-no-thumb bx-def-gal-div-size bx-def-font-middle bx-def-font-grayed bx-def-padding bx-def-box-sizing">
-                    __summary_plain__
-                    <div class="bx-base-text-unit-strecher"></div>
-                </div>
+            <div class="bx-def-gal-img-column flex-shrink-0">
+                <div class="bx-base-text-unit-no-thumb flex flex-col items-center justify-center h-48 p-4 bg-gradient-to-b box-border rounded-lg"></div>
             </div>
         </bx_if:no_thumb>
-        <div class="bx-base-text-unit-text bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-box-sizing">
-            <div class="bx-base-text-unit-title">
-                <h2><a href="__content_url__">__title__</a></h2>
-            </div>
-            <div class="bx-base-text-unit-info">
-                <bx_if:meta><div class="bx-base-general-unit-meta">__meta__</div></bx_if:meta>
-            </div>
-        </div>
+        
     </div>
 </div>

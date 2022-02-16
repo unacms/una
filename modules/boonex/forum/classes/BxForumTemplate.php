@@ -140,7 +140,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
-        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 120);
+        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 60);
 
         $aMetas = array('main' => false, 'counters' => false, 'reply' => false);
         foreach(array_keys($aMetas) as $sMeta) {
@@ -226,7 +226,8 @@ class BxForumTemplate extends BxBaseModTextTemplate
         
         $aTmplVars['category'] = $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]);
         $aTmplVars['category_icon'] = $sIcon;
-        
+        $oProfile = BxDolProfile::getInstanceMagic($aData[$CNF['FIELD_AUTHOR']]);
+        $aTmplVars['author'] = $oProfile->getUnit();
 
         return $aTmplVars;
     }

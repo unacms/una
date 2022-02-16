@@ -8,6 +8,3 @@ html.hidden {
 .bx-base-profile-cover-block-wrapper .bx-menu-custom.bx-menu-custom-hor{
     justify-content: center !important;
 }
-.bx-search-result-block {
-    display: flex;
-}

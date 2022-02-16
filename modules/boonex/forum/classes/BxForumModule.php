@@ -185,10 +185,11 @@ class BxForumModule extends BxBaseModTextModule
             return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
 
 		$aCategories = $o->getCategoriesList($bShowEmptyCategories, true);
-      
+        
 		if(!isset($aCategories['bx_repeat:cats']))
 			return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
     
+        $iCount = 0;
         foreach ($aCategories['bx_repeat:cats'] as $sKey => $aCategory) {
             $aCategories['bx_repeat:cats'][$sKey]['icon'] = '';
             $aCategories['bx_repeat:cats'][$sKey]['class'] = $aCategory['value'] == bx_get('category') ? 'bx-forum-category-list-item-selected' : '';
@@ -197,16 +198,29 @@ class BxForumModule extends BxBaseModTextModule
             if(isset($aCategoryData['icon']))
                 $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon sys-colored'));
             else
-                $aCategories['bx_repeat:cats'][$sKey]['icon'] =  $this->_oTemplate->parseHtmlByName('default_category.html', []);
+                $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->parseImage($this->_oTemplate->getIconUrl('default-cat.svg'), ['class' => 'sys-icon sys-colored gray']);
+            
+            $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage(isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder', array('class' => 'sys-icon sys-colored'));
             
             if(isset($aCategoryData['visible_for_levels']) && $aCategoryData['visible_for_levels'] != '' && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategoryData['visible_for_levels'])){
                 unset($aCategories['bx_repeat:cats'][$sKey]);
-            }    
+            }  
+            $iCount +=  $aCategories['bx_repeat:cats'][$sKey]['num'];
         }
+        
+        $CNF = &$this->_oConfig->CNF;
+
+        $aCategories['bx_repeat:cats'] = array_merge(['all' => [
+            'icon' => $this->_oTemplate->parseImage($this->_oTemplate->getIconUrl('all-cat.svg'), ['class' => 'sys-icon sys-colored gray']),
+            'class' => bx_get('category') == '' ? 'bx-forum-category-list-item-selected' : '',
+            'url' => BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
+            'name' => _t('_bx_forum_txt_all_categories'),
+            'num' => $iCount
+        ]], $aCategories['bx_repeat:cats']);
         
         return $this->_oTemplate->parseHtmlByName('category_list.html', $aCategories);
     }
-
+    
     /**
      * @page service Service Calls
      * @section bx_forum Discussions

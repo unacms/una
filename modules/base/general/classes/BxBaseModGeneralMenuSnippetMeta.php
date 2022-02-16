@@ -63,8 +63,10 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
     protected function _getMenuItemDate($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-
-        return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE));
+        if ($aItem['icon'] == '')
+            return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE));
+        else
+            return $this->getUnitMetaItemExtended(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE), $aItem['icon'], '');
     }
 
     protected function _getMenuItemCategory($aItem)

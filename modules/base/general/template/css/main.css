@@ -216,7 +216,7 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
 }
 
 .sys-author ul.bx-menu-custom.bx-menu-custom-hor > li > span,
-.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li > span {
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li > span:not(.bx-menu-meta-item-ex) {
     margin-left: 0;
     margin-right: 0;
 }

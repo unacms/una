@@ -51,6 +51,51 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
     {
         return $this->getUnitMetaItem('custom', $sContent);
     }
+    
+    public function getUnitMetaItemExtended($sContent = '', $sIcon = '', $sUrl = '')
+    {
+        $aTmplVarsEx = [];
+        
+        $aTmplVarsEx['bx_if:icon'] = [
+            'condition' => ($sIcon != ''),
+            'content' => ['icon' => $this->getMenuIconHtml($sIcon)]
+        ];
+        
+        $aTmplVarsEx['bx_if:noicon'] = [
+            'condition' => ($sIcon == ''),
+            'content' => []
+        ];
+        
+        $aTmplVarsEx['bx_if:a'] = [
+            'condition' => ($sUrl != ''),
+            'content' => ['link' => $sUrl]
+        ];
+        
+        $aTmplVarsEx['bx_if:a2'] = [
+            'condition' => ($sUrl != ''),
+            'content' => []
+        ];
+
+        $aTmplVarsEx['bx_if:text'] = [
+            'condition' => ($sContent != ''),
+            'content' => ['content' => $sContent]
+        ];
+
+        $aTmplVars['bx_if:extended'] = [
+            'condition' => true,
+            'content' => $aTmplVarsEx
+        ];
+        
+        $aTags = array('span', 'a', 'button', 'sbutton', 'custom', 'nl');
+        
+        foreach($aTags as $sTag) {
+            $aTmplVars['bx_if:' . $sTag] = array(
+            	'condition' => false,
+                'content' => []
+            );
+        }
+        return $this->_oTemplate->parseHtmlByName('unit_meta_item_ex.html', $aTmplVars);
+    }
 
     public function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
     {
@@ -60,7 +105,7 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         if(!is_array($aAttrs))
             $aAttrs = array();
 
-        $aTags = array('span', 'a', 'button', 'sbutton', 'custom', 'nl');
+        $aTags = array('span', 'a', 'button', 'sbutton', 'custom', 'nl', 'extended');
 
         $sTmplVarsClass = ''; 
         if(!empty($aAttrs['class'])) {
@@ -89,7 +134,7 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
                 'content' => $aTmplVarsTag
             );
         }
-
+        
         return $this->_oTemplate->parseHtmlByName($sTemplate, $aTmplVars);
     }
     

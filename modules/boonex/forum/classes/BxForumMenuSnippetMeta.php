@@ -46,20 +46,6 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
     }
 
-    protected function _getMenuItemComments($aItem)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || (empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]) && !$this->_bShowZeros))
-            return false;
-
-        $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oComments || !$oComments->isEnabled())
-            return false;
-
-        return $this->getUnitMetaItemCustom('<i class="sys-icon comment "></i> ' . $oComments->getCommentsCountAll());
-    }
-
     protected function _getMenuItemReplyAuthor($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -96,6 +82,50 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         return $this->getUnitMetaItemText(strmaxtextlen($aComment['cmt_text'], 100), array('class' => $this->_sModule . '-gpm-reply-text'));
     }
     
+    protected function _getMenuItemAuthor($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oProfile = BxDolProfile::getInstanceMagic($this->_aContentInfo[$CNF['FIELD_AUTHOR']]);
+        return $this->getUnitMetaItemExtended($oProfile->getDisplayName(), $oProfile->getThumb(), $oProfile->getUrl());
+    }
+    
+    protected function _getMenuItemCategory($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_CATEGORY']) || empty($CNF['FIELD_CATEGORY']) || empty($this->_aContentInfo[$CNF['FIELD_CATEGORY']]))
+            return false;
+
+        $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+        if(!$oCategory)
+            return false;
+
+        $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
+        $aCategoryData = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
+        
+        return $this->getUnitMetaItemExtended($sTitle, (isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder'), $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
+    }
+    
+    protected function _getMenuItemComments($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || (empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]) && !$this->_bShowZeros))
+            return false;
+
+        $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oComments || !$oComments->isEnabled())
+            return false;
+
+        return $this->getUnitMetaItemExtended(_t('_bx_forum_page_block_title_entry_comments', $oComments->getCommentsCountAll()), $aItem['icon'], '');
+    }
+    
+    protected function _getMenuItemBadges($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        return $this->getUnitMetaItemExtended($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true)); 
+    }
+    
     protected function _getMenuItemStatus($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -109,15 +139,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
                 $sStatus .= _t('_bx_forum_grid_filter_resolved_unresolved');
             }  
             
-            return $this->getUnitMetaItemCustom($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['status' => $sStatus, 'status_class' => $this->_aContentInfo['resolved']])); 
+            return $this->getUnitMetaItemExtended($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['status' => $sStatus, 'status_class' => $this->_aContentInfo['resolved']])); 
         }
         return '';
-    }
-    
-    protected function _getMenuItemBadges($aItem)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        return $this->getUnitMetaItemCustom($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true)); 
     }
 }
 

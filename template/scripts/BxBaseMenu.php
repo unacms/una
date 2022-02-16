@@ -278,6 +278,30 @@ class BxBaseMenu extends BxDolMenu
     {
         return BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon(!empty($a['icon']) ? $a['icon'] : '');
     }
+    
+    public function getMenuIconHtml($sIcon)
+    {
+        list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIcon($sIcon);
+
+        $a['bx_if:image'] = array (
+            'condition' => (bool)$sIconUrl,
+            'content' => array('icon_url' => $sIconUrl),
+        );
+        $a['bx_if:icon'] = array (
+            'condition' => (bool)$sIcon,
+            'content' => array('icon' => $sIcon),
+        );
+        $a['bx_if:icon-a'] = array (
+            'condition' => (bool)$sIconA,
+            'content' => array('icon-a' => $sIconA),
+        );
+        $a['bx_if:icon-html'] = array (
+            'condition' => (bool)$sIconHtml,
+            'content' => array('icon' => $sIconHtml),
+        );
+
+        return $this->_oTemplate->parseHtmlByName('menu_icon.html', $a);
+    }
 
     protected function _getMenuAddon ($aMenuItem)
     {

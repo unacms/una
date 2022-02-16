@@ -63,14 +63,18 @@ class BxForumGrid extends BxTemplGrid
         
         $this->_sFilter2Name = 'filter2';
         $aBadges = BxDolBadges::getInstance()->getData(['type' => 'by_module', 'module' => $this->_oModule->_aModule['name']]);
-        $this->_aFilter2Values = array(
-            '' => _t('_bx_forum_grid_filter_badges_all'),
-        );
+        
+        $this->_aFilter2Values = [];
+        
+        if (count($aBadges) > 0){
+            $this->_aFilter2Values[''] = _t('_bx_forum_grid_filter_badges_all');
+        }
         
         foreach($aBadges as $aBadge) {
             $this->_aFilter2Values[$aBadge['id']] = $aBadge['text'];
         }
         
+
         $sFilter2 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter2)) {
             $this->_sFilter2Value = bx_process_input($sFilter2);
@@ -206,7 +210,7 @@ class BxForumGrid extends BxTemplGrid
 
         if(isset($aCategoryData['icon']))
             $sIcon = $this->_oTemplate->getImage($aCategoryData['icon'], array('class' => 'sys-icon'));
-      //  echo $sIcon;
+        
         $mixedValue = $this->_oModule->_oTemplate->parseHtmlByName('thumb.html', ['icon' => $sIcon, 'title' => $o->getCategoryTitle($aRow['cat'])]);
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -253,7 +257,6 @@ class BxForumGrid extends BxTemplGrid
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
         
-
         // featured
         if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FEATURED){
             $this->_aBrowseParams['where'] = ['fld' => 'featured', 'val' => 0, 'opr' => '<>'];
@@ -398,6 +401,7 @@ class BxForumGrid extends BxTemplGrid
 
         // filter by badges
         if(isset($this->_sFilter2Value) && $this->_sFilter2Value != ''){
+            
             $aObjects = BxDolBadges::getInstance()->getData(['type' => 'by_module&badge', 'badge_id' => $this->_sFilter2Value, 'module' => $this->_oModule->_aModule['name']]);
             $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` IN (" . implode(',', $aObjects ) . ")";
         }
@@ -644,7 +648,7 @@ class BxForumGrid extends BxTemplGrid
     protected function _getFilterControls ()
     {
         parent::_getFilterControls();
-        return  $this->_getFilterSelectOne($this->_sFilter3Name, $this->_sFilter3Value, $this->_aFilter3Values) . $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getFilterSelectOne($this->_sFilter2Name, $this->_sFilter2Value, $this->_aFilter2Values) . $this->_getSearchInput();
+        return  $this->_getFilterSelectOne($this->_sFilter3Name, $this->_sFilter3Value, $this->_aFilter3Values) . $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . (count($this->_aFilter2Values) > 0 ? $this->_getFilterSelectOne($this->_sFilter2Name, $this->_sFilter2Value, $this->_aFilter2Values) : '') . $this->_getSearchInput();
     }
     
     protected function _getSearchInput()
