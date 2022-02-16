@@ -23,11 +23,12 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
             'object_metatags' => 'bx_timeline',
             'title' => _t('_bx_timeline_page_title_browse'),
             'table' => 'bx_timeline_events',
-            'ownFields' => array('id', 'owner_id', 'type', 'action', 'object_id', 'object_privacy_view', 'content', 'title', 'description', 'views', 'rate', 'votes', 'rrate', 'rvotes', 'score', 'sc_up', 'sc_down', 'comments', 'reports', 'reposts', 'date', 'status', 'pinned', 'sticked', 'promoted'),
+            'ownFields' => array('id', 'owner_id', 'type', 'action', 'object_id', 'object_privacy_view', 'content', 'title', 'description', 'views', 'rate', 'votes', 'rrate', 'rvotes', 'score', 'sc_up', 'sc_down', 'comments', 'reports', 'reposts', 'date', 'status', 'status_admin', 'pinned', 'sticked', 'promoted'),
             'searchFields' => array('title'),
             'restriction' => array(
                 'internal' => array('value' => 'timeline_common_post', 'field' => 'type', 'operator' => '='),
                 'status' => array('value' => BX_TIMELINE_STATUS_ACTIVE, 'field' => 'status', 'operator' => '='),
+                'status_admin' => array('value' => BX_TIMELINE_STATUS_ACTIVE, 'field' => 'status_admin', 'operator' => '='),
                 'active' => array('value' => '1', 'field' => 'active', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_timeline_events_per_page'), 'start' => 0),
