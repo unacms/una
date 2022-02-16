@@ -24,10 +24,12 @@ class BxDolCmtsQuery extends BxDolDb
     protected $_sTableFiles;
     protected $_sTableFiles2Entries;
 
+    protected $_sTableSystems;
     protected $_sTableIds;
 
     public function __construct(&$oMain)
     {
+        $this->_sTableSystems = BxDolCmts::$sTableSystems;
         $this->_sTableIds = BxDolCmts::$sTableIds;
 
         $this->_oMain = $oMain;
@@ -44,6 +46,37 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
 
         parent::__construct();
+    }
+
+    public static function getSystemBy($aParams)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query', 1 => []]];
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "`ts`.*";
+
+        switch($aParams['type']) {
+            case 'name':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['name'] = $aParams['name'];
+
+                $sWhereClause .= " AND `ts`.`Name` = :name";
+                break;
+
+            case 'all':
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . BxDolCmts::$sTableSystems . "` AS `ts` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array(array($oDb, $aMethod['name']), $aMethod['params']);
     }
 
     public static function getInfoBy($aParams)
@@ -77,7 +110,7 @@ class BxDolCmtsQuery extends BxDolDb
         if(!empty($sLimitClause))
             $sLimitClause = 'LIMIT ' . $sLimitClause;
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . BxDolCmts::$sTableIds . "` " . $sJoinClause . " AS `ti` WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . BxDolCmts::$sTableIds . "` AS `ti` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
         return call_user_func_array(array($oDb, $aMethod['name']), $aMethod['params']);
     }
 
@@ -297,10 +330,13 @@ class BxDolCmtsQuery extends BxDolDb
     {
     	$aBindings = array(
             'cmt_object_id' => $iId,
-            'system_id' => $this->_oMain->getSystemId()
+            'system_id' => $this->_oMain->getSystemId(),
+            'status_admin' => BX_CMT_STATUS_ACTIVE
     	);
         $sFields = $sJoin = "";
-        
+
+        $sWhereStatus = " AND `{$this->_sTableIds}`.`status_admin`=:status_admin";
+
         $sWhereParent = '';
         if((int)$iCmtVParentId >= 0) {
             $aBindings['cmt_vparent_id'] = $iCmtVParentId;
@@ -355,17 +391,27 @@ class BxDolCmtsQuery extends BxDolDb
         
        	$sLimit = $iCount != -1 ? $this->prepareAsString(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
-        $sWhereClause = $sWhereParent . $sWhereFilter . $sWhereCf;
+        $sWhereClause = $sWhereStatus . $sWhereParent . $sWhereFilter . $sWhereCf;
            
         $sQuery = "SELECT
                 `{$this->_sTable}`.*,
-                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`
+                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
+                `{$this->_sTableIds}`.`status_admin` AS `cmt_status_admin`
                 $sFields
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id) 
             INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$this->_sTable}`.`cmt_author_id` AND (`p`.`status` = 'active' OR `{$this->_sTable}`.`cmt_replies` != 0))";
            
-        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'select_clause' => &$sQuery, 'join_clause' => &$sJoin, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrder, 'limit_clause' => &$sLimit, 'params' => &$aBindings)); 
+        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array(
+            'system' => $this->_oMain->getSystemInfo(), 
+            'select_clause' => &$sQuery, 
+            'join_clause' => &$sJoin, 
+            'where_clause' => &$sWhereClause, 
+            'order_clause' => &$sOrder, 
+            'limit_clause' => &$sLimit, 
+            'params' => &$aBindings
+        ));
+
         $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause . $sOrder . $sLimit;
         
         return $this->getAll($sQuery, $aBindings);
@@ -524,7 +570,8 @@ class BxDolCmtsQuery extends BxDolDb
 
         $sQuery = $this->prepare("SELECT
                 `{$this->_sTable}`.*,
-                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`
+                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
+                `{$this->_sTableIds}`.`status_admin` AS `cmt_status_admin`
                 $sFields
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = ?)
@@ -750,7 +797,7 @@ class BxDolCmtsQuery extends BxDolDb
     }
     
 
-    function updateTriggerTable($iId, $iCount)
+    public function updateTriggerTable($iId, $iCount)
     {
         if (!$this->_sTriggerFieldComments)
             return true;
@@ -758,20 +805,30 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    function getUniqId($iSystemId, $iCmtId, $iAuthorId = 0)
+    public function getUniqId($iSystemId, $iCmtId, $aData = [])
     {
         $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableIds}` WHERE `system_id` = ? AND `cmt_id` = ?", $iSystemId, $iCmtId);
         if(($iUniqId = (int)$this->getOne($sQuery)) != 0)
             return $iUniqId;
 
-        if(empty($iAuthorId))
-            $iAuthorId = bx_get_logged_profile_id();
+        $aDataDefault = [
+            'system_id' => $iSystemId, 
+            'cmt_id' => $iCmtId,
+            'author_id' => bx_get_logged_profile_id()
+        ];
 
-        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableIds}` SET `system_id` = ?, `cmt_id` = ?, `author_id` = ?", $iSystemId, $iCmtId, $iAuthorId);
-        if(!$this->query($sQuery))
+        if(!$this->query("INSERT INTO `{$this->_sTableIds}` SET " . $this->arrayToSQL(array_merge($aDataDefault, $aData))))
             return false;
 
         return $this->lastId();
+    }
+
+    public function updateUniqId($aSetClause, $aWhereClause)
+    {
+        if(empty($aSetClause) || empty($aWhereClause))
+            return;
+
+        return (int)$this->query("UPDATE `{$this->_sTableIds}` SET " . $this->arrayToSQL($aSetClause) . " WHERE " . $this->arrayToSQL($aWhereClause)) > 0;
     }
 
     protected function convertImagesArray($a)

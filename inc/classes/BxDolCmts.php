@@ -48,6 +48,11 @@ define('BX_CMT_USAGE_BLOCK', 'block');
 define('BX_CMT_USAGE_INLINE', 'inline');
 define('BX_CMT_USAGE_DEFAULT', BX_CMT_USAGE_BLOCK);
 
+define('BX_CMT_STATUS_ACTIVE', 'active');
+define('BX_CMT_STATUS_HIDDEN', 'hidden');
+define('BX_CMT_STATUS_PENDING', 'pending');
+
+
 /**
  * Comments for any content
  *
@@ -447,6 +452,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
 
+    public function getStatusAdmin()
+    {
+        return $this->isEditAllowedAll() || $this->isRemoveAllowedAll() || $this->isAutoApprove() ? BX_CMT_STATUS_ACTIVE : BX_CMT_STATUS_PENDING;
+    }
+
     public function getViewUrl($iCmtId)
     {
     	if(empty($this->_aSystem['trigger_field_title']))
@@ -642,6 +652,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return true;
     }
 
+    public function isAutoApprove()
+    {
+        return getParam('sys_cmts_enable_auto_approve') == 'on';
+    }
+
     /**
      * set id to operate with votes
      */
@@ -732,7 +747,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
      */
     public function getCommentUniqId($iCmtId, $iAuthorId = 0)
     {
-        return $this->_oQuery->getUniqId($this->getSystemId(), $iCmtId, $iAuthorId);
+        return $this->_oQuery->getUniqId($this->getSystemId(), $iCmtId, ['author_id' => $iAuthorId]);
     }
 
     /**

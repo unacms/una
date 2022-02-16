@@ -1623,6 +1623,7 @@
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[Профиль системного бота]]></string>
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Система логирования по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Включить режим 'Быстрых реакций' - голосовать при клике, используя реакцию по умолчанию]]></string>
+    <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Автоматически активировать комментарий после создания]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
@@ -1833,6 +1834,7 @@
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>
 	<string name="_cmt_txt_counter_empty"><![CDATA[Комментировать]]></string>
         <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете оставить комментарий.]]></string>
+        <string name="_cmt_txt_note_approve_pending"><![CDATA[Комментарий будет опубликован, как только пройдет проверку модератором.]]></string>
         <string name="_cmt_nts_popup_view_title"><![CDATA[Заметки]]></string>
         <string name="_cmt_rvw_block_rating_title"><![CDATA[Оценка по обзорам]]></string>
         <string name="_cmt_rvw_block_reviews_title"><![CDATA[Обзоры ({0})]]></string>
@@ -2057,30 +2059,31 @@
 	<string name="_sys_block_types_skeletons"><![CDATA[Скелеты]]></string>
 	<string name="_sys_block_types_system"><![CDATA[Система]]></string>
   
-  <string name="_sys_cmts"><![CDATA[комментарии]]></string>
-  <string name="_sys_cmts_administration_grid_column_title_adm_cmt_text"><![CDATA[Текст]]></string>
-  <string name="_sys_cmts_administration_grid_column_title_adm_cmt_time"><![CDATA[Добавлено]]></string>
-  <string name="_sys_cmts_administration_grid_column_title_adm_cmt_author_id"><![CDATA[Автор]]></string>
-  <string name="_sys_cmts_administration_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
-	
+    <string name="_sys_cmts"><![CDATA[комментарии]]></string>
+    <string name="_sys_cmts_administration_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_sys_cmts_administration_grid_column_title_adm_cmt_text"><![CDATA[Текст]]></string>
+    <string name="_sys_cmts_administration_grid_column_title_adm_cmt_time"><![CDATA[Добавлено]]></string>
+    <string name="_sys_cmts_administration_grid_column_title_adm_cmt_author_id"><![CDATA[Автор]]></string>
+    <string name="_sys_cmts_administration_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+
     <string name="_sys_chart_growth_object"><![CDATA[Вывести]]></string>
     <string name="_sys_chart_growth_date_from"><![CDATA[С]]></string>
     <string name="_sys_chart_growth_date_to"><![CDATA[По]]></string>
     <string name="_sys_chart_accounts_growth"><![CDATA[Аккаунты: Развитие]]></string>
     <string name="_sys_chart_accounts_growth_speed"><![CDATA[Аккаунты: Скорость развития]]></string>
-	<string name="_sys_close"><![CDATA[Закрыть]]></string>
-        <string name="_sys_confirm"><![CDATA[Подтвердить]]></string>
-        <string name="_sys_confirmed"><![CDATA[Подтвержденный]]></string>
-	<string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
-	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>
-	<string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Запрос на связь ожидает подтверждения]]></string>
-	<string name="_sys_conn_err_input_data_is_not_defined"><![CDATA[Входные данные не определены]]></string>
+    <string name="_sys_close"><![CDATA[Закрыть]]></string>
+    <string name="_sys_confirm"><![CDATA[Подтвердить]]></string>
+    <string name="_sys_confirmed"><![CDATA[Подтвержденный]]></string>
+    <string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
+    <string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>
+    <string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Запрос на связь ожидает подтверждения]]></string>
+    <string name="_sys_conn_err_input_data_is_not_defined"><![CDATA[Входные данные не определены]]></string>
     <string name="_sys_conn_msg_success"><![CDATA[Операция удачно завершена]]></string>
 
     <string name="_sys_connect_information"><![CDATA[Информация о настройке]]></string>
     <string name="_sys_connect_error_join_unavailable"><![CDATA[Извините, но регистрация на данный момент недоступна. Пожалуйста попробуйте снова попозже.]]></string>
     <string name="_sys_connect_profile_error_info"><![CDATA[Невозможно получить информацию о профиле]]></string>
-	<string name="_sys_connect_state_invalid"><![CDATA["State" параметр не совпадает]]></string>
+    <string name="_sys_connect_state_invalid"><![CDATA["State" параметр не совпадает]]></string>
     <string name="_sys_connect_adm_stg_cpt_category_general"><![CDATA[Общие]]></string>
     <string name="_sys_connect_option_redirect"><![CDATA[Перенаправление после захода на сайт]]></string>
     <string name="_sys_connect_option_module"><![CDATA[Модуль в котором создавать профили]]></string>
