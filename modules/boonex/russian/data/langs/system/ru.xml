@@ -1239,6 +1239,11 @@
         <string name="_adm_nav_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string>
         <string name="_adm_nav_txt_block_hidden_on_mobile"><![CDATA[мобильное приложение]]></string>
         <string name="_adm_nav_txt_block_hidden_on_pt"><![CDATA[Скрыть на страницах типа]]></string>
+        <string name="_adm_nav_txt_block_hidden_on_col"><![CDATA[Скрыть в колонках]]></string>
+        <string name="_adm_nav_txt_block_hidden_on_col_thin"><![CDATA[Тонкая]]></string>
+        <string name="_adm_nav_txt_block_hidden_on_col_half"><![CDATA[Половина]]></string>
+        <string name="_adm_nav_txt_block_hidden_on_col_wide"><![CDATA[Широкая]]></string>
+        <string name="_adm_nav_txt_block_hidden_on_col_full"><![CDATA[Полная]]></string>
         <string name="_adm_page_cpt_audit"><![CDATA[Аудит]]></string>
         <string name="_adm_page_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Формы]]></string>
