@@ -19,6 +19,8 @@ class BxTimelineCmtsSearchResult extends BxBaseModGeneralCmtsSearchResult
 
         $this->aCurrent['title'] = _t('_bx_timeline_page_block_title_browse_cmts');
         $this->aCurrent['table'] = $this->oModule->_oConfig->getDbPrefix() . 'comments';
+
+        $this->_joinTableUniqueIds();
     }
 }
 

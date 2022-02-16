@@ -509,7 +509,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_hide_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_module_list_for_privacy_selector";s:5:"class";s:13:"TemplServices";}', '', '', 50),
 
-(@iCategoryId, 'sys_vote_reactions_quick_mode', '_adm_stg_cpt_option_sys_vote_reactions_quick_mode', 'on', 'checkbox', '', '', '', 60);
+(@iCategoryId, 'sys_vote_reactions_quick_mode', '_adm_stg_cpt_option_sys_vote_reactions_quick_mode', 'on', 'checkbox', '', '', '', 60),
+
+(@iCategoryId, 'sys_cmts_enable_auto_approve', '_adm_stg_cpt_option_sys_cmts_enable_auto_approve', 'on', 'checkbox', '', '', '', 70);
 
 --
 -- CATEGORY: Storage
@@ -1607,6 +1609,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_ids` (
   `sc_up` int(11) NOT NULL default '0',
   `sc_down` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `system_cmt_id` (`system_id`,`cmt_id`)
 );
@@ -4494,6 +4497,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_account_dashboard_manage_tools', 'system', 'cmts-administration', '_sys_menu_item_title_system_cmts_administration', '_sys_menu_item_title_cmts_administration', 'page.php?i=cmts-administration', '', '', 'comments', 'a:2:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, 1),
 ('sys_account_dashboard_manage_tools', 'system', 'audit-administration', '_sys_menu_item_title_system_audit_administration', '_sys_menu_item_title_audit_administration', 'page.php?i=audit-administration', '', '', 'comments', 'a:2:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, 2);
 
+-- dashboard content
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_dashboard_content_manage', 'system', 'cmts', '_sys_menu_item_title_system_cmts_administration', '_sys_menu_item_title_cmts_administration', 'page.php?i=dashboard-content&module=cmts', '', '', '', '', '', 192, 1, 0, 1);
+
 -- profile stats
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_profile_stats', 'system', 'profile-stats-profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', 'user', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_profile_edit";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483646, 1, 0, 0);
@@ -4865,15 +4872,16 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('sys_cmts_administration', 'Sql', '', 'sys_cmts_ids', 'cmt_id', 'cmt_time', '', '', 20, NULL, 'start', '', 'cmt_text,email', '', 'like', 'reports', '', 192, 'BxTemplCmtsGridAdministration', '');
+('sys_cmts_administration', 'Sql', '', 'sys_cmts_ids', 'cmt_id', 'cmt_time', 'status_admin', '', 20, NULL, 'start', '', 'cmt_text,email', '', 'like', 'reports', '', 192, 'BxTemplCmtsGridAdministration', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('sys_cmts_administration', 'checkbox', '_sys_select', '2%', 0, '0', '', 1),
-('sys_cmts_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '0', '', 2),
-('sys_cmts_administration', 'cmt_text', '_sys_cmts_administration_grid_column_title_adm_cmt_text', '33%', 0, '25', '', 3),
-('sys_cmts_administration', 'cmt_time', '_sys_cmts_administration_grid_column_title_adm_cmt_time', '20%', 1, '25', '', 4),
-('sys_cmts_administration', 'cmt_author_id', '_sys_cmts_administration_grid_column_title_adm_cmt_author_id', '20%', 0, '25', '', 5),
-('sys_cmts_administration', 'actions', '', '20%', 0, '', '', 6);
+('sys_cmts_administration', 'switcher', '_sys_cmts_administration_grid_column_title_adm_active', '8%', 0, '', '', 2),
+('sys_cmts_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '0', '', 3),
+('sys_cmts_administration', 'cmt_text', '_sys_cmts_administration_grid_column_title_adm_cmt_text', '30%', 0, '25', '', 4),
+('sys_cmts_administration', 'cmt_time', '_sys_cmts_administration_grid_column_title_adm_cmt_time', '15%', 1, '25', '', 5),
+('sys_cmts_administration', 'cmt_author_id', '_sys_cmts_administration_grid_column_title_adm_cmt_author_id', '20%', 0, '25', '', 6),
+('sys_cmts_administration', 'actions', '', '20%', 0, '', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_cmts_administration', 'bulk', 'delete', '_sys_cmts_administration_grid_action_title_adm_delete', '', 0, 1, 1),

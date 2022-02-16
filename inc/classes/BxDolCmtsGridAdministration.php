@@ -53,6 +53,16 @@ class BxDolCmtsGridAdministration extends BxTemplGrid
         $this->_sDefaultSortingOrder = 'DESC';
     }
 
+    protected function _switcherChecked2State($isChecked)
+    {
+        return $isChecked ? 'active' : 'hidden';
+    }
+
+    protected function _switcherState2Checked($mixedState)
+    {
+        return 'active' == $mixedState ? true : false;
+    }
+
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
@@ -69,7 +79,7 @@ class BxDolCmtsGridAdministration extends BxTemplGrid
         if(!$this->_oCmts || !$this->_oCmts->isEnabled())
             return '';
 
-        $this->_aOptions['source'] = $oModule->_oDb->prepareAsString("SELECT `sys_cmts_ids`.`id`, `sys_cmts_ids`.`cmt_id`, `sys_cmts_ids`.`reports`, `cmts`.*, `sys_accounts`.`email` FROM `sys_cmts_ids` INNER JOIN " . $this->_oCmts->getCommentsTableName() . " AS `cmts` ON `cmts`.`cmt_id`=`sys_cmts_ids`.`cmt_id` INNER JOIN `sys_profiles` ON `cmts`.`cmt_author_id`=`sys_profiles`.`id` INNER JOIN `sys_accounts` ON `sys_profiles`.`account_id`=`sys_accounts`.`id` WHERE `sys_cmts_ids`.`system_id`=?", $this->_oCmts->getSystemId());
+        $this->_aOptions['source'] = $oModule->_oDb->prepareAsString("SELECT `sys_cmts_ids`.`id`, `sys_cmts_ids`.`cmt_id`, `sys_cmts_ids`.`reports`, `sys_cmts_ids`.`status_admin`, `cmts`.*, `sys_accounts`.`email` FROM `sys_cmts_ids` INNER JOIN " . $this->_oCmts->getCommentsTableName() . " AS `cmts` ON `cmts`.`cmt_id`=`sys_cmts_ids`.`cmt_id` INNER JOIN `sys_profiles` ON `cmts`.`cmt_author_id`=`sys_profiles`.`id` INNER JOIN `sys_accounts` ON `sys_profiles`.`account_id`=`sys_accounts`.`id` WHERE `sys_cmts_ids`.`system_id`=?", $this->_oCmts->getSystemId());
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

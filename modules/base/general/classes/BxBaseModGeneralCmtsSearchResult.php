@@ -21,7 +21,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
         $this->oModule = $this->getMain();
         $this->sModuleObjectComments = $this->oModule->_oConfig->CNF['OBJECT_COMMENTS'];
-        $this->aCommentsAddons = array();
+        $this->aCommentsAddons = array();        
 
         $this->aCurrent = array(
             'name' => $this->oModule->_oConfig->getName() . '_cmts',
@@ -38,6 +38,8 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             'sorting' => 'last',
             'ident' => 'cmt_id'
         );
+
+        $this->_joinTableUniqueIds();
 
         $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
     }
@@ -97,6 +99,31 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             'text' => 'cmt_text',
             'added' => 'cmt_time'
         );
+    }
+
+    protected function _joinTableUniqueIds()
+    {
+        $aCommentsSystem = BxDolCmtsQuery::getSystemBy(['type' => 'name', 'name' => $this->sModuleObjectComments]);
+        if(empty($aCommentsSystem) || !is_array($aCommentsSystem))
+            return;
+
+        $sTableMain = $this->aCurrent['table'];
+        $sTableUniqueIds = 'sys_cmts_ids';
+
+        $this->aCurrent['restriction']['status_admin'] = [
+            'value' => 'active', 
+            'field' => 'status_admin', 
+            'operator' => '=', 
+            'table' => $sTableUniqueIds
+        ];
+
+        $this->aCurrent['join']['unique_ids'] = [
+            'type' => 'INNER',
+            'table' => $sTableUniqueIds,
+            'mainField' => 'cmt_id',
+            'on_sql' => "`{$sTableMain}`.`cmt_id`=`{$sTableUniqueIds}`.`cmt_id` AND `{$sTableUniqueIds}`.`system_id`='{$aCommentsSystem['ID']}' ",
+            'joinFields' => array('status_admin'),
+        ];
     }
 }
 

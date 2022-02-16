@@ -92,6 +92,9 @@
         background-color: rgb(255, 244, 213);
         background-color: rgba(255, 234, 193, 0.5);
     }
+    div.cmt-notes {
+        text-align: left;
+    }
     div.cmt-head {
         text-align: left;
         text-overflow: ellipsis;

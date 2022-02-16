@@ -59,47 +59,60 @@ class BxBaseDashboardServices extends BxDol
     {
         return bx_srv('system', 'manage_tools', array(), 'TemplAuditServices');
     }
-    
+
     public function serviceManageContent()
     {
         $oMenu = BxDolMenu::getObjectInstance('sys_dashboard_content');
         if(!$oMenu)
             return '';
 
-        $BxDolModuleQuery = BxDolModuleQuery::getInstance();
-        $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
-    	$aModulesList = array();
-        foreach($aModules as $iKey => $aModule){
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'modules', 'active' => 1]);
+
+    	$aModulesList = [];
+        foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
-            if ($oModule instanceof iBxDolContentInfoService && BxDolRequest::serviceExists($aModule['name'], 'manage_tools')){
-                $aModule['selected'] = false;
+            if($oModule instanceof iBxDolContentInfoService && BxDolRequest::serviceExists($aModule['name'], 'manage_tools')) {
                 $aModulesList[$aModule['uri']] = $aModule;
             }
-            else{
-                unset($aModules[$iKey]);
-            }
         }
-        $aModules = array_values($aModules);
-        $sSelected = bx_get('module');
-        
-        if ($sSelected == ''){
-            $aModulesList[$aModules[0]['uri']]['selected'] = true; 
-            $sSelected = $aModules[0]['uri'];
+
+        $sSelected = bx_get('module');        
+        if($sSelected == '')
+            $sSelected = reset($aModulesList)['uri'];
+
+        $sContent = '';
+        if(isset($aModulesList[$sSelected])) {
+            $sSelectedModule = $aModulesList[$sSelected]['name'];
+
+            $aBlock = bx_srv($sSelectedModule, 'manage_tools', array('administration'));
+            if(!empty($aBlock) && is_array($aBlock))
+                $sContent = $aBlock['content'];
         }
-        else{
-            $aModulesList[$sSelected]['selected'] = true;
+        else {
+            $sSelectedModule = 'system';
+
+            $sMethod = '_getManageContent' . bx_gen_method_name($sSelected);
+            if(method_exists($this, $sMethod))
+                $sContent = $this->$sMethod();
         }
-        
+
         $oMenu->setMenuData($aModulesList);
-        
-        $aGrid = BxDolService::call($aModulesList[$sSelected]['name'], 'manage_tools', array('administration'));
-     
+        $oMenu->setSelected($sSelectedModule, $sSelected);
+
     	return array(
-            'content' => $aGrid['content'],
+            'content' => $sContent,
             'menu' => $oMenu
         );
     }
-    
+
+    protected function _getManageContentCmts()
+    {
+        $aBlock = bx_srv('system', 'manage_tools', ['administration'], 'TemplCmtsServices');
+        if(empty($aBlock) || !is_array($aBlock))
+            return '';
+
+        return $aBlock['content'];
+    }
 }
 
 /** @} */

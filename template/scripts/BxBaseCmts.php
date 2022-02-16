@@ -427,7 +427,7 @@ class BxBaseCmts extends BxDolCmts
             'content' => $sContent,
             'actions' => $sActions,
             'replies' =>  $sReplies,
-        ), $this->_getTmplVarsAuthor($aCmt));
+        ), $this->_getTmplVarsAuthor($aCmt), $this->_getTmplVarsNotes($aCmt));
         
         $sResult = $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, $aVars);
         
@@ -1056,7 +1056,10 @@ class BxBaseCmts extends BxDolCmts
                 return array('code' => 2, 'message' => '_cmt_err_cannot_perform_action');
         }
 
-        $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId);
+        $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, [
+            'author_id' => $iCmtAuthorId, 
+            'status_admin' => $this->getStatusAdmin()
+        ]);
 
         if($iCmtParentId) {
             $this->_oQuery->updateRepliesCount($iCmtParentId, 1);
@@ -1138,7 +1141,10 @@ class BxBaseCmts extends BxDolCmts
 
             $iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
             if($iCmtId != 0) {
-                $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId);
+                $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, [
+                    'author_id' => $iCmtAuthorId,
+                    'status_admin' => $this->getStatusAdmin()
+                ]);
 
                 if($this->isAttachImageEnabled())
                     $oForm->processImages($this, 'cmt_image', $iCmtUniqId, $iCmtId, $iCmtAuthorId, true);
@@ -1189,7 +1195,13 @@ class BxBaseCmts extends BxDolCmts
             $sCmtText = $oForm->getCleanValue('cmt_text');
 
             if($oForm->update($iCmtId) !== false) {
-                $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, (int)$aCmt['cmt_author_id']);
+                $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, [
+                    'author_id' => (int)$aCmt['cmt_author_id']
+                ]);
+                
+                $sStatusAdmin = $this->getStatusAdmin();
+                if($sStatusAdmin !== BX_CMT_STATUS_ACTIVE)
+                    $this->_oQuery->updateUniqId(['status_admin' => $sStatusAdmin], ['id' => $iCmtUniqId]);
 
                 if($this->isAttachImageEnabled())
                     $oForm->processImages($this, 'cmt_image', $iCmtUniqId, $iCmtId, $iCmtAuthorId, false);
@@ -1407,6 +1419,34 @@ class BxBaseCmts extends BxDolCmts
         return $this->_oTemplate->parseHtmlByName('comment_attachments.html', array(
             'bx_repeat:attached' => $aTmplImages
         ));
+    }
+
+    protected function _getTmplVarsNotes($aCmt)
+    {
+        $aTmplVars = array();
+        
+        //--- Pending status related notes.
+        if($aCmt['cmt_status_admin'] == BX_CMT_STATUS_PENDING)
+            $aTmplVars[] = [
+                'style_prefix' => $this->_sStylePrefix,
+                'bx_if:show_note_color' => [
+                    'condition' => true,
+                    'content' => [
+                        'item_note_color' => 'red3'
+                    ]
+                ],
+                'item_note' => _t('_cmt_txt_note_approve_pending')
+            ];
+
+        return [
+            'bx_if:show_notes' => [
+                'condition' => !empty($aTmplVars),
+                'content' => [
+                    'style_prefix' => $this->_sStylePrefix,
+                    'bx_repeat:notes' => $aTmplVars
+                ]
+            ],
+        ];
     }
 
     protected function _getTmplVarsAuthor($aCmt)

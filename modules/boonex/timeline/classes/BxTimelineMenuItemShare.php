@@ -108,9 +108,13 @@ class BxTimelineMenuItemShare extends BxTemplMenu
                 ));
         }
 
-        $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
-        $oSocial->addMarkers($aMarkers);
-        return array_merge($aItems, $oSocial->getMenuItems());
+        if(($oSocial = BxDolMenu::getObjectInstance('sys_social_sharing')) !== false) {
+            $oSocial->addMarkers($aMarkers);
+
+            $aItems = array_merge($aItems, $oSocial->getMenuItems());
+        }
+
+        return $aItems;
     }
 
     protected function _setBrowseParams($aBrowseParams = array())

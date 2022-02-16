@@ -23,6 +23,8 @@ class BxAlbumsCmtsSearchResultMedia extends BxBaseModGeneralCmtsSearchResult
 
         $this->aCurrent['name'] = $this->oModule->_oConfig->getName() . '_cmts_media';
         $this->aCurrent['table'] = $this->oModule->_oConfig->getDbPrefix() . 'cmts_media';
+
+        $this->_joinTableUniqueIds();
     }
 }
 

@@ -4,6 +4,15 @@
         <div class="__style_prefix__-blink-plate"></div>
         <div class="__style_prefix__-avatar bx-def-thumb-size">__author_unit__</div>
         <div class="__style_prefix__-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
+            <bx_if:show_notes>
+                <div class="__style_prefix__-notes bx-def-margin-thd-bottom">
+                    <bx_repeat:notes>
+                        <div class="__style_prefix__-note bx-def-margin-thd-top-auto bx-def-font-small bx-def-font-grayed">
+                            <div class="__style_prefix__-n-text<bx_if:show_note_color> col-__item_note_color__</bx_if:show_note_color>">__item_note__</div>
+                        </div>
+                    </bx_repeat:notes>
+                </div>
+            </bx_if:show_notes>
             <div class="__style_prefix__-head bx-clearfix">
                 <bx_if:meta><span class="__style_prefix__-meta bx-base-general-unit-meta">__meta__</span></bx_if:meta>
                 <bx_if:show_pinned><span class="__style_prefix__-pinned bx-def-margin-sec-left"><i class="sys-icon thumbtack" title="<bx_text:_cmt_txt_pinned />"></i></span></bx_if:show_pinned>

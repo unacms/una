@@ -37,10 +37,11 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_timeline', 'bx_timeline_cmts');
 
+
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_timeline_mute', 'bx_timeline_administration');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_timeline_mute', 'bx_timeline_administration');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_timeline_mute', 'bx_timeline_administration');
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_timeline%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_timeline%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_timeline%';
 
 
 -- METATAGS

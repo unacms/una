@@ -28,23 +28,24 @@ class BxBaseMenuDashboardContentManage extends BxTemplMenuCustom
     {
         $this->_aModulesList = $aModulesList;
     }
-    
+
     protected function getMenuItemsRaw ()
     {
-        $aResult = array();
+        $aResult = parent::getMenuItemsRaw();
+
         $aUrl = bx_get_base_url_inline();
-        
         foreach($this->_aModulesList as $aModule){
-            $aResult[$aModule['name']] = array(
-                'name' => $aModule['name'],
+            $aResult[] = [
+                'module' => $aModule['name'],
+                'name' => $aModule['uri'],
                 'title' => $aModule['title'],
-                'link' => bx_append_url_params($aUrl[0], array_merge($aUrl[1], array('module' => $aModule['uri']))),
-                'active' => true,
-                'selected' => $aModule['selected']//todo selected
-            );                
+                'link' => bx_append_url_params($aUrl[0], array_merge($aUrl[1], ['module' => $aModule['uri']])),
+                'active' => 1,
+            ];
     	}
-        if(!empty($aResult) && is_array($aResult)){
-            $aResult['more-auto'] = array(
+
+        if(!empty($aResult) && is_array($aResult)) {
+            $aResult['more-auto'] = [
                 'module' => 'system', 
                 'id' => 'more-auto', 
                 'name' => 'more-auto',
@@ -52,16 +53,10 @@ class BxBaseMenuDashboardContentManage extends BxTemplMenuCustom
                 'title' => '_sys_menu_item_title_va_more_auto', 
                 'href' => 'javascript:void(0)', 
                 'icon' => 'ellipsis-v',
-            );
+            ];
         }
+
         return $aResult;
-    }
-    
-    protected function _isSelected ($a)
-    {
-        if (isset($a['selected']))
-            return $a['selected'];
-        return false;
     }
 }
 
