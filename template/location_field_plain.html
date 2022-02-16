@@ -12,7 +12,22 @@
 
 <script>
 (function () {
-    var getLocationString = function (sMode) {
+
+    var eForm = $('.bx-form-input-location-__name__').parents('form:first');
+    eForm.on('submit', function (ev) {
+        if (typeof(glBxLocationDisableFormSubmit) !== 'undefined' && glBxLocationDisableFormSubmit)
+            ev.preventDefault();
+    });
+
+    var disableFormSubmit = function (b) {
+        glBxLocationDisableFormSubmit = b;
+        if (b)
+            eForm.find('[type=submit]').addClass('bx-btn-disabled').attr('disabled', true);
+        else
+            eForm.find('[type=submit]').removeClass('bx-btn-disabled').attr('disabled', false);
+    }
+
+    var getLocationParams = function (sMode) {
         var sCountry = $('select[name="__name___country"] :selected').text();
         var sCountryCode = $('select[name="__name___country"]').val();
         var sZip = $('input[name="__name___zip"]').val();
@@ -24,29 +39,29 @@
         if (!sCountryCode || !sCountryCode.length)
             return '';
 
-        sRet = sZip.length ? sZip : '';
-        if ('undefined' !== typeof(sMode) && 'zip_only' == sMode) {
-            return sZip.length ? sRet : '';
-        }
-        if ('undefined' !== typeof(sMode) && 'city_only' == sMode) {
-            return (sCity.length ? sCity + ', ': '') + (sState.length ? sState + ', ': '') + sCountry;
-        }
-        sRet = (sCity.length ? sCity + ', ': '') + (sState.length ? sState + ', ': '') + sRet;
-        
-        if (sCity.length)
-            sRet = (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + sRet;
+        sRet = '&country=' + encodeURIComponent(sCountryCode);
 
-        if ('undefined' !== typeof(sMode) &&  'address_wo_zip' == sMode) {
-            return sCity.length && sStreet.length ? 
-                    (sStreet.length && sNum.length ? sNum + ' ' : '') + (sStreet.length ? sStreet + ', ' : '') + (sCity.length ? sCity + ', ': '') + (sState.length ? sState : '') : '';
-        }
+        if (sZip.length && sMode !== 'no_street_no_zip')
+            sRet += '&postalcode=' + encodeURIComponent(sZip);
+
+        if ('zip_only' == sMode)
+            return sZip.length ? sRet : '';
+
+        if (sState.length)
+            sRet += '&state=' + encodeURIComponent(sState);
+
+        if (sCity.length)
+            sRet += ('county_as_city' == sMode ? '&county=' : '&city=') + encodeURIComponent(sCity);
+        
+        if (sStreet.length && sMode !== 'no_street_no_zip')
+            sRet += '&street=' + (sNum.length ? encodeURIComponent(sNum) + ' ' : '') + encodeURIComponent(sStreet);
 
         return sRet;
     }
 
-    var geocode = function (a, i, sCountryCode) {
+    var geocode = function (a, i) {
         var s = a[i];
-        $.getJSON('__nominatim_server__/search/?q=' + encodeURIComponent(s) + '&countrycodes=' + sCountryCode + '&addressdetails=1&format=json&limit=1&email=__nominatim_email__', function (oResult) {
+        $.getJSON('__nominatim_server__/search/?addressdetails=1' + s + '&format=json&limit=1&email=__nominatim_email__', function (oResult) {
             glBxLocationFieldPlainGeocodingRequest = false;
             if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
 
@@ -72,7 +87,7 @@
             else {
                 i += 1;
                 if ('undefined' !== typeof(a[i])) {
-                    geocode(a, i, sCountryCode);
+                    geocode(a, i);
                 }
                 else {
                     $('input[name="__name___lat"]').val(0);
@@ -86,6 +101,8 @@
     var setLocationStatus = function (s) {
         $('.bx-form-input-location-__name__ .bx-form-input-location-status').hide();
         $('.bx-form-input-location-__name__ .bx-form-input-location-status.' + s).show();
+        if ('loading' !== s)
+            disableFormSubmit(false);
     }
 
     setLocationStatus('undef');
@@ -100,26 +117,27 @@
             if ('hidden' == this.type)
                 return;
             
-            var s = getLocationString();
+            var s = getLocationParams();
             if (!s) {
                 setLocationStatus('undef');
                 return;
             }
             var a = [s];
-            if (s = getLocationString('address_wo_zip'))
-                a.push(s);
-            if (s = getLocationString('zip_only'))
-                a.push(s);
-            if (s = getLocationString('city_only'))
-                a.push(s);
+
+            if (s = getLocationParams('zip_only'))
+                 a.push(s);
+
+            if (s = getLocationParams('no_street_no_zip'))
+                 a.push(s);
  
+            disableFormSubmit(true);
             glBxLocationFieldPlainGeocodingRequest = setTimeout(function () {
                 setLocationStatus('loading');
-                geocode(a, 0, $('select[name="__name___country"]').val());
+                geocode(a, 0);
             }, 1500);
         });
 
-        if (getLocationString()) {
+        if (getLocationParams()) {
             if (parseFloat($('input[name="__name___lat"]').val()) && parseFloat($('input[name="__name___lng"]').val()))
                 setLocationStatus('ok');
             else
