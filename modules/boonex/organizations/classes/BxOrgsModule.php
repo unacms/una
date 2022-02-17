@@ -91,6 +91,26 @@ class BxOrgsModule extends BxBaseModGroupsModule
     	return BxBaseModProfileModule::serviceGetTimelineData();
     }
 
+    public function serviceGetNotificationsInsertData($oAlert, $aHandler, $aDataItems)
+    {
+        if($oAlert->sAction != 'join_request' || empty($aDataItems) || !is_array($aDataItems))
+            return $aDataItems;
+
+        $aDataItem = reset($aDataItems);
+        $aDataItem['owner_id'] = $oAlert->aExtras['performer_id'];
+
+        $aDataItems[] = $aDataItem;
+        return $aDataItems;
+    }
+
+    public function serviceGetNotificationsJoinRequest($aEvent)
+    {
+        if($aEvent['owner_id'] == $aEvent['object_owner_id'])
+            return parent::serviceGetNotificationsJoinRequest($aEvent);
+
+        return $this->_serviceGetNotification($aEvent, $this->_oConfig->CNF['T']['txt_ntfs_join_request_for_owner']);
+    }
+
     public function onFanRemovedFromAdmins($iGroupProfileId, $iProfileId)
     {
         if (!($oProfile = BxDolProfile::getInstance($iProfileId)))

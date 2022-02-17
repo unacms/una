@@ -16,6 +16,14 @@ class BxOrgsPrivacyNotifications extends BxBaseModGroupsPrivacyNotifications
     	$this->MODULE = 'bx_organizations';
         parent::__construct($aOptions, $oTemplate);
     }
+
+    public function checkGroupMember($iGroupProfileId, $iViewerId)
+    {
+        if($iGroupProfileId == $iViewerId)
+            return true;
+
+        return parent::checkGroupMember($iGroupProfileId, $iViewerId);
+    }
 }
 
 /** @} */
