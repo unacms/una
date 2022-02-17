@@ -333,12 +333,15 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     protected function _isVisible ($a)
     {
-        if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
+        if(isset($a['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
 
-        if (!empty($a['visibility_custom']))
-            return BxDolService::callSerialized($a['visibility_custom'], $this->_aMarkers);
-        
+        if(!empty($a['visibility_custom']) && !BxDolService::callSerialized($a['visibility_custom'], $this->_aMarkers))
+            return false;
+
+        if($this->_iPageType && !empty($a['hidden_on_pt']) && ((1 << ($this->_iPageType - 2)) & (int)$a['hidden_on_pt']))
+            return false;
+
         return true;
     }
     

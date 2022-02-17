@@ -69,7 +69,7 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
     	if (isset($aItem['active']) && !$aItem['active'])
             return false;
 
-        if (isset($aItem['visible_for_levels']) && !$this->_isVisible($aItem))
+        if (!$this->_isVisible($aItem))
             return false;
 
     	$sMethod = '_getMenuItem' . str_replace(' ', '', ucwords(str_replace('-', ' ', $aItem['name'])));
