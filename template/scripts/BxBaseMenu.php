@@ -153,10 +153,7 @@ class BxBaseMenu extends BxDolMenu
         if (isset($a['active']) && !$a['active'])
             return false;
 
-        if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
-            return false;
-
-        if($this->_iPageType && !empty($a['hidden_on_pt']) && ((1 << ($this->_iPageType - 2)) & (int)$a['hidden_on_pt']))
+        if (!$this->_isVisible($a))
             return false;
 
         $a['title'] = _t($a['title']);

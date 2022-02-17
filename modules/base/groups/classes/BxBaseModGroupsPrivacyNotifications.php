@@ -24,7 +24,12 @@ class BxBaseModGroupsPrivacyNotifications extends BxBaseModGroupsPrivacy
         if (!($aEvent = BxDolService::call('bx_notifications', 'get_event_by_id', array($iObjectId))))
             return false;
 
-        return $this->_oModule->_oDb->isAdmin($aEvent['object_owner_id'], $iViewerId ? $iViewerId : bx_get_logged_profile_id());
+        return $this->checkGroupMember($aEvent['object_owner_id'], $iViewerId ? $iViewerId : bx_get_logged_profile_id());
+    }
+
+    public function checkGroupMember($iGroupProfileId, $iViewerId)
+    {
+        return $this->_oModule->_oDb->isAdmin($iGroupProfileId, $iViewerId);
     }
 }
 

@@ -237,6 +237,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
                 'txt_N_fans' => '_bx_orgs_txt_N_friends',
                 'txt_ntfs_join_invitation' => '_bx_orgs_txt_ntfs_join_invitation',
             	'txt_ntfs_join_request' => '_bx_orgs_txt_ntfs_join_request',
+                'txt_ntfs_join_request_for_owner' => '_bx_orgs_txt_ntfs_join_request_for_owner',
                 'txt_ntfs_fan_added' => '_bx_orgs_txt_ntfs_fan_added',
             	'txt_ntfs_timeline_post_common' => '_bx_orgs_txt_ntfs_timeline_post_common',
                 'option_members_mode_multi_roles' => '_bx_orgs_option_members_mode_multi_roles',

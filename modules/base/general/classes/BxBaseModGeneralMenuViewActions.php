@@ -86,6 +86,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
      */
     protected function _isVisible($a)
     {
+        if(!parent::_isVisible($a))
+            return false;
+
         return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
     }
 
