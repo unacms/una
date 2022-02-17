@@ -483,7 +483,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         if (!$aTemplate)
             return false;
         
-        return $this->sendLetter($sEmail, $iCampaignId, $aCustomHeaders, bx_get_logged_profile_id(), $aTemplate, false);
+        return $this->sendLetter($sEmail, $iCampaignId, $aCustomHeaders, getLoggedId(), $aTemplate, false);
     }
           
     public function sendAll($iCampaignId)
@@ -499,7 +499,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $this->_oDb->deleteCampaignData($iCampaignId);
         $aAccounts = $this->getEmailsBySegment($aCampaign['segments'], $aCampaign['is_one_per_account']);
         foreach ($aAccounts as $aAccountInfo){
-            $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['profile_id'], $aTemplate, true);
+            $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['account_id'], $aTemplate, true);
             $this->_oDb->addEmailToSentListForCampaign($iCampaignId, $aAccountInfo['email']);
         }
               
@@ -507,12 +507,12 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         return true;
     }
     
-    private function sendLetter($sEmail, $iCampaignId, $aCustomHeaders, $iProfileId, $aTemplate, $bAddToQueue)
+    private function sendLetter($sEmail, $iCampaignId, $aCustomHeaders, $iAccountId, $aTemplate, $bAddToQueue)
     {
         $sLetterCode = $this->_oDb->addLetter($iCampaignId, $sEmail);
         
-        $aMarkers = $this->addMarkers($iProfileId, $sLetterCode);
-        bx_alert($this->_aModule['name'], 'user_fields', $iCampaignId, $iProfileId, array('email' => $sEmail, 'markers' => &$aMarkers));
+        $aMarkers = $this->addMarkers($iAccountId, $sLetterCode);
+        bx_alert($this->_aModule['name'], 'user_fields', $iCampaignId, $iAccountId, array('email' => $sEmail, 'markers' => &$aMarkers));
         
         $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
         $aTemplate['Body'] = preg_replace_callback("/$regexp/siU",
@@ -527,6 +527,17 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                 }
             },
             $aTemplate['Body']);
+        
+        $aMarkersInLetter = [];
+        preg_match_all("/\{[^\}]*\}/i", $aTemplate['Body'], $aMarkersInLetter);
+        if ($aMarkersInLetter[0]>0){
+            foreach ($aMarkersInLetter[0] as $sMarker){
+                $sMarker = str_replace(['{', '}'], '', $sMarker);
+                if (!array_key_exists($sMarker, $aMarkers)) {
+                    $aMarkers[$sMarker] = '';
+                }
+            }
+        }
         
         return sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aMarkers, BX_EMAIL_MASS, 'html', false, $aCustomHeaders, $bAddToQueue);
     }
@@ -620,19 +631,21 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         return array($aTemplate, $aCustomHeaders, $aCampaign);
     }
           
-    private function addMarkers($iProfileId, $sLetterCode)
+    private function addMarkers(iAccountId, $sLetterCode)
     {
         $CNF = &$this->_oConfig->CNF;
         $aMarkers = array();
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if ($oProfile){
-            $oAccount = BxDolAccount::getInstance($oProfile->getAccountId());
-            $sAccountEmail = $oAccount->getEmail();
-
-            $aMarkers['email'] = $sAccountEmail;
-            $aMarkers['account_name'] = $oAccount->getDisplayName();
-            $aMarkers['account_id'] = $oProfile->getAccountId();
-
+        
+        $oAccount = BxDolAccount::getInstance($iAccountId);
+        $aAccountInfo = $oAccount->getInfo();
+        $sAccountEmail = $oAccount->getEmail();
+        
+        $aMarkers['email'] = $sAccountEmail;
+        $aMarkers['account_name'] = $oAccount->getDisplayName();
+        $aMarkers['account_id'] = $oAccount->id();
+        
+        if ($aAccountInfo['profile_id'] > 0){
+            $oProfile = BxDolProfile::getInstance($aAccountInfo['profile_id']);
             $sModule = $oProfile->getModule();
             if (BxDolRequest::serviceExists($sModule, 'get_info')) {
                 $aProfileInfo = bx_srv($sModule, 'get_info', array($oProfile->getContentId(), false));
@@ -640,14 +653,14 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                     if(!isset($aMarkers[$sKey]))
                         $aMarkers[$sKey] = $sValue;
             }
+        }    
 
-            $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
-            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
+        $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
+        $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
 
-            $aMarkers['reset_password_url'] = '';
-            if(($sResetPasswordUrl = bx_get_reset_password_link($sAccountEmail)) !== false)
-                $aMarkers['reset_password_url'] = $sResetPasswordUrl . "&lhash=" . $sLetterCode;
-        }
+        $aMarkers['reset_password_url'] = '';
+        if(($sResetPasswordUrl = bx_get_reset_password_link($sAccountEmail)) !== false)
+            $aMarkers['reset_password_url'] = $sResetPasswordUrl . "&lhash=" . $sLetterCode;
 
         return $aMarkers;
     }

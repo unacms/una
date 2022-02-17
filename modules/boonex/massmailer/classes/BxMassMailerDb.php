@@ -71,7 +71,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
     
     public function getAccountsByTerms($sTerms = "")
     {
-        $sSql = "SELECT `ta`.`email`, `tp`.`id` AS `profile_id` FROM `sys_accounts` AS `ta` " . $sTerms . "  WHERE `ta`.`receive_news` <> 0 AND `ta`.`email_confirmed` = 1";
+        $sSql = "SELECT `ta`.`email`, `tp`.`id` AS `profile_id`, `ta`.`id` as `account_id` FROM `sys_accounts` AS `ta` " . $sTerms . "  WHERE `ta`.`receive_news` <> 0 AND `ta`.`email_confirmed` = 1";
         return $this->getAll($sSql);
     }
     
