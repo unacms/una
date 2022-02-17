@@ -11,6 +11,7 @@ VALUES (@iTypeId, 'bx_froala_general', '_bx_froala_adm_stg_cpt_category_general'
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+('bx_froala_license_key', '', @iCategId, '_bx_froala_option_license_key', 'digit', '', '', '', 1),
 ('bx_froala_icons_template', 'svg', @iCategId, '_bx_froala_option_icons_template', 'select', 'svg,font_awesome_5,text', '', '', 5),
 ('bx_froala_option_plugins', 'emoticons,embedly,draggable,fullscreen,image,link', @iCategId, '_bx_froala_option_plugins', 'digit', '', '', '', 10),
 

@@ -1,7 +1,7 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
 (function (global, factory) {
@@ -19,6 +19,25 @@
     translation: {
       // Place holder
       'Type something': 'Escriba algo',
+      // Missing translations
+      'More Text': 'Más texto',
+      'Text Color': 'Color de texto',
+      'Background Color': 'Color de fondo',
+      'Inline Class': 'Clase en línea',
+      'Default': 'Defecto',
+      'Lower Alpha': 'Alpha inferiores',
+      'Lower Greek': 'Griegas inferiores',
+      'Lower Roman': 'Romanas inferiores',
+      'Upper Alpha': 'Alpha superiores',
+      'Upper Roman': 'Romanas superiores',
+      'Circle': 'Circulo',
+      'Disc': 'Dto',
+      'Square': 'Cuadrado',
+      'Single': 'Soltero',
+      'Double': 'Doble',
+      'More Rich': 'Más Rico',
+      'More Misc': 'Más Diverso',
+      'Download PDF': 'Descargar PDF',
       // Basic formatting
       'Bold': 'Negrita',
       'Italic': "It\xE1lica",
@@ -50,6 +69,7 @@
       'Heading 2': 'Encabezado 2',
       'Heading 3': 'Encabezado 3',
       'Heading 4': 'Encabezado 4',
+      'Line Height': 'Interlineado',
       // Style
       'Paragraph Style': "Estilo de p\xE1rrafo",
       'Inline Style': "Estilo en l\xEDnea",

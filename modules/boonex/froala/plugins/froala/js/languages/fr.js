@@ -1,7 +1,7 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
 (function (global, factory) {
@@ -37,6 +37,8 @@
       // Font
       'Font Family': "Polices de caract\xE8res",
       'Font Size': 'Taille de police',
+      'Text Color': 'Couleur de police',
+      'Background Color': 'Couleur d\'arri\xE8re plan',
       // Colors
       'Colors': 'Couleurs',
       'Background': "Arri\xE8re-plan",
@@ -50,9 +52,15 @@
       'Heading 2': 'Titre 2',
       'Heading 3': 'Titre 3',
       'Heading 4': 'Titre 4',
+      'Line Height': 'Interligne',
+      'Single': 'Célibataire',
       // Style
       'Paragraph Style': 'Style de paragraphe',
       'Inline Style': 'Style en ligne',
+      'Gray': 'Grise',
+      'Bordered': 'Bordé',
+      'Spaced': 'Espacé',
+      'Uppercase': 'Majuscule',
       // Alignment
       'Align': 'Aligner',
       'Align Left': "Aligner \xE0 gauche",
@@ -60,9 +68,22 @@
       'Align Right': "Aligner \xE0 droite",
       'Align Justify': 'Justifier',
       'None': 'Aucun',
+      // Download PDF
+      'Download PDF': 'Télécharger le PDF',
+      // Inline Class
+      'Inline Class': 'Classe en ligne',
       // Lists
       'Ordered List': "Liste ordonn\xE9e",
       'Unordered List': "Liste non ordonn\xE9e",
+      'Default': 'D\xE9faut',
+      'Circle': 'Cercle',
+      'Disc': 'Rond',
+      'Square': 'Carr\xE9',
+      'Lower Alpha': 'Alpha inf\xE9rieur',
+      'Lower Greek': 'Grec inf\xE9rieur',
+      'Lower Roman': 'Romain inf\xE9rieur',
+      'Upper Alpha': 'Alpha sup\xE9rieur',
+      'Upper Roman': 'Romain sup\xE9rieur',
       // Indent
       'Decrease Indent': 'Diminuer le retrait',
       'Increase Indent': 'Augmenter le retrait',
@@ -78,16 +99,16 @@
       'Upload Image': "T\xE9l\xE9verser une image",
       'By URL': 'Par URL',
       'Browse': 'Parcourir',
-      'Drop image': "D\xE9poser une image",
-      'or click': 'ou cliquer',
+      'Drop image': 'Cliquer pour parcourir',
+      'or click': 'ou glisser/d\xE9poser en plein \xE9cran',
       'Manage Images': "G\xE9rer les images",
       'Loading': 'Chargement',
       'Deleting': 'Suppression',
       'Tags': "\xC9tiquettes",
       'Are you sure? Image will be deleted.': "Etes-vous certain? L'image sera supprim\xE9e.",
       'Replace': 'Remplacer',
-      'Uploading': "En t\xE9l\xE9versement d'images",
-      'Loading image': 'En chargement d\'images',
+      'Uploading': 'Envoi en cours',
+      'Loading image': 'Chargement d\'image en cours',
       'Display': 'Afficher',
       'Inline': 'En ligne',
       'Break Text': 'Rompre le texte',
@@ -102,8 +123,8 @@
       'Insert Video': "Ins\xE9rer une vid\xE9o",
       'Embedded Code': "Code int\xE9gr\xE9",
       'Paste in a video URL': "Coller l'URL d'une vid\xE9o",
-      'Drop video': "D\xE9poser une vid\xE9o",
-      'Your browser does not support HTML5 video.': "Votre navigateur ne supporte pas les vid\xE9os en format HTML5.",
+      'Drop video': 'Cliquer pour parcourir',
+      'Your browser does not support HTML5 video.': "Votre navigateur ne supporte pas les vid\xE9os au format HTML5.",
       'Upload Video': "T\xE9l\xE9verser une vid\xE9o",
       // Tables
       'Insert Table': "Ins\xE9rer un tableau",
@@ -132,9 +153,13 @@
       'Align Middle': 'Aligner au centre',
       'Align Bottom': 'Aligner en bas',
       'Cell Style': 'Style de cellule',
+      'Dashed Borders': 'Bordures pointillées',
+      'Alternate Rows': 'Lignes alternatives',
+      'Highlighted': 'Souligné',
+      'Thick': 'Épais',
       // Files
       'Upload File': "T\xE9l\xE9verser un fichier",
-      'Drop file': "D\xE9poser un fichier",
+      'Drop file': 'Cliquer pour parcourir',
       // Emoticons
       'Emoticons': "\xC9motic\xF4nes",
       'Grinning face': 'Souriant visage',
@@ -205,7 +230,7 @@
       // Clear formatting
       'Clear Formatting': 'Effacer le formatage',
       // Save
-      'Save': 'sauvegarder',
+      'Save': 'Sauvegarder',
       // Undo, redo
       'Undo': 'Annuler',
       'Redo': "R\xE9tablir",
@@ -264,12 +289,12 @@
       'Clean': 'Nettoyer',
       'Word Paste Detected': "Copiage de mots d\xE9tect\xE9",
       // Character Counter 
-      'Characters': 'Caractères',
+      'Characters': 'Caract\xE8res',
       // More Buttons
-      'More Text': 'Plus de texte',
-      'More Paragraph': 'Plus paragraphe',
-      'More Rich': 'Plus riche',
-      'More Misc': 'Plus divers'
+      'More Text': 'Autres options de texte',
+      'More Paragraph': 'Autres options de paragraphe',
+      'More Rich': 'Autres options d\'enrichissement',
+      'More Misc': 'Autres fonctionnalit\xE9s diverses'
     },
     direction: 'ltr'
   };

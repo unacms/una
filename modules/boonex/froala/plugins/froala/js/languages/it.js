@@ -1,7 +1,7 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
 (function (global, factory) {
@@ -19,6 +19,21 @@
     translation: {
       // Place holder
       'Type something': 'Digita qualcosa',
+      //Missing translations
+      'Text Color': 'Colore del testo',
+      'Background Color': 'Colore di sfondo',
+      'Inline Class': 'Classe inline',
+      'Default': 'Predefinito',
+      'Lower Alpha': 'Alfa minuscole',
+      'Lower Greek': 'Greche minuscole',
+      'Lower Roman': 'Romane minuscole',
+      'Upper Alpha': 'Alfa maiuscole',
+      'Upper Roman': 'Romane maiuscole',
+      'Circle': 'Cerchio',
+      'Disc': 'Disco',
+      'Square': 'Quadrato',
+      'Double': 'Doppio',
+      'Download PDF': 'Scarica il PDF',
       // Basic formatting
       'Bold': 'Grassetto',
       'Italic': 'Corsivo',
@@ -264,10 +279,11 @@
       'Clean': 'Pulisci',
       'Word Paste Detected': "\xC8 stato rilevato un incolla da Word",
       // Character Counter
-      'Characters': 'Personaggi',
+      'Characters': 'Caratteri',
+      'Words': 'Parole',
       // More Buttons
-      'More Text': 'Altro testo',
-      'More Paragraph': 'Altro paragrafo',
+      'More Text': 'Altro Testo',
+      'More Paragraph': 'Altro Paragrafo',
       'More Rich': 'Altro Ricco',
       'More Misc': 'Altro Varie'
     },
