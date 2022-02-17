@@ -16,11 +16,6 @@ class BxOrgsPrivacyNotifications extends BxBaseModGroupsPrivacyNotifications
     	$this->MODULE = 'bx_organizations';
         parent::__construct($aOptions, $oTemplate);
     }
-
-    protected function getObjectInfo($sAction, $iObjectId)
-    {
-        return BxBaseModProfilePrivacy::getObjectInfo($sAction, $iObjectId);
-    }
 }
 
 /** @} */

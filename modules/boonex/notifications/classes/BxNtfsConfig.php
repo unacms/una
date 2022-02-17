@@ -233,21 +233,21 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
     protected function _getProfileBasedModulesData() 
     {
-        $this->_aModulesProfiles = array();
-        $this->_aModulesContexts = array();
+        $this->_aModulesProfiles = [];
+        $this->_aModulesContexts = [];
 
-        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'modules']);
         foreach($aModules as $aModule) {
-            if(!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+            if(!bx_is_srv($aModule['name'], 'act_as_profile'))
                 continue;
 
-            if(BxDolService::call($aModule['name'], 'act_as_profile'))
+            if(bx_srv($aModule['name'], 'act_as_profile'))
                 $this->_aModulesProfiles[] = $aModule['name'];
             else
                 $this->_aModulesContexts[] = $aModule['name'];
         }
 
-        return array($this->_aModulesProfiles, $this->_aModulesContexts);        
+        return [$this->_aModulesProfiles, $this->_aModulesContexts];
     }
 }
 
