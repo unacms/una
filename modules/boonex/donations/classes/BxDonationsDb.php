@@ -77,6 +77,8 @@ class BxDonationsDb extends BxDolModuleDb
 
                     $sWhereClause .= " AND `tt`.`active`=:active";
                 }
+
+                $sOrderClause = "`tt`.`order` ASC";
                 break;
 
             case 'conditions':

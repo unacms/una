@@ -1,16 +1,16 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
-.clearfix::after {
+.fr-clearfix::after {
   clear: both;
   display: block;
   content: "";
   height: 0; }
 
-.hide-by-clipping {
+.fr-hide-by-clipping {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -20,7 +20,7 @@
   clip: rect(0, 0, 0, 0);
   border: 0; }
 
-img.fr-rounded, .fr-img-caption.fr-rounded img {
+.fr-view img.fr-rounded, .fr-view .fr-img-caption.fr-rounded img {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -28,15 +28,20 @@ img.fr-rounded, .fr-img-caption.fr-rounded img {
   -webkit-background-clip: padding-box;
   background-clip: padding-box; }
 
-img.fr-bordered, .fr-img-caption.fr-bordered img {
+.fr-view img.fr-shadow, .fr-view .fr-img-caption.fr-shadow img {
+  -webkit-box-shadow: 10px 10px 5px 0px #cccccc;
+  -moz-box-shadow: 10px 10px 5px 0px #cccccc;
+  box-shadow: 10px 10px 5px 0px #cccccc; }
+
+.fr-view img.fr-bordered, .fr-view .fr-img-caption.fr-bordered img {
   border: solid 5px #CCC; }
 
-img.fr-bordered {
+.fr-view img.fr-bordered {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box; }
 
-.fr-img-caption.fr-bordered img {
+.fr-view .fr-img-caption.fr-bordered img {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -47,6 +52,8 @@ img.fr-bordered {
     color: inherit; }
   .fr-view strong {
     font-weight: 700; }
+  .fr-view table[border='0'] td:not([class]), .fr-view table[border='0'] th:not([class]), .fr-view table[border='0'] td[class=""], .fr-view table[border='0'] th[class=""] {
+    border-width: 0px; }
   .fr-view table {
     border: none;
     border-collapse: collapse;
@@ -76,6 +83,7 @@ img.fr-bordered {
     -khtml-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    break-after: always;
     page-break-after: always; }
   .fr-view .fr-file {
     position: relative; }
@@ -248,10 +256,11 @@ img.fr-bordered {
     text-align: center; }
     .fr-view .fr-img-caption .fr-img-wrap {
       padding: 0;
-      display: inline-block;
       margin: auto;
       text-align: center;
       width: 100%; }
+      .fr-view .fr-img-caption .fr-img-wrap a {
+        display: block; }
       .fr-view .fr-img-caption .fr-img-wrap img {
         display: block;
         margin: auto;

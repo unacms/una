@@ -1,7 +1,7 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
 (function (global, factory) {
@@ -37,6 +37,8 @@
       // Font
       'Font Family': 'Lettertype',
       'Font Size': 'Lettergrootte',
+      'Text color': 'Tekstkleur',
+      'Background color': 'Achtergrondkleur',
       // Colors
       'Colors': 'Kleuren',
       'Background': 'Achtergrond',
@@ -63,6 +65,15 @@
       // Lists
       'Ordered List': 'Geordende lijst',
       'Unordered List': 'Ongeordende lijst',
+      'Default': 'Standaard',
+      'Lower Alpha': 'Kleine letters',
+      'Lower Greek': 'Kleine Griekse letters',
+      'Lower Roman': 'Kleine Romeinse cijfers',
+      'Upper Alpha': 'Grote letters',
+      'Upper Roman': 'Grote Romeinse cijfers',
+      'Circle': 'Cirkel',
+      'Disc': 'Stip',
+      'Square': 'Vierkant',
       // Indent
       'Decrease Indent': 'Inspringen verkleinen',
       'Increase Indent': 'Inspringen vergroten',
@@ -98,6 +109,8 @@
       'Something went wrong. Please try again.': 'Er is iets fout gegaan. Probeer opnieuw.',
       'Image Caption': 'Afbeelding caption',
       'Advanced Edit': 'Geavanceerd bewerken',
+      'Image file type is invalid.': 'Het bestandsformaat is niet toegestaan.',
+      'File is too large.': 'Het bestand is te groot.',
       // Video
       'Insert Video': 'Video invoegen',
       'Embedded Code': 'Ingebedde code',

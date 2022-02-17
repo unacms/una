@@ -60,7 +60,7 @@ BxDolLiveUpdates.prototype.destroy = function() {
 };
 
 BxDolLiveUpdates.prototype.perform = function() {
-	if(!this._bServerRequesting || this._bBusy)
+	if(!this._bServerRequesting || this._bBusy || ('undefined' !== typeof(document.hidden) && document.hidden))
 		return;
 
 	var $this = this;

@@ -1,7 +1,7 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
 (function (global, factory) {
@@ -19,6 +19,23 @@
     translation: {
       // Place holder
       'Type something': 'Digite algo',
+      // Missing translations
+      'Text Color': 'Cor do texto',
+      'Background Color': 'Cor de fundo',
+      'Inline Class': 'Classe Inline',
+      'Default': 'Padrão',
+      'Lower Alpha': 'Alfa minúsculo',
+      'Lower Greek': 'Grego minúsculo',
+      'Lower Roman': 'Roman minúsculo',
+      'Upper Alpha': 'Alfa maiúsculo',
+      'Upper Roman': 'Roman maiúscula',
+      'Circle': 'Círculo',
+      'Disc': 'Disco',
+      'Square': 'Quadrado',
+      'Single': 'Único',
+      'Double': 'Duplo',
+      'Insert Files': 'Inserir arquivos',
+      'Download PDF': 'Baixar PDF',
       // Basic formatting
       'Bold': 'Negrito',
       'Italic': "It\xE1lico",
@@ -86,7 +103,7 @@
       'Tags': 'Etiquetas',
       'Are you sure? Image will be deleted.': "Voc\xEA tem certeza? Imagem ser\xE1 apagada.",
       'Replace': 'Substituir',
-      'Uploading': 'Carregando imagem',
+      'Uploading': 'Carregando',
       'Loading image': 'Carregando imagem',
       'Display': 'Exibir',
       'Inline': 'Em linha',

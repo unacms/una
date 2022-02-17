@@ -24,7 +24,7 @@ class BxFroalaEditor extends BxDolEditor
         new FroalaEditor('{bx_var_selector}', {
             {bx_var_custom_init}
             {bx_var_custom_conf}
-            key:'SDB17hD9B4F4B3eMRPYa1c1REe1BGQOQIc1CDBREJImD6F5F4I4E1B9B6C3F5C4==',
+            key:'{bx_var_froala_key}',
             attribution: false,
             embedlyKey: '{bx_var_embedly_key}',
             emoticonsUseImage: false,
@@ -88,7 +88,7 @@ EOS;
     /**
      * Available editor languages
      */
-    protected static $CONF_LANGS = array('ar' => 1, 'bs' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en_ca' => 1, 'en_gb' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'ku' => 1, 'me' => 1, 'nb' => 1, 'nl' => 1, 'pl' => 1, 'pt_br' => 1, 'pt_pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh_cn' => 1, 'zh_tw' => 1);
+    protected static $CONF_LANGS = array('ar' => 1, 'bs' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en_ca' => 1, 'en_gb' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'ku' => 1, 'me' => 1, 'nb' => 1, 'nl' => 1, 'pl' => 1, 'pt_br' => 1, 'pt_pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh_cn' => 1, 'zh_tw' => 1);
 
     protected $_oTemplate;
     protected $_bJsCssAdded = false;
@@ -165,7 +165,8 @@ EOS;
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
-            'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),            
+            'bx_var_froala_key' => bx_js_string(getParam('bx_froala_license_key'), BX_ESCAPE_STR_APOS),
+            'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),
             'bx_var_image_upload_url' => $oModule ? BX_DOL_URL_ROOT . $oModule->_oConfig->getBaseUri() . 'upload' : '',
             'bx_var_icons_template' => getParam('bx_froala_icons_template'),
         );

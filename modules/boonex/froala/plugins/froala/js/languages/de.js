@@ -1,7 +1,7 @@
 /*!
- * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v4.0.9 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2022 Froala Labs
  */
 
 (function (global, factory) {
@@ -17,6 +17,19 @@
    */
   FE.LANGUAGE['de'] = {
     translation: {
+      // Font Awesome
+      'Font Awesome': 'Font Awesome',
+      'Web Application Icons': 'Web Anwendungen',
+      'Accessibility Icons': 'Barrierefreiheit',
+      'Hand Icons': 'Hände',
+      'Transportation Icons': 'Transport',
+      'Gender Icons': 'Geschlechter',
+      'Form Control Icons': 'Formulare',
+      'Payment Icons': 'Zahlungsarten',
+      'Chart Icons': 'Diagramme',
+      'Currency Icons': 'Währungen',
+      'Text Editor Icons': 'Text Editor',
+      'Brand Icons': 'Marken',
       // Place holder
       'Type something': 'Hier tippen',
       // Basic formatting
@@ -61,8 +74,23 @@
       'Align Justify': 'Blocksatz',
       'None': 'Keine',
       // Lists
+      'Default': 'Standard',
+      // Ordered lists
       'Ordered List': 'Nummerierte Liste',
+      'Lower Alpha': 'Kleinbuchstaben',
+      'Lower Greek': 'Griechisches Alphabet',
+      'Lower Roman': 'Römische Ziffern (klein)',
+      'Upper Alpha': 'Grossbuchstaben',
+      'Upper Roman': 'Römische Ziffern (gross)',
+      // Unordered lists
       'Unordered List': 'Unnummerierte Liste',
+      'Circle': 'Kreis',
+      'Disc': 'Kreis gefüllt',
+      'Square': 'Quadrat',
+      // Line height
+      'Line Height': 'Zeilenhöhe',
+      'Single': 'Einfach',
+      'Double': 'Doppelt',
       // Indent
       'Decrease Indent': 'Einzug verkleinern',
       'Increase Indent': 'Einzug vergrößern',
@@ -134,6 +162,7 @@
       'Cell Style': 'Zellen-Stil',
       // Files
       'Upload File': 'Datei hochladen',
+      'Insert File': 'Datei einfügen',
       'Drop file': 'Datei hineinziehen',
       // Emoticons
       'Emoticons': 'Emoticons',
@@ -205,7 +234,7 @@
       // Clear formatting
       'Clear Formatting': 'Formatierung löschen',
       // Save
-      'Save': 'Sparen',
+      'Save': 'Speichern',
       // Undo, redo
       'Undo': 'Rückgängig',
       'Redo': 'Wiederholen',
@@ -235,7 +264,7 @@
       'Spell Checker': 'Rechtschreibprüfung',
       // Help
       'Help': 'Hilfe',
-      'Shortcuts': 'Verknüpfungen',
+      'Shortcuts': 'Tastaturkurzbefehle',
       'Inline Editor': 'Inline-Editor',
       'Show the editor': 'Editor anzeigen',
       'Common actions': 'Häufig verwendete Befehle',
@@ -266,10 +295,12 @@
       // Character Counter 
       'Characters': 'Zeichen',
       // More Buttons
-      'More Text': 'Mehr Text',
-      'More Paragraph': 'Mehr Absatz',
-      'More Rich': 'Mehr Reich',
-      'More Misc': 'Mehr Sonstiges'
+      'More Text': 'Weitere Textformate',
+      'More Paragraph': 'Weitere Absatzformate',
+      'More Rich': 'Weitere Reichhaltige Formate',
+      'More Misc': 'Weitere Formate',
+      'Text Color': 'Textfarbe',
+      'Background Color': 'Hintergrundfarbe'
     },
     direction: 'ltr'
   };
