@@ -191,7 +191,7 @@ class BxBaseMenu extends BxDolMenu
 
         
         
-        $a['class_add'] .= $this->_getMenuVisibility($a);
+        $a['class_add'] .= $this->_getVisibilityClass($a);
 
         $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
         $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
@@ -262,38 +262,6 @@ class BxBaseMenu extends BxDolMenu
                 $a[$sName] = $sDefaultValue;
 
         return $a;
-    }
-
-    protected function _getMenuVisibility($a)
-    {
-        $aHiddenOn = array(
-            pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
-            pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
-            pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide',
-            pow(2, BX_DB_HIDDEN_MOBILE - 1) => 'bx-def-mobile-app-hide'
-        );
-        
-        $aHiddenOnCol = array(
-            pow(2, 1) => 'bx-def-thin-col-hide',
-            pow(2, 2) => 'bx-def-half-col-hide',
-            pow(2, 3) => 'bx-def-wide-col-hide',
-            pow(2, 4) => 'bx-def-full-col-hide'
-        );
-        
-        $sHiddenOnCssClasses = '';
-        if(!empty($a['hidden_on']))
-            foreach($aHiddenOn as $iHiddenOn => $sClass)
-                if((int)$a['hidden_on'] & $iHiddenOn)
-                    $sHiddenOnCssClasses .= ' ' . $sClass;
-       
-        
-        if(!empty($a['hidden_on_col'])){    
-            foreach($aHiddenOnCol as $iHiddenOn => $sClass)
-                if((int)$a['hidden_on_col'] & $iHiddenOn)
-                    $sHiddenOnCssClasses .= ' ' . $sClass;
-        }
-        
-        return $sHiddenOnCssClasses;
     }
     
     protected function _getMenuIcon ($a)
