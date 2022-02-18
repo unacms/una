@@ -293,30 +293,30 @@
     }
 
     .bx-artificer .bx-def-font-small {
-        @apply text-sm;
+        @apply text-xs;
     }
-    
+
     .bx-artificer .bx-def-font-middle {
-        @apply text-lg;
+        @apply text-sm;
     }
 
     .bx-artificer .bx-def-font-large {
-        @apply text-xl;
+        @apply text-lg;
     }
-    
+
     .bx-artificer h3,
     .bx-artificer .bx-def-font-h3 {
-        @apply text-2xl;
+        @apply text-xl;
     }
     
     .bx-artificer h2,
     .bx-artificer .bx-def-font-h2 {
-        @apply text-3xl;
+        @apply text-2xl;
     }
 
     .bx-artificer h1,
     .bx-artificer .bx-def-font-h1 {
-        @apply text-4xl leading-10;
+        @apply text-3xl leading-10;
     }
 
     /* Common elements: Pages. */
@@ -326,7 +326,7 @@
 
     /* Common elements: Blocks, Boxes, etc. */
     .bx-artificer .bx-def-color-bg-block {
-        @apply bg-white dark:bg-gray-900;
+        @apply bg-gray-50 dark:bg-gray-900;
     }
     .bx-artificer .bx-def-color-bg-box {
         @apply bg-white dark:bg-gray-800;
@@ -356,19 +356,6 @@
         min-width: 1rem;
     }
 
-    /* Common elements: Menu visibility */
-    .bx-layout-column-thin .bx-def-thin-col-hide{
-        @apply hidden;
-    }
-    .bx-layout-column-half .bx-def-half-col-hide{
-        @apply hidden;
-    }
-    .bx-layout-column-wide .bx-def-wide-col-hide{
-        @apply hidden;
-    }
-    .bx-layout-column-full .bx-def-full-col-hide{
-        @apply hidden;
-    }
     /* Common elements: Buttons */
     .bx-btn {
         @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md cursor-pointer;
@@ -613,9 +600,10 @@
         @apply bg-gray-50 dark:bg-gray-700 ring-1 ring-gray-200 dark:ring-gray-600 text-gray-900 dark:text-white shadow;
     }
 
-    .bx-artificer .bx-tl-view.bx-tl-view-timeline .bx-tl-cnt .bx-tl-items:before {
-        @apply bg-gray-200 dark:bg-gray-700;
+    .bx-artificer .bx-tl-item-text .bx-tl-content.bx-tl-overflow:before {
+        @apply bg-gradient-to-b from-transparent to-white dark:to-gray-800;
     }
+
 
     /* 3d Party: Flickity */
     .bx-artificer .flickity-button {

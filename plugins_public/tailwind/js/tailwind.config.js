@@ -53,6 +53,8 @@ module.exports = {
 
     'bx-base-general-unit-meta-username',
 
+    'bx-tl-overflow',
+
     'sys-auth-block', 'sys-auth-compact-container',
 
     'flickity-button',
