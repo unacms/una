@@ -631,7 +631,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         return array($aTemplate, $aCustomHeaders, $aCampaign);
     }
           
-    private function addMarkers(iAccountId, $sLetterCode)
+    private function addMarkers($iAccountId, $sLetterCode)
     {
         $CNF = &$this->_oConfig->CNF;
         $aMarkers = array();
