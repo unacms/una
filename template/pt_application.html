@@ -40,7 +40,7 @@
             <bx_injection:injection_between_content_menu />
             <div id="bx-content-wrapper">
                 __informer__
-                <div class="bx-page-wrapper bx-def-centered bx-def-padding-sec-leftright bx-def-page-width bx-def-box-sizing">
+                <div class="bx-page-wrapper bx-def-padding-sec-leftright bx-def-box-sizing">
                     <div id="bx-content-container" class="bx-content-container bx-def-padding-sec-leftright">
                         <div id="bx-content-main" class="bx-content-main bx-def-margin-top">
                             <bx_injection:injection_content_before />
@@ -53,20 +53,20 @@
                     </div> <!-- #bx-content-container -->
                 </div>
             </div> <!-- #bx-content-wrapper -->
-            <div id="bx-footer-wrapper">
-                <hr class="bx-def-hr" />
-                <div class="bx-def-centered bx-def-padding-sec-leftright bx-def-page-width bx-def-box-sizing">
-                    <div id="bx-footer" class="bx-def-padding-sec-left bx-def-padding-sec-right bx-clearfix">
-                        <bx_injection:injection_footer_before />
-                        <div id="bx-menu-bottom">
-                            <bx_menu:sys_footer />
-                        </div>
-                        <bx_injection:injection_footer_after />
-                    </div>
-                </div>
-            </div>
-            <bx_menu:sys_site_action />
         </div> <!-- .bx-main-column -->
     </div> <!-- .bx-main-content -->
+    <div id="bx-footer-wrapper">
+        <hr class="bx-def-hr" />
+        <div class="bx-def-centered bx-def-padding-sec-leftright bx-def-page-width bx-def-box-sizing">
+            <div id="bx-footer" class="bx-def-padding-sec-left bx-def-padding-sec-right bx-clearfix">
+                <bx_injection:injection_footer_before />
+                <div id="bx-menu-bottom">
+                    <bx_menu:sys_footer />
+                </div>
+                <bx_injection:injection_footer_after />
+            </div>
+        </div>
+    </div>
+    <bx_menu:sys_site_action />
 </div>
 <bx_include_auto:_footer.html />
