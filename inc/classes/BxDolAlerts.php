@@ -102,8 +102,11 @@ class BxDolAlerts extends BxDol
         if (isset($this->_aAlerts[$this->sUnit]) && isset($this->_aAlerts[$this->sUnit][$this->sAction]))
             foreach($this->_aAlerts[$this->sUnit][$this->sAction] as $iHandlerId) {
                 $aHandler = $this->_aHandlers[$iHandlerId];
+                if(!$aHandler['active'])
+                    continue;
 
-                if (isset($GLOBALS['bx_profiler']) && 'bx_profiler' != $aHandler['name']) $GLOBALS['bx_profiler']->beginAlert($this->sUnit, $this->sAction, $aHandler['name']);
+                if (isset($GLOBALS['bx_profiler']) && 'bx_profiler' != $aHandler['name']) 
+                    $GLOBALS['bx_profiler']->beginAlert($this->sUnit, $this->sAction, $aHandler['name']);
 
                 if (!empty($aHandler['file']) && !empty($aHandler['class']) && file_exists(BX_DIRECTORY_PATH_ROOT . $aHandler['file'])) {
                     if(!class_exists($aHandler['class'], false))
@@ -121,7 +124,8 @@ class BxDolAlerts extends BxDol
                     BxDolService::call($aService['module'], $aService['method'], $aParams, isset($aService['class']) ? $aService['class'] : 'Module');
                 }
 
-                if (isset($GLOBALS['bx_profiler']) && 'bx_profiler' != $aHandler['name']) $GLOBALS['bx_profiler']->endAlert($this->sUnit, $this->sAction, $aHandler['name']);
+                if (isset($GLOBALS['bx_profiler']) && 'bx_profiler' != $aHandler['name']) 
+                    $GLOBALS['bx_profiler']->endAlert($this->sUnit, $this->sAction, $aHandler['name']);
             }
     }
 
@@ -139,9 +143,15 @@ class BxDolAlerts extends BxDol
         foreach ($aAlerts as $aAlert)
             $aResult['alerts'][$aAlert['unit']][$aAlert['action']][] = $aAlert['handler_id'];
 
-        $aHandlers = $oDb->getAll("SELECT `id`, `class`, `file`, `service_call`, `name` FROM `sys_alerts_handlers` ORDER BY `id` ASC");
+        $aHandlers = $oDb->getAll("SELECT * FROM `sys_alerts_handlers` ORDER BY `id` ASC");
         foreach ($aHandlers as $aHandler)
-            $aResult['handlers'][$aHandler['id']] = array('class' => $aHandler['class'], 'file' => $aHandler['file'], 'service_call' => $aHandler['service_call'], 'name' => $aHandler['name']);
+            $aResult['handlers'][$aHandler['id']] = [
+                'name' => $aHandler['name'],
+                'class' => $aHandler['class'], 
+                'file' => $aHandler['file'], 
+                'service_call' => $aHandler['service_call'],
+                'active' => (int)$aHandler['active']
+            ];
 
         return $aResult;
     }

@@ -1824,6 +1824,7 @@ CREATE TABLE `sys_alerts_handlers` (
   `class` varchar(128) NOT NULL default '',
   `file` varchar(255) NOT NULL default '',
   `service_call` text NOT NULL default '', 
+  `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
 );
