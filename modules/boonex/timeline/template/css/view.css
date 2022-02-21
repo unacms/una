@@ -59,6 +59,17 @@
 .bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-item-subitems {
     display: none;
 }
+.bx-tl-menu-feeds.bx-menu-ver li .bx-menu-subitem .bx-menu-item-cnt {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
 
 
 /*--- Views Block Style ---*/

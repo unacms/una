@@ -67,13 +67,15 @@ class BxTimelineMenuFeeds extends BxTemplMenu
                 $aSubmenu[] = array(
                     'id' => 'context-' . $iId, 
                     'name' => 'context-' . $iId, 
+                    'module' => $aItem['module'],
                     'class' => '', 
                     'link' => $oContext->getUrl(), 
                     'onclick' => sprintf($sOnClickMask, $aItem['module'], $iId), 
                     'target' => '_self', 
                     'title' => $oContext->getDisplayName(), 
                     'icon' => $oContext->getIcon(),
-                    'active' => 1
+                    'active' => 1,
+                    'context_id' => $iId
                 );
             }
 

@@ -7,6 +7,11 @@
                         <bx_include_auto:menu_icon.html />
                         <span class="bx-menu-item-title bx-def-margin-sec-left-auto">__title__</span>
                     </a>
+                    <bx_if:addon>
+                        <div class="bx-menu-addon bx-def-padding-sec-left">
+                            <div class="bx-menu-addon-cnt bx-def-label menu">__addon__</div>
+                        </div>
+                    </bx_if:addon>
                     <bx_if:show_toggle>
                         <span class="bx-menu-collapse bx-def-padding-sec-left">
                             <a href="javascript:void(0)" onclick="javascript:__js_object__.toggleMenuItemFeeds(this)">
