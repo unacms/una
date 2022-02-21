@@ -94,6 +94,14 @@ class BxDolCategory extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get search object associated with category object
+     */
+    public function getSearchObject()
+    {
+        return $this->_aObject['search_object'];
+    }
+
+    /**
      * Set condition for search results object for category object
      * @param $oSearchResult search results object
      * @param $mixedCategory category
