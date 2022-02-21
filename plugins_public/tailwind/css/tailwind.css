@@ -582,6 +582,10 @@
         @apply w-48 h-48;
     }
 
+    .bx-artificer .bx-base-pofile-unit-online {
+        @apply absolute w-2.5 h-2.5 right-0.5 bottom-0.5 ring-1 ring-inset ring-white rounded-full bg-green-500;
+    }
+
     .bx-artificer .bx-base-general-unit-meta .bx-base-profile-unit-meta-item > a:not(.bx-btn),
     .bx-artificer .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor .bx-base-pofile-unit {
         @apply p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700;

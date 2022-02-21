@@ -8,3 +8,7 @@ import url(../../../../../../../template/css/connection.css);
     width: 1.5rem;
     height: 1.5rem;
 }
+
+.sys-action-counter-profile .bx-base-pofile-unit-online {
+    display: none;
+}
