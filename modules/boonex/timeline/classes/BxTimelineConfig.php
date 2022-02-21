@@ -867,13 +867,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         }
     }
 
-    public function getUserChoice($sKey)
+    public function getUserChoice($sKey, $iUserId = 0)
     {
         $sField = '_sSessionKey' . bx_gen_method_name($sKey);
         if(!isLogged() || !isset($this->$sField))
             return false;
 
-        $iUserId = bx_get_logged_profile_id();
+        if(!$iUserId)
+            $iUserId = bx_get_logged_profile_id();
 
         return BxDolSession::getInstance()->getValue($this->$sField . $iUserId);
     }

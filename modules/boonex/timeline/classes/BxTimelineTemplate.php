@@ -368,6 +368,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         bx_alert($sModuleName, 'get_view', 0, 0, array(
             'params' => $aParams,
+            'event_first' => $iEvent,
             'back' => &$sBack,
             'empty' => &$sEmpty,
             'content_before' => &$sContentBefore,
@@ -595,6 +596,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $iEventId = (int)$aEvent[$CNF['FIELD_ID']];
+        $iViewerId = isset($aBrowseParams['viewer_id']) ? (int)$aBrowseParams['viewer_id'] : bx_get_logged_profile_id();
 
         $sMemoryCacheItemsKey = sprintf(self::$_sMemoryCacheItemsKeyMask, $aBrowseParams['view'], $iEventId);
         if(array_key_exists($sMemoryCacheItemsKey, self::$_aMemoryCacheItems)) {
@@ -613,7 +615,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
             $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
-            if(!$oPrivacy->check($iEventId))
+            if(!$oPrivacy->check($iEventId, $iViewerId))
                 return '';
         }
 

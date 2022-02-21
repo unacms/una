@@ -1933,18 +1933,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockViewsDb($aParams = [])
     {
-        $aParams = $this->_prepareParams(array_merge($aParams, [
+        if(!isset($aParams['viewer_id']))
+            $aParams['viewer_id'] = $this->getUserId();
+
+        if(!isset($aParams['owner_id']))
+            $aParams['owner_id'] = $this->getUserId();
+
+        if(!isset($aParams['type']) && ($sType = $this->_oConfig->getUserChoice('type', $aParams['viewer_id'])) !== false)
+            $aParams['type'] = $sType;
+
+        $aParams = $this->_prepareParams(array_merge([
             'name' => BX_TIMELINE_NAME_VIEWS_DB,
             'view' => BX_TIMELINE_VIEW_TIMELINE,
             'type' => BX_TIMELINE_TYPE_FEED,
-            'owner_id' => $this->getProfileId()
-        ]));
-
-        if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
-            $aParams['type'] = $sType;
+        ], $aParams));
 
         $this->_iOwnerId = $aParams['owner_id'];
-
         return $this->_oTemplate->getViewsDbBlock($aParams);
     }
 
@@ -4971,6 +4975,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['blink']) || !is_array($aParams['blink']))
             $aParams['blink'] = array();
 
+        if(empty($aParams['viewer_id']))
+            $aParams['viewer_id'] = $this->getUserId();
+
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
             'status' => BX_TIMELINE_STATUS_ACTIVE,
@@ -5016,6 +5023,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams['blink'] = bx_get('blink');
         $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();
+
+        $aParams['viewer_id'] = bx_get('viewer_id');
+        $aParams['viewer_id'] = $aParams['viewer_id'] !== false ? bx_process_input($aParams['viewer_id'], BX_DATA_INT) : $this->getUserId();
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
