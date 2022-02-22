@@ -98,3 +98,17 @@
     width:66%;
 }
 
+
+/* menu visibility */
+.bx-layout-column-thin .bx-def-thin-col-hide{
+    display: hidden;
+}
+.bx-layout-column-half .bx-def-half-col-hide{
+    display: hidden;
+}
+.bx-layout-column-wide .bx-def-wide-col-hide{
+    display: hidden;
+}
+.bx-layout-column-full .bx-def-full-col-hide{
+    display: hidden;
+}
