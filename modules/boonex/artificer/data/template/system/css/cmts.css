@@ -64,3 +64,8 @@ span.cmt-reply-to a .bx-def-icon-size {
     line-height: 0.875rem;
     font-size: 0.6rem;
 }
+
+/*--- Comment Element Styles ---*/
+.cmt-counter .bx-base-pofile-unit-online {
+    display: none;
+}

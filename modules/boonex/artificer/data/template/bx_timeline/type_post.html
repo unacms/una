@@ -15,6 +15,13 @@
         </bx_repeat:items>
     </div>
 </bx_if:show_videos>
+<bx_if:show_files>
+    <div class="__style_prefix__-item-files __style_prefix__-if-main __style_prefix__-if-__display__ mx-1 mb-3 lg:mb-4 rounded">
+        <bx_repeat:items>
+            <div class="__style_prefix__-item-file rounded">__item__</div>
+        </bx_repeat:items>
+    </div>
+</bx_if:show_files>
 <div class="__style_prefix__-item-text group px-3 lg:px-4 pt-0">
     <bx_if:show_title>
         <div class="__style_prefix__-title text-lg lg:text-xl font-semibold text-gray-700 group-hover:text-gray-900 dark:text-gray-300 dark:group-hover:text-white mb-1 lg:mb-2 ">__title__</div>
@@ -38,7 +45,7 @@
     </div>
 </bx_if:show_links>
 <bx_if:show_attachments_files>
-    <div class="__style_prefix__-item-attachments __style_prefix__-iaf-__display__ __style_prefix__-iaf-i__count__ flex justify-start px-3 lg:px-4 mt-3 lg:mt-4 space-x-2">
+    <div class="__style_prefix__-item-attachments __style_prefix__-iaf-__display__ __style_prefix__-iaf-i__count__ mx-1 mb-3 lg:mb-4">
         <bx_repeat:items>
             <div class="__style_prefix__-item-attachment__class__">__item__</div>
         </bx_repeat:items>
