@@ -20,6 +20,10 @@ module.exports = {
     // Messenger
     './modules/boonex/messenger/js/*.js',
     './modules/boonex/messenger/template/*.html',
+      
+    // Forum
+    './modules/boonex/forum/js/*.js',
+    './modules/boonex/forum/template/*.html',  
 
     './template/*.html',
   ],

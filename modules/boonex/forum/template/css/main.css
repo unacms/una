@@ -240,7 +240,6 @@
 .bx-forum-grid-preview .bx-menu-item-date .text-sm{
     font-size: 12px;
     font-weight: 500;
-    color:#374151;
 }
 
 .bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-def-icon-size-min-height {
@@ -357,6 +356,9 @@
 #bx-grid-table-bx_forum tr{
     border-bottom: 1px solid #F4F4F5
 }
+.dark #bx-grid-table-bx_forum tr{
+    border-bottom: 1px solid rgb(55 65 81);
+}
 .bx-grid-table-cell-participants .cmt-counter{
     float: right;
 }
@@ -388,17 +390,20 @@
 .bx-media-phone .bx-forum-grid tr{
     display: grid;
 	grid-template-areas:
-    "rating text"
-	"rating participants";
+    "text text"
+	"participants rating";
 	
     grid-template-rows: auto auto;
-	grid-template-columns: 34px 1fr;
-    margin-bottom: 1rem;
+	grid-template-columns: auto auto;
+    margin-bottom: 0.5rem;
 }
 
 .bx-media-phone .bx-forum-grid table{
     width: 100% !important;
     min-width: inherit !important;
+    max-width: 100% !important;
+    overflow: hidden;
+    display: block;
 }
 .bx-media-phone .bx-forum-grid td{
     width: auto !important;
@@ -411,11 +416,31 @@
 .bx-media-phone .bx-forum-grid .bx-grid-table-cell-text{
     grid-area: text;
     padding-bottom: 0px;
+    overflow: hidden;
+    padding-top: 0px;
 }
 .bx-media-phone .bx-forum-grid .bx-grid-table-cell-participants{
     grid-area: participants;
     padding-top: 0px;
-
+    display: flex;
+    align-items: center;
+}
+.bx-media-phone .bx-forum-grid .bx-grid-table-cell-rating{
+    grid-area: rating;
+    text-align: right;
+    margin-right: 1rem;
+    padding-top: 0px;
+}
+.bx-media-phone .bx-forum-gpm-main{
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+.bx-media-phone .bx-forum-gpm-main UL{
+    width: 100%;
+    justify-content: space-between;
+}
+.bx-media-phone .bx-forum-gpm-main UL LI:nth-child(n+4){
+    display: none;
 }
 
 .bx-media-phone .bx-grid-table-cell-participants .cmt-counter{
@@ -438,31 +463,9 @@
     color:#fff;
     border-radius: 7px 7px 0 0;
 }
-/*
-#bx-grid-table-bx_forum .bx-score-element-holder,
-#bx-grid-table-bx_forum .bx-score-counter-holder{
-    border:1px solid rgba(209,213,219, 1) !important;
-    border-width: 1px !important;
-    margin: 0px !important;
-    padding: 0px 5px;
-    border-collapse: collapse;
+.bx-forum-unit .bx-base-text-unit-title{
+    white-space: normal;
 }
-#bx-grid-table-bx_forum .bx-score-counter-holder{
-    border-left: none !important;
-    border-right: none !important;
-    padding: 2px 10px;
-    padding-top: 1px;
-}
-#bx-grid-table-bx_forum .bx-score-cnt .bx-score-element-holder:first-child{
-    border-top-left-radius: 0.375rem;
-    border-bottom-left-radius: 0.375rem;
-}
-
-#bx-grid-table-bx_forum .bx-score-cnt .bx-score-element-holder:last-child{
-    border-top-right-radius: 0.375rem;
-    border-bottom-right-radius: 0.375rem;
-}
-*/
 .bx-forum-grid .bx-grid-header-controls-counter{
     display: none;
 }
@@ -478,30 +481,16 @@
     display: flex;
     flex-wrap: nowrap;
 }
-/*.bx-forum-unit .bx-base-text-unit-info .bx-base-pofile-unit .bx-base-pofile-unit-thumb{
-    height: 1.5rem;
-    width: 1.5rem !important;
-}
-.bx-forum-unit .bx-base-text-unit-info .bx-base-pofile-unit .bx-def-thumb-size{
-    height: 1.5rem;
-    font-size: 1rem;
-    width: 1.5rem !important;
-}
-
-.bx-forum-unit .bx-base-text-unit-info .bx-base-pofile-unit .bx-def-unit-info{
-    margin-left: 2rem;
-    min-height: inherit !important;
-    text-align: left;
-}*/
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-info .bx-base-pofile-unit A,
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-title A{
     color:#fff !important;
 }
-.bx-forum-unit .bx-base-text-unit-info .bx-base-pofile-unit{
-    zoom:0.75;
-}
 .bx-forum-unit .bx-base-text-unit-info .bx-base-pofile-unit .bx-def-unit-info{
     text-align: left;
+}
+.bx-forum-unit .bx-base-pofile-unit{
+    margin-bottom: 0px;
+    margin-right: 0px;
 }
 /* ---------------new meta menu need to move incore*/
 
@@ -524,6 +513,9 @@
      width: 1rem ;
     height: 1rem !important;
     display: block;
+}
+.bx-menu-meta-item-ex.bx-menu-meta-item-ex-no-bg{
+    background: none !important;
 }
 
 
