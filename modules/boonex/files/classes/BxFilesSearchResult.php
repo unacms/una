@@ -178,6 +178,11 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
         $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
 
+
+        //show to a profile author all of his files regardless of CF
+        if ($sMode == 'author' && $oProfileAuthor && bx_get_logged_profile_id() == $oProfileAuthor->id())
+            unset($this->aCurrent['restriction']['cf_viewer']);
+
         if ($this->bFileManagerMode) {
             $this->addContainerClass('bx-files-with-toolbar');
 

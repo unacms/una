@@ -470,6 +470,7 @@ class BxFilesModule extends BxBaseModTextModule
                 bx_set('attachments', $aFilesIDs, 'post');
                 bx_set('profile_id', $iAuthorProfile, 'post');
                 bx_set('allow_view_to', !$iContext ? BX_DOL_PG_ALL : -$iContext, 'post');
+                bx_set('cf', 1, 'post');
 
                 $oForm = BxDolForm::getObjectInstance($this->_oConfig->CNF['OBJECT_FORM_ENTRY_UPLOAD'], $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_UPLOAD']);
                 $aFiles = $oForm->insert();
