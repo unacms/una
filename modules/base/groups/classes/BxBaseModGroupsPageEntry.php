@@ -25,7 +25,7 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         $bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id();
         $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
 
-        if(!empty($CNF['FIELD_CF'])) {
+        if(!empty($CNF['FIELD_CF']) && isset($this->_aContentInfo[$CNF['FIELD_CF']])) {
             $oCf = BxDolContentFilter::getInstance();
             if($oCf->isEnabled() && !$oCf->isAllowed($this->_aContentInfo[$CNF['FIELD_CF']])) {
                 $this->setPageCover(false);

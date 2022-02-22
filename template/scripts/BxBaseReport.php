@@ -193,7 +193,7 @@ class BxBaseReport extends BxDolReport
         }
 
         if(empty($aTmplReports))
-            $aTmplReports = MsgBox(_t('_Empty'));
+            return '';
 
         return $this->_oTemplate->parseHtmlByName('report_by_list_with_comments.html', array(
             'style_prefix' => $this->_sStylePrefix,
