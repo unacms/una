@@ -48,7 +48,7 @@ function BxTimelineView(oOptions) {
         window.glBxTimelineVapPlayers = [];
 
     //--- Use Scroll for Attachments.
-    this._bScrollForFiles = false;
+    this._bScrollForFiles = true;
 
     //--- Get currently active 'view'.
     this.initView();
