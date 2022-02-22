@@ -329,7 +329,7 @@
         @apply bg-white dark:bg-gray-900;
     }
     .bx-artificer .bx-def-color-bg-box {
-        @apply bg-white dark:bg-gray-800;
+        @apply bg-gray-50 dark:bg-gray-800;
     }
     .bx-artificer .bx-def-color-bg-box-active {
         @apply bg-gray-100 dark:bg-gray-700;
