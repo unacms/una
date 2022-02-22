@@ -2,4 +2,8 @@
 
 .sys-auth .bx-btn {
     width: auto;
+    border:none !important;
+}
+.sys-auth .bx-btn .sys-icon{
+    font-size: 1.25rem !important;
 }

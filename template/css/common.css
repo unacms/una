@@ -123,8 +123,6 @@ blockquote {
 
 .bx-anchor-invisible,
 .bx-anchor {
-    padding-top:60px;
-    margin-top:-60px;
     -webkit-background-clip:content-box;
     background-clip:content-box;
 }
