@@ -727,6 +727,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return BX_DOL_PG_ALL;
     }
 
+    /*
+     * Gets Content Filter object.
+     */
+    public function getObjectContentFilter ()
+    {
+        $oCf = BxDolContentFilter::getInstance();
+        if(!$oCf->isEnabledForComments())
+            return false;
+
+        return $oCf;
+    }
+
     public function getCommentsCountAll ($iObjectId = 0, $bForceCalculate = false)
     {
         return $this->_oQuery->getCommentsCountAll ($iObjectId ? $iObjectId : $this->getId(), $bForceCalculate);

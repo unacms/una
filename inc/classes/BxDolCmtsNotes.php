@@ -21,6 +21,11 @@ class BxDolCmtsNotes extends BxTemplCmts
     {
         return BX_DOL_PG_HIDDEN;
     }
+    
+    public function getObjectContentFilter ()
+    {
+        return false;
+    }
 }
 
 /** @} */

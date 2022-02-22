@@ -267,8 +267,7 @@ class BxDolCmtsQuery extends BxDolDb
                 break;
         }
 
-        $oCf = BxDolContentFilter::getInstance();
-        if($oCf->isEnabledForComments())
+        if(($oCf = $this->_oMain->getObjectContentFilter()) !== false)
             $sWhereClause .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
         $sQuery = "SELECT COUNT(*) FROM `{$this->_sTable}` $sJoinClause WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
@@ -360,8 +359,7 @@ class BxDolCmtsQuery extends BxDolDb
         }
 
         $sWhereCf = '';
-        $oCf = BxDolContentFilter::getInstance();
-        if($oCf->isEnabledForComments())
+        if(($oCf = $this->_oMain->getObjectContentFilter()) !== false)
             $sWhereCf = $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
         $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, `{$this->_sTable}`.`cmt_time` ASC";
@@ -529,8 +527,7 @@ class BxDolCmtsQuery extends BxDolDb
                     $sWhereConditions .= " AND `{$this->_sTable}`.`" . $sSearchParam . "`" . $sSearchValue;
                 }
 
-                $oCf = BxDolContentFilter::getInstance();
-                if($oCf->isEnabledForComments())
+                if(($oCf = $this->_oMain->getObjectContentFilter()) !== false)
                     $sWhereConditions .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
                 $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
