@@ -4534,8 +4534,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aVideos = $this->_oDb->getMedia($CNF['FIELD_VIDEO'], $iEventId);
-        if(empty($aVideos) || !is_array($aVideos))
+        $aMediaIds = $this->_oDb->getMedia($CNF['FIELD_VIDEO'], $iEventId);
+        if(empty($aMediaIds) || !is_array($aMediaIds))
             return array();
 
         $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_videos'));
@@ -4544,21 +4544,40 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
         $oTranscoderMp4Hd = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4_hd'));
 
+        $oTranscoderPhoto = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_videos_photo_view'));
+        $oTranscoderPhotoBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_videos_photo_big'));
+
         $aResult = array();
-        foreach($aVideos as $iVideoId) {
-            $sVideoUrl = $oStorage->getFileUrlById($iVideoId);
-            $aVideoFile = $oStorage->getFile($iVideoId);
+        foreach($aMediaIds as $iMediaId) {
+            $aMediaFile = $oStorage->getFile($iMediaId);
 
-            $sVideoUrlHd = '';
-            if (!empty($aVideoFile['dimensions']) && $oTranscoderMp4Hd->isProcessHD($aVideoFile['dimensions']))
-                $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iVideoId);
+            $bVideoFile = strncmp('video/', $aMediaFile['mime_type'], 6) === 0 && $oTranscoderPoster->isMimeTypeSupported($aMediaFile['mime_type']);
+            if($bVideoFile) {
+                $sVideoUrlHd = '';
+                if (!empty($aMediaFile['dimensions']) && $oTranscoderMp4Hd->isProcessHD($aMediaFile['dimensions']))
+                    $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iMediaId);
 
-            $aResult[$iVideoId] = array(
-                'id' => $iVideoId,
-                'src_poster' => $oTranscoderPoster->getFileUrl($iVideoId),
-                'src_mp4' => $oTranscoderMp4->getFileUrl($iVideoId),
-                'src_mp4_hd' => $sVideoUrlHd,
-            );
+                $aResult[$iMediaId] = array(
+                    'id' => $iMediaId,
+                    'src_poster' => $oTranscoderPoster->getFileUrl($iMediaId),
+                    'src_mp4' => $oTranscoderMp4->getFileUrl($iMediaId),
+                    'src_mp4_hd' => $sVideoUrlHd,
+                );
+            }
+
+            $bImageFile = strncmp('image/', $aMediaFile['mime_type'], 6) === 0 && $oTranscoderPhoto->isMimeTypeSupported($aMediaFile['mime_type']);
+            if($bImageFile) {
+                $sPhotoSrc = $oTranscoderPhoto->getFileUrl($iMediaId);
+                $sPhotoSrcBig = $oTranscoderPhotoBig->getFileUrl($iMediaId);
+                if(empty($sPhotoSrcBig) && !empty($sPhotoSrc))
+                    $sPhotoSrcBig = $sPhotoSrc;
+
+                $aResult[$iMediaId] = array(
+                    'id' => $iMediaId,
+                    'src' => $sPhotoSrc,
+                    'src_orig' => $sPhotoSrcBig,
+                );
+            }
         }
 
         return $aResult;

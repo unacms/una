@@ -224,7 +224,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 );
 
             $this->aInputs[$CNF['FIELD_VIDEO']]['storage_object'] = $sStorage;
-            $this->aInputs[$CNF['FIELD_VIDEO']]['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_poster');
+            $this->aInputs[$CNF['FIELD_VIDEO']]['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_preview');
             $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders_id'] = $sUploadersId;
             $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders'] = $aUploaders;
             $this->aInputs[$CNF['FIELD_VIDEO']]['upload_buttons_titles'] = array('Simple' => 'video');

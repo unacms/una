@@ -792,17 +792,26 @@ div.bx-tl-view div.bx-tl-item-videos.bx-tl-iv-single div.bx-tl-item-video video 
 }
 
 /*+++ Item Attachment +++*/
+div.bx-tl-view-timeline div.bx-tl-item-attachments,
+div.bx-tl-view-outline div.bx-tl-item-attachments,
+div.bx-tl-view-item div.bx-tl-item-attachments,
+div.bx-tl-view-search div.bx-tl-item-attachments {
+    position: relative;
+    white-space: nowrap;
+    overflow-x: auto;
+}
 div.bx-tl-view-timeline div.bx-tl-item-attachment,
 div.bx-tl-view-outline div.bx-tl-item-attachment,
 div.bx-tl-view-item div.bx-tl-item-attachment,
 div.bx-tl-view-search div.bx-tl-item-attachment {
     position: relative;
-    display: -webkit-flex;
-    display: flex;
+    display: -webkit-inline-flex;
+    display: inline-flex;
     -webkit-justify-content: center;
     justify-content: center;  
 
     width: 100%;
+    vertical-align: middle;
 }
 div.bx-tl-view-timeline div.bx-tl-item-attachments.bx-tl-ia-gallery div.bx-tl-item-attachment img,
 div.bx-tl-view-item div.bx-tl-item-attachments.bx-tl-ia-gallery div.bx-tl-item-attachment img,

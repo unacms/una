@@ -2619,6 +2619,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $iTotal = count($aVideos);
 
         $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
         $aTmplVarsVideos = array();
 
         /*
@@ -2671,14 +2672,30 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     )) 
                 );
             else {
-                if($bMain || $sDisplay == BX_TIMELINE_ML_GALLERY || ($bAttachFirst && $iVideo == $iVideoFirst))
+                if($bMain || $sDisplay == BX_TIMELINE_ML_GALLERY || ($bAttachFirst && $iVideo == $iVideoFirst)) {
+                    $sItem = '';
+                    if(isset($aVideo['src'], $aVideo['src_orig'])) {
+                        $sItem = $this->parseImage($aVideo['src'], array(
+                            'class' => $sStylePrefix . '-item-image'
+                        ));
+
+                        $aAttrs = array();
+                        if(!empty($aVideo['src_orig']))
+                            $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aVideo['src_orig']))) . ')'; 
+
+                        $sItem = $this->parseLinkByName('image_link.html', isset($aVideo['url']) ? $aVideo['url'] : 'javascript:void(0)', $sItem, $aAttrs);
+                    }
+                    else 
+                        $sItem = BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array(
+                            'preload' => $this->_oConfig->getVideosPreload(),
+                        ), '', $aBrowseParams['dynamic_mode']);
+
                     $aTmplVarsVideos[] = array(
                         'style_prefix' => $sStylePrefix,
                         'class' => '',
-                        'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array(
-                            'preload' => $this->_oConfig->getVideosPreload(),
-                        ), '', $aBrowseParams['dynamic_mode'])
+                        'item' => $sItem
                     );
+                }
                 else {
                     $bUrl = !empty($aVideo['url']);
                     $sUrl = $bUrl ? $aVideo['url'] : '';

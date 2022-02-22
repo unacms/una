@@ -125,8 +125,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_STORAGE_VIDEOS' => $this->_sName . '_videos',
             'OBJECT_STORAGE_FILES' => $this->_sName . '_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
+            'OBJECT_VIDEOS_TRANSCODER_PREVIEW' => $this->_sName . '_proxy_preview',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
-                'poster' => 'bx_timeline_videos_poster', 
+                'poster' => 'bx_timeline_videos_poster_view', 
+                'poster_preview' => 'bx_timeline_videos_poster_preview', 
             	'mp4' => 'bx_timeline_videos_mp4', 
             	'mp4_hd' => 'bx_timeline_videos_mp4_hd'
             ),
@@ -221,9 +223,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'transcoder_photos_view' => $this->_sName . '_photos_view',
             'transcoder_photos_medium' => $this->_sName . '_photos_medium',
             'transcoder_photos_big' => $this->_sName . '_photos_big',
+            'transcoder_videos_preview' => $this->CNF['OBJECT_VIDEOS_TRANSCODER_PREVIEW'],
             'transcoder_videos_poster' => $this->CNF['OBJECT_VIDEOS_TRANSCODERS']['poster'],
             'transcoder_videos_mp4' => $this->CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4'],
             'transcoder_videos_mp4_hd' => $this->CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd'],
+            'transcoder_videos_photo_view' => $this->_sName . '_videos_photo_view',
+            'transcoder_videos_photo_big' => $this->_sName . '_videos_photo_big',
 
             'page_item_brief' => $this->_sName . '_item_brief',
 
