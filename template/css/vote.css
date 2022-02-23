@@ -24,6 +24,10 @@ div.bx-vote div.bx-vote-counter-holder {
 /*----------------------------------*/
 /*--- Likes based Element Styles ---*/
 /*----------------------------------*/
+span.bx-vote-likes {
+    display: inline-block;
+}
+
 .bx-vote-likes .bx-vote-element-holder,
 .bx-vote-likes .bx-vote-counter-holder {
     line-height: 20px;
