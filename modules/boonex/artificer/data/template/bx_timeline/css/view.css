@@ -110,6 +110,11 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     text-align: center;
 }
 
+/*--- Item Action Style ---*/
+div.bx-tl-item div.bx-tl-item-action .bx-tl-timeline-owner-name .bx-tl-ton-div:first-child {
+    display: none;
+}
+
 /*+++ Item Text +++*/
 div.bx-tl-view-outline div.bx-tl-item-text div.bx-tl-title {
     font-weight: bold;
