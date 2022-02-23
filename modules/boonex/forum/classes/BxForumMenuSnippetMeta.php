@@ -123,7 +123,7 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
     protected function _getMenuItemBadges($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        return $this->getUnitMetaItemExtended($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true)); 
+        return $this->getUnitMetaItemExtended($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true), '', '', true); 
     }
     
     protected function _getMenuItemStatus($aItem)
@@ -139,7 +139,7 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
                 $sStatus .= _t('_bx_forum_grid_filter_resolved_unresolved');
             }  
             
-            return $this->getUnitMetaItemExtended($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['status' => $sStatus, 'status_class' => $this->_aContentInfo['resolved']])); 
+            return $this->getUnitMetaItemExtended($this->_oModule->_oTemplate->parseHtmlByName('status.html', ['status' => $sStatus, 'status_class' => $this->_aContentInfo['resolved']]), '' ,'', true); 
         }
         return '';
     }

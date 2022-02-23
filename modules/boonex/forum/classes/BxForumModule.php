@@ -210,7 +210,7 @@ class BxForumModule extends BxBaseModTextModule
         
         $CNF = &$this->_oConfig->CNF;
 
-        $aCategories['bx_repeat:cats'] = array_merge(['all' => [
+        $aCategories['bx_repeat:cats'] = array_merge([[
             'icon' => $this->_oTemplate->parseImage($this->_oTemplate->getIconUrl('all-cat.svg'), ['class' => 'sys-icon sys-colored gray']),
             'class' => bx_get('category') == '' ? 'bx-forum-category-list-item-selected' : '',
             'url' => BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
