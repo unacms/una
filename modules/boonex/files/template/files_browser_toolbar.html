@@ -8,13 +8,20 @@
     <div class="bx-files-toolbar-controls-group">
         __uploader_code__
         <script>
-            $(document).ready(function(){
-                //catch onUploadCompleted call here
+            function bx_files_inject_onupload_handler() {
+                if (typeof __uploader_js_object__ == 'undefined') {
+                    setTimeout(bx_files_inject_onupload_handler, 200);
+                    return;
+                }
                 __uploader_js_object__.onUploadCompletedDefault = __uploader_js_object__.onUploadCompleted;
                 __uploader_js_object__.onUploadCompleted = function (sErrorMsg) {
                     __uploader_js_object__.onUploadCompletedDefault(sErrorMsg);
                     __js_object__.onAfterUpload();
                 }
+            }
+            $(document).ready(function(){
+                //catch onUploadCompleted call here
+                setTimeout(bx_files_inject_onupload_handler, 200);
             });
         </script>
         <button class="bx-btn" onclick="__js_object__.onBeforeUpload(); __uploader_js_object__.showUploaderForm();"><i class="sys-icon upload"></i>&nbsp;<bx_text:_bx_files_txt_upload /></button>

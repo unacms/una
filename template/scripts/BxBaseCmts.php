@@ -778,9 +778,10 @@ class BxBaseCmts extends BxDolCmts
             'content' => $this->_getCounterLabel($iCount, $aParams),
             'bx_repeat:profiles' => $aTmplVarsProfiles,
             'bx_if:show_icon' => array(
-                'condition' => $bShowEmpty && (!isset($aParams['show_icon']) || $aParams['show_icon']),
+                'condition' => ($bShowEmpty || !empty($aTmplVarsProfiles)) && (!isset($aParams['show_icon']) || $aParams['show_icon']),
                 'content' => array(
-                    'icon' => isset($aParams['custom_icon']) && $aParams['custom_icon'] != '' ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml('comment', $this->_sStylePrefix . '-counter-icon sys-icon')
+                    'style_prefix' => $this->_sStylePrefix,
+                    'icon' => !empty($aParams['custom_icon']) ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml('comment', $this->_sStylePrefix . '-counter-icon sys-icon')
                 )
             )
         ));

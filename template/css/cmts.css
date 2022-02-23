@@ -428,8 +428,6 @@ span.cmt span.cmt-counter-holder {
     box-sizing: border-box;
     z-index: 2;
 
-    margin-right: 0.5rem;
-
     background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
     border-radius: 1rem;
