@@ -1149,7 +1149,7 @@
 	<string name="_adm_nav_btn_sets_create"><![CDATA[Add New Set]]></string>
 	<string name="_adm_nav_btn_sets_delete"><![CDATA[Delete set]]></string>
 	<string name="_adm_nav_btn_sets_edit"><![CDATA[Edit set]]></string>
-	<string name="_adm_nav_dsc_items_icon"><![CDATA[You may use font icon here]]></string>
+	<string name="_adm_nav_dsc_items_icon"><![CDATA[You may use font icon, SVG or Emoji code here]]></string>
 	<string name="_adm_nav_dsc_items_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
 	<string name="_adm_nav_dsc_items_link"><![CDATA[Enter the link URL]]></string>

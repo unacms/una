@@ -1134,7 +1134,7 @@
 	<string name="_adm_nav_btn_sets_create"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_nav_btn_sets_delete"><![CDATA[Удалить набор]]></string>
 	<string name="_adm_nav_btn_sets_edit"><![CDATA[Редактировать набор]]></string>
-	<string name="_adm_nav_dsc_items_icon"><![CDATA[Вы можете использовать здесь иконку для шрифта]]></string>
+	<string name="_adm_nav_dsc_items_icon"><![CDATA[Вы можете использовать здесь иконку для шрифта, SVG код или эмодзи]]></string>
 	<string name="_adm_nav_dsc_items_icon_image"><![CDATA[или загрузить маленькую картинку для отображения рядом со ссылкой.]]></string>
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[Картинка не загружена. В элементе меню будет использован текст.]]></string>
 	<string name="_adm_nav_dsc_items_link"><![CDATA[Введите URL ссылки]]></string>
