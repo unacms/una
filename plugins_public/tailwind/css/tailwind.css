@@ -432,6 +432,41 @@
         @apply text-red-400;
     }
 
+    /* Common elements: Forms: Text Input */
+    .bx-artificer .bx-form-input-slider,
+    .bx-artificer .bx-form-input-doublerange,
+    .bx-artificer .bx-form-input-select_multiple,
+    .bx-artificer .bx-form-input-select,
+    .bx-artificer .bx-form-input-number,
+    .bx-artificer .bx-form-input-time,
+    .bx-artificer .bx-form-input-datepicker,
+    .bx-artificer .bx-form-input-datetime,
+    .bx-artificer .bx-form-input-textarea,
+    .bx-artificer .bx-form-input-text,
+    .bx-artificer .bx-form-input-price,
+    .bx-artificer .bx-form-input-wrapper-price span {
+        @apply block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm appearance-none;
+    }
+
+    /* Common elements: Forms: Password Input */
+    .bx-artificer .bx-form-input-wrapper-password {
+        @apply relative block w-full pl-3 pr-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm;
+    }
+
+    /* Common elements: Forms: Checkbox/Radio Set Input */
+    .bx-artificer .bx-form-input-wrapper-checkbox_set,
+    .bx-artificer .bx-form-input-wrapper-radio_set {
+        @apply relative block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 dark:focus:text-gray-100 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm;
+    }
+    
+    
+    /* Common elements: Forms: Checkbox Input */
+    .bx-artificer .bx-form-input-checkbox,
+    .bx-artificer .bx-form-input-radio {
+        @apply block py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm;
+    }
+
+    /* Common elements: Forms: Switcher Input */
     .bx-artificer .bx-switcher-cont.on button {
         @apply bg-white dark:bg-gray-800;
     }
@@ -445,6 +480,10 @@
         @apply bg-white dark:bg-gray-500 translate-x-0;
     }
 
+    /* Common elements: Forms: Autosuggestion Input */
+    .bx-artificer .bx-form-input-text.bx-form-input-autotoken {
+        @apply flex flex-wrap items-stretch w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm appearance-none;
+    }
     .bx-artificer .bx-form-input-autotoken b.val {
         @apply bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600;
     }

@@ -52,6 +52,9 @@ module.exports = {
     'bx-def-color-bg-box-active', 
 
     'bx-form-required', 'bx-form-warn', 'bx-switcher-cont', 
+    '.bx-form-input-wrapper-checkbox_set', 'bx-form-input-wrapper-radio_set',
+    'bx-form-input-slider', 'bx-form-input-doublerange', 'bx-form-input-select_multiple', 'bx-form-input-select', 'bx-form-input-radio_set', 'bx-form-input-checkbox_set', 'bx-form-input-number', 'bx-form-input-time', 'bx-form-input-datepicker', 'bx-form-input-datetime', 'bx-form-input-textarea', 'bx-form-input-text', 'bx-form-input-price', 'bx-form-input-checkbox', 'bx-form-input-radio', 
+
     'bx-popup-full-screen', 'bx-popup-fog',
     'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
 
