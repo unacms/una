@@ -102,6 +102,10 @@ import url(../../../../../../../template/css/common.css);
     position: relative;
 }
 
+.bx-content-padding-block {
+    padding: 1rem;
+}
+
 .bx-db-content .bx-db-help {
     position: absolute;
     top: 0;
