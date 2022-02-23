@@ -480,7 +480,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     /**
      * Get event's content.
      * @param integer $iId - event ID.
-     * @param string $sMode - 'photo' is only one mode which is available for now.
+     * @param string $sMode - 'file'/'photo'/'video' are available for now. But only images will be shown.
      */
     public function getItemBlockContent($iId, $sMode) {
         $oModule = $this->getModule();
@@ -492,50 +492,77 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aEvent = $aItemData['event'];       
 
-        $aTmplVars = [];
+        $sKeyMain = $sKeyAttach = '';
         switch($sMode) {
+            case 'file':
+                $sKeyMain = 'files';
+                $sKeyAttach = 'files_attach';
+                break;
+
             case 'photo':
-                $aImages = [];
-                if(!empty($aEvent['content']['images']) && is_array($aEvent['content']['images']))
-                    $aImages = $aEvent['content']['images'];
-                else if(!empty($aEvent['content']['images_attach']) && is_array($aEvent['content']['images_attach']))
-                    $aImages = $aEvent['content']['images_attach'];
+                $sKeyMain = 'images';
+                $sKeyAttach = 'images_attach';
+                break;
 
-                if(isset($aImages['total']) && isset($aImages['items']))
-                    $aImages = $aImages['items'];
-
-                $bImageSingle = count($aImages) == 1;
-                $sImageSelected = base64_decode(bx_process_input(bx_get('src')));
-
-                $aTmplVarsImages = [];
-                if(!$bImageSingle)
-                    foreach($aImages as $aImage) 
-                        $aTmplVarsImages[] = [
-                            'style_prefix' => $sStylePrefix,
-                            'url' => $aImage['url'],
-                            'src' => $aImage[!empty($aImage['src_orig']) ? 'src_orig' : 'src']
-                        ];
-
-                $aTmplVars = [
-                    'style_prefix' => $sStylePrefix,
-                    'bx_if:show_image' => [
-                        'condition' => $bImageSingle,
-                        'content' => [
-                            'style_prefix' => $sStylePrefix,
-                            'src' => $sImageSelected,
-                        ]
-                    ],
-                    'bx_if:show_images' => [
-                        'condition' => !$bImageSingle,
-                        'content' => [
-                            'style_prefix' => $sStylePrefix,
-                            'bx_repeat:images' => $aTmplVarsImages
-                        ]
-                    ]
-                ];
-
+            case 'video':
+                $sKeyMain = 'videos';
+                $sKeyAttach = 'videos_attach';
                 break;
         }
+
+        $aImages = [];
+        if(!empty($aEvent['content'][$sKeyMain]) && is_array($aEvent['content'][$sKeyMain]))
+            $aImages = $aEvent['content'][$sKeyMain];
+        else if(!empty($aEvent['content'][$sKeyAttach]) && is_array($aEvent['content'][$sKeyAttach]))
+            $aImages = $aEvent['content'][$sKeyAttach];
+
+        if(isset($aImages['total']) && isset($aImages['items']))
+            $aImages = $aImages['items'];
+
+        $bImageSingle = count($aImages) == 1;
+        $sImageSelected = base64_decode(bx_process_input(bx_get('src')));
+
+        $aTmplVarsImages = [];
+        if(!$bImageSingle) {
+            $iIndex = 1;
+            foreach($aImages as $aImage)  {
+                if(!isset($aImage['src'], $aImage['src_orig']))
+                    continue;
+
+                $iCurrent = $iIndex;
+                if(strcmp($aImage['src'], $sImageSelected) == 0 || strcmp($aImage['src_orig'], $sImageSelected) == 0)
+                    $iCurrent = 0;
+
+                $aTmplVarsImages[$iCurrent] = [
+                    'style_prefix' => $sStylePrefix,
+                    'url' => $aImage['url'],
+                    'src' => $aImage[!empty($aImage['src_orig']) ? 'src_orig' : 'src']
+                ];
+
+                $iIndex++;
+            }
+
+            ksort($aTmplVarsImages);
+            $aTmplVarsImages = array_values($aTmplVarsImages);
+        }
+
+        $aTmplVars = [
+            'style_prefix' => $sStylePrefix,
+            'bx_if:show_image' => [
+                'condition' => $bImageSingle,
+                'content' => [
+                    'style_prefix' => $sStylePrefix,
+                    'src' => $sImageSelected,
+                ]
+            ],
+            'bx_if:show_images' => [
+                'condition' => !$bImageSingle,
+                'content' => [
+                    'style_prefix' => $sStylePrefix,
+                    'bx_repeat:images' => $aTmplVarsImages
+                ]
+            ]
+        ];
 
         return $this->parseHtmlByName('block_item_content.html', $aTmplVars);
     }
@@ -2681,7 +2708,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                         $aAttrs = array();
                         if(!empty($aVideo['src_orig']))
-                            $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aVideo['src_orig']))) . ')'; 
+                            $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'video\', ' . json_encode(array('src' => base64_encode($aVideo['src_orig']))) . ')'; 
 
                         $sItem = $this->parseLinkByName('image_link.html', isset($aVideo['url']) ? $aVideo['url'] : 'javascript:void(0)', $sItem, $aAttrs);
                     }
@@ -2785,7 +2812,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(isset($aFile['onclick']))
                 $aAttrs['onclick'] = $aFile['onclick'];
             else if(!$bViewItem && !empty($aFile['src_orig']))
-                $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aFile['src_orig']))) . ')'; 
+                $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'file\', ' . json_encode(array('src' => base64_encode($aFile['src_orig']))) . ')'; 
             if(isset($aFile['title']))
                 $aAttrs['title'] = $aFile['title'];
 
