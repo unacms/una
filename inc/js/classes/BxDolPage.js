@@ -52,6 +52,7 @@ BxDolPage.prototype.share = function(oLink, sUrl)
     oData['a'] = 'get_share';
     oData['url'] = sUrl;
     $(".bx-popup-applied:visible").dolPopupHide();
+
     $(window).dolPopupAjax({
         url: bx_append_url_params(this._sActionsUri, oData),
         displayMode: 'box',

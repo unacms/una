@@ -193,7 +193,10 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                         $sIconHtml = $sCode;    
 
                     $sClass .= 'sys-icon sys-icon-svg ';
-                    if ($sClass != '' && strpos($sIconHtml, 'class="') !== false)
+                    
+                    
+                    $sIconHtmlClear = strip_tags($sIconHtml, '<svg>');
+                    if ($sClass != '' && strpos($sIconHtmlClear, 'class="') !== false)
                         $sIconHtml = str_replace('class="', 'class="' . $sClass, $sIconHtml);
                     else
                         $sIconHtml = str_replace('<svg', '<svg class="' . $sClass . '" ', $sIconHtml);

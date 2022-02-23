@@ -211,8 +211,12 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
 
         $aCounter = array();
         $this->oDb->getSearchForms(array('type' => 'counter_by_modules'), $aCounter, false);
-        foreach($aInputModules['values'] as $sKey => $sValue)
-            $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
+        foreach($aInputModules['values'] as $sKey => $sValue){
+            if (isset($aCounter[$sKey]) && $aCounter[$sKey] > 0)
+                $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
+            else
+                unset($aInputModules['values'][$sKey]);
+        }
 
         $aInputModules['values'] = array_merge(array('' => _t('_adm_form_txt_all_modules')), $aInputModules['values']);
 
