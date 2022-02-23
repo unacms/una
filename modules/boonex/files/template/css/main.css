@@ -84,10 +84,6 @@
     padding: 0;
 }
 
-.bx-files-border-thick {
-    border-width: 3px;
-}
-
 /*--- Files Browser Table layout ---*/
 .bx-files-text-unit-simple-row {
     text-align: left;

@@ -1503,6 +1503,7 @@ BLAH;
         $aAttrs = $this->_genCustomInputUsernamesSuggestionsAttrs($aInput, $bDisabled);
 
         $aTmplVarsVals = [];
+        $sValue = '';
         if(!empty($aInput['value'])) {
             if(is_array($aInput['value']) || (is_numeric($aInput['value']))) {
                 if (!is_array($aInput['value']))
@@ -1521,7 +1522,7 @@ BLAH;
                 }
             }
             else if(is_string($aInput['value']))
-                $aTmplVarsVals = $aInput['value'];
+                $sValue = $aInput['value'];
         }
 
         $aTmplVarsInputText = [];
@@ -1561,6 +1562,7 @@ BLAH;
             'name' => $aInput['name'],
             'attrs' => bx_convert_array2attrs($aAttrs),
             'bx_repeat:vals' => $aTmplVarsVals,
+            'value' => $sValue,
             'bx_if:input' => array(
                 'condition' => !$bDisabled,
                 'content' => $aTmplVarsInputText
@@ -1633,6 +1635,9 @@ BLAH;
         if(strcmp($sKeyPlaceholder, _t($sKeyPlaceholder)) != 0)
             $sValue .= $oLabel->getLabelPlaceholder($sKeyPlaceholder);           
 
+       // print_r($aInput);
+         
+        
         $aInputLabels = array(
             'type' => 'custom',
             'name' => $sName,
@@ -1646,7 +1651,7 @@ BLAH;
                 'disabled' => 'disabled'
             )
         );
-
+        
         return $this->oTemplate->parseHtmlByName('label_select_field.html', array(
             'js_object' => $oLabel->getJsObjectName(),
             'js_code' => $oLabel->getJsCodeForm(),

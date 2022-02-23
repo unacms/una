@@ -17,6 +17,8 @@ class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
     {
         parent::__construct ($aObject);
         
+        $this->_sTmplContentItem = $this->_oTemplate->getHtml('menu_custom_item_addon.html');
+        
         $this->_aObject['menu_id'] = 'sys-dashboard-reports-manage-menu';
 
         $this->_bShowDivider = false;

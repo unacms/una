@@ -531,7 +531,7 @@
     }
 
     .bx-artificer .bx-db-header .bx-menu-custom-hor li.bx-menu-tab-active a {
-        @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white;
+        @apply dark:bg-gray-800 text-gray-900 dark:text-white;
     }
 
     /* Vertical menu */

@@ -22,7 +22,7 @@ BxDolStudioFormsSearchFields.prototype.onChangeModule = function() {
 	var oDate = new Date();
 	var sModule = $('#bx-grid-module-' + this.sObjNameGrid).val();
 
-	this.reloadGrid();
+	this.reloadGrid(sModule);
 
 	bx_loading($('body'), true);
 
@@ -48,15 +48,19 @@ BxDolStudioFormsSearchFields.prototype.onChangeModule = function() {
 };
 
 BxDolStudioFormsSearchFields.prototype.onChangeForm = function() {
-	this.reloadGrid($('#bx-grid-module-' + this.sObjNameGrid).val(), $('#bx-grid-form-' + this.sObjNameGrid).val());
+	this.reloadGrid($('#bx-grid-module-' + this.sObjNameGrid).val(), $('#bx-grid-form-sys_studio_search_forms_fields').val());
 };
 
 BxDolStudioFormsSearchFields.prototype.reloadGrid = function(sModule, sObject) {
 	var bReload = false;
-
 	if(!sModule) 
 		sObject = '';
 
+    console.log(sModule);
+    console.log(sObject);
+    console.log($('#bx-grid-form-' + this.sObjNameGrid).val());
+      console.log('#bx-grid-form-' + this.sObjNameGrid);
+    
 	var oSearch = $('#bx-form-element-keyword');
 	var oActions = $("[bx_grid_action_independent]");
 	if(!sObject) {
@@ -72,11 +76,12 @@ BxDolStudioFormsSearchFields.prototype.reloadGrid = function(sModule, sObject) {
 		glGrids[this.sObjNameGrid]._oQueryAppend['module'] = sModule;
 		bReload = true;
 	}
-
+    
 	if(glGrids[this.sObjNameGrid]._oQueryAppend['form'] != sObject) {
 		glGrids[this.sObjNameGrid]._oQueryAppend['form'] = sObject;
 		bReload = true;
 	}
+    console.log(glGrids[this.sObjNameGrid]._oQueryAppend);
 	if(bReload)
 		glGrids[this.sObjNameGrid].reload(0);
 };

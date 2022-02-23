@@ -142,9 +142,25 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sText = $this->getText($aData);
             $sSummary = $this->getSummary($aData, $sTitle, $sText, $sUrl);
         }
-
+        
+        $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
+        $bCoverUrl = !empty($sCoverUrl);
+        $bCoverImage = false;
+        if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
+            $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
+        
+        if(empty($sCoverUrl))
+            $sCoverUrl = $this->getImageUrl('cover.svg');
+        else
+            $bCoverImage = true;
+        
         $sThumbUrl = $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
+
+        if(substr($sTemplate, 0, 13) == 'unit_wo_cover' && $bCoverImage && !$bThumbUrl){
+            $bThumbUrl = true;
+            $sThumbUrl = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER_THUMB'])->getFileUrlById($aData[$CNF['FIELD_COVER']]);
+        }
 		
         $aTmplVarsThumbnail = array(
             'bx_if:show_thumb_image' => array(
@@ -170,14 +186,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'badges' => $oModule->serviceGetBadges($iContentId, false, true),
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
         );
-
-        $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
-        $bCoverUrl = !empty($sCoverUrl);
-
-        if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
-            $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
-        if(empty($sCoverUrl))
-            $sCoverUrl = $this->getImageUrl('cover.svg');
 
         $aTmplVarsMeta = array();
         if(substr($sTemplate, 0, 8) != 'unit_wo_')
