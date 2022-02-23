@@ -110,10 +110,7 @@ import url(../../../../../../../template/css/forms.css);
 
 
 /*-- Form field: Password --*/
-.bx-form-input-wrapper-password {
-    padding: 0 2.125rem 0 0;
-}
-.bx-form-input-wrapper-password > a {
+.bx-artificer .bx-form-input-wrapper-password > a {
     position: absolute;
     z-index: 1000;
     
@@ -130,7 +127,7 @@ import url(../../../../../../../template/css/forms.css);
 
     margin: 0 0.5rem;
 }
-.bx-form-input-password {
+.bx-artificer .bx-form-input-password {
     position: relative;
 
     -moz-box-sizing: border-box;
@@ -142,12 +139,12 @@ import url(../../../../../../../template/css/forms.css);
     height: 100%;
 
     margin: 0;
-    padding: 0.5rem 2.125rem 0.5rem 0.75rem;
+    padding: 0.5rem 0;
 
     border: 0;
     background-color: transparent;
 }
-.bx-form-input-password:focus {
+.bx-artificer .bx-form-input-password:focus {
     border-color: transparent;
     outline: none;
     box-shadow: none;
@@ -187,6 +184,14 @@ import url(../../../../../../../template/css/forms.css);
 /*-- Form field: Switcher --*/
 .bx-switcher-cont input {
    display: none !important;
+}
+
+
+/*-- Form field: Checkbox/Radio Set --*/
+.bx-form-input-wrapper-checkbox_set label,
+.bx-artificer .bx-form-input-wrapper-radio_set label {
+    margin-left: 0.5rem;
+    vertical-align: text-bottom;
 }
 
 
@@ -298,18 +303,18 @@ import url(../../../../../../../template/css/forms.css);
     display: none;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) input {
-    border:0;
-    margin:0;
-    padding:0 0 0 5px;
-    width:auto;
-    float:left;
+    float: left;
+    width: auto;
+    margin: 0;
+    padding: 0 0 0 0.5rem;
+    border: 0;
     box-shadow: none;
+    line-height: 2.5rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-base-pofile-unit-wo-info {
     display: inline-block;
     vertical-align: middle;
 
-    margin-right: 8px;
     margin-right: 0.5rem;
 }
 .bx-form-value .bx-form-input-labels > a {
@@ -335,9 +340,4 @@ import url(../../../../../../../template/css/forms.css);
 }
 .bx-form-input-wrapper-html .second-toolbar{
     border-bottom:none !important;
-}
-/* wrapper set */
-.bx-form-input-wrapper-set label{
-    margin-left: 0.5rem;
-    vertical-align: text-bottom;
 }
