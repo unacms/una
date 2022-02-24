@@ -64,8 +64,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'object_cf' => $this->_getObjectCf($oAlert->aExtras),
                     'content' => $sContent,
                     'title' => '',
-                    'description' => '',
-                    'status_admin' => $this->_oModule->getStatusAdmin()
+                    'description' => ''
                 );
 
                 $sMethod = '_prepareEvent' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
