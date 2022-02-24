@@ -47,6 +47,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_TEXT' => 'description',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_BIRTHDAY' => 'birthday',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
             'FIELD_ALLOW_CONTACT_TO' => 'allow_contact_to',

@@ -224,6 +224,76 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
             'table' => $sContentTable
         ];
     }
+
+    public function updateValuesByProfile($aProfile)
+    {
+        if(!is_array($aProfile))
+            $aProfile = BxDolProfileQuery::getInstance()->getProfiles(['type' => 'id', 'id' => (int)$aProfile]);
+
+        if(!BxDolRequest::serviceExists($aProfile['type'], 'get_info'))
+            return;
+
+        $aFilters = BxDolFormQuery::getDataItems($this->_sDataList, true, BX_DATA_VALUES_ALL);
+        $aProfileInfo = bx_srv($aProfile['type'], 'get_info', [$aProfile['content_id'], false]);
+
+        $iCfwValue = (int)$aProfile['cfw_value'];
+        $bUpdateCfwValue = false;
+
+        $iCfwItems = $iCfuItems = 0;
+        $bUpdateCfwItems = $bUpdateCfuItems = false;
+        foreach($aFilters as $aFilter) {
+            $iFilter = (int)$aFilter['Value'];
+
+            if(!empty($aFilter['Data'])) {
+                $aData = unserialize($aFilter['Data']);
+                if(empty($aData) || !is_array($aData))
+                    continue;
+            }
+            else
+                $aData = [
+                    'is_allowed_watch' => ['module' => 'system', 'method' => 'is_allowed_cfilter', 'params' => ['watch'], 'class' => 'BaseServiceProfiles'],
+                    'is_allowed_use' => ['module' => 'system', 'method' => 'is_allowed_cfilter', 'params' => ['use'], 'class' => 'BaseServiceProfiles'],
+                ];
+
+            if(!empty($aData['is_allowed_watch'])) {
+                $aData['is_allowed_watch']['params'] = array_merge($aData['is_allowed_watch']['params'], [$iFilter, $aProfileInfo]);
+
+                $iWatch = call_user_func_array('bx_srv', $aData['is_allowed_watch']);
+                if($iWatch === false)
+                    continue;
+
+                if($iWatch == 0) {
+                    $iCfwValue &= ~ (1 << ($iFilter - 1));
+                    $bUpdateCfwValue = true;
+                }
+
+                $iCfwItems |= $iWatch;
+                $bUpdateCfwItems = true;
+            }
+
+            if(!empty($aData['is_allowed_use']) && (int)$aProfile['cfu_locked'] == 0) {
+                $aData['is_allowed_use']['params'] = array_merge($aData['is_allowed_use']['params'], [$aFilter['Value'], $aProfileInfo]);
+
+                $iUse = call_user_func_array('bx_srv', $aData['is_allowed_use']);
+                if($iUse === false)
+                    continue;
+
+                $iCfuItems |= $iUse;
+                $bUpdateCfuItems = true;
+            }
+        }
+
+        $oProfileQuery = BxDolProfileQuery::getInstance();
+
+        if($bUpdateCfwValue) 
+            $oProfileQuery->changeCfwValue($aProfile['id'], $iCfwValue);
+
+        if($bUpdateCfwItems)
+            $oProfileQuery->changeCfwItems($aProfile['id'], $iCfwItems);
+
+        if($bUpdateCfuItems)
+            $oProfileQuery->changeCfuItems($aProfile['id'], $iCfuItems);
+    }
 }
 
 /** @} */

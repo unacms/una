@@ -106,6 +106,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus){
             $aTrackTextFieldsChanges = array ();
         }
+
+        if(isset($CNF['FIELD_BIRTHDAY']) && isset($aContentInfo[$CNF['FIELD_BIRTHDAY']]))
+            $oForm->addTrackFields($CNF['FIELD_BIRTHDAY'], $aContentInfo);
     }
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
@@ -136,6 +139,10 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         if(isset($CNF['FIELD_ALLOW_POST_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
             $oPrivacy->reassociateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]);
+
+        // update content filters
+        if(isset($CNF['FIELD_BIRTHDAY']) && $oForm->isTrackFieldChanged($CNF['FIELD_BIRTHDAY']))
+            BxDolContentFilter::getInstance()->updateValuesByProfile($oProfile->getInfo());
 
         return '';
     }
@@ -189,6 +196,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oAccount = BxDolAccount::getInstance($iAccountId);
             $oAccount->updateProfileContext($iProfileId);
         }
+
+        // update content filters
+        BxDolContentFilter::getInstance()->updateValuesByProfile($oProfile->getInfo());
 
         return '';
     }

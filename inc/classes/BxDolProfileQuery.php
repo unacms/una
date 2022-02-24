@@ -71,6 +71,15 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         $sOrderClause = "`tp`.`id` ASC";
 
     	switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `tp`.`id`=:id";
+                break;
+
             case 'active':
                 $sWhereClause = " AND `tp`.`status`='active'";
 
