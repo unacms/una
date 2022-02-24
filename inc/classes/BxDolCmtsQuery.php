@@ -329,12 +329,11 @@ class BxDolCmtsQuery extends BxDolDb
     {
     	$aBindings = array(
             'cmt_object_id' => $iId,
-            'system_id' => $this->_oMain->getSystemId(),
-            'status_admin' => BX_CMT_STATUS_ACTIVE
+            'system_id' => $this->_oMain->getSystemId()
     	);
         $sFields = $sJoin = "";
 
-        $sWhereStatus = " AND `{$this->_sTableIds}`.`status_admin`=:status_admin";
+        $sWhereStatus = $this->getCommentsCheckStatus($iAuthorId);
 
         $sWhereParent = '';
         if((int)$iCmtVParentId >= 0) {
@@ -413,6 +412,34 @@ class BxDolCmtsQuery extends BxDolDb
         $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause . $sOrder . $sLimit;
         
         return $this->getAll($sQuery, $aBindings);
+    }
+
+    protected function getCommentsCheckStatus($iAuthorId, $sStatus = BX_CMT_STATUS_ACTIVE)
+    {
+        if($this->_oMain->isModerator()) 
+            return '';
+
+        //--- Check viewer as comment author.
+        $sWhereClause = $this->prepareAsString("`{$this->_sTable}`.`cmt_author_id`=?", $iAuthorId);
+
+        //--- Check viewer as an administrator/moderator of comment author.
+        $aGroups = [];
+        $aModules = bx_srv('system', 'get_modules_by_type', ['profile']);
+        foreach($aModules as $aModule) {
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            if(!$oModule || !($oModule instanceof BxBaseModGroupsModule))
+                continue;
+
+            $aGroups = array_merge($aGroups, $oModule->getGroupsByFan($iAuthorId, [
+                BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR,
+                BX_BASE_MOD_GROUPS_ROLE_MODERATOR
+            ]));
+        }
+
+        if(!empty($aGroups))
+            $sWhereClause .= " OR `{$this->_sTable}`.`cmt_author_id` IN (" . $this->implode_escape($aGroups) . ")";
+
+        return $this->prepareAsString(" AND IF(" . $sWhereClause . ", 1, `{$this->_sTableIds}`.`status_admin`=?) ", $sStatus);
     }
 
     function getCommentsBy($aParams = array())

@@ -1706,6 +1706,40 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $this->doAudit($iGroupProfileId, $iFanProfileId, '_sys_audit_action_group_role_changed');
     }
 
+    public function getGroupsByFan($iProfileId, $mixedRole = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        if($mixedRole === false)
+            $mixedRole = BX_BASE_MOD_GROUPS_ROLE_COMMON;
+
+        if(!is_array($mixedRole))
+            $mixedRole = [$mixedRole];
+
+        $aResult = [];
+        foreach($mixedRole as $iRole) {
+            switch($iRole) {
+                case BX_BASE_MOD_GROUPS_ROLE_COMMON:
+                    $aIds = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedContent($iProfileId);
+                    break;
+
+                default:
+                    $aIds = $this->_oDb->getRoles([
+                        'type' => 'group_pids_by_fan_id', 
+                        'fan_id' => $iProfileId,
+                        'role' => $iRole
+                    ]);
+            }
+
+            $aResult = array_merge($aResult, $aIds);
+        }
+
+        return $aResult;
+    }
+
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;

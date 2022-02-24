@@ -177,6 +177,22 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
                 }
                 break;
 
+            case 'group_pids_by_fan_id':
+                $aMethod['name'] = 'getColumn';
+                $aMethod['params'][1] = [
+                    'fan_id' => $aParams['fan_id'],
+                ];
+
+                $sSelectClause = "`ta`.`group_profile_id`";
+                $sWhereClause = "AND `ta`.`fan_id` = :fan_id";
+
+                if(!empty($aParams['role'])) {
+                    $aMethod['params'][1]['role'] = $aParams['role'];
+
+                    $sWhereClause .= " AND `ta`.`role` = :role";
+                }
+                break;
+
             case 'expired':
                 $sWhereClause .= "AND `ta`.`added` < UNIX_TIMESTAMP() AND `ta`.`expired` <> 0 AND `ta`.`expired` < UNIX_TIMESTAMP()";
                 break;
