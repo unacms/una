@@ -3758,8 +3758,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function isModerator()
     {
+        return $this->isModeratorForProfile((int)$this->getUserId());
+    }
+
+    public function isModeratorForProfile($iUserId)
+    {
         $sModule = $this->getName();
-        $iUserId = (int)$this->getUserId();
 
         $aCheckResult = checkActionModule($iUserId, 'edit', $sModule);
         if($aCheckResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
@@ -5000,6 +5004,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
             'status' => BX_TIMELINE_STATUS_ACTIVE,
+            'moderator' => $this->isModeratorForProfile($aParams['viewer_id']),
             'dynamic_mode' => false,
         ));
 
@@ -5049,6 +5054,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
             'status' => BX_TIMELINE_STATUS_ACTIVE,
+            'moderator' => $this->isModeratorForProfile($aParams['viewer_id']),
             'dynamic_mode' => true,
         ));
 

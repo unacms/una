@@ -707,6 +707,36 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
 
+    protected function _getSqlPartsEventsListStatusAdmin($aParams)
+    {
+        $iViewerId = !empty($aParams['viewer_id']) ? $aParams['viewer_id'] : bx_get_logged_profile_id();
+
+        if(isset($aParams['moderator']) && $aParams['moderator'] === true)
+            return '';
+
+        //--- Check viewer as event author.
+        $sWhereClause = $this->prepareAsString("`{$this->_sTable}`.`object_owner_id`=?", $iViewerId);
+
+        //--- Check viewer as an administrator/moderator of event author.
+        $aGroups = [];
+        $aModules = bx_srv('system', 'get_modules_by_type', ['profile']);
+        foreach($aModules as $aModule) {
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            if(!$oModule || !($oModule instanceof BxBaseModGroupsModule))
+                continue;
+
+            $aGroups = array_merge($aGroups, $oModule->getGroupsByFan($iViewerId, [
+                BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR,
+                BX_BASE_MOD_GROUPS_ROLE_MODERATOR
+            ]));
+        }
+
+        if(!empty($aGroups))
+            $sWhereClause .= " OR `{$this->_sTable}`.`object_owner_id` IN (" . $this->implode_escape($aGroups) . ")";
+
+        return $this->prepareAsString(" AND IF(`{$this->_sTable}`.`system`='0' AND (" . $sWhereClause . "), 1, `{$this->_sTable}`.`status_admin`=?) ", isset($aParams['status_admin']) ? $aParams['status_admin'] : BX_TIMELINE_STATUS_ACTIVE);
+    }
+
     protected function _getSqlPartsEventsList($aParams)
     {
         $sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
@@ -715,7 +745,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sWhereClauseStatus = "AND `{$this->_sTable}`.`active`='1' ";
         $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`status`=? ", isset($aParams['status']) ? $aParams['status'] : BX_TIMELINE_STATUS_ACTIVE);
-        $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`status_admin`=? ", isset($aParams['status_admin']) ? $aParams['status_admin'] : BX_TIMELINE_STATUS_ACTIVE);
+        $sWhereClauseStatus .= $this->_getSqlPartsEventsListStatusAdmin($aParams);
 
         //--- Apply filter
         $sWhereClauseFilter = "";
