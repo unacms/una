@@ -258,7 +258,7 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
             if(!empty($aData['is_allowed_watch'])) {
                 $aData['is_allowed_watch']['params'] = array_merge($aData['is_allowed_watch']['params'], [$iFilter, $aProfileInfo]);
 
-                $iWatch = call_user_func_array('bx_srv', $aData['is_allowed_watch']);
+                $iWatch = call_user_func_array('bx_srv', array_values($aData['is_allowed_watch']));
                 if($iWatch === false)
                     continue;
 
@@ -274,7 +274,7 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
             if(!empty($aData['is_allowed_use']) && (int)$aProfile['cfu_locked'] == 0) {
                 $aData['is_allowed_use']['params'] = array_merge($aData['is_allowed_use']['params'], [$aFilter['Value'], $aProfileInfo]);
 
-                $iUse = call_user_func_array('bx_srv', $aData['is_allowed_use']);
+                $iUse = call_user_func_array('bx_srv', array_values($aData['is_allowed_use']));
                 if($iUse === false)
                     continue;
 
