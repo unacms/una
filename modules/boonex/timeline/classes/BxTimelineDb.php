@@ -200,22 +200,28 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         )) > 0;
     }
 
-    public function getMedia($sType, $iEventId, $iOffset = 0)
+    public function getMedia($sType, $iEventId, $iOffset = 0, $bFullInfo = false)
     {
     	$sTableMedia = $this->_aTablesMedia[$sType];
     	$sTableMedia2Events = $this->_aTablesMedia2Events[$sType];
+
+        $sMethod = 'getColumn';
+        $sSelectClause = "`tme`.`media_id` AS `id`";
+        if($bFullInfo) {
+            $sMethod = 'getAll';
+            $sSelectClause = "`tm`.*, `tme`.`event_id` AS `event_id`";
+        }
 
         $sLimitAddon = '';
         if($iOffset != 0)
             $sLimitAddon = $this->prepareAsString(" OFFSET ?", $iOffset);
 
-        $sQuery = $this->prepare("SELECT
-                 `tme`.`media_id` AS `id`
+        $sQuery = $this->prepare("SELECT " . $sSelectClause . " 
             FROM `" . $sTableMedia2Events . "` AS `tme`
             LEFT JOIN `" . $sTableMedia . "` AS `tm` ON `tme`.`media_id`=`tm`.`id`
             WHERE `tme`.`event_id`=?" . $sLimitAddon, $iEventId);
 
-        return $this->getColumn($sQuery);
+        return $this->$sMethod($sQuery);
     }
 
     public function getMediaById($sType, $iMediaId)

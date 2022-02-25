@@ -271,9 +271,9 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             return;
 
         $oTranscoder = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $aMediasToCheck = $this->_oModule->_oDb->getMedia($CNF['FIELD_VIDEO'], $iContentId);
-        foreach($aMediasToCheck as $iMediaToCheck)
-            if(!$oTranscoder->isFileReady($iMediaToCheck))
+        $aMediasToCheck = $this->_oModule->_oDb->getMedia($CNF['FIELD_VIDEO'], $iContentId, 0, true);
+        foreach($aMediasToCheck as $aMediaToCheck)
+            if($oTranscoder->isMimeTypeSupported($aMediaToCheck['mime_type']) && !$oTranscoder->isFileReady($aMediaToCheck['id']))
                 return;
 
         if(!$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId)))
