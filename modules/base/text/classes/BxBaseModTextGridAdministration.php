@@ -63,6 +63,31 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         return 'active' == $mixedState ? true : false;
     }
 
+    protected function _enable ($mixedId, $isChecked)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $bStatusAdmin = $this->_sStatusField == $CNF['FIELD_STATUS_ADMIN'];
+
+        $sStatusBefore = '';
+        if($bStatusAdmin) {
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
+            if(!empty($aContentInfo) && is_array($aContentInfo))
+                $sStatusBefore = $aContentInfo[$this->_sStatusField];
+        }
+
+        $mixedResult = parent::_enable($mixedId, $isChecked);
+        if((int)$mixedResult > 0) {
+            if($bStatusAdmin && $sStatusBefore == BX_BASE_MOD_TEXT_STATUS_PENDING) {
+                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
+                if($aContentInfo[$this->_sStatusField] == BX_BASE_MOD_TEXT_STATUS_ACTIVE)
+                    $this->_oModule->onApprove($aContentInfo);
+            }
+        }
+
+        return $mixedResult;
+    }
+
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
