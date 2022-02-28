@@ -30,7 +30,11 @@
 
 .sys-auth .bx-btn .sys-icon {
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+}
+
+.sys-auth .bx-btn u {
+    display: inline;
 }
 
 .sys-auth-compact {
