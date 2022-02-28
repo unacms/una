@@ -140,7 +140,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
-        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 60);
+        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 55);
 
         $aMetas = array('main' => false, 'counters' => false, 'reply' => false);
         foreach(array_keys($aMetas) as $sMeta) {
