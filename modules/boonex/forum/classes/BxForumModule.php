@@ -841,6 +841,30 @@ class BxForumModule extends BxBaseModTextModule
 
         return true;
     }
+    
+    
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-entity_author entity_author
+     * 
+     * @code bx_srv('bx_forum', 'entity_author', [...]); @endcode
+     * 
+     * Get page block with author.
+     * 
+     * @param $iContentId (optional) content ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceEntityAuthor
+     */
+    /** 
+     * @ref bx_forum-entity_author "entity_author"
+     */
+    public function serviceEntityAuthor ($iContentId = 0)
+    {
+        return bx_srv('system', 'get_block_author', ['bx_forum', $iContentId], 'TemplServices');
+    }
 
     /**
      * @page service Service Calls

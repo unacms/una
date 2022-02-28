@@ -41,7 +41,7 @@ class BxAccntDb extends BxBaseModGeneralDb
             $sSql .= ' AND ' . (isset($aValue['table'])? '`' . $aValue['table'] .'`.' : '') . '`' . $aValue['key'] ."` " . $aValue['operator'] . " '" . $aValue['value'] . "'";
         }
         
-        $sQuery = $this->prepare($sSql, $this->_oConfig->getName());
+        $sQuery = $this->prepare($sSql);
         return $this->getOne($sQuery);
     }
 }

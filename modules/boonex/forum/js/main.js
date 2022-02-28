@@ -52,12 +52,6 @@ BxForumMain.prototype.init = function() {
                         location = $(this).find('.bx-forum-gp-title A').attr('href');
                     }
                 })
-                $(this).mouseover(function (evt) {
-                    $(this).addClass('bx-def-color-bg-box')
-                })
-                $(this).mouseout(function (evt) {
-                    $(this).removeClass('bx-def-color-bg-box')
-                })
 	        }); 
             
             
