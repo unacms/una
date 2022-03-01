@@ -146,6 +146,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 'type' => $sType,
                 'action' => $sAction,
                 'object_id' => $iObjectId,
+                'object_owner_id' => $iOwnerId,
                 'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
                 'content' => '',
                 'title' => '',
@@ -942,12 +943,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //--- Note. Disabled for now and next check is used instead. 
                 //$mixedWhereSubclause['p2'] = $this->prepareAsString(" AND IF(`{$this->_sTable}`.`system`='0', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
 
-                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_owner_id', $aParams['owner_id']);
                 $aJoin2 = $aQueryParts['join'];
                 $aJoin2['table_alias'] = 'cc';
                 $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
-                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'];
+                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system` = 0 AND `" . $this->_sTable . "`.`object_privacy_view` > 0 AND " . $aJoin2['condition'];
                 $mixedWhereSubclause['p3'] = "NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
 
                 //--- Select Promoted posts.
