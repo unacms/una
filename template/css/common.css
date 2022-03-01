@@ -762,9 +762,6 @@ svg .gray .outer .p2 {
 }
 	
 /* --------------- button */
-
-
-
 .bx-btn-height {
     height: 2.2rem;
     line-height: 2.2rem;
@@ -777,10 +774,6 @@ svg .gray .outer .p2 {
     background-color: #79bd9a;
     text-decoration:none;
 }
-A.bx-btn{
-    display: inline-block
-}
-
 .bx-btn img {
     width:1.2em;
     height:1.2em;

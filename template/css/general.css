@@ -434,7 +434,7 @@ div.bx-account-unit-online {
 }
 .sys-jf-login .bx-btn,
 .sys-lf-join .bx-btn {
-    float: none;
+    display: block;
 }
 
 
