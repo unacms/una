@@ -217,37 +217,10 @@
 
 /* --------------- 'Add to Homescreen' popup */
 .ath-container {
-	color: #333;
+    color: #333;
 }
 
 /* --------------- Account */
-p.bx-account-unit-thumb {
-    display: block;
-    margin: 0px;
-
-    background: #ffffff;
-    background-clip: padding-box;
-    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
-
-    line-height: 46px;
-    line-height: 2.9rem;
-
-    font-size: 32px;
-    font-size: 2.0rem;
-    font-weight: 700;
-    color: #d0d0d0;
-}
-p.bx-account-unit-thumb.bx-def-icon-size {
-    line-height: 26px;
-    line-height: 1.75rem;
-
-    font-size: 19.5px;
-    font-size: 1.3rem;
-}
-p.bx-account-unit-thumb.bx-def-border {
-    border-width: 2px;
-    border-color: #ffffff;
-}
 div.bx-account-unit-online {
     position: absolute;
     right: 0;
