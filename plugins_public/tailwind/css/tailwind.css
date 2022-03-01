@@ -229,10 +229,10 @@
     .bx-artificer .bx-def-padding-sec-topbottom {
         @apply py-2;
     }
-    .bx-artificer .bx-def-padding-lefttopright {
+    .bx-artificer .bx-def-padding-sec-lefttopright {
         @apply px-2 pt-2;
     }
-    .bx-artificer .bx-def-padding-rightbottomleft {
+    .bx-artificer .bx-def-padding-sec-rightbottomleft {
         @apply px-2 pb-2;
     }
 
@@ -263,10 +263,10 @@
     .bx-artificer .bx-def-padding-thd-topbottom {
         @apply py-1;
     }
-    .bx-artificer .bx-def-padding-lefttopright {
+    .bx-artificer .bx-def-padding-thd-lefttopright {
         @apply px-1 pt-1;
     }
-    .bx-artificer .bx-def-padding-rightbottomleft {
+    .bx-artificer .bx-def-padding-thd-rightbottomleft {
         @apply px-1 pb-1;
     }
 
