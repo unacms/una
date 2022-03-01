@@ -80,6 +80,16 @@ class BxBaseMenuToolbar extends BxTemplMenu
 
         return $a;
     }
+    
+    protected function _getMenuAttrs ($aMenuItem)
+    {
+        $sAttrs = parent::_getMenuAttrs($aMenuItem);
+
+        if($aMenuItem['name'] == 'apps') 
+            $sAttrs .= ' data-dropdown-toggle="sys-menu-apps"';
+
+        return $sAttrs;
+    }
 
     protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
     {

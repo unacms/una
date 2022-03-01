@@ -15,6 +15,7 @@
     <string name="_anonymous"><![CDATA[Аноним]]></string>
     <string name="_anonymous_f"><![CDATA[Аноним ({0})]]></string>
         <string name="_Apply"><![CDATA[Применить]]></string>
+        <string name="_apps"><![CDATA[Приложения]]></string>
 	<string name="_Are_you_sure"><![CDATA[Вы уверены?]]></string>
 	<string name="_Auth type"><![CDATA[Тип авторизации]]></string>
 	<string name="_Basic"><![CDATA[Базовая]]></string>

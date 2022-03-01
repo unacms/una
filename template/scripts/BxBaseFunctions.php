@@ -850,6 +850,23 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         return $sContent;
     }
+    
+    protected function getInjFooterPopupApps() 
+    {
+        if($this->_oTemplate->getPageType() != BX_PAGE_TYPE_APPLICATION) 
+            return '';
+
+        $oMenu = BxDolMenu::getObjectInstance('sys_homepage');
+        if(!$oMenu) 
+            return '';
+
+        $this->_oTemplate->addJs(['popper.js']);
+        return $this->_oTemplate->parsePageByName('menu_apps.html', [
+            'name' => 'sys-menu-apps',
+            'title' => _t('_apps'),
+            'bx_repeat:menu_items' => $oMenu->getMenuItems(),
+        ]);
+    }
 
     protected function getInjFooterPopups() 
     {
