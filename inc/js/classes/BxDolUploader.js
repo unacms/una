@@ -35,6 +35,7 @@ BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, 
     this._sFormContainerId = 'bx-form-input-files-' + sUniqId + '-form-cont';
 
     this._sTemplateGhost = options.template_ghost ? options.template_ghost : '<div id="' + this._getFileContainerId('{file_id}') + '"><input type="hidden" name="f[]" value="{file_id}" />{file_name} (<a href="javascript:void(0);" onclick="{js_instance_name}.deleteGhost(\'{file_id}\')">delete</a>)</div>';
+    this._sTemplateReorder = options.template_reorder ? options.template_reorder : '<div class="bx-uploader-ghost-reorder"><i class="sys-icon bars"></i></div>';
     this._sTemplateError = options.template_error_msg ? options.template_error_msg : '<div>{error}</div>' ;
     this._sTemplateErrorGhosts = options.template_error_ghosts ? options.template_error_ghosts : this._sTemplateError;
 
@@ -159,9 +160,15 @@ BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onCompl
             $('#' + $this._sResultContainerId).bx_show_more_check_overflow();
 
             if(bInitReordering) {
-                var fInitReordering = function() {
+                var sClassGhost = 'bx-uploader-ghost';
+                $('#' + $this._sResultContainerId).find('.' + sClassGhost).each(function() {
+                    if($(this).find('.bx-uploader-ghost-reorder').length == 0)
+                        $(this).prepend($this._sTemplateReorder);
+                });
+
+                var fInitReordering = function() {                    
                     $('#' + $this._sResultContainerId).sortable({
-                        items: '.bx-uploader-ghost', 
+                        items: '.' + sClassGhost, 
                         start: function(oEvent, oUi) {
                             oUi.item.addClass('bx-uploader-ghost-dragging');
                         },
