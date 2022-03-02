@@ -1,8 +1,10 @@
 
 /* uploader */
-.bx-form-input-files-result.ui-sortable .bx-uploader-ghost-reorder {
+.bx-form-input-files-result .bx-uploader-ghost-reorder {
     float: left;
-    margin-right: 0.25rem;
+    margin-right: 0.5rem;
+}
+.bx-form-input-files-result.ui-sortable .bx-uploader-ghost-reorder {
     cursor: move;
 }
 
