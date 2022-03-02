@@ -361,13 +361,14 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
 
     public function getProfileQuota($iProfileId)
     {
-        if (!$iProfileId) // for guests and storages without owner don't count per-user quota
-            return array('current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0);
+        $a = ['current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0];
 
-        $sQuery = $this->prepare("SELECT `current_size`, `current_number`, 0 as `quota_size`, 0 as `quota_number`, 0 as `max_file_size` FROM `sys_storage_user_quotas` WHERE `profile_id` = ?", $iProfileId);
-        $a = $this->getRow($sQuery);
-        if (!is_array($a) || !$a)
-            $a = array ('current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0);
+        if ($iProfileId) {
+            $sQuery = $this->prepare("SELECT `current_size`, `current_number`, 0 as `quota_size`, 0 as `quota_number`, 0 as `max_file_size` FROM `sys_storage_user_quotas` WHERE `profile_id` = ?", $iProfileId);
+            $a = $this->getRow($sQuery);
+            if (!is_array($a) || !$a)
+                $a = ['current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0];
+        }
 
         // get quota_number and quota_size from user's acl/membership
         $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($iProfileId);
