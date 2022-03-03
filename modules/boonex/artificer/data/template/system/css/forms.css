@@ -313,7 +313,7 @@ import url(../../../../../../../template/css/forms.css);
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-base-pofile-unit-wo-info {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
 
     margin-right: 0.5rem;
 }
