@@ -21,6 +21,11 @@ function BxDolForm(oOptions)
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
     this._aHtmlIds = oOptions.aHtmlIds;
+    
+    var $this = this;
+	$(document).ready(function () {
+		$this.checkError();
+	});
 }
 
 BxDolForm.prototype.showHelp = function(oLink, sInputName)
@@ -83,7 +88,7 @@ BxDolForm.setCheckBoxValue = function (obj) {
     oHidden.val(val);
 }
 
-BxDolForm.prototype.onError = function () {
+BxDolForm.prototype.checkError = function () {
 
     var $aErr = $('form[name="' + this._sObject + '"]').find('.bx-form-warn:visible');
     
