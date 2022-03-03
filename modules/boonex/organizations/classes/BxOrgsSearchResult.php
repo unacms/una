@@ -106,6 +106,7 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                 );
 
                 $this->aCurrent['restriction']['fans'] = array('value' => $oJoinedProfile->id(), 'field' => 'initiator', 'operator' => '=', 'table' => 'bx_organizations_fans');
+                $this->aCurrent['restriction']['fans2'] = array('value' => 1, 'field' => 'mutual', 'operator' => '=', 'table' => 'bx_organizations_fans');
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_JOINED_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_joined_entries');
