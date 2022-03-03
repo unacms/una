@@ -2148,7 +2148,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
-<p>Hello, {name}.</p>
+<p>Hello, {name} ({email}).</p>
 <p>Click the link below to verify your email address, please:</p>
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
@@ -2162,6 +2162,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
+<p>Hello {name} ({email})</p>,
 <p>Click the link below to reset your password, please:</p>
 <p> </p>
 <p><a href="{forgot_password_url}">Reset my password</a>.</p>

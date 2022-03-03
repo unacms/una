@@ -2133,7 +2133,7 @@
 <p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
-<p>Привет, {name}.</p>
+<p>Привет, {name} ({email}).</p>
 <p>Пожалуйста, подтвердите ваш email, нажав по ссылке:</p>
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
@@ -2147,6 +2147,7 @@
 <p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
+<p>Привет {name} ({email})</p>,
 <p>Пожалуйста, нажмите по ссылке, чтобы сбросить свой пароль:</p>
 <p> </p>
 <p><a href="{forgot_password_url}">Сбросить мой пароль</a>.</p>
