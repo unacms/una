@@ -853,7 +853,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
             $oChecker->enableFormCsrfChecking(isset($this->aParams['csrf']['disable']) && $this->aParams['csrf']['disable'] === true ? false : true);
 
-            $this->_isValid = $oChecker->check($this->aInputs, $aValues);
+            $this->_isValid = $oChecker->check($this->aInputs, $aValues, $this);
 
             if (!$this->_initCheckerNestedForms ())
                 $this->_isValid = false;
@@ -1307,7 +1307,7 @@ class BxDolFormChecker
     }
 
     // check function
-    function check (&$aInputs, $aValues = array())
+    function check (&$aInputs, $aValues = array(), $oForm = null)
     {
         $oChecker = $this->_oChecker;
         $iErrors = 0;
@@ -1472,6 +1472,9 @@ class BxDolFormChecker
         // add error message near submit button
         if ($iErrors && $sSubmitName)
             $aInputs[$sSubmitName]['error'] = _t('_sys_txt_form_submission_error');
+        
+        if ($oForm && $aInputs[$sSubmitName]['error'])
+            $aInputs[$sSubmitName]['error'] .= "<script>window['" . $oForm->getJsObjectName() . "'].onError()</script>";
 
         return $iErrors ? false : true;
     }

@@ -83,4 +83,15 @@ BxDolForm.setCheckBoxValue = function (obj) {
     oHidden.val(val);
 }
 
+BxDolForm.prototype.onError = function () {
+
+    var $aErr = $('form[name="' + this._sObject + '"]').find('.bx-form-warn:visible');
+    
+    if ($aErr.length > 0){
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $aErr.first().closest('.bx-form-element-wrapper').offset().top - 100
+        }, 200);
+    }
+}
+
 /** @} */
