@@ -651,7 +651,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getExtenalsEvery($sType = 'default')
     {
         if($this->isInfiniteScroll())
-            $sType = 'preload';
+            $sType .= '_preload';
 
         $iExtenalsEvery = (int)getParam($this->getPrefix('option') . 'extenals_every_' . $sType);
         if(!$iExtenalsEvery)
