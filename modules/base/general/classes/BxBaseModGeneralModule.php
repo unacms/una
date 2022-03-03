@@ -109,6 +109,14 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_gallery.html';
 
+        $CNF = &$this->_oConfig->CNF;
+        
+        if(!empty($CNF['OBJECT_VIEWS'])) {
+            $oView = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId);
+            if($oView && $oView->isEnabled())
+                $oView->doView();
+        }
+        
         $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate) . $sAddCode);
     }
    
