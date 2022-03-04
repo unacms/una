@@ -11,6 +11,8 @@
 
 require_once('BxPaymentProviderChargebee.php');
 
+use ChargeBee\ChargeBee\Models\PortalSession;
+
 class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
 {
     function __construct($aConfig)
@@ -64,21 +66,21 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     public function actionGetPortal($iPendingId)
     {
     	if(!isLogged())
-    		return echoJson(array());
+            return echoJson(array());
 
     	$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
     	if(empty($aPending) || !is_array($aPending))
-    		return echoJson(array());
+            return echoJson(array());
 
     	$this->initOptionsByVendor((int)$aPending['seller_id']);
 
     	$aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iPendingId));
     	if(empty($aSubscription) || !is_array($aSubscription))
-    		return echoJson(array());
+            return echoJson(array());
 
     	$oPortal = $this->getPortal($aSubscription['customer_id'], $aSubscription['subscription_id']);
     	if($oPortal === false)
-    		return echoJson(array());
+            return echoJson(array());
 
     	header('Content-type: text/html; charset=utf-8');
     	echo $oPortal->toJson();
@@ -87,7 +89,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     public function addJsCss()
     {
     	if(!$this->isActive())
-    		return;
+            return;
 
         $this->_oModule->_oTemplate->addJs($this->_aIncludeJs);
         $this->_oModule->_oTemplate->addCss($this->_aIncludeCss);
@@ -106,39 +108,39 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     {
         $sPageId = bx_process_input(bx_get('page_id'));
         if(empty($sPageId) || empty($iPendingId))
-        	return $this->_sLangsPrefix . 'err_wrong_data';
+            return $this->_sLangsPrefix . 'err_wrong_data';
 
     	$aItem = array_shift($aCartInfo['items']);
     	if(empty($aItem) || !is_array($aItem))
-    		return $this->_sLangsPrefix . 'err_empty_items';
+            return $this->_sLangsPrefix . 'err_empty_items';
 
-		$aClient = $this->_oModule->getProfileInfo();
-		$aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
+        $aClient = $this->_oModule->getProfileInfo();
+        $aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
 
-		$oPage = $this->retreiveHostedPage($sPageId);
-		if($oPage === false)
-			return $this->_sLangsPrefix . 'err_cannot_perform';
+        $oPage = $this->retreiveHostedPage($sPageId);
+        if($oPage === false)
+            return $this->_sLangsPrefix . 'err_cannot_perform';
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
-		if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return $this->_sLangsPrefix . 'err_already_processed';
 
         if($aPending['type'] != BX_PAYMENT_TYPE_RECURRING) 
             return $this->_sLangsPrefix . 'err_wrong_data';
 
-		$oCustomer = $oPage->content()->customer();
-		$oSubscription = $oPage->content()->subscription();
+        $oCustomer = $oPage->content()->customer();
+        $oSubscription = $oPage->content()->subscription();
 
-		return array(
-			'code' => 0,
-			'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
-			'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
-				'order_id' => $oSubscription->id,
-				'customer_id' => $oCustomer->id,
-				'pending_id' => $aPending['id'],
-				'redirect' => $sRedirect
-			))
-		);
+        return array(
+            'code' => 0,
+            'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
+            'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
+                'order_id' => $oSubscription->id,
+                'customer_id' => $oCustomer->id,
+                'pending_id' => $aPending['id'],
+                'redirect' => $sRedirect
+            ))
+        );
     }
 
     public function finalizeCheckout(&$aData)
@@ -191,21 +193,22 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     	$oPortal = false;
 
     	try {
-    		ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-    		$oResult = ChargeBee_PortalSession::create(array(
-				'customer' => array(
-					'id' => $sCustomerId
-				)));
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = PortalSession::create(array(
+                'customer' => array(
+                    'id' => $sCustomerId
+                )
+            ));
 
-    		$oPortal = $oResult->portalSession();
+            $oPortal = $oResult->portalSession();
     	}
     	catch (Exception $oException) {
-    		$iError = $oException->getCode();
-    		$sError = $oException->getMessage();
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
 
-    		$this->log('Get Portal Error: ' . $sError . '(' . $iError . ')');
+            $this->log('Get Portal Error: ' . $sError . '(' . $iError . ')');
 
-    		return false;
+            return false;
     	}
 
     	return $oPortal;
@@ -215,13 +218,13 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     {
     	$sSite = '';
     	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_js_code', 0, 0, array(
-	    	'site' => &$sSite,
-	    	'params' => &$aParams
+            'site' => &$sSite,
+            'params' => &$aParams
     	));
 
     	return $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
-			'sProvider' => $this->_sName,
-			'sSite' => !empty($sSite) ? $sSite : $this->_getSite()
+            'sProvider' => $this->_sName,
+            'sSite' => !empty($sSite) ? $sSite : $this->_getSite()
     	), $aParams));
     }
 
