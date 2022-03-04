@@ -382,10 +382,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 $bSeparatorNeeded = true;
                 $sCaptionType = 'latest';
             }
-            
+
             $bAttachment = !empty($aFiles[$iAttachmentId]);
             $aAttachments[$iAttachmentId]['bx_if:not_image']['content'] = array_merge($aAttachments[$iAttachmentId]['bx_if:not_image']['content'], [
                 'file_type' => $bAttachment ? _t('_bx_market_form_entry_input_files_type_' . $aFiles[$iAttachmentId]['type']) : '',
+                'file_name_attr' => bx_html_attribute($aAttachments[$iAttachmentId]['file_name']),
                 'bx_if:show_version' => [
                     'condition' => $bAttachment && $aFiles[$iAttachmentId]['type'] == BX_MARKET_FILE_TYPE_VERSION,
                     'content' => [

@@ -21,9 +21,10 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
     protected $_bMoreAuto;
     protected $_iMoreAutoItemsStatic;
     protected $_bMoreAutoItemsStaticOnly;
-    
+
     protected $_sJsClassMoreAuto;
     protected $_sJsObjectMoreAuto;
+    protected $_sJsCallMoreAuto;
 
     protected $_aHtmlIds;
 
@@ -37,9 +38,10 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         $this->_bMoreAuto = null;
         $this->_iMoreAutoItemsStatic = 1;
         $this->_bMoreAutoItemsStaticOnly = false;
-        
+
         $this->_sJsClassMoreAuto = 'BxDolMenuMoreAuto';
         $this->_sJsObjectMoreAuto = 'oMenuMoreAuto' . bx_gen_method_name($this->_sObject);
+        $this->_sJsCallMoreAuto = "if(!{js_object}) {var {js_object} = new {js_class}({js_params}); {js_object}.init();}";
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
         $this->_aHtmlIds = array(
@@ -98,18 +100,18 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
     protected function _getJsCodeMoreAuto()
     {
-        $sJsClass = $this->_getJsClassMoreAuto();
-        $sJsObject = $this->_getJsObjectMoreAuto();
-        $aJsParams = array(
-            'sObject' => $this->_sObject,
-            'iItemsStatic' => $this->_iMoreAutoItemsStatic,
-            'bItemsStaticOnly' => $this->_bMoreAutoItemsStaticOnly ? 1 : 0,
-            'aHtmlIds' => $this->_getHtmlIds()
-        );
-
-        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $sJsObject . ") {var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aJsParams) . "); " . $sJsObject . ".init();}");
+        return $this->_oTemplate->_wrapInTagJsCode(bx_replace_markers($this->_sJsCallMoreAuto, [
+            'js_class' => $this->_getJsClassMoreAuto(),
+            'js_object' => $this->_getJsObjectMoreAuto(),
+            'js_params' => json_encode([
+                'sObject' => $this->_sObject,
+                'iItemsStatic' => $this->_iMoreAutoItemsStatic,
+                'bItemsStaticOnly' => $this->_bMoreAutoItemsStaticOnly ? 1 : 0,
+                'aHtmlIds' => $this->_getHtmlIds()
+            ])
+        ]));
     }
-    
+
     protected function _getMenuItem ($aItem)
     {
         $aItem['popup'] = '';

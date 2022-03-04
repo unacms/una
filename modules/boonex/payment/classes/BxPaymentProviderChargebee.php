@@ -12,6 +12,12 @@
 define('CBEE_MODE_LIVE', 1);
 define('CBEE_MODE_TEST', 2);
 
+use ChargeBee\ChargeBee\Environment;
+use ChargeBee\ChargeBee\Models\Addon;
+use ChargeBee\ChargeBee\Models\Customer;
+use ChargeBee\ChargeBee\Models\HostedPage;
+use ChargeBee\ChargeBee\Models\Subscription;
+
 class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
     protected $_iMode;
@@ -138,8 +144,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
                     'pending_id' => $iPendingId
                 ));
 
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResult = ChargeBee_HostedPage::checkoutNew($aPage);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = HostedPage::checkoutNew($aPage);
 
             $oPage = $oResult->hostedPage();
         }
@@ -160,8 +166,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         $oPage = null;
 
         try {
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResult = ChargeBee_HostedPage::retrieve($sPageId);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = HostedPage::retrieve($sPageId);
 
             $oPage = $oResult->hostedPage();
         }
@@ -182,8 +188,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         $oSubscription = null;
 
         try {
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResult = ChargeBee_Subscription::retrieve($sSubscriptionId);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = Subscription::retrieve($sSubscriptionId);
 
             $oSubscription = $oResult->subscription();
             if($oSubscription->id != $sSubscriptionId)
@@ -224,8 +230,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
     public function deleteSubscription($sSubscriptionId)
     {
         try {
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResult = ChargeBee_Subscription::cancel($sSubscriptionId);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = Subscription::cancel($sSubscriptionId);
 
             $oSubscription = $oResult->subscription();
             if($oSubscription->status != 'cancelled')
@@ -256,8 +262,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
             if(!empty($iLimit))
                 $aParams['limit'] = $iLimit;
             
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResults = ChargeBee_Addon::all($aParams);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResults = Addon::all($aParams);
 
             foreach($oResults as $oResult)
                 $aAddons[] = $oResult->addon();
@@ -292,8 +298,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         $oAddon = null;
 
         try {
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResult = ChargeBee_Addon::retrieve($sId);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = Addon::retrieve($sId);
 
             $oAddon = $oResult->addon();
             if($oAddon->id != $sId)
@@ -325,8 +331,8 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         $oCustomer = null;
 
         try {
-            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-            $oResult = ChargeBee_Customer::retrieve($sCustomerId);
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = Customer::retrieve($sCustomerId);
 
             $oCustomer = $oResult->customer();
             if($oCustomer->id != $sCustomerId)

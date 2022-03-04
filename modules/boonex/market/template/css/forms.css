@@ -1,5 +1,6 @@
-.bx-form-value .bx-form-input-autotoken b {
-    padding-left:0.5rem;
+/*--- Subentries field ---*/
+#bx-form-element-subentries .bx-form-value .bx-form-input-autotoken b {
+    padding-left: 0.5rem;
 }
 
 /*--- Uploader Ghost ---*/
