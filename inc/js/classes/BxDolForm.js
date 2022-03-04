@@ -94,7 +94,7 @@ BxDolForm.prototype.checkError = function () {
     
     if ($aErr.length > 0){
         $([document.documentElement, document.body]).animate({
-            scrollTop: $aErr.first().closest('.bx-form-element-wrapper').offset().top - 100
+            scrollTop: $aErr.first().closest('.bx-form-element-wrapper').offset().top - 50
         }, 200);
     }
 }

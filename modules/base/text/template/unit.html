@@ -1,20 +1,18 @@
-<div class="bx-base-text-unit bx-base-text-unit-ext bx-def-box bx-def-round-corners bx-def-color-bg-box bx-def-margin-bottom">
-	<bx_if:thumb>
-		<div class="bx-base-text-unit-cover">
-			<img class="bx-base-text-unit-cover bx-def-round-corners" alt="__title__" src="__thumb_url__" />
-		</div>
-	</bx_if:thumb>
-	<div class="bx-base-text-unit-text bx-def-padding bx-def-box-sizing">
-	    <div class="bx-base-text-unit-title">
-			<h2><a href="__content_url__">__title__ </a></h2>
-			 __badges__
-		</div>
-		
-	    <div class="bx-base-text-unit-info bx-def-margin-sec-top bx-def-font-small">
+<div class="bx-base-text-unit bx-base-text-unit-ext flex flex-col mb-3 md:mb-4 lg:mb-6 bx-def-color-bg-box ring-1 ring-gray-200 dark:ring-gray-700 overflow-hidden text-left rounded-md">
+    <bx_if:thumb>
+        <div class="bx-base-text-unit-cover flex-shrink-0 m-1">
+            <img class="h-48 w-full object-cover rounded" src="__gallery_url__" alt="">
+        </div>
+    </bx_if:thumb>
+    <div class="bx-base-text-unit-text p-3 md:p-4 lg:p-6 pt-2 md:pt-3 lg:pt-5 box-border">
+        <div class="bx-base-text-unit-info flex space-x-1 text-sm text-gray-500 dark:text-gray-400 pb-2">
             <bx_if:meta><div class="bx-base-general-unit-meta">__meta__</div></bx_if:meta>
         </div>
-	    <div class="bx-base-text-unit-summary bx-def-margin-sec-top bx-clearfix">
-	        __summary__
-	    </div> 
-	</div>
+        <div class="bx-base-text-unit-title text-left">
+            <a href="__content_url__" class="text-lg lg:text-xl font-semibold text-gray-700 group-hover:text-gray-900 dark:text-gray-200 dark:group-hover:text-white">__title__</a>__badges__
+        </div>
+        <div class="bx-base-text-unit-text text-left mt-1 lg:mt-2 font-normal text-sm lg:text-base text-gray-500 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300">
+        __summary__
+        </div>
+    </div>
 </div>
