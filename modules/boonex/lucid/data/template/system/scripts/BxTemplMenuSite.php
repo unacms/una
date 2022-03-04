@@ -26,6 +26,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         $this->_sJsClassMoreAuto = 'BxLucidMenuMoreAuto';
+        $this->_sJsCallMoreAuto = "if(!{js_object}) {var {js_object} = new {js_class}({js_params}); $(document).ready(function() {{js_object}.init();});}";
 
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
         $this->_bSiteMenuSubmenu = false;
