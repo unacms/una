@@ -553,12 +553,11 @@ class BxBaseServiceProfiles extends BxDol
         if(!in_array($sAction, ['watch', 'use']) || !isset($aProfileInfo['birthday']))
             return false;
 
+        $iAge = 0;
+        if(!empty($aProfileInfo['birthday']) && !in_array($aProfileInfo['birthday'], array('0000-00-00', '0000-00-00 00:00:00'))) 
+            $iAge = bx_birthday2age($aProfileInfo['birthday']);
+
         $iResult = 0;
-        if(empty($aProfileInfo['birthday']) || in_array($aProfileInfo['birthday'], array('0000-00-00', '0000-00-00 00:00:00'))) 
-            return $iResult;
-
-        $iAge = bx_birthday2age($aProfileInfo['birthday']);
-
         switch($iValue) {
             case 1:
                 $iResult = $iValue;
