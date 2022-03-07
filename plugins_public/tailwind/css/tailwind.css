@@ -109,11 +109,17 @@
     .bx-artificer .bx-def-margin-sec-bottom {
         @apply mb-2;
     }
+    .bx-artificer .bx-def-margin-sec-bottom-neg {
+        @apply -mb-2;
+    }
     .bx-artificer .bx-def-margin-sec-leftright {
         @apply mx-2;
     }
     .bx-artificer .bx-def-margin-sec-leftright-neg {
         @apply -mx-2;
+    }
+    .bx-artificer .bx-def-margin-sec-lefttopright-neg {
+        @apply -mx-2 -mt-2;
     }
     .bx-artificer .bx-def-margin-sec-topbottom {
         @apply my-2;
