@@ -227,9 +227,6 @@ body.bx-popup-lock {
 .bx-popup-menu .bx-popup-close-wrapper {
     display: none;
 }
-.bx-popup-menu .bx-popup-content {
-    width: 14rem;
-}
 .bx-popup-menu .bx-popup-content-indent {
     padding: 0px !important;
 }

@@ -514,6 +514,11 @@
         @apply w-full md:w-128;
     }
 
+    .bx-artificer .bx-popup-width-small,
+    .bx-artificer .bx-popup-menu .bx-popup-content {
+        @apply w-56;
+    }
+
     .bx-artificer .bx-popup-full-screen .bx-popup-width {
         @apply w-full md:w-full;
     }

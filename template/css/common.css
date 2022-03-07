@@ -370,11 +370,15 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-width {
-	width: 500px;
+    width: 500px;
+}
+
+.bx-popup-width-small {
+    width: 14rem;
 }
 
 .bx-popup-border {
-	border:1px solid #383d66;
+    border:1px solid #383d66;
 }
 
 .bx-popup-color-bg {
