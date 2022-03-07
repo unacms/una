@@ -427,12 +427,25 @@ function bx_menu_popup (o, e, options, vars) {
  * @param options - popup options
  */
 function bx_menu_popup_inline (jSel, e, options) {
-    var options = options || {};
-    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {pointer:{el:$(e)}, cssClass: 'bx-popup-menu'});
     if ($(jSel + ':visible').length) 
         $(jSel).dolPopupHide(); 
-    else 
+    else {
+        var options = options || {};
+        var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {
+            pointer:{el:$(e)}, 
+            cssClass: 'bx-popup-menu',
+            onShow: function(oPopup) {
+                oPopup.find('a').each(function () {
+                    $(this).off('click.bx-popup-menu');
+                    $(this).on('click.bx-popup-menu', function() {
+                        $(jSel).dolPopupHide();
+                    });
+                });
+            }
+        });
+
         $(jSel).dolPopup(o);
+    }
 }
 
 /**
