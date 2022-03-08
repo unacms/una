@@ -290,7 +290,7 @@
         @apply font-inter text-gray-500 dark:text-gray-400;
     }
 
-    .bx-artificer .bx-def-font-grayed {
+    .bx-def-font-grayed {
         @apply text-gray-700 dark:text-gray-500 text-opacity-60;
     }
 

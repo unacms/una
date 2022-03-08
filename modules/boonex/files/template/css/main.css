@@ -48,10 +48,12 @@
 .bx-files-text-unit-gallery .bx-base-text-unit-text {
     overflow: hidden;
 }
-.bx-media-phone .bx-files-text-unit-gallery {
+.bx-media-phone .bx-files-text-unit-gallery,
+.bx-media-desktop .bx-layout-column-thin .bx-files-text-unit-gallery {
     max-width: 100%;
 }
-.bx-media-tablet2 .bx-files-text-unit-gallery {
+.bx-media-tablet2 .bx-files-text-unit-gallery,
+.bx-media-desktop .bx-layout-column-half .bx-files-text-unit-gallery {
     max-width: 49.8%;
 }
 .bx-media-desktop .bx-files-text-unit-gallery {
