@@ -100,10 +100,10 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         if (isset($CNF['OBJECT_CONNECTIONS']) && $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             $oConnection->onDeleteInitiatorAndContent($oGroupProfile->id());
 
-        if(($oPrivacyView = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+        if((isset($CNF['OBJECT_PRIVACY_VIEW']) && $oPrivacyView = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacyView->deleteGroupCustomByContentId($iContentId);
 
-        if(($oPrivacyPost = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
+        if((isset($CNF['OBJECT_PRIVACY_POST']) && $oPrivacyPost = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
             $oPrivacyPost->deleteGroupCustomByContentId($iContentId);
 
         return '';
