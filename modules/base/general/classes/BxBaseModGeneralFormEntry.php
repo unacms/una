@@ -142,7 +142,14 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $sUniqId = genRndPwd (8, false);
         $aNestedForms = array();
         if (!$this->isSubmitted()){
-            $aNestedValues = $this->_oModule->_oDb->getNestedBy(array('type' => 'content_id', 'id' => $this->_iContentId, 'key_name' => $aInput['ghost_template']['params']['db']['key']), $aInput['ghost_template']['params']['db']['table']);
+            $aGhostTemplateParams = is_object($aInput['ghost_template']) ? $aInput['ghost_template']->aParams : $aInput['ghost_template']['params'];
+
+            $aNestedValues = $this->_oModule->_oDb->getNestedBy(array(
+                'type' => 'content_id', 
+                'id' => $this->_iContentId, 
+                'key_name' => $aGhostTemplateParams['db']['key']
+            ), $aGhostTemplateParams['db']['table']);
+
             foreach($aNestedValues as $aNestedValue) {
                 $aNestedValuesRv = array();
                 $oForm = $this->getNestedFormObject($aInput);  
@@ -206,7 +213,14 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     function genNestedForm (&$aInput)
     {
         $sResult = '';
-        $aNestedValues = $this->_oModule->_oDb->getNestedBy(array('type' => 'content_id', 'id' => $this->_iContentId, 'key_name' => $aInput['ghost_template']['params']['db']['key']), $aInput['ghost_template']['params']['db']['table']);
+        $aGhostTemplateParams = is_object($aInput['ghost_template']) ? $aInput['ghost_template']->aParams : $aInput['ghost_template']['params'];
+
+        $aNestedValues = $this->_oModule->_oDb->getNestedBy(array(
+            'type' => 'content_id', 
+            'id' => $this->_iContentId, 
+            'key_name' => $aGhostTemplateParams['db']['key']
+        ), $aGhostTemplateParams['db']['table']);
+
         foreach($aNestedValues as $aNestedValue) {
             $sValue = '';
 			$aNestedValuesRv = array();
@@ -453,19 +467,20 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         
-        if(!empty($iContentId)){
+        if(!empty($iContentId)) {
             foreach($this->aInputs as $aInput) {
-                if ($aInput['type'] == 'nested_form'){
-			        if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
-				        foreach ($aInput['ghost_template'] as $oFormNested) {
-					        $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
-                            if ($aInput['rateable']){
+                if ($aInput['type'] == 'nested_form') {
+                    if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
+                        foreach ($aInput['ghost_template'] as $oFormNested) {
+                            $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
+
+                            if ($aInput['rateable']) {
                                 BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $iAuthor, $this->_oModule->getName(), $iNestedContentId);
                             }
-				        }
-			        }
+                        }
+                    }
                 }
-		    }
+            }
             
             if ($bMulticatEnabled)
                 $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
@@ -525,14 +540,16 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $bMulticatEnabled = $this->_isMulticatEnabled();
         if ($bMulticatEnabled)
             $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
-        
+
         $mixedResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
-        
+
         foreach($this->aInputs as $aInput) {
             if ($aInput['type'] == 'nested_form'){
                 if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
                     foreach ($aInput['ghost_template'] as $oFormNested) {
-                        $iNestedContentId = $oFormNested->aInputs[$aInput['name']]['value'];
+                        $aSpecificValues = $oFormNested->getSpecificValues();
+                        $iNestedContentId = $oFormNested->getSubmittedValue($aInput['name'], BX_DOL_FORM_METHOD_SPECIFIC, $aSpecificValues);
+
                         if (empty($iNestedContentId)){
                             $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
                             if ($aInput['rateable']){
@@ -546,7 +563,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 }
             }
         }
-        
+
         if ($bMulticatEnabled)
             $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
         

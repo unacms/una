@@ -1163,8 +1163,14 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
                 // collect nested form values
                 $aSpecificValues = array ();
-                if (isset($this->aParams['db']['submit_name']))
-                    $aSpecificValues = array ($this->aParams['db']['submit_name'] => 1);
+                if (isset($this->aParams['db']['submit_name'])) {
+                    $sSubmitName = $this->aParams['db']['submit_name'];
+                    if(is_array($sSubmitName))
+                        $sSubmitName = reset($sSubmitName);
+        
+                    $aSpecificValues = array ($sSubmitName => 1);
+                }
+
                 foreach ($oFormNested->aInputs as $r) {
                     $sName = str_replace('[]', '', $r['name']);
                     $aValue = $this->getSubmittedValue($sName, $this->aFormAttrs['method']);
