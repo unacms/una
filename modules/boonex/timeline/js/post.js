@@ -114,7 +114,7 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
 
         oExp = new RegExp($this._sPregUrl , "ig");
         while(aMatch = oExp.exec(sData)) {
-            var sUrl = aMatch[0].replace(/^[\s(&nbsp;)]+|[\s(&nbsp;)]+$/gm,'');
+            var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');
             if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined || ($this._iLimitAttachLinks != 0 && Object.keys($this._oAttachedLinks).length >= $this._iLimitAttachLinks))
                 continue;
 
