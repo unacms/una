@@ -3519,7 +3519,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_favorite', 'system', 'action', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_favorite', 'system', 'id', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_favorite', 'system', 'list', '', '#!sys_report_types', 0, 'checkbox_set', '_sys_form_favorite_input_caption_system_list', '_sys_form_favorite_input_caption_list', '', 1, 0, 0, '', '', '', 'Avail', '', '_Please select value', 'Xss', '', 1, 0),
-('sys_favorite', 'system', 'new_list', '_sys_form_favorite_input_caption_button_new_list', '', 0, 'button', '', '', '', 0, 0, 0, 'a:1:{s:7:"onclick";s:25:"{js_object}.showNewList(this)";}', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_favorite', 'system', 'new_list', '_sys_form_favorite_input_caption_button_new_list', '', 0, 'button', '', '', '', 0, 0, 0, 'a:1:{s:7:"onclick";s:29:"{js_object}.showNewList(this)";}', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_favorite', 'system', 'title', '', '', 0, 'text', '_sys_form_favorite_input_caption_system_title', '_sys_form_favorite_input_caption_title', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_favorite', 'system', 'allow_view_favorite_list_to', '', '', 0, 'custom', '_sys_form_favorite_input_caption_system_allow_view_to', '_sys_form_favorite_input_caption_allow_view_to', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_favorite', 'system', 'submit', '_sys_form_favorite_input_caption_submit', '', 0, 'submit', '_sys_form_favorite_input_caption_system_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
