@@ -56,11 +56,6 @@ BxDolStudioFormsSearchFields.prototype.reloadGrid = function(sModule, sObject) {
 	if(!sModule) 
 		sObject = '';
 
-    console.log(sModule);
-    console.log(sObject);
-    console.log($('#bx-grid-form-' + this.sObjNameGrid).val());
-      console.log('#bx-grid-form-' + this.sObjNameGrid);
-    
 	var oSearch = $('#bx-form-element-keyword');
 	var oActions = $("[bx_grid_action_independent]");
 	if(!sObject) {
