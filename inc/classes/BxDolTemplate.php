@@ -2968,28 +2968,41 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             }
         }
 
+        /** 
+         * Module(mod) related locations will be checked first in TMPL and BASE,
+         * then system(sys) location(s) will be checked in TMPL and BASE.
+         */
+        $aLocationsList = array_reverse($this->_aLocations, true);
+        $aLocationsGrouped = ['mod' => [], 'sys' => []];
+        foreach($aLocationsList as $sLocation => $aLocation) {
+            if($sLocation == 'system')
+                $aLocationsGrouped['sys'][$sLocation] = $aLocation;
+            else
+                $aLocationsGrouped['mod'][$sLocation] = $aLocation;
+        }
+
         $sResult = '';
-        $aLocations = array_reverse($this->_aLocations, true);
+        foreach($aLocationsGrouped as $aLocations) {
+            //--- Check it Template.
+            $bInSub = false;
+            $aCheckIn = [BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL];
+            if(in_array($sCheckIn, $aCheckIn) || $bInSub = (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], $aCheckIn)))
+                foreach($aLocations as $sKey => $aLocation)
+                    if((!$bInSub || $sCheckIn['sub'] == $sKey) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName)) {
+                        $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sKey . $sDivider . $sFolder . $sName;
+                        break 2;
+                    }
 
-        //--- Check it Template.
-        $bInSub = false;
-        $aCheckIn = [BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_TMPL];
-        if(in_array($sCheckIn, $aCheckIn) || $bInSub = (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], $aCheckIn)))
-            foreach($aLocations as $sKey => $aLocation)
-                if((!$bInSub || $sCheckIn['sub'] == $sKey) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName)) {
-                    $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sKey . $sDivider . $sFolder . $sName;
-                    break;
-                }
-
-        //--- Check it Base.
-        $bInSub = false;
-        $aCheckIn = [BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE];
-        if(empty($sResult) && (in_array($sCheckIn, $aCheckIn) || $bInSub = (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], $aCheckIn))))
-            foreach($aLocations as $sKey => $aLocation)
-                if((!$bInSub || $sCheckIn['sub'] == $sKey) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName)) {
-                    $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
-                    break;
-                }
+            //--- Check it Base.
+            $bInSub = false;
+            $aCheckIn = [BX_DOL_TEMPLATE_CHECK_IN_BOTH, BX_DOL_TEMPLATE_CHECK_IN_BASE];
+            if(empty($sResult) && (in_array($sCheckIn, $aCheckIn) || $bInSub = (isset($sCheckIn['in'], $sCheckIn['sub']) && in_array($sCheckIn['in'], $aCheckIn))))
+                foreach($aLocations as $sKey => $aLocation)
+                    if((!$bInSub || $sCheckIn['sub'] == $sKey) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName)) {
+                        $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
+                        break 2;
+                    }
+        }
 
         /**
          * try to find from received path
