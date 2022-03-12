@@ -1,3 +1,8 @@
+/*-- Unit --*/
+.bx-base-text-unit-cnt {
+    width: 100%;
+}
+
 /*-- Browsing: Search results --*/
 .bx-base-text-unit-gallery-wrapper {
     display: -webkit-flex;
