@@ -275,7 +275,6 @@ function bx_editor_init(oEditor, oParams){
     
 function bx_editor_insert_html (sEditorId, sImgId, sHtml) 
 {
-    console.log(999);
     if ($('#' + sEditorId) &&  $('#' + sEditorId).attr('object_editor')){
         eval ('oEditor = ' + $('#' + sEditorId).attr('object_editor'));
         if (oEditor.getSelection())
