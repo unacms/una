@@ -249,7 +249,7 @@ function bx_editor_init(oEditor, oParams){
             return true;
         }
     });
-    console.log(oParams.insert_as_plain_text);
+
     if (oParams.insert_as_plain_text){
         oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
             var plaintext = $ (node).text ();
