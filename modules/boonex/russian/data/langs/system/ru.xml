@@ -1619,6 +1619,7 @@
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
+    <string name="_adm_stg_cpt_option_sys_quill_insert_as_plain_text"><![CDATA[Quill - вставлять как текст]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill кнопки для мини редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill кнопки для стандартного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons кнопки для полного редактора]]></string>

@@ -1634,6 +1634,7 @@
     <string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
     <string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
+    <string name="_adm_stg_cpt_option_sys_quill_insert_as_plain_text"><![CDATA[Quill - paste as plain text]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill buttons for mini editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill buttons for standard editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons for full editor]]></string>
