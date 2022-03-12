@@ -195,7 +195,7 @@ class BxBaseServiceAccount extends BxDol
     public function serviceEmailConfirmation($sMsg = false)
     {
         // if user is logged in and email is confirmed then just display a message
-        if (isLogged()) {
+        if (isLogged() && !bx_get('code')) {
             $oAccount = BxDolAccount::getInstance();
             if ($oAccount->isConfirmedEmail())
                 return MsgBox(_t("_sys_txt_confirm_email_already_confirmed"));
