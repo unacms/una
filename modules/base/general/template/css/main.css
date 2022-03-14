@@ -104,15 +104,8 @@ div.bx-base-general-breadcrumb i {
 }
 
 /* attachments */
-.bx-base-general-attachments {
-    margin:-1px;
-}
-.bx-base-general-attachment {
-    position:relative;
-    margin:1px;
-    text-align: center;
-}
-.bx-base-general-attachments .bx-base-general-attachment video {
+.bx-base-general-attachments .bx-base-general-attachment video,
+.flickity-enabled .flickity-viewport .flickity-slider .bx-base-general-attachment video {
     max-width:100%;
     max-height:100%;
 }

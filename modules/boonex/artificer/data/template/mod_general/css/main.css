@@ -1,3 +1,37 @@
+/* attachments */
+.bx-base-general-attachments .bx-base-general-attachment video,
+.flickity-enabled .flickity-viewport .flickity-slider .bx-base-general-attachment video {
+    max-width:100%;
+    max-height:100%;
+}
+.bx-base-general-attachment a div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.bx-base-general-attachment a canvas {
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.bx-base-general-attachment-sound {
+    position:relative;
+    height:100%;
+}
+.bx-base-general-attachment-sound-file-name,
+.bx-base-general-attachment-sound-player {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+.bx-base-general-attachment-sound-file-name {
+    height:9.25rem;
+}
+.bx-base-general-attachment-sound-player {
+    height:3.25rem;
+}
+
 /* unit meta */
 .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
     -webkit-flex-wrap: wrap;

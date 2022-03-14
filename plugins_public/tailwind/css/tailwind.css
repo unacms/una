@@ -32,6 +32,10 @@
         @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
 
+    .bx-artificer .bx-def-box {
+        @apply flex flex-col ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 overflow-hidden rounded;
+    }
+
     .bx-artificer .bx-def-box-sizing {
         @apply box-border;
     }
