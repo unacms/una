@@ -249,6 +249,14 @@ function bx_editor_init(oEditor, oParams){
             return true;
         }
     });
+
+    if (oParams.insert_as_plain_text){
+        oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
+            var plaintext = $ (node).text ();
+            const Delta = Quill.import('delta')
+            return new Delta().insert (plaintext);
+        });
+    }
     
     oEditor.keyboard.bindings[13].unshift({
         key: 13,

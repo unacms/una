@@ -52,10 +52,10 @@ BxDolFavorite.prototype.favorite = function(oLink) {
     );
 };
 
-BxDolFavorite.prototype.showNewList = function () {
-    $("#bx-form-element-title").show();
-    $("#bx-form-element-allow_view_favorite_list_to").show();
-    $("#bx-form-element-new_list").hide();
+BxDolFavorite.prototype.showNewList = function (obj) {
+    $(obj).parents('form').find("#bx-form-element-title").show();
+    $(obj).parents('form').find("#bx-form-element-allow_view_favorite_list_to").show();
+    $(obj).parents('form').find("#bx-form-element-new_list").hide();
 }
 
 BxDolFavorite.prototype.cmtDelete = function (obj, list_id) {
