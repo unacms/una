@@ -34,7 +34,7 @@
     margin: 0px;
     vertical-align: top;
 }
-.bx-files-inline-menu ul.bx-menu-object-bx_files_view_inline li.bx-menu-item {
+.bx-files-inline-menu ul.bx-menu-object-bx_files_view_inline > li.bx-menu-item {
     white-space: nowrap;
 }
 .bx-files-text-unit-gallery .bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto {

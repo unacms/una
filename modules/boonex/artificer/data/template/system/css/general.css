@@ -22,6 +22,10 @@ import url(../../../../../../../template/css/general.css);
     height: 3.25rem;
 }
 
+.bx-menu-main-bar:not(.bx-menu-more-auto) .bx-menu-main-bar-cnt > div {
+    overflow-x: auto;
+}
+
 .bx-menu-main-bar-gap.bx-menu-main-bar-hidden,
 .bx-menu-main-bar-wrapper.bx-menu-main-bar-hidden,
 .bx-menu-main-bar.bx-menu-main-bar-hidden {
