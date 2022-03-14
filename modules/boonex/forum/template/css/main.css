@@ -486,7 +486,7 @@
 #bx-forum-snippet-meta-main{
     overflow: hidden;
     display: flex;
-    flex-wrap: nowrap;
+    grid-row-gap: 0.5rem;
 }
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-info .bx-base-pofile-unit A,
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-title A{
@@ -499,6 +499,24 @@
     margin-bottom: 0px;
     margin-right: 0px;
 }
+.bx-base-unit-showcase.bx-forum-unit{
+    display: inline-block;
+}
+/* one item */
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(1) {
+    width: 100% !important;
+}
+/* two items */
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(2),
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(2) ~ .bx-forum-unit {
+    width: 50%  !important;
+}
+/* 3 items or more */
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3),
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3) ~ .bx-forum-unit {
+    width: 33.3333%;
+}
+
 /* ---------------new meta menu need to move incore*/
 
 .bx-menu-meta-icon img,
@@ -519,5 +537,4 @@
 .bx-menu-meta-item-ex{
     margin-right: 0.5rem !important;
 }
-
 
