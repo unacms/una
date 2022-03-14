@@ -15,6 +15,8 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
 {
     protected $_oCmts;
     protected $_aCmt;
+    protected $_aBp;
+    protected $_aDp;
 
     protected $_bShowTitles;
 
@@ -22,16 +24,22 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     {
         parent::__construct ($aObject, $oTemplate);
 
+        $this->_aBp = [];
+        $this->_aDp = [];
+
         $this->_bShowTitles = false;
     }
 
-    public function setCmtsData($oCmts, $iCmtId)
+    public function setCmtsData($oCmts, $iCmtId, $aBp = [], $aDp = [])
     {
         if(empty($oCmts) || empty($iCmtId))
             return;
 
         $this->_oCmts = $oCmts;
         $this->_aCmt = $oCmts->getCommentRow($iCmtId);
+
+        $this->_aBp = $aBp;
+        $this->_aDp = $aDp;
 
         $sJsObject = $oCmts->getJsObjectName();
         $this->addMarkers(array(
@@ -43,6 +51,22 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
             'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')',
             'quote_onclick' => $sJsObject . '.toggleQuote(this, ' . $iCmtId . ')'
         ));
+    }
+
+    public function getMenuItems()
+    {
+        if((int)$this->_aCmt['cmt_pinned'] > 0 && !empty($this->_aBp['pinned']))
+            $this->_aObject['menu_items'] = [
+                'item-unpin' => [
+                    'name' => 'item-unpin', 
+                    'title' => '_sys_menu_item_title_cmts_item_unpin', 
+                    'link' => 'javascript:void(0)',
+                    'onclick' => 'javascript:{js_object}.cmtPin(this, {content_id}, 0)',
+                    'icon' => 'thumbtack'
+                ]
+            ];
+
+        return parent::getMenuItems();
     }
 
     protected function _getMenuItemItemVote($aItem)
@@ -75,24 +99,24 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     {
         $oScore = $this->_oCmts->getScoreObject($this->_aCmt['cmt_unique_id']);
         if(!$oScore)
-        	return false;
+            return false;
 
         $aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
         if($this->_bShowTitles)
-		    $aScoresParams['show_do_vote_label'] = true;
+            $aScoresParams['show_do_vote_label'] = true;
 
     	return $oScore->getElementInline($aScoresParams);
     }
 
-	protected function _getMenuItemItemReport($aItem)
+    protected function _getMenuItemItemReport($aItem)
     {
         $oReport = $this->_oCmts->getReportObject($this->_aCmt['cmt_unique_id']);
         if(!$oReport)
-        	return false;
+            return false;
 
         $aReportParams = array('dynamic_mode' => $this->_bDynamicMode);
         if($this->_bShowTitles)
-		    $aReportParams['show_do_report_label'] = true;
+            $aReportParams['show_do_report_label'] = true;
 
     	return $oReport->getElementInline($aReportParams);
     }
@@ -107,7 +131,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!parent::_isVisible($a))
             return false;
 
-        if((int)$this->_aCmt['cmt_pinned'] > 0 && !in_array($a['name'], array('item-pin', 'item-unpin', 'item-more')))
+        if((int)$this->_aCmt['cmt_pinned'] > 0 && !empty($this->_aBp['pinned']) && $a['name'] != 'item-unpin')
             return false;
 
         $sCheckFuncName = '';

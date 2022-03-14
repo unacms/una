@@ -151,7 +151,7 @@ class BxBaseCmts extends BxDolCmts
         //add live update
 
         $sComments = $this->getComments($aBp, $aDp);
-        $sCommentsPinned = $this->getCommentsPinned($aBp, $aDp);
+        $sCommentsPinned = $this->getCommentsPinned(array_merge($aBp, ['pinned' => 1]), $aDp);
         $sContentBefore = $this->_getContentBefore($aBp, $aDp);
         $sContentAfter = $this->_getContentAfter($aBp, $aDp);
         $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)));
@@ -345,7 +345,7 @@ class BxBaseCmts extends BxDolCmts
         if(!empty($aDp['class_comment_content']))
             $sClassCnt .= ' ' . $aDp['class_comment_content'];
 
-        $sActions = $this->_getActionsBox($aCmt, $aDp);
+        $sActions = $this->_getActionsBox($aCmt, $aBp, $aDp);
 
         $aTmplReplyTo = array();
         if((int)$aCmt['cmt_parent_id'] != 0) {
@@ -916,7 +916,7 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
-    protected function _getActionsBox(&$aCmt, $aDp = array())
+    protected function _getActionsBox(&$aCmt, $aBp = [], $aDp = [])
     {
     	$bViewOnly = isset($aDp['view_only']) && $aDp['view_only'] === true;
     	$bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
@@ -924,7 +924,7 @@ class BxBaseCmts extends BxDolCmts
         $sMenuActions = '';
         if(!$bViewOnly) {
             $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
-            $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
+            $oMenuActions->setCmtsData($this, $aCmt['cmt_id'], $aBp, $aDp);
             $oMenuActions->setDynamicMode($bDynamicMode);
             $sMenuActions = $oMenuActions->getCode();
         }

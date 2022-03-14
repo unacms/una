@@ -1840,6 +1840,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
         $aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
         $aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
+        $aBp['pinned'] = isset($aBp['pinned']) ? (int)$aBp['pinned'] : 0;
         $aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
         $aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
 
