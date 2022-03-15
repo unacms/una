@@ -132,11 +132,12 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
         if(!$iViewerId)
             $iViewerId = $this->_iViewerId;
 
+        $iCfwValue = $this->getDefaultValue();
         $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewerId);
-        if(!$aViewerInfo)
-            return false;
+        if(!empty($aViewerInfo) && is_array($aViewerInfo))
+            $iCfwValue = $aViewerInfo['cfw_value'];
 
-        return (1 << ($iValue - 1)) & $aViewerInfo['cfw_value'];
+        return (1 << ($iValue - 1)) & $iCfwValue;
     }
 
     public function getSQLParts($sContentTable, $sContentField, $iViewerId = 0)
