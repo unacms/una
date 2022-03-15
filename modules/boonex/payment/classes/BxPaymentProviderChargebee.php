@@ -17,6 +17,7 @@ use ChargeBee\ChargeBee\Models\Addon;
 use ChargeBee\ChargeBee\Models\Customer;
 use ChargeBee\ChargeBee\Models\HostedPage;
 use ChargeBee\ChargeBee\Models\Subscription;
+use ChargeBee\ChargeBee\Models\Invoice;
 
 class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
@@ -57,7 +58,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         $aClient = $this->_oModule->getProfileInfo();
         $aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
 
-        $oPage = $this->createHostedPage($aItem, $aClient, $aVendor, $iPendingId);
+        $oPage = $this->createHostedPageRecurring($aItem, $aClient, $aVendor, $iPendingId);
         if($oPage === false)
             return $this->_sLangsPrefix . 'err_cannot_perform';
 
@@ -120,21 +121,65 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         return $this->deleteSubscription($sSubscriptionId);
     }
 
-    public function createHostedPage($aItem, $aClient, $aVendor = array(), $iPendingId = 0)
+    public function createHostedPageSingle($aItem, $aClient, $aVendor = array(), $iPendingId = 0)
     {
         $oPage = false;
 
         try {
-            $aPage = array(
+            $aPage = [
                 'embed' => false, //--- Note. 'embed' should be disabled to allow payments via PayPal
-                'subscription' => array(
-                    'planId' => $aItem['name']
-                ),
-                'customer' => array(
+                'charges' => [
+                    [
+                        'amount' => $aItem['amount'], 
+                        'description' => $aItem['description'],
+                    ]
+                ],
+                'customer' => [
                     'email' => $aClient['email'],
                     'firstName' => $aClient['name']
-                ), 
-            );
+                ],
+            ];
+
+            if(!empty($aItem['addons']) && is_array($aItem['addons']))
+                $aPage['addons'] = $aItem['addons'];
+
+            if(!empty($aVendor) && is_array($aVendor) && !empty($aVendor))
+                $aPage['redirectUrl'] = bx_append_url_params($this->getReturnDataUrl($aVendor['id']), array(
+                    'pending_id' => $iPendingId
+                ));
+
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = HostedPage::checkoutOneTime($aPage);
+
+            $oPage = $oResult->hostedPage();
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
+
+            $this->log('Create Hosted Page Error: ' . $sError . '(' . $iError . ')');
+
+            return false;
+        }
+
+        return $oPage;
+    }
+
+    public function createHostedPageRecurring($aItem, $aClient, $aVendor = array(), $iPendingId = 0)
+    {
+        $oPage = false;
+
+        try {
+            $aPage = [
+                'embed' => false, //--- Note. 'embed' should be disabled to allow payments via PayPal
+                'subscription' => [
+                    'planId' => $aItem['name']
+                ],
+                'customer' => [
+                    'email' => $aClient['email'],
+                    'firstName' => $aClient['name']
+                ], 
+            ];
 
             if(!empty($aItem['addons']) && is_array($aItem['addons']))
                 $aPage['addons'] = $aItem['addons'];
@@ -249,6 +294,30 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         $this->onDeleteSubscription($sSubscriptionId, $oSubscription->getValues());
 
         return true;
+    }
+
+    public function retrieveInvoice($sInvoiceId)
+    {
+        $oInvoice = null;
+
+        try {
+            Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = Invoice::retrieve($sInvoiceId);
+
+            $oInvoice = $oResult->invoice();
+            if($oInvoice->id != $sInvoiceId)
+                return false;
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
+
+            $this->log('Retrieve Invoice Error: ' . $sError . '(' . $iError . ')');
+
+            return false;
+        }
+
+        return $oInvoice;
     }
 
     public function retrieveAddons($sStatus = 'active', $iLimit = 0)

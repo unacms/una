@@ -237,6 +237,12 @@ class BxBaseModPaymentCart extends BxDol
         return isset($aContent[$iSellerId]) && is_array($aContent[$iSellerId]) ? $aContent[$iSellerId] : array();
     }  
 
+    public function getCartItems($iUserId, $iSellerId = 0)
+    {
+        $aContent = $this->_parseByVendor($iUserId);
+        return $iSellerId != 0 && isset($aContent[$iSellerId]) && is_array($aContent[$iSellerId]) ? $aContent[$iSellerId] : [];
+    }  
+
     protected function _parseByVendor($iUserId)
     {                            
         $aCart = $this->_oModule->_oDb->getCartContent($iUserId);
