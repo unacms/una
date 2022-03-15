@@ -36,7 +36,7 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             return $aItem;
 
         $aItem['class'] = isset($aItem['class']) ? $aItem['class'] : '';
-        if($this->_bInlineIcons && $aItem['bx_if:image']['condition'] && strpos($aItem['bx_if:image']['content']['icon_url'], '.svg') !== false)
+        if($this->_bInlineIcons && $aItem['bx_if:image']['condition'] && strpos($aItem['icon'], '.svg') !== false) {
             $aItem = array_merge($aItem, array(
                 'bx_if:image' => array (
                     'condition' => false,
@@ -45,10 +45,11 @@ class BxBaseStudioMenu extends BxDolStudioMenu
                 'bx_if:image_inline' => array (
                     'condition' => true,
                     'content' => array(
-                        'image' => bx_file_get_contents($aItem['bx_if:image']['content']['icon_url'])
+                        'image' => file_get_contents($this->_oTemplate->getIconPath($aItem['icon']))
                     ),
                 ),
             ));
+        }
 
         return $aItem;
     }
