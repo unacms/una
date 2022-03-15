@@ -363,7 +363,11 @@
     border-bottom: 1px solid #F4F4F5
 }
 .dark #bx-grid-table-bx_forum tr{
-    border-bottom: 1px solid rgb(55 65 81);
+    border-bottom: 1px solid rgb(31 41 55);
+}
+.bx-grid-table-cell-participants .sys-action-counter-iconset .ml-2
+{
+    display: none;
 }
 .bx-grid-table-cell-participants .cmt-counter{
     float: right;
@@ -465,7 +469,7 @@
     color:rgb(107,114,128) !important;
 }
 .bx-forum-unit .bx-base-text-unit-no-thumb{
-    background: url("data:image/svg+xml,%3Csvg width='32' height='26' viewBox='0 0 32 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 0v3.994C14 7.864 10.858 11 7 11c-3.866 0-7-3.138-7-7.006V0h2v4.005C2 6.765 4.24 9 7 9c2.756 0 5-2.236 5-4.995V0h2zm0 26v-5.994C14 16.138 10.866 13 7 13c-3.858 0-7 3.137-7 7.006V26h2v-6.005C2 17.235 4.244 15 7 15c2.76 0 5 2.236 5 4.995V26h2zm2-18.994C16 3.136 19.142 0 23 0c3.866 0 7 3.138 7 7.006v9.988C30 20.864 26.858 24 23 24c-3.866 0-7-3.138-7-7.006V7.006zm2-.01C18 4.235 20.244 2 23 2c2.76 0 5 2.236 5 4.995v10.01C28 19.765 25.756 22 23 22c-2.76 0-5-2.236-5-4.995V6.995z' fill='%230694A2' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"), linear-gradient(90deg, #3F83F8 0%, #0694A2 100%);
+    background: url("data:image/svg+xml,%3Csvg width='16' height='20' viewBox='0 0 16 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M8 0v20L0 10M16 0v10L8 0M16 10v10H8'/%3E%3C/g%3E%3C/svg%3E"), linear-gradient(90deg, #3F83F8 0%, #0694A2 100%);
     text-align: left;
     color:#fff;
     border-radius: 7px 7px 0 0;
@@ -486,7 +490,7 @@
 #bx-forum-snippet-meta-main{
     overflow: hidden;
     display: flex;
-    flex-wrap: nowrap;
+    grid-row-gap: 0.5rem;
 }
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-info .bx-base-pofile-unit A,
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-title A{
@@ -499,6 +503,24 @@
     margin-bottom: 0px;
     margin-right: 0px;
 }
+.bx-base-unit-showcase.bx-forum-unit{
+    display: inline-block;
+}
+/* one item */
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(1) {
+    width: 100% !important;
+}
+/* two items */
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(2),
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(2) ~ .bx-forum-unit {
+    width: 50%  !important;
+}
+/* 3 items or more */
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3),
+.bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3) ~ .bx-forum-unit {
+    width: 33.3333%;
+}
+
 /* ---------------new meta menu need to move incore*/
 
 .bx-menu-meta-icon img,
@@ -519,5 +541,4 @@
 .bx-menu-meta-item-ex{
     margin-right: 0.5rem !important;
 }
-
 

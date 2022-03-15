@@ -1514,7 +1514,7 @@ BLAH;
                         continue;
 
                    $aTmplVarsVals[] = [
-                       'item_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+                       'item_unit' => $oProfile->getUnit(0, ['template' => ['name' => 'unit_wo_info', 'size' => 'icon']]),
                        'item_name' => $oProfile->getDisplayName(),
                        'name' => $aInput['name'] . (isset($aInput['custom']['only_once']) && $aInput['custom']['only_once'] == 1 ? '' : '[]'),
                        'value' => $sVal
