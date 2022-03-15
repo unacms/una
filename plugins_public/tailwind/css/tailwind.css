@@ -290,7 +290,7 @@
 
     /* Fonts */
     .bx-def-font,
-    .bx-artificer .bx-def-font-inputs {
+    .bx-artificer .bx-def-font-inputs:not(.bx-btn) {
         @apply font-inter text-gray-500 dark:text-gray-400;
     }
 
