@@ -46,6 +46,11 @@ div.bx-score-counter-holder {
     line-height: 1.25rem;
 }
 
+.bx-score-counter-holder{
+    min-width: 40px !important;
+    text-align: center;
+}
+
 .bx-score-button .bx-score-element-holder,
 .bx-score-button .bx-score-counter-holder {
     line-height: 36px;

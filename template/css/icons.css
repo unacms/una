@@ -4266,15 +4266,3 @@
 
 .sys-icon.zhihu:before, .fa-zhihu:before {
   content: "\f63f"; }
-
-/* icons */
-.sys-icon-emoji{
-    font-weight: normal !important;
-}
-.sys-icon-image,
-.sys-icon-svg{
-    width: 1.5rem;
-    height: 1.5rem;
-    background-size: contain;
-    display: inline-block;
-}
