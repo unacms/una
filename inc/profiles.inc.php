@@ -114,7 +114,14 @@ function bx_login($iId, $bRememberMe = false)
     $oAccountQuery->updateLoggedIn($iId);
 
     bx_alert('account', 'login',  $iId);
-
+    
+    bx_audit(
+        $iId, 
+        'bx_accounts', 
+        '_sys_audit_action_account_login',  
+        array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]])
+    );
+    
     return $oAccountQuery->getInfoById($iId);
 }
 
@@ -126,6 +133,13 @@ function bx_logout($bNotify = true)
     if ($bNotify && isMember())
         bx_alert('account', 'logout', (int)$_COOKIE['memberID']);
 
+    bx_audit(
+        $_COOKIE['memberID'], 
+        'bx_accounts', 
+        '_sys_audit_action_account_logout',  
+        array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]])
+    );
+    
     $aUrl = parse_url(BX_DOL_URL_ROOT);
     $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 
@@ -199,6 +213,14 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
         ));
     
     if ($sErrorMsg = bx_check_login($aAccountInfo['id'], $sPassCheck, $iRole)){
+        bx_audit(
+            $aAccountInfo['id'], 
+            'bx_accounts', 
+            '_sys_audit_action_account_failed_login_attempt',  
+            array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]]),
+            $aAccountInfo['profile_id']
+        );
+
         $iMaxLoginAttempts = getParam('sys_account_limit_incorrect_login_attempts');
         if ($iMaxLoginAttempts >0){
             $oAccountQuery = BxDolAccountQuery::getInstance();

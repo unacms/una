@@ -293,7 +293,6 @@ function process_pass_data( $text, $strip_tags = 0 )
 {
     if ( $strip_tags )
         $text = strip_tags($text);
-
     if ( !get_magic_quotes_gpc() )
         return $text;
     else
@@ -1564,12 +1563,14 @@ function bx_unicode_urldecode($s)
  * @param string $sAction - system action key
  * @param array $aParams - array of parameters 
  */
-function bx_audit($iContentId, $sContentModule, $sAction, $aParams)
+function bx_audit($iContentId, $sContentModule, $sAction, $aParams, $iProfileId = 0)
 {
     if (!getParam('sys_audit_enable') || getParam('sys_audit_acl_levels') == '')
         return;
     
-    $iProfileId = bx_get_logged_profile_id();
+    if ($iProfileId == 0)
+        $iProfileId = bx_get_logged_profile_id();
+    
     if (!BxDolAcl::getInstance()->isMemberLevelInSet(explode(',', getParam('sys_audit_acl_levels')), $iProfileId))
         return;
     

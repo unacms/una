@@ -33,6 +33,11 @@ class BxAccntModule extends BxBaseModGeneralModule
             'xml' => _t('_bx_accnt_txt_export_to_xml'),
         );
     }
+    
+    public function serviceGetTitle ($iContentId)
+    {
+        return BxDolAccount::getInstance($iContentId)->getEmail();
+    }
 
     public function serviceGetOptionsExportFields()
     {

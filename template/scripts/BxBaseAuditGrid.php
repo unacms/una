@@ -47,12 +47,25 @@ class BxBaseAuditGrid extends BxDolAuditGrid
         $mixedValue = '';
         if ($aRow['content_id'] > 0){
 			$sLink = BxDolRequest::serviceExists($aRow['content_module'], 'get_link') ? BxDolService::call($aRow['content_module'], 'get_link', array($aRow['content_id'])) : '';
-			$sTitle = BxDolRequest::serviceExists($aRow['content_module'], 'get_title') ? BxDolService::call($aRow['content_module'], 'get_title', array($aRow['content_id'])) : '';
+			$sTitle = BxDolRequest::serviceExists($aRow['content_module'], 'get_title') ? BxDolService::call($aRow['content_module'], 'get_title', array($aRow['content_id'])) : $aRow['content_title'];
             if ($sLink){
                 $mixedValue = BxDolTemplate::getInstance()->parseLink($sLink, $sTitle);
             }
+            else{
+                $mixedValue = $sTitle;
+            }
         }
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        $sLinkExtras = '';
+        $aExtras = unserialize($aRow['extras']);
+        if (isset($aExtras['display_info'])){
+            $sLinkExtras = $this->_oTemplate->parseLink('javascript:void(0)',' <i class="sys-icon info-circle"></i>' , array(
+                'title' => '',
+                'bx_grid_action_single' => 'show_stat',
+                'bx_grid_action_data' => $aRow['extras']
+            ));
+        }
+        
+        return parent::_getCellDefault($mixedValue . $sLinkExtras, $sKey, $aField, $aRow);
     }
     
     protected function _getCellContextProfileId ($mixedValue, $sKey, $aField, $aRow)
@@ -201,6 +214,22 @@ class BxBaseAuditGrid extends BxDolAuditGrid
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputModules, true);
     }
+    
+    public function performActionShowStat()
+    {
+		$aTmp2 = bx_get('ids');
+		$sData = $aTmp2[0];
+        $aData = unserialize($sData);
+        $sContentInfo = '';
+        if (isset($aData['display_info'])){
+            foreach($aData['display_info'] as $sKey => $sValue)
+                $sContentInfo .= $sKey . ': ' . $sValue;
+        }
+		
+		$sContent = BxTemplStudioFunctions::getInstance()->popupBox('sys-audit-content-info', _t('_sys_audit_content_info_popup_title'), $sContentInfo);
+        
+		echoJson(array('popup' => $sContent));
+	}
     
 }
 

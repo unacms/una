@@ -1958,6 +1958,7 @@
         <string name="_sys_acl_state"><![CDATA[Состояние: ]]></string>
         <string name="_sys_acl_state_trial"><![CDATA[Пробный]]></string>
 
+  <string name="_sys_audit_content_info_popup_title"><![CDATA[Информация]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>
   <string name="_sys_audit_action_add_content"><![CDATA[Контент добавлен]]></string>
   <string name="_sys_audit_action_detete_content"><![CDATA[Контент удален]]></string>
@@ -1973,6 +1974,9 @@
   <string name="_sys_audit_action_account_change_role_to_3"><![CDATA[Добавлен в операторы]]></string>
   <string name="_sys_audit_action_account_change_role_to_1"><![CDATA[Удален из операторов]]></string>
   <string name="_sys_audit_action_account_unlock"><![CDATA[Разблокирован]]></string>
+  <string name="_sys_audit_action_account_login"><![CDATA[Вход]]></string>
+  <string name="_sys_audit_action_account_failed_login_attempt"><![CDATA[Неудачная попытка входа]]></string>
+  <string name="_sys_audit_action_account_logout"><![CDATA[Выход]]></string>
   <string name="_sys_audit_action_account_reset_password"><![CDATA[Пароль сброшен]]></string>
   <string name="_sys_audit_action_account_resend_confirmation_email"><![CDATA[Письмо с подтверждением отправлено повторно]]></string>
   <string name="_sys_audit_action_account_deleted_with_content"><![CDATA[Удален вместе с контентом]]></string>

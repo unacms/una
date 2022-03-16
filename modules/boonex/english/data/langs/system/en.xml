@@ -1973,6 +1973,7 @@
         <string name="_sys_acl_state"><![CDATA[State: ]]></string>
         <string name="_sys_acl_state_trial"><![CDATA[Trial]]></string>
 
+  <string name="_sys_audit_content_info_popup_title"><![CDATA[Information]]></string>
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
   <string name="_sys_audit_action_add_content"><![CDATA[Content added]]></string>
   <string name="_sys_audit_action_detete_content"><![CDATA[Content removed]]></string>
@@ -1988,6 +1989,9 @@
   <string name="_sys_audit_action_account_change_role_to_3"><![CDATA[Made operator]]></string>
   <string name="_sys_audit_action_account_change_role_to_1"><![CDATA[Unmade operator]]></string>
   <string name="_sys_audit_action_account_unlock"><![CDATA[Unlocked]]></string>
+  <string name="_sys_audit_action_account_login"><![CDATA[Login]]></string>
+  <string name="_sys_audit_action_account_failed_login_attempt"><![CDATA[Failed login attempt]]></string>
+  <string name="_sys_audit_action_account_logout"><![CDATA[Logout]]></string>
   <string name="_sys_audit_action_account_reset_password"><![CDATA[Password reseted]]></string>
   <string name="_sys_audit_action_account_resend_confirmation_email"><![CDATA[Confirmation email re-sended]]></string>
   <string name="_sys_audit_action_account_deleted_with_content"><![CDATA[Removed with content]]></string>
