@@ -32,7 +32,44 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         );
     }
 
-    public function actionGetHostedPage($iClientId, $iVendorId, $sItemName)
+    public function actionGetHostedPageSingle($iClientId, $iVendorId)
+    {
+        $this->initOptionsByVendor($iVendorId);
+
+        $aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iVendorId);
+
+        $aItem = [
+            'amount' => 100 * $aCartInfo['items_price'], 
+            'description' => _t($this->_sLangsPrefix . 'txt_payment_to', $aCartInfo['vendor_name'])
+        ];
+
+        $mixedItemAddons = bx_process_input(bx_get('addons'));
+        if(!empty($mixedItemAddons)) {
+            $aItemAddons = is_array($mixedItemAddons) ? $mixedItemAddons : $this->_oModule->_oConfig->s2a($mixedItemAddons);
+
+            foreach($aItemAddons as $sItemAddon)
+                if(!isset($aItem['addons'][$sItemAddon]))
+                    $aItem['addons'][$sItemAddon] = array(
+                        'id' => $sItemAddon,
+                        'quantity' => 1
+                    );
+                else 
+                    $aItem['addons'][$sItemAddon]['quantity'] += 1;
+
+            $aItem['addons'] = array_values($aItem['addons']);
+        }
+
+        $aClient = $this->_oModule->getProfileInfo($iClientId);
+
+        $oPage = $this->createHostedPageSingle($aItem, $aClient);
+        if($oPage === false)
+            return echoJson(array());
+
+        header('Content-type: text/html; charset=utf-8');
+        echo $oPage->toJson();
+    }
+
+    public function actionGetHostedPageRecurring($iClientId, $iVendorId, $sItemName)
     {
         $this->initOptionsByVendor($iVendorId);
 
@@ -55,7 +92,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         }
         $aClient = $this->_oModule->getProfileInfo($iClientId);
 
-        $oPage = $this->createHostedPage($aItem, $aClient);
+        $oPage = $this->createHostedPageRecurring($aItem, $aClient);
         if($oPage === false)
             return echoJson(array());
 
@@ -125,22 +162,38 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return $this->_sLangsPrefix . 'err_already_processed';
 
-        if($aPending['type'] != BX_PAYMENT_TYPE_RECURRING) 
-            return $this->_sLangsPrefix . 'err_wrong_data';
+        $aResult = [];
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $oInvoice = $oPage->content()->invoice();
 
-        $oCustomer = $oPage->content()->customer();
-        $oSubscription = $oPage->content()->subscription();
+                $aResult = [
+                    'code' => 0,
+                    'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onCartCheckout(oData);',
+                    'link' => $this->getReturnDataUrl($aVendor['id'], [
+                        'order_id' => $oInvoice->id,
+                        'customer_id' => $oInvoice->customerId,
+                        'pending_id' => $aPending['id'],
+                        'redirect' => $sRedirect
+                    ])
+                ];
+                break;
 
-        return array(
-            'code' => 0,
-            'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
-            'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
-                'order_id' => $oSubscription->id,
-                'customer_id' => $oCustomer->id,
-                'pending_id' => $aPending['id'],
-                'redirect' => $sRedirect
-            ))
-        );
+            case BX_PAYMENT_TYPE_RECURRING:
+                $aResult = [
+                    'code' => 0,
+                    'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
+                    'redirect' => $this->getReturnDataUrl($aVendor['id'], [
+                        'order_id' => $oPage->content()->subscription()->id,
+                        'customer_id' => $oPage->content()->customer()->id,
+                        'pending_id' => $aPending['id'],
+                        'redirect' => $sRedirect
+                    ])
+                ];
+                break;
+        }
+
+        return $aResult;
     }
 
     public function finalizeCheckout(&$aData)
@@ -157,33 +210,56 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
-        if($aPending['type'] != BX_PAYMENT_TYPE_RECURRING) 
-            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
-
         $oCustomer = $this->retrieveCustomer($sCustomerId);
-        $oSubscription = $this->retrieveSubscription($sOrderId);
-        if($oCustomer === false || $oSubscription === false)
+        if($oCustomer === false)
             return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
-        $aResult = array(
+        $sOrder = '';
+        $aResult = [
             'code' => BX_PAYMENT_RESULT_SUCCESS,
-            'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
+            'message' => '',
             'pending_id' => $iPendingId,
-            'customer_id' => $oCustomer->id,
-            'subscription_id' => $oSubscription->id,
             'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $oCustomer->firstName, $oCustomer->lastName),
             'client_email' => $oCustomer->email,
             'paid' => false,
-            'trial' => $oSubscription->status == 'in_trial',
             'redirect' => $sRedirect
-        );
+        ];
+
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $oInvoice = $this->retrieveInvoice($sOrderId);
+                if($oInvoice === false || empty($oInvoice->linkedPayments))
+                    return ['code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
+
+                $sOrder = $oInvoice->linkedPayments[0]->txnId;
+                $aResult = array_merge($aResult, [
+                    'message' => $this->_sLangsPrefix . 'cbee_msg_charged',
+                    'paid' => $oInvoice->status == 'paid',
+                ]);
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                $oSubscription = $this->retrieveSubscription($sOrderId);
+                if($oSubscription === false)
+                    return ['code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
+
+                $sOrder = $oSubscription->id;
+                $aResult = array_merge($aResult, [
+                    'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
+                    'customer_id' => $oCustomer->id,
+                    'subscription_id' => $oSubscription->id,
+                    'trial' => $oSubscription->status == 'in_trial',
+                ]);
+
+                break;
+        }
 
         //--- Update pending transaction ---//
-        $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
-            'order' => $oSubscription->id,
+        $this->_oModule->_oDb->updateOrderPending($iPendingId, [
+            'order' => $sOrder,
             'error_code' => $aResult['code'],
             'error_msg' => _t($aResult['message'])
-        ));
+        ]);
 
         return $aResult;
     }
@@ -228,17 +304,40 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     	), $aParams));
     }
 
-    /**
-     * Single time payments aren't available with Chargebee
-     */
-    public function getButtonSingle($iClientId, $iVendorId, $aParams = array())
+    public function getButtonSingle($iClientId, $iVendorId, $aParams = [])
     {
-        return '';
+        $oCart = $this->_oModule->getObjectCart();
+        $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, (int)$iVendorId);
+        if(empty($aCartInfo) || !is_array($aCartInfo))
+            return '';
+
+        $aItems = [];
+        $aCartItems = $oCart->getCartItems($iClientId, $iVendorId);
+        foreach($aCartItems as $aCartItem)
+            $aItems[] = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
+
+    	return $this->_getButton(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iVendorId, array_merge($aParams, [
+            'iSellerId' => $iVendorId,
+            'aItems' => $aItems
+    	]));
     }
 
-    public function getButtonSingleJs($iClientId, $iVendorId, $aParams = array())
+    public function getButtonSingleJs($iClientId, $iVendorId, $aParams = [])
     {
-        return array();
+        $oCart = $this->_oModule->getObjectCart();
+        $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, (int)$iVendorId);
+        if(empty($aCartInfo) || !is_array($aCartInfo))
+            return '';
+
+        $aItems = [];
+        $aCartItems = $oCart->getCartItems($iClientId, $iVendorId);
+        foreach($aCartItems as $aCartItem)
+            $aItems[] = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
+
+    	return $this->_getButtonJs(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iVendorId, array_merge($aParams, [
+            'iSellerId' => $iVendorId,
+            'aItems' => $aItems
+    	]));
     }
 
     public function getButtonRecurring($iClientId, $iVendorId, $aParams = array())
@@ -278,9 +377,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         $sJsObject = $this->getJsObject($aParams);
         switch($sType) {
             case BX_PAYMENT_TYPE_SINGLE:
-                /**
-                 * Single time payments aren't available with Chargebee.
-                 */
+                $sJsMethod = $sJsObject . '.checkout(this)';
                 break;
 
             case BX_PAYMENT_TYPE_RECURRING:

@@ -590,6 +590,7 @@
     <string name="_bx_payment_cbee_expiration_email_cpt"><![CDATA[Email для предупреждений о заканчивающихся подписках]]></string>
     <string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
     <string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
+    <string name="_bx_payment_cbee_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
     <string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
     <string name="_bx_payment_cbee_txt_checkout_with_single"><![CDATA[Оплатить через {0}]]></string>
     <string name="_bx_payment_cbee_txt_checkout_with_recurring"><![CDATA[Оплатить через {0}]]></string>

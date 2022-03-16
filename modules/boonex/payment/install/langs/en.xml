@@ -588,6 +588,7 @@
         <string name="_bx_payment_cbee_expiration_email_cpt"><![CDATA[Expiration Email]]></string>
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
+        <string name="_bx_payment_cbee_msg_charged"><![CDATA[Payment was successfully processed.]]></string>
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
 	<string name="_bx_payment_cbee_txt_checkout_with_single"><![CDATA[Checkout with {0}]]></string>
     <string name="_bx_payment_cbee_txt_checkout_with_recurring"><![CDATA[Checkout with {0}]]></string>

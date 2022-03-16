@@ -260,7 +260,7 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 -- Chargebee V3 payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('chargebee_v3', '_bx_payment_cbee_v3_cpt', '_bx_payment_cbee_v3_dsc', 'cbee_v3_', 1, 0, 1, 1, 41, 'BxPaymentProviderChargebeeV3');
+('chargebee_v3', '_bx_payment_cbee_v3_cpt', '_bx_payment_cbee_v3_dsc', 'cbee_v3_', 1, 1, 1, 1, 41, 'BxPaymentProviderChargebeeV3');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES

@@ -711,6 +711,28 @@ class BxPaymentModule extends BxBaseModPaymentModule
         exit;
     }
 
+    public function actionInitializeCheckoutJson($sType)
+    {
+    	if(!$this->isLogged())
+            return echoJson(['code' => 1, 'message' => _t($this->_sLangsPrefix . 'err_required_login')]);
+
+        if(bx_get('seller_id') !== false && bx_get('provider') !== false && bx_get('items') !== false) {
+            $iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
+            $sProvider = bx_process_input(bx_get('provider'));
+            $aItems = bx_process_input(bx_get('items'));
+
+            $mixedResult = $this->serviceInitializeCheckout(BX_PAYMENT_TYPE_SINGLE, $iSellerId, $sProvider, $aItems);
+            if($mixedResult === false)
+                return echoJson(['code' => 2, 'message' => _t($this->_sLangsPrefix . 'err_cannot_perform')]);
+            if(is_string($mixedResult))
+                return echoJson(['code' => 3, 'message' => $mixedResult]);
+            else if(is_array($mixedResult))
+                return echoJson($mixedResult);
+        }
+
+        return echoJson(['code' => 0, 'redirect' => $this->_oConfig->getUrl('URL_CART')]);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_payment Payment
