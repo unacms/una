@@ -107,7 +107,8 @@ class BxBaseReportsGrid extends BxTemplGrid
         if ($this->_aReportSystemInfo['object_comment'] && $this->_aReportSystemInfo['object_comment'] != ''){
             $oCmts = BxDolCmts::getObjectInstance($this->_aReportSystemInfo['object_comment'], $aRow['object_id']);
             if ($oCmts){
-                $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $this->_aReportSystemInfo['name'] . "', '" . $aRow['object_id'] . "')"));  
+                $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['name']);
+                $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $oModule->_aModule['uri'] . "', '" . $aRow['object_id'] . "')"));  
             }    
         }
 
@@ -121,7 +122,8 @@ class BxBaseReportsGrid extends BxTemplGrid
         if ($this->_aReportSystemInfo['object_comment'] && $this->_aReportSystemInfo['object_comment'] != ''){
             $oCmts = BxDolCmts::getObjectInstance($this->_aReportSystemInfo['object_comment'], -$aRow['id']);
             if ($oCmts){
-                $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $this->_aReportSystemInfo['name'] . "', '" . - $aRow['id'] . "')")); 
+                $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['name']);
+                $mixedValue =  BxDolTemplate::getInstance()->parseLink('javascript:', $oCmts->getCommentsCount(), array("onclick" => "bx_get_notes(this, '" . $oModule->_aModule['uri'] . "', '" . - $aRow['id'] . "')")); 
             }
         }
 
