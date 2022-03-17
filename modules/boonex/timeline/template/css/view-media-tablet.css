@@ -15,11 +15,3 @@
 .bx-media-tablet .bx-layout-column-thin .bx-tl-grid-item-sizer {
     width: 100%;
 }
-
-/*--- Timeline Item Style ---*/
-.bx-media-tablet div.bx-tl-view-timeline div.bx-tl-item-cnt {
-    position: relative;
-
-    margin: 0px 0px 0px 48px;
-    margin: 0px 0px 0px 3.0rem;
-}
