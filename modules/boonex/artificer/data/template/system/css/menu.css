@@ -53,6 +53,9 @@ li.bx-mi-hidden {
     width: 100%;
     padding-right: 1.0rem;
 }
+.bx-popup .bx-menu-custom-ver li > span .bx-menu-addon {
+    padding-right: 0;
+}
 
 /* --- Horizontal, Custom Horizontal Menus --- */
 .bx-menu-custom .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item,
