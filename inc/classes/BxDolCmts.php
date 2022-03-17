@@ -1398,7 +1398,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             if($oTranscoder && $oTranscoder->isMimeTypeSupported($aSibling['mime_type']))
                 $sFile = $oStorage->getFileUrlById($aSibling['image_id']);
             else
-                $sFile = $oStorage->getFontIconNameByFileName($aFile['file_name']);
+                $sFile = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
 
             $aImageInfo = BxDolImageResize::getInstance()->getImageSize($sFile);
 

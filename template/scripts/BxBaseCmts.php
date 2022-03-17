@@ -195,7 +195,7 @@ class BxBaseCmts extends BxDolCmts
             'script' => $sJsContent
         ));
 
-        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
+        BxDolTemplate::getInstance()->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
 
         return $aDp['in_designbox'] ? DesignBoxContent($sBlockTitle, $sContent, BX_DB_DEF, $sBlockMenu) : array(
             'title' => $sBlockTitle,
@@ -287,7 +287,7 @@ class BxBaseCmts extends BxDolCmts
         if (!$sComment)
             return '';
 
-        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
+        BxDolTemplate::getInstance()->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
 
         return $this->_oTemplate->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
@@ -463,7 +463,7 @@ class BxBaseCmts extends BxDolCmts
         if(empty($sAddon))
             $sAddon = $this->getJsScript($aBp, $aDp);
 
-        $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
+        BxDolTemplate::getInstance()->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
 
         return $this->_oTemplate->parseHtmlByName('comment_search.html', array(
             'comment' => $this->getComment($iCmtId, $aBp, $aDp),

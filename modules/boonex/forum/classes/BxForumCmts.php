@@ -75,9 +75,19 @@ class BxForumCmts extends BxTemplCmts
     public function getCommentsBlock($aBp = array(), $aDp = array())
     {
         $mixedBlock = parent::getCommentsBlock($aBp, $aDp);
-        if (is_array($mixedBlock) && isset($mixedBlock['title']))
+        if(is_array($mixedBlock) && isset($mixedBlock['title']))
             $mixedBlock['title'] = _t('_bx_forum_page_block_title_entry_comments', $this->getCommentsCount());
+
         return $mixedBlock;
+    }
+    
+    public function getCommentBlock($iCmtId = 0, $aBp = [], $aDp = [])
+    {
+        $sResult = parent::getCommentBlock($iCmtId, $aBp, $aDp);
+        if(!empty($sResult))
+            $this->_oModule->_oTemplate->addCss('main.css');
+
+        return $sResult;
     }
     
     protected function _getCounterItems($iCmtsLimit, $iCmtsStart = 0)
