@@ -36,6 +36,11 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
         $this->_bShowTitles = true;
         $this->_bShowCounters = true;
         $this->_sTmplNameItem = 'menu_custom_item_ver.html';
+        
+        $this->addMarkers(array(
+            'module' => $this->_oModule->_oConfig->getName(),
+            'module_uri' => $this->_oModule->_oConfig->getUri(),
+        ));
     }
 }
 

@@ -64,6 +64,7 @@
 	<string name="_bx_channels_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_channels_page_block_title_entry_reports"><![CDATA[Reports]]></string>
 	<string name="_bx_channels_page_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_channels_page_title_sys_profile_info"><![CDATA[Channel Info]]></string>
 	<string name="_bx_channels_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>

@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `labels` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
-  `votes` int(11) NOT NULL default '0',
+  `votes` int(11) NOT NULL default '0',re
   `rrate` float NOT NULL default '0',
   `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
@@ -581,8 +581,8 @@ INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `mod
 
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_forum', 'bx_forum', 'bx_forum_reports', 'bx_forum_reports_track', '1', 'page.php?i=view-discussion&id={object_id}', 'bx_forum_discussions', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_forum', 'bx_forum', 'bx_forum_reports', 'bx_forum_reports_track', '1', 'page.php?i=view-discussion&id={object_id}', 'bx_forum_notes', 'bx_forum_discussions', 'id', 'author', 'reports', '', '');
 
 
 -- STUDIO: page & widget

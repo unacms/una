@@ -86,6 +86,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'OBJECT_COMMENTS' => 'bx_channels',
             'OBJECT_REPORTS' => 'bx_channels',
             'OBJECT_METATAGS' => 'bx_channels',
+            'OBJECT_NOTES' => 'bx_cnl_notes',
             'OBJECT_FORM_ENTRY' => 'bx_channel',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_channel_view',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_channel_view_full', // for "info" tab on view channel page
