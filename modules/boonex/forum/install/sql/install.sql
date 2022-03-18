@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `labels` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
-  `votes` int(11) NOT NULL default '0',re
+  `votes` int(11) NOT NULL default '0',
   `rrate` float NOT NULL default '0',
   `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
