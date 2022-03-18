@@ -20,10 +20,10 @@ class BxCreditsGridOrdersCommon extends BxCreditsGridOrdersAdministration
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-        if(empty($this->_aQueryAppend['profile_id']))
-                return array();
+        if(empty($this->_iUserId))
+            return [];
 
-        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `to`.`profile_id`=?", $this->_aQueryAppend['profile_id']);
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `to`.`profile_id`=?", $this->_iUserId);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

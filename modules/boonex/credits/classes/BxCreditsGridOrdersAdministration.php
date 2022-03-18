@@ -14,6 +14,8 @@ class BxCreditsGridOrdersAdministration extends BxTemplGrid
     protected $_sModule;
     protected $_oModule;
 
+    protected $_iUserId;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
     	$this->_sModule = 'bx_credits';
@@ -26,9 +28,11 @@ class BxCreditsGridOrdersAdministration extends BxTemplGrid
         $this->_sDefaultSortingOrder = 'DESC';
         $this->_aQueryReset = array($this->_aOptions['order_get_field'], $this->_aOptions['order_get_dir'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
 
-        $iProfileId = bx_get_logged_profile_id();
-        if($iProfileId !== false)
-            $this->_aQueryAppend['profile_id'] = (int)$iProfileId;
+        $iUserId = bx_get_logged_profile_id();
+        if($iUserId !== false) {
+            $this->_iUserId = (int)$iUserId;
+            $this->_aQueryAppend['user_id'] = $this->_iUserId;
+        }
     }
 
     protected function _getCellProfileId($mixedValue, $sKey, $aField, $aRow)
@@ -38,11 +42,11 @@ class BxCreditsGridOrdersAdministration extends BxTemplGrid
 
     protected function _getCellBundle($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bundle_link.html', array(
-            'href' => $this->_oModule->_oConfig->getBundleUrl(array('id' => $aRow['bundle_id'])),
+        $mixedValue = $this->_oTemplate->parseHtmlByName('bundle_link.html', [
+            'href' => $this->_oModule->_oConfig->getBundleUrl(['id' => $aRow['bundle_id']]),
             'title' => bx_html_attribute($mixedValue),
             'content' => $mixedValue
-        ));
+        ]);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -70,7 +74,7 @@ class BxCreditsGridOrdersAdministration extends BxTemplGrid
         if(!$oProfile)
             return $mixedValue;
 
-        return $oProfile->getUnit(0, array('template' => array('name' => 'unit', 'size' => 'icon')));
+        return $oProfile->getUnit(0, ['template' => ['name' => 'unit', 'size' => 'icon']]);
     }
 }
 

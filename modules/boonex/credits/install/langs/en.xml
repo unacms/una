@@ -39,6 +39,7 @@
 
     <string name="_bx_credits_form_credit"><![CDATA[Credit]]></string>
     <string name="_bx_credits_form_credit_display_grant"><![CDATA[Grant]]></string>
+    <string name="_bx_credits_form_credit_display_send"><![CDATA[Send]]></string>
     <string name="_bx_credits_form_credit_display_withdraw_request"><![CDATA[Request Withdraw]]></string>
     <string name="_bx_credits_form_credit_display_withdraw_confirm"><![CDATA[Confirm withdraw]]></string>
     <string name="_bx_credits_form_credit_input_sys_balance"><![CDATA[Balance]]></string>
@@ -52,6 +53,7 @@
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string>
+    <string name="_bx_credits_form_credit_input_message_inf_s"><![CDATA[Indicate the purpose of sending to reflect it in history for future references]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_wr"><![CDATA[Payment instructions and other notes]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_wc"><![CDATA[Payment confirmation and other notes]]></string>
     <string name="_bx_credits_form_credit_input_profile"><![CDATA[Profile]]></string>
@@ -140,9 +142,11 @@
     <string name="_bx_credits_grid_column_title_htr_info"><![CDATA[Notice]]></string>
     <string name="_bx_credits_grid_column_title_htr_date"><![CDATA[Date]]></string>
     <string name="_bx_credits_grid_action_title_htr_grant"><![CDATA[Grant]]></string>
+    <string name="_bx_credits_grid_action_title_htr_send"><![CDATA[Send]]></string>
     <string name="_bx_credits_grid_action_title_htr_withdraw_confirm"><![CDATA[Confirm withdraw]]></string>
     <string name="_bx_credits_grid_action_title_htr_withdraw_request"><![CDATA[Request withdraw]]></string>
     <string name="_bx_credits_grid_popup_title_htr_grant"><![CDATA[Grant]]></string>
+    <string name="_bx_credits_grid_popup_title_htr_send"><![CDATA[Send]]></string>
     <string name="_bx_credits_grid_popup_title_htr_withdraw_confirm"><![CDATA[Confirm withdraw]]></string>
     <string name="_bx_credits_grid_popup_title_htr_withdraw_request"><![CDATA[Request withdraw]]></string>
 
@@ -162,6 +166,13 @@
     <string name="_bx_credits_et_txt_body_granted"><![CDATA[{email_header}
 <p>Hello, {profile_name}.</p>
 <p>You're granted <b>{amount}</b> credits.</p>
+<p>{message}</p>
+{email_footer}]]></string>
+    <string name="_bx_credits_et_txt_name_received"><![CDATA[Credits received.]]></string>
+    <string name="_bx_credits_et_txt_subject_received"><![CDATA[You've received {amount} credits.]]></string>
+    <string name="_bx_credits_et_txt_body_received"><![CDATA[{email_header}
+<p>Hello, {profile_name}.</p>
+<p>You've received <b>{amount}</b> credits from <a href="{performer_link}">{performer_name}</a>.<br />The order is <b>{order}</b>.</p>
 <p>{message}</p>
 {email_footer}]]></string>
     <string name="_bx_credits_et_txt_name_purchased"><![CDATA[Credits purchased.]]></string>
@@ -211,11 +222,14 @@
     <string name="_bx_credits_txt_direction_in"><![CDATA[got from]]></string>
     <string name="_bx_credits_txt_purchased_note"><![CDATA[Contact <a href="{0}">{1}</a> if you have any questions or need support.]]></string>
     <string name="_bx_credits_txt_history_info_grant"><![CDATA[Grant]]></string>
+    <string name="_bx_credits_txt_history_info_send"><![CDATA[Transfer]]></string>
     <string name="_bx_credits_txt_history_info_purchase"><![CDATA[Bundle purchase]]></string>
     <string name="_bx_credits_txt_history_info_checkout"><![CDATA[Profile to profile checkout]]></string>
     <string name="_bx_credits_txt_history_info_withdraw"><![CDATA[Withdraw by request]]></string>
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Artificially initiated transfer]]></string>
     <string name="_bx_credits_txt_history_info_refund"><![CDATA[Refund]]></string>
+    <string name="_bx_credits_txt_history_info_cancellation"><![CDATA[Cancellation]]></string>
+
 
     <string name="_bx_credits_msg_empty_author"><![CDATA['Main seller' is empty. You need to mark some profile as 'Main seller' in Settings of currently active Payment app.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[The action was performed successfully.]]></string>

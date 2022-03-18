@@ -69,6 +69,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             // objects
             'OBJECT_FORM_CREDIT' => 'bx_credits_credit',
             'OBJECT_FORM_CREDIT_DISPLAY_GRANT' => 'bx_credits_credit_grant',
+            'OBJECT_FORM_CREDIT_DISPLAY_SEND' => 'bx_credits_credit_send',
             'OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_REQUEST' => 'bx_credits_credit_withdraw_request',
             'OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_CONFIRM' => 'bx_credits_credit_withdraw_confirm',
             'OBJECT_FORM_BUNDLE' => 'bx_credits_bundle',
@@ -84,6 +85,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
 
             // email templates
             'ETEMPLATE_GRANTED' => 'bx_credits_granted',
+            'ETEMPLATE_RECEIVED' => 'bx_credits_received',
             'ETEMPLATE_PURCHASED' => 'bx_credits_purchased',
             'ETEMPLATE_IN' => 'bx_credits_in',
             'ETEMPLATE_OUT' => 'bx_credits_out',
@@ -94,6 +96,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'T' => array (
                 'txt_sample_single' => '_bx_credits_txt_sample_single',
                 'grant_popup' => '_bx_credits_grid_popup_title_htr_grant',
+                'send_popup' => '_bx_credits_grid_popup_title_htr_send',
                 'withdraw_request_popup' => '_bx_credits_grid_popup_title_htr_withdraw_request',
                 'withdraw_confirm_popup' => '_bx_credits_grid_popup_title_htr_withdraw_confirm',
             ),
@@ -118,6 +121,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'add_bundle_popup' =>  $sPrefix . '-add-bundle-popup',
             'edit_bundle_popup' =>  $sPrefix . '-edit-bundle-popup',
 
+            'send_popup' =>  $sPrefix . '-send-popup',
             'grant_popup' =>  $sPrefix . '-grant-popup',
             'withdraw_request_popup' =>  $sPrefix . '-withdraw-request-popup',
             'withdraw_confirm_popup' =>  $sPrefix . '-withdraw-confirm-popup',
@@ -224,7 +228,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
 
     public function getOrder($iLength = 16)
     {
-        return genRndPwd($iLength, false);
+        return strtoupper(genRndPwd($iLength, false));
     }
 
     /**
