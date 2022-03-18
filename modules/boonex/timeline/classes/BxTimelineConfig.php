@@ -145,6 +145,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
             'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
+            'OBJECT_NOTES' => $this->_sName . '_notes',
             'OBJECT_VIEWS' => $this->_sName,
             'OBJECT_VOTES' => $this->_sName,
             'OBJECT_REACTIONS' => $this->_sName . '_reactions',

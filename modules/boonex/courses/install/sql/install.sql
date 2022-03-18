@@ -447,8 +447,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 ('bx_courses', 'bx_courses', 'bx_courses_scores', 'bx_courses_scores_track', '604800', '0', 'bx_courses_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_courses', 'bx_courses', 'bx_courses_reports', 'bx_courses_reports_track', '1', 'page.php?i=view-course-profile&id={object_id}', 'bx_courses_data', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_courses', 'bx_courses', 'bx_courses_reports', 'bx_courses_reports_track', '1', 'page.php?i=view-course-profile&id={object_id}', 'bx_courses_notes', 'bx_courses_data', 'id', 'author', 'reports', '', '');
 
 -- FAFORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

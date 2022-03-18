@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_cnl_data`, `bx_cnl_content`, `bx_cnl_pics`, `bx_cnl_pics_resized`, `bx_cnl_cmts`, `bx_cnl_views_track`, `bx_cnl_meta_keywords`, `bx_cnl_meta_mentions`, `bx_cnl_votes`, `bx_cnl_votes_track`, `bx_cnl_reports`, `bx_cnl_reports_track`, `bx_cnl_favorites_track`, `bx_cnl_scores`, `bx_cnl_scores_track`;
+DROP TABLE IF EXISTS `bx_cnl_data`, `bx_cnl_content`, `bx_cnl_pics`, `bx_cnl_pics_resized`, `bx_cnl_cmts`, `bx_cnl_cmts_note`, `bx_cnl_views_track`, `bx_cnl_meta_keywords`, `bx_cnl_meta_mentions`, `bx_cnl_votes`, `bx_cnl_votes_track`, `bx_cnl_reports`, `bx_cnl_reports_track`, `bx_cnl_favorites_track`, `bx_cnl_scores`, `bx_cnl_scores_track`;
 
 -- PROFILES
 

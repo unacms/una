@@ -344,8 +344,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 ('bx_glossary', 'bx_glossary', 'bx_glossary_scores', 'bx_glossary_scores_track', '604800', '0', 'bx_glossary_terms', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_glossary', 'bx_glossary', 'bx_glossary_reports', 'bx_glossary_reports_track', '1', 'page.php?i=view-glossary&id={object_id}', 'bx_glossary_terms', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_glossary', 'bx_glossary', 'bx_glossary_reports', 'bx_glossary_reports_track', '1', 'page.php?i=view-glossary&id={object_id}', 'bx_glossary_notes', 'bx_glossary_terms', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

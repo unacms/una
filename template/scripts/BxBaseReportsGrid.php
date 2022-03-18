@@ -105,6 +105,7 @@ class BxBaseReportsGrid extends BxTemplGrid
     {
         $mixedValue = '';
         if ($this->_aReportSystemInfo['object_comment'] && $this->_aReportSystemInfo['object_comment'] != ''){
+            
             $oCmts = BxDolCmts::getObjectInstance($this->_aReportSystemInfo['object_comment'], $aRow['object_id']);
             if ($oCmts){
                 $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['name']);
@@ -120,6 +121,7 @@ class BxBaseReportsGrid extends BxTemplGrid
         $mixedValue = '';
         
         if ($this->_aReportSystemInfo['object_comment'] && $this->_aReportSystemInfo['object_comment'] != ''){
+            
             $oCmts = BxDolCmts::getObjectInstance($this->_aReportSystemInfo['object_comment'], -$aRow['id']);
             if ($oCmts){
                 $oModule = BxDolModule::getInstance($this->_aReportSystemInfo['name']);

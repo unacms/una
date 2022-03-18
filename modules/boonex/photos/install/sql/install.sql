@@ -379,8 +379,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_photos', 'bx_photos', 'bx_photos_reports', 'bx_photos_reports_track', '1', 'page.php?i=view-photo&id={object_id}', 'bx_photos_entries', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`,  `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_photos', 'bx_photos', 'bx_photos_reports', 'bx_photos_reports_track', '1', 'page.php?i=view-photo&id={object_id}', 'bx_photos_notes', 'bx_photos_entries', 'id', 'author', 'reports', '', '');
 
 
 -- VIEWS

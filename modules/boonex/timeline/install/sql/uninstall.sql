@@ -28,6 +28,8 @@ DROP TABLE IF EXISTS `bx_timeline_hot_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_scores`, `bx_timeline_scores_track`;
 
+DROP TABLE IF EXISTS `bx_timeline_cmts_notes`;
+
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_timeline%';
@@ -46,7 +48,7 @@ DELETE FROM `sys_objects_form` WHERE `module` = @sName;
 
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_timeline' LIMIT 1;
+DELETE FROM `sys_objects_cmts` WHERE `Name` IN ('bx_timeline', 'bx_timeline_notes');
 
 
 -- VIEWS
