@@ -11,8 +11,9 @@
 .bx-cnv-collaborator.bx-def-margin-sec-right-auto {
     float:right;
 }
-.bx-cnv-collaborator-last-replier {
-    left:0; right:auto;
+.bx-cnv-collaborator .bx-cnv-collaborator-last-replier {
+    left: -2px;
+    right: auto;
 }
 
 .bx-grid-table .bx-cnv-collaborator,
@@ -36,8 +37,9 @@
     overflow:hidden;
 }
 
-.bx-cnv-grid-field-label {
-    display:inline-block;
+.bx-cnv-grid-field-messages .bx-cnv-grid-field-label {
+    position: relative;
+    display: inline-block;
 }
 
 .bx-cnv-preview .bx-cnv-grid-field-label {

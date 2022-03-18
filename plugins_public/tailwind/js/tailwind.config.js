@@ -17,13 +17,17 @@ module.exports = {
     './modules/boonex/artificer/data/template/**/*.html',
     './modules/boonex/artificer/template/*.html',
 
+    // Convos
+    './modules/boonex/convos/js/*.js',
+    './modules/boonex/convos/template/*.html',
+
+    // Forum
+    './modules/boonex/forum/js/*.js',
+    './modules/boonex/forum/template/*.html',
+
     // Messenger
     './modules/boonex/messenger/js/*.js',
     './modules/boonex/messenger/template/*.html',
-      
-    // Forum
-    './modules/boonex/forum/js/*.js',
-    './modules/boonex/forum/template/*.html',  
 
     './template/*.html',
   ],

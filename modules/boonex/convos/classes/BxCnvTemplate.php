@@ -107,7 +107,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         return _t('_bx_cnv_author_desc', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE), bx_time_js($aData['last_reply_timestamp'], BX_FORMAT_DATE));
     }
 
-    function getMessageLabel ($r, $oProfileLast = null)
+    function getMessageLabel ($iCount, $r, $oProfileLast = null)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
 
@@ -132,7 +132,8 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         if (!isset($r['unread_messages']))
             $r['unread_messages'] = $r['comments'] - $r['read_comments'];
 
-        $aVars = array (
+        return $this->parseHtmlByName('message_label.html', array (
+            'count' => $iCount,
             'bx_if:unread_messages' => array (
                 'condition' => $r['unread_messages'] > 0,
                 'content' => array (
@@ -147,9 +148,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
                 'condition' => $bReadByAll,
                 'content' => array (),
             ),
-        );
-
-        return $this->parseHtmlByName('message_label.html', $aVars);
+        ));
     }
 
     function getMessagesPreviews ($a)
