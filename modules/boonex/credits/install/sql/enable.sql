@@ -110,7 +110,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_credits_manage_submenu', 'bx_credits', '_bx_credits_menu_set_title_manage_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_credits_manage_submenu', 'bx_credits', 'credits-history-common', '_bx_credits_menu_item_title_system_history_common', '_bx_credits_menu_item_title_history_common', 'page.php?i=credits-history-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 1)
+('bx_credits_manage_submenu', 'bx_credits', 'credits-history-common', '_bx_credits_menu_item_title_system_history_common', '_bx_credits_menu_item_title_history_common', 'page.php?i=credits-history-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 1),
 ('bx_credits_manage_submenu', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_history_administration', '_bx_credits_menu_item_title_history_administration', 'page.php?i=credits-history-administration', '', '_self', '', '', '', 192, 1, 0, 1, 2),
 ('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-common', '_bx_credits_menu_item_title_system_orders_common', '_bx_credits_menu_item_title_orders_common', 'page.php?i=credits-orders-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 3),
 ('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-administration', '_bx_credits_menu_item_title_system_orders_administration', '_bx_credits_menu_item_title_orders_administration', 'page.php?i=credits-orders-administration', '', '_self', '', '', '', 192, 1, 0, 1, 4);
