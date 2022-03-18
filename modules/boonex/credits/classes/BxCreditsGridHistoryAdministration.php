@@ -14,6 +14,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
     protected $_sModule;
     protected $_oModule;
 
+    protected $_iUserId;
     protected $_bWithdraw;
 
     public function __construct ($aOptions, $oTemplate = false)
@@ -27,9 +28,11 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
 
         $this->_sDefaultSortingOrder = 'DESC';
 
-        $iProfileId = bx_get_logged_profile_id();
-        if($iProfileId !== false)
-            $this->_aQueryAppend['profile_id'] = (int)$iProfileId;
+        $iUserId = bx_get_logged_profile_id();
+        if($iUserId !== false) {
+            $this->_iUserId = (int)$iUserId;
+            $this->_aQueryAppend['user_id'] = $this->_iUserId;
+        }
 
         $this->_bWithdraw = $this->_oModule->_oConfig->isWithdraw();
     }
@@ -53,7 +56,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
     public function performActionWithdrawConfirm()
     {
         if(!$this->_bWithdraw)
-            return echoJson(array());
+            return echoJson([]);
 
         $sAction = 'withdraw_confirm';
 
@@ -70,7 +73,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
 
     protected function _getCellDirection($mixedValue, $sKey, $aField, $aRow)
     {
-        if(in_array($mixedValue, array(BX_CREDITS_DIRECTION_IN, BX_CREDITS_DIRECTION_OUT)))
+        if(in_array($mixedValue, [BX_CREDITS_DIRECTION_IN, BX_CREDITS_DIRECTION_OUT]))
             $mixedValue = _t('_bx_credits_txt_direction_' . $mixedValue);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
@@ -110,7 +113,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
         if(!$oProfile)
             return $mixedValue;
 
-        return $oProfile->getUnit(0, array('template' => array('name' => 'unit', 'size' => 'icon')));
+        return $oProfile->getUnit(0, ['template' => ['name' => 'unit', 'size' => 'icon']]);
     }
 
     protected function _performActionWithProfileAmount($sAction)
@@ -124,28 +127,28 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
             $iProfile = (int)$oForm->getCleanValue('profile');
             $fAmount = (float)$oForm->getCleanValue('amount');
             $sMessage = $oForm->getCleanValue('message');
-            $aResult = $this->_oModule->{'process' . bx_gen_method_name($sAction)}($iProfile, $fAmount, $sMessage);
+            $aResult = $this->_oModule->{'process' . bx_gen_method_name($sAction)}($this->_iUserId, $iProfile, $fAmount, $sMessage);
 
             if((int)$aResult['code'] == 0)
-                $aRes = array('msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_msg_action_performed'));
+                $aRes = ['msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_msg_action_performed')];
             else
-                $aRes = array('msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_err_cannot_perform_action'));
+                $aRes = ['msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_err_cannot_perform_action')];
 
             echoJson($aRes);
         }
         else {
-            $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds($sAction . '_popup'), _t($CNF['T'][$sAction . '_popup']), $this->_oModule->_oTemplate->parseHtmlByName('credit_form.html', array(
+            $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds($sAction . '_popup'), _t($CNF['T'][$sAction . '_popup']), $this->_oModule->_oTemplate->parseHtmlByName('credit_form.html', [
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
-            )));
+            ]));
 
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+            echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
         }
     }
 
-    protected function _getFormObject($sAction, $aBundle = array())
+    protected function _getFormObject($sAction)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -158,17 +161,17 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
     protected function _addJsCss()
     {
         parent::_addJsCss();
-        $this->_oModule->_oTemplate->addJs(array(
+        $this->_oModule->_oTemplate->addJs([
             'jquery.form.min.js', 
             'withdraw.js'
-        ));
+        ]);
 
-        $this->_oModule->_oTemplate->addCss(array(
+        $this->_oModule->_oTemplate->addCss([
             'main.css',
             'withdraw.css'
-        ));
+        ]);
 
-        $oForm = new BxTemplFormView(array());
+        $oForm = new BxTemplFormView([]);
         $oForm->addCssJs();
     }
 }

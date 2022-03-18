@@ -18,10 +18,17 @@ class BxCreditsGridHistoryCommon extends BxCreditsGridHistoryAdministration
         parent::__construct ($aOptions, $oTemplate);
     }
 
+    public function performActionSend()
+    {
+        $sAction = 'send';
+
+        $this->_performActionWithProfileAmount($sAction);
+    }
+
     public function performActionWithdrawRequest()
     {
         if(!$this->_bWithdraw)
-            return echoJson(array());
+            return echoJson([]);
 
         $sAction = 'withdraw_request';
         
@@ -38,10 +45,10 @@ class BxCreditsGridHistoryCommon extends BxCreditsGridHistoryAdministration
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-        if(empty($this->_aQueryAppend['profile_id']))
-                return array();
+        if(empty($this->_iUserId))
+            return [];
 
-        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `first_pid`=?", $this->_aQueryAppend['profile_id']);
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `first_pid`=?", $this->_iUserId);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

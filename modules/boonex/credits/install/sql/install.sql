@@ -71,9 +71,10 @@ CREATE TABLE IF NOT EXISTS `bx_credits_history` (
 
 -- FORMS: credit
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_credits_credit', 'bx_credits', '_bx_credits_form_credit', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', '', '', '', '', 'a:1:{i:0;s:9:"do_submit";}', '', 0, 1, 'BxCreditsFormWithdraw', 'modules/boonex/credits/classes/BxCreditsFormWithdraw.php');
+('bx_credits_credit', 'bx_credits', '_bx_credits_form_credit', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', '', '', '', '', 'a:1:{i:0;s:9:"do_submit";}', '', 0, 1, 'BxCreditsFormCredit', 'modules/boonex/credits/classes/BxCreditsFormCredit.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
+('bx_credits_credit', 'bx_credits_credit_send', 'bx_credits', 0, '_bx_credits_form_credit_display_send'),
 ('bx_credits_credit', 'bx_credits_credit_grant', 'bx_credits', 0, '_bx_credits_form_credit_display_grant'),
 ('bx_credits_credit', 'bx_credits_credit_withdraw_request', 'bx_credits', 0, '_bx_credits_form_credit_display_withdraw_request'),
 ('bx_credits_credit', 'bx_credits_credit_withdraw_confirm', 'bx_credits', 0, '_bx_credits_form_credit_display_withdraw_confirm');
@@ -90,6 +91,13 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_credits_credit', 'bx_credits', 'do_cancel', '_bx_credits_form_credit_input_do_cancel', '', 0, 'button', '_bx_credits_form_credit_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
+('bx_credits_credit_send', 'profile', 2147483647, 1, 1),
+('bx_credits_credit_send', 'amount', 2147483647, 1, 2),
+('bx_credits_credit_send', 'message', 2147483647, 1, 3),
+('bx_credits_credit_send', 'controls', 2147483647, 1, 4),
+('bx_credits_credit_send', 'do_submit', 2147483647, 1, 5),
+('bx_credits_credit_send', 'do_cancel', 2147483647, 1, 6),
+
 ('bx_credits_credit_grant', 'profile', 2147483647, 1, 1),
 ('bx_credits_credit_grant', 'amount', 2147483647, 1, 2),
 ('bx_credits_credit_grant', 'message', 2147483647, 1, 3),

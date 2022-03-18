@@ -39,6 +39,7 @@
 
     <string name="_bx_credits_form_credit"><![CDATA[Кредит]]></string>
     <string name="_bx_credits_form_credit_display_grant"><![CDATA[Дарить]]></string>
+    <string name="_bx_credits_form_credit_display_send"><![CDATA[Отправить]]></string>
     <string name="_bx_credits_form_credit_display_withdraw_request"><![CDATA[Запросить снятие]]></string>
     <string name="_bx_credits_form_credit_display_withdraw_confirm"><![CDATA[Подтвердить снятие]]></string>
     <string name="_bx_credits_form_credit_input_sys_balance"><![CDATA[Баланс]]></string>
@@ -52,6 +53,7 @@
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Сообщение]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Сообщение]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string>
+    <string name="_bx_credits_form_credit_input_message_inf_s"><![CDATA[Укажите цель отправки, чтобы отразить её в истории для дальнейшего использования]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_wr"><![CDATA[Платежные инструкции и другие примечания]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_wc"><![CDATA[Подтверждение оплаты и другие примечания]]></string>
     <string name="_bx_credits_form_credit_input_profile"><![CDATA[Профиль]]></string>
@@ -140,9 +142,11 @@
     <string name="_bx_credits_grid_column_title_htr_info"><![CDATA[Пометка]]></string>
     <string name="_bx_credits_grid_column_title_htr_date"><![CDATA[Дата]]></string>
     <string name="_bx_credits_grid_action_title_htr_grant"><![CDATA[Подарить]]></string>
+    <string name="_bx_credits_grid_action_title_htr_send"><![CDATA[Отправить]]></string>
     <string name="_bx_credits_grid_action_title_htr_withdraw_confirm"><![CDATA[Подтвердить снятие]]></string>
     <string name="_bx_credits_grid_action_title_htr_withdraw_request"><![CDATA[Запросить снятие]]></string>
     <string name="_bx_credits_grid_popup_title_htr_grant"><![CDATA[Подарить]]></string>
+    <string name="_bx_credits_grid_popup_title_htr_send"><![CDATA[Отправить]]></string>
     <string name="_bx_credits_grid_popup_title_htr_withdraw_confirm"><![CDATA[Подтвердить снятие]]></string>
     <string name="_bx_credits_grid_popup_title_htr_withdraw_request"><![CDATA[Запросить снятие]]></string>
 
@@ -162,6 +166,13 @@
     <string name="_bx_credits_et_txt_body_granted"><![CDATA[{email_header}
 <p>Здравствуйте, {profile_name}.</p>
 <p>Вам подарили <b>{amount}</b> кредитов.</p>
+<p>{message}</p>
+{email_footer}]]></string>
+    <string name="_bx_credits_et_txt_name_received"><![CDATA[Кредиты получены.]]></string>
+    <string name="_bx_credits_et_txt_subject_received"><![CDATA[Вы получили {amount} кредитов.]]></string>
+    <string name="_bx_credits_et_txt_body_received"><![CDATA[{email_header}
+<p>Здравствуйте, {profile_name}.</p>
+<p>Вы получили <b>{amount}</b> кредитов от <a href="{performer_link}">{performer_name}</a>.<br />Ордер: <b>{order}</b>.</p>
 <p>{message}</p>
 {email_footer}]]></string>
     <string name="_bx_credits_et_txt_name_purchased"><![CDATA[Кредиты куплены.]]></string>
@@ -211,11 +222,13 @@
     <string name="_bx_credits_txt_direction_in"><![CDATA[переведено]]></string>
     <string name="_bx_credits_txt_purchased_note"><![CDATA[Обращайтесь к <a href="{0}">{1}</a>, если у вас есть какие-либо вопросы или вам нужна поддержка.]]></string>
     <string name="_bx_credits_txt_history_info_grant"><![CDATA[Подарок]]></string>
+    <string name="_bx_credits_txt_history_info_send"><![CDATA[Перевод]]></string>
     <string name="_bx_credits_txt_history_info_purchase"><![CDATA[Покупка пакета]]></string>
     <string name="_bx_credits_txt_history_info_checkout"><![CDATA[Выплаты между профилями]]></string>
     <string name="_bx_credits_txt_history_info_withdraw"><![CDATA[Снятие по запросу]]></string>
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Искусственно инициированный перевод]]></string>
     <string name="_bx_credits_txt_history_info_refund"><![CDATA[Возврат средств]]></string>
+    <string name="_bx_credits_txt_history_info_cancellation"><![CDATA[Отмена]]></string>
 
     <string name="_bx_credits_msg_empty_author"><![CDATA['Главный продавец' не задан. Вам необходимо пометить какой-либо профайл как 'Главный продавец' в настройках активного на данный момент платежного модуля.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[Действие было успешно выполнено.]]></string>

@@ -10,9 +10,9 @@
  */
 
 /**
- * Withdraw form
+ * Credit form
  */
-class BxCreditsFormWithdraw extends BxTemplFormView
+class BxCreditsFormCredit extends BxTemplFormView
 {
     protected $_sModule;
     protected $_oModule;
@@ -35,6 +35,10 @@ class BxCreditsFormWithdraw extends BxTemplFormView
             switch($this->aParams['display']) {
                 case $CNF['OBJECT_FORM_CREDIT_DISPLAY_GRANT']:
                     $sInfo .= 'g';
+                    break;
+
+                case $CNF['OBJECT_FORM_CREDIT_DISPLAY_SEND']:
+                    $sInfo .= 's';
                     break;
 
                 case $CNF['OBJECT_FORM_CREDIT_DISPLAY_WITHDRAW_REQUEST']:

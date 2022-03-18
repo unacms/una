@@ -90,7 +90,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: account dashboard
 SET @iAccountDashboardMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('sys_account_dashboard', 'bx_credits', 'credits-manage', '_bx_credits_menu_item_title_system_manage', '_bx_credits_menu_item_title_manage', 'page.php?i=credits-orders-common', '', '', 'copyright col-green3', '', '', 2147483646, 1, 0, 1, @iAccountDashboardMenuOrder + 1);
+('sys_account_dashboard', 'bx_credits', 'credits-manage', '_bx_credits_menu_item_title_system_manage', '_bx_credits_menu_item_title_manage', 'page.php?i=credits-history-common', '', '', 'copyright col-green3', '', '', 2147483646, 1, 0, 1, @iAccountDashboardMenuOrder + 1);
 
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -110,10 +110,10 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_credits_manage_submenu', 'bx_credits', '_bx_credits_menu_set_title_manage_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-administration', '_bx_credits_menu_item_title_system_orders_administration', '_bx_credits_menu_item_title_orders_administration', 'page.php?i=credits-orders-administration', '', '_self', '', '', '', 192, 1, 0, 1, 1),
-('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-common', '_bx_credits_menu_item_title_system_orders_common', '_bx_credits_menu_item_title_orders_common', 'page.php?i=credits-orders-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 2),
-('bx_credits_manage_submenu', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_history_administration', '_bx_credits_menu_item_title_history_administration', 'page.php?i=credits-history-administration', '', '_self', '', '', '', 192, 1, 0, 1, 3),
-('bx_credits_manage_submenu', 'bx_credits', 'credits-history-common', '_bx_credits_menu_item_title_system_history_common', '_bx_credits_menu_item_title_history_common', 'page.php?i=credits-history-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 4);
+('bx_credits_manage_submenu', 'bx_credits', 'credits-history-common', '_bx_credits_menu_item_title_system_history_common', '_bx_credits_menu_item_title_history_common', 'page.php?i=credits-history-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 1),
+('bx_credits_manage_submenu', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_history_administration', '_bx_credits_menu_item_title_history_administration', 'page.php?i=credits-history-administration', '', '_self', '', '', '', 192, 1, 0, 1, 2),
+('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-common', '_bx_credits_menu_item_title_system_orders_common', '_bx_credits_menu_item_title_orders_common', 'page.php?i=credits-orders-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 3),
+('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-administration', '_bx_credits_menu_item_title_system_orders_administration', '_bx_credits_menu_item_title_orders_administration', 'page.php?i=credits-orders-administration', '', '_self', '', '', '', 192, 1, 0, 1, 4);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -183,9 +183,10 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_credits_history_administration', 'independent', 'grant', '_bx_credits_grid_action_title_htr_grant', '', 0, 0, 1),
-('bx_credits_history_administration', 'independent', 'withdraw_confirm', '_bx_credits_grid_action_title_htr_withdraw_confirm', '', 0, 0, 1),
+('bx_credits_history_administration', 'independent', 'withdraw_confirm', '_bx_credits_grid_action_title_htr_withdraw_confirm', '', 0, 0, 2),
 
-('bx_credits_history_common', 'independent', 'withdraw_request', '_bx_credits_grid_action_title_htr_withdraw_request', '', 0, 0, 1);
+('bx_credits_history_common', 'independent', 'send', '_bx_credits_grid_action_title_htr_send', '', 0, 0, 1),
+('bx_credits_history_common', 'independent', 'withdraw_request', '_bx_credits_grid_action_title_htr_withdraw_request', '', 0, 0, 2);
 
 
 -- ALERTS
@@ -202,6 +203,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
 ('bx_credits', '_bx_credits_et_txt_name_granted', 'bx_credits_granted', '_bx_credits_et_txt_subject_granted', '_bx_credits_et_txt_body_granted'),
+('bx_credits', '_bx_credits_et_txt_name_received', 'bx_credits_received', '_bx_credits_et_txt_subject_received', '_bx_credits_et_txt_body_received'),
 ('bx_credits', '_bx_credits_et_txt_name_purchased', 'bx_credits_purchased', '_bx_credits_et_txt_subject_purchased', '_bx_credits_et_txt_body_purchased'),
 ('bx_credits', '_bx_credits_et_txt_name_in', 'bx_credits_in', '_bx_credits_et_txt_subject_in', '_bx_credits_et_txt_body_in'),
 ('bx_credits', '_bx_credits_et_txt_name_out', 'bx_credits_out', '_bx_credits_et_txt_subject_out', '_bx_credits_et_txt_body_out'),
