@@ -2956,7 +2956,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _serviceTemplateFunc ($sFunc, $iContentId, $sFuncGetContent = 'getContentInfoById')
     {
-        return $this->_serviceTemplateFuncEx($sFunc, $iContentId, array('function_get_content' => 'getContentInfoById'));
+        return $this->_serviceTemplateFuncEx($sFunc, $iContentId, array('function_get_content' => $sFuncGetContent));
     }
     
     protected function _serviceTemplateFuncEx ($sFunc, $iContentId, $aParams = array())
