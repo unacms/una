@@ -40,6 +40,7 @@ BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, 
     this._sTemplateErrorGhosts = options.template_error_ghosts ? options.template_error_ghosts : this._sTemplateError;
 
     this._isMultiple = undefined == options.multiple || !options.multiple ? false : true;
+    this._isReordering = undefined == options.reordering || !options.reordering ? false : true;
 
     this._iContentId = undefined == options.content_id || '' == options.content_id ? '' : parseInt(options.content_id);
 
@@ -136,6 +137,8 @@ BxDolUploaderSimple.prototype.cancelAll = function () {
 BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onComplete) {
     var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&_t=' + escape(new Date());
     var $this = this;
+
+    bInitReordering = bInitReordering !== undefined ? bInitReordering : this._isReordering;
 
     bx_loading(this._sResultContainerId, true);
 
