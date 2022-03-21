@@ -72,10 +72,10 @@ class BxDolKey extends BxDolFactory implements iBxDolSingleton
      * @param $iExpire - number of seconds to generated key after, by default - 1 week
      * @return newly generated key string
      */
-    public function getNewKey ($aData = false, $iExpire = 604800)
+    public function getNewKey ($aData = false, $iExpire = 604800, $sSalt = '')
     {
-        $sKey = md5(time() . rand() . BX_DOL_SECRET);
-        if ($this->_oQuery->insert($sKey, $aData ? serialize($aData) : '', (int)$iExpire));
+        $sKey = md5(time() . rand() . BX_DOL_SECRET . $sSalt);
+        if ($this->_oQuery->insert($sKey, $aData ? serialize($aData) : '', (int)$iExpire, $sSalt));
             return $sKey;
         return false;
     }
@@ -85,9 +85,9 @@ class BxDolKey extends BxDolFactory implements iBxDolSingleton
      * @param $sKey - key string
      * @return true if key exists or false if key is missing
      */
-    public function isKeyExists ($sKey)
+    public function isKeyExists ($sKey, $sSalt = '')
     {
-        return $this->_oQuery->get($sKey) ? true : false;
+        return $this->_oQuery->get($sKey, $sSalt) ? true : false;
     }
 
     /**
@@ -95,9 +95,9 @@ class BxDolKey extends BxDolFactory implements iBxDolSingleton
      * @param $sKey - key string
      * @return true if key exists or false if key is missing
      */
-    public function getKeyData ($sKey)
+    public function getKeyData ($sKey, $sSalt = '')
     {
-        $sData = $this->_oQuery->getData($sKey);
+        $sData = $this->_oQuery->getData($sKey, $sSalt);
         if ($sData)
             return unserialize($sData);
         return '';

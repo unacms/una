@@ -412,11 +412,11 @@ class BxBaseModGeneralModule extends BxDolModule
             }
         }
         
-        if(!empty($CNF['FIELD_ADDED'])){
+        if(!empty($CNF['FIELD_ADDED']) && isset($aInputsAll[$CNF['FIELD_ADDED']])){
            $aSortableFields[] = $CNF['FIELD_ADDED'];
         }
         
-        if(!empty($CNF['FIELD_CHANGED'])){
+        if(!empty($CNF['FIELD_CHANGED']) && isset($aInputsAll[$CNF['FIELD_CHANGED']])){
            $aSortableFields[] = $CNF['FIELD_CHANGED'];
         }     
         

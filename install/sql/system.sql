@@ -17,6 +17,7 @@ CREATE TABLE `sys_keys` (
   `key` varchar(32) NOT NULL,
   `data` text NOT NULL,
   `expire` int(11) NOT NULL,
+  `salt` varchar(255) NOT NULL,
   PRIMARY KEY (`key`)
 );
 
