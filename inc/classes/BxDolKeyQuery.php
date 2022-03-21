@@ -18,9 +18,9 @@ class BxDolKeyQuery extends BxDolDb
         parent::__construct();
     }
 
-    public function insert ($sKey, $sData, $iExpire)
+    public function insert ($sKey, $sData, $iExpire, $sSalt = '')
     {
-        $sQuery = $this->prepare("INSERT INTO `sys_keys` SET `key` = ?, `data` = ?, `expire` = ?", $sKey, $sData, time() + $iExpire);
+        $sQuery = $this->prepare("INSERT INTO `sys_keys` SET `key` = ?, `data` = ?, `expire` = ?, `salt` = ?", $sKey, $sData, time() + $iExpire, $sSalt);
         return $this->query($sQuery);
     }
 
@@ -30,16 +30,26 @@ class BxDolKeyQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    public function get ($sKey)
+    public function get ($sKey, $sSalt = '')
     {
-        $sQuery = $this->prepare("SELECT `key` FROM `sys_keys` WHERE `key` = ?", $sKey);
-        return $this->getOne($sQuery);
+        $sWhere = '';
+        $aBind = ['key' => $sKey];
+        if ($sSalt) {
+            $sWhere .= " AND `salt` = :salt ";
+            $aBind['salt'] = $sSalt;
+        }
+        return $this->getOne("SELECT `key` FROM `sys_keys` WHERE `key` = :key" . $sWhere, $aBind);
     }
 
-    public function getData ($sKey)
+    public function getData ($sKey, $sSalt = '')
     {
-        $sQuery = $this->prepare("SELECT `data` FROM `sys_keys` WHERE `key` = ?", $sKey);
-        return $this->getOne($sQuery);
+        $sWhere = '';
+        $aBind = ['key' => $sKey];
+        if ($sSalt) {
+            $sWhere .= " AND `salt` = :salt ";
+            $aBind['salt'] = $sSalt;
+        }
+        return $this->getOne("SELECT `data` FROM `sys_keys` WHERE `key` = :key" . $sWhere, $aBind);
     }
 
     public function prune ()
