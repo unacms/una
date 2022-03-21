@@ -742,8 +742,16 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iMediaId) !== false)
+            if($oForm->update($iMediaId) !== false) {
+                $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+                if(!empty($aMediaInfo) && is_array($aMediaInfo) && !empty($CNF['OBJECT_METATAGS_MEDIA'])) {
+                    $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
+                    if ($oMetatags->keywordsIsEnabled())
+                        $oMetatags->keywordsAdd($aMediaInfo['id'], $aMediaInfo['title']);
+                }
+
                 $aRes = array('reload' => 1);
+            }
             else
                 $aRes = array('msg' => _t('_bx_albums_txt_err_cannot_perform_action'));
 

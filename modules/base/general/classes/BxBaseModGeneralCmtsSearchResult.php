@@ -109,19 +109,21 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
         $sTableMain = $this->aCurrent['table'];
         $sTableUniqueIds = 'sys_cmts_ids';
+        $sTableUniqueIdsAlias = 'tci';
 
         $this->aCurrent['restriction']['status_admin'] = [
             'value' => 'active', 
             'field' => 'status_admin', 
             'operator' => '=', 
-            'table' => $sTableUniqueIds
+            'table' => $sTableUniqueIdsAlias
         ];
 
         $this->aCurrent['join']['unique_ids'] = [
             'type' => 'INNER',
             'table' => $sTableUniqueIds,
+            'table_alias' => $sTableUniqueIdsAlias,
             'mainField' => 'cmt_id',
-            'on_sql' => "`{$sTableMain}`.`cmt_id`=`{$sTableUniqueIds}`.`cmt_id` AND `{$sTableUniqueIds}`.`system_id`='{$aCommentsSystem['ID']}' ",
+            'on_sql' => "`{$sTableMain}`.`cmt_id`=`{$sTableUniqueIdsAlias}`.`cmt_id` AND `{$sTableUniqueIdsAlias}`.`system_id`='{$aCommentsSystem['ID']}' ",
             'joinFields' => array('status_admin'),
         ];
     }

@@ -4,6 +4,9 @@
 
         var aSidebars = ['site', 'account'];
         for(var i in aSidebars) {
+            if(typeof(aSidebars[i]) != 'string')
+                continue;
+
             $('.bx-sidebar-' + aSidebars[i] + '-trigger').on('click', function(event) {
                 event.preventDefault();
 
