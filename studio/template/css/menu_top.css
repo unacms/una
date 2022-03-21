@@ -218,7 +218,7 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     display: block;
     content: '';
 
-    top: -0.125rem;
+    top: 0.3rem;
     right: 1.5rem;
     width: 0.5rem;
     height: 0.5rem;
@@ -227,10 +227,6 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     background-color: #001529;
 
     transform: rotate(45deg);
-}
-.bx-std-mod-popup-settings-wrapper::before,
-#bx-std-pcap-menu-popup-actions:before {
-    right: 0.75rem;
 }
 .bx-std-mod-popup-settings-wrapper .bx-popup,
 #bx-std-pcap-menu-popup-actions .bx-popup,
@@ -243,7 +239,10 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-content-indent {
     padding: 0;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li {
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-content-indent {
+    padding: 0.5rem 0;
+}
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li {
     position: relative;
     height: 2.5rem;
     margin: 0;
@@ -255,24 +254,35 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     font-weight: 400;
     overflow: hidden;
 }
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li a {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li svg {
+    margin-right: 0.25rem;
+}
+
 .bx-std-mod-popup-settings-wrapper,
-#bx-std-pcap-menu-popup-actions .bx-popup-color-bg,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li a,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li .sys-icon {
+#bx-std-pcap-menu-popup-actions .bx-popup,
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li a,
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li .sys-icon {
     color: rgba(255, 255, 255, 0.7);
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li svg g {
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li svg g {
     opacity: 0.7;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li:hover a,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li:hover a .sys-icon {
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li:hover a,
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li:hover a .sys-icon {
     color: rgba(255, 255, 255, 0.85);
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li.bx-menu-tab-active {
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li.bx-menu-tab-active {
     background-color: rgba(24, 144, 255, 0.2);
     box-shadow: inset 3px 0px 0px rgba(24, 144, 255, 1.0);
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li:hover svg g,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li.bx-menu-tab-active svg g {
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li:hover svg g,
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li.bx-menu-tab-active svg g {
     opacity: 0.85;
 }
