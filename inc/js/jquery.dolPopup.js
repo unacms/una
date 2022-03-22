@@ -636,8 +636,12 @@
             oBtnOk.html(options.params.ok.title);
         }
 
+        var bFuncOk = options.onClickOk && typeof(options.onClickOk) == 'function';
+        if(bFuncOk)
+            options.closeOnOuterClick = false;
+
     	oBtnOk.bind('click', function() {
-            if(options.onClickOk && typeof(options.onClickOk) == 'function')
+            if(bFuncOk)
                 options.onClickOk(oAPopup);
 
             oAPopup.dolPopupHide();
@@ -687,10 +691,15 @@
             oBtnNo.html(options.params.no.title);
         }
 
+        var bFuncYes = options.onClickYes && typeof(options.onClickYes) == 'function';
+        var bFuncNo = options.onClickNo && typeof(options.onClickNo) == 'function';
+        if(bFuncYes || bFuncNo)
+            options.closeOnOuterClick = false;
+
     	oBtnYes.bind('click', function(event) {
             event.stopPropagation();
 
-            if(options.onClickYes && typeof(options.onClickYes) == 'function')
+            if(bFuncYes)
                 options.onClickYes(oCPopup);
 
             oCPopup.dolPopupHide();
@@ -699,7 +708,7 @@
         oBtnNo.bind('click', function(event) {
             event.stopPropagation();
 
-            if (options.onClickNo && typeof(options.onClickNo) == 'function')
+            if(bFuncNo)
                 options.onClickNo(oCPopup);
 
             oCPopup.dolPopupHide();
@@ -763,16 +772,21 @@
             sDefBtnCancelTitle = oBtnCancel.html();
             oBtnCancel.html(options.params.cancel.title);
         }
-        
+
+        var bFuncOk = options.onClickOk && typeof(options.onClickOk) == 'function';
+        var bFuncCancel = options.onClickCancel && typeof(options.onClickCancel) == 'function';
+        if(bFuncOk || bFuncCancel)
+            options.closeOnOuterClick = false;
+
     	oBtnOk.bind('click', function() {
-            if(options.onClickOk && typeof(options.onClickOk) == 'function')
+            if(bFuncOk)
                 options.onClickOk(oPPopup);
 
             oPPopup.dolPopupHide();
         });
 
         oBtnCancel.bind('click', function() {
-            if(options.onClickCancel && typeof(options.onClickCancel) == 'function')
+            if(bFuncCancel)
                 options.onClickCancel(oPPopup);
 
             oPPopup.dolPopupHide();
@@ -783,7 +797,6 @@
             if(typeof(fOnHide) == 'function')
                 fOnHide(oPPopup);
 
-            
             /**
              * Restore default functions and layout 
              * if the last one was customized.
