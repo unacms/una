@@ -383,18 +383,26 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 24, $iThreshold = 0)
+    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
             'module' => $sModule, 
             'interval' => $iInterval
         ];
 
-        $sQueryGroup = "`te`.`id`";
-        if($iThreshold != 0) {
-            $aBindings['threshold'] = $iThreshold;
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
 
-            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`cmt_author_id`) >= :threshold";
+        if($iThresholdAge != 0) {
+            $aBindings['threshold_age'] = $iThresholdAge;
+
+            $sQueryWhere .= " AND (UNIX_TIMESTAMP() - `te`.`date`) / 86400 <= :threshold_age";
+        }
+
+        $sQueryGroup = "`te`.`id`";
+        if($iThresholdCount != 0) {
+            $aBindings['threshold_count'] = $iThresholdCount;
+
+            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`cmt_author_id`) >= :threshold_count";
         }
 
         $sQuery = "SELECT 
@@ -402,24 +410,32 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 MAX(`tt`.`cmt_time`) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`cmt_object_id` AND `te`.`object_owner_id`<>`tt`.`cmt_author_id` AND `te`.`type`=:module 
-            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            WHERE 1 " . $sQueryWhere . " 
             GROUP BY " . $sQueryGroup;
 
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 24, $iThreshold = 0)
+    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
             'module' => $sModule, 
             'interval' => $iInterval
         ];
 
-        $sQueryGroup = "`te`.`object_id`";
-        if($iThreshold != 0) {
-            $aBindings['threshold'] = $iThreshold;
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval)";
 
-            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`cmt_author_id`) >= :threshold";
+        if($iThresholdAge != 0) {
+            $aBindings['threshold_age'] = $iThresholdAge;
+
+            $sQueryWhere .= " AND (UNIX_TIMESTAMP() - `te`.`date`) / 86400 <= :threshold_age";
+        }
+
+        $sQueryGroup = "`te`.`object_id`";
+        if($iThresholdCount != 0) {
+            $aBindings['threshold_count'] = $iThresholdCount;
+
+            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`cmt_author_id`) >= :threshold_count";
         }
 
         $sQuery = "SELECT 
@@ -427,24 +443,32 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 MAX(`tt`.`cmt_time`) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`cmt_object_id` AND `te`.`object_owner_id`<>`tt`.`cmt_author_id` AND `te`.`type`=:module
-            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            WHERE 1 " . $sQueryWhere . " 
             GROUP BY " . $sQueryGroup;
 
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 24, $iThreshold = 0)
+    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
             'module' => $sModule, 
             'interval' => $iInterval
         ];
 
-        $sQueryGroup = "`te`.`id`";
-        if($iThreshold != 0) {
-            $aBindings['threshold'] = $iThreshold;
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
 
-            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`author_id`) >= :threshold";
+        if($iThresholdAge != 0) {
+            $aBindings['threshold_age'] = $iThresholdAge;
+
+            $sQueryWhere .= " AND (UNIX_TIMESTAMP() - `te`.`date`) / 86400 <= :threshold_age";
+        }
+
+        $sQueryGroup = "`te`.`id`";
+        if($iThresholdCount != 0) {
+            $aBindings['threshold_count'] = $iThresholdCount;
+
+            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`author_id`) >= :threshold_count";
         }
 
         $sQuery = "SELECT 
@@ -452,24 +476,32 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 MAX(`tt`.`date`) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`object_owner_id`<>`tt`.`author_id` AND `te`.`type`=:module 
-            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            WHERE 1 " . $sQueryWhere . " 
             GROUP BY " . $sQueryGroup;
 
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);
     }
 
-    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 24, $iThreshold = 0)
+    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 24, $iThresholdAge = 0, $iThresholdCount = 0)
     {
         $aBindings = [
             'module' => $sModule, 
             'interval' => $iInterval
         ];
 
-        $sQueryGroup = "`te`.`object_id`";
-        if($iThreshold != 0) {
-            $aBindings['threshold'] = $iThreshold;
+        $sQueryWhere = " AND (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
 
-            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`author_id`) >= :threshold";
+        if($iThresholdAge != 0) {
+            $aBindings['threshold_age'] = $iThresholdAge;
+
+            $sQueryWhere .= " AND (UNIX_TIMESTAMP() - `te`.`date`) / 86400 <= :threshold_age";
+        }
+
+        $sQueryGroup = "`te`.`object_id`";
+        if($iThresholdCount != 0) {
+            $aBindings['threshold_count'] = $iThresholdCount;
+
+            $sQueryGroup .= " HAVING COUNT(DISTINCT `tt`.`author_id`) >= :threshold_count";
         }
 
         $sQuery = "SELECT 
@@ -477,7 +509,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 MAX(`tt`.`date`) AS `value`
             FROM `" . $this->_sTable . "` AS `te`
             INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`object_owner_id`<>`tt`.`author_id` AND `te`.`type`=:module 
-            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            WHERE 1 " . $sQueryWhere . " 
             GROUP BY " . $sQueryGroup;
 
         return $this->getPairs($sQuery, 'event_id', 'value', $aBindings);

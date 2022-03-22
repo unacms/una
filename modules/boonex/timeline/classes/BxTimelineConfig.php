@@ -45,6 +45,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_bHot;
     protected $_iHotInterval;
+    protected $_iHotThresholdContent;
     protected $_iHotThresholdComment;
     protected $_iHotThresholdVote;
     protected $_aHotSources;
@@ -416,6 +417,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_sAttachmentsLayout = getParam($sOptionPrefix . 'attachments_layout');
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
+        $this->_iHotThresholdContent = (int)getParam($sOptionPrefix . 'hot_threshold_age');
         $this->_iHotThresholdComment = (int)getParam($sOptionPrefix . 'hot_threshold_comment');
         $this->_iHotThresholdVote = (int)getParam($sOptionPrefix . 'hot_threshold_vote');
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
@@ -546,7 +548,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getHotThreshold($sSource)
     {
-        if(!in_array($sSource, [BX_TIMELINE_HFS_COMMENT, BX_TIMELINE_HFS_VOTE]))
+        if(!in_array($sSource, [BX_TIMELINE_HFS_CONTENT, BX_TIMELINE_HFS_COMMENT, BX_TIMELINE_HFS_VOTE]))
             return false;
 
         return $this->{'_iHotThreshold' . ucfirst($sSource)};

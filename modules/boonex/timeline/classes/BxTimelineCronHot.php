@@ -55,6 +55,7 @@ class BxTimelineCronHot extends BxDolCron
         $bHfsComment = $this->_oModule->_oConfig->isHotSource(BX_TIMELINE_HFS_COMMENT);
         $bHfsVote = $this->_oModule->_oConfig->isHotSource(BX_TIMELINE_HFS_VOTE);
 
+        $iHftContent = $this->_oModule->_oConfig->getHotThreshold(BX_TIMELINE_HFS_CONTENT);
         $iHftComments = $this->_oModule->_oConfig->getHotThreshold(BX_TIMELINE_HFS_COMMENT);
         $iHftVotes = $this->_oModule->_oConfig->getHotThreshold(BX_TIMELINE_HFS_VOTE);
 
@@ -77,20 +78,20 @@ class BxTimelineCronHot extends BxDolCron
                 if($bHfsComment && !empty($oModule->_oConfig->CNF['OBJECT_COMMENTS'])) {
                     $sSystem = $oModule->_oConfig->CNF['OBJECT_COMMENTS'];
                     if(isset($aSystemsComments[$sSystem]) && (int)$aSystemsComments[$sSystem]['is_on'] == 1)
-                        $aTracksByDateComments += $this->_oModule->_oDb->getHotTrackByCommentsDateModule($sModule, $aSystemsComments[$sSystem]['table'], $iInterval, $iHftComments);
+                        $aTracksByDateComments += $this->_oModule->_oDb->getHotTrackByCommentsDateModule($sModule, $aSystemsComments[$sSystem]['table'], $iInterval, $iHftContent, $iHftComments);
                 }
 
                 if($bHfsVote) {
                     if(!empty($oModule->_oConfig->CNF['OBJECT_VOTES'])) {
                         $sSystem = $oModule->_oConfig->CNF['OBJECT_VOTES'];
                         if(isset($aSystemsVotes[$sSystem]) && (int)$aSystemsVotes[$sSystem]['is_on'] == 1)
-                            $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDateModule($sModule, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftVotes);
+                            $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDateModule($sModule, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftContent, $iHftVotes);
                     }
 
                     if(!empty($oModule->_oConfig->CNF['OBJECT_REACTIONS'])) {
                         $sSystem = $oModule->_oConfig->CNF['OBJECT_REACTIONS'];
                         if(isset($aSystemsVotes[$sSystem]) && (int)$aSystemsVotes[$sSystem]['is_on'] == 1)
-                            $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDateModule($sModule, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftVotes);
+                            $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDateModule($sModule, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftContent, $iHftVotes);
                     }
                 }
             }
@@ -98,17 +99,17 @@ class BxTimelineCronHot extends BxDolCron
                 if($bHfsComment) {
                     $sSystem = $this->_oModule->_oConfig->getObject('comment');
                     if(isset($aSystemsComments[$sSystem]) && (int)$aSystemsComments[$sSystem]['is_on'] == 1)
-                        $aTracksByDateComments += $this->_oModule->_oDb->getHotTrackByCommentsDate($sCommon, $aSystemsComments[$sSystem]['table'], $iInterval, $iHftComments);
+                        $aTracksByDateComments += $this->_oModule->_oDb->getHotTrackByCommentsDate($sCommon, $aSystemsComments[$sSystem]['table'], $iInterval, $iHftContent, $iHftComments);
                 }
 
                 if($bHfsVote) {
                     $sSystem = $this->_oModule->_oConfig->getObject('vote');
                     if(isset($aSystemsVotes[$sSystem]) && (int)$aSystemsVotes[$sSystem]['is_on'] == 1)
-                        $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDate($sCommon, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftVotes);
+                        $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDate($sCommon, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftContent, $iHftVotes);
 
                     $sSystem = $this->_oModule->_oConfig->getObject('reaction');
                     if(isset($aSystemsVotes[$sSystem]) && (int)$aSystemsVotes[$sSystem]['is_on'] == 1)
-                        $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDate($sCommon, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftVotes);
+                        $aTracksByDateVotes += $this->_oModule->_oDb->getHotTrackByVotesDate($sCommon, $aSystemsVotes[$sSystem]['table_track'], $iInterval, $iHftContent, $iHftVotes);
                 }
             }
         }
