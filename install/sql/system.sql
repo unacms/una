@@ -5356,6 +5356,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `title_system` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `designbox_id` int(11) NOT NULL DEFAULT '11',
+  `class` varchar(128) NOT NULL DEFAULT '',
   `submenu` varchar(64) NOT NULL DEFAULT '',
   `tabs` tinyint(4) NOT NULL DEFAULT '0',
   `async` int(11) NOT NULL DEFAULT '0',

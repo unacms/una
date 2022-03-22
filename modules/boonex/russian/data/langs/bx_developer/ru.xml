@@ -433,6 +433,8 @@
     <string name="_bx_dev_bp_txt_sys_block_designbox_id"><![CDATA[Дизайн]]></string>
     <string name="_bx_dev_bp_txt_block_designbox_id"><![CDATA[Дизайн]]></string>
     <string name="_bx_dev_bp_err_block_designbox_id"><![CDATA[Нужно выбрать дизайн]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_class"><![CDATA[CSS класс]]></string>
+    <string name="_bx_dev_bp_txt_block_class"><![CDATA[CSS класс]]></string>
     <string name="_bx_dev_bp_txt_sys_block_async"><![CDATA[Асинхронный режим]]></string>
     <string name="_bx_dev_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
     <string name="_bx_dev_bp_txt_sys_block_submenu"><![CDATA[Подменю блока]]></string>

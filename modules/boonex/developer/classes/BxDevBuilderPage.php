@@ -385,6 +385,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         foreach($aDBoxes as $aDBox)
             $oForm->aInputs['designbox_id']['values'][] = array('key' => $this->sSelectKeyPrefix . $aDBox['id'], 'value' => _t($aDBox['title']));
 
+        $oForm->aInputs['class']['value'] = $aBlock['class'];
+
         $aContentPlaceholders = $this->oDb->getContentPlaceholders();
         $oForm->aInputs['async']['values'] = array(
             array('key' => 0, 'value' => _t('_sys_no_async'))
