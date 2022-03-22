@@ -773,6 +773,25 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
+    
+    static public function pruning ()
+    {
+        $iCount = 0;
+        
+        if (getParam('sys_account_accounts_pruning_interval') != 0){
+            $oAccountQuery = BxDolAccountQuery::getInstance();
+            $iTime = time() - getParam('sys_account_accounts_pruning_interval') * 86400;
+            $aAccounts = $oAccountQuery->getAccountsForPruning($iTime);
+            foreach ($aAccounts as $k => $aAccount) {
+                $oAccount = BxDolAccount::getInstance($aAccount['id']);
+                if(!$oAccount->isConfirmed() && $oAccount->getDisplayName() != 'Robot'){
+                    $iCount++;
+                    $oAccount->delete(true);
+                }
+            }
+        }
+        return $iCount;
+    }
 
 }
 

@@ -1511,7 +1511,8 @@
     <string name="_adm_stg_cpt_option_sys_account_reset_password_redirect_custom"><![CDATA[URL для перенаправления 'Пользовательская страница']]></string>
     <string name="_adm_stg_cpt_option_sys_account_disable_login_form"><![CDATA[Скрыть форму авторизации]]></string>
     <string name="_adm_stg_cpt_option_sys_account_disable_join_form"><![CDATA[Скрыть форму регистрации]]></string>
-    <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Разрешить использование знака плюс ("+") в адресе электронной почты]]></string> 
+    <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Разрешить использование знака плюс ("+") в адресе электронной почты]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Удалять учетные записи, которые не создавали профили и не подтверждали свою электронную почту в течение N дней (0 - не удалять)]]></string>
     <string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string>
     <string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string>
     <string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Добавить атрибут "nofollow" для внешних ссылок]]></string>
@@ -3258,6 +3259,7 @@
             <li><b>{2}</b> удалено просроченных ключей</li>
             <li><b>{3}</b> удалено просроченных токенов хранилища</li>
             <li><b>{4}</b> удалено просроченных транскодированных изображений</li>
+            <li><b>{5}</b> удалено аккаунтов без профайлов</li>
         </ul>]]></string>
     <string name="_sys_pruning_files"><![CDATA[<h3>Очистка Файлов:</h3>
         <ul>
