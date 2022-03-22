@@ -129,8 +129,12 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
             $sMessage = $oForm->getCleanValue('message');
             $aResult = $this->_oModule->{'process' . bx_gen_method_name($sAction)}($this->_iUserId, $iProfile, $fAmount, $sMessage);
 
-            if((int)$aResult['code'] == 0)
-                $aRes = ['msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_msg_action_performed')];
+            if((int)$aResult['code'] == 0) {
+                if(!empty($aResult['id']))
+                    $aRes = ['grid' => $this->getCode(false), 'blink' => $aResult['id']];
+                else
+                    $aRes = ['msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_msg_action_performed')];
+            }
             else
                 $aRes = ['msg' => _t(!empty($aResult['msg']) ? $aResult['msg'] : '_bx_credits_err_cannot_perform_action')];
 
