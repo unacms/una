@@ -40,7 +40,7 @@ class BxDolCronPruning extends BxDolCron
         $oAcl = BxDolAcl::getInstance();
         $iDeleteMemLevels = $oAcl ? $oAcl->maintenance() : 0;
 
-        //--- Clean sessions ---//
+        // clean sessions
         $oSession = BxDolSession::getInstance();
         $iSessions = $oSession ? $oSession->maintenance() : 0;
 
@@ -50,11 +50,14 @@ class BxDolCronPruning extends BxDolCron
         // clean outdated transcoded images
         $iDeletedTranscodedImages = BxDolTranscoderImage::pruning();
 
+        // clean accounts without profiles
+        $iDeletedAccounts = BxDolAccount::pruning();
+        
         // clean expired keys
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
-        echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);
+        echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages, $iDeletedAccounts);
     }
 
     /**

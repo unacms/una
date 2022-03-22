@@ -557,8 +557,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_account_disable_login_form', '_adm_stg_cpt_option_sys_account_disable_login_form', '', 'checkbox', '', '', '', 40),
 (@iCategoryId, 'sys_account_disable_join_form', '_adm_stg_cpt_option_sys_account_disable_join_form', '', 'checkbox', '', '', '', 42),
 
-(@iCategoryId, 'sys_account_allow_plus_in_email', '_adm_stg_cpt_option_sys_allow_plus_in_email', 'on', 'checkbox', '', '', '', 50);
+(@iCategoryId, 'sys_account_allow_plus_in_email', '_adm_stg_cpt_option_sys_allow_plus_in_email', 'on', 'checkbox', '', '', '', 50),
 
+(@iCategoryId, 'sys_account_accounts_pruning_interval', '_adm_stg_cpt_option_sys_accounts_pruning_interval', '0', 'digit', '', '', '', 55);
 --
 -- CATEGORY: ACL
 --

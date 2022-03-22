@@ -373,6 +373,22 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
         $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `sys_accounts` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :system) WHERE `p`.`status` = :status AND (0 $sWhere) ORDER BY `added` DESC LIMIT :limit";
         return $this->getAll($sQuery, $aBindings);
     }
+    
+    public function getAccountsForPruning($iAdded)
+    {
+        $aBindings = array(
+    		'added' => $iAdded,
+    	);
+        
+        $sQuery = "SELECT `sys_accounts`.`id`, COUNT(`sys_profiles`.`id`) AS `profiles_count` FROM `sys_accounts`
+        INNER  JOIN `sys_profiles` ON `sys_accounts`.`id` = `sys_profiles`.`account_id`
+        WHERE `added` < :added
+        GROUP BY `sys_profiles`.`account_id`
+        HAVING COUNT(`sys_profiles`.`id`) = 1
+        ";
+        
+        return $this->getAll($sQuery, $aBindings);
+    }
 }
 
 /** @} */
