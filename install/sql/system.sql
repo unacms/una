@@ -559,7 +559,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_account_allow_plus_in_email', '_adm_stg_cpt_option_sys_allow_plus_in_email', 'on', 'checkbox', '', '', '', 50),
 
-(@iCategoryId, 'sys_account_accounts_pruning_interval', '_adm_stg_cpt_option_sys_accounts_pruning_interval', '0', 'digit', '', '', '', 55);
+(@iCategoryId, 'sys_account_accounts_pruning', '_adm_stg_cpt_option_sys_accounts_pruning', 'no', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:28:"get_options_pruning_interval";s:5:"class";s:18:"BaseServiceAccount";}', '', '', 55),
+(@iCategoryId, 'sys_account_accounts_pruning_interval', '_adm_stg_cpt_option_sys_accounts_pruning_interval', '0', 'digit', '', '', '', 56);
 --
 -- CATEGORY: ACL
 --
