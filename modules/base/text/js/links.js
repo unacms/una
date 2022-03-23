@@ -26,7 +26,6 @@ function BxBaseModTextLinks(oOptions) {
     var $this = this;
     
     $(document).ready(function () {
-        console.log($this._sFormId);
         $this.initFormPost($this._sFormId);
     });
 }
@@ -36,16 +35,6 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
     var $this = this;
     var oForm = $('#' + sFormId);
     var oTextarea = oForm.find('textarea');
-
-    oForm.ajaxForm({
-        dataType: "json",
-        beforeSubmit: function (formData, jqForm, options) {
-            window[$this._sObjName].beforeFormPostSubmit(oForm);
-        },
-        success: function (oData) {
-            window[$this._sObjName].afterFormPostSubmit(oForm, oData);
-        }
-    });
 
     if (typeof window.glOnSpaceEnterInEditor === 'undefined')
         window.glOnSpaceEnterInEditor = [];    
@@ -71,7 +60,6 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
 
             //--- Mark that 'attach link' process was started.
             $this._oAttachedLinks[sUrl] = 0;
-            console.log(sUrl);
             $this.addAttachLink(oForm, sUrl);
         }
     });
