@@ -388,11 +388,11 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
                 INNER  JOIN `sys_profiles` ON `sys_accounts`.`id` = `sys_profiles`.`account_id`
                 WHERE `added` < :date_limit AND name <> 'Robot'
                 GROUP BY `sys_profiles`.`account_id`
-                HAVING COUNT(`sys_profiles`.`id`) = 1 ";
+                HAVING COUNT(`sys_profiles`.`id`) <= 1 ";
     			break;
                 
             case 'no_login':
-    			$sQuery = "SELECT `sys_accounts`.`id` FROM `sys_accounts` WHERE `logged` < :date_limit AND `added` < :date_limit  AND name <> 'Robot' ";
+    			$sQuery = "SELECT `sys_accounts`.`id` FROM `sys_accounts` WHERE `logged` < :date_limit AND `added` < :date_limit  AND name <> 'Robot'  AND  `sys_accounts`.`id` NOT IN (SELECT `user_id` FROM `sys_sessions`)";
     			break;
                 
             case 'no_confirm':

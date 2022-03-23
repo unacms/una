@@ -1528,10 +1528,10 @@
 ]]></string>
     
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[No pruning]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Delete accounts with no login for N days]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_suspend"><![CDATA[Suspend accounts with no login for N days]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_confirm_delete"><![CDATA[Delete accounts which didn't confirm email for N days]]></string>
-    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_profile_delete"><![CDATA[Delete account which didn't created any profiles for N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Delete accounts with no login within N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_suspend"><![CDATA[Suspend accounts with no login within N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_confirm_delete"><![CDATA[Delete accounts which didn't confirm email within N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_profile_delete"><![CDATA[Delete accounts which didn't created any profiles within N days]]></string>
     
     <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_home"><![CDATA[Home page]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_profile"><![CDATA[View profile page]]></string>
