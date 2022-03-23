@@ -221,6 +221,18 @@
     
     <string name="_bx_posts_menu_item_title_system_add_link"><![CDATA[Add Link]]></string>
     <string name="_bx_posts_menu_item_title_add_link"><![CDATA[Add Link]]></string>
+    <string name="_bx_posts_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
+    <string name="_bx_posts_form_post_input_sys_link"><![CDATA[Link]]></string>
+    <string name="_bx_posts_form_post_input_link_alt"><![CDATA[Add Link]]></string>
+    <string name="_bx_posts_form_attach_link"><![CDATA[Attach Link]]></string>
+    <string name="_bx_posts_form_attach_link_display_add"><![CDATA[Attach Link]]></string>
+    <string name="_bx_posts_form_attach_link_input_sys_content_id"><![CDATA[Content Id]]></string>
+    <string name="_bx_posts_form_attach_link_input_sys_url"><![CDATA[Add Link]]></string>
+    <string name="_bx_posts_form_attach_link_input_url_err"><![CDATA[Correct Link is essential. Please, fill in this field.]]></string>
+    <string name="_bx_posts_form_attach_link_input_url"><![CDATA[Add Link]]></string>
+    <string name="_bx_posts_form_attach_link_input_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_posts_form_attach_link_input_sys_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_posts_form_attach_link_input_do_cancel"><![CDATA[Close]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>
