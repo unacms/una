@@ -16,6 +16,7 @@ class BxBaseModTextMenuAttachments extends BxTemplMenu
 {
     protected $_sModule;
     protected $_oModule;
+    protected $_iContentId;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -24,8 +25,15 @@ class BxBaseModTextMenuAttachments extends BxTemplMenu
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         $this->addMarkers(array(
-            'js_object' => $this->_oModule->_oConfig->getJsObject('poll')
+            'js_object' => $this->_oModule->_oConfig->getJsObject('poll'),
+            'js_object_link' => $this->_oModule->_oConfig->getJsObject('links'),
         ));
+    }
+    
+    public function setContentId($iContentId)
+    {
+        $this->_iContentId = (int)$iContentId;
+        $this->addMarkers(array('content_id' => (int)$this->_iContentId));
     }
 
     protected function _isVisible ($a)

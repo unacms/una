@@ -50,6 +50,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_FILE' => 'files',
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_LINK' => 'link',
             'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
@@ -89,6 +90,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_posts_per_page_for_favorites_lists',
 
             'PARAM_MULTICAT_ENABLED' => true,
+            'PARAM_LINKS_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_posts_auto_activation_for_categories',
 
             // objects
@@ -216,6 +218,10 @@ class BxPostsConfig extends BxBaseModTextConfig
                 'txt_poll_answer_vote_percent' => '_bx_posts_txt_poll_answer_vote_percent'
             ),
         ));
+        
+        $this->_aPrefixes = array(
+            'style' => 'bx-posts',
+        );
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'manage_tools' => 'BxPostsManageTools',

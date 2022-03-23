@@ -97,6 +97,73 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         echoJson($this->getPollForm());
     }
+    
+    public function actionGetAttachLinkForm()
+    {
+        $iContentId = 0;
+        if(bx_get('content_id') !== false)
+            $iContentId = (int)bx_get('content_id');
+
+        echo $this->_oTemplate->getAttachLinkForm($iContentId);
+    }
+    
+    public function actionSubmitAttachLinkForm()
+    {
+        echoJson($this->getFormAttachLink());
+    }
+    
+    public function actionAddAttachLink()
+    {
+        $sUrl = bx_process_input(bx_get('url'));
+        if(empty($sUrl))
+            return echoJson(array());
+
+        $sHeader = 'Content-Type';
+        $aHeaders = get_headers($sUrl, 1);
+        if(!empty($aHeaders) && is_array($aHeaders) && !empty($aHeaders[$sHeader])) {
+            $mixedContentType = $aHeaders[$sHeader];
+            if(!is_array($mixedContentType))
+                $mixedContentType = array($mixedContentType);
+
+            foreach($mixedContentType as $sContentType)
+                if(strpos($sContentType, 'image') !== false) 
+                    return echoJson(array());
+        }
+
+        $iContentId = 0;
+        if(bx_get('content_id') !== false)
+            $iContentId = (int)bx_get('content_id');
+
+        echoJson($this->addAttachLink(array(
+            'content_id' => $iContentId,
+            'url' => $sUrl
+        )));
+    }
+    
+    public function actionDeleteAttachLink()
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+    	$iUserId = $this->getUserId();
+        $iLinkId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(empty($iLinkId))
+            return echoJson(array());
+
+        $aLink = $this->_oDb->getLinksBy(array('type' => 'id', 'id' => $iLinkId, 'profile_id' => $iUserId));
+    	if(empty($aLink) || !is_array($aLink))
+            return echoJson(array());
+
+        if(!empty($aLink['media_id']))
+            BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS'])->deleteFile($aLink['media_id']);
+
+        $aResult = array();
+        if($this->_oDb->deleteLink($iLinkId))
+            $aResult = array('code' => 0);
+        else
+            $aResult = array('code' => 1, 'message' => _t('_bx_posts_form_post_input_link_err_delete'));
+
+        echoJson($aResult);
+    }
 
     public function actionFileEmbedVideo($iFileId)
     {
@@ -600,6 +667,109 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
 
     // ====== COMMON METHODS
+    public function addAttachLink($aValues, $sDisplay = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$sDisplay)
+            $sDisplay = $CNF['OBJECT_FORM_DISPLAY_ATTACH_LINK_ADD'];
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ATTACH_LINK'], $sDisplay, $this->_oTemplate);
+        if(!$oForm)
+            return array('message' => '_sys_txt_error_occured');
+
+        $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->aParams['csrf']['disable'] = true;
+        if(!empty($oForm->aParams['db']['submit_name'])) {
+            $sSubmitName = $oForm->aParams['db']['submit_name'];
+            if(!isset($oForm->aInputs[$sSubmitName])) {
+                if(isset($oForm->aInputs[$CNF['FIELD_ATTACH_LINK_CONTROLS']]))
+                    foreach($oForm->aInputs[$CNF['FIELD_ATTACH_LINK_CONTROLS']] as $mixedIndex => $aInput) {
+                        if(!is_numeric($mixedIndex) || empty($aInput['name']) || $aInput['name'] != $sSubmitName)
+                            continue;
+    
+                        $aValues[$sSubmitName] = $aInput['value'];
+                    }
+            }
+            else            
+                $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
+        }
+
+        $oForm->aInputs['url']['checker']['params']['preg'] = $this->_oConfig->getPregPattern('url');
+
+        $oForm->initChecker(array(), $aValues);
+        if(!$oForm->isSubmittedAndValid())
+            return array('message' => '_sys_txt_error_occured');
+
+        return $this->_addLink($oForm);
+    }
+    
+    public function getFormAttachLink($iContentId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ATTACH_LINK'], $CNF['OBJECT_FORM_DISPLAY_ATTACH_LINK_ADD'], $this->_oTemplate);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'submit_attach_link_form/';
+        $oForm->aInputs['content_id']['value'] = $iContentId;
+        $oForm->aInputs['url']['checker']['params']['preg'] = $this->_oConfig->getPregPattern('url');
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid())
+            return $this->_addLink($oForm);
+
+        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+    }
+    
+    protected function _addLink(&$oForm)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $iUserId = $this->getUserId();
+
+        $iContentId = (int)$oForm->getCleanValue('content_id');
+        $sLink = rtrim($oForm->getCleanValue('url'), '/');
+
+        $aMatches = array();
+        preg_match($this->_oConfig->getPregPattern('url'), $sLink, $aMatches);
+        $sLink = (empty($aMatches[2]) ? 'http://' : '') . $aMatches[0];
+
+        $aSiteInfo = bx_get_site_info($sLink, array(
+            'thumbnailUrl' => array('tag' => 'link', 'content_attr' => 'href'),
+            'OGImage' => array('name_attr' => 'property', 'name' => 'og:image'),
+        ));
+
+        $sTitle = !empty($aSiteInfo['title']) ? $aSiteInfo['title'] : _t('_Empty');
+        $sDescription = !empty($aSiteInfo['description']) ? $aSiteInfo['description'] : _t('_Empty');
+
+        $sMediaUrl = '';
+        if(!empty($aSiteInfo['thumbnailUrl']))
+            $sMediaUrl = $aSiteInfo['thumbnailUrl'];
+        else if(!empty($aSiteInfo['OGImage']))
+            $sMediaUrl = $aSiteInfo['OGImage'];
+
+        $iMediaId = 0;
+        $oStorage = null;
+        if(!empty($sMediaUrl)) {
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
+
+            $iMediaId = $oStorage->storeFileFromUrl($sMediaUrl, true, $iUserId);
+        }
+
+        $iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'media_id' => $iMediaId, 'url' => $sLink, 'title' => $sTitle, 'text' => $sDescription, 'added' => time()));
+        if(!empty($iId)) {
+            if(!empty($oStorage) && !empty($iMediaId))
+                $oStorage->afterUploadCleanup($iMediaId, $iUserId);
+
+            return array(
+                'id' => $iId, 
+                'content_id' => $iContentId, 
+                'url' => $sLink,
+                'item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId)
+            );
+        }
+
+        return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+    }
 
     public function onApprove($mixedContent)
     {

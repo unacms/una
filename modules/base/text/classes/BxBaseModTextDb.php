@@ -327,6 +327,135 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
         return $this->query("DELETE FROM `" . $CNF['TABLE_POLLS_ANSWERS'] . "` WHERE `id` IN (" . $this->implode_escape($aAffected) . ")");
     }
     
+    //--- Link attach related methods ---//
+    public function getUnusedLinks($iUserId)
+    {
+        return $this->getLinksBy(array(
+            'type' => 'unused',
+            'profile_id' => $iUserId
+        ));
+    }
+
+    public function deleteUnusedLinks($iUserId, $iLinkId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+    	$aBindings = array(
+    		'profile_id' => $iUserId
+    	);
+
+        $sWhereAddon = '';
+        if(!empty($iLinkId)) {
+        	$aBindings['id'] = $iLinkId;
+
+            $sWhereAddon = " AND `id`=:id";
+        }
+
+        return $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `profile_id`=:profile_id" . $sWhereAddon, $aBindings);
+    }
+
+    public function saveLink($iContentId, $iLinkId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $aBindings = array(
+            'content_id' => $iContentId,
+            'link_id' => $iLinkId
+        );
+
+        $iId = $this->getOne("SELECT `id` FROM `" . $CNF['TABLE_LINKS2CONTENT'] . "` WHERE `content_id`=:content_id AND `link_id`=:link_id LIMIT 1", $aBindings);
+        if(!empty($iId))
+            return true;
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_LINKS2CONTENT'] . "` SET `content_id`=:content_id, `link_id`=:link_id", $aBindings) > 0;
+    }
+
+    public function deleteLink($iId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        return (int)$this->query("DELETE FROM `tl`, `tle` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tl`.`id` = :id", array(
+            'id' => $iId
+        )) > 0;
+    }
+
+    public function deleteLinks($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        return (int)$this->query("DELETE FROM `tl`, `tle` USING `" . $CNF['TABLE_LINKS'] . "` AS `tl` LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tle`.`content_id` = :content_id", array(
+            'content_id' => $iContentId
+        )) > 0;
+    }
+
+    public function getLinks($iContentId)
+    {
+        return $this->getLinksBy(array('type' => 'content_id', 'content_id' => $iContentId));
+    }
+
+    public function getLinksBy($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sSelectClause = "`tl`.*";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tl`.`id`=:id";
+
+                if(!empty($aParams['profile_id'])) {
+                    $aMethod['params'][1]['profile_id'] = $aParams['profile_id'];
+
+                    $sWhereClause .= " AND `tl`.`profile_id`=:profile_id";
+                }
+                break;
+
+            case 'content_id':
+            	$aMethod['params'][1] = array(
+                    'content_id' => $aParams['content_id']
+                );
+
+                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
+                $sWhereClause = " AND `tle`.`content_id`=:content_id";
+                break;
+
+            case 'unused':
+                $aBindings = array(
+                    'profile_id' => $aParams['profile_id']
+                );
+
+                if(isset($aParams['short']) && $aParams['short'] === true) {
+                    $aMethod['name'] = 'getPairs';
+                    $aMethod['params'][1] = 'url';
+                    $aMethod['params'][2] = 'id';
+                    $aMethod['params'][3] = $aBindings;
+                }
+                else
+                    $aMethod['params'][1] = $aBindings;
+
+                $sJoinClause = "LEFT JOIN `" . $CNF['TABLE_LINKS2CONTENT'] . "` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`content_id`)";
+                $sOrderClause = "`tl`.`added` DESC";
+                break;
+        }
+
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+                " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_LINKS'] . "` AS `tl` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+    
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
     {
         $CNF = &$this->_oConfig->CNF;

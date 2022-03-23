@@ -218,6 +218,9 @@
     <string name="_bx_posts_menu_item_title_cpa_file_html5"><![CDATA[Add Files]]></string>
     <string name="_bx_posts_menu_item_title_system_cpa_poll"><![CDATA[Add Poll]]></string>
     <string name="_bx_posts_menu_item_title_cpa_poll"><![CDATA[Add Poll]]></string>
+    
+    <string name="_bx_posts_menu_item_title_system_add_link"><![CDATA[Add Link]]></string>
+    <string name="_bx_posts_menu_item_title_add_link"><![CDATA[Add Link]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>
