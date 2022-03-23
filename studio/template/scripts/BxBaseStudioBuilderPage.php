@@ -571,7 +571,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $aBlock['cell_id'] = 1;
                 $aBlock['module'] = $this->getBlockModule($aBlock);
                 $aBlock['title'] = $sTitleKey;
-				$aBlock['copyable'] = $sModule == BX_DOL_STUDIO_BP_SKELETONS ? 1 : 0;
+                $aBlock['copyable'] = $sModule == BX_DOL_STUDIO_BP_SKELETONS ? 1 : 0;
                 $aBlock['deletable'] = 1;
 
                 //--- Process Lang copy
@@ -791,6 +791,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'value' => $aBlock['help'],
                     'required' => '0',
                     'html' => 2,
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'class' => array(
+                    'type' => 'text',
+                    'name' => 'class',
+                    'caption' => _t('_adm_bp_txt_block_class'),
+                    'info' => '',
+                    'value' => $aBlock['class'],
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
                     ),

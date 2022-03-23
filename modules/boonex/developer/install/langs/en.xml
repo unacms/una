@@ -433,6 +433,8 @@
     <string name="_bx_dev_bp_txt_sys_block_designbox_id"><![CDATA[Layout]]></string>
     <string name="_bx_dev_bp_txt_block_designbox_id"><![CDATA[Layout]]></string>
     <string name="_bx_dev_bp_err_block_designbox_id"><![CDATA[You need to select a layout]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_class"><![CDATA[CSS class]]></string>
+    <string name="_bx_dev_bp_txt_block_class"><![CDATA[CSS class]]></string>
     <string name="_bx_dev_bp_txt_sys_block_async"><![CDATA[Asynchronous Mode]]></string>
     <string name="_bx_dev_bp_txt_block_async"><![CDATA[Asynchronous Mode]]></string>
     <string name="_bx_dev_bp_txt_sys_block_submenu"><![CDATA[Block submenu]]></string>

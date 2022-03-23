@@ -550,6 +550,7 @@
 	<string name="_adm_bp_txt_block_content_service_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_bp_txt_block_designbox"><![CDATA[Отображение блока]]></string>
 	<string name="_adm_bp_txt_block_designbox_empty"><![CDATA[Выбрать отображение...]]></string>
+        <string name="_adm_bp_txt_block_class"><![CDATA[CSS класс]]></string>
         <string name="_adm_bp_txt_block_help"><![CDATA[Помощь]]></string>
 	<string name="_adm_bp_txt_block_hidden_on"><![CDATA[Скрыть на]]></string>
 	<string name="_adm_bp_txt_block_hidden_on_phone"><![CDATA[телефоне]]></string>

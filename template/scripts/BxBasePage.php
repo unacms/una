@@ -458,15 +458,18 @@ class BxBasePage extends BxDolPage
 
                 $sContentWithBox = $this->_getBlockCodeWithCache($aBlock, $aBlock['async']);
 
-            	$sHiddenOn = '';
+            	$sClassAdd = '';
+                if(!empty($aBlock['class']))
+                    $sClassAdd .= ' ' . $aBlock['class'];
+
                 if(!empty($aBlock['hidden_on']))
-                    foreach($aHiddenOn as $iHiddenOn => $sClass)
+                    foreach($aHiddenOn as $iHiddenOn => $sHiddenOnClass)
                         if((int)$aBlock['hidden_on'] & $iHiddenOn)
-                            $sHiddenOn .= ' ' . $sClass;
+                            $sClassAdd .= ' ' . $sHiddenOnClass;
 
                 if ($sContentWithBox)
                     $sCell .= $this->_oTemplate->parseHtmlByName('designbox_container.html', array(
-                        'class_add' => $sHiddenOn,
+                        'class_add' => $sClassAdd,
                         'bx_if:show_html_id' => array(
                             'condition' => true,
                             'content' => array(
@@ -512,7 +515,7 @@ class BxBasePage extends BxDolPage
     }
 
 
-    protected function _getBlockCodeWithCache($aBlock, $iAsync = 0)
+    protected function _getBlockCodeWithCache(&$aBlock, $iAsync = 0)
     {
         if (!getParam('sys_pb_cache_enable') || !$aBlock['cache_lifetime'] || $iAsync || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')) {
             $sBlockCode = $this->_getBlockCode($aBlock, $iAsync);
@@ -549,7 +552,7 @@ class BxBasePage extends BxDolPage
      * Get block code.
      * @return string
      */
-    protected function _getBlockCode($aBlock, $iAsync = 0)
+    protected function _getBlockCode(&$aBlock, $iAsync = 0)
     {
         $sContentWithBox = '';
         $oFunctions = $this->_oTemplate->getTemplateFunctions();
@@ -611,6 +614,9 @@ class BxBasePage extends BxDolPage
                     $aParams[] = $mixedContent['buttons'];
                 else if($mixedMenu)
                     $aParams[] = (int)$aBlock['tabs'] == 1 ? true : array();
+
+                if(isset($mixedContent['class']))
+                    $aBlock['class'] = $mixedContent['class'];
             }
             else if(is_string($mixedContent) && !empty($mixedContent)) {
                 $iDesignboxId = $aBlock['designbox_id'];

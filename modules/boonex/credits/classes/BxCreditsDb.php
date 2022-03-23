@@ -339,7 +339,7 @@ class BxCreditsDb extends BxBaseModGeneralDb
     public function insertHistory($aSet)
     {
         $sQuery = "INSERT INTO `" . $this->_oConfig->CNF['TABLE_HISTORY'] . "` SET " . $this->arrayToSQL($aSet);
-        return (int)$this->query($sQuery) > 0;
+        return (int)$this->query($sQuery) > 0 ? $this->lastId() : false;
     }
 
     public function updateHistory($aSet, $aWhere)
