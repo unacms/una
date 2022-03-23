@@ -506,7 +506,16 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         if(empty($aTransaction) || (!empty($sWithStatusCheck) && $aTransaction['status'] != $sWithStatusCheck))
             return false;
 
-        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $aTransaction['subscription_id']));
+        $sOrder = '';
+        if(isset($aTransaction['subscription_id']))
+            $sOrder = $aTransaction['subscription_id'];
+        else if(isset($aTransaction['id']))
+            $sOrder = $aTransaction['id'];
+
+        if(empty($sOrder))
+            return false;
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(['type' => 'order', 'order' => $sOrder]);
         if(empty($aPending) || !is_array($aPending))
             return false;
 
