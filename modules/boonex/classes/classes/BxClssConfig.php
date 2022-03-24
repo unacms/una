@@ -54,6 +54,7 @@ class BxClssConfig extends BxBaseModTextConfig
             'FIELD_FILE' => 'files',
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_LINK' => 'link',
             'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
@@ -71,6 +72,7 @@ class BxClssConfig extends BxBaseModTextConfig
 
              // some params
             'PARAM_MULTICAT_ENABLED' => true,
+            'PARAM_LINKS_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_classes_auto_activation_for_categories',
             
             // page URIs
@@ -209,6 +211,10 @@ class BxClssConfig extends BxBaseModTextConfig
                 'txt_poll_answer_vote_percent' => '_bx_classes_txt_poll_answer_vote_percent'
             ),
         ));
+        
+        $this->_aPrefixes = array(
+            'style' => 'bx-clss',
+        );
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'manage_tools' => 'BxClssManageTools',

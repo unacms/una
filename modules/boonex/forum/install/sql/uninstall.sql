@@ -2,7 +2,7 @@ SET @sName = 'bx_forum';
 
 
 -- TABLES: entries
-DROP TABLE IF EXISTS `bx_forum_discussions`, `bx_forum_categories`, `bx_forum_covers`, `bx_forum_files`, `bx_forum_photos`, `bx_forum_photos_resized`, `bx_forum_videos`, `bx_forum_videos_resized`, `bx_forum_subscribers`, `bx_forum_cmts`, `bx_forum_cmts_notes`, `bx_forum_views_track`, `bx_forum_votes`, `bx_forum_votes_track`, `bx_forum_reactions`, `bx_forum_reactions_track`, `bx_forum_meta_keywords`, `bx_forum_meta_mentions`, `bx_forum_reports`, `bx_forum_reports_track`, `bx_forum_favorites_lists`, `bx_forum_favorites_track`, `bx_forum_scores`, `bx_forum_scores_track`, `bx_forum_polls`, `bx_forum_polls_answers`, `bx_forum_polls_answers_votes`, `bx_forum_polls_answers_votes_track`;
+DROP TABLE IF EXISTS `bx_forum_discussions`, `bx_forum_categories`, `bx_forum_covers`, `bx_forum_files`, `bx_forum_photos`, `bx_forum_photos_resized`, `bx_forum_videos`, `bx_forum_videos_resized`, `bx_forum_links`, `bx_forum_links2content`, `bx_forum_subscribers`, `bx_forum_cmts`, `bx_forum_cmts_notes`, `bx_forum_views_track`, `bx_forum_votes`, `bx_forum_votes_track`, `bx_forum_reactions`, `bx_forum_reactions_track`, `bx_forum_meta_keywords`, `bx_forum_meta_mentions`, `bx_forum_reports`, `bx_forum_reports_track`, `bx_forum_favorites_lists`, `bx_forum_favorites_track`, `bx_forum_scores`, `bx_forum_scores_track`, `bx_forum_polls`, `bx_forum_polls_answers`, `bx_forum_polls_answers_votes`, `bx_forum_polls_answers_votes_track`;
 
 
 -- STORAGES & TRANSCODERS

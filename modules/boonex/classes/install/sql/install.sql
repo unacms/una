@@ -191,6 +191,26 @@ CREATE TABLE IF NOT EXISTS `bx_classes_sounds_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_classes_links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `media_id` int(11) NOT NULL DEFAULT '0',
+  `url` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `added` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `profile_id` (`profile_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_classes_links2content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) NOT NULL DEFAULT '0',
+  `link_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `link` (`link_id`, `content_id`)
+);
+
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_classes_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -472,6 +492,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_classes', 'bx_classes', 'covers', 'a:1:{i:0;s:16:"bx_classes_html5";}', 'a:2:{s:17:"bx_classes_simple";s:26:"_sys_uploader_simple_title";s:16:"bx_classes_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_covers', '_bx_classes_form_entry_input_covers', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'pictures', 'a:1:{i:0;s:23:"bx_classes_photos_html5";}', 'a:2:{s:24:"bx_classes_photos_simple";s:26:"_sys_uploader_simple_title";s:23:"bx_classes_photos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_pictures', '_bx_classes_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'videos', 'a:2:{i:0;s:23:"bx_classes_videos_html5";i:1;s:30:"bx_classes_videos_record_video";}', 'a:3:{s:24:"bx_classes_videos_simple";s:26:"_sys_uploader_simple_title";s:23:"bx_classes_videos_html5";s:25:"_sys_uploader_html5_title";s:30:"bx_classes_videos_record_video";s:32:"_sys_uploader_record_video_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_videos', '_bx_classes_form_entry_input_videos', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_classes', 'bx_classes', 'link', '', '', 0, 'custom', '_bx_classes_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'sounds', 'a:1:{i:0;s:23:"bx_classes_sounds_html5";}', 'a:2:{s:24:"bx_classes_sounds_simple";s:26:"_sys_uploader_simple_title";s:23:"bx_classes_sounds_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_sounds', '_bx_classes_form_entry_input_sounds', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'files', 'a:1:{i:0;s:22:"bx_classes_files_html5";}', 'a:2:{s:23:"bx_classes_files_simple";s:26:"_sys_uploader_simple_title";s:22:"bx_classes_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_files', '_bx_classes_form_entry_input_files', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'polls', '', '', 0, 'custom', '_bx_classes_form_entry_input_sys_polls', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -497,19 +518,20 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_add', 'title', 2147483647, 1, 3),
 ('bx_classes_entry_add', 'text', 2147483647, 1, 4),
 ('bx_classes_entry_add', 'attachments', 2147483647, 1, 5),
-('bx_classes_entry_add', 'pictures', 2147483647, 1, 6),
-('bx_classes_entry_add', 'videos', 2147483647, 1, 7),
-('bx_classes_entry_add', 'sounds', 2147483647, 1, 8),
-('bx_classes_entry_add', 'files', 2147483647, 1, 9),
-('bx_classes_entry_add', 'polls', 2147483647, 1, 10),
-('bx_classes_entry_add', 'start_date', 2147483647, 1, 11),
-('bx_classes_entry_add', 'end_date', 2147483647, 1, 12),
-('bx_classes_entry_add', 'completed_when', 2147483647, 1, 13),
-('bx_classes_entry_add', 'avail', 2147483647, 1, 14),
-('bx_classes_entry_add', 'cmts', 2147483647, 1, 15),
-('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 16),
-('bx_classes_entry_add', 'cf', 2147483647, 1, 17),
-('bx_classes_entry_add', 'do_publish', 2147483647, 1, 18),
+('bx_classes_entry_add', 'link', 2147483647, 1, 6),
+('bx_classes_entry_add', 'pictures', 2147483647, 1, 7),
+('bx_classes_entry_add', 'videos', 2147483647, 1, 8),
+('bx_classes_entry_add', 'sounds', 2147483647, 1, 9),
+('bx_classes_entry_add', 'files', 2147483647, 1, 10),
+('bx_classes_entry_add', 'polls', 2147483647, 1, 11),
+('bx_classes_entry_add', 'start_date', 2147483647, 1, 12),
+('bx_classes_entry_add', 'end_date', 2147483647, 1, 13),
+('bx_classes_entry_add', 'completed_when', 2147483647, 1, 14),
+('bx_classes_entry_add', 'avail', 2147483647, 1, 15),
+('bx_classes_entry_add', 'cmts', 2147483647, 1, 16),
+('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 17),
+('bx_classes_entry_add', 'cf', 2147483647, 1, 18),
+('bx_classes_entry_add', 'do_publish', 2147483647, 1, 19),
 
 ('bx_classes_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_classes_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -519,19 +541,20 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_edit', 'title', 2147483647, 1, 3),
 ('bx_classes_entry_edit', 'text', 2147483647, 1, 4),
 ('bx_classes_entry_edit', 'attachments', 2147483647, 1, 5),
-('bx_classes_entry_edit', 'pictures', 2147483647, 1, 6),
-('bx_classes_entry_edit', 'videos', 2147483647, 1, 7),
-('bx_classes_entry_edit', 'sounds', 2147483647, 1, 8),
-('bx_classes_entry_edit', 'files', 2147483647, 1, 9),
-('bx_classes_entry_edit', 'polls', 2147483647, 1, 10),
-('bx_classes_entry_edit', 'start_date', 2147483647, 1, 11),
-('bx_classes_entry_edit', 'end_date', 2147483647, 1, 12),
-('bx_classes_entry_edit', 'completed_when', 2147483647, 1, 13),
-('bx_classes_entry_edit', 'avail', 2147483647, 1, 14),
-('bx_classes_entry_edit', 'cmts', 2147483647, 1, 15),
-('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 16),
-('bx_classes_entry_edit', 'cf', 2147483647, 1, 17),
-('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 18),
+('bx_classes_entry_edit', 'link', 2147483647, 1, 6),
+('bx_classes_entry_edit', 'pictures', 2147483647, 1, 7),
+('bx_classes_entry_edit', 'videos', 2147483647, 1, 8),
+('bx_classes_entry_edit', 'sounds', 2147483647, 1, 9),
+('bx_classes_entry_edit', 'files', 2147483647, 1, 10),
+('bx_classes_entry_edit', 'polls', 2147483647, 1, 11),
+('bx_classes_entry_edit', 'start_date', 2147483647, 1, 12),
+('bx_classes_entry_edit', 'end_date', 2147483647, 1, 13),
+('bx_classes_entry_edit', 'completed_when', 2147483647, 1, 14),
+('bx_classes_entry_edit', 'avail', 2147483647, 1, 15),
+('bx_classes_entry_edit', 'cmts', 2147483647, 1, 16),
+('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 17),
+('bx_classes_entry_edit', 'cf', 2147483647, 1, 18),
+('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 19),
 
 ('bx_classes_entry_view', 'module_id', 2147483647, 1, 1),
 ('bx_classes_entry_view', 'completed_when', 2147483647, 1, 2),
@@ -560,6 +583,28 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_classes_poll_add', 'controls', 2147483647, 1, 3),
 ('bx_classes_poll_add', 'do_submit', 2147483647, 1, 4),
 ('bx_classes_poll_add', 'do_cancel', 2147483647, 1, 5);
+
+
+-- Forms -> Attach link
+INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_classes_attach_link', 'bx_classes', '_bx_classes_form_attach_link', '', '', 'do_submit', 'bx_classes_links', 'id', '', '', '', 0, 1, '', '');
+
+INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('bx_classes_attach_link_add', 'bx_classes', 'bx_classes_attach_link', '_bx_classes_form_attach_link_display_add', 0);
+
+INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+('bx_classes_attach_link', 'bx_classes', 'content_id', '0', '', 0, 'hidden', '_bx_classes_form_attach_link_input_sys_content_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_classes_attach_link', 'bx_classes', 'url', '', '', 0, 'text', '_bx_classes_form_attach_link_input_sys_url', '_bx_classes_form_attach_link_input_url', '', 0, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:0:"";}', '_bx_classes_form_attach_link_input_url_err', '', '', 0, 0),
+('bx_classes_attach_link', 'bx_classes', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_classes_attach_link', 'bx_classes', 'do_submit', '_bx_classes_form_attach_link_input_do_submit', '', 0, 'submit', '_bx_classes_form_attach_link_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_classes_attach_link', 'bx_classes', 'do_cancel', '_bx_classes_form_attach_link_input_do_cancel', '', 0, 'button', '_bx_classes_form_attach_link_input_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+
+INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_classes_attach_link_add', 'content_id', 2147483647, 1, 1),
+('bx_classes_attach_link_add', 'url', 2147483647, 1, 2),
+('bx_classes_attach_link_add', 'controls', 2147483647, 1, 3),
+('bx_classes_attach_link_add', 'do_submit', 2147483647, 1, 4),
+('bx_classes_attach_link_add', 'do_cancel', 2147483647, 1, 5);
 
 -- PRE-VALUES
 

@@ -63,6 +63,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
             'FIELD_ATTACHMENTS' => 'attachments',
+            'FIELD_LINK' => 'link',
             'FIELD_VIEWS' => 'views',
             'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
@@ -109,7 +110,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_forum_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_forum_searchable_fields',
             'PARAM_AUTOSUBSCRIBE_CREATED' => 'bx_forum_autosubscribe_created',
-            'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied',           
+            'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied', 
+            'PARAM_LINKS_ENABLED' => true,
 
             // objects
             'OBJECT_GRID' => 'bx_forum',
@@ -230,6 +232,10 @@ class BxForumConfig extends BxBaseModTextConfig
             ),
         ));
 
+        $this->_aPrefixes = array(
+            'style' => 'bx-forum',
+        );
+        
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'main' => 'BxForumMain',
             'entry' => 'BxForumEntry',

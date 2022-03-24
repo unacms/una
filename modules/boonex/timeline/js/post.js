@@ -101,7 +101,6 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         window.glOnSpaceEnterInEditor = [];    
 
     window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
-        sSelector = '#bx_posts [name=text]';
         if(!oTextarea.is(sSelector))
             return;
 

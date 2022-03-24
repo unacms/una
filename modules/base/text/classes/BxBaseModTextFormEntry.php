@@ -70,7 +70,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateVideo, $this->_getVideoGhostTmplVars($aContentInfo));
         }
 
-        if(isset($this->aInputs[$CNF['FIELD_LINK']]))
+        if(isset($CNF['FIELD_LINK']) && isset($this->aInputs[$CNF['FIELD_LINK']]))
             $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
         
         if (isset($CNF['FIELD_SOUND']) && isset($this->aInputs[$CNF['FIELD_SOUND']])) {

@@ -40,7 +40,7 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
         window.glOnSpaceEnterInEditor = [];    
 
     window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
-        sSelector = '#bx_posts [name=text]';
+        sSelector = '#' + $this._sFormId + ' [name=text]';
         if(!oTextarea.is(sSelector))
             return;
 
