@@ -1523,7 +1523,16 @@
     <string name="_adm_stg_cpt_option_sys_account_disable_login_form"><![CDATA[Disable login form]]></string>
     <string name="_adm_stg_cpt_option_sys_account_disable_join_form"><![CDATA[Disable join form]]></string>
     <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Allow to use plus sign ("+") in email address]]></string>
-    <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Delete accounts which didn't created any profiles and didn't confirm their email for N days (0 - do not delete)]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_pruning"><![CDATA[Accounts pruning]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Accounts pruning period (in days)
+]]></string>
+    
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[No pruning]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Delete accounts with no login within N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_suspend"><![CDATA[Suspend accounts with no login within N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_confirm_delete"><![CDATA[Delete accounts which didn't confirm email within N days]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_profile_delete"><![CDATA[Delete accounts which didn't created any profiles within N days]]></string>
+    
     <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_home"><![CDATA[Home page]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_profile"><![CDATA[View profile page]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_profile_edit"><![CDATA[Edit profile page]]></string>
@@ -3296,7 +3305,7 @@ If it is not enabled then please consider implement this optimization, since it 
             <li><b>{2}</b> deleted expired keys</li>
             <li><b>{3}</b> deleted expired storage tokens</li>
             <li><b>{4}</b> deleted outdated transcoded images</li>
-            <li><b>{5}</b> deleted accounts without profiles</li>
+            <li><b>{5}</b> deleted/suspented accounts</li>
         </ul>]]></string>
     <string name="_sys_pruning_files"><![CDATA[<h3>Files pruning:</h3>
         <ul>

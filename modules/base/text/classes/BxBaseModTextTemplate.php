@@ -478,7 +478,130 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         return $oMenu;
     }
+    
+    public function getAttachLinkForm($iContentId = 0)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObject('links');
 
+        $aForm = $this->getModule()->getFormAttachLink($iContentId);
+
+        return $this->parseHtmlByName('attach_link_form.html', array(
+            'style_prefix' => $sStylePrefix,
+            'js_object' => $sJsObject,
+            'form_id' => $aForm['form_id'],
+            'form' => $aForm['form'],
+        ));
+    }
+    
+    public function getAttachLinkField($iUserId, $iContentId = 0)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        if(!$iContentId)
+            $aLinks = $this->_oDb->getUnusedLinks($iUserId);
+        else
+            $aLinks = $this->_oDb->getLinks($iContentId);
+
+        $sLinks = '';
+        foreach($aLinks as $aLink)
+            $sLinks .= $this->getAttachLinkItem($iUserId, $aLink);
+
+        return $this->parseHtmlByName('attach_link_form_field.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('attach_link_form_field') . $iContentId,
+            'style_prefix' => $sStylePrefix,
+            'links' => $sLinks
+        ));
+    }
+
+    public function getAttachLinkItem($iUserId, $mixedLink)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        $aLink = is_array($mixedLink) ? $mixedLink : $this->_oDb->getLinksBy(array('type' => 'id', 'id' => (int)$mixedLink, 'profile_id' => $iUserId));
+        if(empty($aLink) || !is_array($aLink))
+            return '';
+
+        $sLinkIdPrefix = $this->_oConfig->getHtmlIds('attach_link_item');
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sClass = $sStylePrefix . '-al-item';
+        $sJsObject = $this->_oConfig->getJsObject('links');
+
+        $oEmbed = BxDolEmbed::getObjectInstance();
+        $bEmbed = $oEmbed !== false;
+
+        $sThumbnail = '';
+        $aLinkAttrs = array();
+        if(!$bEmbed) {
+            $aLinkAttrs = array(
+            	'title' => bx_html_attribute($aLink['title'])
+            );
+            if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
+                $aLinkAttrs['target'] = '_blank';
+    
+                if($this->_oDb->getParam('sys_add_nofollow') == 'on')
+            	    $aLinkAttrs['rel'] = 'nofollow';
+            }
+
+            if((int)$aLink['media_id'] != 0)
+                $sThumbnail = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS'])->getFileUrl($aLink['media_id']);
+        }
+        else
+            $sClass .= ' embed';
+
+        return $this->parseHtmlByName('attach_link_item.html', array(
+            'html_id' => $sLinkIdPrefix . $aLink['id'],
+            'style_prefix' => $sStylePrefix,
+            'class' => $sClass,
+            'js_object' => $sJsObject,
+            'id' => $aLink['id'],
+            'bx_if:show_embed_outer' => array(
+                'condition' => $bEmbed,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'embed' => $bEmbed ? $oEmbed->getLinkHTML($aLink['url'], $aLink['title'], 300) : '',
+                )
+            ),
+            'bx_if:show_embed_inner' => array(
+                'condition' => !$bEmbed,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'bx_if:show_thumbnail' => array(
+                        'condition' => !empty($sThumbnail),
+                        'content' => array(
+                            'style_prefix' => $sStylePrefix,
+                            'thumbnail' => $sThumbnail
+                        )
+                    ),
+                    'url' => $aLink['url'],
+                    'link' => $this->parseLink($aLink['url'], $aLink['title'], $aLinkAttrs)
+                )
+            ),
+        ));
+    }
+
+    public function getEventLinks($iContentId)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        $aLinks = $this->_oDb->getLinks($iContentId);
+        if(empty($aLinks) || !is_array($aLinks))
+            return array();
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+
+        $aResult = array();
+        foreach($aLinks as $aLink)
+            $aResult[] = array(
+                'url' => $aLink['url'],
+                'title' => $aLink['title'],
+                'text' => $aLink['text'],
+                'thumbnail' => (int)$aLink['media_id'] != 0 ? $oTranscoder->getFileUrl($aLink['media_id']) : ''
+            );
+
+        return $aResult;
+    }
+    
     public function getTmplVarsText($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -530,6 +653,77 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'additional_code' => $sAddCode,
             )
         );
+        
+        if(isset($CNF['FIELD_LINK'])){
+            $aLinks = $this->getEventLinks($aData[$CNF['FIELD_ID']]);
+            
+            $sStylePrefix = $this->_oConfig->getPrefix('style');
+            $sClass = $sStylePrefix . '-al-item';
+            
+            $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
+            
+            foreach($aLinks as $aLink) {
+                $sLink = '';
+
+                $oEmbed = BxDolEmbed::getObjectInstance();
+                if ($oEmbed) {
+                    $sLink = $this->parseHtmlByName('link_embed_provider.html', array(
+                        'style_prefix' => $sStylePrefix,
+                        'embed' => $oEmbed->getLinkHTML($aLink['url'], $aLink['title']),
+                    ));
+                }
+                else {
+                    $aLinkAttrs = array(
+                    	'title' => $aLink['title']
+                    );
+                    if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
+                        $aLinkAttrs['target'] = '_blank';
+    
+                        if($bAddNofollow)
+                    	    $aLinkAttrs['rel'] = 'nofollow';
+                    }
+
+                    $sLinkAttrs = '';
+                    foreach($aLinkAttrs as $sKey => $sValue)
+                        $sLinkAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+
+                    $sLink = $this->parseHtmlByName('link_embed_common.html', array(
+                        'bx_if:show_thumbnail' => [
+                            'condition' => !empty($aLink['thumbnail']),
+                            'content' => [
+                                'style_prefix' => $sStylePrefix,
+                                'thumbnail' => $aLink['thumbnail'],
+                                'link' => !empty($aLink['url']) ? $aLink['url'] : 'javascript:void(0)',
+                                'attrs' => $sLinkAttrs
+                            ]
+                        ],
+                        'link' => !empty($aLink['url']) ? $aLink['url'] : 'javascript:void(0)',
+                        'attrs' => $sLinkAttrs,
+                        'content' => $aLink['title'],
+                        'bx_if:show_text' => [
+                            'condition' => !empty($aLink['text']),
+                            'content' => [
+                                'style_prefix' => $sStylePrefix,
+                                'text' => $aLink['text']
+                            ]
+                        ]
+                    ));
+                }
+
+                $aTmplVarsLinks[] = [
+                    'style_prefix' => $sStylePrefix,
+                    'link' => $sLink
+                ];
+                
+                $aVars['bx_if:show_links'] = [
+                    'condition' => !empty($aTmplVarsLinks),
+                    'content' => [
+                        'style_prefix' => $sStylePrefix,
+                        'bx_repeat:links' => $aTmplVarsLinks
+                    ]
+                ];
+            }
+        }
 
         if(!empty($CNF['OBJECT_REACTIONS'])) {
             $oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aData[$CNF['FIELD_ID']]);

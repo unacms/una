@@ -28,10 +28,13 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sResult = parent::getCode($bDynamicMode);
-        if(!empty($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS']))
+        if(!empty($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'])){
+            $oMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS']);
+            $oMenu->setContentId((int)$this->_iContentId);
             $sResult = $this->_oModule->_oTemplate->parseHtmlByContent($sResult, array(
-                'attachments_menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'])->getCode()
+                'attachments_menu' =>  $oMenu->getCode()
             ));
+        }
 
         if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true) {
             $sInclude = '';
@@ -39,7 +42,14 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $sInclude .= $this->_oModule->_oTemplate->addJs(array('modules/base/text/js/|polls.js', 'polls.js'), $bDynamicMode);
 
             $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('poll');
-        }   
+        }  
+        
+        if(isset($CNF['PARAM_LINKS_ENABLED']) && $CNF['PARAM_LINKS_ENABLED'] === true) {
+            $sInclude = '';
+            $sInclude .= $this->_oModule->_oTemplate->addJs(array('modules/base/text/js/|links.js', 'links.js'), $bDynamicMode);
+
+            $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('links', ['sFormId' => $this->getId(), 'iContentId' => (int)$this->_iContentId,]);
+        }  
 
     	return $sResult;
     }
@@ -49,8 +59,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $bValues = $aValues && !empty($aValues['id']);
+        $iValueId = $bValues ? (int)$aValues['id'] : 0;
+        $iUserId = $this->_oModule->getUserId();
         $aContentInfo = $bValues ? $this->_oModule->_oDb->getContentInfoById($aValues['id']) : false;
-
+            
         if (isset($CNF['FIELD_VIDEO']) && isset($this->aInputs[$CNF['FIELD_VIDEO']])) {
             if ($bValues)
                 $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = $aValues['id'];
@@ -58,6 +70,9 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateVideo, $this->_getVideoGhostTmplVars($aContentInfo));
         }
 
+        if(isset($CNF['FIELD_LINK']) && isset($this->aInputs[$CNF['FIELD_LINK']]))
+            $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
+        
         if (isset($CNF['FIELD_SOUND']) && isset($this->aInputs[$CNF['FIELD_SOUND']])) {
             if ($bValues)
                 $this->aInputs[$CNF['FIELD_SOUND']]['content_id'] = $aValues['id'];
@@ -132,6 +147,21 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         return true;
     }
+    
+    public function processLinks ($sFieldLink, $iContentId = 0)
+    {
+        
+        if (!isset($this->aInputs[$sFieldLink]))
+            return true;
+
+        $aLinkIds = $this->getCleanValue($sFieldLink);
+        if(empty($aLinkIds) || !is_array($aLinkIds))
+            return true;
+        
+        foreach($aLinkIds as $iLinkId)
+            $this->_oModule->_oDb->saveLink($iContentId, $iLinkId);
+    }
+    
 
     protected function _getVideoGhostTmplVars($aContentInfo = array())
     {

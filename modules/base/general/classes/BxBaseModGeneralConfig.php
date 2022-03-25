@@ -71,6 +71,14 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
         return isset($this->_aGridObjects[$sType]) ? $this->_aGridObjects[$sType] : '';
     }
+    
+    public function isEqualUrls($sUrl1, $sUrl2)
+    {
+        $sUrl1 = trim($sUrl1, "/");
+        $sUrl2 = trim($sUrl2, "/");
+
+        return strncmp($sUrl1, $sUrl2, strlen($sUrl1)) === 0;
+    }
 
     /*
      * Note. The first Transcoder in the array $aTranscoders has the highest priority. 

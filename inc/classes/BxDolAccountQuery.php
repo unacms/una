@@ -374,18 +374,32 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
         return $this->getAll($sQuery, $aBindings);
     }
     
-    public function getAccountsForPruning($iAdded)
+    public function getAccountsForPruning($sMode, $iAdded)
     {
         $aBindings = array(
-    		'added' => $iAdded,
+    		'date_limit' => $iAdded,
     	);
         
-        $sQuery = "SELECT `sys_accounts`.`id`, COUNT(`sys_profiles`.`id`) AS `profiles_count` FROM `sys_accounts`
-        INNER  JOIN `sys_profiles` ON `sys_accounts`.`id` = `sys_profiles`.`account_id`
-        WHERE `added` < :added
-        GROUP BY `sys_profiles`.`account_id`
-        HAVING COUNT(`sys_profiles`.`id`) = 1
-        ";
+        $sQuery = '';
+        
+        switch($sMode) {
+    		case 'no_profile':
+    			$sQuery = "SELECT `sys_accounts`.`id`, COUNT(`sys_profiles`.`id`) AS `profiles_count` FROM `sys_accounts`
+                INNER  JOIN `sys_profiles` ON `sys_accounts`.`id` = `sys_profiles`.`account_id`
+                WHERE `added` < :date_limit AND name <> 'Robot'
+                GROUP BY `sys_profiles`.`account_id`
+                HAVING COUNT(`sys_profiles`.`id`) <= 1 ";
+    			break;
+                
+            case 'no_login':
+    			$sQuery = "SELECT `sys_accounts`.`id` FROM `sys_accounts` WHERE `logged` < :date_limit AND `added` < :date_limit  AND name <> 'Robot'  AND  `sys_accounts`.`id` NOT IN (SELECT `user_id` FROM `sys_sessions`)";
+    			break;
+                
+            case 'no_confirm':
+    			$sWhereClause = "SELECT `sys_accounts`.`id` FROM `sys_accounts` WHERE `added` < :date_limit AND (phone_confirmed = 0 OR email_confirmed = 0) AND name <> 'Robot'";
+    			break;
+    	}
+        
         
         return $this->getAll($sQuery, $aBindings);
     }

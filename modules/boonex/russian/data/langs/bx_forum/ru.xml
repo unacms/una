@@ -231,6 +231,21 @@
     <string name="_bx_forum_menu_item_title_cpa_file_html5"><![CDATA[Добавить файл]]></string>
     <string name="_bx_forum_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
     <string name="_bx_forum_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
+    
+    <string name="_bx_forum_menu_item_title_system_add_link"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_forum_menu_item_title_add_link"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_forum_form_post_input_link_err_delete"><![CDATA[Невозможно удалить ссылку. Пожалуйста, оповестите нас о проблеме.]]></string>
+    <string name="_bx_forum_form_post_input_sys_link"><![CDATA[Ссылка]]></string>
+    <string name="_bx_forum_form_post_input_link_alt"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_forum_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
+    <string name="_bx_forum_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>
+    <string name="_bx_forum_form_attach_link_input_sys_content_id"><![CDATA[Content Id]]></string>
+    <string name="_bx_forum_form_attach_link_input_sys_url"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_forum_form_attach_link_input_url_err"><![CDATA[Необходима правильная ссылка. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_forum_form_attach_link_input_url"><![CDATA[Добавить ссылку]]></string>
+    <string name="_bx_forum_form_attach_link_input_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_forum_form_attach_link_input_sys_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_forum_form_attach_link_input_do_cancel"><![CDATA[Закрыть]]></string>
 
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Форум - Подменю]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Форум - Подменю]]></string>

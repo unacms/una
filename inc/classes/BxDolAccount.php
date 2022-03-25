@@ -777,19 +777,57 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     static public function pruning ()
     {
         $iCount = 0;
+        $iTime = time() - getParam('sys_account_accounts_pruning_interval') * 86400;
+        $oAccountQuery = BxDolAccountQuery::getInstance();
+        $aAccounts = [];
+        $bSuspend = false;
         
-        if (getParam('sys_account_accounts_pruning_interval') != 0){
-            $oAccountQuery = BxDolAccountQuery::getInstance();
-            $iTime = time() - getParam('sys_account_accounts_pruning_interval') * 86400;
-            $aAccounts = $oAccountQuery->getAccountsForPruning($iTime);
+        switch(getParam('sys_account_accounts_pruning')) {
+ 
+            case 'no_login_delete':
+                $aAccounts = $oAccountQuery->getAccountsForPruning('no_login', $iTime);   
+                break;
+            
+            case 'no_login_suspend':
+                $bSuspend = true;
+                $aAccounts = $oAccountQuery->getAccountsForPruning('no_login', $iTime);   
+                break;  
+                
+    		case 'no_confirm_delete':
+                $aAccounts = $oAccountQuery->getAccountsForPruning('no_confirm', $iTime);
+                foreach ($aAccounts as $k => $aAccount) {
+                    $oAccount = BxDolAccount::getInstance($aAccount['id']);
+                    if($oAccount->isConfirmed()){
+                        unset($aAccounts[$k]);
+                    }
+                }
+                break;
+                
+            case 'no_profile_delete':
+                $aAccounts = $oAccountQuery->getAccountsForPruning('no_profile', $iTime);
+                break;
+        }
+
+        if ($bSuspend){
             foreach ($aAccounts as $k => $aAccount) {
                 $oAccount = BxDolAccount::getInstance($aAccount['id']);
-                if(!$oAccount->isConfirmed() && $oAccount->getDisplayName() != 'Robot'){
-                    $iCount++;
-                    $oAccount->delete(true);
+                $oProfile = BxDolProfile::getInstanceAccountProfile($aAccount['id']);
+                $oProfile->suspend(BX_PROFILE_ACTION_AUTO, 0 ,false);
+                $aProfiles = $oAccount->getProfiles();
+                foreach($aProfiles as $aProfile){
+                    BxDolProfile::getInstance($aProfile['id'])->suspend(BX_PROFILE_ACTION_AUTO, 0 ,false);
                 }
+                $iCount++;
             }
         }
+        else{
+            foreach ($aAccounts as $k => $aAccount) {
+                $oAccount = BxDolAccount::getInstance($aAccount['id']);
+                $oAccount->delete(false);
+                $iCount++;
+            }
+        }
+
         return $iCount;
     }
 

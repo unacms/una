@@ -23,6 +23,8 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
      * implement 'attachments' related parameters. 
      */
     protected $_bAttachmentsInTimeline;
+    
+    protected $_aPregPatterns;
 
     function __construct($aModule)
     {
@@ -38,6 +40,9 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'TABLE_POLLS_ANSWERS' => $aModule['db_prefix'] . 'polls_answers',
             'TABLE_POLLS_ANSWERS_VOTES' => $aModule['db_prefix'] . 'polls_answers_votes',
             'TABLE_POLLS_ANSWERS_VOTES_TRACK' => $aModule['db_prefix'] . 'polls_answers_votes_track',
+            
+            'TABLE_LINKS' => $aModule['db_prefix'] . 'links',
+            'TABLE_LINKS2CONTENT' => $aModule['db_prefix'] . 'links2content',
 
             // database fields
             'FIELD_POLL_ID' => 'id',
@@ -45,15 +50,21 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'FIELD_POLL_CONTENT_ID' => 'content_id',
             'FIELD_POLL_TEXT' => 'text',
             'FIELD_POLL_ANSWERS' => 'answers',
+            
+            'FIELD_ATTACH_LINK_CONTROLS' => 'controls',
 
             // some params
             'PARAM_POLL_ENABLED' => true,
             'PARAM_POLL_HIDDEN_RESULTS' => false,
             'PARAM_POLL_ANONYMOUS_VOTING' => true,
             'PARAM_MULTICAT_ENABLED' => false,
+            'PARAM_LINKS_ENABLED' => false,
 
             // objects
             'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',
+            'OBJECT_FORM_ATTACH_LINK' => $this->_sName . '_attach_link',
+            'OBJECT_FORM_DISPLAY_ATTACH_LINK_ADD' => $this->_sName . '_attach_link_add',
+            
 
             // styles
             'STYLES_POLLS_EMBED_CLASS' => 'body.bx-page-iframe.bx-def-color-bg-page',
@@ -64,11 +75,13 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
 
         $this->_aJsClasses = array(
             'poll' => $this->_sClassPrefix . 'Polls',
+            'links' => $this->_sClassPrefix . 'Links',
             'categories' => $this->_sClassPrefix . 'Categories'
         );
 
         $this->_aJsObjects = array(
             'poll' => 'o' . $this->_sClassPrefix . 'Polls',
+            'links' => 'o' . $this->_sClassPrefix . 'Links',
             'categories' => 'o' . $this->_sClassPrefix . 'Categories'
         );
 
@@ -82,6 +95,16 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'poll_view_menu' => $sPrefix . '-poll-view-menu',
             'poll_view_link_answers' => $sPrefix . '-poll-view-answers-',
             'poll_view_link_results' => $sPrefix . '-poll-view-results-',
+            
+            'attach_link_popup' =>  $sPrefix . '-attach-link-popup',
+            'attach_link_form_field' => $sPrefix . '-attach-link-form-field-',
+            'attach_link_item' => $sPrefix . '-attach-link-item-',
+        );
+        
+        $this->_aPregPatterns = array(
+            "meta_title" => "/<title>(.*)<\/title>/",
+            "meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
+            "url" => "/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%#\/\.\w\-_!\(\)]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/"
         );
 
         $this->_bAttachmentsInTimeline = false;
@@ -103,6 +126,11 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
     public function isAutoApproveEnabled()
     {
         return !$this->isAutoApprove() || getParam($this->CNF['PARAM_AUTO_APPROVE']) == 'on';
+    }
+    
+    public function getPregPattern($sType)
+    {
+        return $this->_aPregPatterns[$sType];
     }
 
     public function getHtmlIds($sKey = '')
