@@ -36,10 +36,10 @@
         var sStreet = $('input[name="__name___street"]').val();
         var sNum = $('input[name="__name___street_number"]').val();
 
-        if (!sCountryCode || !sCountryCode.length)
+        if (!sCountry || !sCountry.length)
             return '';
 
-        sRet = '&country=' + encodeURIComponent(sCountryCode);
+        sRet = '&country=' + encodeURIComponent(sCountry);
 
         if (sZip.length && sMode !== 'no_street_no_zip')
             sRet += '&postalcode=' + encodeURIComponent(sZip);
