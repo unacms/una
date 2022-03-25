@@ -15,7 +15,16 @@ class BxDevTemplate extends BxDolModuleTemplate
     {
         parent::__construct($oConfig, $oDb);
 
-        $this->addStudioCss(array('main.css'));
+        $this->addStudioCss(['main.css']);
+    }
+
+    function displayPageSettings($sPage, $oContent, $sGetPageCodeMethod = 'getPageCode')
+    {
+        $this->addStudioCss($oContent->getCss(), false, false);
+        $this->addStudioJs($oContent->getJs(), false, false);
+
+        $this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
+        return $oContent->getCode();
     }
 
     function displayPageContent($sPage, $oContent, $sGetPageCodeMethod = 'getPageCode')
@@ -25,16 +34,16 @@ class BxDevTemplate extends BxDolModuleTemplate
 
         $sMenu = $oContent->getPageMenu();
         $sContent = $oContent->getPageJsCode() . $oContent->$sGetPageCodeMethod();
-        if(in_array($sPage, array(BX_DEV_TOOLS_SETTINGS)) || empty($sMenu)) {
+        if(empty($sMenu)) {
             $this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
             return $sContent;
         }
 
         $this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-columns');
-        return $this->parseHtmlByName('page_content.html', array(
+        return $this->parseHtmlByName('page_content.html', [
             'page_menu_code' => $sMenu,
             'page_main_code' => $sContent
-        ));
+        ]);
     }
 }
 

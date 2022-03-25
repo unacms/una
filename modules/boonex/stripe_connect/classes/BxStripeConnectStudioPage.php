@@ -9,7 +9,7 @@
  * @{
  */
 
-require_once('BxStripeConnectStudioSettings.php');
+require_once('BxStripeConnectStudioOptions.php');
 
 define('BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS', 'accounts');
 
@@ -30,10 +30,12 @@ class BxStripeConnectStudioPage extends BxTemplStudioModule
 
     protected function getSettings()
     {
-        $oPage = new BxStripeConnectStudioSettings($this->sModule);
+        $oOptions = new BxStripeConnectStudioOptions($this->sModule);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
         ));
     }
 

@@ -43,14 +43,16 @@ class BxDevStudioPage extends BxTemplStudioModule
 
     protected function getSettings()
     {
-        $oContent = new BxTemplStudioSettings('system', 'hidden');
+        $oOptions = new BxTemplStudioOptions('system', 'hidden');
 
-        if(($mixedResult = $oContent->checkAction()) !== false) {
+        if(($mixedResult = $oOptions->checkAction()) !== false) {
             echoJson($mixedResult);
             exit;
         }
 
-        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent, 'getFormCode');
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
+        return $this->oModule->_oTemplate->displayPageSettings($this->sPage, $oOptions);
     }
 
     protected function getForms()

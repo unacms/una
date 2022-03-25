@@ -9,7 +9,7 @@
  * @{
  */
 
-require_once ('BxXeroStudioSettings.php');
+require_once ('BxXeroStudioOptions.php');
 
 class BxXeroStudioPage extends BxTemplStudioModule
 {
@@ -23,22 +23,24 @@ class BxXeroStudioPage extends BxTemplStudioModule
 
         parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems['authorize'] = array('name' => 'authorize', 'icon' => 'sign-in-alt', 'title' => '_bx_xero_lmi_cpt_authorize');
+        $this->aMenuItems['authorize'] = ['name' => 'authorize', 'icon' => 'sign-in-alt', 'title' => '_bx_xero_lmi_cpt_authorize'];
     }
 
     protected function getSettings()
     {
-        $oPage = new BxXeroStudioSettings($this->sModule);
+        $oOptions = new BxXeroStudioOptions($this->sModule);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
         ));
     }
 
     protected function getAuthorize()
     {
-        $this->_oModule->_oTemplate->addStudioCss(array('main.css'));
-        $this->_oModule->_oTemplate->addStudioJs(array('main.js'));
+        $this->_oModule->_oTemplate->addStudioCss(['main.css']);
+        $this->_oModule->_oTemplate->addStudioJs(['main.js']);
         return $this->_oModule->_oTemplate->getBlockAuthorize(bx_get('code'));
     }
 }

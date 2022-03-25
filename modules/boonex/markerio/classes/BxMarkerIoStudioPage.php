@@ -9,7 +9,7 @@
  * @{
  */
 
-require_once ('BxMarkerIoStudioSettings.php');
+require_once ('BxMarkerIoStudioOptions.php');
 
 class BxMarkerIoStudioPage extends BxTemplStudioModule
 {
@@ -26,10 +26,12 @@ class BxMarkerIoStudioPage extends BxTemplStudioModule
 
     protected function getSettings()
     {
-        $oPage = new BxMarkerIoStudioSettings($this->sModule);
+        $oOptions = new BxMarkerIoStudioOptions($this->sModule);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
         ));
     }
 }

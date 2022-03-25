@@ -15,13 +15,11 @@ class BxArtificerStudioPage extends BxTemplStudioDesign
 {
     function __construct($sModule, $mixedPageName, $sPage = "")
     {
-    	$this->MODULE = 'bx_artificer';
-
         parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems = bx_array_insert_after(array(
-            BX_ARTIFICER_STUDIO_TEMPL_TYPE_STYLES => array('title' => '_bx_artificer_lmi_cpt_styles', 'icon' => 'paint-brush')
-        ), $this->aMenuItems, BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
+        $this->aMenuItems = bx_array_insert_after([
+            BX_ARTIFICER_STUDIO_TEMPL_TYPE_STYLES => ['title' => '_bx_artificer_lmi_cpt_styles', 'icon' => 'paint-brush']
+        ], $this->aMenuItems, BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
     }
 
     protected function getSettings($mixedCategory = '', $sMix = '')
@@ -29,25 +27,25 @@ class BxArtificerStudioPage extends BxTemplStudioDesign
     	return parent::getSettings('bx_artificer_system', $sMix);
     }
 
-    protected function getStyles($sMix = '')
+    protected function getStyles($mixedCategory = '', $sMix = '')
     {
-    	$oTemplate = BxDolStudioTemplate::getInstance();
+    	$sPrefix = $this->sModule;
 
-    	$sPrefix = $this->MODULE;
-    	$aCategories = array(
-            $sPrefix . '_styles_custom',
-        );
-    	$oPage = new BxTemplStudioSettings($this->sModule, $aCategories, $sMix);
+        if(empty($mixedCategory))
+            $mixedCategory = [
+                $sPrefix . '_styles_custom',
+            ];
 
-    	$oTemplate->addJs(array('codemirror/codemirror.min.js'));
-        $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
+    	$oOptions = new BxTemplStudioOptions($this->sModule, $mixedCategory, $sMix);
 
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
-            'content' => $oPage->getFormCode(),
-            'js_content' => $this->getPageJsCode(array(
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss(), [BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css']);
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs(), ['codemirror/codemirror.min.js']);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', [
+            'content' => $oOptions->getCode(),
+            'js_content' => $this->getPageJsCode([
                 'sCodeMirror' => "textarea[name='" . $sPrefix . "_styles_custom']"
-            ))
-        ));
+            ])
+        ]);
     }
 }
 
