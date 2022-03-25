@@ -351,8 +351,12 @@ class BxDolStudioOptions extends BxDol
                 $mixedValue = (int)getParam($aOption['name']);
 
                 $aIds = $oForm->getCleanValue($aOption['name']);
-                if(empty($aIds))
+                if(empty($aIds)) {
+                    if(!empty($mixedValue))
+                        $mixedValue = 0;
+
                     break;
+                }
 
                 $oStorage = BxDolStorage::getObjectInstance($this->sStorage);
                 if(!$oStorage)
