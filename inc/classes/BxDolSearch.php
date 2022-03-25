@@ -925,6 +925,9 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function getSorting ($sSortType = 'last')
     {
+        if (isset($this->aCurrent['sorting_sql']))
+            return array('order' => $this->aCurrent['sorting_sql']);
+        
         $aOverride = $this->getAlterOrder();
         if (is_array($aOverride) && !empty($aOverride))
             return $aOverride;
