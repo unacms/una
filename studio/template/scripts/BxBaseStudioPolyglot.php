@@ -14,10 +14,15 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
     protected $aMenuItems;
     protected $aGridObjects;
 
-    function __construct($sPage = '')
+    public function __construct($sPage = '')
     {
         parent::__construct($sPage);
 
+        $this->aPageCss = array_merge($this->aPageCss, ['forms.css', 'paginate.css', 'polyglot.css']);
+        $this->aPageJs = array_merge($this->aPageJs, ['polyglot.js']);
+        $this->sPageJsClass = 'BxDolStudioPolyglot';
+        $this->sPageJsObject = 'oBxDolStudioPolyglot';
+        
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'polyglot.php?page=';
 
         $this->aMenuItems = array(
@@ -32,23 +37,8 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
             'etemplates' => 'sys_studio_lang_etemplates',
         );
     }
-    function getPageCss()
-    {
-        return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'polyglot.css'));
-    }
-    function getPageJs()
-    {
-        return array_merge(parent::getPageJs(), array('settings.js', 'polyglot.js'));
-    }
-    function getPageJsClass()
-    {
-        return 'BxDolStudioPolyglot';
-    }
-    function getPageJsObject()
-    {
-        return 'oBxDolStudioPolyglot';
-    }
-    function getPageJsCode($aOptions = array(), $bWrap = true)
+
+    public function getPageJsCode($aOptions = array(), $bWrap = true)
     {
         $aOptions = array_merge($aOptions, array(
             'sActionUrl' => BX_DOL_URL_STUDIO . 'polyglot.php'
@@ -56,7 +46,8 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 
         return parent::getPageJsCode($aOptions, $bWrap);
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+
+    public function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $sJsObject = $this->getPageJsObject();
 
@@ -75,10 +66,12 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 
     protected function getSettings()
     {
-        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
+        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
             'js_content' => ''
         ));
     }

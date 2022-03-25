@@ -17,12 +17,12 @@ class BxBaseStudioModules extends BxDolStudioModules
 
     public function getCss()
     {
-        return array('settings.css', 'module.css');
+        return array('module.css');
     }
 
     public function getJs()
     {
-        return array('jquery.anim.js', 'page.js', 'settings.js', 'module.js');
+        return array('jquery.anim.js', 'page.js', 'module.js');
     }
 
     public function getJsClass()

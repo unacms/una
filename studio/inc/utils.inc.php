@@ -7,6 +7,37 @@
  * @{
  */
 
+function bx_get_js_result($aParams)
+{
+    $aResult = [];
+    if(isset($aParams['code']))
+        $aResult['code'] = $aParams['code'];
+
+    if(!empty($aParams['message'])) {
+        $aResult['message'] = $aParams['message'];
+
+        if(!isset($aParams['translate']) || !empty($aParams['translate'])) {
+            $aTrtParams = array($aResult['message']);
+            if(!empty($aParams['translate']) && is_array($aParams['translate']))
+                $aTrtParams = array_merge($aTrtParams, $aParams['translate']);
+
+            $aResult['message'] = call_user_func_array ('_t', $aTrtParams);
+        }
+    }
+
+    if(isset($aParams['redirect']) && $aParams['redirect'] !== false)
+        $aResult['redirect'] = is_string($aParams['redirect']) ? $aParams['redirect'] : BX_DOL_URL_STUDIO;
+
+    if(!empty($aParams['eval']))
+        $aResult['eval'] = $aParams['eval'];
+
+    $sResult = "window.parent.processJsonData(" . json_encode($aResult) . ");";
+    if(isset($aParams['on_page_load']) && $aParams['on_page_load'] === true)
+        $sResult = "$(document).ready(function() {" . $sResult . "});";
+
+    return BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sResult);
+}
+
 function bx_array_insert_before($aInsert, $aSource, $sKey)
 {
     return bx_array_insert($aInsert, $aSource, $sKey, 0);

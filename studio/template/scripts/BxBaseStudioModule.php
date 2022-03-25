@@ -90,10 +90,12 @@ class BxBaseStudioModule extends BxDolStudioModule
 
     protected function getSettings()
     {
-        $oPage = new BxTemplStudioSettings($this->sModule);
+        $oOptions = new BxTemplStudioOptions($this->sModule);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
         ));
     }
 

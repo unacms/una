@@ -19,20 +19,19 @@ class BxBaseStudioDesign extends BxDolStudioDesign
     {
         parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->oHelper = BxTemplStudioDesigns::getInstance();
-    }
+        $this->aPageJs = array_merge($this->aPageJs, ['jquery.form.min.js', 'jquery.webForms.js']);
 
-    public function getPageJs()
-    {
-        return array_merge(parent::getPageJs(), array('jquery.form.min.js', 'jquery.webForms.js'));
+        $this->oHelper = BxTemplStudioDesigns::getInstance();
     }
 
     protected function getSettings($mixedCategory = '', $sMix = '')
     {
-        $oPage = new BxTemplStudioSettings($this->sModule, $mixedCategory, $sMix);
+        $oOptions = new BxTemplStudioOptions($this->sModule, $mixedCategory, $sMix);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
             'js_content' => $this->getPageJsCode(),
         ));
     }
@@ -41,13 +40,28 @@ class BxBaseStudioDesign extends BxDolStudioDesign
     {
     	$oPage = $this->getObjectDesigner();
 
-        $oTemplate = BxDolStudioTemplate::getInstance();
-        $oTemplate->addJs($oPage->getPageJs());
-        $oTemplate->addCss($oPage->getPageCss());
-    	return $oTemplate->parseHtmlByName('design.html', array(
+        $this->aPageCss = array_merge($this->aPageCss, $oPage->getPageCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oPage->getPageJs());
+    	return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
             'content' => $oPage->getPageCode(BX_DOL_STUDIO_TEMPL_TYPE_LOGO, false),
             'js_content' => $this->getPageJsCode()
         ));
+    }
+    
+    protected function getStyles($mixedCategory = '', $sMix = '')
+    {
+    	$oOptions = new BxTemplStudioOptions($this->sModule, $mixedCategory, $sMix);
+    	$oOptions->enableReadOnly(true);
+    	$oOptions->enableMixes(true);
+
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss(), [BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css']);
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs(), ['codemirror/codemirror.min.js']);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', [
+            'content' => $oOptions->getCode(),
+            'js_content' => $this->getPageJsCode([
+                'sCodeMirror' => "textarea[name='" . $this->sModule . "_styles_custom']"
+            ])
+        ]);
     }
 }
 

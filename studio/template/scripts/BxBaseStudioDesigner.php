@@ -29,41 +29,27 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     protected $sInjectionsIframeId = 'adm-dsg-injections-iframe';
     protected $sInjectionsEditorId = 'adm-dsg-injections-editor';
 
-    protected $aPageCss;
-    protected $aPageJs;
-
-    function __construct($sPage = '')
+    public function __construct($sPage = '')
     {
         parent::__construct($sPage);
-                
-        $this->aPageCss = array('forms.css', 'designer.css');
-        $this->aPageJs = array('settings.js', 'designer.js');
+
+        $this->aPageCss = array_merge($this->aPageCss, ['forms.css', 'designer.css']);
+        $this->aPageJs = array_merge($this->aPageJs, ['designer.js']);
+        $this->sPageJsClass = 'BxDolStudioDesigner';
+        $this->sPageJsObject = 'oBxDolStudioDesigner';
     }
-    function getPageCss()
-    {
-        return array_merge(parent::getPageCss(), $this->aPageCss);
-    }
-    function getPageJs()
-    {
-        return array_merge(parent::getPageJs(), $this->aPageJs);
-    }
-    function getPageJsObject()
-    {
-        return 'oBxDolStudioDesigner';
-    }
-    function getPageJsClass()
-    {
-    	return 'BxDolStudioDesigner';
-    }
+
     public function getPageJsCode($aOptions = array(), $bWrap = true)
     {
-    	$aOptions = array_merge(array(
-    		'sActionUrl' => $this->sManageUrl
-    	), $aOptions);
+    	$aOptions = array_merge([
+            'sActionUrl' => $this->sManageUrl,
+            'sParamPrefix' => $this->sParamPrefix
+    	], $aOptions);
 
     	return parent::getPageJsCode($aOptions, $bWrap);
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array())
+
+    public function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $sJsObject = $this->getPageJsObject();
 
@@ -618,10 +604,12 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
     protected function getSettings()
     {
-        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
+        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
 
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
             'js_content' => $this->getPageJsCode()
         ));
     }

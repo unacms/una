@@ -15,8 +15,6 @@ define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
 
 class BxDolStudioDesign extends BxTemplStudioModule
 {
-    protected $MODULE;
-
     public function __construct($sModule, $mixedPageName, $sPage = "")
     {
         parent::__construct($sModule, $mixedPageName, $sPage);
@@ -82,8 +80,9 @@ class BxDolStudioDesign extends BxTemplStudioModule
     {
     	$oPage = new BxTemplStudioDesigner($this->sPage);
     	$oPage->setManageUrl($this->sManageUrl);
+        $oPage->setParamPrefix($this->sParamPrefix);
 
-    	$oModule = BxDolModule::getInstance($this->MODULE);
+    	$oModule = BxDolModule::getInstance($this->sModule);
     	$oPage->setLogoParams($oModule->_oConfig->getLogoParams());
 
     	return $oPage;

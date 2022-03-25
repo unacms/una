@@ -10,9 +10,32 @@
 
 class BxBaseStudioPage extends BxDolStudioPage
 {
+    protected $aPageCss;
+    protected $aPageJs;
+    protected $sPageJsClass;
+    protected $sPageJsObject;
+
     function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
+
+        $this->aPageCss = [
+            'page.css', 
+            'page-media-tablet.css', 
+            'page-media-desktop.css', 
+            'page_columns.css',
+            'menu_top.css'
+        ];
+
+        $this->aPageJs = [
+            'jquery.anim.js', 
+            'jquery.jfeed.pack.js', 
+            'jquery.dolRSSFeed.js', 
+            'page.js'
+        ];
+
+        $this->sPageJsClass = 'BxDolStudioPage';
+        $this->sPageJsObject = 'oBxDolStudioPage';
     }
 
     public function getPageIndex()
@@ -32,17 +55,17 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageJs()
     {
-        return array('jquery.anim.js', 'jquery.jfeed.pack.js', 'jquery.dolRSSFeed.js', 'page.js');
+        return $this->aPageJs;
     }
 
     public function getPageJsClass()
     {
-        return 'BxDolStudioPage';
+        return $this->sPageJsClass;
     }
 
     public function getPageJsObject()
     {
-        return 'oBxDolStudioPage';
+        return $this->sPageJsObject;
     }
 
     public function getPageJsCode($aOptions = array(), $bWrap = true)
@@ -65,13 +88,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageCss()
     {
-        return array(
-            'page.css', 
-            'page-media-tablet.css', 
-            'page-media-desktop.css', 
-            'page_columns.css',
-            'menu_top.css'
-        );
+        return $this->aPageCss;
     }
 
     public function getPageHeader()
@@ -173,7 +190,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     protected function getJsResult($sMessage, $bTranslate = true, $bRedirect = false, $sRedirect = '', $sOnResult = '')
     {
-        return $this->getJsResultBy(array(
+        return bx_get_js_result(array(
             'message' => $sMessage,
             'translate' => $bTranslate,
             'redirect' => $bRedirect === true && !empty($sRedirect) ? $sRedirect : $bRedirect,
@@ -183,31 +200,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     protected function getJsResultBy($aParams)
     {
-        $aResult = array();
-
-        if(!empty($aParams['message'])) {
-            $aResult['message'] = $aParams['message'];
-
-            if(!isset($aParams['translate']) || !empty($aParams['translate'])) {
-                $aTrtParams = array($aResult['message']);
-                if(!empty($aParams['translate']) && is_array($aParams['translate']))
-                    $aTrtParams = array_merge($aTrtParams, $aParams['translate']);
-
-                $aResult['message'] = call_user_func_array ('_t', $aTrtParams);
-            }
-        }
-
-        if(isset($aParams['redirect']) && $aParams['redirect'] !== false)
-            $aResult['redirect'] = is_string($aParams['redirect']) ? $aParams['redirect'] : BX_DOL_URL_STUDIO;
-
-        if(!empty($aParams['eval']))
-            $aResult['eval'] = $aParams['eval'];
-
-        $sResult = "window.parent.processJsonData(" . json_encode($aResult) . ");";
-        if(isset($aParams['on_page_load']) && $aParams['on_page_load'] === true)
-            $sResult = "$(document).ready(function() {" . $sResult . "});";
-
-        return BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sResult);
+        return bx_get_js_result($aParams);
     }
 }
 

@@ -22,6 +22,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
     protected $sPage;
 
     protected $sManageUrl;
+    protected $sParamPrefix;
 
     protected $sParamLogo;
     protected $sParamLogoAlt;
@@ -41,6 +42,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
             $this->sPage = $sPage;
 
         $this->sManageUrl = BX_DOL_URL_STUDIO . 'designer.php';
+        $this->sParamPrefix = 'dsg';
 
         $this->sParamLogo = 'sys_site_logo';
         $this->sParamLogoAlt = 'sys_site_logo_alt';
@@ -65,7 +67,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
     function checkAction()
     {
-    	$sAction = bx_get('dsg_action');
+    	$sAction = bx_get($this->sParamPrefix . '_action');
     	if($sAction === false)
             return false;
 
@@ -80,7 +82,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
                 break;
 
             case 'delete_cover':
-                $sValue = bx_process_input(bx_get('dsg_value'));
+                $sValue = bx_process_input(bx_get($this->sParamPrefix . '_value'));
 
                 $aResult = array('code' => 0, 'message' => '');
                 if(empty($sValue) || !$this->deleteCover($sValue))
@@ -94,7 +96,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
                 break;
 
             case 'get-page-by-type':
-                $sValue = bx_process_input(bx_get('dsg_value'));
+                $sValue = bx_process_input(bx_get($this->sParamPrefix . '_value'));
                 if(empty($sValue))
                     break;
 
@@ -111,6 +113,11 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         $this->sManageUrl = $sUrl;
     }
 
+    function setParamPrefix($sPrefix)
+    {
+        $this->sParamPrefix = $sPrefix;
+    }
+
     function setLogoParams($aParams)
     {
         list($this->sParamLogo, $this->sParamLogoAlt, $this->sParamLogoWidth, $this->sParamLogoHeight) = $aParams;
@@ -118,7 +125,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
     function makeDefault()
     {
-        $sValue = bx_get('dsg_value');
+        $sValue = bx_get($this->sParamPrefix . '_value');
         if($sValue === false)
             return false;
 
@@ -195,23 +202,23 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
         foreach($this->aCovers as $sCover => $aCover) {
             $iIdNew = $oForm->getCleanValue($sCover);
-        	if(empty($iIdNew))
-        		continue;
+            if(empty($iIdNew))
+                continue;
 
-			$iIdOld = (int)getParam($aCover['setting']);
-			if(!$this->deleteCover($sCover))
-				return $this->getJsResult('_adm_dsg_err_remove_old_cover');
+            $iIdOld = (int)getParam($aCover['setting']);
+            if(!$this->deleteCover($sCover))
+                    return $this->getJsResult('_adm_dsg_err_remove_old_cover');
 
-			$this->oDb->setParam($aCover['setting'], $iIdNew);
-			$oStorage->afterUploadCleanup($iIdNew, $iProfile);
+            $this->oDb->setParam($aCover['setting'], $iIdNew);
+            $oStorage->afterUploadCleanup($iIdNew, $iProfile);
         }
-		
-		$this->oDb->setParam('sys_site_cover_disabled', $oForm->getCleanValue('disabled') == 'on' ? 'on' : '');
 
-		return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
+        $this->oDb->setParam('sys_site_cover_disabled', $oForm->getCleanValue('disabled') == 'on' ? 'on' : '');
+
+        return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
     }
 
-	function deleteCover($sCover)
+    function deleteCover($sCover)
     {
         $iProfile = bx_get_logged_profile_id();
         $oStorage = BxDolStorage::getObjectInstance($this->sCoverStorage);

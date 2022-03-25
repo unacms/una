@@ -18,22 +18,14 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     {
         parent::__construct($sPage);
 
+        $this->aPageCss = array_merge($this->aPageCss, ['forms.css', 'paginate.css']);
+
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'audit.php?page=';
 
         $this->aMenuItems = array(
             BX_DOL_STUDIO_AUD_TYPE_GENERAL => array('icon' => 'search'),
             BX_DOL_STUDIO_AUD_TYPE_SETTINGS => array('icon' => 'cogs'),
         );
-    }
-	
-    function getPageCss()
-    {
-        return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css'));
-    }
-	
-    function getPageJs()
-    {
-        return array_merge(parent::getPageJs(), array('settings.js'));
     }
 
     function getPageJsCode($aOptions = array(), $bWrap = true)
@@ -44,7 +36,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
         return parent::getPageJsCode($aOptions, $bWrap);
     }
-    
+
     function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $sJsObject = $this->getPageJsObject();
@@ -61,18 +53,20 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
         return parent::getPageMenu($aMenu);
     }
-    
+
     protected function getGeneral()
     {
         return $this->getGrid();
     }
-    
+
     protected function getSettings()
     {
-        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_AUDIT);
-        
+        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_AUDIT);
+
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
-            'content' => $oPage->getFormCode(),
+            'content' => $oOptions->getCode(),
             'js_content' => ''
         ));
     }
