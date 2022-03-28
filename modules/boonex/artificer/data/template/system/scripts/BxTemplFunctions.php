@@ -109,10 +109,8 @@ class BxTemplFunctions extends BxBaseFunctions
             'results' => $oSearch->getResultsContainer(),
         ));
 
-        if(isLogged()) {
+        if(isLogged())
             $sContent .= $this->_oTemplate->getMenu('sys_add_content');
-            $sContent .= $this->_oTemplate->getMenu('sys_account_popup');
-        }
 
         return $sContent;
     }
