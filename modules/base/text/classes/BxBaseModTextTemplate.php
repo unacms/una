@@ -654,6 +654,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             )
         );
         
+        $aTmplVarsLinks = [];
+        
         if(isset($CNF['FIELD_LINK'])){
             $aLinks = $this->getEventLinks($aData[$CNF['FIELD_ID']]);
             
@@ -709,21 +711,21 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                         ]
                     ));
                 }
-
+                
                 $aTmplVarsLinks[] = [
                     'style_prefix' => $sStylePrefix,
                     'link' => $sLink
                 ];
-                
-                $aVars['bx_if:show_links'] = [
-                    'condition' => !empty($aTmplVarsLinks),
-                    'content' => [
-                        'style_prefix' => $sStylePrefix,
-                        'bx_repeat:links' => $aTmplVarsLinks
-                    ]
-                ];
             }
         }
+        
+        $aVars['bx_if:show_links'] = [
+            'condition' => count($aTmplVarsLinks) > 0,
+            'content' => [
+                'style_prefix' => $sStylePrefix,
+                'bx_repeat:links' => $aTmplVarsLinks
+            ]
+        ];
 
         if(!empty($CNF['OBJECT_REACTIONS'])) {
             $oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aData[$CNF['FIELD_ID']]);
