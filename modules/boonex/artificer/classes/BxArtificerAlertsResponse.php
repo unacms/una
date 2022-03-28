@@ -59,27 +59,13 @@ class BxArtificerAlertsResponse extends BxDolAlertsResponse
         $sTemplate = !empty($oAlert->aExtras['template']) && is_array($oAlert->aExtras['template']) ? $oAlert->aExtras['template'][0] : $oAlert->aExtras['template'];
         $sClassSize = $this->_oModule->_oConfig->getThumbSize(isset($oAlert->aExtras['template'][1]) ? $oAlert->aExtras['template'][1] : '', $sTemplate);
 
-        $aTmplVarsThumbnail = array(
-            'class_size' => $sClassSize,
-            'bx_if:show_thumb_image' => array(
-                'content' => array(
-                    'class_size' => $sClassSize
-                )
-            ),
-            'bx_if:show_thumb_letter' => array(
-                'content' => array(
-                    'class_size' => $sClassSize
-                )
-            )
-        );
-
-        $aTmplVars = array_merge(array(
-            'bx_if:show_thumbnail' => array(
-                'content' => $aTmplVarsThumbnail
-            )
-        ), $aTmplVarsThumbnail);
-
-        $oAlert->aExtras['tmpl_vars'] = array_merge_recursive($oAlert->aExtras['tmpl_vars'], $aTmplVars);
+        $aTmplVars['class_size'] = $sClassSize;
+        $aTmplVars['bx_if:show_thumb_letter']['content']['class_size'] = $sClassSize;
+        $aTmplVars['bx_if:show_thumb_image']['content']['class_size'] = $sClassSize;
+        
+        $aTmplVars['bx_if:show_thumbnail']['content']['class_size'] = $sClassSize;
+        $aTmplVars['bx_if:show_thumbnail']['content']['bx_if:show_thumb_letter']['content']['class_size'] = $sClassSize;
+        $aTmplVars['bx_if:show_thumbnail']['content']['bx_if:show_thumb_image']['content']['class_size'] = $sClassSize;
     }
 }
 
