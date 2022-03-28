@@ -163,9 +163,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 		
         $aTmplVarsThumbnail = array(
+            'class_size' => '',
             'bx_if:show_thumb_image' => array(
                 'condition' => $bThumbUrl,
                 'content' => array(
+                    'class_size' => '',
                     'size' => $sTemplateSize,
                     'thumb_url' => $sThumbUrl
                 )
@@ -173,6 +175,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'bx_if:show_thumb_letter' => array(
                 'condition' => !$bThumbUrl,
                 'content' => array(
+                    'class_size' => '',
                     'size' => $sTemplateSize,
                     'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
                     'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
