@@ -144,6 +144,8 @@ class BxBaseSearch extends BxDolSearch
             $aForm['inputs']['keyword']['attrs']['onkeydown'] = "return bx_search_on_type(event, $sJsParams);";
             $aForm['inputs']['keyword']['attrs']['onpaste'] = $aForm['inputs']['keyword']['attrs']['onkeydown'];
         }
+        
+        bx_alert('search', 'get_form', 0, 0, array('object' => $this, 'override_result' => &$aForm));
 
         return $aForm;
     }
