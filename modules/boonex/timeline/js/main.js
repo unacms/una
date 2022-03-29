@@ -427,6 +427,13 @@ BxTimelineMain.prototype._getPost = function(oView, iId, aParams) {
             var oElement = $(this);
             if(oElement.hasClass(sClass) || oElement.css('overflow') != 'hidden')
             	return;
+            
+            if (oElement.find('img').length > 0){
+                var iRelImgY = oElement.find('img').first().offset().top - oElement.offset().top;
+                if (iRelImgY < oElement.height() && iRelImgY + oElement.find('img').first().height() > oElement.height()){
+                    oElement.css('max-height', (iRelImgY + oElement.find('img').first().height()) +  50 + 'px');
+                }
+            }
 
             if(oElement.prop('scrollHeight') <= oElement.height())
             	return;
