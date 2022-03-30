@@ -159,10 +159,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 
         unset($this->aData[$sKey]);
 
-        if(!empty($this->aData))
-            $this->save();
-        else
-            $this->destroy();
+        $this->save();
     }
 
 	function isValue($sKey)
