@@ -97,6 +97,24 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends', $iFriends));
     }
 
+    protected function _getMenuItemFriendsMutual($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_bContentPublic || !$this->_oContentProfile)
+            return false;
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if(!$oConnection)
+            return false;
+
+        $iFriends = $oConnection->getCommonContentCount($this->_oContentProfile->id(), bx_get_logged_profile_id(), true);
+        if(!$iFriends && !$this->_bShowZeros)
+            return false;
+
+        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends_mutual', $iFriends));
+    }
+
     protected function _getMenuItemSubscribers($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

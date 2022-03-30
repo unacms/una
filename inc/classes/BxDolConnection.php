@@ -367,6 +367,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     {
         return $this->_oQuery->getCommonContent($iInitiator1, $iInitiator2, $isMutual, $iStart, $iLimit, $iOrder);
     }
+    
+    /**
+     * Get common content count between two initiators
+     * @param $iInitiator1 one initiator
+     * @param $iInitiator2 second initiator
+     * @param $isMutual get mutual connections only
+     * @return number of connections
+     */
+    public function getCommonContentCount ($iInitiator1, $iInitiator2, $isMutual = false)
+    {
+        return $this->_oQuery->getCommonContentCount($iInitiator1, $iInitiator2, $isMutual);
+    }
 
     /**
      * Get connected content count

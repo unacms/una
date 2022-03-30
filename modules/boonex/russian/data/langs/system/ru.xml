@@ -2815,6 +2815,7 @@
     <string name="_sys_menu_item_title_sm_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_sys_menu_item_title_sm_unsubscribe"><![CDATA[Отключить уведомления]]></string>
     <string name="_sys_menu_item_title_sm_friends"><![CDATA[Друзья: {0}]]></string>
+    <string name="_sys_menu_item_title_sm_friends_mutual"><![CDATA[Общие друзья: {0}]]></string>
     <string name="_sys_menu_item_title_sm_members"><![CDATA[Участники: {0}]]></string>
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[Подписчики: {0}]]></string>
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Страна]]></string>
@@ -2922,6 +2923,7 @@
     <string name="_sys_menu_item_title_system_sm_country"><![CDATA[Страна]]></string>
     <string name="_sys_menu_item_title_system_sm_country_city"><![CDATA[Страна и город]]></string>
     <string name="_sys_menu_item_title_system_sm_friends"><![CDATA[Друзья]]></string>
+    <string name="_sys_menu_item_title_system_sm_friends_mutual"><![CDATA[Общие друзья]]></string>
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Участники]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Подписки]]></string>

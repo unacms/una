@@ -982,6 +982,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
+
+        return $s;
+    }
+
+    public function serviceProfileFriendsMutual ($iContentId = 0)
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        bx_import('BxDolConnection');
+        $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_COMMON, true, bx_get_logged_profile_id());
+        if (!$s)
+            return MsgBox(_t('_sys_txt_empty'));
+
         return $s;
     }
 

@@ -214,7 +214,7 @@ class BxDolConnectionQuery extends BxDolDb
 
     protected function _getConnectionsQuery ($sWhere, $sJoin = '', $sFields = '*', $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {
-        $sOrder = $this->_getOrderClause($iOrder);
+        $sOrder = $this->_getOrderClause($iOrder, '`c`');
 
         $sWhere .= (false !== $isMutual) ? $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual) : '';
 
@@ -223,6 +223,25 @@ class BxDolConnectionQuery extends BxDolDb
             $sLimit = $this->prepareAsString("LIMIT ?, ?", $iStart, $iLimit);
 
         return "SELECT $sFields FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere $sOrder $sLimit";
+    }
+
+    public function getCommonContentCount($iInitiator1, $iInitiator2, $isMutual)
+    {
+        $sWhereJoin = "";
+        if($isMutual !== false)
+            $sWhereJoin = " AND `c2`.`mutual` = :mutual";
+
+        $sJoin = "INNER JOIN `" . $this->_sTable . "` AS `c2` ON (`c2`.`initiator` = :initiator2 AND `c`.`content` = `c2`.`content` $sWhereJoin)";
+        if($this->_aObject['profile_content'])
+            $sJoin .= "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')";
+
+        $sWhere = " AND `c`.`initiator` = :initiator1";
+
+        return $this->getOne($this->_getConnectionsQueryCount($sWhere, $sJoin, $isMutual, '`c`.`content`'), [
+            'mutual' => $isMutual,
+            'initiator1' => $iInitiator1,
+            'initiator2' => $iInitiator2,  
+    	]);
     }
 
     public function getConnectedContentCount ($iInitiator, $isMutual = false)
@@ -239,25 +258,27 @@ class BxDolConnectionQuery extends BxDolDb
         return $this->getOne($sQuery);
     }
 
-    protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false)
+    protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false, $sFields = '`id`')
     {
         $sWhere .= (false !== $isMutual) ? $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual) : '';
-        return "SELECT COUNT(`id`) FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere";
+        return "SELECT COUNT(" . $sFields . ") FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere";
     }
 
     protected function _getOrderClause ($iOrder = BX_CONNECTIONS_ORDER_NONE, $sTable = '')
     {
         if ($sTable)
             $sTable .= '.';
+
         $sOrder = '';
         switch ($iOrder) {
-        case BX_CONNECTIONS_ORDER_ADDED_ASC:
-            $sOrder = "ORDER BY {$sTable}`added` ASC";
-            break;
-        case BX_CONNECTIONS_ORDER_ADDED_DESC:
-            $sOrder = "ORDER BY {$sTable}`added` DESC";
-            break;
+            case BX_CONNECTIONS_ORDER_ADDED_ASC:
+                $sOrder = "ORDER BY {$sTable}`added` ASC";
+                break;
+            case BX_CONNECTIONS_ORDER_ADDED_DESC:
+                $sOrder = "ORDER BY {$sTable}`added` DESC";
+                break;
         }
+
         return $sOrder;
     }
 
