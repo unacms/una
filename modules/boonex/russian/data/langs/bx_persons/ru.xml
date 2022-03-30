@@ -99,6 +99,7 @@
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Новые пользователи]]></string>
 	<string name="_bx_persons_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_persons_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
+        <string name="_bx_persons_page_title_browse_familiar"><![CDATA[Пользователи, которых Вы можете знать]]></string>
 	<string name="_bx_persons_page_title_browse_favorites"><![CDATA[{0} избранных]]></string>
 	<string name="_bx_persons_page_title_browse_by_acl"><![CDATA[Пользователи уровня {0}]]></string>
 	<string name="_bx_persons_page_title_browse_by_cmts"><![CDATA[Пользователи - Комментарии]]></string>
@@ -169,6 +170,8 @@
     <string name="_bx_persons_page_block_title_sys_active_profiles"><![CDATA[Активные пользователи]]></string>
     <string name="_bx_persons_page_block_title_active_profiles"><![CDATA[Активные пользователи]]></string>
     <string name="_bx_persons_page_block_title_online_profiles"><![CDATA[Онлайн пользователи]]></string>
+    <string name="_bx_persons_page_block_title_sys_familiar_profiles"><![CDATA[Знакомые пользователи]]></string>
+    <string name="_bx_persons_page_block_title_familiar_profiles"><![CDATA[Пользователи, которых Вы можете знать]]></string>
     <string name="_bx_persons_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_persons_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_persons_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>

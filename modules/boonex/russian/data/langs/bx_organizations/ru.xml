@@ -138,6 +138,7 @@
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[Новые организации]]></string>
 	<string name="_bx_orgs_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
+        <string name="_bx_orgs_page_title_browse_familiar"><![CDATA[Организации, которых Вы можете знать]]></string>
 	<string name="_bx_orgs_page_title_browse_favorites"><![CDATA[{0} избранных]]></string>
 	<string name="_bx_orgs_page_title_browse_by_acl"><![CDATA[Организации уровня {0}]]></string>
 	<string name="_bx_orgs_page_title_browse_by_cmts"><![CDATA[Организации - Комментарии]]></string>
@@ -206,8 +207,8 @@
     <string name="_bx_orgs_page_block_title_fans_link"><![CDATA[Участники группы: <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_orgs_page_block_title_fans"><![CDATA[Участники]]></string>
     <string name="_bx_orgs_page_block_title_system_fans"><![CDATA[Участники]]></string>
-	<string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Расположение]]></string>
-	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
+    <string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Расположение]]></string>
+    <string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Подписчики]]></string>
@@ -226,6 +227,8 @@
     <string name="_bx_orgs_page_block_title_sys_active_profiles"><![CDATA[Активные организации]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Активные организации]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Онлайн организации]]></string>
+    <string name="_bx_orgs_page_block_title_sys_familiar_profiles"><![CDATA[Знакомые организации]]></string>
+    <string name="_bx_orgs_page_block_title_familiar_profiles"><![CDATA[Организации, которые Вы можете знать]]></string>
     <string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
     <string name="_bx_orgs_page_block_title_invite_to_organization"><![CDATA[Пригласить участников в организацию]]></string>
     <string name="_bx_orgs_page_block_title_search_form"><![CDATA[Форма поиска]]></string>

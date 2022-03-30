@@ -140,6 +140,7 @@
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[New Organizations]]></string>
 	<string name="_bx_orgs_page_title_browse_connections"><![CDATA[{0} connections]]></string>
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
+        <string name="_bx_orgs_page_title_browse_familiar"><![CDATA[Organizations You May Know]]></string>
 	<string name="_bx_orgs_page_title_browse_favorites"><![CDATA[{0} favorites]]></string>
 	<string name="_bx_orgs_page_title_browse_by_acl"><![CDATA[{0} Organizations]]></string>
 	<string name="_bx_orgs_page_title_browse_by_cmts"><![CDATA[Organizations' Comments]]></string>
@@ -208,8 +209,8 @@
     <string name="_bx_orgs_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_orgs_page_block_title_fans"><![CDATA[Members]]></string>
     <string name="_bx_orgs_page_block_title_system_fans"><![CDATA[Members]]></string>
-	<string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Location]]></string>
-	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Location]]></string>
+    <string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Followers]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Followers]]></string>
@@ -218,7 +219,7 @@
     <string name="_bx_orgs_page_block_title_system_profile_related_me"><![CDATA[Relationships with Me]]></string>
     <string name="_bx_orgs_page_block_title_profile_related_me"><![CDATA[Relationships with Me]]></string>
     <string name="_bx_orgs_page_block_title_profile_comments"><![CDATA[Comments]]></string>
-	<string name="_bx_orgs_page_block_title_entry_reports"><![CDATA[Reports]]></string>
+    <string name="_bx_orgs_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_orgs_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
     <string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Featured Organizations]]></string>
@@ -231,6 +232,8 @@
     <string name="_bx_orgs_page_block_title_multicats"><![CDATA[Organizations Categories]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Active Organizations]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Online Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_sys_familiar_profiles"><![CDATA[Familiar Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_familiar_profiles"><![CDATA[Organizations You May Know]]></string>
     <string name="_bx_orgs_page_block_title_categories"><![CDATA[Organization categories]]></string>
     <string name="_bx_orgs_page_block_title_invite_to_organization"><![CDATA[Invite Members to the Organization]]></string>
     <string name="_bx_orgs_page_block_title_search_form"><![CDATA[Search Form]]></string>

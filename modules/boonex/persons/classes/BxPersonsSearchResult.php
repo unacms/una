@@ -93,9 +93,16 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 }
                 break;
 
-			case 'acl':
+            case 'familiar':
+                if($this->_setFamiliarConnectionsConditions($aParams)) {
+                    $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_familiar');
+                    unset($this->aCurrent['rss']);
+                }
+                break;
+
+            case 'acl':
                 if ($this->_setAclConditions($aParams)) {
-					$this->aCurrent['title'] = _t('_bx_persons_page_title_browse_by_acl', implode(', ', $this->aCurrent['title']));
+                    $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_by_acl', implode(', ', $this->aCurrent['title']));
                     unset($this->aCurrent['rss']);
                 }
                 break;
@@ -139,7 +146,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 $this->sBrowseUrl = 'page.php?i=persons-active';
                 break;
 
-			case 'online':
+            case 'online':
                 $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_online');
                 $this->aCurrent['restriction']['online']['value'] = time() - 60 * (int)getParam('sys_account_online_time');
