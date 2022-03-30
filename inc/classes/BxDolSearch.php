@@ -715,7 +715,12 @@ class BxDolSearchResult implements iBxDolReplaceable
             $aSql[$sKey] .= $sValue;
 
         // execution
-        $sqlQuery = "SELECT " . $aSql['ownFields'];
+        $sqlQuery = 'SELECT';
+
+        if(isset($this->aCurrent['distinct']) && $this->aCurrent['distinct'] === true)
+            $sqlQuery .= ' DISTINCT';
+
+        $sqlQuery .= ' ' . $aSql['ownFields'];
 
         $sqlQuery .= ' ' . $aSql['from'];
 

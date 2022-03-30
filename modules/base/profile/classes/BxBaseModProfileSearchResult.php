@@ -16,9 +16,18 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
-        $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'gallery_wo_info' => 'unit_wo_info.html', 'showcase' => 'unit_with_cover_showcase.html', 'showcase_wo_info' => 'unit_wo_info_showcase.html', 'simple' => 'unit_wo_links.html');
+
+        $this->aUnitViews = [
+            'unit' => 'unit_wo_cover.html', 
+            'unit_wo_info' => 'unit_wo_info.html', 
+            'gallery' => 'unit_with_cover.html', 
+            'showcase' => 'unit_with_cover_showcase.html', 
+            'showcase_wo_info' => 'unit_wo_info_showcase.html', 
+            'simple' => 'unit_wo_links.html'
+        ];
         if (!empty($aParams['unit_views']) && is_array($aParams['unit_views']))
             $this->aUnitViews = array_merge ($this->aUnitViews, $aParams['unit_views']);
+
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
         
@@ -30,15 +39,16 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
             'bx-def-margin-sec-neg'
         ));
 
-        if(in_array($this->sUnitTemplate, array('unit_wo_info.html', 'unit_wo_info_showcase.html'))) {
+        if(in_array($this->sUnitTemplate, ['unit_wo_cover.html', 'unit_wo_info.html', 'unit_wo_info_showcase.html']))
             $this->removeContainerClass('bx-def-margin-sec-neg');
-        }
-        if(in_array($this->sUnitTemplate, array('unit_with_cover_showcase.html', 'unit_wo_info_showcase.html'))) {
+
+        if(in_array($this->sUnitTemplate, ['unit_with_cover_showcase.html', 'unit_wo_info_showcase.html'])) {
             $this->bShowcaseView = true;
 
             if($this->sUnitTemplate == 'unit_wo_info_showcase.html')
                 $this->addContainerAttribute(array('bx-sc-group-cells' => 3));
         }
+
         if ($sMode == 'recommended')
             $this->bRecommendedView=true;
     }
@@ -110,6 +120,33 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+
+        return true;
+    }
+    
+    protected function _setFamiliarConnectionsConditions ($aParams)
+    {
+        $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
+        if (!$oConnection || !isset($aParams['profile']) || !(int)$aParams['profile'])
+            return false;
+
+        $iProfile = (int)$aParams['profile'];
+        $sContentType = isset($aParams['type']) ? $aParams['type'] : BX_CONNECTIONS_CONTENT_TYPE_CONTENT;
+        $isMutual = isset($aParams['mutual']) ? $aParams['mutual'] : false;
+
+        $aIds = $oConnection->getConnectionsAsArray($sContentType, $iProfile, false, $isMutual);
+
+        $aCondition = $oConnection->getConnectionsAsCondition ($sContentType, 'id', $aIds, false, $isMutual);
+
+        $this->aCurrent['distinct'] = true;
+        $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aCondition['join']);
+        $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aCondition['restriction'], [
+            'connected' => [
+                'value' => array_merge([$iProfile], $aIds),
+                'field' => 'id',
+                'operator' => 'not in',
+            ]
+        ]);
 
         return true;
     }

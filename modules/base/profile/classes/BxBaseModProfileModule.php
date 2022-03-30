@@ -685,6 +685,43 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         return $this->_serviceBrowse ('active', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_familiar_profiles browse_familiar_profiles
+     * 
+     * @code bx_srv('bx_persons', 'browse_familiar_profiles', [...]); @endcode
+     * 
+     * Browse profiles you might be familiar with. By default using 'Profile Friends' connection.
+     * @param $bEmptyMessage optional, display or not "empty" message when there is no content
+     * @param $bAjaxPaginate optional, use AJAX paginate or not
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseFamiliarProfiles
+     */
+    /** 
+     * @ref bx_base_profile-browse_familiar_profiles "browse_familiar_profiles"
+     */
+    public function serviceBrowseFamiliarProfiles ($sConnection = '', $sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = false)
+    {
+        $aParams = [
+            'object' => 'sys_profiles_friends',
+            'profile' => bx_get_logged_profile_id(),
+        ];
+
+        if(!empty($sConnection)) {
+            if(is_string($sConnection))
+                $aParams['object'] = $sConnection;
+            else if(is_array($sConnection))
+                $aParams = array_merge($aParams, $sConnection);
+        }
+
+        if($sUnitView)
+            $aParams['unit_view'] = $sUnitView;
+
+        return $this->_serviceBrowse ('familiar', $aParams, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
 
     /**
      * @page service Service Calls

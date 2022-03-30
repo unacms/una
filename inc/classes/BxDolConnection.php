@@ -625,13 +625,17 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getConnectedContentAsCondition ($sContentField, $iInitiator, $iMutual = false)
     {
+        $sOperation = '=';
+        if(is_array($iInitiator))
+            $sOperation = 'in';
+
         return array(
 
             'restriction' => array (
                 'connections_' . $this->_sObject => array(
                     'value' => $iInitiator,
                     'field' => 'initiator',
-                    'operator' => '=',
+                    'operator' => $sOperation,
                     'table' => $this->_aObject['table'],
                 ),
                 'connections_mutual_' . $this->_sObject => array(
@@ -664,13 +668,17 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getConnectedInitiatorsAsCondition ($sContentField, $iContent, $iMutual = false)
     {
+        $sOperation = '=';
+        if(is_array($iContent))
+            $sOperation = 'in';
+
         return array(
 
             'restriction' => array (
                 'connections_' . $this->_sObject => array(
                     'value' => $iContent,
                     'field' => 'content',
-                    'operator' => '=',
+                    'operator' => $sOperation,
                     'table' => $this->_aObject['table'],
                 ),
                 'connections_mutual_' . $this->_sObject => array(
