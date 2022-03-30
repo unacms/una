@@ -200,6 +200,7 @@
 	<string name="_bx_orgs_page_block_title_system_profile_favorites"><![CDATA[Favorite Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
+        <string name="_bx_orgs_page_block_title_profile_friends_mutual"><![CDATA[Mutual Friends]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_friend_requests_link"><![CDATA[Friend Requests for <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_orgs_page_block_title_system_friend_requests"><![CDATA[Friend Requests]]></string>
