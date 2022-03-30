@@ -118,6 +118,8 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
             if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined || ($this._iLimitAttachLinks != 0 && Object.keys($this._oAttachedLinks).length >= $this._iLimitAttachLinks))
                 continue;
 
+            $this.lockForm($('#' + sFormId));
+
             //--- Mark that 'attach link' process was started.
             $this._oAttachedLinks[sUrl] = 0;
 
@@ -142,6 +144,14 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
             });
         });
    }
+};
+
+BxTimelinePost.prototype.onFormPostSubmit = function(oForm)
+{
+    if(this.isLockedForm($(oForm)))
+        return false;
+
+    return true;
 };
 
 BxTimelinePost.prototype.beforeFormPostSubmit = function(oForm)
@@ -182,6 +192,27 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
         fContinue();
 };
 
+BxTimelinePost.prototype.lockForm = function(oForm)
+{
+    if(this.isLockedForm(oForm))
+        return;
+
+    oForm.attr('bx_form_locked', 1).find('input[type="submit"],button[type="submit"]').addClass('bx-btn-disabled');
+};
+
+BxTimelinePost.prototype.unlockForm = function(oForm)
+{
+    if(!this.isLockedForm(oForm))
+        return;
+
+    oForm.removeAttr('bx_form_locked').find('input[type="submit"],button[type="submit"]').removeClass('bx-btn-disabled');
+};
+
+BxTimelinePost.prototype.isLockedForm = function(oForm)
+{
+    return oForm.attr('bx_form_locked') == 1;
+};
+    
 BxTimelinePost.prototype.initFormAttachLink = function(sFormId)
 {
     var $this = this;
@@ -214,6 +245,9 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
             if(!$.trim(oData.item).length)
                 return;
 
+            //--- Mark that 'attach link' process was finished.
+            $this._oAttachedLinks[oData.url] = oData.id;
+
             var iEventId = 0;
             if(oData && oData.event_id != undefined)
                 iEventId = parseInt(oData.event_id);
@@ -223,7 +257,7 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
                 $(this).bxProcessHtml();
             });
 
-            $this._oAttachedLinks[oData.url] = oData.id;
+            $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
             return;
         }
 
@@ -308,6 +342,8 @@ BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl)
 
             var oItem = $(oData.item).hide();
             $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
+
+            $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
         },
         'json'
     );

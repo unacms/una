@@ -3610,7 +3610,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
         $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_add';
 
-        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);        
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
+        $oForm->aFormAttrs = bx_replace_markers($oForm->aFormAttrs, [
+            'js_object_post' => $this->_oConfig->getJsObject('post')
+        ]);
 
         /**
          * Note. 'ajax_mode' parameter isn't checked because
