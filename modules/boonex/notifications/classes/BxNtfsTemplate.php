@@ -199,12 +199,20 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $aEvent['content'][$sKey] = call_user_func_array('_t', $aCallParams);
         }
 
-    	$bEventParsed = false;
-        
-        $sOwnerUnit = $this->_isInContext($aEvent) && $oObjectOwner ? $oObjectOwner->getUnit(0, array('template' => 'unit_wo_info_links')) : $oOwner->getUnit(0, array('template' => 'unit_wo_info_links'));
-        
-        bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, array('event' => &$aEvent, 'event_parsed' => &$bEventParsed, 'owner' => &$oOwner, 'owner_unit' => &$sOwnerUnit, 'browse_params' => $aBrowseParams));
-        
+        if($this->_isInContext($aEvent) && empty($aEvent['subobject_id']) && $oObjectOwner)
+            $sOwnerUnit = $oObjectOwner->getUnit(0, ['template' => 'unit_wo_info_links']);
+        else
+            $sOwnerUnit = $oOwner->getUnit(0, ['template' => 'unit_wo_info_links']);
+
+        $bEventParsed = false;
+        bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, [
+            'event' => &$aEvent, 
+            'event_parsed' => &$bEventParsed, 
+            'owner' => &$oOwner, 
+            'owner_unit' => &$sOwnerUnit, 
+            'browse_params' => $aBrowseParams
+        ]);
+
         if(!$bEventParsed) {
             $mLk = '';
             if(!empty($aEvent['content']['lang_key'])) {
@@ -356,7 +364,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     protected function _getContentLangKey(&$aEvent)
     {
         if(!empty($aEvent['subobject_id']))
-            return '_bx_ntfs_txt_subobject_added';
+            return '_bx_ntfs_txt_subobject_added' . ($this->_isInContext($aEvent) ? '_in_context' : '');
 
         if($this->_isInContext($aEvent))
             return '_bx_ntfs_txt_object_added_in_context';
