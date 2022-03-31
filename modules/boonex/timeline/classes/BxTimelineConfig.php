@@ -336,7 +336,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'show_do_repost_image' => false,
             'show_do_repost_icon' => true,
             'show_do_repost_text' => false,
+
+            //--- Counter
+            'show_counter_label_icon' => false,
+            'show_counter_label_text' => true,
             'show_counter' => true,
+
+            //--- JS script
+            'show_script' => true,
 
             //--- Images
             'image_do_repost' => '',

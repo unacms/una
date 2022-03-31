@@ -370,6 +370,7 @@
     <string name="_bx_timeline_txt_new_content"><![CDATA[Новый контент]]></string>
 
     <string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
+    <string name="_bx_timeline_txt_repost_counter"><![CDATA[{0}]]></string>
     <string name="_bx_timeline_txt_reposted"><![CDATA[Сделал репост {0} {1}.]]></string>
     <string name="_bx_timeline_txt_reposted_by"><![CDATA[Сделал репост]]></string>
     <string name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Невозможно сделать репост. Пожалуйста, сообщите нам об этой проблеме.]]></string>

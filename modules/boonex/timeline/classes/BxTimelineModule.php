@@ -2472,10 +2472,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_repost_element_block "get_repost_element_block"
      */
-    public function serviceGetRepostElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
+    public function serviceGetRepostElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = [])
     {
     	if(!$this->isEnabled())
-    		return '';
+            return '';
 
         $aParams = array_merge($this->_oConfig->getRepostDefaults(), $aParams);
         return $this->_oTemplate->getRepostElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
@@ -2501,14 +2501,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_repost_counter "get_repost_counter"
      */
-    public function serviceGetRepostCounter($sType, $sAction, $iObjectId)
+    public function serviceGetRepostCounter($sType, $sAction, $iObjectId, $aParams = [])
     {
     	if(!$this->isEnabled())
-    		return '';
+            return '';
 
-		$aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
 
-        return $this->_oTemplate->getRepostCounter($aReposted);
+        $aParams = array_merge($this->_oConfig->getRepostDefaults(), $aParams);
+        return $this->_oTemplate->getRepostCounter($aReposted, $aParams);
     }
 
     /**

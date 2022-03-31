@@ -85,3 +85,18 @@ div.bx-tl-repost div.bx-tl-repost-counter-holder {
 .bx-tl-repost-counter-holder .bx-tl-repost-counter {
     line-height: normal;
 }
+
+.bx-tl-repost-counter span.bx-tl-counter-icon {
+    position: relative;
+    box-sizing: border-box;
+
+    width: 2.0rem;
+    height: 2.0rem;
+
+    background-color: rgba(232, 232, 232, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    line-height: normal;
+    font-size: 1.0rem;
+}

@@ -294,6 +294,35 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->$sReportsMethod($aReportsParams);
     }
 
+    protected function _getMenuItemItemRepost($aItem)
+    {
+        if(!isset($this->_aEvent['reposts'])) 
+            return false;
+
+        $aRepostsParams = array(
+            'show_do_repost_text' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
+
+        $sMethodName = '';
+        $aMethodParams = [];
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sMethodName = 'serviceGetRepostElementBlock';
+                $aMethodParams = [$this->_aEvent['owner_id'], $this->_aEvent['type'], $this->_aEvent['action'], $this->_aEvent['object_id'], $aRepostsParams];
+                break;
+
+            case self::$_sModeCounters:
+                $sMethodName = 'serviceGetRepostCounter';
+                $aMethodParams = [$this->_aEvent['type'], $this->_aEvent['action'], $this->_aEvent['object_id'], $aRepostsParams];
+                break;
+        }
+
+        return call_user_func_array([$this->_oModule, $sMethodName], $aMethodParams);
+    }
+
     protected function _getMenuItemDefault ($aItem)
     {
         if(!isset($aItem['class_link']))

@@ -994,18 +994,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getRepostElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
+    public function getRepostElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams = [])
     {
         $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
         if(empty($aReposted) || !is_array($aReposted))
             return '';
 
-		$oModule = $this->getModule();
-		$bDisabled = $oModule->isAllowedRepost($aReposted) !== true || $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $oModule->getUserId());
-		if($bDisabled && (int)$aReposted['reposts'] == 0)
+        $oModule = $this->getModule();
+        $bDisabled = $oModule->isAllowedRepost($aReposted) !== true || $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $oModule->getUserId());
+        if($bDisabled && (int)$aReposted['reposts'] == 0)
             return '';
 
-		$sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sStylePrefixRepost = $sStylePrefix . '-repost-';
 
         $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
@@ -1098,20 +1098,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         'condition' => (int)$aReposted['reposts'] == 0,
                         'content' => array()
                     ),
-                    'counter' => $this->getRepostCounter($aReposted, $aParams)
+                    'counter' => $this->getRepostCounter($aReposted, array_merge($aParams, ['show_script' => false]))
                 )
             ),
             'script' => $this->getRepostJsScript($bDynamicMode)
         ));
     }
 
-    public function getRepostCounter($aEvent, $aParams = array())
+    public function getRepostCounter($aEvent, $aParams = [])
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('repost');
 
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
+
         $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
         $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
 
         $sClass = $sStylePrefix . '-repost-counter';
         if($bShowDoRepostAsButtonSmall)
@@ -1119,17 +1122,41 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bShowDoRepostAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->parseLink('javascript:void(0)', !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $this->getRepostCounterLabel($aEvent['reposts']) : '', array(
-            'id' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id'],
+        return $this->parseHtmlByName('repost_counter.html', [
             'class' => $sClass,
-            'title' => _t('_bx_timeline_txt_reposted_by'),
-            'onclick' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')'
-        ));
+            'bx_repeat:attrs' => [
+                ['key' => 'id', 'value' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id']],
+                ['key' => 'title', 'value' => _t('_bx_timeline_txt_reposted_by')],
+                ['key' => 'href', 'value' => 'javascript:void(0)'],
+                ['key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')']
+            ],
+            'content' => !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $this->getRepostCounterLabel($aEvent['reposts'], $aParams) : '',
+            'script' => $bShowScript ? $this->getRepostJsScript($bDynamicMode) : ''
+        ]);
     }
 
-    public function getRepostCounterLabel($iCount)
+    public function getRepostCounterLabel($iCount, $aParams = [])
     {
-        return $iCount;
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        return $this->parseHtmlByName('repost_counter_label.html', [
+            'style_prefix' => $sStylePrefix,
+            'bx_if:show_icon' => array(
+                'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'name' => $this->_getCounterIcon($aParams),
+                    'emoji' => ''
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => !isset($aParams['show_counter_label_text']) || (bool)$aParams['show_counter_label_text'] === true,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'text' => $this->_getCounterLabel($iCount, $aParams)
+                )
+            )
+        ]);
     }
 
     public function getRepostedBy($iId)
@@ -3082,6 +3109,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $iResult = BxDolService::call($aHandler['module_name'], 'get_timeline_post_allowed_view', array($aEvent));
 
         return $iResult;
+    }
+
+    protected function _getCounterIcon($aParams = array())
+    {
+        return 'redo';
+    }
+
+    protected function _getCounterLabel($iCount, $aParams = array())
+    {
+        return _t(isset($aParams['caption']) ? $aParams['caption'] : '_bx_timeline_txt_repost_counter', $iCount);
     }
 }
 
