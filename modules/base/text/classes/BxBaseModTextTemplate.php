@@ -605,6 +605,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     public function getTmplVarsText($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
 
         $aVars = parent::getTmplVarsText($aData);
 
@@ -658,8 +659,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         
         if(isset($CNF['FIELD_LINK'])){
             $aLinks = $this->getEventLinks($aData[$CNF['FIELD_ID']]);
-            
-            $sStylePrefix = $this->_oConfig->getPrefix('style');
+
             $sClass = $sStylePrefix . '-al-item';
             
             $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
