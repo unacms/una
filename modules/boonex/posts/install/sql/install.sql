@@ -342,7 +342,7 @@ CREATE TABLE `bx_posts_favorites_track` (
   PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`author_id`)
 );
-,
+
 CREATE TABLE `bx_posts_favorites_lists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
