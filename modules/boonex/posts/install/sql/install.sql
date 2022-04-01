@@ -280,8 +280,10 @@ CREATE TABLE `bx_posts_views_track` (
 
 -- TABLE: metas
 CREATE TABLE `bx_posts_meta_keywords` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 );
