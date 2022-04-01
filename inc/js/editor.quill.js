@@ -245,9 +245,16 @@ function bx_editor_init(oEditor, oParams){
     oEditor.keyboard.addBinding({
         key: ' ',
         handler: function(range, context) {
-            bx_editor_on_space_enter (oEditor, oParams.selector);
+            bx_editor_on_space_enter (oEditor.container.firstChild.innerHTML, oParams.selector);
             return true;
         }
+    });
+    
+    oEditor.clipboard.addMatcher (Node.TEXT_NODE, function (node, delta) {
+        console.log(node.data);
+        const Delta = Quill.import('delta')
+        bx_editor_on_space_enter(node.data, oParams.selector, false);
+        return new Delta().insert(node.data); 
     });
 
     if (oParams.insert_as_plain_text){
@@ -261,7 +268,7 @@ function bx_editor_init(oEditor, oParams){
     oEditor.keyboard.bindings[13].unshift({
         key: 13,
         handler: (range, context) => {
-            bx_editor_on_space_enter (oEditor, oParams.selector)
+            bx_editor_on_space_enter (oEditor.container.firstChild.innerHTML, oParams.selector)
             return true;
         }
     });
@@ -292,21 +299,26 @@ function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
     bx_editor_insert_html(sEditorId, sImgId, '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />')
 }
 
-function bx_editor_on_space_enter (oEditor, sEditorId)
+function bx_editor_on_space_enter (sCode, sEditorId, bSpace = true)
 {
     if (typeof glBxEditorOnSpaceEnterTimer !== 'undefined')
         clearTimeout(glBxEditorOnSpaceEnterTimer);
     
-    glBxEditorOnSpaceEnterTimer = setTimeout(function () {
-        glBxEditorOnSpaceEnterTimer = undefined;
-        if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
-            for (var i = 0; i < glOnSpaceEnterInEditor.length; i++) {
-                if (typeof glOnSpaceEnterInEditor[i] === "function") {;                                             
-                    glOnSpaceEnterInEditor[i](oEditor.container.firstChild.innerHTML, sEditorId);
-                }
+    if (bSpace)
+        glBxEditorOnSpaceEnterTimer = setTimeout(bx_editor_on_space_enter_in, 500, sCode, sEditorId);
+    else
+        bx_editor_on_space_enter_in(sCode, sEditorId);
+}
+
+function bx_editor_on_space_enter_in(sCode, sEditorId) {
+    glBxEditorOnSpaceEnterTimer = undefined;
+    if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
+        for (var i = 0; i < glOnSpaceEnterInEditor.length; i++) {
+            if (typeof glOnSpaceEnterInEditor[i] === "function") {;                                             
+                glOnSpaceEnterInEditor[i](sCode, sEditorId);
             }
         }
-    }, 800);
+    }
 }
 
 function bx_editor_remove_img (aEditorIds, aMarkers) 

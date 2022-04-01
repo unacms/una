@@ -40,6 +40,9 @@ class BxFroalaEditor extends BxDolEditor
             theme: '{bx_var_skin}',
             iconsTemplate: '{bx_var_icons_template}',
             events: { 
+                'paste.after': function () {
+                    bx_editor_on_space_enter('{bx_var_selector}');
+                },
                 'initialized': function () {
                     var editor = this;
                     \$('{bx_var_selector}').data('froala-instance', editor);
