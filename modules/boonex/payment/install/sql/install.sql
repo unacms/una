@@ -38,9 +38,11 @@ CREATE TABLE IF NOT EXISTS `bx_payment_providers_options` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_payment_user_values` (
+  `id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL default '0',
   `option_id` int(11) NOT NULL default '0',  
   `value` varchar(255) NOT NULL default '',
+  PRIMARY KEY(`id`),
   UNIQUE KEY `value`(`user_id`, `option_id`)
 );
 

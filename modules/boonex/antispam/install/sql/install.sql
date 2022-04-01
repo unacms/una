@@ -32,8 +32,10 @@ INSERT INTO `bx_antispam_dnsbl_rules` (`chain`, `zonedomain`, `postvresp`, `url`
 ('spammers', 'zomgbl.spameatingmonkey.net.', 'any', 'http://spameatingmonkey.com/index.html', '', '_bx_antispam_rule_note_zomgbl_spameatingmonkey_net', 0, 0);
 
 CREATE TABLE `bx_antispam_dnsbluri_zones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `level` tinyint(4) NOT NULL,
-  `zone` varchar(64) NOT NULL
+  `zone` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_antispam_disposable_email_domains` (

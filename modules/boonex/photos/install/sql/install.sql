@@ -231,10 +231,12 @@ CREATE TABLE IF NOT EXISTS `bx_photos_reports_track` (
 
 -- TABLE: favorites
 CREATE TABLE `bx_photos_favorites_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `list_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`author_id`)
 );
 
@@ -244,7 +246,7 @@ CREATE TABLE `bx_photos_favorites_lists` (
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   `allow_view_favorite_list_to` varchar(16) NOT NULL DEFAULT '3',
-   PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`)
 );
 
 
