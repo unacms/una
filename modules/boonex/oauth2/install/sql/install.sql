@@ -52,8 +52,10 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_refresh_tokens` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_oauth_scopes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `scope` varchar(255)  DEFAULT NULL,
-  `is_default` tinyint(1) DEFAULT NULL
+  `is_default` tinyint(1) DEFAULT NULL,
+   PRIMARY KEY (`id`)
 );
 
 INSERT INTO `bx_oauth_scopes` (`scope`, `is_default`) VALUES

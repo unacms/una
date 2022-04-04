@@ -663,9 +663,11 @@ CREATE TABLE `sys_options_mixes` (
 -- Table structure for table `sys_options_mixes2options`
 --
 CREATE TABLE `sys_options_mixes2options` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `option` varchar(64) NOT NULL default '',
   `mix_id` int(11) unsigned NOT NULL default '0',
   `value` mediumtext NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `value`(`option`, `mix_id`)
 );
 
@@ -1620,23 +1622,29 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_ids` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_meta_keywords` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_meta_mentions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `profile_id` (`profile_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_votes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -1652,10 +1660,12 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_votes_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_reactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `reaction` varchar(32) NOT NULL default '',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `reaction` (`object_id`, `reaction`)
 );
 
@@ -1672,9 +1682,11 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_reactions_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_form_fields_votes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -1690,10 +1702,12 @@ CREATE TABLE IF NOT EXISTS `sys_form_fields_votes_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_form_fields_reaction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `reaction` varchar(32) NOT NULL default '',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `reaction` (`object_id`, `reaction`)
 );
 
@@ -1710,8 +1724,10 @@ CREATE TABLE IF NOT EXISTS `sys_form_fields_reaction_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -1730,9 +1746,11 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_reports_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_scores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count_up` int(11) NOT NULL default '0',
   `count_down` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -2213,21 +2231,25 @@ CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_storage_tokens` (
+  `iid` int(11) NOT NULL AUTO_INCREMENT,
   `id` int(11) NOT NULL,
   `object` varchar(64) NOT NULL,
   `hash` varchar(32) NOT NULL,
   `created` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`iid`),
   UNIQUE KEY `id` (`id`,`object`,`hash`),
   KEY `created` (`created`)
 );
 
 CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
+  `iid` int(11) NOT NULL AUTO_INCREMENT,
   `id` int(11) NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
   `object` varchar(64) NOT NULL,
   `content_id` int(11) NOT NULL,
   `created` int(10) unsigned NOT NULL,
   `order` int(11) NOT NULL default '0',
+  PRIMARY KEY (`iid`),
   UNIQUE KEY `id` (`id`,`object`),
   KEY `created` (`created`),
   KEY `profile_object_content` (`profile_id`,`object`,`content_id`)
@@ -4604,6 +4626,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_reports_administration', 'Sql', 'WHERE 1 ', '', 'id', 'date', '', '', 20, NULL, 'start', '', 'text,type', '', 'like', '', '', 'BxTemplReportsGrid', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(64) NOT NULL,
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -4613,6 +4636,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `params` text NOT NULL,
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_name` (`object`(64),`name`(127))
 );
 
@@ -4779,6 +4803,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(64) NOT NULL,
   `type` enum('bulk','single','independent') NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -4787,6 +4812,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
   `icon_only` tinyint(4) NOT NULL DEFAULT '0',
   `confirm` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_name_type` (`object`(64),`type`,`name`(123))
 );
 
@@ -5092,11 +5118,13 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `transcoder_object` varchar(64) NOT NULL,
   `file_id` int(11) NOT NULL,
   `handler` varchar(255) NOT NULL,
   `atime` int(11) NOT NULL,
   `data` text NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `transcoder_object` (`transcoder_object`(64),`handler`(127)),
   KEY `atime` (`atime`),
   KEY `file_id` (`file_id`)
@@ -5104,10 +5132,12 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_videos_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `transcoder_object` varchar(64) NOT NULL,
   `file_id` int(11) NOT NULL,
   `handler` varchar(255) NOT NULL,
   `atime` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `transcoder_object` (`transcoder_object`(64),`handler`(127)),
   KEY `atime` (`atime`),
   KEY `file_id` (`file_id`)
@@ -5115,10 +5145,12 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_videos_files` (
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_audio_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `transcoder_object` varchar(64) NOT NULL,
   `file_id` int(11) NOT NULL,
   `handler` varchar(255) NOT NULL,
   `atime` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `transcoder_object` (`transcoder_object`(64),`handler`(127)),
   KEY `atime` (`atime`),
   KEY `file_id` (`file_id`)
@@ -5126,10 +5158,12 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_audio_files` (
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_filters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `transcoder_object` varchar(64) NOT NULL,
   `filter` varchar(32) NOT NULL,
   `filter_params` text NOT NULL,
   `order` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `transcoder_object` (`transcoder_object`)
 );
 
@@ -6000,9 +6034,11 @@ CREATE TABLE `sys_std_widgets` (
 -- Table structure for table `sys_std_widgets_bookmarks`
 --
 CREATE TABLE `sys_std_widgets_bookmarks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `widget_id` int(11) unsigned NOT NULL default '0',
   `profile_id` int(11) unsigned NOT NULL default '0',
   `bookmark` tinyint(4) unsigned NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `bookmark` (`widget_id`, `profile_id`)
 );
 

@@ -103,10 +103,12 @@ CREATE TABLE IF NOT EXISTS `bx_convos_cmts` (
 -- TABLE: views
 
 CREATE TABLE `bx_convos_views_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 );
 

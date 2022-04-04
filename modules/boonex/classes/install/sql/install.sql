@@ -253,9 +253,11 @@ CREATE TABLE IF NOT EXISTS `bx_classes_cmts_notes` (
 
 -- TABLE: votes
 CREATE TABLE IF NOT EXISTS `bx_classes_votes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -271,10 +273,12 @@ CREATE TABLE IF NOT EXISTS `bx_classes_votes_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_classes_reactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `reaction` varchar(32) NOT NULL default '',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `reaction` (`object_id`, `reaction`)
 );
 
@@ -292,24 +296,30 @@ CREATE TABLE IF NOT EXISTS `bx_classes_reactions_track` (
 
 -- TABLE: views
 CREATE TABLE `bx_classes_views_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 );
 
 -- TABLE: metas
 CREATE TABLE `bx_classes_meta_keywords` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 );
 
 CREATE TABLE `bx_classes_meta_mentions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `profile_id` (`profile_id`)
 );
@@ -330,8 +340,10 @@ CREATE TABLE `bx_classes_meta_locations` (
 
 -- TABLE: reports
 CREATE TABLE IF NOT EXISTS `bx_classes_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -351,17 +363,21 @@ CREATE TABLE IF NOT EXISTS `bx_classes_reports_track` (
 
 -- TABLE: favorites
 CREATE TABLE `bx_classes_favorites_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`author_id`)
 );
 
 -- TABLE: scores
 CREATE TABLE IF NOT EXISTS `bx_classes_scores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count_up` int(11) NOT NULL default '0',
   `count_down` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -400,9 +416,11 @@ CREATE TABLE IF NOT EXISTS `bx_classes_polls_answers` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_classes_polls_answers_votes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 

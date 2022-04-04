@@ -152,9 +152,11 @@ CREATE TABLE IF NOT EXISTS `bx_albums_cmts_media` (
 
 -- TABLE: votes
 CREATE TABLE IF NOT EXISTS `bx_albums_votes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -170,9 +172,11 @@ CREATE TABLE IF NOT EXISTS `bx_albums_votes_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_albums_votes_media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -188,10 +192,12 @@ CREATE TABLE IF NOT EXISTS `bx_albums_votes_media_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_albums_reactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `reaction` varchar(32) NOT NULL default '',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `reaction` (`object_id`, `reaction`)
 );
 
@@ -209,39 +215,49 @@ CREATE TABLE IF NOT EXISTS `bx_albums_reactions_track` (
 
 -- TABLE: views
 CREATE TABLE `bx_albums_views_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 );
 
 CREATE TABLE `bx_albums_views_media_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 );
 
 -- TABLE: metas
 CREATE TABLE `bx_albums_meta_keywords` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 );
 
 CREATE TABLE `bx_albums_meta_keywords_media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 );
 
 CREATE TABLE `bx_albums_meta_keywords_media_camera` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 );
@@ -261,16 +277,20 @@ CREATE TABLE `bx_albums_meta_locations` (
 );
 
 CREATE TABLE `bx_albums_meta_mentions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `profile_id` (`profile_id`)
 );
 
 -- TABLE: reports
 CREATE TABLE IF NOT EXISTS `bx_albums_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -289,8 +309,10 @@ CREATE TABLE IF NOT EXISTS `bx_albums_reports_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_albums_reports_media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -310,17 +332,21 @@ CREATE TABLE IF NOT EXISTS `bx_albums_reports_media_track` (
 
 -- TABLE: favorites
 CREATE TABLE `bx_albums_favorites_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `list_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`author_id`)
 );
 
 CREATE TABLE `bx_albums_favorites_media_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `id` (`object_id`,`author_id`)
 );
 
@@ -335,9 +361,11 @@ CREATE TABLE `bx_albums_favorites_lists` (
 
 -- TABLE: scores
 CREATE TABLE IF NOT EXISTS `bx_albums_scores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count_up` int(11) NOT NULL default '0',
   `count_down` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
@@ -353,9 +381,11 @@ CREATE TABLE IF NOT EXISTS `bx_albums_scores_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `bx_albums_scores_media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `count_up` int(11) NOT NULL default '0',
   `count_down` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `object_id` (`object_id`)
 );
 
