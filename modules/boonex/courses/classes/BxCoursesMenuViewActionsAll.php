@@ -50,6 +50,11 @@ class BxCoursesMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
+
+    protected function _getMenuItemApproveCourseProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
     
     protected function _getMenuItemProfileSetBadges($aItem)
     {

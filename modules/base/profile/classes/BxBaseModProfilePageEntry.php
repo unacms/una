@@ -45,8 +45,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
         }
 
-        
-        if (!$this->_aContentInfo || !$this->_oProfile) {
+        if (!$this->_aContentInfo || !$this->_oProfile || !$this->isActive()) {
             $this->setPageCover(false);
             return;
         }

@@ -50,7 +50,12 @@ class BxSpacesMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
-    
+
+    protected function _getMenuItemApproveSpaceProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+
     protected function _getMenuItemProfileSetBadges($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
