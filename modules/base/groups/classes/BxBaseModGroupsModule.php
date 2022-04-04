@@ -1275,7 +1275,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                     if ($mPermissions && isset($mPermissions[$sModule])) {
                         return isset($mPermissions[$sModule][$sAction]) && $mPermissions[$sModule][$sAction];
                     }
-                    break;
                 }
             }
         }
@@ -1289,7 +1288,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if ($iProfileId && $this->isFan($iContentId, $iProfileId)) {
             $sModuleName = $this->getName();
             $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModuleName);
-            $aDataEntry = BxDolRequest::serviceExists($sModuleName, 'get_all') ? BxDolService::call($sModuleName, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
+            $aDataEntry = $this->_oDb->getContentInfoById($iContentId);
             $bResult = $this->isAllowedActionByRole(['action' => $sAction, 'module' => $sPostModule], $aDataEntry, $oGroupProfile->id(), $iProfileId);
 
             if ($bResult === true) return CHECK_ACTION_RESULT_ALLOWED;
