@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`event_name`, `event_desc`)
 );

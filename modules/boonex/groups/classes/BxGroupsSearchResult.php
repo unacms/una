@@ -30,6 +30,8 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                 'perofileType' => array('value' => 'bx_groups', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_groups_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_groups_data'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'bx_groups_data'),
+                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '=', 'table' => 'bx_groups_data'),
             ),
             'join' => array (
                 'profile' => array(

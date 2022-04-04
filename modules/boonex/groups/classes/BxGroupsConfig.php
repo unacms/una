@@ -20,7 +20,8 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'edit-group-profile' => 'checkAllowedEdit',
             'edit-group-cover' => 'checkAllowedChangeCover',
             'invite-to-group' => 'checkAllowedInvite',
-            'delete-group-profile' => 'checkAllowedDelete'
+            'delete-group-profile' => 'checkAllowedDelete',
+            'approve-group-profile' => 'checkAllowedApprove',
         ));
 
         $this->CNF = array (
@@ -53,6 +54,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'FIELD_VIEWS' => 'views',
             'FIELD_VOTES' => 'votes',
             'FIELD_STATUS' => 'status',
+            'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELD_LOCATION' => 'location',
@@ -78,6 +80,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
 
+            'PARAM_AUTO_APPROVE' => 'bx_groups_enable_auto_approve',
             'PARAM_NUM_RSS' => 'bx_groups_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_groups_num_connections_quick',
 
@@ -186,6 +189,13 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                         BX_PROFILE_STATUS_SUSPENDED => '_bx_groups_txt_account_suspended',
                     ),
                 ),
+                'approving' => array (
+                    'name' => 'bx-groups-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_groups_txt_account_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_groups_txt_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
             ),
 
             // some language keys
@@ -213,6 +223,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'grid_action_err_delete' => '_bx_groups_grid_action_err_delete',
                 'grid_txt_account_manager' => '_bx_groups_grid_txt_account_manager',
                 'filter_item_active' => '_bx_groups_grid_filter_item_title_adm_active',
+                'filter_item_hidden' => '_bx_groups_grid_filter_item_title_adm_hidden',
                 'filter_item_pending' => '_bx_groups_grid_filter_item_title_adm_pending',
                 'filter_item_suspended' => '_bx_groups_grid_filter_item_title_adm_suspended',
                 'filter_item_select_one_filter1' => '_bx_groups_grid_filter_item_title_adm_select_one_filter1',

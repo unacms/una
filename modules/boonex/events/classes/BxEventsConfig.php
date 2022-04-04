@@ -20,7 +20,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'edit-event-profile' => 'checkAllowedEdit',
             'edit-event-cover' => 'checkAllowedChangeCover',
             'invite-to-event' => 'checkAllowedInvite',
-            'delete-event-profile' => 'checkAllowedDelete'
+            'delete-event-profile' => 'checkAllowedDelete',
+            'approve-event-profile' => 'checkAllowedApprove',
         ));
 
         $this->CNF = array (
@@ -59,6 +60,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
+            'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELDS_QUICK_SEARCH' => array('event_name'),
             'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
@@ -83,6 +85,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'URL_MANAGE_COMMON' => 'page.php?i=events-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=events-administration',
 
+            'PARAM_AUTO_APPROVE' => 'bx_events_enable_auto_approve',
             'PARAM_CHARS_SUMMARY' => 'bx_events_summary_chars',
             'PARAM_NUM_RSS' => 'bx_events_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_events_num_connections_quick',
@@ -191,6 +194,13 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                         BX_PROFILE_STATUS_SUSPENDED => '_bx_events_txt_account_suspended',
                     ),
                 ),
+                'approving' => array (
+                    'name' => 'bx-groups-approving',
+                    'map' => array (
+                        'pending' => array('msg' => '_bx_events_txt_account_pending', 'type' => BX_INFORMER_ALERT),
+                        'hidden' => array('msg' => '_bx_events_txt_status_hidden', 'type' => BX_INFORMER_ERROR),
+                    ),
+                ),
                 'scheduled' => array (
                     'name' => 'bx-events-scheduled',
                     'map' => array (
@@ -227,6 +237,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             	'grid_action_err_delete' => '_bx_events_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_events_grid_txt_account_manager',
                 'filter_item_active' => '_bx_events_grid_filter_item_title_adm_active',
+                'filter_item_hidden' => '_bx_events_grid_filter_item_title_adm_hidden',
             	'filter_item_pending' => '_bx_events_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_events_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_events_grid_filter_item_title_adm_select_one_filter1',
