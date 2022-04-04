@@ -9,6 +9,10 @@
  * @{
  */
 
+define('BX_BASE_MOD_GENERAL_STATUS_ACTIVE', 'active');
+define('BX_BASE_MOD_GENERAL_STATUS_HIDDEN', 'hidden');
+define('BX_BASE_MOD_GENERAL_STATUS_PENDING', 'pending');
+
 bx_import('BxDolAcl');
 
 /**
@@ -41,6 +45,75 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== ACTIONS METHODS
+
+    public function isEntryActive($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_isModerator())
+            return true;
+
+        if(isset($CNF['FIELD_STATUS']) && $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return false;
+
+        if(isset($CNF['FIELD_STATUS_ADMIN']) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active')
+            return false;
+
+        return true;        
+    }
+
+    public function actionApprove()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['FIELD_STATUS_ADMIN']))
+            return echoJson([]);
+
+        $iContentId = (int)bx_get('content_id');
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo) || $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_GENERAL_STATUS_PENDING)
+            return echoJson([]);
+
+        if(($mixedCheckResult = $this->checkAllowedApprove($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(['msg' => $mixedCheckResult]);
+
+        $oForm = $this->_getApproveForm($iContentId, $aContentInfo);
+        $oForm->initChecker();
+
+        if(!$oForm->isSubmitted() || !$oForm->isValid()) {
+            $sPopupId = $this->getName() . '_approve_' . $iContentId;
+            $sPopupTitle = '_sys_manage_popup_approve_title';
+            if(!empty($CNF['T']['txt_approve_popup_title'])) 
+                $sPopupTitle = $CNF['T']['txt_approve_popup_title'];
+
+            return echoJson(['popup' => BxTemplFunctions::getInstance()->popupBox($sPopupId, _t($sPopupTitle), $oForm->getCode(true))]);
+        }
+
+        if($oForm->getCleanValue('do_send')) {
+            $aResult = [];
+            if($this->_sendApproveMessage($iContentId, $aContentInfo, $oForm))
+                $aResult = ['msg' => _t('_sys_manage_txt_sent')];
+            else
+                $aResult = ['msg' => _t('_sys_manage_err_cannot_perform_action')];
+
+            return echoJson($aResult);
+        }
+
+        if($oForm->getCleanValue('do_submit')) {
+            $aResult = [];
+            if($this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS_ADMIN'] => BX_BASE_MOD_GENERAL_STATUS_ACTIVE], [$CNF['FIELD_ID'] => $iContentId])) {
+                $this->checkAllowedApprove($aContentInfo, true);
+
+                $this->onApprove($aContentInfo);
+
+                $aResult = ['msg' => _t('_sys_manage_txt_approved'), 'reload' => 1];
+            }
+            else
+                $aResult = ['msg' => _t('_sys_manage_err_cannot_perform_action')];
+
+            return echoJson($aResult);
+        }
+    }
 
     public function actionRss ()
     {
@@ -120,7 +193,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $oTemplate->getEmbed($this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate) . $sAddCode);
     }
    
-	public function subactionDelete()
+    public function subactionDelete()
     {
         header('Content-type: text/html; charset=utf-8');
 
@@ -2670,9 +2743,31 @@ class BxBaseModGeneralModule extends BxDolModule
         bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
     }
 
+    public function onApprove($mixedContent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        $this->alertAfterApprove($mixedContent);
+
+        $this->onPublished($mixedContent[$CNF['FIELD_ID']]);
+    }
+
     public function alertAfterAdd($aContentInfo) {}
     
     public function alertAfterEdit($aContentInfo) {}
+
+    public function alertAfterApprove($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->getName(), 'approved', $iId, false, $aParams);
+    }
 
     /**
      * Get array of params to be passed in Add/Edit Alert.
@@ -2976,6 +3071,58 @@ class BxBaseModGeneralModule extends BxDolModule
             return $this->_oTemplate->$sFunc($aContentInfo, $aParams);
         else
             return $this->_oTemplate->$sFunc($aContentInfo);
+    }
+
+    protected function _getApproveForm($iContentId, $aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sForm = 'sys_manage';
+        if(!empty($CNF['OBJECT_FORM_MANAGE']))
+            $sForm = $CNF['OBJECT_FORM_MANAGE'];
+
+        $sFormDisplay = 'sys_manage_approve';
+        if(!empty($CNF['OBJECT_FORM_MANAGE_APPROVE']))
+            $sFormDisplay = $CNF['OBJECT_FORM_MANAGE_APPROVE'];
+
+        $oForm = BxTemplFormView::getObjectInstance($sForm, $sFormDisplay);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'approve';
+        $oForm->aInputs['content_id']['value'] = $iContentId;
+        foreach($oForm->aInputs['controls'] as $iKey => $mixedValue)
+            if(is_numeric($iKey) && isset($mixedValue['name']) && $mixedValue['name'] == 'do_submit')
+                $oForm->aInputs['controls'][$iKey]['value'] = _t('_sys_form_manage_input_do_submit_approve');
+
+        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
+            'content_id' => $iContentId,
+            'content_info' => $aContentInfo,
+            'override_result' => &$oForm
+        ));
+
+        return $oForm;
+    }
+
+    protected function _sendApproveMessage($iContentId, $aContentInfo, &$oForm)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sETemplate = 't_ManageApprove';
+        if(!empty($CNF['ETEMPLATE_MANAGE_APPROVE']))
+            $sETemplate = $CNF['ETEMPLATE_MANAGE_APPROVE'];
+
+        $aEParams = array(
+            'content_title' => !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'notes' => $oForm->getCleanValue('notes'),
+        );
+
+        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, array(
+            'content_id' => $iContentId,
+            'content_info' => $aContentInfo,
+            'form' => $oForm,
+            'email_template' => &$sETemplate,
+            'email_params' => &$aEParams
+        ));
+
+        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
     }
 
     protected function _rss ($aArgs, $sClass = 'SearchResult')

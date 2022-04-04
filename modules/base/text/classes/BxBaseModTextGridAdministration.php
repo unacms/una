@@ -34,7 +34,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
             BX_BASE_MOD_TEXT_STATUS_HIDDEN => $CNF['T']['filter_item_hidden'],
         );
         if($this->_oModule->_oConfig->isAutoApprove())
-            $this->_aFilter1Values[BX_BASE_MOD_TEXT_STATUS_PENDING] = $CNF['T']['filter_item_pending'];
+            $this->_aFilter1Values[BX_BASE_MOD_GENERAL_STATUS_PENDING] = $CNF['T']['filter_item_pending'];
 
     	$sFilter1 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter1)) {
@@ -78,9 +78,9 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
         $mixedResult = parent::_enable($mixedId, $isChecked);
         if((int)$mixedResult > 0) {
-            if($bStatusAdmin && $sStatusBefore == BX_BASE_MOD_TEXT_STATUS_PENDING) {
+            if($bStatusAdmin && $sStatusBefore == BX_BASE_MOD_GENERAL_STATUS_PENDING) {
                 $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
-                if($aContentInfo[$this->_sStatusField] == BX_BASE_MOD_TEXT_STATUS_ACTIVE)
+                if($aContentInfo[$this->_sStatusField] == BX_BASE_MOD_GENERAL_STATUS_ACTIVE)
                     $this->_oModule->onApprove($aContentInfo);
             }
         }

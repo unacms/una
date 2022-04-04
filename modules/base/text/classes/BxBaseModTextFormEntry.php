@@ -94,17 +94,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         
         parent::initChecker ($aValues, $aSpecificValues);
     }
-    
-    public function insert ($aValsToAdd = array(), $isIgnore = false)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!$this->_oModule->_isModerator() && !$this->_oModule->_oConfig->isAutoApproveEnabled())
-            $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_TEXT_STATUS_PENDING;
-
-        return parent::insert($aValsToAdd, $isIgnore);
-    }
-    
     function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
        return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);

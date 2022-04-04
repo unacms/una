@@ -37,6 +37,15 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         $oInformer = BxDolInformer::getInstance($this->_oTemplate);
         if($oInformer && ($bLoggedOwner || $bLoggedModerator)) {
             $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
+            $sStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] : '';
+
+            //--- Display 'approving' informer.
+            if(!empty($sStatusAdmin) && $sStatusAdmin != BX_BASE_MOD_GENERAL_STATUS_ACTIVE) {
+                if(!empty($CNF['INFORMERS']['approving']) && isset($CNF['INFORMERS']['approving']['map'][$sStatusAdmin])) {
+                    $aInformer = $CNF['INFORMERS']['approving'];
+                    $aInformers[] = ['name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatusAdmin]['msg']), 'type' => $aInformer['map'][$sStatusAdmin]['type']];
+                }
+            }
 
             //--- Display 'scheduled' informer if an item wasn't published yet.
             if(isset($CNF['FIELD_PUBLISHED'])) {
@@ -111,6 +120,11 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
 
         $this->_oTemplate->addJs(array('invite_popup.js'));        
         return $sCode;
+    }
+
+    public function isActive()
+    {
+        return $this->_oModule->isEntryActive($this->_aContentInfo);
     }
 
     public function getCode ()

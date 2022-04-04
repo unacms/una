@@ -114,19 +114,6 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
     {
         return $this->_bAttachmentsInTimeline;
     }
-
-    /**
-     * Is Auto Approve mode is available.
-     */
-    public function isAutoApprove()
-    {
-        return !empty($this->CNF['FIELD_STATUS_ADMIN']) && !empty($this->CNF['PARAM_AUTO_APPROVE']);
-    }
-
-    public function isAutoApproveEnabled()
-    {
-        return !$this->isAutoApprove() || getParam($this->CNF['PARAM_AUTO_APPROVE']) == 'on';
-    }
     
     public function getPregPattern($sType)
     {

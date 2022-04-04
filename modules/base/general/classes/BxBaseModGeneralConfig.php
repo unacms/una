@@ -71,7 +71,20 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
         return isset($this->_aGridObjects[$sType]) ? $this->_aGridObjects[$sType] : '';
     }
-    
+
+    /**
+     * Is Auto Approve mode is available.
+     */
+    public function isAutoApprove()
+    {
+        return !empty($this->CNF['FIELD_STATUS_ADMIN']) && !empty($this->CNF['PARAM_AUTO_APPROVE']);
+    }
+
+    public function isAutoApproveEnabled()
+    {
+        return !$this->isAutoApprove() || getParam($this->CNF['PARAM_AUTO_APPROVE']) == 'on';
+    }
+
     public function isEqualUrls($sUrl1, $sUrl2)
     {
         $sUrl1 = trim($sUrl1, "/");

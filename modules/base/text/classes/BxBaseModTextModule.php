@@ -12,6 +12,10 @@
 define('BX_BASE_MOD_TEXT_STATUS_ACTIVE', 'active');
 define('BX_BASE_MOD_TEXT_STATUS_HIDDEN', 'hidden');
 define('BX_BASE_MOD_TEXT_STATUS_AWAITING', 'awaiting');
+/**
+ * Saved for backward compatibility.
+ * Can be removed in future releases of UNA 13.
+ */
 define('BX_BASE_MOD_TEXT_STATUS_PENDING', 'pending');
 
 /**
@@ -173,51 +177,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     public function actionFileEmbedSound($iFileId)
     {
         $this->_oTemplate->embedSound($iFileId);
-    }
-
-    public function actionApprove()
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        if(!isset($CNF['FIELD_STATUS_ADMIN']))
-            return echoJson(array());
-
-        $iContentId = (int)bx_get('content_id');
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if(empty($aContentInfo) || !is_array($aContentInfo) || $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_TEXT_STATUS_PENDING)
-            return echoJson(array());
-
-        $oForm = $this->_getApproveForm($iContentId, $aContentInfo);
-        $oForm->initChecker();
-
-        if(!$oForm->isSubmitted() || !$oForm->isValid()) {
-            $sPopupId = $this->getName() . '_approve_' . $iContentId;
-            $sPopupTitle = !empty($CNF['T']['txt_approve_popup_title']) ? $CNF['T']['txt_approve_popup_title'] : '_sys_manage_popup_approve_title';
-            return echoJson(array('popup' => BxTemplFunctions::getInstance()->popupBox($sPopupId, _t($sPopupTitle), $oForm->getCode(true))));
-        }
-
-        if($oForm->getCleanValue('do_send')) {
-            $aResult = array();
-            if($this->_sendApproveMessage($iContentId, $aContentInfo, $oForm))
-                $aResult = array('msg' => _t('_sys_manage_txt_sent'));
-            else
-                $aResult = array('msg' => _t('_sys_manage_err_cannot_perform_action'));
-
-            return echoJson($aResult);
-        }
-
-        if($oForm->getCleanValue('do_submit')) {
-            $aResult = array();
-            if($this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS_ADMIN'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $iContentId))) {
-                $this->onApprove($aContentInfo);
-
-                $aResult = array('msg' => _t('_sys_manage_txt_approved'), 'reload' => 1);
-            }
-            else
-                $aResult = array('msg' => _t('_sys_manage_err_cannot_perform_action'));
-
-            return echoJson($aResult);
-        }
     }
 
 
@@ -646,7 +605,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(empty($mixedContent) || !is_array($mixedContent))
             return _t($sTxtError);
         
-        if(!isset($CNF['FIELD_STATUS_ADMIN']) || $mixedContent[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_TEXT_STATUS_PENDING)
+        if(!isset($CNF['FIELD_STATUS_ADMIN']) || $mixedContent[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_GENERAL_STATUS_PENDING)
             return _t($sTxtError);
 
         if($this->_isModerator())
@@ -793,7 +752,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $sAction = 'added';
         if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == BX_BASE_MOD_TEXT_STATUS_AWAITING)
             $sAction = 'deferred';
-        else if(isset($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == BX_BASE_MOD_TEXT_STATUS_PENDING)
+        else if(isset($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == BX_BASE_MOD_GENERAL_STATUS_PENDING)
             $sAction = 'deferred';
 
         $aParams = $this->_alertParamsAdd($aContentInfo);
@@ -809,16 +768,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $aParams = $this->_alertParams($aContentInfo);
         bx_alert($this->getName(), 'edited', $iId, false, $aParams);
-    }
-    
-    public function alertAfterApprove($aContentInfo)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
-
-        $aParams = $this->_alertParams($aContentInfo);
-        bx_alert($this->getName(), 'approved', $iId, false, $aParams);
     }
 
     /**
@@ -852,22 +801,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             );
 
         return $aParams;
-    }
-
-    public function isEntryActive($aContentInfo)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        if($aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_isModerator())
-            return true;
-
-        if(isset($CNF['FIELD_STATUS']) && $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
-            return false;
-
-        if(isset($CNF['FIELD_STATUS_ADMIN']) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active')
-            return false;
-
-        return true;        
     }
 
     public function getPollForm()
@@ -920,58 +853,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
 
     // ====== PROTECTED METHODS
-
-    protected function _getApproveForm($iContentId, $aContentInfo)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sForm = 'sys_manage';
-        if(!empty($CNF['OBJECT_FORM_MANAGE']))
-            $sForm = $CNF['OBJECT_FORM_MANAGE'];
-
-        $sFormDisplay = 'sys_manage_approve';
-        if(!empty($CNF['OBJECT_FORM_MANAGE_APPROVE']))
-            $sFormDisplay = $CNF['OBJECT_FORM_MANAGE_APPROVE'];
-
-        $oForm = BxTemplFormView::getObjectInstance($sForm, $sFormDisplay);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'approve';
-        $oForm->aInputs['content_id']['value'] = $iContentId;
-        foreach($oForm->aInputs['controls'] as $iKey => $mixedValue)
-            if(is_numeric($iKey) && isset($mixedValue['name']) && $mixedValue['name'] == 'do_submit')
-                $oForm->aInputs['controls'][$iKey]['value'] = _t('_sys_form_manage_input_do_submit_approve');
-
-        bx_alert($this->_oConfig->getName(), 'get_approve_form', 0, 0, array(
-            'content_id' => $iContentId,
-            'content_info' => $aContentInfo,
-            'override_result' => &$oForm
-        ));
-
-        return $oForm;
-    }
-
-    protected function _sendApproveMessage($iContentId, $aContentInfo, &$oForm)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sETemplate = 't_ManageApprove';
-        if(!empty($CNF['ETEMPLATE_MANAGE_APPROVE']))
-            $sETemplate = $CNF['ETEMPLATE_MANAGE_APPROVE'];
-
-        $aEParams = array(
-            'content_title' => !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-            'notes' => $oForm->getCleanValue('notes'),
-        );
-
-        bx_alert($this->_oConfig->getName(), 'get_approve_message', 0, 0, array(
-            'content_id' => $iContentId,
-            'content_info' => $aContentInfo,
-            'form' => $oForm,
-            'email_template' => &$sETemplate,
-            'email_params' => &$aEParams
-        ));
-
-        return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
-    }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {

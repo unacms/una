@@ -231,34 +231,40 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     protected function _enable ($mixedId, $isChecked)
     {
+        return $this->__enable ($mixedId, $isChecked);
+    }
+
+    protected function __enable ($mixedId, $isChecked)
+    {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $mixedResult = parent::_enable($mixedId, $isChecked);
-        if((int)$mixedResult > 0) {
-            if(!empty($CNF['FIELD_CHANGED']))
-                $this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_CHANGED'] => time()), array($this->_aOptions['field_id'] => $mixedId));
+        if(!$mixedResult) 
+            return $mixedResult;
 
-            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
+        if(!empty($CNF['FIELD_CHANGED']))
+            $this->_oModule->_oDb->updateEntriesBy([$CNF['FIELD_CHANGED'] => time()], [$this->_aOptions['field_id'] => $mixedId]);
 
-            $this->_oModule->alertAfterEdit($aContentInfo);
-            
-            $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
-            $AuditParams = array(
-                'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-                'context_profile_id' => $iContextId,
-                'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
-                'data' => $aContentInfo
-            );
-            if ($iContextId > 0)
-                $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
-            
-            bx_audit(
-                $mixedId, 
-                $this->_oModule->getName(), 
-                ($isChecked ? '_sys_audit_action_content_enabled': '_sys_audit_action_content_disabled'), 
-                $AuditParams
-            );
-        }
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
+
+        $this->_oModule->alertAfterEdit($aContentInfo);
+
+        $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
+        $AuditParams = [
+            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'context_profile_id' => $iContextId,
+            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            'data' => $aContentInfo
+        ];
+        if ($iContextId > 0)
+            $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
+
+        bx_audit(
+            $mixedId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_content_' . ($isChecked ? 'enabled': 'disabled'), 
+            $AuditParams
+        );
 
         return $mixedResult;
     }

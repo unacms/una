@@ -460,8 +460,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             }
         }
 
+        if(!$this->_oModule->_isModerator() && !$this->_oModule->_oConfig->isAutoApproveEnabled())
+            $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_GENERAL_STATUS_PENDING;
+
         $bMulticatEnabled = $this->_isMulticatEnabled();
-        
         if ($bMulticatEnabled)
             $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
 

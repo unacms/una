@@ -1488,6 +1488,29 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $aParams;
     }
 
+    public function alertAfterAdd($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+
+        $sAction = 'added';
+        if(isset($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == BX_BASE_MOD_GENERAL_STATUS_PENDING)
+            $sAction = 'deferred';        
+
+        $sModule = $this->getName();
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert('system', 'prepare_alert_params', 0, 0, [
+            'unit'=> $sModule, 
+            'action' => &$sAction, 
+            'object_id' => &$iId, 
+            'sender_id' => &$iAuthorId, 
+            'extras' => &$aParams
+        ]);
+        bx_alert($sModule, $sAction, $iId, false, $aParams);
+    }
+
     public function addFollower ($iProfileId1, $iProfileId2)
     {
         $oConnectionFollow = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');

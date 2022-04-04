@@ -75,7 +75,7 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
                     $CNF['FIELD_FOR_STORING_FILE_ID'] => $aFile['id'],
                     $CNF['FIELD_TITLE'] => $this->getCleanValue('title-' . $aFile['id']),
                     $CNF['FIELD_AUTHOR'] => bx_get('profile_id') && $this->_oModule->serviceIsAllowedAddContentToProfile(bx_get('profile_id')) ? bx_get('profile_id') : '',
-                    $CNF['FIELD_STATUS_ADMIN'] => !$this->_oModule->_isModerator() && !$this->_oModule->_oConfig->isAutoApproveEnabled() ? BX_BASE_MOD_TEXT_STATUS_PENDING : BX_BASE_MOD_TEXT_STATUS_ACTIVE
+                    $CNF['FIELD_STATUS_ADMIN'] => !$this->_oModule->_isModerator() && !$this->_oModule->_oConfig->isAutoApproveEnabled() ? BX_BASE_MOD_GENERAL_STATUS_PENDING : BX_BASE_MOD_TEXT_STATUS_ACTIVE
                 ), $aFormValues));
             if (!$iContentId)
                 continue;

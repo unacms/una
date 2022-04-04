@@ -57,7 +57,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             $sStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] : '';
 
             //--- Display 'approving' informer.
-            if(!empty($sStatusAdmin) && $sStatusAdmin != BX_BASE_MOD_TEXT_STATUS_ACTIVE) {
+            if(!empty($sStatusAdmin) && $sStatusAdmin != BX_BASE_MOD_GENERAL_STATUS_ACTIVE) {
                 if(!empty($CNF['INFORMERS']['approving']) && isset($CNF['INFORMERS']['approving']['map'][$sStatusAdmin])) {
                     $aInformer = $CNF['INFORMERS']['approving'];
                     $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatusAdmin]['msg']), 'type' => $aInformer['map'][$sStatusAdmin]['type']);
