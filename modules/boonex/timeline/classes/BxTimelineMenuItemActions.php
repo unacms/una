@@ -306,17 +306,21 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             'dynamic_mode' => $this->_bDynamicMode
         );
 
+        $sType = $this->_aEvent['type'];
+        $sAction = $this->_aEvent['action'];
+        $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
+
         $sMethodName = '';
         $aMethodParams = [];
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sMethodName = 'serviceGetRepostElementBlock';
-                $aMethodParams = [$this->_aEvent['owner_id'], $this->_aEvent['type'], $this->_aEvent['action'], $this->_aEvent['object_id'], $aRepostsParams];
+                $aMethodParams = [$this->_aEvent['owner_id'], $sType, $sAction, $iObjectId, $aRepostsParams];
                 break;
 
             case self::$_sModeCounters:
                 $sMethodName = 'serviceGetRepostCounter';
-                $aMethodParams = [$this->_aEvent['type'], $this->_aEvent['action'], $this->_aEvent['object_id'], $aRepostsParams];
+                $aMethodParams = [$sType, $sAction, $iObjectId, $aRepostsParams];
                 break;
         }
 
