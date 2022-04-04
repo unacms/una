@@ -3,6 +3,7 @@
     <string name="_bx_spaces"><![CDATA[Пространства]]></string>
     <string name="_bx_spaces_cmts"><![CDATA[Пространства - Комментарии]]></string>
 
+    <string name="_bx_spaces_option_enable_auto_approve"><![CDATA[Автоматически активировать пространство после создания]]></string>
     <string name="_bx_spaces_option_enable_multilevel_hierarchy"><![CDATA[Включить многоуровневую иерархию (экспериментально)]]></string>
     <string name="_bx_spaces_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
     <string name="_bx_spaces_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
@@ -298,6 +299,7 @@
     <string name="_bx_spaces_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_spaces_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
     <string name="_bx_spaces_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_spaces_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_spaces_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
     <string name="_bx_spaces_grid_filter_item_title_adm_suspended"><![CDATA[Заблокированные]]></string>
     <string name="_bx_spaces_grid_column_title_adm_active"><![CDATA[Активные]]></string>
@@ -336,8 +338,9 @@
     <string name="_bx_spaces_search_extended_cmts"><![CDATA[Поиск комментариев к пространством]]></string>
 
     <string name="_bx_spaces_err_delete_child_presend"><![CDATA[Невозможно удалить пространство, т.к. оно используется другими в качестве родительского.]]></string>
-    <string name="_bx_spaces_txt_account_pending"><![CDATA[Эта пространство ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
-    <string name="_bx_spaces_txt_account_suspended"><![CDATA[Эта пространство заблокирована.]]></string>
+    <string name="_bx_spaces_txt_account_pending"><![CDATA[Это пространство ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
+    <string name="_bx_spaces_txt_account_suspended"><![CDATA[Это пространство заблокировано.]]></string>
+    <string name="_bx_spaces_txt_status_hidden"><![CDATA[Это пространство было скрыто.]]></string>
     <string name="_bx_spaces_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_spaces_txt_role"><![CDATA[Роль]]></string>
     <string name="_bx_spaces_txt_role_added"><![CDATA[Начало]]></string>

@@ -3,6 +3,7 @@
     <string name="_bx_courses"><![CDATA[Courses]]></string>
     <string name="_bx_courses_cmts"><![CDATA[Courses' Comments]]></string>
 
+    <string name="_bx_courses_option_enable_auto_approve"><![CDATA[Auto approve a course after creation]]></string>
     <string name="_bx_courses_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
     <string name="_bx_courses_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_courses_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
@@ -350,6 +351,7 @@
 
     <string name="_bx_courses_txt_account_pending"><![CDATA[This course is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[This course is suspended.]]></string>
+    <string name="_bx_courses_txt_status_hidden"><![CDATA[This course was hidden.]]></string>
     <string name="_bx_courses_txt_N_fans"><![CDATA[{0} students]]></string>
     <string name="_bx_courses_txt_role"><![CDATA[Role]]></string>
     <string name="_bx_courses_txt_role_added"><![CDATA[Added]]></string>

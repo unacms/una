@@ -11,6 +11,7 @@ VALUES (@iTypeId, 'bx_courses', '_bx_courses', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+('bx_courses_enable_auto_approve', 'on', @iCategId, '_bx_courses_option_enable_auto_approve', 'checkbox', '', '', '', 0),
 ('bx_courses_num_connections_quick', '6', @iCategId, '_bx_courses_option_num_connections_quick', 'digit', '', '', '', 10),
 ('bx_courses_per_page_browse', '24', @iCategId, '_bx_courses_option_per_page_browse', 'digit', '', '', '', 11),
 ('bx_courses_num_rss', '10', @iCategId, '_bx_courses_option_num_rss', 'digit', '', '', '', 12),
@@ -264,7 +265,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions_more', 'bx_courses', 'edit-course-profile', '_bx_courses_menu_item_title_system_edit_profile', '_bx_courses_menu_item_title_edit_profile', 'page.php?i=edit-course-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
 ('bx_courses_view_actions_more', 'bx_courses', 'edit-course-pricing', '_bx_courses_menu_item_title_system_edit_pricing', '_bx_courses_menu_item_title_edit_pricing', 'page.php?i=edit-course-pricing&profile_id={profile_id}', '', '', 'money-check-alt', '', 2147483647, 'a:3:{s:6:"module";s:10:"bx_courses";s:6:"method";s:20:"is_pricing_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 41),
 ('bx_courses_view_actions_more', 'bx_courses', 'invite-to-course', '_bx_courses_menu_item_title_system_invite', '_bx_courses_menu_item_title_invite', 'page.php?i=invite-to-course&id={content_id}', '', '', 'user-friends', '', 2147483647, '', 1, 0, 42),
-('bx_courses_view_actions_more', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '_bx_courses_menu_item_title_delete_profile', 'page.php?i=delete-course-profile&id={content_id}', '', '', 'remove', '', 2147483647, '', 1, 0, 50);
+('bx_courses_view_actions_more', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '_bx_courses_menu_item_title_delete_profile', 'page.php?i=delete-course-profile&id={content_id}', '', '', 'remove', '', 2147483647, '', 1, 0, 50),
+('bx_courses_view_actions_more', 'bx_courses', 'approve-course-profile', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, '', 1, 0, 60);
 
 -- MENU: all actions menu for view entry 
 
@@ -297,6 +299,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions_all', 'bx_courses', 'edit-course-pricing', '_bx_courses_menu_item_title_system_edit_pricing', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 415),
 ('bx_courses_view_actions_all', 'bx_courses', 'invite-to-course', '_bx_courses_menu_item_title_system_invite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 420),
 ('bx_courses_view_actions_all', 'bx_courses', 'delete-course-profile', '_bx_courses_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 430),
+('bx_courses_view_actions_all', 'bx_courses', 'approve-course-profile', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 440),
 ('bx_courses_view_actions_all', 'bx_courses', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
 
 -- MENU: meta (counters) menu for view entry
@@ -559,7 +562,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- GRIDS: administration
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_courses_administration', 'Sql', 'SELECT `td`.*, `td`.`name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_courses_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_courses'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_courses_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'name', '', 'like', 'reports', '', 192, 'BxCoursesGridAdministration', 'modules/boonex/courses/classes/BxCoursesGridAdministration.php'),
+('bx_courses_administration', 'Sql', 'SELECT `td`.*, `td`.`name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_courses_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_courses'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_courses_data', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'name', '', 'like', 'reports', '', 192, 'BxCoursesGridAdministration', 'modules/boonex/courses/classes/BxCoursesGridAdministration.php'),
 ('bx_courses_common', 'Sql', 'SELECT `td`.*, `td`.`name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_courses_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_courses'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_courses_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'name', '', 'like', '', '', 2147483647, 'BxCoursesGridCommon', 'modules/boonex/courses/classes/BxCoursesGridCommon.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
@@ -570,10 +573,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_courses_administration', 'added_ts', '_bx_courses_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_courses_administration', 'account', '_bx_courses_grid_column_title_adm_account', '20%', 0, '25', '', 6),
 ('bx_courses_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_courses_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_courses_common', 'name', '_bx_courses_grid_column_title_adm_name', '48%', 0, '', '', 2),
-('bx_courses_common', 'added_ts', '_bx_courses_grid_column_title_adm_added', '30%', 1, '25', '', 3),
-('bx_courses_common', 'actions', '', '20%', 0, '', '', 4);
+('bx_courses_common', 'switcher', '_bx_courses_grid_column_title_adm_active', '8%', 0, '', '', 2);
+('bx_courses_common', 'name', '_bx_courses_grid_column_title_adm_name', '40%', 0, '', '', 3),
+('bx_courses_common', 'added_ts', '_bx_courses_grid_column_title_adm_added', '30%', 1, '25', '', 4),
+('bx_courses_common', 'actions', '', '20%', 0, '', '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_courses_administration', 'bulk', 'delete', '_bx_courses_grid_action_title_adm_delete', '', 0, 1, 2),
@@ -582,6 +587,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_courses_administration', 'single', 'settings', '_bx_courses_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_courses_administration', 'single', 'audit_content', '_bx_courses_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
 ('bx_courses_administration', 'single', 'audit_context', '_bx_courses_grid_action_title_adm_audit_context', 'search-location', 1, 0, 4),
+
 ('bx_courses_common', 'bulk', 'delete', '_bx_courses_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_courses_common', 'bulk', 'delete_with_content', '_bx_courses_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
 ('bx_courses_common', 'single', 'settings', '_bx_courses_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);

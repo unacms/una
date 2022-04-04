@@ -30,6 +30,8 @@ class BxSpacesSearchResult extends BxBaseModGroupsSearchResult
                 'perofileType' => array('value' => 'bx_spaces', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_spaces_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_spaces_data'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'bx_spaces_data'),
+                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '=', 'table' => 'bx_spaces_data'),
             ),
             'join' => array (
                 'profile' => array(
