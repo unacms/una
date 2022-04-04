@@ -1210,12 +1210,20 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return _t('_sys_txt_access_denied');
     }
 
-    public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId)
+    public function isAllowedActionByRole($mAction, $aDataEntry, $iGroupProfileId, $iProfileId)
     {
         $iProfileRole = $this->_oDb->getRole($iGroupProfileId, $iProfileId);
 
-        $bResult = $iProfileId ? $this->isAllowedModuleActionByRole($this->getName(), $sAction, $iProfileRole) : false;
-        // in case neithe of the profile's roles are having permissions set explicitly
+        if (is_array($mAction)) {
+            $sAction = $mAction['action'];
+            $sActionModule = $mAction['module'];
+        } else {
+            $sAction = $mAction;
+            $sActionModule = $this->getName();
+        }
+
+        $bResult = $iProfileId ? $this->isAllowedModuleActionByRole($sActionModule, $sAction, $iProfileRole) : false;
+        // in case neither of the profile's roles are having permissions set explicitly then fallback to an old way
         if ($bResult === NULL) {
             $bResult = false;
             if(!empty($iProfileRole)) {
@@ -1230,6 +1238,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                     case BX_BASE_MOD_GROUPS_ACTION_INVITE:
                     case BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT:
                     case BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT:
+                    case BX_BASE_MOD_GROUPS_ACTION_TIMELINE_POST_PIN:
                         if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) $bResult = true;
                         break;
                     default:
@@ -1243,6 +1252,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'module' => $this->getName(), 
             'multi_roles' => $this->_oConfig->isMultiRoles(),
             'action' => $sAction,
+            'action_module' => $sActionModule,
             'content_profile_id' => $iGroupProfileId, 
             'content_info' => $aDataEntry, 
             'profile_id' => $iProfileId, 
@@ -1263,26 +1273,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 if ($iRole == 0 && $iProfileRole == 0 || $iRole > 0 && $this->isRole($iProfileRole, $iRole)) {
                     $mPermissions = isset($aRoles[$iRole]) && isset($aRoles[$iRole]['Data']) && !empty($aRoles[$iRole]['Data']) ? unserialize($aRoles[$iRole]['Data']) : false;
                     if ($mPermissions && isset($mPermissions[$sModule])) {
-                         return isset($mPermissions[$sModule][$sAction]) && $mPermissions[$sModule][$sAction];
-                    } else {
-                        // default values in case a role has not been specified explicitly
-                        switch ($sAction) {
-                            case BX_BASE_MOD_GROUPS_ACTION_EDIT:
-                            case BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER:
-                            case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
-                                if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)) return true;
-                                break;
-                            case BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS:
-                            case BX_BASE_MOD_GROUPS_ACTION_INVITE:
-                            case BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT:
-                            case BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT:
-                            case BX_BASE_MOD_GROUPS_ACTION_TIMELINE_POST_PIN:
-                                if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) return true;
-                                break;
-                            // for the rest of the actions like "Post" still return NULL
-                            // to let the code go down the stack of checkAllowed* function calls for a default behavior
-                        }
+                        return isset($mPermissions[$sModule][$sAction]) && $mPermissions[$sModule][$sAction];
                     }
+                    break;
                 }
             }
         }
@@ -1294,9 +1287,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if (!$iProfileId) $iProfileId = bx_get_logged_profile_id();
 
         if ($iProfileId && $this->isFan($iContentId, $iProfileId)) {
-            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
-            $iProfileRole = $this->_oDb->getRole($oGroupProfile->id(), $iProfileId);
-            $bResult = $this->isAllowedModuleActionByRole($sPostModule, $sAction, $iProfileRole);
+            $sModuleName = $this->getName();
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModuleName);
+            $aDataEntry = BxDolRequest::serviceExists($sModuleName, 'get_all') ? BxDolService::call($sModuleName, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
+            $bResult = $this->isAllowedActionByRole(['action' => $sAction, 'module' => $sPostModule], $aDataEntry, $oGroupProfile->id(), $iProfileId);
+
             if ($bResult === true) return CHECK_ACTION_RESULT_ALLOWED;
             if ($bResult === false) return _t('_sys_txt_access_denied');
         }
