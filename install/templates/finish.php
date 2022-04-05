@@ -1,6 +1,6 @@
 <div class="bx-install-finish">
 
-    <h1><?php echo _t('_sys_inst_finish'); ?></h1>
+    <h1 class="bx-def-font-h1"><?php echo _t('_sys_inst_finish'); ?></h1>
 
     <p class="bx-def-font-large" style="font-weight:bold;"><?php echo _t('_sys_inst_msg_finish'); ?></p>
 

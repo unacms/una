@@ -5,6 +5,10 @@ html, body {
 	height: 100%;
 }
 
+.bx-btn-primary {
+    background-color: #3b8686;
+}
+
 .bx-install-permissions .bx-btn,
 .bx-install-initial .bx-btn {
     display:inline;
@@ -18,10 +22,18 @@ html, body {
 .bx-install-site-config .bx-form-input-wrapper-submit {
     text-align:center;
 }
+.bx-install-initial > a,
+.bx-install-initial-langs > a,
+.bx-install-permissions-buttons > a,
+.bx-install-site-config .bx-form-input-wrapper-submit > a {
+    display:inline-block;
+}
 
 .bx-install-error-message {
     border:1px solid #966;
-    background-color:#c99
+    background-color:#c99;
+    color:#000;
+    font-weight:bold;
 }
 
 .bx-install-page {

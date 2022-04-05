@@ -25,13 +25,12 @@
 
 <div class="bx-install-page bx-main">
 
-    <div id="bx-toolbar" class="bx-header bx-def-image-bg-header bx-def-color-bg-header bx-def-border-header bx-shadow-header bx-def-z-index-nav bx-toolbar-anim bx-toolbar-reset headroom--top">
+    <div id="bx-toolbar" class="bx-header bx-def-color-bg-header bx-def-z-index-nav bx-def-shadow bx-toolbar-anim headroom--top headroom--not-bottom">
         <div class="bx-def-centered bx-def-padding-sec-leftright bx-def-page-width bx-def-box-sizing">
-            <div class="bx-toolbar-content-wrapper bx-content-padding-header">
-                <div id="bx-toolbar-content" class="bx-clearfix">
-                    <div id="bx-menu-toolbar-1-container"></div>
-                    <div id="bx-logo-container"><a class="bx-def-font-contrasted"><?=$sTitle; ?></a></div>
-                    <div id="bx-menu-toolbar-2-container">
+                <div id="bx-toolbar-content" class="bx-toolbar-content bx-clearfix">
+                    <div id="bx-menu-toolbar-1-container" class="bx-toolbar-item bx-ti-left"></div>
+                    <div id="bx-logo-container" class="bx-toolbar-item bx-ti-logo bx-ti-stretcher"><a class="bx-def-font-contrasted"><span><?=$sTitle; ?></span></a></div>
+                    <div id="bx-menu-toolbar-2-container" class="bx-toolbar-item bx-ti-right">
                         <?php if (!empty($aToolbarItem)): ?>
                         <ul class="bx-menu-toolbar bx-menu-object-sys_toolbar_member">
                             <li class="bx-def-color-bg-hl-hover ">
@@ -43,7 +42,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
+
         </div>
     </div>
 

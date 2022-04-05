@@ -19,6 +19,7 @@ class BxDolInstallView
     protected $_aToolbarItem = array();
 
     protected $_aFilesCss = array (
+        '../../plugins_public/tailwind/css/tailwind.min.css',
         'common.css',
         'default.less',
         'general.css',
@@ -79,7 +80,7 @@ class BxDolInstallView
         $s = '';
         foreach ($this->_aFilesCss as $sFile)
             if (substr($sFile, -4) === '.css')
-                $s .= '<link rel="stylesheet" href="' . $this->_sUrlCss . $sFile . '" />';
+                $s .= '<link rel="stylesheet" href="' . $this->_sUrlCss . $sFile . '" />' . "\n";
         return $s;
     }
 

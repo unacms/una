@@ -517,7 +517,7 @@ class BxDolStudioToolsAudit extends BxDol
     protected function format_output ($mixedVal, $a)
     {
         if (isset($a['type']) && 'bytes' == $a['type'])
-            return _t_format_size($mixedVal);
+            return function_exists('_t_format_size') ? _t_format_size($mixedVal) : $mixedVal;
         if (isset($a['type']) && 'bool' == $a['type'])
             return $mixedVal ? 'On' : 'Off';
         else

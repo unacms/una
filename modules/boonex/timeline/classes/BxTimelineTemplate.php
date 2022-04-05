@@ -65,7 +65,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 );
 
                 if($this->_oConfig->isJumpTo())
-                    $aCss[] = 'jquery-ui/jquery-ui.css';
+                    $aCss[] = BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css';
                 break;
 
             case 'post':
@@ -99,12 +99,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'repost.js',
                 ));
 
-                if($this->_oConfig->isJumpTo())
-                    $aJs = array_merge($aJs, array(
-                        'jquery-ui/jquery.ui.core.min.js',
-                        'jquery-ui/jquery.ui.datepicker.min.js',
-                    ));
-                    
+                if ($this->_oConfig->isJumpTo()) {
+                    $a = array('flatpickr/dist/flatpickr.min.js');
+                    $aLangs = BxBaseFormView::getJsUiLangs ();
+                    $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
+                    if ($sLang)
+                        $a[] = 'flatpickr/dist/l10n/' . $sLang . '.js';
+                    $aJs = array_merge($aJs, $a);
+                }
                 break;
 
             case 'post':

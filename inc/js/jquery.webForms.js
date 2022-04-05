@@ -252,14 +252,14 @@
                     return;
                 $(this).addClass('bx-form-datepicker-processed');
 
-                var iYearMin = '1900';
-                var iYearMax = '2100';
+                var sYearMin = '1900';
+                var sYearMax = '2100';
                 var m;
 
                 if ($(this).attr('min') && (m = $(this).attr('min').match(/^(\d{4})/)))
-                    iYearMin = m[1];
+                    sYearMin = m[1];
                 if ($(this).attr('max') && (m = $(this).attr('max').match(/^(\d{4})/)))
-                    iYearMax = m[1];
+                    sYearMax = m[1];
 
                 var onBeforeShow = function(oInput, oInstance) {
                 	$(oInstance.dpDiv).addClass('bx-form-datepicker-modal');
@@ -267,50 +267,40 @@
 
                 if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
-                    $(this).datepicker({
-                        changeYear: true,
-                        changeMonth: true,
-                        dateFormat: 'yy-mm-dd',
-                        //defaultDate: '-22y',
-                        yearRange: iYearMin + ':' + iYearMax,
-                        beforeShow: onBeforeShow
+                    flatpickr(this, {
+                        altInput: true,
+                        altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-date") : "F j, Y",
+                        dateFormat: "Y-m-d",
+                        minDate: sYearMin,
+                        maxDate: sYearMax,
+                        onOpen: onBeforeShow
                     });
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
-
                     var oPickerOptions = {
-                        changeYear: true,
-                        changeMonth: true,
-                        dateFormat: 'yy-mm-dd',
-                        beforeShow: onBeforeShow
+                        enableTime: true,
+                        altInput: true,
+                        altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-datetime") : "F j, Y H:i",
+                        dateFormat: "Y-m-d H:i",
+                        time_24hr: null === this.getAttribute("data-frmt-24h") || 'on' == this.getAttribute("data-frmt-24h") ? true : false,
+                        minDate: sYearMin,
+                        maxDate: sYearMax,
+                        onOpen: onBeforeShow
                     };
-                    if (1 == $(this).attr('data-utc')) {
-                        var e = $(this).clone();
-                        if ($(this).val().length) {
-                            e.val(moment($(this).val() + ' Z').format("YYYY-MM-DD HH:mm:0 Z"));
-                            $(this).val(moment($(this).val() + ' Z').format("YYYY-MM-DD HH:mm"));
-                        }
-                        e.attr('type', 'hidden').appendTo($(this).parent());
-                        $(this).attr('name', $(this).attr('name') + '_fake');
-                        oPickerOptions['altField'] = e;
-                        oPickerOptions['altFieldTimeOnly'] = false;
-                        oPickerOptions['altTimeFormat'] = 'HH:mm:00 Z';
-                        oPickerOptions['showTimezone'] = 'false';
-                    }
-                    
-                    $(this).datetimepicker(oPickerOptions);
+                    if (1 == $(this).attr('data-utc'))
+                        oPickerOptions.dateFormat = "Y-m-d H:i:00 \\Z";
+                    flatpickr(this, oPickerOptions);
                 } else if(this.getAttribute("type") == "dateselect") { // DateTime selector
                     moment.locale(sLang);
                     $(this).combodate({
-                        minYear: iYearMin,
-                        maxYear: iYearMax,
+                        minYear: sYearMin,
+                        maxYear: sYearMax,
                         format: 'YYYY-MM-DD',
                         template: 'DD MMMM YYYY',
                         firstItem: 'none',
                         'smartDays': true,
                         customClass: 'bx-def-font-inputs bx-form-input-select block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 appearance-none',
-                    });  
-                    console.log('xxxx'+iYearMin);
+                    });
                 }
 
                 if (window.navigator.appVersion.search(/Chrome\/(.*?) /) == -1 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 24)

@@ -689,18 +689,11 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _addJsCss()
     {
-        if ($this->_aOptions['field_order']) {
-            
-            $aUiLangs = BxBaseFormView::getJsUiLangs ();
-            $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
-
+        if ($this->_aOptions['field_order']) {            
             $this->_oTemplate->addJs(array(
                 'jquery-ui/jquery-ui.custom.min.js',
-                'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
                 'URI.js',
             ));
-        
-            $this->_oTemplate->addCss('jquery-ui/jquery-ui.css');
         }
 
         $this->_oTemplate->addJs('BxDolGrid.js');

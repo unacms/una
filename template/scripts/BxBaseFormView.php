@@ -1230,6 +1230,13 @@ BLAH;
         if (isset($aInput['value'])) $aAttrs['value'] = $aInput['value'];
         if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass'])) $aAttrs['data-utc'] = 1;
 
+        if (!isset($aAttrs['data-format-24h']))
+            $aAttrs['data-frmt-24h'] = getParam('sys_format_input_24h');
+        if (!isset($aAttrs['data-format-date']))
+            $aAttrs['data-frmt-date'] = getParam('sys_format_input_date');
+        if (!isset($aAttrs['data-format-datetime']))
+            $aAttrs['data-frmt-datetime'] = getParam('sys_format_input_datetime');
+
         // for inputs with labels generate id
         if (isset($aInput['label']))
             $aAttrs['id'] = $this->getInputId($aInput);
@@ -2149,7 +2156,7 @@ BLAH;
 
     static function getJsUiLangs ()
     {
-        return array ('af' => 1, 'ar-DZ' => 1, 'ar' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en-AU' => 1, 'en-GB' => 1, 'en-NZ' => 1, 'en' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr-CA' => 1, 'fr-CH' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'kk' => 1, 'km' => 1, 'ko' => 1, 'ky' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'ml' => 1, 'ms' => 1, 'nb' => 1, 'nl-BE' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'rm' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-SR' => 1, 'sr' => 1, 'sv' => 1, 'ta' => 1, 'th' => 1, 'tj' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-HK' => 1, 'zh-TW' => 1);
+        return array ('ar-dz' => 1, 'ar' => 1, 'at' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bn' => 1, 'bs' => 1, 'cat' => 1, 'ckb' => 1, 'cs' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'default' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr' => 1, 'ga' => 1, 'gr' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'index' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'km' => 1, 'ko' => 1, 'kz' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'mn' => 1, 'ms' => 1, 'my' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pa' => 1, 'pl' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'si' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-cyr' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'uz' => 1, 'uz_latn' => 1, 'vn' => 1, 'zh-tw' => 1, 'zh' => 1);
     }
     
     function addCssJsUi ()
@@ -2157,16 +2164,16 @@ BLAH;
         if (self::$_isCssJsUiAdded)
             return;
 
-        $aUiLangs = $this->getJsUiLangs ();
+        $aLangs = $this->getJsUiLangs ();
 
-        $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
+        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
 
         $this->_addJs(array(
-            'jquery-ui/jquery-ui.custom.min.js',
-            'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
-        ), "'undefined' === typeof($.datepicker)");
+            'flatpickr/dist/flatpickr.min.js',
+            'flatpickr/dist/l10n/' . $sLang . '.js',
+        ), "'undefined' === typeof(flatpickr)");
         
-        $this->_addCss('jquery-ui/jquery-ui.css');
+        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css');
 
         self::$_isCssJsUiAdded = true;
     }

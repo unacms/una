@@ -1,6 +1,6 @@
 <div class="bx-install-permissions">
 
-    <h1><?php echo _t('_adm_admtools_Permissions'); ?></h1>
+    <h1 class="bx-def-font-h1"><?php echo _t('_adm_admtools_Permissions'); ?></h1>
 
    <?=$sPermissionsStyles; ?>
    <?=$sPermissionsTable; ?>

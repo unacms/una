@@ -1562,10 +1562,13 @@
     <string name="_adm_stg_cpt_option_sys_player_default_quality"><![CDATA[Default video quality]]></string>
     <string name="_adm_stg_cpt_option_sys_pt_default_visitor"><![CDATA[Default page type for visitor]]></string>
     <string name="_adm_stg_cpt_option_sys_pt_default_member"><![CDATA[Default page type for member]]></string>
-    <string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
-    <string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
-    <string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
+    <string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[<a target="_blank" href="https://momentjs.com/docs/#/displaying/format/">Date Format</a>]]></string>
+    <string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[<a target="_blank" href="https://momentjs.com/docs/#/displaying/format/">Date And Time Format</a>]]></string>
+    <string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[<a target="_blank" href="https://momentjs.com/docs/#/displaying/format/">Time Format</a>]]></string>
     <string name="_adm_stg_cpt_option_sys_format_timeago"><![CDATA[Use 'time ago' format for dates less than this number of seconds]]></string>
+    <string name="_adm_stg_cpt_option_sys_format_input_date"><![CDATA[<a target="_blank" href="https://flatpickr.js.org/formatting/">Date Format For Inputs</a>]]></string>
+    <string name="_adm_stg_cpt_option_sys_format_input_datetime"><![CDATA[<a target="_blank" href="https://flatpickr.js.org/formatting/">Date And Time Format For Inputs</a>]]></string>
+    <string name="_adm_stg_cpt_option_sys_format_input_24h"><![CDATA[Use 24h Format For Calendar Input]]></string>
     <string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to the script on FTP server]]></string>
     <string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
     <string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
