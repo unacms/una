@@ -382,7 +382,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_format_date', '_adm_stg_cpt_option_sys_format_date', 'D MMM YYYY', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_format_time', '_adm_stg_cpt_option_sys_format_time', 'HH:mm', 'digit', '', '', '', 4),
 (@iCategoryId, 'sys_format_datetime', '_adm_stg_cpt_option_sys_format_datetime', 'D MMM YYYY h:mm:ss a', 'digit', '', '', '', 5),
-(@iCategoryId, 'sys_format_timeago', '_adm_stg_cpt_option_sys_format_timeago', 432000, 'digit', '', '', '', 6);
+(@iCategoryId, 'sys_format_timeago', '_adm_stg_cpt_option_sys_format_timeago', 432000, 'digit', '', '', '', 6),
+(@iCategoryId, 'sys_format_input_date', '_adm_stg_cpt_option_sys_format_input_date', 'F j, Y', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_format_input_datetime', '_adm_stg_cpt_option_sys_format_input_datetime', 'F j, Y H:i', 'digit', '', '', '', 22),
+(@iCategoryId, 'sys_format_input_24h', '_adm_stg_cpt_option_sys_format_input_24h', 'on', 'checkbox', '', '', '', 24);
 
 
 --

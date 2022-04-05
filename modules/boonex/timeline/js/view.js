@@ -604,19 +604,17 @@ BxTimelineView.prototype.showCalendar = function(oLink)
 
     var sClassProcessed = this.sSP + '-datepicker-processed';
     if(!oInput.hasClass(sClassProcessed)) {
-        oInput.datepicker({
-            changeYear: true,
-            changeMonth: true,
-            dateFormat: 'yy-mm-dd',
-            yearRange: '1900:2100',
-            onSelect: function(sDate, oPicker){
-		$this.changeTimeline(oLink, sDate);
+        flatpickr(oInput.parent, {
+            wrap: true,
+            dateFormat: "Y-m-d",
+            minDate: 1900,
+            maxDate: "today",
+            onValueUpdate: function(sDate, oPicker){
+                $this.changeTimeline(oLink, sDate);
             }
         });
         oInput.addClass(sClassProcessed);
     }
-
-    oInput.datepicker('show');
 };
 
 BxTimelineView.prototype.showMore = function(oLink)
