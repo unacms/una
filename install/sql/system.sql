@@ -343,7 +343,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_default_curl_timeout', '_adm_stg_cpt_option_sys_default_curl_timeout', '300', 'digit', '', '', '', '', 140),
 (@iCategoryId, 'sys_curl_ssl_allow_untrusted', '_adm_stg_cpt_option_sys_ssl_allow_untrusted', '', 'checkbox', '', '', '', '', 145),
 
-(@iCategoryId, 'sys_csp_frame_ancestors', '_adm_stg_cpt_option_sys_csp_frame_ancestors', '*', 'digit', '', '', '', '', 150);
+(@iCategoryId, 'sys_csp_frame_ancestors', '_adm_stg_cpt_option_sys_csp_frame_ancestors', '*', 'digit', '', '', '', '', 150),
+
+(@iCategoryId, 'sys_allow_approve_by_role', '_adm_stg_cpt_option_sys_allow_approve_by_role', '', 'checkbox', '', '', '', '', 160);
 
 --
 -- CATEGORY (HIDDEN): System

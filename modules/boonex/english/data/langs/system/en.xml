@@ -1615,8 +1615,8 @@
 	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token lifetime in seconds(0 - do not track time)]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Total security impact threshold to send report and block aggressor]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_log"><![CDATA[Total security impact threshold to send report]]></string>
-  <string name="_adm_stg_cpt_option_sys_security_block_content_after_n_reports"><![CDATA[Block content after N reports (0 - do not block)]]></string>
-  <string name="_adm_stg_cpt_option_sys_site_logo_height"><![CDATA[Logo Height]]></string>
+        <string name="_adm_stg_cpt_option_sys_security_block_content_after_n_reports"><![CDATA[Block content after N reports (0 - do not block)]]></string>
+        <string name="_adm_stg_cpt_option_sys_site_logo_height"><![CDATA[Logo Height]]></string>
 	<string name="_adm_stg_cpt_option_sys_site_logo_width"><![CDATA[Logo Width]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_default"><![CDATA[Default storage engine (other than Local may require custom/additional setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_access_key"><![CDATA[AWS access key]]></string>
@@ -1642,6 +1642,7 @@
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
+    <string name="_adm_stg_cpt_option_sys_allow_approve_by_role"><![CDATA[Allow context member with necessary role to approve content in the context]]></string>
     <string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
     <string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
