@@ -102,7 +102,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if ($this->_oConfig->isJumpTo()) {
                     $a = array('flatpickr/dist/flatpickr.min.js');
                     $aLangs = BxBaseFormView::getJsUiLangs ();
-                    $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs) : false;
+                    $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
                     if ($sLang)
                         $a[] = 'flatpickr/dist/l10n/' . $sLang . '.js';
                     $aJs = array_merge($aJs, $a);
