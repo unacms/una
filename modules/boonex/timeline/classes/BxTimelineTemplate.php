@@ -99,14 +99,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'repost.js',
                 ));
 
-                if($this->_oConfig->isJumpTo())
-                    $aLangs = BxTemplFormView::getJsUiLangs ();
-                    $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
-                    $aJs = array_merge($aJs, array(
-                        'flatpickr/dist/flatpickr.min.js',
-                        'flatpickr/dist/l10n/' . $sLang . '.js',
-                    ));
-                    
+                if ($this->_oConfig->isJumpTo()) {
+                    $a = array('flatpickr/dist/flatpickr.min.js');
+                    $aLangs = BxBaseFormView::getJsUiLangs ();
+                    $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs) : false;
+                    if ($sLang)
+                        $a[] = 'flatpickr/dist/l10n/' . $sLang . '.js';
+                    $aJs = array_merge($aJs, $a);
+                }
                 break;
 
             case 'post':
