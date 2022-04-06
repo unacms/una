@@ -345,7 +345,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_csp_frame_ancestors', '_adm_stg_cpt_option_sys_csp_frame_ancestors', '*', 'digit', '', '', '', '', 150),
 
-(@iCategoryId, 'sys_allow_approve_by_role', '_adm_stg_cpt_option_sys_allow_approve_by_role', '', 'checkbox', '', '', '', '', 160);
+(@iCategoryId, 'sys_notify_to_approve_by_role', '_adm_stg_cpt_option_sys_notify_to_approve_by_role', '', 'checkbox', '', '', '', '', 160);
 
 --
 -- CATEGORY (HIDDEN): System

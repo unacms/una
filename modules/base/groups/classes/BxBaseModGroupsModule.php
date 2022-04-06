@@ -220,6 +220,32 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_oDb->getRole($iGroupProfileId, $iProfileId);
     }
 
+    /*
+     * Get context (group) advanced members who can perform the specified action.
+     * If 'Roles' are disabled for the context then all context admins are returned.
+     */
+    public function serviceGetAdminsByAction($iGroupProfileId, $mixedAction)
+    {
+        $aGroupContentInfo = $this->_oDb->getContentInfoByProfileId($iGroupProfileId);
+        if(empty($aGroupContentInfo) || !is_array($aGroupContentInfo))
+            return [];
+
+        $aAdmins = $this->_oDb->getAdmins($iGroupProfileId);
+        if(!$this->_oConfig->isRoles())
+            return $aAdmins;
+
+        if(!is_array($mixedAction))
+            $mixedAction = [$mixedAction];
+
+        $aResult = [];
+        foreach($mixedAction as $sAction)
+            foreach($aAdmins as $iAdminProfileId)
+                if(!in_array($iAdminProfileId, $aResult) && $this->isAllowedActionByRole($sAction, $aGroupContentInfo, $iGroupProfileId, $iAdminProfileId))
+                    $aResult[] = $iAdminProfileId;
+
+        return $aResult;
+    }
+
     /**
      * Delete profile from fans and admins tables
      * @param $iProfileId profile id 
@@ -1222,25 +1248,32 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $sActionModule = $this->getName();
         }
 
-        $bResult = $iProfileId ? $this->isAllowedModuleActionByRole($sActionModule, $sAction, $iProfileRole) : false;
+        $bResult = false;
+        if($iProfileId)
+            $bResult = $this->isAllowedModuleActionByRole($sActionModule, $sAction, $iProfileRole);
+
         // in case neither of the profile's roles are having permissions set explicitly then fallback to an old way
         if ($bResult === NULL) {
             $bResult = false;
-            if(!empty($iProfileRole)) {
+            if($this->isFanByGroupProfileId($iGroupProfileId)) {
                 switch ($sAction) {
                     case BX_BASE_MOD_GROUPS_ACTION_DELETE:
                     case BX_BASE_MOD_GROUPS_ACTION_EDIT:
                     case BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER:
                     case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
-                        if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)) $bResult = true;
+                        if($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)) 
+                            $bResult = true;
                         break;
+
                     case BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS:
                     case BX_BASE_MOD_GROUPS_ACTION_INVITE:
                     case BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT:
                     case BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT:
                     case BX_BASE_MOD_GROUPS_ACTION_TIMELINE_POST_PIN:
-                        if ($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) $bResult = true;
+                        if($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR) || $this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_MODERATOR)) 
+                            $bResult = true;
                         break;
+
                     default:
                         $bResult = true;
                 }
@@ -1248,7 +1281,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         }
 
         // call alert to allow custom checks
-        bx_alert('system', 'check_allowed_action_by_role', 0, 0, array(
+        bx_alert('system', 'check_allowed_action_by_role', 0, 0, [
             'module' => $this->getName(), 
             'multi_roles' => $this->_oConfig->isMultiRoles(),
             'action' => $sAction,
@@ -1258,13 +1291,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'profile_id' => $iProfileId, 
             'profile_role' => $iProfileRole,
             'override_result' => &$bResult
-        ));
+        ]);
 
         return $bResult;
     }
 
-    public function isAllowedModuleActionByRole($sModule, $sAction, $iProfileRole) {
+    public function isAllowedModuleActionByRole($sModule, $sAction, $iProfileRole)
+    {
         static $aRoles;
+
         if (!$aRoles && isset($this->_oConfig->CNF['OBJECT_PRE_LIST_ROLES']) && !empty($this->_oConfig->CNF['OBJECT_PRE_LIST_ROLES']))
             $aRoles = BxBaseFormView::getDataItems($this->_oConfig->CNF['OBJECT_PRE_LIST_ROLES'], true, BX_DATA_VALUES_ALL);
 
@@ -1503,6 +1538,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'extras' => &$aParams
         ]);
         bx_alert($sModule, $sAction, $iId, false, $aParams);
+
+        $this->_processModerationNotifications($aContentInfo);
     }
 
     public function addFollower ($iProfileId1, $iProfileId2)

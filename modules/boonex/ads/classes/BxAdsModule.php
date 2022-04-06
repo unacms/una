@@ -556,7 +556,6 @@ class BxAdsModule extends BxBaseModTextModule
         $aResult = parent::serviceGetNotificationsData();
         $aResult['handlers'] = array_merge($aResult['handlers'], array(
             array('group' => $sModule . '_interest', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doInterest', 'module_name' => $sModule, 'module_method' => 'get_notifications_interest', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-            array('group' => $sModule . '_approved', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'approved', 'module_name' => $sModule, 'module_method' => 'get_notifications_approved', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             array('group' => $sModule . '_paid', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'license_register', 'module_name' => $sModule, 'module_method' => 'get_notifications_license_register', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             //---> To Buyer
             array('group' => $sModule . '_shipped', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'shipped', 'module_name' => $sModule, 'module_method' => 'get_notifications_shipped', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
@@ -574,7 +573,6 @@ class BxAdsModule extends BxBaseModTextModule
         $aResult['settings'] = array_merge($aResult['settings'], array(
             array('group' => 'interest', 'unit' => $sModule, 'action' => 'doInterest', 'types' => array('personal')),
 
-            array('group' => 'usage', 'unit' => $sModule, 'action' => 'approved', 'types' => array('personal')),
             array('group' => 'usage', 'unit' => $sModule, 'action' => 'license_register', 'types' => array('personal')),
             array('group' => 'usage', 'unit' => $sModule, 'action' => 'shipped', 'types' => array('personal')),
             array('group' => 'usage', 'unit' => $sModule, 'action' => 'received', 'types' => array('personal')),
@@ -586,7 +584,6 @@ class BxAdsModule extends BxBaseModTextModule
 
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
             array('unit' => $sModule, 'action' => 'doInterest'),
-            array('unit' => $sModule, 'action' => 'approved'),
             array('unit' => $sModule, 'action' => 'license_register'),
             array('unit' => $sModule, 'action' => 'shipped'),
             array('unit' => $sModule, 'action' => 'received'),
@@ -684,11 +681,6 @@ class BxAdsModule extends BxBaseModTextModule
             'subentry_url' => '',
             'lang_key' => '_bx_ads_txt_ntfs_subobject_interested', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
-    }
-
-    public function serviceGetNotificationsApproved($aEvent)
-    {
-        return $this->_serviceGetNotificationsByEntryAndAction($aEvent, 'approved');
     }
 
     public function serviceGetNotificationsLicenseRegister($aEvent)

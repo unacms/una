@@ -48,6 +48,12 @@ define('MEMBERSHIP_ID_MODERATOR', 7);
 define('MEMBERSHIP_ID_ADMINISTRATOR', 8);
 
 /**
+ * Standard membership actions
+ */
+define('MEMBERSHIP_ACTION_EDIT_ANY_ENTRY', 'edit any entry');
+define('MEMBERSHIP_ACTION_DELETE_ANY_ENTRY', 'delete any entry');
+
+/**
  * Indices for checkAction() result array
  */
 define('CHECK_ACTION_RESULT', 0);

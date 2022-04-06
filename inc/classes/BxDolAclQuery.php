@@ -396,7 +396,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
 	    return $this->query($sQuery);
     }
 
-	function getContentByLevelAsSQLPart($sContentTable, $sContentField, $mixedLevelId)
+    function getContentByLevelAsSQLPart($sContentTable, $sContentField, $mixedLevelId)
     {
     	$sJoin = $sWhere = ""; 
         $iLevelId = !is_array($mixedLevelId) ? $mixedLevelId : 0;
@@ -442,13 +442,47 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             );
         }
     }
+    
+    function getContentByActionAsSQLPart($sContentTable, $sContentField, $mixedActionName, $aParams = [])
+    {
+        $sWhere = " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) ";
+
+        $sJoinWhere = "";
+        if(is_array($mixedActionName))
+            $sJoinWhere .= " AND `ta`.`Name` IN (" . $this->implode_escape($mixedActionName) . ")";
+        else
+            $sJoinWhere .= $this->prepareAsString(" AND `ta`.`Name` = ?", $mixedActionName);
+        
+        if(!empty($aParams['module']))
+            $sJoinWhere .= $this->prepareAsString(" AND `ta`.`Module` = ?", $aParams['module']);
+
+        $sJoin = " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember` INNER JOIN `sys_acl_matrix` AS `tm` ON `tlm`.`IDLevel`=`tm`.`IDLevel` INNER JOIN `sys_acl_actions` AS `ta` ON (`tm`.`IDAction`=`ta`.`ID` " . $sJoinWhere . ") ";
+
+        return array(
+            'where' => $sWhere,
+            'join' => $sJoin
+        );
+    }
 
     function getProfilesByMembership($mixedLevelId)
     {
     	$aSqlParts = $this->getContentByLevelAsSQLPart('sys_profiles', 'id', $mixedLevelId);
 
-    	$sSql = $this->prepare("SELECT `sys_profiles`.* FROM `sys_profiles`" . $aSqlParts['join'] . " WHERE 1" . $aSqlParts['where']);
-    	return $this->getAll($sSql); 
+    	return $this->getAll("SELECT `sys_profiles`.* FROM `sys_profiles`" . $aSqlParts['join'] . " WHERE 1" . $aSqlParts['where']);
+    }
+
+    function getProfilesByAction($mixedActionName, $aParams = [])
+    {
+        $sMethod = "getAll";
+        $sSqlSelect = "`sys_profiles`.*";
+        if(isset($aParams['ids_only']) && $aParams['ids_only'] === true) {
+            $sMethod = "getColumn";
+            $sSqlSelect = "`sys_profiles`.`id`";
+        }
+
+        $aSqlParts = $this->getContentByActionAsSQLPart('sys_profiles', 'id', $mixedActionName, $aParams);
+
+    	return $this->$sMethod("SELECT DISTINCT " . $sSqlSelect . " FROM `sys_profiles`" . $aSqlParts['join'] . " WHERE 1" . $aSqlParts['where']);
     }
 }
 

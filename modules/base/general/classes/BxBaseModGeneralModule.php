@@ -1729,74 +1729,88 @@ class BxBaseModGeneralModule extends BxDolModule
         if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
             $sEventPrivacy = '';
 
-        $aResult = array(
-            'handlers' => array(
-                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-                array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
-                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted'),
+        $aResult = [
+            'handlers' => [
+                ['group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
+                ['group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'],
+                ['group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted'],
 
-                array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-                array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+                ['group' => $sModule . '_object_approved', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'approved', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_approved', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
 
-                array('group' => $sModule . '_reply', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'replyPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_reply', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-                array('group' => $sModule . '_reply', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'replyRemoved'),
+                ['group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
+                ['group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'],
 
-                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-                array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+                ['group' => $sModule . '_reply', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'replyPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_reply', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
+                ['group' => $sModule . '_reply', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'replyRemoved'],
 
-                array('group' => $sModule . '_reaction', 'type' => 'insert', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_reaction', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-                array('group' => $sModule . '_reaction', 'type' => 'delete', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'undoVote'),
+                ['group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
+                ['group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'],
 
-                array('group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+                ['group' => $sModule . '_reaction', 'type' => 'insert', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_reaction', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
+                ['group' => $sModule . '_reaction', 'type' => 'delete', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'undoVote'],
 
-                array('group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
-            ),
-            'settings' => array(
-                array('group' => 'content', 'unit' => $sModule, 'action' => 'added', 'types' => array('follow_member', 'follow_context')),
-                array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
-                array('group' => 'reply', 'unit' => $sModule, 'action' => 'replyPost', 'types' => array('personal')),
-                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
-                array('group' => 'vote', 'unit' => $sModule . '_reactions', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
-                array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => array('personal', 'follow_member', 'follow_context')),
-                array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => array('personal', 'follow_member', 'follow_context'))
-            ),
-            'alerts' => array(
-                array('unit' => $sModule, 'action' => 'added'),
-                array('unit' => $sModule, 'action' => 'edited'),
-                array('unit' => $sModule, 'action' => 'deleted'),
+                ['group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
 
-                array('unit' => $sModule, 'action' => 'commentPost'),
-                array('unit' => $sModule, 'action' => 'commentRemoved'),
+                ['group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
 
-                array('unit' => $sModule, 'action' => 'replyPost'),
-                array('unit' => $sModule, 'action' => 'replyRemoved'),
+                //--- Moderation related: For 'admins'.
+                ['group' => $sModule . '_object_pending_approval', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'pending_approval', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_pending_approval', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy],
+            ],
+            'settings' => [
+                ['group' => 'content', 'unit' => $sModule, 'action' => 'added', 'types' => ['follow_member', 'follow_context']],
+                ['group' => 'content_updated', 'unit' => $sModule, 'action' => 'approved', 'types' => ['personal']],
+                ['group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => ['personal', 'follow_member', 'follow_context']],
+                ['group' => 'reply', 'unit' => $sModule, 'action' => 'replyPost', 'types' => ['personal']],
+                ['group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => ['personal', 'follow_member', 'follow_context']],
+                ['group' => 'vote', 'unit' => $sModule . '_reactions', 'action' => 'doVote', 'types' => ['personal', 'follow_member', 'follow_context']],
+                ['group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => ['personal', 'follow_member', 'follow_context']],
+                ['group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => ['personal', 'follow_member', 'follow_context']],
 
-                array('unit' => $sModule, 'action' => 'doVote'),
-                array('unit' => $sModule, 'action' => 'undoVote'),
+                //--- Moderation related: For 'admins'.
+                ['group' => 'action_required', 'unit' => $sModule, 'action' => 'pending_approval', 'types' => ['personal']],
+            ],
+            'alerts' => [
+                ['unit' => $sModule, 'action' => 'added'],
+                ['unit' => $sModule, 'action' => 'edited'],
+                ['unit' => $sModule, 'action' => 'deleted'],
 
-                array('unit' => $sModule . '_reactions', 'action' => 'doVote'),
-                array('unit' => $sModule . '_reactions', 'action' => 'undoVote'),
+                ['unit' => $sModule, 'action' => 'approved'],
 
-                array('unit' => $sModule, 'action' => 'doVoteUp'),
-                array('unit' => $sModule, 'action' => 'doVoteDown'),
-            )
-        );
+                ['unit' => $sModule, 'action' => 'commentPost'],
+                ['unit' => $sModule, 'action' => 'commentRemoved'],
+
+                ['unit' => $sModule, 'action' => 'replyPost'],
+                ['unit' => $sModule, 'action' => 'replyRemoved'],
+
+                ['unit' => $sModule, 'action' => 'doVote'],
+                ['unit' => $sModule, 'action' => 'undoVote'],
+
+                ['unit' => $sModule . '_reactions', 'action' => 'doVote'],
+                ['unit' => $sModule . '_reactions', 'action' => 'undoVote'],
+
+                ['unit' => $sModule, 'action' => 'doVoteUp'],
+                ['unit' => $sModule, 'action' => 'doVoteDown'],
+
+                //--- Moderation related: For 'admins'.
+                ['unit' => $sModule, 'action' => 'pending_approval'],
+            ]
+        ];
 
         if(!empty($this->_oConfig->CNF['FIELDS_DELAYED_PROCESSING'])) {
-            $aResult['handlers'] = array_merge($aResult['handlers'], array(
-                array('group' => $sModule . '_object_publish_failed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_failed', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_failed', 'module_class' => 'Module', 'module_event_privacy' => ''),
-                array('group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module', 'module_event_privacy' => ''),
-            ));
+            $aResult['handlers'] = array_merge($aResult['handlers'], [
+                ['group' => $sModule . '_object_publish_failed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_failed', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_failed', 'module_class' => 'Module', 'module_event_privacy' => ''],
+                ['group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module', 'module_event_privacy' => ''],
+            ]);
 
-            $aResult['settings'] = array_merge($aResult['settings'], array(
-                array('group' => 'content_publish_failed', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
-                array('group' => 'content_publish_succeeded', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
-            ));
+            $aResult['settings'] = array_merge($aResult['settings'], [
+                ['group' => 'content_updated', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => ['personal']],
+                ['group' => 'content_updated', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => ['personal']],
+            ]);
 
-            $aResult['alerts'] = array_merge($aResult['alerts'], array(
-                array('unit' => $sModule, 'action' => 'publish_failed'),
-                array('unit' => $sModule, 'action' => 'publish_succeeded'),
-            ));
+            $aResult['alerts'] = array_merge($aResult['alerts'], [
+                ['unit' => $sModule, 'action' => 'publish_failed'],
+                ['unit' => $sModule, 'action' => 'publish_succeeded'],
+            ]);
         }
 
         return $aResult;
@@ -1841,6 +1855,24 @@ class BxBaseModGeneralModule extends BxDolModule
         );
     }
 
+    public function serviceGetNotificationsPostPendingApproval($aEvent)
+    {
+        $aResult = $this->serviceGetNotificationsPost($aEvent);
+
+        /**
+         * Unset Entry Author because the notification is addressed to 'admins'.
+         */
+        if(isset($aResult['entry_author']))
+            unset($aResult['entry_author']);
+
+        return $aResult;
+    }
+
+    public function serviceGetNotificationsPostApproved($aEvent)
+    {
+        return $this->serviceGetNotificationsPost($aEvent);
+    }
+
     public function serviceGetNotificationsPostPublishFailed($aEvent)
     {
         return $this->serviceGetNotificationsPost($aEvent);
@@ -1850,6 +1882,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         return $this->serviceGetNotificationsPost($aEvent);
     }
+
 
     /**
      * Entry post comment for Notifications module
@@ -1863,22 +1896,22 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return array();
 
-		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+        $oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
-			'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
-			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
+            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
 	/**
@@ -2577,7 +2610,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
-    	$aCheck = checkActionModule($iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
+    	$aCheck = checkActionModule($iProfileId, MEMBERSHIP_ACTION_EDIT_ANY_ENTRY, $this->getName(), $isPerformAction);
     	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
     		return CHECK_ACTION_RESULT_ALLOWED;
 
@@ -2592,7 +2625,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
-    	$aCheck = checkActionModule($iProfileId, 'delete any entry', $this->getName(), $isPerformAction);
+    	$aCheck = checkActionModule($iProfileId, MEMBERSHIP_ACTION_DELETE_ANY_ENTRY, $this->getName(), $isPerformAction);
     	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
     		return CHECK_ACTION_RESULT_ALLOWED;
 
@@ -2765,8 +2798,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
 
+        $sModule = $this->getName();
         $aParams = $this->_alertParams($aContentInfo);
-        bx_alert($this->getName(), 'approved', $iId, false, $aParams);
+        bx_alert($sModule, 'approved', $iId, false, $aParams);
     }
 
     /**
@@ -3123,6 +3157,41 @@ class BxBaseModGeneralModule extends BxDolModule
         ));
 
         return sendMailTemplate($sETemplate, 0, $aContentInfo[$CNF['FIELD_AUTHOR']], $aEParams);
+    }
+
+    protected function _processModerationNotifications($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aRecipients = [];
+        if(getParam('sys_notify_to_approve_by_role') == 'on' && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+            $iContextProfileId = abs((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
+            $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
+
+            $aRecipients = bx_srv($oContextProfile->getModule(), 'get_admins_by_action', [$iContextProfileId, [
+                BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT, 
+                BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT
+            ]]);
+        }
+
+        $sModule = $this->getName();
+
+        if(empty($aRecipients))
+            $aRecipients = BxDolAclQuery::getInstance()->getProfilesByAction([
+                MEMBERSHIP_ACTION_EDIT_ANY_ENTRY, 
+                MEMBERSHIP_ACTION_DELETE_ANY_ENTRY
+            ], [
+                'module' => $sModule, 
+                'ids_only' => true
+            ]);
+
+        if(empty($aRecipients))
+            return;
+
+        foreach($aRecipients as $iRecipientId)
+            bx_alert($sModule, 'pending_approval', $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], [
+                'object_author_id' => (int)$iRecipientId
+            ]);
     }
 
     protected function _rss ($aArgs, $sClass = 'SearchResult')

@@ -178,11 +178,17 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
                 $this->_updateSettingTitle($mixedValueKey, $aRow);
         }
 
-        if($this->_bGrouped && $aRow['type'] == BX_NTFS_STYPE_OTHER)
-            $mixedValue = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $mixedValue);
+        if($this->_bGrouped) {
+            $sValueKey = '_bx_ntfs_alert_action_group_' . $aRow['group'];
+            $sValue = _t($sValueKey);
+            if(strcmp($sValueKey, $sValue) !== 0)
+                $mixedValue = $sValue;
+            else if($aRow['type'] == BX_NTFS_STYPE_OTHER)
+                $mixedValue = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $mixedValue);
 
-        if($this->_bGrouped && !$this->_isSettingsGroupValid($aRow))
-            $mixedValue = $this->_oTemplate->parseIcon('exclamation-triangle', array('class' => 'bx-def-margin-sec-right', 'title' => _t('_bx_ntfs_grid_column_title_title_warning'))) . $mixedValue;
+            if(!$this->_isSettingsGroupValid($aRow))
+                $mixedValue = $this->_oTemplate->parseIcon('exclamation-triangle', array('class' => 'bx-def-margin-sec-right', 'title' => _t('_bx_ntfs_grid_column_title_title_warning'))) . $mixedValue;
+        }            
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

@@ -27,6 +27,14 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
         return $aInfo;
     }
 
+    public function getContentInfoByProfileId ($iProfileId)
+    {
+        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `p`.`id` = ?", $this->_oConfig->getName(), $iProfileId);
+        $aInfo = $this->getRow($sQuery);
+        bx_alert('profile', 'content_info_by_profile_id', $iProfileId, 0, array('module' => $this->_oConfig->getName(), 'info' => &$aInfo));
+        return $aInfo;
+    }
+
     public function resetContentPictureByFileId($iFileId, $sFieldPicture)
     {
         return $this->query("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = 0 WHERE `" . $sFieldPicture . "` = :file", [

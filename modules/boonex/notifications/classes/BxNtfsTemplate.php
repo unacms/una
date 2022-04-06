@@ -371,6 +371,14 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $sKey = '';
         switch($aEvent['action']) {
+            case 'pending_approval':
+                $sKey = '_bx_ntfs_txt_object_pending_approval';
+                break;
+
+            case 'approved':
+                $sKey = '_bx_ntfs_txt_object_approved';
+                break;
+
             case 'publish_failed':
                 $sKey = '_bx_ntfs_txt_object_publish_failed';
                 break;

@@ -1645,7 +1645,7 @@
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
-    <string name="_adm_stg_cpt_option_sys_allow_approve_by_role"><![CDATA[Allow context member with necessary role to approve content in the context]]></string>
+    <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Notify context member with necessary role to approve content in the context]]></string>
     <string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
     <string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
