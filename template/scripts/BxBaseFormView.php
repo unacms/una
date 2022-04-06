@@ -2169,11 +2169,12 @@ BLAH;
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
 
         $this->_addJs(array(
+            'jquery-ui/jquery-ui.custom.min.js',
             'flatpickr/dist/flatpickr.min.js',
             'flatpickr/dist/l10n/' . $sLang . '.js',
         ), "'undefined' === typeof(flatpickr)");
         
-        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css');
+        $this->_addCss([BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css', 'jquery-ui/jquery-ui.css']);
 
         self::$_isCssJsUiAdded = true;
     }

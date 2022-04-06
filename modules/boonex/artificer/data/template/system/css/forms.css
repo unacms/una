@@ -260,6 +260,7 @@ import url(../../../../../../../template/css/forms.css);
 
 
 /*--- Form field: Auto-siggestion ---*/
+
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
     float:left;
     padding: 2px 2px;
@@ -353,3 +354,4 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-input-wrapper-html .second-toolbar{
     border-bottom:none !important;
 }
+
