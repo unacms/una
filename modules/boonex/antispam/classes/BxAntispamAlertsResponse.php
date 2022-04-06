@@ -42,6 +42,8 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
                     BxDolService::call('bx_antispam', 'on_form_submitted', array($oAlert->aExtras['module'], $oAlert->aExtras['entry_id']));
                     break;
             }
+        } elseif ('comment' == $oAlert->sUnit && BxDolService::call('bx_antispam', 'is_last_form_submitted_toxic', array())) {
+            BxDolService::call('bx_antispam', 'set_comment_as_pending', array($oAlert->iObject));
         }
     }
 }

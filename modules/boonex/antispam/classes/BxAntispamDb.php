@@ -15,6 +15,11 @@ class BxAntispamDb extends BxDolModuleDb
     {
         parent::__construct($oConfig);
     }
+
+    function setCommentStatus($iCmtId, $sStatus) {
+        $sTableName = BxDolCmts::$sTableIds;
+        $this->query("UPDATE `{$sTableName}` SET `status_admin` = :status WHERE `id` = :id", ['id' => $iCmtId, 'status' => $sStatus]);
+    }
 }
 
 /** @} */

@@ -225,7 +225,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('account', 'check_join', @iHandler),
 ('system', 'check_spam', @iHandler),
 ('system', 'form_check', @iHandler),
-('system', 'form_submitted', @iHandler);
+('system', 'form_submitted', @iHandler),
+('comment', 'added', @iHandler),
+('comment', 'edited', @iHandler);
 
 -- email templates
 
