@@ -100,6 +100,9 @@ BxTimelineView.prototype.init = function(bForceInit)
 
         //--- Init 'Infinite Scroll'
         this.initInfiniteScroll(this.oView);
+
+        // Init calendar
+        this.initCalendar();
     }
 
     if(this.bViewOutline) {
@@ -595,26 +598,30 @@ BxTimelineView.prototype.changeTimeline = function(oLink, sDate)
     });
 };
 
-BxTimelineView.prototype.showCalendar = function(oLink)
+BxTimelineView.prototype.initCalendar = function()
 {
     var $this = this;
-    var oInput = $(oLink).siblings('.' + this.sSP + '-jump-to-calendar');
+    var oInput = $('.' + this.sSP + '-jump-to-calendar');
     if(!oInput.length)
         return;
 
     var sClassProcessed = this.sSP + '-datepicker-processed';
     if(!oInput.hasClass(sClassProcessed)) {
-        flatpickr(oInput.parent, {
+        flatpickr(oInput.parents('.flatpickr').get(0), {
             wrap: true,
             dateFormat: "Y-m-d",
             minDate: 1900,
             maxDate: "today",
             onValueUpdate: function(sDate, oPicker){
-                $this.changeTimeline(oLink, sDate);
+                $this.changeTimeline(oInput.parent(), sDate);
             }
         });
         oInput.addClass(sClassProcessed);
     }
+};
+
+BxTimelineView.prototype.showCalendar = function(oLink)
+{
 };
 
 BxTimelineView.prototype.showMore = function(oLink)
