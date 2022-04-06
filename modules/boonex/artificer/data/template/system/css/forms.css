@@ -262,7 +262,7 @@ import url(../../../../../../../template/css/forms.css);
 /*--- Form field: Auto-siggestion ---*/
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
     float:left;
-    padding: 2px 0;
+    padding: 2px 2px;
     height:auto;
     box-shadow: none;
     min-height: 2.375rem;
@@ -279,9 +279,6 @@ import url(../../../../../../../template/css/forms.css);
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b.val-wo-icon {
     padding-left: 1.5rem;
-}
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:first-child {
-    margin-left: 0.75rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b:hover {
     opacity: 0.7;
@@ -308,13 +305,29 @@ import url(../../../../../../../template/css/forms.css);
     padding: 0 0 0 0.5rem;
     border: 0;
     box-shadow: none;
-    line-height: 2.5rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-base-pofile-unit-wo-info {
     display: inline-block;
     vertical-align: top;
 
     margin-right: 0.5rem;
+}
+.sys-labels .bx-form-input-text.bx-form-input-autotoken b:first-child{
+    margin-left: 2px !important;
+}
+
+.sys-labels .bx-form-input-text.bx-form-input-autotoken.bx-form-input-disabled b{
+    height: 2rem;
+    line-height: 2rem;
+}
+
+.bx-form-value .sys-labels .bx-form-input-autotoken.bx-form-input-labels{
+    padding: 0 !important;
+    padding-top: 2px !important;
+}
+.sys-labels .bx-form-input-text.bx-form-input-autotoken
+{
+    min-height: 2.375rem !important;
 }
 .bx-form-value .bx-form-input-labels > a {
     margin-left: 0.5rem;

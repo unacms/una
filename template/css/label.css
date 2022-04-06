@@ -8,8 +8,6 @@
     box-sizing: border-box;
     height: auto;
     min-height: 2.5rem;
-
-    padding: 0.25rem;
 }
 .sys-labels .bx-form-input-text.bx-form-input-autotoken b,
 .sys-labels .bx-form-input-text.bx-form-input-autotoken input:not([type = 'hidden']) {
@@ -18,7 +16,6 @@
     float: none;
 
     height: 1.625rem;
-    margin: 0.125rem;
 
     line-height: 1.625rem;
 }
@@ -31,22 +28,32 @@
     white-space: nowrap;
     cursor: pointer;
 }
-.sys-labels .bx-form-input-text.bx-form-input-autotoken b:first-child {
-    margin-left: 0.75rem;
-}
+
 .sys-labels .bx-form-input-text.bx-form-input-autotoken b:after {
     top: -1px;
 
     margin: 0;
     padding: 0 0.5rem;
 }
-.sys-labels .bx-form-input-text.bx-form-input-autotoken b.val-placeholder {
-    border-style: dashed;
-}
 .sys-labels .bx-form-input-text.bx-form-input-autotoken.bx-form-input-disabled b {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    height: 2rem;
+    line-height: 2rem;
 }
+.sys-labels .bx-form-input-text.bx-form-input-autotoken b.val-placeholder{
+    padding-left: 1.5rem !important;
+}
+.sys-labels .bx-form-input-text.bx-form-input-autotoken b.val-placeholder::before{
+    font-family: 'sys-user', 'sys-user-fal';
+    content: "\f067";
+    position: absolute;
+    margin-left: -1.5em;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+
 .sys-labels .bx-form-input-text.bx-form-input-autotoken input:not([type = 'hidden']) {
     width: auto !important;
     padding: 0;
@@ -132,4 +139,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.sys-labels .bx-form-input-text.bx-form-input-autotoken b:first-child{
+    margin-left: 0.125rem;
 }

@@ -640,19 +640,17 @@
 
 /* auto-siggestion input */
 
-.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
+.bx-form-value .bx-form-input-autotoken {
     float:left;
     padding:0px;
     height:auto;
     box-shadow: none;
-    min-height: 2.8rem;
+    padding: 2px;
 }
 .bx-form-value .bx-form-input-autotoken b {
     cursor:pointer;
     display:block;
     float:left;
-    line-height: 40px;
-    line-height: 2.5rem;
     padding-right: 1.5em; 
     margin-left:0.1em;
     margin-right:0.1em;
@@ -670,7 +668,7 @@
     content: "\f00d";    
     position:absolute;    
     padding:0 0.5em;
-    margin-left: 0.5em;
+    margin-left: 0.25em;
     font-size:0.7em;
     font-weight:bold;
 }
