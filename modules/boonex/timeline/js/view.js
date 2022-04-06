@@ -601,23 +601,19 @@ BxTimelineView.prototype.changeTimeline = function(oLink, sDate)
 BxTimelineView.prototype.initCalendar = function()
 {
     var $this = this;
-    var oInput = $('.' + this.sSP + '-jump-to-calendar');
+    var oInput = $('.' + $this.sSP + '-jump-to-calendar');
     if(!oInput.length)
         return;
 
-    var sClassProcessed = this.sSP + '-datepicker-processed';
-    if(!oInput.hasClass(sClassProcessed)) {
-        flatpickr(oInput.parents('.flatpickr').get(0), {
-            wrap: true,
-            dateFormat: "Y-m-d",
-            minDate: 1900,
-            maxDate: "today",
-            onValueUpdate: function(sDate, oPicker){
-                $this.changeTimeline(oInput.parent(), sDate);
-            }
-        });
-        oInput.addClass(sClassProcessed);
-    }
+    flatpickr(oInput.parents('.flatpickr').get(0), {
+        wrap: true,
+        dateFormat: "Y-m-d",
+        minDate: 1900,
+        maxDate: "today",
+        onValueUpdate: function(aDates, sDate, oPicker){
+            $this.changeTimeline(oInput.parent(), sDate);
+        }
+    });
 };
 
 BxTimelineView.prototype.showCalendar = function(oLink)
@@ -1223,6 +1219,8 @@ BxTimelineView.prototype._onGetPosts = function(oData)
 
         if(oData && oData.empty != undefined)
             $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
+
+        $this.initCalendar();
     };
 
     if(oData && oData.items != undefined) {
@@ -1233,7 +1231,7 @@ BxTimelineView.prototype._onGetPosts = function(oData)
             oItems.html(sItems).bxProcessHtml();
 
             this.blink(oItems);
-            this.initFlickity(this.oView);
+            this.initFlickity(this.oView);            
 
             onComplete();
             return;
