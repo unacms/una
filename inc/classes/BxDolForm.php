@@ -934,6 +934,10 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             }
         }
 
+        //if this is a comments form then we support it since V13.A3 as a special case
+        if (isset($this->aParams['module']) && $this->aParams['module'] == 'system' && isset($this->aParams['object']) && $this->aParams['object'] == 'sys_comment')
+            return true;
+
         return false;
     }
 
@@ -942,7 +946,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             $oModule = BxDolModule::getInstance($this->aParams['module']);
             $CNF = &$oModule->_oConfig->CNF;
 
-            if (isset($oModule->_oConfig->CNF) && isset($CNF['FIELD_STATUS_ADMIN'])) $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_TEXT_STATUS_HIDDEN;
+            if (isset($oModule->_oConfig->CNF) && isset($CNF['FIELD_STATUS_ADMIN'])) $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = 'pending';
         }
     }
 
