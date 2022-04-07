@@ -2954,6 +2954,7 @@
         <string name="_sys_menu_set_title_profile_followings"><![CDATA[Отслеживаемые контексты]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_set_title_site"><![CDATA[Сайт]]></string>
+        <string name="_sys_menu_set_title_application"><![CDATA[Приложение]]></string>
         <string name="_sys_menu_set_title_panel"><![CDATA[Панель]]></string>
 	<string name="_sys_menu_set_title_homepage"><![CDATA[Модули с содержимым]]></string>
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Панель инструментов - Пользователь]]></string>
@@ -3004,6 +3005,7 @@
 	<string name="_sys_menu_title_footer"><![CDATA[Основание - Ссылки]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Навигация по сайту]]></string>
         <string name="_sys_menu_title_main_in_panel"><![CDATA[Навигация по сайту - Панель]]></string>
+        <string name="_sys_menu_title_application"><![CDATA[Навигация в режиме 'Приложение']]></string>
 	<string name="_sys_menu_title_homepage"><![CDATA[Меню на главной странице]]></string>
         <string name="_sys_menu_title_homepage_submenu"><![CDATA[Подменю на главной странице]]></string>
 	<string name="_sys_menu_set_title_homepage_submenu"><![CDATA[Подменю на главной странице]]></string>

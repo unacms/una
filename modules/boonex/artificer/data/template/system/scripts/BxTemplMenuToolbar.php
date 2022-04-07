@@ -59,6 +59,8 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
                 break;
 
             case 'add-content':
+                $a['class_add'] = str_replace('bx-def-media-phone-hide', '',  $a['class_add']);
+
                 if(isset($a['onclick']))
                     $a['onclick'] = str_replace('bx_menu_slide_inline', 'bx_menu_popup_inline', $a['onclick']);
                 break;

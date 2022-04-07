@@ -5,7 +5,7 @@
     <nav class="fixed z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
-                <div class="flex items-center justify-start">
+                <div class="flex flex-1 items-center justify-start">
                     <!-- Mobile: Hamburger -->
                     <div class="flex-none items-center lg:hidden mr-4 hidden">
                         <bx_menu:sys_toolbar_site />
@@ -25,16 +25,24 @@
                         <bx_injection:injection_logo_after />
                     </div>
                     <!-- Menu -->
-                    <div class="bx-toolbar-item bx-ti-menu flex-2 hidden lg:block w-64 ml-4">
+                    <div class="bx-toolbar-item bx-ti-menu flex-2 w-64 ml-4">
                         <div id="bx-menu-toolbar-1-container" class="bx-toolbar-item bx-ti-menu w-full">
-                            <bx_menu:sys_site />
+                            <bx_menu:sys_application />
                         </div>
                     </div>
                     <!-- Search -->
-                    <div class="bx-toolbar-item bx-ti-search flex flex-1 items-center justify-end ml-4 md:min-w-88">
-                        <div class="flex items-start w-full hidden md:block">
+                    <div class="bx-toolbar-item bx-ti-search flex flex-1 items-center justify-end">
+                        <div class="bx-ti-search-box flex items-start md:min-w-88 mx-4 rounded-md shadow-lg lg:shadow-none hidden lg:block">
                             <div class="relative w-full">__sys_site_search__</div>
                         </div>
+                        <div class="bx-ti-search-button relative flex items-center mx-3 text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 border border-transparent rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 block lg:hidden">
+                            <a href="javascript:void(0)" onclick="javascript:bx_site_search_show(this)">
+                                <span class="relative block h-8 w-8 flex items-center justify-center">
+                                    <i class="sys-icon search"></i>
+                                </span>
+                            </a>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="flex items-center">

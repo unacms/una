@@ -16,7 +16,8 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
     protected $_oModule;
 
     protected $_bSiteMenu;
-    
+    protected $_bApplicationMenu;
+
     protected $_aHideFromSiteMenu;
 
     public function __construct ($aObject, $oTemplate = false)
@@ -28,8 +29,8 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $this->_aHideFromSiteMenu = ['search'];
 
         $this->_sJsClassMoreAuto = 'BxArtificerMenuMoreAuto';
-
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
+        $this->_bApplicationMenu = $this->_sObject == 'sys_application';
     }
 
     public function getCode ()
@@ -37,7 +38,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $sTemplate = 'menu_main_popup.html';
         $sClass = 'bx-popup-menu-main';
         $sStyle = 'display:none';
-        if($this->_bSiteMenu) {
+        if($this->_bSiteMenu || $this->_bApplicationMenu) {
             $sTemplate = 'menu_main_inline.html';
             $sClass = 'bx-inline-smenu-main';
             $sStyle = '';
