@@ -16,10 +16,10 @@ class BxDolStudioDesignerQuery extends BxDolStudioPageQuery
 
     public function updateInjection($sName, $sValue)
     {
-		return (int)$this->query("UPDATE `sys_injections` SET `data`=:data WHERE `name`=:name", array(
-			'name' => $sName,
-			'data' => $sValue
-		)) > 0;
+        return $this->query("UPDATE `sys_injections` SET `data`=:data WHERE `name`=:name", [
+            'name' => $sName,
+            'data' => $sValue
+        ]) !== false;
     }
     
 }

@@ -239,18 +239,20 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_SPLASH);
     }
 
-	function submitInjections(&$oForm)
+    function submitInjections(&$oForm)
     {
-		$bResult = $this->oDb->updateInjection('sys_head', $oForm->getCleanValue('sys_head'));
+        $sResult = '_adm_dsg_err_save_changes';
+
+        $bResult = $this->oDb->updateInjection('sys_head', $oForm->getCleanValue('sys_head'));
         $bResult |= $this->oDb->updateInjection('sys_body', $oForm->getCleanValue('sys_body'));
         if($bResult) {
-        	if(getParam('sys_db_cache_enable'))
-            	$this->oDb->cleanCache('sys_injections.inc');
+            if(getParam('sys_db_cache_enable'))
+                $this->oDb->cleanCache('sys_injections.inc');
 
-            return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_INJECTIONS);
+            $sResult = '_adm_dsg_scs_save';
         }
 
-        return $this->getJsResult('_adm_dsg_err_save_changes');
+        return $this->getJsResult($sResult, true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_INJECTIONS);
     }
 }
 
