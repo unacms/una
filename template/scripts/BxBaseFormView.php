@@ -1202,13 +1202,12 @@ BLAH;
             $aAttrs['type'] = 'date_time';
 
         switch($aAttrs['type']) {
+            case 'datepicker':
             case 'date_time':
-                $this->addCssJsUi ();
                 $this->addCssJsTimepicker ();
                 break;
             case 'slider':
             case 'doublerange':
-            case 'datepicker':
                 $this->addCssJsUi ();
                 break;
             case 'dateselect':
@@ -2154,7 +2153,7 @@ BLAH;
         }
     }
 
-    static function getJsUiLangs ()
+    static function getJsCalendarLangs ()
     {
         return array ('ar-dz' => 1, 'ar' => 1, 'at' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bn' => 1, 'bs' => 1, 'cat' => 1, 'ckb' => 1, 'cs' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'default' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr' => 1, 'ga' => 1, 'gr' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'index' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'km' => 1, 'ko' => 1, 'kz' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'mn' => 1, 'ms' => 1, 'my' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pa' => 1, 'pl' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'si' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-cyr' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'uz' => 1, 'uz_latn' => 1, 'vn' => 1, 'zh-tw' => 1, 'zh' => 1);
     }
@@ -2164,17 +2163,11 @@ BLAH;
         if (self::$_isCssJsUiAdded)
             return;
 
-        $aLangs = $this->getJsUiLangs ();
-
-        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
-
         $this->_addJs(array(
             'jquery-ui/jquery-ui.custom.min.js',
-            'flatpickr/dist/flatpickr.min.js',
-            'flatpickr/dist/l10n/' . $sLang . '.js',
-        ), "'undefined' === typeof(flatpickr)");
+        ), "'undefined' === typeof($.widget)");
         
-        $this->_addCss([BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css', 'jquery-ui/jquery-ui.css']);
+        $this->_addCss('jquery-ui/jquery-ui.css');
 
         self::$_isCssJsUiAdded = true;
     }
@@ -2196,17 +2189,15 @@ BLAH;
         if (self::$_isCssJsTimepickerAdded)
             return; 
 
-        $aCalendarLangs = array ('af' => 1, 'am' => 1, 'bg' => 1, 'ca' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sr-RS' => 1, 'sr-YU' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-TW' => 1);
+        $aLangs = $this->getJsCalendarLangs ();
+        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
 
-        $sCalendarLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aCalendarLangs);            
-        $this->_addCss('timepicker-addon/jquery-ui-timepicker-addon.css');
-        
         $this->_addJs(array(
-            'timepicker-addon/jquery-ui-timepicker-addon.min.js',
-            'timepicker-addon/jquery-ui-sliderAccess.js',
-            'timepicker-addon/i18n/jquery-ui-timepicker-' . $sCalendarLang . '.js',
-            'jquery.ui.touch-punch.min.js',
-        ), "'undefined' === typeof($.fn.datetimepicker)");
+            'flatpickr/dist/flatpickr.min.js',
+            'flatpickr/dist/l10n/' . $sLang . '.js',
+        ), "'undefined' === typeof(flatpickr)");
+        
+        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css');
 
         self::$_isCssJsTimepickerAdded = true;
     }
