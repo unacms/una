@@ -597,7 +597,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     public function checkAllowedApprove($mixedContent, $isPerformAction = false)
     {
         $CNF = &$this->_oConfig->CNF;
+
         $sTxtError = '_sys_txt_access_denied';
+        $iProfileId = bx_get_logged_profile_id();
 
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
@@ -611,6 +613,15 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if($this->_isModerator())
             return CHECK_ACTION_RESULT_ALLOWED;
 
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$mixedContent[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+            $iContextProfileId = abs((int)$mixedContent[$CNF['FIELD_ALLOW_VIEW_TO']]);
+            $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
+
+            $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
+            if(in_array($iProfileId, $aAdmins))
+                return CHECK_ACTION_RESULT_ALLOWED;
+        }
+        
         return _t($sTxtError);
     }    
 

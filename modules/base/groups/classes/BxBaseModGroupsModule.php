@@ -246,6 +246,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $aResult;
     }
 
+    public function serviceGetAdminsToManageContent($iGroupProfileId)
+    {
+        return $this->serviceGetAdminsByAction($iGroupProfileId, [
+            BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT, 
+            BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT
+        ]);
+    }
+
     /**
      * Delete profile from fans and admins tables
      * @param $iProfileId profile id 

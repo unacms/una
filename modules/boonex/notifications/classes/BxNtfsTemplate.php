@@ -199,10 +199,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $aEvent['content'][$sKey] = call_user_func_array('_t', $aCallParams);
         }
 
-        if($this->_isInContext($aEvent) && empty($aEvent['subobject_id']) && $oObjectOwner)
-            $sOwnerUnit = $oObjectOwner->getUnit(0, ['template' => 'unit_wo_info_links']);
-        else
-            $sOwnerUnit = $oOwner->getUnit(0, ['template' => 'unit_wo_info_links']);
+        $sOwnerUnit = $oOwner->getUnit(0, ['template' => 'unit_wo_info_links']);
 
         $bEventParsed = false;
         bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, [
@@ -363,20 +360,15 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getContentLangKey(&$aEvent)
     {
-        if(!empty($aEvent['subobject_id']))
-            return '_bx_ntfs_txt_subobject_added' . ($this->_isInContext($aEvent) ? '_in_context' : '');
+        $bInContext = $this->_isInContext($aEvent);
 
-        if($this->_isInContext($aEvent))
-            return '_bx_ntfs_txt_object_added_in_context';
+        if(!empty($aEvent['subobject_id']))
+            return '_bx_ntfs_txt_subobject_added' . ($bInContext ? '_in_context' : '');
 
         $sKey = '';
         switch($aEvent['action']) {
             case 'pending_approval':
                 $sKey = '_bx_ntfs_txt_object_pending_approval';
-                break;
-
-            case 'approved':
-                $sKey = '_bx_ntfs_txt_object_approved';
                 break;
 
             case 'publish_failed':
@@ -388,7 +380,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 break;
 
             default:
-                $sKey = '_bx_ntfs_txt_object_added';
+                $sKey = '_bx_ntfs_txt_object_' . $aEvent['action'] . ($bInContext ? '_in_context' : '');
         }
 
     	return $sKey;

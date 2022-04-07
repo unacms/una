@@ -50,8 +50,18 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if($aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_isModerator())
+        $iProfileId = bx_get_logged_profile_id();
+        if($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId || $this->_isModerator())
             return true;
+
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+            $iContextProfileId = abs((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
+            $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
+
+            $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
+            if(in_array($iProfileId, $aAdmins))
+                return true;
+        }
 
         if(isset($CNF['FIELD_STATUS']) && $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
             return false;
@@ -3168,10 +3178,7 @@ class BxBaseModGeneralModule extends BxDolModule
             $iContextProfileId = abs((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
             $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
 
-            $aRecipients = bx_srv($oContextProfile->getModule(), 'get_admins_by_action', [$iContextProfileId, [
-                BX_BASE_MOD_GROUPS_ACTION_EDIT_CONTENT, 
-                BX_BASE_MOD_GROUPS_ACTION_DELETE_CONTENT
-            ]]);
+            $aRecipients = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
         }
 
         $sModule = $this->getName();
