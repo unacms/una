@@ -104,6 +104,35 @@
 
 /*--- Poll item ---*/
 /*+++ Poll item: Actions +++*/
+.bx-base-text-poll-actions {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    align-items: center;
+
+    top: 0;
+    right: 0;
+}
+.bx-base-text-poll-action {
+    position: relative;
+    display: block;
+}
+.bx-base-text-poll-actions li.bx-menu-inter-pas:hover {
+    background-color: transparent;
+}
+.bx-base-text-poll-actions li.bx-menu-inter-act,
+.bx-base-text-poll-actions li.bx-menu-inter-pas {
+    margin-left: 0.5rem;
+}
+.bx-base-text-poll-actions li.bx-menu-inter-act div, 
+.bx-base-text-poll-actions li.bx-menu-inter-pas div{
+    padding: 0;
+}
 .bx-base-text-poll-actions li.bx-menu-inter-div {
     display: none;
 }
