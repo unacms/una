@@ -385,7 +385,13 @@
 
     /* Common elements: Buttons */
     .bx-btn {
-        @apply relative inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 dark:hover:text-white hover:text-gray-800 whitespace-nowrap bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-sm hover:shadow-md cursor-pointer;
+        @apply relative inline-flex items-center px-4 py-2;
+        @apply shadow-sm hover:shadow active:shadow-none;
+        @apply bg-gray-100 hover:bg-white active:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-800;
+        @apply border border-gray-300 hover:border-gray-300 active:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500 dark:active:border-gray-700;
+        @apply font-medium text-sm text-gray-700 hover:text-gray-800 active:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:active:text-gray-200;
+        @apply transform-gpu hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-150;
+        @apply rounded-md;               
     }
 
     .bx-btn i, 
@@ -412,7 +418,9 @@
     }
 
     .bx-btn.bx-btn-primary {
-        @apply border-transparent text-white hover:text-white dark:hover:text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+        @apply bg-blue-600 hover:bg-blue-500 active:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 dark:active:bg-blue-800;
+        @apply border border-blue-600 hover:border-blue-500 active:border-blue-800 dark:border-blue-600 dark:hover:border-blue-500 dark:active:border-blue-700;
+        @apply text-white hover:text-white active:text-white dark:text-white dark:hover:text-white dark:active:text-white;
     }
 
     .bx-btn.bx-btn-primary i, 
@@ -444,9 +452,9 @@
         @apply text-sm font-normal text-gray-700 dark:text-gray-300;
     }
 
-    .bx-artificer form a,
-    .bx-artificer .sys-jf-agreement a, 
-    .bx-artificer .sys-lf-agreement a {
+    .bx-artificer form a:not(.bx-btn),
+    .bx-artificer .sys-jf-agreement a:not(.bx-btn), 
+    .bx-artificer .sys-lf-agreement a:not(.bx-btn) {
         @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
 
@@ -476,25 +484,45 @@
     .bx-artificer .bx-form-input-text,
     .bx-artificer .bx-form-input-price,
     .bx-artificer .bx-form-input-wrapper-price span {
-        @apply block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm appearance-none;
+        @apply block w-full px-3 py-1.5;
+        @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
+        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
+        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
+        @apply rounded-md;
     }
 
     /* Common elements: Forms: Password Input */
     .bx-artificer .bx-form-input-wrapper-password {
-        @apply relative block w-full pl-3 pr-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm;
+        @apply relative block w-full pl-3 pr-8;
+        @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
+        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
+        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
+        @apply rounded-md;
     }
 
     /* Common elements: Forms: Checkbox/Radio Set Input */
     .bx-artificer .bx-form-input-wrapper-checkbox_set,
     .bx-artificer .bx-form-input-wrapper-radio_set {
-        @apply relative block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 dark:focus:text-gray-100 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm;
+        @apply relative block w-full py-2 px-3;
+        @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
+        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
+        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
+        @apply rounded-md;
     }
     
     
     /* Common elements: Forms: Checkbox Input */
     .bx-artificer .bx-form-input-checkbox,
     .bx-artificer .bx-form-input-radio {
-        @apply block py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm;
+        @apply block py-2 px-3 ;
+        @apply bg-gray-50 dark:bg-gray-900/50;
+        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70;
+        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
+        @apply rounded-md;
     }
 
     /* Common elements: Forms: Switcher Input */
@@ -513,7 +541,12 @@
 
     /* Common elements: Forms: Autosuggestion Input */
     .bx-artificer .bx-form-input-text.bx-form-input-autotoken {
-        @apply flex flex-wrap items-stretch w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:text-gray-900 dark:focus:text-gray-100 focus:ring-blue-500 focus:border-opacity-70 focus:ring-opacity-20 focus:border-blue-500 text-sm text-gray-700 dark:text-gray-300 rounded-md shadow-sm appearance-none;
+        @apply flex flex-wrap items-stretch w-full py-2 px-3 ;
+        @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
+        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
+        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
+        @apply rounded-md;
     }
     .bx-artificer .bx-form-input-autotoken b.val {
         @apply bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600;
