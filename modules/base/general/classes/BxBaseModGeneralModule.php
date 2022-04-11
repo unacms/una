@@ -1506,10 +1506,13 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
             return false;
 
-        if(!(BxDolAcl::getInstance()->isMemberLevelInSet(192) || bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']]))
+        if(!(BxDolAcl::getInstance()->isMemberLevelInSet(192) || (isset($CNF['FIELD_AUTHOR']) && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']])))
             return false;
 
         $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId, true);
+        if(!$oReport)
+            return false;
+
         return $oReport->getReportedByWithComments($CNF['OBJECT_NOTES']);
     }
     
