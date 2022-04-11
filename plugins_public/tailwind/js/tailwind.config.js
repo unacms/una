@@ -55,11 +55,15 @@ module.exports = {
     'bx-def-icon-size', 'bx-def-thumb-size', 'bx-def-ava-size', 'bx-def-ava-big-size',
     'bx-def-color-bg-box-active', 
 
-    'bx-form-required', 'bx-form-warn', 'bx-switcher-cont', 
-    '.bx-form-input-wrapper-checkbox_set', 'bx-form-input-wrapper-radio_set',
+    'bx-form-caption', 'bx-form-value', 'bx-form-required', 'bx-form-warn', 
+    'bx-form-input-wrapper-checkbox_set', 'bx-form-input-wrapper-radio_set',
     'bx-form-input-slider', 'bx-form-input-doublerange', 'bx-form-input-select_multiple', 'bx-form-input-select', 'bx-form-input-radio_set', 'bx-form-input-checkbox_set', 'bx-form-input-number', 'bx-form-input-time', 'bx-form-input-datepicker', 'bx-form-input-datetime', 'bx-form-input-textarea', 'bx-form-input-text', 'bx-form-input-price', 'bx-form-input-checkbox', 'bx-form-input-radio', 
+    'bx-switcher-cont', 
 
     'bx-popup-full-screen', 'bx-popup-fog',
+
+    'bx-stl-mil', 'bx-stl-mii', 'bx-stl-mit', 'bx-stl-mia', 
+
     'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
 
     'bx-base-general-unit-meta-username',
@@ -73,7 +77,7 @@ module.exports = {
   darkMode: 'class', // false or 'media' or 'class'
   theme: {
     fontFamily: {
-        'inter': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
+        'inter': ['Inter var', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
     },
     extend: {
         width: {

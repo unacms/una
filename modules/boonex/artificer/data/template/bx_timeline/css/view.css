@@ -103,11 +103,8 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
 }
 
 /*--- Menu: Item Manage ---*/
-.bx-menu-object-bx_timeline_menu_item_manage .sys-icon, .bx-menu-object-bx_timeline_menu_item_manage .sys-icon {
-    display: inline-block;
-    width: 1.25rem;
-    height: 1.25rem;
-    text-align: center;
+.bx-menu-object-bx_timeline_menu_item_manage .sys-action-do-text {
+    margin-left: 0rem;
 }
 
 /*--- Item Action Style ---*/
