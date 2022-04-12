@@ -210,16 +210,16 @@
         },
         {
             "name": "chargebee/chargebee-php",
-            "version": "v3.5.0",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chargebee/chargebee-php.git",
-                "reference": "e9dbb9c76d1f105f4b6143ef1f7a8360385d9059"
+                "reference": "46bfcbea2b341fc0da04c5944e481506d5ef29bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/e9dbb9c76d1f105f4b6143ef1f7a8360385d9059",
-                "reference": "e9dbb9c76d1f105f4b6143ef1f7a8360385d9059",
+                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/46bfcbea2b341fc0da04c5944e481506d5ef29bf",
+                "reference": "46bfcbea2b341fc0da04c5944e481506d5ef29bf",
                 "shasum": ""
             },
             "require": {
@@ -253,9 +253,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chargebee/chargebee-php/issues",
-                "source": "https://github.com/chargebee/chargebee-php/tree/v3.5.0"
+                "source": "https://github.com/chargebee/chargebee-php/tree/v3.5.2"
             },
-            "time": "2022-03-14T10:46:11+00:00"
+            "time": "2022-03-30T10:00:02+00:00"
         },
         {
             "name": "curl/cacert",
@@ -1051,16 +1051,16 @@
         },
         {
             "name": "mpratt/embera",
-            "version": "2.0.24",
+            "version": "2.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "997e7352af461f6c1b21757695971646c2b36933"
+                "reference": "001d2a83e5a209432fdfb4f7f3b47c24c87a7892"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/997e7352af461f6c1b21757695971646c2b36933",
-                "reference": "997e7352af461f6c1b21757695971646c2b36933",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/001d2a83e5a209432fdfb4f7f3b47c24c87a7892",
+                "reference": "001d2a83e5a209432fdfb4f7f3b47c24c87a7892",
                 "shasum": ""
             },
             "require": {
@@ -1109,7 +1109,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mpratt/Embera/issues",
-                "source": "https://github.com/mpratt/Embera/tree/2.0.24"
+                "source": "https://github.com/mpratt/Embera/tree/2.0.25"
             },
             "funding": [
                 {
@@ -1117,7 +1117,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2022-02-08T05:25:07+00:00"
+            "time": "2022-04-07T12:37:39+00:00"
         },
         {
             "name": "paypal/paypal-checkout-sdk",
@@ -1600,16 +1600,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.120.0",
+            "version": "v7.122.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "d63a23a281d2efa1a9618ac48b74c61ce8a775f1"
+                "reference": "c58179aa4cad16240a6e65dbf29c2bfd4ae0c033"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d63a23a281d2efa1a9618ac48b74c61ce8a775f1",
-                "reference": "d63a23a281d2efa1a9618ac48b74c61ce8a775f1",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c58179aa4cad16240a6e65dbf29c2bfd4ae0c033",
+                "reference": "c58179aa4cad16240a6e65dbf29c2bfd4ae0c033",
                 "shasum": ""
             },
             "require": {
@@ -1654,22 +1654,22 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v7.120.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v7.122.0"
             },
-            "time": "2022-03-29T15:44:39+00:00"
+            "time": "2022-04-08T16:57:33+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "6f981ee24cf69ee7ce9736146d1c57c2780598a8"
+                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/6f981ee24cf69ee7ce9736146d1c57c2780598a8",
-                "reference": "6f981ee24cf69ee7ce9736146d1c57c2780598a8",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
+                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
                 "shasum": ""
             },
             "require": {
@@ -1707,7 +1707,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.1"
             },
             "funding": [
                 {
@@ -1723,7 +1723,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-12T14:48:14+00:00"
+            "time": "2022-01-02T09:53:40+00:00"
         },
         {
             "name": "tpyo/amazon-s3-php-class",
@@ -1915,5 +1915,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

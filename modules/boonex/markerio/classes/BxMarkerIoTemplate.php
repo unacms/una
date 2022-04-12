@@ -26,7 +26,9 @@ class BxMarkerIoTemplate extends BxDolModuleTemplate
 
             $aTmplVarsShowForLogged = array(
                 'email' => $oProfile->getAccountObject()->getEmail(),
-                'name' => $oProfile->getDisplayName()
+                'name' => $oProfile->getDisplayName(),
+                'profile_url' => $oProfile->getUrl(),
+                'template' => $this->getCode(),
             );
         }
 
