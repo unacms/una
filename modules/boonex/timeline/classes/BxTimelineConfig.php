@@ -15,7 +15,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 {
     protected $_aTypeToFormDisplay;
 
-    protected $_bAutoApprove;
     protected $_bAllowEdit;
     protected $_bAllowDelete;
     protected $_bShowAll;
@@ -121,6 +120,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'URI_VIEW_ENTRY' => 'item',
 
             'URL_HOME' => 'page.php?i=timeline-view-home',
+
+            // some params
+            'PARAM_AUTO_APPROVE' => $this->_sName . '_enable_auto_approve',
 
             // objects
             'OBJECT_STORAGE' => $this->_sName . '_photos',
@@ -384,7 +386,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     	parent::init($oDb);
 
     	$sOptionPrefix = $this->getPrefix('option');
-        $this->_bAutoApprove = getParam($sOptionPrefix . 'enable_auto_approve') == 'on';
     	$this->_bAllowEdit = getParam($sOptionPrefix . 'enable_edit') == 'on';
         $this->_bAllowDelete = getParam($sOptionPrefix . 'enable_delete') == 'on';
         $this->_bShowAll = getParam($sOptionPrefix . 'enable_show_all') == 'on';
@@ -487,11 +488,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sGlue = !empty($aRules['glue']) ? $aRules['glue'] : '_';
 
         return str_replace($sGlue, '-', $this->_sName  . $sGlue . $sKey . $sGlue . $this->getNameView($aParams, $aRules) . (!$bWhole ? $sGlue : ''));
-    }
-
-    public function isAutoApprove()
-    {
-        return $this->_bAutoApprove;
     }
 
     public function isAllowEdit()

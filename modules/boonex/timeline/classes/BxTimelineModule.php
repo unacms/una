@@ -3214,7 +3214,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function getStatusAdmin()
     {
-        return $this->isModerator() || $this->_oConfig->isAutoApprove() ? BX_TIMELINE_STATUS_ACTIVE : BX_TIMELINE_STATUS_PENDING;
+        return $this->isModerator() || $this->_oConfig->isAutoApproveEnabled() ? BX_TIMELINE_STATUS_ACTIVE : BX_TIMELINE_STATUS_PENDING;
     }
 
     public function getItemData($iId, $aParams = array())
