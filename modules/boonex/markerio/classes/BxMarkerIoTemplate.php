@@ -28,6 +28,7 @@ class BxMarkerIoTemplate extends BxDolModuleTemplate
                 'email' => $oProfile->getAccountObject()->getEmail(),
                 'name' => $oProfile->getDisplayName(),
                 'profile_url' => $oProfile->getUrl(),
+                'template' => $this->getCode(),
             );
         }
 
