@@ -198,6 +198,8 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
             $aEvent['content'][$sKey] = call_user_func_array('_t', $aCallParams);
         }
+        
+        $bEventCanceled = false;
 
         $sOwnerUnit = $oOwner->getUnit(0, ['template' => 'unit_wo_info_links']);
 
@@ -205,10 +207,14 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, [
             'event' => &$aEvent, 
             'event_parsed' => &$bEventParsed, 
+            'event_canceled' => &$bEventCanceled,
             'owner' => &$oOwner, 
             'owner_unit' => &$sOwnerUnit, 
             'browse_params' => $aBrowseParams
         ]);
+        
+        if ($bEventCanceled)
+            return '';
 
         if(!$bEventParsed) {
             $mLk = '';
