@@ -400,6 +400,8 @@ div.bx-account-unit-online {
 #sys_account .bx-form-element .bx-form-input-submit.bx-btn,
 #sys-form-login .bx-form-element .bx-form-input-submit.bx-btn {
     width: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
     text-align: center;
 }
 #bx-form-element-submit_text .bx-form-value {
