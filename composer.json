@@ -9,7 +9,10 @@
         }
     ],
     "config": {
-        "vendor-dir": "plugins"
+        "vendor-dir": "plugins",
+        "allow-plugins": {
+            "avto-dev/composer-cleanup-plugin": true
+        }
     },
     "repositories": [
         {
