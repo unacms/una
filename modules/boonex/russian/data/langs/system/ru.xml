@@ -2422,7 +2422,7 @@
         <string name="_sys_form_input_anonymous"><![CDATA[Анонимная публикация]]></string>
         <string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
         <string name="_sys_form_input_labels"><![CDATA[Метки]]></string>
-	<string name="_sys_form_input_labels_placeholder"><![CDATA[+ Добавить метку]]></string>
+	<string name="_sys_form_input_labels_placeholder"><![CDATA[Добавить метку]]></string>
         <string name="_sys_form_labels"><![CDATA[Метки]]></string>
         <string name="_sys_form_labels_display_select"><![CDATA[Выбор метки]]></string>
         <string name="_sys_form_labels_input_caption_system_name"><![CDATA[Имя]]></string>
