@@ -1,0 +1,6 @@
+/*-- Forms: Link attachment --*/
+.bx-base-attach-link-form-field .embed {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+}

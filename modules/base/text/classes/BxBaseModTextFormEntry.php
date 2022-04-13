@@ -46,6 +46,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         
         if(isset($CNF['PARAM_LINKS_ENABLED']) && $CNF['PARAM_LINKS_ENABLED'] === true) {
             $sInclude = '';
+            $sInclude .= $this->_oModule->_oTemplate->addCss(array('links.css'), $bDynamicMode);
             $sInclude .= $this->_oModule->_oTemplate->addJs(array('modules/base/text/js/|links.js', 'links.js'), $bDynamicMode);
 
             $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('links', ['sFormId' => $this->getId(), 'iContentId' => (int)$this->_iContentId,]);

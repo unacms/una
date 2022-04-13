@@ -26,12 +26,6 @@
     float: none;
 }
 
-.bx-base-attach-link-form-field .embed {
-    display: inline-block;
-    vertical-align: top;
-    width: 50%;
-}
-
 
 /*--- Polls list ---*/
 .bx-base-text-polls {
