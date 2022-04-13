@@ -261,11 +261,18 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
-    
+
     public function serviceIsBadgesAvaliable()
     {
-        $oBadges = BxDolBadges::getInstance();
-		$aBadges = $oBadges->getData(array('type' => 'by_module&object', 'object_id' => 0, 'module' => $this->_oConfig->getName()));
+        if(!isAdmin() && !$this->_isAdministrator())
+            return false;
+
+        $aBadges = BxDolBadges::getInstance()->getData([
+            'type' => 'by_module&object', 
+            'object_id' => 0, 
+            'module' => $this->getName()
+        ]);
+
         return count($aBadges) > 0 ? true : false;
     }
 
