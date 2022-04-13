@@ -1,0 +1,59 @@
+version: '3'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - ./scripts/docker-compose/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./:/opt/una
+        depends_on:
+            - php
+    php:
+        build:
+            context: .
+            dockerfile: scripts/docker-compose/PHP.Dockerfile
+        volumes:
+            - ./scripts/docker-compose/php.ini:/usr/local/etc/php/php.ini
+            - ./:/opt/una
+        depends_on:
+            - mysql
+    cron:
+        build:
+            context: .
+            dockerfile: scripts/docker-compose/Cron.Dockerfile
+        volumes:
+            - ./scripts/docker-compose/php.ini:/usr/local/etc/php/php.ini
+            - ./:/opt/una
+        depends_on:
+            - mysql
+    mysql:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: 'root'
+            MYSQL_USER: 'una'
+            MYSQL_PASSWORD: 'una'
+            MYSQL_DATABASE: 'una'
+        volumes:
+            - mysqldata:/var/lib/mysql
+            - ./scripts/docker-compose/db_dump.sql:/docker-entrypoint-initdb.d/db_dump.sql
+        ports:
+            - 3306:3306
+    jot:
+        image: unaio/jot-server:latest
+        restart: always
+        ports:
+            - 5000:5000
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8080:80
+        environment:
+            - PMA_HOST=mysql
+            - PMA_USER=una
+            - PMA_PASSWORD=una
+        depends_on:
+            - mysql
+volumes:
+    mysqldata: {}
