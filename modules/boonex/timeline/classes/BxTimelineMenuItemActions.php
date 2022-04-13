@@ -67,7 +67,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             'item-promote' => 'isAllowedPromote',
             'item-unpromote' => 'isAllowedUnpromote',
             'item-edit' => 'isAllowedEdit',
-            'item-delete' => 'isAllowedDelete'
+            'item-delete' => 'isAllowedDelete',
+            'item-notes' => 'isAllowedNotes',
         );
     }
 

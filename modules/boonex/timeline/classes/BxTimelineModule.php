@@ -3767,14 +3767,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function isModeratorForProfile($iUserId)
     {
-        $sModule = $this->getName();
-
-        $aCheckResult = checkActionModule($iUserId, 'edit', $sModule);
-        if($aCheckResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+        if($this->checkAllowedEditAnyEntryForProfile(false, $iUserId) === CHECK_ACTION_RESULT_ALLOWED)
             return true;
 
-        $aCheckResult = checkActionModule($iUserId, 'delete', $sModule);
-        if($aCheckResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+        if($this->checkAllowedDeleteAnyEntryForProfile(false, $iUserId) === CHECK_ACTION_RESULT_ALLOWED)
             return true;
 
         return false;
@@ -3841,9 +3837,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aCheckResult = checkActionModule($iUserId, 'edit', $this->getName(), $bPerform);
         if(!empty($iOwnerId) && ($oProfileOwner = BxDolProfile::getInstance($iOwnerId)) !== false) {
-            if (BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'edit_any')) === CHECK_ACTION_RESULT_ALLOWED) {
+            if(BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'edit_any')) === CHECK_ACTION_RESULT_ALLOWED)
                 return true;
-            }
+
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_edit', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
         }
 
@@ -3866,9 +3862,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
         if(!empty($iOwnerId) && ($oProfileOwner = BxDolProfile::getInstance($iOwnerId)) !== false) {
-            if (BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'delete_any')) === CHECK_ACTION_RESULT_ALLOWED) {
+            if(BxDolService::call($oProfileOwner->getModule(), 'check_allowed_module_action_in_profile', array($oProfileOwner->getContentId(), $this->getName(), 'delete_any')) === CHECK_ACTION_RESULT_ALLOWED)
                 return true;
-            }
+
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
         }
 
@@ -4129,7 +4125,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function isAllowedUnstick($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['sticked'] == 0)
-    		return false;
+            return false;
     
     	return $this->_isAllowedStick($aEvent, $bPerform);
     }
@@ -4137,7 +4133,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function isAllowedPromote($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['promoted'] != 0)
-    		return false;
+            return false;
 
         return $this->_isAllowedPromote($aEvent, $bPerform);
     }
@@ -4145,9 +4141,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function isAllowedUnpromote($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['promoted'] == 0)
-    		return false;
+            return false;
 
         return $this->_isAllowedPromote($aEvent, $bPerform);
+    }
+
+    public function isAllowedNotes($aEvent, $bPerform = false)
+    {
+        return $this->isModerator();
     }
 
     public function isAllowedMore($aEvent, $bPerform = false)
@@ -4216,7 +4217,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     	$aCheck = checkActionModule($iProfileId, 'edit', $this->getName(), $isPerformAction);
     	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
-    		return CHECK_ACTION_RESULT_ALLOWED;
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+    	return _t('_sys_txt_access_denied');
+    }
+
+    public function checkAllowedDeleteAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+    	$aCheck = checkActionModule($iProfileId, 'delete', $this->getName(), $isPerformAction);
+    	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
 
     	return _t('_sys_txt_access_denied');
     }
