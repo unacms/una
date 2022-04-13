@@ -296,7 +296,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $iNow = time();
 
         // get all events for today and tomorrow, since the max reminder is 24 hours
-        $aEntries = $this->_oDb->getEntriesByDate('@' . time(), '@' . (time() + 3600 * getParam('bx_events_reminder_interval'));
+        $aEntries = $this->_oDb->getEntriesByDate('@' . time(), '@' . (time() + 3600 * getParam('bx_events_reminder_interval')));
 
         foreach ($aEntries as $a) {
             if (!$a['reminder'])
