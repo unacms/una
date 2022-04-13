@@ -969,7 +969,7 @@ class BxForumModule extends BxBaseModTextModule
     		return false;
 
         if($aDataEntry[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id())
-            return true;
+            return CHECK_ACTION_RESULT_ALLOWED;
         
 		return $this->_checkAllowedAction('resolve any entry', $aDataEntry, $isPerformAction);
     }
@@ -982,7 +982,7 @@ class BxForumModule extends BxBaseModTextModule
 			return false;
         
         if($aDataEntry[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id())
-            return true;
+            return CHECK_ACTION_RESULT_ALLOWED;
 
     	return $this->_checkAllowedAction('resolve any entry', $aDataEntry, $isPerformAction);
     }
