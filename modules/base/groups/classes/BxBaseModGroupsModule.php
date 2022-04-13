@@ -226,6 +226,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function serviceGetAdminsByAction($iGroupProfileId, $mixedAction)
     {
+        if(!$this->_oConfig->isAdmins())
+            return [];
+
         $aGroupContentInfo = $this->_oDb->getContentInfoByProfileId($iGroupProfileId);
         if(empty($aGroupContentInfo) || !is_array($aGroupContentInfo))
             return [];

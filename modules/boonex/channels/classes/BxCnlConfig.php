@@ -178,6 +178,10 @@ class BxCnlConfig extends BxBaseModGroupsConfig
         );
     }
 
+    public function isFans()
+    {
+        return false;
+    }
 }
 
 /** @} */

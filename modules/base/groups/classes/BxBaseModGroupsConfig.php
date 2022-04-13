@@ -56,6 +56,16 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
     	return $this->_aCurrency;
     }
 
+    public function isFans()
+    {
+        return true;
+    }
+
+    public function isAdmins()
+    {
+        return $this->isFans() && !empty($this->CNF['TABLE_ADMINS']);
+    }
+
     public function isPaidJoin()
     {
         return isset($this->CNF['PARAM_PAID_JOIN_ENABLED']) && $this->CNF['PARAM_PAID_JOIN_ENABLED'] === true;
