@@ -116,6 +116,14 @@ class BxBaseModGeneralModule extends BxDolModule
 
                 $this->onApprove($aContentInfo);
 
+                /*
+                 * Process metas.
+                 * Note. It's essential to process metas a the very end, 
+                 * because all data related to an entry should be already
+                 * processed and are ready to be passed to alert. 
+                 */
+                $this->processMetasAdd($iContentId);
+
                 $aResult = ['msg' => _t('_sys_manage_txt_approved'), 'reload' => 1];
             }
             else
