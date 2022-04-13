@@ -403,7 +403,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_market', 'bx_market_entry_view_full', 'bx_market', 1, '_bx_market_form_entry_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_market', 'bx_market', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_market', 'bx_market', 'cf', '1', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_market', 'bx_market', 'allow_view_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_view_to', '_bx_market_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'allow_purchase_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_purchase_to', '_bx_market_form_entry_input_allow_purchase_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'allow_comment_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_comment_to', '_bx_market_form_entry_input_allow_comment_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

@@ -662,7 +662,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_ads', 'bx_ads_entry_price_year_view', 'bx_ads', 1, '_bx_ads_form_entry_price_year_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_ads', 'bx_ads', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_ads', 'bx_ads', 'cf', '1', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_ads', 'bx_ads', 'allow_view_to', '', '', 0, 'custom', '_bx_ads_form_entry_input_sys_allow_view_to', '_bx_ads_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_ads_form_entry_input_sys_delete_confirm', '_bx_ads_form_entry_input_delete_confirm', '_bx_ads_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'do_submit', '_bx_ads_form_entry_input_do_submit', '', 0, 'submit', '_bx_ads_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

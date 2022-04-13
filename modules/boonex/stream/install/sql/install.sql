@@ -294,7 +294,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_stream', 'bx_stream_entry_view', 'bx_stream', 1, '_bx_stream_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_stream', 'bx_stream', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_stream', 'bx_stream', 'cf', '1', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_stream', 'bx_stream', 'allow_view_to', '', '', 0, 'custom', '_bx_stream_form_entry_input_sys_allow_view_to', '_bx_stream_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_stream', 'bx_stream', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_stream_form_entry_input_sys_delete_confirm', '_bx_stream_form_entry_input_delete_confirm', '_bx_stream_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_stream_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_stream', 'bx_stream', 'do_publish', '_bx_stream_form_entry_input_do_publish', '', 0, 'submit', '_bx_stream_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

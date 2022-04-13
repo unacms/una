@@ -129,10 +129,14 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
 
     public function isAllowedByViewer($iValue, $iViewerId = 0)
     {
+        $iCfDefault = $this->getDefaultValue();
+        if(!$iValue)
+            $iValue = $iCfDefault;
+
         if(!$iViewerId)
             $iViewerId = $this->_iViewerId;
 
-        $iCfwValue = $this->getDefaultValue();
+        $iCfwValue = $iCfDefault;
         $aViewerInfo = BxDolProfileQuery::getInstance()->getInfoById($iViewerId);
         if(!empty($aViewerInfo) && is_array($aViewerInfo))
             $iCfwValue = $aViewerInfo['cfw_value'];

@@ -291,7 +291,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_files_upload', 'bx_files_entry_upload', 'bx_files', 0, '_bx_files_form_entry_display_add');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_files', 'bx_files', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_files', 'bx_files', 'cf', '1', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_files', 'bx_files', 'allow_view_to', '', '', 0, 'custom', '_bx_files_form_entry_input_sys_allow_view_to', '_bx_files_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files', 'bx_files', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_files_form_entry_input_sys_delete_confirm', '_bx_files_form_entry_input_delete_confirm', '_bx_files_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_files_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_files', 'bx_files', 'do_publish', '_bx_files_form_entry_input_do_publish', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -307,7 +307,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 ('bx_files_upload', 'bx_files', 'attachments', 'a:1:{i:0;s:14:"bx_files_html5";}', 'a:2:{s:15:"bx_files_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_files_form_entry_input_sys_attachments', '_bx_files_form_entry_input_attachments', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_files_form_entry_input_attachments', '', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'cat', '', '#!bx_files_cats', 0, 'select', '_bx_files_form_entry_input_sys_cat', '_bx_files_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_files_form_entry_input_cat_err', 'Xss', '', 1, 0),
-('bx_files_upload', 'bx_files', 'cf', '', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_files_upload', 'bx_files', 'cf', '1', '#!sys_content_filter', 0, 'select', '_sys_form_entry_input_sys_cf', '_sys_form_entry_input_cf', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'allow_view_to', '', '', 0, 'custom', '_bx_files_form_entry_input_sys_allow_view_to', '_bx_files_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'profile_id', '0', '', 0, 'hidden', '_bx_files_form_entry_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
