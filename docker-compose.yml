@@ -37,6 +37,7 @@ services:
         volumes:
             - mysqldata:/var/lib/mysql
             - ./scripts/docker-compose/db_dump.sql:/docker-entrypoint-initdb.d/db_dump.sql
+            - ./scripts/docker-compose/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
         ports:
             - 3306:3306
     jot:
@@ -53,6 +54,8 @@ services:
             - PMA_HOST=mysql
             - PMA_USER=una
             - PMA_PASSWORD=una
+        volumes:
+            - ./scripts/docker-compose/phpmyadmin.inc.php:/etc/phpmyadmin/config.user.inc.php
         depends_on:
             - mysql
 volumes:
