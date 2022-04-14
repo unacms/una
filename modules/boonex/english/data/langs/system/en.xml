@@ -1524,8 +1524,9 @@
     <string name="_adm_stg_cpt_option_sys_account_disable_join_form"><![CDATA[Disable join form]]></string>
     <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Allow to use plus sign ("+") in email address]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning"><![CDATA[Accounts pruning]]></string>
-    <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Accounts pruning period (in days)
-]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Accounts pruning period (in days)]]></string>
+    <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Lock site from unauthenticated users]]></string>
+    <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Comma separated list of pages URIs, which are avalilable for unauthenticated users]]></string>
     
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[No pruning]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no_login_delete"><![CDATA[Delete accounts with no login within N days]]></string>
