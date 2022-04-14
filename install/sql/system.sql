@@ -485,7 +485,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_cf_enable', '_adm_stg_cpt_option_sys_cf_enable', 'on', 'checkbox', '', '', '', 40),
 (@iCategoryId, 'sys_cf_enable_comments', '_adm_stg_cpt_option_sys_cf_enable_comments', 'on', 'checkbox', '', '', '', 41),
-(@iCategoryId, 'sys_cf_prohibited', '_adm_stg_cpt_option_sys_cf_prohibited', '', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_cf_prohibited";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', '', '', 42);
+(@iCategoryId, 'sys_cf_prohibited', '_adm_stg_cpt_option_sys_cf_prohibited', '', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_cf_prohibited";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', '', '', 42),
+
+(@iCategoryId, 'sys_lock_from_unauthenticated', '_adm_stg_cpt_option_sys_lock_from_unauthenticated', '', 'checkbox', '', '', '', 50),
+(@iCategoryId, 'sys_lock_from_unauthenticated_exceptions', '_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions', 'login,forgot-password,create-account,confirm-email,terms,privacy,contact,about,home', 'text', '', '', '', 52);
 
 --
 -- CATEGORY: Site Settings
