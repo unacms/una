@@ -2495,13 +2495,22 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedApprove ($aDataEntry, $isPerformAction = false)
     {
+        $CNF = &$this->_oConfig->CNF;
+        $sError = '_sys_txt_access_denied';
+
+        if(!$this->_oConfig->isAutoApproveEnabled())
+            return _t($sError);
+
+        if($aDataEntry[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_GENERAL_STATUS_PENDING)
+            return _t($sError);
+
         // moderator always have access
         if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check for context's admins 
-        if (!empty($this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
-            $oProfile = BxDolProfile::getInstance(-(int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]);
+        if (!empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aDataEntry[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+            $oProfile = BxDolProfile::getInstance(-(int)$aDataEntry[$CNF['FIELD_ALLOW_VIEW_TO']]);
             if ($oProfile){
                 $sModule = $oProfile->getModule();
                 $aEntity = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $oProfile->getContentId()))) : array();
@@ -2521,7 +2530,7 @@ class BxBaseModGeneralModule extends BxDolModule
             }
         }
 
-        return _t('_sys_txt_access_denied');
+        return _t($sError);
     }
 
     /**
