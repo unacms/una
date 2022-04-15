@@ -71,6 +71,13 @@ class BxBaseVoteReactionsMenuDo extends BxTemplMenu
 
         return $aResult;
     }
+    
+    protected function _getMenuAttrs ($a)
+    {
+        $sResult = parent::_getMenuAttrs($a);
+        $sResult .= 'title = "' . bx_html_attribute(_t($a['title'])) . '"';
+        return $sResult;
+    }
 }
 
 /** @} */
