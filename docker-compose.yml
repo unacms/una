@@ -52,8 +52,8 @@ services:
             - 8080:80
         environment:
             - PMA_HOST=mysql
-            - PMA_USER=una
-            - PMA_PASSWORD=una
+            - PMA_USER=root
+            - PMA_PASSWORD=root
         volumes:
             - ./scripts/docker-compose/phpmyadmin.inc.php:/etc/phpmyadmin/config.user.inc.php
         depends_on:
