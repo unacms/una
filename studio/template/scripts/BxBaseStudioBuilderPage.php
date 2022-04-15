@@ -518,7 +518,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'type', 'value' => [BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE]]);
         $aModulesWithBlocks = $this->oDb->getModulesWithCopyableBlocks();
         foreach($aModules as $aModule) {
             $sName = $aModule['name'];

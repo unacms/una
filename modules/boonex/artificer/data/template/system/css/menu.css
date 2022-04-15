@@ -129,6 +129,13 @@ div.bx-popup-menu-main.sys-add-content ul {
     flex-direction: column;
 }
 
+/*--- Profile Stats/Followings Menu ---*/
+.bx-db-content .bx-profile-stats .bx-menu-profile-stats,
+.bx-db-content.bx-content-padding-block .bx-menu-profile-stats,
+.bx-db-content.bx-content-padding-block .bx-menu-profile-followings {
+    margin: -0.75rem;
+}
+
 /*--- Profile Followings Menu ---*/
 .bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-show {
     display: none;

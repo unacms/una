@@ -17,6 +17,16 @@
                 bx_sidebar_toggle(aMatches[1]);
             });
 
+            $('.bx-sidebar .bx-sidebar-' + aSidebars[i] + '-bg').on('click', function(event){
+                event.preventDefault();
+
+                var aMatches = $(this).attr('class').match(/bx-sidebar-(.*)-bg/);
+                if(!aMatches || aMatches.length != 2)
+                    return;
+                
+                bx_sidebar_toggle(aMatches[1]);
+            });
+
             $('.bx-sidebar .bx-sidebar-' + aSidebars[i] + '-close').on('click', function(event){
                 event.preventDefault();
 

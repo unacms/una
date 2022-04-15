@@ -1,10 +1,12 @@
 <div class="bx-menu-toolbar-padding">
-    <div class="bx-base-pofile-cover-wrapper __class__ relative bg-gradient-to-b from-gray-100 to-white dark:from-black dark:to-gray-900">
-         <div class="absolute w-full h-full overflow-hidden">
-            <div class="absolute top-6 -left-1/4 w-2/3 h-2/3 bg-blue-700 filter blur-3xl z-0 opacity-50 animate-goo"></div>
-            <div class="absolute top-6 -right-1/4 w-2/3 h-2/3 bg-green-700 filter blur-3xl z-0 opacity-50 animate-goo"></div>
+    <div class="bx-base-pofile-cover-wrapper __class__ relative">
+        <div class="absolute top-0 left-0 w-full h-full dark:hidden">
+            <img src="<bx_image_url:cover-profile.svg />" class="object-cover h-full w-full" />
         </div>
-        <div class="bx-base-pofile-cover">
+        <div class="absolute top-0 left-0 w-full h-full hidden dark:block">
+            <img src="<bx_image_url:cover-profile-dark.svg />" class="object-cover h-full w-full" />
+        </div>
+        <div class="bx-base-pofile-cover relative">
             <div class="bx-base-pofile-cover-image-wrp relative xl:px-4 overflow-hidden">
                 <div class="bx-base-pofile-cover-image bx-def-page-width relative mx-auto opacity-100 xl:rounded-b-lg <bx_if:show_cover_placeholder>bx-bpci-holder h-32 lg:h-32 bg-gradient-to-b from-blue-400 to-blue-500</bx_if:show_cover_placeholder><bx_if:show_cover>h-64 lg:h-80</bx_if:show_cover> __add_class__">
                     <a class="bx-base-pofile-cover-image box-border absolute h-full w-full" href="__cover_href__" onclick="$('#__cover_popup_id__').dolPopupImage('__cover_url__', this)">

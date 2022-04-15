@@ -675,6 +675,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             return '';
 
         return bx_srv($sModuleAuthor, $sMethodGetCover, [$oAuthor->getContentId(), [
+            'class' => 'bx-base-author',
             'use_as_author' => true,
             'show_cover' => false
         ]]);

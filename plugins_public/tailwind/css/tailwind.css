@@ -327,7 +327,7 @@
 
     /* Common elements: Pages. */
     .bx-def-color-bg-page{
-	@apply bg-gray-100 dark:bg-black;
+	@apply bg-gray-100 dark:bg-gray-900;
     }
 
     /* Common elements: Blocks, Boxes, etc. */
@@ -353,13 +353,17 @@
         @apply rounded-md;
     }
     .bx-artificer .bx-content-padding-block {
-        @apply p-4;
+        @apply p-3 md:p-4;
     }
     .bx-artificer .bx-def-color-bg-box-hover {
         @apply hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-gray-200;
     }
     .bx-artificer .bx-def-color-bg-box-active {
         @apply bg-gray-100 dark:bg-gray-700;
+    }
+
+    .bx-artificer .bx-db-title {
+        @apply leading-8 text-lg lg:text-xl text-gray-800 dark:text-gray-100 font-semibold align-middle;
     }
 
     /* Common Elements: HR */
@@ -384,16 +388,39 @@
     }
 
     /* Common elements: Buttons */
+    .bx-btn-shadow {
+        @apply shadow-sm hover:shadow active:shadow-none;
+    }
+    .bx-btn-border {
+        @apply border border-gray-300 dark:border-gray-600 rounded-md;
+    }
+    .bx-btn-bg {
+        @apply bg-gray-100 dark:bg-gray-700;
+    }
+    .bx-btn-text {
+        @apply text-sm text-gray-700 dark:text-gray-100 font-medium ;
+    }
+    .bx-btn-hover {
+        @apply hover:bg-white dark:hover:bg-gray-600;
+        @apply hover:border-gray-300 dark:hover:border-gray-500;
+        @apply hover:text-gray-800 dark:hover:text-white;
+        @apply hover:-translate-y-px;
+    }
+    .bx-btn-active {
+        @apply active:bg-gray-300 dark:active:bg-gray-800;
+        @apply active:border-gray-400 dark:active:border-gray-700;
+        @apply active:text-gray-900 dark:active:text-gray-200;
+        @apply active:translate-y-px;
+    }
     .bx-btn {
         @apply relative inline-flex items-center px-4 py-2;
-        @apply shadow-sm hover:shadow active:shadow-none;
-        @apply bg-gray-100 hover:bg-white active:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-800;
-        @apply border border-gray-300 hover:border-gray-300 active:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500 dark:active:border-gray-700;
-        @apply font-medium text-sm text-gray-700 hover:text-gray-800 active:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:active:text-gray-200;
-        @apply transform-gpu hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-150;
-        @apply rounded-md;               
+        @apply bx-btn-shadow;
+        @apply bx-btn-bg;
+        @apply bx-btn-border;
+        @apply bx-btn-text;
+        @apply transform-gpu transition-all duration-150;
+        @apply bx-btn-hover bx-btn-active;
     }
-
     .bx-btn i, 
     .bx-btn u {
         @apply inline-block align-middle;
@@ -603,18 +630,29 @@
     /* Common elements: Menus */
     .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm {
-        @apply flex items-center px-3 py-1.5 leading-6 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 active:bg-gray-300 dark:active:bg-black hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium rounded-md;
+        @apply flex items-center px-3 py-1.5;
+        @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
+        @apply active:bg-gray-300 dark:active:bg-black/50 hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
+        @apply rounded-md;
     }
     .bx-artificer .bx-stl-mil-sm {
-        @apply px-2 leading-4;
+        @apply px-2 leading-5;
+    }
+    .bx-artificer .bx-stl-mil-hover {
+        @apply hover:text-gray-800 dark:hover:text-gray-200;
+        @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
+    }
+    .bx-artificer .bx-stl-mil-active {
+        @apply active:bg-gray-300 dark:active:bg-black/50;
     }
     .bx-artificer .bx-popup .bx-stl-mil,
     .bx-artificer .bx-popup .bx-stl-mil-sm {
         @apply rounded-none;
     }
     .bx-artificer .bx-menu-tab-active .bx-stl-mil,
-    .bx-artificer .bx-menu-tab-active .bx-stl-mil-sm {
-        @apply ring-1 ring-white dark:ring-gray-800 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white;
+    .bx-artificer .bx-menu-tab-active .bx-stl-mil-sm,
+    .bx-artificer .bx-db-header .bx-menu-custom-hor li.bx-menu-tab-active a {
+        @apply ring-1 ring-white/50 dark:ring-gray-800/50 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white;
     }
     .bx-artificer .bx-popup .bx-menu-tab-active .bx-stl-mil,
     .bx-artificer .bx-popup .bx-menu-tab-active .bx-stl-mil-sm {
@@ -639,10 +677,6 @@
     .bx-artificer .bx-menu-hor li.bx-menu-tab-active a,
     .bx-artificer .bx-menu-custom-hor li.bx-menu-tab-active a {
         @apply text-gray-700 dark:text-gray-200 font-medium;
-    }
-
-    .bx-artificer .bx-db-header .bx-menu-custom-hor li.bx-menu-tab-active a {
-        @apply dark:bg-gray-800 text-gray-900 dark:text-white;
     }
 
     /* Vertical menu */
