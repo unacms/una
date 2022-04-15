@@ -644,8 +644,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $aI = array_combine($aURIs, array_fill(0, count($aURIs), 1));
             if (!preg_match('/\/oauth2\//', $_SERVER['REQUEST_URI']) /*&& !preg_match('/searchKeyword.php$/', $_SERVER['PHP_SELF'])*/ && !preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$this->_aObject['uri']])) {
                 if ($bRedirectToLoginFormForUnauthenticated) {
-                    header("Location: " . bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login'), ['relocate' => bx_get_self_url()]));
-                    exit;
+                    $this->_redirectToLoginForm();
                 }
                 else {
                     return false;
@@ -656,6 +655,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
 
+    protected function _redirectToLoginForm ()
+    {
+        header("Location: " . bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login'), ['relocate' => bx_get_self_url()]));
+        exit;
+    }
 }
 
 /** @} */
