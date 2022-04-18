@@ -36,7 +36,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_azrcon_client_id', '', @iCategId, '_bx_azrcon_option_client_id', 'digit', '', '', 22, ''),
 ('bx_azrcon_secret', '', @iCategId, '_bx_azrcon_option_secret', 'digit', '', '', 24, ''),
 ('bx_azrcon_redirect_page', 'index', @iCategId, '_sys_connect_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
-('bx_azrcon_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:12:"bx_azrcon";s:6:"method";s:20:"get_profiles_modules";}'),
+('bx_azrcon_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:9:"bx_azrcon";s:6:"method";s:20:"get_profiles_modules";}'),
 ('bx_azrcon_privacy', '3', @iCategId, '_sys_connect_option_privacy', 'select', '', '', 54, 'a:2:{s:6:"module";s:12:"bx_azrcon";s:6:"method";s:18:"get_privacy_groups";}'),
 ('bx_azrcon_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
 ('bx_azrcon_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, '');

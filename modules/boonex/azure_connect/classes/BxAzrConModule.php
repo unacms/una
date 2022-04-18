@@ -149,7 +149,7 @@ class BxAzrConModule extends BxBaseModConnectModule
         $aProfileFields['fullname'] = !empty($aProfileInfo['givenName']) ? $aProfileInfo['givenName'] : $aProfileFields['name'];
         $aProfileFields['last_name'] = !empty($aProfileInfo['surname']) ? ' ' . $aProfileInfo['surname'] : '';
         $aProfileFields['email'] = isset($aProfileInfo['mail']) ? $aProfileInfo['mail'] : $aProfileInfo['userPrincipalName'];
-        $aProfileFields['picture'] = false; // isset($aProfileInfo['picture']) ? $aProfileInfo['picture'] : '';
+        $aProfileFields['picture'] = ''; // isset($aProfileInfo['picture']) ? $aProfileInfo['picture'] : '';
         $aProfileFields['allow_view_to'] = getParam('bx_azrcon_privacy');
 
         return $aProfileFields;

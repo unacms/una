@@ -211,7 +211,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
                 $iProfileId = $iAccountProfileId;
             }
 
-            $oAccount = BxDolAccount::getInstance();
+            $oAccount = BxDolAccount::getInstance($iAccountId);
             if ($oAccount)
                 $oAccount->updateEmailConfirmed($this->_oConfig->isAlwaysConfirmEmail);
 
