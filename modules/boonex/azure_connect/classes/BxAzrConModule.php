@@ -84,13 +84,7 @@ class BxAzrConModule extends BxBaseModConnectModule
             'code'          => $sCode,
             'client_secret' => $this->_oConfig->sSecret,
         ], 'post', array ('Content-Type: application/x-www-form-urlencoded'));
-
-        // handle error
-        if (!$s || NULL === ($aAuthData = json_decode($s, true)) || !isset($aAuthData['access_token']) || isset($aAuthData['error'])) {
-            $sErrorDescription = isset($aAuthData['error_description']) ? $aAuthData['error_description'] : _t('_error occured');
-            $this->_oTemplate->getPage(_t('_Error'), MsgBox($sErrorDescription));
-            return;
-        }
+        $aAuthData = $this->_decodeResponseAndHandleError($s);
 
         // get the data, especially access_token
         $sAccessToken = $aAuthData['access_token'];
@@ -104,15 +98,17 @@ class BxAzrConModule extends BxBaseModConnectModule
             'Accept: application/json',
             'Authorization: Bearer ' . $sAccessToken,
         ));
+        $aUserData = $this->_decodeResponseAndHandleError($s);
 
-        // handle error
-        if (!$s || NULL === ($aUserData = json_decode($s, true)) || !$aUserData || isset($aUserData['error'])) {
-            $sErrorDescription = isset($aUserData['error_description']) ? $aUserData['error_description'] : _t('_error occured'); 
-            $this->_oTemplate->getPage(_t('_Error'), MsgBox($sErrorDescription));
-            return;
-        }
+        // request profile photo
+        $s = bx_file_get_contents("https://graph.microsoft.com/v1.0/me/photo/", array(), 'get', array(
+            'Accept: application/json',
+            'Authorization: Bearer ' . $sAccessToken,
+        ));
+        $aUserPhoto = $this->_decodeResponseAndHandleError($s, false);
 
         $aRemoteProfileInfo = $aUserData;
+        $aRemoteProfileInfo['picture'] = $aUserPhoto;
 
         if ($aRemoteProfileInfo) {
 
@@ -155,6 +151,23 @@ class BxAzrConModule extends BxBaseModConnectModule
         return $aProfileFields;
     }
 
+    protected function _decodeResponseAndHandleError($s, $bDisplayErrorPage = true)
+    {
+        if (!$s || NULL === ($aData = json_decode($s, true)) || !$aData || isset($aData['error'])) {
+            if (is_array($aData['error']) && !empty($aData['error']['message']))
+                $sErrorDescription = $aData['error']['message'];
+            else
+                $sErrorDescription = isset($aData['error_description']) ? $aData['error_description'] : _t('_error occured');
+            if ($bDisplayErrorPage) {
+                $this->_oTemplate->getPage(_t('_Error'), MsgBox($sErrorDescription));
+                exit;
+            }
+            else {  
+                return false;
+            }
+        }
+        return $aData;
+    }
 }
 
 /** @} */
