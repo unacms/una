@@ -539,18 +539,25 @@
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
-    
-    
+
     /* Common elements: Forms: Checkbox Input */
     .bx-artificer .bx-form-input-checkbox,
     .bx-artificer .bx-form-input-radio {
-        @apply block py-2 px-3 ;
-        @apply bg-gray-50 dark:bg-gray-900/50;
+        @apply block w-4 h-4;
+        @apply bg-gray-50 dark:bg-gray-900/50 bg-origin-border;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70;
         @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
-        @apply rounded-md;
+        @apply rounded;
+        @apply appearance-none select-none;
     }
+    .bx-artificer .bx-form-input-checkbox:checked {
+        background-image:url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTYgMTYnIGZpbGw9JyNmZmYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTEyLjIwNyA0Ljc5M2ExIDEgMCAwIDEgMCAxLjQxNGwtNSA1YTEgMSAwIDAgMS0xLjQxNCAwbC0yLTJhMSAxIDAgMCAxIDEuNDE0LTEuNDE0TDYuNSA5LjA4Nmw0LjI5My00LjI5M2ExIDEgMCAwIDEgMS40MTQgMHonLz48L3N2Zz4=)
+    }
+    .bx-artificer .bx-form-input-radio:checked {
+        background-image:url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTYgMTYnIGZpbGw9JyNmZmYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PGNpcmNsZSBjeD0nOCcgY3k9JzgnIHI9JzMnLz48L3N2Zz4=)
+    }
+
 
     /* Common elements: Forms: Switcher Input */
     .bx-artificer .bx-switcher-cont.on button {
@@ -757,7 +764,7 @@
     }
 
     .bx-artificer .bx-base-pofile-unit-online {
-        @apply absolute w-2.5 h-2.5 right-0.5 bottom-0.5 ring-1 ring-inset ring-white rounded-full bg-green-500;
+        @apply absolute w-2.5 h-2.5 right-0.5 bottom-0.5 ring-1 ring-inset ring-white dark:ring-gray-800 bg-green-500 rounded-full;
     }
 
     .bx-artificer .bx-base-general-unit-meta .bx-base-profile-unit-meta-item > a:not(.bx-btn),

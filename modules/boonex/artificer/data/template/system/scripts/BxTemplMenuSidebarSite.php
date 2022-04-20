@@ -12,14 +12,18 @@
  */
 class BxTemplMenuSidebarSite extends BxTemplMenu
 {
+    protected $_aHideFromMenu;
+
     public function __construct ($aObject, $oTemplate = false)
     {
         parent::__construct ($aObject, $oTemplate);
+        
+        $this->_aHideFromMenu = ['search', 'more-auto'];
     }
 
     protected function _getMenuItem ($a)
     {
-        if($a['name'] == 'more-auto')
+        if(in_array($a['name'], $this->_aHideFromMenu))
             return false;
 
         $aResult = parent::_getMenuItem($a);
