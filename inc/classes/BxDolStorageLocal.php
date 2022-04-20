@@ -46,7 +46,7 @@ class BxDolStorageLocal extends BxDolStorage
     /**
      * Start file downloading by remote id. If file is private then token is checked.
      */
-    public function download ($sRemoteId, $sToken = false, $bForceDownloadDialog = false)
+    public function download ($sRemoteId, $sToken = false, $mixedForceDownloadDialog = 'auto')
     {
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
@@ -65,6 +65,20 @@ class BxDolStorageLocal extends BxDolStorage
             $this->setErrorCode(BX_DOL_STORAGE_ERR_FILE_NOT_FOUND);
             return false;
         }
+
+        if ('auto' === $mixedForceDownloadDialog) {
+            $bForceDownloadDialog = true;
+            foreach ($this->_aMimeTypesViewable as $sType) {
+                if (0 === strpos($aFile['mime_type'], $sType)) {
+                    $bForceDownloadDialog = false;
+                    break;
+                }
+            }
+        } 
+        else {
+            $bForceDownloadDialog = $mixedForceDownloadDialog;
+        }
+        
 
         if (!bx_smart_readfile($sFileLocation, $aFile['file_name'], $aFile['mime_type'], $aFile['private'] && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl, $aFile['private'] ? 'private' : 'public', $bForceDownloadDialog ? 'attachment' : 'inline')) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);

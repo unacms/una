@@ -194,6 +194,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     protected $_aParams; ///< custom params
     protected $_iErrorCode; ///< last error code
     protected $_oDb; ///< database relates function are in this object
+    protected $_aMimeTypesViewable = ['audio/', 'image/', 'video/']; ///< file types (by mime type) to allow view file in browser instead of downloading
 
     /**
      * constructor
@@ -652,7 +653,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
      * @param array $aFile downloading file info.
      * @param boolean $bForceDownloadDialog if downloading to a local file system first is required and/or send the outout as attachment rather than inline.
      */
-    public function download ($aFile, $sToken = false, $bForceDownloadDialog = false)
+    public function download ($aFile, $sToken = false, $bForceDownloadDialog = 'auto')
     {
     	$bRet = true;
         bx_alert($this->_aObject['object'], 'file_downloaded', $aFile['id'], bx_get_logged_profile_id(), array(

@@ -362,10 +362,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             if(!$bSetCookie || bx_get('preview'))
                 return $aResult;
 
-            $aUrl = parse_url(BX_DOL_URL_ROOT);
-            $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-
-            setcookie($sCodeKey, $sCode, time() + 60*60*24*365, $sPath);
+            bx_setcookie($sCodeKey, $sCode, time() + 60*60*24*365);
 
             return $aResult;
         };
@@ -382,10 +379,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             if(!$bSetCookie)
                 return $iMix;
 
-            $aUrl = parse_url(BX_DOL_URL_ROOT);
-            $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-
-            setcookie($sMixKey, $iMix, time() + 60*60*24*365, $sPath);
+            bx_setcookie($sMixKey, $iMix, time() + 60*60*24*365);
 
             return $iMix;
         };

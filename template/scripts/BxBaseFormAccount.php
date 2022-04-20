@@ -101,6 +101,8 @@ class BxBaseFormAccount extends BxTemplFormView
         if (!parent::isValid ())
             return false;
 
+        if (isLogged() || !$this->isSubmitted()) return true; // exit in case it is an account edit or form has not been submitted yet
+
         $sErrorMsg = '';
         bx_alert('account', 'check_join', 0, false, array('error_msg' => &$sErrorMsg, 'email' => $this->getCleanValue('email'), 'approve' => &$this->_bSetPendingApproval));
         if ($sErrorMsg)

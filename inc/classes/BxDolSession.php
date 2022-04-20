@@ -91,9 +91,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 		if (!$this->sId)
             $this->sId = genRndPwd(32, true);
 
-        $aUrl = parse_url(BX_DOL_URL_ROOT);
-        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-        setcookie(BX_DOL_SESSION_COOKIE, $this->sId, 0, $sPath, '', false, true);
+        bx_setcookie(BX_DOL_SESSION_COOKIE, $this->sId, 0, 'auto', '', 'auto', true);
 
         $this->save();
         return true;
@@ -102,9 +100,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
     function destroy($bDeleteCookies = true)
     {
         if ($bDeleteCookies) {
-            $aUrl = parse_url(BX_DOL_URL_ROOT);
-            $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-            setcookie(BX_DOL_SESSION_COOKIE, '', time() - 86400, $sPath, '', false, true);
+            bx_setcookie(BX_DOL_SESSION_COOKIE, '', time() - 86400, 'auto', '', 'auto', true);
             unset($_COOKIE[BX_DOL_SESSION_COOKIE]);
         }
 

@@ -77,7 +77,7 @@ class BxDolStorageS3 extends BxDolStorage
     /**
      * Start file downloading by remote id. If file is private then token is checked.
      */
-    public function download ($sRemoteId, $sToken = false, $bForceDownloadDialog = false)
+    public function download ($sRemoteId, $sToken = false, $bForceDownloadDialog = 'auto')
     {
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
@@ -94,7 +94,7 @@ class BxDolStorageS3 extends BxDolStorage
 
         $sUrl = $this->getFileUrlById($aFile['id']);
 
-        if ($bForceDownloadDialog) {
+        if ($bForceDownloadDialog && $bForceDownloadDialog !== 'auto') {
             // download remote file to tmp
             $sTmpFilePath = BX_DIRECTORY_PATH_TMP . 'dwnld_'.$sRemoteId;
             if (!file_exists($sTmpFilePath)) {

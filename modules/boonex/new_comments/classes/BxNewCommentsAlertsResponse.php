@@ -37,9 +37,9 @@ class BxNewCommentsAlertsResponse extends BxDolAlertsResponse
         $iCookieTime = time() + 24 * 3600;
         $iLastVistit = time();
         if ($iLastVistit - $this->getPrevSession() > 60 * getParam('bx_new_comments_session_interval')){
-            setcookie("bxNewCommentsPrevSession", $iLastVistit, $iCookieTime, '/', $_SERVER['HTTP_HOST']);
+            bx_setcookie("bxNewCommentsPrevSession", $iLastVistit, $iCookieTime);
         }
-        setcookie("bxNewCommentsCurrentSession", $iLastVistit, $iCookieTime, '/', $_SERVER['HTTP_HOST']);
+        bx_setcookie("bxNewCommentsCurrentSession", $iLastVistit, $iCookieTime);
     }
     
     private function getPrevSession()

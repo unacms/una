@@ -100,13 +100,10 @@ function bx_login($iId, $bRememberMe = false)
     if (!$sPassword)
         return false;
 
-    $aUrl = parse_url(BX_DOL_URL_ROOT);
-    $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-    $sHost = '';
     $iCookieTime = $bRememberMe ? time() + 60 * getParam('sys_session_lifetime_in_min') : 0;
-    setcookie("memberID", $iId, $iCookieTime, $sPath, $sHost);
+    bx_setcookie("memberID", $iId, $iCookieTime, 'auto');
     $_COOKIE['memberID'] = $iId;
-    setcookie("memberPassword", $sPassword, $iCookieTime, $sPath, $sHost, false, true /* http only */);
+    bx_setcookie("memberPassword", $sPassword, $iCookieTime, 'auto', '', 'auto', true /* http only */);
     $_COOKIE['memberPassword'] = $sPassword;
 
     BxDolSession::getInstance()->setUserId($iId);
@@ -139,12 +136,9 @@ function bx_logout($bNotify = true)
         '_sys_audit_action_account_logout',  
         array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]])
     );
-    
-    $aUrl = parse_url(BX_DOL_URL_ROOT);
-    $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 
-    setcookie('memberID', '', time() - 96 * 3600, $sPath);
-    setcookie('memberPassword', '', time() - 96 * 3600, $sPath);
+    bx_setcookie('memberID', '', time() - 96 * 3600);
+    bx_setcookie('memberPassword', '', time() - 96 * 3600, 'auto', '', 'auto', true /* http only */);
 
     unset($_COOKIE['memberID']);
     unset($_COOKIE['memberPassword']);
@@ -177,8 +171,10 @@ function check_logged()
         }
     }
 
-    if($bID && $bPassword && $bLogged)
+    if($bID && $bPassword && $bLogged) {
+        header("Cache-Control: no-cache, no-store, must-revalidate");
         bx_alert('account', 'logged', getLoggedId());
+    }
 
     if(($bID || $bPassword) && !$bLogged)
         bx_logout(false);
