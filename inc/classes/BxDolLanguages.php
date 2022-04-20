@@ -396,8 +396,8 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
             $oAccountQuery->updateLanguage($iAccountId, $iLangId);
         }
 
-        setcookie( 'lang', '',     time() - 60*60*24,    '/' );
-        setcookie( 'lang', $sLang, time() + 60*60*24*365, '/' );
+        bx_setcookie('lang', '',     time() - 60*60*24);
+        bx_setcookie('lang', $sLang, time() + 60*60*24*365);
     }
 }
 

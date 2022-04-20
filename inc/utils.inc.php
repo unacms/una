@@ -941,17 +941,19 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         if ($aHeaders)
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
 
-        $sAllCookies = '';
-        foreach($_COOKIE as $sKey => $mValue){
-            if(is_array($mValue)){
-                foreach ($mValue as $k => $v)
-                    $sAllCookies .= "{$sKey}[{$k}]={$v};";
+        if (0 === strpos($sFileUrl, BX_DOL_URL_ROOT)) {
+            $sAllCookies = '';
+            foreach($_COOKIE as $sKey => $mValue){
+                if(is_array($mValue)){
+                    foreach ($mValue as $k => $v)
+                        $sAllCookies .= "{$sKey}[{$k}]={$v};";
+                }
+                else{
+                    $sAllCookies .= $sKey . '=' . $mValue . ';';
+                }
             }
-            else{
-                $sAllCookies .= $sKey . '=' . $mValue . ';';
-            }
+            curl_setopt($rConnect, CURLOPT_COOKIE, $sAllCookies);
         }
-        curl_setopt($rConnect, CURLOPT_COOKIE, $sAllCookies);
 
         if ($aCustomCurlParams)
             foreach ($aCustomCurlParams as $sName => $mixedValue)
@@ -2131,6 +2133,27 @@ function bx_birthday2age($sBirthday)
         $iResult -= 1;
 
     return $iResult;
+}
+
+function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'auto', $sDomain = '', $bSecure = 'auto', $bHttpOnly = false)
+{
+    $aUrl = 'auto' === $sPath || 'auto' === $bSecure ? parse_url(BX_DOL_URL_ROOT) : [];
+
+    if ('auto' === $sPath)
+        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+
+    if ('auto' === $bSecure)
+        $bSecure = 0 === strcasecmp('https', $aUrl['scheme']);
+    
+    return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
+}
+
+function is_private_ip ($sIp)
+{
+    if (filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) !== $sIp)
+        return false;
+
+    return filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== $sIp;
 }
 
 /** @} */

@@ -87,13 +87,11 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 		if (isset($_COOKIE[$CNF['COOKIE_SETTING_KEY']]))
 			$aTmp =	json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
 			
-		$aUrl = parse_url(BX_DOL_URL_ROOT);
-		$sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 		if ($sValue != '')
 			$aTmp[$iListId] = $sValue;
 		else
 			unset($aTmp[$iListId]);
-        setcookie($CNF['COOKIE_SETTING_KEY'], json_encode($aTmp), time() + 60*60*24*365, $sPath);
+        bx_setcookie($CNF['COOKIE_SETTING_KEY'], json_encode($aTmp), time() + 60*60*24*365);
 	}
 	
 	public function actionProcessTaskListForm($iContextId, $iId)
