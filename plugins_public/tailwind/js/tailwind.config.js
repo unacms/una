@@ -73,6 +73,8 @@ module.exports = {
     'sys-auth-block', 'sys-auth-compact-container',
 
     'flickity-button',
+	  
+	'ql-editor',
   ],
   darkMode: 'class', // false or 'media' or 'class'
   theme: {

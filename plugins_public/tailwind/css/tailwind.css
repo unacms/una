@@ -519,6 +519,10 @@
         @apply rounded-md;
     }
 
+	div.ql-editor:focus{
+		@apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
+	}
+	
     /* Common elements: Forms: Password Input */
     .bx-artificer .bx-form-input-wrapper-password {
         @apply relative block w-full pl-3 pr-8;
