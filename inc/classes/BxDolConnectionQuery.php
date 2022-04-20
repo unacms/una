@@ -141,19 +141,25 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getCommonContent($iInitiator1, $iInitiator2, $isMutual, $iStart, $iLimit, $iOrder)
     {
-        $sWhereJoin = (false !== $isMutual) ? " AND `c2`.`mutual` = :mutual" : "";
-        $sJoin = "INNER JOIN `" . $this->_sTable . "` AS `c2` ON (`c2`.`initiator` = :initiator2 AND `c`.`content` = `c2`.`content` $sWhereJoin)";
+        $aBindings = [
+            'initiator1' => $iInitiator1,
+            'initiator2' => $iInitiator2,  
+    	];
 
-        $sJoin .= $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')" : '';
+        $sWhereJoin = "";
+        if($isMutual !== false) {
+            $aBindings['mutual'] = $isMutual;
+
+            $sWhereJoin = " AND `c2`.`mutual` = :mutual";
+        }
+
+        $sJoin = "INNER JOIN `" . $this->_sTable . "` AS `c2` ON (`c2`.`initiator` = :initiator2 AND `c`.`content` = `c2`.`content` $sWhereJoin)";
+        if($this->_aObject['profile_content'])
+            $sJoin .= "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')";
 
         $sWhere = " AND `c`.`initiator` = :initiator1";
-        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
 
-        return $this->getColumn($sQuery, array(
-    		'mutual' => $isMutual,
-    		'initiator1' => $iInitiator1,
-    		'initiator2' => $iInitiator2,  
-    	));
+        return $this->getColumn($this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder), $aBindings);
     }
 
     public function getConnectedContent ($iInitiator, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
@@ -227,9 +233,17 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getCommonContentCount($iInitiator1, $iInitiator2, $isMutual)
     {
+        $aBindings = [
+            'initiator1' => $iInitiator1,
+            'initiator2' => $iInitiator2
+        ];
+
         $sWhereJoin = "";
-        if($isMutual !== false)
+        if($isMutual !== false) {
+            $aBindings['mutual'] = $isMutual;
+
             $sWhereJoin = " AND `c2`.`mutual` = :mutual";
+        }
 
         $sJoin = "INNER JOIN `" . $this->_sTable . "` AS `c2` ON (`c2`.`initiator` = :initiator2 AND `c`.`content` = `c2`.`content` $sWhereJoin)";
         if($this->_aObject['profile_content'])
@@ -237,11 +251,7 @@ class BxDolConnectionQuery extends BxDolDb
 
         $sWhere = " AND `c`.`initiator` = :initiator1";
 
-        return $this->getOne($this->_getConnectionsQueryCount($sWhere, $sJoin, $isMutual, '`c`.`content`'), [
-            'mutual' => $isMutual,
-            'initiator1' => $iInitiator1,
-            'initiator2' => $iInitiator2,  
-    	]);
+        return $this->getOne($this->_getConnectionsQueryCount($sWhere, $sJoin, $isMutual, '`c`.`content`'), $aBindings);
     }
 
     public function getConnectedContentCount ($iInitiator, $isMutual = false)
