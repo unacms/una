@@ -1,0 +1,10 @@
+/*-- Tailwind overwrite --*/
+html.hidden {
+    display: block !important;
+}
+.bx-def-unit.absolute {
+    position: relative;
+}
+.bx-base-profile-cover-block-wrapper .bx-menu-custom.bx-menu-custom-hor{
+    justify-content: center !important;
+}
