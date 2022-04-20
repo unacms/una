@@ -4876,6 +4876,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $iEventId = (int)$oForm->getCleanValue('event_id');
         $sLink = rtrim($oForm->getCleanValue('url'), '/');
+        $sHost = parse_url($sLink, PHP_URL_HOST);
+        if (is_private_ip(gethostbyname($sHost)))
+            return array('message' => _t('_sys_txt_error_occured'));
 
         $aMatches = array();
         preg_match($this->_oConfig->getPregPattern('url'), $sLink, $aMatches);
