@@ -69,15 +69,23 @@ class BxInvResponse extends BxDolAlertsResponse
         if (getParam('bx_invites_automatically_befriend') != 'on')
             return;
         
-        $oProfile = BxDolProfile::getInstanceMagic($oAlert->iObject);
-        if ($oProfile && $oProfile->isActAsProfile()){
-            $iProfileInvitor = $this->_oModule->_oDb->getInvites(array('type' => 'profile_id_by_joined_account_id', 'value' => $oProfile->getAccountId()));
-            if ($iProfileInvitor){
-                $oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
-                $oConnFrinds->addConnection($oAlert->iObject, $iProfileInvitor);
-                $oConnFrinds->addConnection($iProfileInvitor, $oAlert->iObject);
-            }
-        }  
+		$bNeedToFriend = true;
+		bx_alert($this->_sModule, 'add_friend', 0, 0, [
+			'profile_id' => $oAlert->iObject,
+			'override_result' => &$bNeedToFriend,
+		]);
+		
+		if ($bNeedToFriend){
+			$oProfile = BxDolProfile::getInstanceMagic($oAlert->iObject);
+			if ($oProfile && $oProfile->isActAsProfile()){
+				$iProfileInvitor = $this->_oModule->_oDb->getInvites(array('type' => 'profile_id_by_joined_account_id', 'value' => $oProfile->getAccountId()));
+				if ($iProfileInvitor){
+					$oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
+					$oConnFrinds->addConnection($oAlert->iObject, $iProfileInvitor);
+					$oConnFrinds->addConnection($iProfileInvitor, $oAlert->iObject);
+				}
+			}  
+		}
     }
     
     protected function _processProfileDelete($oAlert)
