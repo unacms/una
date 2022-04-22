@@ -44,6 +44,138 @@
         @apply flex items-center !important;
     }
 
+
+    /* Color Palette */
+    .bx-artificer .col-red1 {
+        @apply text-red-500;
+    }
+    .bx-artificer .bg-col-red1 { 
+        @apply bg-red-400;
+    }
+    .bx-artificer .col-red1-dark { 
+        @apply text-red-800; 
+    }
+    .bx-artificer .bg-col-red1-dark { 
+        @apply bg-red-700;
+    }
+
+    .bx-artificer .col-red2 { 
+        @apply text-rose-500; 
+    }
+    .bx-artificer .bg-col-red2 { 
+        @apply bg-rose-400;
+    }
+    .bx-artificer .col-red2-dark { 
+        @apply text-rose-800;
+    }
+    .bx-artificer .bg-col-red2-dark {
+        @apply bg-rose-700;
+    }
+
+    .bx-artificer .col-red3 {
+        @apply text-orange-500;
+    }
+    .bx-artificer .bg-col-red3 {
+        @apply bg-orange-400;
+    }
+    .bx-artificer .col-red3-dark {
+        @apply text-orange-800;
+    }
+    .bx-artificer .bg-col-red3-dark {
+        @apply bg-orange-700;
+    }
+
+    .bx-artificer .col-green1 {
+        @apply text-green-500;
+    }
+    .bx-artificer .bg-col-green1 {
+        @apply bg-green-400;
+    }
+    .bx-artificer .col-green1-dark {
+        @apply text-green-800;
+    }
+    .bx-artificer .bg-col-green1-dark {
+        @apply bg-green-700;
+    }
+
+    .bx-artificer .col-green2 {
+        @apply text-teal-500;
+    }
+    .bx-artificer .bg-col-green2 {
+        @apply bg-teal-400;
+    }
+    .bx-artificer .col-green2-dark {
+        @apply text-teal-800;
+    }
+    .bx-artificer .bg-col-green2-dark {
+        @apply bg-teal-700;
+    }
+
+    .bx-artificer .col-green3 {
+        @apply text-emerald-500;
+    }
+    .bx-artificer .bg-col-green3 {
+        @apply bg-emerald-400;
+    }
+    .bx-artificer .col-green3-dark {
+        @apply text-emerald-800;
+    }
+    .bx-artificer .bg-col-green3-dark {
+        @apply bg-emerald-700;
+    }
+
+    .bx-artificer .col-blue1 {
+        @apply text-blue-500;
+    }
+    .bx-artificer .bg-col-blue1 {
+        @apply bg-blue-400;
+    }
+    .bx-artificer .col-blue1-dark {
+        @apply text-blue-800;
+    }
+    .bx-artificer .bg-col-blue1-dark {
+        @apply bg-blue-700;
+    }
+
+    .bx-artificer .col-blue2 {
+        @apply text-purple-500;
+    }
+    .bx-artificer .bg-col-blue2 {
+        @apply bg-purple-400;
+    }
+    .bx-artificer .col-blue2-dark {
+        @apply text-purple-800;
+    }
+    .bx-artificer .bg-col-blue2-dark {
+        @apply bg-purple-700;
+    }
+
+    .bx-artificer .col-blue3 {
+        @apply text-sky-500;
+    }
+    .bx-artificer .bg-col-blue3 {
+        @apply bg-sky-400;
+    }
+    .bx-artificer .col-blue3-dark {
+        @apply text-sky-800;
+    }
+    .bx-artificer .bg-col-blue3-dark {
+        @apply bg-sky-700;
+    }
+
+    .bx-artificer .col-gray {
+        @apply text-gray-500;
+    }
+    .bx-artificer .bg-col-gray {
+        @apply bg-gray-400;
+    }
+    .bx-artificer .col-gray-dark {
+        @apply text-gray-800;
+    }
+    .bx-artificer .bg-col-gray-dark {
+        @apply bg-gray-700;
+    }
+
     /* Margins and Paddings */
     .bx-artificer .bx-def-centered {
         @apply mx-auto;
