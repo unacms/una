@@ -1,0 +1,23 @@
+div.bx-std-login-form {
+	width: 635px;
+	height: auto;
+}
+form.bx-std-login-form {
+    display: flex;
+}
+div.bx-std-login-form {}
+div.bx-std-lf-input {
+	position: relative;
+	width: 225px;
+	margin-right: 10px;
+}
+div.bx-std-lf-submit {
+	position: relative;
+    width: 125px;
+}
+div.bx-std-lf-submit .bx-btn {
+	width: 125px;
+	-moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}

@@ -1,0 +1,65 @@
+div.bx-dashboard {
+	position: relative;
+}
+div.bx-dbd-column {
+	position: relative;
+	float: left;
+	width: 50%;
+}
+div.bx-dbd-block-content {
+	position: relative;
+}
+
+/*--- Versions block ---*/
+div.bx-dbd-virsion-image {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+div.bx-dbd-virsion-image img {
+	width: 110px;
+	height: 110px;
+}
+div.bx-dbd-virsion-info {
+	position: relative;
+	min-height: 110px;
+	margin-left: 130px;
+}
+div.bx-dbd-vi-column {
+	position: relative;
+	float: left;
+	width: 50%;
+}
+div.bx-dbd-version-available {
+	display: none;
+}
+div.bx-dbd-version {
+	position: relative;
+	float: left;
+
+	line-height: 26px;
+	line-height: 1.6rem;
+}
+
+/*--- Chart based blocks ---*/
+div.bx-dbd-chart {
+	width: 400px;
+	height: 200px;
+	margin: 0px auto; 
+}
+
+/*--- Host Tools block ---*/
+div.bx-dbd-htools .bx-btn {
+    display: inline-block;
+    float: none;
+}
+
+div.bx-dbd-htools .bx-dbd-htools-item {
+    float: left;
+    width: 50%;
+}
+
+/*--- Queues block ---*/
+#bx-grid-table-sys_queues {
+    width:100%;
+}
