@@ -54,6 +54,7 @@ services:
             - PMA_HOST=mysql
             - PMA_USER=root
             - PMA_PASSWORD=root
+            - UPLOAD_LIMIT=200M
         volumes:
             - ./scripts/docker-compose/phpmyadmin.inc.php:/etc/phpmyadmin/config.user.inc.php
         depends_on:
