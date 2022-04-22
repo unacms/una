@@ -12,7 +12,7 @@ DELETE FROM `sys_menu_items` WHERE `set_name`='bx_events_view_actions_more' AND 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_events_view_actions_more', 'bx_events', 'approve-event-profile', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this, ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, '', 1, 0, 60);
 
-DELETE FROM `sys_menu_items` WHERE `set_name`='' AND `name` IN ('social-sharing', 'approve-event-profile', 'social-sharing-facebook', 'social-sharing-twitter', 'social-sharing-pinterest');
+DELETE FROM `sys_menu_items` WHERE `set_name`='bx_events_view_actions_all' AND `name` IN ('social-sharing', 'approve-event-profile', 'social-sharing-facebook', 'social-sharing-twitter', 'social-sharing-pinterest');
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_events_view_actions_all', 'bx_events', 'social-sharing', '_sys_menu_item_title_system_social_sharing', '_sys_menu_item_title_social_sharing', 'javascript:void(0)', 'oBxDolPage.share(this, \'{url_encoded}\')', '', 'share', '', '', 0, 2147483647, '', 1, 0, 300),
 ('bx_events_view_actions_all', 'bx_events', 'approve-event-profile', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 440);

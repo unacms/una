@@ -34,6 +34,8 @@ UPDATE `sys_objects_connection` SET `profile_initiator`='1', `profile_content`='
 
 
 -- GRIDS
+UPDATE `sys_objects_grid` SET `field_active`='status_admin' WHERE `object`='bx_courses_administration';
+
 DELETE FROM `sys_grid_fields` WHERE `object`='bx_courses_common' AND `name`='switcher';
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_courses_common', 'switcher', '_bx_courses_grid_column_title_adm_active', '8%', 0, '', '', 1);
