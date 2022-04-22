@@ -180,7 +180,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 -- Forms
 
-DELETE FROM `object` IN('sys_profile', 'sys_acl');
+DELETE FROM `sys_objects_form` WHERE `object` IN('sys_profile', 'sys_acl');
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_profile', 'system', '_sys_form_profile', '', '', 'do_submit', 'sys_profiles', 'id', '', '', '', 0, 1, 'BxTemplFormProfile', ''),
 ('sys_acl', 'system', '_sys_form_acl', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', '');
