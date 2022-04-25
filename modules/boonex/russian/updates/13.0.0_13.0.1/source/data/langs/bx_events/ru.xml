@@ -375,6 +375,9 @@
     <string name="_bx_events_txt_invite_popup_button_decline"><![CDATA[Отклонить]]></string>
     <string name="_bx_events_txt_invite_popup_error_invitation_absent"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение устарело или удалено.]]></string>
     <string name="_bx_events_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение адресовано не Вам.]]></string>
+    <string name="_bx_events_txt_n_unit"><![CDATA[{0} ({1})]]></string>
+    <string name="_bx_events_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
+    <string name="_bx_events_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (пожизненно)]]></string>
 
     <string name="_bx_events_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый участник <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>

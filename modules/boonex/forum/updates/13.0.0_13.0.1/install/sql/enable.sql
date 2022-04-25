@@ -65,7 +65,7 @@ UPDATE `sys_menu_items` SET `name`='profile-stats-my-forum', `link`='page.php?i=
 -- GRIDS
 UPDATE `sys_grid_fields` SET `width`='75%' WHERE `object`=@sName AND `name`='text';
 
-DELETE FROM `sys_grid_fields` WHERE `object`=@sName AND `name` IN ('category', 'participants', 'rating');
+DELETE FROM `sys_grid_fields` WHERE `object`=@sName AND `name` IN ('author', 'category', 'participants', 'rating');
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 (@sName, 'category', '', '10%', '', 1),
 (@sName, 'participants', '', '10%', '', 3),

@@ -6,6 +6,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 DELETE FROM `sys_pages_blocks` WHERE `object`='' AND `module`='bx_persons' AND `title`='_bx_persons_page_block_title_cover_block';
 
+UPDATE `sys_pages_blocks` SET `content`='a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:22:\"browse_active_profiles\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:12:\"unit_wo_info\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}' WHERE `module`='bx_persons' AND (`title`='_bx_persons_page_block_title_active_profiles' OR `title` LIKE '_bx_persons_page_block_title_active_profiles_%') AND `content` LIKE '%gallery_wo_info%';
+
 DELETE FROM `sys_pages_blocks` WHERE `object`='' AND `module`='bx_persons' AND `title`='_bx_persons_page_block_title_familiar_profiles';
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 

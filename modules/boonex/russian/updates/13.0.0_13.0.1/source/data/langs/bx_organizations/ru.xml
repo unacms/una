@@ -503,6 +503,7 @@
     <string name="_bx_orgs_ps_group_title_participants"><![CDATA[Сотрудники]]></string>
     <string name="_bx_orgs_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_orgs_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
+    <string name="_bx_orgs_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (пожизненно)]]></string>
 
     <string name="_bx_orgs_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
     <string name="_bx_orgs_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>

@@ -76,6 +76,7 @@
 	<string name="_N_points"><![CDATA[<span>{0}</span> pluses]]></string>
 	<string name="_Name"><![CDATA[Name]]></string>
 	<string name="_Name is required"><![CDATA[Name is required]]></string>
+        <string name="_never"><![CDATA[never]]></string>
 	<string name="_No"><![CDATA[No]]></string>
 	<string name="_None"><![CDATA[None]]></string>
 	<string name="_No actions allowed for this membership"><![CDATA[No actions allowed for this membership]]></string>

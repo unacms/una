@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 	<string_add name="_apps"><![CDATA[Приложения]]></string_add>
+	<string_add name="_never"><![CDATA[никогда]]></string_add>
 	<string_add name="_adm_bp_txt_block_class"><![CDATA[CSS класс]]></string_add>
 	<string_add name="_adm_dbd_txt_c_clear_purifier"><![CDATA[Очистить кэш Purifier]]></string_add>
 	<string_add name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Очистить Opcache]]></string_add>

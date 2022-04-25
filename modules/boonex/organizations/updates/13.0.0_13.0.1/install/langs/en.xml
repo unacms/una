@@ -5,4 +5,5 @@
 	<string_add name="_bx_orgs_page_block_title_sys_familiar_profiles"><![CDATA[Familiar Organizations]]></string_add>
     <string_add name="_bx_orgs_page_block_title_familiar_profiles"><![CDATA[Organizations You May Know]]></string_add>
 	<string_add name="_bx_orgs_txt_ntfs_join_request_for_owner"><![CDATA[<b class="bx-ntfs-content-entry">{subentry_sample}</b> sent a join request to your organization]]></string_add>
+	<string_add name="_bx_orgs_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (lifetime)]]></string_add>
 </resources>

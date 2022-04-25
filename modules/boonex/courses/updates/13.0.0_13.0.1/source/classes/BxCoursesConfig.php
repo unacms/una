@@ -242,6 +242,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'txt_n_unit' => '_bx_courses_txt_n_unit',
                 'txt_buy_title' => '_bx_courses_grid_action_title_buy_title',
                 'txt_cart_item_title' => '_bx_courses_txt_cart_item_title',
+                'txt_cart_item_title_lifetime' => '_bx_courses_txt_cart_item_title_lifetime',
                 'txt_subscribe_title' => '_bx_courses_grid_action_title_subscribe_title',
                 'msg_performed' => '_bx_courses_msg_performed',
                 'popup_title_price_add' => '_bx_courses_popup_title_price_add',

@@ -5,4 +5,5 @@
 	<string_add name="_bx_groups_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Any Audience]]></string_add>
 	<string_add name="_bx_groups_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string_add>
 	<string_add name="_bx_groups_txt_status_hidden"><![CDATA[This group was hidden.]]></string_add>
+	<string_add name="_bx_groups_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (lifetime)]]></string_add>
 </resources>

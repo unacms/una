@@ -3,4 +3,5 @@
 	<string_add name="_bx_courses_option_enable_auto_approve"><![CDATA[Автоматически активировать курс после создания]]></string_add>
 	<string_add name="_bx_courses_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string_add>
 	<string_add name="_bx_courses_txt_status_hidden"><![CDATA[Этот курс был скрыт.]]></string_add>
+	<string_add name="_bx_courses_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (пожизненно)]]></string_add>
 </resources>

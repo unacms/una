@@ -242,6 +242,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
                 'txt_n_unit' => '_bx_spaces_txt_n_unit',
                 'txt_buy_title' => '_bx_spaces_grid_action_title_buy_title',
                 'txt_cart_item_title' => '_bx_spaces_txt_cart_item_title',
+                'txt_cart_item_title_lifetime' => '_bx_spaces_txt_cart_item_title_lifetime',
                 'txt_subscribe_title' => '_bx_spaces_grid_action_title_subscribe_title',
                 'popup_title_price_add' => '_bx_spaces_popup_title_price_add',
                 'popup_title_price_edit' => '_bx_spaces_popup_title_price_edit',
