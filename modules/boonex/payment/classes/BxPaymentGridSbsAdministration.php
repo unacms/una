@@ -77,7 +77,9 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
     
     protected function _getCellDateNext($mixedValue, $sKey, $aField, $aRow)
     {
-        if(empty($mixedValue) || (is_numeric($mixedValue) && (int)$mixedValue < $this->_iNow))
+        if(empty($mixedValue))
+            return parent::_getCellDefault(_t('_never'), $sKey, $aField, $aRow);
+        else if(is_numeric($mixedValue) && (int)$mixedValue < $this->_iNow)
             return parent::_getCellDefault(_t('_uknown'), $sKey, $aField, $aRow);
 
         return $this->_getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow);

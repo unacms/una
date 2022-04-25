@@ -371,6 +371,7 @@
     <string name="_bx_courses_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Извините, произошла ошибка. Вы не можете принять участие в курсе. Приглашение адресовано не Вам.]]></string>
     <string name="_bx_courses_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_courses_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
+    <string name="_bx_courses_txt_cart_item_title_lifetime"><![CDATA[{0}: {1} (пожизненно)]]></string>
 
     <string name="_bx_courses_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
     <string name="_bx_courses_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>

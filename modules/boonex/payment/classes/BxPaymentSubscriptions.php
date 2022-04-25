@@ -383,14 +383,22 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
             return false;
 
         $aItem = array_shift($aInfo['items']);
+        $iItemPeriod = (int)$aItem['period_recurring'];
+        $sItemPeriodUnit = $aItem['period_unit_recurring'];
 
-        $sInterval = $this->_getInterval((int)$aItem['period_recurring'], $aItem['period_unit_recurring']);
+        $iDateNext = 0;
+        if(!empty($iItemPeriod) && !empty($sItemPeriodUnit)) {
+            $sInterval = $this->_getInterval($iItemPeriod, $sItemPeriodUnit);
+            if(empty($sInterval))
+                return false;
 
-        $oDate = date_create('@' . $aSubscription['date_next']);
-        date_add($oDate, new DateInterval($sInterval));
+            $oDate = date_create('@' . $aSubscription['date_next']);
+            date_add($oDate, new DateInterval($sInterval));
+            $iDateNext = date_format($oDate, 'U');
+        }
 
         $this->_oModule->_oDb->updateSubscription(array_merge(array(
-            'date_next' => date_format($oDate, 'U'),
+            'date_next' => $iDateNext,
             'pay_attempts' => 0,
             'status' => BX_PAYMENT_SBS_STATUS_ACTIVE
         ), $aParams), array(

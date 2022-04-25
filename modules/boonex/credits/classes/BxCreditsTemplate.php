@@ -150,9 +150,13 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
         if(!empty($aData['currency']['sign']))
             $sCurrencySign = $aData['currency']['sign'];
 
-        $sPeriod = _t('_bx_credits_txt_subscribe_period_unit_' . $aData['period_unit']);
-        if((int)$aData['period'] > 1);
-            $sPeriod = _t('_bx_credits_txt_subscribe_period_mask', $aData['period'], $sPeriod);
+        if(!empty($aData['period']) && !empty($aData['period_unit'])) {
+            $sPeriod = _t('_bx_credits_txt_subscribe_period_unit_' . $aData['period_unit']);
+            if((int)$aData['period'] > 1);
+                $sPeriod = _t('_bx_credits_txt_subscribe_period_mask', $aData['period'], $sPeriod);
+        }
+        else
+            $sPeriod = _t('_bx_credits_txt_subscribe_lifetime');
 
         $sInclude = '';
         $sInclude .= $this->addJs(array('subscribe.js'), $bDynamic);

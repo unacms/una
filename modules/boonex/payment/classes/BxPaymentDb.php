@@ -516,7 +516,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
                 $sSelectClause .= ", `ttp`.`client_id`, `ttp`.`seller_id`, `ttp`.`type`, `ttp`.`provider`, `ttp`.`amount`, `ttp`.`order`";
                 $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` INNER JOIN `" . $this->_sPrefix . "providers` AS `tp` ON `ttp`.`provider`=`tp`.`name` AND `tp`.`time_tracker`='1'";
-                $sWhereClause = " AND `ts`.`date_next`<=UNIX_TIMESTAMP() AND (`ts`.`status`=:status_active OR `ts`.`status`=:status_trial OR (`ts`.`status`=:status_unpaid AND `ts`.`pay_attempts`<:pay_attempts_max AND DATE_ADD(FROM_UNIXTIME(`ts`.`date_next`), INTERVAL `ts`.`pay_attempts`*:pay_attempts_interval SECOND)<=NOW()))";
+                $sWhereClause = " AND `ts`.`date_next`<>0 AND `ts`.`date_next`<=UNIX_TIMESTAMP() AND (`ts`.`status`=:status_active OR `ts`.`status`=:status_trial OR (`ts`.`status`=:status_unpaid AND `ts`.`pay_attempts`<:pay_attempts_max AND DATE_ADD(FROM_UNIXTIME(`ts`.`date_next`), INTERVAL `ts`.`pay_attempts`*:pay_attempts_interval SECOND)<=NOW()))";
                 break;
         }
 

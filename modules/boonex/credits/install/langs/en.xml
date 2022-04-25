@@ -251,7 +251,8 @@
 
     <!-- Subscribe process -->
     <string name="_bx_credits_txt_subscribe"><![CDATA[Subscribe]]></string>
-    <string name="_bx_credits_txt_subscribe_for"><![CDATA[Subscribe for:]]></string>    
+    <string name="_bx_credits_txt_subscribe_for"><![CDATA[Subscribe for:]]></string>
+    <string name="_bx_credits_txt_subscribe_lifetime"><![CDATA[lifetime]]></string>    
     <string name="_bx_credits_txt_subscribe_period_mask"><![CDATA[{0} {1}]]></string>
     <string name="_bx_credits_txt_subscribe_period_unit_year"><![CDATA[yr.]]></string>
     <string name="_bx_credits_txt_subscribe_period_unit_month"><![CDATA[mo.]]></string>

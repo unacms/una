@@ -76,6 +76,7 @@
 	<string name="_N_points"><![CDATA[<span>{0}</span> плюсов]]></string>
 	<string name="_Name"><![CDATA[Имя]]></string>
 	<string name="_Name is required"><![CDATA[Необходимо указать имя]]></string>
+        <string name="_never"><![CDATA[никогда]]></string>
 	<string name="_No"><![CDATA[Нет]]></string>
 	<string name="_None"><![CDATA[Никакой]]></string>
 	<string name="_No actions allowed for this membership"><![CDATA[Нет разрешённых действий для данного членства]]></string>
