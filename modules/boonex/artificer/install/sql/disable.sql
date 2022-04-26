@@ -19,4 +19,4 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 
 -- injections
-DELETE FROM `sys_injections` WHERE `name` = @sName;
+DELETE FROM `sys_injections` WHERE `name` LIKE 'bx_artificer_%';

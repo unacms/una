@@ -15,7 +15,7 @@ class BxTasksUpdater extends BxDolStudioUpdater
     {
         if($sOperation == 'install') {
             if(!$this->oDb->isFieldExists('bx_tasks_tasks', 'cf'))
-                $this->oDb->query("ALTER TABLE `bx_tasks_tasks` ADD `cf` int(11) NOT NULL default '1' AFTER `featured`");
+                $this->oDb->query("ALTER TABLE `bx_tasks_tasks` ADD `cf` int(11) NOT NULL default '1' AFTER `expired`");
 
             if(!$this->oDb->isFieldExists('bx_tasks_cmts', 'cmt_cf'))
                 $this->oDb->query("ALTER TABLE `bx_tasks_cmts` ADD `cmt_cf` int(11) NOT NULL default '1' AFTER `cmt_pinned`");
