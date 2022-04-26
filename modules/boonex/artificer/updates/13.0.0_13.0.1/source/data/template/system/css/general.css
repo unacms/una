@@ -4,6 +4,23 @@ import url(../../../../../../../template/css/general.css);
 
 
 /*--- Toolbar ---*/
+.bx-toolbar-anim {
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out
+}
+.bx-toolbar-reset {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0)
+}
+.bx-toolbar-up {
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%)
+}
+
 .bx-toolbar-item.bx-ti-search .bx-tis-button-hidden {
     display: none;
 }
