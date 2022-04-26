@@ -41,6 +41,15 @@ module.exports = {
     'border-blue-500', 'border-opacity-70', 
     'focus:border-blue-500', 'focus:border-opacity-70',
 
+    'col-red1', 'col-red1-dark', 'col-red2', 'col-red2-dark', 'col-red3', 'col-red3-dark',
+    'bg-col-red1', 'bg-col-red1-dark', 'bg-col-red2', 'bg-col-red2-dark', 'bg-co3-red1', 'bg-col-red3-dark',
+    'col-green1', 'col-green1-dark', 'col-green2', 'col-green2-dark', 'col-green3', 'col-green3-dark',
+    'bg-col-green1', 'bg-col-green1-dark', 'bg-col-green2', 'bg-col-green2-dark', 'bg-co3-green1', 'bg-col-green3-dark',
+    'col-blue1', 'col-blue1-dark', 'col-blue2', 'col-blue2-dark', 'col-blue3', 'col-blue3-dark',
+    'bg-col-blue1', 'bg-col-blue1-dark', 'bg-col-blue2', 'bg-col-blue2-dark', 'bg-co3-blue1', 'bg-col-blue3-dark',
+    'col-gray', 'col-gray-dark',
+    'bg-col-gray', 'bg-col-gray-dark',
+
     'bx-def-box-sizing', 'bx-def-align-center',  'bx-def-valign-center', 'bx-def-centered', 
     'bx-def-margin', 'bx-def-margin-left', 'bx-def-margin-left-auto', 'bx-def-margin-right', 'bx-def-margin-top', 'bx-def-margin-top-auto', 'bx-def-margin-bottom', 'bx-def-margin-leftright', 'bx-def-margin-leftright-neg', 'bx-def-margin-topbottom', 'bx-def-margin-topbottom-neg', 'bx-def-margin-lefttopright', 'bx-def-margin-rightbottomleft', 
     'bx-def-margin-sec', 'bx-def-margin-sec-left', 'bx-def-margin-sec-left-auto', 'bx-def-margin-sec-right', 'bx-def-margin-sec-top', 'bx-def-margin-sec-top-auto', 'bx-def-margin-sec-bottom', 'bx-def-margin-sec-leftright', 'bx-def-margin-sec-leftright-neg', 'bx-def-margin-sec-topbottom', 'bx-def-margin-sec-topbottom-neg', 'bx-def-margin-sec-lefttopright', 'bx-def-margin-sec-rightbottomleft', 

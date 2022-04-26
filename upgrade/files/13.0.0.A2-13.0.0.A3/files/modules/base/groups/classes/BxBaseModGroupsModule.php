@@ -795,11 +795,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         
         $aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
 
+        $sTitle = '';
+        if(!empty($aItem['period']) && !empty($aItem['period_unit']))
+            $sTitle = _t($CNF['T']['txt_cart_item_title'], $oGroupProfile->getDisplayName(), $aRoles[$aItem['role_id']], $aItem['period'], $aItem['period_unit']);
+        else
+            $sTitle = _t($CNF['T']['txt_cart_item_title_lifetime'], $oGroupProfile->getDisplayName(), $aRoles[$aItem['role_id']]);
+
         return array (
             'id' => $aItem['id'],
             'author_id' => $aGroupProfile[$CNF['FIELD_AUTHOR']],
             'name' => $aItem['name'],
-            'title' => _t($CNF['T']['txt_cart_item_title'], $oGroupProfile->getDisplayName(), $aRoles[$aItem['role_id']], $aItem['period'], $aItem['period_unit']),
+            'title' => $sTitle,
             'description' => '',
             'url' => $oGroupProfile->getUrl(),
             'price_single' => $aItem['price'],
