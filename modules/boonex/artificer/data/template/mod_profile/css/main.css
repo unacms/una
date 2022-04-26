@@ -128,6 +128,9 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 
 
 /*--- Profile Cover ---*/
+.bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-cover-bg  {
+    height: 50%;
+}
 .bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-cover-info {
     padding-top: 1rem;
 }
