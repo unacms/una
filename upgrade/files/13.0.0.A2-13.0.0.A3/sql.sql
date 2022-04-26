@@ -1,7 +1,8 @@
 
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 -- Options: Hidden
 
--- TODO: move install time to sys_modules table
 DELETE FROM `sys_options` WHERE `name` = 'sys_install_time';
 
 DELETE FROM `sys_options` WHERE `name` IN('sys_quill_insert_as_plain_text', 'sys_quill_toolbar_mini', 'sys_quill_toolbar_standard', 'sys_quill_toolbar_full', 'sys_csp_frame_ancestors', 'sys_notify_to_approve_by_role');
@@ -174,8 +175,8 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 
 DELETE FROM `sys_objects_storage` WHERE `object` IN('sys_wiki_files', 'sys_wiki_images_resized');
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('sys_wiki_files', 'Local', '', 360, 2592000, 3, 'sys_wiki_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('sys_wiki_images_resized', 'Local', '', 360, 2592000, 3, 'sys_wiki_images_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('sys_wiki_files', @sStorageEngine, '', 360, 2592000, 3, 'sys_wiki_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_wiki_images_resized', @sStorageEngine, '', 360, 2592000, 3, 'sys_wiki_images_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 
 -- Forms
@@ -374,6 +375,8 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_application', 'system', '_sys_menu_set_title_application', 0),
 ('sys_site_panel', 'system', '_sys_menu_set_title_panel', 0);
 
+
+UPDATE `sys_menu_items` SET `icon` = 'home col-gray' WHERE `icon` = 'home col-gray-dark' AND `set_name` = 'sys_site' AND `name` = 'home';
 
 -- panel menu
 DELETE FROM `sys_menu_items` WHERE `set_name` = 'sys_site_panel';
