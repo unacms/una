@@ -2,8 +2,6 @@ SET @sName = 'bx_timeline';
 
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_timeline_cache`;
-
 CREATE TABLE IF NOT EXISTS `bx_timeline_cmts_notes` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',

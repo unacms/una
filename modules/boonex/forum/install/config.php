@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_forum',
     'title' => 'Discussions',
     'note' => 'Discussions module.',
-    'version' => '13.0.1.DEV',
+    'version' => '13.0.2.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
