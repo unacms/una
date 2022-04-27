@@ -2110,7 +2110,7 @@ function bx_get_device_pixel_ratio()
  */
 function bx_log($sObject, $mixed)
 {
-    if ($o = BxDolLogs::getObjectInstance($sObject))
+    if (class_exists('BxDolLogs', true) && $o = BxDolLogs::getObjectInstance($sObject))
         return $o->add($mixed);
     else
         return false;
