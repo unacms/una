@@ -941,7 +941,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         if ($aHeaders)
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
 
-        if (0 === strpos($sFileUrl, BX_DOL_URL_ROOT)) {
+        if (defined('BX_DOL_URL_ROOT') && 0 === strpos($sFileUrl, BX_DOL_URL_ROOT)) {
             $sAllCookies = '';
             foreach($_COOKIE as $sKey => $mValue){
                 if(is_array($mValue)){
