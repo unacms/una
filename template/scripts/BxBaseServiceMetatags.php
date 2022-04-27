@@ -52,16 +52,15 @@ class BxBaseServiceMetatags extends BxDol
     	$bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
 
         $aContextInfo = bx_get_page_info();
-        if (isset($aContextInfo['context_module']) && isset($aContextInfo['profile_context_id'])){
-            $sResult = BxDolMetatags::getObjectInstance($sObject)->getKeywordsCloud($mixedSection, $iMaxCount, false, ['context_id' => $aContextInfo['profile_context_id']]);
-        }
-        else{
+        if ($aContextInfo !== false)
+            $sResult = BxDolMetatags::getObjectInstance($sObject)->getKeywordsCloud($mixedSection, $iMaxCount, false, ['context_id' => $aContextInfo['context_profile_id']]);
+        else
             $sResult = BxDolMetatags::getObjectInstance($sObject)->getKeywordsCloud($mixedSection, $iMaxCount);
-        }
-        if(empty($sResult))
-			return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
 
-		return $sResult;
+        if(empty($sResult))
+            return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
+
+        return $sResult;
     }
 
     public function serviceBrowseLabels($aParams = array())

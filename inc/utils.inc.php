@@ -941,7 +941,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         if ($aHeaders)
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
 
-        if (defined('BX_DOL_URL_ROOT') && 0 === strpos($sFileUrl, BX_DOL_URL_ROOT)) {
+        if (0 === strpos($sFileUrl, BX_DOL_URL_ROOT)) {
             $sAllCookies = '';
             foreach($_COOKIE as $sKey => $mValue){
                 if(is_array($mValue)){
@@ -1324,20 +1324,29 @@ function bx_get_base_url($sPageLink)
 
 function bx_get_page_info()
 {
-    $a = bx_get_base_url_inline();
-    $oPage = BxDolPage::getObjectInstanceByURI($a[1]['i']);
-    $oServ = bx_instance('BxTemplServices');
-    if ($oServ->serviceIsModuleContext($oPage->getModule())){
-        $oProfile = BxDolProfile::getInstanceByContentAndType($a[1]['id'], $oPage->getModule());
-        return ['context_module' => $oPage->getModule(), 'context_id' => isset($a[1]['id']) ? $a[1]['id'] : '', 'profile_context_id' => $oProfile->id()];
+    list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+
+    if(isset($aPageParams['i'], $aPageParams['id']) && ($oPage = BxDolPage::getObjectInstanceByURI($aPageParams['i'])) !== false) {
+        $sPageModule = $oPage->getModule();
+        if(bx_srv('system', 'is_module_context', [$sPageModule]) && ($oProfile = BxDolProfile::getInstanceByContentAndType($aPageParams['id'], $sPageModule)) !== false)
+            return [
+                'context_module' => $sPageModule, 
+                'context_id' => $aPageParams['id'], 
+                'context_profile_id' => $oProfile->id()
+            ];
     }
-    
-    if (isset($a[1]['profile_id'])){
-        $oProfile = BxDolProfile::getInstance($a[1]['profile_id']);
-        if($oProfile  && $oServ->serviceIsModuleContext($oProfile->getModule())){
-            return ['context_module' => $oProfile->getModule(), 'context_id' => $oProfile->getContentId(), 'profile_context_id' => $a[1]['profile_id']];
-        }
+
+    if(isset($aPageParams['profile_id']) && ($oProfile = BxDolProfile::getInstance($aPageParams['profile_id'])) !== false) {
+        $sProfileModule = $oProfile->getModule();
+        if(bx_srv('system', 'is_module_context', [$sProfileModule]))
+            return [
+                'context_module' => $sProfileModule, 
+                'context_id' => $oProfile->getContentId(), 
+                'context_profile_id' => $aPageParams['profile_id']
+            ];
     }
+
+    return false;
 }
 
 function bx_get_location_bounds_latlng($fLatitude, $fLongitude, $iRadiusInKm)
@@ -2110,7 +2119,7 @@ function bx_get_device_pixel_ratio()
  */
 function bx_log($sObject, $mixed)
 {
-    if (class_exists('BxDolLogs', true) && $o = BxDolLogs::getObjectInstance($sObject))
+    if ($o = BxDolLogs::getObjectInstance($sObject))
         return $o->add($mixed);
     else
         return false;

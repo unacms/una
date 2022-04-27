@@ -70,10 +70,10 @@ class BxBaseCategory extends BxDolCategory
     public function getCategoriesList($bDisplayEmptyCats = true, $bAsArray = false)
     {
         $aContextInfo = bx_get_page_info();
+
         $mProfileContextId = false;
-        if (isset($aContextInfo['context_module']) && isset($aContextInfo['profile_context_id'])){
-            $mProfileContextId = $aContextInfo['profile_context_id'];
-        }
+        if ($aContextInfo !== false)
+            $mProfileContextId = $aContextInfo['context_profile_id'];
         
         $a = BxDolForm::getDataItems($this->_aObject['list_name']);
         if (!$a)
