@@ -592,8 +592,20 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function getUrlForGooglePageSpeed ($sRule)
     {
-        $sUrl = urlencode(BX_DOL_URL_ROOT);
-        return 'http://pagespeed.googlelabs.com/#url=' . $sUrl . '&mobile=false&rule=' . $sRule;
+        if (defined('BX_DOL_URL_ROOT')) {
+            $sUrl = BX_DOL_URL_ROOT;
+        }
+        else {
+            $sUrl = 'http://';
+            if  (
+                (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) || 
+                (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == strtolower($_SERVER['HTTP_X_FORWARDED_PROTO'])) || 
+                getenv('UNA_HTTPS')
+            )
+                $sUrl = 'https://';
+            $sUrl .= $_SERVER['HTTP_HOST'] . str_replace('/install/index.php', '', $_SERVER['PHP_SELF']);
+        }
+        return 'https://pagespeed.web.dev/report?url=' . $sUrl;
     }
 
     protected function sendTestEmail ()
