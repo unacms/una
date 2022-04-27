@@ -1,5 +1,22 @@
 <?php
 
+    class BxDolTemplate2 extends BxDolTemplate {
+        public static function getInstance()
+        {
+            if(!isset($GLOBALS['bxDolClasses']['BxDolTemplate'])) {
+                $GLOBALS['bxDolClasses']['BxDolTemplate'] = new BxDolTemplate2();
+                $GLOBALS['bxDolClasses']['BxDolTemplate']->init();
+            }
+            return $GLOBALS['bxDolClasses']['BxDolTemplate'];
+        }
+        function getCssClassName()
+        {
+            return str_replace('_', '-', $this->_sName);
+        }
+    }
+    BxDolTemplate2::getInstance();
+
+
     if (!$this->oDb->isFieldExists('sys_keys', 'salt'))
         $this->oDb->query("ALTER TABLE `sys_keys` ADD `salt` varchar(255) NOT NULL AFTER `expire`");
 
