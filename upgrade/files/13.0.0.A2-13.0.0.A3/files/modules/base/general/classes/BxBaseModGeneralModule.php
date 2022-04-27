@@ -2391,12 +2391,12 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
     {
         $aContextInfo = bx_get_page_info();
+
         $mProfileContextId = false;
-        if (isset($aContextInfo['context_module']) && isset($aContextInfo['profile_context_id'])){
-            $mProfileContextId = $aContextInfo['profile_context_id'];
-        }
+        if ($aContextInfo !== false)
+            $mProfileContextId = $aContextInfo['context_profile_id'];
         
-		$oCategories = BxDolCategories::getInstance();
+        $oCategories = BxDolCategories::getInstance();
         if ($mProfileContextId)
             $aCats = $oCategories->getData([
                 'type' => 'by_module&context_with_num', 
