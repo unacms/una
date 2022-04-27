@@ -660,7 +660,7 @@ function uriGenerate ($sValue, $sTable, $sField, $sEmpty = '-', $sDivider = '-',
 function uriFilter ($s, $sEmpty = '-', $sDivider = '-')
 {
     if (BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
-        $s = get_mb_replace ('/[^\pL^\pN]+/u', $sDivider, $s); // unicode characters
+        $s = get_mb_replace ('/[^\pL^\pN^_]+/u', $sDivider, $s); // unicode characters
     else
         $s = get_mb_replace ('/([^\d^\w]+)/u', $sDivider, $s); // latin characters only
 
