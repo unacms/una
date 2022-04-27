@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_markerio',
     'title' => 'Marker.io',
     'note' => 'Marker.io integration module.',
-    'version' => '13.0.0',
+    'version' => '13.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.x.x'
+        '13.0.x'
     ),
 
     /**
