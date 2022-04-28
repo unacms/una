@@ -5356,7 +5356,8 @@ INSERT INTO `sys_pages_layouts` (`id`, `name`, `icon`, `title`, `template`, `cel
 (17, 'topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.png', '_sys_layout_topbottom_area_col1_col5', 'layout_topbottom_area_col1_col5.html', 4),
 (18, '1_column_thin', 'layout_1_column_thin.png', '_sys_layout_1_column_thin', 'layout_1_column_thin.html', 1),
 (19, '1_column_half', 'layout_1_column_half.png', '_sys_layout_1_column_half', 'layout_1_column_half.html', 1),
-(20, '1_column_wiki', 'layout_1_column_wiki.png', '_sys_layout_1_column_wiki', 'layout_1_column_wiki.html', 1);
+(20, '1_column_wiki', 'layout_1_column_wiki.png', '_sys_layout_1_column_wiki', 'layout_1_column_wiki.html', 1),
+(21, 'topbottom_area_col2_col5_col3', 'layout_topbottom_area_col2_col5_col3.png', '_sys_layout_topbottom_area_col2_col5_col3', 'layout_topbottom_area_col2_col5_col3.html', 5);
 
 CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
   `id` int(11) NOT NULL,

@@ -2715,6 +2715,7 @@
 	<string name="_sys_layout_topbottom_area_bar_right"><![CDATA[Верхнее и нижнее пространства с правой линейкой посередине]]></string>
         <string name="_sys_layout_topbottom_area_col1_col3_col2"><![CDATA[Верхнее и нижнее пространства с 3 столбцами (1:3:2) посередине]]></string>
         <string name="_sys_layout_topbottom_area_col1_col5"><![CDATA[Верхнее и нижнее пространства с 2 столбцами (1:5) посередине]]></string>
+        <string name="_sys_layout_topbottom_area_col2_col5_col3"><![CDATA[Верхнее и нижнее пространства с 3 столбцами (2:5:3) посередине]]></string>
 	<string name="_sys_loading"><![CDATA[Загрузка...]]></string>
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
 	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>

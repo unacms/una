@@ -2727,6 +2727,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_topbottom_area_bar_right"><![CDATA[Top&bottom areas with right bar in the middle]]></string>	
         <string name="_sys_layout_topbottom_area_col1_col3_col2"><![CDATA[Top&bottom areas with 3 columns (1:3:2) in the middle]]></string>
         <string name="_sys_layout_topbottom_area_col1_col5"><![CDATA[Top&bottom areas with 2 columns (1:5) in the middle]]></string>
+        <string name="_sys_layout_topbottom_area_col2_col5_col3"><![CDATA[Top&bottom areas with 3 columns (2:5:3) in the middle]]></string>
 	<string name="_sys_loading"><![CDATA[Loading...]]></string>
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
 	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>
