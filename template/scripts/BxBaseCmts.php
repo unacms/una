@@ -394,9 +394,9 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
-        if ($oProfileAuthor->isActive() || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR))) {
+        if(($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR])) {
             $sContent = $this->_getContent($aCmt);
-        } 
+        }
         else {
             $sClass .= ' cmt-author-not-active';
             $sContent = _t('_hidden_comment', BxDolProfileUndefined::getInstance()->getDisplayName());
