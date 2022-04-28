@@ -629,18 +629,22 @@ class BxForumGrid extends BxTemplGrid
 
     protected function _getSqlWhereFromConditionAuthorComment($aCnd)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $aEntriesIds = $this->_oModule->_oDb->getComments(array('type' => 'entries_author_search', 'author' => $aCnd['val']));
         if(!empty($aEntriesIds) && is_array($aEntriesIds))
-            return array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+            return array('tbl' => $CNF['TABLE_ENTRIES'], 'fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
 
         return '';
     }
 
     protected function _getSqlWhereFromConditionKeywordComment($aCnd)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $aEntriesIds = $this->_oModule->_oDb->getComments(array('type' => 'entries_keyword_search', 'keyword' => $aCnd['val']));
         if(!empty($aEntriesIds) && is_array($aEntriesIds))
-            return array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+            return array('tbl' => $CNF['TABLE_ENTRIES'], 'fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
 
         return '';
     }
