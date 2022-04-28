@@ -1,10 +1,10 @@
-<div class="bx-base-text-attachments bx-market-attachments">
+<div class="bx-base-text-attachments bx-market-attachments flex flex-wrap">
     <bx_repeat:attachments>
         <bx_if:show_separator>
             <div class="bx-market-attachment-separator bx-base-text-attachment bx-market-attachment w-full pl-2 box-border"><div class="text-xl pt-4"> __type__</div></div>
         </bx_if:show_separator>
-        <div class="bx-base-text-attachment-wrp inline-block w-1/4 min-w-48">
-            <div class="bx-base-text-attachment bx-market-attachment bx-def-box bx-def-color-bg-box bx-def-round-corners relative m-2 __class__">
+        <div class="bx-base-text-attachment bx-market-attachment __class__ inline-block w-1/4 min-w-48">
+            <div class="bx-base-text-attachment-cnt bx-def-box bx-def-color-bg-box bx-def-round-corners relative m-2">
                 <bx_if:main>
                     <div class="bx-market-a-main absolute top-1 right-2 text-2xl">
                         <i class="sys-icon check col-green3" title="<bx_text_attribute:_bx_market_txt_most_current_version />"></i>

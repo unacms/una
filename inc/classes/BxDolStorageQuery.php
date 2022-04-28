@@ -335,7 +335,7 @@ class BxDolStorageQuery extends BxDolDb
 
             $sJoin .= ')';
 
-            $sOrder = ' ORDER BY `g`.`order` ASC';
+            $sOrder = ' ORDER BY `g`.`order` ASC, `g`.`created` DESC';
         } 
         else {
             if (is_array($mixedProfileId) && $mixedProfileId) {
