@@ -584,6 +584,38 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_serviceBrowseQuick($aProfiles, $iStart, $iLimit);
     }
 
+    public function serviceRoles ($iContentId = 0, $iRole = BX_BASE_MOD_GROUPS_ROLE_COMMON)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!$iContentId)
+            return false;
+
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+        if(!$oGroupProfile)
+            return false;
+
+        $iStart = (int)bx_get('start');
+        $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
+        if(!$iLimit)
+            $iLimit = 4;
+
+        $aProfiles = $this->_oDb->getRoles([
+            'type' => 'fan_pids_by_group_pid', 
+            'group_profile_id' => $oGroupProfile->id(), 
+            'role' => $iRole,
+            'start' => $iStart,  
+            'limit' => $iLimit + 1
+        ]);
+
+        if(empty($aProfiles) || !is_array($aProfiles))
+            return false;
+
+        return $this->_serviceBrowseQuick($aProfiles, $iStart, $iLimit);
+    }
+
     public function serviceBrowseJoinedEntries ($iProfileId = 0, $bDisplayEmptyMsg = false)
     {
         if (!$iProfileId)
