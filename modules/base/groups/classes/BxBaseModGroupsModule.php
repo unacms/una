@@ -584,7 +584,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_serviceBrowseQuick($aProfiles, $iStart, $iLimit);
     }
 
-    public function serviceRoles ($iContentId = 0, $iRole = BX_BASE_MOD_GROUPS_ROLE_COMMON)
+    public function serviceMembersByRole ($iContentId = 0, $iRole = BX_BASE_MOD_GROUPS_ROLE_COMMON)
     {
         $CNF = &$this->_oConfig->CNF;
 
