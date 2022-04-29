@@ -477,6 +477,18 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
+            'bx_if:show_title_as_tag' => [
+                'condition' => !$bUseAsAuthor,
+                'content' => [
+                    'title' => $sTitle
+                ]
+            ],
+            'bx_if:show_title_as_text' => [
+                'condition' => $bUseAsAuthor,
+                'content' => [
+                    'title' => $sTitle
+                ]
+            ],
             'bx_if:show_avatar' => [
                 'condition' => $bTmplVarsShowAvatar,
                 'content' => $aTmplVarsShowAvatar

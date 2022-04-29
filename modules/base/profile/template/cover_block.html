@@ -25,7 +25,12 @@
                 </div>
                 <div class="bx-base-pofile-cover-user bx-def-margin-sec-topbottom">
                     <div class="bx-base-profile-cover-title-bages">
-                        <h1 class="bx-def-unit-info">__title__ </h1>
+                        <bx_if:show_title_as_tag>
+                            <h1 class="bx-def-unit-info">__title__</h1>
+                        </bx_if:show_title_as_tag>
+                        <bx_if:show_title_as_text>
+                            <div class="bx-def-unit-info bx-def-font-h1">__title__</div>
+                        </bx_if:show_title_as_text>
                         <div class="bx-base-profile-cover-bages bx-base-bages-container">__badges__</div>
                     </div>
                     <div class="bx-base-pofile-cover-actions bx-def-padding-sec-leftright bx-def-box-sizing" onclick="event.stopPropagation();">__action_menu__</div>
