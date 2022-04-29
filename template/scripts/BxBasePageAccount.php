@@ -56,22 +56,46 @@ class BxBasePageAccount extends BxTemplPage
             $sInformerMsg = '';
             $oProfile = BxDolProfile::getInstance($iSwitchToProfileId);
 
-            if ($oProfile && BxDolService::call($oProfile->getModule(), 'act_as_profile')) {
+            if($oProfile && BxDolService::call($oProfile->getModule(), 'act_as_profile')) {
+                $mixedRes = bx_srv('system', 'switch_profile', [$oProfile->id()], 'TemplServiceAccount');
+                if($mixedRes === true) {
+                    if(bx_get('redirect') !== false) {
+                        $sLocation = '';
 
-                $mixedRes = bx_srv('system','switch_profile',[$oProfile->id()], 'TemplServiceAccount');
-                if (true === $mixedRes) {
-                    $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
-                    if ((int)bx_get('redirect_back') && isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) {
-                        header("Location:" . $_SERVER['HTTP_REFERER']);
-                        exit;
+                        switch(bx_process_input(bx_get('redirect'))) {
+                            case 'back':
+                                if(isset($_SERVER['HTTP_REFERER']) && mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT) === 0)
+                                    $sLocation = $_SERVER['HTTP_REFERER'];
+                                break;
+
+                            case 'home':
+                                $sLocation = BX_DOL_URL_ROOT;
+                                break;
+
+                            case 'profile':
+                                $sLocation = $oProfile->getUrl();
+                                break;
+
+                            case 'custom':
+                                $sLocation = getParam('sys_account_switch_to_profile_redirect_custom');
+                                if(mb_stripos($sLocation, BX_DOL_URL_ROOT) !== 0)
+                                    $sLocation = '';
+                                break;
+                        }
+
+                        if($sLocation != '') {
+                            header('Location: ' . $sLocation);
+                            exit;
+                        }
                     }
+
+                    $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
                 }
-                else {
+                else
                     $sInformerMsg = $mixedRes;
-                }
 
                 $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-                if ($oInformer)
+                if($oInformer)
                     $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), true === $mixedRes ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
 
             }

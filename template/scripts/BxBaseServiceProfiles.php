@@ -488,7 +488,7 @@ class BxBaseServiceProfiles extends BxDol
                     'content' => array(
                         'id' => $aProfile['id'], 
                         'button_title' => $sButtonTitle ? $sButtonTitle : _t('_sys_txt_switch_profile_context'),
-                        'url_switch' => $sUrlProfileAction ? str_replace('{profile_id}', $aProfile['id'], $sUrlProfileAction) : BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $aProfile['id'], 'redirect_back' => 1))
+                        'url_switch' => $sUrlProfileAction ? str_replace('{profile_id}', $aProfile['id'], $sUrlProfileAction) : BxDolProfile::getSwitchToProfileRedirectUrl($aProfile['id'])
                     ),
                 ),
                 'unit' => BxDolService::call($aProfile['type'], 'profile_unit', array($aProfile['content_id'], array('template' => $sProfileTemplate))),

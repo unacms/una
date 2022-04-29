@@ -567,7 +567,15 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         return true;
     }
-    
+
+    public static function getSwitchToProfileRedirectUrl($iProfileId)
+    {
+        return BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', [
+            'switch_to_profile' => $iProfileId, 
+            'redirect' => getParam('sys_account_switch_to_profile_redirect')
+        ]);
+    }
+
     /**
      * Display informer message if it is possible to switch to this profile
      */
@@ -589,18 +597,12 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $bCanSwitch = ($iSwitchToAccountId == $iViewerAccountId || $bAllowSwitchToAnyProfile);
         bx_alert('account', 'check_switch_context', $iSwitchToAccountId, $iViewerProfileId, array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
 
-        if (!$bCanSwitch ||  $iViewerProfileId == $iSwitchToProfileId)
+        if(!$bCanSwitch ||  $iViewerProfileId == $iSwitchToProfileId)
             return;
 
         $oInformer = BxDolInformer::getInstance($oTemplate);
-        if ($oInformer){
-            if ($iSwitchToAccountId == $iViewerAccountId){
-                $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id(), 'redirect_back' => 1))), BX_INFORMER_INFO);
-            }
-            else{
-                $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_to_another_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id(), 'redirect_back' => 1))), BX_INFORMER_INFO);
-            }
-        }
+        if($oInformer)
+            $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change' . ($iSwitchToAccountId != $iViewerAccountId ? '_to_another' : '') . '_suggestion', self::getSwitchToProfileRedirectUrl($this->id())), BX_INFORMER_INFO);
     }
 
     /**

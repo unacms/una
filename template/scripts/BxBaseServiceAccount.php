@@ -356,7 +356,18 @@ class BxBaseServiceAccount extends BxDol
 
         return $aResult;
     }
-    
+
+    public function serviceGetOptionsSwitchToProfileRedirect()
+    {
+        $aResult = array();
+
+        $aChoices = array('back', 'home', 'profile', 'custom');
+        foreach($aChoices as $sChoice) 
+            $aResult[] = array('key' => $sChoice, 'value' => _t('_adm_stg_cpt_option_value_sys_account_switch_to_profile_redirect_' . $sChoice));
+
+        return $aResult;
+    }
+
     public function serviceGetOptionsPruningInterval()
     {
         $aResult = array();
