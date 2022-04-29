@@ -36,7 +36,8 @@ class BxTemplMenuSidebarSite extends BxTemplMenu
             $aResult['onclick'] = "javascript:return bx_sidebar_dropdown_toggle(this)";
             $aResult['class_add'] .= ' bx-si-dropdown-has';
 
-            $aTmplVarsSubmenu['bx_repeat:submenu_items'] = BxDolMenu::getObjectInstance($aResult['submenu_object'])->getMenuItems(); 
+            if(($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false)
+                $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems(); 
         }
 
         $aResult['bx_if:show_arrow'] = array (
