@@ -3200,6 +3200,9 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if(empty($CNF['PARAM_AUTO_APPROVE']) || getParam($CNF['PARAM_AUTO_APPROVE']) == 'on')
+            return;
+
         $aRecipients = [];
         if(getParam('sys_notify_to_approve_by_role') == 'on' && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
             $iContextProfileId = abs((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
