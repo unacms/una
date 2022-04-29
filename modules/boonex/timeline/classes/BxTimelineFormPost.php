@@ -265,6 +265,11 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $this->_bVisibilityAutoselect = $bVisibilityAutoselect;
     }
 
+    protected function genCustomRowObjectCf(&$aInput)
+    {
+        return parent::genCustomRowCf($aInput);
+    }
+
     protected function _getPrivacyFields($aKeysF2O = array())
     {
         if(empty($aKeysF2O))
