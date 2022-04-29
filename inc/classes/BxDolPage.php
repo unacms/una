@@ -602,7 +602,12 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
         return $this->_isVisiblePage($this->_aObject);
     }
-    
+
+    public function isVisiblePageSubmenu ()
+    {
+        return $this->_aObject['submenu'] != 'disabled';
+    }
+
     public function isEditAllowed ()
     {
         return false;

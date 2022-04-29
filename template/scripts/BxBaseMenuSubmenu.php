@@ -118,15 +118,6 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     {
         return $this->isVisible() && $this->_oObjectSubmenu->getTemplateId() == BX_MENU_TEMPLATE_SUBMENU_MORE_AUTO ? 'bx-menu-more-auto' : '';
     }
-    
-    /**
-     * Get class
-     * @return class
-     */
-    public function getClassHidden ()
-    {
-        return !$this->isVisible() ? 'bx-menu-main-bar-hidden' : '';
-    }
 
     /**
      * Get menu code.

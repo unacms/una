@@ -1693,9 +1693,20 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     $sRet = $oMenu->getClass();
                 break;
             case 'site_submenu_hidden':
+                $sClass = 'bx-menu-main-bar-hidden';
+
+                $oPage = BxDolPage::getObjectInstanceByURI();
+                if($oPage !== false && !$oPage->isVisiblePageSubmenu()) {
+                    $sRet = $sClass;
+                    break;
+                }
+
                 $oMenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-                if($oMenu)
-                    $sRet = $oMenu->getClassHidden();
+                if($oMenu !== false && !$oMenu->isVisible()) {
+                    $sRet = $sClass;
+                    break;
+                }
+
                 break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();
