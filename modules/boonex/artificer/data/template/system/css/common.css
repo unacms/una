@@ -19,11 +19,16 @@ import url(../../../../../../../template/css/common.css);
 .bx-clearfix:after {
     clear:both;
 }
+
+/*--- Application ---*/
 .bx-main.bx-pt-application .bx-menu-toolbar-padding {
     padding-top: 0;
 }
-.bx-main-content .bx-main-column .bx-def-page-width {
+.bx-main.bx-pt-application .bx-main-content .bx-main-column .bx-def-page-width {
     width: 100%;
+}
+.bx-main.bx-pt-application .bx-main-column.narrow.bx-mc-narrowed .bx-mc-cnt {
+    padding: 0;
 }
 
 /*--- Design Boxes ---*/

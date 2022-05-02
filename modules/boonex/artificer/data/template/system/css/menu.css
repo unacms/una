@@ -129,12 +129,45 @@ div.bx-popup-menu-main.sys-add-content ul {
     flex-direction: column;
 }
 
+/*--- Pannel Menu ---*/
+.bx-menu-panel {}
+
+.bx-menu-panel .bx-menu-panel-item .bx-mpi-toggle-hidden {
+    position: absolute;
+    display: none;
+}
+
+.bx-mc-narrowed .bx-menu-panel li .bx-stl-mil {
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    padding: 0;
+}
+.bx-mc-narrowed .bx-menu-panel li .bx-stl-mii {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+.bx-mc-narrowed .bx-menu-panel .bx-def-thumb-size {
+    width: 2rem;
+    height: 2rem;
+}
+.bx-mc-narrowed .bx-menu-panel .bx-profile-avatar-cnt {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
 /*--- Profile Stats/Followings Menu ---*/
 .bx-db-content .bx-profile-stats .bx-profile-avatar-cnt,
 .bx-db-content .bx-profile-stats .bx-menu-profile-stats,
 .bx-db-content.bx-content-padding-block .bx-menu-profile-stats,
 .bx-db-content.bx-content-padding-block .bx-menu-profile-followings {
     margin: -0.75rem;
+}
+.bx-main.bx-pt-application .bx-main-column.narrow .bx-menu-profile-stats,
+.bx-main.bx-pt-application .bx-main-column.narrow .bx-menu-profile-followings {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
 }
 
 /*--- Profile Followings Menu ---*/

@@ -6,6 +6,8 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
     const bottomMenuEl = document.querySelector('[sidebar-bottom-menu]');
     const mainContentEl = document.getElementById('main-content');
     if (expand) {
+        sidebarEl.classList.remove('bx-mc-narrowed');
+        sidebarEl.classList.add('bx-mc-expanded');
         sidebarEl.classList.add('lg:w-64');
         sidebarEl.classList.remove('lg:w-16');
         mainContentEl.classList.add('lg:ml-64');
@@ -14,6 +16,7 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
         document.querySelectorAll('#' + sidebarEl.getAttribute('id') + ' [sidebar-toggle-item]').forEach(sidebarToggleEl => {
             sidebarToggleEl.classList.remove('lg:hidden');
             sidebarToggleEl.classList.remove('lg:absolute');
+            sidebarToggleEl.classList.remove('bx-mpi-toggle-hidden');
         });
 
         // toggle multi level menu item initial and full text
@@ -27,7 +30,10 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
         bottomMenuEl.classList.remove('flex-col', 'space-y-4', 'p-2');
         bottomMenuEl.classList.add('space-x-4', 'p-4');
         setExpanded ? toggleSidebarEl.setAttribute('aria-expanded', 'true') : null;
-    } else {
+    } 
+    else {
+        sidebarEl.classList.add('bx-mc-narrowed');
+        sidebarEl.classList.remove('bx-mc-expanded');
         sidebarEl.classList.remove('lg:w-64');
         sidebarEl.classList.add('lg:w-16');
         mainContentEl.classList.remove('lg:ml-64');
@@ -35,6 +41,7 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
         document.querySelectorAll('#' + sidebarEl.getAttribute('id') + ' [sidebar-toggle-item]').forEach(sidebarToggleEl => {
             sidebarToggleEl.classList.add('lg:hidden');
             sidebarToggleEl.classList.add('lg:absolute');
+            sidebarToggleEl.classList.add('bx-mpi-toggle-hidden');
         });
 
         // toggle multi level menu item initial and full text
