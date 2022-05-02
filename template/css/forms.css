@@ -288,11 +288,12 @@
 	float: none;
 }
 .bx-form-input-file {
-	position: fixed;
-	top: -1000px;
+    position: fixed;
+    top: -1000px;
 
     border: none;
     background-color: transparent;
+    visibility: hidden;
 }
 
 .bx-form-input-wrapper-slider,

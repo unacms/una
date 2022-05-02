@@ -339,10 +339,8 @@ class BxDolStudioNavigationQuery extends BxDolDb
 
     function updateItem($iId, $aFields)
     {
-        $sSql = "UPDATE `sys_menu_items` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
-        $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
-        echo $sSql;
-        return $this->query($sSql);
+        $sSql = "UPDATE `sys_menu_items` SET " . $this->arrayToSQL($aFields) . " WHERE `id`=:id";
+        return $this->query($sSql, ['id' => $iId]);
     }
 
     function getItemOrderMax($sSetName)
