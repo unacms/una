@@ -61,6 +61,8 @@ class BxDolQueueEmail extends BxDolQueue implements iBxDolSingleton
         $aParams = array();
         if(!empty($sParams))
             $aParams = unserialize($sParams);
+        if (false === $aParams)
+            return false;
 
         if(!call_user_func_array('sendMail', array_merge(array($sEmail, $sSubject, $sBody), $aParams)))
             return false;
