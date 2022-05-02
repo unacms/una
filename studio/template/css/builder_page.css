@@ -12,26 +12,26 @@ div.bx-std-pt-buttons {
 
 /*--- Main section style ---*/
 div.adm-bp-cell {
-	background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.8);
 }
 div.adm-bp-cell-cnt {
-	padding: 3px 6px 50px 6px;
+    padding: 3px 6px 50px 6px;
 }
 div.adm-bp-blocks {
-	position: relative;
+    position: relative;
 }
 div.adm-bp-block {
-	position: relative;
+    position: relative;
     overflow: hidden;
-	margin: 3px 0px;
+    margin: 3px 0px;
 
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px 5px 5px 5px;
 
-	box-shadow: 0 0 1px rgba(51, 51, 51, 0.3);
+    box-shadow: 0 0 1px rgba(51, 51, 51, 0.3);
 
-	background-color: #ececec;
+    background-color: #ececec;
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ececec));
     background-image: -webkit-linear-gradient(top, #fff, #ececec); 
     background-image: -moz-linear-gradient(top, #fff, #ececec); 
@@ -40,81 +40,80 @@ div.adm-bp-block {
     background-image: linear-gradient(top, #fff, #ececec);	
 }
 div.adm-bpb-inactive {
-	opacity: 0.5;
+    opacity: 0.5;
 }
 div.adm-bp-block-empty {
     height: 42px;
-	border-style: dashed;
-	box-shadow: none;
+    border-style: dashed;
+    box-shadow: none;
 }
 div.adm-bp-block-dragging {}
 div.adm-bpb-content {
-	position: relative;
-	padding: 5px;
+    position: relative;
+    display: -webkit-flex; 
+    display: flex;
+
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+
+    -webkit-align-items: center;
+    align-items: center;
+
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    
+    padding: 0.5rem;
+}
+
+div.adm-bpb-icon,
+div.adm-bpb-icon-bg,
+div.adm-bpb-icon img,
+div.adm-bpb-icon i.sys-icon {
+    width: 2rem;
+    height: 2rem;
 }
 div.adm-bpb-icon {
-	position: absolute;
-	width: 32px;
-	height: 32px;
+    position: relative;
 }
 div.adm-bpb-icon-bg {
-    width: 32px;
-    height: 32px;
-
     background-color: #323c46;
-    border-radius: 8px;
-}
-div.adm-bpb-icon img {
-    width: 32px;
-    height: 32px;
+    border-radius: 0.5rem;
 }
 div.adm-bpb-icon i.sys-icon {
-	position: absolute;
-    width:32px;
-	height: 32px;
-	top: 0px;
-	left: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 
     color:white;
     font-size:20px;
     text-align:center;
     text-shadow:none;
-	line-height: 32px;
+    line-height: 2rem;
 }
 div.adm-bpb-info {
-	min-height: 32px;
-	padding-left: 40px; 
+    -webkit-flex-grow: 2;
+    flex-grow: 2;
+
+    min-height: 2rem;
 }
 div.adm-bpb-title {
-	padding-right: 20px;
+    padding-right: 1rem;
 
-	white-space: nowrap;
+    white-space: nowrap;
     text-overflow: ellipsis;
-	overflow: hidden;
+    overflow: hidden;
 
-	font-weight: bold;
+    font-weight: bold;
 }
 div.adm-bpb-description {
-	font-size: 11px;
-}
-div.adm-bpb-checkbox {
-	position: absolute;
-	top: 11px;
-	right: 5px;
+    font-size: 0.75rem;
 }
 div.adm-bpb-drag-handle {
-	position: absolute;
-    top: 14px;
-    left: 10px;
-	cursor: move;
-	color:#666666;
-    font-size:14px;
-}
-div.adm-bp-cell div.adm-bpb-icon {
-	left: 36px;
-}
-div.adm-bp-cell div.adm-bpb-info {
-	padding-left: 75px; 
+    text-align: center;
+    line-height: 2rem;
+    cursor: move;
+    color: #666666;
+    font-size: 0.875rem;
 }
 
 /*--- Add Block popup style ---*/
