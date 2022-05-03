@@ -94,6 +94,8 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected $_aMarkers = array();
     protected $_bMultilevel = false;
 
+    protected $_sSessionKeyCollapsed;
+
     /**
      * Constructor
      * @param $aObject array of menu options
@@ -112,16 +114,19 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         $this->_bMultilevel = !empty($this->_aObject['set_name']) && $this->_oQuery->isSetMultilevel($this->_aObject['set_name']);
 
-        if (isLogged()) {
-            $oProfile = BxDolProfile::getInstance();
-            if ($oProfile) {
-                $this->addMarkers(array(
-                    'member_id' => $oProfile->id(),
-                    'member_display_name' => $oProfile->getDisplayName(),
-                    'member_url' => $oProfile->getUrl(),
-                	'content_id' => $oProfile->getContentId()
-                ));
-            }
+        $this->_sSessionKeyCollapsed = 'bx_menu_collapsed_';
+
+        $this->addMarkers([
+            'object' => $this->_sObject
+        ]);
+
+        if(isLogged() && ($oProfile = BxDolProfile::getInstance()) !== false) {
+            $this->addMarkers([
+                'member_id' => $oProfile->id(),
+                'member_display_name' => $oProfile->getDisplayName(),
+                'member_url' => $oProfile->getUrl(),
+                'content_id' => $oProfile->getContentId()
+            ]);
         }
     }
 
@@ -312,6 +317,63 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     public function removeMarker ($s) 
     {
         unset($this->_aMarkers[$s]);
+    }
+
+    public function performActionSetCollapsed($mixedValue)
+    {
+        $this->_setCollapsed($this->_sObject, (int)$mixedValue);
+    }
+
+    public function performActionSetCollapsedSubmenu($sMenuItem, $mixedValue)
+    {
+        $this->_setCollapsed($this->_sObject . '_' . $sMenuItem, (int)$mixedValue);
+    }
+
+    public function getUserChoiceCollapsed($sObject = '')
+    {
+        $iProfile = bx_get_logged_profile_id();
+        if(!$iProfile)
+            return false;
+
+        if(!$sObject)
+            $sObject = $this->_sObject;
+
+        $sSessionKey = $this->_sSessionKeyCollapsed . $iProfile;
+        $aCollapsed = BxDolSession::getInstance()->getValue($sSessionKey);
+        if(!isset($aCollapsed[$sObject]))
+            return false;
+
+        return (int)$aCollapsed[$sObject];
+    }
+
+    public function getUserChoiceCollapsedSubmenu($mixedItem, $sObject = '')
+    {
+        if(!$sObject)
+            $sObject = $this->_sObject;
+
+        if(is_array($mixedItem) && isset($mixedItem['name']))
+            $sObject .= '_' . $mixedItem['name'];
+        else if(is_string($mixedItem))
+            $sObject .= '_' . $mixedItem;
+
+        return $this->getUserChoiceCollapsed($sObject);
+    }
+
+    protected function _setCollapsed($sName, $mixedValue)
+    {
+        $iProfile = bx_get_logged_profile_id();
+        if(!$iProfile)
+            return;
+
+        $oSession = BxDolSession::getInstance();
+        $sSessionKey = $this->_sSessionKeyCollapsed . $iProfile;
+
+        $aCollapsed = $oSession->getValue($sSessionKey);
+        if(!is_array($aCollapsed))
+            $aCollapsed = [];
+
+        $aCollapsed[$sName] = $mixedValue;
+        $oSession->setValue($sSessionKey, $aCollapsed);
     }
 
     /**

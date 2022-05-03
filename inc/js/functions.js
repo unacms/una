@@ -688,11 +688,35 @@ function bx_menu_show_live_update(oData) {
 	}
 }
 
-function bx_menu_show_more_less(oLink, sSelectorParent) {
+function bx_menu_show_more_less(oLink, sMenu, sSelectorParent) {
     if(!sSelectorParent)
         sSelectorParent = 'ul';
 
-    $(oLink).parents(sSelectorParent + ':first').find('.bx-mi-aux, .bx-psmi-show-more, .bx-psmi-show-less').toggle('bx-mi-hidden');
+    var sClass = 'bx-mi-hidden';
+    $(oLink).parents(sSelectorParent + ':first').find('.bx-mi-aux, .bx-psmi-show-more, .bx-psmi-show-less').toggleClass(sClass);
+
+    $.get(sUrlRoot + 'menu.php', {
+        o: sMenu, 
+        a: 'set_collapsed', 
+        v: $(oLink).parents(sSelectorParent + ':first').find('.bx-mi-aux').hasClass(sClass) ? 1 : 0
+    });
+}
+
+function bx_menu_toggle(oLink, sMenu, sMenuItem, sSelectorParent) {
+    if(!sSelectorParent)
+        sSelectorParent = 'li';
+
+    var sClass = 'bx-mi-collapsed';
+    var oParent = $(oLink).parents(sSelectorParent + ':first');
+
+    oParent.toggleClass(sClass);
+
+    $.get(sUrlRoot + 'menu.php', {
+        o: sMenu, 
+        a: 'set_collapsed_submenu',
+        i: sMenuItem,
+        v: oParent.hasClass(sClass) ? 1 : 0
+    });
 }
 
 /**

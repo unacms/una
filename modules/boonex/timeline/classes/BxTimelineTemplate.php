@@ -124,10 +124,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getJsCodeView($aParams = array(), $bWrap = true, $bDynamic = false)
     {
-        $aParams = array_merge(array(
+        $aParams = array_merge([
+            'sObjNameMenuFeeds' => $this->_oConfig->getObject('menu_feeds'),
             'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
-        ), $aParams);
+        ], $aParams);
 
         return parent::getJsCode('view', $aParams, $bWrap, $bDynamic);
     }

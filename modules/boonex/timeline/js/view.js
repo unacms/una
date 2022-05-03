@@ -14,6 +14,7 @@ function BxTimelineView(oOptions) {
     this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oTimelineView' : oOptions.sObjName;
+    this._sObjNameMenuFeeds = oOptions.sObjNameMenuFeeds == undefined ? 'bx_timeline_menu_feeds' : oOptions.sObjNameMenuFeeds;
     this._sName = oOptions.sName == undefined ? '' : oOptions.sName;
     this._sView = oOptions.sView == undefined ? 'timeline' : oOptions.sView;
     this._sType = oOptions.sType == undefined ? 'public' : oOptions.sType;
@@ -448,7 +449,7 @@ BxTimelineView.prototype.changeFeedFilters = function(oLink, oRequestParams)
 
 BxTimelineView.prototype.toggleMenuItemFeeds = function(oSource)
 {
-    $(oSource).parents('li:first').toggleClass('bx-menu-item-collapsed');
+    bx_menu_toggle(oSource, this._sObjNameMenuFeeds);
 };
 
 BxTimelineView.prototype.onFilterByModuleChange = function(oSource)

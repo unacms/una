@@ -29,16 +29,19 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
         if(empty($aItems) || !is_array($aItems))
             return $aItems;
 
+        $mixedCollpsed = $this->getUserChoiceCollapsed();
+        $bCollpsed = $mixedCollpsed === false || $mixedCollpsed == 1;
+
         $iMaxNum = count($aItems);
         if($this->_iMenuItemsMin > $iMaxNum)
             $this->_iMenuItemsMin = $iMaxNum;
 
         for($i = $this->_iMenuItemsMin; $i < $iMaxNum; $i++)
-            $aItems[$i]['class_add'] .= ' bx-mi-aux bx-mi-hidden';
+            $aItems[$i]['class_add'] .= ' bx-mi-aux' . ($bCollpsed ? ' bx-mi-hidden' : '');
 
         $aShowMoreLinks = [
-            'more' => ['title' => '_sys_show_more', 'icon' => 'chevron-down', 'class' => ''],
-            'less' => ['title' => '_sys_show_less', 'icon' => 'chevron-up', 'class' => 'bx-mi-hidden']
+            'more' => ['title' => '_sys_show_more', 'icon' => 'chevron-down', 'class' => $bCollpsed ? '' : 'bx-mi-hidden'],
+            'less' => ['title' => '_sys_show_less', 'icon' => 'chevron-up', 'class' => !$bCollpsed ? '' : 'bx-mi-hidden']
         ];
 
         foreach($aShowMoreLinks as $sLink => $aLink)
@@ -47,7 +50,7 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
                 'name' => 'show-' . $sLink,
                 'title' => _t($aLink['title']),
                 'link' => 'javascript:void(0)',
-                'onclick' => 'bx_menu_show_more_less(this, \'.bx-menu-profile-stats\')',
+                'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-profile-stats\')',
                 'attrs' => '',
                 'bx_if:image' => [
                     'condition' => false,

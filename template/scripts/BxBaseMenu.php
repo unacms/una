@@ -156,6 +156,8 @@ class BxBaseMenu extends BxDolMenu
         if (!$this->_isVisible($a))
             return false;
 
+        $a['object'] = $this->_sObject;
+
         $a['title'] = _t($a['title']);
         $a['bx_if:title'] = array(
             'condition' => !empty($a['title']),
@@ -185,9 +187,6 @@ class BxBaseMenu extends BxDolMenu
         list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = $this->_getMenuIcon($a);
 
         $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
-
-        
-        
         $a['class_add'] .= $this->_getVisibilityClass($a);
 
         $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
@@ -207,7 +206,7 @@ class BxBaseMenu extends BxDolMenu
             'condition' => (bool)$sIcon,
             'content' => array('icon' => $sIcon),
         );
-		$a['bx_if:icon-html'] = array (
+        $a['bx_if:icon-html'] = array (
             'condition' => (bool)$sIconHtml,
             'content' => array('icon' => $sIconHtml),
         );
@@ -232,8 +231,11 @@ class BxBaseMenu extends BxDolMenu
         $aTmplVarsSubitems = array('subitems' => '');
         $bTmplVarsSubitems = $this->_bMultilevel && !empty($a['subitems']);
         if($bTmplVarsSubitems) {
-            if(isset($a['collapsed']) && $a['collapsed'])
-                $a['class_add'] .= ' bx-menu-item-collapsed';
+            $sClassCollpsed = 'bx-mi-collapsed';
+            if(($iCollapsed = $this->getUserChoiceCollapsedSubmenu($a)) !== false)
+                $a['class_add'] .= $iCollapsed ? ' ' . $sClassCollpsed : '';
+            else if(isset($a['collapsed']) && $a['collapsed'])
+                $a['class_add'] .= ' ' . $sClassCollpsed;
 
             $aSubitems = array();
             foreach($a['subitems'] as $aSubitem) {

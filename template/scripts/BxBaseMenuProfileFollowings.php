@@ -34,7 +34,7 @@ class BxBaseMenuProfileFollowings extends BxTemplMenu
             $aIds = $oConnection->getConnectedContentByType($iProfile, array($aItem['module']));
 
             if(empty($aItem['onclick']))
-                $aMenuItems[$iIndex]['onclick'] = 'bx_toggle_pf(this)';
+                $aMenuItems[$iIndex]['onclick'] = "javascript:bx_menu_toggle(this, '" . $this->_sObject . "', '" . $aItem['name'] . "')";
 
             $aSubmenu = array();
             foreach($aIds as $iId) {

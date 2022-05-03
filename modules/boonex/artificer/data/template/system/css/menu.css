@@ -177,13 +177,13 @@ div.bx-popup-menu-main.sys-add-content ul {
 .bx-menu-ver.bx-menu-object-sys_profile_followings li .bx-menu-hide {
     display: inline;
 }
-.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-show {
+.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-mi-collapsed .bx-menu-show {
     display: inline;
 }
-.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-hide {
+.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-mi-collapsed .bx-menu-hide {
     display: none;
 }
-.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-menu-item-collapsed .bx-menu-item-subitems {
+.bx-menu-ver.bx-menu-object-sys_profile_followings li.bx-mi-collapsed .bx-menu-item-subitems {
     display: none;
 }
 

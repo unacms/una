@@ -22,13 +22,13 @@ import url(../../../../../timeline/template/css/view.css);
 .bx-tl-menu-feeds.bx-menu-ver li .bx-menu-hide {
     display: inline;
 }
-.bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-show {
+.bx-tl-menu-feeds.bx-menu-ver li.bx-mi-collapsed .bx-menu-show {
     display: inline;
 }
-.bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-hide {
+.bx-tl-menu-feeds.bx-menu-ver li.bx-mi-collapsed .bx-menu-hide {
     display: none;
 }
-.bx-tl-menu-feeds.bx-menu-ver li.bx-menu-item-collapsed .bx-menu-item-subitems {
+.bx-tl-menu-feeds.bx-menu-ver li.bx-mi-collapsed .bx-menu-item-subitems {
     display: none;
 }
 

@@ -8,7 +8,7 @@
                         <span class="bx-def-margin-sec-left-auto">__title__</span>
                     </a>
                     <span class="bx-menu-collapse bx-def-padding-sec-left">
-                        <a href="javascript:void(0)" onclick="bx_toggle_pf(this)">
+                        <a href="javascript:void(0)" onclick="javascript:bx_menu_toggle(this, '__object__', '__name__')">
                             <i class="sys-icon chevron-up bx-menu-hide"></i>
                             <i class="sys-icon chevron-down bx-menu-show"></i>
                         </a>
@@ -21,8 +21,3 @@
         </li>
     </bx_repeat:menu_items>
 </ul>
-<script language="javascript">
-    function bx_toggle_pf(oLink) {
-        $(oLink).parents('li:first').toggleClass('bx-menu-item-collapsed');
-    }
-</script>
