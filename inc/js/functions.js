@@ -1319,9 +1319,10 @@ jQuery.bxGetCachedScript = function(sUrl, oOptions)
 function bx_is_selector_in_stylesheet(sSel)
 {
     var o = [].slice.call(document.styleSheets)
-        .reduce( (prev, styleSheet) => [].slice.call(styleSheet.cssRules))
-        .reduce( (prev, cssRule) => prev + cssRule.cssText);
-    return jQuery.isFunction(o.includes) && o.includes('.plyr');
+        .reduce( (prev, styleSheet) => { if (null===styleSheet.href || styleSheet.href.startsWith(sUrlRoot)) return [].slice.call(styleSheet.cssRules); else return [] } )
+        .reduce( (prev, cssRule) => prev + cssRule.cssText );
+
+    return jQuery.isFunction(o.includes) && o.includes(sSel);
 }
 
 function bx_copy_to_clipboard(s, onSuccess, onFail)
