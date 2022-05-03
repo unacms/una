@@ -682,10 +682,18 @@
         @apply block w-4 h-4;
         @apply bg-gray-50 dark:bg-gray-900/50 bg-origin-border;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70;
-        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded;
         @apply appearance-none select-none;
+    }
+    .bx-artificer .bx-def-font-inputs.bx-form-input-checkbox,
+    .bx-artificer .bx-def-font-inputs.bx-form-input-radio {
+        @apply leading-6 text-sm font-medium text-blue-600 dark:text-blue-600;
+    }
+    .bx-artificer .bx-form-input-checkbox:checked,
+    .bx-artificer .bx-form-input-radio:checked {
+        background-color: currentColor;
+        border-color: transparent;
     }
     .bx-artificer .bx-form-input-checkbox:checked {
         background-image:url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTYgMTYnIGZpbGw9JyNmZmYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTEyLjIwNyA0Ljc5M2ExIDEgMCAwIDEgMCAxLjQxNGwtNSA1YTEgMSAwIDAgMS0xLjQxNCAwbC0yLTJhMSAxIDAgMCAxIDEuNDE0LTEuNDE0TDYuNSA5LjA4Nmw0LjI5My00LjI5M2ExIDEgMCAwIDEgMS40MTQgMHonLz48L3N2Zz4=)
