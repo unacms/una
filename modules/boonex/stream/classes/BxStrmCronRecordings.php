@@ -9,10 +9,9 @@
  * @{
  */
 
-class BxStrmCronPublishing extends BxDolCron
+class BxStrmCronRecordings extends BxDolCron
 {
     protected $_sModule;
-    protected $_oModule;
 
     public function __construct()
     {
@@ -23,15 +22,15 @@ class BxStrmCronPublishing extends BxDolCron
 
     function processing()
     {
-    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
+    	$oModule = BxDolModule::getInstance($this->_sModule);
 
-        $mixedIds = $this->_oModule->_oDb->publishEntries();
-        if($mixedIds === false)
-            return;
-
-        foreach($mixedIds as $iId)
-            $this->_oModule->onPublished($iId);
+        $a = $oModule->_oDb->getPendingRecordings();
+        foreach($a as $r) {
+            $aContentInfo = $oModule->_oDb->getContentInfoById($r['content_id']);
+            $oModule->getStreamEngine()->processRecordings($r['id'], $aContentInfo, $oModule, $r['tries']);
+        }
     }
 }
 
 /** @} */
+

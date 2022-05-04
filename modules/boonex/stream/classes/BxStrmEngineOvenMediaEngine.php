@@ -11,6 +11,11 @@
 
 class BxStrmEngineOvenMediaEngine extends BxDol
 {
+    public function getName()
+    {
+        return 'OvenMediaEngine';
+    }
+
     public function isSreamFromBrowser()
     {
         return true;
@@ -63,6 +68,47 @@ class BxStrmEngineOvenMediaEngine extends BxDol
         return $this->_apiRequest("/vhosts/default/apps/{$sApp}:stopRecord", 'post-json', [
             "id" => "{$iRecordingId}",
         ]);
+    }
+
+    public function getRecordings($iRecordingId)
+    {
+        $sApp = getParam('bx_stream_app');
+        if (!$sApp)
+            return false;
+
+        return $this->_apiRequest("/vhosts/default/apps/{$sApp}:records", 'post-json', [
+            "id" => "{$iRecordingId}",
+        ]);
+    }
+
+    public function processRecordings ($iRecordingId, $aContentInfo, $oModule, $iTries = 0)
+    {
+        $CNF = &$oModule->_oConfig->CNF;
+        $bDeleteRecording = false;
+        $oStorage = BxDolStorage::getObjectInstance('bx_stream_recordings');
+
+        if ($oStorage) {
+            $sFileUrl = getParam('bx_stream_recordings_url') . $aContentInfo['key'] . '_' . $iRecordingId . '.ts';
+
+            $iFileId = $oStorage->storeFileFromUrl($sFileUrl, true, $aContentInfo[$CNF['FIELD_AUTHOR']], $aContentInfo['id']);
+            if ($iFileId) {
+                $bDeleteRecording = true;
+            }
+            else {
+                bx_log('bx_stream', "Store recording from URL(" . getParam('bx_stream_recordings_url') . $a['filePath'] . ") failed for content id($iContentId): " . $oStorage->getErrorString());
+            }
+        }
+        else {
+            bx_log('bx_stream', "Store recording failed because 'bx_stream_recordings' storage doesn't exist");
+            $bDeleteRecording = true;
+        }
+
+        if ($bDeleteRecording || ($iTries + 1) > 10) {
+            $oModule->_oDb->deleteRecording($iRecordingId);
+        }
+        else {
+            $oModule->_oDb->updateRecording($iRecordingId, ['tries' => $iTries + 1]);
+        }
     }
 
     public function getRtmpSettings($sStreamKey)
