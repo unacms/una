@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `bx_stream_recordings` (
 CREATE TABLE IF NOT EXISTS `bx_stream_recordings_seq` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content_id` int(10) unsigned NOT NULL,
+  `tries` tinyint(4) NOT NULL DEFAULT 0,
   `added` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `content_id` (`content_id`)

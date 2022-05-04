@@ -297,18 +297,7 @@ class BxStrmModule extends BxBaseModTextModule
             if ($iRecordingId) {
 
                 $aRecordings = $this->getStreamEngine()->stopRecording($iRecordingId);
-                foreach ($aRecordings as $a) {
-                    if ($a && !empty($a['filePath']) && $oStorage = BxDolStorage::getObjectInstance('bx_stream_recordings')) {
-                        $iFileId = $oStorage->storeFileFromUrl(getParam('bx_stream_recordings_url') . $a['filePath'], true, $aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
-                        if ($iFileId) {
-                            $this->_oDb->deleteRecording($iRecordingId);
-                        }
-                        else {
-                            bx_log('bx_stream', "Store recording from URL(" . getParam('bx_stream_recordings_url') . $a['filePath'] . ") failed for content id($iContentId)");
-                        }
-                    }
-                }
-
+                $this->getStreamEngine()->processRecordings($iRecordingId, $aContentInfo, $this);
                 BxDolSession::getInstance()->unsetValue('bx-stream-rec-' . $iContentId);
 
             }

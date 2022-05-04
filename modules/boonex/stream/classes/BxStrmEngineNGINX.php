@@ -11,6 +11,11 @@
 
 class BxStrmEngineNGINX extends BxDol
 {
+    public function getName()
+    {
+        return 'NGINX';
+    }
+
     public function isSreamFromBrowser()
     {
         return false;
