@@ -65,7 +65,6 @@ class BxBasePage extends BxDolPage
     public function performActionGetShare ()
     {
         $aEmbedData = BxDolPage::getEmbedData(bx_get('url'));
-        
         $aMarkers = array(
             'url' => bx_get('url'),
             'img_url_encoded' => '',

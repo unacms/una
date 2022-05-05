@@ -29,7 +29,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         $bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId;
         $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
         $bLoggedContextModerator = false;
-        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+        if($this->_aContentInfo && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
             $iContextProfileId = abs((int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
             $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
 
