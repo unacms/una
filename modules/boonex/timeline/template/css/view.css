@@ -997,10 +997,7 @@ div.bx-tl-item-comments-holder .cmt.bx-def-box {
 
 
 /*--- Live Update Alert Styles ---*/
-div.bx-tl-live-update-button {
-    position: relative;
-    text-align: center;
-}
+div.bx-tl-live-update-button {}
 @supports(position:sticky) {
     div.bx-tl-live-update-button {
         position: sticky;

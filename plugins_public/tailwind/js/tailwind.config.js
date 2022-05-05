@@ -142,6 +142,9 @@ module.exports = {
         flex: {
             2: '2 2 0%',
         },
+        translate: {
+            '5/4': '125%',
+        },
         animation: {
           goo: "goo 8s infinite",
         },
@@ -163,5 +166,7 @@ module.exports = {
         },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
