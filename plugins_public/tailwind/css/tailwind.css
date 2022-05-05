@@ -661,8 +661,12 @@
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
+	
+	.bx-artificer div.ql-editor {
+		 @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
+	}
 
-	div.ql-editor:focus{
+	.bx-artificer div.ql-editor:focus{
 		@apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
 	}
 	
