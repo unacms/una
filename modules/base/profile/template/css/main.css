@@ -364,10 +364,22 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     padding: 0;
 
     line-height:normal;
-    text-align: left;
+    text-align: center;
     text-shadow: none;
     font-size: 1.5rem;
     font-weight: 800;
+}
+.bx-media-tablet .bx-base-pofile-cover-user h1.bx-def-unit-info,
+.bx-media-desktop .bx-base-pofile-cover-user h1.bx-def-unit-info {
+    text-align: left;
+}
+
+.bx-base-profile-cover-meta {}
+.bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li:last-child {
+    margin-right: 0;
+}
+.bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li .sys-meta-div {
+    display: none;
 }
 
 .bx-base-pofile-cover-actions {
@@ -617,24 +629,9 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     width:calc(10.0%);
 }
 
-
-
 /* view page */
 .bx-base-profile-entity-content,
 .bx-base-profile-entity-content p {
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.bx-base-pofile-unit-bages {
-    position: absolute;
-    right: -30%;
-    top: 0px;
-}
-.bx-base-profile-cover-title-bages{
-    display: flex; 
-    align-items: center;
-    justify-content: center; 
-    overflow: hidden;
-    align-items: center;
 }
