@@ -791,9 +791,14 @@
 
     /* Common elements: Menus */
     .bx-artificer .bx-stl-mil,
+    .bx-artificer .bx-stl-mil-sm,
+    .bx-artificer .bx-stl-mil-wo-bg {
+        @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
+    }
+    
+    .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm {
         @apply flex items-center px-3 py-1.5;
-        @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
         @apply active:bg-gray-300 dark:active:bg-black/50 hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
         @apply rounded-md;
     }

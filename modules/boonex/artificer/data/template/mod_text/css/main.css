@@ -2,6 +2,17 @@
 .bx-base-text-unit-cnt {
     width: 100%;
 }
+.bx-base-text-unit-cover {
+	position: relative;
+}
+.bx-base-text-unit-cover img {
+    position: relative;
+    display: block;
+
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
 
 /*-- Browsing: Search results --*/
 .bx-base-text-unit-gallery-wrapper {
