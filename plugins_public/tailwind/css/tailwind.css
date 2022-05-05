@@ -805,6 +805,9 @@
     .bx-artificer .bx-stl-mil-sm {
         @apply px-2 leading-5;
     }
+    .bx-artificer .bx-popup .bx-stl-mil-sm {
+        @apply px-4;
+    }
     .bx-artificer .bx-stl-mil-hover {
         @apply hover:text-gray-800 dark:hover:text-gray-200;
         @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
