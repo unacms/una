@@ -262,14 +262,16 @@ import url(../../../../../../../template/css/forms.css);
 /*--- Form field: Auto-siggestion ---*/
 
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
-    float:left;
-    padding: 2px 2px;
-    height:auto;
+    float: left;
+    padding: 0.125rem 0;
+    height: auto;
     box-shadow: none;
     min-height: 2.375rem;
 }
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b {
     display: block;
+    float: left;
+    margin: 0 0.125rem;
     padding-right: 1.5rem;
     border-radius: 1.25rem;
 
@@ -307,6 +309,7 @@ import url(../../../../../../../template/css/forms.css);
     border: 0;
     box-shadow: none;
 }
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-account-unit-wo-info,
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) .bx-base-pofile-unit-wo-info {
     display: inline-block;
     vertical-align: top;

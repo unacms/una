@@ -831,7 +831,16 @@
     .bx-artificer .bx-stl-mii,
     .bx-artificer .bx-stl-mii-sm,
     .bx-artificer .bx-stl-mil .sys-action-do-icon {
-        @apply flex items-center justify-center h-6 w-6 mr-3 leading-6 text-gray-500 text-lg;
+        @apply flex items-center justify-center text-gray-500 text-lg;
+    }
+    
+    .bx-artificer .bx-stl-mii > *,
+    .bx-artificer .bx-stl-mii-sm > *,
+    .bx-artificer .bx-stl-mil .sys-action-do-icon > * {
+        @apply flex items-center justify-center h-6 w-6 mr-3;
+    }
+    .bx-artificer .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text {
+        @apply ml-0; 
     }
     .bx-artificer .bx-stl-mii-sm {
         @apply h-4 w-4 mr-1 leading-4 text-sm;
