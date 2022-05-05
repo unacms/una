@@ -4026,9 +4026,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($iUserId == 0)
             return false;
 
+        $aPrivacy = [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS];
+		bx_alert($this->_oConfig->getObject('alert'), 'is_allow_repost', $aEvent['id'], $iUserId, array('result' => &$aPrivacy));
         $iPrivacy = (int)$aEvent['object_privacy_view'];
-        if($iPrivacy >= 0 && !in_array($iPrivacy, array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS)))
-            return false;      
+		
+        if($iPrivacy >= 0 && !in_array($iPrivacy, $aPrivacy))
+            return false;         
 
         if(isAdmin())
             return true;

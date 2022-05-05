@@ -58,6 +58,7 @@ class BxChartsCron extends BxDolCron
             if ($oContentModule && isset($oContentModule->_oConfig->CNF['TABLE_ENTRIES']) && isset($oContentModule->_oConfig->CNF['FIELD_AUTHOR'])){
                 $sContentTable = $oContentModule->_oConfig->CNF['TABLE_ENTRIES'];
                 $sColumnAuthor = $oContentModule->_oConfig->CNF['FIELD_AUTHOR'];
+				$sColumnAdded = $oContentModule->_oConfig->CNF['FIELD_ADDED'];
                 if (!empty($sContentTable) && !empty($sColumnAuthor)){
                     $aSystems = BxDolView::getSystems();
                     $aModules = array_keys($this->_oModule->serviceGetProfileModules());
@@ -69,7 +70,7 @@ class BxChartsCron extends BxDolCron
                             $sSystem = $oModule->_oConfig->CNF['OBJECT_VIEWS'];
                             if(empty($sSystem))
                                 continue;
-                            $this->_oModule->_oDb->saveMostActiveProfiles_Create($sProfileModule, $sContentModule, $sContentTable, $sColumnAuthor);
+                            $this->_oModule->_oDb->saveMostActiveProfiles_Create($sProfileModule, $sContentModule, $sContentTable, $sColumnAuthor, $sColumnAdded);
                         }
                     }
                 }

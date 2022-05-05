@@ -52,11 +52,11 @@ class BxChartsDb extends BxBaseModGeneralDb
         $this->query($sQuery);
     }
     
-    public function saveMostActiveProfiles_Create($sProfileModuleName, $sContentModuleName, $sTableName, $sColumnAuthor)
+    public function saveMostActiveProfiles_Create($sProfileModuleName, $sContentModuleName, $sTableName, $sColumnAuthor, $sColumnAdded)
     {
         $iInterval = intval(getParam('bx_charts_chart_most_active_profiles_interval_day'));
         $sQuery = "INSERT INTO `" . $this->_sTableMostActiveProfiles . "` (`object_id`, `profile_module`, `content_module`, `create_count`)  SELECT `sys_profiles`.`content_id`, `sys_profiles`.`type`, '" . $sContentModuleName . "' , COUNT(`" . $sTableName . "`.`id`) FROM `" . $sTableName . "`
-  INNER JOIN `sys_profiles`  ON `sys_profiles`.`id` = `" . $sTableName . "`.`" . $sColumnAuthor . "` WHERE sys_profiles.type='" . $sProfileModuleName . "' AND  `" . $sTableName . "`.`added` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `sys_profiles`.`content_id`, `sys_profiles`.`type` ORDER BY COUNT(`" . $sTableName . "`.`id`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_active_profiles_count'));
+  INNER JOIN `sys_profiles`  ON `sys_profiles`.`id` = `" . $sTableName . "`.`" . $sColumnAuthor . "` WHERE sys_profiles.type='" . $sProfileModuleName . "' AND  `" . $sTableName . "`.`" . $sColumnAdded . "` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `sys_profiles`.`content_id`, `sys_profiles`.`type` ORDER BY COUNT(`" . $sTableName . "`.`id`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_active_profiles_count'));
         $this->query($sQuery);
     }
     
