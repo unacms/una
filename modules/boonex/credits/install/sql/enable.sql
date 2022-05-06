@@ -12,6 +12,9 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_credits_enable_withdraw', '', @iCategId, '_bx_credits_option_enable_withdraw', 'checkbox', '', '', '', 1),
 ('bx_credits_withdraw_email', '', @iCategId, '_bx_credits_option_withdraw_email', 'digit', '', '', '', 2),
+('bx_credits_withdraw_clearing', '30', @iCategId, '_bx_credits_option_withdraw_clearing', 'digit', '', '', '', 3),
+('bx_credits_withdraw_minimum', '500', @iCategId, '_bx_credits_option_withdraw_minimum', 'digit', '', '', '', 4),
+('bx_credits_withdraw_remaining', '100', @iCategId, '_bx_credits_option_withdraw_remaining', 'digit', '', '', '', 5),
 
 ('bx_credits_precision', '2', @iCategId, '_bx_credits_option_precision', 'digit', '', '', '', 10),
 ('bx_credits_conversion_rate_use', '1.0', @iCategId, '_bx_credits_option_conversion_rate_use', 'digit', '', '', '', 11),
@@ -171,15 +174,17 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_credits_history_administration', 'second_pid', '_bx_credits_grid_column_title_htr_second_pid', '15%', 0, '', '', 3),
 ('bx_credits_history_administration', 'amount', '_bx_credits_grid_column_title_htr_amount', '10%', 1, '', '', 4),
 ('bx_credits_history_administration', 'order', '_bx_credits_grid_column_title_htr_order', '15%', 0, '16', '', 5),
-('bx_credits_history_administration', 'info', '_bx_credits_grid_column_title_htr_info', '20%', 1, '24', '', 6),
-('bx_credits_history_administration', 'date', '_bx_credits_grid_column_title_htr_date', '15%', 0, '', '', 7),
+('bx_credits_history_administration', 'info', '_bx_credits_grid_column_title_htr_info', '15%', 1, '24', '', 6),
+('bx_credits_history_administration', 'date', '_bx_credits_grid_column_title_htr_date', '10%', 0, '', '', 7),
+('bx_credits_history_administration', 'cleared', '_bx_credits_grid_column_title_htr_cleared', '10%', 0, '', '', 8),
 
 ('bx_credits_history_common', 'direction', '_bx_credits_grid_column_title_htr_direction', '10%', 0, '', '', 1),
 ('bx_credits_history_common', 'second_pid', '_bx_credits_grid_column_title_htr_pid', '25%', 0, '', '', 2),
 ('bx_credits_history_common', 'amount', '_bx_credits_grid_column_title_htr_amount', '15%', 1, '', '', 3),
 ('bx_credits_history_common', 'order', '_bx_credits_grid_column_title_htr_order', '15%', 0, '16', '', 4),
-('bx_credits_history_common', 'info', '_bx_credits_grid_column_title_htr_info', '20%', 1, '32', '', 5),
-('bx_credits_history_common', 'date', '_bx_credits_grid_column_title_htr_date', '15%', 0, '', '', 6);
+('bx_credits_history_common', 'info', '_bx_credits_grid_column_title_htr_info', '15%', 1, '32', '', 5),
+('bx_credits_history_common', 'date', '_bx_credits_grid_column_title_htr_date', '10%', 0, '', '', 6),
+('bx_credits_history_common', 'cleared', '_bx_credits_grid_column_title_htr_cleared', '10%', 0, '', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_credits_history_administration', 'independent', 'grant', '_bx_credits_grid_action_title_htr_grant', '', 0, 0, 1),
@@ -209,3 +214,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('bx_credits', '_bx_credits_et_txt_name_out', 'bx_credits_out', '_bx_credits_et_txt_subject_out', '_bx_credits_et_txt_body_out'),
 ('bx_credits', '_bx_credits_et_txt_name_withdraw_requested', 'bx_credits_withdraw_requested', '_bx_credits_et_txt_subject_withdraw_requested', '_bx_credits_et_txt_body_withdraw_requested'),
 ('bx_credits', '_bx_credits_et_txt_name_withdraw_sent', 'bx_credits_withdraw_sent', '_bx_credits_et_txt_subject_withdraw_sent', '_bx_credits_et_txt_body_withdraw_sent');
+
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_credits_clearing', '0 0 * * *', 'BxCreditsCronClearing', 'modules/boonex/credits/classes/BxCreditsCronClearing.php', '');

@@ -273,16 +273,20 @@ class BxCreditsDb extends BxBaseModGeneralDb
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function updateProfileBalance($iId, $fBalance)
+    public function updateProfileBalance($iId, $fAmount, $bCleared = false)
     {
-        if(!$this->isProfile($iId))
-            return $this->insertProfile(array('id' => $iId, 'balance' => $fBalance));
+        $CNF = &$this->_oConfig->CNF;
 
-        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_PROFILES'] . "` SET `balance`=`balance`+:balance WHERE `id`=:id";
-        return (int)$this->query($sQuery, array(
+        $sBalance = $bCleared ? 'cleared' : 'balance';
+
+        if(!$this->isProfile($iId))
+            return $this->insertProfile(['id' => $iId, $sBalance => $fAmount]);
+
+        $sQuery = "UPDATE `" . $CNF['TABLE_PROFILES'] . "` SET `" . $sBalance . "`=`" . $sBalance . "`+:amount WHERE `id`=:id";
+        return (int)$this->query($sQuery, [
             'id' => $iId,
-            'balance' => $fBalance
-        )) > 0;
+            'amount' => $fAmount
+        ]) > 0;
     }
 
     public function deleteProfile($aWhere)
@@ -300,16 +304,38 @@ class BxCreditsDb extends BxBaseModGeneralDb
     public function getHistory($aParams = array())
     {
     	$CNF = &$this->_oConfig->CNF;
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
 
     	$sSelectClause = "`th`.*";
     	$sJoinClause = $sWhereClause = $sLimitClause = "";
         switch($aParams['type']) {
+            case 'cleared':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = [
+                    'profile' => $aParams['profile']
+                ];
+
+                $sSelectClause = "SUM(`th`.`amount`)";
+                $sWhereClause = " AND `th`.`first_pid`=:profile AND `th`.`direction`='in' AND `th`.`type` IN (" . $this->implode_escape($this->_oConfig->getTransferTypesForClearing()) . ") AND `th`.`cleared`<>'0'";
+                break;
+
+            case 'spent':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = [
+                    'profile' => $aParams['profile'],
+                    'type_cancel' => BX_CREDITS_TRANSFER_TYPE_CANCELLATION
+                ];
+
+                $sSelectClause = "SUM(`th`.`amount`)";
+                $sJoinClause = " LEFT JOIN `" . $CNF['TABLE_HISTORY'] . "` AS `thc` ON `th`.`order`=`thc`.`order` AND `thc`.`type`=:type_cancel";
+                $sWhereClause = " AND `th`.`first_pid`=:profile AND `th`.`direction`='out' AND `th`.`type` IN (" . $this->implode_escape($this->_oConfig->getTransferTypesForSpending()) . ") AND ISNULL(`thc`.`id`)";
+                break;
+
             case 'id':
             	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = array(
+            	$aMethod['params'][1] = [
                     'id' => $aParams['id']
-                );
+                ];
 
                 $sWhereClause = " AND `th`.`id`=:id";
                 break;
@@ -317,6 +343,14 @@ class BxCreditsDb extends BxBaseModGeneralDb
             case 'row_by':
                 $aMethod['name'] = 'getRow';
                 $sWhereClause = " AND " . $this->arrayToSQL($aParams['by'], ' AND ');
+                break;
+
+            case 'clearing':
+                $aMethod['params'][1] = [
+                    'clearing' => $aParams['clearing']
+                ];
+
+                $sWhereClause = " AND `th`.`direction`='in' AND `th`.`type` IN (" . $this->implode_escape($this->_oConfig->getTransferTypesForClearing()) . ") AND `th`.`date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL :clearing DAY)) AND `th`.`cleared`='0'";
                 break;
         }
 

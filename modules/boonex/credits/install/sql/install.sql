@@ -60,11 +60,13 @@ CREATE TABLE IF NOT EXISTS `bx_credits_history` (
   `first_pid` int(11) NOT NULL DEFAULT '0',
   `second_pid` int(11) NOT NULL DEFAULT '0',
   `amount` float NOT NULL DEFAULT '0',
+  `type` varchar(16) NOT NULL default '',
   `direction` enum('in', 'out') NOT NULL DEFAULT 'in',
   `order` varchar(32) NOT NULL default '',
   `data` text NOT NULL default '',
   `info` varchar(255) NOT NULL DEFAULT '',
   `date` int(11) NOT NULL DEFAULT '0',
+  `cleared` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 );
 
@@ -81,6 +83,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_credits_credit', 'bx_credits', 'balance', '', '', 0, 'text', '_bx_credits_form_credit_input_sys_balance', '_bx_credits_form_credit_input_balance', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_credits_credit', 'bx_credits', 'cleared', '', '', 0, 'text', '_bx_credits_form_credit_input_sys_cleared', '_bx_credits_form_credit_input_cleared', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_credits_credit', 'bx_credits', 'rate', '', '', 0, 'text', '_bx_credits_form_credit_input_sys_rate', '_bx_credits_form_credit_input_rate', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_credits_credit', 'bx_credits', 'result', '', '', 0, 'text', '_bx_credits_form_credit_input_sys_result', '_bx_credits_form_credit_input_result', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_credits_credit', 'bx_credits', 'amount', '', '', 0, 'text', '_bx_credits_form_credit_input_sys_amount', '_bx_credits_form_credit_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_credits_form_credit_input_amount_err', 'Xss', '', 1, 0),
@@ -106,13 +109,14 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_credits_credit_grant', 'do_cancel', 2147483647, 1, 6),
 
 ('bx_credits_credit_withdraw_request', 'balance', 2147483647, 1, 1),
-('bx_credits_credit_withdraw_request', 'rate', 2147483647, 1, 2),
-('bx_credits_credit_withdraw_request', 'amount', 2147483647, 1, 3),
-('bx_credits_credit_withdraw_request', 'result', 2147483647, 1, 4),
-('bx_credits_credit_withdraw_request', 'message', 2147483647, 1, 5),
-('bx_credits_credit_withdraw_request', 'controls', 2147483647, 1, 6),
-('bx_credits_credit_withdraw_request', 'do_submit', 2147483647, 1, 7),
-('bx_credits_credit_withdraw_request', 'do_cancel', 2147483647, 1, 8),
+('bx_credits_credit_withdraw_request', 'cleared', 2147483647, 1, 2),
+('bx_credits_credit_withdraw_request', 'rate', 2147483647, 1, 3),
+('bx_credits_credit_withdraw_request', 'amount', 2147483647, 1, 4),
+('bx_credits_credit_withdraw_request', 'result', 2147483647, 1, 5),
+('bx_credits_credit_withdraw_request', 'message', 2147483647, 1, 6),
+('bx_credits_credit_withdraw_request', 'controls', 2147483647, 1, 7),
+('bx_credits_credit_withdraw_request', 'do_submit', 2147483647, 1, 8),
+('bx_credits_credit_withdraw_request', 'do_cancel', 2147483647, 1, 9),
 
 ('bx_credits_credit_withdraw_confirm', 'profile', 2147483647, 1, 1),
 ('bx_credits_credit_withdraw_confirm', 'amount', 2147483647, 1, 2),

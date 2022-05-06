@@ -9,6 +9,14 @@
  * @{
  */
 
+define('BX_CREDITS_TRANSFER_TYPE_PURCHASE', 'purchase');
+define('BX_CREDITS_TRANSFER_TYPE_CHECKOUT', 'checkout');
+define('BX_CREDITS_TRANSFER_TYPE_CANCELLATION', 'cancellation');
+define('BX_CREDITS_TRANSFER_TYPE_GRANT', 'grant');
+define('BX_CREDITS_TRANSFER_TYPE_SEND', 'send');
+define('BX_CREDITS_TRANSFER_TYPE_WITHDRAW', 'withdraw');
+define('BX_CREDITS_TRANSFER_TYPE_SERVICE', 'service');
+
 define('BX_CREDITS_DIRECTION_IN', 'in');
 define('BX_CREDITS_DIRECTION_OUT', 'out');
 
@@ -78,8 +86,8 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'precision' => $this->_oConfig->getPrecision()
         ));
 
-        $this->updateProfileBalance($iBuyerId, $iSellerId, -$fAmount, $sOrder, $sInfo, $sData);
-        $this->updateProfileBalance($iSellerId, $iBuyerId, $fAmount, $sOrder, $sInfo, $sData);
+        $this->updateProfileBalance($iBuyerId, $iSellerId, -$fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo, $sData);
+        $this->updateProfileBalance($iSellerId, $iBuyerId, $fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo, $sData);
 
         bx_alert($this->getName(), 'checkout', 0, false, array(
             'seller' => $iSellerId,
@@ -661,18 +669,18 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(empty($sInfo))
             $sInfo = '_bx_credits_txt_history_info_service';
 
-        return $this->updateProfileBalance($iFirstPid, $iSecondPid, $fAmount, $sOrder, $sInfo);
+        return $this->updateProfileBalance($iFirstPid, $iSecondPid, $fAmount, BX_CREDITS_TRANSFER_TYPE_SERVICE, $sOrder, $sInfo);
     }
     
     public function serviceMakePayment($iBuyerPid, $fAmount, $iSellerPid, $sOrder = '')
     {
         $sInfo = '_bx_credits_txt_history_info_checkout';
 
-        if(!$this->updateProfileBalance($iBuyerPid, $iSellerPid, -$fAmount, $sOrder, $sInfo))
+        if(!$this->updateProfileBalance($iBuyerPid, $iSellerPid, -$fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo))
             return false;
 
-        if(!$this->updateProfileBalance($iSellerPid, $iBuyerPid, $fAmount, $sOrder, $sInfo)) {
-            $this->updateProfileBalance($iBuyerPid, 0, $fAmount, $sOrder, '_bx_credits_txt_history_info_cancellation');
+        if(!$this->updateProfileBalance($iSellerPid, $iBuyerPid, $fAmount, $sOrder, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sInfo)) {
+            $this->updateProfileBalance($iBuyerPid, 0, $fAmount, BX_CREDITS_TRANSFER_TYPE_CANCELLATION, $sOrder, '_bx_credits_txt_history_info_cancellation');
             return false;
         }
 
@@ -717,7 +725,21 @@ class BxCreditsModule extends BxBaseModGeneralModule
         return (float)$this->_oDb->getProfile(array('type' => 'balance', 'id' => $iProfileId));
     }
 
-    public function updateProfileBalance($iFirstPid, $iSecondPid, $fAmount, $sOrder = '', $sInfo = '', $sData = '')
+    public function getProfileBalanceCleared($iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        if(empty($iProfileId))
+            return 0;
+
+        $fCleared = (float)$this->_oDb->getHistory(['type' => 'cleared', 'profile' => $iProfileId]);
+        $fSpent = (float)$this->_oDb->getHistory(['type' => 'spent', 'profile' => $iProfileId]);
+
+        return $fCleared > $fSpent ? $fCleared - $fSpent : 0;
+    }
+
+    public function updateProfileBalance($iFirstPid, $iSecondPid, $fAmount, $sType, $sOrder = '', $sInfo = '', $sData = '')
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -736,16 +758,17 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $fAmountAbs = abs($fAmount);
         $sDirection = $fAmount > 0 ? BX_CREDITS_DIRECTION_IN : BX_CREDITS_DIRECTION_OUT;
 
-        $iHistoryId = $this->_oDb->insertHistory(array(
+        $iHistoryId = $this->_oDb->insertHistory([
             'first_pid' => $iFirstPid,
             'second_pid' => $iSecondPid,
             'amount' => $fAmountAbs,
+            'type' => $sType,
             'direction' => $sDirection,
             'order' => $sOrder,
             'data' => $sData,
             'info' => $sInfo,
             'date' => time()
-        ));
+        ]);
 
         if(!$iHistoryId)
             return false;
@@ -754,6 +777,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'first_pid' => $iFirstPid,
             'second_pid' => $iSecondPid,
             'amount' => $fAmountAbs,
+            'type' => $sType,
             'direction' => $sDirection,
             'order' => $sOrder,
         ));
@@ -776,7 +800,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return ['code' => 2, 'msg' => '_bx_credits_err_profile_not_found'];
 
         $sInfo = '_bx_credits_txt_history_info_grant';
-        $iHistoryId = $this->updateProfileBalance($iProfileId, 0, $fAmount, '', $sInfo);
+        $iHistoryId = $this->updateProfileBalance($iProfileId, 0, $fAmount, BX_CREDITS_TRANSFER_TYPE_GRANT, '', $sInfo);
         if(!$iHistoryId)
             return ['code' => 3, 'msg' => '_bx_credits_err_cannot_update_balance'];
 
@@ -808,13 +832,13 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $sOrder = $this->_oConfig->getOrder();
         $sInfo = !empty($sMessage) ? $sMessage : '_bx_credits_txt_history_info_send';
 
-        $iHistoryId = $this->updateProfileBalance($iUserId, $iProfileId, -$fAmount, $sOrder, $sInfo);
+        $iHistoryId = $this->updateProfileBalance($iUserId, $iProfileId, -$fAmount, BX_CREDITS_TRANSFER_TYPE_SEND, $sOrder, $sInfo);
         if(!$iHistoryId)
             return ['code' => 3, 'msg' => '_bx_credits_err_cannot_update_balance'];
 
-        if(!$this->updateProfileBalance($iProfileId, $iUserId, $fAmount, $sOrder, $sInfo)) {
+        if(!$this->updateProfileBalance($iProfileId, $iUserId, $fAmount, BX_CREDITS_TRANSFER_TYPE_SEND, $sOrder, $sInfo)) {
             $sInfo = '_bx_credits_txt_history_info_cancellation';
-            $iHistoryId = $this->updateProfileBalance($iUserId, 0, $fAmount, $sOrder, $sInfo);
+            $iHistoryId = $this->updateProfileBalance($iUserId, 0, $fAmount, BX_CREDITS_TRANSFER_TYPE_CANCELLATION, $sOrder, $sInfo);
 
             return ['code' => 3, 'id' => $iHistoryId, 'msg' => '_bx_credits_err_cannot_update_balance'];
         }
@@ -847,47 +871,50 @@ class BxCreditsModule extends BxBaseModGeneralModule
             $iProfileId = bx_get_logged_profile_id ();
 
         if(empty($iProfileId))
-            return array('code' => 1, 'msg' => '_bx_credits_err_login_required');
+            return ['code' => 1, 'msg' => '_bx_credits_err_login_required'];
 
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
-            return array('code' => 1, 'msg' => '_bx_credits_err_login_required');
+            return ['code' => 1, 'msg' => '_bx_credits_err_login_required'];
+
+        $fBalanceCleared = $this->getProfileBalanceCleared($iProfileId);
+        if($fAmount > $fBalanceCleared)
+            return ['code' => 2, 'msg' => '_bx_credits_err_low_balance'];
+
+        if($fAmount < ($iWithdrawMinimum = (int)getParam($CNF['PARAM_WITHDRAW_MINIMUM'])))
+            return ['code' => 3, 'msg' => _t('_bx_credits_err_withdraw_minimum', $iWithdrawMinimum)];
 
         $fBalance = $this->getProfileBalance($iProfileId);
-        if($fAmount > $fBalance)
-            return array('code' => 2, 'msg' => '_bx_credits_err_low_balance');
+        if(($fBalance - $fAmount) < ($iWithdrawRemaining = (int)getParam($CNF['PARAM_WITHDRAW_REMAINING'])))
+            return ['code' => 4, 'msg' => _t('_bx_credits_err_withdraw_remaining', $iWithdrawRemaining)];
 
-        $aResult = array('code' => 3, 'msg' => '_bx_credits_err_cannot_send');
-
-        $oEmailTemplates = BxDolEmailTemplates::getInstance();
-        if(!$oEmailTemplates)
-            return $aResult;
+        $aResult = ['code' => 5, 'msg' => '_bx_credits_err_cannot_send'];
 
         $fRate = $this->_oConfig->getConversionRateWithdraw();
 
-        $aTemplateVars = array(
+        $aTemplateVars = [
             'profile_link' => $oProfile->getUrl(),
             'profile_name' => $oProfile->getDisplayName(),
             'amount' => $fAmount,
             'rate' => $fRate,
             'message' => $sMessage,
             'confirm_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HISTORY_ADMINISTRATION'])
-        );
-        $aTemplate = $oEmailTemplates->parseTemplate($CNF['ETEMPLATE_WITHDRAW_REQUESTED'], $aTemplateVars);
+        ];
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($CNF['ETEMPLATE_WITHDRAW_REQUESTED'], $aTemplateVars);
         if(!$aTemplate)
             return $aResult;
 
         $sEmail = $this->_oConfig->getWithdrawEmail();
-        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), true))
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM, 'html', false, [], true))
             return $aResult;
 
-        bx_alert($this->getName(), 'withdraw_requested', 0, $iProfileId, array(
+        bx_alert($this->getName(), 'withdraw_requested', 0, $iProfileId, [
             'profile' => $iProfileId,
             'amount' => $fAmount,
             'rate' => $fRate
-        ));
+        ]);
 
-        return array('code' => 0);
+        return ['code' => 0];
     }
 
     public function processWithdrawConfirm($iUserId, $iProfileId, $fAmount, $sMessage = '')
@@ -903,7 +930,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return ['code' => 2, 'msg' => '_bx_credits_err_low_balance'];
 
         $sInfo = '_bx_credits_txt_history_info_withdraw';
-        $iHistoryId = $this->updateProfileBalance($iProfileId, 0, -$fAmount, '', $sInfo);
+        $iHistoryId = $this->updateProfileBalance($iProfileId, 0, -$fAmount, BX_CREDITS_TRANSFER_TYPE_WITHDRAW, '', $sInfo);
         if(!$iHistoryId)
             return ['code' => 3, 'msg' => '_bx_credits_err_cannot_update_balance'];
 
@@ -919,6 +946,22 @@ class BxCreditsModule extends BxBaseModGeneralModule
         ]);
 
         return ['code' => 0, 'id' => $iHistoryId];
+    }
+
+    public function processClearing()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aItems = $this->_oDb->getHistory(['type' => 'clearing', 'clearing' => $this->_oConfig->getWithdrawClearing()]);
+        if(empty($aItems) || !is_array($aItems))
+            return;
+
+        $iNow = time();
+        foreach($aItems as $aItem) {
+            $this->_oDb->updateHistory([$CNF['FIELD_H_CLEARED'] => $iNow], [$CNF['FIELD_H_ID'] => $aItem['id']]);
+
+            //TODO: Some action(s) related to clearing can be performed here.
+        }
     }
 
     /*
@@ -952,7 +995,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
 
         $sInfo = '_bx_credits_txt_history_info_purchase';
         $fAmount = ((float)$aBundle[$CNF['FIELD_AMOUNT']] + (float)$aBundle[$CNF['FIELD_BONUS']]) * $iItemCount;
-        if(!$this->updateProfileBalance($iClientId, 0, $fAmount, '', $sInfo))
+        if(!$this->updateProfileBalance($iClientId, 0, $fAmount, BX_CREDITS_TRANSFER_TYPE_PURCHASE, '', $sInfo))
             return array();
 
         bx_alert($this->getName(), 'order_' . $sAction, 0, false, array(

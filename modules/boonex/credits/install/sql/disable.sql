@@ -27,3 +27,6 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_credits';
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_credits_%';

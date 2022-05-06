@@ -69,14 +69,21 @@ class BxCreditsFormCredit extends BxTemplFormView
 
         return $this->genRowStandard($aInput);
     }
-    
+
     protected function genCustomInputBalance(&$aInput)
     {
         $aInput['value'] = $this->_oModule->getProfileBalance();
 
         return $this->genInputStandard($aInput);
     }
-    
+
+    protected function genCustomInputCleared(&$aInput)
+    {
+        $aInput['value'] = $this->_oModule->getProfileBalanceCleared();
+
+        return $this->genInputStandard($aInput);
+    }
+
     protected function genCustomInputRate(&$aInput)
     {
         $aInput['value'] = $this->_fRate;

@@ -46,6 +46,11 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
 
             'FIELD_C_MESSAGE' => 'message',
 
+            'FIELD_H_ID' => 'id',
+            'FIELD_H_DIRECTION' => 'direction',
+            'FIELD_H_DATE' => 'date',
+            'FIELD_H_CLEARED' => 'cleared',
+
             // page URIs
             'URI_HOME' => 'credits-home',
             'URL_HOME' => 'page.php?i=credits-home',
@@ -58,6 +63,9 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             // some params
             'PARAM_WITHDRAW' => 'bx_credits_enable_withdraw',
             'PARAM_WITHDRAW_EMAIL' => 'bx_credits_withdraw_email',
+            'PARAM_WITHDRAW_CLEARING' => 'bx_credits_withdraw_clearing',
+            'PARAM_WITHDRAW_MINIMUM' => 'bx_credits_withdraw_minimum',
+            'PARAM_WITHDRAW_REMAINING' => 'bx_credits_withdraw_remaining',
             'PARAM_PRECISION' => 'bx_credits_precision',
             'PARAM_CR_USE' => 'bx_credits_conversion_rate_use',
             'PARAM_CR_WITHDRAW' => 'bx_credits_conversion_rate_withdraw',
@@ -176,6 +184,31 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             $sEmail = getParam('site_email');
 
         return $sEmail;
+    }
+
+    public function getWithdrawClearing()
+    {
+        return (int)getParam($this->CNF['PARAM_WITHDRAW_CLEARING']);
+    }
+
+    public function getTransferTypesForClearing()
+    {
+        return [
+            BX_CREDITS_TRANSFER_TYPE_PURCHASE,
+            BX_CREDITS_TRANSFER_TYPE_CHECKOUT,
+            BX_CREDITS_TRANSFER_TYPE_GRANT,
+            BX_CREDITS_TRANSFER_TYPE_SEND,
+            BX_CREDITS_TRANSFER_TYPE_SERVICE
+        ];
+    }
+
+    public function getTransferTypesForSpending()
+    {
+        return [
+            BX_CREDITS_TRANSFER_TYPE_CHECKOUT,
+            BX_CREDITS_TRANSFER_TYPE_SEND,
+            BX_CREDITS_TRANSFER_TYPE_SERVICE
+        ];
     }
 
     public function getPrecision()

@@ -104,6 +104,29 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
     }
 
+    protected function _getCellCleared($mixedValue, $sKey, $aField, $aRow)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($aRow[$CNF['FIELD_H_DIRECTION']] == BX_CREDITS_DIRECTION_IN) {
+            if(empty($mixedValue)) {
+                $iPeriod = $this->_oModule->_oConfig->getWithdrawClearing();
+                if($iPeriod == 0)
+                    $iPeriod = 1;
+
+                $oDate = date_create('@' . $aRow[$CNF['FIELD_H_DATE']]);
+                date_add($oDate, new DateInterval('P' . $iPeriod . 'D'));
+                $mixedValue = date_format($oDate, 'U');
+            }
+
+            $mixedValue = bx_time_js($mixedValue, BX_FORMAT_DATE, true);
+        }
+        else 
+            $mixedValue = '';
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getProfile($mixedValue) 
     {
         if(is_numeric($mixedValue) && (int)$mixedValue == 0)
