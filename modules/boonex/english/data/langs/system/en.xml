@@ -2138,26 +2138,26 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_connect_option_approve"><![CDATA[Always approve profiles when joined using this module]]></string>
     <string name="_sys_connect_option_privacy"><![CDATA[Default privacy for created profiles]]></string>
 
-	<string name="_sys_currency"><![CDATA[{0} {1}]]></string>
-        <string name="_sys_decline"><![CDATA[Decline]]></string>
-	<string name="_sys_designbox_0"><![CDATA[Content]]></string>
-	<string name="_sys_designbox_1"><![CDATA[Content + Title + Background]]></string>
-	<string name="_sys_designbox_10"><![CDATA[Content + Padding]]></string>
-	<string name="_sys_designbox_11"><![CDATA[Content + Title + Background + Padding]]></string>
-	<string name="_sys_designbox_13"><![CDATA[Content + Background + Padding]]></string>
-	<string name="_sys_designbox_14"><![CDATA[Content + Title + Padding]]></string>
-	<string name="_sys_designbox_2"><![CDATA[Empty box]]></string>
-	<string name="_sys_designbox_3"><![CDATA[Content + Background]]></string>
-	<string name="_sys_designbox_4"><![CDATA[Content + Title]]></string>
-	<string name="_sys_done"><![CDATA[Done]]></string>    
-	<string name="_sys_et_txt_about_us"><![CDATA[About us]]></string>
-	<string name="_sys_et_txt_body_admin_email"><![CDATA[{email_header}
+    <string name="_sys_currency"><![CDATA[{0} {1}]]></string>
+    <string name="_sys_decline"><![CDATA[Decline]]></string>
+    <string name="_sys_designbox_0"><![CDATA[Content]]></string>
+    <string name="_sys_designbox_1"><![CDATA[Content + Title + Background]]></string>
+    <string name="_sys_designbox_10"><![CDATA[Content + Padding]]></string>
+    <string name="_sys_designbox_11"><![CDATA[Content + Title + Background + Padding]]></string>
+    <string name="_sys_designbox_13"><![CDATA[Content + Background + Padding]]></string>
+    <string name="_sys_designbox_14"><![CDATA[Content + Title + Padding]]></string>
+    <string name="_sys_designbox_2"><![CDATA[Empty box]]></string>
+    <string name="_sys_designbox_3"><![CDATA[Content + Background]]></string>
+    <string name="_sys_designbox_4"><![CDATA[Content + Title]]></string>
+    <string name="_sys_done"><![CDATA[Done]]></string>    
+    <string name="_sys_et_txt_about_us"><![CDATA[About us]]></string>
+    <string name="_sys_et_txt_body_admin_email"><![CDATA[{email_header}
 <p>Message from <a href="{site_url}">{site_name}</a> admin:</p>
 <p> </p>
 <p>{MessageText}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
 <p>User {sender_display_name} posted reply to your comment: </p>
 <p> </p>
 <p>{reply_text}</p>
@@ -2165,7 +2165,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>View and reply here: <a href="{page_url}">{page_title}</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
 <p>New <b>{report_type}</b> report received:</p>
 <p> </p>
 <p>{report_text}</p>
@@ -2173,39 +2173,43 @@ If it is not enabled then please consider implement this optimization, since it 
 <p><a href="{report_url}">View report</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
 <p>Hello, {name} ({email}).</p>
 <p>Click the link below to verify your email address, please:</p>
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
 <p>Module: <b>{Module}</b></p>
 <p>Uninstallation result: {Result}</p>
 <p> </p>
 <p>{Message}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
 <p>Hello {name} ({email})</p>,
 <p>Click the link below to reset your password, please:</p>
 <p> </p>
 <p><a href="{forgot_password_url}">Reset my password</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_mem_changed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_mem_changed"><![CDATA[{email_header}
 <p><b>{profile_name}</b> profile membership level is now <b>{membership_level}</b>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_mem_expiration"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_mem_prolonged"><![CDATA[{email_header}
+<p><b>{profile_name}</b> profile membership level (<b>{membership_level}</b>) was prolonged.</p>
+<p> </p>
+{email_footer}]]></string>
+    <string name="_sys_et_txt_body_mem_expiration"><![CDATA[{email_header}
 <p>Your {membership_name} membership will expire in {expire_days} days (-1 means already expired).</p>
 <p>Click the link below to renew your membership:</p>
 <p> </p>
 <p><a href="{page_url}">Renew my membership</a></p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
 <p>Your {site_name} account details:</p>
 <p> </p>
 <p>Name: {account_name}</p>
@@ -2213,64 +2217,60 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>URL: <a href="{site_url}">{site_url}</a></p>
 <p></p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[{email_header}
 <p>Your profile is pending review. We will send you the review result shortly.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[{email_header}
 <p>Your profile is currently suspended.</p>
 <p> </p>
 {email_footer}]]></string>
-  <string name="_sys_et_txt_body_account_change_status_activate">
-    <![CDATA[{email_header}
+    <string name="_sys_et_txt_body_account_change_status_activate"><![CDATA[{email_header}
 <p>Your account and all your related profiles are currently activated.</p>
 <p></p>
-{email_footer}]]>
-  </string>
-  <string name="_sys_et_txt_body_account_change_status_suspended">
-    <![CDATA[{email_header}
+{email_footer}]]></string>
+    <string name="_sys_et_txt_body_account_change_status_suspended"><![CDATA[{email_header}
 <p>Your account and all your related profiles are currently suspended.</p>
 <p> </p>
-{email_footer}]]>
-  </string>
-	<string name="_sys_et_txt_body_account"><![CDATA[{email_header}
+{email_footer}]]></string>
+    <string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
 <p>{pruning_output}</p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_failed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_failed"><![CDATA[{email_header}
 <p>Upgrade failed due to the following error:</p>
 <p> </p>
 <p>{error_msg}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[{email_header}
 <p>The following errors appeared during modules upgrade:</p>
 <p> </p>
 <p>{conclusion}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Site was successfully upgraded to {new_version}.</p>
 <p>Please go to <b>Studio &gt; Apps Market &gt; Updates</b> to check for modules updates.</p>
 <p> </p>
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[{email_header}
 <p>The following modules were successfully upgraded.</p>
 <p> </p>
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[{email_header}
 <p>Background operation failed with the following message.</p>
 <p> </p>
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
-        <string name="_sys_et_txt_body_manage_approve"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_manage_approve"><![CDATA[{email_header}
 <p>Moderation team has a question for you about '{content_title}':</p>
 <p> </p>
 <p>{notes}</p>
@@ -2285,6 +2285,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_system_delayed_module_uninstall"><![CDATA[Delayed module uninstall notification]]></string>
 	<string name="_sys_et_txt_name_system_forgot"><![CDATA[Reset password message]]></string>
 	<string name="_sys_et_txt_name_system_mem_changed"><![CDATA[The letter is sent to members whose membership level was changed]]></string>
+        <string name="_sys_et_txt_name_system_mem_prolonged"><![CDATA[The letter is sent to members whose membership level was prolonged]]></string>
 	<string name="_sys_et_txt_name_system_mem_expiration"><![CDATA[Membership expiration letter sent to members whose membership level expires]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Profile status changed to active]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Profile status changed to pending]]></string>
@@ -2306,6 +2307,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Delayed {Module} module uninstall: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Reset your password]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Your membership level was changed]]></string>
+        <string name="_sys_et_txt_subject_mem_prolonged"><![CDATA[Your membership level was prolonged]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Your membership is about to expire]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Profile activated]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Profile pending review]]></string>

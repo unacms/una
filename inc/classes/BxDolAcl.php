@@ -648,14 +648,16 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $mixedPeriod, $sTransactionId))
            return false;
 
+        $bProlong = $iLevelId == $aMembershipCurrent['id'];
+
         // raise membership alert
-        bx_alert('profile', 'set_membership', '', $iProfileId, array(
+        bx_alert('profile', ($bProlong ? 'prolong' : 'set') . '_membership', '', $iProfileId, [
             'mlevel'=> $iLevelId, 
             'period' => $mixedPeriod['period'], 
             'period_unit' => $mixedPeriod['period_unit'], 
             'starts_now' => $bStartsNow, 
             'txn_id' => $sTransactionId
-        ));
+        ]);
 
         // audit
         $aDataForAudit = array();
@@ -664,7 +666,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         BxDolProfile::getInstance($iProfileId)->doAudit('_sys_audit_action_set_membership', $aDataForAudit);
         
         // Send notification
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Mem' . ($bProlong ? 'Prolonged' : 'Changed'), array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
         if ($aTemplate)
             sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
 

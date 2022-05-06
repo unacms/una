@@ -2125,26 +2125,26 @@
     <string name="_sys_connect_option_approve"><![CDATA[Всегда одобрять профиль, когда заходят через это соединение]]></string>
     <string name="_sys_connect_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
 
-	<string name="_sys_currency"><![CDATA[{0} {1}]]></string>
-        <string name="_sys_decline"><![CDATA[Отклонить]]></string>
-	<string name="_sys_designbox_0"><![CDATA[Содержимое]]></string>
-	<string name="_sys_designbox_1"><![CDATA[Содержимое + заголовок + фон]]></string>
-	<string name="_sys_designbox_10"><![CDATA[Содержимое + отступ]]></string>
-	<string name="_sys_designbox_11"><![CDATA[Содержимое + заголовок + фон + отступ]]></string>
-	<string name="_sys_designbox_13"><![CDATA[Содержимое + фон + отступ]]></string>
-	<string name="_sys_designbox_14"><![CDATA[Содержимое + заголовок + отступ]]></string>
-	<string name="_sys_designbox_2"><![CDATA[Пустой квадратик]]></string>
-	<string name="_sys_designbox_3"><![CDATA[Содержимое + фон]]></string>
-	<string name="_sys_designbox_4"><![CDATA[Содержимое + заголовок]]></string>
-	<string name="_sys_done"><![CDATA[Готово]]></string>
-	<string name="_sys_et_txt_about_us"><![CDATA[О нас]]></string>
-	<string name="_sys_et_txt_body_admin_email"><![CDATA[{email_header}
+    <string name="_sys_currency"><![CDATA[{0} {1}]]></string>
+    <string name="_sys_decline"><![CDATA[Отклонить]]></string>
+    <string name="_sys_designbox_0"><![CDATA[Содержимое]]></string>
+    <string name="_sys_designbox_1"><![CDATA[Содержимое + заголовок + фон]]></string>
+    <string name="_sys_designbox_10"><![CDATA[Содержимое + отступ]]></string>
+    <string name="_sys_designbox_11"><![CDATA[Содержимое + заголовок + фон + отступ]]></string>
+    <string name="_sys_designbox_13"><![CDATA[Содержимое + фон + отступ]]></string>
+    <string name="_sys_designbox_14"><![CDATA[Содержимое + заголовок + отступ]]></string>
+    <string name="_sys_designbox_2"><![CDATA[Пустой квадратик]]></string>
+    <string name="_sys_designbox_3"><![CDATA[Содержимое + фон]]></string>
+    <string name="_sys_designbox_4"><![CDATA[Содержимое + заголовок]]></string>
+    <string name="_sys_done"><![CDATA[Готово]]></string>
+    <string name="_sys_et_txt_about_us"><![CDATA[О нас]]></string>
+    <string name="_sys_et_txt_body_admin_email"><![CDATA[{email_header}
 <p>Сообщение от администрации сайта <a href="{site_url}">{site_name}</a>:</p>
 <p> </p>
 <p>{MessageText}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
 <p>{sender_display_name} ответил на Ваш комментарий:</p>
 <p> </p>
 <p>{reply_text}</p>
@@ -2152,7 +2152,7 @@
 <p>Ответ можно посмотреть здесь: <a href="{page_url}">{page_title}</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
 <p>Была получена новая жалоба <b>{report_type}</b>:</p>
 <p> </p>
 <p>{report_text}</p>
@@ -2160,39 +2160,43 @@
 <p><a href="{report_url}">Посмотреть жалобу</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
 <p>Привет, {name} ({email}).</p>
 <p>Пожалуйста, подтвердите ваш email, нажав по ссылке:</p>
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
 <p>Модуль: <b>{Module}</b></p>
 <p>Результат демонтажа: {Result}</p>
 <p> </p>
 <p>{Message}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
 <p>Привет {name} ({email})</p>,
 <p>Пожалуйста, нажмите по ссылке, чтобы сбросить свой пароль:</p>
 <p> </p>
 <p><a href="{forgot_password_url}">Сбросить мой пароль</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_mem_changed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_mem_changed"><![CDATA[{email_header}
 <p>Уровень членства профиля <b>{profile_name}</b> изменён на <b>{membership_level}</b>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_mem_expiration"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_mem_prolonged"><![CDATA[{email_header}
+<p>Уровень членства (<b>{membership_level}</b>) профиля <b>{profile_name}</b> был продлён.</p>
+<p> </p>
+{email_footer}]]></string>
+    <string name="_sys_et_txt_body_mem_expiration"><![CDATA[{email_header}
 <p>Ваше {membership_name} членство истекает через {expire_days} дней (-1 означает: уже истекло).</p>
 <p>Нажмите по ссылке, чтобы обновить ваше членство:</p>
 <p> </p>
 <p><a href="{page_url}">Обновить моё членство</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
 <p>Данные вашего аккаунта на сайте {site_name}:</p>
 <p> </p>
 <p>Имя: {account_name}</p>
@@ -2200,65 +2204,61 @@
 <p>URL: <a href="{site_url}">{site_url}</a></p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[{email_header}
 <p>Привет {profile_name},</p>
 <p>Ваш профиль ожидает одобрения. Мы сообщим Вам о результатах в ближайшее время.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[{email_header}
 <p>Ваш профиль заблокирован.</p>
 <p> </p>
 {email_footer}]]></string>
-  <string name="_sys_et_txt_body_account_change_status_activate">
-    <![CDATA[{email_header}
+    <string name="_sys_et_txt_body_account_change_status_activate"><![CDATA[{email_header}
 <p>Ваш аккаунт и все связанные с ним профили активированы.</p>
 <p></p>
-{email_footer}]]>
-  </string>
-  <string name="_sys_et_txt_body_account_change_status_suspended">
-    <![CDATA[{email_header}
+{email_footer}]]></string>
+    <string name="_sys_et_txt_body_account_change_status_suspended"><![CDATA[{email_header}
 <p>Ваш аккаунт и все связанные с ним профили заблокированы.</p>
 <p> </p>
-{email_footer}]]>
-  </string>
-	<string name="_sys_et_txt_body_account"><![CDATA[{email_header}
+{email_footer}]]></string>
+    <string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
 <p>{pruning_output}</p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_failed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_failed"><![CDATA[{email_header}
 <p>Обновление не удалось в связи со следующей ошибкой:</p>
 <p> </p>
 <p>{error_msg}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[{email_header}
 <p>В процессе обновления модулей произошли следующие ошибки:</p>
 <p> </p>
 <p>{conclusion}</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Сайт был удачно обновлён до {new_version}.</p>
 <p>Нужно зайти в <b>Студию &gt; Магазин Приложений &gt; Обновления</b>, чтобы проверить обновления для модулей.</p>
 <p> </p>
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[{email_header}
 <p>Следующие модули были удачно обновлены.</p>
 <p> </p>
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[{email_header}
 <p>Фоновый процесс завершился ошибкой со следующим сообщением.</p>
 <p> </p>
 {conclusion}
 <p> </p>
 {email_footer}]]></string>
-        <string name="_sys_et_txt_body_manage_approve"><![CDATA[{email_header}
+    <string name="_sys_et_txt_body_manage_approve"><![CDATA[{email_header}
 <p>У команды модераторов есть к вам вопрос о '{content_title}':</p>
 <p> </p>
 <p>{notes}</p>
@@ -2273,6 +2273,7 @@
 	<string name="_sys_et_txt_name_system_delayed_module_uninstall"><![CDATA[Уведомление об отложенном демонтировании модуля]]></string>
 	<string name="_sys_et_txt_name_system_forgot"><![CDATA[Сообщение о сбросе пароля]]></string>
 	<string name="_sys_et_txt_name_system_mem_changed"><![CDATA[Сообщение для посылки пользователям, чей уровень членства был изменён]]></string>
+        <string name="_sys_et_txt_name_system_mem_prolonged"><![CDATA[Сообщение для посылки пользователям, чей уровень членства был продлён]]></string>
 	<string name="_sys_et_txt_name_system_mem_expiration"><![CDATA[Сообщение об истечении срока членства]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Статус профиля изменён на Активный]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Статус профиля изменён на Ожидающий]]></string>
@@ -2294,6 +2295,7 @@
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Отложенный демонтаж модуля {Module}: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Сбросьте свой пароль]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Уровень Вашего членства был изменён]]></string>
+        <string name="_sys_et_txt_subject_mem_prolonged"><![CDATA[Уровень Вашего членства был продлён]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Срок Вашего членства истекает]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Профиль активирован]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Профиль в ожидании одобрения]]></string>
