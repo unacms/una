@@ -11,7 +11,7 @@ require_once('./inc/header.inc.php');
 
 $sUploaderObject = bx_process_input(bx_get('uo'));
 $sStorageObject = bx_process_input(bx_get('so'));
-$sUniqId = bx_process_input(bx_get('uid'));
+$sUniqId = preg_match("/^[\d\w]+$/", bx_get('uid')) ? bx_get('uid') : '';
 $isMultiple = bx_get('m') ? true : false;
 
 $sFormat = bx_process_input(bx_get('f'));
