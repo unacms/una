@@ -207,7 +207,7 @@
  *     foreach ($aIds as $mixedId) {
  *         if (!$this->_approve($mixedId))
  *             continue;
- *         $aIdsAffected[] = $mixedId;
+ *         $aIdsAffected[] = (int)$mixedId;
  *         $iAffected++;
  *     }
  *

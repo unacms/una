@@ -99,7 +99,7 @@ class BxBaseGrid extends BxDolGrid
         $aAffectedIds = array ();
         foreach ($aIds as $mixedId)
             if ($this->_enable($mixedId, $iChecked))
-                $aAffectedIds[] = $mixedId;
+                $aAffectedIds[] = preg_match("/^[\d\w]+$/", $mixedId) ? $mixedId : (int)$mixedId;
 
         $sAction = $iChecked ? 'enable' : 'disable';
         echo echoJson(array($sAction => $aAffectedIds));
