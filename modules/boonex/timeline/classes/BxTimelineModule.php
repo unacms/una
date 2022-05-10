@@ -513,10 +513,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         */
 
         $aResult = array(
-            'id' => $aEvent['id'],
-            'name' => $aParams['name'],
-            'view' => $aParams['view'],
-            'type' => $aParams['type'],
+            'id' => (int)$aEvent['id'],
+            'name' => bx_process_output($aParams['name']),
+            'view' => bx_process_output($aParams['view']),
+            'type' => bx_process_output($aParams['type']),
             'item' => $this->_oTemplate->getPost($aEvent, $aParams),
             'eval' => $sJsObject . "._onGetPost(oData)"
         );
