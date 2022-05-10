@@ -206,6 +206,7 @@ import url(../../../../../../../template/css/forms.css);
 
     border: none;
     background-color: transparent;
+    visibility: hidden;
 }
 
 
