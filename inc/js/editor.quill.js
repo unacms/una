@@ -238,6 +238,8 @@ function bx_editor_init(oEditor, oParams){
     $(oParams.selector).next().find('span.ql-background').attr('title', _t('_sys_txt_quill_tooltip_background'));
     $(oParams.selector).next().find('span.ql-align').attr('title', _t('_sys_txt_quill_tooltip_align'));
     $(oParams.selector).next().find('span.ql-header').attr('title', _t('_sys_txt_quill_tooltip_header'));
+	console.log(oParams.selector);
+	$('#' + oParams.name).find('.ql-editor').addClass('prose');
     
     if (bEmptyToolbar)
         $(oParams.selector).next().hide();

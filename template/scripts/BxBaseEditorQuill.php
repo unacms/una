@@ -192,7 +192,7 @@ class BxBaseEditorQuill extends BxDolEditor
         ));
         
         $aCss = array_merge($aCss, array(
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.' . $this->_aObject['skin'] . '.css',  
+            BX_DIRECTORY_PATH_BASE . 'css/|editor_snow.quill.css',  
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.mention.css', 
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'highlight/|default.min.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/quill.imageUploader.min.css',

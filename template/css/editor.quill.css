@@ -18,3 +18,6 @@
     cursor: pointer;
     
 }
+.ql-editor.prose{
+	max-width: none;
+}
