@@ -456,17 +456,17 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $aAddons = array();
         if(!empty($aParams['name']))
-            $aAddons[] = $aParams['name'];
+            $aAddons[] = bx_process_output($aParams['name']);
         else {
             if($bWithView && !empty($aParams['view']))
-                $aAddons[] = $aParams['view'];
+                $aAddons[] = bx_process_output($aParams['view']);
 
             if($bWithType && !empty($aParams['type']))
-                $aAddons[] = $aParams['type'];
+                $aAddons[] = bx_process_output($aParams['type']);
         }
 
         if($bWithOwner)
-            $aAddons[] = $aParams['owner_id'];
+            $aAddons[] = (int)$aParams['owner_id'];
 
         return !empty($aAddons) ? implode($sGlue, $aAddons) : '';
     }

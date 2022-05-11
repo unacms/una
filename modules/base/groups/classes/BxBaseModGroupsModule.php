@@ -1045,6 +1045,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         );
     }
 
+    public function serviceGetNotificationsInsertData($oAlert, $aHandler, $aDataItems)
+    {
+        if($oAlert->sAction != 'join_invitation_notif' || empty($aDataItems) || !is_array($aDataItems))
+            return $aDataItems;
+
+        foreach($aDataItems as $iIndex => $aDataItem)
+            $aDataItems[$iIndex]['object_privacy_view'] = BX_DOL_PG_ALL;
+
+        return $aDataItems;
+    }
+
     /**
      * Notification about new invitation to join the group
      */
@@ -1200,16 +1211,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
         $CNF = &$this->_oConfig->CNF;
+        
+        $iGroupContentId = (int)$aDataEntry[$CNF['FIELD_ID']];
 
         $bInvited = false;
-        if(!empty($CNF['TABLE_INVITES']) && bx_get('key')){
-            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
-            $mixedInvited = $this->isInvited(bx_get('key'), $oGroupProfile->id());
-            if($mixedInvited === true)
-                $bInvited = true;
+        if(!empty($CNF['TABLE_INVITES'])) {
+            $iGroupProfileId = BxDolProfile::getInstanceByContentAndType($iGroupContentId, $this->getName())->id();
+
+            if(($sKey = bx_get('key')) !== false) {
+                $mixedInvited = $this->isInvited($sKey, $iGroupProfileId);
+                if($mixedInvited === true)
+                    $bInvited = true;
+            }
+            else {
+                $mixedInvited = $this->isInvitedByProfileId($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $iGroupProfileId);
+                if($mixedInvited === true)
+                    $bInvited = true;
+            }
         }
 
-        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId) || $bInvited)
+        if ($this->isFan($iGroupContentId, $iProfileId) || $bInvited)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);

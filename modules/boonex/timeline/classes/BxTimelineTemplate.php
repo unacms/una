@@ -2048,7 +2048,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
         if($oMenu)
             return array();
-        
+
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
         if(!$oMenu)
             return array();
@@ -2060,10 +2060,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sOnclick = "bx_menu_popup('bx_timeline_menu_item_manage', this, {'id':'bx_timeline_menu_item_manage_{content_id}'}, {content_id:{content_id}, name:'{name}', view:'{view}', type:'{type}'});";
         $sOnclick = bx_replace_markers($sOnclick, array(
-            'content_id' => $aEvent['id'],            
-            'view' => $aBrowseParams['view'],
-            'type' => $aBrowseParams['type'],
-            'name' => $aBrowseParams['name'],
+            'content_id' => (int)$aEvent['id'],            
+            'view' => bx_process_output($aBrowseParams['view']),
+            'type' => bx_process_output($aBrowseParams['type']),
+            'name' => bx_process_output($aBrowseParams['name']),
         ));
 
         return array(

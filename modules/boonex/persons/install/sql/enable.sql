@@ -519,7 +519,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_persons_administration', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_persons_administration', 'single', 'audit_content', '_bx_persons_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
 ('bx_persons_administration', 'single', 'audit_profile', '_bx_persons_grid_action_title_adm_audit_profile', 'search-location', 1, 0, 4),
-('bx_persons_administration', 'single', 'lock_cf', '_bx_persons_grid_action_title_adm_lock_cf', 'filter', 1, 0, 5),
 
 ('bx_persons_common', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_persons_common', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 2),

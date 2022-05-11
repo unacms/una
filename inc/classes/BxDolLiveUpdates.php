@@ -127,7 +127,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
                 if((int)$aCurrent[$sName] == (int)$aData['count'])			    
                     continue;
 
-                $aResultData = array('count_new' => $aData['count'], 'count_old' => $aCurrent[$sName]);
+                $aResultData = array('count_new' => (int)$aData['count'], 'count_old' => (int)$aCurrent[$sName]);
                 if(isset($aData['data']))
                     $aResultData = array_merge($aResultData, $aData['data']);
 
