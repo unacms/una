@@ -890,6 +890,17 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         return BxDolSession::getInstance()->getValue($this->$sField . $iUserId);
     }
+
+    public function prepareParam($sName, $sPattern = "/^[\d\w_]+$/")
+    {
+        $mixedValue = bx_get($sName);
+        return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
+    }
+
+    public function prepareParamWithDefault($sName, $sDefault, $sPattern = "/^[\d\w_]+$/")
+    {
+        return ($sValue = $this->prepareParam($sName, $sPattern)) != '' ? $sValue : $sDefault;
+    }
 }
 
 /** @} */

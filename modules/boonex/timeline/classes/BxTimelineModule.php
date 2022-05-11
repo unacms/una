@@ -5036,16 +5036,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     protected function _prepareParamsGet()
     {
-        $aParams = array();
-
-        $aParams['name'] = bx_get('name');
-        $aParams['name'] = $aParams['name'] !== false ? bx_process_input($aParams['name'], BX_DATA_TEXT) : '';
-
-        $aParams['view'] = bx_get('view');
-        $aParams['view'] = $aParams['view'] !== false ? bx_process_input($aParams['view'], BX_DATA_TEXT) : BX_TIMELINE_VIEW_DEFAULT;
-
-        $aParams['type'] = bx_get('type');
-        $aParams['type'] = $aParams['type'] !== false ? bx_process_input($aParams['type'], BX_DATA_TEXT) : BX_TIMELINE_TYPE_DEFAULT;
+        $aParams = [
+            'name' => $this->_oConfig->prepareParam('name'),
+            'view' => $this->_oConfig->prepareParamWithDefault('view', BX_TIMELINE_VIEW_DEFAULT),
+            'type' => $this->_oConfig->prepareParamWithDefault('type', BX_TIMELINE_TYPE_DEFAULT),
+        ];
 
         $aParams['owner_id'] = bx_get('owner_id');
         $aParams['owner_id'] = $aParams['owner_id'] !== false ? bx_process_input($aParams['owner_id'], BX_DATA_INT) : $this->getUserId();

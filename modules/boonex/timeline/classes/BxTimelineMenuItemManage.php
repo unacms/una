@@ -29,7 +29,7 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
         $aBrowseParams = array('name' => '', 'view' => '', 'type' => '');
         foreach($aBrowseParams as $sKey => $sValue)
             if(bx_get($sKey) !== false)
-                $aBrowseParams[$sKey] = bx_process_input(bx_get($sKey));
+                $aBrowseParams[$sKey] = $this->_oModule->_oConfig->prepareParam($sKey);
 
         $this->setEventById($iContentId, $aBrowseParams);
 
