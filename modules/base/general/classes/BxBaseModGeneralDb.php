@@ -79,7 +79,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
             case 'search_ids':
                 $this->_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
-                bx_alert('system', 'search_ids', 0, 0, array('module_name' => $this->_oConfig->getName(), 'params' => &$aParams, 'select_clause' => &$sSelectClause, 'join_clause' => &$sJoinClause, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrderClause, 'limit_clause' => &$sLimitClause));
+                bx_alert('system', 'search_ids', 0, 0, array('module_name' => $this->_oConfig->getName(), 'params' => &$aParams, 'select_clause' => &$sSelectClause, 'join_clause' => &$sJoinClause, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrderClause, 'limit_clause' => &$sLimitClause, 'bindings' => &$aMethod['params'][1]));
                 break;
 
             case 'all_ids':
