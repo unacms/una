@@ -61,7 +61,7 @@ class BxAzrB2CModule extends BxBaseModConnectModule
 
             $sBaseUrl = "https://" . $this->_oConfig->sDomain . "/" . $this->_oConfig->sTenant . "/" . $this->_oConfig->sPolicy;//B2C_1_login_una";
             $sUrl = bx_append_url_params($sBaseUrl . "/oauth2/v2.0/authorize", [
-                'state' => $this->_genToken(), // This at least semi-random string is likely good enough as state identifier
+                // 'state' => $this->_genToken(), // This at least semi-random string is likely good enough as state identifier
                 'scope' => $this->_oConfig->sScope, 
                 'response_type' => 'code',
                 'response_mode' => 'query',
@@ -79,13 +79,13 @@ class BxAzrB2CModule extends BxBaseModConnectModule
     function actionHandle()
     {
         require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
-
+/*
         // check CSRF token
         if ($this->_getToken() != bx_get('state')) {
             $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_state_invalid')));
             return;
         }
-
+*/
         // check code
         $sCode = bx_get('code');
         if (!$sCode || bx_get('error')) {
