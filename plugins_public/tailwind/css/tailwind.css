@@ -662,14 +662,6 @@
         @apply rounded-md;
     }
 	
-	.bx-artificer div.ql-editor {
-		 @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
-	}
-
-	.bx-artificer div.ql-editor:focus{
-		@apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
-	}
-	
     /* Common elements: Forms: Password Input */
     .bx-artificer .bx-form-input-wrapper-password {
         @apply relative block w-full pl-3 pr-8;
@@ -796,13 +788,18 @@
     /* Common elements: Menus */
     .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm,
-    .bx-artificer .bx-stl-mil-wo-bg {
+    .bx-artificer .bx-stl-mil-wo-bg,
+    .bx-artificer .bx-stl-mil-wo-bg-gaps {
         @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
     }
     
     .bx-artificer .bx-stl-mil,
-    .bx-artificer .bx-stl-mil-sm {
+    .bx-artificer .bx-stl-mil-sm,
+    .bx-artificer .bx-stl-mil-wo-bg {
         @apply flex items-center px-3 py-1.5;
+    }
+    .bx-artificer .bx-stl-mil,
+    .bx-artificer .bx-stl-mil-sm {
         @apply active:bg-gray-300 dark:active:bg-black/50 hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
         @apply rounded-md;
     }
@@ -981,7 +978,16 @@
         @apply text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 opacity-75 hover:opacity-100;
     }
 
+
     /* 3d Party: Quill */
+    .bx-artificer div.ql-editor {
+        @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
+    }
+
+    .bx-artificer div.ql-editor:focus{
+        @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
+    }
+
     .bx-artificer .ql-mention-list li {
         @apply flex items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 text-sm font-normal;
     }

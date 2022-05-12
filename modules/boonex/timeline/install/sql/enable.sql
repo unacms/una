@@ -220,7 +220,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_counters', 'bx_timeline', 'item-reaction', '_bx_timeline_menu_item_title_system_item_reaction', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 20),
 ('bx_timeline_menu_item_counters', 'bx_timeline', 'item-score', '_bx_timeline_menu_item_title_system_item_score', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 30),
 ('bx_timeline_menu_item_counters', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 40),
-('bx_timeline_menu_item_counters', 'bx_timeline', 'item-repost', '_bx_timeline_menu_item_title_system_item_repost', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 50);
+('bx_timeline_menu_item_counters', 'bx_timeline', 'item-repost', '_bx_timeline_menu_item_title_system_item_repost', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 50);
 
 -- MENU: Item Meta Info
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

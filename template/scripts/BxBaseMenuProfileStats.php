@@ -29,12 +29,12 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
         if(empty($aItems) || !is_array($aItems))
             return $aItems;
 
+        $iMaxNum = count($aItems);
+        if($iMaxNum <= $this->_iMenuItemsMin)
+            return $aItems;
+
         $mixedCollpsed = $this->getUserChoiceCollapsed();
         $bCollpsed = $mixedCollpsed === false || $mixedCollpsed == 1;
-
-        $iMaxNum = count($aItems);
-        if($this->_iMenuItemsMin > $iMaxNum)
-            $this->_iMenuItemsMin = $iMaxNum;
 
         for($i = $this->_iMenuItemsMin; $i < $iMaxNum; $i++)
             $aItems[$i]['class_add'] .= ' bx-mi-aux' . ($bCollpsed ? ' bx-mi-hidden' : '');

@@ -237,6 +237,7 @@ body.bx-popup-lock {
     padding: 0px !important;
 }
 .bx-popup-menu ul.bx-menu-ver,
+.bx-popup-menu ul.bx-menu-verlit,
 .bx-popup-menu ul.bx-menu-custom-ver,
 .bx-popup-menu.bx-popup-menu-main.sys-add-content ul {
     margin-top: 0.5rem;
