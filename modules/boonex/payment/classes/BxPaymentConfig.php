@@ -244,6 +244,11 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
     	return explode($this->getDivider('DIVIDER_DESCRIPTOR'), $s);
     }
 
+    public function descriptorsA2S($a) 
+    {
+    	return implode($this->getDivider('DIVIDER_DESCRIPTORS'), $a);
+    }
+
     /**
      * Conver items to array with necessary structure.
      *

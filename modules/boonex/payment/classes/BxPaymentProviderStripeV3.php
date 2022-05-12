@@ -376,7 +376,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'quantity' => $aItem['quantity'],
                     );
 
-                    $aMetaItems[] = array('v' => $aCartInfo['vendor_id'], 'c' => $aClient['id'], 'm' => $aItem['module_id'], 'i' => $aItem['id']);
+                    $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
                 }
                 break;
 
@@ -389,27 +389,27 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'quantity' => $aItem['quantity'],
                     );
 
-                    $aMetaItems[] = array('v' => $aCartInfo['vendor_id'], 'c' => $aClient['id'], 'm' => $aItem['module_id'], 'i' => $aItem['id']);
+                    $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
                 }
                 break;
         }
 
         $oSession = null;
-        $aSession = array(
+        $aSession = [
             'payment_method_types' => ['card'],
             'customer_email' => !empty($aClient['email']) ? $aClient['email'] : '',
             'line_items' => $aLineItems,
             'mode' => $sMode,
             'success_url' => $aParams['success_url'],
             'cancel_url' => $aParams['cancel_url'],
-            'metadata' => array(
+            'metadata' => [
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
                 'type' => $sType, 
-                'items' => serialize($aMetaItems),
+                'items' => $this->_oModule->_oConfig->descriptorsA2S($aMetaItems),
                 'verification' => $this->getVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
-            )
-        );
+            ]
+        ];
 
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_session', 0, false, array(
             'session_object' => &$oSession, 
