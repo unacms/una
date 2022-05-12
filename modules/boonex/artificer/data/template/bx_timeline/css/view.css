@@ -45,6 +45,11 @@ div.bx-tl-view-filters div.bx-form-section-content {
     padding-bottom: 0;
 }
 
+/*--- Load More Style ---*/
+div.bx-tl-view-timeline div.bx-tl-load-more {
+    padding-top: 0px;
+}
+
 /*--- Item Style: Timeline ---*/
 div.bx-tl-view-timeline div.bx-tl-items,
 div.bx-tl-view-search div.bx-tl-items,
