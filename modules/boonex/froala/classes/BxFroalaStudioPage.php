@@ -16,12 +16,11 @@ class BxFroalaStudioPage extends BxTemplStudioModule
         parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->aMenuItems = array(
-            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            'help' => array('name' => 'help', 'icon' => 'question', 'title' => '_bx_froala_information'),
+            'settings' => array('name' => 'settings', 'icon' => 'question', 'title' => '_bx_froala_information'),
         );
     }
     
-    function getHelp ()
+    function getSettings ()
     {
         return _t('_bx_froala_information_block');
     }
