@@ -656,7 +656,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             if ($oImagesTranscoder)
                 $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);
         }
-        return $bSubstituteNoImage && !$sImageUrl ? $this->getImageUrl($sNoImage) : $sImageUrl;
+
+        if(!$bSubstituteNoImage || $sImageUrl)
+            return $sImageUrl;
+
+        $sImageUrl = $this->getImageUrl($sNoImage);
+        if(!$sImageUrl)
+            $sImageUrl = $this->getImageUrl(substr($sNoImage, 0, strrpos($sNoImage, '-')) . '.svg');
+
+        return $sImageUrl;
     }
 
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
