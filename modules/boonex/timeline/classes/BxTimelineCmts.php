@@ -14,6 +14,8 @@ class BxTimelineCmts extends BxTemplCmts
     function __construct($sSystem, $iId, $iInit = 1)
     {
         parent::__construct($sSystem, $iId, $iInit);
+
+        $this->_aSystem['trigger_field_privacy_view'] = 'object_privacy_view';
     }
 }
 
