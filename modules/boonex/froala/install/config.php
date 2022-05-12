@@ -13,9 +13,10 @@ $aConfig = array(
     /**
      * Main Section.
      */
+    'deprecated' => 1,
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_froala',
-    'title' => 'Froala',
+    'title' => 'Froala (not supported)',
     'note' => 'Froala editor integration.',
     'version' => '13.0.2.DEV',
     'vendor' => 'BoonEx',
