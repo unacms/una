@@ -18,7 +18,16 @@ use Alancting\Microsoft\JWT\AzureAd\AzureAdIdTokenJWT;
 
 /**
  * This Azude AD connect code was created with instructions from:
+ * https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-b2c-overview#supported-app-types-and-scenarios
  * https://www.sipponen.com/archives/4024
+ * And official docs:
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/add-web-api-application?tabs=app-reg-ga
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/configure-tokens?pivots=b2c-user-flow
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/access-tokens
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/authorization-code-flow
+ * https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent?tabs=azure-portal
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/openid-connect
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
  */
 class BxAzrB2CModule extends BxBaseModConnectModule
 {
