@@ -95,7 +95,7 @@ class BxStrmEngineOvenMediaEngine extends BxDol
                 $bDeleteRecording = true;
             }
             else {
-                bx_log('bx_stream', "Store recording from URL(" . getParam('bx_stream_recordings_url') . $a['filePath'] . ") failed for content id($iContentId): " . $oStorage->getErrorString());
+                bx_log('bx_stream', "Store recording from URL(" . $sFileUrl . ") failed for content id({$aContentInfo['id']}): " . $oStorage->getErrorString());
             }
         }
         else {

@@ -201,6 +201,8 @@
     <string name="_bx_stream_grid_column_title_adm_status_admin"><![CDATA[Moderation]]></string>
     <string name="_bx_stream_grid_action_err_delete"><![CDATA[Cannot delete the selected stream(s).]]></string>
     <string name="_bx_stream_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+    <string name="_bx_stream_grid_action_publish"><![CDATA[Publish in videos module]]></string>
+    <string name="_bx_stream_grid_action_download"><![CDATA[Download recording]]></string>
 
     <string name="_bx_stream_chart_growth"><![CDATA[Streams: Growth]]></string>
     <string name="_bx_stream_chart_growth_speed"><![CDATA[Streams: Growth Speed]]></string>

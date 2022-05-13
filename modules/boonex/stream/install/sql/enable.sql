@@ -375,10 +375,10 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_stream_recordings', 'added', '_bx_stream_field_added', '20%', 0, 0, '', 2),
 ('bx_stream_recordings', 'actions', '_sys_actions', '60%', 0, 0, '', 3);
 
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_stream_recordings', 'single', 'download', '', 'download', 0, 1),
-('bx_stream_recordings', 'single', 'publish', '', 'upload', 1, 2),
-('bx_stream_recordings', 'single', 'delete', '', 'remove',  1, 3);
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_stream_recordings', 'single', 'download', '_bx_stream_grid_action_download', 'download', 1, 0, 1),
+('bx_stream_recordings', 'single', 'publish', '_bx_stream_grid_action_publish', 'upload', 1, 1, 2),
+('bx_stream_recordings', 'single', 'delete', '_Delete', 'remove',  1, 1, 3);
 
 -- UPLOADERS
 

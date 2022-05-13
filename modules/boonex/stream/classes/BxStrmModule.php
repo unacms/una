@@ -97,9 +97,15 @@ class BxStrmModule extends BxBaseModTextModule
         exit;
     }
 
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
+    {
+        return $this->_serviceTemplateFunc ('embedStream', $iContentId);
+    }
+
     public function actionEmbedStream($iContentId = 0)
     {
-        $this->_serviceTemplateFunc ('embedStream', $iContentId);
+        header("Location:" . BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed/' . $iContentId . '/', true, 301);
+        exit;
     }
 
     public function actionStreamViewers ($iContentId = 0)
@@ -297,7 +303,7 @@ class BxStrmModule extends BxBaseModTextModule
             if ($iRecordingId) {
 
                 $aRecordings = $this->getStreamEngine()->stopRecording($iRecordingId);
-                $this->getStreamEngine()->processRecordings($iRecordingId, $aContentInfo, $this);
+                // $this->getStreamEngine()->processRecordings($iRecordingId, $aContentInfo, $this); // this line is commented to process recordings later upon cron run to make sure long recording are processed properly
                 BxDolSession::getInstance()->unsetValue('bx-stream-rec-' . $iContentId);
 
             }

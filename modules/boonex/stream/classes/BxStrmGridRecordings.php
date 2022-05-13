@@ -56,10 +56,9 @@ class BxStrmGridRecordings extends BxTemplGrid
 
         $aIdsAffected = array ();
         foreach ($aIds as $mixedId) {
-            if (!$this->_delete($mixedId))
+            if (!$this->_delete((int)$mixedId))
                 continue;
-            $aIdsAffected[] = $mixedId;
-            $iAffected++;
+            $aIdsAffected[] = (int)$mixedId;
         }
 
         echoJson([
@@ -121,7 +120,7 @@ class BxStrmGridRecordings extends BxTemplGrid
         if (!($oStorage = $this->_actionWithStorage($iFileId)))
             return false;
         
-        return $oStorage->deleteFile($aFile['id']);
+        return $oStorage->deleteFile($iFileId);
     }
 
     protected function _download($iFileId)
