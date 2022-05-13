@@ -54,7 +54,7 @@ class BxStrmTemplate extends BxBaseModTextTemplate
 
         $sUrlViewStream = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . (int)$aContentInfo['id'];
         $sUrlViewStream = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrlViewStream);
-        $sUrlEmbed = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed_stream/' . (int)$aContentInfo['id'];
+        $sUrlEmbed = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed/' . (int)$aContentInfo['id'];
 
         $aForm = array(
             'form_attrs' => array(

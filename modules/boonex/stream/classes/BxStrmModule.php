@@ -97,9 +97,15 @@ class BxStrmModule extends BxBaseModTextModule
         exit;
     }
 
+    public function actionEmbed($iContentId, $sUnitTemplate = '', $sAddCode = '')
+    {
+        return $this->_serviceTemplateFunc ('embedStream', $iContentId);
+    }
+
     public function actionEmbedStream($iContentId = 0)
     {
-        $this->_serviceTemplateFunc ('embedStream', $iContentId);
+        header("Location:" . BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed/' . $iContentId . '/', true, 301);
+        exit;
     }
 
     public function actionStreamViewers ($iContentId = 0)
