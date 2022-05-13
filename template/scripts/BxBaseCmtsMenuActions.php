@@ -13,12 +13,18 @@
  */
 class BxBaseCmtsMenuActions extends BxTemplMenuCustom
 {
+    protected static $_sModeActions = 'actions';
+    protected static $_sModeCounters = 'counters';
+
     protected $_oCmts;
     protected $_aCmt;
     protected $_aBp;
     protected $_aDp;
 
+    protected $_sMode;
     protected $_bShowTitles;
+    protected $_bShowCounters;
+    protected $_bShowCountersIcons;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -27,7 +33,10 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         $this->_aBp = [];
         $this->_aDp = [];
 
-        $this->_bShowTitles = false;
+        $this->_sMode = strpos($this->_sObject, '_actions') !== false ? self::$_sModeActions : self::$_sModeCounters;
+        $this->_bShowTitles = true;
+        $this->_bShowCounters = false;
+        $this->_bShowCountersIcons = true;
     }
 
     public function setCmtsData($oCmts, $iCmtId, $aBp = [], $aDp = [])
@@ -75,11 +84,24 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!$oVote)
             return false;
 
-        $aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aVotesParams['show_do_vote_label'] = true;
+        $aVotesParams = [
+            'dynamic_mode' => $this->_bDynamicMode,
+            'show_do_vote_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+        ];
 
-        return $oVote->getElementInline($aVotesParams);
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sVotesMethod = 'getElementInline';
+                break;
+
+            case self::$_sModeCounters:
+                $sVotesMethod = 'getCounter';
+                break;
+        }
+
+        return $oVote->$sVotesMethod($aVotesParams);
     }
 
     protected function _getMenuItemItemReaction($aItem)
@@ -88,11 +110,25 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!$oReaction)
             return false;
 
-        $aReactionParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aReactionParams['show_do_vote_label'] = true;
+        $aReactionsParams = [
+            'dynamic_mode' => $this->_bDynamicMode,
+            'show_do_vote_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_style' => 'compound',
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+        ];
 
-        return $oReaction->getElementInline($aReactionParams);
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sReactionsMethod = 'getElementInline';
+                break;
+
+            case self::$_sModeCounters:
+                $sReactionsMethod = 'getCounter';
+                break;
+        }
+
+        return $oReaction->$sReactionsMethod($aReactionsParams);
     }
 
     protected function _getMenuItemItemScore($aItem)
@@ -101,11 +137,24 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!$oScore)
             return false;
 
-        $aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aScoresParams['show_do_vote_label'] = true;
+        $aScoresParams = array(
+            'dynamic_mode' => $this->_bDynamicMode,
+            'show_do_vote_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+        );
 
-    	return $oScore->getElementInline($aScoresParams);
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sScoresMethod = 'getElementInline';
+                break;
+
+            case self::$_sModeCounters:
+                $sScoresMethod = 'getCounter';
+                break;
+        }
+
+    	return $oScore->$sScoresMethod($aScoresParams);
     }
 
     protected function _getMenuItemItemReport($aItem)
@@ -114,9 +163,11 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!$oReport)
             return false;
 
-        $aReportParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aReportParams['show_do_report_label'] = true;
+        $aReportParams = [
+            'dynamic_mode' => $this->_bDynamicMode,
+            'show_do_report_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+        ];
 
     	return $oReport->getElementInline($aReportParams);
     }

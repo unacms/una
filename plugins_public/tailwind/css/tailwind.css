@@ -840,6 +840,11 @@
     .bx-artificer .bx-stl-mil .sys-action-do-icon > * {
         @apply flex items-center justify-center h-6 w-6 mr-3;
     }
+    .bx-artificer .bx-stl-mii:last-child > *,
+    .bx-artificer .bx-stl-mii-sm:last-child > *,
+    .bx-artificer .bx-stl-mil .sys-action-do-icon:last-child > * {
+        @apply mr-0;
+    }
     .bx-artificer .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text {
         @apply ml-0; 
     }

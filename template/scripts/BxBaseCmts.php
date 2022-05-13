@@ -395,7 +395,7 @@ class BxBaseCmts extends BxDolCmts
 
         $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
         if(($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR])) {
-            $sContent = $this->_getContent($aCmt);
+            $sContent = $this->_getContent($aCmt, $aBp, $aDp);
         }
         else {
             $sClass .= ' cmt-author-not-active';
@@ -1261,15 +1261,23 @@ class BxBaseCmts extends BxDolCmts
         return $oForm;
     }
 
-    protected function _getContent($aCmt)
+    protected function _getContent($aCmt, $aBp = [], $aDp = [])
     {
+        $bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
+
         $sAttachments = $this->_getAttachments($aCmt);
 
+        /*
         $sReactions = '';
         if(($oReaction = $this->getReactionObject($aCmt['cmt_unique_id'])) !== false)
             $sReactions = $oReaction->getCounter(array(
                 'show_counter' => true
             ));
+         */
+
+        $oMenuCounters = BxDolMenu::getObjectInstance($this->_sMenuObjCounters);
+        $oMenuCounters->setCmtsData($this, $aCmt['cmt_id'], $aBp, $aDp);
+        $oMenuCounters->setDynamicMode($bDynamicMode);
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameItemContent, array_merge(array(
             'style_prefix' => $this->_sStylePrefix,
@@ -1281,7 +1289,7 @@ class BxBaseCmts extends BxDolCmts
                     'attached' => $sAttachments
                 )
             ),
-            'reactions' => $sReactions,
+            'counters' => $oMenuCounters->getCode(),
         ), $this->_getTmplVarsText($aCmt)));
     }
 

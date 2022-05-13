@@ -4338,6 +4338,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', ''),
 ('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 20, 0, 1, 'BxTemplCmtsMenuManage', ''),
 ('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 15, 0, 1, 'BxTemplCmtsMenuActions', ''),
+('sys_cmts_item_counters', '_sys_menu_title_cmts_item_counters', 'sys_cmts_item_counters', 'system', 15, 0, 1, 'BxTemplCmtsMenuActions', ''),
 ('sys_cmts_item_meta', '_sys_menu_title_cmts_item_meta', 'sys_cmts_item_meta', 'system', 15, 0, 1, 'BxTemplCmtsMenuUnitMeta', ''),
 ('sys_account_popup', '_sys_menu_title_account_popup', '', 'system', 12, 0, 1, 'BxTemplMenuAccountPopup', ''),
 ('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 19, 0, 1, 'BxTemplMenuAccountNotifications', ''),
@@ -4390,6 +4391,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_profile_followings', 'system', '_sys_menu_set_title_profile_followings', 0),
 ('sys_cmts_item_manage', 'system', '_sys_menu_set_title_cmts_item_manage', 0),
 ('sys_cmts_item_actions', 'system', '_sys_menu_set_title_cmts_item_actions', 0),
+('sys_cmts_item_counters', 'system', '_sys_menu_set_title_cmts_item_counters', 0),
 ('sys_cmts_item_meta', 'system', '_sys_menu_set_title_cmts_item_meta', 0),
 ('sys_switch_language', 'system', '_sys_menu_set_title_switch_language', 0),
 ('sys_switch_template', 'system', '_sys_menu_set_title_switch_template', 0),
@@ -4525,6 +4527,12 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{reply_onclick}', '_self', 'reply', '', '', 0, 2147483647, 1, 0, 1, 3),
 ('sys_cmts_item_actions', 'system', 'item-quote', '_sys_menu_item_title_system_cmts_item_quote', '_sys_menu_item_title_cmts_item_quote', 'javascript:void(0)', 'javascript:{quote_onclick}', '_self', 'quote-right', '', '', 0, 2147483647, 1, 0, 1, 4),
 ('sys_cmts_item_actions', 'system', 'item-more', '_sys_menu_item_title_system_cmts_item_more', '_sys_menu_item_title_cmts_item_more', 'javascript:void(0)', 'bx_menu_popup(''sys_cmts_item_manage'', this, {''id'':''sys_cmts_item_manage_{cmt_system}_{cmt_id}'', ''removeOnClose'':1}, {cmt_system:''{cmt_system}'', cmt_object_id:{cmt_object_id}, cmt_id:{cmt_id}});', '', 'ellipsis-h', '', 'sys_cmts_item_manage', 1, 2147483647, 1, 0, 1, 5);
+
+-- comment counters menu
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('sys_cmts_item_counters', 'system', 'item-vote', '_sys_menu_item_title_system_cmts_item_vote', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 0),
+('sys_cmts_item_counters', 'system', 'item-reaction', '_sys_menu_item_title_system_cmts_item_reaction', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 1),
+('sys_cmts_item_counters', 'system', 'item-score', '_sys_menu_item_title_system_cmts_item_score', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 2);
 
 -- comment meta info menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 

@@ -175,10 +175,6 @@
     span.cmt-body-see-more a {
         font-weight: bold;
     }
-    div.cmt-reactions .bx-vote-counter-wrapper {
-        line-height: 2.0rem;
-        font-size: 1.2rem;
-    }
     div.cmt-attached-preview {
         overflow:hidden;
     }
@@ -198,6 +194,9 @@
         background-repeat: no-repeat;
         background-size: contain;
     }
+
+    /*--- Comment Counters ---*/
+    div.cmt-counters {}
 
     /*--- Comment Actions ---*/
     div.cmt-actions {

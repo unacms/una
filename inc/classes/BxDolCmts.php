@@ -168,6 +168,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected $_sMenuObjManage;
     protected $_sMenuObjActions;
+    protected $_sMenuObjCounters;
     protected $_sMenuObjMeta;
 
     protected $_sMetatagsObj;
@@ -262,6 +263,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_sMenuObjManage = 'sys_cmts_item_manage';
         $this->_sMenuObjActions = 'sys_cmts_item_actions';
+        $this->_sMenuObjCounters = 'sys_cmts_item_counters';
         $this->_sMenuObjMeta = 'sys_cmts_item_meta';
 
         $this->_sMetatagsObj = 'sys_cmts';

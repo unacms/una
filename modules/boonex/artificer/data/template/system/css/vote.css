@@ -10,6 +10,16 @@ import url(../../../../../../../template/css/vote.css);
     margin: 0;
 }
 
+/*----------------------------------*/
+/*--- Likes based Element Styles ---*/
+/*----------------------------------*/
+.bx-vote-counter-likes span.bx-vote-counter-text {
+    width: auto;
+    height: auto;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
 /*--------------------------------------*/
 /*--- Reactions based Element Styles ---*/
 /*--------------------------------------*/

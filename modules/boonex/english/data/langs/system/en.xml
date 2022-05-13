@@ -2797,9 +2797,9 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
     <string name="_sys_menu_item_title_cmts_item_pin"><![CDATA[Pin]]></string>
     <string name="_sys_menu_item_title_cmts_item_unpin"><![CDATA[Unpin]]></string>
-    <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
+    <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[Quote]]></string>
     <string name="_sys_menu_item_title_cmts_item_reaction"><![CDATA[]]></string>
-    <string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
+    <string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Reply]]></string>
     <string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
     <string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
     <string name="_sys_menu_item_title_cmts_item_more"><![CDATA[]]></string>
@@ -2977,6 +2977,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_set_title_dashboard_reports_manage"><![CDATA[Reports Manage]]></string>
     <string name="_sys_menu_set_title_add_profile"><![CDATA[Add Profile]]></string>
     <string name="_sys_menu_set_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
+    <string name="_sys_menu_set_title_cmts_item_counters"><![CDATA[Comment Сounters]]></string>
     <string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
     <string name="_sys_menu_set_title_cmts_item_meta"><![CDATA[Comment Meta Info]]></string>
     <string name="_sys_menu_set_title_switch_language"><![CDATA[Switch Language]]></string>
@@ -3033,6 +3034,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_title_add_profile"><![CDATA[Add Profile Menu]]></string>
     <string name="_sys_menu_title_add_profile_vertical"><![CDATA[Add Profile Menu (vertical)]]></string>
     <string name="_sys_menu_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
+    <string name="_sys_menu_title_cmts_item_counters"><![CDATA[Comment Counters]]></string>
     <string name="_sys_menu_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
     <string name="_sys_menu_title_cmts_item_meta"><![CDATA[Comment Meta Info]]></string>
     <string name="_sys_menu_title_footer"><![CDATA[Footer Links]]></string>
