@@ -659,6 +659,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if ($o) $o->onObjectDelete();
         }
 
+        if (!empty($CNF['OBJECT_REPORTS'])) {
+            $o = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId);
+            if ($o) $o->onObjectDelete();
+        }
+
         if (!empty($CNF['OBJECT_METATAGS'])) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($o) $o->onDeleteContent($iContentId);

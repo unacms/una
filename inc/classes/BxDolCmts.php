@@ -568,48 +568,48 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $sResult;
     }
 
-    public function getVoteObject($iId)
+    public function getVoteObject($iEniqId)
     {
         if(empty($this->_aSystem['object_vote']))
             $this->_aSystem['object_vote'] = 'sys_cmts';
 
-        $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId, true, $this->_oTemplate);
+        $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iEniqId, true, $this->_oTemplate);
         if(!$oVote || !$oVote->isEnabled())
             return false;
 
         return $oVote;
     }
 
-    public function getReactionObject($iId)
+    public function getReactionObject($iEniqId)
     {
         if(empty($this->_aSystem['object_reaction']))
             $this->_aSystem['object_reaction'] = 'sys_cmts_reactions';
 
-        $oReaction = BxDolVote::getObjectInstance($this->_aSystem['object_reaction'], $iId, true, $this->_oTemplate);
+        $oReaction = BxDolVote::getObjectInstance($this->_aSystem['object_reaction'], $iEniqId, true, $this->_oTemplate);
         if(!$oReaction || !$oReaction->isEnabled())
             return false;
 
         return $oReaction;
     }
 
-    public function getScoreObject($iId)
+    public function getScoreObject($iEniqId)
     {
         if(empty($this->_aSystem['object_score']))
-        	$this->_aSystem['object_score'] = 'sys_cmts';
+            $this->_aSystem['object_score'] = 'sys_cmts';
 
-        $oScore = BxDolScore::getObjectInstance($this->_aSystem['object_score'], $iId, true, $this->_oTemplate);
+        $oScore = BxDolScore::getObjectInstance($this->_aSystem['object_score'], $iEniqId, true, $this->_oTemplate);
         if(!$oScore || !$oScore->isEnabled())
             return false;
 
         return $oScore;
     }
 
-    public function getReportObject($iId)
+    public function getReportObject($iEniqId)
     {
         if(empty($this->_aSystem['object_report']))
-        	$this->_aSystem['object_report'] = 'sys_cmts';
+            $this->_aSystem['object_report'] = 'sys_cmts';
 
-        $oReport = BxDolReport::getObjectInstance($this->_aSystem['object_report'], $iId, true, $this->_oTemplate);
+        $oReport = BxDolReport::getObjectInstance($this->_aSystem['object_report'], $iEniqId, true, $this->_oTemplate);
         if(!$oReport || !$oReport->isEnabled())
             return false;
 
@@ -788,8 +788,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function onObjectDelete ($iObjectId = 0)
     {
         // delete comments
-        $aFiles = $aCmtIds = array();
+        $aFiles = $aCmtIds = [];
         $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId(), $aFiles, $aCmtIds);
+
+        // delete votes
+        $this->deleteVotes($aCmtIds);
+
+        // delete reactions
+        $this->deleteReactions($aCmtIds);
+
+        // delete scores
+        $this->deleteScores($aCmtIds);
+
+        // delete reports
+        $this->deleteReports($aCmtIds);
 
         // delete meta info
         $this->deleteMetaInfo($aCmtIds);
@@ -800,6 +812,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             if ($oStorage)
                 $oStorage->queueFilesForDeletion($aFiles);
         }
+
+        // delete unique IDs
+        $this->deleteUniqueIds($aCmtIds);
     }
 
     public static function onAuthorDelete ($iAuthorId)
@@ -813,6 +828,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $aFiles = $aCmtIds = array ();
             $oQuery->deleteAuthorComments($iAuthorId, $aFiles, $aCmtIds);
 
+            // delete votes
+            $o->deleteVotes($aCmtIds);
+
+            // delete reactions
+            $o->deleteReactions($aCmtIds);
+
+            // delete scores
+            $o->deleteScores($aCmtIds);
+
+            // delete reports
+            $o->deleteReports($aCmtIds);
+
             // delete meta info
             $o->deleteMetaInfo($aCmtIds);
     
@@ -820,6 +847,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
             if ($oStorage)
                 $oStorage->queueFilesForDeletion($aFiles);
+            
+            // delete unique IDs
+            $o->deleteUniqueIds($aCmtIds);
         }
         return true;
     }
@@ -866,6 +896,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $aFiles = $aCmtIds = array ();
             $oQuery->deleteAll($aSystem['system_id'], $aFiles, $aCmtIds);
 
+            // delete votes
+            $o->deleteVotes($aCmtIds);
+
+            // delete reactions
+            $o->deleteReactions($aCmtIds);
+
+            // delete scores
+            $o->deleteScores($aCmtIds);
+
+            // delete reports
+            $o->deleteReports($aCmtIds);
+
             // delete meta info
             $o->deleteMetaInfo($aCmtIds);
 
@@ -876,9 +918,52 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
             if (null !== $iFiles)
                 $iFiles += count($aFiles);
+
+            // delete unique IDs
+            $o->deleteUniqueIds($aCmtIds);
         }
 
         return true;
+    }
+
+    public function deleteVotes ($mixedCmtId)
+    {
+        if(!is_array($mixedCmtId))
+            $mixedCmtId = [$mixedCmtId];
+
+        foreach($mixedCmtId as $iCmtId)
+            if(($oReport = $this->getVoteObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+                $oReport->onObjectDelete();
+    }
+
+    public function deleteReactions ($mixedCmtId)
+    {
+        if(!is_array($mixedCmtId))
+            $mixedCmtId = [$mixedCmtId];
+
+        foreach($mixedCmtId as $iCmtId)
+            if(($oReport = $this->getReactionObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+                $oReport->onObjectDelete();
+    }
+
+    public function deleteScores ($mixedCmtId)
+    {
+        if(!is_array($mixedCmtId))
+            $mixedCmtId = [$mixedCmtId];
+
+        foreach($mixedCmtId as $iCmtId)
+            if(($oReport = $this->getScoreObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+                $oReport->onObjectDelete();
+    }
+
+    public function deleteReports ($mixedCmtId)
+    {
+        if(!is_array($mixedCmtId))
+            $mixedCmtId = [$mixedCmtId];
+
+        foreach($mixedCmtId as $iCmtId)
+            if(($oReport = $this->getReportObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+                $oReport->onObjectDelete();
     }
 
     public function deleteMetaInfo ($mixedCmtId)
@@ -890,12 +975,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!empty($this->_sMetatagsObj))
             $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
 
-        foreach($mixedCmtId as $iCmtId) {
-            if($oMetatags)
+        if($oMetatags)
+            foreach($mixedCmtId as $iCmtId)
                 $oMetatags->onDeleteContent($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId));
+    }
 
+    public function deleteUniqueIds ($mixedCmtId)
+    {
+        if(!is_array($mixedCmtId))
+            $mixedCmtId = array($mixedCmtId);
+
+        foreach($mixedCmtId as $iCmtId)
             $this->_oQuery->deleteCmtIds($this->_aSystem['system_id'], $iCmtId);
-        }
     }
 
     /**
@@ -1333,6 +1424,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->isRemoveAllowed($aCmt, true);
 
+        $this->deleteVotes($iCmtId);
+
+        $this->deleteReactions($iCmtId);
+
+        $this->deleteScores($iCmtId);
+
+        $this->deleteReports($iCmtId);
+
         $this->deleteMetaInfo($iCmtId);
 
         $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
@@ -1350,6 +1449,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 bx_alert('reply', 'deleted', $iCmtId, $iPerformerId, $aAlertParamsReply);
             }
         }
+
+        $this->deleteUniqueIds($iCmtId);
 
         return array('id' => $iCmtId);
     }

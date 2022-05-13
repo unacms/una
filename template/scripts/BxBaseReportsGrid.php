@@ -149,11 +149,10 @@ class BxBaseReportsGrid extends BxTemplGrid
         }
         else {
             $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aReportSystemInfo['name']);
-            if($oContentInfo)
+            if($oContentInfo) {
                 $sTitle = $oContentInfo->getContentTitle($aRow['object_id']);
-
-            $oReport = BxDolReport::getObjectInstance($this->_aReportSystemInfo['name'], $aRow['object_id']);
-            $sUrl = BxDolPermalinks::getInstance()->permalink($oReport->getBaseUrl());
+                $sUrl = $oContentInfo->getContentLink($aRow['object_id']);
+            }
         }
  
         if($sTitle == '')

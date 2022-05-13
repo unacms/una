@@ -1267,14 +1267,6 @@ class BxBaseCmts extends BxDolCmts
 
         $sAttachments = $this->_getAttachments($aCmt);
 
-        /*
-        $sReactions = '';
-        if(($oReaction = $this->getReactionObject($aCmt['cmt_unique_id'])) !== false)
-            $sReactions = $oReaction->getCounter(array(
-                'show_counter' => true
-            ));
-         */
-
         $oMenuCounters = BxDolMenu::getObjectInstance($this->_sMenuObjCounters);
         $oMenuCounters->setCmtsData($this, $aCmt['cmt_id'], $aBp, $aDp);
         $oMenuCounters->setDynamicMode($bDynamicMode);
