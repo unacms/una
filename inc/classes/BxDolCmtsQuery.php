@@ -463,17 +463,26 @@ class BxDolCmtsQuery extends BxDolDb
                 $sWhereClause .= " AND `{$this->_sTable}`.`cmt_id` = :id";
                 break;
 
+            case 'uniq_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['system_id'] = $this->_oMain->getSystemId();
+                $aMethod['params'][1]['uniq_id'] = (int)$aParams['uniq_id'];
+
+                $sJoinClause = "LEFT JOIN `{$this->_sTableIds}` ON `{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id";
+                $sWhereClause .= " AND `{$this->_sTableIds}`.`id` = :uniq_id";
+                break;
+
             case 'latest':
             	if(!empty($aParams['author'])) {
-            		$aMethod['params'][1]['cmt_author_id'] = (int)$aParams['author'];
+                    $aMethod['params'][1]['cmt_author_id'] = (int)$aParams['author'];
 
-            		$sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` " . (isset($aParams['others']) && (int)$aParams['others'] == 1 ? "<>" : "=") . " :cmt_author_id";
+                    $sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` " . (isset($aParams['others']) && (int)$aParams['others'] == 1 ? "<>" : "=") . " :cmt_author_id";
             	}
 
                 $sOrderClause = "`{$this->_sTable}`.`cmt_time` DESC";
                 $sLimitClause = "";
                 if(isset($aParams['per_page']))
-                	$sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
+                    $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
 
                 break;
 
@@ -577,7 +586,7 @@ class BxDolCmtsQuery extends BxDolDb
             $sLimitClause = 'LIMIT ' . $sLimitClause;
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$this->_sTable}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
-		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     function getComment ($iId, $iCmtId)

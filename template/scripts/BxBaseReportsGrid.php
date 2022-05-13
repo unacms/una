@@ -134,33 +134,39 @@ class BxBaseReportsGrid extends BxTemplGrid
     
     protected function _getCellObject ($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = '';
-        $sTitle = '';
-        $sUrl = '';
-        if ($this->_aReportSystemInfo['name'] == 'sys_cmts'){
+        $sTitle = $sUrl = '';
+        if($this->_aReportSystemInfo['name'] == 'sys_cmts'){
             $oCmts = BxDolCmts::getObjectInstanceByUniqId($aRow['object_id']);
-            $aCmts = BxDolCmtsQuery::getCommentByUniq($aRow['object_id']);
-            $sTitle = $oCmts->getViewText($aCmts['cmt_id']);
-            $sUrl = $oCmts->getViewUrl($aCmts['cmt_id']);
+            if($oCmts) {
+                $aCmts = $oCmts->getCommentsBy([
+                    'type' => 'uniq_id', 
+                    'uniq_id' => $aRow['object_id']
+                ]);
+
+                $sTitle = $oCmts->getViewText($aCmts['cmt_id']);
+                $sUrl = $oCmts->getViewUrl($aCmts['cmt_id']);
+            }
         }
-        else{
+        else {
             $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aReportSystemInfo['name']);
-            $sTitle = $oContentInfo ? $oContentInfo->getContentTitle($aRow['object_id']) : '';
-            
+            if($oContentInfo)
+                $sTitle = $oContentInfo->getContentTitle($aRow['object_id']);
+
             $oReport = BxDolReport::getObjectInstance($this->_aReportSystemInfo['name'], $aRow['object_id']);
             $sUrl = BxDolPermalinks::getInstance()->permalink($oReport->getBaseUrl());
         }
  
-        if ($sTitle == '')
-             $sTitle = _t('_Empty');
+        if($sTitle == '')
+            $sTitle = _t('_undefined');
         
-        $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
-            'href' => $sUrl,
-            'title' =>  $sTitle,
-            'content' =>  $sTitle
-        ));
+        if($sUrl != '')
+            $sTitle = $this->_oTemplate->parseHtmlByName('account_link.html', array(
+                'href' => $sUrl,
+                'title' => bx_html_attribute($sTitle),
+                'content' => $sTitle
+            ));
         
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        return parent::_getCellDefault($sTitle, $sKey, $aField, $aRow);
     }
     
     protected function _getCellAuthor ($mixedValue, $sKey, $aField, $aRow)

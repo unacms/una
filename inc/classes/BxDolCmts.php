@@ -321,7 +321,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
      */
     public static function getObjectInstanceByUniqId($iUniqId, $iInit = true, $oTemplate = false)
     {
-        $aData = BxDolCmtsQuery::getCommentByUniq($iUniqId);
+        $aData = BxDolCmtsQuery::getInfoByUniqId($iUniqId);
         if(empty($aData) || !is_array($aData))
             return null;
 
@@ -754,6 +754,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function getCommentsArray ($iVParentId, $sFilter, $aOrder, $iStart = 0, $iCount = -1)
     {
         return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $sFilter, $aOrder, $iStart, $iCount);
+    }
+
+    public function getCommentsBy ($aParams = [])
+    {
+        return $this->_oQuery->getCommentsBy($aParams); 
     }
 
     /**

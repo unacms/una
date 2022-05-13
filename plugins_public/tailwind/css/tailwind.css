@@ -821,8 +821,7 @@
         @apply rounded-none;
     }
     .bx-artificer .bx-menu-tab-active .bx-stl-mil,
-    .bx-artificer .bx-menu-tab-active .bx-stl-mil-sm,
-    .bx-artificer .bx-db-header .bx-menu-custom-hor li.bx-menu-tab-active a {
+    .bx-artificer .bx-menu-tab-active .bx-stl-mil-sm {
         @apply ring-1 ring-white/50 dark:ring-gray-800/50 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white;
     }
     .bx-artificer .bx-popup .bx-menu-tab-active .bx-stl-mil,
