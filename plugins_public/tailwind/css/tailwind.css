@@ -14,6 +14,10 @@
 
 @layer components {
     /* Global: HTML tags */
+    a {
+        @apply hover:underline;
+    }
+
     ol, ul {
         @apply pl-10 list-outside;
     }
@@ -427,18 +431,26 @@
     }
 
     .bx-def-font-author {
-        @apply text-sm text-gray-700 dark:text-gray-200 font-semibold;
+        @apply text-sm text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white font-semibold;
     }
 
     .bx-def-font-meta {
         @apply text-sm font-normal;
     }
     .bx-def-font-meta:not(a) {
-        @apply text-gray-700 dark:text-gray-500 text-opacity-60;
+        @apply text-gray-700 dark:text-gray-400 text-opacity-60;
     }
 
     .bx-artificer .bx-def-a-colored {
-        @apply no-underline text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+        @apply text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
+    }
+
+    .bx-artificer a.bx-def-font-meta,
+    .bx-artificer a.bx-def-font-meta.bx-def-a-colored {
+        @apply text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50;
+    }
+    .bx-artificer .bx-def-font-meta:not(a) {
+        @apply text-opacity-100;
     }
 
     .bx-artificer .bx-def-font-small {
@@ -628,7 +640,8 @@
         @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
 
-    .bx-artificer .bx-form-caption {
+    .bx-artificer .bx-form-caption,
+    .bx-artificer .bx-form-row-view-caption {
         @apply text-gray-700 dark:text-gray-300 text-sm font-medium;
     }
 
@@ -785,7 +798,7 @@
     }
 
 
-    /* Common elements: Menus */
+    /* Common elements: Menus */   
     .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm,
     .bx-artificer .bx-stl-mil-wo-bg,
@@ -793,6 +806,16 @@
         @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
     }
     
+    .bx-artificer .bx-menu-item a:not(.bx-def-font-meta),
+    .bx-artificer a.bx-stl-mil:not(.bx-def-font-meta),
+    .bx-artificer a.bx-stl-mil-wo-bg:not(.bx-def-font-meta),
+    .bx-artificer a.bx-stl-mil-wo-bg-gaps:not(.bx-def-font-meta),
+    .bx-artificer .bx-stl-mil a:not(.bx-def-font-meta),
+    .bx-artificer .bx-stl-mil-wo-bg a:not(.bx-def-font-meta),
+    .bx-artificer .bx-stl-mil-wo-bg-gaps a:not(.bx-def-font-meta) {
+        @apply hover:no-underline;
+    }
+
     .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm,
     .bx-artificer .bx-stl-mil-wo-bg {
@@ -847,14 +870,14 @@
     .bx-artificer .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text {
         @apply ml-0; 
     }
-    .bx-artificer .bx-stl-mii-sm {
-        @apply h-4 w-4 mr-1 leading-4 text-sm;
+    .bx-artificer .bx-stl-mii-sm > * {
+        @apply h-4 w-4 mr-1.5 leading-4 text-sm;
     }
     .bx-artificer .bx-stl-mit {
         @apply truncate;
     }
     .bx-artificer .bx-stl-mia {
-        @apply inline-block py-0.5 px-2 bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs rounded-full;
+        @apply inline-block py-0.5 px-2 bg-gray-200/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 text-xs rounded-full;
     }
 
     /* Horizontal menu */
@@ -959,7 +982,7 @@
 
     .bx-artificer .bx-base-text-unit-title a,
     .bx-artificer .bx-tl-title a {
-        @apply hover:underline hover:text-blue-700 dark:hover:text-blue-600;
+        @apply text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:no-underline;
     }
 
     .bx-artificer .bx-base-pofile-unit-online {
