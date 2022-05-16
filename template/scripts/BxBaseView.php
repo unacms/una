@@ -44,6 +44,7 @@ class BxBaseView extends BxDolView
             'show_do_view_icon' => true,
             'show_do_view_label' => false,
             'show_counter' => true,
+            'show_counter_only' => true,
             'show_counter_label_icon' => false,
             'show_counter_label_text' => true,
             'show_script' => true
@@ -80,9 +81,9 @@ class BxBaseView extends BxDolView
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
-        $sJsObject = $this->getJsObjectName();
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
 
         $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
         $bShowDoViewAsButtonSmall = isset($aParams['show_do_view_as_button_small']) && $aParams['show_do_view_as_button_small'] == true;
@@ -91,14 +92,21 @@ class BxBaseView extends BxDolView
 
         $bAllowedViewViewViewers = $this->isAllowedViewViewViewers();
 
-        $aView = $this->_oQuery->getView($this->getId());
-        $sClass = $this->_sStylePrefix . '-counter';
+        $sClass = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClass .= ' sys-ac-only';
+
+        $sClass .= ' ' . $this->_sStylePrefix . '-counter';
         if($bShowDoViewAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
         if($bShowDoViewAsButton)
             $sClass .= ' bx-btn-height';
 
-        $sContent = (int)$aView['count'] > 0 ? $this->_getCounterLabel($aView['count'], $aParams) : '';
+        $sContent = '';
+        $aView = $this->_oQuery->getView($this->getId());
+        if((int)$aView['count'] > 0)
+            $sContent = $this->_getCounterLabel($aView['count'], $aParams);
+
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
             'html_id' => $this->_aHtmlIds['counter'],
             'style_prefix' => $this->_sStylePrefix,
@@ -119,7 +127,7 @@ class BxBaseView extends BxDolView
                     'bx_repeat:attrs' => array(
                         array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
                         array('key' => 'href', 'value' => 'javascript:void(0)'),
-                        array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)'),
+                        array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)'),
                         array('key' => 'title', 'value' => _t('_view_do_view_by'))
                     ),
                     'content' => $sContent
@@ -183,7 +191,10 @@ class BxBaseView extends BxDolView
                     'condition' => !$bCount,
                     'content' => array()
                 ),
-                'counter' => $this->getCounter(array_merge($aParams, array('show_script' => false)))
+                'counter' => $this->getCounter(array_merge($aParams, [
+                    'show_counter_only' => false,
+                    'show_script' => false
+                ]))
             );
 
         if(!$bTmplVarsDoView && !$bTmplVarsCounter)

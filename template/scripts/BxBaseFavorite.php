@@ -47,7 +47,8 @@ class BxBaseFavorite extends BxDolFavorite
             'show_do_favorite_as_button_small' => false,
             'show_do_favorite_icon' => true,
             'show_do_favorite_label' => false,
-            'show_counter' => true
+            'show_counter' => true,
+            'show_counter_only' => true
         );
 
         $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('favorite_element_block.html');
@@ -81,13 +82,20 @@ class BxBaseFavorite extends BxDolFavorite
         return $this->getJsObjectName() . '.favorite(this)';
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
         $bShowDoFavoriteAsButtonSmall = isset($aParams['show_do_favorite_as_button_small']) && $aParams['show_do_favorite_as_button_small'] == true;
         $bShowDoFavoriteAsButton = !$bShowDoFavoriteAsButtonSmall && isset($aParams['show_do_favorite_as_button']) && $aParams['show_do_favorite_as_button'] == true;
 
         $aFavorite = $this->_oQuery->getFavorite($this->getId());
-        $sClass = $this->_sStylePrefix . '-counter';
+
+        $sClass = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClass .= ' sys-ac-only';
+
+        $sClass .= ' ' . $this->_sStylePrefix . '-counter';
         if($bShowDoFavoriteAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
         if($bShowDoFavoriteAsButton)
@@ -95,9 +103,9 @@ class BxBaseFavorite extends BxDolFavorite
 
         return $this->_oTemplate->parseLink('javascript:void(0)', (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '', array(
             'title' => _t('_favorite_do_favorite_by'),
-        	'id' => $this->_aHtmlIds['counter'],
-        	'class' => $sClass,
-        	'onclick' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)'
+            'id' => $this->_aHtmlIds['counter'],
+            'class' => $sClass,
+            'onclick' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)'
         ));
     }
 
@@ -122,10 +130,10 @@ class BxBaseFavorite extends BxDolFavorite
 
         $bShowDoFavoriteAsButtonSmall = isset($aParams['show_do_favorite_as_button_small']) && $aParams['show_do_favorite_as_button_small'] == true;
         $bShowDoFavoriteAsButton = !$bShowDoFavoriteAsButtonSmall && isset($aParams['show_do_favorite_as_button']) && $aParams['show_do_favorite_as_button'] == true;
-		$bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true && $this->isAllowedFavoriteView();
+        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true && $this->isAllowedFavoriteView();
 
-		$iObjectId = $this->getId();
-		$iAuthorId = $this->_getAuthorId();
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
         $aFavorite = $this->_oQuery->getFavorite($iObjectId);
         $bCount = (int)$aFavorite['count'] != 0;
 
@@ -146,11 +154,13 @@ class BxBaseFavorite extends BxDolFavorite
                 'condition' => $bShowCounter,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-        			'bx_if:show_hidden' => array(
-        				'condition' => !$bCount,
-        				'content' => array()
-        			),
-                    'counter' => $this->getCounter($aParams)
+                    'bx_if:show_hidden' => array(
+                        'condition' => !$bCount,
+                        'content' => array()
+                    ),
+                    'counter' => $this->getCounter(array_merge($aParams, [
+                        'show_counter_only' => false
+                    ]))
                 )
             ),
             'script' => $this->getJsScript($bDynamicMode)

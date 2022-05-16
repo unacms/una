@@ -75,6 +75,8 @@ module.exports = {
 
     'bx-informer-msg-info', 'bx-informer-msg-alert', 'bx-informer-msg-error',
 
+    'sys-action-counter', 'sys-ac-only', 'sys-ac-link',
+
     'bx-base-general-unit-meta-username',
 
     'bx-tl-overflow',

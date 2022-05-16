@@ -83,7 +83,7 @@ class BxBaseVote extends BxDolVote
         return $this->getJsObjectName() . '.toggleByPopup(this)';
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
         $aParams = array_merge($this->_aElementDefaults, $aParams);
 
@@ -92,7 +92,11 @@ class BxBaseVote extends BxDolVote
         $bShowActive = $this->isAllowedVoteViewVoters() && (!isset($aParams['show_counter_active']) || (bool)$aParams['show_counter_active'] === true);
         $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
 
-        $sClass = $this->_sStylePrefix . '-counter ' . $this->_sStylePrefix . '-counter-' . $this->_sType;
+        $sClass = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClass .= ' sys-ac-only';
+
+        $sClass .= ' ' .$this->_sStylePrefix . '-counter ' . $this->_sStylePrefix . '-counter-' . $this->_sType;
         if(!empty($aParams['class_counter']))
             $sClass .= $aParams['class_counter'];
 
@@ -218,7 +222,10 @@ class BxBaseVote extends BxDolVote
                     'condition' => !$bCount && !$bShowCounterEmpty,
                     'content' => array()
                 ),
-                'counter' => $this->getCounter(array_merge($aParams, array('show_script' => false)))
+                'counter' => $this->getCounter(array_merge($aParams, [
+                    'show_counter_only' => false, 
+                    'show_script' => false
+                ]))
             );
 
         //--- Legend

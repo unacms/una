@@ -29,6 +29,7 @@ class BxBaseVoteLikes extends BxDolVoteLikes
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
             'show_counter' => true,
+            'show_counter_only' => true,
             'show_counter_empty' => false,
             'show_counter_label_icon' => false,
             'show_counter_label_text' => true,
@@ -48,8 +49,10 @@ class BxBaseVoteLikes extends BxDolVoteLikes
         return parent::getJsClick($iValue);
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
         $sClass = '';
         if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
             $sClass = 'bx-btn-small-height';

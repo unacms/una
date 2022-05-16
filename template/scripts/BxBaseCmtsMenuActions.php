@@ -24,6 +24,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     protected $_sMode;
     protected $_bShowTitles;
     protected $_bShowCounters;
+    protected $_bShowCountersEmpty;
     protected $_bShowCountersIcons;
 
     public function __construct ($aObject, $oTemplate)
@@ -36,6 +37,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         $this->_sMode = strpos($this->_sObject, '_actions') !== false ? self::$_sModeActions : self::$_sModeCounters;
         $this->_bShowTitles = true;
         $this->_bShowCounters = false;
+        $this->_bShowCountersEmpty = false;
         $this->_bShowCountersIcons = true;
     }
 
@@ -88,6 +90,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_label' => $this->_bShowTitles,
             'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
             'show_counter_label_icon' => $this->_bShowCountersIcons,
         ];
 
@@ -114,6 +117,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_label' => $this->_bShowTitles,
             'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
             'show_counter_style' => 'compound',
             'show_counter_label_icon' => $this->_bShowCountersIcons,
         ];
@@ -141,6 +145,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_label' => $this->_bShowTitles,
             'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
             'show_counter_label_icon' => $this->_bShowCountersIcons,
         );
 

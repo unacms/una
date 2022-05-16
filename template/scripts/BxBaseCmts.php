@@ -57,6 +57,7 @@ class BxBaseCmts extends BxDolCmts
             'show_do_comment_icon' => true,
             'show_do_comment_label' => false,
             'show_counter' => true,
+            'show_counter_only' => true,
             'show_counter_empty' => false
         );
 
@@ -691,7 +692,9 @@ class BxBaseCmts extends BxDolCmts
                     'condition' => !$bShowCounterEmpty && !$bCount,
                     'content' => array()
                 ),
-                'counter' => $this->getCounter($aParams)
+                'counter' => $this->getCounter(array_merge($aParams, [
+                    'show_counter_only' => false
+                ]))
             );
 
         if(!$bTmplVarsDoComment && !$bTmplVarsCounter)
@@ -720,8 +723,10 @@ class BxBaseCmts extends BxDolCmts
         return $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => $iCmtsStart, 'per_page' => $iCmtsLimit * 4));
     }
     
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
         $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
         $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
         $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
@@ -730,7 +735,11 @@ class BxBaseCmts extends BxDolCmts
         if($iCount == 0 && !$bShowEmpty)
             return '';
 
-        $sClass = $this->_sStylePrefix . '-counter';
+        $sClass = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClass .= ' sys-ac-only';
+
+        $sClass .= ' ' . $this->_sStylePrefix . '-counter';
         if($bShowDoCommentAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
         if($bShowDoCommentAsButton)

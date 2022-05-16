@@ -29,6 +29,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected $_sMode;
     protected $_bShowTitles;
     protected $_bShowCounters;
+    protected $_bShowCountersEmpty;
     protected $_bShowCountersIcons;
 
     protected $_sTmplNameItem;

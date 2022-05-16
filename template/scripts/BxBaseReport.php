@@ -47,7 +47,8 @@ class BxBaseReport extends BxDolReport
             'show_do_report_as_button_small' => false,
             'show_do_report_icon' => true,
             'show_do_report_label' => false,
-            'show_counter' => true
+            'show_counter' => true,
+            'show_counter_only' => true
         );
 
         $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('report_element_block.html');
@@ -83,15 +84,20 @@ class BxBaseReport extends BxDolReport
         return $this->getJsObjectName() . '.report(this)';
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
-        $sJsObject = $this->getJsObjectName();
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
 
         $bShowDoReportAsButtonSmall = isset($aParams['show_do_report_as_button_small']) && $aParams['show_do_report_as_button_small'] == true;
         $bShowDoReportAsButton = !$bShowDoReportAsButtonSmall && isset($aParams['show_do_report_as_button']) && $aParams['show_do_report_as_button'] == true;
 
         $aReport = $this->_oQuery->getReport($this->getId());
-        $sClass = $this->_sStylePrefix . '-counter';
+
+        $sClass = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClass .= ' sys-ac-only';
+
+        $sClass .= ' ' . $this->_sStylePrefix . '-counter';
         if($bShowDoReportAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
         if($bShowDoReportAsButton)
@@ -100,8 +106,8 @@ class BxBaseReport extends BxDolReport
         return $this->_oTemplate->parseLink('javascript:void(0)',  (int)$aReport['count'] > 0 ? $this->_getCounterLabel($aReport['count']) : '', array(
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass, 
-        	'title' => _t('_report_do_report_by'),
-            'onclick' => 'javascript:' . $sJsObject . '.toggleByPopup(this)' 
+            'title' => _t('_report_do_report_by'),
+            'onclick' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)' 
         ));
     }
 
@@ -152,7 +158,9 @@ class BxBaseReport extends BxDolReport
                         'condition' => (int)$aReport['count'] == 0,
                         'content' => array()
                     ),
-                    'counter' => $this->getCounter($aParams)
+                    'counter' => $this->getCounter(array_merge($aParams, [
+                        'show_counter_only' => false
+                    ]))
                 )
             ),
             'script' => $this->getJsScript($bDynamicMode)

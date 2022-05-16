@@ -34,6 +34,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
             'show_counter' => false,
+            'show_counter_only' => true,
             'show_counter_empty' => true,
             'show_counter_style' => self::$_sCounterStyleDivided, //--- Alloved styles are 'simple', 'divided' and 'compound'
             'show_legend' => false,
@@ -82,9 +83,11 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         return $sJsObject . '.' . $sJsMethod . '(this, \'' . $sReaction . '\')';
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
-        $sDefault = $this->_aElementDefaults['show_counter_style'];
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
+        $sDefault = $aParams['show_counter_style'];
         $sCounterStyle = !empty($aParams['show_counter_style']) ? $aParams['show_counter_style'] : $sDefault;
 
         $sMethodPrefix = '_getCounter';
@@ -247,7 +250,9 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
             $iResultC += $iCount;
             $iResultS += (int)$aVote['sum_' . $sName];
-            $sResult .= trim(parent::getCounter(array_merge($aParams, array('show_script' => false))));
+            $sResult .= trim(parent::getCounter(array_merge($aParams, [
+                'show_script' => false
+            ])));
         }
 
         $aParams = array_merge($aParams, array(
@@ -264,10 +269,16 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         ));
         $sResult .= parent::getCounter(array_merge($aParams, array('show_script' => false)));
 
+        $sClassWrapper = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClassWrapper .= ' sys-ac-only';
+
+        $sClassWrapper .= ' ' . $this->_aHtmlIds['counter'] . (!$bVote && !$bShowCounterEmpty ? ' bx-vc-hidden' : '');
+
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterWrapper(), array(
             'html_id' => $this->_aHtmlIds['counter'],
             'style_prefix' => $this->_sStylePrefix,
-            'class' => $this->_aHtmlIds['counter'] . (!$bVote && !$bShowCounterEmpty ? ' bx-vc-hidden' : ''),
+            'class' => $sClassWrapper,
             'type' => $this->_sType,
             'style' => self::$_sCounterStyleCompound,
             'bx_if:show_link' => array(

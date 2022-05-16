@@ -46,6 +46,7 @@ class BxBaseScore extends BxDolScore
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
             'show_counter' => true,
+            'show_counter_only' => true,
             'show_counter_empty' => true,
             'show_counter_label_icon' => false,
             'show_counter_label_text' => true,
@@ -98,7 +99,7 @@ class BxBaseScore extends BxDolScore
         return $this->getJsObjectName() . '.toggleByPopup(this)';
     }
 
-    public function getCounter($aParams = array())
+    public function getCounter($aParams = [])
     {
         $aParams = array_merge($this->_aElementDefaults, $aParams);
 
@@ -116,7 +117,11 @@ class BxBaseScore extends BxDolScore
         $iCdown = (int)(int)$aScore['count_down'];
         $bEmpty = $iCup == 0 && $iCdown == 0;
 
-        $sClass = $this->_sStylePrefix . '-counter';
+        $sClass = 'sys-action-counter';
+        if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
+            $sClass .= ' sys-ac-only';
+
+        $sClass .= ' ' . $this->_sStylePrefix . '-counter';
         if($bShowDoVoteAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
         if($bShowDoVoteAsButton)
@@ -229,7 +234,10 @@ class BxBaseScore extends BxDolScore
                     'condition' => !$bShowCounterEmpty && !$bCount,
                     'content' => array()
                 ),
-                'counter' => $this->getCounter(array_merge($aParams, array('show_script' => false)))
+                'counter' => $this->getCounter(array_merge($aParams, [
+                    'show_counter_only' => false,
+                    'show_script' => false
+                ]))
             );
 
         //--- Legend
