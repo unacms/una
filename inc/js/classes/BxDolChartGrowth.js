@@ -46,8 +46,8 @@ BxDolChartGrowth.prototype.loadData = function()
     	{
     		object: $('#' + this._sKeyObjects).val(),
     		action: 'load_data_by_interval',
-    		from: $.datepicker.formatDate($this._sDateFormat, $('#' + $this._sKeyDateFrom).datepicker('getDate')),
-            to: $.datepicker.formatDate($this._sDateFormat, $('#' + $this._sKeyDateTo).datepicker('getDate'))
+    		from: $('#' + $this._sKeyDateFrom).val(),
+            to: $('#' + $this._sKeyDateTo).val()
     	},
     	function(oData) {
     		$('#' + $this._sKeyObjects).attr('disabled', false);
