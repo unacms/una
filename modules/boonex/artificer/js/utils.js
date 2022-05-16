@@ -4,10 +4,10 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
 
 $(document).ready(function() {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        $('.bx-sb-theme-switcher .sys-icon').addClass('moon');
+        $('.bx-sb-theme-switcher .sys-icon').addClass('sun');
     } else {
         document.documentElement.classList.remove('dark');
-        $('.bx-sb-theme-switcher .sys-icon').addClass('sun');
+        $('.bx-sb-theme-switcher .sys-icon').addClass('moon');
     }
 });
 
@@ -21,7 +21,7 @@ function bx_artificer_set_color_scheme(){
         $('.bx-sb-theme-switcher .sys-icon').addClass('moon').removeClass('sun')
     }
     
-    if (v == 'moon'){
+    if (v == 'sun'){
         $('html').addClass('dark');
         localStorage.theme = 'dark'
     }
