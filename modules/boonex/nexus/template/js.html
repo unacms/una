@@ -1,7 +1,9 @@
 <script>
     function bx_mobile_apps_show_main_menu () {
         if ('__main_menu__' == 'default') {
-            if ($('.cd-dropdown-trigger').size())
+            if ($('.bx-sidebar-site-trigger').size())
+                bx_sidebar_toggle('site');
+            else if ($('.cd-dropdown-trigger').size())
                 $('.cd-dropdown-trigger').click();
             else if ($('.cd-side-nav').size())
                 $([$('.cd-side-nav'), $('.cd-nav-trigger')]).toggleClass('nav-is-visible');
@@ -14,7 +16,10 @@
     }
 
     function bx_mobile_apps_show_profile_menu () {
-        bx_menu_slide_inline('#bx-sliding-menu-account', null, 'site');
+        if ($('.bx-sidebar-account-trigger').size())
+            bx_sidebar_toggle('account');
+        else
+            bx_menu_slide_inline('#bx-sliding-menu-account', null, 'site');
     }
 
     function bx_mobile_apps_show_add_menu () {
