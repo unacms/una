@@ -460,22 +460,20 @@ class BxBaseReport extends BxDolReport
             $sKeyObjectContentInfo = 'OBJECT_CMTS_CONTENT_INFO';
             $sActionName = '_sys_audit_action_report_comment';
         }
-        
+
         $oModule = BxDolModule::getInstance($sModule);
-        if ($oModule){
+        if ($oModule) {
             $CNF = $oModule->_oConfig->CNF;
 
             $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iObjectId))) : array();
-        
-            $AuditParams = array(
-                'content_title' => isset($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-                'content_info_object' =>  isset($CNF[$sKeyObjectContentInfo]) ? $CNF[$sKeyObjectContentInfo] : '',
+                    
+            return [
+                'content_title' => !empty($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+                'content_info_object' => !empty($CNF[$sKeyObjectContentInfo]) ? $CNF[$sKeyObjectContentInfo] : '',
                 'data' => $aData,
                 'action_name' => $sActionName, 
                 'object_id' => $iObjectId 
-            );
-            
-            return $AuditParams;
+            ];
         }
         
         return false;
