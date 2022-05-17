@@ -662,6 +662,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         bx_import('BxTemplFunctions');
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
+		
+		$this->addJsOption('sys_fixed_header');
     }
 
     protected function getInjectionsData ()
