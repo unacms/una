@@ -805,7 +805,7 @@
     .bx-artificer .bx-stl-mil-wo-bg-gaps {
         @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
     }
-    
+
     .bx-artificer .bx-menu-item a:not(.bx-def-font-meta),
     .bx-artificer a.bx-stl-mil:not(.bx-def-font-meta),
     .bx-artificer a.bx-stl-mil-wo-bg:not(.bx-def-font-meta),
@@ -944,9 +944,7 @@
     .bx-artificer .bx-informer-msg-error {
         @apply bg-red-50 text-red-700;
     }
-    .bx-artificer .bx-form-row-view-value {
-        @apply truncate;
-    }
+
 
     /* Common elements: All Actions */
     .bx-artificer .sys-action-counter.sys-ac-link,
