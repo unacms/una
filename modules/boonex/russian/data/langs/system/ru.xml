@@ -1640,6 +1640,7 @@
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA[Значение заголовка 'Content-Security-Policy: frame-ancestors']]></string>
     <string name="_adm_stg_cpt_option_sys_samesite_cookies"><![CDATA[Значение "SameSite" для конфиденциальных Cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Оповещать участников контекста с определенной ролью о необходимости одобрять контент в контексте]]></string>
+	<string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Статический заголовок]]></string>
     <string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
     <string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>

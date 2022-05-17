@@ -26,7 +26,7 @@ BxDolPage.prototype.init = function() {
     var $this = this;
     if ($this._isStickyColumns && !$('html').hasClass('bx-media-phone')) {
         $('.bx-layout-col').theiaStickySidebar({
-            additionalMarginTop: $('#bx-toolbar').height()
+            additionalMarginTop: $('#bx-toolbar').height() + 13
         });
     }
     // process embeds
