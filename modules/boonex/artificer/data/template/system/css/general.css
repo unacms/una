@@ -23,6 +23,9 @@ import url(../../../../../../../template/css/general.css);
 .bx-toolbar-item.bx-ti-logo a:hover {
     text-decoration: none;
 }
+.bx-toolbar-item.bx-ti-search .bx-ti-search-button a {
+    text-decoration: none;
+}
 .bx-toolbar-item.bx-ti-search .bx-tis-button-hidden {
     display: none;
 }

@@ -75,6 +75,11 @@
     list-style: none;
 }
 
+/*--- Site Sidebar ---*/
+.bx-sidebar-site-logo a:hover {
+    text-decoration: none;
+}
+
 /*--- Account Sidebar ---*/
 .bx-sidebar.bx-sidebar-account .bx-sb-profile .bx-base-pofile-unit {
     margin: 0;
