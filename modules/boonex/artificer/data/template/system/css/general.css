@@ -20,7 +20,9 @@ import url(../../../../../../../template/css/general.css);
     -ms-transform: translateY(-100%);
     transform: translateY(-100%)
 }
-
+.bx-toolbar-item.bx-ti-logo a:hover {
+    text-decoration: none;
+}
 .bx-toolbar-item.bx-ti-search .bx-tis-button-hidden {
     display: none;
 }

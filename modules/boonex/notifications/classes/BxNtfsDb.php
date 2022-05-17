@@ -60,6 +60,10 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams, $bReturnCount = false)
     {
+        bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, [
+            'params' => &$aParams,
+        ]);
+
         if($aParams['browse'] != 'list' || $aParams['type'] != BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)
             return parent::getEvents($aParams);
 
@@ -69,21 +73,21 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         $sLimitClause = isset($aParams['per_page']) ? "LIMIT 0, " . ($aParams['start'] + $aParams['per_page']) : "";
 
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER;
-        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause) = $this->_getSqlPartsEvents($aParams);
+        list($sMethod, $sSelectClause, $sJoinClausePo, $sWhereClausePo, $sOrderClausePo) = $this->_getSqlPartsEvents($aParams);
 
         $sQueryOwner = "SELECT {select}
             FROM `{$this->_sTable}`
-            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . (!$bCountOnly ? " " . $sOrderClause . " " . $sLimitClause : "");
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClausePo . "
+            WHERE 1 " . $sWhereClausePo . (!$bCountOnly ? " " . $sOrderClausePo . " " . $sLimitClause : "");
 
         //--- Get query for 'Connections based' notifications
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_CONNECTIONS;
-        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause) = $this->_getSqlPartsEvents($aParams);
+        list($sMethod, $sSelectClause, $sJoinClausePc, $sWhereClausePc, $sOrderClausePc) = $this->_getSqlPartsEvents($aParams);
 
         $sQueryConnections = "SELECT {select}
             FROM `{$this->_sTable}`
-            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . (!$bCountOnly ? " " . $sOrderClause . " " . $sLimitClause : "");
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClausePc . "
+            WHERE 1 " . $sWhereClausePc . (!$bCountOnly ? " " . $sOrderClausePc . " " . $sLimitClause : "");
 
         //--- Combine both queries in one
         $sUnionMethod = 'getColumn';
@@ -93,9 +97,35 @@ class BxNtfsDb extends BxBaseModNotificationsDb
             $sUnionOrderClause = "ORDER BY `date` DESC, `id` DESC";
             $sUnionLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
         }
-        
+
+        $aAlertParams = $aParams;
+        unset($aAlertParams['browse']);
+
+        /**
+         * Parts: 
+         * PO - notifications related to Owner's content
+         * PC - notifications related to Connections' content
+         */
+        bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, [
+            'browse' => $aParams['browse'],
+            'params' => $aAlertParams,
+            'table' => $this->_sTable,
+            'method' => &$sUnionMethod,
+            'select_clause' => &$sSelectClause,
+            'join_clause_po' => &$sJoinClausePo,
+            'join_clause_pc' => &$sJoinClausePc,
+            'where_clause_po' => &$sWhereClausePo,
+            'where_clause_pc' => &$sWhereClausePc,
+            'order_clause_po' => &$sOrderClausePo,
+            'order_clause_pc' => &$sOrderClausePc,
+            'order_clause' => &$sUnionOrderClause,
+            'limit_clause' => &$sUnionLimitClause,
+            'query_po' => &$sQueryOwner,
+            'query_pc' => &$sQueryConnections,
+        ]);
+
         $sQuery = "(" . $sQueryOwner . ") UNION (" . $sQueryConnections . ") {order} {limit}";
-        $sQuery = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sUnionOrderClause, $sUnionLimitClause), $sQuery);
+        $sQuery = str_replace(['{select}', '{order}', '{limit}'], [$sSelectClause, $sUnionOrderClause, $sUnionLimitClause], $sQuery);
         $aEntries = $this->$sUnionMethod($sQuery);
 
         if($bCountOnly)
@@ -127,34 +157,35 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     {
         $sJoinClause = $sWhereClause = "";
 
+        //--- Apply status filter
+        $sWhereClauseStatus = '';
         if(isset($aParams['active']))
-            $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
+            $sWhereClauseStatus = $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
 
         //--- Apply modules or handlers filter
-        $sWhereModuleFilter = '';
+        $sWhereClauseModules = '';
         if(!empty($aParams['modules']) && is_array($aParams['modules']))
-            $sWhereModuleFilter = "AND `" . $this->_sTable . "`.`type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
+            $sWhereClauseModules = "AND `" . $this->_sTable . "`.`type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
 
-        if($sWhereModuleFilter == '') {
+        if($sWhereClauseModules == '') {
             $aHidden = $this->_oConfig->getHandlersHidden();
-            $sWhereModuleFilter = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
+            $sWhereClauseModules = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
         }
 
-        if($sWhereModuleFilter != '')
-            $sWhereClause .= $sWhereModuleFilter;
-
         //--- Check flag 'New'
+        $sWhereClauseNew = '';
         if(!empty($aParams['new']) && !empty($aParams['owner_id']))
-            $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $this->getLastRead((int)$aParams['owner_id']));
+            $sWhereClauseNew = $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $this->getLastRead((int)$aParams['owner_id']));
 
         //--- Check type
+        $sWhereClauseSettings = $sWhereClauseType = '';
         if(!empty($aParams['owner_id']))
             switch($aParams['type']) {
                 /*
                  * Note. It isn't used for now and outdated.
                  */
                 case BX_BASE_MOD_NTFS_TYPE_OWNER:
-                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+                    $sWhereClauseType = $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
                     break;
 
                 case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
@@ -165,9 +196,9 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
 
                     $sJoinClause .= $sJoinClauseS2U;
-                    $sWhereClause .= "AND ((ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings}`.`value`='1') OR (NOT ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings2Users}`.`active`='1')) ";
+                    $sWhereClauseSettings = "AND ((ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings}`.`value`='1') OR (NOT ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings2Users}`.`active`='1')) ";
 
-                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
+                    $sWhereClauseType = $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
                     break;
 
                 case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
@@ -178,8 +209,9 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
                     $sJoinClause .= " LEFT JOIN `sys_profiles` AS `tsp` ON `{$this->_sTable}`.`owner_id`=`tsp`.`id` " . $aQueryParts['join'];
 
+                    $sWhereClauseType = '';
                     if(!empty($aQueryParts['fields']['added']))
-                        $sWhereClause .= "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
+                        $sWhereClauseType = "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
 
                     list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
                     $sJoinClause .= $this->prepareAsString(" INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1' AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . ")))", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
@@ -189,7 +221,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
 
                     $sJoinClause .= $sJoinClauseS2U;
-                    $sWhereClause .= "AND ((ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings}`.`value`='1') OR (NOT ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings2Users}`.`active`='1')) ";
+                    $sWhereClauseSettings = "AND ((ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings}`.`value`='1') OR (NOT ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings2Users}`.`active`='1')) ";
                     break;
 
                 case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
@@ -226,13 +258,36 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
 
                     $sJoinClause .= $sJoinClauseS2U;
-                    $sWhereClause .= "AND ((ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings}`.`value`='1') OR (NOT ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings2Users}`.`active`='1')) ";
+                    $sWhereClauseSettings = "AND ((ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings}`.`value`='1') OR (NOT ISNULL(`{$this->_sTableSettings2Users}`.`active`) AND `{$this->_sTableSettings2Users}`.`active`='1')) ";
 
-                    $sWhereClause .= "AND ((" . $sWhereClauseObjectOwner . ") || (" . $sWhereClauseConnections . ")) ";
+                    $sWhereClauseType = "AND ((" . $sWhereClauseObjectOwner . ") OR (" . $sWhereClauseConnections . ")) ";
                     break;
             }
 
-        return array($sJoinClause, $sWhereClause);
+        $aAlertParams = $aParams;
+        unset($aAlertParams['type'], $aAlertParams['owner_id']);
+
+        bx_alert($this->_oConfig->getName(), 'get_list_by_type', 0, 0, [
+            'type' => $aParams['type'],
+            'owner_id' => $aParams['owner_id'],
+            'params' => $aAlertParams,
+            'table' => $this->_sTable,
+            'join_clause' => &$sJoinClause,
+            'where_clause' => &$sWhereClause,
+            'where_clause_status' => &$sWhereClauseStatus,
+            'where_clause_modules' => &$sWhereClauseModules,
+            'where_clause_new' => &$sWhereClauseNew,
+            'where_clause_settings' => &$sWhereClauseSettings,
+            'where_clause_type' => &$sWhereClauseType
+        ]);
+
+        $sWhereClause .= $sWhereClauseStatus;
+        $sWhereClause .= $sWhereClauseModules;
+        $sWhereClause .= $sWhereClauseNew;
+        $sWhereClause .= $sWhereClauseSettings;
+        $sWhereClause .= $sWhereClauseType;
+
+        return [$sJoinClause, $sWhereClause];
     }
 
     public function getEventsToProcess($iLimit = 0)

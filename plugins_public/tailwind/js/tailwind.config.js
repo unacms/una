@@ -85,7 +85,7 @@ module.exports = {
 
     'flickity-button',
 	  
-	'ql-editor',
+    'ql-editor',
   ],
   darkMode: 'class', // false or 'media' or 'class'
   theme: {

@@ -346,6 +346,16 @@ class BxStrmModule extends BxBaseModTextModule
             return $aCheck[CHECK_ACTION_MESSAGE];
         return CHECK_ACTION_RESULT_ALLOWED;
     }
+
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = [])
+    {
+        $aImages = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        if(!empty($aImages) && is_array($aImages))
+            foreach($aImages as $iIndex => $aImage)
+                $aImages[$iIndex]['onclick'] = '';
+
+        return $aImages;
+    }
 }
 
 /** @} */

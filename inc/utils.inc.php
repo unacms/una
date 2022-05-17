@@ -2153,8 +2153,25 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
 
     if ('auto' === $bSecure)
         $bSecure = 0 === strcasecmp('https', $aUrl['scheme']);
-    
-    return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
+
+    if (PHP_VERSION_ID < 70300) {
+        if ('memberPassword' == $sName || 'memberSession' == $sName)
+            $sPath .= '; SameSite=' . getParam('sys_samesite_cookies');
+        return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
+    } 
+    else {
+        $aOptions = is_array($oExpiresOrOptions) ? $oExpiresOrOptions : [
+            'expires' => $oExpiresOrOptions, 
+            'path' => $sPath, 
+            'domain' => $sDomain, 
+            'secure' => $bSecure, 
+            'httponly' => $bHttpOnly,
+        ];
+        if (!isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
+            $aOptions['samesite'] = getParam('sys_samesite_cookies');
+
+        return setcookie($sName, $sValue, $aOptions);
+    }
 }
 
 function is_private_ip ($sIp)

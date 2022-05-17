@@ -1651,6 +1651,7 @@
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
+    <string name="_adm_stg_cpt_option_sys_samesite_cookies"><![CDATA[SameSite value for sensitive cookies]]></string>
     <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Notify context member with necessary role to approve content in the context]]></string>
 	<string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Fixed header]]></string>
     <string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
