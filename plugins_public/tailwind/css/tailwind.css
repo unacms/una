@@ -559,6 +559,7 @@
         @apply hover:bg-white dark:hover:bg-gray-600;
         @apply hover:border-gray-300 dark:hover:border-gray-500;
         @apply hover:text-gray-800 dark:hover:text-white;
+        @apply hover:no-underline;
         @apply hover:-translate-y-px;
     }
     .bx-btn-active {
@@ -806,6 +807,7 @@
         @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
     }
 
+    .bx-artificer .bx-menu-toolbar-item a,
     .bx-artificer .bx-menu-item a:not(.bx-def-font-meta),
     .bx-artificer a.bx-stl-mil:not(.bx-def-font-meta),
     .bx-artificer a.bx-stl-mil-wo-bg:not(.bx-def-font-meta),
