@@ -529,7 +529,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_add', 'allow_view_to', 2147483647, 1, 13),
 ('bx_posts_entry_add', 'cf', 2147483647, 1, 14),
 ('bx_posts_entry_add', 'location', 2147483647, 1, 15),
-('bx_posts_entry_add', 'published', 192, 1, 16),
+('bx_posts_entry_add', 'published', 192, 0, 16),
 ('bx_posts_entry_add', 'allow_comments', 192, 1, 17),
 ('bx_posts_entry_add', 'do_publish', 2147483647, 1, 18),
 
@@ -553,7 +553,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_edit', 'cf', 2147483647, 1, 15),
 ('bx_posts_entry_edit', 'location', 2147483647, 1, 16),
 ('bx_posts_entry_edit', 'allow_comments', 192, 1, 17),
-('bx_posts_entry_edit', 'published', 192, 1, 18),
+('bx_posts_entry_edit', 'published', 192, 0, 18),
 ('bx_posts_entry_edit', 'do_submit', 2147483647, 1, 19),
 
 ('bx_posts_entry_view', 'cat', 2147483647, 1, 1),
