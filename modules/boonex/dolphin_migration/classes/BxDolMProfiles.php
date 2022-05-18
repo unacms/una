@@ -153,14 +153,17 @@ class BxDolMProfiles extends BxDolMData
 						$aValue['EmailNotify']
 						);
 						
-					$this -> _oDb -> query($sQuery);										
+					$this -> _oDb -> query($sQuery);
 
 					$iAccountId = $iAccountId ? $iAccountId : $this -> _oDb -> lastId();
 					if (!$iAccountId) 
 						continue;
 
-					if (!$bAccountExists)
-                        $this->_oDb->query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'system', `status` = 'active'");
+					$iSysProfileId = 0;
+					if (!$bAccountExists) {
+                        $this->_oDb->query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `content_id` = {$iAccountId}, `type` = 'system', `status` = 'active'");
+                        $iSysProfileId = $this->_oDb->lastId();
+                    }
 
 
                     $this -> setMID($iAccountId, $aValue['ID']);
@@ -189,7 +192,7 @@ class BxDolMProfiles extends BxDolMData
 	                     "{$sAction}
 	                     		`bx_persons_data`
 	                     	SET
-	                     		`author`   			= 0,
+	                     		`author`   			= ?,
 	                     		`added`      		= ?,
 	                     		`changed`   		= ?,
 								`picture`			= 0,		
@@ -203,6 +206,7 @@ class BxDolMProfiles extends BxDolMData
 								`description`		= ?
 							{$sWhere}
 	                     ",
+                            $iSysProfileId,
                             $iDateReg ? $iDateReg : 0,
                             $iDateEdit ? $iDateEdit : 0,
 							$sFullName,
@@ -217,7 +221,7 @@ class BxDolMProfiles extends BxDolMData
 						$this -> _oDb -> query($sQuery);	
 						$iContentId = $iProfID ? $iProfID : $this -> _oDb -> lastId();
 						if (!$iProfID) {
-                            $this->_oDb->query("UPDATE `sys_profiles` SET `content_id` = {$iContentId} WHERE `account_id` = {$iAccountId} AND `type` = 'system'");
+                            $this->_oDb->query("UPDATE `sys_profiles` SET `content_id` = {$iAccountId} WHERE `account_id` = {$iAccountId} AND `type` = 'system'");
                             $this->_oDb->query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'bx_persons', `content_id` = {$iContentId}, `status` = 'active'");
 
                             $iProfile = $this->_oDb->lastId();
