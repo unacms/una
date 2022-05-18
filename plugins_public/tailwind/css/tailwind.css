@@ -841,8 +841,8 @@
     .bx-artificer .bx-stl-mil-active {
         @apply active:bg-gray-300 dark:active:bg-black/50;
     }
-    .bx-artificer .bx-popup .bx-stl-mil,
-    .bx-artificer .bx-popup .bx-stl-mil-sm {
+    .bx-artificer .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil,
+    .bx-artificer .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm {
         @apply rounded-none;
     }
     .bx-artificer .bx-menu-tab-active .bx-stl-mil,

@@ -64,7 +64,12 @@ import url(../../../../../../../template/css/vote.css);
 .bx-vote-counter-wrapper-reactions .bx-vote-counter.bx-vc-hidden {
     display: none;
 }
-.bx-menu-object-sys_vote_reactions_do li .sys-icon {
+.bx-menu-object-sys_vote_reactions_do li.bx-menu-item {
+    padding: 0.25rem;
+}
+.bx-menu-object-sys_vote_reactions_do li.bx-menu-item .sys-icon {
+    width: 2rem;
+    height: 2rem;
     font-size: 1.5rem;
 }
 
