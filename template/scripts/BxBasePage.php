@@ -359,7 +359,7 @@ class BxBasePage extends BxDolPage
      */
     public function getBlockHelp ($aBlock)
     {
-        if(empty($aBlock['help']))
+        if(empty($aBlock['help']) || empty(strip_tags(_t($aBlock['help']))))
             return '';
 
         return $this->_oTemplate->parseHtmlByName('designbox_help.html', array(
