@@ -774,6 +774,7 @@ class BxBaseCmts extends BxDolCmts
             $sOnclick = $aParams['overwrite_counter_link_onclick'];
 
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass,
             'href' => $sHref,
@@ -783,7 +784,6 @@ class BxBaseCmts extends BxDolCmts
                     'onclick' => $sOnclick
                 )
             ),
-            
             'content' => $this->_getCounterLabel($iCount, $aParams),
             'bx_repeat:profiles' => $aTmplVarsProfiles,
             'bx_if:show_icon' => array(
