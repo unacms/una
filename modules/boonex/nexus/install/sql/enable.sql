@@ -14,7 +14,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_nexus_option_styles', '', @iCategId, '_bx_nexus_option_styles', 'text', '', '', '', 10),
 ('bx_nexus_option_guest_pages', 'forgot-password,create-account,terms,privacy,contact,about,home', @iCategId, '_bx_nexus_option_guest_pages', 'text', '', '', '', 20),
 ('bx_nexus_option_custom_homepage', 'on', @iCategId, '_bx_nexus_option_custom_homepage', 'checkbox', '', '', '', 30),
-('bx_nexus_option_main_menu', 'default', @iCategId, '_bx_nexus_option_main_menu', 'select', 'a:3:{s:6:"module";s:8:"bx_nexus";s:6:"method";s:14:"get_menus_list";s:6:"params";a:0:{}}', '', '', 40);
+('bx_nexus_option_main_menu', 'default', @iCategId, '_bx_nexus_option_main_menu', 'select', 'a:3:{s:6:"module";s:8:"bx_nexus";s:6:"method";s:14:"get_menus_list";s:6:"params";a:0:{}}', '', '', 40),
+('bx_nexus_option_push_notifications_count', '', @iCategId, '_bx_nexus_option_push_notifications_count', 'checkbox', '', '', '', 50);
 
 -- Injections
 
