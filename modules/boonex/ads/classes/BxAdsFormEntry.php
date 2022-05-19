@@ -231,6 +231,22 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         if(isset($CNF['FIELD_CATEGORY_SELECT']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_SELECT']]))
             $this->aInputs[$CNF['FIELD_CATEGORY_SELECT']]['values'] = $this->_oModule->serviceGetCategoryOptions(0, true);
     }
+
+    protected function _isChangeUserForAdmins($sDisplay)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_bAllowChangeUserForAdmins)
+            return false;
+
+        if(strpos($sDisplay, '_add') !== false)
+            return $sDisplay != $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'];
+
+        if(strpos($sDisplay, '_edit') !== false)
+            return true;
+
+        return false;
+    }
 }
 
 /** @} */

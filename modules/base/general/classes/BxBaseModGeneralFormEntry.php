@@ -69,17 +69,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$CNF['FIELD_LOCATION_PREFIX']])) {
             $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = true;
         }
-        
+
         // add ability to change author by admins in some apps
-        if (
-            $this->_oModule->checkAllowedEditAnyEntry(false) === CHECK_ACTION_RESULT_ALLOWED &&
-            isset($CNF['FIELD_AUTHOR']) && 
-            (
-                (isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) && $this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) ||
-                (isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']) && $this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])
-            ) && 
-            $this->_bAllowChangeUserForAdmins){
-                $this->aInputs = array_merge([
+        if (!empty($CNF['FIELD_AUTHOR']) && ($this->_oModule->_isModerator() || $this->_oModule->_isAdministrator()) && $this->_isChangeUserForAdmins($this->aParams['display']))
+            $this->aInputs = array_merge([
                 $CNF['FIELD_AUTHOR'] => [
                     'type' => 'custom',
                     'name' => $CNF['FIELD_AUTHOR'],
@@ -87,7 +80,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                     'caption' => _t('_sys_form_input_caption_author')
                 ],
             ], $this->aInputs);
-        }
 
         if (isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE'];
@@ -108,6 +100,22 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $this->genGhostTemplateForInputNestedForm ($this->aInputs[$sKey]);
             }
         }
+    }
+
+    protected function _isChangeUserForAdmins($sDisplay)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_bAllowChangeUserForAdmins)
+            return false;
+
+        if(isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']) && $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])
+            return true;
+
+        if(isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']) && $sDisplay == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'])
+            return true;
+
+        return false;
     }
 
     function getCode($bDynamicMode = false)
