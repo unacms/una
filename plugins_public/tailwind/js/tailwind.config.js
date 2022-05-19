@@ -43,6 +43,7 @@ module.exports = {
 
     'aspect-w-1', 'aspect-w-3', 'aspect-w-4', 'aspect-w-9', 'aspect-w-16',
     'aspect-h-1', 'aspect-h-3', 'aspect-h-4', 'aspect-h-9', 'aspect-h-16',
+    'aspect-none',
 
     'col-red1', 'col-red1-dark', 'col-red2', 'col-red2-dark', 'col-red3', 'col-red3-dark',
     'bg-col-red1', 'bg-col-red1-dark', 'bg-col-red2', 'bg-col-red2-dark', 'bg-co3-red1', 'bg-col-red3-dark',
