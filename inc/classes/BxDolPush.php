@@ -131,9 +131,7 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             return false;
 
         if($bAddToQueue && BxDolQueuePush::getInstance()->add($iProfileId, $aMessage))
-            return true;
-
-        $iBadgeCount = $this->getNotificationsCount($iProfileId);
+            return true;        
     
 		$aFields = array(
 			'app_id' => $this->_sAppId,
@@ -145,9 +143,13 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             'web_url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
             'data' => array('url' => !empty($aMessage['url']) ? $aMessage['url'] : ''),
             'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
-            'ios_badgeType' => 'SetTo',
-            'ios_badgeCount' => $iBadgeCount,
 		);
+
+        if ('on' == getParam('bx_nexus_option_push_notifications_count')) {
+            $iBadgeCount = $this->getNotificationsCount($iProfileId);
+            $aFields['ios_badgeType'] = 'SetTo';
+            $aFields['ios_badgeCount'] = $iBadgeCount;
+        }
 
 		$oChannel = curl_init();
 		curl_setopt($oChannel, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
