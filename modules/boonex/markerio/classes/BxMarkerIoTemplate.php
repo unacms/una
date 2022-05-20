@@ -20,6 +20,10 @@ class BxMarkerIoTemplate extends BxDolModuleTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $sCode = $this->_oDb->getParam($CNF['PARAM_CODE']);
+        if(empty($sCode))
+            return '';
+
         $aTmplVarsShowForLogged = array();
         if(isLogged()) {
             $oProfile = BxDolProfile::getInstance();
@@ -33,7 +37,7 @@ class BxMarkerIoTemplate extends BxDolModuleTemplate
         }
 
         return $this->parseHtmlByName('code.html', array(
-            'code' => $this->_oDb->getParam($CNF['PARAM_CODE']),
+            'code' => $sCode,
             'bx_if:show_for_logged' => array(
                 'condition' => !empty($aTmplVarsShowForLogged),
                 'content' => $aTmplVarsShowForLogged
