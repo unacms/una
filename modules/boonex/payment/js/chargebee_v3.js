@@ -161,22 +161,26 @@ BxPaymentProviderChargebeeV3.prototype.subscribeWithAddons = function(oLink, mix
 };
 
 BxPaymentProviderChargebeeV3.prototype.manage = function(oLink, iPendingId) {
-	var $this = this;
+    var $this = this;
     var oDate = new Date();
 
     $(".bx-popup-applied:visible").dolPopupHide();
 
-	this._rHandler.setPortalSession(function() {
+    this._rHandler.setPortalSession(function() {
     	return $.post({
-    		url: $this._sActionsUrl + 'call/' + $this._sProvider + '/get_portal/' + iPendingId + '/',
-    		dataType: 'json'
+            url: $this._sActionsUrl + 'call/' + $this._sProvider + '/get_portal/' + iPendingId + '/',
+            dataType: 'json'
     	});
     });
 
-	var cbPortal = this._rHandler.createChargebeePortal();
-	cbPortal.open({});
+    var cbPortal = this._rHandler.createChargebeePortal();
+    cbPortal.open({
+        close: function() {
+            $this._rHandler.logout();
+        }
+    });
 
-	return false;
+    return false;
 };
 
 /** @} */

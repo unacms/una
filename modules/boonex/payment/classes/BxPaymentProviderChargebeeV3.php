@@ -11,6 +11,7 @@
 
 require_once('BxPaymentProviderChargebee.php');
 
+use ChargeBee\ChargeBee\Environment;
 use ChargeBee\ChargeBee\Models\PortalSession;
 
 class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
