@@ -261,9 +261,16 @@ function bx_editor_init(oEditor, oParams){
 
     if (oParams.insert_as_plain_text){
         oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
-            var plaintext = $ (node).text ();
-            const Delta = Quill.import('delta')
-            return new Delta().insert (plaintext);
+			let ops = []
+			delta.ops.forEach(op => {
+				if (op.insert && typeof op.insert === 'string') {
+					ops.push({
+						insert: op.insert
+					})
+				}
+			})
+			delta.ops = ops
+			return delta
         });
     }
     
