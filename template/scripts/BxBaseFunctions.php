@@ -440,7 +440,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 if(!empty($aButton['onclick']))
                     $aAttrs['onclick'] = $aButton['onclick'];
                 
-                $aAttrs['class'] = 'bx-btn';
+                $aAttrs['class'] = 'bx-btn bx-btn-small';
                 if(!empty($aButton['class']))
                     $aAttrs['class'] .= ' ' . trim($aButton['class']);
 
