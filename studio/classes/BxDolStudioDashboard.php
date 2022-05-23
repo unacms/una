@@ -109,15 +109,14 @@ class BxDolStudioDashboard extends BxTemplStudioWidget
                         case 'less':
                         case 'css':
                         case 'js':
+                        case 'purifier':
+                        case 'opcache':
+                        case 'custom':
                             $aResult = $oCacheUtilities->clear($sValue);
                             break;
 
-                        case 'custom':
-                            $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
-                            break;
-
                         default:
-                            $aResult = array('code' => 1, 'message' => _t('_Error Occured'));
+                            $aResult = array('code' => 1, 'message' => _t('_error occured'));
                     }
 
                     if($aResult === false)

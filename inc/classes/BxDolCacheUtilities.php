@@ -69,49 +69,41 @@ class BxDolCacheUtilities extends BxDol
             return $mixedResult;
 
         $bClear = $sMode == 'clear';
-
-        $sFuncCacheObject = $bClear ? '_clearObject' : '_getSizeObject';
-        $sFuncCacheFile = $bClear ? '_clearFile' : '_getSizeFile';
+        $sAction = $bClear ? '_clear' : '_getSize';
 
         $oTemplate = BxDolStudioTemplate::getInstance();
         switch ($sCache) {
             case 'db':
                 $oCacheDb = BxDolDb::getInstance()->getDbCacheObject();
-                $mixedResult = $this->$sFuncCacheObject($oCacheDb, 'db_');
+                $mixedResult = $this->{$sAction . 'Object'}($oCacheDb, 'db_');
                 break;
 
             case 'template':
                 $oCacheTemplates = $oTemplate->getTemplatesCacheObject();
-                $mixedResult = $this->$sFuncCacheObject($oCacheTemplates, $oTemplate->getCacheFilePrefix($sCache));
+                $mixedResult = $this->{$sAction . 'Object'}($oCacheTemplates, $oTemplate->getCacheFilePrefix($sCache));
                 break;
 
             case 'less':
-                $mixedResult = $this->$sFuncCacheFile($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
+                $mixedResult = $this->{$sAction . 'File'}($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
 
             case 'css':
                 if($bClear)
                     $this->clear('less');
 
-                $mixedResult = $this->$sFuncCacheFile($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
+                $mixedResult = $this->{$sAction . 'File'}($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
 
             case 'js':
-                $mixedResult = $this->$sFuncCacheFile($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
+                $mixedResult = $this->{$sAction . 'File'}($oTemplate->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
-                
-            case 'purifier':
-                HTMLPurifier_Bootstrap::registerAutoload();
-                $oConfig = HTMLPurifier_Config::createDefault();
-                $oConfig->set('Cache.DefinitionImpl', null);
-                $oHtmlPurifier = new HTMLPurifier($oConfig);
-                $oHtmlPurifier->purify('');
-                $mixedResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
-                break;
-            case 'opcache':
-                if (function_exists('opcache_reset'))
-                    opcache_reset();
-                $mixedResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
+
+            default:
+                $sMethod = $sAction . bx_gen_method_name($sCache);
+                if(!method_exists($this, $sMethod))
+                    $sMethod = $sAction . 'Unsupported';
+
+                $mixedResult = $this->$sMethod();
                 break;
         }
 
@@ -141,6 +133,34 @@ class BxDolCacheUtilities extends BxDol
         return array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
     }
 
+    protected function _clearPurifier()
+    {
+        HTMLPurifier_Bootstrap::registerAutoload();
+        $oConfig = HTMLPurifier_Config::createDefault();
+        $oConfig->set('Cache.DefinitionImpl', null);
+        $oHtmlPurifier = new HTMLPurifier($oConfig);
+        $oHtmlPurifier->purify('');
+        return ['code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success')];
+    }
+
+    protected function _clearOpcache()
+    {
+        if(function_exists('opcache_reset'))
+            opcache_reset();
+
+        return ['code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success')];
+    }
+
+    protected function _clearCustom()
+    {
+        return ['code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success')];
+    }
+
+    protected function _clearUnsupported()
+    {
+        return ['code' => 2, 'message' => _t('_adm_dbd_err_c_clean_unsupported')];
+    }
+
     protected function _getSizeObject($oCache, $sPrefix)
     {
         return $oCache->getSizeByPrefix ($sPrefix);
@@ -160,6 +180,23 @@ class BxDolCacheUtilities extends BxDol
         closedir($rHandler);
 
         return $iSize;
+    }
+
+    protected function _getSizeOpcache()
+    {
+        if(!function_exists('opcache_get_status'))
+            return 0;
+        
+        $mixedResult = opcache_get_status();
+        if(empty($mixedResult) || !is_array($mixedResult))
+            return 0;
+
+        return isset($mixedResult['memory_usage'], $mixedResult['memory_usage']['used_memory']) ? $mixedResult['memory_usage']['used_memory'] : 0;
+    }
+
+    protected function _getSizeUnsupported()
+    {
+        return 0;
     }
 }
 
