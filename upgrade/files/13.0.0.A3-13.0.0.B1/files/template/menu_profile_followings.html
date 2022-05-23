@@ -1,0 +1,20 @@
+<ul class="bx-menu-profile-followings bx-menu-ver bx-menu-object-__object__ bx-def-font-middle bx-clearfix">
+    <bx_repeat:menu_items>
+        <li class="bx-menu-item bx-menu-item-__name__ bx-def-round-corners __class_add__">
+            <div class="bx-menu-item-cnt">
+                <div class="bx-menu-item-link bx-def-padding-thd-topbottom bx-def-padding-sec-leftright bx-def-color-bg-hl-hover">
+                    <a href="__link__" onclick="__onclick__"__attrs__>__title__</a>
+                    <span class="bx-menu-collapse bx-def-padding-sec-left">
+                        <a href="javascript:void(0)" onclick="javascript:bx_menu_toggle(this, '__object__', '__name__')">
+                            <i class="sys-icon chevron-up bx-menu-hide"></i>
+                            <i class="sys-icon chevron-down bx-menu-show"></i>
+                        </a>
+                    </span>
+                </div>
+                <bx_if:show_subitems>
+                    <div class="bx-menu-item-subitems">__subitems__</div>
+                </bx_if:show_subitems>
+            </div>
+        </li>
+    </bx_repeat:menu_items>
+</ul>
