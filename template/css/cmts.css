@@ -226,10 +226,6 @@
     }
 
     /*--- Add Comment/Reply Form Styles ---*/
-    form.cmt-post-reply .bx-form-input-textarea {
-		height: 64px;
-    	height: 4rem;
-    }
     form.cmt-post-reply div#bx-form-element-cmt_image,
     form.cmt-post-reply .bx-form-input-files-uploaders {
 		margin-top: 0px;
