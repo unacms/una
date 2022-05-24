@@ -295,7 +295,7 @@ class BxDolStudioOptions extends BxDol
                     $aCheckFunction = [$oChecker, 'check' . bx_gen_method_name($aOption['check'])];
                     $aCheckFunctionParams = [$aData[$aOption['name']]];
                     if(!empty($aOption['check_params']))
-                        $aCheckFunctionParams = array_merge($aCheckFunctionParams, unserialize($aOption['check_params']));
+                        $aCheckFunctionParams = array_merge($aCheckFunctionParams, array_values(unserialize($aOption['check_params'])));
 
                     if(is_callable($aCheckFunction) && !call_user_func_array($aCheckFunction, $aCheckFunctionParams)) {
                         $this->sCategory = $sCategory;
