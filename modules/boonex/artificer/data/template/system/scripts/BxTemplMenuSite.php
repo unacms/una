@@ -16,9 +16,11 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
     protected $_oModule;
 
     protected $_bSiteMenu;
+    protected $_bSiteMenuInPanel;
     protected $_bApplicationMenu;
 
     protected $_aHideFromSiteMenu;
+    protected $_aHideFromSiteMenuInPanel;
 
     public function __construct ($aObject, $oTemplate = false)
     {
@@ -27,9 +29,11 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $this->_sModule = 'bx_artificer';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
         $this->_aHideFromSiteMenu = ['search'];
+        $this->_aHideFromSiteMenuInPanel = ['more-auto'];
 
         $this->_sJsClassMoreAuto = 'BxArtificerMenuMoreAuto';
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
+        $this->_bSiteMenuInPanel = $this->_sObject == 'sys_site_in_panel';
         $this->_bApplicationMenu = $this->_sObject == 'sys_application';
     }
 
@@ -38,7 +42,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $sTemplate = 'menu_main_popup.html';
         $sClass = 'bx-popup-menu-main';
         $sStyle = 'display:none';
-        if($this->_bSiteMenu || $this->_bApplicationMenu) {
+        if($this->_bSiteMenu || $this->_bSiteMenuInPanel || $this->_bApplicationMenu) {
             $sTemplate = 'menu_main_inline.html';
             $sClass = 'bx-inline-smenu-main';
             $sStyle = '';
@@ -52,13 +56,17 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
             'content' => parent::getCode()
         ));
     }
-    
+
     protected function _getMenuItem ($a)
     {
     	//--- Hide '[Search]' from Site Menu
         if( $this->_bSiteMenu && in_array($a['name'], $this->_aHideFromSiteMenu))
             return false;
-        
+
+        //--- Hide '[More Auto]' from Site Menu in Panel
+        if( $this->_bSiteMenuInPanel && in_array($a['name'], $this->_aHideFromSiteMenuInPanel))
+            return false;
+
         return parent::_getMenuItem ($a);
     }
 }

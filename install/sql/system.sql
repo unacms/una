@@ -4324,7 +4324,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 28, 0, 1, 'BxTemplMenuSite', ''),
-('sys_site_in_panel', '_sys_menu_title_main_in_panel', 'sys_site', 'system', 31, 0, 1, '', ''),
+('sys_site_in_panel', '_sys_menu_title_main_in_panel', 'sys_site', 'system', 31, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_application', '_sys_menu_title_application', 'sys_application', 'system', 28, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 7, 0, 1, 'BxTemplMenuHomepage', ''),
 ('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),

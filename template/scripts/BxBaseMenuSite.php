@@ -12,15 +12,36 @@
  */
 class BxBaseMenuSite extends BxTemplMenu
 {
+    protected $_bSiteMenuInPanel;
+    protected $_aHideFromSiteMenuInPanel;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_bSiteMenuInPanel = $this->_sObject == 'sys_site_in_panel';
+
+        $this->_aHideFromSiteMenuInPanel = ['more-auto'];
     }
 
     public function getCode ()
     {
-        $s = parent::getCode ();
-        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="bx-sliding-menu-main bx-def-z-index-nav bx-def-border-bottom" style="display:none;"><div class="bx-sliding-menu-main-cnt">' . $s . '</div></div>';
+        $sClass = 'bx-sliding-menu-main';
+        $sStyle = 'display:none';
+        if($this->_bSiteMenuInPanel)
+            $sStyle = '';
+
+        $s = parent::getCode();
+        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav bx-def-border-bottom" style="' . $sStyle . '"><div class="bx-sliding-menu-main-cnt">' . $s . '</div></div>';
+    }
+    
+    protected function _getMenuItem ($a)
+    {
+        //--- Hide '[More Auto]' from Site Menu in Panel
+        if($this->_bSiteMenuInPanel && in_array($a['name'], $this->_aHideFromSiteMenuInPanel))
+            return false;
+
+        return parent::_getMenuItem ($a);
     }
 }
 
