@@ -274,6 +274,14 @@ class BxBaseStudioOptions extends BxDolStudioOptions
                     ],
                     'db' => ['pass' => 'Xss']
                 ],
+                'dark' => [
+                    'type' => 'switcher',
+                    'name' => 'dark',
+                    'caption' => _t('_adm_stg_txt_mix_dark'),
+                    'info' => '',
+                    'value' => '1',
+                    'db' => ['pass' => 'Int']
+                ],
                 'duplicate' => [
                     'type' => 'select',
                     'name' => 'duplicate',

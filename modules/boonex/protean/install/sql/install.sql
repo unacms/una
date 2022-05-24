@@ -929,8 +929,8 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 
 
 -- Dark Mix
-INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `published`, `editable`) VALUES
-(@sName, '', 'Protean-Dark-Mix', 'Dark Mix', 0, 1, 0);
+INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `dark`, `active`, `published`, `editable`) VALUES
+(@sName, '', 'Protean-Dark-Mix', 'Dark Mix', 1, 0, 1, 0);
 SET @iMixId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES

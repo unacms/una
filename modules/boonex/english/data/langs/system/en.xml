@@ -1677,6 +1677,7 @@
 	<string name="_adm_stg_err_mix_already_exists"><![CDATA[Mix with the same name already exists.]]></string>
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Import Mix]]></string>
+        <string name="_adm_stg_txt_mix_dark"><![CDATA[Dark mode]]></string>
 	<string name="_adm_stg_txt_mix_duplicate"><![CDATA[Duplicate from]]></string>
 	<string name="_adm_stg_txt_mix_duplicate_inf"><![CDATA[Use 'None' to duplicate System values]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Mix Title]]></string>

@@ -1664,6 +1664,7 @@
 	<string name="_adm_stg_err_mix_already_exists"><![CDATA[Набор с таким именем уже существует.]]></string>
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Импортировать набор]]></string>
+        <string name="_adm_stg_txt_mix_dark"><![CDATA[Темный]]></string>
 	<string name="_adm_stg_txt_mix_duplicate"><![CDATA[Продублировать]]></string>
 	<string name="_adm_stg_txt_mix_duplicate_inf"><![CDATA[Используйте 'Никакой', чтобы продублировать Системные значения]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>

@@ -662,8 +662,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         bx_import('BxTemplFunctions');
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
-		
-		$this->addJsOption('sys_fixed_header');
+
+        $this->addJsOption('sys_fixed_header');
     }
 
     protected function getInjectionsData ()
@@ -1745,6 +1745,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
             case 'class_name':
                 $sRet = $this->getCssClassName();
+
+                if(!empty($this->_iMix)) {
+                    $aMix = BxDolDb::getInstance()->getParamsMix($this->_iMix);
+                    if(isset($aMix['dark']) && (int)$aMix['dark'] == 1)
+                        $sRet .= ' dark';
+                }
                 break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
