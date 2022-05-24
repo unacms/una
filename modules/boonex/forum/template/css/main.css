@@ -526,6 +526,10 @@
     width: 33.3333%;
 }
 
+.bx-forum-grid .sys-action-counter-label.bx-score-counter-label{
+	padding: 0px !important;
+}
+
 /* ---------------new meta menu need to move incore*/
 
 .bx-menu-meta-icon img,
