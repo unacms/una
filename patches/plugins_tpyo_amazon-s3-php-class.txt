@@ -1,0 +1,15 @@
+--- orig/plugins/tpyo/amazon-s3-php-class/S3.php	2022-05-20 05:32:24.000000000 +1000
++++ fixed/plugins/tpyo/amazon-s3-php-class/S3.php	2022-05-25 20:48:42.000000000 +1000
+@@ -2350,6 +2350,12 @@
+ 			{
+ 				$this->amzHeaders['x-amz-date'] = gmdate('Ymd\THis\Z');
+ 
++                if (!isset($this->headers['content-type']))
++                    $this->headers['content-type'] = 'application/octet-stream';
++
++                if (!isset($this->headers['content-md5']))
++                    $this->headers['content-md5'] = hash('md5', $this->data);
++
+ 				if (!isset($this->amzHeaders['x-amz-content-sha256'])) 
+ 					$this->amzHeaders['x-amz-content-sha256'] = hash('sha256', $this->data);
+ 

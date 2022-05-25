@@ -74,7 +74,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "akeeba/s3": "dev-main",
+        "akeeba/s3": "dev-development",
         "achingbrain/php5-akismet": "0.5",
         "unaio/amazon-s3-php-class-hmac-v2": "*",
         "tpyo/amazon-s3-php-class": "dev-master",
@@ -106,7 +106,8 @@
             "@relocate-ffmpeg"
         ],
         "relocate-ffmpeg": [
-            "test -f ./plugins/ffmpeg/ffmpeg/linux-x64 && mv ./plugins/ffmpeg/ffmpeg/linux-x64 ./plugins/ffmpeg/ffmpeg.exe && rm -rf ./plugins/ffmpeg/ffmpeg || true"
+            "test -f ./plugins/ffmpeg/ffmpeg/linux-x64 && mv ./plugins/ffmpeg/ffmpeg/linux-x64 ./plugins/ffmpeg/ffmpeg.exe && rm -rf ./plugins/ffmpeg/ffmpeg || true",
+            "patch -p1 < patches/plugins_tpyo_amazon-s3-php-class.txt"
         ]
     }
 }
