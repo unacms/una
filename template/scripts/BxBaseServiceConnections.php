@@ -24,9 +24,11 @@ class BxBaseServiceConnections extends BxDol
     {
         if(!$iProfileId && bx_get('profile_id') !== false)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return false;
 
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections');
-        if (!$oGrid)
+        if(!$oGrid)
             return false;
 
         $oGrid->setProfile($iProfileId);

@@ -57,6 +57,14 @@ class BxDolGridConnections extends BxTemplGrid
         $this->_bInit = $this->init();
     }
 
+    public function getCode ($isDisplayHeader = true)
+    {
+        if(!$this->_bInit)
+            return '';
+
+        return parent::getCode($isDisplayHeader);        
+    }
+
     /**
      * 'accept' action handler
      */
