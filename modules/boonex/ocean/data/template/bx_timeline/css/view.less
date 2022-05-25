@@ -1,5 +1,6 @@
 @import (reference) '../../system/css/default.less';
 @import '../../../../../timeline/template/css/view.css';
+@import (reference) '../../../../../../../template/css/_mixins.less';
 
 div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
     background: -webkit-linear-gradient(top, transparent, @bx-color-box);
@@ -8,13 +9,13 @@ div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
     background: linear-gradient(to bottom, transparent, @bx-color-box);
 }
 
-div.bx-tl-activity ul.bx-menu-object-bx_timeline_menu_item_actions {
+.@{bx-root-class-name} div.bx-tl-activity ul.bx-menu-object-bx_timeline_menu_item_actions {
     .bx-ocean .bx-def-margin-thd-leftright-neg;
 
-    .bx-ocean .margin-top(-@bx-margin-thd);
+    .margin-top(-@bx-margin-thd);
 }
 
-div.bx-tl-activity ul.bx-menu-object-bx_timeline_menu_item_actions li  {
+.@{bx-root-class-name} div.bx-tl-activity ul.bx-menu-object-bx_timeline_menu_item_actions li  {
     .bx-ocean .bx-def-margin-thd;
 }
 
