@@ -1,4 +1,4 @@
-@import '../../../../../../../template/css/_mixins.less';
+@import (reference) '../../../../../../../template/css/_mixins.less';
 
 .@{bx-root-class-name}.bx-def-font {
     font-family:@bx-font-family;
@@ -9,6 +9,14 @@
 
 .@{bx-root-class-name}.bx-def-color-bg-page {
     .background-color (@bx-color-page);
+}
+
+.@{bx-root-class-name}.bx-def-image-bg-page {
+	background-image: @bx-image-bg-page;
+	background-repeat: @bx-image-bg-page-repeat;
+	background-attachment: @bx-image-bg-page-attachment;
+	background-size: @bx-image-bg-page-size;
+	background-position: center center;
 }
 
 .@{bx-root-class-name} {
@@ -93,7 +101,6 @@
     /* background images */
     .bx-def-image-bg-header,
     .bx-def-image-bg-footer,
-    .bx-def-image-bg-page,
     .bx-def-image-bg-block,
     .bx-def-box,
     .bx-popup-color-bg,
@@ -115,12 +122,6 @@
         background-repeat: @bx-image-bg-footer-repeat;
         background-attachment: @bx-image-bg-footer-attachment;
         background-size: @bx-image-bg-footer-size;
-    }
-    .bx-def-image-bg-page {
-        background-image: @bx-image-bg-page;
-        background-repeat: @bx-image-bg-page-repeat;
-        background-attachment: @bx-image-bg-page-attachment;
-        background-size: @bx-image-bg-page-size;
     }
     .bx-def-image-bg-block {
         background-image: @bx-image-bg-block;
