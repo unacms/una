@@ -186,23 +186,25 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $this->_isAdmin($iContentId));
 
         $bResult = (int)$this->_oModule->_oDb->updateContentPictureById($iContentId, 0/*$iProfileId*/, $iFileId, $sPictureField) > 0;
-        if($bResult) {
-            $sModule = $this->_oModule->getName();
-            switch($sPictureField) {
-                case $CNF['FIELD_PICTURE']:
-                    bx_alert($sModule, 'profile_picture_changed', $iFileId, $iProfileId, array('content' => $iContentId, 'field' => $CNF['FIELD_PICTURE']));
-                    break;
+        if(!$bResult) 
+            return;
 
-                case $CNF['FIELD_COVER']:
-                    bx_alert($sModule, 'profile_cover_changed', $iFileId, $iProfileId, array('content' => $iContentId, 'field' => $CNF['FIELD_COVER']));
-                    break;
-            }
-        }
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aField2Method = [
+            $CNF['FIELD_PICTURE'] => 'picture',
+            $CNF['FIELD_COVER'] => 'cover',
+        ];
+
+        if(!empty($aField2Method[$sPictureField]))
+            bx_alert($this->_oModule->getName(), 'profile_' . $aField2Method[$sPictureField] . '_changed', $iFileId, $iProfileId, [
+                'object_author_id' => $iProfileId, 
+                'content' => $iContentId, 
+                'field' => $sPictureField
+            ]);
     }
 
     protected function _getProfilePhotoGhostTmplVars($sField, $aContentInfo = array())
