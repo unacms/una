@@ -62,21 +62,17 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
     
     public function getBlockInvite($iAccountId, $iProfileId)
     {
-        $sInvitesRemain = '';
-        if(!isAdmin($iAccountId)) {
-            $mInvitesRemain = $this->_oConfig->getCountPerUser();
-            if ($mInvitesRemain === true)
-                 $sInvitesRemain = _t('_bx_invites_txt_unlimited');
-        }
+        $mInvitesRemain = $this->_oConfig->getCountPerUser();
+		if ($mInvitesRemain === true)
+			$mInvitesRemain = _t('_bx_invites_txt_unlimited');
            
-
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
 
         $this->getCssJs();
         return $this->parseHtmlByName('block_invite.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('main'),
-            'text' => _t('_bx_invites_txt_invite_block_text', $sInvitesRemain),
+            'text' => _t('_bx_invites_txt_invite_block_text', $mInvitesRemain),
             'url' => $sUrl,
             'js_code' => $this->getJsCode('main')
         ));
