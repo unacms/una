@@ -1,15 +1,15 @@
 --- orig/plugins/tpyo/amazon-s3-php-class/S3.php	2022-05-20 05:32:24.000000000 +1000
-+++ fixed/plugins/tpyo/amazon-s3-php-class/S3.php	2022-05-25 20:48:42.000000000 +1000
-@@ -2350,6 +2350,12 @@
- 			{
- 				$this->amzHeaders['x-amz-date'] = gmdate('Ymd\THis\Z');
++++ fixed/tpyo/amazon-s3-php-class/S3.php	2022-05-25 22:22:12.000000000 +1000
+@@ -2356,6 +2356,12 @@
+ 				foreach ($this->amzHeaders as $header => $value)
+ 					if (strlen($value) > 0) $httpHeaders[] = $header.': '.$value;
  
-+                if (!isset($this->headers['content-type']))
-+                    $this->headers['content-type'] = 'application/octet-stream';
++				if (empty($this->headers['Content-MD5']))
++					$this->headers['Content-MD5'] = hash('md5', $this->data);
 +
-+                if (!isset($this->headers['content-md5']))
-+                    $this->headers['content-md5'] = hash('md5', $this->data);
++				if (empty($this->headers['Content-Type']))
++					$this->headers['Content-Type'] = 'application/xml';
 +
- 				if (!isset($this->amzHeaders['x-amz-content-sha256'])) 
- 					$this->amzHeaders['x-amz-content-sha256'] = hash('sha256', $this->data);
+ 				foreach ($this->headers as $header => $value)
+ 					if (strlen($value) > 0) $httpHeaders[] = $header.': '.$value;
  
