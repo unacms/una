@@ -59,6 +59,8 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
 }
 
 const toggleSidebarMobile = (sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose) => {
+    sidebar.classList.remove('bx-mc-narrowed');
+    sidebar.classList.add('bx-mc-expanded');
     sidebar.classList.toggle('hidden');
     sidebarBackdrop.classList.toggle('hidden');
     toggleSidebarMobileHamburger.classList.toggle('hidden');
