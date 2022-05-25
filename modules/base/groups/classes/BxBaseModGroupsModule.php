@@ -682,9 +682,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     
     public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
-        if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
-            return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
-        return false;
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
+            return false;
+
+        return $this->_serviceEntityForm ('inviteForm', $iContentId, false, false, $bErrorMsg);
     }
     
     /**
@@ -1463,7 +1466,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_INVITE, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        return $this->checkAllowedEdit ($aDataEntry, $isPerformAction);
+        return parent::checkAllowedEdit($aDataEntry, $isPerformAction);
     }
     
     public function checkAllowedChangeCover($aDataEntry, $isPerformAction = false)

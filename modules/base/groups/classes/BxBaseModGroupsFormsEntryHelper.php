@@ -18,6 +18,71 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+    
+    public function getObjectFormInvite ($sDisplay = false)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($sDisplay === false)
+            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'];
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        if($this->_bAjaxMode)
+            $oForm->setAjaxMode($this->_bAjaxMode);
+
+        if($this->_bAbsoluteActionUrl)
+            $this->_setAbsoluteActionUrl('edit', $oForm);
+
+        return $oForm;
+    }
+
+    public function inviteForm ($iContentId, $sDisplay = false, $sCheckFunction = false, $bErrorMsg = true)
+    {
+        if (!$sCheckFunction)
+            $sCheckFunction = 'checkAllowedInvite';
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        // get content data and profile info
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
+        if(!$aContentInfo)
+            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_entry_is_not_defined')) : '';
+
+        // check access
+        if(($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $bErrorMsg ? MsgBox($sMsg) : '';
+
+        // check and display form
+        $oForm = $this->getObjectFormInvite($sDisplay);
+        if(!$oForm)
+            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_occured')) : '';
+
+        $oForm->initChecker($aContentInfo);
+        if (!$oForm->isSubmittedAndValid())
+            return $oForm->getCode();
+
+        $this->onDataInviteBefore($aContentInfo[$CNF['FIELD_ID']], $aContentInfo);
+
+        if (!$oForm->update($aContentInfo[$CNF['FIELD_ID']])) {
+            if (!$oForm->isValid())
+                return $oForm->getCode();
+            else
+                return MsgBox(_t('_sys_txt_error_entry_update'));
+        }
+
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
+        $sResult = $this->onDataInviteAfter($aContentInfo[$CNF['FIELD_ID']], $aContentInfo);
+        if($sResult)
+            return $sResult;
+
+        // Perform ACL action
+        $this->_oModule->$sCheckFunction($aContentInfo, true);
+
+        // Redirect
+        $this->redirectAfterEdit($aContentInfo);
+    }
 
     protected function _getProfileAndContentData ($iContentId)
     {
@@ -44,10 +109,11 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
     public function onDataAddAfter ($iAccountId, $iContentId)
     {
-        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
+        if($s = parent::onDataAddAfter($iAccountId, $iContentId))
             return $s;
 
-        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName())))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
+        if(!$oGroupProfile)
             return '';
 
         $this->makeAuthorAdmin ($oGroupProfile, bx_get('initial_members'));
@@ -59,16 +125,33 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
     {
-        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm))
+        if($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm))
             return $s;
 
-        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName())))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
+        if(!$oGroupProfile)
             return ''; 
 
         $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
 
         return '';
     }
+
+    public function onDataInviteBefore ($iContentId, $aContentInfo)
+    {
+        return '';
+    }
+
+    public function onDataInviteAfter ($iContentId, $aContentInfo)
+    {
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
+        if(!$oGroupProfile)
+            return '';
+
+        $this->inviteMembers($oGroupProfile, bx_get('initial_members'));
+
+        return '';
+    }   
     
     protected function redirectAfterEdit($aContentInfo)
     {
