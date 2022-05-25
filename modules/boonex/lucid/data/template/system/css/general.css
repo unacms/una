@@ -82,11 +82,9 @@
 .cd-logo img {
   display: block;
 }
-@media only screen and (min-width: 720px) {
-  .cd-logo {
+:where(.bx-media-tablet, .bx-media-desktop) .cd-logo {
     margin: 16px 0 0 36px;
   }
-}
 
 .cd-nav-trigger {
   /* navigation trigger - visible on mobile devices only */

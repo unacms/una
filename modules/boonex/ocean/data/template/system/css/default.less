@@ -1,3 +1,16 @@
+@import '../../../../../../../template/css/_mixins.less';
+
+.@{bx-root-class-name}.bx-def-font {
+    font-family:@bx-font-family;
+    font-weight:400; /* 26.13.13: prev val 300 */
+    .font-size(@bx-font-size-default);
+    color:@bx-font-color-default;
+}
+
+.@{bx-root-class-name}.bx-def-color-bg-page {
+    .background-color (@bx-color-page);
+}
+
 .@{bx-root-class-name}{
     @import '../../../../../../../template/css/default.less';
 
