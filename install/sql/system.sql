@@ -349,7 +349,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_notify_to_approve_by_role', '_adm_stg_cpt_option_sys_notify_to_approve_by_role', '', 'checkbox', '', '', '', '', 160),
 
-(@iCategoryId, 'sys_fixed_header', '_adm_stg_cpt_option_sys_fixed_header', '', 'checkbox', '', '', '', '', 170);
+(@iCategoryId, 'sys_fixed_header', '_adm_stg_cpt_option_sys_fixed_header', '', 'checkbox', '', '', '', '', 170),
+
+(@iCategoryId, 'sys_css_media_classes', '_adm_stg_cpt_option_sys_css_media_classes', '{"phone":"(max-width:720px)","phone2":"(min-width:533px) and (max-width:720px)","tablet":"(min-width:720px) and (max-width:1280px)","tablet2":"(min-width:1024px) and (max-width:1280px)","desktop":"(min-width:1280px)"}', 'digit', '', '', '', '', 180);
 
 --
 -- CATEGORY (HIDDEN): System

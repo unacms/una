@@ -1752,6 +1752,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                         $sRet .= ' dark';
                 }
                 break;
+			case 'css_media_phone':
+			case 'css_media_phone2':
+			case 'css_media_tablet':
+			case 'css_media_tablet2':
+			case 'css_media_desktop':
+                $aData = json_decode(getParam('sys_css_media_classes'), true);
+				$sKey = str_replace('css_media_', '', $sKey);
+                $sRet = $aData[$sKey];
+                break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
         }

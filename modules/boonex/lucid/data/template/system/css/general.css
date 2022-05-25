@@ -69,12 +69,10 @@
   content: "";
   display: table;
 }
-@media only screen and (min-width: 720px) {
-  .cd-main-header {
+:where(.bx-media-tablet, .bx-media-desktop) .cd-main-header {
     position: fixed;
     height: 55px;
   }
-}
 
 .cd-logo {
   float: left;
@@ -176,18 +174,14 @@
   -o-transform: translateX(4px) translateY(2px) rotate(-45deg);
   transform: translateX(4px) translateY(2px) rotate(-45deg);
 }
-@media only screen and (min-width: 720px) {
-  .cd-nav-trigger {
+:where(.bx-media-tablet, .bx-media-desktop) .cd-nav-trigger {
     display: none;
   }
-}
 
 
 /*--- Top Navigation ---*/
-@media only screen and (min-width: 720px) {
-  .cd-nav {
+:where(.bx-media-tablet, .bx-media-desktop) .cd-nav {
     display: block;
-  }
 }
 
 

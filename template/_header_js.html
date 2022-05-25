@@ -17,11 +17,11 @@
         window.location.reload();
     })(window);
 
-    var oMediaPhone = window.matchMedia('(max-width:720px)');
-    var oMediaPhone2 = window.matchMedia('(min-width:533px) and (max-width:720px)');
-    var oMediaTablet = window.matchMedia('(min-width:720px) and (max-width:__page_width__)');
-    var oMediaTablet2 = window.matchMedia('(min-width:533px) and (max-width:__page_width__)');
-    var oMediaDesktop = window.matchMedia('(min-width:__page_width__)');
+    var oMediaPhone = window.matchMedia('__css_media_phone__');
+    var oMediaPhone2 = window.matchMedia('__css_media_phone2__');
+    var oMediaTablet = window.matchMedia('__css_media_tablet__');
+    var oMediaTablet2 = window.matchMedia('__css_media_tablet2__');
+    var oMediaDesktop = window.matchMedia('__css_media_desktop__');
 
     function fMediaCallback(e) {
         if (oMediaPhone.matches)
