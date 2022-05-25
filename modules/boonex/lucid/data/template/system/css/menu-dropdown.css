@@ -137,13 +137,9 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
   z-index: 1;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.cd-dropdown h2,
-.cd-dropdown h2 .sys-icon {
-	color: rgba(255,255,255,1);
-}
 .cd-dropdown h2 img {
-	height: 2rem;
-	margin: 0.5625rem 0;
+    height: 2rem;
+    margin: 0.5625rem 0;
 }
 .cd-dropdown .cd-close {
   /* 'X' close icon - mobile version only */
@@ -244,7 +240,8 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
     right: 0;
     left: auto;
   }
-:where(.bx-media-tablet2, .bx-media-desktop) .cd-dropdown h2, .cd-dropdown .cd-close {
+:where(.bx-media-tablet2, .bx-media-desktop) .cd-dropdown h2, 
+:where(.bx-media-tablet2, .bx-media-desktop) .cd-dropdown .cd-close {
     /* on desktop - hide title and 'X' */
     display: none;
   }

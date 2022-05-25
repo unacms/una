@@ -1,7 +1,7 @@
 @import (reference) 'default.less';
 @import '../../../../../../../template/css/menu.css';
 
-.@{bx-root-class-name}{
+.@{bx-root-class-name} {
     
     .bx-menu-toolbar-padding {
         padding-top: 0;
@@ -32,8 +32,6 @@
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li:hover {
         opacity: 1.0;
     }
-
-
 
     .bx-sliding-smenu-submenu {
         position: absolute;
@@ -111,13 +109,6 @@
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li.bx-sliding-smenu-tab-active .bx-menu-floating-blocks-arrow .sys-icon.inactive {
         display: none;
     }
-
-    
-
-
-ul.bx-menu-toolbar li a .bx-menu-item-addon {
-	bottom: auto;
-}
 
 
     /*--- Submenu ---*/
@@ -224,6 +215,10 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
         font-size: 1.0rem;
     }
 
+    ul.bx-menu-toolbar li a .bx-menu-item-addon {
+        bottom: auto;
+    }
+
 
     /*--- Toolbar Site ---*/
     #bx-menu-toolbar-1-container .bx-menu-toolbar li {
@@ -318,8 +313,6 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     }
 
     /*--- Account Popup ---*/
-	
-	
     #bx-sliding-menu-account.bx-sliding-menu-main.bx-sliding-menu-fullheight {
         height: calc(100% - 3.75rem);
     }
@@ -387,8 +380,6 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     }
 
     /*--- Add Content Menu ---*/
-    
-
     #bx-sliding-menu-sys_add_content.bx-sliding-menu-main .bx-menu-object-sys_add_content {
         display: block;
         width: 100%;
@@ -542,115 +533,116 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     }
 }
 
-:where(.bx-media-tablet, .bx-media-desktop) .@{bx-root-class-name}{
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main {
-		position: relative;
-		height: 2.125rem;
-	}
+:where(.bx-media-tablet, .bx-media-desktop) .@{bx-root-class-name} {
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main {
+        position: relative;
+        height: 2.125rem;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-sliding-menu-main-cnt {
-		position: absolute;
-		width: 100%;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-sliding-menu-main-cnt {
+        position: absolute;
+        width: 100%;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site {
-		position: relative;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-align-items: center;
-		align-items: center;
-		height: 100%;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site {
+        position: relative;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        height: 100%;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
-		position: relative;
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
+        position: relative;
 
-		height: 2.125rem;
-		border: 1px solid transparent;
-		border-radius: 0.5rem;
-	}
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li:not(.bx-menu-item-more-auto) {
-		display: block;
-	}
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li > a {
-		position: relative;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-align-items: center;
-		align-items: center;
-		height: 100%;
-	}
+        height: 2.125rem;
+        border: 1px solid transparent;
+        border-radius: 0.5rem;
+    }
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li:not(.bx-menu-item-more-auto) {
+        display: block;
+    }
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li > a {
+        position: relative;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        height: 100%;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-menu-floating-blocks-line {
-		position: absolute;
-		display: none;
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-menu-floating-blocks-line {
+        position: absolute;
+        display: none;
 
-		top: 0px;
-		left: 0px;
-		width: 100%;
-		height: 0.1875rem;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 0.1875rem;
 
-		-webkit-border-radius: 0.25rem;
-		border-radius: 0.25rem;
-		background-color: rgba(255, 255, 255, 1.0);
-	}
+        -webkit-border-radius: 0.25rem;
+        border-radius: 0.25rem;
+        background-color: rgba(255, 255, 255, 1.0);
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-sliding-smenu-submenu ul,
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-sliding-smenu-submenu ul li{
-		display: block; 
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-sliding-smenu-submenu ul,
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-sliding-smenu-submenu ul li{
+        display: block; 
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li:hover,
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li.bx-menu-tab-active:hover {
-		border: 1px solid rgba(0, 0, 0, 0.05);
-		background-color: rgba(0, 0, 0, 0.05);
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li:hover,
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li.bx-menu-tab-active:hover {
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        background-color: rgba(0, 0, 0, 0.05);
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li.bx-menu-tab-active {
-		border-color: transparent;
-		background-color: transparent;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li.bx-menu-tab-active {
+        border-color: transparent;
+        background-color: transparent;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li:hover .bx-sliding-smenu-submenu {
-		display: block;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li:hover .bx-sliding-smenu-submenu {
+        display: block;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li:hover .bx-menu-floating-blocks-arrow .sys-icon.active {
-		display: inline;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li:hover .bx-menu-floating-blocks-arrow .sys-icon.active {
+        display: inline;
+    }
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li:hover .bx-menu-floating-blocks-arrow .sys-icon.inactive {
-		display: none;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li:hover .bx-menu-floating-blocks-arrow .sys-icon.inactive {
+        display: none;
+    }
 
-	#bx-sliding-menu-account.bx-sliding-menu-main {
-		left: auto !important;
-		right: 0px !important;
-		width: auto !important;
-	}
-	#bx-sliding-menu-sys_add_content.bx-sliding-menu-main {
-		left: auto !important;
-		right: 0px !important;
-		width: auto !important;
-	}
+    #bx-sliding-menu-account.bx-sliding-menu-main {
+        left: auto !important;
+        right: 0px !important;
+        width: auto !important;
+    }
+    #bx-sliding-menu-sys_add_content.bx-sliding-menu-main {
+        left: auto !important;
+        right: 0px !important;
+        width: auto !important;
+    }
 }
-.bx-media-phone .@{bx-root-class-name}{
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
-	   height: auto;
-	}
+.bx-media-phone .@{bx-root-class-name} {
 
-	#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-sliding-sms-cnt {
-	   padding: 0px 0px 0px 1.7rem;
-	}
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
+       height: auto;
+    }
 
-	.bx-sliding-smenu-submenu {
-		position: relative;
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li .bx-sliding-sms-cnt {
+       padding: 0px 0px 0px 1.7rem;
+    }
 
-		top: 0px;
-		left: 0px;
+    .bx-sliding-smenu-submenu {
+        position: relative;
 
-		background-color: #transparent;
-		box-shadow: none;
-	}	
+        top: 0px;
+        left: 0px;
+
+        background-color: #transparent;
+        box-shadow: none;
+    }
 }
