@@ -42,7 +42,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     public function performActionDelete($aParams = array())
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         $iAffected = 0;
         $aIds = bx_get('ids');
@@ -53,17 +53,17 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
-			$aContentInfo = $this->_getContentInfo($iId);
-	    	if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
-	    		continue;
-
-        	if(!$this->_doDelete($iId, $aParams))
+            $aContentInfo = $this->_getContentInfo($iId);
+            if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
                 continue;
 
-			if(!$this->_onDelete($iId, $aParams))
-				continue;
+            if(!$this->_doDelete($iId, $aParams))
+                continue;
 
-			$this->_oModule->checkAllowedDelete($aContentInfo, true);
+            if(!$this->_onDelete($iId, $aParams))
+                continue;
+
+            $this->_oModule->checkAllowedDelete($aContentInfo, true);
 
             $aIdsAffected[] = $iId;
             $iAffected++;
@@ -276,7 +276,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     protected function _onDelete($iId, $aParams = array())
     {
-    	return false;
+    	return true;
     }
 
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
