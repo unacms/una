@@ -16,9 +16,6 @@ class BxXeroConfig extends BxBaseModGeneralConfig
     protected $_oSession;
     protected $_sSessionKey;
 
-    protected $_bLog;
-    protected $_oLog;
-
     protected $_sClientId;
     protected $_sClientSecret;
     protected $_sRedirectUrl;
@@ -32,12 +29,6 @@ class BxXeroConfig extends BxBaseModGeneralConfig
 
         $this->_oSession = BxDolSession::getInstance();
         $this->_sSessionKey = 'bx_xero_session';
-
-        $this->_bLog = true;
-        if($this->_bLog) {
-            $this->_oLog = BxDolLog::getInstance();
-            $this->_oLog->setName('xero');
-        }
 
         $this->_sAuthorizeUrl = BX_DOL_URL_STUDIO . bx_append_url_params('module.php', ['name' => $this->getName(), 'page' => 'authorize']);
 
@@ -72,14 +63,6 @@ class BxXeroConfig extends BxBaseModGeneralConfig
         $this->_oDb = &$oDb;
 
         //NOTE: Some settings can be inited here.
-    }
-
-    public function getObjectLog()
-    {
-        if(!$this->_bLog)
-            return false;
-
-        return $this->_oLog;
     }
 
     public function getClientId()

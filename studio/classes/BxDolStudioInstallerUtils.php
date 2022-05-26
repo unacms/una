@@ -53,10 +53,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $this->bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
 
         $this->sAuthorizedAccessClass = 'BxDolStudioOAuthOAuth2';
-        $this->sStoreDataUrlPublic = BX_DOL_MARKET_URL_INTEGRATION;
-
-        $this->_oLog = BxDolLog::getInstance();
-        $this->_oLog->setName('upgrade_modules');
+        $this->sStoreDataUrlPublic = BX_DOL_MARKET_URL_INTEGRATION;        
     }
 
     /**
@@ -265,7 +262,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if(empty($aConfig) || !file_exists($sPathInstaller)) {
             $sMessage = _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory);
 
-            $this->writeLog($sMessage, $aParams);
+            bx_log('sys_modules', ":\n[" . $sOperation . "] Operation failed: " . $this->getModuleTitle($aParams) . "\n" . strip_tags($sMessage));
+            
             if($bTransient)
                 $this->emailNotify($sMessage, $aParams);
 
@@ -279,7 +277,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aResult = $oInstaller->$sOperation($aParams);
 
         if(!$aResult['result']) {
-            $this->writeLog($aResult['message'], $aParams);
+            bx_log('sys_modules', ":\n[" . $sOperation . "] Operation failed: " . $this->getModuleTitle($aParams) . "\n" . strip_tags($aResult['message']));
 
             if($bTransient)
                 $this->emailNotify($aResult['message'], $aParams);
@@ -315,7 +313,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aFailed = array();
         $aUpdates = $this->checkUpdates();
         if(empty($aUpdates) || !is_array($aUpdates)) {
-            $this->_oLog->write('Cannot get a list of modules which require to be updated.');
+            bx_log('sys_modules', ":\n[upgrade] Cannot get a list of modules which require to be updated.");
             return true;
         }
 
@@ -330,7 +328,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aSuccess = array();
         $aUpdates = $this->getUpdates();
         if(empty($aUpdates) || !is_array($aUpdates)) {
-            $this->_oLog->write('Cannot find update scripts for modules. They are damaged or were not downloaded.');
+            bx_log('sys_modules', ":\n[upgrade] Cannot find update scripts for modules. They are damaged or were not downloaded.");
             return true;
         }
 
@@ -353,14 +351,20 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         }
 
         if(!empty($aFailed)) {
-            $this->_oLog->write('Failed to update modules:', $aFailed);
+            bx_log('sys_modules', [
+                ":\n[upgrade] Failed to update modules:",
+                $aFailed
+            ]);
 
             if($bTransient)
                 $this->emailNotifyModulesUpgrade('failed', $aFailed);
         }
 
         if(!empty($aSuccess)) {
-            $this->_oLog->write('Successfully updated modules:', $aSuccess);
+            bx_log('sys_modules', [
+                ":\n[upgrade] Successfully updated modules:",
+                $aSuccess
+            ]);
 
             if($bTransient)
                 $this->emailNotifyModulesUpgrade('success', $aSuccess);
@@ -483,7 +487,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         @unlink($sFilePath);
         if($mixedResult !== true) {
-            $this->writeLog($mixedResult, $aParams);
+            bx_log('sys_modules', ":\n[download] Operation failed: " . $this->getModuleTitle($aParams) . "\n" . $mixedResult);
+
             if($bTransient)
                 $this->emailNotify($mixedResult, $aParams);
 
@@ -496,7 +501,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         @bx_rrmdir($sPackagePath);
         if($mixedResult !== true) {
-            $this->writeLog($mixedResult, $aParams);
+            bx_log('sys_modules', ":\n[download] Operation failed: " . $this->getModuleTitle($aParams) . "\n" . $mixedResult);
+
             if($bTransient)
                 $this->emailNotify($mixedResult, $aParams);
 
@@ -715,11 +721,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             return true;
 
         return false;
-    }
-
-    private function writeLog($sMessage, $aParams = array())
-    {
-        $this->_oLog->write('Operation failed:', $this->getModuleTitle($aParams) . $sMessage);
     }
 
     private function emailNotify($sMessage, $aParams = array())

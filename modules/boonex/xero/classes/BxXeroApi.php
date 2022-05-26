@@ -19,14 +19,12 @@ use XeroAPI\XeroPHP\AccountingObjectSerializer;
 class BxXeroApi extends BxDol
 {
     protected $_oModule;
-    protected $_oLog;
 
     protected $_oProvider;
 
     public function __construct(&$oModule)
     {
         $this->_oModule = $oModule;
-        $this->_oLog = $this->_oModule->_oConfig->getObjectLog();
     }
 
     public function authorize()
@@ -99,7 +97,7 @@ class BxXeroApi extends BxDol
             return $this->_oModule->_oConfig->getAuthorizeUrl(0);
         }
         catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $oException) {
-            $this->_oLog->write('Callback failed: ', $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Callback failed: " . $oException->getMessage());
             return false;
         }
     }
@@ -148,7 +146,7 @@ class BxXeroApi extends BxDol
             }
         }
         catch (Exception $oException) {
-            $this->_oLog->write('Add Contact: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Add Contact: " . $oException->getMessage());
         }
 
         return $mixedResult;
@@ -169,7 +167,7 @@ class BxXeroApi extends BxDol
                 $mixedResult = $oXeroResponse->getContacts()[0];
         }
         catch (Exception $oException) {
-            $this->_oLog->write('Get Contact: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Get Contact: " . $oException->getMessage());
         }
 
         return $mixedResult;
@@ -201,7 +199,7 @@ class BxXeroApi extends BxDol
                 $mixedResult = $oXeroResponse->getContacts();
         }
         catch (Exception $oException) {
-            $this->_oLog->write('Get Contacts: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Get Contacts: " . $oException->getMessage());
         }
 
         return $mixedResult;
@@ -299,7 +297,7 @@ class BxXeroApi extends BxDol
                 $mixedResult = $oXeroResponse->getInvoices()[0]->getInvoiceId();
         }
         catch (Exception $oException) {
-            $this->_oLog->write('Add Invoice: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Add Invoice: " . $oException->getMessage());
         }
 
         return $mixedResult;
@@ -323,7 +321,7 @@ class BxXeroApi extends BxDol
                 $mixedResult = $oXeroResponse->getInvoices();
         }
         catch (Exception $oException) {
-            $this->_oLog->write('Get Invoices: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Get Invoices: " . $oException->getMessage());
         }
 
         return $mixedResult;
@@ -344,7 +342,7 @@ class BxXeroApi extends BxDol
                 $mixedResult = $oXeroResponse->getInvoices()[0];
         }
         catch (Exception $oException) {
-            $this->_oLog->write('Get Invoice: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Get Invoice: " . $oException->getMessage());
         }
 
         return $mixedResult;
@@ -365,7 +363,7 @@ class BxXeroApi extends BxDol
             $oXeroApi->emailInvoice($sTenantId, $sInvoiceId, $oRequestEmpty);            
         } 
         catch (Exception $oException) {
-            $this->_oLog->write('Send Invoice: ' . $oException->getMessage());
+            bx_log($this->_oModule->getName(), ":\n[API] Send Invoice: " . $oException->getMessage());
             $bResult = false;
         }
 
@@ -391,12 +389,12 @@ class BxXeroApi extends BxDol
     {
         $sTenantId = $this->_oModule->_oConfig->getTenantId();
         if($sTenantId === false) {
-            $this->_oLog->write('Fetch failed: Empty Tenant ID.');
+            bx_log($this->_oModule->getName(), ":\n[API] Fetch failed: Empty Tenant ID.");
             return false;
         }
 
         if(!$this->isAuthorized()) {
-            $this->_oLog->write('Fetch failed: Unauthorized access.');
+            bx_log($this->_oModule->getName(), ":\n[API] Fetch failed: Unauthorized access.");
             return false;
         }
 

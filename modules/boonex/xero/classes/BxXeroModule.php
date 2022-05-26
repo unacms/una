@@ -26,8 +26,6 @@ class BxXeroModule extends BxDolModule
 
         bx_import('Api', $aModule);
         $this->_oApi = new BxXeroApi($this);
-
-        $this->_oLog = $this->_oConfig->getObjectLog();
     }
 
     /**
@@ -70,7 +68,7 @@ class BxXeroModule extends BxDolModule
         $sSignatureReceived = isset($_SERVER['HTTP_X_XERO_SIGNATURE']) ? $_SERVER['HTTP_X_XERO_SIGNATURE'] : '';
 
         if(!hash_equals($sSignatureComputed, $sSignatureReceived)) {
-            @$this->_oLog->write('Get Webhook: Wrong Signature', $sSignatureComputed, $sSignatureReceived);
+            bx_log($this->getName(), ":\n[Core] Get Webhook: Wrong Signature (" . $sSignatureComputed . ", " . $sSignatureReceived . ")");
             http_response_code(401);
             return;
         }
@@ -199,7 +197,10 @@ class BxXeroModule extends BxDolModule
         $oInvoice = $this->_oApi->actionGetInvoice($sId);
         $aInvoice = $this->_getInvoiceData($oInvoice);
 
-        $this->_oLog->write('Create Invoice: ' . $sId, $aInvoice);
+        bx_log($this->getName(), [
+            ":\n[Core] Create Invoice: " . $sId,
+            $aInvoice
+        ]);
 
         bx_alert($this->_oConfig->getName(), 'invoice_created', 0, 0, array(
             'id' => $sId,
@@ -212,7 +213,10 @@ class BxXeroModule extends BxDolModule
         $oInvoice = $this->_oApi->actionGetInvoice($sId);
         $aInvoice = $this->_getInvoiceData($oInvoice);
 
-        $this->_oLog->write('Update Invoice: ' . $sId, $aInvoice);
+        bx_log($this->getName(), [
+            ":\n[Core] Update Invoice: " . $sId,
+            $aInvoice
+        ]);
 
         bx_alert($this->_oConfig->getName(), 'invoice_updated', 0, 0, array(
             'id' => $sId,
