@@ -55,20 +55,31 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         }
 
         $sBaseUri = $this->_oConfig->getBaseUri();
-        $aParams = array_merge(array(
+        $aParams = array_merge([
             'sActionUri' => $sBaseUri,
             'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
             'sObjName' => $sJsObject,
-            'aHtmlIds' => array(),
-            'oRequestParams' => array()
-        ), $aParams);
+            'aHtmlIds' => [],
+            'oRequestParams' => []
+        ], $aParams);
 
-        $sContent = bx_replace_markers($sMask, array_merge(array(
-            'var' => 'var',
-            'object' => $sJsObject, 
-            'class' => $sJsClass,
-            'params' => json_encode($aParams)
-        ), $aMaskMarkers));
+        $sContent = false;
+        bx_alert('system', 'get_js_code', 0, 0, [
+            'mask' => &$sMask,
+            'mask_markers' => &$aMaskMarkers,
+            'object' => &$sJsObject,
+            'class' => &$sJsClass,
+            'params' => &$aParams,
+            'override_result' => &$sContent,
+        ]);
+
+        if($sContent !== false)
+            $sContent = bx_replace_markers($sMask, array_merge([
+                'var' => 'var',
+                'object' => $sJsObject, 
+                'class' => $sJsClass,
+                'params' => json_encode($aParams)
+            ], $aMaskMarkers));
 
         return ($mixedWrap === true || (is_array($mixedWrap) && isset($mixedWrap['wrap']) && $mixedWrap['wrap'] === true)) ? $this->_wrapInTagJsCode($sContent) : $sContent;
     }

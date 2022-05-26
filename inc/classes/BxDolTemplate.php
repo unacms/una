@@ -2615,6 +2615,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
             switch($sAction) {
                 case 'add':
+                    bx_alert('system', 'add_files', 0, 0, [
+                        'file' => $sFile,
+                        'type' => $sType,
+                        'dynamic' => $bDynamic,
+                        'system' => $bSystem,
+                        'url' => &$sUrl,
+                        'path' => &$sPath,
+                    ]);
+
                     if($bDynamic)
                         $sResult .= $this->$sMethodWrap(bx_append_url_params($sUrl, array(
                             'rev' => $iRev
