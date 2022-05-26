@@ -539,7 +539,7 @@ class BxInvModule extends BxDolModule
        );
     }
 
-    protected function onInvite($iProfileId)
+    public function onInvite($iProfileId)
     {
         $this->isAllowedInvite($iProfileId, true);
 
@@ -548,7 +548,7 @@ class BxInvModule extends BxDolModule
         //--- Event -> Invite for Alerts Engine ---//
     }
     
-    protected function getJoinLink($sKey)
+    public function getJoinLink($sKey)
     {
         $sKeyCode = $this->_oConfig->getKeyCode();
 
@@ -556,7 +556,7 @@ class BxInvModule extends BxDolModule
         return bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey));
     }
     
-    protected function getSeenImageUrl($sKey)
+    public function getSeenImageUrl($sKey)
     {
         return  BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'SetSeenMark/' . $sKey . "/";
     }
