@@ -244,9 +244,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $this->_sBrowseFilter = $mixedUserBpFilter;
 
         $this->_sViewUrl = BX_DOL_URL_ROOT . 'page.php?i=cmts-view';
-        $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
-        if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
-            $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
+        $this->_sBaseUrl = $this->_aSystem['base_url'];
+
         $this->_sListAnchor = "cmts-anchor-%s-%d";
         $this->_sItemAnchor = "cmt-anchor-%s-%d-%d";
 
@@ -484,7 +483,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function getBaseUrl()
     {
-        return $this->_replaceMarkers($this->_sBaseUrl);
+        $sUrl = $this->_replaceMarkers($this->_sBaseUrl);
+        $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
+        if(get_mb_substr($sUrl, 0, 6) != 'http:/' && get_mb_substr($sUrl, 0, 7) != 'https:/')
+            $sUrl = BX_DOL_URL_ROOT . $sUrl;
+        return $sUrl;
     }
 
     public function getListUrl()
