@@ -668,7 +668,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                     if (oItem.kind === 'file')
                         aFiles.push(oItem.getAsFile());
                 }
-                $this._uploader.handleFiles(aFiles);
+                $this._uploader.addFiles(aFiles);
             }
         });
     }
