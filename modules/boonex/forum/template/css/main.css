@@ -525,6 +525,14 @@
 .bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3) ~ .bx-forum-unit {
     width: 33.3333%;
 }
+.bx-media-tablet .bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3),
+.bx-media-tablet .bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3) ~ .bx-forum-unit {
+    width: 50%;
+}
+.bx-media-phone .bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3),
+.bx-media-phone .bx-base-unit-showcase-wrapper .bx-forum-unit:first-child:nth-last-child(3) ~ .bx-forum-unit {
+    width: 100%;
+}
 
 .bx-forum-grid .sys-action-counter-label.bx-score-counter-label{
 	padding: 0px !important;
