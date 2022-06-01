@@ -24,6 +24,10 @@
 
     <!-- Other -->
     <string name="_bx_artificer_txt_close_sidebar"><![CDATA[Close sidebar]]></string>
+	
+	<string name="_bx_artificer_txt_color_scheme_light"><![CDATA[Light]]></string>
+	<string name="_bx_artificer_txt_color_scheme_dark"><![CDATA[Dark]]></string>
+	<string name="_bx_artificer_txt_color_scheme_system"><![CDATA[System]]></string>
 
     <string name="_bx_artificer_txt_splash_welcome_l1"><![CDATA[Welcome to]]></string>
     <string name="_bx_artificer_txt_splash_welcome_l2"><![CDATA[the community]]></string>
