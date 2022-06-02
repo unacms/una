@@ -69,7 +69,7 @@ class BxDolLogsStorageFolder extends BxDolFactory implements iBxDolSingleton
         $s .= ' [' . (int)bx_get_logged_profile_id() . '] ';
 
         if (!empty($_SERVER['REQUEST_URI']))
-            $s .= $_SERVER['REQUEST_URI'] . (!empty($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '');
+            $s .= $_SERVER['REQUEST_URI'];
         elseif (defined('BX_DOL_CRON_EXECUTE'))
             $s .= 'CRON';
         else

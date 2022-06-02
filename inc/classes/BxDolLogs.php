@@ -23,6 +23,9 @@
  * - class_name: user defined class name which is derived from BxDolLogs.
  * - class_file: the location of the user defined class, leave it empty if class is located in system folders.
  * 
+ * It's also possible to not add record to sys_objects_logs table, 
+ * then it will use default settings for logging.
+ *
  * @section example Example of usage
  *
  * Log data to the logs object
