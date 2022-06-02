@@ -488,6 +488,11 @@ class BxCnvModule extends BxBaseModTextModule
     {
     	return _t('_sys_txt_access_denied');
     }
+	
+	public function checkAllowedDeleteAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+        return _t('_sys_txt_access_denied');
+    }
 
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {       
