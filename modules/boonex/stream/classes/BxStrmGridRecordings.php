@@ -92,7 +92,7 @@ class BxStrmGridRecordings extends BxTemplGrid
             $s = BxTemplFunctions::getInstance()->popupBox(
                 'bx_stream_popup',
                 _t('_Error'),
-                MsgBox($sErrorMsg),
+                MsgBox($sErrorMsg)
             );
             $a = ['popup' => $s];
         } 
