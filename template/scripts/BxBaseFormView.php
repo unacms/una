@@ -842,6 +842,8 @@ BLAH;
         if ($isOneLine) {
             $sClassOneLineCaption = ' bx-form-caption-oneline bx-form-caption-oneline-' . $aInput['type'] . ' bx-def-margin-sec-left';
             $sClassOneLineValue = ' bx-form-value-oneline bx-form-value-oneline-' . $aInput['type'];
+            if (!isset($aInput['attrs']) || !is_array($aInput['attrs']))
+                $aInput['attrs'] = [];
             $aInput['attrs']['id'] = $this->getInputId($aInput);
             if ($sCaption)
                 $sCaption = '<label for="' . $aInput['attrs']['id'] . '">' . $sCaption . '</label>';

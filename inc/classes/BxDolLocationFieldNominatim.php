@@ -65,7 +65,9 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
                 $aInputField = $aInput;
                 $aInputField['name'] = $aInput['name'] . '_' . $sKey;
                 $aInputField['type'] = $a['type'];
-                $aInputField['value'] = $this->getLocationVal($aInput, $sKey, $oForm);            
+                $aInputField['value'] = $this->getLocationVal($aInput, $sKey, $oForm);
+                if (!isset($aInputField['attrs']) || !is_array($aInputField['attrs']))
+                    $aInputField['attrs'] = [];
                 $aInputField['attrs']['placeholder'] = empty($a['ph']) ? '' : _t($a['ph']);
                 if (isset($aInputField['attrs']['class']))
                     $aInputField['attrs']['class'] .= ' bx-form-input-location-' . $sKey;
