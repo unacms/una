@@ -13,8 +13,11 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
 {    
     public function __construct($sMode = '', $aParams = array())
     {
-        if (!isset($aParams['unit_views']))
+        if (!isset($aParams['unit_views'])) {
+            if (!is_array($aParams))
+                $aParams = [];
             $aParams['unit_views'] = array('gallery' => 'unit.html', 'showcase' => 'unit_with_cover_showcase.html');
+        }
         parent::__construct($sMode, $aParams);
     }
 

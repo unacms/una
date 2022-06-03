@@ -830,8 +830,11 @@ BLAH;
             $sClassWrapper .= ' ' . $sClassWrapper . '-oneline';
         $sClassWrapper .= ' bx-def-margin-top-auto';
 
-        if (isset($aInput['name']))
+        if (isset($aInput['name'])) {
+            if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))
+                $aInput['tr_attrs'] = [];
             $aInput['tr_attrs']['id'] = "bx-form-element-" . $aInput['name'];
+        }
         $sTrAttrs = bx_convert_array2attrs(isset($aInput['tr_attrs']) && is_array($aInput['tr_attrs']) ? $aInput['tr_attrs'] : array(), $sClassWrapper);
 
         $sClassOneLineCaption = '';
@@ -921,8 +924,11 @@ BLAH;
         $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);
         $sInput = $this->$sCustomMethod($aInput, $sInfoIcon, $sErrorIcon);
 
-        if (isset($aInput['name']))
+        if (isset($aInput['name'])) {
+            if (!isset($aInput['tr_attrs']) || !is_array($aInput['tr_attrs']))
+                $aInput['tr_attrs'] = [];
             $aInput['tr_attrs']['id'] = "bx-form-element-" . $aInput['name'];
+        }
         $sTrAttrs = bx_convert_array2attrs(empty($aInput['tr_attrs']) ? array() : $aInput['tr_attrs'], "bx-form-element-wrapper bx-def-margin-top");
 
         return $this->oTemplate->parseHtmlByName('form_row_custom.html', array(

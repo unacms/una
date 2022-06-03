@@ -1682,7 +1682,7 @@ function bx_replace_markers($mixed, $aMarkers)
             $mixed[$sKey] = bx_replace_markers ($sValue, $aMarkers);
     } else {
         foreach ($aMarkers as $sKey => $sValue)
-            $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
+            $mixed = str_replace('{' . $sKey . '}', is_null($sValue) ? '' : $sValue, $mixed);
     }
 
     return $mixed;

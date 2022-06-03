@@ -147,6 +147,8 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
         if(!empty($aHistory) && isset($aHistory[$aPage['name']]))
             return;
 
+        if (!is_array($aHistory))
+            $aHistory = [];
         $aHistory[$aPage['name']] = array(
             'name' => $aPage['name'],
             'icon' => $aPage['wid_icon'],
