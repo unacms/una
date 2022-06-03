@@ -19,9 +19,11 @@ class BxPersonsFormEntry extends BxBaseModProfileFormEntry
         $this->MODULE = 'bx_persons';
         parent::__construct($aInfo, $oTemplate);
 
-        if (isset($this->aInputs['birthday']))
+        if (isset($this->aInputs['birthday'])) {
+            if (!isset($this->aInputs['birthday']['attrs']) || !is_array($this->aInputs['birthday']['attrs']))
+                $this->aInputs['birthday']['attrs'] = [];
             $this->aInputs['birthday']['attrs']['max'] = date('Y');
-        
+        }
     }
 }
 
