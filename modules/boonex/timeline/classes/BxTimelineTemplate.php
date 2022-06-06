@@ -2629,7 +2629,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         foreach($aImages as $aImage) {
             $sImageSrcKeyCur = $sImageSrcKey;
-            if($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst)
+            if(($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst) || $iTotal == 2)
                 $sImageSrcKeyCur = $sImageSrcKeyBig;
 
             $sImageSrc = !empty($aImage[$sImageSrcKeyCur]) ? $aImage[$sImageSrcKeyCur] : $aImage[$sImageSrcKeyDefault];
