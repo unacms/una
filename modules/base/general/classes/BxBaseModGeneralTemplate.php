@@ -73,7 +73,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'override_result' => &$sContent,
         ]);
 
-        if($sContent !== false)
+        if($sContent === false)
             $sContent = bx_replace_markers($sMask, array_merge([
                 'var' => 'var',
                 'object' => $sJsObject, 

@@ -2629,7 +2629,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         foreach($aImages as $aImage) {
             $sImageSrcKeyCur = $sImageSrcKey;
-            if($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst)
+            if(($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst) || $iTotal == 2)
                 $sImageSrcKeyCur = $sImageSrcKeyBig;
 
             $sImageSrc = !empty($aImage[$sImageSrcKeyCur]) ? $aImage[$sImageSrcKeyCur] : $aImage[$sImageSrcKeyDefault];
@@ -2756,7 +2756,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 else {
                     $bUrl = !empty($aVideo['url']);
                     $sUrl = $bUrl ? $aVideo['url'] : '';
-                    
+
+                    $sSrc = $aVideo[isset($aVideo['src'], $aVideo['src_orig']) ? 'src' : 'src_poster'];
+
                     $bDuration = !empty($aVideo['duration']);
                     $sDuration = _t_format_duration($bDuration ? $aVideo['duration'] : 0);
 
@@ -2770,14 +2772,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                                 'content' => array(
                                     'style_prefix' => $sStylePrefix,
                                     'url' => $sUrl,
-                                    'src' => $aVideo['src_poster'],
+                                    'src' => $sSrc,
                                 )
                             ),
                             'bx_if:show_non_link' => array(
                                 'condition' => !$bUrl,
                                 'content' => array(
                                     'style_prefix' => $sStylePrefix,
-                                    'src' => $aVideo['src_poster'],
+                                    'src' => $sSrc,
                                 )
                             ),
                             'bx_if:show_duration' => array(
@@ -2791,9 +2793,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     );
                 }
             }
-                
         }
-
+ 
         return array( 
             'display' => $sDisplay,
             'total' => $iTotal,

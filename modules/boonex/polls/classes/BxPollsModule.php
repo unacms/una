@@ -203,7 +203,7 @@ class BxPollsModule extends BxBaseModTextModule
     {
         if(empty($iAuthorId)) {
             $iAuthorId = bx_get_logged_profile_id();
-            $iAuthorIp = ip2long(getVisitorIP());
+            $iAuthorIp = bx_get_ip_hash(getVisitorIP());
         }
 
         return $this->_oDb->isPerformed($iObjectId, $iAuthorId, $iAuthorIp);

@@ -2174,6 +2174,11 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
     }
 }
 
+function bx_get_ip_hash($sIp)
+{
+    return sprintf("%u", crc32(crc32($sIp) + crc32(BX_DOL_SECRET)));
+}
+
 function is_private_ip ($sIp)
 {
     if (filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) !== $sIp)

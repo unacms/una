@@ -78,6 +78,8 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
+		$iListId = (int)$aParams['list_id'];
+		
         if (!$oProfileAuthor) 
             return false;
 
@@ -86,7 +88,7 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         if(!$oFavorite || (!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())) 
             return false;
 
-        $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
+        $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor, $iListId);
         if(!empty($aConditions) && is_array($aConditions)) {
             if(empty($this->aCurrent['restriction']) || !is_array($this->aCurrent['restriction']))
                 $this->aCurrent['restriction'] = array();

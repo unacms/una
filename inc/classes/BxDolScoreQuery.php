@@ -67,7 +67,7 @@ class BxDolScoreQuery extends BxDolObjectQuery
             $sWhereClause .= " AND `author_id` = :author_id";
         }
         else {
-            $aBindings['author_nip'] = ip2long($sAuthorIp);
+            $aBindings['author_nip'] = bx_get_ip_hash($sAuthorIp);
 
             $sWhereClause .= " AND `author_nip` = :author_nip";
         }
@@ -102,7 +102,7 @@ class BxDolScoreQuery extends BxDolObjectQuery
         if((int)$this->query("INSERT INTO `{$this->_sTableTrack}` SET " . $this->arrayToSQL(array(
             'object_id' => $iObjectId, 
             'author_id' => $iAuthorId, 
-            'author_nip' => ip2long($sAuthorIp), 
+            'author_nip' => bx_get_ip_hash($sAuthorIp), 
             'type' => $sType, 
             'date' => time()
         ))) > 0)

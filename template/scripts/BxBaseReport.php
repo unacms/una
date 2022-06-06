@@ -279,7 +279,7 @@ class BxBaseReport extends BxDolReport
             return array('code' => 2, 'message' => $this->msgErrAllowedReport());
 
         $iAuthorId = $this->_getAuthorId();
-        $iAuthorNip = ip2long($this->_getAuthorIp());
+        $iAuthorNip = bx_get_ip_hash($this->_getAuthorIp());
 
         $iObjectId = $this->_iId;
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
