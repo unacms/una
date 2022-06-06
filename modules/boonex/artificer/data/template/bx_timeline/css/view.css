@@ -233,7 +233,7 @@ div.bx-tl-item-attachment .bx-tl-iv-duration {
 
 
 /*+++ Showcase Layout +++*/
-div.bx-tl-item-attachments.bx-tl-ia-showcase {
+div.bx-tl-view div.bx-tl-item-attachments.bx-tl-ia-showcase {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-wrap: wrap;
@@ -241,18 +241,18 @@ div.bx-tl-item-attachments.bx-tl-ia-showcase {
     -webkit-justify-content: space-between;
     justify-content: space-between;
 }
-div.bx-tl-item-attachments.bx-tl-ia-showcase div.bx-tl-item-attachment {
+div.bx-tl-view div.bx-tl-item-attachments.bx-tl-ia-showcase div.bx-tl-item-attachment {
     box-sizing: border-box;
     width: 33.2%;
     height: 8.5rem;
     border: 1px solid transparent;
 }
-div.bx-tl-item-attachments.bx-tl-ia-showcase div.bx-tl-item-attachment.bx-tl-ia-first,
-div.bx-tl-item-attachments.bx-tl-ia-showcase.bx-tl-ia-i2 div.bx-tl-item-attachment {
+div.bx-tl-view div.bx-tl-item-attachments.bx-tl-ia-showcase div.bx-tl-item-attachment.bx-tl-ia-first,
+div.bx-tl-view div.bx-tl-item-attachments.bx-tl-ia-showcase.bx-tl-ia-i2 div.bx-tl-item-attachment {
     width: 100%;
     height: auto;
 }
-div.bx-tl-item-attachments.bx-tl-ia-showcase.bx-tl-ia-i3 div.bx-tl-item-attachment:not(.bx-tl-ia-first) {
+div.bx-tl-view div.bx-tl-item-attachments.bx-tl-ia-showcase.bx-tl-ia-i3 div.bx-tl-item-attachment:not(.bx-tl-ia-first) {
     width: 50%;
 }
 div.bx-tl-item-attachments.bx-tl-ia-showcase a,
