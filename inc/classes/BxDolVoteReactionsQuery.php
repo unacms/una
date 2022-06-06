@@ -65,7 +65,7 @@ class BxDolVoteReactionsQuery extends BxDolVoteQuery
             return $this->_deleteTrack($iObjectId, $iAuthorId);
 
         $iNow = time();
-        $iAuthorNip = ip2long($sAuthorIp);
+        $iAuthorNip = bx_get_ip_hash($sAuthorIp);
         $sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `reaction` = ?, `value` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, $sReaction, $iValue, $iNow);
         if((int)$this->query($sQuery) > 0)
             return $this->lastId();

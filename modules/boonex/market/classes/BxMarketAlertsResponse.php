@@ -41,7 +41,7 @@ class BxMarketAlertsResponse extends BxBaseModTextAlertsResponse
     		return;
 
     	$oModule->_oDb->updateFile(array('downloads' => $aFile['downloads'] + 1), array('file_id' => $iFile));
-    	$oModule->_oDb->insertDownload($iFile, $oAlert->iSender, ip2long($oAlert->aExtras['profile_ip']));
+    	$oModule->_oDb->insertDownload($iFile, $oAlert->iSender, bx_get_ip_hash($oAlert->aExtras['profile_ip']));
     }
 
     protected function processBxMarketPhotosFileDeleted(&$oAlert)

@@ -102,7 +102,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function insertRepostTrack($iEventId, $iAuthorId, $sAuthorIp, $iRepostedId)
     {
         $iNow = time();
-        $iAuthorNip = ip2long($sAuthorIp);
+        $iAuthorNip = bx_get_ip_hash($sAuthorIp);
         $sQuery = $this->prepare("INSERT INTO `{$this->_sTableRepostsTrack}` SET `event_id` = ?, `author_id` = ?, `author_nip` = ?, `reposted_id` = ?, `date` = ?", $iEventId, $iAuthorId, $iAuthorNip, $iRepostedId, $iNow);
         return (int)$this->query($sQuery) > 0;
     }

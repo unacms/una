@@ -45,7 +45,7 @@ class BxDolVoteQuery extends BxDolObjectQuery
             $sWhereClause .= " AND `author_id` = :author_id";
         }
         else {
-            $aBindings['author_nip'] = ip2long($sAuthorIp);
+            $aBindings['author_nip'] = bx_get_ip_hash($sAuthorIp);
 
             $sWhereClause .= " AND `author_nip` = :author_nip";
         }
@@ -85,7 +85,7 @@ class BxDolVoteQuery extends BxDolObjectQuery
             return $this->_deleteTrack($iObjectId, $iAuthorId);
 
         $iNow = time();
-        $iAuthorNip = ip2long($sAuthorIp);
+        $iAuthorNip = bx_get_ip_hash($sAuthorIp);
         $sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, $iValue, $iNow);
         if((int)$this->query($sQuery) > 0)
             return $this->lastId();

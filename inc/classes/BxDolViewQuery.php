@@ -51,7 +51,7 @@ class BxDolViewQuery extends BxDolObjectQuery
 
     public function doView($iObjectId, $iAuthorId, $sAuthorIp)
     {
-        $iAuthorNip = ip2long($sAuthorIp);
+        $iAuthorNip = bx_get_ip_hash($sAuthorIp);
 
         $aBindings = array(
             'object_id' => $iObjectId
