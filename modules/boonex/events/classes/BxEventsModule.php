@@ -338,24 +338,30 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $CNF = $this->_oConfig->CNF;
 
         $oDateStart = date_create('@' . $aContentInfo['date_start']);
-        $oDateStart->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
+        if ($oDateStart)
+            $oDateStart->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
         $oDateEnd = date_create('@' . ($aContentInfo['date_start'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_start'] : $aContentInfo['repeat_stop']));
-        $oDateEnd->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
+        if ($oDateEnd)
+            $oDateEnd->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $sLocationString = $oMetatags ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : false;
 
-        $a['content']['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
+        $a['content']['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', [
             'title' => $a['content']['title'],
             'title_attr' => bx_html_attribute($a['content']['title']),
             'url' => $a['content']['url'],
-            'date' => strftime(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . strftime(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp())),
-            'date_c' => $oDateStart->format('c'),
+            'bx_if:date' => [
+                'condition' => $oDateStart && $oDateEnd,
+                'content' => [
+                    'date' => $oDateStart && $oDateEnd ? (strftime(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . strftime(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp()))) : '',
+                    'date_c' => $oDateStart->format('c'),
+            ]],
             'bx_if:location' => array(
                 'condition' => !!$sLocationString,
                 'content' => array('location' => $sLocationString),
             ),
-        ));
+        ]);
 
         $a['content']['title'] = '';
         $a['content']['text'] = '';
