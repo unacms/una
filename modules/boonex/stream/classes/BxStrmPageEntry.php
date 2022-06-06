@@ -27,6 +27,13 @@ class BxStrmPageEntry extends BxBaseModTextPageEntry
     		'icon' => ''
     	)));
     }
+
+    public function isActive()
+    {
+        if (getParam('bx_stream_always_accessible'))
+            return true;
+        return parent::isActive();
+    }
 }
 
 /** @} */

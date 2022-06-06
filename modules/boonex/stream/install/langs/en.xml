@@ -33,6 +33,7 @@
     <string name="_bx_stream_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
     <string name="_bx_stream_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_stream_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
+    <string name="_bx_stream_option_always_accessible"><![CDATA[Make Stream page accessible when not streaming]]></string>
 
     <string name="_bx_stream_form_entry"><![CDATA[Streams]]></string>
     <string name="_bx_stream_form_entry_display_add"><![CDATA[Add Stream]]></string>
