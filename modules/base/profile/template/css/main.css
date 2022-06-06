@@ -630,6 +630,11 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 }
 
 /* view page */
+.bx-base-profile-entity-content.bx-def-vanilla-html {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
 .bx-base-profile-entity-content,
 .bx-base-profile-entity-content p {
     overflow: hidden;

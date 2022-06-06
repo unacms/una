@@ -223,7 +223,12 @@
 }
 
 .bx-base-text-entity-image img {
-    max-width: 100%;
+    width: 100%;
+}
+
+.bx-base-text-entity-content.bx-def-vanilla-html {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .bx-base-text-entity-actions-all .bx-base-text-entity-share,
