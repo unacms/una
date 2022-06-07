@@ -52,6 +52,23 @@
     display: none;
 }
 
+/* Browsing by labels */
+.bx-base-general-lables-tree-parent-0, 
+.bx-base-general-lables-tree-parent-0 ul {
+    list-style-type: none;
+    padding-left: 2rem;
+}
+.bx-base-general-lables-tree-parent-0 {
+    margin: 0px;
+}
+.bx-base-general-lables-tree-parent-0 li {
+    padding: 0px;
+}
+.bx-base-general-lables-tree-parent-0 li i.sys-icon {
+    display: inline-block;
+    width: 0.625rem;
+    margin-left: -1rem;
+}
 
 /* Badges */
 div.bx-badges-list {
