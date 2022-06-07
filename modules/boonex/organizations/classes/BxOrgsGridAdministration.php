@@ -9,11 +9,11 @@
  * @{
  */
 
-class BxOrgsGridAdministration extends BxBaseModGroupsGridAdministration
+class BxOrgsGridAdministration extends BxBaseModProfileGridAdministration
 {
-	protected $_sFilter2Name;
-	protected $_sFilter2Value;
-	protected $_aFilter2Values;
+    protected $_sFilter2Name;
+    protected $_sFilter2Value;
+    protected $_aFilter2Values;
     protected $_sConfirmationType;
 	
     public function __construct ($aOptions, $oTemplate = false)
@@ -21,14 +21,15 @@ class BxOrgsGridAdministration extends BxBaseModGroupsGridAdministration
     	$this->MODULE = 'bx_organizations';
         parent::__construct ($aOptions, $oTemplate);
 		
-		$CNF = &$this->_oModule->_oConfig->CNF;
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $this->_sFilter2Name = 'filter2';
         $aTmp = array();
         BxDolAclQuery::getInstance()->getLevels(array('type' => 'all_active_not_automatic_pair'), $aTmp);
         foreach ($aTmp as $sKey => $sValue) {
             $this->_aFilter2Values["level" . $sKey] = $sValue;
         }
-        
+
         $sFilter2 = bx_get($this->_sFilter2Name);
         if(!empty($sFilter2)) {
             $this->_sFilter2Value = bx_process_input($sFilter2);
@@ -38,8 +39,8 @@ class BxOrgsGridAdministration extends BxBaseModGroupsGridAdministration
         if ($this->_sConfirmationType != BX_ACCOUNT_CONFIRMATION_NONE)
             $this->_aFilter1Values['unconfirmed'] = $CNF['T']['filter_item_unconfirmed'];
     }
-	
-	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);

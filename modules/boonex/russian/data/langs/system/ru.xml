@@ -640,6 +640,7 @@
     <string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
     <string name="_adm_dbd_txt_c_clear_js"><![CDATA[Очистить кэш JavaScript]]></string>
     <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Очистить специальный кэш]]></string>
+    <string name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string>
     <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Очистить Opcache]]></string>
     <string name="_adm_dbd_err_c_clean_failed"><![CDATA[Очистка кэша не поддерживается]]></string>
     <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Clean cache unsupported]]></string>

@@ -19,7 +19,6 @@ html.bx-media-desktop {
 
 .bx-media-desktop .bx-def-constraint-all *,
 .bx-media-desktop .bx-def-constraint-list ol, .bx-def-constraint-list ul,
-.bx-media-desktop .bx-def-constraint-pre pre,
 .bx-media-desktop .bx-def-constraint-object object,
 .bx-media-desktop .bx-def-constraint-iframe iframe,
 .bx-media-desktop .bx-def-constraint-img img {
@@ -30,9 +29,6 @@ html.bx-media-desktop {
 
     max-width:900px !important;
     overflow:hidden !important;
-}
-.bx-media-desktop .bx-def-constraint-pre pre {
-    overflow:scroll !important;
 }
 .bx-media-desktop .bx-def-constraint-img img  {
     max-width:100% !important;

@@ -39,11 +39,21 @@
         }
     });
 
-    function bx_sidebar_toggle(sType) {
-        var oSidebar = $('.bx-sidebar.bx-sidebar-' + sType);
-        var bShow = !oSidebar.hasClass('bx-sidebar-active') ? true : false;
+    function bx_sidebar_get(sType) {
+        return $('.bx-sidebar.bx-sidebar-' + sType);
+    }
 
-        oSidebar.toggleClass('bx-sidebar-active', bShow);
+    function bx_sidebar_active(sType) {
+        var oSidebar = bx_sidebar_get(sType);
+        if(!oSidebar || oSidebar.length == 0)
+            return false;
+
+        return oSidebar.hasClass('bx-sidebar-active');
+    }
+    
+    function bx_sidebar_toggle(sType) {
+        var oSidebar = bx_sidebar_get(sType);
+        oSidebar.toggleClass('bx-sidebar-active', !bx_sidebar_active(sType));
     }
 
     function bx_sidebar_dropdown_toggle(oLink) {

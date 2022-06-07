@@ -27,7 +27,7 @@ class BxTemplMenuAccountNotifications extends BxBaseMenuAccountNotifications
         switch ($a['name']) {
             case 'add-content':
                 if(isset($a['onclick']))
-                    $a['onclick'] = str_replace('bx_menu_slide_inline', "$('.bx-popup-applied:visible').dolPopupHide(); bx_menu_popup_inline", $a['onclick']);
+                    $a['onclick'] = str_replace(['bx_menu_slide_inline', 'bx-menu-toolbar-item-add-content'], ['bx_artificer_add_content_panel', 'bx-menu-toolbar-item-account'], $a['onclick']);
                 break;
         }
 

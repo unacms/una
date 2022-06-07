@@ -127,7 +127,7 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 }
 
 
-/*--- Profile Cover ---*/
+/*--- Entry: Profile Cover ---*/
 .bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-cover-bg  {
     height: 50%;
 }
@@ -158,30 +158,44 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     -webkit-align-items: flex-start;
     align-items: flex-start;
 }
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
-    position: absolute;
+
+/*--- Entry: Profile Actions ---*/
+div.bx-base-general-entity-actions {
+    position: relative;
     width: 100%;
 }
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor > li > .bx-base-general-entity-action > a,
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item > .bx-base-general-entity-action > a,
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
+.bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
+    position: absolute;
+}
+.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.bx-media-desktop .bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor {
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+
+div.bx-base-general-entity-actions .bx-menu-custom-hor > li > .bx-base-general-entity-action > a,
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item > .bx-base-general-entity-action > a,
+div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
     padding: 0.5rem 1.0rem;
 }
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
+div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
     display: block;
 }
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item {
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item {
     border-color: transparent;
     border-radius: 0;
     box-shadow: none;
 }
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item,
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .bx-base-general-entity-action,
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action,
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-element-holder {
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item,
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .bx-base-general-entity-action,
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action,
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-element-holder {
     width: 100%;
 }
-.bx-base-pofile-cover-actions div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-counter-holder {
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-counter-holder {
     margin-right: 1rem;
 }
 
@@ -205,7 +219,13 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     padding: 0;
 }
 
-/* Cover block */
+/*--- Entry: Profile Cover block ---*/
 .bx-base-profile-cover-block-wrapper .bx-base-pofile-cover-actions div.bx-base-general-entity-actions{
     position: relative;
+}
+
+/*--- Entry: Profile Description block ---*/
+.bx-base-profile-entity-content.bx-def-vanilla-html {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }

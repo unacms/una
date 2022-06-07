@@ -31,12 +31,22 @@ class BxBaseGrid extends BxDolGrid
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
-        $this->_aQueryAppend = array(
-            $this->_oTemplate->getCodeKey() => $this->_oTemplate->getCode()
-        );
-        $this->_aQueryAppendExclude = array();
+        $this->_aPopupOptions = [];
 
-        $this->_aQueryReset = array($this->_aOptions['filter_get'], $this->_aOptions['order_get_field'], $this->_aOptions['order_get_dir'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+        $this->_aQueryAppend = [
+            $this->_oTemplate->getCodeKey() => $this->_oTemplate->getCode()
+        ];
+        $this->_aQueryAppendExclude = [];
+
+        $this->_aQueryReset = [
+            $this->_aOptions['filter_get'], 
+            $this->_aOptions['order_get_field'], 
+            $this->_aOptions['order_get_dir'], 
+            $this->_aOptions['paginate_get_start'], 
+            $this->_aOptions['paginate_get_per_page']
+        ];
+
+        $this->_aConfirmMessages = [];
     }
 
     public function performActionDisplay()

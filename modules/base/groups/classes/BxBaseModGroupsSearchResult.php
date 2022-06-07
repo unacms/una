@@ -78,10 +78,12 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
-		$iListId = (int)$aParams['list_id'];
-		
         if (!$oProfileAuthor) 
             return false;
+
+        $iListId = 0;
+        if(isset($aParams['list_id']))
+            $iListId = (int)$aParams['list_id'];
 
         $iProfileAuthor = $oProfileAuthor->id();
         $oFavorite = $this->oModule->getObjectFavorite();

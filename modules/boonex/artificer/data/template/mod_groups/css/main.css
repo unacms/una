@@ -2,9 +2,8 @@
 .bx-base-groups-unit-with-cover .bx-base-pofile-unit-info .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-}
-.bx-base-groups-unit-with-cover .bx-base-pofile-unit-info .bx-base-general-unit-meta ul .bx-menu-item-nl ~ li {
-    width: 50%;
+
+    width: 100%;
 }
 .bx-base-groups-unit-with-cover .bx-base-pofile-unit-info .bx-base-general-unit-meta ul .bx-menu-item-nl ~ li .bx-base-profile-unit-meta-item,
 .bx-base-groups-unit-with-cover .bx-base-pofile-unit-info .bx-base-general-unit-meta ul .bx-menu-item-nl ~ li .bx-base-profile-unit-meta-item .bx-btn {
