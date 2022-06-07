@@ -23,8 +23,11 @@ class BxOrgsTemplate extends BxBaseModGroupsTemplate
         $this->_bLetterAvatar = true;
 
         $this->_sUnitClass = 'bx-base-pofile-unit';
+        $this->_sUnitClassWoCover = $this->_sUnitClass;
         $this->_sUnitClassWithCover = 'bx-base-pofile-unit-with-cover';
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
+        $this->_sUnitClassWoInfoShowCase = 'bx-base-pofile-unit-wo-info bx-base-unit-showcase bx-base-pofile-unit-wo-info-showcase';
+        $this->_sUnitClassShowCase = 'bx-base-pofile-unit-with-cover bx-base-unit-showcase bx-base-pofile-unit-showcase';
     }
 
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
