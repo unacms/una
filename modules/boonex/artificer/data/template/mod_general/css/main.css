@@ -43,7 +43,7 @@
 .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: none;
     width: 100%;
-    height: 0.5rem;
+    height: 0;
 }
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: block;
