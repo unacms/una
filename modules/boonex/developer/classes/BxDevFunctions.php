@@ -44,7 +44,8 @@ class BxDevFunctions
         $sTrlCheckFuncPostfix = 'Translatable';
         foreach($aInputs as $sName => $aInput)
             if(isset($aInput['type']) && stripos($aInput['type'], $sTrlTypePostfix) !== false) {
-                $aInputs[$sName]['type'] = str_ireplace($sTrlTypePostfix, '', $aInput['type']);
+                $aInputs[$sName]['type'] = 'text';
+                $aInputs[$sName]['html'] = 0;
 
                 if(isset($aInput['checker']['func']) && stripos($aInput['checker']['func'], $sTrlCheckFuncPostfix) !== false)
                     $aInputs[$sName]['checker']['func'] = str_ireplace($sTrlCheckFuncPostfix, '', $aInput['checker']['func']);
