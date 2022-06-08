@@ -1685,6 +1685,9 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
         
 		$sMode = 'recent';
+		if(bx_srv('system', 'is_module_content', [$this->_aModule['name']]))
+		   $sMode = 'public';
+		   
 		$sClassSearchResult ='SearchResult';
 		
 		bx_import($sClassSearchResult, $this->_aModule['name']);
