@@ -3411,6 +3411,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             ]);
 
             if(!empty($iId)) {
+                $this->isAllowedPost(true);
+
                 $aContent = array_merge($aContent, [
                     'timeline_group' => [
                         'by' => $this->getName() . '_' . $iUserId . '_' . $iId,
@@ -3467,6 +3469,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aEvent) || !is_array($aEvent))
             return [];
 
+        if(($mixedCheck = $this->isAllowedEdit($aEvent)) !== true)
+            return ['message' => $mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')];
+        
         $aContent = unserialize($aEvent['content']);
         if(is_array($aContent) && !empty($aContent['text']))
             $aEvent['text'] = $aContent['text'];
@@ -3575,6 +3580,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             if($oForm->update($iId, $aValsToAdd) === false)
                 return ['message' => _t('_bx_timeline_txt_err_cannot_perform_action')];
+
+            $this->isAllowedEdit($aEvent, true);
 
             $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
             if($bText)
