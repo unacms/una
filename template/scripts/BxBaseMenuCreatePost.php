@@ -15,6 +15,8 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
 {
     protected $_sJsObject;
 
+    protected $_mixedContextId;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject);
@@ -23,6 +25,13 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
 
         $this->_bShowDivider = false;
         $this->_sJsObject = 'oBxDolCreatePost';
+
+        $this->_mixedContextId = false;
+    }
+
+    public function setContextId($mixedContextId)
+    {
+        $this->_mixedContextId = $mixedContextId;
     }
 
     protected function getMenuItemsRaw ()
@@ -41,6 +50,10 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
 
             if(BxDolRequest::serviceExists($sModule, 'act_as_profile'))
                 continue;
+
+            if($this->_mixedContextId !== false && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($this->_mixedContextId))))
+                if(bx_srv($aContextInfo['type'], 'check_allowed_post_in_profile', [$aContextInfo['content_id'], $sModule]) !== CHECK_ACTION_RESULT_ALLOWED)
+                    continue;
 
             $aResult[$iKey] = array_merge($aMenuItem, array(
                 'id' => $sModule,

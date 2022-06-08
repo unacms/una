@@ -1120,13 +1120,17 @@ class BxBaseModGeneralModule extends BxDolModule
     /** 
      * @ref bx_base_general-get_create_post_form "get_create_post_form"
      */
-    public function serviceGetCreatePostForm($aParams = array())
+    public function serviceGetCreatePostForm($aParams = [])
     {
     	$aParams = array_merge($this->_aFormParams, $aParams);
 
+        if($aParams['context_id'] !== false && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($aParams['context_id']))))
+            if(bx_srv($aContextInfo['type'], 'check_allowed_post_in_profile', [$aContextInfo['content_id'], $this->getName()]) !== CHECK_ACTION_RESULT_ALLOWED)
+                return '';
+
     	$oForm = $this->serviceGetObjectForm('add', $aParams);
     	if(!$oForm)
-            return ''; 	
+            return '';
 
     	return $this->serviceEntityCreate($aParams);
     }
