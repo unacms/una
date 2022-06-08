@@ -245,21 +245,22 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     line-height: normal;
 }
 
-/* browsing by labels */
-.bx-base-general-lables-tree-parent-0 , .bx-base-general-lables-tree-parent-0 UL{
-	list-style-type: none;
-	padding-left: 2rem;
+/* Browsing by labels */
+.bx-base-general-lables-tree-parent-0, 
+.bx-base-general-lables-tree-parent-0 ul {
+    list-style-type: none;
+    padding-left: 2rem;
 }
-.bx-base-general-lables-tree-parent-0 LI{
-	padding: 0px;
+.bx-base-general-lables-tree-parent-0 {
+    margin: 0px;
 }
-UL.bx-base-general-lables-tree-parent-0{
-	margin: 0px;
+.bx-base-general-lables-tree-parent-0 li {
+    padding: 0px;
 }
-.bx-base-general-lables-tree-parent-0 LI I.sys-icon {
-    width: 10px;
-    margin-left: -15px;
+.bx-base-general-lables-tree-parent-0 li i.sys-icon {
     display: inline-block;
+    width: 0.625rem;
+    margin-left: -1rem;
 }
 
 /* Badges */
