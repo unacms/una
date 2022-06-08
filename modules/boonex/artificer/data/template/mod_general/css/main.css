@@ -51,6 +51,10 @@
 .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
     display: none;
 }
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-metatags-keyword {
+    margin: 0px;
+    line-height: normal;
+}
 
 /* Browsing by labels */
 .bx-base-general-lables-tree-parent-0, 
