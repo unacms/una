@@ -87,15 +87,26 @@ class BxTemplFunctions extends BxBaseFunctions
 
     public function TemplPageAddComponent($sKey)
     {
-        switch( $sKey ) {
+        $mixedResult = false;
+
+        switch($sKey) {
+            case 'sys_header_width':
+                $mixedResult = '';
+                if(getParam('bx_artificer_header_stretched') != 'on')
+                    $mixedResult = parent::TemplPageAddComponent($sKey);
+                break;
+
             case 'sys_site_search':
                 $oSearch = new BxTemplSearch();
                 $oSearch->setLiveSearch(true);
-                return $oSearch->getForm(BX_DB_PADDING_DEF, false, true) . $oSearch->getResultsContainer();
+                $mixedResult = $oSearch->getForm(BX_DB_PADDING_DEF, false, true) . $oSearch->getResultsContainer();
+                break;
 
             default:
-                return parent::TemplPageAddComponent($sKey);
+                $mixedResult = parent::TemplPageAddComponent($sKey);
         }
+
+        return $mixedResult;
     }    
 
     protected function getInjFooterPopupMenus() 

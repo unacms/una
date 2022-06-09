@@ -60,12 +60,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
     function TemplPageAddComponent($sKey)
     {
-        switch( $sKey ) {
-            case 'something':
-                return false; // return here additional components
-            default:
-                return false; // if you have not such component, return false!
+        $mixedResult = false; // if you have not such component, return false!
+
+        switch($sKey) {
+            case 'sys_header_width':
+                $mixedResult = 'bx-def-page-width';
+                break;
         }
+
+        return $mixedResult;
     }
 
     function msgBox($sText, $iTimer = 0, $sOnClose = "")
