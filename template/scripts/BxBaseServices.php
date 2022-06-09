@@ -604,15 +604,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if($mixedContextId !== false)
             $mixedContextId = (int)(!empty($mixedContextId) ? -$mixedContextId : $oProfile->id());
 
-        $bContext = $mixedContextId !== false;
-        if($bContext && ($oContextProfile = BxDolProfile::getInstance(abs($mixedContextId))) !== false)
-            if($oContextProfile->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
-                return '';
-
-        $sTitle = _t('_sys_page_block_title_create_post' . (!$bContext ? '_public' : ($mixedContextId < 0 ? '_context' : '')));
-        $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
-
     	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
+        $oMenu->setContextId($mixedContextId);
         if(!$oMenu)
             return '';
 
@@ -625,6 +618,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             $sDefault = !empty($aDefault['module']) ? $aDefault['module'] : $aDefault['name'];
     	}
     	$oMenu->setSelected($sDefault, $sDefault);
+
+        $bContext = $mixedContextId !== false;
+        if($bContext && ($aContextInfo = BxDolProfileQuery::getInstance()->getInfoById(abs($mixedContextId))))
+            if(bx_srv($aContextInfo['type'], 'check_allowed_post_in_profile', [$aContextInfo['content_id'], $sDefault]) !== CHECK_ACTION_RESULT_ALLOWED)
+                return '';
+
+        $sTitle = _t('_sys_page_block_title_create_post' . (!$bContext ? '_public' : ($mixedContextId < 0 ? '_context' : '')));
+        $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
 
     	$oTemplate = BxDolTemplate::getInstance();
     	$oTemplate->addJs(array('BxDolCreatePost.js'));

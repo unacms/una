@@ -193,12 +193,6 @@ div.bx-base-general-entity-actions {
     -webkit-justify-content: flex-end;
     justify-content: flex-end;
 }
-
-div.bx-base-general-entity-actions .bx-menu-custom-hor > li > .bx-base-general-entity-action > a,
-div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item > .bx-base-general-entity-action > a,
-div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
-    padding: 0.5rem 1.0rem;
-}
 div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
     display: block;
 }

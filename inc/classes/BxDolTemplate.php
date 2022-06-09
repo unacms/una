@@ -1673,12 +1673,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
             case 'cover':
             	$oCover = BxDolCover::getInstance($this);
-            	if(!$oCover)
-                    break;
 
-            	$bCover = true;
-            	$oPage = BxDolPage::getObjectInstanceByURI();
-            	if($oPage !== false) {
+            	$bCover = $oCover->isEnabled();
+            	if($bCover && ($oPage = BxDolPage::getObjectInstanceByURI()) !== false) {
                     $bCover = $oPage->isPageCover();
                     if($bCover && !$oCover->isCover()) {
                         $aCover = $oPage->getPageCoverImage();

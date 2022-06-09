@@ -110,6 +110,14 @@ class BxDolCover extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Determine whether cover is enabled globally or not.
+     */
+    public function isEnabled()
+    {
+        return getParam('sys_site_cover_disabled') != 'on';
+    }
+
+    /**
      * Determine whether cover is already set for the page or not.  
      */
     public function isCover()

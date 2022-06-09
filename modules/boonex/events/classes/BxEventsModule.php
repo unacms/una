@@ -72,6 +72,16 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         echo json_encode($aEntries);
     }
     
+    public function serviceIsIcalExportAvaliable($iContentId)
+    {
+        return true;
+        $aContentInfo = $iContentId ? $this->_oDb->getContentInfoById($iContentId) : false;
+        if ($aContentInfo)
+            return false;
+        
+        return $aContentInfo['date_start'] && $aContentInfo['date_end'];
+    }
+
     public function serviceGetCalendarEntries($iProfileId)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -340,7 +350,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oDateStart = date_create('@' . $aContentInfo['date_start']);
         if ($oDateStart)
             $oDateStart->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
-        $oDateEnd = date_create('@' . ($aContentInfo['date_start'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_start'] : $aContentInfo['repeat_stop']));
+        $oDateEnd = date_create('@' . ($aContentInfo['date_end'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_end'] : $aContentInfo['repeat_stop']));
         if ($oDateEnd)
             $oDateEnd->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
 

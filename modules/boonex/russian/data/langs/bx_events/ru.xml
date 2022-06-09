@@ -327,6 +327,7 @@
     <string name="_bx_events_menu_item_title_sm_date_start"><![CDATA[Начало]]></string>
     <string name="_bx_events_menu_item_title_system_sm_date_end"><![CDATA[Конец]]></string>
     <string name="_bx_events_menu_item_title_sm_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_menu_item_title_ical_export"><![CDATA[Добавить в календарь]]></string>
 
     <string name="_bx_events_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_events_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
