@@ -239,7 +239,11 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
 
     public function genCustomRowVideoEmbed(&$aInput) {
         $sSource = isset($this->aInputs['video_source']) && $this->aInputs['video_source']['value'] == 'embed' ? 'embed' : 'upload';
-        if ($sSource != 'embed') $aInput['tr_attrs']['style'] = 'display:none';
+        if ($sSource != 'embed') {
+            if (!is_array($aInput['tr_attrs']))
+                $aInput['tr_attrs'] = [];
+            $aInput['tr_attrs']['style'] = 'display:none';
+        }
         return $this->genRowStandard($aInput);
     }
 
@@ -281,6 +285,8 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
         $sJsCode = '';
 
         if ($aInput['name'] == 'video_source' && $aInput['type'] == 'radio_set') {
+            if (!is_array($aInput['attrs']))
+                $aInput['attrs'] = [];
             $aInput['attrs']['onchange'] = $this->_oModule->_oConfig->getJsObject('embeds').'.changeVideoSource(this.value);';
             $sJsCode = '';
             if ($this->_bDynamicMode) {
