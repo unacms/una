@@ -261,11 +261,11 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
     {
         $iTime = (int)$iTime;
 
-        $sFormat = '%M:%S';
+        $sFormat = 'i:s';
         if($iTime > 3600)
-            $sFormat = '%H:' . $sFormat;
+            $sFormat = 'H:' . $sFormat;
 
-        return strftime($sFormat, $iTime);
+        return date($sFormat, $iTime);
     }
 
     function _t_format_currency ($fPrice, $iPrecision = 2, $bFormatThousands = true)
