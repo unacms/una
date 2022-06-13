@@ -57,7 +57,7 @@ class BxDolStudioToolsAudit extends BxDol
             'register_globals' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'safe_mode' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'short_open_tag' => array('op' => '=', 'val' => true, 'type' => 'bool'),
-            'disable_functions' => array('op' => 'without', 'val' => 'shell_exec,eval,assert,phpinfo,getenv,ini_set,mail,fsockopen,chmod,parse_ini_file,readfile,escapeshellcmd,fput,popen'),
+            'disable_functions' => array('op' => 'without', 'val' => 'shell_exec,eval,assert,phpinfo,getenv,ini_set,fsockopen,chmod,parse_ini_file,readfile,escapeshellcmd,fput,popen'),
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
             'php module: mbstring' => array('op' => 'module', 'val' => 'mbstring'),
