@@ -2180,8 +2180,8 @@ If it is not enabled then please consider implement this optimization, since it 
 <p> </p>
 {email_footer}]]></string>
     <string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
-<p>Hello, {name} ({email}).</p>
-<p>Click the link below to verify your email address, please:</p>
+<p>Hello {name} ({email}),</p>
+<p>Please confirm your email address by clicking the link below:</p>
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
@@ -2309,7 +2309,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[User {sender_display_name} replied to your comment.]]></string>
 	<string name="_sys_et_txt_subject_system_reported"><![CDATA[New report notification]]></string>
-	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm your Email, please. (ACTION REQUIRED)]]></string>
+	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm your email address]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Delayed {Module} module uninstall: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Reset your password]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Your membership level was changed]]></string>
