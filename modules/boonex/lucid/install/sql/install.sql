@@ -2,6 +2,11 @@ SET @sName = 'bx_lucid';
 
 
 -- SETTINGS
+SET @iSystemCategoryId = (SELECT `id` FROM `sys_options_categories` WHERE `name`='system' LIMIT 1);
+SET @iSystemCategoryOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_options` WHERE `category_id`=@iSystemCategoryId LIMIT 1);
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 1);
+
 INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
 ('templates', @sName, '_bx_lucid_stg_cpt_type', 'bx_lucid@modules/boonex/lucid/|std-icon.svg', 2);
 SET @iTypeId = LAST_INSERT_ID();
@@ -42,15 +47,13 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_header_bg_image_size'), '_bx_lucid_stg_cpt_option_header_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_site_logo'), '_bx_lucid_stg_cpt_option_site_logo', '', 'image', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_site_logo_alt'), '_bx_lucid_stg_cpt_option_site_logo_alt', '', 'text', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_site_logo_width'), '_bx_lucid_stg_cpt_option_site_logo_width', '240', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_site_logo_height'), '_bx_lucid_stg_cpt_option_site_logo_height', '48', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_lucid_stg_cpt_option_header_border_color', 'rgba(255, 255, 255, 1.0)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_lucid_stg_cpt_option_header_border_size', '1px', 'digit', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_header_shadow'), '_bx_lucid_stg_cpt_option_header_shadow', 'none', 'digit', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_header_icon_color'), '_bx_lucid_stg_cpt_option_header_icon_color', 'rgba(255, 255, 255, 0.8)', 'rgba', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_header_icon_color_hover'), '_bx_lucid_stg_cpt_option_header_icon_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 15),
-(@iCategoryId, CONCAT(@sName, '_header_link_color'), '_bx_lucid_stg_cpt_option_header_link_color', 'rgba(215, 235, 255, 1)', 'rgba', '', '', '', 16),
-(@iCategoryId, CONCAT(@sName, '_header_link_color_hover'), '_bx_lucid_stg_cpt_option_header_link_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 17);
+(@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_lucid_stg_cpt_option_header_border_color', 'rgba(255, 255, 255, 1.0)', 'rgba', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_lucid_stg_cpt_option_header_border_size', '1px', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_header_shadow'), '_bx_lucid_stg_cpt_option_header_shadow', 'none', 'digit', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_header_icon_color'), '_bx_lucid_stg_cpt_option_header_icon_color', 'rgba(255, 255, 255, 0.8)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_header_icon_color_hover'), '_bx_lucid_stg_cpt_option_header_icon_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_header_link_color'), '_bx_lucid_stg_cpt_option_header_link_color', 'rgba(215, 235, 255, 1)', 'rgba', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_header_link_color_hover'), '_bx_lucid_stg_cpt_option_header_link_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 15);
 
 -- SETTINGS: Lucid template Styles Footer
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -731,8 +734,6 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_lucid_header_icon_color_hover', @iMixId, 'rgba(24, 144, 255, 1)'),
 ('bx_lucid_site_logo_alt', @iMixId, ''),
 ('bx_lucid_header_link_color_hover', @iMixId, 'rgba(24, 144, 255, 1)'),
-('bx_lucid_site_logo_height', @iMixId, '28'),
-('bx_lucid_site_logo_width', @iMixId, '0'),
 ('bx_lucid_header_border_color', @iMixId, 'rgba(245, 245, 245, 1)'),
 ('bx_lucid_header_bg_image_size', @iMixId, 'cover'),
 ('bx_lucid_header_bg_image_repeat', @iMixId, 'no-repeat'),

@@ -10,33 +10,30 @@
  */
 
 
-class BxArtificerAlertsResponse extends BxDolAlertsResponse
+class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
 {
-    protected $_sModule;
-    protected $_oModule;
-
     function __construct()
     {
-        parent::__construct();
-
         $this->_sModule = 'bx_artificer';
-    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
+
+        parent::__construct();
     }
 
-    public function response($oAlert)
+    protected function _processSystemChangeLogo($oAlert)
     {
-        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
-        if(!method_exists($this, $sMethod))
+        $sPrefix = $this->_oModule->_oConfig->getPrefix('option');
+
+        if(!in_array($oAlert->aExtras['option'], ['sys_site_logo', $sPrefix . 'site_logo']))
             return;
 
-        if(BxDolTemplate::getInstance()->getCode() != $this->_oModule->_oConfig->getUri())
-            return;
-
-        $this->$sMethod($oAlert);
+        setParam($sPrefix . 'site_logo_aspect_ratio', '');
     }
 
     protected function _processSystemGetObject($oAlert)
     {
+        if(!$this->_isActive())
+            return;
+
         if(empty($oAlert->aExtras['type']))
             return;
 
@@ -52,10 +49,14 @@ class BxArtificerAlertsResponse extends BxDolAlertsResponse
 
     protected function _processProfileUnit($oAlert)
     {
+        if(!$this->_isActive())
+            return;
+
         $sModule = $oAlert->aExtras['module'];
         $oModule = BxDolModule::getInstance($sModule);
         if(!$oModule)
             return;
+
         $sTemplate = !empty($oAlert->aExtras['template']) && is_array($oAlert->aExtras['template']) ? $oAlert->aExtras['template'][0] : $oAlert->aExtras['template'];
         $sClassSize = $this->_oModule->_oConfig->getThumbSize(isset($oAlert->aExtras['template'][1]) ? $oAlert->aExtras['template'][1] : '', $sTemplate);
 

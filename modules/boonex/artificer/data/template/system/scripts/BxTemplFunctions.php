@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolDesigns');
+
 class BxTemplFunctions extends BxBaseFunctions
 {
     public function __construct($oTemplate = null)
@@ -32,31 +34,48 @@ class BxTemplFunctions extends BxBaseFunctions
 
         $bDefault = false;
         if(($sFileUrl = $this->getMainLogoUrl()) !== false || ($bDefault = (!$bTitle && ($sFileUrl = $this->_oTemplate->getImageUrl('logo-generic.svg')) != ''))) {
-            $iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
-            $sMaxWidth = $iLogoWidth > 0 ? 'max-width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
-
-            $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
-            $sMaxHeight = $iLogoHeight > 0 ? 'max-height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
-
             $bTmplVarsShowTitle = false;
             $aTmplVarsShowImage = [
                 'class' => '',
-                'style' => $sMaxWidth . $sMaxHeight,
+                'style' => '',
                 'src' => $sFileUrl,
                 'alt' => $sAltAttr
             ];
 
+            $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
+            $sHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+
             if($bDefault) {
+                //--- Default Logo
+                list($iDlWidth, $iDlHeight) = bx_get_svg_image_size($sFileUrl);
+                $fDlAspectRation = $iDlHeight ? $iDlWidth / $iDlHeight : BxDolDesigns::$fLogoAspectRatioDefault;
+
+                $iLogoWidth = $iLogoHeight * $fDlAspectRation;
+
+                //--- Default Logo Mini
                 $aTmplVarsShowImage['class'] = 'hidden lg:block';
 
-                if(($sFileUrl = $this->_oTemplate->getImageUrl('mark-generic.svg')) != '')
+                if(($sFileUrl = $this->_oTemplate->getImageUrl('mark-generic.svg')) != '') {
+                    list($iMlWidth, $iMlHeight) = bx_get_svg_image_size($sFileUrl);
+                    $fMlAspectRation = $iMlHeight ? $iMlWidth / $iMlHeight : BxDolDesigns::$fLogoAspectRatioDefault;
+                    
+                    $imlLogoWidth = $iLogoHeight * $fMlAspectRation;
+                    $sMlWidth = $imlLogoWidth > 0 ? 'width:' . round($imlLogoWidth/16, 3) . 'rem;' : '';
+
                     $aTmplVarsShowImageMini = [
                         'class' => 'block lg:hidden',
-                        'style' => $sMaxWidth . $sMaxHeight,
+                        'style' => $sMlWidth . ' ' . $sHeight,
                         'src' => $sFileUrl,
                         'alt' => $sAltAttr
                     ];
+                }
             }
+            else
+                $iLogoWidth = $oDesigns->getSiteLogoWidth();
+
+            $sWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+
+            $aTmplVarsShowImage['style'] = $sWidth . ' ' . $sHeight;
         }
 
         $aAttrs = [

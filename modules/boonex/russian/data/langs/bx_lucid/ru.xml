@@ -22,8 +22,6 @@
     <string name="_bx_lucid_stg_cpt_option_header_bg_image_size"><![CDATA[Размер изображения фона]]></string>	
     <string name="_bx_lucid_stg_cpt_option_site_logo"><![CDATA[Эмблема]]></string>
     <string name="_bx_lucid_stg_cpt_option_site_logo_alt"><![CDATA[Эмблема ALT]]></string>
-    <string name="_bx_lucid_stg_cpt_option_site_logo_width"><![CDATA[Ширина эмблемы]]></string>
-    <string name="_bx_lucid_stg_cpt_option_site_logo_height"><![CDATA[Высота эмблемы]]></string>
     <string name="_bx_lucid_stg_cpt_option_header_border_color"><![CDATA[Цвет границы заголовка]]></string>
     <string name="_bx_lucid_stg_cpt_option_header_border_size"><![CDATA[Размер границы заголовка]]></string>
     <string name="_bx_lucid_stg_cpt_option_header_shadow"><![CDATA[Тень]]></string>
