@@ -236,7 +236,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             $aInput['value'] = '';
         else {
             if ($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d'))
-                $aInput['value'] = _t('_bx_events_txt_from_time_to_time', strftime(getParam('bx_events_time_format'), $aStartEnd['start']->getTimestamp()), strftime(getParam('bx_events_time_format'), $aStartEnd['end']->getTimestamp()));
+                $aInput['value'] = _t('_bx_events_txt_from_time_to_time', date(getParam('bx_events_time_format'), $aStartEnd['start']->getTimestamp()), date(getParam('bx_events_time_format'), $aStartEnd['end']->getTimestamp()));
             else
                 $aInput['value'] = '';
         }
@@ -256,7 +256,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
             $sFormat = getParam($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? 'bx_events_short_date_format' : 'bx_events_datetime_format');
             $oDate = 'date_start' == $aInput['name'] ? $aStartEnd['start'] : $aStartEnd['end'];
-            return strftime($sFormat, $oDate->getTimestamp());
+            return date($sFormat, $oDate->getTimestamp());
         }
         return parent::genViewRowValue($aInput);
     }

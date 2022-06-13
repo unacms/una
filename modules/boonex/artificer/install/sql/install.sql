@@ -13,7 +13,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_artificer_stg_cpt_option_switcher_name', 'Artificer', 'digit', '', '', '', 1), 
-(@iCategoryId, CONCAT(@sName, '_page_width'), '_bx_artificer_stg_cpt_option_page_width', '1280', 'digit', '', '', '', 2);
+(@iCategoryId, CONCAT(@sName, '_page_width'), '_bx_artificer_stg_cpt_option_page_width', '1280', 'digit', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_header_stretched'), '_bx_artificer_stg_cpt_option_header_stretched', '', 'checkbox', '', '', '', 3);
 
 -- SETTINGS: Artificer template Custom Styles
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -29,8 +30,7 @@ SET @iSystemCategoryOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_options` W
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo'), '', '0', 'digit', '', '', '', @iSystemCategoryOrder + 1),
 (@iSystemCategoryId, CONCAT(@sName, '_site_logo_alt'), '', '', 'text', '', '', '', @iSystemCategoryOrder + 2),
-(@iSystemCategoryId, CONCAT(@sName, '_site_logo_width'), '', '240', 'digit', '', '', '', @iSystemCategoryOrder + 3),
-(@iSystemCategoryId, CONCAT(@sName, '_site_logo_height'), '', '32', 'digit', '', '', '', @iSystemCategoryOrder + 4);
+(@iSystemCategoryId, CONCAT(@sName, '_site_logo_aspect_ratio'), '', '', 'digit', '', '', '', @iSystemCategoryOrder + 3);
 
 
 -- STUDIO PAGE & WIDGET

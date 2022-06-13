@@ -22,8 +22,6 @@
 	<string name="_bx_decorous_stg_cpt_option_header_bg_image_size"><![CDATA[Background image size]]></string>	
 	<string name="_bx_decorous_stg_cpt_option_site_logo"><![CDATA[Logo image]]></string>
 	<string name="_bx_decorous_stg_cpt_option_site_logo_alt"><![CDATA[Logo ALT]]></string>
-	<string name="_bx_decorous_stg_cpt_option_site_logo_width"><![CDATA[Logo width]]></string>
-	<string name="_bx_decorous_stg_cpt_option_site_logo_height"><![CDATA[Logo height]]></string>
 	<string name="_bx_decorous_stg_cpt_option_header_border_color"><![CDATA[Header border color]]></string>
 	<string name="_bx_decorous_stg_cpt_option_header_border_size"><![CDATA[Header border size]]></string>
 	<string name="_bx_decorous_stg_cpt_option_header_shadow"><![CDATA[Shadow]]></string>

@@ -9,10 +9,16 @@
 
 class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
 {
+    public static $fLogoAspectRatioDefault = 1.0;
+
     protected $sDesign;
     protected $oDesign;
 
     protected $aParams;
+    protected $aValues;
+
+    protected $sLogoStorage;
+    protected $sLogoTranscoder;
 
     protected function __construct()
     {
@@ -20,6 +26,9 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct();
+
+        $this->sLogoStorage = 'sys_images_custom';
+        $this->sLogoTranscoder = 'sys_custom_images';
     }
 
     /**
@@ -53,18 +62,58 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
             $this->oDesign = BxDolModule::getInstance($aDesign['name']);
 
     	//--- Init site's logo params.
-    	if($this->oDesign instanceof BxDolModule && method_exists($this->oDesign->_oConfig, 'getLogoParams'))
+    	if($this->oDesign instanceof BxDolModule && method_exists($this->oDesign->_oConfig, 'getLogoParams')) {
             list(
                 $this->aParams['logo'], 
-                $this->aParams['logo_alt'], 
-                $this->aParams['logo_width'], 
-                $this->aParams['logo_height']
+                $this->aParams['logo_alt']
             ) = $this->oDesign->_oConfig->getLogoParams();
+
+            list(
+                $this->aValues['logo_width'], 
+                $this->aValues['logo_height'],
+                $this->aValues['logo_aspect_ratio']
+            ) = $this->oDesign->_oConfig->getLogoValues($this->getSiteLogoUrl(), $this->getSiteLogoInfo());
+        }
     }
 
     public function getSiteLogo()
     {
     	return $this->getSiteLogoParam('logo');
+    }
+
+    public function getSiteLogoUrl($iFileId = 0, $bOriginal = true)
+    {
+        if(!$iFileId)
+            $iFileId = (int)$this->getSiteLogo();
+        if(!$iFileId) 
+            return false;
+
+        if($bOriginal)
+            return BxDolStorage::getObjectInstance($this->sLogoStorage)->getFileUrlById($iFileId);
+
+        $aParams = [];
+        if(($iLogoWidth = (int)$this->getSiteLogoWidth()) > 0)
+            $aParams['x'] = $iLogoWidth;
+
+        if(($iLogoHeight = (int)$this->getSiteLogoHeight()) > 0)
+            $aParams['y'] = $iLogoHeight;
+
+        if(!empty($aParams))
+            $sFileUrl = BX_DOL_URL_ROOT . bx_append_url_params('image_transcoder.php', array_merge(array('o' => $this->sLogoTranscoder, 'h' => $iFileId), $aParams));
+        else 
+            $sFileUrl = BxDolTranscoder::getObjectInstance($this->sLogoTranscoder)->getFileUrl($iFileId);
+
+        return !empty($sFileUrl) ? $sFileUrl : false;
+    }
+
+    public function getSiteLogoInfo($iFileId = 0)
+    {
+        if(!$iFileId)
+            $iFileId = (int)$this->getSiteLogo();
+        if(!$iFileId) 
+            return false;
+
+        return BxDolStorage::getObjectInstance($this->sLogoStorage)->getFile($iFileId);
     }
 
     public function getSiteLogoAlt()
@@ -74,12 +123,12 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
 
     public function getSiteLogoWidth()
     {
-    	return $this->getSiteLogoParam('logo_width', !$this->oDesign->_oConfig->getLogo());
+    	return ($iResult = $this->getSiteLogoValue('logo_width')) !== false ? $iResult : 0;
     }
 
     public function getSiteLogoHeight()
     {
-    	return $this->getSiteLogoParam('logo_height', !$this->oDesign->_oConfig->getLogo());
+        return ($iResult = $this->getSiteLogoValue('logo_height')) !== false ? $iResult : 0;
     }
 
     protected function getSiteLogoParam($sName, $bGetSystem = false)
@@ -91,6 +140,11 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
     	}
 
     	return getParam('sys_site_' . $sName);
+    }
+
+    protected function getSiteLogoValue($sName)
+    {
+        return isset($this->aValues[$sName]) ? $this->aValues[$sName] : false;
     }
 }
 

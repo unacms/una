@@ -1,8 +1,10 @@
 SET @sName = 'bx_ocean';
 
+
 -- SETTINGS
 DELETE FROM `top`, `toc`, `to` USING `sys_options_types` AS `top` LEFT JOIN `sys_options_categories` AS `toc` ON `top`.`id`=`toc`.`type_id` LEFT JOIN `sys_options` AS `to` ON `toc`.`id`=`to`.`category_id` WHERE `top`.`name`=@sName;
-DELETE FROM `sys_options` WHERE `name` IN (CONCAT(@sName, '_site_logo'), CONCAT(@sName, '_site_logo_alt'), CONCAT(@sName, '_site_logo_width'), CONCAT(@sName, '_site_logo_height'));
+DELETE FROM `sys_options` WHERE `name` LIKE 'bx_ocean_site_%';
+
 
 -- STUDIO PAGE & WIDGET
 DELETE FROM `tp`, `tw`, `twb`, `tpw` 

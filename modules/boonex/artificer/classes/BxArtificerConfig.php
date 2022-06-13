@@ -23,6 +23,8 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
     {
         parent::__construct($aModule);
 
+        $this->_iLogoHeight = 48;
+
         $this->_aPrefixes = [
             'option' => 'bx_artificer_'
         ];

@@ -1614,8 +1614,7 @@
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Общий порог угрозы бесопасности перед тем, как послать отчёт и заблокировать агрессора]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_log"><![CDATA[Общий порог угрозы бесопасности перед тем, как послать отчёт]]></string>
         <string name="_adm_stg_cpt_option_sys_security_block_content_after_n_reports"><![CDATA[Блокировать контент после N жалоб (0 - не блокировать)]]></string>
-	<string name="_adm_stg_cpt_option_sys_site_logo_height"><![CDATA[Высота лого]]></string>
-	<string name="_adm_stg_cpt_option_sys_site_logo_width"><![CDATA[Ширина лого]]></string>
+	<string name="_adm_stg_cpt_option_sys_site_logo_aspect_ratio"><![CDATA[Соотношение сторон лого]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_default"><![CDATA[Основной движок хранения (отличный от Local может потребовать дополнительную настройку)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_access_key"><![CDATA[AWS - ключ доступа]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS - сегмент (bucket)]]></string>

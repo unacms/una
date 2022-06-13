@@ -163,28 +163,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
                     'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',
                     'storage_object' => 'sys_images_custom',
-                    'transcoder_object' => 'sys_custom_images',
-                    'transcoder_image_width' => (int)getParam($this->sParamLogoWidth),
-                    'transcoder_image_height' => (int)getParam($this->sParamLogoHeight),
                     'value' => (int)getParam($this->sParamLogo),
-                ),
-                'width' => array(
-                    'type' => 'text',
-                    'name' => 'width',
-                    'caption' => _t('_adm_stg_cpt_option_sys_site_logo_width'),
-                    'value' => (int)getParam($this->sParamLogoWidth),
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                ),
-                'height' => array(
-                    'type' => 'text',
-                    'name' => 'height',
-                    'caption' => _t('_adm_stg_cpt_option_sys_site_logo_height'),
-                    'value' => (int)getParam($this->sParamLogoHeight),
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
                 ),
                 'alt' => array(
                     'type' => 'text',
