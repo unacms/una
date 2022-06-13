@@ -433,6 +433,7 @@ BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
         'xvid'   : 'video/xvid',
         
         'xwd'    : 'image/x-xwindowdump',
+        'svg'    : 'image/svg+xml',
         'zip'    : ['application/zip', 'application/x-zip-compressed']
        
     }
