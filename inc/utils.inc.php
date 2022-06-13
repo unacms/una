@@ -507,6 +507,32 @@ function bx_get_image_exif_and_size($oStorage, $oTranscoder, $iContentId){
     return array('exif' => $sExif, 'size' => $sData);
 }
 
+function bx_get_svg_image_size($sUrl)
+{
+    $iWidth = $iHeight = 0;
+
+    $sContent = bx_file_get_contents($sUrl);
+    if(empty($sContent))
+        return [$iWidth, $iHeight];
+
+    $aAttributes = BxDolXmlParser::getInstance()->getAttributes($sContent, 'SVG', 0);
+    if(isset($aAttributes['VIEWBOX'])) {
+        $aViewBox = explode(' ', $aAttributes['VIEWBOX']);
+        if(!empty($aViewBox) && is_array($aViewBox) && count($aViewBox) == 4) {
+            $iWidth = (float)$aViewBox[2];
+            $iHeight = (float)$aViewBox[3];
+        }
+    }
+
+    if(!$iWidth && isset($aAttributes['WIDTH']))
+        $iWidth = $this->_str2px($aAttributes['WIDTH']);
+
+    if(!$iHeight && isset($aAttributes['HEIGHT']))
+        $iHeight = $this->_str2px($aAttributes['HEIGHT']);
+
+    return [$iWidth, $iHeight];
+}
+
 function extFileExists( $sFileSrc )
 {
     return (file_exists( $sFileSrc ) && is_file( $sFileSrc )) ? true : false;

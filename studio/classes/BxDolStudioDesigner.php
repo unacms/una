@@ -26,8 +26,6 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
     protected $sParamLogo;
     protected $sParamLogoAlt;
-    protected $sParamLogoWidth;
-    protected $sParamLogoHeight;
 
     protected $aCovers;
 
@@ -46,8 +44,6 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
         $this->sParamLogo = 'sys_site_logo';
         $this->sParamLogoAlt = 'sys_site_logo_alt';
-        $this->sParamLogoWidth = 'sys_site_logo_width';
-        $this->sParamLogoHeight = 'sys_site_logo_height';
 
         $this->aCovers = array(
             'cover_common' => array(
@@ -120,7 +116,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
     function setLogoParams($aParams)
     {
-        list($this->sParamLogo, $this->sParamLogoAlt, $this->sParamLogoWidth, $this->sParamLogoHeight) = $aParams;
+        list($this->sParamLogo, $this->sParamLogoAlt) = $aParams;
     }
 
     function makeDefault()
@@ -136,6 +132,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
     function submitLogo(&$oForm)
     {
         $iProfileId = getLoggedId();
+        $iValuePrior = $this->oDb->getParam($this->sParamLogo);
 
         if(!empty($_FILES['image']['tmp_name'])) {
             $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
@@ -151,11 +148,15 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
             $this->oDb->setParam($this->sParamLogo, $iId);
             $oStorage->afterUploadCleanup($iId, $iProfileId);
+
+            bx_alert('system', 'change_logo', 0, 0, [
+                'option' => $this->sParamLogo, 
+                'value' => $iId,
+                'value_prior' => $iValuePrior
+            ]);
         }
 
         $this->oDb->setParam($this->sParamLogoAlt, $oForm->getCleanValue('alt'));
-        $this->oDb->setParam($this->sParamLogoWidth, $oForm->getCleanValue('width'));
-        $this->oDb->setParam($this->sParamLogoHeight, $oForm->getCleanValue('height'));
         return $this->getJsResult('_adm_dsg_scs_save', true, true, bx_append_url_params($this->sManageUrl, array('page' => BX_DOL_STUDIO_DSG_TYPE_LOGO)));
     }
 
@@ -170,6 +171,13 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
             return false;
 
         $this->oDb->setParam($this->sParamLogo, 0);
+
+        bx_alert('system', 'change_logo', 0, 0, [
+            'option' => $this->sParamLogo, 
+            'value' => 0,
+            'value_prior' => $iId
+        ]);
+
         return true;
     }
 

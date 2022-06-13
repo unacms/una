@@ -524,25 +524,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      */
     function getMainLogoUrl()
     {
-        $oDesigns = BxDolDesigns::getInstance();
-
-        $iFileId = (int)$oDesigns->getSiteLogo();
-        if(!$iFileId) 
-            return false;
-
-        $aParams = array();
-        if(($iLogoWidth = (int)$oDesigns->getSiteLogoWidth()) > 0)
-            $aParams['x'] = $iLogoWidth;
-
-        if(($iLogoHeight = (int)$oDesigns->getSiteLogoHeight()) > 0)
-            $aParams['y'] = $iLogoHeight;
-
-        if(!empty($aParams))
-            $sFileUrl = BX_DOL_URL_ROOT . bx_append_url_params('image_transcoder.php', array_merge(array('o' => 'sys_custom_images', 'h' => $iFileId), $aParams));
-        else 
-            $sFileUrl = BxDolTranscoder::getObjectInstance('sys_custom_images')->getFileUrl($iFileId);
-
-        return !empty($sFileUrl) ? $sFileUrl : false;
+        return BxDolDesigns::getInstance()->getSiteLogoUrl();
     }
 
     /**
@@ -562,12 +544,12 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         $sFileUrl = $this->getMainLogoUrl();
         if (!empty($sFileUrl)) {
             $iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
-            $sMaxWidth = $iLogoWidth > 0 ? 'max-width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+            $sWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
 
             $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
-            $sMaxHeight = $iLogoHeight > 0 ? 'max-height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+            $sHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
 
-            $sLogo = '<img style="' . $sMaxWidth . $sMaxHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
+            $sLogo = '<img style="' . $sWidth . ' ' . $sHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
         }
 
         $aAttrs = array(
