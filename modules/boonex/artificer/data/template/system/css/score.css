@@ -46,3 +46,9 @@ div.bx-score-by-item .bx-score-bi-vote {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
+.bx-base-general-entity-actions .bx-menu-custom-hor.bx-menu-more-auto .bx-score-counter-holder {
+    border-width: 0;
+}
+.bx-base-general-entity-actions .bx-menu-custom-hor.bx-menu-more-auto .bx-score-counter-holder .bx-score-counter-label {
+    padding: 0;
+}

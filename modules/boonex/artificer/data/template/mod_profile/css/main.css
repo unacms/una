@@ -207,7 +207,7 @@ div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto
 div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-element-holder {
     width: 100%;
 }
-div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-counter-holder {
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-counter-holder:not(.bx-score-counter-holder) {
     margin-right: 1rem;
 }
 
