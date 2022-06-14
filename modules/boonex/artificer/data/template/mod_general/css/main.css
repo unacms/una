@@ -158,5 +158,12 @@ div.bx-badge.bx-badge-compact img{
 }
 .sys-action-counter-holder .bx-view-counter-label {
     padding: 0px;
-    
+}
+.bx-base-unit-showcase-wrapper {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase{
+    display: inline-block;
 }

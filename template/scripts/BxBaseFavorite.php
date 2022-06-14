@@ -362,7 +362,7 @@ class BxBaseFavorite extends BxDolFavorite
         
         $oForm->aInputs['title']['value'] = $aData['title'];
         $oForm->aInputs['allow_view_favorite_list_to']['value'] = $aData['allow_view_favorite_list_to'];
-        //echo 'yyy';
+
         if($oForm->isSubmittedAndValid()) {
             
             $sTitle = $oForm->getCleanValue('title');

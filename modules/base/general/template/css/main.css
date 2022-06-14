@@ -330,3 +330,8 @@ div.bx-badge.bx-badge-compact img{
 #bx-popup-ajax-wrapper-sys_set_badges li INPUT[type="checkbox"] {
     margin-right: 0.5rem;
 }
+.bx-base-unit-showcase-wrapper {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+}

@@ -538,11 +538,6 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 }
 
 /* showcase view */
-.bx-base-unit-showcase-wrapper {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-}
 .bx-base-unit-showcase-wrapper .bx-base-unit-showcase {
 	white-space: normal;
 }
