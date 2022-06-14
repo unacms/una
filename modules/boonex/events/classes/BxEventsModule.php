@@ -364,7 +364,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             'bx_if:date' => [
                 'condition' => $oDateStart && $oDateEnd,
                 'content' => [
-                    'date' => $oDateStart && $oDateEnd ? (strftime(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . strftime(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp()))) : '',
+                    'date' => $oDateStart && $oDateEnd ? (date(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . date(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp()))) : '',
                     'date_c' => $oDateStart->format('c'),
             ]],
             'bx_if:location' => array(
@@ -463,7 +463,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oDateBegin->setTimestamp($aContentInfo['start_utc']);
         $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
         $sEntryBegin = $oDateBegin->format('r');
-        $sEntryBeginShort = strftime(getParam('bx_events_short_date_format'), $oDateBegin->getTimestamp());
+        $sEntryBeginShort = date(getParam('bx_events_short_date_format'), $oDateBegin->getTimestamp());
         $oDateBegin->setTimezone(new DateTimeZone('UTC'));
         $sEntryBeginUTC = $oDateBegin->format('c');
 
