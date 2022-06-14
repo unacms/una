@@ -34,10 +34,11 @@ BxDolConnection.prototype.toggleByPopup = function(oLink) {
     });
 };
 
-BxDolView.prototype.getUsers = function(oLink, iStart, iPerPage) {
+BxDolConnection.prototype.getUsers = function(oLink, iStart, iPerPage) {
     var $this = this;
     var oData = this._getDefaultParams();
-    oData['action'] = 'GetUsers';
+    oData['act'] = 'GetUsers';
+    oData['fmt'] = 'json';
     oData['start'] = iStart;
     oData['per_page'] = iPerPage;
 
@@ -54,6 +55,13 @@ BxDolView.prototype.getUsers = function(oLink, iStart, iPerPage) {
         },
         'json'
     );
+};
+
+BxDolConnection.prototype.onGetUsers = function(oData) {
+    if(!oData.content)
+        return;
+
+    $(oData.source).parents('.bx-popup-content-wrapped:first').html(oData.content);
 };
 
 BxDolConnection.prototype._loadingInButton = function(e, bShow) {
