@@ -40,9 +40,12 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 .bx-form-section-header legend {
-    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
 
-    line-height: 1.125rem;
+    line-height: 1.25rem;
     text-transform: uppercase;
 }
 
@@ -61,14 +64,17 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 .bx-form-collapsable .bx-form-section-toggler {
-    position:absolute;
-    left: -2px;
-    top: 2px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
 
-    width:20px;
-    height:20px;
+    width: 1.25rem;
+    height: 1.25rem;
 
-    text-decoration:none;
+    text-decoration: none;
 
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
@@ -79,6 +85,8 @@ import url(../../../../../../../template/css/forms.css);
     -moz-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
+
+    line-height: 1.25rem;
 }
 
 .bx-form-collapsed .bx-form-section-toggler {
@@ -89,11 +97,7 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 .bx-form-section-toggler .sys-icon {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 0 0 5px;
     font-size:0.875rem;
-    line-height:1.2rem;
 }
 
 /*--- One Line fields ---*/

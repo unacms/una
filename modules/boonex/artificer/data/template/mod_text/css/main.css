@@ -120,6 +120,9 @@
     border-radius: 0;
     box-shadow: none;
 }
+.bx-base-general-entity-actions .bx-menu-custom-hor > .bx-menu-item-more-auto > .bx-base-general-entity-action > a > .bx-mi-text {
+    display: none;
+}
 
 /*-- Entry: Author block --*/
 .sys-author-info .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor {

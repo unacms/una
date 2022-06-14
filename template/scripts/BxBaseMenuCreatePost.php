@@ -67,7 +67,7 @@ class BxBaseMenuCreatePost extends BxTemplMenuCustom
                 'module' => 'system', 
                 'id' => 'more-auto', 
                 'name' => 'more-auto',
-                'title' => '_sys_menu_item_title_va_more_auto', 
+                'title' => '_sys_menu_item_title_va_more_auto_empty', 
                 'href' => 'javascript:void(0)', 
                 'icon' => 'ellipsis-v',
                 'active' => 1

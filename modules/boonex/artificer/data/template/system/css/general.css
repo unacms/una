@@ -63,6 +63,10 @@ import url(../../../../../../../template/css/general.css);
 
 
 /*--- Profile Avatar ---*/
+.bx-db-content.bx-content-padding-block .bx-profile-avatar-cnt {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+}
 #bx-profile-switcher .bx-pas-list .bx-def-hr:first-child {
     display: none;
 }

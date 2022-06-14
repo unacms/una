@@ -34,8 +34,13 @@
 }
 
 .bx-form-section-header legend {
-    position:relative;
-    text-transform:uppercase;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    line-height: 1.25rem;
+    text-transform: uppercase;
 }
 
 .bx-form-section-header legend u {
@@ -72,13 +77,15 @@
 /* section toggler */
 
 .bx-form-collapsable .bx-form-section-toggler {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
 
-    position:absolute;
-    left: -2px;
-    top: 2px;
-
-    width:20px;
-    height:20px;
+    width: 1.25rem;
+    height: 1.25rem;
 
     text-decoration:none;
 
@@ -91,6 +98,8 @@
     -moz-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
+
+    line-height: 1.25rem;
 }
 
 .bx-form-collapsed .bx-form-section-toggler {
@@ -101,11 +110,7 @@
 }
 
 .bx-form-section-toggler .sys-icon {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 0 0 5px;
-    font-size:0.875rem;
-    line-height:1.2rem;
+    font-size: 0.875rem;
 }
 
 /* form inputs */

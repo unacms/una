@@ -983,9 +983,9 @@ BLAH;
 
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
+            $sLegend = '<legend class="bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
         else
-            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
+            $sLegend = '<legend class="bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
 
         $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sLegend);
 

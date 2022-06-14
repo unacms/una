@@ -2813,7 +2813,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_invoices"><![CDATA[Invoices]]></string>
     <string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>
     <string name="_sys_menu_item_title_more"><![CDATA[More]]></string>
-    <string name="_sys_menu_item_title_more_auto"><![CDATA[More]]></string>
+    <string name="_sys_menu_item_title_more_auto"><![CDATA[]]></string>
     <string name="_sys_menu_item_title_orders"><![CDATA[Orders]]></string>
     <string name="_sys_menu_item_title_profile"><![CDATA[Profile]]></string>
     <string name="_sys_menu_item_title_set_acl_level"><![CDATA[Set membership]]></string>
@@ -2940,6 +2940,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_va_notes"><![CDATA[Notes]]></string>
     <string name="_sys_menu_item_title_va_audit"><![CDATA[Audit]]></string>
     <string name="_sys_menu_item_title_va_more_auto"><![CDATA[More]]></string>
+    <string name="_sys_menu_item_title_va_more_auto_empty"><![CDATA[]]></string>
     <string name="_sys_menu_item_title_social_sharing"><![CDATA[Share]]></string>
     <string name="_sys_menu_item_title_system_social_sharing"><![CDATA[Share]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Share in Facebook]]></string>

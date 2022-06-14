@@ -671,7 +671,7 @@
         @apply block w-full px-3 py-1.5;
         @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
-        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
@@ -681,7 +681,7 @@
         @apply relative block w-full pl-3 pr-8;
         @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
-        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
@@ -692,7 +692,7 @@
         @apply relative block w-full py-2 px-3;
         @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
-        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
@@ -709,7 +709,7 @@
     }
     .bx-artificer .bx-def-font-inputs.bx-form-input-checkbox,
     .bx-artificer .bx-def-font-inputs.bx-form-input-radio {
-        @apply leading-6 text-sm font-medium text-blue-600 dark:text-blue-600;
+        @apply leading-6 text-base font-medium text-blue-600 dark:text-blue-600;
     }
     .bx-artificer .bx-form-input-checkbox:checked,
     .bx-artificer .bx-form-input-radio:checked {
@@ -743,7 +743,7 @@
         @apply flex flex-wrap items-stretch w-full py-2 px-3 ;
         @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
-        @apply leading-6 text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
+        @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
         @apply placeholder:text-gray-500 dark:focus:placeholder:text-gray-700 focus:placeholder:text-gray-300;
         @apply rounded-md;
     }
@@ -804,7 +804,7 @@
     .bx-artificer .bx-stl-mil-sm,
     .bx-artificer .bx-stl-mil-wo-bg,
     .bx-artificer .bx-stl-mil-wo-bg-gaps {
-        @apply leading-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
+        @apply text-base text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
     }
 
     .bx-artificer .bx-menu-toolbar-item a,
@@ -821,15 +821,16 @@
     .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm,
     .bx-artificer .bx-stl-mil-wo-bg {
-        @apply flex items-center px-3 py-1.5;
+        @apply flex items-center px-3 py-2;
     }
     .bx-artificer .bx-stl-mil,
     .bx-artificer .bx-stl-mil-sm {
+        @apply border border-transparent active:border-gray-300 dark:active:border-gray-700 hover:border-gray-200/50 dark:hover:border-gray-700/50;
         @apply active:bg-gray-300 dark:active:bg-black/50 hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
         @apply rounded-md;
     }
     .bx-artificer .bx-stl-mil-sm {
-        @apply px-2 leading-5;
+        @apply px-2 py-1.5 text-sm;
     }
     .bx-artificer .bx-popup .bx-stl-mil-sm {
         @apply px-4;
@@ -873,7 +874,7 @@
         @apply ml-0; 
     }
     .bx-artificer .bx-stl-mii-sm > * {
-        @apply h-4 w-4 mr-1.5 leading-4 text-sm;
+        @apply h-5 w-5 mr-1.5 text-sm;
     }
     .bx-artificer .bx-stl-mit {
         @apply truncate;
@@ -967,7 +968,9 @@
     }
 
     /* Common elements: Units */
-    .bx-artificer .bx-def-icon-size {
+    .bx-artificer .bx-def-icon-size,
+    .bx-artificer .bx-profile-avatar .bx-def-thumb-size,
+    .bx-artificer .bx-profile-stats .bx-ps-user .bx-def-thumb-size {
         @apply h-8 w-8;
     }
     .bx-artificer .bx-def-thumb-size {
