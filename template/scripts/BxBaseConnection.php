@@ -41,11 +41,11 @@ class BxBaseConnection extends BxDolConnection
         $bIsMutual = (bool)bx_get('mutual');
         $iStart = (int)bx_get('start');
         $iPerPage = (int)bx_get('per_page');
-        
-        return echoJson(array(
+
+        return [
             'content' => $this->_getConnected($sContentType, $iProfileId, $bIsMutual, $iStart, $iPerPage),
             'eval' => $this->getJsObjectName($iProfileId) . '.onGetUsers(oData)'
-        ));
+        ];
     }
     
     public function getJsObjectName($iProfileId)
@@ -203,35 +203,38 @@ class BxBaseConnection extends BxDolConnection
     }
     
     public function _getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart = 0, $iPerPage = 0)
-    {   
-        $aUsers = $this->getConnectionsAsArray($sContentType, $iProfileId, null, $bIsMutual);
-        
-        $oPaginate = new BxTemplPaginate(array(
+    {
+        if(empty($iPerPage))
+            $iPerPage = $this->_aObject['per_page_default'];
+
+        $aUsers = $this->getConnectionsAsArray($sContentType, $iProfileId, null, $bIsMutual, $iStart, $iPerPage + 1);
+
+        $oPaginate = new BxTemplPaginate([
             'on_change_page' => $this->getJsObjectName($iProfileId) . '.getUsers(this, {start}, {per_page})',
             'start' => $iStart,
             'per_page' => $iPerPage,
-        ));
+        ]);
         $oPaginate->setNumFromDataArray($aUsers);
 
         foreach($aUsers as $iProfile) {
             $oProfile = BxDolProfile::getInstanceMagic($iProfile);
-            $aTmplUsers[] = array(
+            $aTmplUsers[] = [
                 'style_prefix' => $this->_sStylePrefix,
-                'user_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+                'user_unit' => $oProfile->getUnit(0, ['template' => 'unit_wo_info']),
                 'user_url' => $oProfile->getUrl(),
             	'user_title' => bx_html_attribute($oProfile->getDisplayName()),
             	'user_name' => $oProfile->getDisplayName()
-            );
+            ];
         }
-        
+
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
 
-        return $this->_oTemplate->parseHtmlByName('connected_by_list.html', array(
+        return $this->_oTemplate->parseHtmlByName('connected_by_list.html', [
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplUsers,
             'paginate' => $oPaginate->getSimplePaginate()
-        ));
+        ]);
     }
     
     protected function _getAuthorInfo($iAuthorId = 0)

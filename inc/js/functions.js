@@ -719,6 +719,25 @@ function bx_menu_toggle(oLink, sMenu, sMenuItem, sSelectorParent) {
     });
 }
 
+function bx_menu_followings_load_more(oLink, sMenu, sContextModule, iStart, iPerPage) {
+    var oLoadingParent = $(oLink).length ? $(oLink).parents('.bx-menu-item:first') : $('body'); 
+
+    bx_loading(oLoadingParent, true);
+
+    $.get(sUrlRoot + 'menu.php', {
+        o: sMenu, 
+        a: 'load_more', 
+        v: sContextModule,
+        start: iStart,
+        per_page: iPerPage
+    }, function(oData) {
+        bx_loading(oLoadingParent, false);
+
+        if(oData && oData.content != undefined)
+            $(oLink).parents('.bx-menu-subitem:first').replaceWith(oData.content);
+    }, 'json');
+}
+
 /**
  * Set ACL level for specified profile
  * @param iProfileId - profile id to set acl level for

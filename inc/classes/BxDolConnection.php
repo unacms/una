@@ -132,6 +132,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_sObject = $aObject['object'];
         $this->_aObject = $aObject;
+        $this->_aObject['per_page_default'] = 20;
+
         $this->_sType = $aObject['type'];
 
         $this->_oQuery = new BxDolConnectionQuery($aObject);
