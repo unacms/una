@@ -493,7 +493,7 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 }
 
 /* flexbox */
-.bx-base-pofile-units-wrapper {
+.bx-base-pofile-units-wrapper:not(.bx-base-unit-showcase-wrapper) {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -545,8 +545,8 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     width:calc(100%);
 }
 .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase {
-	display: inline-block;
-	vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
 
     width: calc(16.6%);
 }
