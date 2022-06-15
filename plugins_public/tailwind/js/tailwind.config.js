@@ -29,6 +29,9 @@ module.exports = {
     './modules/boonex/messenger/js/*.js',
     './modules/boonex/messenger/template/*.html',
 
+    // Editor
+    './modules/boonex/editor/js/*.js',  
+      
     './template/*.html',
   ],
   safelist: [
@@ -81,7 +84,7 @@ module.exports = {
 
     'sys-action-counter', 'sys-ac-only', 'sys-ac-link',
 
-    'bx-base-general-unit-meta-username',
+    'bx-base-general-unit-meta-username', 'bx-base-text-unit-gallery-wrapper', 'aspect-video', 
 
     'bx-tl-overflow',
 
@@ -89,7 +92,7 @@ module.exports = {
 
     'flickity-button',
 	  
-    'ql-editor',
+    'ql-editor', 'space-x-4'
   ],
   darkMode: 'class', // false or 'media' or 'class'
   theme: {
@@ -154,6 +157,27 @@ module.exports = {
         animation: {
           goo: "goo 8s infinite",
         },
+        aspectRatio: {
+          auto: 'auto',
+          square: '1 / 1',
+          video: '16 / 9',
+          1: '1',
+          2: '2',
+          3: '3',
+          4: '4',
+          5: '5',
+          6: '6',
+          7: '7',
+          8: '8',
+          9: '9',
+          10: '10',
+          11: '11',
+          12: '12',
+          13: '13',
+          14: '14',
+          15: '15',
+          16: '16',
+        },
         keyframes: {
           goo: {
             "0%": {
@@ -176,7 +200,7 @@ module.exports = {
     aspectRatio: ['responsive', 'hover']
   },
   corePlugins: {
-    aspectRatio: false,
+    aspectRatio: true,
   },
   plugins: [
     require('@tailwindcss/typography'),
