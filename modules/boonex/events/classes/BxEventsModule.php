@@ -350,9 +350,6 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oDateStart = date_create('@' . $aContentInfo['date_start']);
         if ($oDateStart)
             $oDateStart->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
-        $oDateEnd = date_create('@' . ($aContentInfo['date_end'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_end'] : $aContentInfo['repeat_stop']));
-        if ($oDateEnd)
-            $oDateEnd->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $sLocationString = $oMetatags ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : false;
@@ -362,9 +359,9 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             'title_attr' => bx_html_attribute($a['content']['title']),
             'url' => $a['content']['url'],
             'bx_if:date' => [
-                'condition' => $oDateStart && $oDateEnd,
+                'condition' => $oDateStart,
                 'content' => [
-                    'date' => $oDateStart && $oDateEnd ? (date(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . date(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp()))) : '',
+                    'date' => $oDateStart ? bx_time_js($aContentInfo['date_start'], BX_FORMAT_DATE_TIME) : '',
                     'date_c' => $oDateStart->format('c'),
             ]],
             'bx_if:location' => array(
