@@ -141,9 +141,9 @@ class BxDolFormQuery extends BxDolDb
                 'privacy' => $a['privacy'] ? true : false,
                 'rateable' => $a['rateable'],
                 'html' => $a['html'],
-                'attrs' => $a['attrs'] ? unserialize($a['attrs']) : false,
-                'tr_attrs' => $a['attrs_tr'] ? unserialize($a['attrs_tr']) : false,
-                'attrs_wrapper' => $a['attrs_wrapper'] ? unserialize($a['attrs_wrapper']) : false,
+                'attrs' => $a['attrs'] ? unserialize($a['attrs']) : [],
+                'tr_attrs' => $a['attrs_tr'] ? unserialize($a['attrs_tr']) : [],
+                'attrs_wrapper' => $a['attrs_wrapper'] ? unserialize($a['attrs_wrapper']) : [],
                 'visible_for_levels' => $a['visible_for_levels'],
             );
 
