@@ -482,7 +482,7 @@ BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
 BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {};
 
 BxDolGrid.prototype._checkAppend = function (oInput, oData) {
-	var oAppend = $.parseJSON($(oInput).attr('bx_grid_action_append'));
+	var oAppend = $(oInput).attr('bx_grid_action_append') ? $.parseJSON($(oInput).attr('bx_grid_action_append')) : false;
     if(typeof(oAppend) == 'object')
         oData = $.extend({}, oData, oAppend);
 
