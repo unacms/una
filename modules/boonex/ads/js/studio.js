@@ -21,10 +21,10 @@ BxAdsStudio.prototype.onChangeClone = function(oElement) {
     var sClass = 'bx-form-element-wrapper';
     var oName = $(oElement).parents('form:first').find("#bx-form-element-type_title input");
 
-    if($(oElement).attr('checked') != undefined)
-        oName.removeAttr('disabled').parents('.' + sClass + ':first').show();
+    if($(oElement).prop('checked'))
+        oName.prop('disabled', false).parents('.' + sClass + ':first').show();
     else
-        oName.attr('disabled', 'disabled').parents('.' + sClass + ':first').hide();
+        oName.prop('disabled', true).parents('.' + sClass + ':first').hide();
 };
 
 BxAdsStudio.prototype.loadingInButton = function(e, bShow) {

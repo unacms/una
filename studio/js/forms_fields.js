@@ -132,15 +132,15 @@ BxDolStudioFormsFields.prototype.onSelectChecker = function(oSelect, bClear) {
 
 BxDolStudioFormsFields.prototype.onCheckRequired = function(oCheckbox) {
     var sId = 'bx-form-element-checker_func';
-    if($(oCheckbox).attr('checked') != undefined) {
-        $('#' + sId + ',#bx-form-element-checker_error').show().find('select,input').removeAttr('disabled');
+    if($(oCheckbox).prop('checked')) {
+        $('#' + sId + ',#bx-form-element-checker_error').show().find('select,input').prop('disabled', false);
 
         var oSelect = $('#' + sId + ' select');
         if(oSelect.val() != '')
             this.onSelectChecker(oSelect, false);
     }
     else {
-        $('#' + sId).hide().find('select').val('').attr('disabled', 'disabled');
+        $('#' + sId).hide().find('select').val('').prop('disabled', true);
         $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_error, #bx-form-element-checker_params_required').hide().find('input').val('').attr('disabled', 'disabled');
     }
 };

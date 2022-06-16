@@ -160,10 +160,10 @@ BxDolStudioBuilderPage.prototype.onChangeModule = function(sName, oLink) {
 };
 
 BxDolStudioBuilderPage.prototype.onSelectBlock = function(oCheckbox) {
-	var iCounter = parseInt($('#adm-bp-cbf-counter').html());
-	iCounter += $(oCheckbox).attr('checked') == 'checked' ? 1 : -1;
+    var iCounter = parseInt($('#adm-bp-cbf-counter').html());
+    iCounter += $(oCheckbox).prop('checked') ? 1 : -1;
 
-	$('#adm-bp-cbf-counter').html(iCounter);
+    $('#adm-bp-cbf-counter').html(iCounter);
 };
 
 BxDolStudioBuilderPage.prototype.onCreateBlock = function(oData) {
