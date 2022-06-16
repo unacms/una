@@ -994,58 +994,67 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
     	$sModule = $this->_aModule['name'];
 
-        $aSettingsTypes = array('follow_member', 'follow_context');
+        $aSettingsTypes = ['follow_member', 'follow_context'];
         if($this->serviceActAsProfile())
-            $aSettingsTypes = array('personal', 'follow_member');
+            $aSettingsTypes = ['personal', 'follow_member'];
 
-        return array(
-            'handlers' => array(
-                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
-                array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+        return [
+            'handlers' => [
+                ['group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'],
+                ['group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'],
                 
-                array('group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module'),
+                ['group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module'],
 
-                array('group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module'),
+                ['group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module'],
 
-                array('group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'),
+                ['group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'],
 
-                array('group' => $sModule . '_join_invitation', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_invitation_notif', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_invitation', 'module_class' => 'Module'),
+                ['group' => $sModule . '_join_invitation', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_invitation_notif', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_invitation', 'module_class' => 'Module'],
                 
-                array('group' => $sModule . '_join_request', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_request', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_request', 'module_class' => 'Module', 'module_event_privacy' => $this->_oConfig->CNF['OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT']),
+                ['group' => $sModule . '_join_request', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_request', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_request', 'module_class' => 'Module', 'module_event_privacy' => $this->_oConfig->CNF['OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT']],
                 
-                array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module'),
-            ),
-            'settings' => array(
-                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => $aSettingsTypes),
-
-                array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => $aSettingsTypes),
-
-                array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => $aSettingsTypes),
+                ['group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module'],
                 
-                array('group' => 'fan', 'unit' => $sModule, 'action' => 'fan_added', 'types' => $aSettingsTypes),
+                //--- Moderation related: For 'admins'.
+                ['group' => $sModule . '_object_pending_approval', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'pending_approval', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_pending_approval', 'module_class' => 'Module'],
+            ],
+            'settings' => [
+                ['group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => $aSettingsTypes],
 
-                array('group' => 'invite', 'unit' => $sModule, 'action' => 'join_invitation_notif', 'types' => array('personal')),
+                ['group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => $aSettingsTypes],
 
-                array('group' => 'join', 'unit' => $sModule, 'action' => 'join_request', 'types' => $aSettingsTypes),
+                ['group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => $aSettingsTypes],
+                
+                ['group' => 'fan', 'unit' => $sModule, 'action' => 'fan_added', 'types' => $aSettingsTypes],
 
-                array('group' => 'timeline_post', 'unit' => $sModule, 'action' => 'timeline_post_common', 'types' => $aSettingsTypes)
-            ),
-            'alerts' => array(
-                array('unit' => $sModule, 'action' => 'doVote'),
-                array('unit' => $sModule, 'action' => 'undoVote'),
+                ['group' => 'invite', 'unit' => $sModule, 'action' => 'join_invitation_notif', 'types' => ['personal']],
 
-                array('unit' => $sModule, 'action' => 'doVoteUp'),
-                array('unit' => $sModule, 'action' => 'doVoteDown'),
+                ['group' => 'join', 'unit' => $sModule, 'action' => 'join_request', 'types' => $aSettingsTypes],
 
-                array('unit' => $sModule, 'action' => 'fan_added'),
+                ['group' => 'timeline_post', 'unit' => $sModule, 'action' => 'timeline_post_common', 'types' => $aSettingsTypes],
 
-                array('unit' => $sModule, 'action' => 'join_invitation_notif'),
+                //--- Moderation related: For 'admins'.
+                ['group' => 'action_required', 'unit' => $sModule, 'action' => 'pending_approval', 'types' => ['personal']],
+            ],
+            'alerts' => [
+                ['unit' => $sModule, 'action' => 'doVote'],
+                ['unit' => $sModule, 'action' => 'undoVote'],
 
-                array('unit' => $sModule, 'action' => 'join_request'),
+                ['unit' => $sModule, 'action' => 'doVoteUp'],
+                ['unit' => $sModule, 'action' => 'doVoteDown'],
 
-                array('unit' => $sModule, 'action' => 'timeline_post_common'),
-            )
-        );
+                ['unit' => $sModule, 'action' => 'fan_added'],
+
+                ['unit' => $sModule, 'action' => 'join_invitation_notif'],
+
+                ['unit' => $sModule, 'action' => 'join_request'],
+
+                ['unit' => $sModule, 'action' => 'timeline_post_common'],
+                
+                //--- Moderation related: For 'admins'.
+                ['unit' => $sModule, 'action' => 'pending_approval'],
+            ]
+        ];
     }
 
     public function serviceGetNotificationsInsertData($oAlert, $aHandler, $aDataItems)

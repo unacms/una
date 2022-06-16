@@ -3211,7 +3211,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return;
 
         $aRecipients = [];
-        if(getParam('sys_notify_to_approve_by_role') == 'on' && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
+        if(getParam('sys_notify_to_approve_by_role') == 'on' && bx_srv('system', 'is_module_content', [$this->_oConfig->getName()]) && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
             $iContextProfileId = abs((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
             $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
 
