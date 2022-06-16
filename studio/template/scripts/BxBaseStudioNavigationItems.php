@@ -458,7 +458,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         else if($aRow['submenu_object'] == "" && $aRow['onclick'] != "")
             $mixedValue = $this->_limitMaxLength(_t('_adm_nav_txt_items_gl_link_custom'), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         else
-            $mixedValue = BxDolPermalinks::getInstance()->permalink($mixedValue);
+            $mixedValue = $this->_limitMaxLength(BxDolPermalinks::getInstance()->permalink($aRow['link']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
