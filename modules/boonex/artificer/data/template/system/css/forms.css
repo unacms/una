@@ -185,12 +185,6 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 
-/*-- Form field: Switcher --*/
-.bx-switcher-cont input {
-   display: none !important;
-}
-
-
 /*-- Form field: Checkbox/Radio Set --*/
 .bx-form-input-wrapper-checkbox_set label,
 .bx-artificer .bx-form-input-wrapper-radio_set label {
