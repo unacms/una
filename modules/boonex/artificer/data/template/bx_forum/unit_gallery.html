@@ -1,29 +1,25 @@
-<div onclick="location.href='__content_url__'" class="__class__ bx-base-text-unit bx-forum-unit bx-base-text-unit-gallery bx-def-gal-unit-size flex flex-col w-full p-2 box-border relative inline-block cursor-pointer">
-    <div class="grid grid-cols-1">
-        <div class="bx-base-text-unit-cnt rounded-lg ring-1 ring-gray-200 dark:ring-gray-700 overflow-hidden bg-white dark:bg-gray-800 row-start-1 col-start-1" >
+<div onclick="location.href='__content_url__'" class="__class__ w-full bx-base-text-unit bx-base-text-unit-gallery bx-def-gal-unit-size group p-1 -m-1">
+    <div class="bg-white dark:bg-gray-800 shadow ring-1 ring-gray-300 dark:ring-gray-700 rounded-md xl:mx-auto h-full">
+        <div class="h-full space-y-4 p-1 pb-4 flex flex-col justify-between">
             <bx_if:thumb>
-                <a href="__content_url__" title="__summary_attr__">
-                    <div class="flex-shrink-0">
-                        <img class="h-48 w-full object-cover rounded-lg" src="__gallery_url__" alt="">
-                    </div>
-                </a>
+                <a href="__content_url__" title="__summary_attr__">   <img class="flex grow-0 w-full aspect-video overflow-y-auto align-top  object-cover rounded" src="__gallery_url__" alt=""></a>  
             </bx_if:thumb>
-            <bx_if:no_thumb>
-                <div class="bx-def-gal-img-column flex-shrink-0">
-                    <div class="bx-base-text-unit-no-thumb flex flex-col items-center justify-center h-48 p-4 bg-gradient-to-b box-border rounded-lg"></div>
+            <div class="grow-none px-3 mt-4 text-lg leading-tight font-semibold text-gray-700 group-hover:text-gray-900 dark:text-gray-200 dark:group-hover:text-white">
+                <a href="__content_url__" title="__summary_attr__" class=" text-lg leading-tight font-semibold text-gray-600 group-hover:text-gray-900 dark:text-gray-300 dark:group-hover:text-white">__title__</a>
+            </div>               
+            <bx_if:no_thumb>  
+                <div class="grow relative rounded w-full max-w-full sm:aspect-video overflow-hidden font-normal text-sm  text-gray-500 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300">
+                    <div class="absolute top-auto bottom-0  w-full h-1/4 bg-gradient-to-b from-white/0 to-white dark:from-gray-900/0 dark:to-gray-800"></div>
+                    <div class=" px-3">__summary_plain__</div>
                 </div>
-            </bx_if:no_thumb>
-        </div>
-        <div class="flex flex-col m-4 justify-between row-start-1 col-start-1 items-start">
-            
-            <div class="bx-base-text-unit-text box-border bottom-0 max-w-full h-full justify-between flex flex-col">
-                <div class="bx-base-text-unit-title flex items-center text-left mb-2">
-                    <a href="__content_url__" class="text-ellipsis text-xl font-bold text-white group-hover:text-gray-900 dark:group-hover:text-white">__title__</a>
+            </bx_if:no_thumb> 
+            <bx_if:meta>
+                <div class="bx-base-general-unit-meta flex grow-0 px-2">
+                    <div class="inline-flex flex-wrap text-xs font-medium">
+                        __meta__
+                    </div>
                 </div>
-               <div class="bx-base-text-unit-info text-xs">
-                    <bx_if:meta><div class="bx-base-general-unit-meta pb-2">__meta__</div></bx_if:meta>
-               </div>
-            </div>
+            </bx_if:meta>
         </div>
     </div>
 </div>

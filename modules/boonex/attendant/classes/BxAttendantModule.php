@@ -191,7 +191,6 @@ class BxAttendantModule extends BxDolModule
         $sRv = '';
         $sDefaultEvent = getParam('bx_attendant_on_profile_event_list');
         $oProfile = BxDolProfile::getInstance($aEvent['profile_id']);
-		print_r($aEvent['profile_id']);
         $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
         $bNeedRaiseEvent = false;
         if ($aEvent['event'] == 'add' && $aEvent['module'] == 'profile'){

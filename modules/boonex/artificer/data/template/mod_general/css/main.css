@@ -161,6 +161,7 @@ div.bx-badge.bx-badge-compact img{
 }
 .bx-base-unit-showcase-wrapper {
     display: block;
+    white-space: nowrap;
     overflow: hidden;
 }
 .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase{

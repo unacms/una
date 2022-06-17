@@ -15,7 +15,7 @@
 }
 
 /*-- Browsing: Search results --*/
-/*.bx-base-text-unit-gallery-wrapper {
+.bx-base-text-unit-gallery-wrapper {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: stretch;
@@ -34,7 +34,7 @@
     flex: 0 0 100%;
 
     overflow:hidden;
-}*/
+}
 .bx-base-unit-showcase-wrapper .flickity-slider {
     display: -webkit-flex;
     display: flex;
@@ -44,16 +44,12 @@
     flex-wrap: wrap;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-    margin: 2px;
-}/*
+}
 .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
     margin: 0;
     padding: 0.25rem;
-}*/
-.bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
-
-    padding: 0rem;
 }
+
 .bx-base-unit-showcase-wrapper.bx-sc-enabled .bx-base-text-unit-showcase {
     height: calc(100% - 3px);
 }
@@ -100,12 +96,12 @@
 
 .bx-media-desktop .bx-layout-column-half .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase,
 .bx-media-desktop .bx-layout-column-wide .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
-   width:calc(33%);
+   width:calc(50%);
 }
 
 .bx-media-desktop #sys_search_results  .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase,
 .bx-media-desktop .bx-layout-column-fullwidth  .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
-   width:calc(25.3% - 17px);
+   width:calc(33.3%);
 }
 
 /*-- Entry: Text block --*/

@@ -303,7 +303,7 @@
 	background-color: rgba(55, 65, 81, 0.5) !important;
 }
 .bx-forum-icon{
-    width: 1.5rem;
+    min-width: 1.5rem;
     height: 1.5rem;
     text-align: center;
     line-height: 1.7rem;
@@ -553,6 +553,8 @@
 
 .bx-menu-meta-item-ex.bx-menu-meta-item-ex-no-bg{
     background: none !important;
+}
+.bx-menu-meta-item-ex.bx-menu-meta-item-ex-no-pad{
     padding: 0px !important;
 }
 .bx-menu-meta-item-ex{
