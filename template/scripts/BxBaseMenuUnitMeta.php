@@ -52,7 +52,7 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         return $this->getUnitMetaItem('custom', $sContent);
     }
     
-    public function getUnitMetaItemExtended($sContent = '', $sIcon = '', $sUrl = '', $bIsNoBg = false )
+    public function getUnitMetaItemExtended($sContent = '', $sIcon = '', $sUrl = '', $bIsNoBg = false, $bIsNoPadding = false )
     {
         $aTmplVarsEx = [];
         
@@ -99,6 +99,8 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         }
         
         $aTmplVars['class'] = $bIsNoBg ? 'bx-menu-meta-item-ex-no-bg' : '';
+        
+        $aTmplVars['class'] = $bIsNoPadding ? 'bx-menu-meta-item-ex-no-pad' : '';
         
         return $this->_oTemplate->parseHtmlByName('unit_meta_item_ex.html', $aTmplVars);
     }
