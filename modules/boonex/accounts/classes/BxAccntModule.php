@@ -36,7 +36,8 @@ class BxAccntModule extends BxBaseModGeneralModule
     
     public function serviceGetTitle ($iContentId)
     {
-        return BxDolAccount::getInstance($iContentId)->getEmail();
+        $oAcc = BxDolAccount::getInstance($iContentId);
+        return $oAcc ? $oAcc->getEmail() : '';
     }
 
     public function serviceGetOptionsExportFields()
