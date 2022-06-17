@@ -1044,7 +1044,7 @@
         @apply bg-gray-300 dark:bg-black/50 dark:text-gray-200 text-gray-800;
     }
     
-    /* forum units*/
+    /* forum units - new view, for UNA14 need to migrate in general */
     .bx-artificer .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {

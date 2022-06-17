@@ -45,8 +45,8 @@ div.bx-forum-participants.none .bx-forum-participant {
     display: -webkit-flex;
     display: flex;
 }
-/* new units */
 
+/* forum units - new view, for UNA14 need to migrate in general */
 .bx-base-unit-showcase-wrapper.bx-forum-wrapper{
     white-space:normal;
     text-align: left !important;
@@ -57,12 +57,12 @@ div.bx-forum-participants.none .bx-forum-participant {
 
 .bx-media-desktop .bx-layout-column-half .bx-base-unit-showcase-wrapper.flickity-enabled.bx-forum-wrapper .bx-base-text-unit-showcase,
 .bx-media-desktop .bx-layout-column-wide .bx-base-unit-showcase-wrapper.flickity-enabled.bx-forum-wrapper .bx-base-text-unit-showcase {
-   width:calc(33%);
+    width:calc(33%);
 }
 
 .bx-media-desktop #sys_search_results  .bx-base-unit-showcase-wrapper.flickity-enabled.bx-forum-wrapper .bx-base-text-unit-showcase,
 .bx-media-desktop .bx-layout-column-fullwidth  .bx-base-unit-showcase-wrapper.flickity-enabled.bx-forum-wrapper .bx-base-text-unit-showcase {
-   width:calc(25%);
+    width:calc(25%);
 }
 .bx-artificer .bx-base-unit-showcase-wrapper.flickity-enabled.bx-forum-wrapper .flickity-slider .bx-base-text-unit-showcase > div {
     margin-left: 0.5rem !important;
