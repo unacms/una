@@ -141,28 +141,33 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if (!$aMenuItemSelected)
             return '';
 
-        // (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name']) - homepage detection
-
         $oMenuActions = BxDolMenu::getObjectInstance($this->_sObjectActionsMenu);
 
-        $bImage = strpos($aMenuItemSelected['icon'], '.') !== false;
+        $bImageInline = strpos($aMenuItemSelected['icon'], '&lt;svg') !== false || strpos($aMenuItemSelected['icon'], '<svg') !== false;
+
+        $bVarsImage = !$bImageInline && strpos($aMenuItemSelected['icon'], '.') !== false;
+        $aVarsImage = [];
+        if($bVarsImage)
+            $aVarsImage = [
+                'icon_url' => $this->_oTemplate->getIconUrl($aMenuItemSelected['icon'])
+            ];
+
         $aVars = array (
             'object' => $this->_sObject,
             'title' => bx_process_output($aMenuItemSelected['title']),
             'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),
             'actions' => $oMenuActions ? $oMenuActions->getCode() : '',
             'bx_if:image' => array (
-                'condition' => $bImage,
-                'content' => array('icon_url' => $aMenuItemSelected['icon']),
+                'condition' => $bVarsImage,
+                'content' => $aVarsImage,
             ),
             'bx_if:icon' => array (
-                'condition' => !$bImage && !empty($aMenuItemSelected['icon']),
-                'content' => array('icon' => $aMenuItemSelected['icon']),
+                'condition' => !$bVarsImage && !empty($aMenuItemSelected['icon']),
+                'content' => array(
+                    'icon' => $aMenuItemSelected['icon']
+                ),
             ),
         );
-
-        // if (!$this->_sObjectSubmenu && !$this->_mixedMainMenuItemSelected && $aMenuItemSelected['submenu_object'])
-        //    $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
 
         return $aVars;
     }
