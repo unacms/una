@@ -116,7 +116,7 @@ function bx_login($iId, $bRememberMe = false)
         $iId, 
         'bx_accounts', 
         '_sys_audit_action_account_login',  
-        array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]])
+        array('content_title' => '', 'data' => ['display_info' => ['User agent' => (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '')]])
     );
     
     return $oAccountQuery->getInfoById($iId);
@@ -134,7 +134,7 @@ function bx_logout($bNotify = true)
         $_COOKIE['memberID'], 
         'bx_accounts', 
         '_sys_audit_action_account_logout',  
-        array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]])
+        array('content_title' => '', 'data' => ['display_info' => ['User agent' => (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '')]])
     );
 
     bx_setcookie('memberID', '', time() - 96 * 3600);
@@ -213,7 +213,7 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
             $aAccountInfo['id'], 
             'bx_accounts', 
             '_sys_audit_action_account_failed_login_attempt',  
-            array('content_title' => '', 'data' => ['display_info' => ['User agent' => $_SERVER["HTTP_USER_AGENT"]]]),
+            array('content_title' => '', 'data' => ['display_info' => ['User agent' => (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '')]]),
             $aAccountInfo['profile_id']
         );
 
