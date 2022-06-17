@@ -212,34 +212,6 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'pp_api_return_data_url', 'value', '_bx_payment_pp_api_return_data_url_cpt', '', '', '', '', '', 10),
 (@iProviderId, 'pp_api_notify_url', 'value', '_bx_payment_pp_api_notify_url_cpt', '', '', '', '', '', 11);
 
-
--- 2Checkout payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('2checkout', '_bx_payment_2co_cpt', '_bx_payment_2co_dsc', '2co_', 1, 1, 0, 0, 20, 'BxPaymentProvider2Checkout');
-SET @iProviderId = LAST_INSERT_ID();
-
-INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
-(@iProviderId, '2co_active', 'checkbox', '_bx_payment_2co_active_cpt', '_bx_payment_2co_active_dsc', '', '', '', '', 1),
-(@iProviderId, '2co_mode', 'select', '_bx_payment_2co_mode_cpt', '_bx_payment_2co_mode_dsc', '1|_bx_payment_2co_mode_live,2|_bx_payment_2co_mode_test', '', '', '', 2),
-(@iProviderId, '2co_account_id', 'text', '_bx_payment_2co_account_id_cpt', '_bx_payment_2co_account_id_dsc', '', '', '', '', 3),
-(@iProviderId, '2co_payment_method', 'select', '_bx_payment_2co_payment_method_cpt', '_bx_payment_2co_payment_method_dsc', 'CC|_bx_payment_2co_payment_method_cc,PPI|_bx_payment_2co_payment_method_ppi', '', '', '', 4),
-(@iProviderId, '2co_secret_word', 'text', '_bx_payment_2co_secret_word_cpt', '_bx_payment_2co_secret_word_dsc', '', '', '', '', 5),
-(@iProviderId, '2co_return_data_url', 'value', '_bx_payment_2co_return_data_url_cpt', '', '', '', '', '', 6);
-
-
--- BitPay payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('bitpay', '_bx_payment_bp_cpt', '_bx_payment_bp_dsc', 'bp_', 0, 1, 0, 0, 30, 'BxPaymentProviderBitPay');
-SET @iProviderId = LAST_INSERT_ID();
-
-INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
-(@iProviderId, 'bp_active', 'checkbox', '_bx_payment_bp_active_cpt', '_bx_payment_bp_active_dsc', '', 'https', '', '_bx_payment_bp_active_err', 1),
-(@iProviderId, 'bp_api_key', 'text', '_bx_payment_bp_api_key_cpt', '_bx_payment_bp_api_key_dsc', '', '', '', '', 2),
-(@iProviderId, 'bp_transaction_speed', 'select', '_bx_payment_bp_transaction_speed_cpt', '_bx_payment_bp_transaction_speed_dsc', 'high|_bx_payment_bp_transaction_speed_high,medium|_bx_payment_bp_transaction_speed_medium,low|_bx_payment_bp_transaction_speed_low', '', '', '', 3),
-(@iProviderId, 'bp_full_notifications', 'checkbox', '_bx_payment_bp_full_notifications_cpt', '_bx_payment_bp_full_notifications_dsc', '', '', '', '', 4),
-(@iProviderId, 'bp_notification_email', 'text', '_bx_payment_bp_notification_email_cpt', '_bx_payment_bp_notification_email_dsc', '', 'EmailOrEmpty', '', '_bx_payment_form_input_email_err_cor_or_emp', 5);
-
-
 -- Chargebee payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
 ('chargebee', '_bx_payment_cbee_cpt', '_bx_payment_cbee_dsc', 'cbee_', 1, 0, 1, 1, 40, 'BxPaymentProviderChargebee');
@@ -279,21 +251,6 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_v3_expiration_email', 'text', '_bx_payment_cbee_expiration_email_cpt', '', '', 'EmailOrEmpty', '', '_bx_payment_form_input_email_err_cor_or_emp', 11),
 (@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 12),
 (@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 13);
-
--- Recurly payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('recurly', '_bx_payment_rcrl_cpt', '_bx_payment_rcrl_dsc', 'rcrl_', 1, 0, 1, 0, 50, 'BxPaymentProviderRecurly');
-SET @iProviderId = LAST_INSERT_ID();
-
-INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
-(@iProviderId, 'rcrl_active', 'checkbox', '_bx_payment_rcrl_active_cpt', '_bx_payment_rcrl_active_dsc', '', 'https', '', '_bx_payment_rcrl_active_err', 1),
-(@iProviderId, 'rcrl_hidden', 'checkbox', '_bx_payment_rcrl_hidden_cpt', '_bx_payment_rcrl_hidden_dsc', '', '', '', '', 2),
-(@iProviderId, 'rcrl_mode', 'select', '_bx_payment_rcrl_mode_cpt', '_bx_payment_rcrl_mode_dsc', '1|_bx_payment_rcrl_mode_live,2|_bx_payment_rcrl_mode_test', '', '', '', 3),
-(@iProviderId, 'rcrl_site', 'text', '_bx_payment_rcrl_site_cpt', '_bx_payment_rcrl_site_dsc', '', '', '', '', 4),
-(@iProviderId, 'rcrl_api_key_private', 'text', '_bx_payment_rcrl_api_key_private_cpt', '_bx_payment_rcrl_api_key_private_dsc', '', '', '', '', 5),
-(@iProviderId, 'rcrl_api_key_public', 'text', '_bx_payment_rcrl_api_key_public_cpt', '_bx_payment_rcrl_api_key_public_dsc', '', '', '', '', 6),
-(@iProviderId, 'rcrl_return_data_url', 'value', '_bx_payment_rcrl_return_data_url_cpt', '', '', '', '', '', 7),
-(@iProviderId, 'rcrl_notify_url', 'value', '_bx_payment_rcrl_notify_url_cpt', '', '', '', '', '', 8);
 
 -- Stripe payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
