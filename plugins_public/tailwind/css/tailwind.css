@@ -14,10 +14,6 @@
 
 @layer components {
     /* Global: HTML tags */
-    a {
-        @apply hover:underline;
-    }
-
     ol, ul {
         @apply pl-10 list-outside;
     }

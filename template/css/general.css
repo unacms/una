@@ -521,31 +521,8 @@ div.bx-account-unit-online {
 .sys-cpf-form {
     position: relative;
 }
-.sys-cpf-form .sys-cpf-user {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.sys-cpf-form .sys-cpf-content {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-}
-.sys-cpf-form.sys-cpf-default .sys-cpf-content {
-    -webkit-align-items: stretch;
-    align-items: stretch;   
-}
-.sys-cpf-form.sys-cpf-default .sys-cpf-content > div {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    width: 100%;
-    cursor: text;
-}
 .sys-cpf-form .bx-uploader-ghost .bx-base-general-icon-wrapper img {
-	max-width: 9.375rem;
+    max-width: 9.375rem;
 }
 .sys-cpf-close {
     position: absolute;
