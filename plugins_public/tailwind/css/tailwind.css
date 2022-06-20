@@ -796,86 +796,86 @@
 
 
     /* Common elements: Menus */   
-    .bx-artificer .bx-stl-mil,
-    .bx-artificer .bx-stl-mil-sm,
-    .bx-artificer .bx-stl-mil-wo-bg,
-    .bx-artificer .bx-stl-mil-wo-bg-gaps {
+    .bx-stl-mil,
+    .bx-stl-mil-sm,
+    .bx-stl-mil-wo-bg,
+    .bx-stl-mil-wo-bg-gaps {
         @apply text-base text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
     }
 
-    .bx-artificer .bx-menu-toolbar-item a,
-    .bx-artificer .bx-menu-item a:not(.bx-def-font-meta),
-    .bx-artificer a.bx-stl-mil:not(.bx-def-font-meta),
-    .bx-artificer a.bx-stl-mil-wo-bg:not(.bx-def-font-meta),
-    .bx-artificer a.bx-stl-mil-wo-bg-gaps:not(.bx-def-font-meta),
-    .bx-artificer .bx-stl-mil a:not(.bx-def-font-meta),
-    .bx-artificer .bx-stl-mil-wo-bg a:not(.bx-def-font-meta),
-    .bx-artificer .bx-stl-mil-wo-bg-gaps a:not(.bx-def-font-meta) {
+    .bx-menu-toolbar-item a,
+    .bx-menu-item a:not(.bx-def-font-meta),
+    a.bx-stl-mil:not(.bx-def-font-meta),
+    a.bx-stl-mil-wo-bg:not(.bx-def-font-meta),
+    a.bx-stl-mil-wo-bg-gaps:not(.bx-def-font-meta),
+    .bx-stl-mil a:not(.bx-def-font-meta),
+    .bx-stl-mil-wo-bg a:not(.bx-def-font-meta),
+    .bx-stl-mil-wo-bg-gaps a:not(.bx-def-font-meta) {
         @apply hover:no-underline;
     }
 
-    .bx-artificer .bx-stl-mil,
-    .bx-artificer .bx-stl-mil-sm,
-    .bx-artificer .bx-stl-mil-wo-bg {
+    .bx-stl-mil,
+    .bx-stl-mil-sm,
+    .bx-stl-mil-wo-bg {
         @apply flex items-center px-3 py-2;
     }
-    .bx-artificer .bx-stl-mil,
-    .bx-artificer .bx-stl-mil-sm {
+    .bx-stl-mil,
+    .bx-stl-mil-sm {
         @apply border border-transparent active:border-gray-300 dark:active:border-gray-700 hover:border-gray-200/50 dark:hover:border-gray-700/50;
         @apply active:bg-gray-300 dark:active:bg-black/50 hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
         @apply rounded-md;
     }
-    .bx-artificer .bx-stl-mil-sm {
+    .bx-stl-mil-sm {
         @apply px-2 py-1.5 text-sm;
     }
-    .bx-artificer .bx-popup .bx-stl-mil-sm {
+    .bx-popup .bx-stl-mil-sm {
         @apply px-4;
     }
-    .bx-artificer .bx-stl-mil-hover {
+    .bx-stl-mil-hover {
         @apply hover:text-gray-800 dark:hover:text-gray-200;
         @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
     }
-    .bx-artificer .bx-stl-mil-active {
+    .bx-stl-mil-active {
         @apply active:bg-gray-300 dark:active:bg-black/50;
     }
-    .bx-artificer .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil,
-    .bx-artificer .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm {
+    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil,
+    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm {
         @apply rounded-none;
     }
-    .bx-artificer .bx-menu-tab-active .bx-stl-mil,
-    .bx-artificer .bx-menu-tab-active .bx-stl-mil-sm {
+    .bx-menu-tab-active .bx-stl-mil,
+    .bx-menu-tab-active .bx-stl-mil-sm {
         @apply ring-1 ring-white/50 dark:ring-gray-800/50 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white;
     }
-    .bx-artificer .bx-popup .bx-menu-tab-active .bx-stl-mil,
-    .bx-artificer .bx-popup .bx-menu-tab-active .bx-stl-mil-sm {
+    .bx-popup .bx-menu-tab-active .bx-stl-mil,
+    .bx-popup .bx-menu-tab-active .bx-stl-mil-sm {
         @apply ring-0;
     }
-    .bx-artificer .bx-stl-mii,
-    .bx-artificer .bx-stl-mii-sm,
-    .bx-artificer .bx-stl-mil .sys-action-do-icon {
+    .bx-stl-mii,
+    .bx-stl-mii-sm,
+    .bx-stl-mil .sys-action-do-icon {
         @apply flex items-center justify-center text-gray-500 text-lg;
     }
     
-    .bx-artificer .bx-stl-mii > *,
-    .bx-artificer .bx-stl-mii-sm > *,
-    .bx-artificer .bx-stl-mil .sys-action-do-icon > * {
+    .bx-stl-mii > *,
+    .bx-stl-mii-sm > *,
+    .bx-stl-mil .sys-action-do-icon > * {
         @apply flex items-center justify-center h-6 w-6 mr-3;
     }
-    .bx-artificer .bx-stl-mii:last-child > *,
-    .bx-artificer .bx-stl-mii-sm:last-child > *,
-    .bx-artificer .bx-stl-mil .sys-action-do-icon:last-child > * {
+    .bx-stl-mii:last-child > *,
+    .bx-stl-mii-sm:last-child > *,
+    .bx-stl-mil .sys-action-do-icon:last-child > * {
         @apply mr-0;
     }
-    .bx-artificer .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text {
+    .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text {
         @apply ml-0; 
     }
-    .bx-artificer .bx-stl-mii-sm > * {
+    .bx-stl-mii-sm > * {
         @apply h-5 w-5 mr-1.5 text-sm;
     }
-    .bx-artificer .bx-stl-mit {
+    .bx-stl-mit {
         @apply truncate;
     }
-    .bx-artificer .bx-stl-mia {
+    .bx-stl-mia {
         @apply inline-block py-0.5 px-2 bg-gray-200/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 text-xs rounded-full;
     }
 
