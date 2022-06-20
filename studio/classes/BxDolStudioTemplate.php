@@ -24,9 +24,20 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         $this->_sInjectionsTable = 'sys_injections_admin';
         $this->_sInjectionsCache = 'sys_injections_admin.inc';
 
+        $aCode = self::retrieveCode();
+
         $this->_sCodeKey = BX_DOL_STUDIO_TEMPLATE_CODE_KEY;
-        $this->_sCode = isset($_COOKIE[$this->_sCodeKey]) && preg_match('/^[A-Za-z0-9_-]+$/', $_COOKIE[$this->_sCodeKey]) ? $_COOKIE[$this->_sCodeKey] : BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE;
-        $this->_sCode = isset($_GET[$this->_sCodeKey]) && preg_match('/^[A-Za-z0-9_-]+$/', $_GET[$this->_sCodeKey]) ? $_GET[$this->_sCodeKey] : $this->_sCode;
+        $aCodeStudio = self::retrieveCode($this->_sCodeKey, $this->_sMixKey, $this->_sRootPath);
+
+        $sCodeDefault = getParam('template');
+        if($aCodeStudio !== false && $aCodeStudio[0] != $sCodeDefault)
+            $aCode = $aCodeStudio;
+
+        list(
+            $this->_sCode, 
+            $this->_sName, 
+            $this->_sSubPath
+        ) = $aCode;
 
         $this->addLocation('studio', $this->_sRootPath, $this->_sRootUrl);
         $this->addLocationJs('system_admin_js', $this->_sRootPath . 'js/' , $this->_sRootUrl . 'js/');
@@ -63,7 +74,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             'common.less',
             'default.less',
             'general.css',
-        	'menu.css',
+            'menu.css',
         ));
 
         bx_import('BxTemplStudioConfig');

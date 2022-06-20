@@ -348,7 +348,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 return false;
 
             $aModule = BxDolModuleQuery::getInstance()->getModuleByUri($sCode);
-            if(empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] != 1 || !file_exists($sRootPath . 'modules/' . $aModule['path'] . 'data/template/'))
+            if(empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] != 1 || !file_exists(BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'data/template/'))
                 return false;
 
             $oConfig = new BxDolModuleConfig($aModule);
