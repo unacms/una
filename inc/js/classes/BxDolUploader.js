@@ -489,13 +489,6 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 if (error.main)
                     $this._showError(error.main + '. ' + error.sub, true);
             },
-            onprocessfile: (error, file) => { 
-                if (error){
-                    $this._uploader.removeFile(file);
-                }
-                if($this._uploader.status != 3)
-                    $this.onUploadCompleted(''); 
-            },
             onprocessfiles: (files) => { 
                 $this.onUploadCompleted(''); 
             },
