@@ -501,6 +501,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         foreach ($aAccounts as $aAccountInfo){
             $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['account_id'], $aTemplate, true);
             $this->_oDb->addEmailToSentListForCampaign($iCampaignId, $aAccountInfo['email']);
+            unset($GLOBALS['bxDolClasses']['BxDolAccount_' . $aAccountInfo['account_id']]);
         }
               
         $this->_oDb->sendCampaign($iCampaignId);
