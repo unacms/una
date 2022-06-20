@@ -479,6 +479,8 @@ class BxFilesModule extends BxBaseModTextModule
                     $this->_oDb->moveFilesToFolder($aFiles, $iFolder);
             }
         }
+
+        echoJson(['success' => true]);
     }
 
     public function actionCreateFolder() {
