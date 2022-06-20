@@ -1,0 +1,23 @@
+.bx-form-input-html-editor{
+	border: none !important;
+    border-radius: 0 0 0.375rem 0.375rem !important;
+}
+
+.bx-form-input-html-editor .bx-embed-link{
+    width:100%;
+    background: #E1ED10;
+    height: 100px;
+    content: attr(source);
+}
+.bx-form-input-html-editor .bx-embed-link::before{
+    content: attr(source);
+    width: 100%;
+    display: block;
+    height: 100%;
+    line-height: 100px;
+    position: relative;
+    text-align: center;
+    vertical-align: baseline;
+    font-size: 16px;
+    border:1px solid #000;
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+    <string name="_sys_module_editor"><![CDATA[Editor]]></string>
+    <string name="_bx_editor"><![CDATA[Editor]]></string>
+
+    <string name="_bx_editor_setting"><![CDATA[Editor Setting]]></string>
+
+    <string name="_bx_editor_information"><![CDATA[Information]]></string>
+    <string name="_bx_editor_information_block"><![CDATA[]]></string>
+	
+	
+	<string name="_bx_editor_toolbar_action_bold"><![CDATA[Bold]]></string>
+	<string name="_bx_editor_toolbar_action_italic"><![CDATA[Italic]]></string>
+	<string name="_bx_editor_toolbar_action_underline"><![CDATA[Underline]]></string>
+	<string name="_bx_editor_toolbar_action_strike"><![CDATA[Strike]]></string>
+	<string name="_bx_editor_toolbar_action_subscript"><![CDATA[Subscript]]></string>
+	<string name="_bx_editor_toolbar_action_superscript"><![CDATA[Superscript]]></string>
+	<string name="_bx_editor_toolbar_action_code"><![CDATA[Code]]></string>
+	<string name="_bx_editor_toolbar_action_highlight"><![CDATA[Highlight]]></string>
+	<string name="_bx_editor_toolbar_action_indent"><![CDATA[Indent]]></string>
+	<string name="_bx_editor_toolbar_action_outdent"><![CDATA[Outdent]]></string>
+	<string name="_bx_editor_toolbar_action_bullet_list"><![CDATA[Bullet List]]></string>
+	<string name="_bx_editor_toolbar_action_ordered_list"><![CDATA[Ordered List]]></string>
+	<string name="_bx_editor_toolbar_action_code_block"><![CDATA[Code block]]></string>
+	<string name="_bx_editor_toolbar_action_align_left"><![CDATA[Align left]]></string>
+	<string name="_bx_editor_toolbar_action_align_center"><![CDATA[Align center]]></string>
+	<string name="_bx_editor_toolbar_action_align_right"><![CDATA[Align right]]></string>
+	<string name="_bx_editor_toolbar_action_align_justify"><![CDATA[Align justify]]></string>
+	<string name="_bx_editor_toolbar_action_h1"><![CDATA[H1]]></string>
+	<string name="_bx_editor_toolbar_action_h2"><![CDATA[H2]]></string>
+	<string name="_bx_editor_toolbar_action_h3"><![CDATA[H3]]></string>
+	<string name="_bx_editor_toolbar_action_h4"><![CDATA[H4]]></string>
+	<string name="_bx_editor_toolbar_action_link"><![CDATA[Link]]></string>
+	<string name="_bx_editor_toolbar_action_image"><![CDATA[Image]]></string>
+	<string name="_bx_editor_toolbar_action_embed"><![CDATA[Embed]]></string>
+	
+	<string name="_bx_editor_embed_popup_header"><![CDATA[Paste an URL for embed]]></string>
+	<string name="_bx_editor_embed_popup_link"><![CDATA[Paste an URL]]></string>
+    <string name="_bx_editor_embed_popup_embed"><![CDATA[Paste an Embe\d]]></string>
+	
+	<string name="_bx_editor_option_toolbar_mini"><![CDATA[Buttons for mini editor]]></string>
+	<string name="_bx_editor_option_toolbar_standard"><![CDATA[Buttons for standard editor]]></string>
+	<string name="_bx_editor_option_toolbar_full"><![CDATA[Buttons for full editor]]></string>
+    
+    
+    <string name="_bx_editor_mini"><![CDATA[Mini]]></string>
+    <string name="_bx_editor_standard"><![CDATA[Standard]]></string>
+    <string name="_bx_editor_full"><![CDATA[Full]]></string>
+    <string name="_bx_editor_grid_column_title_name"><![CDATA[Name]]></string>
+    <string name="_bx_editor_grid_column_title_icon"><![CDATA[Icon]]></string>
+    
+    	
+</resources>
