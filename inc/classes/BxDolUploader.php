@@ -277,6 +277,7 @@ abstract class BxDolUploader extends BxDolFactory
             'template_ghost' => $sJsValue,
             'multiple' => $isMultiple ? 1 : 0,
             'storage_private' => isset($aParams['storage_private']) ? $aParams['storage_private'] : 1,
+            'is_init_reordering' => isset($aParams['is_init_reordering']) ? $aParams['is_init_reordering'] : 0,
             'bx_if:restore_ghosts' => [
                 'condition' => isset($aParams['is_init_ghosts']) ? $aParams['is_init_ghosts'] : 1,
                 'content' => [

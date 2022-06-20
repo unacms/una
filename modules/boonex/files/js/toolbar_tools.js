@@ -85,7 +85,7 @@ BxFilesBrowserTools.prototype.onSelectAll = function(el) {
         closest('.bx-files-text-unit-simple-row').
         siblings().
         find('input[type=checkbox]').
-        attr('checked', $(el).attr('checked') == 'checked').change(function(){
+        prop('checked', $(el).prop('checked')).change(function(){
             $(el).attr('checked', false);
         });
 };

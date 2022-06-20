@@ -158,3 +158,6 @@
 .bx-files-bulk-actions {
     display: none;
 }
+.bx-files-input-checkbox-select-all {
+    display: inline-block!important;
+}
