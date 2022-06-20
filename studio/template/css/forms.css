@@ -65,13 +65,6 @@
     background-color: rgba(255, 255, 255, 1);
 }
 
-.bx-form-value .bx-switcher-cont {
-    border-color: rgba(136, 143, 153, 1);
-    border-width: 1px;
-
-    background-color: rgba(255, 255, 255, 1);
-}
-
 .bx-form-value .bx-form-input-select_multiple,
 .bx-form-value .bx-form-input-radio_set,
 .bx-form-value .bx-form-input-checkbox_set {

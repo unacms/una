@@ -14,10 +14,6 @@
 
 @layer components {
     /* Global: HTML tags */
-    a {
-        @apply hover:underline;
-    }
-
     ol, ul {
         @apply pl-10 list-outside;
     }
@@ -725,16 +721,16 @@
 
 
     /* Common elements: Forms: Switcher Input */
-    .bx-artificer .bx-switcher-cont.on button {
+    .bx-switcher-cont.on button {
         @apply bg-white dark:bg-gray-800;
     }
-    .bx-artificer .bx-switcher-cont.on button span {
+    .bx-switcher-cont.on button span {
         @apply bg-green-500 dark:bg-green-500 translate-x-5;
     }
-    .bx-artificer .bx-switcher-cont.off button {
+    .bx-switcher-cont.off button {
         @apply bg-gray-200 dark:bg-gray-900;
     }
-    .bx-artificer .bx-switcher-cont.off button span {
+    .bx-switcher-cont.off button span {
         @apply bg-white dark:bg-gray-500 translate-x-0;
     }
 

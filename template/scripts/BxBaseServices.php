@@ -644,7 +644,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'content' => BxDolTemplate::getInstance()->parseHtmlByName('create_post_form.html', array(
                 'default' => $sDefault,
                 'placeholder' => $sPlaceholder,
-                'user_thumb' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+                'user_thumb' => $oProfile->getUnit(0, array('template' => 'unit_wo_info_links')),
                 'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('context_id' => $mixedContextId, 'ajax_mode' => true, 'absolute_action_url' => true, 'custom' => $aCustom))),
                 'js_object' => $sJsObject,
                 'js_content' => $sJsContent

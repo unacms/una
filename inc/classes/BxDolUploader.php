@@ -237,6 +237,9 @@ abstract class BxDolUploader extends BxDolFactory
 
     public function getUploadErrorMessages ($sFormat = 'HTML')
     {
+        if (!$this->_sUploadErrorMessages)
+            return '';
+
         if ('HTML' == $sFormat)
             return nl2br($this->_sUploadErrorMessages);
         else

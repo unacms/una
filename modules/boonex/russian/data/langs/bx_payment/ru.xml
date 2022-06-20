@@ -506,61 +506,6 @@
     <string name="_bx_payment_txt_cart_paypal_api"><![CDATA[PayPal]]></string>
     <string name="_bx_payment_txt_subscribe_paypal_api"><![CDATA[PayPal]]></string>
 
-    <!-- 2Checkout payment provider -->
-    <string name="_bx_payment_2co_cpt"><![CDATA[2Checkout]]></string>
-    <string name="_bx_payment_2co_dsc"><![CDATA[Платежная система 2Checkout]]></string>
-    <string name="_bx_payment_2co_active_cpt"><![CDATA[Активировать]]></string>
-    <string name="_bx_payment_2co_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему.]]></string>
-    <string name="_bx_payment_2co_mode_cpt"><![CDATA[Режим]]></string>
-    <string name="_bx_payment_2co_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
-    <string name="_bx_payment_2co_mode_live"><![CDATA[рабочий]]></string>
-    <string name="_bx_payment_2co_mode_test"><![CDATA[тестовый]]></string>
-    <string name="_bx_payment_2co_account_id_cpt"><![CDATA[Номер счета]]></string>
-    <string name="_bx_payment_2co_account_id_dsc"><![CDATA[Номер Вашего торгового счета в 2Checkout]]></string>
-    <string name="_bx_payment_2co_payment_method_cpt"><![CDATA[Метод оплаты]]></string>
-    <string name="_bx_payment_2co_payment_method_dsc"><![CDATA[Данный метода оплаты будет использоваться по умолчанию во время процесса]]></string>
-    <string name="_bx_payment_2co_payment_method_cc"><![CDATA[Кредитная карта (CC)]]></string>
-    <string name="_bx_payment_2co_payment_method_ppi"><![CDATA[PayPal (PPI)]]></string>
-    <string name="_bx_payment_2co_secret_word_cpt"><![CDATA[Секретное слово]]></string>
-    <string name="_bx_payment_2co_secret_word_dsc"><![CDATA[Секретное слово используется для подсчета проверочного хэша]]></string>
-    <string name="_bx_payment_2co_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
-    <string name="_bx_payment_2co_err_no_vendor_given"><![CDATA[Неизвестный продавец.]]></string>
-    <string name="_bx_payment_2co_err_no_data_given"><![CDATA[Нет переданных данных.]]></string>
-    <string name="_bx_payment_2co_err_wrong_key"><![CDATA[Проверочный ключ неправильный.]]></string>
-    <string name="_bx_payment_2co_err_wrong_payment"><![CDATA[Неправильный метод оплаты.]]></string>
-    <string name="_bx_payment_2co_err_already_processed"><![CDATA[Этот платеж был уже обработан.]]></string>
-    <string name="_bx_payment_2co_msg_verified"><![CDATA[Успешно верифицировано.]]></string>
-    <string name="_bx_payment_txt_name_2checkout"><![CDATA[2Checkout]]></string>
-    <string name="_bx_payment_txt_cart_2checkout"><![CDATA[2Checkout]]></string>
-
-    <!-- BitPay payment provider -->
-    <string name="_bx_payment_bp_cpt"><![CDATA[BitPay]]></string>
-    <string name="_bx_payment_bp_dsc"><![CDATA[Платежная система BitPay]]></string>
-    <string name="_bx_payment_bp_active_cpt"><![CDATA[Активировать]]></string>
-    <string name="_bx_payment_bp_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему.]]></string>
-    <string name="_bx_payment_bp_active_err"><![CDATA[Нужен SSL сертификат (для HTTPS соединения), чтобы активировать и использовать BitPay.]]></string>
-    <string name="_bx_payment_bp_api_key_cpt"><![CDATA[API ключ]]></string>
-    <string name="_bx_payment_bp_api_key_dsc"><![CDATA[API ключ платежной системы BitPay]]></string>
-    <string name="_bx_payment_bp_transaction_speed_cpt"><![CDATA[Скорость транзакции]]></string>
-    <string name="_bx_payment_bp_transaction_speed_dsc"><![CDATA[Определяет как скоро счет будет подтвержден.]]></string>
-    <string name="_bx_payment_bp_transaction_speed_high"><![CDATA[Высокая]]></string>
-    <string name="_bx_payment_bp_transaction_speed_medium"><![CDATA[Средняя]]></string>
-    <string name="_bx_payment_bp_transaction_speed_low"><![CDATA[Низкая]]></string>
-    <string name="_bx_payment_bp_full_notifications_cpt"><![CDATA[Активировать полное оповещение]]></string>
-    <string name="_bx_payment_bp_full_notifications_dsc"><![CDATA[В активном режиме оповещения будут отправляться при каждой смене статуса счета, в противном случае - одинажды при подтверждении счета.]]></string>
-    <string name="_bx_payment_bp_notification_email_cpt"><![CDATA[Email для оповещений]]></string>
-    <string name="_bx_payment_bp_notification_email_dsc"><![CDATA[Email, на который будут оправляться оповещения о изменениях статуса счета. Оставьте пустым для отключения данной функции.]]></string>
-    <string name="_bx_payment_bp_err_posdata_exceed_limit"><![CDATA[Значение posData превысило допустимый лимит. Свяжитесь с администратором.]]></string>
-    <string name="_bx_payment_bp_err_no_data_given"><![CDATA[Нет переданных данных.]]></string>
-    <string name="_bx_payment_bp_err_no_vendor_given"><![CDATA[Неизвестный продавец.]]></string>
-    <string name="_bx_payment_bp_err_incorrect_data"><![CDATA[Некорректные данные платежа.]]></string>
-    <string name="_bx_payment_bp_err_wrong_amount"><![CDATA[Неправильная сумма платежа.]]></string>
-    <string name="_bx_payment_bp_err_already_processed"><![CDATA[Этот  платеж уже обработан.]]></string>
-    <string name="_bx_payment_bp_err_no_confirmation_given"><![CDATA[Платеж ожидает полного подтверждения от Bitcoin сети.]]></string>
-    <string name="_bx_payment_bp_msg_checkout_finished"><![CDATA[Платеж был подтвержден. Когда транзакция будет полностью подтверждена в Bitcoin сети, платеж будет автоматически обработан. Купленный продукт(ы) появится в истории платежей.<br /><b>Внимание.</b> Если это по какой-либо причине не произойдёт, Вам необходимо связаться с продавцом продукта и предоставить ему детали вашего платежа. Он сможет обработать платеж вручную, если средства были получены.]]></string>
-    <string name="_bx_payment_txt_name_bitpay"><![CDATA[BitPay]]></string>
-    <string name="_bx_payment_txt_cart_bitpay"><![CDATA[BitPay]]></string>
-
     <!-- Chargebee payment provider -->
     <string name="_bx_payment_cbee_cpt"><![CDATA[Chargebee]]></string>
     <string name="_bx_payment_cbee_dsc"><![CDATA[Пользователи могут оплачивать, используя готовые страницы оплаты от Chargebee.]]></string>
@@ -599,62 +544,6 @@
     <string name="_bx_payment_txt_name_chargebee_v3"><![CDATA[Chargebee]]></string>
     <string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>
     <string name="_bx_payment_txt_cart_chargebee_v3"><![CDATA[Chargebee]]></string>
-
-    <!-- Recurly payment provider -->
-    <string name="_bx_payment_rcrl_cpt"><![CDATA[Recurly]]></string>
-    <string name="_bx_payment_rcrl_dsc"><![CDATA[Платежная система Recurly]]></string>
-    <string name="_bx_payment_rcrl_active_cpt"><![CDATA[Активировать]]></string>
-    <string name="_bx_payment_rcrl_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему.]]></string>
-    <string name="_bx_payment_rcrl_active_err"><![CDATA[Нужен SSL сертификат (для HTTPS соединения), чтобы активировать и использовать Recurly.]]></string>
-    <string name="_bx_payment_rcrl_hidden_cpt"><![CDATA[Скрыть]]></string>
-    <string name="_bx_payment_rcrl_hidden_dsc"><![CDATA[Платежную систему можно Скрыть, если Вы не хотите принимать новые платежи, но у вас уже есть активные подписки.]]></string>
-    <string name="_bx_payment_rcrl_mode_cpt"><![CDATA[Режим]]></string>
-    <string name="_bx_payment_rcrl_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
-    <string name="_bx_payment_rcrl_mode_live"><![CDATA[рабочий]]></string>
-    <string name="_bx_payment_rcrl_mode_test"><![CDATA[тестовый]]></string>
-    <string name="_bx_payment_rcrl_site_cpt"><![CDATA[Имя сайта]]></string>
-    <string name="_bx_payment_rcrl_site_dsc"><![CDATA[Имя вашего сайта зарегистрированного в Recurly]]></string>
-    <string name="_bx_payment_rcrl_api_key_private_cpt"><![CDATA[Приватный API ключ]]></string>
-    <string name="_bx_payment_rcrl_api_key_private_dsc"><![CDATA[Ваш Приватный API ключ доступа, предоставленный Recurly.]]></string>
-    <string name="_bx_payment_rcrl_api_key_public_cpt"><![CDATA[Публичный API ключ]]></string>
-    <string name="_bx_payment_rcrl_api_key_public_dsc"><![CDATA[Ваш Публичный API ключ доступа, предоставленный Recurly.]]></string>
-    <string name="_bx_payment_rcrl_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
-    <string name="_bx_payment_rcrl_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
-    <string name="_bx_payment_rcrl_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
-    <string name="_bx_payment_txt_name_recurly"><![CDATA[Recurly]]></string>
-    <string name="_bx_payment_txt_cart_recurly"><![CDATA[Recurly]]></string>
-
-    <string name="_bx_payment_form_rcrl_card"><![CDATA[Recurly: форма ввода карты]]></string>
-    <string name="_bx_payment_form_rcrl_card_display_add"><![CDATA[Recurly: добавление карты]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_pending_id_sys"><![CDATA[Обрабатываемый заказ]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_item_sys"><![CDATA[Товар]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_token_sys"><![CDATA[Токен]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_first_name_sys"><![CDATA[Имя]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_first_name"><![CDATA[Имя]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_first_name_err"><![CDATA[Введите ваше имя.]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_last_name_sys"><![CDATA[Фамилия]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_last_name"><![CDATA[Фамилия]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_last_name_err"><![CDATA[Введите вашу фамилию.]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_email_sys"><![CDATA[Email]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_email"><![CDATA[Email]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_email_err"><![CDATA[Введите ваш email.]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_number_sys"><![CDATA[Номер карты]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_number"><![CDATA[Номер карты]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_number_inf"><![CDATA[Введите 16-ти значный номер вашей карты.]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_expire_sys"><![CDATA[Дата окончания]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_expire"><![CDATA[Дата окончания]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_expire_month"><![CDATA[Месяц]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_expire_year"><![CDATA[Год]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_expire_inf"><![CDATA[Используйте 'mm yyyy' формат ввода.]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_cvv_sys"><![CDATA[CVV]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_cvv"><![CDATA[CVV]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_card_cvv_inf"><![CDATA[Три цифры, которые Вы можете найти на обратной стороне вашей карты.]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_submit_sys"><![CDATA[Отправить]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_submit"><![CDATA[Отправить]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_cancel_sys"><![CDATA[Отменить]]></string>
-    <string name="_bx_payment_form_rcrl_card_input_cancel"><![CDATA[Отменить]]></string>
-
-    <string name="_bx_payment_popup_title_rcrl_card_add"><![CDATA[Детали карты]]></string>
 
     <!-- Stripe payment provider -->
     <string name="_bx_payment_strp_cpt"><![CDATA[Stripe]]></string>
