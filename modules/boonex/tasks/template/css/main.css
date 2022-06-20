@@ -38,7 +38,6 @@
         display:none;
 }
 .bx-tasks-task-checkbox  input[type=checkbox] + label{
-	background:url("../images/completed.svg") #FFFFFF;
 	height: 24px;
 	width: 24px;
 	display:inline-block;
@@ -46,12 +45,30 @@
 	cursor: pointer;
 }
 
+.bx-tasks-task-checkbox  input[type=checkbox] + label:before{
+    content: "\f111";
+    font-family: "sys-user-far", sans-serif;
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
 .bx-tasks-task-checkbox input[type=checkbox]:checked + label{
-	background:url("../images/uncompleted.svg") #FFFFFF;
 	height: 24px;
 	width: 24px;
 	display:inline-block;
 	padding: 0;
+}
+.bx-tasks-task-checkbox input[type=checkbox]:checked + label:before{
+    content: "\f058";
+    font-family: "sys-user-far", sans-serif;
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.5rem;
+    line-height: 1;
 }
 .bx-tasks-task{
 	display: flex;
