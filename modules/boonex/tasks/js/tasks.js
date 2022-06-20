@@ -21,7 +21,7 @@ BxTasksView.prototype.init = function () {
 
 BxTasksView.prototype.setCompleted = function (iId, oObj) {
     var $this = this;
-	var iVal = ($(oObj).attr('checked') != 'checked' ? 0 : 1);
+	var iVal = ($(oObj).prop('checked') ? 1 : 0);
 	$this._setCompleted(iId, iVal);
 }
 
