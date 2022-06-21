@@ -9,17 +9,35 @@
         s.parentNode.insertBefore(e, s);
     }
 })(window, document);
-<bx_if:key>
+
 $(document).ready(function () {
+
     embedly("defaults", {
+<bx_if:key>
         cards: {key: '__key__'},
+</bx_if:key>
 		controls: 0
     });
+
     embedly('on', 'card.resize', function(iframe){
         var $card = $(iframe);
         var $card_parent = $card.parents('.fr-embedly');
         $card_parent.css('height', $card.height());
     });
+
+    function bx_embedly_process_links(e) {
+        $(e).find('.bx-embed-link').each(function () { 
+            $(this).html('');
+            $(this).html('<a href="' + $(this).attr('source') + '"></a>');
+            embedly('card', $(this).find('a')[0]); 
+        });
+    }
+
+    if (typeof glOnProcessHtml === 'undefined')
+        glOnProcessHtml = [];
+    if (glOnProcessHtml instanceof Array) 
+        glOnProcessHtml.push(bx_embedly_process_links);
+
+    bx_embedly_process_links(this);
 });
-</bx_if:key>
 </script>
