@@ -149,6 +149,7 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName('stream_player.html', array(
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'sources' => $sSources,
+            'mute' => getParam('bx_stream_mute') ? 1 : 0,
         ));
     }
 
