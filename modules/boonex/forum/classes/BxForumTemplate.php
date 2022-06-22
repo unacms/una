@@ -140,7 +140,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
-        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 55);
+        $sTitle = $aRow[$CNF['FIELD_TITLE']];
 
         $aMetas = array('main' => false, 'counters' => false, 'reply' => false);
         foreach(array_keys($aMetas) as $sMeta) {
@@ -161,6 +161,24 @@ class BxForumTemplate extends BxBaseModTextTemplate
                 'content' => $sMenuMeta
             );
         }
+        
+        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
+        $sParticipants = $oObject ? $oObject->getCounter(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => true, 'caption' => '', 'show_icon' => false, 'caption_empty' => '']) : '';
+        
+        $oObject = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aRow[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate) : null;
+        $sVotes = $oObject ? $oObject->getElementInline() : '';
+        
+        $sImage = '';
+        $mixedImage = $this->_getHeaderImage($aRow);
+        if($mixedImage !== false) {
+            if(!empty($mixedImage['object']))
+                $o = BxDolStorage::getObjectInstance($mixedImage['object']);
+            else if(!empty($mixedImage['transcoder']))
+                $o = BxDolTranscoder::getObjectInstance($mixedImage['transcoder']);
+
+            if($o)
+                $sImage = $o->getFileUrlById($mixedImage['id']);
+        }
 
         return $this->parseHtmlByName('entry-preview.html', array(
             'bx_if:show_stick' => array(
@@ -173,10 +191,19 @@ class BxForumTemplate extends BxBaseModTextTemplate
             ),
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]),
             'title' => $sTitle ? $sTitle : _t('_Empty'),
+            'participants' => $sParticipants,
+            'badges' => $this->_oModule->serviceGetBadges($aRow[$CNF['FIELD_ID']]),
+            'votes' => $sVotes,
+            'image' => $sImage,
             'bx_if:meta_main' => array(
                 'condition' => $aMetas['main'] !== false && (!isset($aParams['show_meta_main']) || $aParams['show_meta_main']),
                 'content' => $aMetas['main']
             ),
+            'bx_if:image' => array(
+                'condition' => $sImage != '',
+                'content' => ['image' => $sImage]
+            ),
+            
             'bx_if:meta_counters' => array(
                 'condition' => $aMetas['counters'] !== false && (!isset($aParams['show_meta_counters']) || $aParams['show_meta_counters']),
                 'content' => $aMetas['counters']

@@ -431,7 +431,7 @@
     }
 
     .bx-def-font-meta {
-        @apply text-xs font-bold;
+        @apply text-xs;
     }
     .bx-def-font-meta:not(a) {
         @apply text-gray-700 dark:text-gray-400 text-opacity-60;
