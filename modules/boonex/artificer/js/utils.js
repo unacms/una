@@ -11,17 +11,19 @@ function bx_artificer_set_color_scheme_html(){
 }
 
 function bx_artificer_set_color_scheme_icon(){
-    if (localStorage.theme === 'dark') {
-        $('.bx-sb-theme-switcher .sys-icon').addClass('moon').removeClass('sun').removeClass('desktop');
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        $('.bx-sb-theme-switcher .sys-icon').addClass('moon').removeClass('sun');
     }
 
-    if (localStorage.theme === 'sun') {
-        $('.bx-sb-theme-switcher .sys-icon').addClass('sun').removeClass('moon').removeClass('desktop');
+    if (localStorage.theme === 'sun' || (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        $('.bx-sb-theme-switcher .sys-icon').addClass('sun').removeClass('moon');
     }
-
-    if (!('theme' in localStorage))
-        $('.bx-sb-theme-switcher .sys-icon').addClass('desktop').removeClass('moon').removeClass('sun');
 }
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    bx_artificer_set_color_scheme_icon();
+    bx_artificer_set_color_scheme_html();
+});
 
 function bx_artificer_set_color_scheme(m){
     switch (m) {
