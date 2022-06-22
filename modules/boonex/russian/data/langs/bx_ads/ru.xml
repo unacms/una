@@ -146,7 +146,8 @@
     <string name="_bx_ads_acl_action_view_entry"><![CDATA[Просмотреть объявление]]></string>
     <string name="_bx_ads_acl_action_set_thumb"><![CDATA[Назначить изображение заголовка объявления]]></string>
     <string name="_bx_ads_acl_action_edit_any_entry"><![CDATA[Редактировать любое объявление]]></string>
-	<string name="_bx_ads_acl_action_delete_any_entry"><![CDATA[Удалять любое объявление]]></string>
+    <string name="_bx_ads_acl_action_delete_any_entry"><![CDATA[Удалять любое объявление]]></string>
+    <string name="_bx_ads_acl_action_make_offer"><![CDATA[Сделать предложение]]></string>
 
     <string name="_bx_ads_page_title_sys_create_entry"><![CDATA[Новое объявление]]></string>
     <string name="_bx_ads_page_title_create_entry"><![CDATA[Новое объявление]]></string>

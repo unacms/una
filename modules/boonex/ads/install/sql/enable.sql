@@ -417,6 +417,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_ads', 'delete any entry', NULL, '_bx_ads_acl_action_delete_any_entry', '', 1, 3);
 SET @iIdActionEntryDeleteAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_ads', 'make offer', NULL, '_bx_ads_acl_action_make_offer', '', 1, 3);
+SET @iIdActionMakeOffer = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -462,7 +466,13 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionEntryEditAny),
 
 -- delete any entry
-(@iAdministrator, @iIdActionEntryDeleteAny);
+(@iAdministrator, @iIdActionEntryDeleteAny),
+
+-- make offer
+(@iStandard, @iIdActionMakeOffer),
+(@iModerator, @iIdActionMakeOffer),
+(@iAdministrator, @iIdActionMakeOffer),
+(@iPremium, @iIdActionMakeOffer);
 
 
 -- SEARCH

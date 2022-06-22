@@ -139,6 +139,9 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return echoJson(array());
 
+        if(($mixedCheck = $this->checkAllowedMakeOffer($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(array('code' => 2, 'msg' => $mixedCheck));
+
         $aOffer = $this->_oDb->getOffersBy(array(
             'type' => 'content_and_author_ids', 
             'content_id' => $iContentId, 
@@ -147,7 +150,7 @@ class BxAdsModule extends BxBaseModTextModule
         ));
 
         if(!empty($aOffer) && is_array($aOffer))
-            return echoJson(array('code' => 2, 'msg' => _t('_bx_ads_txt_err_duplicate')));
+            return echoJson(array('code' => 3, 'msg' => _t('_bx_ads_txt_err_duplicate')));
 
         $aOffer = $this->_oDb->getOffersBy(array(
             'type' => 'content_and_author_ids', 
@@ -157,7 +160,7 @@ class BxAdsModule extends BxBaseModTextModule
         ));
 
         if(!empty($aOffer) && is_array($aOffer))
-            return echoJson(array('code' => 3, 'msg' => _t('_bx_ads_txt_err_offer_accepted')));
+            return echoJson(array('code' => 4, 'msg' => _t('_bx_ads_txt_err_offer_accepted')));
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_OFFER'], $CNF['OBJECT_FORM_OFFER_DISPLAY_ADD']);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'make_offer', array('id' => $iContentId));
@@ -167,12 +170,15 @@ class BxAdsModule extends BxBaseModTextModule
             $aValToAdd = array('content_id' => $iContentId, 'author_id' => $iAuthorId);
 
             $iId = (int)$oForm->insert($aValToAdd);
-            if($iId != 0)
-                $aResult = array('code' => 0, 'msg' => _t('_bx_ads_txt_msg_offer_added'), 'eval' => $sJsObject . '.onMakeOffer(oData);', 'id' => $iId);
-            else
-                $aResult = array('code' => 4, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+            if($iId != 0) {
+                $this->checkAllowedMakeOffer($aContentInfo, true);
 
-            $this->onOfferAdded($iId, $aResult);
+                $this->onOfferAdded($iId, $aResult);
+
+                $aResult = array('code' => 0, 'msg' => _t('_bx_ads_txt_msg_offer_added'), 'eval' => $sJsObject . '.onMakeOffer(oData);', 'id' => $iId);
+            }
+            else
+                $aResult = array('code' => 5, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
 
             return echoJson($aResult);
         }
@@ -1376,6 +1382,8 @@ class BxAdsModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
         $sTxtError = '_sys_txt_access_denied';
 
+        $iProfileId = bx_get_logged_profile_id();
+
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
@@ -1385,10 +1393,14 @@ class BxAdsModule extends BxBaseModTextModule
         if(!$this->isAuction($mixedContent) || (int)$mixedContent[$CNF['FIELD_QUANTITY']] <= 0)
             return _t($sTxtError);
 
-        if($mixedContent[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id())
-            return CHECK_ACTION_RESULT_ALLOWED;
+        if($mixedContent[$CNF['FIELD_AUTHOR']] == $iProfileId)
+            return _t($sTxtError);
 
-        return _t($sTxtError);
+        $aCheck = checkActionModule($iProfileId, 'make offer', $this->getName(), $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function isAllowedViewOffers($mixedContent, $isPerformAction = false)
