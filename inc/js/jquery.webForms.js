@@ -119,6 +119,13 @@
             if (oInput.hasClass('bx-form-select-labels')) {
                 $(".bx-form-select-labels").select2ToTree();
             }
+             
+            if(oInput.hasClass('bx-form-input-rgb-list')) {
+				oInput.bind('change', function() {
+                    oInput.removeClassWild('bg-*').addClass('bg-' + $(this).val());
+                });
+                oInput.removeClassWild('bg-*').addClass('bg-' + $(this).val());
+			}
         });
 
         if (!$(".bx-form-input-wrapper-password").hasClass("bx-inited")) {
@@ -332,4 +339,12 @@ $(document).ready(function() {
     $(this).addWebForms();
 });
 
+(function($) {
+    $.fn.removeClassWild = function(mask) {
+        return this.removeClass(function(index, cls) {
+            var re = mask.replace(/\*/g, '\\S+');
+            return (cls.match(new RegExp('\\b' + re + '', 'g')) || []).join(' ');
+        });
+    };
+})(jQuery);
 /** @} */

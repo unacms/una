@@ -24,10 +24,11 @@
 
     border-color: rgba(136, 143, 153, 1);
     border-width: 1px;
-
-    background-color: rgba(255, 255, 255, 1);
     
     font-size: 1.075rem;
+}
+.bx-form-input-rgb-list{
+    color:#fff;
 }
 
 .bx-form-value .bx-form-input-select_multiple,

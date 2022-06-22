@@ -3893,7 +3893,8 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `exte
 ('sys_relations', '_sys_pre_lists_relations', 'system', '0', '1'),
 ('sys_content_filter', '_sys_pre_lists_content_filter', 'system', '1', '0'),
 
-('sys_studio_widget_types', '_sys_pre_lists_studio_widget_types', 'system', '0', '0');
+('sys_studio_widget_types', '_sys_pre_lists_studio_widget_types', 'system', '0', '0'),
+('sys_colors', '_sys_pre_lists_colors', 'system', '0', '0');
 
 
 CREATE TABLE `sys_form_pre_values` (
@@ -4266,6 +4267,32 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 ('sys_studio_widget_types', 'extensions', 7, '_sys_pre_lists_studio_widget_types_extensions', '', 'a:1:{s:4:"icon";s:18:"lmi-extensions.svg";}'),
 ('sys_studio_widget_types', 'integrations', 8, '_sys_pre_lists_studio_widget_types_integrations', '', 'a:1:{s:4:"icon";s:20:"lmi-integrations.svg";}'),
 ('sys_studio_widget_types', 'favorites', 9, '_sys_pre_lists_studio_widget_types_favorites', '', 'a:1:{s:4:"icon";s:17:"lmi-favorites.svg";}');
+
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
+('sys_colors', 'slate-600', 2, '_sys_pre_lists_color_slate', '', ''),
+('sys_colors', 'gray-600', 3, '_sys_pre_lists_color_gray', '', ''),
+('sys_colors', 'zinc-600', 4, '_sys_pre_lists_color_zinc', '', ''),
+('sys_colors', 'neutral-600', 5, '_sys_pre_lists_color_neutral', '', ''),
+('sys_colors', 'stone-600', 6, '_sys_pre_lists_color_stone', '', ''),
+('sys_colors', 'red-600', 7, '_sys_pre_lists_color_red', '', ''),
+('sys_colors', 'orange-600', 8, '_sys_pre_lists_color_orange', '', ''),
+('sys_colors', 'amber-600', 9, '_sys_pre_lists_color_amber', '', ''),
+('sys_colors', 'yellow-600', 10, '_sys_pre_lists_color_yellow', '', ''),
+('sys_colors', 'lime-600', 11, '_sys_pre_lists_color_lime', '', ''),
+('sys_colors', 'green-600', 12, '_sys_pre_lists_color_green', '', ''),
+('sys_colors', 'emerald-600', 13, '_sys_pre_lists_color_emerald', '', ''),
+('sys_colors', 'teal-600', 14, '_sys_pre_lists_color_teal', '', ''),
+('sys_colors', 'cyan-600', 15, '_sys_pre_lists_color_cyan', '', ''),
+('sys_colors', 'sky-600', 16, '_sys_pre_lists_color_sky', '', ''),
+('sys_colors', 'blue-600', 17, '_sys_pre_lists_color_blue', '', ''),
+('sys_colors', 'indigo-600', 18, '_sys_pre_lists_color_indigo', '', ''),
+('sys_colors', 'violet-600', 19, '_sys_pre_lists_color_violet', '', ''),
+('sys_colors', 'purple-600', 20, '_sys_pre_lists_color_purple', '', ''),
+('sys_colors', 'fuchsia-600', 21, '_sys_pre_lists_color_fuchsia', '', ''),
+('sys_colors', 'pink-600', 22, '_sys_pre_lists_color_pink', '', ''),
+('sys_colors', 'rose-600', 23, '_sys_pre_lists_color_rose', '', '');
+
 
 -- --------------------------------------------------------
 

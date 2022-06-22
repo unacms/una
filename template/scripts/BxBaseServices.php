@@ -1047,22 +1047,24 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 		$sStyleFont = '';
 		$sStyleBg = '';
 		if ($aBadge['color'] == '')
-			$aBadge['color'] = '#ff0000';
-        if ($aBadge['fontcolor'] == '')
-			$aBadge['fontcolor'] = '#ffffff';
+			$aBadge['color'] = 'purple-600';
 		
         if ($bIsCompact && $aBadge['icon'] != ''){
             $aBadge['is_icon_only'] = 1;
-			$sClass .= ' bx-badge-compact-to';
-			$sStyleFont = 'color: ' . $aBadge['color'];
         }
-		else{
-			$sStyleBg = 'background-color: ' . $aBadge['color'] . '; color: ' . $aBadge['fontcolor'];
-		}
-		
         if ($aBadge['is_icon_only'] == 1){
             $sClass .= ' bx-badge-compact';
+            if (substr_count($aBadge['color'], 'rgb('))
+                $sStyleFont = 'color: ' . $aBadge['color'];
+            else
+                $sClass .= ' text-' . $aBadge['color'];
         }
+		else{
+            if (substr_count($aBadge['color'], 'rgb('))
+                $sStyleBg = 'background-color: ' . $aBadge['color'];
+            else
+                $sClass .= ' bg-' . $aBadge['color'];
+		}
         
         return BxDolTemplate::getInstance()->parseHtmlByName('badge.html', array(
             'bx_if:content' => array(

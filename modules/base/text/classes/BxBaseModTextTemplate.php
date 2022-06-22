@@ -888,7 +888,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
         $bBadgesSingle = isset($aParams['badges_single']) ? $aParams['badges_single'] : false;
-        $bBadgesCompact = isset($aParams['badges_compact']) ? $aParams['badges_compact'] : true;
+        $bBadgesCompact = isset($aParams['badges_compact']) ? $aParams['badges_compact'] : false;
 
         $aTmplVars = array (
             'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),

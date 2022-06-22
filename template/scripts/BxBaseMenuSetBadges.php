@@ -59,7 +59,7 @@ class BxBaseMenuSetBadges extends BxTemplMenu
                 'id' => $aBadge['id'],
                 'name' => $aBadge['id'],
                 'class' => '',
-                'title' => '<input onclick=bx_set_badge("' . $sModule . '",' . $iContentId . ',' . $aBadge['id'] . ') type="checkbox" ' . ($aBadge['badge_id'] != '' ? 'checked' : '') . '>' . BxDolService::call('system', 'get_badge', array($aBadge), 'TemplServices'),
+                'title' => '<div class="flex items-center"><input class="mr-2" onclick=bx_set_badge("' . $sModule . '",' . $iContentId . ',' . $aBadge['id'] . ') type="checkbox" ' . ($aBadge['badge_id'] != '' ? 'checked' : '') . '>' . BxDolService::call('system', 'get_badge', array($aBadge), 'TemplServices') .'</div>',
                 'addon' => '',
                 'selected' => true,
                 'link' => 'javascript:void(0);',
