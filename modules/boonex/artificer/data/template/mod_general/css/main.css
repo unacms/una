@@ -73,6 +73,9 @@
     width: 0.625rem;
     margin-left: -1rem;
 }
+.bx-badge-icon{
+    color:inherit;
+}
 
 /* more menu */
 .bx-menu-submenu-more-auto .sys-action-do-icon,
