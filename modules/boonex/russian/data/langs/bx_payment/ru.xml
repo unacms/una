@@ -362,6 +362,7 @@
     <string name="_bx_payment_err_self_purchase"><![CDATA[Покупка из собственного магазина не возможна.]]></string>
     <string name="_bx_payment_err_required_login"><![CDATA[Вам нужно войти.]]></string>
     <string name="_bx_payment_err_unknown_vendor"><![CDATA[Неизвестный продавец.]]></string>
+    <string name="_bx_payment_err_wrong_vendor"><![CDATA[Неверный продавец.]]></string>
     <string name="_bx_payment_err_wrong_data"><![CDATA[Неверные входные данные.]]></string>
     <string name="_bx_payment_err_not_found_pending"><![CDATA[Обрабатываемый заказ не найден.]]></string>
     <string name="_bx_payment_err_cannot_perform"><![CDATA[Действие не может быть выполнено. Свяжитесь с нами.]]></string>
@@ -496,10 +497,12 @@
     <string name="_bx_payment_pp_api_test_secret_dsc"><![CDATA[Часть учетных данных приложения.]]></string>
     <string name="_bx_payment_pp_api_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
     <string name="_bx_payment_pp_api_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
+    <string name="_bx_payment_pp_api_err_cannot_authorize"><![CDATA[Не удалось авторизовать одобренный заказ.]]></string>
     <string name="_bx_payment_pp_api_err_cannot_capture"><![CDATA[Не удалось завершить оплату.]]></string>
     <string name="_bx_payment_pp_api_err_no_item"><![CDATA[Объект для создания подписки отсутствует.]]></string>
     <string name="_bx_payment_pp_api_err_no_subscription"><![CDATA[Данные подписки недоступны или неверны.]]></string>
     <string name="_bx_payment_pp_api_err_subscription_not_confirmed"><![CDATA[Подписка не подтверждена.]]></string>
+    <string name="_bx_payment_pp_api_msg_authorized"><![CDATA[Заказ авторизован.]]></string>
     <string name="_bx_payment_pp_api_msg_captured"><![CDATA[Платеж принят.]]></string>
     <string name="_bx_payment_pp_api_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
     <string name="_bx_payment_txt_name_paypal_api"><![CDATA[PayPal]]></string>
@@ -573,6 +576,7 @@
     <string name="_bx_payment_strp_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
     <string name="_bx_payment_strp_cancellation_email_cpt"><![CDATA[Email для запросов отмены подписки]]></string>
     <string name="_bx_payment_strp_expiration_email_cpt"><![CDATA[Email для предупреждений о заканчивающихся подписках]]></string>
+    <string name="_bx_payment_strp_msg_authorized"><![CDATA[Заказ авторизован.]]></string>
     <string name="_bx_payment_strp_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
     <string name="_bx_payment_strp_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
     <string name="_bx_payment_strp_msg_details_changed"><![CDATA[Детали подписки были изменены.]]></string>

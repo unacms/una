@@ -42,6 +42,14 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     	return $this->_sActive;
     }
 
+    public function getActiveObject()
+    {
+        if(!$this->isActive())
+            return null;
+
+    	return BxDolModule::getInstance($this->_sActive);
+    }
+
     public function isActive()
     {
     	if(empty($this->_sActive))
@@ -422,6 +430,42 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 
         $aSrvParams = array($iPendingId, $sOrderId);
         return bx_srv($this->_sActive, 'send_subscription_expiration_letters', $aSrvParams, 'Subscriptions');
+    }
+
+    public function authorizeCheckoutSingle($iVendorId, $sProvider, $aItems = array())
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'authorize_checkout'))
+            return '';
+
+        $aSrvParams = array(BX_PAYMENT_TYPE_SINGLE, $iVendorId, $sProvider, $aItems);
+        return bx_srv($this->_sActive, 'authorize_checkout', $aSrvParams);
+    }
+    
+    public function authorizeCheckoutRecurring($iVendorId, $sProvider, $aItems = array())
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'authorize_checkout'))
+            return '';
+
+        $aSrvParams = array(BX_PAYMENT_TYPE_RECURRING, $iVendorId, $sProvider, $aItems);
+        return bx_srv($this->_sActive, 'authorize_checkout', $aSrvParams);
+    }
+    
+    public function captureAuthorizedCheckoutSingle($sOrder)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'capture_authorized_checkout'))
+            return '';
+
+        $aSrvParams = array(BX_PAYMENT_TYPE_SINGLE, $sOrder);
+        return bx_srv($this->_sActive, 'capture_authorized_checkout', $aSrvParams);
+    }
+    
+    public function captureAuthorizedCheckoutRecurring($sOrder)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'capture_authorized_checkout'))
+            return '';
+
+        $aSrvParams = array(BX_PAYMENT_TYPE_RECURRING, $sOrder);
+        return bx_srv($this->_sActive, 'capture_authorized_checkout', $aSrvParams);
     }
 
     public function initializeCheckout($iVendorId, $sProvider, $aItems = array())

@@ -15,6 +15,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 {
     protected $_oStripe;
 
+    protected $_iAmountPrecision;
+
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
@@ -24,6 +26,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         );
 
         $this->_oStripe = null;
+
+        $this->_iAmountPrecision = 2;
     }
 
     public function actionGetSessionRecurring()
@@ -79,6 +83,85 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         ));
     }
 
+    public function authorizeCheckout($iPendingId, $aCartInfo, $sRedirect = '')
+    {
+        $sSessionId = bx_process_input(bx_get('session_id'));
+
+    	if(empty($aCartInfo['items']) || !is_array($aCartInfo['items']))
+            return $this->_sLangsPrefix . 'err_empty_items';
+
+        $aClient = $this->_oModule->getProfileInfo();
+        $aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
+            return $this->_sLangsPrefix . 'err_already_processed';
+
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $mixedResult = $this->_getSession(BX_PAYMENT_TYPE_SINGLE, $sSessionId);
+                if($mixedResult === false)
+                    return $this->_sLangsPrefix . 'err_cannot_perform';
+
+                return [
+                    'code' => BX_PAYMENT_RESULT_SUCCESS,
+                    'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
+                        'mode' => $mixedResult['mode'],
+                        'order_id' => $mixedResult['order_id'],
+                        'customer_id' => $mixedResult['customer_id'], 
+                        'pending_id' => $aPending['id'],
+                        'redirect' => $sRedirect
+                    ))
+                ];
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                return $this->_sLangsPrefix . 'err_not_supported';
+        }
+    }
+
+    public function captureAuthorizedCheckout($sOrderAuth, $mixedPending, $aInfo)
+    {
+        $aPending = is_array($mixedPending) ? $mixedPending : $this->_oModule->_oDb->getOrderPending(['type' => 'id', 'id' => (int)$mixedPending]);
+        if(empty($aPending) || !is_array($aPending))
+            return ['code' => 2, 'message' => $this->_sLangsPrefix . 'err_empty_order'];
+
+        $bPaid = false;
+        $sOrder = '';
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $oPaymentIntent = $this->_createPaymentIntent($sOrderAuth, $aInfo['items_price'], $aInfo['vendor_currency_code']);
+                if($oPaymentIntent === false)
+                    return ['code' => 3, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
+
+                $aPaymentIntent = $oPaymentIntent->jsonSerialize();
+                if(empty($aPaymentIntent) || !is_array($aPaymentIntent))
+                    return ['code' => 3, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
+
+                $bPaid = $aPaymentIntent['status'] == 'succeeded';
+                $sOrder = $aPaymentIntent['id'];
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                return ['code' => 1, 'message' => $this->_sLangsPrefix . 'err_not_supported'];
+        }
+
+        $aResult = [
+            'code' => BX_PAYMENT_RESULT_SUCCESS,
+            'message' => $this->_sLangsPrefix . 'strp_msg_charged',
+            'pending_id' => $aPending['id'],
+            'paid' => $bPaid
+        ];
+
+        //--- Update pending transaction
+        $this->_oModule->_oDb->updateOrderPending($aResult['pending_id'], [
+            'order' => $sOrder,
+            'error_code' => $aResult['code'],
+            'error_msg' => _t($aResult['message']),
+        ]);
+
+        return $aResult;
+    }
+
     public function initializeCheckout($iPendingId, $aCartInfo, $sRedirect = '')
     {
         $sSessionId = bx_process_input(bx_get('session_id'));
@@ -100,6 +183,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                     return $this->_sLangsPrefix . 'err_cannot_perform';
 
                 header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
+                    'mode' => $mixedResult['mode'],
                     'order_id' => $mixedResult['order_id'],
                     'customer_id' => $mixedResult['customer_id'], 
                     'pending_id' => $aPending['id'],
@@ -113,6 +197,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                     return $this->_sLangsPrefix . 'err_cannot_perform';
 
                 header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
+                    'mode' => $mixedResult['mode'],
                     'order_id' => $mixedResult['order_id'],
                     'customer_id' => $mixedResult['customer_id'],
                     'pending_id' => $aPending['id'],
@@ -124,6 +209,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
     public function finalizeCheckout(&$aData)
     {
+        $sMode = bx_process_input($aData['mode']);
     	$sOrderId = bx_process_input($aData['order_id']);
     	$sCustomerId = bx_process_input($aData['customer_id']);
         $iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
@@ -144,6 +230,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'subscription_id' => '',
             'client_name' => '',
             'client_email' => '',
+            'authorized' => false,
             'paid' => false,
             'trial' => false,
             'redirect' => $sRedirect
@@ -152,19 +239,48 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         switch($aPending['type']) {
             case BX_PAYMENT_TYPE_SINGLE:
                 $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_SINGLE, $sCustomerId);
-                $oPaymentIntent = $this->_retrievePaymentIntent($sOrderId);
-                if($oCustomer === false || $oPaymentIntent === false)
+                if($oCustomer === false)
                     return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
                 $aCustomer = $oCustomer->jsonSerialize();
-                $aPaymentIntent = $oPaymentIntent->jsonSerialize();
-                if(empty($aCustomer) || !is_array($aCustomer) || empty($aPaymentIntent) || !is_array($aPaymentIntent))
+                if(empty($aCustomer) || !is_array($aCustomer))
                     return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
+                $sMessage = '';
+                $bPaid = $bAuthorized = false;
+                switch($sMode) {
+                    case 'setup':
+                        $oSetupIntent = $this->_retrieveSetupIntent($sOrderId);
+                        if($oSetupIntent === false)
+                            return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+                        
+                        $aSetupIntent = $oSetupIntent->jsonSerialize();
+                        if(empty($aSetupIntent) || !is_array($aSetupIntent))
+                            return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+                                
+                        $sMessage = $this->_sLangsPrefix . 'strp_msg_authorized';
+                        $bAuthorized = $aSetupIntent['status'] == 'succeeded';
+                        break;
+                    
+                    case 'payment':
+                        $oPaymentIntent = $this->_retrievePaymentIntent($sOrderId);
+                        if($oPaymentIntent === false)
+                            return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+
+                        $aPaymentIntent = $oPaymentIntent->jsonSerialize();
+                        if(empty($aPaymentIntent) || !is_array($aPaymentIntent))
+                            return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+                        
+                        $sMessage = $this->_sLangsPrefix . 'strp_msg_charged';
+                        $bPaid = $aPaymentIntent['status'] == 'succeeded';
+                        break;
+                }
+
                 $aResult = array_merge($aResult, array(
-                    'message' => $this->_sLangsPrefix . 'strp_msg_charged',
+                    'message' => $sMessage,
                     'client_email' => $aCustomer['email'],
-                    'paid' => $aPaymentIntent['status'] == 'succeeded'
+                    'authorized' => $bAuthorized,
+                    'paid' => $bPaid,
                 ));
                 break;
 
@@ -232,6 +348,28 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'eval' => $this->_oModule->_oConfig->getJsObject($this->_sName) . '.onCartCheckout(oData);', 
             'session_id' => $sSessionId
         );
+    }
+
+    public function createSessionAuthorize($sType, $iClientId, $iSellerId, $sItems, $aSessionParams = [])
+    {
+        $aClient = $this->_oModule->getProfileInfo($iClientId);
+
+        $oCart = $this->_oModule->getObjectCart();
+        $aCartInfo = $oCart->getInfo($sType, $aClient['id'], $iSellerId, $sItems);
+        if(empty($aCartInfo) || !is_array($aCartInfo))
+            return false;
+
+        $aSessionParams = array_merge([
+            'cancel_url' => $oCart->serviceGetCartUrl($iSellerId),
+            'success_url' => bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_AUTHORIZE') . $sType . '/', [
+                'provider' => $this->_sName,
+                'seller_id' => $iSellerId,
+                'items' => $sItems,
+                'session_id' => '{CHECKOUT_SESSION_ID}'
+            ])
+        ], $aSessionParams);
+
+        return $this->_createSession('authorize', $aSessionParams, $aClient, $aCartInfo);
     }
 
     public function createTax($sName, $fPercentage, $bInclusive = false)
@@ -349,14 +487,16 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
      */
     protected function _createSession($sType, $aParams, &$aClient, &$aCartInfo)
     {
-        $iAmountPrecision = 2;
-        $fAmount = 100 * round((float)$aCartInfo['items_price'], $iAmountPrecision);
-
         $sMode = '';
         $aLineItems = array();
         $aMetaItems = array();
 
         switch($sType) {
+            case 'authorize':
+                $sMode = 'setup';
+                $aParams['customer_creation'] = 'always';
+                break;
+
             case BX_PAYMENT_TYPE_SINGLE:
                 $sMode = 'payment';
 
@@ -371,7 +511,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'price_data' => array(
                             'currency' => $aCartInfo['vendor_currency_code'],
                             'product_data' => $aProductData,
-                            'unit_amount' => 100 * round($this->_oModule->_oConfig->getPrice($sType, $aItem), $iAmountPrecision),
+                            'unit_amount' => 100 * round($this->_oModule->_oConfig->getPrice($sType, $aItem), $this->_iAmountPrecision),
                         ),
                         'quantity' => $aItem['quantity'],
                     );
@@ -395,21 +535,29 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         }
 
         $oSession = null;
-        $aSession = [
+        $aSession = array_merge([
             'payment_method_types' => ['card'],
             'customer_email' => !empty($aClient['email']) ? $aClient['email'] : '',
-            'line_items' => $aLineItems,
             'mode' => $sMode,
-            'success_url' => $aParams['success_url'],
-            'cancel_url' => $aParams['cancel_url'],
-            'metadata' => [
+            'success_url' => '',
+            'cancel_url' => '',
+        ], $aParams);
+
+        $bLineItems = !empty($aLineItems);
+        $aSession['line_items'] = $aLineItems;
+
+        $bMetaData = !empty($aMetaItems);
+        if($bMetaData) {
+            $fAmount = 100 * round((float)$aCartInfo['items_price'], $this->_iAmountPrecision);
+
+            $aSession['metadata'] = [
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
                 'type' => $sType, 
                 'items' => $this->_oModule->_oConfig->descriptorsA2S($aMetaItems),
                 'verification' => $this->getVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
-            ]
-        ];
+            ];
+        }
 
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_session', 0, false, array(
             'session_object' => &$oSession, 
@@ -428,7 +576,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         if(empty($aResult) || !is_array($aResult))
             return false;
 
-        if(!$this->checkVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $aResult))
+        if($bMetaData && !$this->checkVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $aResult))
             return false;
 
         return $aResult['id'];
@@ -444,16 +592,21 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         if(empty($aSession) || !is_array($aSession))
             return array();
 
+        $sMode = 'payment';
+        if(!empty($aSession['mode']))
+            $sMode = $aSession['mode'];
+        
         $aResult = array(
             'id' => $aSession['id'],
-            'order_id' => $aSession['payment_intent'],
+            'mode' => $sMode,
+            'order_id' => '',
             'customer_id' => $aSession['customer'],
             'status' => $aSession['payment_status']
         );
 
         switch($sType) {
             case BX_PAYMENT_TYPE_SINGLE:
-                $aResult['order_id'] = $aSession['payment_intent'];
+                $aResult['order_id'] = $aSession[($sMode == 'setup' ? 'setup' : 'payment') . '_intent'];
                 break;
 
             case BX_PAYMENT_TYPE_RECURRING:
@@ -467,7 +620,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     /*
      * Related Docs: https://stripe.com/docs/api/checkout/sessions/retrieve
      */
-    protected function _retrieveSession($sId) {
+    protected function _retrieveSession($sId)
+    {
         $oSession = null;
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_session', 0, false, array(
             'session_id' => &$sId,
@@ -485,10 +639,71 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         return $oSession;
     }
     
+    
+    /*
+     * Related Docs: https://stripe.com/docs/api/setup_intents/retrieve
+     */
+    protected function _retrieveSetupIntent($sId)
+    {
+        $oSetupIntent = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_setup_intent', 0, false, array(
+            'setup_intent_id' => &$sId,
+            'setup_intent_object' => &$oSetupIntent
+        ));
+
+        try {
+            if(empty($oSetupIntent))
+                $oSetupIntent = $this->_getStripe()->setupIntents->retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Setup Intent Error: ', $oException);
+        }
+
+        return $oSetupIntent;
+    }
+
+    /*
+     * Related Docs: https://stripe.com/docs/api/payment_intents/create
+     */
+    protected function _createPaymentIntent($sSetupIntentId, $fAmount, $sCurrency, $bConfirm = true)
+    {
+        $oPaymentIntent = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_payment_intent', 0, false, array(
+            'setup_intent_id' => &$sSetupIntentId,
+            'payment_intent_object' => &$oPaymentIntent
+        ));
+
+        try {
+            if(empty($oPaymentIntent)) {
+                $oSetupIntent = $this->_retrieveSetupIntent($sSetupIntentId);
+                if($oSetupIntent === false)
+                    return false;
+
+                $aSetupIntent = $oSetupIntent->jsonSerialize();
+                if(empty($aSetupIntent) || !is_array($aSetupIntent))
+                    return false;
+
+                $oPaymentIntent = $this->_getStripe()->paymentIntents->create([
+                    'amount' => 100 * round($fAmount, $this->_iAmountPrecision),
+                    'currency' => strtolower($sCurrency),
+                    'customer' => $aSetupIntent['customer'],
+                    'payment_method' => $aSetupIntent['payment_method'],
+                    'confirm' => $bConfirm
+                ]);
+            }
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Payment Intent Error: ', $oException);
+        }
+
+        return $oPaymentIntent;
+    }
+
     /*
      * Related Docs: https://stripe.com/docs/api/payment_intents/retrieve
      */
-    protected function _retrievePaymentIntent($sId) {
+    protected function _retrievePaymentIntent($sId)
+    {
         $oPaymentIntent = null;
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_payment_intent', 0, false, array(
             'payment_intent_id' => &$sId,

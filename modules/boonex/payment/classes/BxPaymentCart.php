@@ -287,14 +287,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
         foreach($aContent as $iSellerId => $aSellerItems)
             $aResult[$iSellerId] = $this->_getInfo($sType, $iUserId, $iSellerId, $aSellerItems);
 
-        $this->_oModule->alert('get_cart_info', 0, 0, array(
-           'type' => $sType,
-           'client_id' => $iUserId,
-           'seller_id' => $iSellerId,
-           'items' => $aItems,
-           'override_result' => &$aResult
-       ));
-        
         return $aResult;
     }
 
@@ -365,7 +357,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         }
 
         $aSeller = $this->_oModule->getVendorInfo((int)$iSellerId);
-        return array(
+        $aResult = array(
             'client_id' => $iClientId,
             'vendor_id' => $aSeller['id'],
             'vendor_name' => $aSeller['name'],
@@ -380,6 +372,16 @@ class BxPaymentCart extends BxBaseModPaymentCart
             'items_price' => $fItemsPrice,
             'items' => $aItemsInfo
         );
+
+        $this->_oModule->alert('get_cart_info', 0, 0, array(
+           'type' => $sType,
+           'client_id' => $iClientId,
+           'seller_id' => $iSellerId,
+           'items' => $aItems,
+           'override_result' => &$aResult
+        ));
+
+        return $aResult;
     }
 }
 

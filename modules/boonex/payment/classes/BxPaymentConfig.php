@@ -35,6 +35,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'URL_CARTS' => 'page.php?i=payment-carts',
             'URL_CART' => 'page.php?i=payment-cart',
             'URL_CART_CHECKOUT' => $sBaseUrl . 'initialize_checkout/' . BX_PAYMENT_TYPE_SINGLE . '/',
+            'URL_AUTHORIZE' => $sBaseUrl . 'authorize_checkout/',
             'URL_SUBSCRIBE' => $sBaseUrl . 'subscribe/',
             'URL_SUBSCRIBE_JSON' => $sBaseUrl . 'subscribe_json/',
             'URL_SUBSCRIPTIONS' => 'page.php?i=payment-sbs-list-my',
