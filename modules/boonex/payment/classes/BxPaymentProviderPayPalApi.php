@@ -33,13 +33,20 @@
  * 3.3 WebHooks
  * https://developer.paypal.com/docs/api-basics/notifications/webhooks/rest/
  * 
+ * 4. Authorize Intent and Capture Authorized: 
+ * https://github.com/paypal/Checkout-PHP-SDK/tree/develop/samples
+ * 
  */
 
+use PayPalHttp\HttpException;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use PayPalCheckoutSdk\Orders\OrdersAuthorizeRequest;
+use PayPalCheckoutSdk\Payments\AuthorizationsCaptureRequest;
 
 define('PP_API_MODE_LIVE', 1);
 define('PP_API_MODE_TEST', 2);
@@ -73,6 +80,67 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         $this->_bCheckAmount = true;
         $this->_iMode = (int)$this->getOption('mode');
         $this->_sEndpoint = 'https://api-m' . ($this->_iMode == PP_API_MODE_TEST ? '.sandbox' : '') . '.paypal.com/';
+    }
+
+    public function authorizeCheckout($iPendingId, $aCartInfo)
+    {
+        if(empty($aCartInfo['items']) || !is_array($aCartInfo['items']))
+            return $this->_sLangsPrefix . 'err_empty_items';
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
+            return $this->_sLangsPrefix . 'err_already_processed';
+
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $mixedResult = $this->_createOrder($iPendingId, $aCartInfo, ['intent' => 'authorize']);
+                if($mixedResult === false)
+                    return $this->_sLangsPrefix . 'err_cannot_perform';
+
+                $this->_setSessionOrder($mixedResult['order']);
+                return [
+                    'code' => BX_PAYMENT_RESULT_SUCCESS,
+                    'redirect' => $mixedResult['redirect']
+                ];
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                return $this->_sLangsPrefix . 'err_not_supported';
+        }
+    }
+
+    public function captureAuthorizedCheckout($sOrderAuth, $mixedPending, $aInfo)
+    {
+        $aPending = is_array($mixedPending) ? $mixedPending : $this->_oModule->_oDb->getOrderPending(['type' => 'id', 'id' => (int)$mixedPending]);
+        if(empty($aPending) || !is_array($aPending))
+            return ['code' => 2, 'message' => $this->_sLangsPrefix . 'err_empty_order'];
+
+        $mixedResult = false;
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $mixedResult = $this->_captureAuthorization($sOrderAuth);
+                if($mixedResult === false)
+                    return ['code' => 3, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                return ['code' => 1, 'message' => $this->_sLangsPrefix . 'err_not_supported'];
+        }
+
+        $aResult = [
+            'code' => BX_PAYMENT_RESULT_SUCCESS,
+            'message' => $this->_sLangsPrefix . 'pp_api_msg_captured',
+            'pending_id' => $aPending['id'],
+            'paid' => true
+        ];
+
+        //--- Update pending transaction
+        $this->_oModule->_oDb->updateOrderPending($aResult['pending_id'], [
+            'order' => $mixedResult['order'],
+            'error_code' => $aResult['code'],
+            'error_msg' => _t($aResult['message']),
+        ]);
+
+        return $aResult;
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo)
@@ -149,27 +217,50 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         if(empty($sOrder))
             $sOrder = $this->_getSessionOrder();
         if(empty($sOrder))
-            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_empty_order');
+            return['code' => 1, 'message' => $this->_sLangsPrefix . 'err_empty_order'];
 
-        $mixedResult = $this->_captureOrder($sOrder);
-        if($mixedResult === false)
-            return array('code' => 2, 'message' => $this->_sLangsPrefix . 'pp_api_err_cannot_capture');
+        $aOrder = $this->_getOrder($sOrder);
+        if(empty($aOrder) || !is_array($aOrder))
+            return ['code' => 1, 'message' => $this->_sLangsPrefix . 'err_empty_order'];
 
-        $aResult = array(
+        $sMessage = '';
+        $bAuthorized = $bPaid = false;
+        switch($aOrder['intent']) {
+            case 'authorize':
+                $mixedResult = $this->_authorizeOrder($sOrder);
+                if($mixedResult === false)
+                    return ['code' => 2, 'message' => $this->_sLangsPrefix . 'pp_api_err_cannot_authorize'];
+
+                $sMessage = $this->_sLangsPrefix . 'pp_api_msg_authorized';
+                $bAuthorized = true;
+                break;
+
+            case 'capture':
+                $mixedResult = $this->_captureOrder($sOrder);
+                if($mixedResult === false)
+                    return ['code' => 2, 'message' => $this->_sLangsPrefix . 'pp_api_err_cannot_capture'];
+
+                $sMessage = $this->_sLangsPrefix . 'pp_api_msg_captured';
+                $bPaid = true;
+                break;
+        }
+
+        $aResult = [
             'code' => BX_PAYMENT_RESULT_SUCCESS, 
-            'message' => $this->_sLangsPrefix . 'pp_api_msg_captured',
+            'message' => $sMessage,
             'pending_id' => $mixedResult['pending_id'],
             'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $mixedResult['client_first_name'], $mixedResult['client_last_name']),
             'client_email' => $mixedResult['client_email'],
-            'paid' => true
-        );
+            'authorized' => $bAuthorized,
+            'paid' => $bPaid
+        ];
 
         //--- Update pending transaction
-        $this->_oModule->_oDb->updateOrderPending($aResult['pending_id'], array(
+        $this->_oModule->_oDb->updateOrderPending($aResult['pending_id'], [
             'order' => $mixedResult['order'],
             'error_code' => $aResult['code'],
-            'error_msg' => _t($aResult['message'])
-        ));
+            'error_msg' => _t($aResult['message']),
+        ]);
 
         return $aResult;
     }
@@ -503,8 +594,10 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         return new PayPalHttpClient($oEnvironment);
     }
 
-    protected function _createOrder($iPendingId, $aCartInfo, $sReturnType = 'approve')
+    protected function _createOrder($iPendingId, $aCartInfo, $aParams = [])
     {
+        $sReturnType = isset($aParams['return_type']) ? $aParams['return_type'] : 'approve';
+                
         $aItems = array();
         foreach($aCartInfo['items'] as $aItem)
             $aItems[] = array(
@@ -519,7 +612,7 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         $oRequest = new OrdersCreateRequest();
         $oRequest->prefer('return=representation');
         $oRequest->body = array(
-            'intent' => 'CAPTURE',
+            'intent' => isset($aParams['intent']) ? strtoupper($aParams['intent']) : 'CAPTURE',
             'purchase_units' => array(
                 array(
                     'reference_id' => $iPendingId,
@@ -564,6 +657,49 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         }
     }
 
+    protected function _getOrder($sOrderId)
+    {
+        $oRequest = new OrdersGetRequest($sOrderId);
+
+        try {
+            $oResponse = $this->_getClient()->execute($oRequest);
+            if($oResponse->statusCode != 200 || strcmp(strtolower($oResponse->result->status), 'approved') != 0)
+                return false;
+
+            $oPurchase = current($oResponse->result->purchase_units);
+            return array_merge(array(
+                'id' => $oResponse->result->id,
+                'intent' => strtolower($oResponse->result->intent),
+                'pending_id' => (int)$oPurchase->reference_id,
+            ), $this->_getClientInfo($oResponse->result->payer));
+        }
+        catch (HttpException $oException) {
+            return $this->_processException('Get Order Error: ', $oException);
+        }
+        
+    }
+
+    protected function _authorizeOrder($sOrderId)
+    {
+        $oRequest = new OrdersAuthorizeRequest($sOrderId);
+
+        try {
+            $oResponse = $this->_getClient()->execute($oRequest);
+            if($oResponse->statusCode != 201 || strcmp(strtolower($oResponse->result->status), 'completed') != 0)
+                return false;
+
+            $oPurchase = current($oResponse->result->purchase_units);
+            $oAuthorization = current($oPurchase->payments->authorizations);
+            return array_merge(array(
+                'pending_id' => (int)$oPurchase->reference_id,
+                'order' => $oAuthorization->id,
+            ), $this->_getClientInfo($oResponse->result->payer));
+        }
+        catch (HttpException $oException) {
+            return $this->_processException('Authorize Order Error: ', $oException);
+        }
+    }
+
     protected function _captureOrder($sOrderId)
     {
         $oRequest = new OrdersCaptureRequest($sOrderId);
@@ -584,17 +720,43 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             return $this->_processException('Capture Order Error: ', $oException);
         }
     }
+    
+    protected function _captureAuthorization($sAuthorizationId)
+    {
+        $oRequest = new AuthorizationsCaptureRequest($sAuthorizationId);
+
+        try {
+            $oResponse = $this->_getClient()->execute($oRequest);
+            if($oResponse->statusCode != 201 || strcmp(strtolower($oResponse->result->status), 'completed') != 0)
+                return false;
+
+            return [
+                'order' => $oResponse->result->id
+            ];
+        }
+        catch (HttpException $oException) {
+            return $this->_processException('Capture Authorization Error: ', $oException);
+        }
+    }
 
     protected function _processException($sMessage, &$oException)
     {
-        $aError = $oException->getJsonBody();
+        $sDescription = '';
+        $aError = [];
 
-        $sDescription = $aError['error']['message'];
+        $sMethod = 'getJsonBody';
+        if(method_exists($oException, $sMethod)) {
+            $aError = $oException->getJsonBody();
+            if(isset($aError['error']['message']))
+                $sDescription = $aError['error']['message'];
+        }
+
         if(empty($sDescription))
             $sDescription = $oException->getMessage();
 
         $this->log($sMessage . $sDescription);
-        $this->log($aError);
+        if(!empty($aError))
+            $this->log($aError);
 
         return false;
     }

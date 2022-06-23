@@ -151,6 +151,11 @@ class BxBaseModPaymentProvider extends BxDol
 
     public function addJsCss() {}
 
+    public function getJsObject()
+    {
+        return $this->_oModule->_oConfig->getJsObject($this->_sName);
+    }
+
     public function finalizedCheckout() {}
 
     public function isSubscriptionStatus($sStatus, $aSubscription, $sStatusKey = 'status')

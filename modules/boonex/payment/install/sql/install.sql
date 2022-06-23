@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
   `error_code` varchar(16) NOT NULL default '',
   `error_msg` varchar(255) NOT NULL default '',
   `date` int(11) NOT NULL default '0',
+  `authorized` tinyint(4) NOT NULL default '0',
   `processed` tinyint(4) NOT NULL default '0',
   PRIMARY KEY(`id`)
 );
