@@ -916,12 +916,9 @@ class BxAdsModule extends BxBaseModTextModule
         $fItemPrice = (float)$aItem[$CNF['FIELD_PRICE']];
 
         if($this->isAuction($aItem)) {
-            $iUserId = bx_get_logged_profile_id();
-
             $aOffer = $this->_oDb->getOffersBy(array(
-                'type' => 'content_and_author_ids', 
+                'type' => 'accepted', 
                 'content_id' => $iItemId, 
-                'author_id' => $iUserId,
                 'status' => BX_ADS_OFFER_STATUS_ACCEPTED
             ));
 
@@ -993,6 +990,50 @@ class BxAdsModule extends BxBaseModTextModule
         }
 
         return $aResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_ads Ads
+     * @subsection bx_ads-payments Payments
+     * @subsubsection bx_ads-authorize_cart_item authorize_cart_item
+     * 
+     * @code bx_srv('bx_ads', 'authorize_cart_item', [...]); @endcode
+     * 
+     * Authorize the order to process a single time payment inside the Ads module in future. Is called with payment processing module after the order was authorized there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return an array with authorize prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAdsModule::serviceAuthorizeCartItem
+     */
+    /** 
+     * @ref bx_ads-authorize_cart_item "authorize_cart_item"
+     */
+    public function serviceAuthorizeCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aItem = $this->serviceGetCartItem($iItemId);
+        if(empty($aItem) || !is_array($aItem))
+            return [];
+
+        $aEntry = $this->_oDb->getContentInfoById($iItemId);
+        if(empty($aEntry) || !is_array($aEntry))
+            return [];
+
+        bx_alert($this->getName(), 'order_authorize', 0, false, [
+            'product_id' => $iItemId,
+            'profile_id' => $iClientId,
+            'order' => $sOrder,
+            'count' => $iItemCount
+        ]);
+
+        return $aItem;
     }
 
     /**
@@ -1081,6 +1122,33 @@ class BxAdsModule extends BxBaseModTextModule
      * @page service Service Calls
      * @section bx_ads Ads
      * @subsection bx_ads-payments Payments
+     * @subsubsection bx_ads-authorize_subscription_item authorize_subscription_item
+     * 
+     * @code bx_srv('bx_ads', 'authorize_subscription_item', [...]); @endcode
+     * 
+     * Authorize the order to process a subscription (recurring payment) inside the Ads module in future. Is called with payment processing module after the order for subscription was authorized there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return an array with authorize prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAdsModule::serviceAuthorizeSubscriptionItem
+     */
+    /** 
+     * @ref bx_ads-authorize_subscription_item "authorize_subscription_item"
+     */
+    public function serviceAuthorizeSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+        return [];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_ads Ads
+     * @subsection bx_ads-payments Payments
      * @subsubsection bx_ads-register_subscription_item register_subscription_item
      * 
      * @code bx_srv('bx_ads', 'register_subscription_item', [...]); @endcode
@@ -1102,7 +1170,7 @@ class BxAdsModule extends BxBaseModTextModule
      */
     public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
-        return array();
+        return [];
     }
 
     /**
