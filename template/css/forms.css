@@ -163,8 +163,6 @@
 
     outline:none;
 
-    background-color: #fff;
-
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)"; 
     filter: alpha(opacity=90); 
     -moz-opacity: 0.9;

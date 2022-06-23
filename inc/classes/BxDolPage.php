@@ -339,7 +339,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (false === $sQuery)
             return false;
 
-        parse_str($sQuery, $aQueryParams);
+        $aQueryParams = bx_parse_str($sQuery);
 
         $sPageUri = !empty($aQueryParams['i']) ? $aQueryParams['i'] : false;
         unset($aQueryParams['i']);
@@ -415,7 +415,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (!$sSeoPageUri)
             return false;
 
-        return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams));
+        return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams), false);
     }
 
 	/**

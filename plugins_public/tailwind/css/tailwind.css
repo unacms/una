@@ -431,7 +431,7 @@
     }
 
     .bx-def-font-meta {
-        @apply text-xs font-bold;
+        @apply text-xs;
     }
     .bx-def-font-meta:not(a) {
         @apply text-gray-700 dark:text-gray-400 text-opacity-60;
@@ -1077,4 +1077,16 @@
     .bx-artificer .bx-search-result-block.bx-clearfix:before{
         @apply hidden;
     }
+    
+    /*    badges    */
+    .bx-badges-list{
+        @apply inline-flex grow-0 space-x-1 w-min
+    }
+    .bx-badge{
+        @apply space-x-1 w-min opacity-90 hover:opacity-100 active:translate-y-0.5 text-white inline-flex items-center px-1.5 py-0.5  text-xs font-medium rounded-full 
+    }
+	.sys-icon-image.bx-badge-icon,
+	.sys-icon-svg.bx-badge-icon{
+		@apply w-4 h-4
+	}
 }

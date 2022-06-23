@@ -25,7 +25,7 @@ class BxForumMetatags extends BxTemplMetatags
 
         $this->_sBrowseUrl = bx_append_url_params(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_KEYWORD_ENTRIES']), array(
         	'keyword' => '{keyword}'
-        ));
+        ), true, ['{keyword}']);
     }
 }
 

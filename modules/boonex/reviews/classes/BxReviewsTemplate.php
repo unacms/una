@@ -151,10 +151,9 @@ class BxReviewsTemplate extends BxBaseModTextTemplate
         $aProduct = [];
         if (!empty($aData[$CNF['FIELD_PRODUCT']])) {
             $sProduct = $aData[$CNF['FIELD_PRODUCT']];
-            $sProductUrlEncoded = urlencode($sProduct);
             $aProduct = [
                 'product_name' => bx_process_output($sProduct),
-                'product_link' => bx_append_url_params(BX_DOL_URL_ROOT . $this->_oModule->_oConfig->CNF['URI_SEARCH_PRODUCT'], ['keyword' => $sProductUrlEncoded]),
+                'product_link' => bx_append_url_params(BX_DOL_URL_ROOT . $this->_oModule->_oConfig->CNF['URI_SEARCH_PRODUCT'], ['keyword' => $sProduct]),
             ];
         }
 

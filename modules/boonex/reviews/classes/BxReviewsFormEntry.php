@@ -230,7 +230,7 @@ class BxReviewsFormEntry extends BxBaseModTextFormEntry
             return null;
 
         $sProduct = bx_process_output($aInput['value']);
-        $sProductUrlEncoded = urlencode($aInput['value']);
+        $sProductUrlEncoded = $aInput['value'];
         $sProductSearchUrl = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->CNF['URI_SEARCH_PRODUCT'];
         $sProductSearchUrl = bx_append_url_params($sProductSearchUrl, ['keyword' => $sProductUrlEncoded]);
         return '<a href="'.$sProductSearchUrl.'">'.$sProduct.'</a>';

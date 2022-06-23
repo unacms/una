@@ -341,7 +341,7 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     )
                 ),
                 'color' => array(
-                    'type' => 'rgb',
+                    'type' => 'rgb-list',
                     'name' => 'color',
                     'caption' => _t('_adm_form_txt_badges_color'),
                     'info' => '',
@@ -351,17 +351,7 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                         'pass' => 'Xss',
                     )
                 ),
-                'fontcolor' => array(
-                    'type' => 'rgb',
-                    'name' => 'fontcolor',
-                    'caption' => _t('_adm_form_txt_badges_fontcolor'),
-                    'info' => '',
-                    'value' => isset($aBadge['fontcolor']) ? $aBadge['fontcolor'] : '',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    )
-                ),
+                
                 'is_icon_only' => array(
                     'type' => 'switcher',
                     'name' => 'is_icon_only',

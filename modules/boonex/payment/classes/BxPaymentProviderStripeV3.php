@@ -63,7 +63,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'cancel_url' => $aItem['url'],
             'success_url' => bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIBE_JSON'), array_merge($aParams, array(
                 'session_id' => '{CHECKOUT_SESSION_ID}'
-            )))
+            )), false)
         );
 
         $sSessionId = $this->_createSession(BX_PAYMENT_TYPE_RECURRING, $aSessionParams, $aClient, $aCartInfo);
@@ -337,7 +337,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'cancel_url' => $oCart->serviceGetCartUrl($aParams['seller_id']),
             'success_url' => bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART_CHECKOUT'), array_merge($aParams, array(
                 'session_id' => '{CHECKOUT_SESSION_ID}'
-            )))
+            )), false)
         );
 
         $sSessionId = $this->_createSession(BX_PAYMENT_TYPE_SINGLE, $aSessionParams, $aClient, $aCartInfo);

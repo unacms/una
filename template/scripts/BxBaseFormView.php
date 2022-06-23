@@ -1062,6 +1062,10 @@ BLAH;
             	$aInput['type'] = 'text';
                 $sInput = $this->genInputStandard($aInput);
             break;
+                
+            case 'rgb-list':
+                $sInput = $this->genInputSelectRgb($aInput);
+            break;    
 
             case 'switcher':
                 $sInput = $this->genInputSwitcher($aInput);
@@ -1684,6 +1688,29 @@ BLAH;
     function genInputSelect(&$aInput)
     {
         $sCurValue = isset($aInput['value']) ? $aInput['value'] : '';
+        return $this->_genInputSelect($aInput, false, $sCurValue, '_isSelected');
+    }
+    
+    /**
+     * Generate Select RGB Element	
+     *
+     * @param  array  $aInput
+     * @return string
+     */
+    function genInputSelectRgb(&$aInput)
+    {
+        $aInput['type'] = 'select';
+        
+        $sCurValue = isset($aInput['value']) ? $aInput['value'] : '';
+        
+        $aInput['values_list_name'] = 'sys_colors';
+        $aInput['values'] = self::getDataItems('sys_colors', isset(self::$TYPES_SET[$aInput['type']]));
+        $aInput['attrs'] = ['class' => 'bx-form-input-rgb-list'];
+        
+        foreach ($aInput['values'] as $sOptValue => $sOptTitle) {
+            $aInput['values'][$sOptValue] = ['key' => $sOptValue, 'value' => $sOptTitle, 'class' => 'bg-' . $sOptValue, 'style' => 'color:#fff'];
+        }
+
         return $this->_genInputSelect($aInput, false, $sCurValue, '_isSelected');
     }
 

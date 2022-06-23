@@ -112,7 +112,9 @@
     top: 0;
 }
 #bx-forum-snippet-meta-main{
-	margin-left: -8px;
+    overflow: hidden;
+    display: flex;
+    grid-gap: 0.25rem;
 }
 .bx-forum-preview .bx-def-unit-info {
     line-height:1.15em;
@@ -382,9 +384,15 @@
 }
 .bx-forum-grid td{
     vertical-align: top;
+    padding: 0px !important;
 }
 .bx-forum-grid tr:hover{
     cursor: pointer;
+}
+.bx-forum-grid .bx-grid-table-wrapper2{
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width:calc(100% + 2rem);
 }
 .bx-forum-grid tr td:first-child{
     padding-left: 0rem;
@@ -492,11 +500,6 @@
 .bx-forum-grid #bx-form-element-search{
     flex-grow: 3;
 }
-#bx-forum-snippet-meta-main{
-    overflow: hidden;
-    display: flex;
-    grid-row-gap: 0.5rem;
-}
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-info .bx-base-pofile-unit A,
 .bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-title A{
     color:#fff !important;
@@ -538,6 +541,7 @@
 	padding: 0px !important;
 }
 
+
 /* ---------------new meta menu need to move incore*/
 
 .bx-menu-meta-icon img,
@@ -563,5 +567,8 @@
 .bx-forum-category-list{
 	margin: -0.75rem !important;
 	margin-top: 0px !important;
+}
+.bx-menu-meta-item-ex span:nth-child(2) {
+    margin-left: 0.375rem;
 }
 

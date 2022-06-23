@@ -1406,7 +1406,33 @@ function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
     return $s;
 }
 
-function bx_append_url_params ($sUrl, $mixedParams)
+/**
+ * It works similar to `parse_str` php function, but it doesn't decode URL params
+ */
+function bx_parse_str($s) 
+{
+    $a = [];
+    $aPairs = explode('&', $s);
+
+    foreach ($aPairs as $i) {
+        list($sName, $mixedValue) = explode('=', $i, 2);
+        $sName = rtrim($sName, '[]');
+
+        if (isset($a[$sName])) {
+            if (is_array($a[$sName]))
+                $a[$sName][] = $mixedValue;
+            else 
+                $a[$sName] = [$a[$sName], $mixedValue];
+        }
+        else {
+            $a[$sName] = $mixedValue;
+        }
+    }
+
+    return $a;
+}
+
+function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgnoreParams = [])
 {
     if (!$mixedParams)
         return $sUrl;
@@ -1416,11 +1442,24 @@ function bx_append_url_params ($sUrl, $mixedParams)
     if (is_array($mixedParams)) {
         foreach($mixedParams as $sKey => $sValue) {
             if (!is_array($sValue)) {
+                if ($bEncodeParams) {
+                    if (!in_array($sKey, $aIgnoreParams))
+                        $sKey = rawurlencode($sKey);
+                    if (!in_array($sValue, $aIgnoreParams))
+                        $sValue = rawurlencode($sValue);
+                }
                 $sParams .= $sKey . '=' . $sValue . '&';
             }
             else {
-                foreach($sValue as $sSubValue)
+                foreach($sValue as $sSubValue) {
+                    if ($bEncodeParams) {
+                        if (!in_array($sKey, $aIgnoreParams))
+                            $sKey = rawurlencode($sKey);
+                        if (!in_array($sSubValue, $aIgnoreParams))
+                            $sSubValue = rawurlencode($sSubValue);
+                    }
                     $sParams .= $sKey . '[]=' . $sSubValue . '&';
+                }
             }
         }
         $sParams = substr($sParams, 0, -1);

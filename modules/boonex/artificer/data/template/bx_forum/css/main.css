@@ -88,3 +88,10 @@ div.bx-forum-participants.none .bx-forum-participant {
 .bx-menu-meta-item-ex {
     margin-right: 0px !important;
 }
+.bx-menu-meta-item-ex span:nth-child(2){
+    margin-left: 0.375rem;
+}
+.bx-menu-meta-item-ex .bx-menu-meta-icon{
+    min-width: 16px;
+    text-align: center;
+}

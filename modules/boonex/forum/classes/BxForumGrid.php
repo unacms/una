@@ -112,7 +112,7 @@ class BxForumGrid extends BxTemplGrid
                 list($sPageLink, $aPageParams) = bx_get_base_url_inline();
 
                 $aPageParams[$this->_aOptions['paginate_get_start']] = '{start}';
-                $this->_aOptions['paginate_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams));
+                $this->_aOptions['paginate_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams, true, ['{start}']));
             }
 
             unset($aParams['ajax_paginate']);

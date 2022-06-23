@@ -58,6 +58,9 @@ class BxBaseConnection extends BxDolConnection
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
+        if ('mutual' != $this->_aObject['type'])
+            $bIsMutual = false;
+
         if(empty($aParams))
             $aParams = [];
 
@@ -151,6 +154,9 @@ class BxBaseConnection extends BxDolConnection
     
     protected function _getCounterLabel($iCount, $iProfileId, $bIsMutual, $aParams, $sContentType)
     {
+        if ('mutual' != $this->_aObject['type'])
+            $bIsMutual = false;
+
         $bShowWithProfiles = isset($aParams['show_counter_label_with_profiles']) && $aParams['show_counter_label_with_profiles'] === true;
         $bShowWithIcon = (!isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true) && !$bShowWithProfiles;
 
@@ -204,6 +210,9 @@ class BxBaseConnection extends BxDolConnection
     
     public function _getConnected ($sContentType, $iProfileId, $bIsMutual, $iStart = 0, $iPerPage = 0)
     {
+        if ('mutual' != $this->_aObject['type'])
+            $bIsMutual = false;
+
         if(empty($iPerPage))
             $iPerPage = $this->_aObject['per_page_default'];
 

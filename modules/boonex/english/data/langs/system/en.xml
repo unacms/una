@@ -845,8 +845,8 @@
   <string name="_adm_form_txt_badges_text"><![CDATA[Text]]></string>
   <string name="_adm_form_txt_badges_view"><![CDATA[View]]></string>
   <string name="_adm_form_txt_badges_fontcolor"><![CDATA[Foreground color]]></string>
-  <string name="_adm_form_txt_badges_color"><![CDATA[Background color]]></string>
-  <string name="_adm_form_dsc_badges_color"><![CDATA[Background color]]></string>
+  <string name="_adm_form_txt_badges_color"><![CDATA[Color]]></string>
+  <string name="_adm_form_dsc_badges_color"><![CDATA[Color]]></string>
   <string name="_adm_form_txt_badges_is_icon_only"><![CDATA[Show icon only]]></string>
   <string name="_adm_form_txt_badges_btn_current_icon_image_delete"><![CDATA[Delete]]></string>
   <string name="_adm_form_txt_badges_icon"><![CDATA[Icon]]></string>
@@ -3272,6 +3272,31 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
 	<string name="_sys_please_select"><![CDATA[Please select...]]></string>
+    
+    <string name="_sys_pre_lists_colors"><![CDATA[Colors]]></string>
+    <string name="_sys_pre_lists_color_slate"><![CDATA[Slate]]></string>
+    <string name="_sys_pre_lists_color_gray"><![CDATA[Gray]]></string>
+    <string name="_sys_pre_lists_color_zinc"><![CDATA[Zinc]]></string>
+    <string name="_sys_pre_lists_color_neutral"><![CDATA[Neutral]]></string>
+    <string name="_sys_pre_lists_color_stone"><![CDATA[Stone]]></string>
+    <string name="_sys_pre_lists_color_red"><![CDATA[Red]]></string>
+    <string name="_sys_pre_lists_color_orange"><![CDATA[Orange]]></string>
+    <string name="_sys_pre_lists_color_amber"><![CDATA[Amber]]></string>
+    <string name="_sys_pre_lists_color_yellow"><![CDATA[Yellow]]></string>
+    <string name="_sys_pre_lists_color_lime"><![CDATA[Lime]]></string>
+    <string name="_sys_pre_lists_color_green"><![CDATA[Green]]></string>
+    <string name="_sys_pre_lists_color_emerald"><![CDATA[Emerald]]></string>
+    <string name="_sys_pre_lists_color_teal"><![CDATA[Teal]]></string>
+    <string name="_sys_pre_lists_color_cyan"><![CDATA[Cyan]]></string>
+    <string name="_sys_pre_lists_color_sky"><![CDATA[Sky]]></string>
+    <string name="_sys_pre_lists_color_blue"><![CDATA[Blue]]></string>
+    <string name="_sys_pre_lists_color_indigo"><![CDATA[Indigo]]></string>
+    <string name="_sys_pre_lists_color_violet"><![CDATA[Violet]]></string>
+    <string name="_sys_pre_lists_color_purple"><![CDATA[Purple]]></string>
+    <string name="_sys_pre_lists_color_fuchsia"><![CDATA[Fuchsia]]></string>
+    <string name="_sys_pre_lists_color_pink"><![CDATA[Pink]]></string>
+    <string name="_sys_pre_lists_color_rose"><![CDATA[Rose]]></string>
+    
         <string name="_sys_pre_lists_content_filter"><![CDATA[Content filter]]></string>
         <string name="_sys_pre_lists_content_filter_g"><![CDATA[G]]></string>
         <string name="_sys_pre_lists_content_filter_pg"><![CDATA[PG]]></string>

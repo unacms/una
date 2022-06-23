@@ -318,6 +318,20 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         $aResult[CHECK_ACTION_PARAMETER] = $aAction['additional_param_value'];
         $aLangFileParams[CHECK_ACTION_LANG_FILE_ACTION] = !empty($aAction['title']) ? _t($aAction['title']) : $aAction['name'];
 
+        /* Check membership action with ability to overwrite params - begin */
+        $bContinue = true;
+        bx_alert('membership', 'check_action', $iActionId, $iProfileId, array(
+            'action' => &$aAction,
+            'perform' => &$bPerformAction,
+            'result' => &$aResult,
+            'lang' => &$aLangFileParams,
+            'continue' => &$bContinue
+        ));
+
+        if (!$bContinue)
+            return $aResult;
+        /* Check membership action with ability to overwrite params - end */
+
         /**
          * Action is not allowed for the current membership
          */
