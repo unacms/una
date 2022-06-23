@@ -51,7 +51,7 @@ class BxStripeConnectTemplate extends BxBaseModConnectTemplate
 
     	$this->addCss(array('main.css'));
     	return $this->parseHtmlByName('block_connect.html', array(
-    		'link' => bx_append_url_params($CNF['URL_API_AUTHORIZE'], $aRequestParams)
+    		'link' => bx_append_url_params($CNF['URL_API_AUTHORIZE'], $aRequestParams, false)
     	));
     }
     

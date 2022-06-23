@@ -415,7 +415,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (!$sSeoPageUri)
             return false;
 
-        return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams));
+        return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams), false);
     }
 
 	/**

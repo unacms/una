@@ -856,7 +856,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function addBrowseParams($sUrl, $aParams, $sKey = 'bp')
     {
-        return bx_append_url_params($sUrl, array($sKey => urlencode(base64_encode(serialize($aParams)))));
+        return bx_append_url_params($sUrl, array($sKey => base64_encode(serialize($aParams))));
     }
 
     public function getBrowseParams($sValue)

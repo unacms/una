@@ -292,7 +292,7 @@ class BxBaseSearchResult extends BxDolSearchResult
                 'type' => $this->_sMetaType,
                 'start' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['start'] : '{start}',
                 'per_page' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['perPage'] : '{per_page}',
-            ));
+            ), false);
         }
 
         foreach ($this->aGetParams as $sGetParam) {

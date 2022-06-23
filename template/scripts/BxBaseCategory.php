@@ -28,7 +28,7 @@ class BxBaseCategory extends BxDolCategory
 		$this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', array(
 			'cat' => '{category}',
 			'keyword' => '{keyword}'
-		)) . '{sections}' . '{context}';
+		), true, ['{category}', '{keyword}']) . '{sections}' . '{context}';
     }
 
     public function getCategoryTitle($sValue)

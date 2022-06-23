@@ -185,15 +185,15 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
             $sPage = $this->getPageNameFromLink($sLink, $iLength);
 
             if (!$this->_isEnabled($sKey))
-                return bx_append_url_params($sLink, $aParams);
+                return bx_append_url_params($sLink, $aParams, false);
 
             $sUrl = $this->_fixUrlAmpersand($this->aLinksStandard[$sKey]['permalink'] . $sPage);
 
-            return $sPrefix . bx_append_url_params($sUrl, $aParams);
+            return $sPrefix . bx_append_url_params($sUrl, $aParams, false);
 
         }
 
-        return $sPrefix . bx_append_url_params($this->_isEnabled($sLink) ? $this->aLinksStandard[$sLink]['permalink'] : $sLink, $aParams);
+        return $sPrefix . bx_append_url_params($this->_isEnabled($sLink) ? $this->aLinksStandard[$sLink]['permalink'] : $sLink, $aParams, false);
     }
 
     /**

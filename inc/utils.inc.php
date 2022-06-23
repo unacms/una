@@ -1406,7 +1406,7 @@ function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
     return $s;
 }
 
-function bx_append_url_params ($sUrl, $mixedParams)
+function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgnoreParams = [])
 {
     if (!$mixedParams)
         return $sUrl;
@@ -1416,11 +1416,24 @@ function bx_append_url_params ($sUrl, $mixedParams)
     if (is_array($mixedParams)) {
         foreach($mixedParams as $sKey => $sValue) {
             if (!is_array($sValue)) {
+                if ($bEncodeParams) {
+                    if (!in_array($sKey, $aIgnoreParams))
+                        $sKey = rawurlencode($sKey);
+                    if (!in_array($sValue, $aIgnoreParams))
+                        $sValue = rawurlencode($sValue);
+                }
                 $sParams .= $sKey . '=' . $sValue . '&';
             }
             else {
-                foreach($sValue as $sSubValue)
+                foreach($sValue as $sSubValue) {
+                    if ($bEncodeParams) {
+                        if (!in_array($sKey, $aIgnoreParams))
+                            $sKey = rawurlencode($sKey);
+                        if (!in_array($sSubValue, $aIgnoreParams))
+                            $sSubValue = rawurlencode($sSubValue);
+                    }
                     $sParams .= $sKey . '[]=' . $sSubValue . '&';
+                }
             }
         }
         $sParams = substr($sParams, 0, -1);

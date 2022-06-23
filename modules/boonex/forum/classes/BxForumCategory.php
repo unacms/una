@@ -25,7 +25,7 @@ class BxForumCategory extends BxTemplCategory
 
         $this->_sBrowseUrl = bx_append_url_params(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_CATEGORY_ENTRIES']), array(
 			'category' => '{keyword}'
-		));
+		), true, ['{keyword}']);
     }
 }
 
