@@ -1406,6 +1406,32 @@ function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
     return $s;
 }
 
+/**
+ * It works similar to `parse_str` php function, but it doesn't decode URL params
+ */
+function bx_parse_str($s) 
+{
+    $a = [];
+    $aPairs = explode('&', $s);
+
+    foreach ($aPairs as $i) {
+        list($sName, $mixedValue) = explode('=', $i, 2);
+        $sName = rtrim($sName, '[]');
+
+        if (isset($a[$sName])) {
+            if (is_array($a[$sName]))
+                $a[$sName][] = $mixedValue;
+            else 
+                $a[$sName] = [$a[$sName], $mixedValue];
+        }
+        else {
+            $a[$sName] = $mixedValue;
+        }
+    }
+
+    return $a;
+}
+
 function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgnoreParams = [])
 {
     if (!$mixedParams)
