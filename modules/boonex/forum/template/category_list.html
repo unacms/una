@@ -3,9 +3,11 @@
 		<li class="bx-menu-item-profile-stats-profile rounded-md __class__ bx-category-list-item bx-forum-category-list-item">
             <div class="bx-menu-item-cnt bx-stl-mil group">
                 <a class="flex flex-2 items-center truncate" href="__url__">
-                    <span class="bx-menu-item-icon bx-forum-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
-                        __icon__
-                    </span>
+                    <bx_if:show_icon>
+                        <span class="bx-menu-item-icon bx-forum-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                            __icon__
+                        </span>
+                    </bx_if:show_icon>
                     <span class="bx-menu-item-title bx-stl-mit">__name__</span>
                 </a>
 				<div class="bx-menu-addon bx-stl-mia flex-none group-hover:text-gray-800 dark:group-hover:text-gray-100">

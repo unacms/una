@@ -45,6 +45,17 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
     }
+    
+    protected function _getMenuItemScore($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $oVotes = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $this->_aContentInfo[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate);
+        if(!$oVotes || !$oVotes->isEnabled())
+            return 'zxczx';
+
+        return $this->getUnitMetaItemCustom($oVotes->getElementInline());
+    }
 
     protected function _getMenuItemReplyAuthor($aItem)
     {

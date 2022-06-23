@@ -348,10 +348,11 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_forum_snippet_meta_main', 'bx_forum', '_bx_forum_menu_set_title_snippet_meta_main', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`, `hidden_on_col`) VALUES 
+('bx_forum_snippet_meta_main', 'bx_forum', 'score', '_bx_forum_menu_item_title_system_sm_vote', '_bx_forum_menu_item_title_sm_vote', '', '', '', '', '', 2147483647, 1, 0, 1, 0, 0),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 1, 0),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', 'clock', '', 2147483647, 1, 0, 1, 2, 0),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3, 3),
-('bx_forum_snippet_meta_main', 'bx_forum', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', 'comments', '', 2147483647, 1, 0, 1, 4, 0),
+('bx_forum_snippet_meta_main', 'bx_forum', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', 'comments', '', 2147483647, 1, 0, 1, 4, 3),
 ('bx_forum_snippet_meta_main', 'bx_forum', 'status', '_bx_forum_menu_item_title_system_sm_status', '_bx_forum_menu_item_title_sm_status', '', '', '', '', '', 2147483647, 1, 0, 1, 5, 3);
 
 

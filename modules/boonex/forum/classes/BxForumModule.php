@@ -202,6 +202,13 @@ class BxForumModule extends BxBaseModTextModule
             
             $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage(isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder', array('class' => 'sys-icon sys-colored'));
             
+            $aCategories['bx_repeat:cats'][$sKey]['bx_if:show_icon'] = [
+                'condition' => $aCategories['bx_repeat:cats'][$sKey]['icon'] != '', 
+                'content' => [
+                    'icon' => $aCategories['bx_repeat:cats'][$sKey]['icon']
+                ]
+            ];
+            
             if(isset($aCategoryData['visible_for_levels']) && $aCategoryData['visible_for_levels'] != '' && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategoryData['visible_for_levels'])){
                 unset($aCategories['bx_repeat:cats'][$sKey]);
             }  
@@ -209,6 +216,7 @@ class BxForumModule extends BxBaseModTextModule
         }
         
         $CNF = &$this->_oConfig->CNF;
+        
 
         $aCategories['bx_repeat:cats'] = array_merge([[
             'icon' => $this->_oTemplate->parseImage($this->_oTemplate->getIconUrl('all-cat.svg'), ['class' => 'sys-icon sys-colored gray']),

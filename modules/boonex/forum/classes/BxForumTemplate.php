@@ -165,9 +165,6 @@ class BxForumTemplate extends BxBaseModTextTemplate
         $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
         $sParticipants = $oObject ? $oObject->getCounter(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => true, 'caption' => '', 'show_icon' => false, 'caption_empty' => '']) : '';
         
-        $oObject = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aRow[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate) : null;
-        $sVotes = $oObject ? $oObject->getElementInline() : '';
-        
         $sImage = '';
         $mixedImage = $this->_getHeaderImage($aRow);
         if($mixedImage !== false) {
@@ -193,7 +190,6 @@ class BxForumTemplate extends BxBaseModTextTemplate
             'title' => $sTitle ? $sTitle : _t('_Empty'),
             'participants' => $sParticipants,
             'badges' => $this->_oModule->serviceGetBadges($aRow[$CNF['FIELD_ID']]),
-            'votes' => $sVotes,
             'image' => $sImage,
             'bx_if:meta_main' => array(
                 'condition' => $aMetas['main'] !== false && (!isset($aParams['show_meta_main']) || $aParams['show_meta_main']),
