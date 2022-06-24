@@ -664,7 +664,7 @@
     .bx-artificer .bx-form-input-text,
     .bx-artificer .bx-form-input-price,
     .bx-artificer .bx-form-input-wrapper-price span {
-        @apply block w-full px-3 py-1.5;
+        @apply block w-full px-3 py-2;
         @apply bg-gray-50 dark:bg-gray-900/50 focus:bg-white dark:focus:bg-gray-900;
         @apply border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:border-opacity-70 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:outline-none;
         @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300 focus:text-gray-900 dark:focus:text-gray-100;
@@ -852,24 +852,29 @@
     }
     .bx-stl-mii,
     .bx-stl-mii-sm,
-    .bx-stl-mil .sys-action-do-icon {
+    .bx-stl-mil .sys-action-do-icon,
+    .bx-stl-mil-sm .sys-action-do-icon {
         @apply flex items-center justify-center text-gray-500 text-lg;
     }
     
     .bx-stl-mii > *,
     .bx-stl-mii-sm > *,
-    .bx-stl-mil .sys-action-do-icon > * {
+    .bx-stl-mil .sys-action-do-icon > *,
+    .bx-stl-mil-sm .sys-action-do-icon > * {
         @apply flex items-center justify-center h-6 w-6 mr-3;
     }
     .bx-stl-mii:last-child > *,
     .bx-stl-mii-sm:last-child > *,
-    .bx-stl-mil .sys-action-do-icon:last-child > * {
+    .bx-stl-mil .sys-action-do-icon:last-child > *,
+    .bx-stl-mil-sm .sys-action-do-icon:last-child > * {
         @apply mr-0;
     }
-    .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text {
+    .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text,
+    .bx-stl-mil-sm .sys-action-do-icon ~ .sys-action-do-text {
         @apply ml-0; 
     }
-    .bx-stl-mii-sm > * {
+    .bx-stl-mii-sm > *,
+    .bx-stl-mil-sm .sys-action-do-icon > * {
         @apply h-5 w-5 mr-1.5 text-sm;
     }
     .bx-stl-mit {

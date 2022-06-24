@@ -14,6 +14,7 @@
  */
 class BxTimelineMenuItemShare extends BxTemplMenu
 {
+    protected $_sModule;
     protected $_oModule;
 
     protected $_iEvent;
@@ -21,9 +22,10 @@ class BxTimelineMenuItemShare extends BxTemplMenu
 
     public function __construct($aObject, $oTemplate = false)
     {
-        parent::__construct($aObject, $oTemplate);
+        $this->_sModule = 'bx_timeline';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        $this->_oModule = BxDolModule::getInstance('bx_timeline');
+        parent::__construct($aObject, $this->_oModule->_oTemplate);
 
         $iContentId = 0;
         if(bx_get('content_id') !== false)
