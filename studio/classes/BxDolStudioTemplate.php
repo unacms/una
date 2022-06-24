@@ -39,6 +39,10 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             $this->_sSubPath
         ) = $aCode;
 
+        $this->_iMix = 0;
+        if(is_array($this->_sCode))
+            list($this->_sCode, $this->_iMix) = $this->_sCode;
+
         $this->addLocation('studio', $this->_sRootPath, $this->_sRootUrl);
         $this->addLocationJs('system_admin_js', $this->_sRootPath . 'js/' , $this->_sRootUrl . 'js/');
     }
