@@ -281,7 +281,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
 
         $aContent = $this->_parseByVendor($iUserId);
         if($iSellerId != BX_PAYMENT_EMPTY_ID)
-            return isset($aContent[$iSellerId]) ? $this->_getInfo($sType, $iUserId, $iSellerId, $aContent[$iSellerId]) : array();
+            return $this->_getInfo($sType, $iUserId, $iSellerId, (isset($aContent[$iSellerId]) ? $aContent[$iSellerId] : []));
 
         $aResult = array();
         foreach($aContent as $iSellerId => $aSellerItems)

@@ -366,7 +366,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 'seller_id' => $iSellerId,
                 'items' => $sItems,
                 'session_id' => '{CHECKOUT_SESSION_ID}'
-            ])
+            ], false)
         ], $aSessionParams);
 
         return $this->_createSession('authorize', $aSessionParams, $aClient, $aCartInfo);
