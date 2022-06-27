@@ -906,7 +906,11 @@
         @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white;
     }
 
-    /* Main menu */
+    /* Toolbar menu */
+    .bx-artificer .bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-toolbar-item-unit .bx-def-icon-size {
+        @apply h-8 w-8 md:h-10 md:w-10;
+    }
+
     /* Page Submenu */
     .bx-artificer .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active a {
         @apply text-gray-900 dark:text-gray-100;
