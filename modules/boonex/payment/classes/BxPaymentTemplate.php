@@ -25,9 +25,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     public function addJsCssOrders()
     {
     	$this->addJs(array(
-            'jquery-ui/jquery.ui.widget.min.js',
-            'jquery-ui/jquery.ui.menu.min.js', 
-            'jquery-ui/jquery.ui.autocomplete.min.js', 
+            'jquery-ui/jquery-ui.min.js',
             'jquery.form.min.js', 
             'jquery.anim.js', 
             'jquery.webForms.js',

@@ -68,7 +68,7 @@ class BxBaseStudioBadges extends BxDolStudioBadges
             return '';
 
         $oTemplate = BxDolStudioTemplate::getInstance();
-        $oTemplate->addJs(array('BxDolGrid.js', 'jquery.form.min.js', 'jquery-ui/jquery-ui.custom.min.js' , 'jquery-ui/jquery.ui.sortable.min.js'));
+        $oTemplate->addJs(array('BxDolGrid.js', 'jquery.form.min.js', 'jquery-ui/jquery-ui.min.js'));
         $oForm = new BxTemplStudioFormView(array());
         $oTemplate->addCss('grid.css');
         $oTemplate->addJsTranslation(array('_sys_grid_search'));

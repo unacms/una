@@ -93,10 +93,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         return array_merge(parent::getPageJs(), array(
             'codemirror/codemirror.min.js',
-            'jquery-ui/jquery.ui.core.min.js',
-            'jquery-ui/jquery.ui.widget.min.js',
-            'jquery-ui/jquery.ui.mouse.min.js',
-            'jquery-ui/jquery.ui.sortable.min.js',
+            'jquery-ui/jquery-ui.min.js',
             'jquery.ui.touch-punch.min.js',
             'jquery.easing.js',
             'jquery.form.min.js',
