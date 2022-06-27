@@ -639,10 +639,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 		);
 		
 		$this->_oTemplate->addJs(array(
-			'jquery-ui/jquery.ui.widget.min.js',
-    		'jquery-ui/jquery.ui.menu.min.js', 
-    		'jquery-ui/jquery.ui.autocomplete.min.js',
-			'jquery-ui/jquery.ui.core.min.js',
+			'jquery-ui/jquery-ui.min.js',
 			'tasks.js',
             'modules/base/general/js/|forms.js'
     	));

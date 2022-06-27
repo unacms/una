@@ -1570,7 +1570,7 @@ BLAH;
 
             if($this->_bDynamicMode)
                 $sJsCode = $this->oTemplate->addJsPreloadedWrapped([
-                    'jquery-ui/jquery-ui.custom.min.js'
+                    'jquery-ui/jquery-ui.min.js'
                 ], $sJsCode);
             else 
                 $sJsCode = $this->oTemplate->addJsCodeOnLoadWrapped($sJsCode);
@@ -2199,10 +2199,10 @@ BLAH;
             return;
 
         $this->_addJs(array(
-            'jquery-ui/jquery-ui.custom.min.js',
-        ), "'undefined' === typeof($.widget)");
+            'jquery-ui/jquery-ui.min.js',
+        ), "'undefined' === typeof(jQuery.ui.position)");
         
-        $this->_addCss('jquery-ui/jquery-ui.css');
+        $this->_addCss('jquery-ui/jquery-ui.min.css');
 
         self::$_isCssJsUiAdded = true;
     }
@@ -2213,8 +2213,8 @@ BLAH;
             return;
 
         $this->_addJs(array(
-            'jquery-ui/jquery.ui.sortable.min.js'
-        ), "'undefined' === typeof($.sortable)");
+            'jquery-ui/jquery-ui.min.js'
+        ), "'undefined' === typeof(jQuery.ui.position)");
 
         self::$_isCssJsUiSortableAdded = true;
     }

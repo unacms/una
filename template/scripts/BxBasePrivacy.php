@@ -60,14 +60,8 @@ class BxBasePrivacy extends BxDolPrivacy
 
         if($bDynamicMode) {
             $sCode = "var " . $this->_sJsObjName . " = null;
-            if(typeof(jQuery.ui.core) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.core.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(typeof(jQuery.ui.widget) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.widget.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(typeof(jQuery.ui.menu) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.menu.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(typeof(jQuery.ui.autocomplete) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.autocomplete.min.js'), BX_ESCAPE_STR_APOS) . "');
+            if(typeof(jQuery.ui.position) == 'undefined')
+                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery-ui.min.js'), BX_ESCAPE_STR_APOS) . "');
             if(window['" . $this->_sJsObjName . "'] === null)
                 $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolPrivacy.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
                     " . $sCode . "
@@ -85,10 +79,7 @@ class BxBasePrivacy extends BxDolPrivacy
 
         if(!$bDynamicMode)
             $this->_oTemplate->addJs(array(
-                'jquery-ui/jquery.ui.core.min.js',
-                'jquery-ui/jquery.ui.widget.min.js',
-                'jquery-ui/jquery.ui.menu.min.js',
-                'jquery-ui/jquery.ui.autocomplete.min.js', 
+                'jquery-ui/jquery-ui.min.js',
                 'BxDolPrivacy.js'
             ));
 

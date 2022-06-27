@@ -36,10 +36,7 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
     public function getPageJs()
     {
         $aJs = array(
-            'jquery-ui/jquery.ui.core.min.js',
-            'jquery-ui/jquery.ui.widget.min.js',
-            'jquery-ui/jquery.ui.mouse.min.js',
-            'jquery-ui/jquery.ui.sortable.min.js',
+            'jquery-ui/jquery-ui.min.js',
             'jquery.ui.touch-punch.min.js',
             'jquery.easing.js',
             'jquery.cookie.min.js',

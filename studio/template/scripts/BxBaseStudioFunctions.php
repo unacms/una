@@ -53,7 +53,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $oTemplate->setPageNameIndex(BX_PAGE_CLEAR);
         $oTemplate->setPageParams(array(
            'css_name' => array('forms.css', 'login.css'),
-           'js_name' => array('jquery-ui/jquery.ui.position.min.js', 'jquery.form.min.js', 'jquery.dolPopup.js', 'login.js'),
+           'js_name' => array('jquery-ui/jquery-ui.min.js', 'jquery.form.min.js', 'jquery.dolPopup.js', 'login.js'),
            'header' => _t('_adm_page_cpt_login'),
         ));
         $oTemplate->setPageContent ('page_main_code', $sHtml);

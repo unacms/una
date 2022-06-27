@@ -5886,7 +5886,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 
 ('system', 'js_system', 'jquery/jquery.min.js', 1, 1),
 ('system', 'js_system', 'jquery/jquery-migrate.min.js', 1, 2),
-('system', 'js_system', 'jquery-ui/jquery.ui.position.min.js', 1, 3),
+('system', 'js_system', 'jquery-ui/jquery-ui.min.js', 1, 3),
 ('system', 'js_system', 'jquery.easing.js', 1, 4),
 ('system', 'js_system', 'jquery.cookie.min.js', 1, 5),
 ('system', 'js_system', 'jquery.form.min.js', 1, 6),
