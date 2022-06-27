@@ -3773,8 +3773,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
-        if($iOwnerId != 0 && ($oOwner = BxDolProfile::getInstanceMagic($iOwnerId)) !== false) {
-            $mixedCheckResult = BxDolService::call($oOwner->getModule(), 'check_allowed_with_content_for_profile', array('view', $oOwner->getContentId(), $iProfileId));
+        if($iOwnerId != 0 && ($oOwner = BxDolProfile::getInstanceMagic($iOwnerId)) !== false && !($oOwner instanceof BxDolProfileUndefined)) {
+            $mixedCheckResult = bx_srv($oOwner->getModule(), 'check_allowed_with_content_for_profile', ['view', $oOwner->getContentId(), $iProfileId]);
             if($mixedCheckResult !== CHECK_ACTION_RESULT_ALLOWED)
                 return $mixedCheckResult;
         }
