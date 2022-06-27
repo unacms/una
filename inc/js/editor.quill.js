@@ -66,16 +66,22 @@ function bx_editor_init(oEditor, oParams){
                     node.innerHTML = value.denotationChar + value.value;
                     node.setAttribute('title', value.value);
                     node.setAttribute('dchar', value.denotationChar);
+                    node.setAttribute('data-profile-id', value.dataProfileId);
                 }
                 return node;
             }
             
             format(name, value) {
-                if (name === 'href' || name === 'title' || name === 'dchar') {
+                if (name === 'href' || name === 'title' || name === 'dchar' || name === 'data-profile-id' || name === 'dataProfileId') {
                     if (value) {
-                        this.domNode.setAttribute(name, value);
                         if (name === 'dchar'){
                             this.domNode.innerHTML = value + this.domNode.getAttribute('title');
+                        }
+                        if (name === 'dataProfileId'){
+                            this.domNode.setAttribute('data-profile-id', value);
+                        }
+                        else{
+                            this.domNode.setAttribute(name, value);
                         }
                     } else {
                         this.domNode.removeAttribute(name, value);
@@ -96,6 +102,12 @@ function bx_editor_init(oEditor, oParams){
                 }
                 if (node.hasAttribute('dchar')) {
                     format.dchar = node.getAttribute('dchar');
+                }
+                if (node.hasAttribute('data-profile-id')) {
+                    format['data-profile-id'] = node.getAttribute('data-profile-id');
+                }
+                if (node.hasAttribute('dataProfileId')) {
+                    format.dataProfileId = node.getAttribute('dataProfileId');
                 }
                 return format;
             }  
@@ -166,6 +178,7 @@ function bx_editor_init(oEditor, oParams){
                 blotName: 'menthion-link',
                 mentionContainerClass: 'bx-popup bx-popup-trans bx-popup-border bx-popup-color-bg',
                 mentionListClass: 'ql-mention-list bx-menu-ver',
+                dataAttributes: ['id', 'value', 'denotationChar', 'link', 'target','disabled', 'dataProfileId'], 
                 listItemClass: 'bx-menu-item bx-def-color-bg-hl-hover',
                 source: function (searchTerm, renderList, mentionChar) {
                   $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention', $.extend({}, {symbol: mentionChar, term: searchTerm}, oParams.query_params), function(data){
@@ -174,6 +187,7 @@ function bx_editor_init(oEditor, oParams){
                 },
                 renderItem: function(item, searchTerm){
                     item.id = item.url;
+                    item.dataProfileId = item.value;
                     item.value = item.label;
                     return item.symbol + item.value;
                 },
@@ -253,7 +267,6 @@ function bx_editor_init(oEditor, oParams){
     });
     
     oEditor.clipboard.addMatcher (Node.TEXT_NODE, function (node, delta) {
-        console.log(node.data);
         const Delta = Quill.import('delta')
         bx_editor_on_space_enter(node.data, oParams.selector, false);
         return new Delta().insert(node.data); 
