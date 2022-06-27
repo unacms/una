@@ -211,11 +211,14 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         );
         $this->query("UPDATE `" . $CNF['TABLE_LINKS'] . "` SET `" . $CNF['FIELD_DATE_CLICK'] . "` = :date_click WHERE `" . $CNF['FIELD_HASH'] . "` = :code", $aBindings);
         $aData = $this->getRow("SELECT * FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_HASH'] . "` = :code", array('code' => $sCode));
-        $aBindings['code'] = $aData[$CNF['FIELD_LETTER_HASH']];
-        if ($aData[$CNF['FIELD_LETTER_HASH']] != '')
-            $this->query("UPDATE `" . $CNF['TABLE_LETTERS'] . "` SET `" . $CNF['FIELD_DATE_CLICK'] . "` = :date_click WHERE `" . $CNF['FIELD_HASH'] . "` = :code", $aBindings);
-        
-        return $aData[$CNF['FIELD_LINK']];
+        if (isset($aData[$CNF['FIELD_LETTER_HASH']]) && isset($aData[$CNF['FIELD_LINK']])){
+            $aBindings['code'] = $aData[$CNF['FIELD_LETTER_HASH']];
+            if ($aData[$CNF['FIELD_LETTER_HASH']] != '')
+                $this->query("UPDATE `" . $CNF['TABLE_LETTERS'] . "` SET `" . $CNF['FIELD_DATE_CLICK'] . "` = :date_click WHERE `" . $CNF['FIELD_HASH'] . "` = :code", $aBindings);
+
+            return $aData[$CNF['FIELD_LINK']];
+        }
+        return '';
     }
     
     
