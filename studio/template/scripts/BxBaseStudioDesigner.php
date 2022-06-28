@@ -130,6 +130,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
     protected function getLogo()
     {
+        $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aForm = array(
@@ -161,9 +162,18 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'name' => 'image',
                     'caption' => _t('_adm_dsg_txt_upload_image'),
                     'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
-                    'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',
+                    'ajax_action_delete' => $sJsObject . '.deleteLogo()',
                     'storage_object' => 'sys_images_custom',
                     'value' => (int)getParam($this->sParamLogo),
+                ),
+                'mark' => array(
+                    'type' => 'image_uploader',
+                    'name' => 'mark',
+                    'caption' => _t('_adm_dsg_txt_upload_mark'),
+                    'caption_preview' => _t('_adm_dsg_txt_upload_mark_preview'),
+                    'ajax_action_delete' => $sJsObject . '.deleteMark()',
+                    'storage_object' => 'sys_images_custom',
+                    'value' => '',
                 ),
                 'alt' => array(
                     'type' => 'text',
@@ -187,6 +197,11 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                 )
             )
         );
+
+        if(!empty($this->sParamMark))
+            $aForm['inputs']['mark']['value'] = (int)getParam($this->sParamMark);
+        else
+            unset($aForm['inputs']['mark']);
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();

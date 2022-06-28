@@ -29,6 +29,16 @@ class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
         setParam($sPrefix . 'site_logo_aspect_ratio', '');
     }
 
+    protected function _processSystemChangeMark($oAlert)
+    {
+        $sPrefix = $this->_oModule->_oConfig->getPrefix('option');
+
+        if(!in_array($oAlert->aExtras['option'], ['sys_site_mark', $sPrefix . 'site_mark']))
+            return;
+
+        setParam($sPrefix . 'site_mark_aspect_ratio', '');
+    }
+
     protected function _processSystemGetObject($oAlert)
     {
         if(!$this->_isActive())

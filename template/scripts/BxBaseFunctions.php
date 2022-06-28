@@ -528,6 +528,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get mark URL.
+     * @return string
+     */
+    function getMainMarkUrl()
+    {
+        return BxDolDesigns::getInstance()->getSiteMarkUrl();
+    }
+
+    /**
      * Get logo HTML.
      * @return string
      */

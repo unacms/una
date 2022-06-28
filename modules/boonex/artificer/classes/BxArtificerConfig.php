@@ -24,6 +24,7 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
         parent::__construct($aModule);
 
         $this->_iLogoHeight = 48;
+        $this->_iMarkHeight = 48;
 
         $this->_aPrefixes = [
             'option' => 'bx_artificer_'
@@ -45,6 +46,17 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
         ];
         
         
+    }
+
+    public function getLogoParams()
+    {
+    	$sPrefix = $this->getPrefix('option');
+
+    	return [
+            $sPrefix . 'site_logo',
+            $sPrefix . 'site_mark',
+            $sPrefix . 'site_logo_alt'
+    	];
     }
 
     public function getReplacements()

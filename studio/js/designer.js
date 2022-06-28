@@ -55,7 +55,6 @@ BxDolStudioDesigner.prototype.makeDefault = function(sUri) {
 };
 
 BxDolStudioDesigner.prototype.deleteLogo = function() {
-    var $this = this;
     var oDate = new Date();
     var aParams = {_t: oDate.getTime()};
     aParams[this.sParamPrefix + '_action'] = 'delete_logo';
@@ -64,12 +63,22 @@ BxDolStudioDesigner.prototype.deleteLogo = function() {
         this.sActionsUrl,
         aParams,
         function(oData) {
-            if(oData.code != 0 && oData.message.length > 0) {
-                bx_alert(oData.message);
-                return;
-            }
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
 
-            document.location.href = document.location.href; 
+BxDolStudioDesigner.prototype.deleteMark = function() {
+    var oDate = new Date();
+    var aParams = {_t: oDate.getTime()};
+    aParams[this.sParamPrefix + '_action'] = 'delete_mark';
+
+    $.post(
+        this.sActionsUrl,
+        aParams,
+        function(oData) {
+            processJsonData(oData);
         },
         'json'
     );

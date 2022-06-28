@@ -659,6 +659,7 @@
 	<string name="_adm_dsg_err_remove_old_cover"><![CDATA[Cannot remove current cover image.]]></string>
 	<string name="_adm_dsg_err_remove_old_icon"><![CDATA[Cannot remove current icon.]]></string>
 	<string name="_adm_dsg_err_remove_old_logo"><![CDATA[Cannot remove current logo image.]]></string>
+        <string name="_adm_dsg_err_remove_old_mark"><![CDATA[Cannot remove current mark image.]]></string>
 	<string name="_adm_dsg_err_save"><![CDATA[Cannot save: ]]></string>
 	<string name="_adm_dsg_err_save_changes"><![CDATA[Cannot save changes.]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[The changes were successfully saved]]></string>
@@ -677,6 +678,8 @@
 	<string name="_adm_dsg_txt_upload_icon"><![CDATA[Upload New Site Icon]]></string>
 	<string name="_adm_dsg_txt_upload_image"><![CDATA[Upload New Logo Image]]></string>
 	<string name="_adm_dsg_txt_upload_image_preview"><![CDATA[Current Logo Image]]></string>
+        <string name="_adm_dsg_txt_upload_mark"><![CDATA[Upload New Mark Image]]></string>
+	<string name="_adm_dsg_txt_upload_mark_preview"><![CDATA[Current Mark Image]]></string>
 	<string name="_adm_dsg_txt_inj_head"><![CDATA[&lt;HEAD&gt; injection]]></string>
 	<string name="_adm_dsg_txt_inj_head_inf"><![CDATA[Code to insert before closing HEAD tag]]></string>
 	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; injection]]></string>

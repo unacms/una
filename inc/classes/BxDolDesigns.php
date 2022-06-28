@@ -10,6 +10,7 @@
 class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
 {
     public static $fLogoAspectRatioDefault = 1.0;
+    public static $fMarkAspectRatioDefault = 1.0;
 
     protected $sDesign;
     protected $oDesign;
@@ -65,14 +66,19 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
     	if($this->oDesign instanceof BxDolModule && method_exists($this->oDesign->_oConfig, 'getLogoParams')) {
             list(
                 $this->aParams['logo'], 
+                $this->aParams['mark'], 
                 $this->aParams['logo_alt']
             ) = $this->oDesign->_oConfig->getLogoParams();
 
             list(
                 $this->aValues['logo_width'], 
                 $this->aValues['logo_height'],
-                $this->aValues['logo_aspect_ratio']
-            ) = $this->oDesign->_oConfig->getLogoValues($this->getSiteLogoUrl(), $this->getSiteLogoInfo());
+                $this->aValues['logo_aspect_ratio'],
+
+                $this->aValues['mark_width'],
+                $this->aValues['mark_height'],
+                $this->aValues['mark_aspect_ratio']
+            ) = $this->oDesign->_oConfig->getLogoValues($this->getSiteLogoUrl(), $this->getSiteLogoInfo(), $this->getSiteMarkUrl(), $this->getSiteMarkInfo());
         }
     }
 
@@ -106,10 +112,35 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
         return !empty($sFileUrl) ? $sFileUrl : false;
     }
 
+    public function getSiteMark()
+    {
+    	return $this->getSiteLogoParam('mark');
+    }
+
+    public function getSiteMarkUrl($iFileId = 0, $bOriginal = true)
+    {
+        if(!$iFileId)
+            $iFileId = (int)$this->getSiteMark();
+        if(!$iFileId) 
+            return false;
+        
+        return $this->getSiteLogoUrl($iFileId, $bOriginal);
+    }
+
     public function getSiteLogoInfo($iFileId = 0)
     {
         if(!$iFileId)
             $iFileId = (int)$this->getSiteLogo();
+        if(!$iFileId) 
+            return false;
+
+        return BxDolStorage::getObjectInstance($this->sLogoStorage)->getFile($iFileId);
+    }
+
+    public function getSiteMarkInfo($iFileId = 0)
+    {
+        if(!$iFileId)
+            $iFileId = (int)$this->getSiteMark();
         if(!$iFileId) 
             return false;
 
@@ -129,6 +160,16 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
     public function getSiteLogoHeight()
     {
         return ($iResult = $this->getSiteLogoValue('logo_height')) !== false ? $iResult : 0;
+    }
+
+    public function getSiteMarkWidth()
+    {
+    	return ($iResult = $this->getSiteLogoValue('mark_width')) !== false ? $iResult : 0;
+    }
+
+    public function getSiteMarkHeight()
+    {
+        return ($iResult = $this->getSiteLogoValue('mark_height')) !== false ? $iResult : 0;
     }
 
     protected function getSiteLogoParam($sName, $bGetSystem = false)

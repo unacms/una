@@ -32,6 +32,7 @@ class BxTemplFunctions extends BxBaseFunctions
         $aTmplVarsShowImage = [];
         $aTmplVarsShowImageMini = [];
 
+        //--- Logo image
         $bDefault = false;
         if(($sFileUrl = $this->getMainLogoUrl()) !== false || ($bDefault = (!$bTitle && ($sFileUrl = $this->_oTemplate->getImageUrl('logo-generic.svg')) != ''))) {
             $bTmplVarsShowTitle = false;
@@ -43,39 +44,51 @@ class BxTemplFunctions extends BxBaseFunctions
             ];
 
             $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
-            $sHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+            $sLogoHeight = $iLogoHeight > 0 ? 'height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
 
+            //--- Default Logo
             if($bDefault) {
-                //--- Default Logo
                 list($iDlWidth, $iDlHeight) = bx_get_svg_image_size($sFileUrl);
                 $fDlAspectRation = $iDlHeight ? $iDlWidth / $iDlHeight : BxDolDesigns::$fLogoAspectRatioDefault;
 
                 $iLogoWidth = $iLogoHeight * $fDlAspectRation;
-
-                //--- Default Logo Mini
-                $aTmplVarsShowImage['class'] = 'hidden lg:block';
-
-                if(($sFileUrl = $this->_oTemplate->getImageUrl('mark-generic.svg')) != '') {
-                    list($iMlWidth, $iMlHeight) = bx_get_svg_image_size($sFileUrl);
-                    $fMlAspectRation = $iMlHeight ? $iMlWidth / $iMlHeight : BxDolDesigns::$fLogoAspectRatioDefault;
-                    
-                    $imlLogoWidth = $iLogoHeight * $fMlAspectRation;
-                    $sMlWidth = $imlLogoWidth > 0 ? 'width:' . round($imlLogoWidth/16, 3) . 'rem;' : '';
-
-                    $aTmplVarsShowImageMini = [
-                        'class' => 'block lg:hidden',
-                        'style' => $sMlWidth . ' ' . $sHeight,
-                        'src' => $sFileUrl,
-                        'alt' => $sAltAttr
-                    ];
-                }
             }
             else
                 $iLogoWidth = $oDesigns->getSiteLogoWidth();
 
-            $sWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+            $sLogoWidth = $iLogoWidth > 0 ? 'width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
 
-            $aTmplVarsShowImage['style'] = $sWidth . ' ' . $sHeight;
+            $aTmplVarsShowImage['style'] = $sLogoWidth . ' ' . $sLogoHeight;
+        }
+
+        //--- Mark image
+        $bDefault = false;
+        if(($sFileUrl = $this->getMainMarkUrl()) !== false || ($bDefault = (!$bTitle && ($sFileUrl = $this->_oTemplate->getImageUrl('mark-generic.svg')) != ''))) {
+            $aTmplVarsShowImage['class'] = 'hidden lg:block';
+
+            $aTmplVarsShowImageMini = [
+                'class' => 'block lg:hidden',
+                'style' => '',
+                'src' => $sFileUrl,
+                'alt' => $sAltAttr
+            ];
+
+            $iMarkHeight = (int)$oDesigns->getSiteMarkHeight();
+            $sMarkHeight = $iMarkHeight > 0 ? 'height:' . round($iMarkHeight/16, 3) . 'rem;' : '';
+
+            //--- Default Mark
+            if($bDefault) {
+                list($iDmWidth, $iDmHeight) = bx_get_svg_image_size($sFileUrl);
+                $fDmAspectRation = $iDmHeight ? $iDmWidth / $iDmHeight : BxDolDesigns::$fMarkAspectRatioDefault;
+                    
+                $iMarkWidth = $iMarkHeight * $fDmAspectRation;
+            }
+            else
+                $iMarkWidth = $oDesigns->getSiteMarkWidth();
+
+            $sMarkWidth = $iMarkWidth > 0 ? 'width:' . round($iMarkWidth/16, 3) . 'rem;' : '';
+
+            $aTmplVarsShowImageMini['style'] = $sMarkWidth . ' ' . $sMarkHeight;
         }
 
         $aAttrs = [
