@@ -72,14 +72,14 @@ import url(../../../../../../../template/css/general.css);
 }
 
 /*--- Profile Stats ---*/
-.bx-menu-profile-stats li.bx-psmi-show-more,
-.bx-menu-profile-stats li.bx-psmi-show-less {
+.bx-menu-vertical-more-less li.bx-psmi-show-more,
+.bx-menu-vertical-more-less li.bx-psmi-show-less {
     text-transform: uppercase;
     font-size: 0.875rem;
 }
 
-.bx-menu-profile-stats  li.bx-psmi-show-more:hover,
-.bx-menu-profile-stats  li.bx-psmi-show-less:hover {
+.bx-menu-vertical-more-less li.bx-psmi-show-more:hover,
+.bx-menu-vertical-more-less li.bx-psmi-show-less:hover {
     background-color: transparent;
 }
 

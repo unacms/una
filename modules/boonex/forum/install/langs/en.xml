@@ -17,6 +17,8 @@
     <string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Autosubscribe to replied discussions]]></string>
     <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
     <string name="_bx_forum_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_forum_option_visible_categories"><![CDATA[Number of visible categories]]></string>
+    <string name="_bx_forum_option_visible_hashtags"><![CDATA[Number of visible hashtags]]></string>
 
     <string name="_bx_forum_form_entry"><![CDATA[Forum]]></string>
     <string name="_bx_forum_form_entry_display_add"><![CDATA[New discussion]]></string>
@@ -336,6 +338,7 @@
     <string name="_bx_forum_menu_item_title_sm_status"><![CDATA[Status]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_badges"><![CDATA[Badges]]></string>
     <string name="_bx_forum_menu_item_title_sm_badges"><![CDATA[Badges]]></string>
+    <string name="_bx_forum_menu_title_categories"><![CDATA[Categories]]></string>
   
 
     <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>

@@ -68,6 +68,13 @@ class BxBaseMetatags extends BxDolMetatags
         $aKeywords = $this->keywordsPopularList($iMaxCount, isset($aParams['context_id']) ? $aParams['context_id'] : 0);
         if(!$aKeywords)
             return $bAsArray ? array() : '';
+        
+        if (isset($aParams['menu_view']) && $aParams['menu_view'] == true){
+            $oMenu = BxDolMenu::getObjectInstance('sys_tags_cloud');
+            arsort($aKeywords);
+            $oMenu->setKeywords($aKeywords, $this, $mixedSection);
+            return $oMenu->getCode();
+        }
 
         ksort($aKeywords, SORT_LOCALE_STRING);
 
@@ -96,6 +103,7 @@ class BxBaseMetatags extends BxDolMetatags
             return $aVars;
 
         $this->addCssJs();
+        
         return $this->_oTemplate->parseHtmlByName('metatags_keywords_cloud.html', $aVars);
     }
 

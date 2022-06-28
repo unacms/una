@@ -3033,6 +3033,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_template_title_custom_hor"><![CDATA[Horizontal menu with custom items]]></string>
     <string name="_sys_menu_template_title_custom_ver"><![CDATA[Vertical menu with custom items]]></string>
     <string name="_sys_menu_template_title_profile_followings"><![CDATA[Profile Following Menu]]></string>
+    <string name="_sys_menu_template_title_vertical_more_less"><![CDATA[Vertical menu with more/less]]></string>
     <string name="_sys_menu_template_title_profile_stats"><![CDATA[Profile Stats Menu]]></string>
     <string name="_sys_menu_title_account_dashboard"><![CDATA[Account Dashboard Menu]]></string>
     <string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools Menu]]></string>
@@ -3062,6 +3063,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_title_profiles_create"><![CDATA[Create Profiles]]></string>
     <string name="_sys_menu_title_profile_followings"><![CDATA[Profile Following]]></string>
     <string name="_sys_menu_title_profile_stats"><![CDATA[Profile Stats]]></string>
+    <string name="_sys_menu_title_tags_cloud"><![CDATA[Tags Cloud]]></string>
     <string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
     <string name="_sys_menu_title_set_acl_level"><![CDATA[ACL Levels]]></string>
     <string name="_sys_menu_title_set_badges"><![CDATA[Badges]]></string>

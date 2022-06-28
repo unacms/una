@@ -542,6 +542,9 @@
 .bx-forum-grid .sys-action-counter-label.bx-score-counter-label{
 	padding: 0px !important;
 }
+.bx-forum-grid .sys-action-counter-iconset .sys-action-counter-text{
+    display: none;
+}
 
 
 /* ---------------new meta menu need to move incore*/

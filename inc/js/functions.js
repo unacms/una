@@ -1407,4 +1407,12 @@ function bx_regexp_escape(s)
         .replace(/-/mg, '\\x2d');
 }
 
+function bx_click_area(link, event)
+{
+    var oEl = $(event.srcElement);
+    if (oEl.parents('A').length == 0){
+        location.href = link;
+    }
+}
+
 /** @} */

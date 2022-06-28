@@ -50,12 +50,15 @@ class BxBaseServiceMetatags extends BxDol
     {
     	$iMaxCount = isset($aParams['max_count']) ? (int)$aParams['max_count'] : BX_METATAGS_KEYWORDS_IN_CLOUD;
     	$bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
-
+        $bMenuView = isset($aParams['menu_view']) ? (bool)$aParams['menu_view'] : false;
+        
         $aContextInfo = bx_get_page_info();
+        
+        $aParams = ['menu_view' => $bMenuView];
         if ($aContextInfo !== false)
-            $sResult = BxDolMetatags::getObjectInstance($sObject)->getKeywordsCloud($mixedSection, $iMaxCount, false, ['context_id' => $aContextInfo['context_profile_id']]);
-        else
-            $sResult = BxDolMetatags::getObjectInstance($sObject)->getKeywordsCloud($mixedSection, $iMaxCount);
+            $aParams['context_id'] = $aContextInfo['context_profile_id'];
+
+        $sResult = BxDolMetatags::getObjectInstance($sObject)->getKeywordsCloud($mixedSection, $iMaxCount, false, $aParams);
 
         if(empty($sResult))
             return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
