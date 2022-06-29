@@ -38,6 +38,10 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         if (!$oEngine->isSreamFromBrowser()) 
             return MsgBox(_t('_bx_stream_from_webcam_not_supported'));
 
+        $mixedMsg = $this->getModule()->checkAllowedAdd (false);
+        if ($mixedMsg !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox($mixedMsg);
+
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         return $this->parseHtmlByName('stream_broadcast_ome.html', array(

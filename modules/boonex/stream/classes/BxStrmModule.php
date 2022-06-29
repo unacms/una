@@ -157,6 +157,10 @@ class BxStrmModule extends BxBaseModTextModule
             return false;
         list($iContentId, $aContentInfo) = $mixedContent;
 
+        $mixedMsg = $this->checkAllowedAdd (false);
+        if ($mixedMsg !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox($mixedMsg);
+
         if ($aContentInfo[$CNF['FIELD_AUTHOR']] !== bx_get_logged_profile_id() && !isAdmin()) 
             return false;
 
