@@ -26,7 +26,8 @@ class BxBaseEditorQuill extends BxDolEditor
             toolbar: {toolbar},
             root_url: '{bx_url_root}',
             query_params: {bx_var_query_params},
-            insert_as_plain_text: {insert_as_plain_text}
+            insert_as_plain_text: {insert_as_plain_text},
+            allowed_tags: {allowed_tags}
         }
         {bx_var_editor_name} = bx_editor_init({bx_var_editor_name}, oParams);";
    
@@ -121,6 +122,7 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_var_form_id' => $aAttrs['form_id'],
             'toolbar' => $sToolbarItems ? '[' . $sToolbarItems . ']' : 'false',
             'insert_as_plain_text' => getParam('sys_quill_insert_as_plain_text') == 'on' ? 'true' : 'false',
+            'allowed_tags' => getParam('sys_quill_allowed_tags'),
             'bx_var_css_additional_class' => $sToolbarItems ? '' : 'bx-form-input-html-quill-empty',
             'bx_var_element_name' => str_replace(['-', ' '], '_', $aAttrs['element_name']),
             'bx_var_editor_name' => $sEditorName,

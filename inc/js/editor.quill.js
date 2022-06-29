@@ -167,7 +167,7 @@ function bx_editor_init(oEditor, oParams){
 
     var oConfig = {              
          theme: oParams.skin,
-         formats: ['link', 'size', 'image'],
+         formats: oParams.allowed_tags,
          modules: {
             syntax: true, 
             imageResize: {},
