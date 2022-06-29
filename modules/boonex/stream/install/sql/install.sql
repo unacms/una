@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `bx_stream_recordings_seq` (
   `content_id` int(10) unsigned NOT NULL,
   `tries` tinyint(4) NOT NULL DEFAULT 0,
   `added` int(10) unsigned NOT NULL,
+  `status` enum('pending','processing') NOT NULL DEFAULT 'pending',
   PRIMARY KEY (`id`),
   KEY `content_id` (`content_id`)
 );
