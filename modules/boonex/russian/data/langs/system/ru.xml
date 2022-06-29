@@ -3010,6 +3010,7 @@
     <string name="_sys_menu_template_title_custom_hor"><![CDATA[Горизонтальное меню с индивидуальными элементами]]></string>
     <string name="_sys_menu_template_title_custom_ver"><![CDATA[Вертикальное меню с индивидуальными элементами]]></string>
     <string name="_sys_menu_template_title_profile_followings"><![CDATA[Подписки профиля - Меню]]></string>
+    <string name="_sys_menu_template_title_vertical_more_less"><![CDATA[Вертикальное меню с больше/меньше]]></string>
     <string name="_sys_menu_template_title_profile_stats"><![CDATA[Статистика профиля - Меню]]></string>
     <string name="_sys_menu_title_account_dashboard"><![CDATA[Панель аккаунта - Меню]]></string>
     <string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Меню инструментов управления]]></string>
@@ -3039,6 +3040,7 @@
     <string name="_sys_menu_title_profiles_create"><![CDATA[Профиль - Создание]]></string>
     <string name="_sys_menu_title_profile_followings"><![CDATA[Профиль - Подписки]]></string>
     <string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
+    <string name="_sys_menu_title_tags_cloud"><![CDATA[Облако тегов]]></string>
     <string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
     <string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
     <string name="_sys_menu_title_set_badges"><![CDATA[Бейджи]]></string>

@@ -11,21 +11,62 @@
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
+class BxBaseMenuTagsCloud extends BxTemplMenu
 {
     protected $_iMenuItemsMin;
+    protected $_aItems;
 
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
-
+        
         $this->_bDisplayAddons = true;
         $this->_iMenuItemsMin = 10;
     }
-
+    
+    public function setKeywords($aKeywords, $oMetaObject, $mixedSection)
+    {
+        foreach ($aKeywords as $sKeyword => $iCount) {    
+            $aItems[] =  [
+                'class_add' => 'bx-psmi-show-' . $sKeyword . ' ',
+                'name' => 'show-' . $sKeyword,
+                'title' => htmlspecialchars_adv($sKeyword),
+                'link' => $oMetaObject->keywordsGetHashTagUrl($sKeyword, 0, $mixedSection),
+                'onclick' => 'javascript:',
+                'attrs' => '',
+                'bx_if:image' => array (
+                    'condition' => false,
+                    'content' => [],
+                ),
+                'bx_if:image_inline' => array (
+                    'condition' => false,
+                    'content' => [],
+                ),
+                'bx_if:icon' => array (
+                    'condition' => true,
+                    'content' => array('icon' => 'hashtag'),
+                ),
+                'bx_if:icon-a' => array (
+                    'condition' => false,
+                    'content' => [],
+                ),
+                'bx_if:icon-html' => array (
+                    'condition' => false,
+                    'content' => [],
+                ),
+                'bx_if:addon' => [
+                    'condition' => true,
+                    'content' => ['addon' => $iCount]
+                ]
+            ];
+        }
+        
+        $this->_aItems = $aItems;
+    }
+    
     public function getMenuItems ()
     {
-        $aItems = parent::getMenuItems();
+        $aItems = $this->_aItems;
         if(empty($aItems) || !is_array($aItems))
             return $aItems;
 
@@ -50,7 +91,7 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
                 'name' => 'show-' . $sLink,
                 'title' => _t($aLink['title']),
                 'link' => 'javascript:void(0)',
-                'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \bx-menu-object-' . $this->_sObject . '\')',
                 'attrs' => '',
                 'bx_if:image' => [
                     'condition' => false,

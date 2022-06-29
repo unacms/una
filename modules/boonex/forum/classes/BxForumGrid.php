@@ -230,7 +230,7 @@ class BxForumGrid extends BxTemplGrid
         $CNF = &$this->_oModule->_oConfig->CNF;
     	$oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
       
-        $mixedValue = $oObject ? $oObject->getCounter(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => true, 'caption' => '', 'show_icon' => false, 'caption_empty' => '']) : '';
+        $mixedValue = $oObject ? $oObject->getCounter(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => true, 'show_icon' => false, 'caption_empty' => '']) : '';
 
         return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

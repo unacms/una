@@ -389,8 +389,8 @@ div.bx-account-unit-online {
     text-overflow: ellipsis;
 }
 
-.bx-menu-profile-stats li.bx-psmi-show-more:hover,
-.bx-menu-profile-stats li.bx-psmi-show-less:hover {
+.bx-menu-vertical-more-less li.bx-psmi-show-more:hover,
+.bx-menu-vertical-more-less li.bx-psmi-show-less:hover {
     background-color: transparent;
 }
 

@@ -838,12 +838,15 @@
     .bx-stl-mil-active {
         @apply active:bg-gray-300 dark:active:bg-black/50;
     }
+    
     .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil,
     .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm {
         @apply rounded-none;
     }
     .bx-menu-tab-active .bx-stl-mil,
-    .bx-menu-tab-active .bx-stl-mil-sm {
+    .bx-menu-tab-active .bx-stl-mil-sm,
+    .bx-menu-item-active .bx-stl-mil
+    {
         @apply ring-1 ring-white/50 dark:ring-gray-800/50 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white;
     }
     .bx-popup .bx-menu-tab-active .bx-stl-mil,
