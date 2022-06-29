@@ -24,20 +24,23 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         $iProfileId = bx_get_logged_profile_id();
 
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
-        	$sJsObject = $this->_oModule->_oConfig->getJsObject('form');
+            $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
 
-        	$aMask = array('mask' => "javascript:%s.checkName('%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
+            $aMask = array('mask' => "javascript:%s.checkName('%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
             if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && bx_get('id') !== false) {
                 $aMask['mask'] = "javascript:%s.checkName('%s', '%s', %d);";
                 $aMask[] = (int)bx_get('id');
             }
 
             $sOnBlur = call_user_func_array('sprintf', array_values($aMask)); 
-        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = $sOnBlur;
-        	$this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = $sOnBlur;
+            $this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = $sOnBlur;
+            $this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = $sOnBlur;
         }
 
-	    if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
+        if(isset($this->aInputs[$CNF['FIELD_COVER_RAW']]))
+            $this->aInputs[$CNF['FIELD_COVER_RAW']]['code'] = 1;
+
+        if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
             $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $CNF['OBJECT_STORAGE_FILES'];
             $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] =  !empty($this->aInputs[$CNF['FIELD_FILE']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_FILE']]['value']) : $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = '';
@@ -49,61 +52,65 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
         $bRecurring = $this->_oModule->_oDb->getParam($CNF['OPTION_ENABLE_RECURRING']) == 'on';
         if(!$bRecurring) {
-        	$this->aInputs[$CNF['FIELD_DURATION_RECURRING']]['type'] = 'hidden';
-			$this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['type'] = 'hidden';
-			$this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['value'] = 0;
+            $this->aInputs[$CNF['FIELD_DURATION_RECURRING']]['type'] = 'hidden';
+            $this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['type'] = 'hidden';
+            $this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['value'] = 0;
 
-			unset($this->aInputs[$CNF['FIELD_HEADER_BEG_RECURRING']]);
-			unset($this->aInputs[$CNF['FIELD_HEADER_END_RECURRING']]);
+            unset($this->aInputs[$CNF['FIELD_HEADER_BEG_RECURRING']]);
+            unset($this->aInputs[$CNF['FIELD_HEADER_END_RECURRING']]);
         }
 
         $oPayment = BxDolPayments::getInstance();
         if(isset($this->aInputs[$CNF['FIELD_WARNING_SINGLE']])) {
-	        if(!$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_SINGLE)) 
-	        	$this->aInputs[$CNF['FIELD_WARNING_SINGLE']]['value'] = MsgBox(_t($this->aInputs[$CNF['FIELD_WARNING_SINGLE']]['value'], $oPayment->getDetailsUrl()));
-	        else 
-	        	unset($this->aInputs[$CNF['FIELD_WARNING_SINGLE']]);
+            if(!$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_SINGLE)) 
+                $this->aInputs[$CNF['FIELD_WARNING_SINGLE']]['value'] = MsgBox(_t($this->aInputs[$CNF['FIELD_WARNING_SINGLE']]['value'], $oPayment->getDetailsUrl()));
+            else 
+                unset($this->aInputs[$CNF['FIELD_WARNING_SINGLE']]);
         }
 
         if(isset($this->aInputs[$CNF['FIELD_WARNING_RECURRING']])) {
-	        if($bRecurring && !$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_RECURRING))
-	        	$this->aInputs[$CNF['FIELD_WARNING_RECURRING']]['value'] = MsgBox(_t($this->aInputs[$CNF['FIELD_WARNING_RECURRING']]['value'], $oPayment->getDetailsUrl()));
-	        else 
-	        	unset($this->aInputs[$CNF['FIELD_WARNING_RECURRING']]);
+            if($bRecurring && !$oPayment->isAcceptingPayments($iProfileId, BX_PAYMENT_TYPE_RECURRING))
+                $this->aInputs[$CNF['FIELD_WARNING_RECURRING']]['value'] = MsgBox(_t($this->aInputs[$CNF['FIELD_WARNING_RECURRING']]['value'], $oPayment->getDetailsUrl()));
+            else 
+                unset($this->aInputs[$CNF['FIELD_WARNING_RECURRING']]);
         }
 
-		if(isset($this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']]))
-			$this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_PURCHASE']);
+        if(isset($this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']]))
+            $this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_PURCHASE']);
 
-		$aDynamicGroups = array(
-			array ('key' => '', 'value' => '----'),
-			array ('key' => 'c', 'value' => _t('_bx_market_privacy_group_customers'))
-		);
+        $aDynamicGroups = array(
+            array ('key' => '', 'value' => '----'),
+            array ('key' => 'c', 'value' => _t('_bx_market_privacy_group_customers'))
+        );
 
-		if(isset($this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']])) {
-			$this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_COMMENT'], $iProfileId, array('dynamic_groups' => $aDynamicGroups));
-			$this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']]['db']['pass'] = 'Xss';
-		}
+        if(isset($this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']])) {
+            $this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_COMMENT'], $iProfileId, array('dynamic_groups' => $aDynamicGroups));
+            $this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']]['db']['pass'] = 'Xss';
+        }
 
-		if(isset($this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']])) {
-			$this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VOTE'], $iProfileId, array('dynamic_groups' => $aDynamicGroups));
-			$this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']]['db']['pass'] = 'Xss';
-		}
+        if(isset($this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']])) {
+            $this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VOTE'], $iProfileId, array('dynamic_groups' => $aDynamicGroups));
+            $this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']]['db']['pass'] = 'Xss';
+        }
 
-		if(isset($this->aInputs[$CNF['FIELD_SUBENTRIES']]) && $this->_oModule->checkAllowedSetSubentries() !== CHECK_ACTION_RESULT_ALLOWED)
-		    unset($this->aInputs[$CNF['FIELD_SUBENTRIES']]);
+        if(isset($this->aInputs[$CNF['FIELD_SUBENTRIES']]) && $this->_oModule->checkAllowedSetSubentries() !== CHECK_ACTION_RESULT_ALLOWED)
+            unset($this->aInputs[$CNF['FIELD_SUBENTRIES']]);
     }
 
     function getCode($bDynamicMode = false)
     {
-    	$sJs = $this->_oModule->_oTemplate->addJs(array('form.js'), $bDynamicMode);
+        $sCss = $this->_oModule->_oTemplate->addCss([BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css'], $bDynamicMode);
+    	$sJs = $this->_oModule->_oTemplate->addJs([
+            'codemirror/codemirror.min.js',
+            'form.js'
+        ], $bDynamicMode);
 
         $sCode = '';
         if($bDynamicMode)
-        	$sCode .= $sJs;
+            $sCode .= $sCss . $sJs;
 
-		$sCode .= $this->_oModule->_oTemplate->getJsCode('form');
-		$sCode .= $this->_oModule->_oTemplate->parseHtmlByName('form.html', array(
+        $sCode .= $this->_oModule->_oTemplate->getJsCode('form');
+        $sCode .= $this->_oModule->_oTemplate->parseHtmlByName('form.html', array(
             'content' => parent::getCode($bDynamicMode)
         ));
 

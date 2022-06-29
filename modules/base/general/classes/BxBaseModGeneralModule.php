@@ -2941,6 +2941,10 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         $iId = (int)$aContentInfo[$CNF[$sField]];
+        $aFile = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])->getFile($iId);
+        if(strpos($aFile['mime_type'], 'svg') !== false)
+            return array('id' => $iId, 'object' => $CNF['OBJECT_STORAGE']);
+
         foreach($aTranscoders as $sTranscoder)
             if(!empty($CNF[$sTranscoder]))
                 return array('id' => $iId, 'transcoder' => $CNF[$sTranscoder]);

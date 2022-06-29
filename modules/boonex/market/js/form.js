@@ -9,7 +9,7 @@
  */
 
 function BxMarketForm(oOptions) {
-	this._sActionsUri = oOptions.sActionUri;
+    this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxMarketForm' : oOptions.sObjName;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
@@ -17,7 +17,23 @@ function BxMarketForm(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+    
+    var $this = this;
+    jQuery(document).ready(function() {
+        $this.init();
+    });
 }
+
+BxMarketForm.prototype.init = function() {
+    jQuery("textarea[name='cover_raw']").each(function() {
+        CodeMirror.fromTextArea(this, {
+            lineNumbers: true,
+            mode: "htmlmixed",
+            htmlMode: true,
+            matchBrackets: true
+        });
+    });
+};
 
 BxMarketForm.prototype.checkName = function(sTitleId, sNameId, iId) {
 	var oDate = new Date();

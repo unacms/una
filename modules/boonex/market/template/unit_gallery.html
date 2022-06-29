@@ -15,19 +15,24 @@
 
         <!-- Main section -->
         <div class="bx-market-unit-cnt bx-market-unit-cover">
-		    <bx_if:show_cover>
-	            <a href="__content_url__" title="__summary_attr__">
-	                <div class="bx-base-text-unit-thumb bx-def-gal-div-size bx-def-font-middle" style="background-image:url(__cover_url__)">
-	                    <div class="bx-base-text-unit-strecher">__strecher__</div>
-	                </div>
-	            </a>
-	        </bx_if:show_cover>
-	        <bx_if:show_cover_empty>
+            <bx_if:show_cover_raw>
+                <a href="__content_url__" title="__summary_attr__">
+                    <div class="bx-base-text-unit-thumb bx-base-text-unit-thumb-raw">__cover_raw__</div>
+                </a>
+            </bx_if:show_cover_raw>
+            <bx_if:show_cover>
+                <a href="__content_url__" title="__summary_attr__">
+                    <div class="bx-base-text-unit-thumb bx-def-gal-div-size bx-def-font-middle" style="background-image:url(__cover_url__)">
+                        <div class="bx-base-text-unit-strecher">__strecher__</div>
+                    </div>
+                </a>
+            </bx_if:show_cover>
+            <bx_if:show_cover_empty>
                 <div class="bx-base-text-unit-no-thumb bx-def-gal-div-size bx-def-font-middle bx-def-font-grayed bx-def-padding bx-def-border bx-def-box-sizing">
                     __summary_plain__
                     <div class="bx-base-text-unit-strecher">__strecher__</div>
                 </div>
-	        </bx_if:show_cover_empty>
+            </bx_if:show_cover_empty>
         </div>
 		<div class="bx-market-unit-cnt bx-def-padding">
             <div class="bx-market-unit-info">
