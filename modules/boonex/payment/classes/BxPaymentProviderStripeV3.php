@@ -488,12 +488,17 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
     protected function _createSession($sType, $aParams, &$aClient, &$aCartInfo)
     {
         $sMode = '';
-        $aLineItems = array();
-        $aMetaItems = array();
+        $aLineItems = $aMetaItems = [];
+        $bVerify = true;
 
         switch($sType) {
             case 'authorize':
                 $sMode = 'setup';
+                $bVerify = false;
+
+                foreach($aCartInfo['items'] as $aItem)
+                    $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
+
                 $aParams['customer_creation'] = 'always';
                 break;
 
@@ -501,20 +506,20 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $sMode = 'payment';
 
                 foreach($aCartInfo['items'] as $aItem) {
-                    $aProductData = array(
+                    $aProductData = [
                         'name' => $aItem['title']
-                    );
+                    ];
                     if(!empty($aItem['description']))
                         $aProductData['description'] = strmaxtextlen(strip_tags($aItem['description']), 60, '...');
 
-                    $aLineItems[] = array(
-                        'price_data' => array(
+                    $aLineItems[] = [
+                        'price_data' => [
                             'currency' => $aCartInfo['vendor_currency_code'],
                             'product_data' => $aProductData,
                             'unit_amount' => 100 * round($this->_oModule->_oConfig->getPrice($sType, $aItem), $this->_iAmountPrecision),
-                        ),
+                        ],
                         'quantity' => $aItem['quantity'],
-                    );
+                    ];
 
                     $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
                 }
@@ -524,10 +529,10 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $sMode = 'subscription';
 
                 foreach($aCartInfo['items'] as $aItem) {
-                    $aLineItems[] = array(
+                    $aLineItems[] = [
                         'price' => $aItem['name'],
                         'quantity' => $aItem['quantity'],
-                    );
+                    ];
 
                     $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
                 }
@@ -548,15 +553,17 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         $bMetaData = !empty($aMetaItems);
         if($bMetaData) {
-            $fAmount = 100 * round((float)$aCartInfo['items_price'], $this->_iAmountPrecision);
-
             $aSession['metadata'] = [
                 'vendor' => $aCartInfo['vendor_id'],
                 'client' => $aClient['id'],
                 'type' => $sType, 
-                'items' => $this->_oModule->_oConfig->descriptorsA2S($aMetaItems),
-                'verification' => $this->getVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
+                'items' => $this->_oModule->_oConfig->descriptorsA2S($aMetaItems)
             ];
+
+            if($bVerify) {
+                $fAmount = 100 * round((float)$aCartInfo['items_price'], $this->_iAmountPrecision);
+                $aSession['metadata']['verification'] = $this->getVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code']);
+            }
         }
 
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_session', 0, false, array(
@@ -576,7 +583,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         if(empty($aResult) || !is_array($aResult))
             return false;
 
-        if($bMetaData && !$this->checkVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $aResult))
+        if($bVerify && !$this->checkVerificationCodeSession($aCartInfo['vendor_id'], $aClient['id'], $aResult))
             return false;
 
         return $aResult['id'];

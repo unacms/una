@@ -4446,7 +4446,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `name` varchar(255) NOT NULL,
   `title_system` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL,
+  `link` varchar(512) NOT NULL,
   `onclick` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL,
   `icon` text NOT NULL,

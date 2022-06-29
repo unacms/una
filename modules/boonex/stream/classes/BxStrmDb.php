@@ -34,7 +34,7 @@ class BxStrmDb extends BxBaseModTextDb
     public function getPendingRecordings ($iLimit = 2)
     {
         $CNF = &$this->_oConfig->CNF;
-        return $this->getAll("SELECT `r`.* FROM `bx_stream_recordings_seq` AS `r` INNER JOIN `{$CNF['TABLE_ENTRIES']}` AS `c` ON (`r`.`content_id` = `c`.`id` AND `c`.`status` = 'awaiting') ORDER BY `r`.`id` ASC LIMIT " . (int)$iLimit);
+        return $this->getAll("SELECT `r`.* FROM `bx_stream_recordings_seq` AS `r` INNER JOIN `{$CNF['TABLE_ENTRIES']}` AS `c` ON (`r`.`content_id` = `c`.`id` AND `c`.`status` = 'awaiting' AND `r`.`status` = 'pending') ORDER BY `r`.`id` ASC LIMIT " . (int)$iLimit);
     }
 
     public function updateRecording($iRecordingId, $aValues = [])

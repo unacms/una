@@ -90,6 +90,8 @@ class BxStrmEngineOvenMediaEngine extends BxDol
         if ($oStorage) {
             $sFileUrl = getParam('bx_stream_recordings_url') . $aContentInfo['key'] . '_' . $iRecordingId . '.ts';
 
+            $oModule->_oDb->updateRecording($iRecordingId, ['status' => 'processing']);
+
             $iFileId = $oStorage->storeFileFromUrl($sFileUrl, true, $aContentInfo[$CNF['FIELD_AUTHOR']], $aContentInfo['id']);
             if ($iFileId) {
                 $bDeleteRecording = true;
@@ -107,7 +109,7 @@ class BxStrmEngineOvenMediaEngine extends BxDol
             $oModule->_oDb->deleteRecording($iRecordingId);
         }
         else {
-            $oModule->_oDb->updateRecording($iRecordingId, ['tries' => $iTries + 1]);
+            $oModule->_oDb->updateRecording($iRecordingId, ['tries' => $iTries + 1, 'status' => 'pending']);
         }
     }
 

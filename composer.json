@@ -88,7 +88,7 @@
         "wikimedia/less.php": "*",
         "matthiasmullie/minify": "^1.3",
         "lusitanian/oauth": "^0.8.11",
-        "bshaffer/oauth2-server-php": "^1.11",
+        "bshaffer/oauth2-server-php": "^1.12",
         "erusev/parsedown": "@dev",
         "paypal/paypal-checkout-sdk": "^1.0",
         "phpmailer/phpmailer": "^6.5",
