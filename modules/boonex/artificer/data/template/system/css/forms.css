@@ -44,6 +44,8 @@ import url(../../../../../../../template/css/forms.css);
     display: flex;
     -webkit-align-items: center;
     align-items: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
 
     line-height: 1.25rem;
     text-transform: uppercase;
@@ -54,6 +56,9 @@ import url(../../../../../../../template/css/forms.css);
 }
 
 .bx-form-section-header span {
+    width: 100%;
+    padding-left: 1.25rem;
+
     white-space: nowrap;
     text-transform: none;
     font-size: 0.75rem;
