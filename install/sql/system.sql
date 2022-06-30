@@ -323,7 +323,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_quill_insert_as_plain_text', '_adm_stg_cpt_option_sys_quill_insert_as_plain_text', '', 'checkbox', '', '', '', '', 65),
 
-(@iCategoryId, 'sys_quill_allowed_tags', '_adm_stg_cpt_option_sys_quill_allowed_tags', '[\'link\', \'size\', \'image\']', 'digit', '', '', '', '', 67),
+(@iCategoryId, 'sys_quill_allowed_tags', '_adm_stg_cpt_option_sys_quill_allowed_tags', '[\'link\', \'size\', \'image\', \'menthion-link\', \'embed-link\']', 'digit', '', '', '', '', 67),
 
 (@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\',{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},\'blockquote\',\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 70),
 (@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\',{ \'header\': [1, 2, 3, 4, 5, 6, false] },{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'},{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'},\'blockquote\',\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 73),
