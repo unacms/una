@@ -167,7 +167,6 @@ function bx_editor_init(oEditor, oParams){
 
     var oConfig = {              
          theme: oParams.skin,
-         formats: oParams.allowed_tags,
          modules: {
             syntax: true, 
             imageResize: {},
@@ -198,6 +197,10 @@ function bx_editor_init(oEditor, oParams){
             },
         }
     };
+    
+    if (oParams.allowed_tags){
+        oConfig.formats = oParams.allowed_tags;
+    }
     
     oConfig.modules.imageUploader = {
         upload: file => {

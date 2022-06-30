@@ -561,6 +561,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         }
         
         if (o.resizeWidth || o.resizeHeight){
+            console.log(o.resizeWidth);
             _options.allowImageResize = true;
             _options.imageResizeTargetWidth = o.resizeWidth;
             _options.imageResizeTargetHeight = o.resizeHeight;
@@ -568,6 +569,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         }
         else{
             _options.allowImageResize = false;
+            _options.allowImageTransform = false;
         }
         
         FilePond.registerPlugin(
