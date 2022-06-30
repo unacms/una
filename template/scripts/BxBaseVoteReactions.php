@@ -425,7 +425,8 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->getIcon($sReaction),
-                    'emoji' => $this->getEmoji($sReaction)
+                    'emoji' => $this->getEmoji($sReaction),
+                    'title_attr' => bx_html_attribute(_t($this->_aDataList[$sReaction]['title'])),
                 )
             ),
             'bx_if:show_text' => array(
