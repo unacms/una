@@ -37,10 +37,10 @@
 	<string name="_bx_market_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_market_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
     <string name="_bx_market_form_entry_input_sys_price_single"><![CDATA[Price]]></string>
-	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Price]]></string>
+    <string name="_bx_market_form_entry_input_price_single"><![CDATA[Price]]></string>
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Leave empty to make the product free.]]></string>
     <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Recurring price]]></string>
-	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Price]]></string>
+    <string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Price]]></string>
     <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Leave empty to make the product free.]]></string>
     <string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Billing period]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Billing period]]></string>
@@ -75,7 +75,10 @@
 	<string name="_bx_market_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this product]]></string>
 	<string name="_bx_market_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
 	<string name="_bx_market_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the product]]></string>
-	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
+        <string name="_bx_market_form_entry_input_sys_cover_raw"><![CDATA[Header Image RAW]]></string>
+	<string name="_bx_market_form_entry_input_cover_raw"><![CDATA[Header Image RAW]]></string>
+        <string name="_bx_market_form_entry_input_cover_raw_inf"><![CDATA[If provided, it'll be used instead of image based variant.]]></string>
+        <string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures_title"><![CDATA[Title]]></string>
 	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Icon]]></string>

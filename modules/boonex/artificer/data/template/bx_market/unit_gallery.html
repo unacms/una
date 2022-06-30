@@ -1,5 +1,5 @@
 <div class="__class__  bx-base-text-unit bx-base-text-unit-gallery bx-def-gal-unit-size p-2">
-    <div class="bx-market-unit-gallery-cnt bx-def-box bx-def-box-round-corners bx-def-color-bg-box">
+    <div class="bx-market-unit-gallery-cnt bx-def-box bx-def-box-round-corners bx-def-color-bg-box w-full">
         <!-- Author section -->
         <bx_if:show_section_author>
             <div class="bx-market-unit-cnt p-4">
@@ -15,6 +15,11 @@
 
         <!-- Main section -->
         <div class="bx-market-unit-cnt bx-market-unit-cover">
+            <bx_if:show_cover_raw>
+                <a href="__content_url__" title="__summary_attr__">
+                    <div class="bx-base-text-unit-thumb bx-base-text-unit-thumb-raw">__cover_raw__</div>
+                </a>
+            </bx_if:show_cover_raw>
             <bx_if:show_cover>
                 <a href="__content_url__" title="__summary_attr__">
                     <div class="bx-base-text-unit-thumb bx-def-gal-div-size bx-def-font-middle bg-cover bg-center bg-no-repeat" style="background-image:url(__cover_url__)">

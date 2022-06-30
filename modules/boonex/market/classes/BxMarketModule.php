@@ -700,26 +700,39 @@ class BxMarketModule extends BxBaseModTextModule
     	$CNF = &$this->_oConfig->CNF;
 
         if(!$iItemId)
-			return array();
+            return [];
 
     	$aData = $this->_oDb->getContentInfoById($iItemId);
-    	
+
     	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => array($aData[$CNF['FIELD_THUMB']], $aData[$CNF['FIELD_COVER']])));
     	if(empty($aPhotos) || !is_array($aPhotos))
-    		return array();
+            return [];
 
-		$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if(!$oStorage)
+            return [];
+
     	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
 
-    	$aResult = array();
-    	foreach($aPhotos as $aPhoto) 
-    		$aResult[] = array(
-    			'id' => $aPhoto['file_id'],
-    			'url_sm' => $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($aPhoto['file_id']) : '',
-    			'url_bg' => $oStorage ? $oStorage->getFileUrlById($aPhoto['file_id']) : ''
-    		);
+    	$aResult = [];
+    	foreach($aPhotos as $aPhoto) {
+            $sUrlSm = '';
+            $sUrlBg = $oStorage->getFileUrlById($aPhoto['file_id']);
 
-		return $aResult;
+            $aPhotoInfo = $oStorage->getFile($aPhoto['file_id']);
+            if(strpos($aPhotoInfo['mime_type'], 'svg') !== false)
+                $sUrlSm = $sUrlBg;
+            else
+                $sUrlSm = $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($aPhoto['file_id']) : '';
+
+            $aResult[] = [
+                'id' => $aPhoto['file_id'],
+                'url_sm' => $sUrlSm,
+                'url_bg' => $sUrlBg
+            ];
+        }
+
+        return $aResult;
     }
 
 	/**

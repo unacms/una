@@ -39,10 +39,10 @@
 	<string name="_bx_market_form_entry_input_sys_price_single"><![CDATA[Цена]]></string>
 	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Цена]]></string>
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
-	<string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Периодические выплаты]]></string>
-	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Цена]]></string>
+    <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Периодические выплаты]]></string>
+    <string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Цена]]></string>
     <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
-	<string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Период оплаты]]></string>
+    <string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_sys_trial_recurring"><![CDATA[Пробный период]]></string>
     <string name="_bx_market_form_entry_input_trial_recurring"><![CDATA[Пробный период]]></string>
@@ -75,6 +75,9 @@
 	<string name="_bx_market_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить этот продукт]]></string>
 	<string name="_bx_market_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
 	<string name="_bx_market_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить продукт]]></string>
+        <string name="_bx_market_form_entry_input_sys_cover_raw"><![CDATA[Изображение заголовка (RAW)]]></string>
+	<string name="_bx_market_form_entry_input_cover_raw"><![CDATA[Изображение заголовка (RAW)]]></string>
+        <string name="_bx_market_form_entry_input_cover_raw_inf"><![CDATA[Если предоставлено, то оно будет использоваться вместо варианта на основе изображения.]]></string>
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures_title"><![CDATA[Название]]></string>

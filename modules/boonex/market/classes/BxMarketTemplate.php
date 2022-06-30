@@ -52,6 +52,19 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
         $aVars = parent::getTmplVarsText($aData);
 
+        //--- Process Cover
+        $bCoverRaw = !empty($CNF['FIELD_COVER_RAW']) && !empty($aData[$CNF['FIELD_COVER_RAW']]);
+
+        $aVars['bx_if:show_image_raw'] = [
+            'condition' => $bCoverRaw,
+            'content' => [
+                'image_raw' => $aData[$CNF['FIELD_COVER_RAW']]
+            ]
+        ];
+
+        $aVars['bx_if:show_image']['condition'] = !$bCoverRaw && $aVars['bx_if:show_image']['condition'];
+
+        //--- Process Thumb
         $sIcon = '';
         $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', array('OBJECT_IMAGES_TRANSCODER_THUMB', 'OBJECT_IMAGES_TRANSCODER_GALLERY'));
         if($mixedIcon !== false) {
@@ -71,6 +84,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
             )
         );
 
+        //--- Process Screenshots
         $sScreenshots = $this->getScreenshots($aData);
         $bScreenshots = !empty($sScreenshots);
         if($bScreenshots) {
@@ -94,11 +108,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     	$CNF = &$oModule->_oConfig->CNF;
     	$aPhotos = $oModule->serviceGetScreenshots($aData[$CNF['FIELD_ID']]);
-		if(empty($aPhotos) || !is_array($aPhotos))
-    		return '';
+        if(empty($aPhotos) || !is_array($aPhotos))
+            return '';
 
-		return $this->parseHtmlByName('entry-screenshots.html', array(
-    		'bx_repeat:items' => $aPhotos
+        return $this->parseHtmlByName('entry-screenshots.html', array(
+            'bx_repeat:items' => $aPhotos
     	));
     }
     
@@ -197,23 +211,35 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         //--- Icon Info
         $sIconUrl = '';
         if(!empty($CNF['FIELD_THUMB']) && $aData[$CNF['FIELD_THUMB']]) {
-            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_ICON']);
-            if($oImagesTranscoder)
-                $sIconUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+            $iThumb = (int)$aData[$CNF['FIELD_THUMB']];
+
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+            $aThumb = $oStorage->getFile($iThumb);
+
+            if(strpos($aThumb['mime_type'], 'svg') !== false)
+                $sIconUrl = $oStorage->getFileUrlById($iThumb);
+
+            if(empty($sIconUrl)) {
+                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_ICON']);
+                if($oImagesTranscoder)
+                    $sIconUrl = $oImagesTranscoder->getFileUrl($iThumb);
+            }
 
             if(empty($sIconUrl)) {
                 $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
                 if($oImagesTranscoder)
-                    $sIconUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+                    $sIconUrl = $oImagesTranscoder->getFileUrl($iThumb);
             }
         }
 
         //--- Cover Info
+        $bCoverRaw = !empty($CNF['FIELD_COVER_RAW']) && !empty($aData[$CNF['FIELD_COVER_RAW']]);
+
         $sCoverUrl = '';
-        if(!empty($CNF['FIELD_COVER']) && $aData[$CNF['FIELD_COVER']]) {
+        if(!$bCoverRaw && !empty($CNF['FIELD_COVER']) && $aData[$CNF['FIELD_COVER']]) {
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
-                if($oImagesTranscoder)
-                    $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+            if($oImagesTranscoder)
+                $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
 
             if(empty($sCoverUrl)) {
                 $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
@@ -320,6 +346,14 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                     'icon' => $CNF['ICON']
                 ),
             ),
+            'bx_if:show_cover_raw' => array (
+                'condition' => $bCoverRaw,
+                'content' => array (
+                    'summary_attr' => bx_html_attribute($sSummaryPlain),
+                    'content_url' => $sUrl,
+                    'cover_raw' => $aData[$CNF['FIELD_COVER_RAW']],
+                ),
+            ),
             'bx_if:show_cover' => array (
                 'condition' => $sCoverUrl,
                 'content' => array (
@@ -330,7 +364,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 ),
             ),
             'bx_if:show_cover_empty' => array (
-                'condition' => !$sCoverUrl,
+                'condition' => !$bCoverRaw && !$sCoverUrl,
                 'content' => array (
                     'summary_plain' => $sSummaryPlain,
                     'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),

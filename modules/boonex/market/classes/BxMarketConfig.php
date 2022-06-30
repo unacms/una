@@ -69,6 +69,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_SUBENTRIES' => 'subentries',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_COVER_RAW' => 'cover_raw',
             'FIELD_COVER' => 'cover',
             'FIELD_FILE' => 'files',
             'FIELD_PACKAGE' => 'package',
