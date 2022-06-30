@@ -208,16 +208,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sTitle = _t('_bx_timeline_page_block_title_views_' . $aParams['view']);
 
-        return array(
-            'content' => $this->parseHtmlByName('block_views.html', array(
+        return [
+            'content' => $this->parseHtmlByName('block_views.html', [
                 'style_prefix' => $sStylePrefix,
-                'html_id' => $this->_oConfig->getHtmlIdView('views', $aParams, array('with_type' => false)),
-                'html_id_content' => $this->_oConfig->getHtmlIdView('views_content', $aParams, array('with_type' => false)),
+                'html_id' => $this->_oConfig->getHtmlIdView('views', $aParams, ['with_type' => false]),
+                'html_id_content' => $this->_oConfig->getHtmlIdView('views_content', $aParams, ['with_type' => false]),
+                'html_id_view_placeholder' => $this->_oConfig->getHtmlIdView('main', array_merge($aParams, ['type' => 'placeholder'])),
                 'title' => $sTitle,
                 'content' => $this->getViewBlock($aParams)
-            )),
+            ]),
             'menu' => $oMenu
-        );
+        ];
     }
 
     public function getViewsDbBlock($aParams)

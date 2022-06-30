@@ -435,7 +435,7 @@ BxTimelineMain.prototype._getPost = function(oView, iId, aParams) {
                 }
             }
 
-            if(oElement.prop('scrollHeight') <= oElement.height())
+            if(oElement.prop('scrollHeight') <= Math.ceil(oElement.height()))
             	return;
 
             oElement.addClass(sClass);
