@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78768e5138ed84dbf0e50d07eff17ef8",
+    "content-hash": "3f2f41ec2487e43be6e0b7617c5959e5",
     "packages": [
         {
             "name": "achingbrain/php5-akismet",
@@ -1736,12 +1736,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/unaio/amazon-s3-php-class.git",
-                "reference": "3f720a0144843c214b9444e626119dbe12ecc180"
+                "reference": "7c62b0e9b7d956a04e377ca236979a78dbac4e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unaio/amazon-s3-php-class/zipball/3f720a0144843c214b9444e626119dbe12ecc180",
-                "reference": "3f720a0144843c214b9444e626119dbe12ecc180",
+                "url": "https://api.github.com/repos/unaio/amazon-s3-php-class/zipball/7c62b0e9b7d956a04e377ca236979a78dbac4e66",
+                "reference": "7c62b0e9b7d956a04e377ca236979a78dbac4e66",
                 "shasum": ""
             },
             "require": {
@@ -1768,7 +1768,7 @@
             "support": {
                 "source": "https://github.com/unaio/amazon-s3-php-class/tree/master"
             },
-            "time": "2021-09-02T09:17:14+00:00"
+            "time": "2022-06-30T03:20:34+00:00"
         },
         {
             "name": "twilio/sdk",
@@ -1826,11 +1826,11 @@
         },
         {
             "name": "unaio/amazon-s3-php-class-hmac-v2",
-            "version": "0.5",
+            "version": "0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unaio/amazon-s3-php-class-hmac-v2",
-                "reference": "main"
+                "reference": "3687dec0af7be2cb11f21828aa4b12d20c4c5935"
             },
             "type": "library"
         },
