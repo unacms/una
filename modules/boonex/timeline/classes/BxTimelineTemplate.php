@@ -1149,8 +1149,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'name' => $this->_getCounterIcon($aParams),
-                    'emoji' => ''
+                    'icon' => $this->_getCounterIcon($aParams),
                 )
             ),
             'bx_if:show_text' => array(
@@ -3118,7 +3117,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getCounterIcon($aParams = array())
     {
-        return 'redo';
+        return $this->parseHtmlByName('repost_counter_icon.html', ['emoji' => '']);
     }
 
     protected function _getCounterLabel($iCount, $aParams = array())
