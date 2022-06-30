@@ -109,11 +109,6 @@
     width: 100%;
 }
 
-.bx-base-text-entity-content.bx-def-vanilla-html {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
 /*-- Entry: Actions Menu --*/
 .bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom .bx-menu-item {
     width: 100%;
