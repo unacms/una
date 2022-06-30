@@ -504,6 +504,9 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
     if(!oViewBefore.length)
         oViewBefore = oViews.children(':visible');
 
+    var oViewPlaceholder = $(this._getHtmlId('main', jQuery.extend({}, this._oRequestParams, {type: 'placeholder'})));
+    var bViewPlaceholder = oViewPlaceholder && oViewPlaceholder.length != 0;
+
     if(this._sVideosAutoplay != 'off')
         this.pauseVideos(oViewBefore);
 
@@ -518,10 +521,16 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
     var sView = this._getHtmlId('main', this._oRequestParams);
     if(oViews.find(sView).length !== 0) {
         oViewBefore.hide();
-        oViews.find(sView).show();
+        if(bViewPlaceholder) {
+            oViewPlaceholder.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
+                oViewPlaceholder.hide();
+                oViews.find(sView).show();
+            });            
+        }
+        else
+            oViews.find(sView).show();
 
         this.initView();
-
         return;
     }
 
@@ -529,19 +538,29 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
     if(oRequestParams != undefined)
         oData = jQuery.extend({}, oData, oRequestParams);
 
-    this.loadingIn(oLink, true);
+    if(bViewPlaceholder) {
+        oViewBefore.hide();
+        oViewPlaceholder.show();
+    }
+    else
+        this.loadingIn(oLink, true);
 
     jQuery.get (
         this._sActionsUrl + 'get_view',
         oData,
         function(oResponse) {
-            if(oLink)
-                $this.loadingIn(oLink, false);
+            if(bViewPlaceholder)
+                oViewPlaceholder.hide();
+            else
+                $this.loadingIn(oLink, false);                
 
-            if(!oResponse.content)
+            if(!oResponse.content) {
+                if(oViewBefore.is(':hidden'))
+                    oViewBefore.show();
+
                 return;
+            }
 
-            oViewBefore.hide();
             oViews.append(oResponse.content).find(sView).bxProcessHtml();
         },
         'json'
