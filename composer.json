@@ -63,11 +63,11 @@
             "type": "package",
             "package": {
                 "name": "unaio/amazon-s3-php-class-hmac-v2",
-                "version": "0.5",
+                "version": "0.6",
                 "source": {
                     "url": "https://github.com/unaio/amazon-s3-php-class-hmac-v2",
                     "type": "git",
-                    "reference": "main"
+                    "reference": "3687dec0af7be2cb11f21828aa4b12d20c4c5935"
                 }
             }
         }

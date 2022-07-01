@@ -4057,25 +4057,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function isAllowedRepost($aEvent, $bPerform = false)
     {
-        $iUserId = (int)$this->getUserId();
-        if($iUserId == 0)
-            return false;
+        $mixedResult = $this->_isAllowedRepost($aEvent, $bPerform);
 
-        $aPrivacy = [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS];
-		bx_alert($this->_oConfig->getObject('alert'), 'is_allow_repost', $aEvent['id'], $iUserId, array('result' => &$aPrivacy));
-        $iPrivacy = (int)$aEvent['object_privacy_view'];
-		
-        if($iPrivacy >= 0 && !in_array($iPrivacy, $aPrivacy))
-            return false;         
+        bx_alert($this->getName(), 'is_allowed_repost', 0, 0, [
+            'content_info' => $aEvent, 
+            'override_result' => &$mixedResult
+        ]);
 
-        if(isAdmin())
-            return true;
-
-        $aCheckResult = checkActionModule($iUserId, 'repost', $this->getName(), $bPerform);
-        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_repost', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
-
-        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+        return $mixedResult;
     }
 
     public function isAllowedSend($aEvent, $bPerform = false)
@@ -4842,6 +4831,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'files' => array(),
             'files_attach' => $this->getEventFiles($iId)
         );
+    }
+
+    protected function _isAllowedRepost($aEvent, $bPerform = false)
+    {
+        $iUserId = (int)$this->getUserId();
+        if($iUserId == 0)
+            return false;
+
+        $iPrivacy = (int)$aEvent['object_privacy_view'];
+        if($iPrivacy >= 0 && !in_array($iPrivacy, [BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS]))
+            return false;         
+
+        if(isAdmin())
+            return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'repost', $this->getName(), $bPerform);
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_repost', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
     protected function _isAllowedMute($bPerform = false)
