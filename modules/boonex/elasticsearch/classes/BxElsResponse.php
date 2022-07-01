@@ -107,7 +107,7 @@ class BxElsResponse extends BxDolAlertsResponse
         $aResults = $this->_oModule->serviceSearchExtended($aCondition, $aSelection, $oContentInfo->getName());
 
         $aIds = array();
-        if((int)$aResults['total'] > 0 && !empty($aResults['hits']))
+        if($aResults && (int)$aResults['total'] > 0 && !empty($aResults['hits']))
             foreach($aResults['hits'] as $aResult)
                 $aIds[] = $aResult['_id'];
 
