@@ -15,7 +15,7 @@ class BxBaseGrid extends BxDolGrid
 {
     protected $_oTemplate;
     protected $_aPopupOptions = false;
-    protected $_aQueryAppend = false;
+    protected $_aQueryAppend = [];
     protected $_aQueryAppendExclude = false; // an array of keys which shouldn't be pathed in http requests, but can be stored (used) in 'Query Append' array.
     protected $_aQueryReset = false;
     protected $_aConfirmMessages = false;
