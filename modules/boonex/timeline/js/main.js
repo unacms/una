@@ -429,9 +429,15 @@ BxTimelineMain.prototype._getPost = function(oView, iId, aParams) {
             	return;
             
             if (oElement.find('img').length > 0){
-                var iRelImgY = oElement.find('img').first().offset().top - oElement.offset().top;
-                if (iRelImgY < oElement.height() && iRelImgY + oElement.find('img').first().height() > oElement.height()){
-                    oElement.css('max-height', (iRelImgY + oElement.find('img').first().height()) +  50 + 'px');
+                var oImg = oElement.find('img').first();
+                var iRelImgY = oImg.offset().top - oElement.offset().top;
+                
+                const img = new Image();
+                img.src = oImg.prop('src');
+                img.onload = function() {
+                    if (iRelImgY < oElement.height() && iRelImgY + this.height > oElement.height()){
+                        oElement.css('max-height', (iRelImgY + this.height) +  50 + 'px');
+                    }
                 }
             }
 
