@@ -118,6 +118,7 @@
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Delete Organization's Profile]]></string>
 	<string name="_bx_orgs_acl_action_view_profile"><![CDATA[View Organization's Profile]]></string>
 	<string name="_bx_orgs_acl_action_edit_any_profile"><![CDATA[Edit Any Organization's Profile]]></string>
+        <string name="_bx_orgs_acl_action_delete_any_profile"><![CDATA[Delete Any Organization's Profile]]></string>
 
 	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Create a Profile - Organization]]></string>
 	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Create a Profile - Organization]]></string>
