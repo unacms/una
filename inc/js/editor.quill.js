@@ -68,6 +68,13 @@ function bx_editor_init(oEditor, oParams){
                     node.setAttribute('dchar', value.denotationChar);
                     node.setAttribute('data-profile-id', value.dataProfileId);
                 }
+                if (value.url && value.dchar && value.title && value.dataProfileId){
+                    node.setAttribute('href', value.url);
+                    node.innerHTML = value.text;
+                    node.setAttribute('title', value.title);
+                    node.setAttribute('dchar', value.dchar);
+                    node.setAttribute('data-profile-id', value.dataProfileId);
+                }
                 return node;
             }
             
@@ -91,6 +98,10 @@ function bx_editor_init(oEditor, oParams){
                     super.format(name, value);
                 }
             };
+            
+            static value(node) {
+                return { url: node.getAttribute('href') ,title: node.getAttribute('title'), dchar: node.getAttribute('dchar'), dataProfileId: node.getAttribute('data-profile-id'), text: node.innerText }
+            }
                 
             static formats(node) {
                 let format = {};
@@ -143,6 +154,10 @@ function bx_editor_init(oEditor, oParams){
                     super.format(name, value);
                 }
             };
+            
+            static value(node) {
+                return { source: node.getAttribute('source'), inlinecode: "emded"}
+            }
                 
             static formats(node) {
                 let format = {};
