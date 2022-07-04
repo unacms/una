@@ -77,33 +77,30 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
-                $aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
-                
-                $aEvent = $this->_oModule->_oDb->getEvents(array(
-                    'browse' => 'descriptor', 
-                    'type' => $oAlert->sUnit, 
-                    'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'],
-                    'object_id' => $oAlert->iObject
-                ));
+                $sMethod = '_getEventUpdate' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+                if(!method_exists($this, $sMethod))
+                    $sMethod = '_getEventUpdate';
+
+                $aEvent = $this->$sMethod($oAlert, $aHandler);
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
 
-                $aParamsSet = array(
+                $aParamsSet = [
                     'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
-                );
+                ];
 
                 if($iObjectPrivacyView > 0 && !empty($iObjectAuthorId) && $iObjectAuthorId == $oAlert->iSender)
-                    $aParamsSet = array_merge($aParamsSet, array(
+                    $aParamsSet = array_merge($aParamsSet, [
                         'owner_id' => $oAlert->iSender,
                         'object_privacy_view' => $iObjectPrivacyView
-                    ));
+                    ]);
                 else if($iObjectPrivacyView < 0)
-                    $aParamsSet = array_merge($aParamsSet, array(
+                    $aParamsSet = array_merge($aParamsSet, [
                         'owner_id' => abs($iObjectPrivacyView),
                         'object_privacy_view' => $iObjectPrivacyView 
-                    ));
+                    ]);
 
-                $this->_oModule->_oDb->updateEvent($aParamsSet, array('id' => $aEvent[$CNF['FIELD_ID']]));
+                $this->_oModule->_oDb->updateEvent($aParamsSet, ['id' => $aEvent[$CNF['FIELD_ID']]]);
 
                 //--- Delete item cache.
                 $oCacheItem = $this->_oModule->getCacheItemObject();
@@ -130,18 +127,15 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     break;
                 }
 
-            	$aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
+                $sMethod = '_getEventDelete' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+                if(!method_exists($this, $sMethod))
+                    $sMethod = '_getEventDelete';
 
-            	$aEvent = $this->_oModule->_oDb->getEvents(array(
-                    'browse' => 'descriptor', 
-                    'type' => $oAlert->sUnit,
-                    'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
-                    'object_id' => $oAlert->iObject
-            	));
+                $aEvent = $this->$sMethod($oAlert, $aHandler);
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
 
-            	$this->_oModule->deleteEvent($aEvent);
+                $this->_oModule->deleteEvent($aEvent);
                 break;
         }
     }
@@ -152,6 +146,66 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             'object_id' => $oAlert->aExtras['comment_uniq_id'],
             'object_owner_id' => $oAlert->aExtras['comment_author_id'],
         ));
+    }
+
+    protected function _getEventUpdate(&$oAlert, &$aHandler)
+    {
+        $aHandlers = $this->_oModule->_oDb->getHandlers([
+            'type' => 'by_group_key_type', 
+            'group' => $aHandler['group']
+        ]);
+
+        return $this->_oModule->_oDb->getEvents([
+            'browse' => 'descriptor', 
+            'type' => $oAlert->sUnit, 
+            'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'],
+            'object_id' => $oAlert->iObject
+        ]);
+    }
+
+    protected function _getEventUpdateCommentEdited(&$oAlert, &$aHandler)
+    {
+        $aHandlers = $this->_oModule->_oDb->getHandlers([
+            'type' => 'by_group_key_type', 
+            'group' => $aHandler['group']
+        ]);
+
+        return $this->_oModule->_oDb->getEvents([
+            'browse' => 'descriptor', 
+            'type' => $oAlert->sUnit, 
+            'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'],
+            'object_id' => $oAlert->aExtras['comment_uniq_id']
+        ]);
+    }
+
+    protected function _getEventDelete(&$oAlert, &$aHandler)
+    {
+        $aHandlers = $this->_oModule->_oDb->getHandlers([
+            'type' => 'by_group_key_type', 
+            'group' => $aHandler['group']
+        ]);
+
+        return $this->_oModule->_oDb->getEvents([
+            'browse' => 'descriptor', 
+            'type' => $oAlert->sUnit,
+            'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
+            'object_id' => $oAlert->iObject
+        ]);
+    }
+    
+    protected function _getEventDeleteCommentDeleted(&$oAlert, &$aHandler)
+    {
+        $aHandlers = $this->_oModule->_oDb->getHandlers([
+            'type' => 'by_group_key_type', 
+            'group' => $aHandler['group']
+        ]);
+
+        return $this->_oModule->_oDb->getEvents([
+            'browse' => 'descriptor', 
+            'type' => $oAlert->sUnit,
+            'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
+            'object_id' => $oAlert->aExtras['comment_uniq_id']
+        ]);
     }
 
     protected function _processSystemClearCache($oAlert)
