@@ -483,7 +483,7 @@
 
     /* Common elements: Blocks, Boxes, etc. */
     .bx-artificer .bx-def-box {
-        @apply flex flex-col overflow-hidden;
+        @apply flex flex-col;
     }
     .bx-artificer .bx-def-box.bx-def-box-hor {
         @apply flex-row;
