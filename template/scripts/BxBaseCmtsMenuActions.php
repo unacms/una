@@ -66,7 +66,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
 
     public function getMenuItems()
     {
-        if((int)$this->_aCmt['cmt_pinned'] > 0 && !empty($this->_aBp['pinned']))
+        if($this->_sMode == self::$_sModeActions && (int)$this->_aCmt['cmt_pinned'] > 0 && !empty($this->_aBp['pinned']))
             $this->_aObject['menu_items'] = [
                 'item-unpin' => [
                     'name' => 'item-unpin', 
