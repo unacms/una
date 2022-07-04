@@ -67,21 +67,26 @@ class BxBaseEditorQuill extends BxDolEditor
      */
     public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false, $aAttrs = [])
     {
+        $sAllowedTags = '';
+        $sToolbarItems = '';
         // set visual mode
         switch ($iViewMode) {
-        case BX_EDITOR_MINI:
+            case BX_EDITOR_MINI:
                 $sToolbarItems = getParam('sys_quill_toolbar_mini');
+                $sAllowedTags = getParam('sys_quill_allowed_tags_mini');
                 $sCustomInit = self::$CONF_MINI;
                 break;
                 
             case BX_EDITOR_FULL:
                 $sToolbarItems = getParam('sys_quill_toolbar_full');
+                $sAllowedTags = getParam('sys_quill_allowed_tags_full');
                 $sCustomInit = self::$CONF_FULL;
             break;
                 
             case BX_EDITOR_STANDARD:
             default:
                 $sToolbarItems = getParam('sys_quill_toolbar_standard');
+                $sAllowedTags = getParam('sys_quill_allowed_tags_standard');
                 $sCustomInit = self::$CONF_STANDARD;
         }
         
@@ -122,7 +127,7 @@ class BxBaseEditorQuill extends BxDolEditor
             'bx_var_form_id' => $aAttrs['form_id'],
             'toolbar' => $sToolbarItems ? '[' . $sToolbarItems . ']' : 'false',
             'insert_as_plain_text' => getParam('sys_quill_insert_as_plain_text') == 'on' ? 'true' : 'false',
-            'allowed_tags' => getParam('sys_quill_allowed_tags') == '' ? 'false' : getParam('sys_quill_allowed_tags'),
+            'allowed_tags' => $sAllowedTags == '' ? 'false' : $sAllowedTags,
             'bx_var_css_additional_class' => $sToolbarItems ? '' : 'bx-form-input-html-quill-empty',
             'bx_var_element_name' => str_replace(['-', ' '], '_', $aAttrs['element_name']),
             'bx_var_editor_name' => $sEditorName,
