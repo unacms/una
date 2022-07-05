@@ -1,4 +1,6 @@
 
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 -- Editors
 
 DELETE FROM `sys_objects_editor` WHERE `object` IN('sys_quill', 'sys_tinymce');
@@ -103,8 +105,8 @@ CREATE TABLE IF NOT EXISTS `sys_images_editor_resized` (
 
 DELETE FROM `sys_objects_storage` WHERE `object` IN('sys_images_editor', 'sys_images_editor_resized');
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('sys_images_editor', 'Local', '', 360, 2592000, 3, 'sys_images_editor', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('sys_images_editor_resized', 'Local', '', 360, 2592000, 3, 'sys_images_editor_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('sys_images_editor', @sStorageEngine, '', 360, 2592000, 3, 'sys_images_editor', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_images_editor_resized', @sStorageEngine, '', 360, 2592000, 3, 'sys_images_editor_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 DELETE FROM `sys_objects_uploader` WHERE `object` = 'sys_cmts_html5';
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
