@@ -59,6 +59,10 @@
         <exclude name="composer.json" />
         <exclude name="composer.lock" />
         <exclude name="composer.phar" />
+        <exclude name="phing.phar" />
+        <exclude name="CODE_OF_CONDUCT.md" />
+        <exclude name="docker-compose.yml" />
+        <exclude name="patches/**" />
         <exclude name="storage/**/*" />
         <exclude name="samples/**" />
         <exclude name="scripts/**" />
