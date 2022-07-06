@@ -644,7 +644,7 @@
     <string name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string>
     <string name="_adm_dbd_txt_c_clear_opcache"><![CDATA[Clear Opcache]]></string>
     <string name="_adm_dbd_err_c_clean_failed"><![CDATA[Failed to clear cache]]></string>
-    <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Сache clearing is unsupported]]></string>
+    <string name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Cache clearing is unsupported]]></string>
     <string name="_adm_dbd_msg_c_clean_success"><![CDATA[Cache was successfully cleared]]></string>
     <string name="_adm_dbd_msg_c_all_disabled"><![CDATA[All caches are disabled]]></string>
     <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
