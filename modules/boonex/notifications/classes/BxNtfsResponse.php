@@ -176,6 +176,33 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         );
     }
     
+    protected function getInsertDataMetaMentionAdded(&$oAlert, &$aHandler)
+    {
+        $iOwnerId = $oAlert->iSender;
+        $iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
+
+        if($iObjectPrivacyView < 0)
+            $iOwnerId = abs($iObjectPrivacyView);
+        
+         $aResult = [[
+            'owner_id' => $iOwnerId,
+            'type' => $oAlert->sUnit,
+            'action' => $oAlert->sAction,
+            'object_id' => $oAlert->iObject,
+            'object_owner_id' => $this->_getObjectOwnerId($oAlert->aExtras),
+            'object_privacy_view' => $iObjectPrivacyView,
+            'subobject_id' => 0,
+            'content' => $this->_getContent($oAlert->aExtras, array(
+                'content_id' => $oAlert->aExtras['content_id'],
+                'module' => $oAlert->aExtras['object']
+            )),
+            'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
+            'processed' => 0
+        ]];
+
+    	return $aResult;
+    }
+    
     protected function getDeleteDataSysProfilesFriendsConnectionRemoved(&$oAlert, &$aHandler)
     {
         $aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
