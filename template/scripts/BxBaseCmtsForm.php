@@ -48,7 +48,14 @@ class BxBaseCmtsForm extends BxTemplFormView
         if (isset($this->aInputs['id'])){
             $aQueryParams['cid'] = $this->aInputs['id']['value'];
         }
-        $aQueryParams['m'] ='sys_cmts';
+        $aQueryParams['m'] = 'sys_cmts';
+        $aQueryParams['fi'] = '';
+        
+        bx_alert('system', 'editor_query_params', 0, 0, array(
+            'form' => $this,
+            'override_result' => &$aQueryParams
+        ));
+        
         return $aQueryParams;
     }
     

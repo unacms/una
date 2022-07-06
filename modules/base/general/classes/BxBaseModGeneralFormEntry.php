@@ -602,6 +602,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($this->_iContentId) && $this->_iContentId){
             $aQueryParams['cid'] = $this->_iContentId;
         }
+        $aQueryParams['fi'] = '';
+        
+        bx_alert('system', 'editor_query_params', 0, 0, array(
+            'form' => $this,
+            'override_result' => &$aQueryParams
+        ));
+        
         return $aQueryParams;
     }
 
