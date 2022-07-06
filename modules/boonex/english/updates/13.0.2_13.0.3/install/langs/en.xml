@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 	<string_add name="_adm_dbd_txt_c_opcache"><![CDATA[Opcache]]></string_add>
-	<string_add name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Ñache clearing is unsupported]]></string_add>
+	<string_add name="_adm_dbd_err_c_clean_unsupported"><![CDATA[Cache clearing is unsupported]]></string_add>
 	<string_add name="_adm_dsg_err_remove_old_mark"><![CDATA[Cannot remove current mark image.]]></string_add>
 	<string_add name="_adm_dsg_txt_upload_mark"><![CDATA[Upload New Mark Image]]></string_add>
 	<string_add name="_adm_dsg_txt_upload_mark_preview"><![CDATA[Current Mark Image]]></string_add>
