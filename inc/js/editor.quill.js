@@ -196,9 +196,14 @@ function bx_editor_init(oEditor, oParams){
                 dataAttributes: ['id', 'value', 'denotationChar', 'link', 'target','disabled', 'dataProfileId'], 
                 listItemClass: 'bx-menu-item bx-def-color-bg-hl-hover',
                 source: function (searchTerm, renderList, mentionChar) {
-                  $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention', $.extend({}, {symbol: mentionChar, term: searchTerm}, oParams.query_params), function(data){
-                      renderList(data, searchTerm);
-                  });
+                    var aFlds = oParams.query_params['fi'].split(",");
+                    aFlds.forEach(fld => {
+                        oParams.query_params[fld] = $('#' + oParams.query_params['f'] + ' [name="' + fld + '"]').val()
+                    });
+                        
+                    $.getJSON(oParams.root_url + 'searchExtended.php?action=get_mention', $.extend({}, {symbol: mentionChar, term: searchTerm}, oParams.query_params), function(data){
+                        renderList(data, searchTerm);
+                    });
                 },
                 renderItem: function(item, searchTerm){
                     item.id = item.url;
