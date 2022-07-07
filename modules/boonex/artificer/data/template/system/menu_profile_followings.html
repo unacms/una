@@ -2,16 +2,14 @@
     <bx_repeat:menu_items>
         <li class="bx-menu-item bx-menu-item-__name__ __class_add__">
             <div class="bx-menu-item-cnt">
-                <div class="bx-menu-item-link bx-stl-mil">
-                    <a class="flex items-center w-full" href="__link__" onclick="__onclick__"__attrs__>
-                        <span class="bx-menu-item-title bx-stl-mit uppercase" sidebar-toggle-item>__title__</span>
-                    </a>
-                    <span class="bx-menu-collapse pl-2" sidebar-toggle-item>
-                        <a href="javascript:void(0)" onclick="javascript:bx_menu_toggle(this, '__object__', '__name__')">
+                <div class="bx-menu-item-link bx-stl-mil-wo-gaps">
+                    <a class="bx-stl-mil-gaps flex flex-auto items-center" href="__link__" onclick="__onclick__"__attrs__>
+                        <span class="bx-menu-item-title bx-stl-mit flex-1 uppercase" sidebar-toggle-item>__title__</span>
+                        <span class="bx-menu-collapse flex-none pl-2" sidebar-toggle-item>
                             <i class="sys-icon chevron-up bx-menu-hide"></i>
                             <i class="sys-icon chevron-down bx-menu-show"></i>
-                        </a>
-                    </span>
+                        </span>
+                    </a>
                 </div>
                 <bx_if:show_subitems>
                     <div class="bx-menu-item-subitems pt-2">
