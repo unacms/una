@@ -47,7 +47,7 @@ class BxForumMenuCategories extends BxTemplMenu
         }
         
         $aItems[] =  [
-            'class_add' => 'bx-psmi-show-' . $aCategories['bx_repeat:cats'][$sKey]['value'] . (bx_get('category') == '' ? ' bx-menu-item-active' : ''),
+            'class_add' => 'bx-psmi-show-0' .  (bx_get('category') == '' ? ' bx-menu-item-active' : ''),
             'name' => 'show-0',
             'title' => _t('_bx_forum_txt_all_categories'),
             'link' => BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),

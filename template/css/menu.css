@@ -867,11 +867,11 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
 
 /* --------------- profile stats menu */
-.bx-menu-ver.bx-menu-object-sys_profile_stats li {
+.bx-menu-ver.bx-menu-vertical-more-less li {
     border-width: 0;
     border-radius: 0;
 }
-.bx-menu-ver.bx-menu-object-sys_profile_stats li .bx-menu-item-cnt {
+.bx-menu-ver.bx-menu-vertical-more-less li .bx-menu-item-cnt {
     position: relative;
     display: -webkit-flex;
     display: flex;
@@ -882,7 +882,7 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     -webkit-justify-content: space-between;
     justify-content: space-between;
 }
-.bx-menu-ver.bx-menu-object-sys_profile_stats li a {
+.bx-menu-ver.bx-menu-vertical-more-less li a {
     -webkit-flex-grow: 3;
     flex-grow: 3;
 
@@ -898,8 +898,8 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
     line-height: 1.5rem;
 }
-.bx-menu-ver.bx-menu-object-sys_profile_stats li img, 
-.bx-menu-ver.bx-menu-object-sys_profile_stats li .sys-icon {
+.bx-menu-ver.bx-menu-vertical-more-less li img, 
+.bx-menu-ver.bx-menu-vertical-more-less li .sys-icon {
     display: inline-block;
     vertical-align: top;
     width: 1.5rem;
