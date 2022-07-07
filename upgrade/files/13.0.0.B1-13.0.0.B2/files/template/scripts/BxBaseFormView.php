@@ -1370,7 +1370,14 @@ BLAH;
     
     function getHtmlEditorQueryParams($aInput)
     {
-        return ['i' => $aInput['name'], 'f' => $this->aFormAttrs['id']];
+        $aQueryParams = ['i' => $aInput['name'], 'f' => $this->aFormAttrs['id'], 'fi' => ''];
+        
+        bx_alert('system', 'editor_query_params', 0, 0, array(
+            'form' => $this,
+            'override_result' => &$aQueryParams
+        ));
+        
+        return $aQueryParams;
     }
 
     /**
