@@ -339,7 +339,10 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (false === $sQuery)
             return false;
 
-        $aQueryParams = bx_parse_str($sQuery);
+        if (function_exists('bx_parse_str'))
+            $aQueryParams = bx_parse_str($sQuery);
+        else
+            parse_str($sQuery, $aQueryParams);
 
         $sPageUri = !empty($aQueryParams['i']) ? $aQueryParams['i'] : false;
         unset($aQueryParams['i']);
