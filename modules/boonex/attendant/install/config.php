@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_attendant',
     'title' => 'Attendant',
     'note' => 'Attendant module.',
-    'version' => '13.0.1.DEV',
+    'version' => '13.0.2.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
