@@ -674,3 +674,6 @@
     display:table-cell;
     vertical-align:middle;
 }
+.combodate {
+    display: flex;
+}
