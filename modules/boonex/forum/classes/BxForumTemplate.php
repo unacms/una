@@ -247,10 +247,14 @@ class BxForumTemplate extends BxBaseModTextTemplate
         if(isset($aCategoryData['icon']))
             $sIcon = $this->getImage($aCategoryData['icon'], array('class' => 'sys-icon'));
         
-        $aTmplVars['category'] = $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]);
-        $aTmplVars['category_icon'] = $sIcon;
         $oProfile = BxDolProfile::getInstanceMagic($aData[$CNF['FIELD_AUTHOR']]);
         $aTmplVars['author'] = $oProfile->getUnit();
+        $aTmplVars['category'] = $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]);
+        $aTmplVars['category_icon'] = $sIcon;
+        $aTmplVars['bx_if:thumb']['content']['badges'] = $aTmplVars['badges'];
+        $aTmplVars['bx_if:no_thumb']['content']['badges'] = $aTmplVars['badges'];
+        $aTmplVars['bx_if:no_thumb']['content']['title'] = $aTmplVars['title'];
+        $aTmplVars['bx_if:no_thumb']['content']['summary_attr'] = $aTmplVars['bx_if:thumb']['content']['summary_attr'];
 
         return $aTmplVars;
     }
