@@ -128,6 +128,12 @@ class BxDolPageQuery extends BxDolDb
         return $this->getRow($sQuery);
     }
 
+    static public function getSeoUriRewrites()
+    {
+        $oDb = BxDolDb::getInstance();
+        return $oDb->fromCache('sys_seo_uri_rewrites', 'getPairs', 'SELECT `uri_orig`, `uri_rewrite` FROM `sys_seo_uri_rewrites`', 'uri_orig', 'uri_rewrite');
+    }
+
     static public function getSeoLink($sModule, $sPageUri, $aCond = [])
     {
         $oDb = BxDolDb::getInstance();

@@ -5850,6 +5850,15 @@ CREATE TABLE `sys_seo_links` (
   KEY `param_name_value` (`param_name`,`param_value`)
 );
 
+CREATE TABLE `sys_seo_uri_rewrites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uri_orig` varchar(255) NOT NULL,
+  `uri_rewrite` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uri_orig` (`uri_orig`(191)),
+  UNIQUE KEY `uri_rewrite` (`uri_rewrite`(191))
+);
+
 -- --------------------------------------------------------
 
 --
