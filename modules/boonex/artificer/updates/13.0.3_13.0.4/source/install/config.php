@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Lucid Lucid template
+ * @defgroup    Artificer Artificer template
  * @ingroup     UnaModules
  *
  * @{
@@ -14,30 +14,30 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
-    'name' => 'bx_lucid',
-    'title' => 'Lucid',
+    'name' => 'bx_artificer',
+    'title' => 'Artificer',
     'note' => 'Design template',
-    'version' => '13.0.5.DEV',
+    'version' => '13.0.4',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '13.0.0-B2'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/lucid/',
-    'home_uri' => 'lucid',
+    'home_dir' => 'boonex/artificer/',
+    'home_uri' => 'artificer',
 
-    'db_prefix' => 'bx_lucid_',
-    'class_prefix' => 'BxLucid',
+    'db_prefix' => 'bx_artificer_',
+    'class_prefix' => 'BxArtificer',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Boonex Lucid Template',
+    'language_category' => 'Boonex Artificer Template',
 
     /**
      * Installation/Uninstallation Section.
