@@ -795,35 +795,53 @@
     }
 
 
-    /* Common elements: Menus */   
+    /* Common elements: Menus */
+    .bx-stl-mil-gaps {
+        @apply px-3 py-2;
+    }
+
+    .bx-stl-mil-hover-text {
+        @apply hover:text-gray-800 dark:hover:text-gray-200;
+    }
+    .bx-stl-mil-hover-bg {
+        @apply hover:border-gray-200/50 dark:hover:border-gray-700/50;
+        @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
+    }
+    .bx-stl-mil-hover {
+        @apply bx-stl-mil-hover-text;
+        @apply bx-stl-mil-hover-bg;
+    }
+
+    .bx-stl-mil-active-bg {
+        @apply active:border-gray-300 dark:active:border-gray-700;
+        @apply active:bg-gray-300 dark:active:bg-black/50;
+    }
+    .bx-stl-mil-active {
+        @apply bx-stl-mil-active-bg;
+    }
+    
     .bx-stl-mil,
     .bx-stl-mil-sm,
     .bx-stl-mil-wo-bg,
-    .bx-stl-mil-wo-bg-gaps {
-        @apply text-base text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium;
-    }
-
-    .bx-menu-toolbar-item a,
-    .bx-menu-item a:not(.bx-def-font-meta),
-    a.bx-stl-mil:not(.bx-def-font-meta),
-    a.bx-stl-mil-wo-bg:not(.bx-def-font-meta),
-    a.bx-stl-mil-wo-bg-gaps:not(.bx-def-font-meta),
-    .bx-stl-mil a:not(.bx-def-font-meta),
-    .bx-stl-mil-wo-bg a:not(.bx-def-font-meta),
-    .bx-stl-mil-wo-bg-gaps a:not(.bx-def-font-meta) {
-        @apply hover:no-underline;
+    .bx-stl-mil-wo-bg-gaps,
+    .bx-stl-mil-wo-gaps {
+        @apply flex items-center;
+        @apply text-base text-gray-600 dark:text-gray-400 font-medium;
+        @apply bx-stl-mil-hover-text;
     }
 
     .bx-stl-mil,
     .bx-stl-mil-sm,
     .bx-stl-mil-wo-bg {
-        @apply flex items-center px-3 py-2;
+        @apply bx-stl-mil-gaps;
     }
+
     .bx-stl-mil,
-    .bx-stl-mil-sm {
-        @apply border border-transparent active:border-gray-300 dark:active:border-gray-700 hover:border-gray-200/50 dark:hover:border-gray-700/50;
-        @apply active:bg-gray-300 dark:active:bg-black/50 hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
+    .bx-stl-mil-sm,
+    .bx-stl-mil-wo-gaps {
+        @apply border border-transparent;
         @apply rounded-md;
+        @apply bx-stl-mil-hover-bg bx-stl-mil-active-bg;
     }
     .bx-stl-mil-sm {
         @apply px-2 py-1.5 text-sm;
@@ -831,49 +849,52 @@
     .bx-popup .bx-stl-mil-sm {
         @apply px-4;
     }
-    .bx-stl-mil-hover {
-        @apply hover:text-gray-800 dark:hover:text-gray-200;
-        @apply hover:bg-gray-200/50 dark:hover:bg-gray-700/50;
-    }
-    .bx-stl-mil-active {
-        @apply active:bg-gray-300 dark:active:bg-black/50;
-    }
-    
+
     .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil,
-    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm {
+    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm,
+    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-wo-gaps {
         @apply rounded-none;
     }
     .bx-menu-tab-active .bx-stl-mil,
     .bx-menu-tab-active .bx-stl-mil-sm,
-    .bx-menu-item-active .bx-stl-mil
-    {
-        @apply ring-1 ring-white/50 dark:ring-gray-800/50 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white;
+    .bx-menu-tab-active .bx-stl-mil-wo-gaps,
+    .bx-menu-item-active .bx-stl-mil,
+    .bx-menu-item-active .bx-stl-mil-sm, 
+    .bx-menu-item-active .bx-stl-mil-wo-gaps {
+        @apply text-gray-900 dark:text-white;
+        @apply bg-gray-200 dark:bg-gray-900;
+        @apply ring-1 ring-white/50 dark:ring-gray-800/50;
     }
     .bx-popup .bx-menu-tab-active .bx-stl-mil,
-    .bx-popup .bx-menu-tab-active .bx-stl-mil-sm {
+    .bx-popup .bx-menu-tab-active .bx-stl-mil-sm,
+    .bx-popup .bx-menu-tab-active .bx-stl-mil-wo-gaps {
         @apply ring-0;
     }
     .bx-stl-mii,
     .bx-stl-mii-sm,
     .bx-stl-mil .sys-action-do-icon,
-    .bx-stl-mil-sm .sys-action-do-icon {
+    .bx-stl-mil-sm .sys-action-do-icon,
+    .bx-stl-mil-wo-gaps .sys-action-do-icon {
         @apply flex items-center justify-center text-gray-500 text-lg;
     }
     
     .bx-stl-mii > *,
     .bx-stl-mii-sm > *,
     .bx-stl-mil .sys-action-do-icon > *,
-    .bx-stl-mil-sm .sys-action-do-icon > * {
+    .bx-stl-mil-sm .sys-action-do-icon > *,
+    .bx-stl-mil-wo-gaps .sys-action-do-icon > * {
         @apply flex items-center justify-center h-6 w-6 mr-3;
     }
     .bx-stl-mii:last-child > *,
     .bx-stl-mii-sm:last-child > *,
     .bx-stl-mil .sys-action-do-icon:last-child > *,
-    .bx-stl-mil-sm .sys-action-do-icon:last-child > * {
+    .bx-stl-mil-sm .sys-action-do-icon:last-child > *,
+    .bx-stl-mil-wo-gaps .sys-action-do-icon:last-child > * {
         @apply mr-0;
     }
     .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text,
-    .bx-stl-mil-sm .sys-action-do-icon ~ .sys-action-do-text {
+    .bx-stl-mil-sm .sys-action-do-icon ~ .sys-action-do-text,
+    .bx-stl-mil-wo-gaps .sys-action-do-icon ~ .sys-action-do-text {
         @apply ml-0; 
     }
     .bx-stl-mii-sm > *,
