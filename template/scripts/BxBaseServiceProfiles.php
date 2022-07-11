@@ -387,8 +387,14 @@ class BxBaseServiceProfiles extends BxDol
         return $aRet;
     }
 
-    public function serviceProfilesSearch ($sTerm, $iLimit = 20)
+    public function serviceProfilesSearch ($sTerm, $mixedParems = [])
     {
+        $iLimit = 20;
+        if(is_int($mixedParems)) 
+            $iLimit = (int)$mixedParems;
+        else if(is_array($mixedParems) && isset($mixedParems['limit']))
+            $iLimit = (int)$mixedParems['limit'];
+
         // display friends by default
         if (!$sTerm)
             return $this->serviceProfilesFriends($iLimit);
@@ -410,10 +416,11 @@ class BxBaseServiceProfiles extends BxDol
         });
 
         bx_alert('system', 'profiles_search', 0, 0, array(
-           'term' => $sTerm,
-           'result' => &$a
+            'module' => is_array($mixedParems) && isset($mixedParems['module']) ? $mixedParems['module'] : '',
+            'term' => $sTerm,
+            'result' => &$a
         ));
-        
+
         // return as array
         return array_slice($a, 0, $iLimit);
     }
