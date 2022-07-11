@@ -9,9 +9,10 @@
 
 class BxDolRelation extends BxDolConnection
 {
-    protected $_sParamDivider;
-    protected $_sParamEnabled;
+    protected static $_sParamEnabled = 'sys_relations_enable';
+    protected static $_sParamTypes = 'sys_relations';
 
+    protected $_sParamDivider;
     protected $_sPreList;
 
     protected function __construct($aObject)
@@ -21,8 +22,16 @@ class BxDolRelation extends BxDolConnection
         $this->_oQuery = new BxDolRelationQuery($aObject);
 
         $this->_sParamDivider = '_';
-        $this->_sParamEnabled = 'sys_relations';
         $this->_sPreList = 'sys_relations';
+    }
+
+    /**
+     * Whether the Relations feature is enabled globaly or not.
+     * @return boolean
+     */
+    public static function isEnabled()
+    {
+        return getParam(self::$_sParamEnabled) == 'on';
     }
 
     /**
@@ -268,7 +277,7 @@ class BxDolRelation extends BxDolConnection
 
     public function getRelationTypes()
     {
-        $sParam = getParam($this->_sParamEnabled);
+        $sParam = getParam(self::$_sParamTypes);
         if(empty($sParam))
             return array();
 

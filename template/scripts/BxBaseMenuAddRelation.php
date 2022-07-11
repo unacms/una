@@ -27,6 +27,14 @@ class BxBaseMenuAddRelation extends BxTemplMenu
         $this->_iContent = 0;
     }
 
+    public function getCode ()
+    {
+        if(!BxDolRelation::isEnabled())
+            return '';
+
+        return parent::getCode();
+    }
+
     public function getMenuItems ()
     {
         $this->loadData();

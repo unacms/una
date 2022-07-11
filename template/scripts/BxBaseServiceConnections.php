@@ -210,6 +210,9 @@ class BxBaseServiceConnections extends BxDol
      */
     public function serviceRelationsTable ($iProfileId = 0)
     {
+        if(!BxDolRelation::isEnabled())
+            return false;
+
         if(!$iProfileId && bx_get('profile_id') !== false)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
@@ -240,6 +243,9 @@ class BxBaseServiceConnections extends BxDol
      */
     public function serviceRelatedMeTable ($iProfileId = 0)
     {
+        if(!BxDolRelation::isEnabled())
+            return false;
+
         if(!$iProfileId && bx_get('profile_id') !== false)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 

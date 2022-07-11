@@ -81,7 +81,7 @@ BxDolPrivacy.prototype.selectGroup = function(oElement)
     $('#' + this._aHtmlIds['group_custom_element']).remove();
 
     var iGroupId = parseInt($(oElement).val());
-    if(!this._aGroupSettings[iGroupId])
+    if(!this._aGroupSettings[iGroupId] || !this._aGroupSettings[iGroupId]['js_method_create_group'])
         return;
 
     var sMethodCreateGroup = 'selectMembers';

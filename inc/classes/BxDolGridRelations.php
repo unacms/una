@@ -27,6 +27,14 @@ class BxDolGridRelations extends BxDolGridConnectionOut
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
+
+    protected function _getDataSql ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        if(!$this->_bOwner)
+            $this->_aOptions['source'] .= " AND `c`.`mutual`='1'";
+
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
 }
 
 /** @} */

@@ -182,8 +182,9 @@ class BxBasePrivacy extends BxDolPrivacy
             else {
                 $this->_oDb->deleteGroupCustomMembership(array('group_id' => $iGroupCustomId));
 
-                foreach($aMemberships as $iMembershipId)
-                    $this->_oDb->insertGroupCustomMembership(array('group_id' => $iGroupCustomId, 'membership_id' => $iMembershipId));
+                if(!empty($aMemberships) && is_array($aMemberships))
+                    foreach($aMemberships as $iMembershipId)
+                        $this->_oDb->insertGroupCustomMembership(array('group_id' => $iGroupCustomId, 'membership_id' => $iMembershipId));
             }
 
             return array('eval' => $sJsObject . '.onSelectMemberships(oData);', 'content' => $oForm->getElementGroupCustom(array(

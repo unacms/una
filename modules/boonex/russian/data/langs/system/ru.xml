@@ -1610,6 +1610,7 @@
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA/hCaptcha - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
         <string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Перенаправлять после подтверждения email-а на]]></string>
+        <string name="_adm_stg_cpt_option_sys_relations_enable"><![CDATA[Включить связи]]></string>
         <string name="_adm_stg_cpt_option_sys_relations"><![CDATA[Разрешить связи между]]></string>
         <string name="_adm_stg_cpt_option_sys_revision"><![CDATA[Номер ревизии]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Задействовать CSRF токен в формах]]></string>
