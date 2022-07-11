@@ -17,7 +17,7 @@ class BxOceanConfig extends BxBaseModTemplateConfig
     {
         parent::__construct($aModule);
 
-        $this->_iLogoHeight = 48;
+        $this->_iLogoHeight = 40;
 
         $this->_aPrefixes = array(
             'option' => 'bx_ocean_'
