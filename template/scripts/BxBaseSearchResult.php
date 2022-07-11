@@ -400,7 +400,8 @@ class BxBaseSearchResult extends BxDolSearchResult
      */
     function applyContainerClass ()
     {
-        return implode(' ', $this->aContainerClasses) . ' '. str_replace('_', '-', $this->getMain()->getName()) . '-wrapper';
+        $sModule = $this->getMain() ? $this->getMain()->getName() : 'sys';
+        return implode(' ', $this->aContainerClasses) . ' '. str_replace('_', '-', $sModule) . '-wrapper';
     }
 
     /**
