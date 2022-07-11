@@ -4,15 +4,15 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitaf17cf87f5bb62f386b8dd43aae5dd62
+class ComposerStaticInitb3256b538e59582ac5c4d876ff129efe
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -214,10 +214,10 @@ class ComposerStaticInitaf17cf87f5bb62f386b8dd43aae5dd62
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitaf17cf87f5bb62f386b8dd43aae5dd62::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitaf17cf87f5bb62f386b8dd43aae5dd62::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitaf17cf87f5bb62f386b8dd43aae5dd62::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitaf17cf87f5bb62f386b8dd43aae5dd62::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb3256b538e59582ac5c4d876ff129efe::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb3256b538e59582ac5c4d876ff129efe::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb3256b538e59582ac5c4d876ff129efe::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitb3256b538e59582ac5c4d876ff129efe::$classMap;
 
         }, null, ClassLoader::class);
     }
