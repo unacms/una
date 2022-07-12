@@ -62,9 +62,12 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     function actionGetPosts()
     {
         $aParams = $this->_prepareParamsGet();
-        $sEvents = $this->_oTemplate->getPosts($aParams);
+        if(empty($aParams['owner_id']) || (int)$aParams['owner_id'] != $this->_iOwnerId)
+            return echoJson([]);
 
-        echoJson(array('events' => $sEvents));
+        echoJson([
+            'events' => $this->_oTemplate->getPosts($aParams)
+        ]);
     }
 
     /**
@@ -73,9 +76,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
     public function serviceGetSafeServices()
     {
-        return array (
+        return [
             'GetBlockView' => '',
-        );
+        ];
     }
 
     /**
