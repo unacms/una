@@ -288,9 +288,9 @@ div.bx-std-widget-caption a {
     transform: rotate(45deg);
 }
 #bx-std-launcher-browser .bx-popup {
+    margin: 0;
     box-shadow: inset -1px -1px 0px rgba(240, 240, 240, 0.2), inset 1px 1px 0px rgba(240, 240, 240, 0.2);
     background-color: #001529;
-    
 }
 .bx-std-launcher-browser {
     position: relative;
