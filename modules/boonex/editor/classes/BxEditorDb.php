@@ -16,10 +16,11 @@ class BxEditorDb extends BxDolModuleDb
         parent::__construct($oConfig);
     }
     
-    public function getSettings ($sMode)
+    public function getSettings ($sMode, $sType)
     {
-        return $this->getOne("SELECT group_concat(`name` ORDER BY `order` SEPARATOR ',') FROM `bx_editor_toolbar_buttons` WHERE `mode` = :mode AND `active` = 1", array(
+        return $this->getOne("SELECT group_concat(`name` ORDER BY `order` SEPARATOR ',') FROM `bx_editor_toolbar_buttons` WHERE `mode` = :mode AND `inline` = :type AND `active` = 1", array(
             'mode' => $sMode,
+            'type' => $sType,
         ));
     }
 }

@@ -25,12 +25,10 @@ class BxEditorEditor extends BxDolEditor
     protected static $CONF_COMMON = "
         var oParams = {   
 			root_url: '{bx_url_root}',
-            bx_url_uploader: '{bx_url_uploader}',
             name: '{bx_var_editor_name}',
             selector: '{bx_var_selector}',
 			toolbar: {toolbar},
-			buttons: {buttons},
-			
+			toolbar_inline: {toolbar_inline},
         }
         {bx_var_editor_name} = bx_ex_editor_init({bx_var_editor_name}, oParams);";
 
@@ -64,31 +62,32 @@ class BxEditorEditor extends BxDolEditor
         switch ($iViewMode) {
                 
             case BX_EDITOR_MINI:
-                $sToolbarItems = $this->_oModule->_oDb->getSettings('mini');
+                $sToolbarItems = $this->_oModule->_oDb->getSettings('mini', 1);
+                $sToolbarItemsInline = $this->_oModule->_oDb->getSettings('mini', 0);
                 break;
                 
             case BX_EDITOR_FULL:
-                $sToolbarItems = $this->_oModule->_oDb->getSettings('full');
+                $sToolbarItems = $this->_oModule->_oDb->getSettings('full', 1);
+                $sToolbarItemsInline = $this->_oModule->_oDb->getSettings('full', 0);
             break;
                 
             case BX_EDITOR_STANDARD:
             default:
-                $sToolbarItems = $this->_oModule->_oDb->getSettings('standard');
+                $sToolbarItems = $this->_oModule->_oDb->getSettings('standard', 1);
+                $sToolbarItemsInline = $this->_oModule->_oDb->getSettings('standard', 0);
         }
         
         if ($this->_sButtonsCustom !== false) {
             $sToolbarItems = $this->_sButtonsCustom;
         }
         
-        $sToolbarItems = str_replace(',', "','", $sToolbarItems);
-        $sToolbarItems = str_replace(",'separator',", '],[', $sToolbarItems);
-        $sToolbarItems = "['" . $sToolbarItems . "']";
+        $sToolbarItems = "'" . str_replace(',', "','", $sToolbarItems) . "'";
+        $sToolbarItemsInline = "'" . str_replace(',', "','", $sToolbarItemsInline) . "'";
         
         $sEditorName = 'editor_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
         
         $this->_oTemplate->addJsTranslation([
-            '_bx_editor_embed_popup_link',
-            '_bx_editor_embed_popup_embed',
+            '_bx_editor_embed_popup_header',
         ]);
         
         // initialize editor
@@ -97,24 +96,21 @@ class BxEditorEditor extends BxDolEditor
             'bx_var_query_params' => isset($aAttrs['query_params']) ? json_encode($aAttrs['query_params']) : "''",
             'bx_var_form_id' => $aAttrs['form_id'],
             'toolbar' => $sToolbarItems ? '[' . $sToolbarItems . ']' : 'false',
-			'buttons' => json_encode($this->_aButtons),
-            'insert_as_plain_text' => getParam('sys_quill_insert_as_plain_text') == 'on' ? 'true' : 'false',
-            'bx_var_css_additional_class' => $sToolbarItems ? '' : 'bx-form-input-html-quill-empty',
+            'toolbar_inline' => $sToolbarItemsInline ? '[' . $sToolbarItemsInline . ']' : 'false',
+            'bx_var_css_additional_class' => $sToolbarItems ? '' : 'bx-form-input-html-editor-empty',
             'bx_var_element_name' => str_replace(['-', ' '], '_', $aAttrs['element_name']),
             'bx_var_editor_name' => $sEditorName,
-            'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
-            'bx_url_uploader' => bx_js_string(BX_DOL_URL_ROOT . "storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", BX_ESCAPE_STR_APOS)
         ));
 
         $sInitCallBack = "
-            bQuillEditorInited = true;
+            bEditorInited = true;
         " . $sInitEditor;
 
         if ($bDynamicMode) {
             list($aJs, $aCss) = $this->_getJsCss(true);
 
-            $sScript = "var " . $sEditorName . "; " . $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bQuillEditorInited === 'undefined'", $sInitEditor);
+            $sScript = "var " . $sEditorName . "; " . $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bEditorInited === 'undefined'", $sInitEditor);
             $sScript = $this->_oTemplate->_wrapInTagJsCode($sScript);
             $sScript = $this->_oTemplate->addCss($aCss, true) . $sScript;
 
@@ -141,6 +137,7 @@ class BxEditorEditor extends BxDolEditor
         list($aJs, $aCss) = $this->_getJsCss();
 		
         $this->_oTemplate->addJs($aJs);
+        
         $this->_oTemplate->addCss($aCss);
         
         $this->_bJsCssAdded = true;
@@ -151,17 +148,37 @@ class BxEditorEditor extends BxDolEditor
     protected function _getJsCss($bUseUrlsForJs = false)
     {
 		$sJsPrefix = $bUseUrlsForJs ? BX_DOL_URL_MODULES : BX_DIRECTORY_PATH_MODULES;
+        
+        $sJsPrefixPlugins = $bUseUrlsForJs ? BX_DOL_URL_PLUGINS : BX_DIRECTORY_PATH_PLUGINS_PUBLIC;
+        
 		$sJsSuffix = $bUseUrlsForJs ? '' : '|';
 		
 		$aCss = [
 			 BX_DIRECTORY_PATH_MODULES . 'boonex/editor/template/css/|main.css',  
+             BX_DIRECTORY_PATH_MODULES . 'boonex/editor/plugins/tribute/|tribute.css',  
 		];
+        
 		$aJs = [
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'editor.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'header.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'paragraph.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'edjsHTML.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'list.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'delimiter.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'code.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'inline-code.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'image.js',
+            $sJsPrefix . 'boonex/editor/plugins/editorjs/' . $sJsSuffix . 'marker.js',
+            
+            $sJsPrefix . 'boonex/editor/plugins/tribute/' . $sJsSuffix . 'tribute.min.js',
+          
+            
             $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'editor.js',
-            'https://unpkg.com/@popperjs/core@2',
-            'https://unpkg.com/tippy.js@6'
+            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'embed-inline.js',
+            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'embed-block.js',
+            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'mention.js',
         ];
-		
+
         return array($aJs, $aCss);
     }
 }

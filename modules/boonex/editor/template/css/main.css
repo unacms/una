@@ -5,11 +5,16 @@
 
 .bx-form-input-html-editor .bx-embed-link{
     width:100%;
-    background: #E1ED10;
-    height: 100px;
-    content: attr(source);
+    background: #f3e8c8;
+    color:#b19370;
+    box-shadow rgb(255, 255, 255) 0px 0px 0px 0px, rgb(209, 213, 219) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
+    display: block;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    
 }
-.bx-form-input-html-editor .bx-embed-link::before{
+/*.bx-form-input-html-editor .bx-embed-link::after{
     content: attr(source);
     width: 100%;
     display: block;
@@ -20,4 +25,7 @@
     vertical-align: baseline;
     font-size: 16px;
     border:1px solid #000;
-}
+    background: #E1ED10;
+    text-indent: 0px;
+}*/
+
