@@ -91,7 +91,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_aGroupsSettings = [
             BX_DOL_PG_FRIENDS_SELECTED => [
-                'name' => 'friends',
+                'name' => 'friends_selected',
                 'is_allowed' => '',
                 'connection' => 'sys_profiles_friends', 
                 'js_method_create_group' => 'selectMembers',
@@ -99,9 +99,14 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 'db_field_item' => 'member_id',
                 'uri_get_items' => 'users_list',
             ],
-            BX_DOL_PG_RELATIONS_SELECTED => [
+            BX_DOL_PG_RELATIONS => [
                 'name' => 'relations',
-                'is_allowed' => '',
+                'is_allowed' => 'isAllowedRelations',
+                'connection' => 'sys_profiles_relations',
+            ],
+            BX_DOL_PG_RELATIONS_SELECTED => [
+                'name' => 'relations_selected',
+                'is_allowed' => 'isAllowedRelations',
                 'connection' => 'sys_profiles_relations', 
                 'js_method_create_group' => 'selectMembers',
                 'db_table_items' => 'sys_privacy_groups_custom_members',
@@ -109,7 +114,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 'uri_get_items' => 'users_list',
             ],
             BX_DOL_PG_MEMBERSHIPS_SELECTED => [
-                'name' => 'memberships',
+                'name' => 'memberships_selected',
                 'is_allowed' => 'isAllowedMemberships',
                 'connection' => '',
                 'js_method_create_group' => 'selectMemberships',
@@ -778,6 +783,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     protected function isSelectGroupCustomMemberships($aParams)
     {
         return true;
+    }
+
+    public function isAllowedRelations($iUserId)
+    {
+        return BxDolRelation::isEnabled();
     }
 
     public function isAllowedMemberships($iUserId)

@@ -1085,6 +1085,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileRelations ($iContentId = 0, $aParams = array())
     {
+        if(!BxDolRelation::isEnabled())
+            return false;
+
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
             return false;
@@ -1101,6 +1104,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileRelatedMe ($iContentId = 0)
     {
+        if(!BxDolRelation::isEnabled())
+            return false;
+
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
             return false;
@@ -1126,6 +1132,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceIsEnableRelations()
     {
+        if(!BxDolRelation::isEnabled())
+            return false;
+
         $sModule = $this->_oConfig->getName();
         $oRelations = BxDolConnection::getObjectInstance('sys_profiles_relations');
         return $oRelations->isRelationAvailableWithProfile($sModule) || $oRelations->isRelationAvailableFromProfile($sModule);
@@ -1696,7 +1705,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedRelationAdd (&$aDataEntry, $isPerformAction = false)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry)))
+        $sResult = _t('_sys_txt_access_denied');
+        if(!BxDolRelation::isEnabled())
+            return $sResult;
+
+        if(($sMsg = $this->checkAllowedView($aDataEntry)) !== CHECK_ACTION_RESULT_ALLOWED)
             return $sMsg;
 
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_relations', false, false);
@@ -1707,12 +1720,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedRelationRemove (&$aDataEntry, $isPerformAction = false)
     {
+        $sResult = _t('_sys_txt_access_denied');
+        if(!BxDolRelation::isEnabled())
+            return $sResult;
+
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_relations', false, true);
     }
 
     public function checkAllowedRelationsView (&$aDataEntry, $isPerformAction = false)
     {
         $sResult = _t('_sys_txt_access_denied');
+        if(!BxDolRelation::isEnabled())
+            return $sResult;
 
         $sModule = $this->_oConfig->getName();
         $oRelations = BxDolConnection::getObjectInstance('sys_profiles_relations');

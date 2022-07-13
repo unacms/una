@@ -299,6 +299,21 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (!$a || empty($a[0]))
             return false;
 
+        // check page URI rewrite redirect
+        $aSeoUriRewrites = BxDolPageQuery::getSeoUriRewrites();
+        if (isset($aSeoUriRewrites[$a[0]])) {
+            unset($_GET['_q']);
+            $a[0] = $aSeoUriRewrites[$a[0]];
+            $sUrl = BX_DOL_URL_ROOT . bx_append_url_params(mb_strtolower(implode('/', $a)), $_GET);
+            header('Location:' . $sUrl, true, 301);
+            exit;            
+        }
+
+        // check page URI rewrite
+        $aSeoUriRewritesInv = array_flip($aSeoUriRewrites);
+        if (isset($aSeoUriRewritesInv[$a[0]]))
+            $a[0] = $aSeoUriRewritesInv[$a[0]];
+
         // get page
         $sPageName = BxDolPageQuery::getPageObjectNameByURI($a[0]);
         $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
@@ -367,6 +382,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return false;
 
         $sSeoPageUri = $sPageUri;
+        $aSeoUriRewrites = BxDolPageQuery::getSeoUriRewrites();
+        if (isset($aSeoUriRewrites[$sSeoPageUri]))
+            $sSeoPageUri = $aSeoUriRewrites[$sSeoPageUri];
 
         if ($sSeoParamName && $sSeoParamValue) { // process page with SEO param
             $sPageName = BxDolPageQuery::getPageObjectNameByURI($sPageUri);

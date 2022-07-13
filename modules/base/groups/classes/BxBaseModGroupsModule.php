@@ -54,7 +54,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $sTerm = bx_get('term');
 
-        $a = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
+        $a = BxDolService::call('system', 'profiles_search', [$sTerm, ['module' => $this->_oConfig->getName()]], 'TemplServiceProfiles');
 
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));

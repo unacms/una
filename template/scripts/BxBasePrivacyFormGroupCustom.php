@@ -131,7 +131,7 @@ class BxBasePrivacyFormGroupCustom extends BxTemplFormView
         ]);
     }
 
-    protected function getElementGroupCustomValueMemberships($sName, $aItems)
+    protected function getElementGroupCustomValueMembershipsSelected($sName, $aItems)
     {
         $oAcl = BxDolAcl::getInstance();
 

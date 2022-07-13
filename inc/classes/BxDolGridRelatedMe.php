@@ -84,6 +84,32 @@ class BxDolGridRelatedMe extends BxDolGridConnectionIn
         $a['attr']['onclick'] = "javascript: bx_menu_popup('sys_add_relation', window, {}, {profile_id: " . $aRow['id'] . "});";
         return parent::_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
+
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if (!isLogged() || !$this->_bOwner)
+            return '';
+
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _delete ($mixedId)
+    {
+        list($iId, $iViewedId) = $this->_prepareIds();
+
+        if(!$this->_oConnection->isConnected($iId, $iViewedId))
+            return true;
+
+        return $this->_oConnection->removeConnection($iId, $iViewedId);
+    }
+
+    protected function _getDataSql ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        if(!$this->_bOwner)
+            $this->_aOptions['source'] .= " AND `c`.`mutual`='1'";
+
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
 }
 
 /** @} */

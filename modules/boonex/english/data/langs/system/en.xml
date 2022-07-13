@@ -1623,7 +1623,8 @@
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA/hCaptcha public key]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Redirect after email confirmation to]]></string>
-        <string name="_adm_stg_cpt_option_sys_relations"><![CDATA[Enable relationships between]]></string>
+        <string name="_adm_stg_cpt_option_sys_relations_enable"><![CDATA[Enable relationships]]></string>
+        <string name="_adm_stg_cpt_option_sys_relations"><![CDATA[Allow relationships between]]></string>
 	<string name="_adm_stg_cpt_option_sys_revision"><![CDATA[Revision number]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Enable CSRF token in forms]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token lifetime in seconds(0 - do not track time)]]></string>

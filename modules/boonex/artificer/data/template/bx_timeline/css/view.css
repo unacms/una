@@ -94,14 +94,23 @@ div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu
     margin-top: 1.0rem;
 }
 
-.bx-menu-object-bx_timeline_menu_item_manage .menu-custom-item-ver,
 .bx-menu-object-bx_timeline_menu_item_manage .menu-custom-item-ver a,
-.bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder {
-    width: 100%;
+.bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder a {
     display: block;
+    width: 100%;
+    box-sizing: border-box;
 }
 .bx-menu-object-bx_timeline_menu_item_manage .bx-report-element-holder {
+    -webkit-flex: 1 0 auto;
+    flex: 1 0 auto;
+
     padding: 0px !important;
+}
+.bx-menu-object-bx_timeline_menu_item_manage .bx-report-counter-holder {
+    -webkit-flex: 0 1 auto;
+    flex: 0 1 auto;
+
+    padding-right: 1rem;
 }
 .bx-tl-owner-avatar .bx-def-thumb-size{
     width: 2.5rem;

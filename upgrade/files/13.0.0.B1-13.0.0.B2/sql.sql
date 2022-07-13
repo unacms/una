@@ -1,6 +1,15 @@
 
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
+CREATE TABLE IF NOT EXISTS `sys_seo_uri_rewrites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uri_orig` varchar(255) NOT NULL,
+  `uri_rewrite` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uri_orig` (`uri_orig`(191)),
+  UNIQUE KEY `uri_rewrite` (`uri_rewrite`(191))
+);
+
 -- Options: hidden
 
 DELETE FROM `sys_options` WHERE `name` IN('sys_quill_allowed_tags_mini', 'sys_quill_allowed_tags_standard', 'sys_quill_allowed_tags_full', 'sys_css_media_classes');

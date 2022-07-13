@@ -86,7 +86,7 @@ class BxStrmGridRecordings extends BxTemplGrid
             $sUrl = $this->_publish(array_shift($aIds), $sErrorMsg);
         
         if ($sUrl) {
-            $a = ['open_url' => $sUrl];
+            $a = ['redirect' => $sUrl];
         }
         elseif ($sErrorMsg) {
             $s = BxTemplFunctions::getInstance()->popupBox(

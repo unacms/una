@@ -108,6 +108,9 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
             //--- Remove update package ---//
             $this->delete($aParams);
+
+            //--- Increase revision ---//
+            setParam('sys_revision', 1 + getParam('sys_revision'));
         }
 
         return $aResult;
