@@ -44,14 +44,16 @@ li.bx-mi-hidden {
 
 /*--- Vertical, Vertical lite, Custom Vertical Menus (in Popup) ---*/
 .bx-popup .bx-menu-custom-ver li > span {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
     -webkit-justify-content: space-between;
     justify-content: space-between;
-    width: 100%;
-    padding-right: 1.0rem;
 }
 .bx-popup .bx-menu-custom-ver li > span .bx-menu-addon {
     padding-right: 0;

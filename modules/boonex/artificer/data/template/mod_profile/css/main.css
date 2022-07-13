@@ -203,6 +203,9 @@ div.bx-base-general-entity-actions {
     -webkit-justify-content: flex-end;
     justify-content: flex-end;
 }
+div.bx-base-general-entity-actions .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
+    padding: 0.375rem 0.5rem 0.375rem 0.5rem;
+}
 div.bx-base-general-entity-actions .bx-menu-custom-hor > li .sys-action-element-holder a {
     display: block;
 }
@@ -216,6 +219,10 @@ div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto
 div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action,
 div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-element-holder {
     width: 100%;
+}
+div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item a {
+    width: 100%;
+    box-sizing: border-box;
 }
 div.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item-more-auto .bx-popup .bx-menu-custom-ver .bx-menu-item .sys-action-counter-holder:not(.bx-score-counter-holder) {
     margin-right: 1rem;

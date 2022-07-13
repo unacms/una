@@ -800,6 +800,10 @@
         @apply px-3 py-2;
     }
 
+    .bx-stl-mil-gaps-sm {
+        @apply px-2 py-1.5;
+    }
+
     .bx-stl-mil-hover-text {
         @apply hover:text-gray-800 dark:hover:text-gray-200;
     }
@@ -824,7 +828,8 @@
     .bx-stl-mil-sm,
     .bx-stl-mil-wo-bg,
     .bx-stl-mil-wo-bg-gaps,
-    .bx-stl-mil-wo-gaps {
+    .bx-stl-mil-wo-gaps,
+    .bx-stl-mil-wo-gaps-sm {
         @apply flex items-center;
         @apply text-base text-gray-600 dark:text-gray-400 font-medium;
         @apply bx-stl-mil-hover-text;
@@ -838,43 +843,61 @@
 
     .bx-stl-mil,
     .bx-stl-mil-sm,
-    .bx-stl-mil-wo-gaps {
+    .bx-stl-mil-wo-gaps,
+    .bx-stl-mil-wo-gaps-sm {
         @apply border border-transparent;
         @apply rounded-md;
         @apply bx-stl-mil-hover-bg bx-stl-mil-active-bg;
     }
-    .bx-stl-mil-sm {
-        @apply px-2 py-1.5 text-sm;
+    .bx-stl-mil.bx-stl-mib,
+    .bx-stl-mil-sm.bx-stl-mib,
+    .bx-stl-mil-wo-gaps.bx-stl-mib,
+    .bx-stl-mil-wo-gaps-sm.bx-stl-mib {
+        @apply border border-gray-300 dark:border-gray-700;
     }
-    .bx-popup .bx-stl-mil-sm {
+    .bx-stl-mil-sm,
+    .bx-stl-mil-wo-gaps-sm {
+        @apply text-sm;
+    }
+
+    .bx-stl-mil-sm {
+        @apply px-2 py-1.5;
+    }
+    .bx-popup .bx-stl-mil-sm,
+    .bx-popup .bx-stl-mil-gaps-sm {
         @apply px-4;
     }
 
     .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil,
     .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-sm,
-    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-wo-gaps {
+    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-wo-gaps,
+    .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-wo-gaps-sm {
         @apply rounded-none;
     }
     .bx-menu-tab-active .bx-stl-mil,
     .bx-menu-tab-active .bx-stl-mil-sm,
     .bx-menu-tab-active .bx-stl-mil-wo-gaps,
+    .bx-menu-tab-active .bx-stl-mil-wo-gaps-sm,
     .bx-menu-item-active .bx-stl-mil,
     .bx-menu-item-active .bx-stl-mil-sm, 
-    .bx-menu-item-active .bx-stl-mil-wo-gaps {
+    .bx-menu-item-active .bx-stl-mil-wo-gaps,
+    .bx-menu-item-active .bx-stl-mil-wo-gaps-sm {
         @apply text-gray-900 dark:text-white;
         @apply bg-gray-200 dark:bg-gray-900;
         @apply ring-1 ring-white/50 dark:ring-gray-800/50;
     }
     .bx-popup .bx-menu-tab-active .bx-stl-mil,
     .bx-popup .bx-menu-tab-active .bx-stl-mil-sm,
-    .bx-popup .bx-menu-tab-active .bx-stl-mil-wo-gaps {
+    .bx-popup .bx-menu-tab-active .bx-stl-mil-wo-gaps,
+    .bx-popup .bx-menu-tab-active .bx-stl-mil-wo-gaps-sm {
         @apply ring-0;
     }
     .bx-stl-mii,
     .bx-stl-mii-sm,
     .bx-stl-mil .sys-action-do-icon,
     .bx-stl-mil-sm .sys-action-do-icon,
-    .bx-stl-mil-wo-gaps .sys-action-do-icon {
+    .bx-stl-mil-wo-gaps .sys-action-do-icon,
+    .bx-stl-mil-wo-gaps-sm .sys-action-do-icon {
         @apply flex items-center justify-center text-gray-500 text-lg;
     }
     
@@ -882,23 +905,27 @@
     .bx-stl-mii-sm > *,
     .bx-stl-mil .sys-action-do-icon > *,
     .bx-stl-mil-sm .sys-action-do-icon > *,
-    .bx-stl-mil-wo-gaps .sys-action-do-icon > * {
+    .bx-stl-mil-wo-gaps .sys-action-do-icon > *,
+    .bx-stl-mil-wo-gaps-sm .sys-action-do-icon > * {
         @apply flex items-center justify-center h-6 w-6 mr-3;
     }
     .bx-stl-mii:last-child > *,
     .bx-stl-mii-sm:last-child > *,
     .bx-stl-mil .sys-action-do-icon:last-child > *,
     .bx-stl-mil-sm .sys-action-do-icon:last-child > *,
-    .bx-stl-mil-wo-gaps .sys-action-do-icon:last-child > * {
+    .bx-stl-mil-wo-gaps .sys-action-do-icon:last-child > *,
+    .bx-stl-mil-wo-gaps-sm .sys-action-do-icon:last-child > * {
         @apply mr-0;
     }
     .bx-stl-mil .sys-action-do-icon ~ .sys-action-do-text,
     .bx-stl-mil-sm .sys-action-do-icon ~ .sys-action-do-text,
-    .bx-stl-mil-wo-gaps .sys-action-do-icon ~ .sys-action-do-text {
+    .bx-stl-mil-wo-gaps .sys-action-do-icon ~ .sys-action-do-text,
+    .bx-stl-mil-wo-gaps-sm .sys-action-do-icon ~ .sys-action-do-text {
         @apply ml-0; 
     }
     .bx-stl-mii-sm > *,
-    .bx-stl-mil-sm .sys-action-do-icon > * {
+    .bx-stl-mil-sm .sys-action-do-icon > *,
+    .bx-stl-mil-wo-gaps-sm .sys-action-do-icon > * {
         @apply h-5 w-5 mr-1.5 text-sm;
     }
     .bx-stl-mit {
@@ -1047,6 +1074,14 @@
     .bx-artificer .bx-tl-item-text .bx-tl-content.bx-tl-overflow:before {
         @apply bg-gradient-to-b from-transparent to-white dark:to-gray-800;
     }
+    .bx-artificer .bx-tl-item-activity .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a,
+    .bx-artificer .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
+        @apply relative flex;
+        @apply bx-stl-mil-gaps-sm;
+    }
+    .bx-artificer .bx-popup .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
+        @apply px-4;
+    }
 
 
     /* 3d Party: Flickity */
@@ -1068,12 +1103,12 @@
         @apply flex items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:text-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 text-sm font-normal;
     }
     
-    /* editor app*/
+    /* Modules: Editor */
     .editor_toolbar button.selected{
         @apply bg-gray-300 dark:bg-black/50 dark:text-gray-200 text-gray-800;
     }
-    
-    /* forum units - new view, for UNA14 need to migrate in general */
+
+    /* Modules: Forum. Units - new view, for UNA14 need to migrate in general */
     .bx-artificer .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
@@ -1096,30 +1131,26 @@
     {
         @apply max-w-full mx-auto grid sm:grid-cols-1 gap-4 md:max-w-none;
     }
-
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper.flickity-enabled
     { 
        @apply block;
     }
-    
-    
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper .flickity-slider{ 
        @apply space-x-4 ;
     }
-   
     .bx-artificer .bx-search-result-block.bx-clearfix:before{
         @apply hidden;
     }
-    
-    /*    badges    */
+
+    /* badges */
     .bx-badges-list{
         @apply inline-flex grow-0 space-x-1 w-min
     }
     .bx-badge{
         @apply space-x-1 w-min opacity-90 hover:opacity-100 active:translate-y-0.5 text-white inline-flex items-center px-1.5 py-0.5  text-xs font-medium rounded-full 
     }
-	.sys-icon-image.bx-badge-icon,
-	.sys-icon-svg.bx-badge-icon{
-		@apply w-4 h-4
-	}
+    .sys-icon-image.bx-badge-icon,
+    .sys-icon-svg.bx-badge-icon{
+        @apply w-4 h-4
+    }
 }
