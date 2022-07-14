@@ -172,11 +172,10 @@ class BxEditorEditor extends BxDolEditor
             
             $sJsPrefix . 'boonex/editor/plugins/tribute/' . $sJsSuffix . 'tribute.min.js',
           
-            
-            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'editor.js',
-            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'embed-inline.js',
+            /*$sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'embed-inline.js',
             $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'embed-block.js',
-            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'mention.js',
+            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'mention.js',*/
+            $sJsPrefix . 'boonex/editor/js/' . $sJsSuffix . 'editor.js',
         ];
 
         return array($aJs, $aCss);
