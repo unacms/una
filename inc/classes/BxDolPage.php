@@ -554,6 +554,9 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     public function displayPage ($oTemplate = null)
     {
+        if(isLogged())
+            BxDolAccount::getInstance()->isNeedChangePassword();
+        
         if (!$oTemplate)
             $oTemplate = BxDolTemplate::getInstance();
 

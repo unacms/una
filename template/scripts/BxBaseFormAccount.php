@@ -16,6 +16,26 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
     {
         return $s == bx_process_input(bx_get(BxTemplFormAccount::$FIELD_PASSWORD));
     }
+    
+    function checkPassword ($s, $r)
+    {
+        $bValid = parent::checkPreg($s, $r);
+        
+        if (!$bValid)
+            return $bValid;
+        
+        $aPasswords = BxDolAccountQuery::getInstance()->getLastPasswordLog( BxDolAccount::getInstance()->id());
+        $bUsed = false;
+        foreach ($aPasswords as $aPassword){
+            if($aPassword['password'] == encryptUserPwd($s, $aPassword['salt']))
+                $bUsed = true;
+        }
+        
+        if ($bUsed)
+            return _t('_sys_form_account_input_password_error_old_used');
+        
+        return true;
+    }
 
     /**
      * Password confirmation check.
@@ -152,6 +172,12 @@ class BxBaseFormAccount extends BxTemplFormView
         if ($sPwd) {
             $sSalt = genRndSalt();
             $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
+            
+            $oAccount = BxDolAccount::getInstance($val, true);
+            $iPasswordExpired = $oAccount->getPasswordExpiredDateByAccount($val);
+            
+            BxDolAccountQuery::getInstance()->logPassword($val);
+            BxDolAccountQuery::getInstance()->updatePasswordExpired($val, $iPasswordExpired);
         }
 
         $aValsToAdd = array_merge(

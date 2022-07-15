@@ -152,18 +152,64 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     }
 
     /**
-     * Update last logged in time
+     * Update password
      * @param $sPasswordHash - password hash
      * @param $sSalt - pasword salt
      * @param $iAccountId - account id to update password for
      * @return number of affected rows
      */
-    public function updatePassword($sPasswordHash, $sSalt, $iAccountId)
+    public function updatePassword($sPasswordHash, $sSalt, $iAccountId, $iPasswordExpired)
     {
-        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `password` = ?, `salt` = ? WHERE `id`= ?", $sPasswordHash, $sSalt, $iAccountId);
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `password` = ?, `salt` = ?, `password_expired` = ? WHERE `id`= ?", $sPasswordHash, $sSalt, $iPasswordExpired, $iAccountId);
         return $this->query($sQuery);
     }
 
+    /**
+     * Save password log
+     * @param $sPasswordHash - password hash
+     * @param $sSalt - pasword salt
+     * @param $iAccountId - account id to update password for
+     * @return number of affected rows
+     */
+    public function logPassword($iAccountId)
+    {
+        $iCountPassword = (int)getParam('sys_account_accounts_password_log_count');
+        
+        if ($iCountPassword > 0){
+            $sSql = $this->prepare("SELECT `password`, `salt` FROM `sys_accounts` WHERE `id` = ?", $iAccountId);
+            $aAccount = $this->getRow($sSql);
+
+            $sQuery = "INSERT INTO `sys_accounts_password` (`password`, `password_changed`, `salt`, `account_id`) VALUES(:password, :password_changed, :salt, :account_id)";
+            $aBindings = array(
+               'password' => $aAccount['password'],
+               'password_changed' => time(),
+               'salt' => $aAccount['salt'],
+               'account_id' => $iAccountId,
+            );
+            $this->query($sQuery, $aBindings);
+            
+            $this->query($this->prepare("DELETE FROM `sys_accounts_password` WHERE `id` NOT IN (SELECT `id` FROM (SELECT `id` FROM `sys_accounts_password` WHERE `account_id` = ? ORDER BY `password_changed` DESC LIMIT 0, " . getParam('sys_account_accounts_password_log_count') . ") a)", $iAccountId));
+        }
+    }
+    
+    public function getLastPasswordChanged($iAccountId)
+    {
+        $sSql = $this->prepare("SELECT `password_changed` FROM `sys_accounts_password` WHERE `account_id` = ? ORDER BY password_changed  DESC limit 0, 1", $iAccountId);
+        return (int)$this->getOne($sSql);
+    }
+    
+    public function getLastPasswordLog($iAccountId)
+    {
+        $sSql = $this->prepare("SELECT * FROM `sys_accounts_password` WHERE `account_id` = ? ", $iAccountId);
+        return $this->getAll($sSql);
+    }
+    
+    public function updatePasswordExpired($iAccountId, $iPasswordExpired)
+    {
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `password_expired` = ? WHERE `id`= ?", $iPasswordExpired, $iAccountId);
+        return $this->query($sQuery);
+    }
+    
     /**
      * Update last logged in time
      * @param  int    $iID account id

@@ -101,6 +101,10 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             case 'all_order_id':
                 $sOrderClause = "ORDER BY `tal`.`ID` ASC";
                 break;
+                
+            case 'password_can_expired':
+                $sWhereClause .= "AND PasswordExpired <> 0";
+                break;
 
             case 'all':
                 break;
@@ -117,6 +121,8 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 `tal`.`QuotaSize` AS `quota_size`,
                 `tal`.`QuotaNumber` AS `quota_number`,
                 `tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
+                `tal`.`PasswordExpired` AS `password_expired`,
+                `tal`.`PasswordExpiredNotify` AS `password_expired_notify`,
                 `tal`.`Order` AS `order`" . $sSelectClause . "
             FROM `sys_acl_levels` AS `tal` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
