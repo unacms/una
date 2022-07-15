@@ -22,11 +22,40 @@ class BxDolCronAccount extends BxDolCron
 
     public function processing()
     {
-        if(getParam('enable_notification_account') != 'on')
-            return;
-
         set_time_limit(0);
         ignore_user_abort();
+        
+        $aEmails = [];
+        
+        /* password expired soon email */
+        $aMemberships = [];
+        $Membership = BxDolAclQuery::getInstance()->getLevels(['type' => 'password_can_expired'], $aMemberships);
+        foreach($aMemberships as $aMembership) {
+            $aProfiles = BxDolAclQuery::getInstance()->getProfilesByMembership([$aMembership['id']]);
+            foreach($aProfiles as $aProfile) {
+                $iPasswordExpired = BxDolAccount::getInstance()->getPasswordExpiredDate($aMembership['password_expired'], $aProfile['account_id']);
+                $aAccountInfo = BxDolAccountQuery::getInstance()->getInfoById($aProfile['account_id']);
+                $iLastPassChanged = BxDolAccountQuery::getInstance()->getLastPasswordChanged($aProfile['account_id']);
+                if (
+                    !in_array($aAccountInfo['email'], $aEmails) 
+                    && ($aMembership['password_expired'] - $aMembership['password_expired_notify']) * 86400 + $iLastPassChanged < time()
+                    && $iPasswordExpired >= time()
+                ){
+                    $aPlus = array();
+                    $aPlus['expired_date'] = date('d.m.Y', $iPasswordExpired);
+                    $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_AccountPasswordExpired', $aPlus);
+
+                    sendMail($aAccountInfo['email'], $aTemplate['Subject'], $aTemplate['Body'], $aProfile['id']);
+                    $aEmails[] = $aAccountInfo['email'];
+                }
+
+                BxDolAccountQuery::getInstance()->updatePasswordExpired($aProfile['account_id'], $iPasswordExpired);
+            }
+        }
+        
+        /* new accounts email */
+        if(getParam('enable_notification_account') != 'on')
+            return;
 
         $this->processNewlyJoined();
 
@@ -58,6 +87,8 @@ class BxDolCronAccount extends BxDolCron
             if(sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body'], $aProfile['id']))
             	$aSent[] = $aAccount['email'];
         }
+       
+        
     }
 
     protected function processNewlyJoined()

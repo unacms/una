@@ -593,8 +593,11 @@ class BxBaseServiceAccount extends BxDol
         $sPwd = genRndPwd(8, false);
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
-
-        $this->_oAccountQuery->updatePassword($sPasswordHash, $sSalt, $iAccountId);
+        
+        $oAccount = BxDolAccount::getInstance($iAccountId);
+        $iPasswordExpired = $oAccount->getPasswordExpiredDateByAccount($iAccountId);
+        
+        $this->_oAccountQuery->updatePassword($sPasswordHash, $sSalt, $iAccountId, $iPasswordExpired);
 
         bx_alert('account', 'edited', $iAccountId, $iAccountId, array('action' => 'forgot_password'));
 

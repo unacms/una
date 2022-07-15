@@ -1355,6 +1355,9 @@
 	<string name="_adm_prm_dsc_level_name"><![CDATA[Short name for the membership level (i.e Premium, Gold, Newcomer, etc.)]]></string>
 	<string name="_adm_prm_dsc_level_quota_max_file_size"><![CDATA[Limit max file size for user with this level across all modules (0 - unlimited, other system limits may apply).]]></string>
 	<string name="_adm_prm_dsc_level_quota_number"><![CDATA[Limit  amount of files a user with this level can upload (0 - unlimited).]]></string>
+    <string name="_adm_prm_dsc_level_password_expired"><![CDATA[Period after which the password must be changed, in days (0 - unlimited).]]></string>
+    <string name="_adm_prm_dsc_level_password_expired_notify"><![CDATA[The period for which the notification of an expired password will be sent, in days (0 - unlimited).]]></string>
+    
 	<string name="_adm_prm_dsc_level_quota_size"><![CDATA[Limit how much space can be used by user with this level across all modules (0 - unlimited).]]></string>
 	<string name="_adm_prm_dsc_price_add_days"><![CDATA[Use 0 for life-time]]></string>
 	<string name="_adm_prm_err_level_create"><![CDATA[Cannot create membership level]]></string>
@@ -1367,6 +1370,8 @@
 	<string name="_adm_prm_err_level_name"><![CDATA[You need to enter name(3, 100) for all languages]]></string>
 	<string name="_adm_prm_err_level_quota_max_file_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
 	<string name="_adm_prm_err_level_quota_number"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
+    <string name="_adm_prm_err_level_password_expired"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
+    <string name="_adm_prm_err_level_password_expired_notify"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
 	<string name="_adm_prm_err_level_quota_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
 	<string name="_adm_prm_err_price_create"><![CDATA[Cannot create pricing option]]></string>
 	<string name="_adm_prm_err_price_duplicate"><![CDATA[The similar pricing option already exists for this level.]]></string>
@@ -1397,6 +1402,8 @@
 	<string name="_adm_prm_txt_level_premium"><![CDATA[Premium]]></string>
 	<string name="_adm_prm_txt_level_quota_max_file_size"><![CDATA[Max File Size Limit(Mb)]]></string>
 	<string name="_adm_prm_txt_level_quota_number"><![CDATA[Max Files Limit]]></string>
+    <string name="_adm_prm_txt_level_password_expired"><![CDATA[Password Expired]]></string>
+    <string name="_adm_prm_txt_level_password_expired_notify"><![CDATA[Password Expired Notify]]></string>
 	<string name="_adm_prm_txt_level_quota_size"><![CDATA[Storage Limit(Mb)]]></string>
 	<string name="_adm_prm_txt_level_standard"><![CDATA[Standard]]></string>
 	<string name="_adm_prm_txt_level_suspended"><![CDATA[Suspended]]></string>
@@ -1531,6 +1538,7 @@
     <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Allow to use plus sign ("+") in email address]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning"><![CDATA[Accounts pruning]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Accounts pruning period (in days)]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_password_log_count"><![CDATA[Number of stored old passwords  (0 = do not store)]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Lock site from unauthenticated users]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Comma separated list of pages URIs, which are avalilable for unauthenticated users]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[No pruning]]></string>
@@ -2249,6 +2257,12 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
 {email_footer}]]></string>
+    
+     <string name="_sys_et_txt_body_account_password_expired"><![CDATA[{email_header}
+<p>Your password will expired in {expired_date}</p>
+<p>Please, sign-in and change password</p>
+{email_footer}]]></string>
+    
     <string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
 <p>{pruning_output}</p>
 {email_footer}]]></string>
@@ -2307,6 +2321,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Account status changed to suspended]]></string>
         <string name="_sys_et_txt_name_manage_approve"><![CDATA[Approve: Contact content's author]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[New Accounts]]></string>
+    <string name="_sys_et_txt_name_system_account_password_expired"><![CDATA[Expired Password]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Pruning result]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Upgrade failed]]></string>
 	<string name="_sys_et_txt_name_upgrade_modules_failed"><![CDATA[Modules upgrade failed]]></string>
@@ -2329,6 +2344,8 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_et_txt_subject_account_change_status_suspended"><![CDATA[Account suspended]]></string>
         <string name="_sys_et_txt_subject_manage_approve"><![CDATA[Approvement. A question about '{content_title}'.]]></string>
 	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} {account_count} accounts created yesterday]]></string>
+    <string name="_sys_et_txt_subject_account_password_expired"><![CDATA[{site_name} - your password will expired soon]]></string>
+    
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} pruning result]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} upgrade failed]]></string>
 	<string name="_sys_et_txt_subject_upgrade_modules_failed"><![CDATA[Modules upgrade failed on {site_name}]]></string>
@@ -2371,6 +2388,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_password_current"><![CDATA[Current Password]]></string>
 	<string name="_sys_form_account_input_password_current_error"><![CDATA[Current password isn't correct, please enter password you are using to login to this site.]]></string>
 	<string name="_sys_form_account_input_password_error"><![CDATA[The password must at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter and 1 digit.]]></string>
+    <string name="_sys_form_account_input_password_error_old_used"><![CDATA[This password already used before. Please use newone.]]></string>
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Receive Newsletters]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Receive Site Updates]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Submit]]></string>

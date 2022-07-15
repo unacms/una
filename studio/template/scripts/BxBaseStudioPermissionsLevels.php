@@ -478,6 +478,38 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                         'error' => _t('_adm_prm_err_level_quota_number'),
                     ),
                 ),
+                'PasswordExpired' => array(
+                    'type' => 'text',
+                    'name' => 'PasswordExpired',
+                    'caption' => _t('_adm_prm_txt_level_password_expired'),
+                    'info' => _t('_adm_prm_dsc_level_password_expired'),
+                    'value' => isset($aLevel['password_expired']) ? (int)$aLevel['password_expired'] : '0',
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                    'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9]+$/'),
+                        'error' => _t('_adm_prm_err_level_password_expired'),
+                    ),
+                ),
+                'PasswordExpiredNotify' => array(
+                    'type' => 'text',
+                    'name' => 'PasswordExpiredNotify',
+                    'caption' => _t('_adm_prm_txt_level_password_expired_notify'),
+                    'info' => _t('_adm_prm_dsc_level_password_expired_notify'),
+                    'value' => isset($aLevel['password_expired_notify']) ? (int)$aLevel['password_expired_notify'] : '0',
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                    'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9]+$/'),
+                        'error' => _t('_adm_prm_err_level_password_expired_notify'),
+                    ),
+                ),
                 'Icon' => array(
                     'type' => 'textarea',
                     'name' => 'Icon',
