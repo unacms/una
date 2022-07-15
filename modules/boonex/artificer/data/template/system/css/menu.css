@@ -166,8 +166,13 @@ div.bx-popup-menu-main.sys-add-content ul {
 /*--- Profile Stats/Followings Menu ---*/
 .bx-db-content .bx-profile-stats .bx-profile-avatar-cnt,
 .bx-db-content .bx-profile-stats .bx-menu-vertical-more-less,
-.bx-db-content.bx-content-padding-block .bx-menu-profile-followings {
+.bx-db-container:not(.bx-dbc-nopadding) .bx-menu-vertical-more-less,
+.bx-db-container:not(.bx-dbc-nopadding) .bx-menu-profile-followings {
     margin: -0.75rem;
+}
+.bx-db-container:not(.bx-dbc-notitle) .bx-menu-vertical-more-less,
+.bx-db-container:not(.bx-dbc-notitle) .bx-menu-profile-followings {
+    margin-top: 0;
 }
 .bx-main.bx-pt-application .bx-main-column.narrow .bx-menu-vertical-more-less,
 .bx-main.bx-pt-application .bx-main-column.narrow .bx-menu-profile-followings {
