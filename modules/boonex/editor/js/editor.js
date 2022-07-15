@@ -88,10 +88,9 @@ function bx_ex_editor_init(oEditor, oParams)
                 break;
         }
     })
-    console.log(oTools);
     
     oEditor = new EditorJS({
-        holder : oParams.name,
+        holderId : oParams.name,
         inlineToolbar: oParams.toolbar_inline.concat(['embedin', 'mention']),
         tools: oTools,
         onReady: () => {
