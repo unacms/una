@@ -144,16 +144,17 @@ class BxDolStorageLocal extends BxDolStorage
 
     protected function mkdir($sDirName, $sRights = false)
     {
-        if (false == $sRights)
+        if (false == $sRights) 
             $sRights = BX_DOL_STORAGE_DIR_RIGHTS;
 
+        $sDirName = bx_ltrim_str($sDirName, BX_DIRECTORY_PATH_ROOT); 
         $aDirs = explode('/', $sDirName);
-        $sDir='';
+        $sDir = BX_DIRECTORY_PATH_ROOT;
         foreach ($aDirs as $sPart) {
             $sDir .= $sPart.'/';
             if (!is_dir($sDir) && strlen($sDir) > 0 && !file_exists($sDir)) {
-                mkdir($sDir);
-                chmod($sDir, $sRights);
+                mkdir($sDir); 
+                chmod($sDir, $sRights); 
             }
         }
     }
