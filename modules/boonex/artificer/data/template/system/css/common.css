@@ -132,9 +132,10 @@ import url(../../../../../../../template/css/common.css);
 
 /*--- Design Boxes Menu ---*/
 .bx-db-menu ul li {
-    border-radius: 0;
-
     white-space: nowrap;
+}
+.bx-db-menu ul li:not(.bx-stl-mil-sm) {
+    border-radius: 0;
 }
 .bx-db-menu ul.bx-menu-hor,
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor,
@@ -144,8 +145,8 @@ import url(../../../../../../../template/css/common.css);
     -webkit-justify-content: flex-end;
     justify-content: flex-end;
 }
-.bx-db-menu ul.bx-menu-hor > li,
-.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li {
+.bx-db-menu ul.bx-menu-hor > li:not(.bx-stl-mil-sm),
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li:not(.bx-stl-mil-sm) {
     display: block;
 
     -webkit-flex: 0 1 auto; 
@@ -156,7 +157,7 @@ import url(../../../../../../../template/css/common.css);
 
     border-bottom: 1px solid transparent;
 }
-.bx-db-menu .bx-menu-custom.bx-menu-custom-hor > li > span {
+.bx-db-menu .bx-menu-custom.bx-menu-custom-hor > li:not(.bx-stl-mil-sm) > span {
     display: block;
 
     margin: 0;

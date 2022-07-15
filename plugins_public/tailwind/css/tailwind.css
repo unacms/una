@@ -874,6 +874,10 @@
     .bx-popup ul:not(.bx-menu-hor) .bx-stl-mil-wo-gaps-sm {
         @apply rounded-none;
     }
+    .bx-menu-tab-active.bx-stl-mil,
+    .bx-menu-tab-active.bx-stl-mil-sm,
+    .bx-menu-tab-active.bx-stl-mil-wo-gaps,
+    .bx-menu-tab-active.bx-stl-mil-wo-gaps-sm,
     .bx-menu-tab-active .bx-stl-mil,
     .bx-menu-tab-active .bx-stl-mil-sm,
     .bx-menu-tab-active .bx-stl-mil-wo-gaps,
@@ -886,6 +890,10 @@
         @apply bg-gray-200 dark:bg-gray-900;
         @apply ring-1 ring-white/50 dark:ring-gray-800/50;
     }
+    .bx-popup .bx-menu-tab-active.bx-stl-mil,
+    .bx-popup .bx-menu-tab-active.bx-stl-mil-sm,
+    .bx-popup .bx-menu-tab-active.bx-stl-mil-wo-gaps,
+    .bx-popup .bx-menu-tab-active.bx-stl-mil-wo-gaps-sm,
     .bx-popup .bx-menu-tab-active .bx-stl-mil,
     .bx-popup .bx-menu-tab-active .bx-stl-mil-sm,
     .bx-popup .bx-menu-tab-active .bx-stl-mil-wo-gaps,
