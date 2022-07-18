@@ -216,7 +216,7 @@ class BxBaseCmts extends BxDolCmts
     {
         $this->_prepareParams($aBp, $aDp);
 
-        $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
+        $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
         if(empty($aCmts) || !is_array($aCmts)) {
             if((int)$aBp['parent_id'] == 0 && !isLogged()) {
                 $oPermalink = BxDolPermalinks::getInstance();
@@ -256,7 +256,7 @@ class BxBaseCmts extends BxDolCmts
 
         $aBp['count'] = count($aDp['structure']);
         $this->_prepareParams($aBp, $aDp);
-        $aDp['structure'] = array_slice($aDp['structure'], $aBp['start'], $aBp['per_view'], true);
+        $aDp['structure'] = array_slice($aDp['structure'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view'], true);
 
         $sCmts = '';
         foreach($aDp['structure'] as $iCmtId => $aCmt)

@@ -1928,6 +1928,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aBp['filter'] = !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
         $aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
         $aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
+        $aBp['init_view'] = isset($aBp['init_view']) ? $aBp['init_view'] : -1;
         $aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
         $aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
         $aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
@@ -1950,6 +1951,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aBp['filter'] = !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
         $aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
         $aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
+        $aBp['init_view'] = isset($aBp['init_view']) ? $aBp['init_view'] : -1;
         $aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
         $aBp['pinned'] = isset($aBp['pinned']) ? (int)$aBp['pinned'] : 0;
         $aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
@@ -1997,9 +1999,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $aBp['start'] = 0;
         if($aBp['type'] == BX_CMT_BROWSE_TAIL) {
-            $aBp['start'] = $aBp['count'] - $aBp['per_view'];
+            $sPerView = ($aBp['init_view'] != -1 ? 'init' : 'per') . '_view';
+
+            $aBp['start'] = $aBp['count'] - $aBp[$sPerView];
             if($aBp['start'] < 0) {
-                $aBp['per_view'] += $aBp['start'];
+                $aBp[$sPerView] += $aBp['start'];
                 $aBp['start'] = 0;
             }
         }
