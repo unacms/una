@@ -88,13 +88,14 @@ function bx_ex_editor_init(oEditor, oParams)
                 break;
         }
     })
-    
+
     oEditor = new EditorJS({
-        holderId : oParams.name,
+        holder : document.getElementById(oParams.name),
         inlineToolbar: oParams.toolbar_inline.concat(['embedin', 'mention']),
         tools: oTools,
         onReady: () => {
-            oEditor.blocks.renderFromHTML($(oParams.selector).val());
+            if ($(oParams.selector).val() != '')
+                oEditor.blocks.renderFromHTML($(oParams.selector).val());
         },
         onChange:() =>{
             
@@ -113,34 +114,7 @@ function bx_ex_editor_init(oEditor, oParams)
             })  
         }
     }); 
-    
-    /*$('#' + oParams.name).atwho({
-        at: "@",
-        searchKey: 'label',
-        insertTpl: '<a class="bx-menthion-link" dchar="@" data-profile-id="${value}" href="${url}">@${label}</a>',
-        displayTpl: '<li class="bx-mention-row" data-value="${value}"><span>${label}</span></li>',
-        callbacks: {
-            remoteFilter: function(query, callback) {
-                $.getJSON(oParams.root_url + "/searchExtended.php?action=get_mention&symbol=%40&", {term: query}, function(data) {
-                    callback(data);
-                });
-            }
-        },
-    });
-    
-    $('#' + oParams.name).atwho({
-        at: "#",
-        searchKey: 'label',
-        insertTpl: '<a class="bx-menthion-link" dchar="#" data-profile-id="${value}" href="${url}">#${label}</a>',
-        displayTpl: '<li class="bx-mention-row" data-value="${value}"><span>${label}</span> <img class="bx-def-round-corners" src="${thumb}" /></li>',
-        callbacks: {
-            remoteFilter: function(query, callback) {
-                $.getJSON(oParams.root_url + "/searchExtended.php?action=get_mention&symbol=%23&", {term: query}, function(data) {
-                    callback(data);
-                });
-            }
-        },
-    });*/
+
     tribute = new Tribute({
         collection: [
             {
