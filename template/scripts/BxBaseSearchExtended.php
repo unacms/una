@@ -168,7 +168,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             $aParams['per_page'] = '{per_page}';
             list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
 
-            $aPaginate['page_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams));
+            $aPaginate['page_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams, false));
         }
         else
             $aPaginate['on_change_page'] = "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aParams)) . ");";            
