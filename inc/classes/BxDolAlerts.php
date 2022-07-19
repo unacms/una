@@ -182,6 +182,7 @@ class BxDolAlerts extends BxDol
             ];
 
         $aCacheTriggers = $oDb->getAll("SELECT * FROM `sys_alerts_cache_triggers` ORDER BY `id` ASC");
+        $aResult['cache_triggers'] = [];
         foreach ($aCacheTriggers as $r)
             $aResult['cache_triggers'][$r['unit']][$r['action']][] = [
                 'markers' => $r['markers'] ? json_decode($r['markers'], true) : [],
