@@ -440,11 +440,14 @@ class BxCreditsModule extends BxBaseModGeneralModule
     /** 
      * @ref bx_credits-get_cart_items "get_cart_items"
      */
-    public function serviceGetCartItems($iAuthorId)
+    public function serviceGetCartItems($iSellerId)
     {
     	$CNF = &$this->_oConfig->CNF;
 
         $iAuthorId = $this->_oConfig->getAuthor();
+        if($iSellerId != $iAuthorId && !BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_ADMINISTRATOR], $iSellerId))
+            return array();
+
         $aItems = $this->_oDb->getBundle(array('type' => 'all', 'active' => 1));
 
         $aResult = array();

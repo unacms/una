@@ -978,7 +978,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aCmtsBp = array();
         if(!empty($aBrowseParams['cmts_preload_number']))
-            $aCmtsBp['per_view'] = $aBrowseParams['cmts_preload_number'];
+            $aCmtsBp['init_view'] = $aBrowseParams['cmts_preload_number'];
 
         $aCmtsDp = array(
             'in_designbox' => false, 

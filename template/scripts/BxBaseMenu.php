@@ -297,9 +297,25 @@ class BxBaseMenu extends BxDolMenu
         if (empty($aMenuItem['addon']))
             return '';
 
-        return BxDolService::callSerialized($aMenuItem['addon'], $this->_aMarkers);
+        if ($aMenuItem['addon_cache']) {
+            $oCache = BxDolDb::getInstance()->getDbCacheObject();
+            $sKey = 'menu_' . $this->_sObject . '_' . $aMenuItem['name'] . '_' . bx_get_logged_profile_id() . '_' . bx_site_hash() . '.php';
+            $s = $oCache->getData($sKey);
+            if ($s !== null) {
+                return $s;
+            }
+            else {
+                $s = BxDolService::callSerialized($aMenuItem['addon'], $this->_aMarkers);
+                $oCache->setData($sKey, $s);
+            }
+
+            return $s;
+        }
+        else {
+            return BxDolService::callSerialized($aMenuItem['addon'], $this->_aMarkers);
+        }
     }
-    
+
     protected function _getMenuMarkers ($aMenuItem)
     {
         if (empty($aMenuItem['markers']))

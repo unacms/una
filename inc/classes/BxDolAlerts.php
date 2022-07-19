@@ -45,6 +45,9 @@ class BxDolAlerts extends BxDol
 
     protected $_aAlerts;
     protected $_aHandlers;
+    protected $_aCacheTriggers;
+    protected $_aCacheTriggersMarkers;
+    protected $_oCacheObject;
 
     /**
      * Constructor
@@ -76,6 +79,7 @@ class BxDolAlerts extends BxDol
 
         $this->_aAlerts = $aData['alerts'];
         $this->_aHandlers = $aData['handlers'];
+        $this->_aCacheTriggers = $aData['cache_triggers'];
 
         $this->sUnit = $sUnit;
         $this->sAction = $sAction;
@@ -86,6 +90,18 @@ class BxDolAlerts extends BxDol
             $this->iSender = $oProfile ? $oProfile->id() : 0;
         } else {
             $this->iSender = (int)$iSender;
+        }
+
+        if (getParam('sys_db_cache_enable')) {
+            $this->_aCacheTriggersMarkers = $this->aExtras;
+            $this->_aCacheTriggersMarkers['_alert_content'] = $this->iObject;
+            $this->_aCacheTriggersMarkers['_alert_sender'] = $this->iSender;
+            $this->_aCacheTriggersMarkers['_hash'] = bx_site_hash();
+
+    		$sEngine = getParam('sys_db_cache_engine');
+	    	$this->_oCacheObject = bx_instance('BxDolCache'.$sEngine);
+		    if(!$this->_oCacheObject->isAvailable())
+			    $this->_oCacheObject = bx_instance('BxDolCacheFile');
         }
     }
 
@@ -127,6 +143,18 @@ class BxDolAlerts extends BxDol
                 if (isset($GLOBALS['bx_profiler']) && 'bx_profiler' != $aHandler['name']) 
                     $GLOBALS['bx_profiler']->endAlert($this->sUnit, $this->sAction, $aHandler['name']);
             }
+        
+        // process cache triggers
+
+        if ($this->_oCacheObject && isset($this->_aCacheTriggers[$this->sUnit]) && isset($this->_aCacheTriggers[$this->sUnit][$this->sAction])) {
+            foreach($this->_aCacheTriggers[$this->sUnit][$this->sAction] as $a) {
+                $a['cache_key'] = preg_replace_callback('/({[\d\w]+})/', function ($m) {
+                    $sKey = trim($m[1], '{}');
+                    return $this->_aCacheTriggersMarkers[$sKey];
+                }, $a['cache_key']);
+                $this->_oCacheObject->delData($a['cache_key']);
+            }
+        }
     }
 
     /**
@@ -151,6 +179,13 @@ class BxDolAlerts extends BxDol
                 'file' => $aHandler['file'], 
                 'service_call' => $aHandler['service_call'],
                 'active' => (int)$aHandler['active']
+            ];
+
+        $aCacheTriggers = $oDb->getAll("SELECT * FROM `sys_alerts_cache_triggers` ORDER BY `id` ASC");
+        foreach ($aCacheTriggers as $r)
+            $aResult['cache_triggers'][$r['unit']][$r['action']][] = [
+                'markers' => $r['markers'] ? json_decode($r['markers'], true) : [],
+                'cache_key' => $r['cache_key'],
             ];
 
         return $aResult;
