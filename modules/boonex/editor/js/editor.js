@@ -151,6 +151,7 @@ function bx_ex_editor_init(oEditor, oParams)
         ]
     })
     tribute.attach(document.getElementById(oParams.name));
+    
     document.getElementById(oParams.name).removeAttribute("contenteditable");
 }
 
