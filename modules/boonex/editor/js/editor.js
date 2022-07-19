@@ -1,6 +1,6 @@
 function bx_ex_editor_init(oEditor, oParams)
 {
-    $(oParams.selector).after("<div id='" + oParams.name + "' class='" + oParams.name + " bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-editor mt-px text-gray-700 dark:text-gray-300  w-full p-4  ring-1 ring-gray-300 dark:ring-gray-700 dark:focus:placeholder-700 bg-gray-50 dark:bg-gray-900/50 placeholder-gray-500 focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:placeholder-gray-300 dark:focus:placeholder-gray-700  focus:text-gray-900 dark:focus:text-gray-100 text-base border-0 flex-wrap" + oParams.css_class + "'></div>" );
+    $(oParams.selector).after("<div id='" + oParams.name + "' class='123 " + oParams.name + " bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-editor mt-px text-gray-700 dark:text-gray-300  w-full p-4  ring-1 ring-gray-300 dark:ring-gray-700 dark:focus:placeholder-700 bg-gray-50 dark:bg-gray-900/50 placeholder-gray-500 focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:placeholder-gray-300 dark:focus:placeholder-gray-700  focus:text-gray-900 dark:focus:text-gray-100 text-base border-0 flex-wrap" + oParams.css_class + "'></div>" );
     
     $(oParams.selector).hide();
     
@@ -151,6 +151,7 @@ function bx_ex_editor_init(oEditor, oParams)
         ]
     })
     tribute.attach(document.getElementById(oParams.name));
+    document.getElementById(oParams.name).removeAttribute("contenteditable");
 }
 
 function bx_ex_editor_custom_parser(block)
