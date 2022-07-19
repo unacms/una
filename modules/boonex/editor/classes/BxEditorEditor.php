@@ -80,9 +80,11 @@ class BxEditorEditor extends BxDolEditor
         if ($this->_sButtonsCustom !== false) {
             $sToolbarItems = $this->_sButtonsCustom;
         }
+        if ($sToolbarItems != '')
+            $sToolbarItems = "'" . str_replace(',', "','", $sToolbarItems) . "'";
         
-        $sToolbarItems = "'" . str_replace(',', "','", $sToolbarItems) . "'";
-        $sToolbarItemsInline = "'" . str_replace(',', "','", $sToolbarItemsInline) . "'";
+        if ($sToolbarItemsInline != '')
+            $sToolbarItemsInline = "'" . str_replace(',', "','", $sToolbarItemsInline) . "'";
         
         $sEditorName = 'editor_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
         
