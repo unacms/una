@@ -4,7 +4,8 @@
 }
 
 .bx-form-input-html-editor .bx-embed-link{
-    width:100%;
+    width: calc(100% - 1rem);
+    margin: 0.5rem;
     background: #f3e8c8;
     color:#b19370;
     box-shadow rgb(255, 255, 255) 0px 0px 0px 0px, rgb(209, 213, 219) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
@@ -14,20 +15,19 @@
     padding-bottom: 50px;
     
 }
-/*.bx-form-input-html-editor .bx-embed-link::after{
+.bx-form-input-html-editor .bx-embed-link::after{
     content: attr(source);
     width: 100%;
     display: block;
-    height: 100%;
-    line-height: 100px;
     position: relative;
     text-align: center;
     vertical-align: baseline;
     font-size: 16px;
-    border:1px solid #000;
-    background: #E1ED10;
     text-indent: 0px;
-}*/
+}
+.cdx-input.image-tool__caption{
+    display: none;
+}
 .cdx-search-field{
     display: none;
 }
