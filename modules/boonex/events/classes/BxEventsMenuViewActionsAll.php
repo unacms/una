@@ -27,6 +27,9 @@ class BxEventsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
     {
         parent::setContentId($iContentId);
 
+        if (!$this->_aContentInfo['date_start'] || !$this->_aContentInfo['date_end'])
+            return;
+
         $oDateStart = new DateTime('@' . $this->_aContentInfo['date_start']);
         $oDateEnd = new DateTime('@' . ($this->_aContentInfo['date_end'] > $this->_aContentInfo['repeat_stop'] ? $this->_aContentInfo['date_end'] : $this->_aContentInfo['repeat_stop']));
 

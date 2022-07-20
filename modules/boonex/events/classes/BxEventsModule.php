@@ -435,6 +435,11 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         }
     }
 
+    public function checkAllowedIcalExport ($aDataEntry, $isPerformAction = false)
+    {
+        return $aDataEntry['date_start'] && $aDataEntry['date_end'] ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_access_denied');
+    }
+
     /**
      * Send reminder to event's paritcipants
      * @param $aContentInfo content info

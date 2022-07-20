@@ -44,10 +44,10 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         }
 
         return array_merge($aVars, array(
-			'date_start' => $aData['date_start'],
-			'date_start_f' => date(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()),
-			'date_end' => $aData['date_end'],
-			'date_end_f' => date(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp()),
+			'date_start' => $aData['date_start'] ? $aData['date_start'] : '',
+			'date_start_f' => $oDateStart ? date(getParam('bx_events_short_date_format'), $oDateStart->getTimestamp()) : '',
+			'date_end' => $aData['date_end'] ? $aData['date_end'] : '',
+			'date_end_f' => $oDateEnd ? date(getParam('bx_events_short_date_format'), $oDateEnd->getTimestamp()) : '',
         ));
     }
 }

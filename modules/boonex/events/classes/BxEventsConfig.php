@@ -22,6 +22,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'invite-to-event' => 'checkAllowedInvite',
             'delete-event-profile' => 'checkAllowedDelete',
             'approve-event-profile' => 'checkAllowedApprove',
+            'ical-export' => 'checkAllowedIcalExport',
         ));
 
         $this->CNF = array (
