@@ -28,7 +28,7 @@ function bx_editor_init(oEditor, oParams){
                             oEditor.insertEmbed(range.index+2, 'embed-link', {source: sLink, inlinecode : aData.code}, 'api');
                         }
                         else{
-                            oEditor.insertEmbed(0, 'embed-link', {source: sLink, inlinecode : aData.code}, 'api');
+                            oEditor.insertEmbed(0, 'embed-link', {source: sLink, inlinecode : sLink}, 'api');
                         }
                             
                         if ($(oParams.selector).next().next().find('.bx-embed-link a[href="' + aData.link + '"]').length > 0)
@@ -40,8 +40,20 @@ function bx_editor_init(oEditor, oParams){
             },
             'link': function(value) {
                 if (value) {
+                    var range = oEditor.getSelection();
                     bx_prompt(_t('_sys_txt_quill_tooltip_link_popup_header'), '', function(oPopup){
-                        oEditor.format('link', $(oPopup).find("input[type = 'text']").val());
+                        var sLink = $(oPopup).find("input[type = 'text']").val();
+                        if (range) {
+                            if (range.length > 0){
+                                oEditor.format('link', sLink);
+                            }
+                            else{
+                                oEditor.insertText(range.index, sLink, 'link', sLink);
+                            }
+                        }
+                        else{
+                            oEditor.insertText(0, sLink, 'link', sLink);
+                        }
                     });
                 } else {
                     oEditor.format('link', false);
@@ -365,6 +377,7 @@ function bx_editor_on_space_enter_in(sCode, sEditorId) {
             }
         }
     }
+    console.log(glOnSpaceEnterInEditor);
 }
 
 function bx_editor_remove_img (aEditorIds, aMarkers) 
