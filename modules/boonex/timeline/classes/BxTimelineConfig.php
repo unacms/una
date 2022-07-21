@@ -334,6 +334,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         );
 
         $this->_aRepostDefaults = array(
+            'do' => 'repost',
+
             'show_do_repost_as_button' => false,
             'show_do_repost_as_button_small' => false,
             'show_do_repost_image' => false,
@@ -350,12 +352,18 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             //--- Images
             'image_do_repost' => '',
+            'image_do_repost_with' => '',
+            'image_do_repost_to' => '',
 
             //--- Icons
             'icon_do_repost' => 'sync-alt',
+            'icon_do_repost_with' => 'sync-alt',
+            'icon_do_repost_to' => 'sync-alt',
 
             //--- Texts
             'text_do_repost' => '_bx_timeline_txt_do_repost',
+            'text_do_repost_with' => '_bx_timeline_txt_do_repost_with',
+            'text_do_repost_to' => '_bx_timeline_txt_do_repost_to',
 
             //--- Templates
             'template_do_repost_label' => '',

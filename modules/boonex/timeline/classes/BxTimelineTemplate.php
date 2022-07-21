@@ -1012,7 +1012,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sStylePrefixRepost = $sStylePrefix . '-repost-';
 
-        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
+        $sDo = isset($aParams['do']) ? $aParams['do'] : 'repost';
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;       
 
         $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
         $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
@@ -1031,20 +1032,24 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sOnClick = '';
         if(!$bDisabled) {
+            $sMethod = '_get' . bx_gen_method_name($sDo) . 'JsClick';
+            if(!method_exists($this, $sMethod))
+                $sMethod = '_getRepostJsClick';
+
             $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
             if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
                 $aRepostedData = unserialize($aReposted['content']);
 
-                $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+                $sOnClick = $this->$sMethod($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
             }
             else
-                $sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+                $sOnClick = $this->$sMethod($iOwnerId, $sType, $sAction, $iObjectId);
         }
         else
             $sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
 
         $aOnClickAttrs = array(
-            'title' => _t('_bx_timeline_txt_do_repost')
+            'title' => _t('_bx_timeline_txt_do_' . $sDo)
         );
         if(!empty($sClass))
             $aOnClickAttrs['class'] = $sClass;
@@ -1069,21 +1074,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => $bShowDoRepostImage,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'src' => $this->getIconUrl($aParams['image_do_repost'])
+                    'src' => $this->getIconUrl($aParams['image_do_' . $sDo])
                 )
             ),
             'bx_if:show_icon' => array(
                 'condition' => $bShowDoRepostIcon,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'name' => $aParams['icon_do_repost']
+                    'name' => $aParams['icon_do_' . $sDo]
                 )
             ),
             'bx_if:show_text' => array(
                 'condition' => $bShowDoRepostText,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'text' => _t($aParams['text_do_repost'])
+                    'text' => _t($aParams['text_do_' . $sDo])
                 )
             )
         ));
