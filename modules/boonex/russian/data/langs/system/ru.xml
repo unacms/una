@@ -2919,6 +2919,8 @@
     <string name="_sys_menu_item_title_system_va_feature"><![CDATA[В продвинутые]]></string>
     <string name="_sys_menu_item_title_system_va_reaction"><![CDATA[Отреагировать]]></string>
     <string name="_sys_menu_item_title_system_va_repost"><![CDATA[Сделать репост]]></string>
+    <string name="_sys_menu_item_title_system_va_repost_with_text"><![CDATA[Сделать репост с текстом]]></string>
+    <string name="_sys_menu_item_title_system_va_repost_to_context"><![CDATA[Сделать репост в контекст]]></string>
     <string name="_sys_menu_item_title_system_va_report"><![CDATA[Пожаловаться]]></string>
     <string name="_sys_menu_item_title_system_va_notes"><![CDATA[Заметки]]></string>
     <string name="_sys_menu_item_title_system_va_audit"><![CDATA[Аудит]]></string>

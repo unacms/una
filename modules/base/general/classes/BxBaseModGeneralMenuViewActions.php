@@ -378,6 +378,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             return '';
 
         $sResult = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
+            'do' => !empty($aParams['do']) ? $aParams['do'] : 'repost',
             'show_do_repost_as_button' => $this->_bShowAsButton,
             'show_do_repost_text' => $this->_bShowTitle
         )));
@@ -385,6 +386,20 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             return '';
 
     	return array($sResult, $this->_sClassMiSa);
+    }
+
+    protected function _getMenuItemRepostWithText($aItem, $aParams = [])
+    {
+        return $this->_getMenuItemRepost($aItem, array_merge($aParams, [
+            'do' => 'repost_with'
+        ]));
+    }
+
+    protected function _getMenuItemRepostToContext($aItem, $aParams = [])
+    {
+        return $this->_getMenuItemRepost($aItem, array_merge($aParams, [
+            'do' => 'repost_to'
+        ]));
     }
 
     protected function _getMenuItemReport($aItem, $aParams = array())

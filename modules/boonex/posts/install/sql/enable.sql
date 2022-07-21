@@ -273,6 +273,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_posts_view_actions', 'bx_posts', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 240),
 ('bx_posts_view_actions', 'bx_posts', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 250),
 ('bx_posts_view_actions', 'bx_posts', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 260),
+('bx_posts_view_actions', 'bx_posts', 'repost-with-text', '_sys_menu_item_title_system_va_repost_with_text', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 261),
+('bx_posts_view_actions', 'bx_posts', 'repost-to-context', '_sys_menu_item_title_system_va_repost_to_context', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 262),
 ('bx_posts_view_actions', 'bx_posts', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 270),
 ('bx_posts_view_actions', 'bx_posts', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, '', 1, 0, 280),
 ('bx_posts_view_actions', 'bx_posts', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_posts&content_id={content_id}', '', '', 'history', '', '', 0, 192, '', 1, 0, 290),
