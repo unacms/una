@@ -28,7 +28,7 @@ function bx_editor_init(oEditor, oParams){
                             oEditor.insertEmbed(range.index+2, 'embed-link', {source: sLink, inlinecode : aData.code}, 'api');
                         }
                         else{
-                            oEditor.insertEmbed(0, 'embed-link', {source: sLink, inlinecode : sLink}, 'api');
+                            oEditor.insertEmbed(0, 'embed-link', {source: sLink, inlinecode : aData.code}, 'api');
                         }
                             
                         if ($(oParams.selector).next().next().find('.bx-embed-link a[href="' + aData.link + '"]').length > 0)
@@ -338,6 +338,11 @@ function bx_editor_init(oEditor, oParams){
     return oEditor
 }
     
+function bx_editor_activate(oEditor)
+{
+    oEditor.focus();
+}
+
 function bx_editor_insert_html (sEditorId, sImgId, sHtml) 
 {
     if ($('#' + sEditorId) &&  $('#' + sEditorId).attr('object_editor')){
