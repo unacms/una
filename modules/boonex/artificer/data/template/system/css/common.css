@@ -50,7 +50,7 @@ import url(../../../../../../../template/css/common.css);
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
-.bx-db-container.bx-dbc-nopadding .bx-db-header {
+.bx-db-container.bx-dbc-nopadding > .bx-db-header {
     padding-left: 0;
     padding-right: 0;
 }
