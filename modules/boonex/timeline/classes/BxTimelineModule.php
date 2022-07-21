@@ -353,8 +353,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         if(($iReposterId = bx_get('reposter_id')) !== false)
             $iReposterId = bx_process_input($iReposterId, BX_DATA_INT);
-        if(!$iReposterId)
-            $iReposterId = $this->getUserId();
+
+        $iUserId = $this->getUserId();
+        if(!$iReposterId || $iReposterId != $iUserId)
+            $iReposterId = $iUserId;
 
         $iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
         $sType = bx_process_input(bx_get('type'), BX_DATA_TEXT);
