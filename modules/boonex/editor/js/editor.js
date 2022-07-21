@@ -1,6 +1,6 @@
 function bx_ex_editor_init(oEditor, oParams)
 {
-    $(oParams.selector).after("<div id='" + oParams.name + "' class='123 " + oParams.name + " bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-editor mt-px text-gray-700 dark:text-gray-300  w-full p-4  ring-1 ring-gray-300 dark:ring-gray-700 dark:focus:placeholder-700 bg-gray-50 dark:bg-gray-900/50 placeholder-gray-500 focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:placeholder-gray-300 dark:focus:placeholder-gray-700  focus:text-gray-900 dark:focus:text-gray-100 text-base border-0 flex-wrap" + oParams.css_class + "'></div>" );
+    $(oParams.selector).after("<div id='" + oParams.name + "' class='" + oParams.name + " bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-editor mt-px text-gray-700 dark:text-gray-300  w-full p-4  ring-1 ring-gray-300 dark:ring-gray-700 dark:focus:placeholder-700 bg-gray-50 dark:bg-gray-900/50 placeholder-gray-500 focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:placeholder-gray-300 dark:focus:placeholder-gray-700  focus:text-gray-900 dark:focus:text-gray-100 text-base border-0 flex-wrap" + oParams.css_class + "'></div>" );
     
     $(oParams.selector).hide();
     
@@ -55,43 +55,43 @@ function bx_ex_editor_init(oEditor, oParams)
           class: Paragraph,
           inlineToolbar: true,
         },
-        embedin: BxEmbedInline,
         mention: BxMention,
         marker: Marker,
         inlineCode: InlineCode,
     };
 
-    oParams.toolbar.forEach(function(item){
-        switch(item) {
-            case 'header':
-                oTools.header = Header;
-                break;
+    if (oParams.toolbar){
+        oParams.toolbar.forEach(function(item){
+            switch(item) {
+                case 'header':
+                    oTools.header = Header;
+                    break;
 
-            case 'list':
-                oTools.list = List;
-                break;
+                case 'list':
+                    oTools.list = List;
+                    break;
 
-            case 'image':
-                oTools.image = oImage;
-                break;
-                
-            case 'embed':
-                oTools.embed = BxEmbedBlock;
-                break;
-                
-            case 'code':
-                oTools.code = CodeTool;
-                break;
-                
-            case 'delimiter':
-                oTools.delimiter = Delimiter;
-                break;
-        }
-    })
+                case 'image':
+                    oTools.image = oImage;
+                    break;
 
+                case 'embed':
+                    oTools.embedblock = BxEmbedBlock;
+                    break;
+
+                case 'code':
+                    oTools.code = CodeTool;
+                    break;
+
+                case 'delimiter':
+                    oTools.delimiter = Delimiter;
+                    break;
+            }
+        })
+    }
     oEditor = new EditorJS({
         holder : document.getElementById(oParams.name),
-        inlineToolbar: oParams.toolbar_inline.concat(['embedin', 'mention']),
+        inlineToolbar: oParams.toolbar_inline.concat(['mention']),
         tools: oTools,
         onReady: () => {
             if ($(oParams.selector).val() != '')
@@ -100,8 +100,9 @@ function bx_ex_editor_init(oEditor, oParams)
         onChange:() =>{
             
             oEditor.save().then((savedData) =>{
-                const edjsParser = edjsHTML({embed2: bx_ex_editor_custom_parser});
+                const edjsParser = edjsHTML({embedblock: bx_ex_editor_custom_parser_embedblock});
                 oData = edjsParser.parse(savedData);
+                console.log(oData);
                 var s ='';
                 oData.forEach(function(item){
                     s += item;
@@ -155,27 +156,30 @@ function bx_ex_editor_init(oEditor, oParams)
     document.getElementById(oParams.name).removeAttribute("contenteditable");
 }
 
-function bx_ex_editor_custom_parser(block)
+
+function bx_ex_editor_custom_parser_embedblock(block)
 {
-    return '<p><span class="bx-embed-link" source="' + block.data.source + '">' + block.data.source + '</span></p>';
+    if (block.data && block.data.source)
+        return '<div class="bx-embed-link" source="' + block.data.source + '">' + block.data.source + '</div>';
 }
 
+var oLink ='';
+
 class BxEmbedBlock {
-    
     constructor({ data, block }){
+         console.log('--!constructor');
+          console.log(data);
         this.blockAPI = block
-   
-    this.nodes = {
-      linkContent: null,
-    };
 
-    this._data = {
-      link: '',
-      meta: {},
-    };
-
-    this.data = data;
-  }
+        this.nodes = {
+            linkContent: null,
+        };
+        if (this.data && this.data.source)
+            this.source = data.source;
+        
+        this.wrapper = undefined;
+        this.data = data;    
+    }
     
     static get toolbox() {
         return {
@@ -185,123 +189,74 @@ class BxEmbedBlock {
     }
 
      render() {
-        var sLink = '';
+        this.wrapper = document.createElement('p');
        
-        var oObj = document.createElement('span');
+        if (this.data && this.data.source){
+            this._createEmbed(this.data.source);
+            return this.wrapper;
+        }
+         else{
+             this._createInput();
+         }
+
+         return this.wrapper; 
+    }
+    
+    _createEmbed(sLink){
+        var oObj = document.createElement('div');
         oObj.setAttribute('source', sLink)
         oObj.className = 'bx-embed-link';
         oObj.innerHTML = sLink;
-        this.nodes.linkContent = oObj;
-        var $this = this;
-        bx_prompt(_t('_bx_editor_embed_popup_header'), '', 
-            function(oPopup){
-                sLink = $(oPopup).find("input[type = 'text']").val();
-                if (sLink != ''){
-                    $this.nodes.linkContent.setAttribute('source', sLink);
-                    bx_embed_link($this.nodes.linkContent);
-                    $this.blockAPI.dispatchChange();
-                }
-                else{
-                    $this.nodes.linkContent.remove();
-                    $this.blockAPI.dispatchChange();
-                }
-            }
-            ,function(oPopup){
-                $this.nodes.linkContent.remove();
-                $this.blockAPI.dispatchChange();
-            }
-        );
-        
-        return this.nodes.linkContent;
-    }
-        
-    save(blockContent){
-        return {
-            source: this.nodes.linkContent.getAttribute('source')
-        }
-    }
-}
-
-class BxEmbedInline {
-    static get CSS() {
-        return 'bx-embed-link';
-    };
-
-    constructor({api}) {
-        this.api = api;
-        this.button = null;
-        this.tag = 'span';
-
-        this.iconClasses = {
-          base: this.api.styles.inlineToolButton,
-          active: this.api.styles.inlineToolButtonActive
-        };
-    }
-
-    static get isInline() {
-        return true;
-    }
-
-    render() {
-        return;
-    }
-
-    surround(range) {
-        if (!range) {
-            return;
-        }
-
-        let termWrapper = this.api.selection.findParentTag(this.tag, BxEmbedInline.CSS);
-        if (termWrapper) {
-          this.unwrap(termWrapper);
-        } else {
-          this.wrap(range);
-        }
-    }
-
-    wrap(range) {
-        let marker = document.createElement(this.tag);
-
-        marker.classList.add(BxEmbedInline.CSS);
-
-        marker.appendChild(range.extractContents());
-        range.insertNode(marker);
-
-        this.api.selection.expandToTag(marker);
+        this.wrapper.removeChild(this.wrapper.querySelector('input'));
+        this.wrapper.appendChild(oObj);
     }
     
-    unwrap(termWrapper) {
-        this.api.selection.expandToTag(termWrapper);
-
-        let sel = window.getSelection();
-        let range = sel.getRangeAt(0);
-
-        let unwrappedContent = range.extractContents();
-
-        termWrapper.parentNode.removeChild(termWrapper);
-
-        range.insertNode(unwrappedContent);
-
-        sel.removeAllRanges();
-        sel.addRange(range);
+     _createInput(){
+        var oObj = document.createElement('input');
+        oObj.className = 'bx-def-font-inputs bx-form-input-text';
+        oObj.setAttribute('placeholder', _t('_bx_editor_embed_popup_header'));
+        oObj.addEventListener('blur', (event) => {
+            if (oObj.value != ''){
+                this._createEmbed(oObj.value);
+            }
+        });
+        this.wrapper.appendChild(oObj);
     }
-
-    checkState() {
-        const termTag = this.api.selection.findParentTag(this.tag, BxEmbedInline.CSS);
-
-        this.button.classList.toggle(this.iconClasses.active, !!termTag);
+   
+    save(blockContent){
+        const div = blockContent.querySelector('div');
+        console.log(div);
+        if (div){
+            return {
+                source: div.getAttribute('source')
+            }
+        }
     }
-
-    static get sanitize() {
+   
+    static get pasteConfig() {
         return {
-          span: function(el) {
-              const source = el.getAttribute('source')
-              return {
-                  class: BxEmbedInline.CSS,
-                  source: source
-              }
-          }
-        };
+            tags: ['DIV'],
+        }
+    }
+    
+    onPaste(event) {
+        console.log(8);
+        if (event.detail.data.attributes.source){
+            var sSource = event.detail.data.attributes.source.nodeValue;
+            this._createEmbed(sSource);
+            this.data.source = sSource;
+        }
+    }
+    
+    static get sanitize(){
+        return {
+            url: true, // disallow HTML
+        }
+    }
+    
+    validate(savedData) {
+
+        return true;
     }
 }
 
