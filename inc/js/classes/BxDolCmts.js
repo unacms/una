@@ -78,8 +78,11 @@ BxDolCmts.prototype.cmtShowForm = function(oElement)
 
             if(!oTextarea || oTextarea.length == 0)
                 return;
-
-            oTextarea.focus();
+            
+            if (oTextarea.attr('object_editor'))
+                eval('bx_editor_activate(' + oTextarea.attr('object_editor') + ')');
+            else
+                oTextarea.focus();
         });
     });
 };
