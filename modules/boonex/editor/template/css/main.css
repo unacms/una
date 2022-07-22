@@ -1,6 +1,5 @@
 .bx-form-input-html-editor{
 	border: none !important;
-    border-radius: 0 0 0.375rem 0.375rem !important;
 }
 
 .bx-form-input-html-editor .bx-embed-link{
@@ -33,7 +32,7 @@
 }
 .ce-block__content,
 .ce-toolbar__content{
-    max-width: 80ch;
+    max-width: min(80ch, calc(100% - 60px));
 }
 .dark .ce-toolbar__settings-btn:hover{
     background-color: rgb(55 65 81);
