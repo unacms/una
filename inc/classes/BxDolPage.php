@@ -554,10 +554,15 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     public function displayPage ($oTemplate = null)
     {
+        $sSessionKey = 'sys_entrance_url';
+        $oSession = BxDolSession::getInstance();
+        if(!$oSession->getValue($sSessionKey))
+            $oSession->setValue($sSessionKey, $this->_aObject['url']);
+
         if(isLogged())
             BxDolAccount::getInstance()->isNeedChangePassword();
-        
-        if (!$oTemplate)
+
+        if(!$oTemplate)
             $oTemplate = BxDolTemplate::getInstance();
 
         $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
