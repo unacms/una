@@ -1173,13 +1173,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         $sRet = '';
 
+        $oPage = BxDolPage::getObjectInstanceByURI();
+        $bPage = $oPage !== false;
+
         // general meta tags
         if (!empty($this->aPage['keywords']) && is_array($this->aPage['keywords']))
             $sRet .= '<meta name="keywords" content="' . bx_html_attribute(implode(',', $this->aPage['keywords'])) . '" />';
 
-        $bDescription = !empty($this->aPage['description']) && is_string($this->aPage['description']);
+        $sDescription = '';
+        if(!empty($this->aPage['description']) && is_string($this->aPage['description']))
+            $sDescription = $this->aPage['description'];
+        if(!$sDescription && $bPage)
+            $sDescription = $oPage->getMetaDescription();
+        $bDescription = !empty($sDescription);
+
         if ($bDescription)
-            $sRet .= '<meta name="description" content="' . bx_html_attribute($this->aPage['description']) . '" />';
+            $sRet .= '<meta name="description" content="' . bx_html_attribute($sDescription) . '" />';
 
         // location
         if (!empty($this->aPage['location']) && isset($this->aPage['location']['lat']) && isset($this->aPage['location']['lng']) && isset($this->aPage['location']['country']))
@@ -1189,22 +1198,22 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
         // set cover image as meta[image] value
-		if (empty($this->aPage['image']) && ($oPage = BxDolPage::getObjectInstanceByURI()) !== false){
+        if (empty($this->aPage['image']) && $bPage) {
             $aCover = $oPage->getPageCoverImage();
-			if ($aCover){
-				$oCover = BxDolCover::getInstance($this);
-				$this->aPage['image'] =  $oCover->getCoverImageUrl($aCover);
-			}
-		}	
-		
-		// facebook / twitter
+            if ($aCover) {
+                $oCover = BxDolCover::getInstance($this);
+                $this->aPage['image'] =  $oCover->getCoverImageUrl($aCover);
+            }
+        }	
+
+        // facebook / twitter
         $bPageImage = !empty($this->aPage['image']);
         $sRet .= '<meta name="twitter:card" content="' . ($bPageImage ? 'summary_large_image' : 'summary') . '" />';
         if ($bPageImage)
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
         $sRet .= '
 			<meta property="og:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />
-			<meta property="og:description" content="' . ($bDescription ? bx_html_attribute($this->aPage['description']) : '') . '" />';
+			<meta property="og:description" content="' . ($bDescription ? bx_html_attribute($sDescription) : '') . '" />';
 
         // Smart App Banner
         if (getParam('smart_app_banner') && false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) {

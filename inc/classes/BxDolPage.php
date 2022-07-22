@@ -588,6 +588,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return $this->_aObject['submenu'];
     }
 
+    public function getMetaDescription ()
+    {
+        return $this->_aObject['meta_description'];
+    }
+
     public function getName ()
     {
     	return $this->_sObject;

@@ -73,7 +73,10 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         
         $mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo);
         if (!$oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $mixedAllowView)) {
-            $this->_oTemplate->displayAccessDenied($sMsg);
+            $this->_oTemplate->displayAccessDenied([
+                'title' => $this->_oProfile->getDisplayName(),
+                'content' => $sMsg
+            ]);
             exit;
         }
         elseif ($oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && $CNF['OBJECT_PAGE_VIEW_ENTRY'] == $this->_sObject && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
