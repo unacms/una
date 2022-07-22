@@ -60,6 +60,9 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         $this->addConditionsForAuthorStatus($CNF);
 
         $this->addConditionsForCf($CNF);
+
+        if(!empty($aParams['filter']) && is_array($aParams['filter']))
+            $this->addConditionsForFilter($CNF, $sMode, $aParams);
     }
 
     protected function addConditionsForAuthorStatus($CNF)
@@ -95,6 +98,39 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         $aConditions = $oCf->getConditions($this->aCurrent['table'], $CNF['FIELD_CF']);
         if(!empty($aConditions) && is_array($aConditions))
             $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aConditions);
+    }
+    
+    protected function addConditionsForFilter($CNF, $sMode, $aParams)
+    {
+        $aFilter = $aParams['filter'];
+        
+        if(empty($aFilter['field']) || empty($aFilter['value']))
+            return;
+        
+        $aRestriction = [
+            'value' => $aFilter['value'],
+            'field' => $aFilter['field'],
+            'operator' => '=',
+        ];
+
+        if(isset($aFilter['operator']))
+            $aRestriction['operator'] = $aFilter['operator'];
+
+        if(isset($aFilter['table']))
+            switch($aFilter['table']) {
+                case 'table':
+                    $aRestriction['table'] = $this->aCurrent['table'];
+                    break;
+
+                case 'tableSearch':
+                    $aRestriction['table'] = $this->aCurrent['tableSearch'];
+                    break;
+
+                default: 
+                    $aRestriction['table'] = $aFilter['table'];
+            }
+
+        $this->aCurrent['restriction']['filter'] = $aRestriction;
     }
 
     /**
