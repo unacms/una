@@ -556,8 +556,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     {
         $sSessionKey = 'sys_entrance_url';
         $oSession = BxDolSession::getInstance();
-        if(!$oSession->getValue($sSessionKey))
-            $oSession->setValue($sSessionKey, $this->_aObject['url']);
+        if(!$oSession->getValue($sSessionKey)) {
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+
+            $oSession->setValue($sSessionKey, bx_append_url_params($sPageLink, array_intersect_key($aPageParams, array_flip(['i', 'id', 'profile_id']))));
+        }
 
         if(isLogged())
             BxDolAccount::getInstance()->isNeedChangePassword();
