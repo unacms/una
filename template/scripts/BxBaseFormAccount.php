@@ -24,15 +24,18 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
         if (!$bValid)
             return $bValid;
         
-        $aPasswords = BxDolAccountQuery::getInstance()->getLastPasswordLog( BxDolAccount::getInstance()->id());
-        $bUsed = false;
-        foreach ($aPasswords as $aPassword){
-            if($aPassword['password'] == encryptUserPwd($s, $aPassword['salt']))
-                $bUsed = true;
+        $oAccount = BxDolAccount::getInstance();
+        if ($oAccount){
+            $aPasswords = BxDolAccountQuery::getInstance()->getLastPasswordLog($oAccount->id());
+            $bUsed = false;
+            foreach ($aPasswords as $aPassword){
+                if($aPassword['password'] == encryptUserPwd($s, $aPassword['salt']))
+                    $bUsed = true;
+            }
+
+            if ($bUsed)
+                return _t('_sys_form_account_input_password_error_old_used');
         }
-        
-        if ($bUsed)
-            return _t('_sys_form_account_input_password_error_old_used');
         
         return true;
     }
