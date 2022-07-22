@@ -61,6 +61,12 @@ function bx_editor_init(oEditor, oParams){
             }
         }
     }
+    
+    sVal = $(oParams.selector).val();    
+    if(!oParams.empty_tags){
+        sVal = sVal.replaceAll('<p><br></p>','');    
+    }
+    
     $(oParams.selector).after("<div id='" + oParams.name + "' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill " + oParams.css_class + "'>" + $(oParams.selector).val() + "</div>" );
     $(oParams.selector).hide();
     
@@ -332,7 +338,11 @@ function bx_editor_init(oEditor, oParams){
     });
     
     oEditor.on('text-change', function(delta, oldDelta, source) {
-        $(oParams.selector).val(oEditor.container.firstChild.innerHTML);
+        sVal = oEditor.container.firstChild.innerHTML;
+        if(!oParams.empty_tags){
+            sVal = sVal.replaceAll('<p><br></p>','');
+        }
+        $(oParams.selector).val(sVal); 
     });
     
     return oEditor

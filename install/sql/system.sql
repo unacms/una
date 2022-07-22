@@ -323,6 +323,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', '', 60),
 
 (@iCategoryId, 'sys_quill_insert_as_plain_text', '_adm_stg_cpt_option_sys_quill_insert_as_plain_text', '', 'checkbox', '', '', '', '', 65),
+(@iCategoryId, 'sys_quill_allow_empty_tags', '_adm_stg_cpt_option_sys_quill_allow_empty_tags', 'on', 'checkbox', '', '', '', '', 66),
 
 (@iCategoryId, 'sys_quill_allowed_tags_mini', '_adm_stg_cpt_option_sys_quill_allowed_tags_mini', '[\'link\', \'size\', \'image\', \'menthion-link\', \'embed-link\']', 'digit', '', '', '', '', 67),
 (@iCategoryId, 'sys_quill_allowed_tags_standard', '_adm_stg_cpt_option_sys_quill_allowed_tags_standard', '', 'digit', '', '', '', '', 68),
