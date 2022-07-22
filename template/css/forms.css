@@ -33,7 +33,7 @@
     border: none;
 }
 
-.bx-form-section-header legend {
+.bx-form-section-header .bx-form-section-title {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
@@ -45,7 +45,7 @@
     text-transform: uppercase;
 }
 
-.bx-form-section-header legend u {
+.bx-form-section-header .bx-form-section-title u {
     cursor: pointer;
 }
 

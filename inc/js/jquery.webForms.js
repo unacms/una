@@ -109,8 +109,8 @@
 
             };
 
-            $('<u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u>').prependTo($('legend', eFormSection));
-            $('legend:first', eFormSection).click(fCallback);
+            $('<u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u>').prependTo($('.bx-form-section-title', eFormSection));
+            $('.bx-form-section-title:first', eFormSection).click(fCallback);
         });
 
         $("select", this).each(function () {

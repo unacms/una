@@ -981,13 +981,12 @@ BLAH;
         else
             $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
 
-
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sLegend = '<legend class="bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
+            $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
         else
-            $sLegend = '<legend class="bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
+            $sTitle = '<div class="bx-form-section-title bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption'], BX_DATA_HTML) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</div>';
 
-        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sLegend);
+        $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sTitle);
 
         return $sCode;
     }
@@ -2121,14 +2120,14 @@ BLAH;
         }
     }
 
-    function getOpenSection($aAttrs = array(), $sLegend = '')
+    function getOpenSection($aAttrs = array(), $sTitle = '')
     {
         if (!$this->_isSectionOpened) {
 
             if (!$aAttrs || !is_array($aAttrs))
                 $aAttrs = array();
 
-            if ($sLegend)
+            if ($sTitle)
                 $sClassesAdd = "bx-form-section-header";
             else
                 $sClassesAdd = "bx-form-section-divider";
@@ -2137,7 +2136,7 @@ BLAH;
 
             $this->_isSectionOpened = true;
 
-            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sLegend <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sLegend ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
+            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sTitle ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
 
         } else {
 
@@ -2158,14 +2157,14 @@ BLAH;
         }
     }
 
-    function getOpenSectionViewMode($aAttrs = array(), $sLegend = '')
+    function getOpenSectionViewMode($aAttrs = array(), $sTitle = '')
     {
         if (!$this->_isSectionOpened) {
 
             if (!$aAttrs || !is_array($aAttrs))
                 $aAttrs = array();
 
-            if ($sLegend)
+            if ($sTitle)
                 $sClassesAdd = "bx-form-section-header";
             else
                 $sClassesAdd = "bx-form-section-divider";
@@ -2174,7 +2173,7 @@ BLAH;
 
             $this->_isSectionOpened = true;
 
-            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sLegend <div class=\"bx-form-section-content bx-def-padding-top\">\n";
+            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sTitle <div class=\"bx-form-section-content bx-def-padding-top\">\n";
 
         } else {
 
