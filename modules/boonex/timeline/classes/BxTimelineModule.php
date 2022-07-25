@@ -5067,8 +5067,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['blink']) || !is_array($aParams['blink']))
             $aParams['blink'] = array();
 
-        if(empty($aParams['viewer_id']))
-            $aParams['viewer_id'] = $this->getUserId();
+        $iViewerId = $this->getUserId();
+        if(empty($aParams['viewer_id']) || (int)$aParams['viewer_id'] != $iViewerId)
+            $aParams['viewer_id'] = $iViewerId;
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
@@ -5112,8 +5113,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['blink'] = bx_get('blink');
         $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();
 
-        $aParams['viewer_id'] = bx_get('viewer_id');
-        $aParams['viewer_id'] = $aParams['viewer_id'] !== false ? bx_process_input($aParams['viewer_id'], BX_DATA_INT) : $this->getUserId();
+        $iViewerId = $this->getUserId();
+        if(($aParams['viewer_id'] = bx_get('viewer_id')) !== false)
+            $aParams['viewer_id'] = bx_process_input($aParams['viewer_id'], BX_DATA_INT);
+        if(!$aParams['viewer_id'] || $aParams['viewer_id'] != $iViewerId)
+            $aParams['viewer_id'] = $iViewerId;
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
