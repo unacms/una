@@ -204,6 +204,7 @@ function bx_editor_init(oEditor, oParams){
             syntax: true, 
             imageResize: {},
             toolbar: oParams.toolbar,
+            "emoji-toolbar": true,
             mention: {
                 allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
                 mentionDenotationChars: ["@", "#"],
