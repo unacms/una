@@ -338,7 +338,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             'show_do_repost_as_button' => false,
             'show_do_repost_as_button_small' => false,
-            'show_do_repost_image' => false,
             'show_do_repost_icon' => true,
             'show_do_repost_text' => false,
 
@@ -350,15 +349,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             //--- JS script
             'show_script' => true,
 
-            //--- Images
-            'image_do_repost' => '',
-            'image_do_repost_with' => '',
-            'image_do_repost_to' => '',
-
             //--- Icons
-            'icon_do_repost' => 'sync-alt',
-            'icon_do_repost_with' => 'sync-alt',
-            'icon_do_repost_to' => 'sync-alt',
+            'icon_do_repost' => 'redo',
+            'icon_do_repost_with' => 'redo',
+            'icon_do_repost_to' => 'redo',
 
             //--- Texts
             'text_do_repost' => '_bx_timeline_txt_do_repost',
