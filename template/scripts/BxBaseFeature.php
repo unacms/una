@@ -153,7 +153,7 @@ class BxBaseFeature extends BxDolFeature
                 'condition' => isset($aParams['show_do_feature_icon']) && $aParams['show_do_feature_icon'] == true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDoFeature($bFeatured)
+                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDoFeature($bFeatured))
                 )
             ),
             'bx_if:show_text' => array(

@@ -42,7 +42,6 @@ class BxBaseScore extends BxDolScore
         $this->_aElementDefaults = array(
             'show_do_vote_as_button' => false,
             'show_do_vote_as_button_small' => false,
-            'show_do_vote_image' => false,
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
             'show_counter' => true,
@@ -310,7 +309,7 @@ class BxBaseScore extends BxDolScore
                 'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDo()
+                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo())
                 )
             ),
             'bx_if:show_text' => array(
@@ -327,18 +326,11 @@ class BxBaseScore extends BxDolScore
     {
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
             'style_prefix' => $this->_sStylePrefix,
-            'bx_if:show_image' => array(
-                'condition' => isset($aParams['show_do_vote_image']) && (bool)$aParams['show_do_vote_image'] === true,
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'src' => $this->_getImageDo($sType)
-                )
-            ),
             'bx_if:show_icon' => array(
                 'condition' => isset($aParams['show_do_vote_icon']) && (bool)$aParams['show_do_vote_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDo($sType)
+                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo($sType))
                 )
             ),
             'bx_if:show_text' => array(

@@ -196,7 +196,7 @@ class BxDolView extends BxDolObject
         return $iObjectAuthorId != 0 && $iObjectAuthorId == $this->_getAuthorId() && $this->checkAction('view_view_viewers_own', $isPerformAction);
     }
 
-	/**
+    /**
      * Internal functions
      */
     protected function _getIconDo()

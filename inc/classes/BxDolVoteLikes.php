@@ -38,7 +38,7 @@ class BxDolVoteLikes extends BxTemplVote
 
     protected function _getIconDo($bVoted)
     {
-    	return $bVoted && $this->isUndo() ?  'thumbs-up' : 'thumbs-up';
+    	return $bVoted && $this->isUndo() ? 'thumbs-up' : 'thumbs-up';
     }
 
     protected function _getTitleDo($bVoted)

@@ -171,6 +171,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     	'gray-dark' => array(87, 87, 87)
     );
 
+    protected static $_aImages;
+    protected static $_sImagesCacheKey;
+    protected static $_iImagesCacheTTL;
+
     /**
      * Main fields
      */
@@ -615,7 +619,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         //--- Load page elements related static variables ---//
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,
-        	'type' => BX_PAGE_TYPE_DEFAULT,
+            'type' => BX_PAGE_TYPE_DEFAULT,
             'url' => '',
             'header' => '',
             'header_text' => '',
@@ -657,6 +661,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $this->aPage['injections'] = $aInjections;
 
+        //--- Load images/icons cache ---//
+        $this->initImages();
+
         bx_import('BxTemplConfig'); // TODO: for some reason autoloader isn't working here....
         $this->_oTemplateConfig = BxTemplConfig::getInstance();
 
@@ -664,6 +671,30 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
 
         $this->addJsOption('sys_fixed_header');
+    }
+    
+    protected function initImages()
+    {
+        if(self::$_iImagesCacheTTL)
+            return;
+
+        self::$_iImagesCacheTTL = 86400;
+        self::$_sImagesCacheKey = $this->_sCacheFilePrefix . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
+        self::$_aImages = BxDolDb::getInstance()->getDbCacheObject()->getData(self::$_sImagesCacheKey);
+        if(!self::$_aImages)
+            self::$_aImages = [];
+
+        bx_alert('system', 'get_layout_images', 0, false, array(
+            'override_result' => &self::$_aImages
+        ));
+    }
+
+    protected function saveImages()
+    {
+        if(!self::$_iImagesCacheTTL)
+            $this->initImages();
+
+        BxDolDb::getInstance()->getDbCacheObject()->setData(self::$_sImagesCacheKey, self::$_aImages, self::$_iImagesCacheTTL);
     }
 
     protected function getInjectionsData ()
@@ -1358,6 +1389,76 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_getAbsoluteLocation('path', $this->_sFolderIcons, $sName, $sCheckIn);
     }
+
+    /**
+     * Get image/icon by name automatically. Cache item description:
+     * [
+     *      'v' => value (name, url or source),
+     *      'c' => classes list divided with comma (,)
+     *      't' => parse type (ic - icon, im - image, sc - source)
+     * ]
+     * Cached images can be overwritten by listening 'system' - 'get_layout_images' alert.
+     * 
+     * @param string $sName unique name. The following format can be used: name|classes. 
+     * Where name and classes can consists of multiple parts (divided with comma (,) in HTML variant). For example, 
+     *     in PHP: $this->getImageAuto('far star|class1 class2');
+     *     in HTML: <bx_image_auto:far,star|class1,class2 />
+     * @param boolean $bWrapped wrap in HTML tag or not.
+     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @return string icon/image value (name, url or source) or final HTML code.
+     */
+    function getImageAuto($sName, $bWrapped = true, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
+        $sDivParts = '|';
+        $sDivItems = ',';
+
+        $sKey = md5($sName);
+
+        $sClasses = '';
+        if(strpos($sName, $sDivParts) !== false)
+            list($sName, $sClasses) = explode($sDivParts, $sName);
+
+        if(strpos($sName, $sDivItems) !== false)
+            $sName = implode(' ', explode($sDivItems, $sName));
+
+        if(!isset(self::$_aImages[$sKey])) {
+            $aResult = [
+                'v' => $sName,
+                'c' => $sClasses,
+                't' => 'ic'
+            ];
+
+            $sUrl = '';
+            foreach(['Image', 'Icon'] as $sType) 
+                foreach(['png', 'jpg', 'gif'] as $sExt)
+                    if(($sUrl = $this->{'get' . $sType . 'Url'}($sName . '.' . $sExt, $sCheckIn)) != '') {
+                        $aResult = [
+                            'v' => $sUrl,
+                            'c' => $sClasses,
+                            't' => 'im'
+                        ];
+                        break 2;
+                    }
+
+            self::$_aImages[$sKey] = $aResult;
+
+            $this->saveImages();
+        }
+
+        if(!self::$_aImages[$sKey]['v'])
+            return '';
+
+        if(!$bWrapped || self::$_aImages[$sKey]['t'] == 'sc')
+            return self::$_aImages[$sKey]['v'];       
+
+        $aAttrs = [];
+        if(self::$_aImages[$sKey]['c'] != '')
+            $aAttrs['class'] = implode(' ', explode($sDivItems, self::$_aImages[$sKey]['c']));
+
+        $aType2Method = ['ic' => 'parseIcon', 'im' => 'parseImage'];
+        return $this->{$aType2Method[self::$_aImages[$sKey]['t']]}(self::$_aImages[$sKey]['v'], $aAttrs);
+    }
+
     /**
      * Get full URL for the image.
      *
@@ -2927,6 +3028,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     	$oTemplate = &$this;
 
     	$aCallbackPatterns = array_merge($aCallbackPatterns, array(
+            "'<bx_image_auto:([^\s]+) \/>'s" => "get_image_auto",
             "'<bx_image_url:([^\s]+) \/>'s" => "get_image_url",
             "'<bx_icon_url:([^\s]+) \/>'s" => "get_icon_url",
             "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s" => "get_text",
@@ -2940,6 +3042,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sResult = '';
 
             switch($sAction) {
+                case 'get_image_auto':
+                    $sResult = $oTemplate->getImageAuto($aMatches[1]);
+                    break;
                 case 'get_image_url':
                     $sResult = $oTemplate->getImageUrl($aMatches[1]);
                     break;
