@@ -25,14 +25,20 @@ class BxEventsMenuSnippetMeta extends BxBaseModGroupsMenuSnippetMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_DATE_START']], BX_FORMAT_DATE_TIME, true));
+        if ($this->_aContentInfo[$CNF['FIELD_DATE_START']])
+            return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_DATE_START']], BX_FORMAT_DATE_TIME, true));
+        else
+            return false;
     }
 
     protected function _getMenuItemDateEnd($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_DATE_END']], BX_FORMAT_DATE_TIME, true));
+        if ($this->_aContentInfo[$CNF['FIELD_DATE_END']])
+            return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_DATE_END']], BX_FORMAT_DATE_TIME, true));
+        else
+            return false;
     }
 }
 
