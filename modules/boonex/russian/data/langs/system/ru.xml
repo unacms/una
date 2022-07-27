@@ -1521,6 +1521,7 @@
     <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Разрешить использование знака плюс ("+") в адресе электронной почты]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning"><![CDATA[Удалять учетные записи]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Период удаления учетных записей (в днях)]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_password_log_count"><![CDATA[Количество хранимых использованных паролей]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Заблокировать сайт от неавторизованных пользователей]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Cписок URI страниц (разделенный запятыми), которые доступны для неавторизованных пользователей]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[Не удалять]]></string>
@@ -2358,6 +2359,7 @@
 	<string name="_sys_form_account_input_password_confirm"><![CDATA[Подтвердить пароль]]></string>
 	<string name="_sys_form_account_input_password_confirm_error"><![CDATA[Не удалось подтвердить пароль]]></string>
 	<string name="_sys_form_account_input_password_current"><![CDATA[Текущий пароль]]></string>
+    <string name="_sys_form_account_input_password_error_old_used"><![CDATA[Этот пароль уже был использован ранее, используйте другой]]></string>
 	<string name="_sys_form_account_input_password_current_error"><![CDATA[Неправильный текущий пароль. Введите пароль, который Вы используете для доступа к этому сайту.]]></string>
 	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 8 символов, содержать 1 заглавную латинскую букву, 1 строчную букву и 1 число.]]></string>
 	<string name="_sys_form_account_input_phone_error"><![CDATA[Это обязательное поле.]]></string>

@@ -434,6 +434,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         'header' => $sMailHeader,
         'params' => $sMailParameters,
         'recipient' => $aRecipientInfo,
+        'email_type' => $iEmailType,
         'html' => 'html' == $sEmailFlag ? true : false,
         'custom_headers' => $aCustomHeaders,
         'override_result' => &$bResult,

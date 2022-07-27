@@ -191,7 +191,9 @@ class BxBaseEditorQuill extends BxDolEditor
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.mention.js',  
             $sJsPrefix . 'quill/' . $sJsSuffix . 'quill.imageUploader.min.js', 
             $sJsPrefix . 'quill/' . $sJsSuffix . 'image-resize.min.js', 
+            $sJsPrefix . 'quill/' . $sJsSuffix . 'quill-emoji.js', 
             $sJsPrefixRoot  . $sJsSuffix . 'editor.quill.js',
+            
         );
 
         $sCss = 'editor.less';
@@ -203,6 +205,7 @@ class BxBaseEditorQuill extends BxDolEditor
         $aCss = array_merge($aCss, array(
             BX_DIRECTORY_PATH_BASE . 'css/|editor_snow.quill.css',  
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill.mention.css', 
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/|quill-emoji.css', 
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'highlight/|default.min.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'quill/quill.imageUploader.min.css',
             BX_DIRECTORY_PATH_BASE . 'css/|editor.quill.css',

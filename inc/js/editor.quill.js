@@ -204,6 +204,7 @@ function bx_editor_init(oEditor, oParams){
             syntax: true, 
             imageResize: {},
             toolbar: oParams.toolbar,
+            "emoji-toolbar": true,
             mention: {
                 allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
                 mentionDenotationChars: ["@", "#"],
@@ -392,7 +393,6 @@ function bx_editor_on_space_enter_in(sCode, sEditorId) {
             }
         }
     }
-    console.log(glOnSpaceEnterInEditor);
 }
 
 function bx_editor_remove_img (aEditorIds, aMarkers) 
