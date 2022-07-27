@@ -1117,6 +1117,13 @@
     }
 
     /* Modules: Forum. Units - new view, for UNA14 need to migrate in general */
+    .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
+    {
+        grid-auto-rows: 0; 
+        grid-template-rows: repeat(1, 1fr);
+        overflow-y: hidden;
+    }
+    
     .bx-artificer .bx-base-text-unit-gallery-wrapper.bx-forum-wrapper,
     .bx-artificer .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled)
     {
