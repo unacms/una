@@ -1,46 +1,9 @@
 /*-- Counter --*/
-.sys-action-counter-profiles {
-    display: flex;
-}
-.sys-action-counter-profile {
-    display: block;
-    margin-left: -0.25rem;
-}
-.sys-action-counter-profile:first-child {
-    margin-left: 0;
-}
 .sys-action-counter-profile .bx-def-icon-size {
-    width: 1rem;
-    height: 1rem;
-}
-.sys-action-counter-profiles .sys-action-counter-profile div.bx-def-unit-img, 
-.sys-action-counter-profiles .sys-action-counter-profile div.bx-def-unit-img img {
-    display: block;
-}
-.sys-action-counter-profile div.bx-def-unit-img .bx-base-pofile-unit-thumb {
-    border-radius: 1rem;
-    line-height: normal;
-    font-size: 0.6rem;
-}
-.sys-action-counter-profile .bx-base-pofile-unit-online {
-    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
-/*--- Connected By ---*/
-div.bx-conn-by-list {}
-div.bx-conn-by-list-cnt {}
-div.bx-conn-by-items {
-    max-height: 200px;
-    max-height: 12.5rem;
-    min-width: 220px;
-    min-width: 13.75rem;
-    overflow: auto;
-}
-div.bx-conn-user {
-    position: relative;
-}
-div.bx-conn-user-avatar {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+.sys-action-counter-profile .bx-base-pofile-unit-online {
+    display: none;
 }

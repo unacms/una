@@ -111,12 +111,6 @@
     -o-background-size:cover;
     background-size:cover;
 }
-.bx-base-pofile-unit-cover:not(.bx-def-align-center) {
-    display:block;
-
-    line-height:10.0rem;
-    text-align:center;
-}
 
 .bx-base-pofile-unit-with-cover .sys-author ul.bx-menu-custom.bx-menu-custom-hor,
 .bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
@@ -174,10 +168,6 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
 }
 .bx-base-pofile-unit-with-cover .bx-base-pofile-unit-cnt {
     height: 100%;
-}
-.bx-base-pofile-unit-with-cover div.bx-def-unit-img {
-    display: inline-block;
-    vertical-align: middle;
 }
 .bx-base-pofile-unit-with-cover .bx-base-pofile-unit-online {
     right: 9px;
