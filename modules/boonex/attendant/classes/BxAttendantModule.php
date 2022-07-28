@@ -67,8 +67,7 @@ class BxAttendantModule extends BxDolModule
                                     ],
                                 ]
                             ]);
-                            echo $aPageParams['id'];
-                            print_r($aTmp);
+                            
                             if (isset($aTmp['content'])){
                                 $sTmp = $aTmp['content'];
                                 $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
