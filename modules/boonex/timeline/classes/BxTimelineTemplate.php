@@ -1172,6 +1172,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'user_unit' => $oModule->getObjectUser($iUserId)->getUnit()
             );
 
+        bx_alert($this->_oConfig->getName(), 'get_reposted_by', 0, 0, array(
+            'content_id' => $iId,
+            'user_ids' => $aUserIds,
+            'users' => &$aTmplUsers
+        ));
+        
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
 
