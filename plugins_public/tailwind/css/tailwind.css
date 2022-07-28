@@ -1014,15 +1014,15 @@
 
 
     /* Common elements: All Actions */
-    .bx-artificer .sys-action-counter.sys-ac-link,
-    .bx-artificer .sys-action-counter .sys-ac-link {
+    .sys-action-counter.sys-ac-link,
+    .sys-action-counter .sys-ac-link {
         @apply flex items-center;
         @apply border-none;
         @apply text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300;
         @apply rounded-full;
     }
-    .bx-artificer .sys-action-counter.sys-ac-only.sys-ac-link,
-    .bx-artificer .sys-action-counter.sys-ac-only .sys-ac-link {
+    .sys-action-counter.sys-ac-only.sys-ac-link,
+    .sys-action-counter.sys-ac-only .sys-ac-link {
         @apply hover:bg-gray-100 dark:hover:bg-gray-600;
     }
 

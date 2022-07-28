@@ -91,6 +91,7 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > a,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > div,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > span {
+    display: block;
     margin-top: 1.0rem;
 }
 
