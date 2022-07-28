@@ -19,13 +19,12 @@ class BxAttendantModule extends BxDolModule
         parent::__construct($aModule);
     }
 
-    public function actionRecomendedPopup($sModule, $sEvent, $iObjectId)
+    public function actionRecomendedPopup($sModule, $sEvent, $iObjectId, $bManual)
     {
         $sRv = '';
         $aModules = explode(',', getParam('bx_attendant_on_profile_creation_modules'));
         $aModuleData = array();
         foreach($aModules as $sModuleName){
-
             if(BxDolRequest::serviceExists($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD)){
                 $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, ['unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false]);
 
@@ -36,7 +35,52 @@ class BxAttendantModule extends BxDolModule
                 }
             }
         }
-        $sRv = $this->_oTemplate->popup($aModuleData);
+        $bRedirect = true; // todo setting
+        
+        $oSession = BxDolSession::getInstance();
+        $sFirstPage = $oSession->getValue('sys_entrance_url');
+        $sFirstPage = 'page.php?i=view-group-profile&id=72';
+       
+        if ($sFirstPage){
+            if ($bRedirect){
+                echo json_encode(['redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sFirstPage)]);  
+                exit();
+            }
+            else{
+                list($sPageLink, $aPageParams) = bx_get_base_url($sFirstPage);
+                if (isset($aPageParams['i']) && isset($aPageParams['id'])){
+                    $oPage = BxDolPage::getObjectInstanceByURI($aPageParams['i']);
+
+                    if ($oPage){
+                        $sModuleName = $oPage->getModule();
+                        if(bx_srv('system', 'is_module_context', [$sModuleName])){
+
+                            $oModule = BxDolModule::getInstance($sModuleName);
+                            $aTmp = $oModule->serviceBrowse([
+                                'mode' => 'recent',
+                                'params' => [
+                                    'filter' => [
+                                        'field' => 'id',
+                                        'value' => [$aPageParams['id']],
+                                        'operator' => 'in',
+                                        'table' => 'tableSearch'
+                                    ],
+                                ]
+                            ]);
+                            echo $aPageParams['id'];
+                            print_r($aTmp);
+                            if (isset($aTmp['content'])){
+                                $sTmp = $aTmp['content'];
+                                $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
+                                $aModuleData[$sModuleName. '_initial_link'] = $sTmp;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        $sRv = $this->_oTemplate->popup($aModuleData, $bManual);
         
         bx_alert('bx_attendant', 'show_popup', bx_get_logged_profile_id(), 0, ['module' => $sModule, 'event' => $sEvent, 'object_id' => $iObjectId, 'result' => &$sRv]);
         
