@@ -126,7 +126,7 @@ function bx_ex_editor_init(oEditor, oParams)
                     return "@" + item.original.value;
                 },
                 values: function (text, cb) {
-                    $.getJSON( "/searchExtended.php?action=get_mention&symbol=%40&", {term: text}, function(data) {
+                    $.getJSON(oParams.root_url + "/searchExtended.php?action=get_mention&symbol=%40&", {term: text}, function(data) {
                         cb(data);
                     });
                 },
@@ -142,7 +142,7 @@ function bx_ex_editor_init(oEditor, oParams)
                     return "#" + item.original.value;
                 },
                 values: function (text, cb) {
-                    $.getJSON( "/searchExtended.php?action=get_mention&symbol=%23&", {term: text}, function(data) {
+                    $.getJSON(oParams.root_url + "/searchExtended.php?action=get_mention&symbol=%23&", {term: text}, function(data) {
                         cb(data);
                     });
                 },
