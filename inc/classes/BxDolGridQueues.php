@@ -79,7 +79,6 @@ class BxDolGridQueues extends BxTemplGrid
 
         $sId = array_shift($aIds);
         if (empty($this->_aSources[$sId]) || empty($this->_aSources[$sId]['action'])) {
-print_r($this->_aSources);
             $sRes = echoJson(array('msg' => _t('_error occured')));
             exit;
         } 
