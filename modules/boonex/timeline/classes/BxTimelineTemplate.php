@@ -1018,7 +1018,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
         $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
 
-        $bShowDoRepostImage = isset($aParams['show_do_repost_image']) && $aParams['show_do_repost_image'] == true && !empty($aParams['image_do_repost']);
         $bShowDoRepostIcon = isset($aParams['show_do_repost_icon']) && $aParams['show_do_repost_icon'] == true && !empty($aParams['icon_do_repost']);
         $bShowDoRepostText = isset($aParams['show_do_repost_text']) && $aParams['show_do_repost_text'] == true && !empty($aParams['text_do_repost']);
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
@@ -1070,18 +1069,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sDoRepost = $this->$sMethodDoRepostLabel($sTemplateDoRepostLabel, array(
             'style_prefix' => $sStylePrefix,
-            'bx_if:show_image' => array(
-                'condition' => $bShowDoRepostImage,
-                'content' => array(
-                    'style_prefix' => $sStylePrefix,
-                    'src' => $this->getIconUrl($aParams['image_do_' . $sDo])
-                )
-            ),
             'bx_if:show_icon' => array(
                 'condition' => $bShowDoRepostIcon,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'name' => $aParams['icon_do_' . $sDo]
+                    'icon' => $this->getImageAuto($aParams['icon_do_' . $sDo])
                 )
             ),
             'bx_if:show_text' => array(
@@ -3122,7 +3114,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getCounterIcon($aParams = array())
     {
-        return $this->parseHtmlByName('repost_counter_icon.html', ['emoji' => '']);
+        return $this->parseHtmlByName('repost_counter_icon.html', []);
     }
 
     protected function _getCounterLabel($iCount, $aParams = array())

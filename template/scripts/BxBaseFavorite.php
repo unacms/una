@@ -205,7 +205,7 @@ class BxBaseFavorite extends BxDolFavorite
                 'condition' => isset($aParams['show_do_favorite_icon']) && $aParams['show_do_favorite_icon'] == true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDoFavorite($bFavorited)
+                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDoFavorite($bFavorited))
                 )
             ),
             'bx_if:show_text' => array(

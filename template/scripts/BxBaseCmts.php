@@ -53,7 +53,6 @@ class BxBaseCmts extends BxDolCmts
         $this->_aElementDefaults = array(
             'show_do_comment_as_button' => false,
             'show_do_comment_as_button_small' => false,
-            'show_do_comment_image' => false,
             'show_do_comment_icon' => true,
             'show_do_comment_label' => false,
             'show_counter' => true,
@@ -790,7 +789,7 @@ class BxBaseCmts extends BxDolCmts
                 'condition' => ($bShowEmpty || !empty($aTmplVarsProfiles)) && (!isset($aParams['show_icon']) || $aParams['show_icon']),
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'icon' => !empty($aParams['custom_icon']) ? $aParams['custom_icon'] : BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getFontIconAsHtml('comment', $this->_sStylePrefix . '-counter-icon sys-icon')
+                    'icon' => !empty($aParams['custom_icon']) ? $aParams['custom_icon'] : $this->_oTemplate->getImageAuto('comment|' . $this->_sStylePrefix . '-counter-icon')
                 )
             )
         ));
@@ -800,18 +799,11 @@ class BxBaseCmts extends BxDolCmts
     {
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplLabelDo(), array(
             'style_prefix' => $this->_sStylePrefix,
-            'bx_if:show_image' => array(
-                'condition' => isset($aParams['show_do_comment_image']) && $aParams['show_do_comment_image'] == true,
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'src' => $this->_getImageDo()
-                )
-            ),
             'bx_if:show_icon' => array(
                 'condition' => isset($aParams['show_do_comment_icon']) && $aParams['show_do_comment_icon'] == true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_getIconDo()
+                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo())
                 )
             ),
             'bx_if:show_text' => array(

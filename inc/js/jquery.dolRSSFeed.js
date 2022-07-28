@@ -25,6 +25,8 @@
 
 			bx_loading_content($(this), true, true);
 
+            if ('undefined' === typeof(jQuery.browser))
+                jQuery.browser = {"msie": false};
             $.getFeed( {
 				url: sFeedURL,
 				error: function(oResponse) {
