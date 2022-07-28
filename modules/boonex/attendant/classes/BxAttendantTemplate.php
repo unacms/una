@@ -37,7 +37,7 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
         return $this->getJsCode('main') . BxBaseFunctions::getInstance()->transBox($this->sContainerId, '', true, true);
     }
     
-    public function popup($aModuleData)
+    public function popup($aModuleData, $bManual)
     {
         $aVars = [];
         
@@ -49,21 +49,26 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
            ];
         }
         
-        return $this->parseHtmlByName('popup_recommended.html', [
-                'bx_if:data' => [
-                    'condition' => count($aVars) > 0,
-                    'content' => [
-                        'bx_repeat:items' => $aVars, 
-                        'button_text' => _t('_bx_attendant_popup_with_recommended_button_text')
-                    ]
-                ],
-                'bx_if:nodata' => [
-                    'condition' => count($aVars) == 0,
-                    'content' => [
+        if ($bManual || count($aVars) >0){
+            return $this->parseHtmlByName('popup_recommended.html', [
+                    'bx_if:data' => [
+                        'condition' => count($aVars) > 0,
+                        'content' => [
+                            'bx_repeat:items' => $aVars, 
+                            'button_text' => _t('_bx_attendant_popup_with_recommended_button_text')
+                        ]
+                    ],
+                    'bx_if:nodata' => [
+                        'condition' => count($aVars) == 0,
+                        'content' => [
+                        ]
                     ]
                 ]
-            ]
-        );
+            );
+        }
+        else{
+            return '';
+        }
     }
     
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
@@ -103,7 +108,8 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
         $sValue = _t($sFullKey);
         if ($sValue == $sFullKey){
             $oModule = BxDolModule::getInstance($sModuleName);
-            $sValue =_t($sKey . 'default', $oModule->_aModule['title']);
+            if ($oModule)
+                $sValue =_t($sKey . 'default', $oModule->_aModule['title']);
         }
         return $sValue;
     }

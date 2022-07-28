@@ -15,29 +15,39 @@ function BxAttendant(oOptions) {
     var $this = this;
 }
 
-BxAttendant.prototype.showPopup = function (sModule = 'default', sEvent = 'default', sObject = 0) {
+BxAttendant.prototype.showPopup = function (bManual = 0, sModule = 'default', sEvent = 'default', sObject = 0) {
     var $this = this;
     
-    $(window).dolPopupAjax({
-        url: $this._sActionsUri + 'RecomendedPopup/' + sModule + '/' + sEvent + '/' + sObject + '/',
-        closeOnOuterClick: true,
-		removeOnClose: true,
-        onLoad: function(sPopupSelector){
-            $(sPopupSelector + ' .bx-pwropa-item-container').hide().first().show();
-            $this.reInitFlickity(sPopupSelector);
-            $(sPopupSelector + ' .bx-pwropa-button').click(function () {
-                $oCurr = $(sPopupSelector + ' .bx-pwropa-item-container:visible').hide();
-                $oNext = $oCurr.next(); 
-                $oNext.show();
-                $this.reInitFlickity(sPopupSelector);
-                if ($oNext.length == 0) {
-                    $(sPopupSelector).dolPopupHide();
-                    if ($this._sUrlAfterShow != '') {
-                        location.href = $this._sUrlAfterShow;
+    $.get($this._sActionsUri + 'RecomendedPopup/' + sModule + '/' + sEvent + '/' + sObject + '/' + bManual + '/', function (sData) {
+        if (sData != ''){
+            oData = $.parseJSON(sData);
+            if (oData.redirect){
+                window.location = oData.redirect;
+            }
+            else{
+                $(window).dolPopupAjax({
+                    url: $this._sActionsUri + 'RecomendedPopup/' + sModule + '/' + sEvent + '/' + sObject + '/' + bManual + '/',
+                    closeOnOuterClick: true,
+                    removeOnClose: true,
+                    onLoad: function(sPopupSelector){
+                        $(sPopupSelector + ' .bx-pwropa-item-container').hide().first().show();
+                            $this.reInitFlickity(sPopupSelector);
+                            $(sPopupSelector + ' .bx-pwropa-button').click(function () {
+                                $oCurr = $(sPopupSelector + ' .bx-pwropa-item-container:visible').hide();
+                                $oNext = $oCurr.next(); 
+                                $oNext.show();
+                                $this.reInitFlickity(sPopupSelector);
+                                if ($oNext.length == 0) {
+                                    $(sPopupSelector).dolPopupHide();
+                                    if ($this._sUrlAfterShow != '') {
+                                        location.href = $this._sUrlAfterShow;
+                                    }
+                                }
+                            });
+
                     }
-                }
-            });
-            
+                });
+            }
         }
     });
 }
