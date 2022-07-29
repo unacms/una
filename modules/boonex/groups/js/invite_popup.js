@@ -36,7 +36,7 @@ BxGroupsInvitePopup.prototype.init = function () {
 
 BxGroupsInvitePopup.prototype.onClickAccept = function () {
 	var $this = this;
-	$.getJSON($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/1/', function () {
+	$.post($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/1/', function () {
 	    location.href = $this._sAcceptUrl
 	});
 
@@ -44,7 +44,7 @@ BxGroupsInvitePopup.prototype.onClickAccept = function () {
 
 BxGroupsInvitePopup.prototype.onClickDecline = function () {
     var $this = this;
-    $.getJSON($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/0/', function () {
+    $.post($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/0/', function () {
         location.href = $this._sDeclineUrl
     });
 };
