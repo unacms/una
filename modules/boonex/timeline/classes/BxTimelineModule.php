@@ -582,6 +582,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sUrl = bx_process_input(bx_get('url'));
         if(empty($sUrl))
             return echoJson(array());
+        
+        $sUrl = htmlspecialchars_decode($sUrl);
 
         $sHeader = 'Content-Type';
         $aHeaders = get_headers($sUrl, 1);
