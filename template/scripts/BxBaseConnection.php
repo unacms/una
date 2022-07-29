@@ -74,12 +74,11 @@ class BxBaseConnection extends BxDolConnection
         
         $aParamsDefault = [
             'dynamic_mode' => true,
-            'show_do_as_button_small' => true,
-            'show_do_as_button' => true,
+            'show_do_as_button_small' => false,
+            'show_do_as_button' => false,
             'show_counter_label_with_profiles' => true,
             'show_script' => true,
         ];
-        
         $aParams = array_merge($aParams, $aParamsDefault);
 
         $iCount = $sContentType == BX_CONNECTIONS_CONTENT_TYPE_INITIATORS ? $this->getConnectedInitiatorsCount($iProfileId, $bIsMutual) : $this->getConnectedContentCount($iProfileId, $bIsMutual);
@@ -88,8 +87,8 @@ class BxBaseConnection extends BxDolConnection
             $sJsObject = $this->getJsObjectName($iProfileId);
 
             $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
-            $bShowDoAsButtonSmall = isset($aParams['show_do_as_button_small']) && $aParams['show_do_as_button_small'] == false;
-            $bShowDoAsButton = !$bShowDoAsButtonSmall && isset($aParams['show_do_as_button']) && $aParams['show_do_as_button'] == true;
+            $bShowDoAsButtonSmall = isset($aParams['show_do_as_button_small']) && $aParams['show_do_as_button_small'] === true;
+            $bShowDoAsButton = !$bShowDoAsButtonSmall && isset($aParams['show_do_as_button']) && $aParams['show_do_as_button'] === true;
             $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
 
             $sClass = $this->_sStylePrefix . '-counter';

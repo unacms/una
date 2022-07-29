@@ -732,11 +732,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aArgs = func_get_args();
+        $iLength = $this->_oConfig->getRssLength();
+        if(!$iLength)
+            return;
 
-        $sType = array_shift($aArgs);
         $iOwnerId = 0;
 
+        $aArgs = func_get_args();
+        $sType = array_shift($aArgs);
         switch($sType) {
             case BX_BASE_MOD_NTFS_TYPE_OWNER:
                 $iOwnerId = array_shift($aArgs);
@@ -757,7 +760,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => $sType,
             'owner_id' => $iOwnerId,
             'start' => 0, 
-            'per_page' => $this->_oConfig->getRssLength(), 
+            'per_page' => $iLength, 
             'timeline' => 0, 
             'filter' => '', 
             'modules' => array()
