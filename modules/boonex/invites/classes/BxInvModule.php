@@ -445,8 +445,8 @@ class BxInvModule extends BxDolModule
         
         $sEmails = bx_process_input($oForm->getCleanValue('emails'));
         $sText = bx_process_pass($oForm->getCleanValue('text'));
+
         $mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $mixedInvites, $oForm);
-        $this->onInvite($iProfileId);
         if($mixedResult !== false)
             $sResult = _t('_bx_invites_msg_invitation_sent', count($mixedResult));
         else
