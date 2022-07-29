@@ -966,8 +966,11 @@
     }
 
     /* Toolbar menu */
+    .bx-artificer .bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-toolbar-item-unit {
+        @apply border-4 border-transparent;
+    }
     .bx-artificer .bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-toolbar-item-unit .bx-def-icon-size {
-        @apply h-8 w-8 md:h-10 md:w-10;
+        @apply h-6 w-6 md:h-8 md:w-8;
     }
 
     /* Page Submenu */
