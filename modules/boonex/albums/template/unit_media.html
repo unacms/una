@@ -1,24 +1,24 @@
-<div class="__class__ bx-albums-media-wrapper bx-def-padding-sec bx-def-box-sizing">
-    <div class="bx-albums-media-cnt bx-def-box bx-def-image-bg-block bx-def-color-bg-block bx-def-border-block bx-shadow-block bx-def-padding">
-	    <div class="bx-albums-media-thumb bx-albums-unit-size bx-def-centered">
-	        <bx_if:image>
-	            <a href="__url__" title="__title_attr__">
-	                <img class="bx-albums-unit-size" src="__url_img__" alt="__title_attr__" />
-	            </a>
-	        </bx_if:image>
-	        <bx_if:video>
-	            <a href="__url__" title="__title_attr__">
-	                <img class="bx-albums-unit-size" src="__url_img__" alt="__title_attr__" />
-                        <div class="bx-albums-media-play bx-def-round-corners"><i class="sys-icon play"></i></div>
-	            </a>
-                    <bx_if:show_duration>
-                        <div class="bx-albums-media-duration bx-def-padding-sec-leftright bx-def-padding-thd-topbottom bx-def-border bx-def-round-corners bx-def-font">__duration__</div>
-                    </bx_if:show_duration>
-	        </bx_if:video>
-	    </div>
-	    <div class="bx-albums-media-caption bx-def-margin-sec-topbottom">
-                <a href="__url__" title="__title_attr__">__title__</a>
-            </div>
-	    <div class="bx-albums-media-actions bx-def-margin-sec-leftright-neg">__actions__</div>
+<div class="__class__ bx-albums-media-wrapper sm:w-full md:w-1/2 lg:w-1/3 p-2 box-border">
+    <div class="bx-albums-media-cnt bx-def-box bx-def-box-round-corners bx-def-color-bg-box">
+        <div class="bx-albums-media-thumb bx-albums-unit-size h-48 rounded-tl-md rounded-tr-md overflow-hidden">
+            <bx_if:image>
+                <a href="__url__" title="__title_attr__">
+                    <img class="bx-albums-unit-size h-48" src="__url_img__" alt="__title_attr__" />
+                </a>
+            </bx_if:image>
+            <bx_if:video>
+                <a href="__url__" title="__title_attr__">
+                    <img class="bx-albums-unit-size h-48" src="__url_img__" alt="__title_attr__" />
+                    <div class="bx-albums-media-play rounded-md"><i class="sys-icon play"></i></div>
+                </a>
+                <bx_if:show_duration>
+                    <div class="bx-albums-media-duration px-2 py-1 border text-sm rounded-md">__duration__</div>
+                </bx_if:show_duration>
+            </bx_if:video>
+        </div>
+        <div class="bx-albums-media-caption m-2">
+            <a href="__url__" title="__title_attr__">__title__</a>
+        </div>
+        <div class="bx-albums-media-actions mx-2 mb-2">__actions__</div>
     </div>
 </div>
