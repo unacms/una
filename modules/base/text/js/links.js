@@ -211,12 +211,6 @@ BxBaseModTextLinks.prototype.deleteAttachLink = function(oLink, iId)
         function(oData) {
             var fContinue = function() {
                 if(oData && oData.code != undefined && oData.code == 0) {
-                    for(var sUrl in $this._oAttachedLinks)
-                        if(parseInt($this._oAttachedLinks[sUrl]) == parseInt(iId)) {
-                            delete $this._oAttachedLinks[sUrl];
-                            break;
-                        }
-
                     oAttachLink.bx_anim('hide', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
                         $(this).remove;
                     });
