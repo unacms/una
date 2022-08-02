@@ -727,13 +727,11 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             ]
         ];
 
-        if(!empty($CNF['OBJECT_REACTIONS'])) {
-            $oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aData[$CNF['FIELD_ID']]);
-            if($oReactions)
-                $aVars['content_description_after'] .= $oReactions->getCounter(array(
-                    'show_counter' => true
-                ));
-        }
+        if(!empty($CNF['OBJECT_REACTIONS']) && ($oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aData[$CNF['FIELD_ID']])) !== false)
+            $aVars['content_description_after'] .= $oReactions->getCounter([
+                'show_counter' => true,
+                'show_counter_empty' => false
+            ]);
 
         return $aVars;
     }
