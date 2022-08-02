@@ -1907,6 +1907,9 @@ CREATE TABLE `sys_alerts_cache_triggers` (
   PRIMARY KEY (`id`)
 );
 
+INSERT INTO `sys_alerts_cache_triggers` (`unit`, `action`, `cache_key`) VALUES
+('sys_profiles_subscriptions', 'connection_added', 'menu_sys_profile_stats_profile-stats-subscribed-me_{content}_{_hash}.php');
+
 
 INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES
 ('sys_studio_settings_save_design', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:28:"alert_response_settings_save";s:6:"params";a:0:{}s:5:"class";s:25:"TemplStudioDesignServices";}');

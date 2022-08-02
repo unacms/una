@@ -185,7 +185,6 @@ class BxDolAlerts extends BxDol
         $aResult['cache_triggers'] = [];
         foreach ($aCacheTriggers as $r)
             $aResult['cache_triggers'][$r['unit']][$r['action']][] = [
-                'markers' => $r['markers'] ? json_decode($r['markers'], true) : [],
                 'cache_key' => $r['cache_key'],
             ];
 

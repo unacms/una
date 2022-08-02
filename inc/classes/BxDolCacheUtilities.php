@@ -75,6 +75,7 @@ class BxDolCacheUtilities extends BxDol
         switch ($sCache) {
             case 'db':
                 $oCacheDb = BxDolDb::getInstance()->getDbCacheObject();
+                $this->{$sAction . 'Object'}($oCacheDb, 'menu_');
                 $mixedResult = $this->{$sAction . 'Object'}($oCacheDb, 'db_');
                 break;
 
