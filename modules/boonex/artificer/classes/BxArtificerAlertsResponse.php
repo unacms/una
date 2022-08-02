@@ -12,7 +12,7 @@
 
 class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
 {
-    function __construct()
+    public function __construct()
     {
         $this->_sModule = 'bx_artificer';
 
@@ -54,6 +54,65 @@ class BxArtificerAlertsResponse extends BxBaseModTemplateAlertsResponse
 
                 $oAlert->aExtras['object']->setShowAsButton(false);
                 break;
+        }
+    }
+
+    protected function _processSystemGetLayoutImages($oAlert)
+    {
+        $sImages = getParam($this->_oModule->_oConfig->getPrefix('option') . 'images_custom');
+        if(!$sImages)
+            return;
+        
+        $aImages = preg_split("/\\r\\n|\\r|\\n/", $sImages);
+        if(empty($aImages) || !is_array($aImages))
+            return;
+
+        foreach($aImages as $sImage) {
+            $aImage = explode('=>', $sImage);
+            if(empty($aImage))
+                continue;
+
+            switch(count($aImage)) {
+                case 2:
+                    list($sName, $sValue) = $aImage;
+
+                    $aCacheItemKeys = ['v'];
+                    $aCacheItemValues = [$sValue];
+                    break;
+
+                case 3:
+                    list($sName, $sValue, $sType) = $aImage;
+
+                    $aCacheItemKeys = ['v', 't'];
+                    $aCacheItemValues = [$sValue, $sType];
+                    break;
+
+                case 4:
+                    list($sName, $sValue, $sType, $sClass) = $aImage;
+
+                    $aCacheItemKeys = ['v', 't', 'c'];
+                    $aCacheItemValues = [$sValue, $sType, $sClass];
+                    break;
+
+                default:
+                    continue 2;
+            }
+
+            $sCacheItemKey = md5(trim($sName));
+            if(!isset($oAlert->aExtras['override_result'][$sCacheItemKey]))
+                continue;
+            
+            foreach($aCacheItemValues as $i => $s)
+                $aCacheItemValues[$i] = trim($s);
+
+            $aCacheItem = array_combine($aCacheItemKeys, $aCacheItemValues);
+
+            if(isset($aCacheItem['t']) && $aCacheItem['t'] == 'im')
+                foreach(['Image', 'Icon'] as $sUrlType) 
+                    if(($sUrl = $this->_oModule->_oTemplate->{'get' . $sUrlType . 'Url'}($aCacheItem['v'])) != '')
+                        $aCacheItem['v'] = $sUrl;
+
+            $oAlert->aExtras['override_result'][$sCacheItemKey] = array_merge($oAlert->aExtras['override_result'][$sCacheItemKey], $aCacheItem);
         }
     }
 

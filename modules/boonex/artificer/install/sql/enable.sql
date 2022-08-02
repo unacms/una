@@ -26,6 +26,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'change_logo', @iHandler),
 ('system', 'change_mark', @iHandler),
 ('system', 'get_object', @iHandler),
+('system', 'get_layout_images', @iHandler),
 ('profile', 'unit', @iHandler);
 
 

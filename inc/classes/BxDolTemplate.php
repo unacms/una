@@ -676,15 +676,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected function initImages()
     {
         self::$_iImagesCacheTTL = 86400;
-        self::$_sImagesCacheKey = $this->_sCacheFilePrefix . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
+        self::$_sImagesCacheKey = 'db_layout_images_' . $this->_sCode .  '_' . bx_site_hash('images') . '.php';
         self::$_aImages = BxDolDb::getInstance()->getDbCacheObject()->getData(self::$_sImagesCacheKey);
         if(!self::$_aImages)
             self::$_aImages = [];
 
-        bx_alert('system', 'get_layout_images', 0, false, array(
+        bx_alert('system', 'get_layout_images', 0, false, [
             'code' => $this->_sCode,
             'override_result' => &self::$_aImages
-        ));
+        ]);
     }
 
     protected function saveImages()
@@ -1422,18 +1422,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(!isset(self::$_aImages[$sKey])) {
             $aResult = [
                 'v' => $sName,
-                'c' => $sClasses,
-                't' => 'ic'
+                't' => 'ic',
+                'c' => $sClasses
             ];
 
             $sUrl = '';
             foreach(['Image', 'Icon'] as $sType) 
-                foreach(['png', 'jpg', 'gif'] as $sExt)
+                foreach(['svg', 'png', 'jpg', 'gif'] as $sExt)
                     if(($sUrl = $this->{'get' . $sType . 'Url'}($sName . '.' . $sExt, $sCheckIn)) != '') {
                         $aResult = [
                             'v' => $sUrl,
-                            'c' => $sClasses,
-                            't' => 'im'
+                            't' => 'im',
+                            'c' => $sClasses
                         ];
                         break 2;
                     }

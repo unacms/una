@@ -9,6 +9,8 @@
  * @{
  */
 
+require_once('BxArtificerStudioOptions.php');
+
 define('BX_ARTIFICER_STUDIO_TEMPL_TYPE_STYLES', 'styles');
 
 class BxArtificerStudioPage extends BxTemplStudioDesign
@@ -36,14 +38,14 @@ class BxArtificerStudioPage extends BxTemplStudioDesign
                 $sPrefix . '_styles_custom',
             ];
 
-    	$oOptions = new BxTemplStudioOptions($this->sModule, $mixedCategory, $sMix);
+    	$oOptions = new BxArtificerStudioOptions($this->sModule, $mixedCategory, $sMix);
 
         $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss(), [BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css']);
         $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs(), ['codemirror/codemirror.min.js']);
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', [
             'content' => $oOptions->getCode(),
             'js_content' => $this->getPageJsCode([
-                'sCodeMirror' => "textarea[name='" . $sPrefix . "_styles_custom']"
+                'sCodeMirror' => "textarea[name='" . $sPrefix . "_styles_custom'],textarea[name='" . $sPrefix . "_images_custom']"
             ])
         ]);
     }

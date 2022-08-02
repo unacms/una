@@ -22,7 +22,8 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_styles_custom'), '_bx_artificer_stg_cpt_option_styles_custom', '', 'text', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_styles_custom'), '_bx_artificer_stg_cpt_option_styles_custom', '', 'text', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_images_custom'), '_bx_artificer_stg_cpt_option_images_custom', '', 'text', '', '', '', 10);
 
 -- SETTINGS: Artificer template Site Logo
 SET @iSystemCategoryId = (SELECT IFNULL(`id`, @iCategoryId) FROM `sys_options_categories` WHERE `name`='system' LIMIT 1);
