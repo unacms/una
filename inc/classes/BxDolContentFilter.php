@@ -69,7 +69,12 @@ class BxDolContentFilter extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_iDefaultValue;
     }
-            
+
+    public function getValues()
+    {
+        return BxDolFormQuery::getDataItems($this->_sDataList);
+    }
+
     public function getInput($aInput, $iProfileId = 0)
     {
         return $this->_getInput('content', $aInput, $iProfileId);

@@ -37,9 +37,10 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
         if($this->_oModule->_oConfig->isAutoApprove())
             $this->_aFilter1Values[BX_BASE_MOD_GENERAL_STATUS_PENDING] = $CNF['T']['filter_item_pending'];
 
-        if(($this->_bContentFilter = !empty($CNF['FIELD_CF'])) !== false) {
+        $oCf = BxDolContentFilter::getInstance();
+        if(($this->_bContentFilter = ($oCf->isEnabled() && !empty($CNF['FIELD_CF']))) !== false) {
             $this->_sFilter2Name = 'filter2';
-            $this->_aFilter2Values = BxDolFormQuery::getDataItems('sys_content_filter');
+            $this->_aFilter2Values = $oCf->getValues();
 
             if(($sFilter2 = bx_get($this->_sFilter2Name)) !== false) {
                 $this->_sFilter2Value = bx_process_input($sFilter2);
@@ -126,18 +127,21 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(strpos($sFilter, $this->_sParamsDivider) !== false) {
-            $aFilters = explode($this->_sParamsDivider, $sFilter);
-            if($this->_bContentFilter)
-                list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = $aFilters;
-            else
-                list($this->_sFilter1Value, $sFilter) = $aFilters;
+        $aFilterParts = explode($this->_sParamsDivider, $sFilter);
+        switch (substr_count($sFilter, $this->_sParamsDivider)) {
+            case 1:
+                list($this->_sFilter1Value, $sFilter) = $aFilterParts;
+                break;
+
+            case 2:
+                list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = $aFilterParts;
+                break;
         }
 
     	if(!empty($this->_sFilter1Value))
             $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $this->_sStatusField . "`=?", $this->_sFilter1Value);
 
-        if(!empty($this->_sFilter2Value))
+        if($this->_bContentFilter && !empty($this->_sFilter2Value))
             $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $CNF['FIELD_CF'] . "`=?", $this->_sFilter2Value);
 
         return parent::_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);

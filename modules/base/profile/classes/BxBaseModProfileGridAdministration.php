@@ -156,7 +156,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         $sUrl = BX_DOL_URL_ROOT . 'page/audit-administration?profile=' . $oProfile->id();
 
     	$a['attr'] = array_merge($a['attr'], array(
-    		"onclick" => "window.open('" . $sUrl . "','_audit');"
+            "onclick" => "window.open('" . $sUrl . "','_audit');"
     	));
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -185,38 +185,39 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	$oProfile = $this->_getProfileObject($mixedId);
 
     	if($oProfile instanceof BxDolProfileUndefined)
-    		return false;
+            return false;
 
-		$iAction = BX_PROFILE_ACTION_MANUAL;
+        $iAction = BX_PROFILE_ACTION_MANUAL;
         $bSendEmailNotification = $this->_oModule->serviceActAsProfile();
     	return $isChecked ? $oProfile->activate($iAction, 0, $bSendEmailNotification) : $oProfile->suspend($iAction, 0, $bSendEmailNotification);
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
-    { 
-        $iFilterPartsCount = substr_count($sFilter, $this->_sParamsDivider);
-        switch ($iFilterPartsCount) {
+    {
+        $aFilterParts = explode($this->_sParamsDivider, $sFilter);
+        switch (substr_count($sFilter, $this->_sParamsDivider)) {
             case 1:
-                list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+                list($this->_sFilter1Value, $sFilter) = $aFilterParts;
                 break;
+
             case 2:
-                list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+                list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = $aFilterParts;
                 break;
         }
-        
+
     	if(!empty($this->_sFilter1Value))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
 
         return $this->_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
-    
+
     protected function _getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 
     //--- Layout methods ---//
-	protected function _getFilterControls()
+    protected function _getFilterControls()
     {
         parent::_getFilterControls();
 
