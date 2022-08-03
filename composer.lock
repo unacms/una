@@ -22,12 +22,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/s3.git",
-                "reference": "0c20807b1bfb9d955f9464c26b63f23fc17614ab"
+                "reference": "6448ddf99541f3ba50f97e373ceeb5bfd42a0167"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/s3/zipball/0c20807b1bfb9d955f9464c26b63f23fc17614ab",
-                "reference": "0c20807b1bfb9d955f9464c26b63f23fc17614ab",
+                "url": "https://api.github.com/repos/akeeba/s3/zipball/6448ddf99541f3ba50f97e373ceeb5bfd42a0167",
+                "reference": "6448ddf99541f3ba50f97e373ceeb5bfd42a0167",
                 "shasum": ""
             },
             "require": {
@@ -61,9 +61,9 @@
             ],
             "support": {
                 "issues": "https://github.com/akeeba/s3/issues",
-                "source": "https://github.com/akeeba/s3/tree/2.1.0"
+                "source": "https://github.com/akeeba/s3/tree/development"
             },
-            "time": "2022-05-30T09:14:13+00:00"
+            "time": "2022-07-28T17:03:08+00:00"
         },
         {
             "name": "avto-dev/composer-cleanup-plugin",
@@ -213,16 +213,16 @@
         },
         {
             "name": "chargebee/chargebee-php",
-            "version": "v3.7.0",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chargebee/chargebee-php.git",
-                "reference": "22d5eba6f874939e0f7e3ab13efc112d48236c5e"
+                "reference": "0c659a2715a127f6a6105a00af56ee5547ae4b9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/22d5eba6f874939e0f7e3ab13efc112d48236c5e",
-                "reference": "22d5eba6f874939e0f7e3ab13efc112d48236c5e",
+                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/0c659a2715a127f6a6105a00af56ee5547ae4b9a",
+                "reference": "0c659a2715a127f6a6105a00af56ee5547ae4b9a",
                 "shasum": ""
             },
             "require": {
@@ -256,9 +256,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chargebee/chargebee-php/issues",
-                "source": "https://github.com/chargebee/chargebee-php/tree/v3.7.0"
+                "source": "https://github.com/chargebee/chargebee-php/tree/v3.8.0"
             },
-            "time": "2022-05-23T07:27:10+00:00"
+            "time": "2022-07-18T09:03:03+00:00"
         },
         {
             "name": "curl/cacert",
@@ -1046,16 +1046,16 @@
         },
         {
             "name": "mpratt/embera",
-            "version": "2.0.26",
+            "version": "2.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "d0f4fd8550ca07bd2efb55211c8f66b73db77f99"
+                "reference": "9c16a9559fa75d9a9d5efddb17cd34555a6dff5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/d0f4fd8550ca07bd2efb55211c8f66b73db77f99",
-                "reference": "d0f4fd8550ca07bd2efb55211c8f66b73db77f99",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/9c16a9559fa75d9a9d5efddb17cd34555a6dff5e",
+                "reference": "9c16a9559fa75d9a9d5efddb17cd34555a6dff5e",
                 "shasum": ""
             },
             "require": {
@@ -1104,7 +1104,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mpratt/Embera/issues",
-                "source": "https://github.com/mpratt/Embera/tree/2.0.26"
+                "source": "https://github.com/mpratt/Embera/tree/2.0.27"
             },
             "funding": [
                 {
@@ -1112,7 +1112,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2022-05-15T23:31:41+00:00"
+            "time": "2022-07-15T01:01:46+00:00"
         },
         {
             "name": "paypal/paypal-checkout-sdk",
