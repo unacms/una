@@ -79,9 +79,9 @@ BxDolCreatePost.prototype.hideForm = function(oElement) {
 
     var sTabActive = 'bx-menu-tab-active';
     var sTabDefault = 'bx-menu-item-' + this._sDefault;
-    
-    var oMiActive = $('.sys-cpf-submenu li.' + sTabActive);
-    var bMiChange = oMiActive.not('.' + sTabDefault);
+
+    var oMiActive = $(oElement).parents('.bx-db-container:first').find('ul > li.' + sTabActive);
+    var bMiChange = !oMiActive.hasClass(sTabDefault);
 
     if(bMiChange)
         oMiActive.removeClass(sTabActive);
