@@ -56,7 +56,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stream_rss_num', '10', @iCategId, '_bx_stream_option_rss_num', 'digit', '', '', '', 20),
 ('bx_stream_auto_activation_for_categories', 'on', @iCategId, '_bx_stream_option_auto_activation_for_categories', 'checkbox', '', '', '', 160),
 ('bx_stream_always_accessible', '', @iCategId, '_bx_stream_option_always_accessible', 'checkbox', '', '', '', 170),
-('bx_stream_mute', '', @iCategId, '_bx_stream_option_mute', 'checkbox', '', '', '', 180);
+('bx_stream_mute', '', @iCategId, '_bx_stream_option_mute', 'checkbox', '', '', '', 180),
+('bx_stream_mute_embed', '', @iCategId, '_bx_stream_option_mute_embed', 'checkbox', '', '', '', 182);
 
 -- PAGE: create entry
 

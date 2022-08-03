@@ -35,7 +35,7 @@ class BxNexusModule extends BxDolModule
      */
     public function serviceInjectionHead()
     {
-        if (false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) 
+        if (!isset($_SERVER['HTTP_USER_AGENT']) || false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) 
             return '';
 
         $this->redirects();

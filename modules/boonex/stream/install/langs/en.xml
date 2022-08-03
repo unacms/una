@@ -35,6 +35,7 @@
     <string name="_bx_stream_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
     <string name="_bx_stream_option_always_accessible"><![CDATA[Make Stream page accessible when not streaming]]></string>
     <string name="_bx_stream_option_mute"><![CDATA[Mute sound in player by default]]></string>
+    <string name="_bx_stream_option_mute_embed"><![CDATA[Mute sound in embed by default]]></string>
 
     <string name="_bx_stream_form_entry"><![CDATA[Streams]]></string>
     <string name="_bx_stream_form_entry_display_add"><![CDATA[Add Stream]]></string>
@@ -62,8 +63,8 @@
     <string name="_bx_stream_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this stream]]></string>
     <string name="_bx_stream_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
     <string name="_bx_stream_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the stream]]></string>
-    <string name="_bx_stream_form_entry_input_sys_covers"><![CDATA[Header Image]]></string>
-    <string name="_bx_stream_form_entry_input_covers"><![CDATA[Header Image]]></string>
+    <string name="_bx_stream_form_entry_input_sys_covers"><![CDATA[Poster Image]]></string>
+    <string name="_bx_stream_form_entry_input_covers"><![CDATA[Poster Image]]></string>
     <string name="_bx_stream_form_entry_input_covers_uploader_simple_title"><![CDATA[Upload]]></string>
     <string name="_bx_stream_form_entry_input_covers_uploader_html5_title"><![CDATA[Upload]]></string>
     <string name="_bx_stream_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
@@ -92,7 +93,7 @@
   <string name="_bx_stream_acl_action_create_entry"><![CDATA[Create Stream]]></string>
     <string name="_bx_stream_acl_action_delete_entry"><![CDATA[Delete Stream]]></string>
     <string name="_bx_stream_acl_action_view_entry"><![CDATA[View Stream]]></string>
-    <string name="_bx_stream_acl_action_set_thumb"><![CDATA[Set Stream Header Image]]></string>
+    <string name="_bx_stream_acl_action_set_thumb"><![CDATA[Set Stream Poster Image]]></string>
     <string name="_bx_stream_acl_action_edit_any_entry"><![CDATA[Edit Any Stream]]></string>
     <string name="_bx_stream_acl_action_delete_any_entry"><![CDATA[Delete Any Account]]></string>
     <string name="_bx_stream_acl_action_record"><![CDATA[Record Stream]]></string>
