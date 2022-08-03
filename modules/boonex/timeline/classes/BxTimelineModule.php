@@ -336,17 +336,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!empty($aResult) && is_array($aResult))
             return echoJson($aResult);
 
+        $aParams = $this->_oConfig->getRepostDefaults();
         $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
-        $sCounter = $this->_oTemplate->getRepostCounter($aReposted);
 
-        echoJson(array(
+        echoJson([
             'code' => 0, 
             'message' => _t('_bx_timeline_txt_msg_success_repost'), 
             'count' => $aReposted['reposts'], 
-            'countf' => (int)$aReposted['reposts'] > 0 ? $this->_oTemplate->getRepostCounterLabel($aReposted['reposts']) : '',
-            'counter' => $sCounter,
+            'countf' => (int)$aReposted['reposts'] > 0 ? $this->_oTemplate->getRepostCounterLabel($aReposted['reposts'], $aParams) : '',
+            'counter' => $this->_oTemplate->getRepostCounter($aReposted, $aParams),
             'disabled' => true
-        ));
+        ]);
     }
 
     public function actionRepostWith()
