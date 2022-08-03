@@ -29,6 +29,8 @@ class BxDolUpgradeCron extends BxDolCron
             // if upgrade was successful
             if (($sFolder = $oController->getAvailableUpgrade()) && $oController->runUpgrade($sFolder)) { 
 
+                setParam('sys_revision', getParam('sys_revision') + 1);
+
                 // write upgrade log
                 $oController->writeLog();
 
