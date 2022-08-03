@@ -127,7 +127,7 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         ));
     }
  
-    public function entryStreamPlayer ($aContentInfo)
+    public function entryStreamPlayer ($aContentInfo, $aOptions = [])
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -150,10 +150,21 @@ class BxStrmTemplate extends BxBaseModTextTemplate
             $this->addJs('ovenplayer/hls.min.js');
         $this->addJsTranslation('_bx_stream_txt_wait_for_stream');
 
+        $sImage = '';
+        $mixedImage = $this->_getHeaderImage($aContentInfo);
+        if($mixedImage !== false) {
+            if($o = BxDolTranscoder::getObjectInstance($mixedImage['transcoder']))
+                $sImage = $o->getFileUrlById($mixedImage['id']);                
+        }
+
+        if (!isset($aOptions['mute']))
+            $aOptions['mute'] = getParam('bx_stream_mute') ? 1 : 0;
+
         return $this->parseHtmlByName('stream_player.html', array(
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'sources' => $sSources,
-            'mute' => getParam('bx_stream_mute') ? 1 : 0,
+            'mute' => $aOptions['mute'],
+            'image' => $sImage,
         ));
     }
 
@@ -164,7 +175,7 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         // TODO: visibility and other checks
 
         $sCode = $this->parseHtmlByName('stream_embed.html', array(
-            'player' => $this->entryStreamPlayer ($aContentInfo),
+            'player' => $this->entryStreamPlayer ($aContentInfo, ['mute' => (getParam('bx_stream_mute_embed') ? 1 : 0)]),
             'viewers' => $this->entryStreamViewers ($aContentInfo),
         ));
 
@@ -187,6 +198,13 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         list($sPhotoThumb, $sPhotoGallery) = parent::getUnitThumbAndGallery($aData);
 
         return array($sPhotoGallery, $sPhotoGallery);
+    }
+
+    public function getTmplVarsText($aData)
+    {
+        $a = parent::getTmplVarsText($aData);
+        $a['bx_if:show_image']['condition'] = false;
+        return $a;
     }
 }
 
