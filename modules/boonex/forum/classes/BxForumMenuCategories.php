@@ -78,13 +78,10 @@ class BxForumMenuCategories extends BxTemplMenu
                 'content' => ['addon' => $iCount]
             ]
         ];
-        
-        
-        foreach ($aCategories['bx_repeat:cats'] as $sKey => $aCategory) {    
-            $aCategoryData = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $aCategory['value']));
-            if(
-                isset($aCategoryData['visible_for_levels']) && $aCategoryData['visible_for_levels'] != '' && 
-                BxDolAcl::getInstance()->isMemberLevelInSet($aCategoryData['visible_for_levels'])){
+
+        foreach ($aCategories['bx_repeat:cats'] as $sKey => $aCategory) {
+            $aCategoryData = $this->_oModule->_oDb->getCategories(['type' => 'by_category', 'category' => $aCategory['value']]);
+            if(empty($aCategoryData) || (!empty($aCategoryData['visible_for_levels']) && BxDolAcl::getInstance()->isMemberLevelInSet($aCategoryData['visible_for_levels']))) {
                 
                 $aCategories['bx_repeat:cats'][$sKey]['icon'] = $this->_oTemplate->getImage(isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder', array('class' => 'sys-icon sys-colored'));
                 
@@ -128,7 +125,7 @@ class BxForumMenuCategories extends BxTemplMenu
                 ];
             }
         }
-        
+
         if(empty($aItems) || !is_array($aItems))
             return $aItems;
 
