@@ -625,6 +625,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
     public function serviceManageTools($sType = 'common')
     {
+        if(!isLogged())
+            return '';
+
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
         if(!$oGrid)
             return '';
