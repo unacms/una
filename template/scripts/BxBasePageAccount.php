@@ -102,15 +102,12 @@ class BxBasePageAccount extends BxTemplPage
         }
     }
 
-    protected function _isVisiblePage ($a, $bRedirectToLoginFormForUnauthenticated = false)
+    protected function _isVisiblePage ($a)
     {
-        if (!isLogged()) {
-            if ($bRedirectToLoginFormForUnauthenticated)
-                $this->_redirectToLoginForm();
-            else
+        if (!isLogged())
                 return false;
-        }
-        return parent::_isVisiblePage ($a, $bRedirectToLoginFormForUnauthenticated);
+
+        return parent::_isVisiblePage ($a);
     }
     
 	protected function _addJsCss()

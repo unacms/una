@@ -32,7 +32,7 @@ class BxDolPageQuery extends BxDolDb
         return $aObject;
     }
 
-    static public function getPageObjectNameByURI($sURI, $sModule = false)
+    static public function getPageObjectNameByURI($sURI, $sModule = false, $bSearchRedirects = false)
     {
         $oDb = BxDolDb::getInstance();
         $a = array('uri' => $sURI);
@@ -41,7 +41,18 @@ class BxDolPageQuery extends BxDolDb
             $a['module'] = $sModule;
             $sQuery .= " AND `module` = :module";
         }
-        return $oDb->getOne($sQuery, $a);
+        $sObject = $oDb->getOne($sQuery, $a);
+
+        if ($bSearchRedirects && !$sObject) {
+            $sQuery = "SELECT `p`.`object` FROM `sys_objects_page` AS `p` INNER JOIN `sys_seo_uri_rewrites` AS `r` ON (`p`.`uri` = `r`.`uri_orig`) WHERE `r`.`uri_rewrite` = :uri";
+            if ($sModule) {
+                $a['module'] = $sModule;
+                $sQuery .= " AND `module` = :module";
+            }
+            $sObject = $oDb->getOne($sQuery, $a);
+        }
+
+        return $sObject;
     }
     
     static public function getContentInfoObjectNameByURI($sURI)
