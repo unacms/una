@@ -459,17 +459,18 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $aUris = explode('/', trim($aParts['path'], '/'));
 
         // check if link starts with page URI and page with this URI exists 
-        if (!$aUris || empty($aUris[0]) || !($sPageName = BxDolPageQuery::getPageObjectNameByURI($aUris[0])))
+        if (!$aUris || empty($aUris[0]) || !($sPageName = BxDolPageQuery::getPageObjectNameByURI($aUris[0], false, true)))
             return false;
 
+        $aPage = BxDolPageQuery::getPageObject ($sPageName);
+
         // make final URL
-        $s = 'page.php?i=' . $aUris[0];
+        $s = 'page.php?i=' . $aPage['uri'];
 
         // add params
         if (!empty($aUris[1])) {
-            $aPage = BxDolPageQuery::getPageObject($sPageName);
             if ($aPage) {
-                $r = BxDolPageQuery::getSeoLink($aPage['module'], $aUris[0], ['uri' => urldecode($aUris[1])]);     
+                $r = BxDolPageQuery::getSeoLink($aPage['module'], $aPage['uri'], ['uri' => urldecode($aUris[1])]);     
                 if (!$r)
                     return false;
                 $s .= '&' . $r['param_name'] . '=' .  $r['param_value'];
