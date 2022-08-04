@@ -565,6 +565,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if(isLogged())
             BxDolAccount::getInstance()->isNeedChangePassword();
 
+        if ($this->isLockedFromUnauthenticated ($this->_aObject['uri'])) {
+            $this->redirectToLoginForm();
+            exit;
+        }
+
         if(!$oTemplate)
             $oTemplate = BxDolTemplate::getInstance();
 
@@ -676,7 +681,12 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     /**
      * Check if page is visible.
      */
-    protected function _isVisiblePage ($a, $bRedirectToLoginFormForUnauthenticated = false)
+    protected function _isVisiblePage ($a)
+    {
+        return isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
+    }
+
+    public static function isLockedFromUnauthenticated ($sUri)
     {
         if (!isLogged() && getParam('sys_lock_from_unauthenticated') && !defined('BX_DOL_CRON_EXECUTE')) {
             $aURIs = explode(',', getParam('sys_lock_from_unauthenticated_exceptions'));
@@ -684,20 +694,15 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $sVal = trim($sVal);
             });
             $aI = array_combine($aURIs, array_fill(0, count($aURIs), 1));
-            if (!preg_match('/\/oauth2\//', $_SERVER['REQUEST_URI']) /*&& !preg_match('/searchKeyword.php$/', $_SERVER['PHP_SELF'])*/ && !preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$this->_aObject['uri']])) {
-                if ($bRedirectToLoginFormForUnauthenticated) {
-                    $this->_redirectToLoginForm();
-                }
-                else {
-                    return false;
-                }
+            if (!preg_match('/\/oauth2\//', $_SERVER['REQUEST_URI']) /*&& !preg_match('/searchKeyword.php$/', $_SERVER['PHP_SELF'])*/ && !preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$sUri])) {
+                return true;
             }
         }
 
-        return isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
+        return false;
     }
 
-    protected function _redirectToLoginForm ()
+    public static function redirectToLoginForm ()
     {
         header("Location: " . bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login'), ['relocate' => bx_get_self_url()]));
         exit;

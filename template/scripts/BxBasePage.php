@@ -158,7 +158,7 @@ class BxBasePage extends BxDolPage
     {
         if (bx_get('dynamic') && ($iBlockId = (int)bx_get('pageBlock'))) {
 
-            if (!$this->_isVisiblePage($this->_aObject, true)) {
+            if (self::isLockedFromUnauthenticated($this->_aObject['uri']) || !$this->_isVisiblePage($this->_aObject)) {
                 header('HTTP/1.0 403 Forbidden');
                 exit;
             }
@@ -184,7 +184,7 @@ class BxBasePage extends BxDolPage
             exit;
         }
 
-        if (!$this->_isVisiblePage($this->_aObject, true))
+        if (!$this->_isVisiblePage($this->_aObject))
             return $this->_getPageAccessDeniedMsg ();
 
         $this->_addJsCss();
