@@ -35,43 +35,44 @@ class BxAttendantModule extends BxDolModule
                 }
             }
         }
-        $bRedirect = true; // todo setting
         
         $oSession = BxDolSession::getInstance();
         $sFirstPage = $oSession->getValue('sys_entrance_url');
         $sFirstPage = 'page.php?i=view-group-profile&id=72';
        
         if ($sFirstPage){
-            if ($bRedirect){
+            if (getParam('bx_attendant_on_profile_after_action_url')){
                 echo json_encode(['redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sFirstPage)]);  
                 exit();
             }
             else{
-                list($sPageLink, $aPageParams) = bx_get_base_url($sFirstPage);
-                if (isset($aPageParams['i']) && isset($aPageParams['id'])){
-                    $oPage = BxDolPage::getObjectInstanceByURI($aPageParams['i']);
+                if(getParam('bx_attendant_suggest_entered_page')){
+                    list($sPageLink, $aPageParams) = bx_get_base_url($sFirstPage);
+                    if (isset($aPageParams['i']) && isset($aPageParams['id'])){
+                        $oPage = BxDolPage::getObjectInstanceByURI($aPageParams['i']);
 
-                    if ($oPage){
-                        $sModuleName = $oPage->getModule();
-                        if(bx_srv('system', 'is_module_context', [$sModuleName])){
+                        if ($oPage){
+                            $sModuleName = $oPage->getModule();
+                            if(bx_srv('system', 'is_module_context', [$sModuleName])){
 
-                            $oModule = BxDolModule::getInstance($sModuleName);
-                            $aTmp = $oModule->serviceBrowse([
-                                'mode' => 'recent',
-                                'params' => [
-                                    'filter' => [
-                                        'field' => 'id',
-                                        'value' => [$aPageParams['id']],
-                                        'operator' => 'in',
-                                        'table' => 'tableSearch'
-                                    ],
-                                ]
-                            ]);
-                            
-                            if (isset($aTmp['content'])){
-                                $sTmp = $aTmp['content'];
-                                $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
-                                $aModuleData[$sModuleName. '_initial_link'] = $sTmp;
+                                $oModule = BxDolModule::getInstance($sModuleName);
+                                $aTmp = $oModule->serviceBrowse([
+                                    'mode' => 'recent',
+                                    'params' => [
+                                        'filter' => [
+                                            'field' => 'id',
+                                            'value' => [$aPageParams['id']],
+                                            'operator' => 'in',
+                                            'table' => 'tableSearch'
+                                        ],
+                                    ]
+                                ]);
+
+                                if (isset($aTmp['content'])){
+                                    $sTmp = $aTmp['content'];
+                                    $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
+                                    $aModuleData[$sModuleName. '_initial_link'] = $sTmp;
+                                }
                             }
                         }
                     }
