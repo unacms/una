@@ -20,8 +20,12 @@ BxAttendant.prototype.showPopup = function (bManual = 0, sModule = 'default', sE
     
     $.get($this._sActionsUri + 'RecomendedPopup/' + sModule + '/' + sEvent + '/' + sObject + '/' + bManual + '/', function (sData) {
         if (sData != ''){
-            oData = $.parseJSON(sData);
-            if (oData.redirect){
+            oData = null;
+            try {
+                oData = $.parseJSON(sData);
+            } catch (e) {
+            }
+            if (oData && oData.redirect){
                 window.location = oData.redirect;
             }
             else{
