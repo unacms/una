@@ -1,0 +1,8 @@
+/*--- Viewed By ---*/
+div.bx-view-by-list {}
+div.bx-view-by-list-cnt {}
+div.bx-view-by-items {
+    max-height: 12.5rem;
+    min-width: 13.75rem;
+    overflow: auto;
+}
