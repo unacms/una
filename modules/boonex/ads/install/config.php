@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_ads',
     'title' => 'Ads',
     'note' => 'Ads module.',
-    'version' => '13.0.4.DEV',
+    'version' => '13.0.5.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
