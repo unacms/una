@@ -325,15 +325,17 @@ BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl)
         this._sActionsUrl + 'add_attach_link/',
         oData,
         function(oData) {
-            if(!oData.id || !oData.item || !$.trim(oData.item).length)
-                return;
-
-            //--- Mark that 'attach link' process was finished.
-            $this._oAttachedLinks[sUrl] = oData.id;
-
             var iEventId = 0;
             if(oData && oData.event_id != undefined)
                 iEventId = parseInt(oData.event_id);
+            
+            if(!oData.id || !oData.item || !$.trim(oData.item).length){
+                $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
+                return;
+            }
+
+            //--- Mark that 'attach link' process was finished.
+            $this._oAttachedLinks[sUrl] = oData.id;
 
             var oItem = $(oData.item).hide();
             $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
