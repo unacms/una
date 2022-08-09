@@ -581,30 +581,33 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $sUrl = bx_process_input(bx_get('url'));
         if(empty($sUrl))
-            return echoJson(array());
+            return echoJson([]);
         
         $sUrl = htmlspecialchars_decode($sUrl);
 
+        $aHeaders = @get_headers($sUrl, 1);
+        if($aHeaders === false)
+            return echoJson([]);
+
         $sHeader = 'Content-Type';
-        $aHeaders = get_headers($sUrl, 1);
-        if(!empty($aHeaders) && is_array($aHeaders) && !empty($aHeaders[$sHeader])) {
+        if(!empty($aHeaders[$sHeader])) {
             $mixedContentType = $aHeaders[$sHeader];
             if(!is_array($mixedContentType))
-                $mixedContentType = array($mixedContentType);
+                $mixedContentType = [$mixedContentType];
 
             foreach($mixedContentType as $sContentType)
                 if(strpos($sContentType, 'image') !== false) 
-                    return echoJson(array());
+                    return echoJson([]);
         }
 
         $iEventId = 0;
         if(bx_get('event_id') !== false)
             $iEventId = (int)bx_get('event_id');
 
-        echoJson($this->addAttachLink(array(
+        echoJson($this->addAttachLink([
             'event_id' => $iEventId,
             'url' => $sUrl
-        )));
+        ]));
     }
 
     public function actionDeleteAttachLink()

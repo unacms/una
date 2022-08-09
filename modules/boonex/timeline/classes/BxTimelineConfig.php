@@ -307,6 +307,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aHtmlIds = array(
             'view' => array(
                 'edit_form' => $sHp . '-edit-',
+                'attach_link_form_field' => $sHp . '-attach-link-form-field-',
 
                 'menu_popup' => $sHp . '-menu-popup-',
 

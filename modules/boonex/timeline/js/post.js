@@ -26,10 +26,6 @@ function BxTimelinePost(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
-    this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
-    this._sPregMention = "(<([^>]+bx-mention[^>]+)>)";
-    this._sPregUrl = "(([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[\\-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9\\.\\-]+|(?:www\\.|[\\-;:&=\\+\\$,\\w]+@)[A-Za-z0-9\\.\\-]+)((?:\\/[\\+~%#\\/\\.\\w\\-_!\\(\\)]*)?\\??(?:[\\-\\+=&;%@\\.\\w_]*)#?(?:[\\.\\!\\/\\w]*))?";
-
     var $this = this;
     if (typeof window.glOnInitEditor === 'undefined')
         window.glOnInitEditor = [];
@@ -86,8 +82,6 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
     var oTextarea = oForm.find('textarea');
     autosize(oTextarea);
 
-    this._oAttachedLinks = [];
-
     oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
@@ -98,35 +92,7 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         }
     });
 
-    if (typeof window.glOnSpaceEnterInEditor === 'undefined')
-        window.glOnSpaceEnterInEditor = [];    
-
-    window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
-        if(!oTextarea.is(sSelector))
-            return;
-
-        var oExp, aMatch = null;
-
-        oExp = new RegExp($this._sPregTag , "ig");
-        sData = sData.replace(oExp, '');
-
-        oExp = new RegExp($this._sPregMention , "ig");
-        sData = sData.replace(oExp, '');
-
-        oExp = new RegExp($this._sPregUrl , "ig");
-        while(aMatch = oExp.exec(sData)) {
-            var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');
-            if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined || ($this._iLimitAttachLinks != 0 && Object.keys($this._oAttachedLinks).length >= $this._iLimitAttachLinks))
-                continue;
-
-            $this.lockForm($('#' + sFormId));
-
-            //--- Mark that 'attach link' process was started.
-            $this._oAttachedLinks[sUrl] = 0;
-
-            $this.addAttachLink(oForm, sUrl);
-        }
-    });
+    this.initTrackerInsertSpace(sFormId);
 
     if(this._bAutoAttach) {
         if (typeof window.glOnInsertImageInEditor === 'undefined')
@@ -191,27 +157,6 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
         bx_alert(oData.message, fContinue);
     else
         fContinue();
-};
-
-BxTimelinePost.prototype.lockForm = function(oForm)
-{
-    if(this.isLockedForm(oForm))
-        return;
-
-    oForm.attr('bx_form_locked', 1).find('input[type="submit"],button[type="submit"]').addClass('bx-btn-disabled');
-};
-
-BxTimelinePost.prototype.unlockForm = function(oForm)
-{
-    if(!this.isLockedForm(oForm))
-        return;
-
-    oForm.removeAttr('bx_form_locked').find('input[type="submit"],button[type="submit"]').removeClass('bx-btn-disabled');
-};
-
-BxTimelinePost.prototype.isLockedForm = function(oForm)
-{
-    return oForm.attr('bx_form_locked') == 1;
 };
     
 BxTimelinePost.prototype.initFormAttachLink = function(sFormId)
@@ -310,40 +255,6 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId)
     );
 
     return false;
-};
-
-BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl)
-{
-    if(!sUrl || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length > this._iLimitAttachLinks))
-        return;
-
-    var $this = this;
-    var oData = this._getDefaultData();
-    oData['url'] = sUrl;
-
-    jQuery.post (
-        this._sActionsUrl + 'add_attach_link/',
-        oData,
-        function(oData) {
-            var iEventId = 0;
-            if(oData && oData.event_id != undefined)
-                iEventId = parseInt(oData.event_id);
-            
-            if(!oData.id || !oData.item || !$.trim(oData.item).length){
-                $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
-                return;
-            }
-
-            //--- Mark that 'attach link' process was finished.
-            $this._oAttachedLinks[sUrl] = oData.id;
-
-            var oItem = $(oData.item).hide();
-            $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
-
-            $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
-        },
-        'json'
-    );
 };
 
 BxTimelinePost.prototype.showAttachLink = function(oLink, iEventId)

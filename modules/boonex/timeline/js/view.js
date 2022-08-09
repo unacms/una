@@ -24,6 +24,9 @@ function BxTimelineView(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
     this._bEventsToLoad = oOptions.bEventsToLoad == undefined ? false : oOptions.bEventsToLoad;
+    this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
+    this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
+    this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
@@ -791,12 +794,14 @@ BxTimelineView.prototype.muteAuthor = function(oLink, iId)
     );
 };
 
-BxTimelineView.prototype.initFormEdit = function(sFormId)
+BxTimelineView.prototype.initFormEdit = function(sFormId, iEventId)
 {
     var $this = this;
     var oForm = $('#' + sFormId);
+    var oTextarea = oForm.find('textarea');
 
-    autosize(oForm.find('textarea'));
+    autosize(oTextarea);
+
     oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
@@ -806,6 +811,12 @@ BxTimelineView.prototype.initFormEdit = function(sFormId)
             window[$this._sObjName].afterFormEditSubmit(oForm, oData);
         }
     });
+
+    this.initTrackerInsertSpace(sFormId, iEventId);
+
+    var sContent = oTextarea.val();
+    if(sContent && sContent.length > 0)
+        this.parseContent(oForm, iEventId, sContent, false);
 };
 
 BxTimelineView.prototype.beforeFormEditSubmit = function(oForm)
@@ -817,21 +828,19 @@ BxTimelineView.prototype.afterFormEditSubmit = function (oForm, oData)
 {
     var $this = this;
     var fContinue = function() {
-        if(oData && oData.id != undefined) {
-            var iId = parseInt(oData.id);
-            if(iId <= 0) 
-                return;
-
-            $this._getPost($this.oView, iId, $this._oRequestParams);
-            return;
-        }
+        var iId = 0;
+        if(oData && oData.id != undefined)
+            iId = parseInt(oData.id);
 
         if(oData && oData.form != undefined && oData.form_id != undefined) {
             $('#' + oData.form_id).replaceWith(oData.form);
-            $this.initFormEdit(oData.form_id);
+            $this.initFormEdit(oData.form_id, iId);
 
             return;
         }
+
+        if(iId > 0) 
+            $this._getPost($this.oView, iId, $this._oRequestParams);
     };
 
     this.loadingInButton($(oForm).children().find(':submit'), false);
@@ -888,7 +897,7 @@ BxTimelineView.prototype.onEditPost = function(oData)
     if(oData && oData.form != undefined && oData.form_id != undefined) {
         oItem.find('.' + this.sClassItemContent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
             $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                $this.initFormEdit(oData.form_id);
+                $this.initFormEdit(oData.form_id, oData.id);
             });
         });
     }

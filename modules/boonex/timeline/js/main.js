@@ -37,6 +37,14 @@ function BxTimelineMain() {
     this.bViewTimeline = false;
     this.bViewOutline = false;
     this.bViewItem = false;
+
+    this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
+    this._sPregMention = "(<([^>]+bx-mention[^>]+)>)";
+    this._sPregUrl = "(([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[\\-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9\\.\\-]+|(?:www\\.|[\\-;:&=\\+\\$,\\w]+@)[A-Za-z0-9\\.\\-]+)((?:\\/[\\+~%#\\/\\.\\w\\-_!\\(\\)]*)?\\??(?:[\\-\\+=&;%@\\.\\w_]*)#?(?:[\\.\\!\\/\\w]*))?";
+
+    this._iLimitAttachLinks = 0;
+    this._sLimitAttachLinksErr = '';
+    this._oAttachedLinks = {};
 }
 
 BxTimelineMain.prototype.initView = function() 
@@ -255,6 +263,109 @@ BxTimelineMain.prototype.initFlickityByItem = function(oItem) {
     var oGalleryAttachments = $(oItem).find('.' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery');
     if(oGalleryAttachments.length > 0)
         this.initFlickityAttachments(oGalleryAttachments);
+};
+
+BxTimelineMain.prototype.initTrackerInsertSpace = function(sFormId, iEventId)
+{
+    var $this = this;
+    var oForm = $('#' + sFormId);
+    var oTextarea = oForm.find('textarea');
+
+    this._oAttachedLinks = [];
+
+    if (typeof window.glOnSpaceEnterInEditor === 'undefined')
+        window.glOnSpaceEnterInEditor = [];    
+
+    window.glOnSpaceEnterInEditor.push(function(sData, sSelector) {
+        if(!oTextarea.is(sSelector))
+            return;
+
+        $this.parseContent(oForm, iEventId, sData, true);
+    });
+};
+
+BxTimelineMain.prototype.parseContent = function(oForm, iId, sData, bPerformAttach)
+{
+    var oExp, aMatch = null;
+
+    oExp = new RegExp(this._sPregTag , "ig");
+    sData = sData.replace(oExp, '');
+
+    oExp = new RegExp(this._sPregMention , "ig");
+    sData = sData.replace(oExp, '');
+
+    oExp = new RegExp(this._sPregUrl , "ig");
+    while(aMatch = oExp.exec(sData)) {
+        var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');        
+        if(!sUrl.length || this._oAttachedLinks[sUrl] != undefined || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length >= this._iLimitAttachLinks))
+            continue;
+
+        //--- Mark that 'attach link' process was started.
+        this._oAttachedLinks[sUrl] = 0;
+
+        if(bPerformAttach) {
+            this.lockForm(oForm);
+
+            this.addAttachLink(oForm, iId, sUrl);
+        }
+    }
+};
+
+BxTimelineMain.prototype.lockForm = function(oForm)
+{
+    if(this.isLockedForm(oForm))
+        return;
+
+    oForm.attr('bx_form_locked', 1).find('input[type="submit"],button[type="submit"]').addClass('bx-btn-disabled');
+};
+
+BxTimelineMain.prototype.unlockForm = function(oForm)
+{
+    if(!this.isLockedForm(oForm))
+        return;
+
+    oForm.removeAttr('bx_form_locked').find('input[type="submit"],button[type="submit"]').removeClass('bx-btn-disabled');
+};
+
+BxTimelineMain.prototype.isLockedForm = function(oForm)
+{
+    return oForm.attr('bx_form_locked') == 1;
+};
+
+BxTimelineMain.prototype.addAttachLink = function(oElement, iId, sUrl)
+{
+    if(!sUrl || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length > this._iLimitAttachLinks))
+        return;
+
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData['url'] = sUrl;
+    if(iId != undefined)
+        oData['event_id'] = iId;
+
+    jQuery.post (
+        this._sActionsUrl + 'add_attach_link/',
+        oData,
+        function(oData) {
+            var iEventId = 0;
+            if(oData && oData.event_id != undefined)
+                iEventId = parseInt(oData.event_id);
+            
+            if(!oData.id || !oData.item || !$.trim(oData.item).length){
+                $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
+                return;
+            }
+
+            //--- Mark that 'attach link' process was finished.
+            $this._oAttachedLinks[sUrl] = oData.id;
+
+            var oItem = $(oData.item).hide();
+            $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
+
+            $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
+        },
+        'json'
+    );
 };
 
 BxTimelineMain.prototype.onFindOverflow = function(oElement) {

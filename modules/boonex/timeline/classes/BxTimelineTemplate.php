@@ -128,6 +128,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'sObjNameMenuFeeds' => $this->_oConfig->getObject('menu_feeds'),
             'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
+            'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
+            'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),
+            'oAttachedLinks' => []
         ], $aParams);
 
         return parent::getJsCode('view', $aParams, $bWrap, $bDynamic);
