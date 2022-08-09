@@ -79,7 +79,7 @@ class BxDolAlerts extends BxDol
 
         $this->_aAlerts = $aData['alerts'];
         $this->_aHandlers = $aData['handlers'];
-        $this->_aCacheTriggers = $aData['cache_triggers'];
+        $this->_aCacheTriggers = isset($aData['cache_triggers']) ? $aData['cache_triggers'] : [];
 
         $this->sUnit = $sUnit;
         $this->sAction = $sAction;
