@@ -44,25 +44,12 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
         if(!oTextarea.is(sSelector))
             return;
 
-        var oExp, aMatch = null;
-
-        oExp = new RegExp($this._sPregTag , "ig");
-        sData = sData.replace(oExp, '');
-
-        oExp = new RegExp($this._sPregMention , "ig");
-        sData = sData.replace(oExp, '');
-
-        oExp = new RegExp($this._sPregUrl , "ig");
-        while(aMatch = oExp.exec(sData)) {
-            var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');
-            if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined || ($this._iLimitAttachLinks != 0 && Object.keys($this._oAttachedLinks).length >= $this._iLimitAttachLinks))
-                continue;
-
-            //--- Mark that 'attach link' process was started.
-            $this._oAttachedLinks[sUrl] = 0;
-            $this.addAttachLink(oForm, sUrl);
-        }
+        $this.parseContent(oForm, sData, true);
     });
+
+    var sContent = oTextarea.val();
+    if(sContent && sContent.length > 0)
+        this.parseContent(oForm, sContent, false);
 
     if(this._bAutoAttach) {
         if (typeof window.glOnInsertImageInEditor === 'undefined')
@@ -81,6 +68,30 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
             });
         });
    }
+};
+
+BxBaseModTextLinks.prototype.parseContent = function(oForm, sData, bPerformAttach)
+{
+    var oExp, aMatch = null;
+
+    oExp = new RegExp(this._sPregTag , "ig");
+    sData = sData.replace(oExp, '');
+
+    oExp = new RegExp(this._sPregMention , "ig");
+    sData = sData.replace(oExp, '');
+
+    oExp = new RegExp(this._sPregUrl , "ig");
+    while(aMatch = oExp.exec(sData)) {
+        var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');
+        if(!sUrl.length || this._oAttachedLinks[sUrl] != undefined || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length >= this._iLimitAttachLinks))
+            continue;
+
+        //--- Mark that 'attach link' process was started.
+        this._oAttachedLinks[sUrl] = 0;
+
+        if(bPerformAttach)
+            this.addAttachLink(oForm, sUrl);
+    }
 };
 
 BxBaseModTextLinks.prototype.addAttachLink = function(oElement, sUrl)
