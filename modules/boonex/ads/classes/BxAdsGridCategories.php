@@ -67,7 +67,7 @@ class BxAdsGridCategories extends BxTemplGrid
             $sLanguageCurrent = $oLanguage->getCurrentLangName(false);
 
             $sTitle = BxDolForm::getSubmittedValue('title-' . $sLanguageCurrent, $oForm->aFormAttrs['method']);
-            $sName = uriGenerate(strtolower($sTitle), $CNF['TABLE_CATEGORIES'], 'name', 'cat', '_');
+            $sName = uriGenerate(strtolower($sTitle), $CNF['TABLE_CATEGORIES'], 'name', ['empty' => 'cat', 'divider' => '_']);
 
             $aValsToAdd['name'] = $sName;
             BxDolForm::setSubmittedValue('title', '_bx_ads_cat_' . $sName, $oForm->aFormAttrs['method']);
@@ -78,7 +78,7 @@ class BxAdsGridCategories extends BxTemplGrid
                 if(empty($sTypeNewTitle))
                     $sTypeNewTitle = $sTitle;
 
-                $sTypeNewName = uriGenerate(strtolower($sTypeNewTitle), $CNF['TABLE_CATEGORIES_TYPES'], 'name', 'cat_type', '_');
+                $sTypeNewName = uriGenerate(strtolower($sTypeNewTitle), $CNF['TABLE_CATEGORIES_TYPES'], 'name', ['empty' => 'cat_type', 'divider' => '_']);
 
                 $iType = (int)$oForm->getCleanValue('type');
                 $aType = $this->_oModule->_oDb->getCategoryTypes(array('type' => 'id', 'id' => $iType));

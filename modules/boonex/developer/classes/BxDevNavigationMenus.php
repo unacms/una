@@ -35,7 +35,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_menu', 'object', 'object');
+            $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_menu', 'object', ['empty' => 'object']);
             BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
 
             if(($iId = (int)$oForm->insert()) != 0)

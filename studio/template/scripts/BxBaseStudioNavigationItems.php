@@ -72,7 +72,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 if(empty($sName))
                     $sName = BxDolForm::getSubmittedValue('title_system-' . $sLanguage, $oForm->aFormAttrs['method']);
 
-                $sName = uriGenerate($sName, 'sys_menu_items', 'name', 'item');
+                $sName = uriGenerate($sName, 'sys_menu_items', 'name', ['empty' => 'item']);
             }
 
             bx_import('BxDolStudioUtils');

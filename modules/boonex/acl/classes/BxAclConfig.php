@@ -137,7 +137,7 @@ class BxAclConfig extends BxBaseModGeneralConfig
 
     public function getPriceName($sName)
     {
-        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_NAME']);
+        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_NAME'], ['lowercase' => false]);
     }
 }
 

@@ -106,7 +106,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
             $sKey = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
-            $sKey = uriGenerate($sKey, 'sys_form_pre_lists', 'key', 'key');
+            $sKey = uriGenerate($sKey, 'sys_form_pre_lists', 'key', ['empty' => 'key']);
 
             $iId = (int)$oForm->insert(array('key' => $sKey));
             if($iId != 0)

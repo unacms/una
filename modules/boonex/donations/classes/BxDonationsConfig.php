@@ -142,7 +142,7 @@ class BxDonationsConfig extends BxBaseModGeneralConfig
 
     public function getTypeName($sName)
     {
-        return uriGenerate($sName, $this->CNF['TABLE_TYPES'], $this->CNF['FIELD_NAME']);
+        return uriGenerate($sName, $this->CNF['TABLE_TYPES'], $this->CNF['FIELD_NAME'], ['lowercase' => false]);
     }
 
     public function getTypeNameCustom()

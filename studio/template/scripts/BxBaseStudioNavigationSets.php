@@ -98,7 +98,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sName = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
-            $sName = uriGenerate($sName, 'sys_menu_sets', 'set_name', 'set');
+            $sName = uriGenerate($sName, 'sys_menu_sets', 'set_name', ['empty' => 'set']);
 
             if($oForm->insert(array('set_name' => $sName, 'module' => BX_DOL_STUDIO_MODULE_CUSTOM)) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $sName);

@@ -35,7 +35,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_form', 'object', 'object');
+            $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_form', 'object', ['empty' => 'object']);
             BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
 
             if(($iId = (int)$oForm->insert()) != 0)
@@ -94,7 +94,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         if($oForm->isSubmittedAndValid()) {
             $sObject = $oForm->getCleanValue('object');
             if(strcmp($sObject, $aForm['object']) != 0) {
-                $sObject = uriGenerate($sObject, 'sys_objects_form', 'object', 'object');
+                $sObject = uriGenerate($sObject, 'sys_objects_form', 'object', ['empty' => 'object']);
                 BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
             }
 

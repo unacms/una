@@ -33,7 +33,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sObject = uriGenerate($oForm->getCleanValue('key'), 'sys_form_pre_lists', 'key', 'key');
+            $sObject = uriGenerate($oForm->getCleanValue('key'), 'sys_form_pre_lists', 'key', ['empty' => 'key']);
             BxDolForm::setSubmittedValue('key', $sObject, $oForm->aFormAttrs['method']);
 
             if(($iId = (int)$oForm->insert()) != 0)

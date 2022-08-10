@@ -664,9 +664,12 @@ function clear_xss($val)
 
 //--------------------------------------- friendly permalinks --------------------------------------//
 //------------------------------------------- main functions ---------------------------------------//
-function uriGenerate ($sValue, $sTable, $sField, $sEmpty = '-', $sDivider = '-', $aCond = [])
+function uriGenerate ($sValue, $sTable, $sField, $aParams = [])
 {
-    $sValue = uriFilter($sValue, $sEmpty, $sDivider);
+    $sDivider = isset($aParams['divider']) ? $aParams['divider'] : '-';
+    $aCond = isset($aParams['cond']) && is_array($aParams['cond']) ? $aParams['cond'] : [];
+
+    $sValue = uriFilter($sValue, $aParams);
     if(uriCheckUniq($sValue, $sTable, $sField, $aCond))
         return $sValue;
 
@@ -684,17 +687,22 @@ function uriGenerate ($sValue, $sTable, $sField, $sEmpty = '-', $sDivider = '-',
     return rand(0, PHP_INT_MAX);
 }
 
-function uriFilter ($s, $sEmpty = '-', $sDivider = '-')
+function uriFilter ($s, $aParams = [])
 {
-    if (BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
+    $sEmpty = isset($aParams['empty']) ? $aParams['empty'] : '-';
+    $sDivider = isset($aParams['divider']) ? $aParams['divider'] : '-';
+
+    if(BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
         $s = get_mb_replace ('/[^\pL^\pN^_]+/u', $sDivider, $s); // unicode characters
     else
         $s = get_mb_replace ('/([^\d^\w]+)/u', $sDivider, $s); // latin characters only
 
     $s = get_mb_replace ('/([' . $sDivider . '^]+)/', $sDivider, $s);
     $s = get_mb_replace ('/([' . $sDivider . ']+)$/', '', $s); // remove trailing dash
-    if (!$s) $s = $sEmpty;
-    return mb_strtolower($s);
+    if(!$s) 
+        $s = $sEmpty;
+
+    return !isset($aParams['lowercase']) || $aParams['lowercase'] === true ? mb_strtolower($s) : $s;
 }
 
 function uriCheckUniq ($sValue, $sTable, $sField, $aCond = [])

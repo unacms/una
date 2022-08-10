@@ -40,7 +40,7 @@ class BxDevFormsSearchForms extends BxTemplStudioFormsSearchForms
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_search_extended', 'object', 'object');
+            $sObject = uriGenerate($oForm->getCleanValue('object'), 'sys_objects_search_extended', 'object', ['empty' => 'object']);
             BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
 
             if(($iId = (int)$oForm->insert()) != 0)
@@ -100,7 +100,7 @@ class BxDevFormsSearchForms extends BxTemplStudioFormsSearchForms
         if($oForm->isSubmittedAndValid()) {
             $sObject = $oForm->getCleanValue('object');
             if(strcmp($sObject, $aForm['object']) != 0) {
-                $sObject = uriGenerate($sObject, 'sys_objects_search_extended', 'object', 'object');
+                $sObject = uriGenerate($sObject, 'sys_objects_search_extended', 'object', ['empty' => 'object']);
                 BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
             }
 

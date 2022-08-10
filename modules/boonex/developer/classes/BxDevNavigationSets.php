@@ -33,7 +33,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sName = uriGenerate($oForm->getCleanValue('set_name'), 'sys_menu_sets', 'set_name', 'set');
+            $sName = uriGenerate($oForm->getCleanValue('set_name'), 'sys_menu_sets', 'set_name', ['empty' => 'set']);
             BxDolForm::setSubmittedValue('set_name', $sName, $oForm->aFormAttrs['method']);
 
             if($oForm->insert() !== false)

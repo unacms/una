@@ -32,7 +32,7 @@ class BxPaymentGridCommissions extends BxBaseModPaymentGridCommissions
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sName = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $sFormMethod);
-            $sName = uriGenerate(strtolower($sName), $CNF['TABLE_COMMISSIONS'], 'name', 'commission');
+            $sName = uriGenerate(strtolower($sName), $CNF['TABLE_COMMISSIONS'], 'name', ['empty' => 'commission']);
 
             $aValsToAdd = array(
                 'name' => $sName,

@@ -35,7 +35,7 @@ class BxBaseStudioRolesLevels extends BxDolStudioRolesLevels
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sName = BxDolForm::getSubmittedValue('title-' . $sLanguage, $oForm->aFormAttrs['method']);
-            $sName = uriGenerate(strtolower($sName), 'sys_std_roles', 'name', 'role');
+            $sName = uriGenerate(strtolower($sName), 'sys_std_roles', 'name', ['empty' => 'role']);
 
             $iId = (int)$oForm->insert(array('id' => $iId, 'name' => $sName, 'active' => 1, 'order' => $this->oDb->getRoleOrderMax() + 1));
             if($iId != 0) {

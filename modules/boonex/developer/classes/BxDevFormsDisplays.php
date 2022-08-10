@@ -45,7 +45,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sName = uriGenerate($oForm->getCleanValue('display_name'), 'sys_form_displays', 'display_name', 'display');
+            $sName = uriGenerate($oForm->getCleanValue('display_name'), 'sys_form_displays', 'display_name', ['empty' => 'display']);
             BxDolForm::setSubmittedValue('display_name', $sName, $oForm->aFormAttrs['method']);
 
             if(($iId = (int)$oForm->insert()) != 0)

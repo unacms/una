@@ -39,12 +39,12 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
             $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $oForm->aFormAttrs['method']);
-            $sObject = uriGenerate($sObject, 'sys_objects_menu', 'object', 'object');
+            $sObject = uriGenerate($sObject, 'sys_objects_menu', 'object', ['empty' => 'object']);
 
             //--- New Set Creation
             if($oForm->getCleanValue('set_name') == $this->sCreateNew) {
                 $sSetTitleValue = $oForm->getCleanValue('set_title');
-                $sSetName = uriGenerate($sSetTitleValue, 'sys_menu_sets', 'set_name', 'set');
+                $sSetName = uriGenerate($sSetTitleValue, 'sys_menu_sets', 'set_name', ['empty' => 'set']);
                 $sSetTitleKey = '_adm_nav_txt_set_' . $sSetName;
 
                 if($this->oDb->addSet(array('set_name' => $sSetName, 'module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'title' => $sSetTitleKey, 'deletable' => 1))) {

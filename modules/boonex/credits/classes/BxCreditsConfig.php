@@ -238,7 +238,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
 
     public function getBundleName($sName)
     {
-        return uriGenerate($sName, $this->CNF['TABLE_BUNDLES'], $this->CNF['FIELD_NAME'], 'cat', '_');
+        return uriGenerate($sName, $this->CNF['TABLE_BUNDLES'], $this->CNF['FIELD_NAME'], ['empty' => 'cat', 'divider' => '_', 'lowercase' => false]);
     }
 
     public function getBundleDescription($aBundle)

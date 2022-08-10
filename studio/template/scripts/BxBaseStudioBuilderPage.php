@@ -320,7 +320,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
-            $sObject = uriGenerate($sObject, 'sys_objects_page', 'object', 'object');
+            $sObject = uriGenerate($sObject, 'sys_objects_page', 'object', ['empty' => 'object']);
 
             $sUri = $oForm->getCleanValue('uri');
             

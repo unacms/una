@@ -73,7 +73,7 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
 
     public function getPriceName($sName)
     {
-        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_PRICE_NAME']);
+        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_PRICE_NAME'], ['lowercase' => false]);
     }
 }
 
