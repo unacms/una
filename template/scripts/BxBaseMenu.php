@@ -297,7 +297,7 @@ class BxBaseMenu extends BxDolMenu
         if (empty($aMenuItem['addon']))
             return '';
 
-        if ($aMenuItem['addon_cache']) {
+        if (isset($aMenuItem['addon_cache']) && $aMenuItem['addon_cache']) {
             $oCache = BxDolDb::getInstance()->getDbCacheObject();
             $sKey = 'menu_' . $this->_sObject . '_' . $aMenuItem['name'] . '_' . bx_get_logged_profile_id() . '_' . bx_site_hash() . '.php';
             $s = $oCache->getData($sKey);
