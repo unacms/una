@@ -2139,7 +2139,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'post_common', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
-                array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'reply', 'unit' => $sModule, 'action' => 'replyPost', 'types' => array('personal')),
                 array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
