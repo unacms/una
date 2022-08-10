@@ -21,7 +21,7 @@ html.bx-media-phone {
 
 .bx-media-phone .bx-def-constraint-all *,
 .bx-media-phone .bx-def-constraint-list ol, .bx-def-constraint-list ul,
-.bx-media-phone .bx-def-constraint-pre pre,
+.bx-media-phone .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre,
 .bx-media-phone .bx-def-constraint-object object,
 .bx-media-phone .bx-def-constraint-iframe iframe,
 .bx-media-phone .bx-def-constraint-img img {
@@ -36,7 +36,7 @@ html.bx-media-phone {
 .bx-media-phone .bx-def-constraint-img img {
     height:auto !important;
 }
-.bx-media-phone .bx-def-constraint-pre pre {
+.bx-media-phone .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre {
     overflow:scroll !important;
 }
 

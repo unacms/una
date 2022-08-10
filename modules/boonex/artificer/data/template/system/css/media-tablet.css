@@ -21,7 +21,7 @@ html.bx-media-tablet {
 
 .bx-media-tablet .bx-def-constraint-all *,
 .bx-media-tablet .bx-def-constraint-list ol, .bx-def-constraint-list ul,
-.bx-media-tablet .bx-def-constraint-pre pre,
+.bx-media-tablet .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre,
 .bx-media-tablet .bx-def-constraint-object object,
 .bx-media-tablet .bx-def-constraint-iframe iframe,
 .bx-media-tablet .bx-def-constraint-img img {
@@ -33,7 +33,7 @@ html.bx-media-tablet {
     max-width:500px !important;
     overflow:hidden !important;
 }
-.bx-media-tablet .bx-def-constraint-pre pre {
+.bx-media-tablet .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre {
     overflow:scroll !important;
 }
 
