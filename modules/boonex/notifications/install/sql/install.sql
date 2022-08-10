@@ -102,6 +102,19 @@ INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('subscription', 'delete', 'sys_profiles_subscriptions', 'connection_removed', '');
 
+-- Comments
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('comment', 'insert', 'comment', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:31:"get_notifications_comment_added";s:12:"module_class";s:17:"TemplCmtsServices";}');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('comment', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_comment_added_personal', 1),
+('comment', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_comment_added_personal', 1),
+('comment', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_comment_added_personal', 1);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('comment', 'delete', 'comment', 'deleted', '');
+
 -- Comments Actions (Like, Reaction, Score Up\Down)
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`, `privacy`) VALUES 
 ('sys_cmts_vote', 'insert', 'sys_cmts', 'doVote', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:22:"get_notifications_vote";s:12:"module_class";s:17:"TemplCmtsServices";}', '');

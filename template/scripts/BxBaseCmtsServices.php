@@ -243,6 +243,49 @@ class BxBaseCmtsServices extends BxDol
     }
 
     /**
+     * Comment added for Notifications module
+     */
+    public function serviceGetNotificationsCommentAdded($aEvent)
+    {
+        $aCommentGi = BxDolCmts::getGlobalInfo($aEvent['subobject_id']);
+        if(empty($aCommentGi) || !is_array($aCommentGi))
+            return [];
+
+        $iContentId = (int)$aEvent['object_id'];
+
+        $oComment = BxDolCmts::getObjectInstance($aCommentGi['system_name'], $iContentId);
+        if(!$oComment)
+            return [];
+
+        $aCommentSystem = $oComment->getSystemInfo();
+        
+        $oContentModule = BxDolModule::getInstance($aCommentSystem['module']);
+        if(!$oContentModule)
+            return [];
+
+        $aContentInfo = $oContentModule->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return [];
+
+        $CNF = &$oContentModule->_oConfig->CNF;
+        if(empty($CNF['FIELD_ID']) || empty($CNF['FIELD_AUTHOR']) || !(isset($CNF['FIELD_TITLE']) || isset($CNF['FIELD_TEXT'])) || empty($CNF['URI_VIEW_ENTRY']))
+            return [];
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
+            'subentry_url' => $oComment->getViewUrl((int)$aCommentGi['cmt_id']),
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+
+    /**
      * Comment vote for Notifications module
      */
     public function serviceGetNotificationsVote($aEvent)

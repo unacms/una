@@ -46,6 +46,7 @@
     <string name="_bx_ntfs_option_delivery_timeout"><![CDATA[Delay before sending Email and/or Push notifications (in seconds)]]></string>
     <string name="_bx_ntfs_option_processed_event"><![CDATA[The last processed event upon notifications sending]]></string>
     <string name="_bx_ntfs_option_clear_interval"><![CDATA[Notification lifetime, in days (0 - no limit)]]></string>
+    <string name="_bx_ntfs_option_enable_comment_post_ext"><![CDATA[Notify a user about new comments for a content he's previously commented]]></string>
 
     <string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
 

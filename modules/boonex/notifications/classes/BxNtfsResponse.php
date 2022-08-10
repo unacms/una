@@ -95,7 +95,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
         if($iObjectPrivacyView < 0)
             $iOwnerId = abs($iObjectPrivacyView);
-        
+
         $mixedSubobjectId = $this->_getSubObjectId($oAlert->aExtras);
         if(!is_array($mixedSubobjectId))
             $mixedSubobjectId = array($mixedSubobjectId);
@@ -150,7 +150,53 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         );
     }
 
-	/**
+    /*
+     * Custom insert data getter for comment -> added and deleted alerts. 
+     */
+    protected function getInsertDataCommentAdded(&$oAlert, &$aHandler)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(getParam($CNF['PARAM_COMMENT_POST_EXT']) != 'on')
+            return [];
+
+        $oCmts = BxDolCmts::getObjectInstance($oAlert->aExtras['object_system'], $oAlert->aExtras['object_id']);
+        if(!$oCmts)
+            return [];
+
+        $iOwnerId = $oAlert->iSender;
+        $iObjectId = $oAlert->aExtras['object_id'];
+        $iObjectOwnerId = $this->_getObjectOwnerId($oAlert->aExtras);
+        $iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
+
+        $aResults = $aRecipients = [];        
+
+        $aComments = $oCmts->getCommentsBy(['type' => 'object_id', 'object_id' => $iObjectId]);
+        foreach($aComments as $aComment) {
+            $iCmtAuthorId = (int)$aComment['cmt_author_id'];
+            if(in_array($iCmtAuthorId, $aRecipients) || $iCmtAuthorId == $iOwnerId || $iCmtAuthorId == $iObjectOwnerId)
+                continue;
+
+            $aResults[] = [
+                'owner_id' => $iOwnerId,
+                'type' => $oAlert->sUnit,
+                'action' => $oAlert->sAction,
+                'object_id' => $iObjectId,
+                'object_owner_id' => $iCmtAuthorId,
+                'object_privacy_view' => $iObjectPrivacyView,
+                'subobject_id' => $oAlert->aExtras['comment_uniq_id'],
+                'content' => $this->_getContent($oAlert->aExtras),
+                'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
+                'processed' => 0
+            ];
+
+            $aRecipients[] = $iCmtAuthorId;
+        }
+
+        return $aResults;
+    }
+
+    /**
      * Custom insert data getter for sys_profiles_friends -> connection_added and connection_removed alerts. 
      */
     protected function getInsertDataSysProfilesFriendsConnectionAdded(&$oAlert, &$aHandler)

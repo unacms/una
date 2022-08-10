@@ -45,6 +45,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
             // some params
             'PARAM_QUEUE_ADD_THRESHOLD' => 0,
+            'PARAM_COMMENT_POST_EXT' => 'bx_notifications_enable_comment_post_ext',
 
             // objects
             'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
