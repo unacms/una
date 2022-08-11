@@ -15,6 +15,8 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     protected $_sFilter1Value;
     protected $_aFilter1Values;
 
+    protected $_bSetAclWithDuration;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
@@ -38,6 +40,8 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
             $this->_sFilter1Value = bx_process_input($sFilter1);
             $this->_aQueryAppend[$this->_sFilter1Name] = $this->_sFilter1Value;
         }
+
+        $this->_bSetAclWithDuration = true;
     }
 
     public function performActionSetAclLevel()
@@ -45,12 +49,10 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	$oMenu = BxDolMenu::getObjectInstance('sys_set_acl_level');
 
     	$aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds) || !$oMenu) {
-            echoJson(array());
-            return;
-        }
+        if(!$aIds || !is_array($aIds) || !$oMenu)
+            return echoJson([]);
 
-        $aIdsResult = array();
+        $aIdsResult = [];
         foreach($aIds as $iId) {
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
             if($this->_oModule->checkAllowedSetMembership($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
@@ -59,20 +61,21 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
             $aIdsResult[] = $this->_getProfileId($iId);
         }
 
-        if(empty($aIdsResult)) {
-            echoJson(array());
-            return;
-        }
+        if(empty($aIdsResult))
+            return echoJson([]);
 
         if(count($aIdsResult) == 1)
             $aIdsResult = $aIdsResult[0];
 
-        $sContent = $this->_oTemplate->parseHtmlByName('set_acl_popup.html', array(
-            'content' => $oMenu->getCode($aIdsResult)
-        ));
-        $sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
+        $oMenu->setWithDuration($this->_bSetAclWithDuration);
+        $oMenu->setHiddenByDefault(!$this->_bSetAclWithDuration);
+        $sContent = $oMenu->getCode($aIdsResult);
+        if(!$this->_bSetAclWithDuration)
+            $sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $this->_oTemplate->parseHtmlByName('set_acl_popup.html', [
+                'content' => $sContent
+            ]));
 
-    	echoJson(array('popup' => $sContent));
+    	echoJson(['popup' => $sContent]);
     }
 
     public function performActionManageCf()

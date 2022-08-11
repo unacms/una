@@ -12,14 +12,34 @@
  */
 class BxBaseMenuSetAclLevel extends BxTemplMenu
 {
-    protected $bWithDuration;
+    protected $_bWithDuration;
+    protected $_bHiddenByDefault;
+    protected $_bContentOnly;
+
     protected $mixedProfileId;
 
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
         
-        $this->bWithDuration = true;
+        $this->_bWithDuration = true;
+        $this->_bHiddenByDefault = true;
+        $this->_bContentOnly = false;
+    }
+    
+    public function setWithDuration($bWithDuration)
+    {
+        $this->_bWithDuration = $bWithDuration;
+    }
+
+    public function setHiddenByDefault($bHiddenByDefault)
+    {
+        $this->_bHiddenByDefault = $bHiddenByDefault;
+    }
+
+    public function setContentOnly($bContentOnly)
+    {
+        $this->_bContentOnly = $bContentOnly;
     }
 
     public function getCode ($mixedProfileId = 0)
@@ -39,7 +59,7 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
         if(bx_get('profile_id') !== false)
             $mixedProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-        if($this->bWithDuration && !is_array($mixedProfileId)) {
+        if($this->_bWithDuration && !is_array($mixedProfileId)) {
             $oForm = BxDolForm::getObjectInstance('sys_acl', 'sys_acl_set');
             if($oForm) {
                 $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params('menu.php', [
@@ -57,11 +77,16 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
                 $aProfileAclLevel = $oAcl->getMemberMembershipInfo($mixedProfileId);
                 $oForm->aInputs['level_id']['value'] = $aProfileAclLevel['id'];
 
-                return PopupBox('sys_acl_set_' . $mixedProfileId, _t('_sys_form_popup_acl_set'), $this->_oTemplate->parseHtmlByName('acl_set.html', [
+                $sContent = $this->_oTemplate->parseHtmlByName('acl_set.html', [
                     'form' => $oForm->getCode(),
                     'form_id' => $oForm->getId(),
                     'profile_id' => $mixedProfileId,
-                ]), true);
+                ]);
+
+                if($this->_bContentOnly)
+                    return $sContent;
+
+                return PopupBox('sys_acl_set_' . $mixedProfileId, _t('_sys_form_popup_acl_set'), $sContent, $this->_bHiddenByDefault);
             }
         }
 
