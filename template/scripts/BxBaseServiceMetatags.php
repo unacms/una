@@ -92,9 +92,17 @@ class BxBaseServiceMetatags extends BxDol
         if(!$oProfile)
 			return array();
 
+        if (isset($aEvent['content']['content_id']) && isset($aEvent['content']['module'])) {
+            if (BxDolRequest::serviceExists($aEvent['content']['module'], 'get_link'))
+                $sEntryUrl = bx_srv($aEvent['content']['module'], 'get_link', [$aEvent['content']['content_id']]);
+        }
+
+        if (!$sEntryUrl)
+            $sEntryUrl = BX_DOL_URL_ROOT . bx_append_url_params('searchKeyword.php', array('type' => 'mention', 'keyword' => $iProfile));
+
 		return array(
 			'entry_sample' => '_sys_profile_sample_single',
-			'entry_url' => BX_DOL_URL_ROOT . bx_append_url_params('searchKeyword.php', array('type' => 'mention', 'keyword' => $iProfile)),
+			'entry_url' => $sEntryUrl,
 			'entry_caption' => $oProfile->getDisplayName(),
 			'entry_author' => $iProfile,
 			'lang_key' => '_sys_metatags_mention_added',
