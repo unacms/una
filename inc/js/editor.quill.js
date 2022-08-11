@@ -143,7 +143,7 @@ function bx_editor_init(oEditor, oParams){
             
         }
         MenthionLink.blotName = 'menthion-link'; 
-        MenthionLink.className = 'bx-menthion-link';
+        MenthionLink.className = 'bx-mention-link';
         MenthionLink.tagName = 'a';                
         Quill.register({
             'formats/menthion-link': MenthionLink
