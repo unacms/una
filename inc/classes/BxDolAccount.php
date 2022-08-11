@@ -569,7 +569,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     {
         $iProfilesLimit = (int)getParam('sys_account_limit_profiles_number');
         bx_alert('account', 'get_limit_profiles_number', 0, 0, array('account_id' => $this->_iAccountID, 'number' => &$iProfilesLimit));
-        if ($iProfilesLimit && ($iProfilesNum = $this->getProfilesNumber()) && $iProfilesNum >= $iProfilesLimit)
+        if (!isAdmin() && $iProfilesLimit && ($iProfilesNum = $this->getProfilesNumber()) && $iProfilesNum >= $iProfilesLimit)
             return true;
 
         return false;
@@ -790,7 +790,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     static public function isAllowedCreateMultiple ($iProfileId, $isPerformAction = false)
     {
         $bResult = false;
-        if((int)getParam('sys_account_limit_profiles_number') != 1)
+        if(isAdmin() || (int)getParam('sys_account_limit_profiles_number') != 1)
             $bResult = true;
 
         $oProfile = BxDolProfile::getInstance($iProfileId);
