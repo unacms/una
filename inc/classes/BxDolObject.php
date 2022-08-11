@@ -52,6 +52,37 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
             $this->init($iId);
     }
 
+    public static function &getSystems()
+    {
+        $aResult = [];
+
+        return $aResult;
+    }
+
+    static public function pruning()
+    {
+        $iResults = 0;
+
+        $sClass = get_called_class();
+        $sMethod = 'getSystems';
+        if(!method_exists($sClass, $sMethod))
+            return $iResults;
+
+        $aSystems = $sClass::$sMethod();
+        foreach($aSystems as $aSystem) {
+            if(empty($aSystem['pruning']))
+                continue;
+
+            $oObject = $sClass::getObjectInstance($aSystem['name'], 0, false);
+            if(!$oObject || !$oObject->isEnabled())
+                continue;
+
+            $iResults += $oObject->_oQuery->pruningByDate($aSystem['pruning']);
+        }
+
+        return $iResults;
+    }
+
     public function init($iId)
     {
         if(!$this->isEnabled())

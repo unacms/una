@@ -101,6 +101,7 @@ class BxDolView extends BxDolObject
                     `module` AS `module`,
                     `table_track` AS `table_track`,
                     `period` AS `period`,
+                    `pruning` AS `pruning`,
                     `is_on` AS `is_on`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,

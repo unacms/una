@@ -138,6 +138,7 @@ class BxDolVote extends BxDolObject
                     `PostTimeout` AS `post_timeout`,
                     `MinValue` AS `min_value`,
                     `MaxValue` AS `max_value`,
+                    `Pruning` AS `pruning`,
                     `IsUndo` AS `is_undo`,
                     `IsOn` AS `is_on`,
                     `TriggerTable` AS `trigger_table`,

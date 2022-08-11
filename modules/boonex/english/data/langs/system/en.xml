@@ -3383,6 +3383,11 @@ If it is not enabled then please consider implement this optimization, since it 
             <li><b>{3}</b> deleted expired storage tokens</li>
             <li><b>{4}</b> deleted outdated transcoded images</li>
             <li><b>{5}</b> deleted/suspented accounts</li>
+            <li><b>{6}</b> deleted view tracks</li>
+            <li><b>{7}</b> deleted vote tracks</li>
+            <li><b>{8}</b> deleted score tracks</li>
+            <li><b>{9}</b> deleted favorite tracks</li>
+            <li><b>{10}</b> deleted report tracks</li>
         </ul>]]></string>
     <string name="_sys_pruning_files"><![CDATA[<h3>Files pruning:</h3>
         <ul>

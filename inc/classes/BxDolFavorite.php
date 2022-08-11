@@ -125,6 +125,7 @@ class BxDolFavorite extends BxDolObject
                     `name` AS `name`,
                     `table_track` AS `table_track`,
                     `table_lists` AS `table_lists`,
+                    `pruning` AS `pruning`,
                     `is_on` AS `is_on`,
                     `is_undo` AS `is_undo`,
                     `is_public` AS `is_public`,

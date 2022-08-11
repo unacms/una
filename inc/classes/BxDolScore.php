@@ -129,6 +129,7 @@ class BxDolScore extends BxDolObject
                     `table_main` AS `table_main`,
                     `table_track` AS `table_track`,
                     `post_timeout` AS `post_timeout`,
+                    `pruning` AS `pruning`,
                     `is_on` AS `is_on`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,

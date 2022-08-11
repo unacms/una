@@ -17,7 +17,9 @@ class BxDolObjectQuery extends BxDolDb
     protected $_sTable;
 
     protected $_sTableTrack;
+    protected $_sTableTrackFieldObject;
     protected $_sTableTrackFieldAuthor;
+    protected $_sTableTrackFieldDate;
 
     protected $_sTriggerTable;
     protected $_sTriggerFieldId;
@@ -36,8 +38,10 @@ class BxDolObjectQuery extends BxDolDb
         $this->_sTable = isset($aSystem['table_main']) ? $aSystem['table_main'] : '';
 
         $this->_sTableTrack = isset($aSystem['table_track']) ? $aSystem['table_track'] : '';
+        $this->_sTableTrackFieldObject = 'object_id';
         $this->_sTableTrackFieldAuthor = 'author_id';
-        
+        $this->_sTableTrackFieldDate = 'date';
+
         $this->_sTriggerTable = isset($aSystem['trigger_table']) ? $aSystem['trigger_table'] : '';
         $this->_sTriggerFieldId = isset($aSystem['trigger_field_id']) ? $aSystem['trigger_field_id'] : '';
         $this->_sTriggerFieldAuthor = isset($aSystem['trigger_field_author']) ? $aSystem['trigger_field_author'] : '';
@@ -153,11 +157,8 @@ class BxDolObjectQuery extends BxDolDb
                 $this->query("OPTIMIZE TABLE `{$this->_sTable}`");
     	}
 
-    	if(!empty($this->_sTableTrack)) {
-            $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
-            if($this->query($sQuery))
-                $this->query ("OPTIMIZE TABLE `{$this->_sTableTrack}`");
-    	}
+    	if(!empty($this->_sTableTrack))
+            $this->pruningByObject($iObjectId);
     }
     public function deleteAuthorEntries($iAuthorId)
     {
@@ -182,9 +183,7 @@ class BxDolObjectQuery extends BxDolDb
             }
         }
 
-        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `{$this->_sTableTrackFieldAuthor}`=?", $iAuthorId);
-        if($this->query($sQuery))
-            $this->query("OPTIMIZE TABLE `{$this->_sTableTrack}`");
+        $this->pruningByAuthor($iAuthorId);
     }
 
     public function getObjectAuthorId($iId)
@@ -218,6 +217,27 @@ class BxDolObjectQuery extends BxDolDb
             return false;
 
         return $this->_updateTriggerTable($iObjectId, $aEntry);
+    }
+
+    public function pruningByObject($iObjectId)
+    {
+        if($this->query("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id", ['object_id' => $iObjectId]))
+            $this->query("OPTIMIZE TABLE `{$this->_sTableTrack}`");
+    }
+
+    public function pruningByAuthor($iAuthorId)
+    {
+        if($this->query("DELETE FROM `{$this->_sTableTrack}` WHERE `{$this->_sTableTrackFieldAuthor}` = :author_id", ['author_id' => $iAuthorId]))
+            $this->query("OPTIMIZE TABLE `{$this->_sTableTrack}`");
+    }
+
+    public function pruningByDate($iDate)
+    {
+        $iResult = (int)$this->query("DELETE FROM `{$this->_sTableTrack}` WHERE `{$this->_sTableTrackFieldDate}` < (UNIX_TIMESTAMP() - :date)", ['date' => $iDate]);
+        if($iResult)
+            $this->query("OPTIMIZE TABLE `{$this->_sTableTrack}`");
+
+        return $iResult;
     }
 
     /**

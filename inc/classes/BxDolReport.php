@@ -157,6 +157,7 @@ class BxDolReport extends BxDolObject
                     `module` AS `module_name`,
                     `table_main` AS `table_main`,
                     `table_track` AS `table_track`,
+                    `pruning` AS `pruning`,
                     `is_on` AS `is_on`,
                     `base_url` AS `base_url`,
                     `object_comment` AS `object_comment`,

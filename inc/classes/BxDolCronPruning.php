@@ -20,14 +20,14 @@ class BxDolCronPruning extends BxDolCron
     {
         bx_alert('system', 'pruning', 0);
 
-        if (!($sOutput = ob_get_clean()))
+        if(!($sOutput = ob_get_clean()))
             return;
 
-		if(getParam('enable_notification_pruning') != 'on')
-			return;
+        if(getParam('enable_notification_pruning') != 'on')
+            return;
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Pruning', array('pruning_output' => $sOutput, 'site_title' => getParam('site_title')), 0, 0);
-        if ($aTemplate)
+        if($aTemplate)
             sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY);
     }
 
@@ -50,14 +50,35 @@ class BxDolCronPruning extends BxDolCron
         // clean outdated transcoded images
         $iDeletedTranscodedImages = BxDolTranscoderImage::pruning();
 
+        // clean view tracks
+        $iViewTracks = BxDolView::pruning();
+        
+        // clean vote tracks
+        $iVoteTracks = BxDolVote::pruning();
+        
+        // clean score tracks
+        $iScoreTracks = BxDolScore::pruning();
+
+        // clean favorite tracks
+        $iFavoriteTracks = BxDolFavorite::pruning();
+
+        // clean report tracks
+        $iReportTracks = BxDolReport::pruning();
+
         // clean accounts without profiles
         $iDeletedAccounts = BxDolAccount::pruning();
-        
+
         // clean expired keys
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
-        echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages, $iDeletedAccounts);
+        echo call_user_func_array('_t', ['_sys_pruning_db', 
+            $iDeleteMemLevels, 
+            $iSessions, $iDeletedKeys, 
+            $iDeletedExpiredTokens, $iDeletedTranscodedImages, 
+            $iDeletedAccounts,
+            $iViewTracks, $iVoteTracks, $iScoreTracks, $iFavoriteTracks, $iReportTracks
+        ]);
     }
 
     /**
