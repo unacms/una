@@ -852,7 +852,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', 'mentionsGet', (int)getParam('sys_metatags_mentions_max'), 'mention');
+        return $this->_metaAdd($iId, $s, '/data\-profile\-id="([0-9a-fA-F]+)"/u', 'mentionsDelete', 'mentionsAdd', 'mentionsGet', (int)getParam('sys_metatags_mentions_max'), 'mention');
     }
 
     /**
@@ -1010,6 +1010,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 
         if ($iRet = $this->_oQuery->$sFuncAdd($iId, $aMetas)) {
             foreach ($aMetas as $sMeta) {
+                bx_alert('meta_' . $sAlertName, 'before_added', $iObjectId, bx_get_logged_profile_id(), array('meta' => &$sMeta, 'content_id' => $iId, 'object' => $this->_sObject));
                 $iObjectId = 'mention' == $sAlertName ? $sMeta : $iId;
                 bx_alert($this->_sObject, $sAlertName . '_added', $iObjectId, bx_get_logged_profile_id(), array('meta' => $sMeta, 'content_id' => $iId));
                 bx_alert('meta_' . $sAlertName, 'added', $iObjectId, bx_get_logged_profile_id(), array('meta' => $sMeta, 'content_id' => $iId, 'object' => $this->_sObject));
