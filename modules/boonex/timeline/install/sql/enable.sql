@@ -283,13 +283,16 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_timeline_general', '_bx_timeline_options_category_general', 1);
 SET @iCategId = LAST_INSERT_ID();
 
+-- Events hidden by default:
+SET @iHdrIdComment = (SELECT `id` FROM `bx_timeline_handlers` WHERE `group`='comment' AND `type`='insert' AND `alert_unit`='comment' AND `alert_action`='added' LIMIT 1);
+
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_timeline_enable_auto_approve', 'on', @iCategId, '_bx_timeline_option_enable_auto_approve', 'checkbox', '', '', '', '', 0),
 ('bx_timeline_enable_edit', 'on', @iCategId, '_bx_timeline_option_enable_edit', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_enable_count_all_views', '', @iCategId, '_bx_timeline_option_enable_count_all_views', 'checkbox', '', '', '', '', 3),
 ('bx_timeline_enable_repost_own_actions', 'on', @iCategId, '_bx_timeline_option_enable_repost_own_actions', 'checkbox', '', '', '', '', 4),
-('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 5);
+('bx_timeline_events_hide', CONCAT_WS(',', @iHdrIdComment), @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 5);
 
 -- Category: Browse
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
