@@ -333,6 +333,7 @@
     <string name="_bx_timeline_alert_action_post_common_personal"><![CDATA[New content]]></string>
     <string name="_bx_timeline_alert_action_post_common_follow_member"><![CDATA[New content]]></string>
     <string name="_bx_timeline_alert_action_post_common_follow_context"><![CDATA[New content]]></string>
+    <string name="_bx_timeline_alert_action_repost_personal"><![CDATA[New content repost]]></string>
     <string name="_bx_timeline_alert_action_repost_follow_member"><![CDATA[New content repost]]></string>
     <string name="_bx_timeline_alert_action_repost_follow_context"><![CDATA[New content repost]]></string>
 

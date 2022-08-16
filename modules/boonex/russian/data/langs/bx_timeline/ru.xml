@@ -319,6 +319,7 @@
     <string name="_bx_timeline_alert_action_post_common_personal"><![CDATA[Новый контент]]></string>
     <string name="_bx_timeline_alert_action_post_common_follow_member"><![CDATA[Новый контент]]></string>
     <string name="_bx_timeline_alert_action_post_common_follow_context"><![CDATA[Новый контент]]></string>
+    <string name="_bx_timeline_alert_action_repost_personal"><![CDATA[Новый репост контента]]></string>
     <string name="_bx_timeline_alert_action_repost_follow_member"><![CDATA[Новый репост контента]]></string>
     <string name="_bx_timeline_alert_action_repost_follow_context"><![CDATA[Новый репост контента]]></string>
 
