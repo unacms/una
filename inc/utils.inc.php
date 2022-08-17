@@ -647,7 +647,7 @@ function clear_xss($val)
 		        'src' => 'URI',
 		        'type' => 'Text',
             ));
-            $def->addAttribute('a', 'data-profile-id', 'Number');
+            $def->addAttribute('a', 'data-profile-id', 'Text');
             $def->addAttribute('div', 'source', 'Text');
 		}
 
