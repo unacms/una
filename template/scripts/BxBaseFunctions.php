@@ -183,7 +183,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
         if (!empty($sCode)) {
-            if ((int)$sCode > 0) {
+            if (is_numeric($sCode) && (int)$sCode > 0) {
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$sCode) : false;
             } 
