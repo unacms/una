@@ -341,7 +341,7 @@ BxTimelineView.prototype.pauseVideos = function(oView)
     });
 };
 
-BxTimelineView.prototype.reload = function(oSource)
+BxTimelineView.prototype.reload = function(oSource, onLoad)
 {
     var $this = this;
 
@@ -352,6 +352,9 @@ BxTimelineView.prototype.reload = function(oSource)
         processJsonData(oData);
 
         $this.init(true);
+
+        if(typeof onLoad == 'function')
+            onLoad();
     });
 };
 
