@@ -33,8 +33,10 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
                 BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'
             ]
         );
+        if (isLogged())
+            return $this->getJsCode('main') . BxBaseFunctions::getInstance()->transBox($this->sContainerId, '', true, true);
         
-        return $this->getJsCode('main') . BxBaseFunctions::getInstance()->transBox($this->sContainerId, '', true, true);
+        return '';
     }
     
     public function popup($aModuleData, $bManual)

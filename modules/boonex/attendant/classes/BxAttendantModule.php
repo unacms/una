@@ -38,15 +38,14 @@ class BxAttendantModule extends BxDolModule
         
         $oSession = BxDolSession::getInstance();
         $sFirstPage = $oSession->getValue('sys_entrance_url');
-        $sFirstPage = 'page.php?i=view-group-profile&id=72';
        
         if ($sFirstPage){
-            if (getParam('bx_attendant_on_profile_after_action_url')){
+            if (getParam('bx_attendant_redirect_to_entered_page') == 'on'){
                 echo json_encode(['redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sFirstPage)]);  
                 exit();
             }
             else{
-                if(getParam('bx_attendant_suggest_entered_page')){
+                if(getParam('bx_attendant_suggest_entered_page') == 'on'){
                     list($sPageLink, $aPageParams) = bx_get_base_url($sFirstPage);
                     if (isset($aPageParams['i']) && isset($aPageParams['id'])){
                         $oPage = BxDolPage::getObjectInstanceByURI($aPageParams['i']);
