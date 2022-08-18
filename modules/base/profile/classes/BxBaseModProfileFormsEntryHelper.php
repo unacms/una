@@ -244,14 +244,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oSession->unsetValue('custom-referrer');
         }
 
-        if($sRedirectUrl) {
-            if(!bx_has_proto($sRedirectUrl))
-                $sRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sRedirectUrl);
-
-            header('Location: ' . $sRedirectUrl);
-            exit;
-        }
-
         parent::redirectAfterAdd($aContentInfo);
     }
 }

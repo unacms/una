@@ -25,7 +25,7 @@ class BxDolProfileForms extends BxDolFactory
         if ($isPermalink)
             $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
 
-        if(strncmp($sUrl, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) !== 0)
+        if(!bx_has_proto($sUrl))
             $sUrl = BX_DOL_URL_ROOT . $sUrl;
 
         header('Location: ' . $this->_replaceMarkers($sUrl, $aMarkers));
