@@ -1163,50 +1163,52 @@ class BxMarketModule extends BxBaseModTextModule
     	$sMethod = '';
     	$sStorage = $oStorage->getObject();
         switch($sStorage) {
-        	case $CNF['OBJECT_STORAGE']:
-        		$sMethod = 'getPhoto';
-        		break;
+            case $CNF['OBJECT_STORAGE']:
+                $sMethod = 'getPhoto';
+                break;
 
-			case $CNF['OBJECT_STORAGE_FILES']:
-				$sMethod = 'getFile';
-				break;
+            case $CNF['OBJECT_STORAGE_FILES']:
+                $sMethod = 'getFile';
+                break;
         }
 
-		$aFileInfo = $this->_oDb->$sMethod(array('type' => 'file_id', 'file_id' => $aFile['id']));
+        $aFileInfo = $this->_oDb->$sMethod(['type' => 'file_id', 'file_id' => $aFile['id']]);
         $bFileInfo = !empty($aFileInfo) && is_array($aFileInfo);
 
         $bFileInfoTitle = $bFileInfo && isset($aFileInfo['title']);
 
-		$aTmplVars = array(
-			'file_title' => $bFileInfoTitle ? $aFileInfo['title'] : '',
-			'file_title_attr' => $bFileInfoTitle ? bx_html_attribute($aFileInfo['title']) : '',
-		);
+        $aTmplVars = [
+            'file_title' => $bFileInfoTitle ? $aFileInfo['title'] : '',
+            'file_title_attr' => $bFileInfoTitle ? bx_html_attribute($aFileInfo['title']) : '',
+        ];
 
-		if($sStorage == $CNF['OBJECT_STORAGE'])
-			return $aTmplVars;
+        if($sStorage == $CNF['OBJECT_STORAGE'])
+            return $aTmplVars;
 
-		$bFileInfoVersion = $bFileInfo && isset($aFileInfo['version']);
+        $bFileInfoVersion = $bFileInfo && isset($aFileInfo['version']);
 
         $bFileInfoTypeVersion = !$bFileInfo || ($bFileInfo && isset($aFileInfo['type']) && $aFileInfo['type'] == BX_MARKET_FILE_TYPE_VERSION);
         $bFileInfoTypeUpdate = $bFileInfo && isset($aFileInfo['type']) && $aFileInfo['type'] == BX_MARKET_FILE_TYPE_UPDATE;
 
         $aVersions = $this->_oDb->$sMethod(array('type' => 'content_id', 'content_id' => $iContentId));
 
-		$aTmplVars = array_merge($aTmplVars, array(
-			'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
-			'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
+        $aTmplVars = array_merge($aTmplVars, [
+            'js_object' => $this->_oConfig->getJsObject('form'),
 
-			'file_type_version_selected' => $bFileInfoTypeVersion ? ' selected="selected"' : '',
-			'file_type_update_selected' => $bFileInfoTypeUpdate ? ' selected="selected"' : '',
+            'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
+            'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
 
-			'file_type_version_elements' => !$bFileInfoTypeVersion ? ' style="display:none;"' : '',
-			'file_type_update_elements' => !$bFileInfoTypeUpdate ? ' style="display:none;"' : '',
+            'file_type_version_selected' => $bFileInfoTypeVersion ? ' selected="selected"' : '',
+            'file_type_update_selected' => $bFileInfoTypeUpdate ? ' selected="selected"' : '',
 
-			'file_version_from_options' => $this->_oTemplate->getGhostTemplateFileOptions('version', $aFileInfo, $aVersions),
-			'file_version_to_options' => $this->_oTemplate->getGhostTemplateFileOptions('version_to', $aFileInfo, $aVersions)
-		));
+            'file_type_version_elements' => !$bFileInfoTypeVersion ? ' style="display:none;"' : '',
+            'file_type_update_elements' => !$bFileInfoTypeUpdate ? ' style="display:none;"' : '',
 
-		return $aTmplVars;
+            'file_version_from_options' => $this->_oTemplate->getGhostTemplateFileOptions('version', $aFileInfo, $aVersions),
+            'file_version_to_options' => $this->_oTemplate->getGhostTemplateFileOptions('version_to', $aFileInfo, $aVersions)
+        ]);
+
+        return $aTmplVars;
     }
 
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)

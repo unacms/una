@@ -1,6 +1,6 @@
-<div id="bx-uploader-file-{storage_object}-{file_id}" class="bx-uploader-ghost bx-market-uploader-ghost-photo mt-2 flex flex-col items-start">
-    <div class="bx-uploader-ghost-header my-1 mx-2">
-        <a href="javascript:void(0)" onclick="javascript:bx_market_ghost_toggle(this);"><i class="sys-icon chevron-right"></i></a> {file_name}
+<div id="bx-uploader-file-{storage_object}-{file_id}" class="bx-uploader-ghost bx-market-uploader-ghost-photo mt-2 flex flex-col items-stretch">
+    <div class="bx-uploader-ghost-header py-1 px-2">
+        <a href="javascript:void(0)" onclick="javascript:{js_object}.toggleGhost(this);"><i class="sys-icon chevron-right"></i></a> {file_name}
     </div>
     <div class="bx-uploader-ghost-body flex items-start w-full my-1">
         <input type="hidden" name="__name__" value="{file_id}" />
@@ -40,5 +40,5 @@
     </div>
 </div>
 <script language="javascript">
-    bx_market_ghost_init($('#bx-uploader-file-{storage_object}-{file_id}'), {file_id}, __thumb_id__, __cover_id__);
+    {js_object}.initGhost($('#bx-uploader-file-{storage_object}-{file_id}'), {file_id}, __thumb_id__, __cover_id__);
 </script>

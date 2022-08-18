@@ -110,9 +110,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             $sCode .= $sCss . $sJs;
 
         $sCode .= $this->_oModule->_oTemplate->getJsCode('form');
-        $sCode .= $this->_oModule->_oTemplate->parseHtmlByName('form.html', array(
-            'content' => parent::getCode($bDynamicMode)
-        ));
+        $sCode .= parent::getCode($bDynamicMode);
 
         return $sCode;
     }
