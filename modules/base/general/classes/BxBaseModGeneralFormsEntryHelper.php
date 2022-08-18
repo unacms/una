@@ -300,11 +300,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->redirectAfterAdd($aContentInfo);
     }
 
-    public function redirectAfterAdd($aContentInfo)
+    public function redirectAfterAdd($aContentInfo, $sUrl = '')
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-    	$sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+        if ($sUrl == '')
+    	   $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+        
         bx_alert($this->_oModule->getName(), 'redirect_after_add', 0, false, array(
             'ajax_mode' => $this->_bAjaxMode,
             'content' => $aContentInfo,
