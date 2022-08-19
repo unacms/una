@@ -117,6 +117,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'delete', @iHandler),
 
 ('comment', 'added', @iHandler),
+('comment', 'deleted', @iHandler),
 
 ('meta_mention', 'added', @iHandler),
 
