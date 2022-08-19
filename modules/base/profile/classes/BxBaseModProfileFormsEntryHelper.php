@@ -203,7 +203,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return '';
     }
 
-    public function redirectAfterAdd($aContentInfo)
+    public function redirectAfterAdd($aContentInfo, $sUrl = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
