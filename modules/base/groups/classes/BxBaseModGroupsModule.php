@@ -114,6 +114,22 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $sResult;
     }
 
+    public function serviceGetMenuAddonManageTools()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetMenuAddonManageTools();
+
+        if(!empty($CNF['FIELD_STATUS_ADMIN']))
+            $aResult['counter1_value'] = $this->_oDb->getEntriesNumByParams([[
+                'key' => $CNF['FIELD_STATUS_ADMIN'],
+                'value' => BX_BASE_MOD_GENERAL_STATUS_PENDING, 
+                'operator' => '='
+            ]]);
+
+        return $aResult;
+    }
+
     public function serviceGetOptionsMembersMode()
     {
         $CNF = &$this->_oConfig->CNF;
