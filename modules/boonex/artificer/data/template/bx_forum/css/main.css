@@ -1,5 +1,5 @@
 @import url(../../../../../forum/template/css/main.css);
-
+/*
 /*-- Participants --*/
 div.bx-forum-participants.left,
 div.bx-forum-participants.none,
@@ -51,6 +51,7 @@ div.bx-forum-participants.none .bx-forum-participant {
     white-space:normal;
     text-align: left !important;
 }
+/*
 .bx-base-unit-showcase-wrapper.bx-forum-wrapper:not(.flickity-enabled) .bx-base-text-unit-showcase{
     width: 100%
 }
@@ -99,4 +100,4 @@ div.bx-forum-participants.none .bx-forum-participant {
 .bx-base-unit-showcase-wrapper.bx-forum-wrapper{
     display: flex;
     flex-wrap: nowrap;
-}
+}*/

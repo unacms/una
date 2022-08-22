@@ -474,7 +474,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $bMulticatEnabled = $this->_isMulticatEnabled();
         if ($bMulticatEnabled)
             $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
-
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         
         if(!empty($iContentId)) {
