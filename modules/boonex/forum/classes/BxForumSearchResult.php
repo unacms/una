@@ -205,6 +205,19 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
 
         return $aSql;
     }
+    
+    function displayResultBlock()
+    {
+        if ($this->bShowcaseView) {
+            $this->oModule->_oTemplate->addCss(array('unaca.css'));
+            $this->oModule->_oTemplate->addJs(array('unaca.js'));
+            
+            return $this->oModule->_oTemplate->parseHtmlByName('unaca.html', ['content' => str_replace(['bx-forum-wrapper', 'bx-base-unit-showcase-wrapper'], '' ,str_replace('bx-search-result-block', 'bx-search-result-block unaca-t', parent::displayResultBlock()))]);
+            
+        }
+
+        return parent::displayResultBlock();
+    }
 }
 
 /** @} */
