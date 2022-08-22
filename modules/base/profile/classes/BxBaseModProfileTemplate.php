@@ -145,23 +145,20 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         
         $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
         $bCoverUrl = !empty($sCoverUrl);
-        $bCoverImage = false;
+
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
             $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
-        
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.svg');
-        else
-            $bCoverImage = true;
         
         $sThumbUrl = $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
 
-        if(substr($sTemplate, 0, 13) == 'unit_wo_cover' && $bCoverImage && !$bThumbUrl){
+        if(substr($sTemplate, 0, 13) == 'unit_wo_cover' && !$bThumbUrl && $bCoverUrl) {
             $bThumbUrl = true;
-            $sThumbUrl = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER_THUMB'])->getFileUrlById($aData[$CNF['FIELD_COVER']]);
+            $sThumbUrl = $sCoverUrl;
         }
-		
+
         $aTmplVarsThumbnail = array(
             'class_size' => '',
             'bx_if:show_thumb_image' => array(
@@ -207,6 +204,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'condition' => $bCoverUrl,
                 'content' => array(
                     'cover_url' => $sCoverUrl,
+                    'title' => $sTitle,
                 )
             ),
             'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
@@ -632,17 +630,19 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
         $sImageUrl = $this->_image ($CNF['FIELD_COVER'], $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'], '', $aData, false);
-        if($sImageUrl === false) {
-        	$iImageId = (int)getParam('sys_unit_cover_profile');
-        	$oImageTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE);
-        	if($oImageTranscoder && $iImageId != 0)
-        		$sImageUrl = $oImageTranscoder->getFileUrl($iImageId);
-        }
 
-        if($bSubstituteNoImage && !$sImageUrl)
-        	$sImageUrl = $this->getImageUrl('cover.svg');
+        if(!$bSubstituteNoImage || $sImageUrl)
+            return $sImageUrl;
 
-		return $sImageUrl;
+        $iImageId = (int)getParam('sys_unit_cover_profile');
+        $oImageTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE);
+        if($oImageTranscoder && $iImageId != 0)
+            $sImageUrl = $oImageTranscoder->getFileUrl($iImageId);
+
+        if(!$sImageUrl)
+            $sImageUrl = $this->getImageUrl('cover.svg');
+
+        return $sImageUrl;
     }
 
     /**
