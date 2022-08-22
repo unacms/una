@@ -18,7 +18,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`category_id`, `name`, `value`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'bx_profiler_long_sql_queries_log', 'on', 'Log long sql queries', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'bx_profiler_long_sql_queries_time', '2', 'Time in seconds of long sql query', 'digit', '', '', '', 2),
-(@iCategoryId, 'bx_profiler_long_sql_queries_debug', '', 'Log additionad debug info with each long sql query', 'checkbox', '', '', '', 3);
+(@iCategoryId, 'bx_profiler_long_sql_queries_debug', '', 'Log additional debug info with each long sql query', 'checkbox', '', '', '', 3);
 
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  
@@ -27,7 +27,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`category_id`, `name`, `value`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'bx_profiler_long_module_query_log', 'on', 'Log long modules queries', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'bx_profiler_long_module_query_time', '3', 'Time in seconds of long module query', 'digit', '', '', '', 2),
-(@iCategoryId, 'bx_profiler_long_module_query_debug', '', 'Log additionad debug info with each long module query', 'checkbox', '', '', '', 3);
+(@iCategoryId, 'bx_profiler_long_module_query_debug', '', 'Log additional debug info with each long module query', 'checkbox', '', '', '', 3);
 
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  
@@ -36,7 +36,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`category_id`, `name`, `value`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'bx_profiler_long_page_log', 'on', 'Log long page opens', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'bx_profiler_long_page_time', '5', 'Time in seconds of long page open', 'digit', '', '', '', 2),
-(@iCategoryId, 'bx_profiler_long_page_debug', '', 'Log additionad debug info with each long page open', 'checkbox', '', '', '', 3);
+(@iCategoryId, 'bx_profiler_long_page_debug', '', 'Log additional debug info with each long page open', 'checkbox', '', '', '', 3);
 
 -- ALERTS
 
