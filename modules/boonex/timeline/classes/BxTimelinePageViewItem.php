@@ -29,20 +29,20 @@ class BxTimelinePageViewItem extends BxBaseModTextPageAuthor
 
         $this->_iItemId = $iItemId;
     }
-    
+
     public function getCode()
     {
         $aItemData = $this->_oModule->getItemData($this->_iItemId);
 
-        if(empty($aItemData) || !is_array($aItemData)) {
-            $this->_oTemplate->displayPageNotFound();
+        if($aItemData['code'] != 0) {
+            if($aItemData['code'] == 1)
+                $this->_oTemplate->displayPageNotFound();
+            else
+                $this->_oTemplate->displayMsg($aItemData['content']);
             exit;
         }
 
-        if($aItemData['code'] != 0) {
-            $this->_oTemplate->displayMsg($aItemData['content']);
-            exit;
-        }
+        BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&id=' . $this->_iItemId);
 
         return parent::getCode();
     }
