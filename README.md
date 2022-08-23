@@ -1,76 +1,46 @@
+# Contributor Covenant Code of Conduct
 
+## Our Pledge
 
-<a href="https://una.io"><img width="300" alt="UNA Platform" src="https://user-images.githubusercontent.com/22210428/186068817-62b90f4b-deed-4661-b015-8409c3720b5e.png"></a>
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-## Unified Networking Applications
+## Our Standards
 
-[![UNA Official Website](https://img.shields.io/badge/website-una.io-blue.svg?style=for-the-badge)](https://una.io)
-[![GitHub license](https://img.shields.io/github/license/unaio/una?style=for-the-badge)](https://github.com/unaio/una/blob/master/license.txt)
-[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg?style=for-the-badge)](https://github.com/unaio/una)
-[![Follow UNA Team](https://img.shields.io/twitter/follow/unaplatform.svg?style=for-the-badge&label=Follow)](https://twitter.com/unaplatform)
-[![GitHub forks](https://img.shields.io/github/forks/unaio/una?style=for-the-badge)](https://github.com/unaio/una/network)
+Examples of behavior that contributes to creating a positive environment include:
 
-UNA is a **Community** Management System. The core platform is a full-stack framework for independent community websites and apps. With UNA content management, collaboration, e-commerce, learning and communication modules - aka **UNA Apps** - you can create communities of all types—from small interest groups to global social media networks.
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
 
-![screenshot](https://user-images.githubusercontent.com/22210428/186073113-8f82f8f2-fd5a-4dbb-8328-e0ca847809b9.png)
+Examples of unacceptable behavior by participants include:
 
+* The use of sexualized language or imagery and unwelcome sexual attention or advances
+* Trolling, insulting/derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or electronic address, without explicit permission
+* Other conduct which could reasonably be considered inappropriate in a professional setting
 
+## Our Responsibilities
 
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
+## Scope
 
-## Key Features
+This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
 
-* **Unlimited Scalability**: Hundreds, thousands or millions - get as many users as your hosting can handle. UNA won't limit you.
-* **Absolute Control**: You own the data, you set the rules, you lead the community. We give you the tools and support.
-* **Permissive License**: MIT - the license allowing unrestricted commercial and private use, distribution and modification..
-* **Continious Improvement**: Regular security, performance and feature updates for the core platform, apps and integrations.
-* **Collective Innovation**: Improvements and revisions initiated and co-funded by the platform users community.
-* **Integrations-Friendly**: Intergate 3rd-party services as UNA apps or use UNA REST API to talk to your external apps.
-* **Secure-By-Design**: Full-site SSL encryption, SPD development, regular service updates and vulnurability audits.
-* **Compliance Readiness**: We offer HIPAA, GDPR, CCPA (and any other regulations) compliance preparation service.
+## Enforcement
 
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at team@una.io. The project team will review and investigate all complaints, and will respond in a way that it deems appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
 
+Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
 
+## Attribution
 
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
 
-## Documentaion
-
-To install and run UNA platform, you'll need to a web-hosting server or you can use [UNA Cloud hosting](https://una.io/start) for instant launch. 
-
-
-- [UNA.IO - Official Website](https://una.io)
-- [Documentation](https://github.com/unaio/una/wiki)
-- [Discussions](https://una.io/page/discussions-home)
-- [Contact Team](https://una.io/page/contact)
-- [Installation](https://una.io/page/view-article?id=8)
-
-
-
-
-## Download
-
-You can [download](https://github.com/unaio/una/archive/refs/heads/master.zip) the latest installable version of UNA Core and install to your server. You will need to [create an UNA.IO account](https://una.io) and link it with UNA Studio to install and update UNA Apps.
-
-
-
-
-## Support & Development
-
-UNA is managed by [Yasko.Studio](https://yasko.studio) team and developed with the help of [UNA Community](https://una.io).
-
-* Free community support - [UNA.IO Discussions](https://una.io/page/discussions-home)
-* Direct email support - [UNA.IO Pro](https://una.io/start)
-* Professional services - [Yasko.Studio](https://yasko.studio)
-
-
-
-## License
-
-MIT
-
----
-
-> Twitter [@unaplatform](https://twitter.com/unaplatform)
-
-
+[homepage]: http://contributor-covenant.org
+[version]: http://contributor-covenant.org/version/1/4/
