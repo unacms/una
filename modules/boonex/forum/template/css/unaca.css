@@ -25,15 +25,8 @@
 }
 
 .unaca-c {
-  background-color: #fff;
-  color: #3d414a;
-  border-radius: 100%;
-  box-shadow: 0 2px 10px 0 rgba(33, 34, 36, 0.3);
-  font-size: 24px;
-  height: 48px;
   justify-content: center;
   transition: 0.3s all;
-  width: 48px;
   z-index: 1;
 }
       
@@ -59,30 +52,29 @@
 }
 
 .unaca-t {
-  font-size: 0;
-  transition: all 0.3s ease 0s;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
+    font-size: 0;
+    transition: all 0.3s ease 0s;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
     overflow: visible !important;
 }
 
 .unaca-t > div {
-  display: inline-flex !important;
-  vertical-align: top !important;
-  white-space: normal !important;
+    display: inline-flex !important;
+    vertical-align: top !important;
+    white-space: normal !important;
     width: 25% !important;
 }
-
-.unaca-i--desktop-in-1 {
-  width: 100%;
+.bx-layout-column-wide .unaca-t > div {
+     width: 33.3% !important;
 }
 
-.unaca-i--desktop-in-2 {
-  width: 50%;
+.bx-layout-column-thin .unaca-t > div {
+     width: 100% !important;
 }
 
-.unaca-i {
-  width: 33.3333333333%;
+.bx-layout-column-half .unaca-t > div {
+     width: 50% !important;
 }
 
 .unaca-t .bx-base-text-unit-showcase {
@@ -104,8 +96,6 @@
 .bx-media-phone .unaca-t > div {
     width: 100% !important;
 }
-
-
 
 .bx-media-tablet .unaca-cc {
     display: none;
