@@ -52,21 +52,6 @@ To install and run UNA platform, you'll need to a web-hosting server or you can 
 
 You can [download](https://github.com/unaio/una/archive/refs/heads/master.zip) the latest installable version of UNA Core and install to your server. You will need to [create an UNA.IO account](https://una.io) and link it with UNA Studio to install and update UNA Apps.
 
-## Emailware
-
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
-
-## Credits
-
-This software uses the following open source packages:
-
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
-- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
-- [highlight.js](https://highlightjs.org/)
 
 
 
