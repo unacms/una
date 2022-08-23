@@ -1842,6 +1842,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $iCmtCf = isset($aCmt['cmt_cf']) ? (int)$aCmt['cmt_cf'] : BxDolContentFilter::getInstance()->getDefaultValue();
 
         return array(
+            'source' => 'sys_cmts_' . $iCmtUniqId,
+
             'object_system' => $this->_sSystem, 
             'object_id' => $iObjId, 
             'object_author_id' => $iObjAthrId,

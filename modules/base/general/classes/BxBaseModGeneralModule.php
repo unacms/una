@@ -2857,9 +2857,11 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        return array(
+        return [
+            'source' => $this->_oConfig->getName() . '_' . (int)$aContentInfo[$CNF['FIELD_ID']],
+
             'object_author_id' => (int)$aContentInfo[$CNF['FIELD_AUTHOR']]
-        );
+        ];
     }
 
     public function processMetasAdd($iContentId)

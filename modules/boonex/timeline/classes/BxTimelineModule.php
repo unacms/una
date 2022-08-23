@@ -4292,6 +4292,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Event -> Post/Defer for Alerts Engine ---//
         $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'defer' : 'post') . '_' . $sPostType;
         bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, array(
+            'source' => $this->_oConfig->getName() . '_' . $iContentId,
             'owner_id' => $aEvent['owner_id'],
             'object_author_id' => $iObjectAuthorId,
             'privacy_view' => $aEvent['object_privacy_view'],
