@@ -1,8 +1,9 @@
 # UNA - [Community Management System](https://una.io)
-[![UNA Official Website](https://img.shields.io/badge/website-una.io-blue.svg)](https://una.io)
-[![license](https://img.shields.io/github/license/unaio/una.svg)](https://github.com/unaio/una/blob/master/license.txt)
-[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg)](https://github.com/unaio/una)
-[![Follow UNA Team](https://img.shields.io/twitter/follow/unateam.svg?style=social&label=Follow)](https://twitter.com/unateam)
+[![UNA Official Website](https://img.shields.io/badge/website-una.io-blue.svg?style=for-the-badge)](https://una.io)
+[![GitHub license](https://img.shields.io/github/license/unaio/una?style=for-the-badge)](https://github.com/unaio/una/blob/master/license.txt)
+[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg?style=for-the-badge)](https://github.com/unaio/una)
+[![Follow UNA Team](https://img.shields.io/twitter/follow/unaplatform.svg?style=for-the-badge&label=Follow)](https://twitter.com/unaplatform)
+[![GitHub forks](https://img.shields.io/github/forks/unaio/una?style=for-the-badge)](https://github.com/unaio/una/network)
 
 
 [![UNA - Community Management System](https://user-images.githubusercontent.com/22210428/27618752-754e87be-5c01-11e7-8c85-e9248db730a5.png)](https://una.io)
