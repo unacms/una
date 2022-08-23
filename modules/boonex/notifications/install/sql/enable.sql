@@ -92,6 +92,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notifications_events_per_page', '12', @iCategId, '_bx_ntfs_option_events_per_page', 'digit', '', '', '', '', 1),
 ('bx_notifications_events_per_preview', '5', @iCategId, '_bx_ntfs_option_events_per_preview', 'digit', '', '', '', '', 5),
 ('bx_notifications_enable_group_settings', 'on', @iCategId, '_bx_ntfs_option_enable_group_settings', 'checkbox', '', '', '', '', 10), 
+('bx_notifications_enable_group_events', 'on', @iCategId, '_bx_ntfs_option_enable_group_events', 'checkbox', '', '', '', '', 11), 
 ('bx_notifications_delivery_timeout', '120', @iCategId, '_bx_ntfs_option_delivery_timeout', 'digit', '', '', '', '', 20),
 ('bx_notifications_clear_interval', '0', @iCategId, '_bx_ntfs_option_clear_interval', 'digit', '', '', '', '', 30),
 ('bx_notifications_enable_comment_post_ext', '', @iCategId, '_bx_ntfs_option_enable_comment_post_ext', 'checkbox', '', '', '', '', 40);

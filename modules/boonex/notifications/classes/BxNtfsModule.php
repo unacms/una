@@ -249,6 +249,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $aEvents = $this->_oDb->getEvents($aParams);
 
+        if($this->_oConfig->isEventsGrouped())
+            $this->groupEvents($aEvents);
+
         // returns parsed content for React Jot
         if (!is_array($aBrowseParams) && $aBrowseParams === 'return_parsed_content')
             foreach ($aEvents as &$aContent)
@@ -305,15 +308,32 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             return 0;
 
         $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId, 0, PHP_INT_MAX);
-        $aParams = array_merge($aParams, array(
-            'new' => 1,
-        ));
 
         $sParamCheck = 'perform_privacy_check';
         $sParamCheckFor = 'perform_privacy_check_for';
 
         $iEvents = 0;
-        $aEvents = $this->_oDb->getEvents($aParams);
+        if($this->_oConfig->isEventsGrouped()) {
+            $aEvents = $this->_oDb->getEvents($aParams);
+
+            $this->groupEvents($aEvents);
+
+            $iCount = 0;
+            $iLastRead = $this->_oDb->getLastRead((int)$aParams['owner_id']);
+            foreach($aEvents as $aEvent)
+                if($aEvent['id'] > $iLastRead)
+                    $iCount++;
+
+            $aEvents = array_slice($aEvents, 0, $iCount);
+        }
+        else {
+            $aParams = array_merge($aParams, [
+                'new' => 1,
+            ]);
+
+            $aEvents = $this->_oDb->getEvents($aParams);
+        }
+
         foreach($aEvents as $aEvent) {
             if(isset($aBrowseParams[$sParamCheck]) && $aBrowseParams[$sParamCheck] !== true) 
                 continue;
@@ -517,6 +537,35 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             'url' => $aContent['url'],
             'icon' => $aContent['icon']
         ), true);
+    }
+
+    public function groupEvents(&$aEvents)
+    {
+        //--- Check for Visual Grouping
+        $aGroups = [];
+        foreach($aEvents as $iIndex => $aEvent) {
+            if(empty($aEvent['source']))
+                continue;
+
+            $sSource = $aEvent['source'];
+            if(!isset($aGroups[$sSource]))
+               $aGroups[$sSource] = [];
+
+            $aGroups[$sSource][$iIndex] = $aEvent['priority'];
+        }
+
+        //--- Perform Visual Grouping
+        foreach($aGroups as $sSource => $aGroup) {
+            if(!is_array($aGroup) || count($aGroup) < 2)
+                continue;
+
+            arsort($aGroup);
+            $iPriorityMax = reset($aGroup);
+
+            foreach($aGroup as $iIndex => $iPriority)
+                if($iPriority != $iPriorityMax)
+                    unset($aEvents[$iIndex]);
+        }
     }
 
     /*

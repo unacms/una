@@ -80,7 +80,10 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $aEvents = $this->_oDb->getEvents($aParamsDb);
         if(empty($aEvents))
-        	return $this->getEmpty();
+            return $this->getEmpty();
+
+        if($this->_oConfig->isEventsGrouped())
+            $this->_oModule->groupEvents($aEvents);
 
         $aTmplVarsEvents = array();
         foreach($aEvents as $aEvent) {

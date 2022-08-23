@@ -144,8 +144,12 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                     $sMethod = 'getOne';
                     $sSelectClause = 'COUNT(DISTINCT `' . $this->_sTable . '`.`id`)';
                 }
-                else if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)))
-                    $sSelectClause = 'DISTINCT ' . $sSelectClause;
+                else {
+                    $sSelectClause .= ", `{$this->_sTableHandlers}`.`priority` AS `priority`";
+
+                    if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)))
+                        $sSelectClause = 'DISTINCT ' . $sSelectClause;
+                }
 
                 break;
         }

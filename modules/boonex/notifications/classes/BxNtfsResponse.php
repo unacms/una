@@ -111,6 +111,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'object_privacy_view' => $iObjectPrivacyView,
                 'subobject_id' => $iSubobjectId,
                 'content' => $this->_getContent($oAlert->aExtras),
+                'source' => $this->_getSource($oAlert->aExtras),
                 'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
                 'processed' => 0
     	    );
@@ -186,6 +187,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'object_privacy_view' => $iObjectPrivacyView,
                 'subobject_id' => $oAlert->aExtras['comment_uniq_id'],
                 'content' => $this->_getContent($oAlert->aExtras),
+                'source' => $this->_getSource($oAlert->aExtras),
                 'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
                 'processed' => 0
             ];
@@ -216,6 +218,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'content' => $this->_getContent($oAlert->aExtras, array(
                     'request' => empty($oAlert->aExtras['mutual']) ? 1 : 0
                 )),
+                'source' => $this->_getSource($oAlert->aExtras),
                 'allow_view_event_to' => $iPrivacyView,
                 'processed' => 0
     	    )
@@ -242,6 +245,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'content_id' => $oAlert->aExtras['content_id'],
                 'module' => $oAlert->aExtras['object']
             )),
+            'source' => $this->_getSource($oAlert->aExtras),
             'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
             'processed' => 0
         ]];
@@ -285,6 +289,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
                 'subobject_id' => 0,
                 'content' => $this->_getContent($oAlert->aExtras),
+                'source' => $this->_getSource($oAlert->aExtras),
                 'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
                 'processed' => 0
     	    )
@@ -329,6 +334,11 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             $aResult = array_merge($aResult, $aAdd);
 
         return !empty($aResult) && is_array($aResult) ? serialize($aResult) : '';
+    }
+
+    protected function _getSource($aExtras)
+    {
+        return isset($aExtras['source']) ? $aExtras['source'] : '';
     }
 }
 

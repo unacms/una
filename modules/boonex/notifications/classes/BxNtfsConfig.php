@@ -32,6 +32,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     protected $_iDeliveryTimeout;
     protected $_iProcessedEvent;
 
+    protected $_bEventsGrouped;
+
     /**
      * Constructor
      */
@@ -132,6 +134,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
         $this->_iDeliveryTimeout = (int)getParam($sOptionPrefix . 'delivery_timeout');
         $this->_iProcessedEvent = (int)getParam($sOptionPrefix . 'processed_event');
+
+        $this->_bEventsGrouped = getParam($sOptionPrefix . 'enable_group_events') == 'on';
     }
 
     public function getOwnerNameMaxLen()
@@ -170,6 +174,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     public function getDeliveryTimeout()
     {
         return $this->_iDeliveryTimeout;
+    }
+
+    public function isEventsGrouped()
+    {
+        return $this->_bEventsGrouped;
     }
 
     public function getProcessedEvent()

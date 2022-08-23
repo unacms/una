@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events` (
   `object_privacy_view` varchar(32) NOT NULL default '3',
   `subobject_id` int(11) NOT NULL default '0',
   `content` text NOT NULL,
+  `source` varchar(32) NOT NULL default '',
   `allow_view_event_to` varchar(32) NOT NULL default '3',
   `date` int(11) NOT NULL default '0',
   `processed` tinyint(4) NOT NULL default '0',
@@ -35,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_handlers` (
   `alert_action` varchar(64) NOT NULL default '',
   `content` text NOT NULL,
   `privacy` varchar(64) NOT NULL default '',
+  `priority` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE `handler` (`group`, `type`),
   UNIQUE `alert` (`alert_unit`, `alert_action`)
@@ -67,8 +69,8 @@ INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_ac
 ('profile', 'delete', 'profile', 'delete', '');
 
 -- Mentions
-INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
-('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}');
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`, `privacy`, `priority`) VALUES 
+('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}', '', 1);
 SET @iHandlerId = LAST_INSERT_ID();
 
 INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
