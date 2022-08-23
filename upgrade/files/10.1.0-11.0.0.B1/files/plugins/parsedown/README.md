@@ -1,16 +1,18 @@
-# parsedown
+> I also make [Caret](https://caret.io?ref=parsedown) - a Markdown editor for Mac and PC.
 
-> I also make [Caret](https://caret.io/?ref=parsedown) - a Markdown editor for Mac and PC.
-
-### Parsedown
+## Parsedown
 
 [![Build Status](https://img.shields.io/travis/erusev/parsedown/master.svg?style=flat-square)](https://travis-ci.org/erusev/parsedown)
+<!--[![Total Downloads](http://img.shields.io/packagist/dt/erusev/parsedown.svg?style=flat-square)](https://packagist.org/packages/erusev/parsedown)-->
 
 Better Markdown Parser in PHP
 
-[Demo](http://parsedown.org/demo) | [Benchmarks](http://parsedown.org/speed) | [Tests](http://parsedown.org/tests/) | [Documentation](https://github.com/erusev/parsedown/wiki/)
+[Demo](http://parsedown.org/demo) |
+[Benchmarks](http://parsedown.org/speed) |
+[Tests](http://parsedown.org/tests/) |
+[Documentation](https://github.com/erusev/parsedown/wiki/)
 
-#### Features
+### Features
 
 * One File
 * No Dependencies
@@ -20,24 +22,22 @@ Better Markdown Parser in PHP
 * Tested in 5.3 to 7.2 and in HHVM
 * [Markdown Extra extension](https://github.com/erusev/parsedown-extra)
 
-#### Installation
+### Installation
+#### Composer
+Install the [composer package] by running the following command:
 
-**Composer**
+    composer require erusev/parsedown
 
-Install the [composer package](https://packagist.org/packages/erusev/parsedown) by running the following command:
-
-```
-composer require erusev/parsedown
-```
-
-**Manual**
-
-1. Download the "Source code" from the [latest release](https://github.com/erusev/parsedown/releases/latest)
+#### Manual
+1. Download the "Source code" from the [latest release]
 2. Include `Parsedown.php`
 
-#### Example
+[composer package]: https://packagist.org/packages/erusev/parsedown "The Parsedown package on packagist.org"
+[latest release]: https://github.com/erusev/parsedown/releases/latest "The latest release of Parsedown"
 
-```php
+### Example
+
+``` php
 $Parsedown = new Parsedown();
 
 echo $Parsedown->text('Hello _Parsedown_!'); # prints: <p>Hello <em>Parsedown</em>!</p>
@@ -47,12 +47,11 @@ echo $Parsedown->line('Hello _Parsedown_!'); # prints: Hello <em>Parsedown</em>!
 
 More examples in [the wiki](https://github.com/erusev/parsedown/wiki/) and in [this video tutorial](http://youtu.be/wYZBY8DEikI).
 
-#### Security
+### Security
 
 Parsedown is capable of escaping user-input within the HTML that it generates. Additionally Parsedown will apply sanitisation to additional scripting vectors (such as scripting link destinations) that are introduced by the markdown syntax itself.
 
 To tell Parsedown that it is processing untrusted user-input, use the following:
-
 ```php
 $parsedown = new Parsedown;
 $parsedown->setSafeMode(true);
@@ -62,16 +61,14 @@ If instead, you wish to allow HTML within untrusted user-input, but still want o
 
 In both cases you should strongly consider employing defence-in-depth measures, like [deploying a Content-Security-Policy](https://scotthelme.co.uk/content-security-policy-an-introduction/) (a browser security feature) so that your page is likely to be safe even if an attacker finds a vulnerability in one of the first lines of defence above.
 
-**Security of Parsedown Extensions**
+#### Security of Parsedown Extensions
 
 Safe mode does not necessarily yield safe results when using extensions to Parsedown. Extensions should be evaluated on their own to determine their specific safety against XSS.
 
-#### Escaping HTML
-
-> ⚠️  **WARNING:** This method isn't safe from XSS!
+### Escaping HTML
+> ⚠️  **WARNING:** This method isn't safe from XSS!
 
 If you wish to escape HTML **in trusted input**, you can use the following:
-
 ```php
 $parsedown = new Parsedown;
 $parsedown->setMarkupEscaped(true);
@@ -79,7 +76,7 @@ $parsedown->setMarkupEscaped(true);
 
 Beware that this still allows users to insert unsafe scripting vectors, such as links like `[xss](javascript:alert%281%29)`.
 
-#### Questions
+### Questions
 
 **How does Parsedown work?**
 
@@ -97,4 +94,4 @@ It passes most of the CommonMark tests. Most of the tests that don't pass deal w
 
 **How can I help?**
 
-Use it, star it, share it and if you feel generous, [donate](https://www.paypal.com/cgi-bin/webscr?cmd=\_s-xclick\&hosted\_button\_id=528P3NZQMP8N2).
+Use it, star it, share it and if you feel generous, [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=528P3NZQMP8N2).
