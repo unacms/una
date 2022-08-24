@@ -407,7 +407,13 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getContentLink(&$aEvent)
     {
-        return !empty($aEvent['subobject_id']) && !empty($aEvent['content']['subentry_url']) ? $aEvent['content']['subentry_url'] : $aEvent['content']['entry_url'];
+        $sLink = $aEvent['content']['entry_url'];
+        if(!empty($aEvent['subobject_id']) && !empty($aEvent['content']['subentry_url'])) 
+            $sLink = $aEvent['content']['subentry_url'];
+
+        return bx_replace_markers($sLink, [
+            'bx_url_root' => BX_DOL_URL_ROOT
+        ]);
     }
 
     protected function _isInContext(&$aEvent)

@@ -794,21 +794,21 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->CNF['T']['txt_sample_with_' . $sResult];
     }
 
-    public function getViewUrl($iOwnerId)
+    public function getViewUrl($iOwnerId, $bAbsolute = true)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_LIST'], [
+        return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_LIST'], [
             'id' => $iOwnerId
         ]);
     }
 
-    public function getHomeViewUrl()
+    public function getHomeViewUrl($bAbsolute = true)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
+        return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
     }
 
-    public function getItemViewUrl($aEvent)
+    public function getItemViewUrl($aEvent, $bAbsolute = true)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'], [
+        return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'], [
             'id' => $aEvent['id']
         ]);
     }

@@ -245,7 +245,7 @@ class BxFdbModule extends BxBaseModGeneralModule
         if(empty($aQuestion) || !is_array($aQuestion) || $aQuestion[$CNF['FIELD_STATUS_ADMIN']] != 'active')
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT;
+        $sEntryUrl = '{bx_url_root}';
         $sEntryCaption = strmaxtextlen($aQuestion[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(
@@ -276,7 +276,7 @@ class BxFdbModule extends BxBaseModGeneralModule
         if($this->_oConfig->isModeNio() && (int)$aAnswer[$CNF['FIELD_ANS_IMPORTANT']] == 0)
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT;
+        $sEntryUrl = '{bx_url_root}';
         $sEntryCaption = strmaxtextlen($aQuestion[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(

@@ -271,7 +271,7 @@ class BxBaseCmtsServices extends BxDol
         if(empty($CNF['FIELD_ID']) || empty($CNF['FIELD_AUTHOR']) || !(isset($CNF['FIELD_TITLE']) || isset($CNF['FIELD_TEXT'])) || empty($CNF['URI_VIEW_ENTRY']))
             return [];
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(
@@ -279,7 +279,7 @@ class BxBaseCmtsServices extends BxDol
             'entry_url' => $sEntryUrl,
             'entry_caption' => $sEntryCaption,
             'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
-            'subentry_url' => $oComment->getViewUrl((int)$aCommentGi['cmt_id']),
+            'subentry_url' => '{bx_url_root}' . $oComment->getViewUrl((int)$aCommentGi['cmt_id'], false),
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
@@ -304,7 +304,7 @@ class BxBaseCmtsServices extends BxDol
             return array();
 
         $iCmtId = (int)$aCmtInfo['cmt_id'];
-        $sCmtUrl = $oCmts->serviceGetLink($iCmtId);
+        $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
         return array(
@@ -348,7 +348,7 @@ class BxBaseCmtsServices extends BxDol
             $aSubentrySampleParams[] = '_undefined';
 
         $iCmtId = (int)$aCmtInfo['cmt_id'];
-        $sCmtUrl = $oCmts->serviceGetLink($iCmtId);
+        $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
         return array(
@@ -395,7 +395,7 @@ class BxBaseCmtsServices extends BxDol
             return array();
 
         $iCmtId = (int)$aCmtInfo['cmt_id'];
-        $sCmtUrl = $oCmts->serviceGetLink($iCmtId);
+        $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
         return array(

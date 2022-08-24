@@ -2236,7 +2236,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single_ext'],
-            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_url' => '{bx_url_root}' . $this->_oConfig->getItemViewUrl($aContent, false),
             'entry_caption' => $sEntryCaption,
             'entry_author' => $iEntryAuthor,
             'lang_key' => '' //may be empty or not specified. In this case the default one from Notification module will be used.
@@ -2278,11 +2278,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_url' => '{bx_url_root}' . $this->_oConfig->getItemViewUrl($aContent, false),
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
-            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'subentry_url' => '{bx_url_root}' . $oComment->getViewUrl((int)$aEvent['subobject_id'], false),
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
@@ -2324,11 +2324,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array(
             'object_id' => $iObjectId,
             'entry_sample' => '_cmt_txt_sample_comment_single',
-            'entry_url' => $oComment->getViewUrl($iParentId),
+            'entry_url' => '{bx_url_root}' . $oComment->getViewUrl($iParentId, false),
             'entry_caption' => strmaxtextlen($aParentInfo['cmt_text'], 20, '...'),
             'entry_author' => (int)$aParentInfo['cmt_author_id'],
             'subentry_sample' => '_cmt_txt_sample_reply_to',
-            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'subentry_url' => '{bx_url_root}' . $oComment->getViewUrl((int)$aEvent['subobject_id'], false),
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
@@ -2368,7 +2368,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_url' => '{bx_url_root}' . $this->_oConfig->getItemViewUrl($aContent, false),
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
@@ -2407,7 +2407,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_url' => '{bx_url_root}' . $this->_oConfig->getItemViewUrl($aContent, false),
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_reaction_single'],
@@ -2480,7 +2480,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_url' => '{bx_url_root}' . $this->_oConfig->getItemViewUrl($aContent, false),
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_score_' . $sType . '_single'],

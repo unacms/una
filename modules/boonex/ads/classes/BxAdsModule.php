@@ -676,7 +676,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aInterestedInfo) || !is_array($aInterestedInfo))
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -742,7 +742,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -769,7 +769,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
 
         return array(
             'object_id' => $iContentId,

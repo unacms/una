@@ -1113,7 +1113,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
          * should be linked to Group Profile (Group Profile -> Members tab) 
          * instead of Personal Profile of invited member.
          */
-        $sEntryUrl = $oGroupProfile->getUrl();
+        $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl());
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -1164,13 +1164,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
          * should be linked to Group Profile (Group Profile -> Members tab) 
          * instead of Personal Profile of a member, who performed an action.
          */
-        $sEntryUrl = $oGroupProfile->getUrl();
-        if(!empty($CNF['URL_ENTRY_FANS']))
-            $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], array(
+        if(empty($CNF['URL_ENTRY_FANS']))
+            $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl());
+        else
+            $sEntryUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], [
                 'profile_id' => $oGroupProfile->id()
-            ));
+            ]);
 
-        return array(
+        return [
             'entry_sample' => $CNF['T']['txt_sample_single'],
             'entry_url' => $sEntryUrl,
             'entry_caption' => $oGroupProfile->getDisplayName(),
@@ -1178,7 +1179,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'subentry_sample' => $oProfile->getDisplayName(),
             'subentry_url' => $sEntryUrl,
             'lang_key' => $sLangKey
-        );
+        ];
     }
 
     /**
@@ -1201,7 +1202,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
-        $a['content']['url'] = $oGroupProfile->getUrl();
+        $a['content']['url'] = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl());
         $a['content']['title'] = $oGroupProfile->getDisplayName();
 
         if(isset($CNF['FIELD_PUBLISHED'])) {
