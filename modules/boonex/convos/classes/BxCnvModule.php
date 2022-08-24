@@ -560,6 +560,11 @@ class BxCnvModule extends BxBaseModTextModule
         $aCollaborators = $this->_oDb->getCollaborators($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]);
         return isset($aCollaborators[$iProfileId]);
     }
+
+    public function serviceIsAllowedPostInContext()
+    {
+        return false;
+    }
 }
 
 /** @} */

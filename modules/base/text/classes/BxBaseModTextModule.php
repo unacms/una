@@ -1053,6 +1053,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         return $aParams;
     }
+
+    public function serviceIsAllowedPostInContext()
+    {
+        return true;
+    }
 }
 
 /** @} */
