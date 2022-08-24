@@ -26,6 +26,8 @@
     <string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Show events]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Enable brief cards]]></string>
+    <string name="_bx_timeline_option_title_chars"><![CDATA[Number of characters in auto-generated update's title]]></string>
+    <string name="_bx_timeline_option_title_chars_short"><![CDATA[Number of characters in auto-generated update's short title]]></string>
     <string name="_bx_timeline_option_videos_preload"><![CDATA[Videos preload]]></string>
     <string name="_bx_timeline_option_videos_preload_auto"><![CDATA[Auto]]></string>
     <string name="_bx_timeline_option_videos_preload_metadata"><![CDATA[Metadata]]></string>
