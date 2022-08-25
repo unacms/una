@@ -51,6 +51,7 @@
 
     <string name="_bx_ntfs_privacy_view"><![CDATA[Просматривать события]]></string>
 
+    <string name="_bx_ntfs_alert_action_group_comment"><![CDATA[Новые комментарии]]></string>
     <string name="_bx_ntfs_alert_action_group_content_updated"><![CDATA[Контент был обновлен]]></string>
     <string name="_bx_ntfs_alert_action_group_action_required"><![CDATA[Требуются ваши действия]]></string>
 
@@ -62,6 +63,7 @@
     <string name="_bx_ntfs_alert_action_mention_added_personal"><![CDATA[Кто-то упомянул о Вас]]></string>
     <string name="_bx_ntfs_alert_action_friendship_added_personal"><![CDATA[У Вас новый друг]]></string>
     <string name="_bx_ntfs_alert_action_subscription_added_personal"><![CDATA[У Вас новый последователь]]></string>
+    <string name="_bx_ntfs_alert_action_comment_added_personal"><![CDATA[Кто-то добавил комментарий к ранее прокомментированому вами контенту]]></string>
     <string name="_bx_ntfs_alert_action_added_follow_member"><![CDATA[Новый контент]]></string>
     <string name="_bx_ntfs_alert_action_added_follow_context"><![CDATA[Новый контент]]></string>
     <string name="_bx_ntfs_alert_action_commentPost_personal"><![CDATA[Кто-то добавил комментарий к вашему контенту]]></string>
@@ -98,6 +100,7 @@
     <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Активность, относящаяся к контекстам (группам, событиям и тп), за которыми Вы следите]]></string>
     <string name="_bx_ntfs_setting_type_other"><![CDATA[Другая активность]]></string>
 
+    <string name="_bx_ntfs_alert_module_comment"><![CDATA[Комментарии]]></string>
     <string name="_bx_ntfs_alert_module_sys_cmts"><![CDATA[Комментарии]]></string>
     <string name="_bx_ntfs_alert_module_sys_cmts_reactions"><![CDATA[Реакции к комментариям]]></string>
     <string name="_bx_ntfs_alert_module_meta_mention"><![CDATA[Упоминания о профайлах]]></string>
