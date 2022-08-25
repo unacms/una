@@ -41,3 +41,7 @@
 .dark .ql-picker-options .ql-picker-item{
     color: rgb(209, 213, 219);
 }
+.ql-editor.prose ol li::marker {
+    display: none;
+    content:'';
+}
