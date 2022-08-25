@@ -410,12 +410,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bInfScroll = getParam($sOptionPrefix . 'enable_infinite_scroll') == 'on';
         $this->_iInfScrollAutoPreloads = (int)getParam($sOptionPrefix . 'auto_preloads');
 
-        $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
-        $this->_iLiveUpdateLength = 10;
-        $this->_iCharsDisplayMinTitle = 32;
-        $this->_iCharsDisplayMaxTitle = 64;
+        $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');       
 
         $this->_bBriefCards = getParam($sOptionPrefix . 'enable_brief_cards') == 'on';
+
+        $this->_iLiveUpdateLength = 10;
+        $this->_iCharsDisplayMinTitle = (int)getParam($sOptionPrefix . 'title_chars_short');
+        $this->_iCharsDisplayMaxTitle = (int)getParam($sOptionPrefix . 'title_chars');
 
         $this->_sVideosPreload = getParam($sOptionPrefix . 'videos_preload');
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
@@ -794,21 +795,21 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->CNF['T']['txt_sample_with_' . $sResult];
     }
 
-    public function getViewUrl($iOwnerId)
+    public function getViewUrl($iOwnerId, $bAbsolute = true)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_LIST'], [
+        return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_LIST'], [
             'id' => $iOwnerId
         ]);
     }
 
-    public function getHomeViewUrl()
+    public function getHomeViewUrl($bAbsolute = true)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
+        return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
     }
 
-    public function getItemViewUrl($aEvent)
+    public function getItemViewUrl($aEvent, $bAbsolute = true)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'], [
+        return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'], [
             'id' => $aEvent['id']
         ]);
     }

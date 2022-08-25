@@ -85,28 +85,28 @@ class BxBaseServiceMetatags extends BxDol
 	/**
      * Get notification data for Notifications module - action Mention. 
      */
-	public function serviceGetNotificationsPostMention($aEvent)
+    public function serviceGetNotificationsPostMention($aEvent)
     {
     	$iProfile = (int)$aEvent['object_owner_id'];
     	$oProfile = BxDolProfile::getInstance($iProfile);
         if(!$oProfile)
-			return array();
+            return array();
 
         if (isset($aEvent['content']['content_id']) && isset($aEvent['content']['module'])) {
             if (BxDolRequest::serviceExists($aEvent['content']['module'], 'get_link'))
-                $sEntryUrl = bx_srv($aEvent['content']['module'], 'get_link', [$aEvent['content']['content_id']]);
+                $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', bx_srv($aEvent['content']['module'], 'get_link', [$aEvent['content']['content_id']]));
         }
 
         if (!$sEntryUrl)
-            $sEntryUrl = BX_DOL_URL_ROOT . bx_append_url_params('searchKeyword.php', array('type' => 'mention', 'keyword' => $iProfile));
+            $sEntryUrl = '{bx_url_root}' . bx_append_url_params('searchKeyword.php', array('type' => 'mention', 'keyword' => $iProfile));
 
-		return array(
-			'entry_sample' => '_sys_profile_sample_single',
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $oProfile->getDisplayName(),
-			'entry_author' => $iProfile,
-			'lang_key' => '_sys_metatags_mention_added',
-		);
+        return array(
+            'entry_sample' => '_sys_profile_sample_single',
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $oProfile->getDisplayName(),
+            'entry_author' => $iProfile,
+            'lang_key' => '_sys_metatags_mention_added',
+        );
     }
 }
 

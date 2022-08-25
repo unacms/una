@@ -173,6 +173,13 @@ BxTimelineView.prototype.initSeeMore = function(oParent, bInItems)
     oSubParent.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
     });
+
+    if(oSubParent.find('.bx-tl-item-text .bx-tl-content .bx-embed-link').length != 0)
+        setTimeout(function() {
+            oSubParent.find('.bx-tl-item-text .bx-tl-content:not(.' +  $this.sSP + '-overflow)').has('.bx-embed-link').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                $this.onFindOverflow(oElement);
+            });
+        }, 4000);
 };
 
 BxTimelineView.prototype.initJumpTo = function(oParent)

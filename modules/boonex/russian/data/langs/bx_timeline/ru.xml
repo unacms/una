@@ -26,6 +26,8 @@
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Включить лаконичные карточки]]></string>
+    <string name="_bx_timeline_option_title_chars"><![CDATA[Количество символов в автогенерируемом заголовке сообщения]]></string>
+    <string name="_bx_timeline_option_title_chars_short"><![CDATA[Количество символов в автогенерируемом укороченном заголовке сообщения]]></string>
     <string name="_bx_timeline_option_videos_preload"><![CDATA[Предварительная загрузка для видео роликов]]></string>
     <string name="_bx_timeline_option_videos_preload_auto"><![CDATA[Автоматически]]></string>
     <string name="_bx_timeline_option_videos_preload_metadata"><![CDATA[Метаданные]]></string>

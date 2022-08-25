@@ -325,8 +325,8 @@ class BxInvModule extends BxDolModule
     	$sModule = $this->_aModule['name'];
 
     	$sEventPrivacy = $sModule . '_allow_view_event_to';
-		if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
-			$sEventPrivacy = '';
+        if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+            $sEventPrivacy = '';
 
         return array(
             'handlers' => array(
@@ -347,26 +347,25 @@ class BxInvModule extends BxDolModule
     public function serviceGetNotificationsRequest($aEvent)
     {  
         if (getParam('bx_invites_requests_notifications') != 'on')
-             return array();
-        
+            return [];
+
         $aRequest = $this->_oDb->getRequests(array('type' => 'by_id', 'value' => $aEvent['object_id']));
         if (!$aRequest)
-            return array();
-           
+            return [];
+
         $CNF = &$this->_oConfig->CNF;
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_REQUESTS']);
-            
-		return array(
-			'entry_sample' => $aRequest['name'] . '(' . $aRequest['email'] . ')',
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $aRequest['text'],
-			'entry_author' => '',
-			'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
-			'lang_key' => '_bx_invites_alert_action_request', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink($CNF['URL_REQUESTS']);
+
+        return [
+            'entry_sample' => $aRequest['name'] . '(' . $aRequest['email'] . ')',
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $aRequest['text'],
+            'entry_author' => '',
+            'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
+            'lang_key' => '_bx_invites_alert_action_request', //may be empty or not specified. In this case the default one from Notification module will be used.
+        ];
     }
-    
-    
+
     public function attachAccountIdToInvite($iAccountId, $sKey)
     {
         $this->_oDb->attachAccountIdToInvite($iAccountId, $sKey);

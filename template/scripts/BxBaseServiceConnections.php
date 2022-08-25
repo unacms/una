@@ -288,7 +288,7 @@ class BxBaseServiceConnections extends BxDol
 
         return array(
             'entry_sample' => '_sys_profile_sample_single',
-            'entry_url' => $oOwner->getUrl(),
+            'entry_url' => str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oOwner->getUrl()),
             'entry_caption' => $oProfile->getDisplayName(),
             'entry_author' => $oProfile->id(),
             'lang_key' => '_sys_profile_subscription_added',
@@ -316,7 +316,7 @@ class BxBaseServiceConnections extends BxDol
 
         return array(
             'entry_sample' => '_sys_profile_sample_single',
-            'entry_url' => $oOwner->getUrl(),
+            'entry_url' => str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oOwner->getUrl()),
             'entry_caption' => $oProfile->getDisplayName(),
             'entry_author' => $oProfile->id(),
             'lang_key' => $sLangKey,

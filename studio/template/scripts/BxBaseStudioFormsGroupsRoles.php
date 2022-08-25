@@ -381,7 +381,7 @@ class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
         foreach ($aModules as $sModuleUri => $sModuleName) {
             $oModule = BxDolModule::getInstance($sModuleUri);
             if ($oModule) {
-                if (isset($oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']) && !BxDolRequest::serviceExists($sModuleUri, 'act_as_profile')) {
+                if (bx_srv('system', 'is_module_content', [$sModuleUri]) && !BxDolRequest::serviceExists($sModuleUri, 'act_as_profile')) {
                     $aDefaultActions[$sModuleUri] = [
                         'post' => 1,
                         'edit_any' => $bAdminOrModerator,

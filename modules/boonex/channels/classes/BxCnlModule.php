@@ -402,7 +402,7 @@ class BxCnlModule extends BxBaseModGroupsModule
             if(method_exists($oModule, 'serviceActAsProfile') && $oModule->serviceActAsProfile())
                 $aRv['lang_key'] = '_bx_channels_ntfs_txt_subobject_added_profile';
 
-            $aRv['entry_url'] = $this->serviceGetLink($aContentEvent['cnl_id']);
+            $aRv['entry_url'] = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $this->serviceGetLink($aContentEvent['cnl_id']));
             return $aRv;
         }
 

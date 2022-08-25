@@ -1865,7 +1865,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(
@@ -1938,7 +1938,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(
@@ -1947,7 +1947,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
             'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
-            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'subentry_url' => '{bx_url_root}' . $oComment->getViewUrl((int)$aEvent['subobject_id'], false),
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
@@ -1969,18 +1969,18 @@ class BxBaseModGeneralModule extends BxDolModule
             return array();
 
         $iObjectId = (int)$aParentInfo['cmt_object_id'];
-		$oComment->init($iObjectId);
+            $oComment->init($iObjectId);
 
-		return array(
-		    'object_id' => $iObjectId,
-			'entry_sample' => '_cmt_txt_sample_comment_single',
-			'entry_url' => $oComment->getViewUrl($iParentId),
-			'entry_caption' => strmaxtextlen($aParentInfo['cmt_text'], 20, '...'),
-			'entry_author' => (int)$aParentInfo['cmt_author_id'],
-			'subentry_sample' => '_cmt_txt_sample_reply_to',
-			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'object_id' => $iObjectId,
+            'entry_sample' => '_cmt_txt_sample_comment_single',
+            'entry_url' => '{bx_url_root}' . $oComment->getViewUrl($iParentId, false),
+            'entry_caption' => strmaxtextlen($aParentInfo['cmt_text'], 20, '...'),
+            'entry_author' => (int)$aParentInfo['cmt_author_id'],
+            'subentry_sample' => '_cmt_txt_sample_reply_to',
+            'subentry_url' => '{bx_url_root}' . $oComment->getViewUrl((int)$aEvent['subobject_id'], false),
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
 	/**
@@ -1999,7 +1999,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(
@@ -2039,7 +2039,7 @@ class BxBaseModGeneralModule extends BxDolModule
         else
             $aSubentrySampleParams[] = '_undefined';
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(
@@ -2082,7 +2082,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$oScore || !$oScore->isEnabled())
             return array();
 
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         return array(

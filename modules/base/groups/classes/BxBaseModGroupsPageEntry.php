@@ -121,7 +121,10 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
                 'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
             )), true);
 
-        $this->_oTemplate->addJs(array('invite_popup.js'));        
+        $this->_oTemplate->addJs([
+            'modules/base/groups/js/|invite_popup.js', 
+            'invite_popup.js'
+        ]);
         return $sCode;
     }
 

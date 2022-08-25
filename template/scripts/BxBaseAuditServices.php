@@ -59,7 +59,7 @@ class BxBaseAuditServices extends BxDol
             return array();
 
         $iCmtId = (int)$aCmtInfo['cmt_id'];
-        $sCmtUrl = $oCmts->serviceGetLink($iCmtId);
+        $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
         return array(
@@ -103,7 +103,7 @@ class BxBaseAuditServices extends BxDol
             $aSubentrySampleParams[] = '_undefined';
 
         $iCmtId = (int)$aCmtInfo['cmt_id'];
-        $sCmtUrl = $oCmts->serviceGetLink($iCmtId);
+        $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
         return array(
@@ -150,7 +150,7 @@ class BxBaseAuditServices extends BxDol
             return array();
 
         $iCmtId = (int)$aCmtInfo['cmt_id'];
-        $sCmtUrl = $oCmts->serviceGetLink($iCmtId);
+        $sCmtUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oCmts->serviceGetLink($iCmtId));
         $sCmtCaption = strmaxtextlen($oCmts->serviceGetText($iCmtId), 20, '...');
 
         return array(

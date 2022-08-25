@@ -409,7 +409,13 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if(is_string($mixedModule))
             $mixedModule = BxDolModule::getInstance($mixedModule);
 
-        return $mixedModule instanceof BxDolModule && $mixedModule instanceof iBxDolContentInfoService && !($mixedModule instanceof iBxDolProfileService);
+
+        return
+            $mixedModule instanceof BxDolModule &&
+            $mixedModule instanceof iBxDolContentInfoService &&
+            !($mixedModule instanceof iBxDolProfileService) &&
+            BxDolRequest::serviceExists($mixedModule->_aModule, 'is_allowed_post_in_context') &&
+            bx_srv($mixedModule->getName(), 'is_allowed_post_in_context');
     }
 
     /**
