@@ -50,6 +50,9 @@
     <string name="_bx_smtp_option_secure"><![CDATA[Использовать шифрованное соединение для SMTP сервера]]></string>
     <string name="_bx_smtp_option_allow_selfsigned"><![CDATA[Разрешить не-безопасные сертификаты]]></string>
     <string name="_bx_smtp_option_from_name"><![CDATA[Имя, от которого отправлять все письма]]></string>
-    <string name="_bx_smtp_option_from_email"><![CDATA[E-mail адрес, от которого отправлять все письма]]></string>    
+    <string name="_bx_smtp_option_from_email"><![CDATA[E-mail адрес, от которого отправлять все письма]]></string>
+    <string name="_bx_smtp_option_test_mode"><![CDATA[Тестовый режим (перенаправить всю почту на единственный адрес)]]></string>
+    <string name="_bx_smtp_option_test_email"><![CDATA[Тестовый e-mail]]></string>
+    <string name="_bx_smtp_option_test_subj"><![CDATA[Тестовый префикс темы письма]]></string>
     <string name="_bx_smtp_mailer_log"><![CDATA[SMTP Почтовик: ошибки отправки]]></string>
 </resources>
