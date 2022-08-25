@@ -43,8 +43,7 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
 
         return [
             $this->getUnitMetaItemButtonSmall(_t('_bx_groups_menu_item_title_pay_and_join'), [
-                'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', [
-                    'i' => $CNF['URI_JOIN_ENTRY'], 
+                'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_JOIN_ENTRY'], [
                     'profile_id' => $this->_oContentProfile->id()
                 ])
             ]),
