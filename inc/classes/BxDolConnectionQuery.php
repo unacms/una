@@ -45,29 +45,31 @@ class BxDolConnectionQuery extends BxDolDb
             $sWhereJoin2 .= $this->prepareAsString(" AND `c2`.`mutual` = ?", $isMutual);
         }
 
-        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')" : '';
+        $sJoin = "";
+        if($this->_aObject['profile_content'])
+            $sJoin = " INNER JOIN `sys_profiles` AS `cp1` ON (`cp1`.`id` = `c`.`content` AND `cp1`.`status` = 'active') INNER JOIN `sys_profiles` AS `cp2` ON (`cp2`.`id` = `c2`.`content` AND `cp2`.`status` = 'active')";
 
-        return array(
-            'join' => "
-                INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sWhereJoin1)
-                INNER JOIN `{$this->_sTable}` AS `c2` ON (`c2`.`content` = `c`.`content` $sWhereJoin2)" . $sJoin,
-        );
+        return [
+            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sWhereJoin1) INNER JOIN `{$this->_sTable}` AS `c2` ON (`c2`.`content` = `c`.`content` $sWhereJoin2)" . $sJoin,
+        ];
     }
 
     public function getConnectedContentSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
     {
         $aResult = $this->getConnectedContentSQLPartsExt($sContentTable, $sContentField, $iInitiator, $isMutual);
 
-        $aFields = array();
+        $aFields = [];
         foreach($aResult['fields'] as $sFieldAlias => $aField)
             $aFields[$sFieldAlias] = "`" . $aField['table_alias'] . "`.`" . $aField['name'] . "`";
 
-        $sJoin = $this->_aObject['profile_content'] ? "INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `{$aResult['join']['table_alias']}`.`content` AND `sys_profiles`.`status` = 'active')" : '';
+        $sJoin = "";
+        if($this->_aObject['profile_content']) 
+            $sJoin = " INNER JOIN `sys_profiles` AS `cp` ON (`cp`.`id` = `{$aResult['join']['table_alias']}`.`content` AND `cp`.`status` = 'active')";
 
-        return array(
+        return [
             'fields' => $aFields,
-            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ") " . $sJoin,
-        );
+            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")" . $sJoin,
+        ];
     }
 
     public function getConnectedContentSQLPartsExt ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
@@ -104,11 +106,13 @@ class BxDolConnectionQuery extends BxDolDb
     {
         $aResult = $this->getConnectedInitiatorsSQLPartsExt($sInitiatorTable, $sInitiatorField, $iContent, $isMutual);
 
-        $sJoin = $this->_aObject['profile_initiator'] ? "INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `{$aResult['join']['table_alias']}`.`initiator` AND `sys_profiles`.`status` = 'active')" : '';
+        $sJoin = '';
+        if($this->_aObject['profile_initiator'])
+            $sJoin = " INNER JOIN `sys_profiles` AS `cp` ON (`cp`.`id` = `{$aResult['join']['table_alias']}`.`initiator` AND `cp`.`status` = 'active')";
 
-        return array(
-            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ") " . $sJoin,
-        );
+        return [
+            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")" . $sJoin,
+        ];
     }
 
     public function getConnectedInitiatorsSQLPartsExt ($sInitiatorTable, $sInitiatorField, $iContent, $isMutual = false)
