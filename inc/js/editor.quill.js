@@ -195,10 +195,10 @@ function bx_editor_init(oEditor, oParams){
         var AlignStyle = Quill.import('attributors/style/align');
         Quill.register(AlignStyle, true);
         
-        var DirectionStyle = Quill.import('attributors/style/direction')
+        var DirectionStyle = Quill.import('attributors/style/direction');
         Quill.register(DirectionStyle, true);
         
-        const Parchment = Quill.import("parchment")
+        const Parchment = Quill.import("parchment");
         const pixelLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
         const TAB_MULTIPLIER = 30
 
@@ -216,7 +216,7 @@ function bx_editor_init(oEditor, oParams){
             whitelist: pixelLevels.map(value => `${value * TAB_MULTIPLIER}px`),
         })
 
-        Quill.register({"formats/indent": IndentStyle}, true)
+        Quill.register({"formats/indent": IndentStyle}, true);
         
         bQuillRegistred = true; 
         
