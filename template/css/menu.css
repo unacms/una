@@ -236,24 +236,25 @@ ul.bx-menu-main-submenu {
     padding:0;
 }
 ul.bx-menu-toolbar li {
-	position:relative;
+    position:relative;
     float:left;
     margin:0px;
 } 
 
 ul.bx-menu-toolbar li a {
-    position:relative;
-    display:block;
-    height:48px;
-    height:3rem;
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    
+    height: 3rem;
 
-    line-height:48px;
-    line-height:3rem;
-    font-size:16px;
-    font-size:1rem;
+    font-size: 1rem;
     text-align: center;
-    vertical-align:middle;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 ul.bx-menu-toolbar li a .sys-icon,
@@ -268,7 +269,7 @@ ul.bx-menu-toolbar li a .sys-icon-a {
 }
 
 ul.bx-menu-toolbar li img {
-	max-height:48px;
+    max-height:48px;
     max-height:3rem;
 
     background-position:center center;
@@ -277,14 +278,18 @@ ul.bx-menu-toolbar li img {
 
 ul.bx-menu-toolbar li .sys-icon-a,
 ul.bx-menu-toolbar li .sys-icon {
-    display:inline-block;
-    vertical-align:middle;
+    display: inline-block;
+    vertical-align: middle;
 
-    font-size:24px;
-    font-size:1.5rem;
-    text-align:center;
-    width:1.5rem;
-    height:1.5rem;
+    width: 1.5rem;
+
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+ul.bx-menu-toolbar li img, 
+ul.bx-menu-toolbar li .sys-icon.sys-icon-svg {
+    height: 1.5rem;
 }
 
 ul.bx-menu-toolbar li .bx-menu-toolbar-item-unit {

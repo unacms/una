@@ -482,38 +482,38 @@
     }
 
     /* Common elements: Blocks, Boxes, etc. */
-    .bx-artificer .bx-def-box {
+    .bx-def-box {
         @apply flex flex-col;
     }
-    .bx-artificer .bx-def-box.bx-def-box-hor {
+    .bx-def-box.bx-def-box-hor {
         @apply flex-row;
     }
-    .bx-artificer .bx-def-color-bg-block,
-    .bx-artificer .bx-def-color-bg-box,
-    .bx-artificer .bx-popup-color-bg {
+    .bx-def-color-bg-block,
+    .bx-def-color-bg-box,
+    .bx-popup-color-bg {
         @apply bg-white dark:bg-gray-800 shadow;
     }
-    .bx-artificer .bx-def-border-block,
-    .bx-artificer .bx-def-box,
-    .bx-artificer .bx-popup-border {
+    .bx-def-border-block,
+    .bx-def-box,
+    .bx-popup-border {
         @apply ring-1 ring-gray-300 dark:ring-gray-700;
     }
-    .bx-artificer .bx-def-border-radius-block,
-    .bx-artificer .bx-def-box-round-corners,
-    .bx-artificer .bx-popup-border {
+    .bx-def-border-radius-block,
+    .bx-def-box-round-corners,
+    .bx-popup-border {
         @apply rounded-md;
     }
-    .bx-artificer .bx-content-padding-block {
+    .bx-content-padding-block {
         @apply p-3 md:p-4;
     }
-    .bx-artificer .bx-def-color-bg-box-hover {
+    .bx-def-color-bg-box-hover {
         @apply hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-gray-200;
     }
-    .bx-artificer .bx-def-color-bg-box-active {
+    .bx-def-color-bg-box-active {
         @apply bg-gray-100 dark:bg-gray-700;
     }
 
-    .bx-artificer .bx-db-title {
+    .bx-db-title {
         @apply leading-8 text-lg lg:text-xl text-gray-800 dark:text-gray-100 font-semibold align-middle;
     }
 
