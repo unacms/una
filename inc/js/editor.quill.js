@@ -192,6 +192,32 @@ function bx_editor_init(oEditor, oParams){
             'formats/embed-link': EmbedCode
         });
         
+        var AlignStyle = Quill.import('attributors/style/align');
+        Quill.register(AlignStyle, true);
+        
+        var DirectionStyle = Quill.import('attributors/style/direction');
+        Quill.register(DirectionStyle, true);
+        
+        const Parchment = Quill.import("parchment");
+        const pixelLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        const TAB_MULTIPLIER = 30
+
+        class IndentAttributor extends Parchment.Attributor.Style {
+            add(node, value) {
+                return super.add(node, `${+value * TAB_MULTIPLIER}px`)
+            }
+            value(node) {
+                return parseFloat(super.value(node)) / TAB_MULTIPLIER || undefined // Don't return NaN
+            }
+        }
+
+        const IndentStyle = new IndentAttributor("indent", "margin-left", {
+            scope: Parchment.Scope.BLOCK,
+            whitelist: pixelLevels.map(value => `${value * TAB_MULTIPLIER}px`),
+        })
+
+        Quill.register({"formats/indent": IndentStyle}, true);
+        
         bQuillRegistred = true; 
         
         var icons = Quill.import('ui/icons');
