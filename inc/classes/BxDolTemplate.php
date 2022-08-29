@@ -2883,6 +2883,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             ));
         }
         catch(Exception $oException) {
+            bx_log('sys_template', "Error in _parseContent method. Cannot parse template insertion (<bx_include... />).\n" . 
+                "  Error ({$oException->getCode()}): {$oException->getMessage()}\n" . 
+                (!empty($_COOKIE['memberID']) ? "  Account ID: {$_COOKIE['memberID']}\n" : "")
+            );
+
             return '';
         }
 
@@ -2899,9 +2904,19 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sContent = preg_replace($aKeys, $aValues, $sContent);
 
         //--- Parse System Keys ---//
-        $sContent = preg_replace_callback("'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'", function($aMatches) use($oTemplate, $mixedKeyWrapperHtml) {
-        	return $oTemplate->parseSystemKey($aMatches[1], $mixedKeyWrapperHtml);
-        }, $sContent);
+        try {
+            $sContent = preg_replace_callback("'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'", function($aMatches) use($oTemplate, $mixedKeyWrapperHtml) {
+                return $oTemplate->parseSystemKey($aMatches[1], $mixedKeyWrapperHtml);
+            }, $sContent);
+        }
+        catch(Exception $oException) {
+            bx_log('sys_template', "Error in _parseContent method. Cannot parse System Keys.\n" . 
+                "  Error ({$oException->getCode()}): {$oException->getMessage()}\n" . 
+                (!empty($_COOKIE['memberID']) ? "  Account ID: {$_COOKIE['memberID']}\n" : "")
+            );
+
+            return '';
+        }
 
         return $sContent;
     }
@@ -2992,7 +3007,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVarValues, $mixedKeyWrapperHtml, $sCheckIn) {
                     $mixedResult = $oTemplate->getCached($aMatches[1], $aVarValues, $mixedKeyWrapperHtml, $sCheckIn, false);
                     if($mixedResult === false)
-                        throw new Exception('Unable to create cache file.');
+                        throw new Exception("Unable to create cache file ({$aMatches[1]}).", 1);
 
                     return $mixedResult;
                 }, $sContent);
@@ -3000,6 +3015,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sContent = $this->_parseContentKeys($sContent);
         }
         catch(Exception $oException) {
+            if(($iCode = $oException->getCode()) != 1)
+                bx_log('sys_template', "Error in _compileContent method. Cannot parse template insertion (<bx_include... />).\n" . 
+                    "  Error ({$iCode}): {$oException->getMessage()}\n" . 
+                    (!empty($_COOKIE['memberID']) ? "  Account ID: {$_COOKIE['memberID']}\n" : "")
+                );
+
             return false;
         }
 
@@ -3016,6 +3037,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         //--- Parse Predefined Keys ---//
         $sContent = preg_replace($aKeys, $aValues, $sContent);
+
         //--- Parse System Keys ---//
         $sContent = preg_replace( "'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'", "<?php echo \$this->parseSystemKey('\\1', \$mixedKeyWrapperHtml);?>", $sContent);
 
