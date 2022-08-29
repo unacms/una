@@ -19,6 +19,7 @@ use Alancting\Microsoft\JWT\AzureAd\AzureAdIdTokenJWT;
 /**
  * This Azude AD connect code was created with instructions from:
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-b2c-overview#supported-app-types-and-scenarios
+ * 
  * https://www.sipponen.com/archives/4024
  * And official docs:
  * https://docs.microsoft.com/en-us/azure/active-directory-b2c/add-web-api-application?tabs=app-reg-ga
@@ -28,6 +29,8 @@ use Alancting\Microsoft\JWT\AzureAd\AzureAdIdTokenJWT;
  * https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent?tabs=azure-portal
  * https://docs.microsoft.com/en-us/azure/active-directory-b2c/openid-connect
  * https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
+ *
+ * https://docs.microsoft.com/en-us/azure/active-directory-b2c/microsoft-graph-get-started?tabs=app-reg-ga
  */
 class BxAzrB2CModule extends BxBaseModConnectModule
 {
@@ -70,7 +73,7 @@ class BxAzrB2CModule extends BxBaseModConnectModule
 
             $sBaseUrl = "https://" . $this->_oConfig->sDomain . "/" . $this->_oConfig->sTenant . "/" . $this->_oConfig->sPolicy;//B2C_1_login_una";
             $sUrl = bx_append_url_params($sBaseUrl . "/oauth2/v2.0/authorize", [
-                // 'state' => $this->_genToken(), // This at least semi-random string is likely good enough as state identifier
+                //'state' => $this->_genToken(), // This at least semi-random string is likely good enough as state identifier
                 'scope' => $this->_oConfig->sScope, 
                 'response_type' => 'code',
                 'response_mode' => 'query',
@@ -121,7 +124,6 @@ class BxAzrB2CModule extends BxBaseModConnectModule
 
         $sIdToken = $aAuthData['id_token'];
 
-
         // parse token to get the data
         // 
         // to make library to with B2C correctly please comment out the following lines in 
@@ -145,10 +147,44 @@ class BxAzrB2CModule extends BxBaseModConnectModule
             'id' => $oIdTokenJWT->get('oid'),
             'name' => $oIdTokenJWT->get('given_name'),
             'last_name' => $oIdTokenJWT->get('family_name'),
-            'email' => reset($oIdTokenJWT->get('emails')),
+            'email' => @reset($oIdTokenJWT->get('emails')),
         ];
 
         $aRemoteProfileInfo = $aUserData;
+
+
+        if (getParam('bx_azrb2c_group')) {
+            // get access token to call MS Graph API
+            $s = bx_file_get_contents("https://login.microsoftonline.com/" . $this->_oConfig->sTenantID . "/oauth2/v2.0/token", [
+                'grant_type'    => 'client_credentials',//'authorization_code',
+                'client_id'     => $this->_oConfig->sClientID,
+                'scope'         => "https://graph.microsoft.com/.default",
+                'client_secret' => $this->_oConfig->sSecret,
+            ], 'post', array ('Content-Type: application/x-www-form-urlencoded'));
+            $aAuthData2 = $this->_decodeResponseAndHandleError($s);
+
+            // call MS Graph API
+            $bMemberOfGroup = false;
+            if (isset($aAuthData2['access_token'])) {
+                $sBaseUrl = "https://graph.microsoft.com/v1.0/users/" . $oIdTokenJWT->get('oid') . "/memberOf";
+                $s = bx_file_get_contents($sBaseUrl, [], 'GET', array ('Authorization: Bearer ' . $aAuthData2['access_token']));
+                $aUserGroups = $this->_decodeResponseAndHandleError($s);
+                if (isset($aUserGroups['value'])) {
+                    foreach ($aUserGroups['value'] as $r) {
+                        if (getParam('bx_azrb2c_group') == $r['displayName']) {
+                            $bMemberOfGroup = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!$bMemberOfGroup) {
+                $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t("_bx_azrb2c_error_not_member_of_group")));
+                exit;
+            }
+        }
+
 
         if ($aRemoteProfileInfo) {
 
