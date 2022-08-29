@@ -45,3 +45,9 @@
     display: none;
     content:'';
 }
+.bx-form-input-html-quill-code{
+    width: 500px !important;
+    max-width: 100%;
+    height: 400px;
+    margin-right: 0px;
+}
