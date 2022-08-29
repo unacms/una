@@ -50,6 +50,12 @@
         background-size: 60% 60%;
     }
 
+    /*--- Sliding Menu ---*/
+    .bx-sliding-menu, .bx-sliding-menu-main {
+        left: auto !important;
+        right: 0 !important;
+        max-width: 31.25rem;
+    }
 
     /*--- Account Popup ---*/	
     #bx-sliding-menu-account.bx-sliding-menu-main.bx-sliding-menu-fullheight {
@@ -69,23 +75,20 @@
         width: 100%;
         height: auto;
     }
-    .bx-menu-object-sys_account_notifications li A,
-    .bx-menu-object-sys_add_content li A {
-        padding: 0.25rem 0.5rem;
-        line-height: 2rem;
-        height: 2rem;
-    }
-    .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-icon,
-    .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-title,
-    .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon,
-    .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
-        display: inline-block;
-        vertical-align: middle;
-    }
     .bx-menu-object-sys_account_notifications li a,
-    .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-title,
-    .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
-        line-height: 1.875rem;
+    .bx-menu-object-sys_add_content li a {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+
+        height: 2rem;        
+        padding: 0 0.5rem;
+        line-height: 2rem;
     }
     .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-title,
     .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
@@ -115,6 +118,7 @@
         background-repeat: none;
         background-size: 60% 60%;
     }
+    .bx-menu-object-sys_account_notifications li .bx-def-unit-alert,
     .bx-menu-object-sys_account_notifications li .bx-def-unit-alert-middle {
         top: 4px;
         right: 4px;
@@ -332,7 +336,6 @@
 :where(.bx-media-tablet, .bx-media-desktop) .@{bx-root-class-name}{ 
     /*--- Account Popup ---*/
     #bx-sliding-menu-account.bx-sliding-menu-main {
-        width: auto !important;
         border-radius: 4px;
     }
 
