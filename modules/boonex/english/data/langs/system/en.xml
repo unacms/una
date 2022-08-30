@@ -1681,6 +1681,7 @@
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons for full editor]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Max number of hashtags per post]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Max number of mentions per post]]></string>
+    <string name="_adm_stg_cpt_option_sys_attach_links_max"><![CDATA[Max number of attached links per post (0 - no limit)]]></string>
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Hide post to context for modules in Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Keyword min length in site search]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[System bot profile]]></string>
@@ -3538,6 +3539,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Please enter verification code from the SMS.]]></string>
 
     <string name="_sys_txt_create_post_placeholder"><![CDATA[Write here, {0}...]]></string>
+    <string name="_sys_txt_err_attach_links"><![CDATA[The maximum allowed number of attached links has been reached.]]></string>
 
     <string name="_sys_txt_current_picture"><![CDATA[Current Picture]]></string>
     <string name="_sys_txt_data_successfully_submitted"><![CDATA[Done]]></string>

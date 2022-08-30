@@ -1661,6 +1661,7 @@
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons кнопки для полного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Максимальное число хэш-тагов в одной публикации]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Максимальное число упоминаний кого-либо в одной публикации]]></string>
+    <string name="_adm_stg_cpt_option_sys_attach_links_max"><![CDATA[Максимальное число присоединенных ссылок к одной публикации (0 - без ограничений)]]></string>
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Скрыть из поля "Конфиденциальность" возможность добавления контента в контекст модулей]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Минимальная длина слова в поиске по сайту]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[Профиль системного бота]]></string>
@@ -3464,6 +3465,7 @@
     <string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Пожалуйста, введите код проверки из SMS]]></string>
 
     <string name="_sys_txt_create_post_placeholder"><![CDATA[Напишите здесь, {0}]]></string>
+    <string name="_sys_txt_err_attach_links"><![CDATA[Достигнуто максимально допустимое количество прикрепленных ссылок.]]></string>
 
     <string name="_sys_txt_current_picture"><![CDATA[Текущая картинка]]></string>
     <string name="_sys_txt_data_successfully_submitted"><![CDATA[Выполнено]]></string>

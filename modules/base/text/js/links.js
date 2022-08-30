@@ -17,6 +17,8 @@ function BxBaseModTextLinks(oOptions) {
     this._sFormId = oOptions.sFormId == undefined ? 0 : oOptions.sFormId;
     this._sEditorId = oOptions.sEditorId == undefined ? '' : oOptions.sEditorId;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
+    this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
+    this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
     this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
     
     this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
