@@ -45,6 +45,7 @@ class BxAzrB2CConfig extends BxBaseModConnectConfig
         $this -> sProfilesModule = getParam('bx_azrb2c_module');
         $this -> isAlwaysConfirmEmail = (bool)getParam('bx_azrb2c_confirm_email'); 
         $this -> isAlwaysAutoApprove = (bool)getParam('bx_azrb2c_approve');
+        $this -> bSendPasswordGenerated = false;
 
         $this -> sPageStart = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'start';
         $this -> sPageHandle = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'handle';
