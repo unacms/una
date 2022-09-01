@@ -4450,6 +4450,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_footer', 'system', '_sys_menu_set_title_footer', 0),
 ('sys_toolbar_site', 'system', '_sys_menu_set_title_toolbar_site', 0),
 ('sys_toolbar_member', 'system', '_sys_menu_set_title_toolbar_member', 0),
+('sys_account_popup', 'system', '_sys_menu_set_title_account_popup', 0),
 ('sys_account_notifications', 'system', '_sys_menu_set_title_account_notifications', 0),
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
 ('sys_dashboard_content_manage', 'system', '_sys_menu_set_title_dashboard_content_manage', 0),
@@ -4552,6 +4553,13 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_toolbar_member', 'system', 'apps', '_sys_menu_item_title_system_apps', '', 'javascript:void(0);', '', '', 'qrcode', '', '', 0, 2147483646, 3, 1, 1, 0),
 ('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_slide_inline(''#bx-sliding-menu-account'', this, ''site'');', '', 'user',  'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_notifications";s:5:"class";s:20:"TemplServiceProfiles";}', 'sys_account_popup', 1, 2147483646, 0, 1, 0, 1),
 ('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user',  '', '', 0, 1, 0, 1, 0, 2);
+
+-- account popup menu
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_popup', 'system', 'profile-active', '_sys_menu_item_title_system_ap_profile_active', '', '', '', '', '', '', '', 2147483646, 1, 1, 1),
+('sys_account_popup', 'system', 'profile-notifications', '_sys_menu_item_title_system_ap_profile_notifications', '', '', '', '', '', '', '', 2147483646, 1, 1, 2),
+('sys_account_popup', 'system', 'profile-switcher', '_sys_menu_item_title_system_ap_profile_switcher', '', '', '', '', '', '', '', 2147483646, 1, 1, 3),
+('sys_account_popup', 'system', 'profile-create', '_sys_menu_item_title_system_ap_profile_create', '', '', '', '', '', '', '', 2147483646, 1, 1, 4);
 
 -- notifications menu in account popup
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES

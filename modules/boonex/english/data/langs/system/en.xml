@@ -2902,7 +2902,11 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_account_dashboard_reports"><![CDATA[Reports]]></string>
     <string name="_sys_menu_item_title_system_account_dashboard_audit"><![CDATA[Audit]]></string>
     <string name="_sys_menu_item_title_account_dashboard_audit"><![CDATA[Audit]]></string>
-  
+
+    <string name="_sys_menu_item_title_system_ap_profile_active"><![CDATA[Active Profile]]></string>
+    <string name="_sys_menu_item_title_system_ap_profile_notifications"><![CDATA[Notifications Menu]]></string>
+    <string name="_sys_menu_item_title_system_ap_profile_switcher"><![CDATA[Profile Switcher]]></string>
+    <string name="_sys_menu_item_title_system_ap_profile_create"><![CDATA[Create Profile]]></string>
     <string name="_sys_menu_item_title_system_account_settings"><![CDATA[Settings]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete]]></string>
     <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
@@ -3003,7 +3007,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Account Dashboard]]></string>
     <string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
-    <string name="_sys_menu_set_title_account_notifications"><![CDATA[Notifications]]></string>
+    <string name="_sys_menu_set_title_account_popup"><![CDATA[Account Popup]]></string>
+    <string name="_sys_menu_set_title_account_notifications"><![CDATA[Account Notifications]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Content Manage]]></string>
     <string name="_sys_menu_set_title_dashboard_reports_manage"><![CDATA[Reports Manage]]></string>
@@ -3060,7 +3065,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_template_title_profile_stats"><![CDATA[Profile Stats Menu]]></string>
     <string name="_sys_menu_title_account_dashboard"><![CDATA[Account Dashboard Menu]]></string>
     <string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools Menu]]></string>
-    <string name="_sys_menu_title_account_notifications"><![CDATA[Notifications Items]]></string>
+    <string name="_sys_menu_title_account_notifications"><![CDATA[Account Notifications]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Account Popup]]></string>
     <string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
     <string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>

@@ -11,35 +11,51 @@
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuAccountPopup extends BxTemplMenu
+class BxBaseMenuAccountPopup extends BxTemplMenuCustom
 {
+    protected $_oProfile;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_oProfile = BxDolProfile::getInstance();
     }
 
-    protected function _getTemplateVars ()
+    protected function _getCode($sTmplName, $aTmplVars)
     {
-        $aVars = parent::_getTemplateVars ();
+        if(!$this->_oProfile)
+            return '';
 
-        $oProfile = BxDolProfile::getInstance();
-        if(!$oProfile)
-            return $aVars;
+        return parent::_getCode($sTmplName, $aTmplVars);
+    }
 
-        $aVars['bx_repeat:menu_items'] = array(true);
-        $aVars['active_profile'] = $oProfile->getUnit();
-        $aVars['menu_notifications'] = BxDolMenu::getObjectInstance('sys_account_notifications')->getCode();
-        $aVars['bx_if:multiple_profiles_mode'] = array(
-            'condition' => BxDolAccount::isAllowedCreateMultiple($oProfile->id()),
-            'content' => array(
-				'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
-        	),
-        );
+    protected function _getMenuItemProfileActive ($aItem)
+    {
+        return $this->_oTemplate->parseHtmlByName('map_profile_active.html', [
+            'profile_unit' => $this->_oProfile->getUnit()
+        ]);
+    }
 
-        $a = BxDolService::call('system', 'account_profile_switcher', array(), 'TemplServiceProfiles');
-        $aVars['profile_switcher'] = $a['content'];
+    protected function _getMenuItemProfileNotifications ($aItem)
+    {
+        return BxDolMenu::getObjectInstance('sys_account_notifications')->getCode();
+    }
 
-        return $aVars;
+    protected function _getMenuItemProfileSwitcher ($aItem)
+    {
+        $aResult = bx_srv('system', 'account_profile_switcher', [], 'TemplServiceProfiles');
+        return $aResult['content'];
+    }
+
+    protected function _getMenuItemProfileCreate ($aItem)
+    {
+        if(!BxDolAccount::isAllowedCreateMultiple($this->_oProfile->id()))
+            return '';
+
+        return $this->_oTemplate->parseHtmlByName('map_profile_create.html', [
+            'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
+        ]);
     }
 }
 

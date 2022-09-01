@@ -364,24 +364,10 @@ ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
     white-space:nowrap;
 }
 
-.bx-sliding-menu-main .bx-menu-account-popup-profile .bx-base-pofile-unit {
-    margin-bottom:0;
-}
-
 .bx-popup-content .bx-menu-floating-blocks-wide,
 .bx-popup-content .bx-menu-floating-blocks {
     width:256px;
     width:16rem;
-}
-.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks-wide,
-.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
-    width:auto;
-}
-
-.bx-menu-account-popup-menu ul.bx-menu-floating-blocks-wide {
-    display:inline-block;
-    max-width:800px;
-    max-width:50rem;
 }
 ul.bx-menu-floating-blocks-dash{
     display: flex;
@@ -672,25 +658,40 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 }
 
 /* --------------- account popup menu */
-
 .bx-popup-content .bx-menu-account-popup {
-    min-width:17em;
+    min-width: 17em;
+}
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks-wide,
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
+    width: auto;
 }
 
-.bx-menu-account-popup-menu {
-    text-align:center;
+.bx-menu-account-popup-profile-active {
+    margin-right: 2rem;
+}
+.bx-menu-account-popup-profile-active .bx-base-pofile-unit {
+    float: none;
+    width: 100%;
+    margin: 0;
 }
 
-.bx-menu-account-popup-profile-switcher-link {
+.bx-menu-account-popup-profile-notifications {
     text-align: center;
 }
+.bx-menu-account-popup-profile-notifications ul.bx-menu-floating-blocks-wide {
+    display: inline-block;
+    max-width: 50rem;
+}
 
-.bx-menu-account-popup-profile-switcher-link a:hover,
-.bx-menu-account-popup-profile-switcher-link a {
+.bx-menu-account-popup-profile-create {
+    text-align: center;
+}
+.bx-menu-account-popup-profile-create a:hover,
+.bx-menu-account-popup-profile-create a {
     text-decoration:none;
 }
 
-.bx-menu-account-popup-profile-switcher-link .bx-btn {
+.bx-menu-account-popup-profile-create .bx-btn {
     float: none;
     display: inline-block;
     width: 100%;

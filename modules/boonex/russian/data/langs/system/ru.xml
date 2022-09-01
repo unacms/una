@@ -2870,6 +2870,11 @@
     <string name="_sys_menu_item_title_account_dashboard_reports"><![CDATA[Жалобы]]></string>
     <string name="_sys_menu_item_title_system_account_dashboard_audit"><![CDATA[Аудит]]></string>
     <string name="_sys_menu_item_title_account_dashboard_audit"><![CDATA[Аудит]]></string>
+
+    <string name="_sys_menu_item_title_system_ap_profile_active"><![CDATA[Активный профиль]]></string>
+    <string name="_sys_menu_item_title_system_ap_profile_notifications"><![CDATA[Меню уведомлений]]></string>
+    <string name="_sys_menu_item_title_system_ap_profile_switcher"><![CDATA[Мои профили]]></string>
+    <string name="_sys_menu_item_title_system_ap_profile_create"><![CDATA[Создать профиль]]></string>
     <string name="_sys_menu_item_title_system_account_settings"><![CDATA[Настройки]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Удалить]]></string>
     <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
@@ -2967,6 +2972,7 @@
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Панель аккаунта]]></string>
     <string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Инструменты управления]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Аккаунт - Настройки]]></string>
+    <string name="_sys_menu_set_title_account_popup"><![CDATA[Аккаунт - Всплывающее меню]]></string>
     <string name="_sys_menu_set_title_account_notifications"><![CDATA[Аккаунт - Уведомления]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Добавить содержимое]]></string>
     <string name="_sys_menu_set_title_dashboard_content_manage"><![CDATA[Управление контентом]]></string>
@@ -3024,7 +3030,7 @@
     <string name="_sys_menu_template_title_profile_stats"><![CDATA[Статистика профиля - Меню]]></string>
     <string name="_sys_menu_title_account_dashboard"><![CDATA[Панель аккаунта - Меню]]></string>
     <string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Меню инструментов управления]]></string>
-    <string name="_sys_menu_title_account_notifications"><![CDATA[Меню с уведомлениями]]></string>
+    <string name="_sys_menu_title_account_notifications"><![CDATA[Аккаунт - Меню с уведомлениями]]></string>
     <string name="_sys_menu_title_account_popup"><![CDATA[Аккаунт - Всплывающее меню]]></string>
     <string name="_sys_menu_title_account_settings"><![CDATA[Аккаунт - Меню настроек]]></string>
     <string name="_sys_menu_title_add_content"><![CDATA[Добавить содержимое - Меню]]></string>
