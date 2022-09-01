@@ -494,39 +494,39 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->_iOwnerId = $aParams['owner_id'];
 
-        $sJsObject = ''; 
+        $sJsObject = '';
         if(bx_get('js_object') !== false)
-            $sJsObject = bx_process_input(bx_get('js_object'));
+            $sJsObject = $this->_oConfig->prepareParam('js_object');
         if(empty($sJsObject))
             $sJsObject = $this->_oConfig->getJsObject('post');
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => bx_process_input(bx_get('id'), BX_DATA_INT)));
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => (int)bx_get('id')]);
         if(empty($aEvent) || !is_array($aEvent))
-            return echoJson(array());
+            return echoJson([]);
 
         /**
          * Note. Disabled for now, because Own posts on Timelines of Following members 
          * became visible on posts' author Dashboard Timeline.
-         */
-        /*
+         * 
         $bAfpsLoading = (int)bx_get('afps_loading') === 1;
         if($bAfpsLoading && $this->_iOwnerId != $aEvent['owner_id'])
             return echoJson(array('message' => _t('_bx_timeline_txt_msg_posted')));
-        */
+         * 
+         */
 
-        $aResult = array(
+        $aResult = [
             'id' => (int)$aEvent['id'],
-            'name' => bx_process_output($aParams['name']),
-            'view' => bx_process_output($aParams['view']),
-            'type' => bx_process_output($aParams['type']),
+            'name' => $aParams['name'],
+            'view' => $aParams['view'],
+            'type' => $aParams['type'],
             'item' => $this->_oTemplate->getPost($aEvent, $aParams),
             'eval' => $sJsObject . "._onGetPost(oData)"
-        );
+        ];
 
-        bx_alert($this->getName(), 'on_get_post', 0, 0, array(
+        bx_alert($this->getName(), 'on_get_post', 0, 0, [
             'params' => $aParams,
             'override_result' => &$aResult,
-        ));
+        ]);
 
         echoJson($aResult);
     }
