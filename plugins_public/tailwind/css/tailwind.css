@@ -426,7 +426,8 @@
         @apply text-gray-700 dark:text-gray-500 text-opacity-60;
     }
 
-    .bx-def-font-author {
+    .bx-def-font-author,
+    .bx-def-font-author.bx-def-font-meta {
         @apply text-sm text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white font-semibold;
     }
 
