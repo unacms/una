@@ -83,10 +83,9 @@ class BxForumGrid extends BxTemplGrid
         
         $this->_sFilter3Name = 'filter3';
         $this->_aFilter3Values = array(
-            BX_FORUM_FILTER_ORDER_RECENT => _t('_bx_forum_grid_filter_order_recent'),
+            BX_FORUM_FILTER_ORDER_RECENT => _t('_bx_forum_grid_filter_order_updated'),
             BX_FORUM_FILTER_ORDER_NEW => _t('_bx_forum_grid_filter_order_new'),
             BX_FORUM_FILTER_ORDER_TOP => _t('_bx_forum_grid_filter_order_top'),
-            BX_FORUM_FILTER_ORDER_UPDATED => _t('_bx_forum_grid_filter_order_updated'),
             BX_FORUM_FILTER_ORDER_POPULAR => _t('_bx_forum_grid_filter_order_popular'),
             BX_FORUM_FILTER_ORDER_FEATURED => _t('_bx_forum_grid_filter_order_featured'),
             BX_FORUM_FILTER_ORDER_FAVORITE => _t('_bx_forum_grid_filter_order_favorite'),
@@ -136,10 +135,6 @@ class BxForumGrid extends BxTemplGrid
 
                 case 'featured':
                     $sField = 'featured';
-                    break;
-
-                case 'updated':
-                    $sField = 'changed';
                     break;
 
                 case 'latest':

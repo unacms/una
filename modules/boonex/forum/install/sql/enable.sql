@@ -67,42 +67,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_forum_view_entry', 2, @sName, '', '_bx_forum_page_block_title_entry_reports', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:14:\"entity_reports\";}', 0, 0, 1, 6);
 
 
-
--- PAGE: new entries
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_new', '_bx_forum_page_title_sys_entries_new', '_bx_forum_page_title_entries_new', @sName, 5, 2147483647, 1, 'discussions-new', 'page.php?i=discussions-new', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_forum_new', 1, @sName, '_bx_forum_page_block_title_new_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:10:"browse_new";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1);
-
--- PAGE: top entries
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_top', '_bx_forum_page_title_sys_entries_top', '_bx_forum_page_title_entries_top', @sName, 5, 2147483647, 1, 'discussions-top', 'page.php?i=discussions-top', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_forum_top', 1, @sName, '_bx_forum_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:10:"browse_top";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1);
-
--- PAGE: popular entries
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_popular', '_bx_forum_page_title_sys_entries_popular', '_bx_forum_page_title_entries_popular', @sName, 5, 2147483647, 1, 'discussions-popular', 'page.php?i=discussions-popular', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_forum_popular', 1, @sName, '_bx_forum_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1);
-
--- PAGE: recently updated entries
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_updated', '_bx_forum_page_title_sys_entries_updated', '_bx_forum_page_title_entries_updated', @sName, 5, 2147483647, 1, 'discussions-updated', 'page.php?i=discussions-updated', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_forum_updated', 1, @sName, '_bx_forum_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1);
-
--- PAGE: recently updated entries
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_partaken', '_bx_forum_page_title_sys_entries_partaken', '_bx_forum_page_title_entries_partaken', @sName, 5, 2147483647, 1, 'discussions-partaken', 'page.php?i=discussions-partaken', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_forum_partaken', 1, @sName, '_bx_forum_page_block_title_partaken_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_partaken";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1);
-
 -- PAGE: categories
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_forum_categories', 'discussions-categories', '_bx_forum_page_title_sys_entries_categories', '_bx_forum_page_title_entries_categories', @sName, 5, 2147483647, 1, 'page.php?i=discussions-categories', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
@@ -167,8 +131,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:3:{i:0;s:8:\"bx_forum\";i:1;s:8:\"bx_forum\";i:2;a:1:{s:9:\"menu_view\";b:1;}}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', NULL, 0, 1, 1, 3),
 ('bx_forum_home', 2, @sName, '_bx_forum_page_block_title_popular_entries_view_extended', '_bx_forum_page_block_title_popular_entries', 11, 0, NULL, '', 0, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:1:{i:0;s:8:\"extended\";}}', NULL, 0, 1, 1, 3);
 
-
-
 -- PAGE: module search
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_forum_search', 'discussions-search', '_bx_forum_page_title_sys_entries_search', '_bx_forum_page_title_entries_search', @sName, 5, 2147483647, 1, 'page.php?i=discussions-search', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
@@ -205,17 +167,29 @@ SET @iPBCellProfile = 2;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('trigger_page_profile_view_entry', @iPBCellProfile, @sName, '_bx_forum_page_block_title_sys_my_entries', '_bx_forum_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 0);
 
+
 -- PAGE: service blocks
-SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('', 0, @sName, '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_latest";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
-('', 0, @sName, '_bx_forum_page_block_title_latest_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_latest";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
-('', 0, @sName, '_bx_forum_page_block_title_new_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:10:"browse_new";s:6:"params";a:3:{i:0;s:7:"gallery";i:1;b:1;i:2;b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
-('', 0, @sName, '_bx_forum_page_block_title_new_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:10:"browse_new";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4),
-('', 0, @sName, '_bx_forum_page_block_title_top_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:10:"browse_top";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
-('', 0, @sName, '_bx_forum_page_block_title_top_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:10:"browse_top";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
-('', 0, @sName, '_bx_forum_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7),
-('', 0, @sName, '_bx_forum_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 8);
+ SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('', 0, @sName, '_bx_forum_page_block_title_popular_entries_view_extended', '_bx_forum_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:1:{i:0;s:8:\"extended\";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_popular_entries_view_showcase', '_bx_forum_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_popular_entries_view_gallery', '_bx_forum_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:14:\"browse_popular\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+
+('', 0, @sName, '_bx_forum_page_block_title_featured_entries_view_extended', '_bx_forum_page_block_title_featured_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:1:{i:0;s:8:\"extended\";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_featured_entries_view_gallery', '_bx_forum_page_block_title_featured_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+
+('', 0, @sName, '_bx_forum_page_block_title_latest_entries_view_extended', '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:13:\"browse_latest\";s:6:\"params\";a:1:{i:0;s:8:\"extended\";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_latest_entries_view_showcase', '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:13:\"browse_latest\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_latest_entries_view_gallery', '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:13:\"browse_latest\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+
+('', 0, @sName, '_bx_forum_page_block_title_new_entries_view_extended', '_bx_forum_page_block_title_new_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:10:\"browse_new\";s:6:\"params\";a:1:{i:0;s:8:\"extended\";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_new_entries_view_showcase', '_bx_forum_page_block_title_new_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:10:\"browse_new\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_new_entries_view_gallery', '_bx_forum_page_block_title_new_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:10:\"browse_new\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+
+('', 0, @sName, '_bx_forum_page_block_title_top_entries_view_extended', '_bx_forum_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:10:\"browse_top\";s:6:\"params\";a:1:{i:0;s:8:\"extended\";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_top_entries_view_showcase', '_bx_forum_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:10:\"browse_top\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, @sName, '_bx_forum_page_block_title_top_entries_view_gallery', '_bx_forum_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_forum\";s:6:\"method\";s:10:\"browse_top\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1);
+
 
 
 -- MENU: add to site menu
