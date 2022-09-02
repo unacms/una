@@ -39,24 +39,22 @@ class BxBaseInformer extends BxDolInformer
     public function display ()
     {
     	if(!$this->_bEnabled)
-    		return '';
-
-        $this->_addPermanentMessages();
+            return '';
 
         if (!$this->_aMessages)
             return '';
 
-		$aTmplVarsMessages = array();
+        $aTmplVarsMessages = [];
         foreach ($this->_aMessages as $sId => $a) {
-        	$a['class'] = $this->_aMapType2Class[$a['type']];
+            $a['class'] = $this->_aMapType2Class[$a['type']];
 
-        	$aTmplVarsMessages[] = $a;
+            $aTmplVarsMessages[] = $a;
         }
 
         $this->_addJsCss();
-        return $this->_oTemplate->parseHtmlByName('informer.html', array(
-            'bx_repeat:messages' => $aTmplVarsMessages,
-        ));
+        return $this->_oTemplate->parseHtmlByName('informer.html', [
+            'bx_repeat:messages' => $aTmplVarsMessages
+        ]);
     }
 
     /**
@@ -66,7 +64,9 @@ class BxBaseInformer extends BxDolInformer
     {
         if ($this->_bJsCssAdded)
             return;
-        $this->_oTemplate->addCss(array('informer.css'));
+
+        $this->_oTemplate->addCss(['informer.css']);
+
         $this->_bJsCssAdded = true;
     }
 }

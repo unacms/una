@@ -29,7 +29,7 @@ define('BX_INFORMER_ERROR', 3);
  */
 class BxDolInformer extends BxDolFactory implements iBxDolSingleton
 {
-	protected $_bEnabled = true;
+    protected $_bEnabled = true;
     protected $_aMessages = array();
 
     /**
@@ -41,6 +41,8 @@ class BxDolInformer extends BxDolFactory implements iBxDolSingleton
             trigger_error ('Multiple instances are not allowed for the BxDolInformer class.', E_USER_ERROR);
 
         parent::__construct();
+
+        $this->_addPermanentMessages();
     }
 
     /**
