@@ -156,14 +156,14 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 
 
 /*--- Entry: Profile Cover ---*/
-.bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-cover-bg  {
-    height: 50%;
-}
 .bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-cover-info {
     padding-top: 1rem;
 }
 .bx-base-pofile-cover-wrapper.bx-no-cover .bx-base-pofile-ci-cnt {
     margin-top: 0;
+}
+.bx-base-pofile-cover-wrapper.bx-clickable .bx-base-pofile-cover {
+    cursor: pointer;
 }
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor {
     -webkit-align-items: center;

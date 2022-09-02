@@ -212,6 +212,9 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
     height: auto;
     margin: 1rem 0 0 0;
 }
+.bx-base-pofile-cover-wrapper.bx-clickable .bx-base-pofile-cover {
+    cursor: pointer;
+}
 
 .bx-media-phone .bx-base-pofile-cover-wrapper {
     padding-left: 0;
