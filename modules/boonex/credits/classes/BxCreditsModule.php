@@ -828,8 +828,8 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if($fAmount > $fAmountAvail)
             return ['code' => 1, 'msg' => '_bx_credits_err_low_balance'];
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if(!$oProfile)
+        $oProfile = null;
+        if(!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
             return ['code' => 2, 'msg' => '_bx_credits_err_profile_not_found'];
 
         $sOrder = $this->_oConfig->getOrder();

@@ -55,6 +55,7 @@
     <string name="_bx_credits_form_credit_input_result"><![CDATA[Результат]]></string>
     <string name="_bx_credits_form_credit_input_sys_amount"><![CDATA[Количество]]></string>
     <string name="_bx_credits_form_credit_input_amount"><![CDATA[Количество]]></string>
+    <string name="_bx_credits_form_credit_input_amount_err"><![CDATA[Это поле обязательно. Пожалуйста, заполните его.]]></string>
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Сообщение]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Сообщение]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string>
