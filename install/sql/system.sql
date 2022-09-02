@@ -4411,7 +4411,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 15, 0, 1, 'BxTemplCmtsMenuActions', ''),
 ('sys_cmts_item_counters', '_sys_menu_title_cmts_item_counters', 'sys_cmts_item_counters', 'system', 15, 0, 1, 'BxTemplCmtsMenuActions', ''),
 ('sys_cmts_item_meta', '_sys_menu_title_cmts_item_meta', 'sys_cmts_item_meta', 'system', 15, 0, 1, 'BxTemplCmtsMenuUnitMeta', ''),
-('sys_account_popup', '_sys_menu_title_account_popup', '', 'system', 12, 0, 1, 'BxTemplMenuAccountPopup', ''),
+('sys_account_popup', '_sys_menu_title_account_popup', 'sys_account_popup', 'system', 12, 0, 1, 'BxTemplMenuAccountPopup', ''),
 ('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 19, 0, 1, 'BxTemplMenuAccountNotifications', ''),
 ('sys_profile_stats', '_sys_menu_title_profile_stats', 'sys_profile_stats', 'system', 21, 0, 1, 'BxTemplMenuProfileStats', ''),
 ('sys_tags_cloud', '_sys_menu_title_tags_cloud', '', 'system', 21, 0, 1, 'BxBaseMenuTagsCloud', ''),
