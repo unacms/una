@@ -431,10 +431,13 @@
     }
 
     .bx-def-font-meta {
-        @apply text-xs;
+        @apply text-sm;
     }
     .bx-def-font-meta:not(a) {
         @apply text-gray-700 dark:text-gray-400 text-opacity-60;
+    }
+    a.bx-def-font-meta {
+        @apply hover:underline;
     }
 
     .bx-artificer .bx-def-a-colored {

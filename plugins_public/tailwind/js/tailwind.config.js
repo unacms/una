@@ -12,26 +12,12 @@ module.exports = {
     './modules/base/**/js/*.js',
     './modules/base/**/template/*.html',
 
-    // Artificer
-    './modules/boonex/artificer/js/*.js',
-    './modules/boonex/artificer/data/template/**/*.html',
-    './modules/boonex/artificer/template/*.html',
+    './modules/boonex/**/js/*.js',
+    './modules/boonex/**/template/*.html',
 
-    // Convos
-    './modules/boonex/convos/js/*.js',
-    './modules/boonex/convos/template/*.html',
+    // templates
+    './modules/boonex/**/data/template/**/*.html',
 
-    // Forum
-    './modules/boonex/forum/js/*.js',
-    './modules/boonex/forum/template/*.html',
-
-    // Messenger
-    './modules/boonex/messenger/js/*.js',
-    './modules/boonex/messenger/template/*.html',
-
-    // Editor
-    './modules/boonex/editor/js/*.js',  
-      
     './template/*.html',
   ],
   safelist: [
@@ -136,6 +122,9 @@ module.exports = {
             112: '28rem',
             128: '32rem',
             144: '36rem'
+        },
+        maxHeight: {
+            128: '32rem',
         },
         lineHeight: {
             11: '2.75rem',
