@@ -23,7 +23,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_smtp_from_email', '', @iCategId, '_bx_smtp_option_from_email', 'digit', '', '', 90, ''),
 ('bx_smtp_test_mode', '', @iCategId, '_bx_smtp_option_test_mode', 'checkbox', '', '', 100, ''),
 ('bx_smtp_test_email', '', @iCategId, '_bx_smtp_option_test_email', 'digit', '', '', 102, ''),
-('bx_smtp_test_subj', '[TEST] ', @iCategId, '_bx_smtp_option_test_subj', 'digit', '', '', 104, '');A
+('bx_smtp_test_subj', '[TEST] ', @iCategId, '_bx_smtp_option_test_subj', 'digit', '', '', 104, '');
 
 -- logs
 
