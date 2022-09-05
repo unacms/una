@@ -496,18 +496,21 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         if (!$aTemplate)
             return false;
         
+        $GLOBALS['bx_profiler_disable'] = true;
+        unset($GLOBALS['bx_profiler']);
+
         $this->_oDb->deleteCampaignData($iCampaignId);
         $aAccounts = $this->getEmailsBySegment($aCampaign['segments'], $aCampaign['is_one_per_account']);
         foreach ($aAccounts as $aAccountInfo){
             $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['account_id'], $aTemplate, true);
             $this->_oDb->addEmailToSentListForCampaign($iCampaignId, $aAccountInfo['email']);
-            unset($GLOBALS['bxDolClasses']['BxDolAccount_' . $aAccountInfo['account_id']]);
-            if (1 == rand(1,100)) {
+
+            if (1 == rand(1, 300)) {
                 BxDolDb::getInstance()->cleanMemoryAll();
                 unset($GLOBALS['bxDolClasses']);
             }
         }
-              
+
         $this->_oDb->sendCampaign($iCampaignId);
         return true;
     }
