@@ -293,6 +293,8 @@
     <string name="_bx_market_menu_item_title_entries_top"><![CDATA[Топ]]></string>
     <string name="_bx_market_menu_item_title_system_entries_updated"><![CDATA[Обновленные продукты]]></string>
     <string name="_bx_market_menu_item_title_entries_updated"><![CDATA[Обновленные]]></string>
+    <string name="_bx_market_menu_item_title_system_more_auto"><![CDATA[Ещё]]></string>
+    <string name="_bx_market_menu_item_title_more_auto"><![CDATA[Ещё]]></string>
     <string name="_bx_market_menu_title_view_entry_submenu"><![CDATA[Просмотреть продукт - Подменю]]></string>
     <string name="_bx_market_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть продукт - Подменю]]></string>
     <string name="_bx_market_menu_item_title_system_view_entry_submenu_entry"><![CDATA[Обзор]]></string>
