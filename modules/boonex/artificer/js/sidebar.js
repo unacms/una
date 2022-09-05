@@ -8,14 +8,14 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
     if (expand) {
         sidebarEl.classList.remove('bx-mc-narrowed');
         sidebarEl.classList.add('bx-mc-expanded');
-        sidebarEl.classList.add('lg:w-64');
-        sidebarEl.classList.remove('lg:w-16');
-        mainContentEl.classList.add('lg:ml-64');
-        mainContentEl.classList.remove('lg:ml-16');
+        sidebarEl.classList.add('xl:w-64');
+        sidebarEl.classList.remove('xl:w-16');
+        mainContentEl.classList.add('xl:ml-64');
+        mainContentEl.classList.remove('xl:ml-16');
 
         document.querySelectorAll('#' + sidebarEl.getAttribute('id') + ' [sidebar-toggle-item]').forEach(sidebarToggleEl => {
-            sidebarToggleEl.classList.remove('lg:hidden');
-            sidebarToggleEl.classList.remove('lg:absolute');
+            sidebarToggleEl.classList.remove('xl:hidden');
+            sidebarToggleEl.classList.remove('xl:absolute');
             sidebarToggleEl.classList.remove('bx-mpi-toggle-hidden');
         });
 
@@ -34,13 +34,13 @@ const toggleSidebar = (sidebarEl, expand, setExpanded = false) => {
     else {
         sidebarEl.classList.add('bx-mc-narrowed');
         sidebarEl.classList.remove('bx-mc-expanded');
-        sidebarEl.classList.remove('lg:w-64');
-        sidebarEl.classList.add('lg:w-16');
-        mainContentEl.classList.remove('lg:ml-64');
-        mainContentEl.classList.add('lg:ml-16');
+        sidebarEl.classList.remove('xl:w-64');
+        sidebarEl.classList.add('xl:w-16');
+        mainContentEl.classList.remove('xl:ml-64');
+        mainContentEl.classList.add('xl:ml-16');
         document.querySelectorAll('#' + sidebarEl.getAttribute('id') + ' [sidebar-toggle-item]').forEach(sidebarToggleEl => {
-            sidebarToggleEl.classList.add('lg:hidden');
-            sidebarToggleEl.classList.add('lg:absolute');
+            sidebarToggleEl.classList.add('xl:hidden');
+            sidebarToggleEl.classList.add('xl:absolute');
             sidebarToggleEl.classList.add('bx-mpi-toggle-hidden');
         });
 
