@@ -15,16 +15,12 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
      * Use Internal Notifications.
      */
     protected $_bUseIn;
-    
+
     public function __construct()
     {
         parent::__construct();
 
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $this->_bUseIn = true;
-        if(isset($CNF['PARAM_USE_IN']))
-            $this->_bUseIn = getParam($CNF['PARAM_USE_IN']) == 'on';
+        $this->_bUseIn = $this->_oModule->_oConfig->isInternalNotifications();
     }
 
     public function response($oAlert)
