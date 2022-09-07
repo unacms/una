@@ -538,16 +538,6 @@ div.bx-account-unit-online {
 
 
 /* --------------- Author Info */
-.sys-author-info {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
 .sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor {
     webkit-align-items: center;
     align-items: center;
@@ -565,10 +555,6 @@ div.bx-account-unit-online {
 .sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li > span.bx-base-profile-unit-meta-item {
     padding: 0.25rem;
     white-space: nowrap;
-}
-.sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li > span.bx-base-profile-unit-meta-item.bx-def-padding-thd-leftright {
-    padding-left: 0;
-    padding-right: 0.5rem;
 }
 .sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li:first-child .bx-base-general-unit-meta-div {
     display: none;

@@ -1006,16 +1006,16 @@
 
 
     /* Common elements: Informers */
-    .bx-artificer .bx-informer-msg a {
+    .bx-informer-msg a {
         @apply text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
-    .bx-artificer .bx-informer-msg-info {
+    .bx-informer-msg-info {
         @apply bg-blue-50 text-blue-700;
     }
-    .bx-artificer .bx-informer-msg-alert {
+    .bx-informer-msg-alert {
         @apply bg-yellow-50 text-yellow-700;
     }
-    .bx-artificer .bx-informer-msg-error {
+    .bx-informer-msg-error {
         @apply bg-red-50 text-red-700;
     }
 

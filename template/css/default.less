@@ -571,12 +571,22 @@ h3,
     .margin-left(@bx-size-icon + @bx-margin);
 }
 
+/*--- Unit ---*/
 .bx-def-unit {
     position:relative;
     white-space:nowrap;
 }
+.bx-def-unit-info {
+    .box-sizing(border-box);
 
-/*-- Tailwind overwrite --*/
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+.bx-def-unit .bx-def-unit-line .bx-def-ui-div:first-child {
+    display: none;
+}
+
+/*-- Unit: Tailwind overwrite --*/
 .bx-def-unit.absolute {
     position: relative;
 }
@@ -594,20 +604,12 @@ h3,
 .bx-def-unit.absolute .bx-def-unit-info-cnt {
     width: 100%;
 }
-.bx-def-unit-info {
-    .box-sizing(border-box);
-
-    text-overflow:ellipsis;
-    overflow:hidden;
-}
 .bx-def-unit.absolute .bx-def-unit-line {
     text-overflow:ellipsis;
     overflow:hidden;
 }
-.bx-def-unit.absolute .bx-def-unit-line .bx-def-ui-div:first-child {
-    display: none;
-}
 
+/*--- Alerts ---*/
 .bx-def-unit-alert,
 .bx-def-unit-alert-small,
 .bx-def-unit-alert-middle {
