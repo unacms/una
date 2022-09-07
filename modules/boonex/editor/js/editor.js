@@ -178,10 +178,6 @@ class BxEmbedBlock {
         this.nodes = {
             linkContent: null,
         };
-        console.log(8);
-        console.log(this.data);
-        console.log(data);
-        console.log(block);
         if (this.data && this.data.source)
             this.source = data.source;
         
@@ -198,7 +194,6 @@ class BxEmbedBlock {
 
      render() {
         this.wrapper = document.createElement('p');
-       console.log(5);
         if (this.data && this.data.source){
             this._createEmbed(this.data.source);
             return this.wrapper;
@@ -211,18 +206,15 @@ class BxEmbedBlock {
     }
     
     _createEmbed(sLink){
-        console.log(6);
         var oObj = document.createElement('div');
         oObj.setAttribute('source', sLink)
         oObj.className = 'bx-embed-link';
-       // oObj.innerHTML = sLink;
         this.wrapper.removeChild(this.wrapper.querySelector('input'));
         this.wrapper.appendChild(oObj);
         this.blockAPI.dispatchChange();
     }
     
      _createInput(){
-        console.log(7);
         var oObj = document.createElement('input');
         oObj.className = 'bx-def-font-inputs bx-form-input-text';
         oObj.setAttribute('placeholder', _t('_bx_editor_embed_popup_header'));
@@ -235,7 +227,6 @@ class BxEmbedBlock {
     }
    
     save(blockContent){
-        console.log(9);
         const div = blockContent.querySelector('div');
         if (div){
             return {
@@ -251,7 +242,6 @@ class BxEmbedBlock {
     }
     
     onPaste(event) {
-        console.log(10);
         if (event.detail.data.attributes.source){
             var sSource = event.detail.data.attributes.source.nodeValue;
             this._createEmbed(sSource);
