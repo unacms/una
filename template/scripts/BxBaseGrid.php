@@ -135,18 +135,15 @@ class BxBaseGrid extends BxDolGrid
         $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
         $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
 
-        if ($this->_aOptions['paginate_get_start'])
-            $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);
-        else
-            $iStart = 0;
+        $iStart = 0;
+        if($this->_aOptions['paginate_get_start'] && ($iStartGet = (int)bx_get($this->_aOptions['paginate_get_start'])) >= 0)
+            $iStart = $iStartGet;
 
-        if ($this->_aOptions['paginate_get_per_page'] && (int)bx_get($this->_aOptions['paginate_get_per_page']) > 0)
-            $iPerPage = (int)bx_get($this->_aOptions['paginate_get_per_page']);
-        elseif ($this->_aOptions['paginate_per_page'])
-            $iPerPage = (int)$this->_aOptions['paginate_per_page'];
-        else
-            $iPerPage = 10;
-            
+        $iPerPage = 10;
+        if($this->_aOptions['paginate_get_per_page'] && ($iPerPageGet = (int)bx_get($this->_aOptions['paginate_get_per_page'])) > 0)
+            $iPerPage = $iPerPageGet;
+        else if($this->_aOptions['paginate_per_page'])
+            $iPerPage = (int)$this->_aOptions['paginate_per_page'];            
 
         if ($this->_aOptions['paginate_get_start']) {
 
