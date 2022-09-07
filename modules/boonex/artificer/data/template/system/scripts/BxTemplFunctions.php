@@ -11,9 +11,13 @@ bx_import('BxDolDesigns');
 
 class BxTemplFunctions extends BxBaseFunctions
 {
+    protected $_sModule;
+
     public function __construct($oTemplate = null)
     {
         parent::__construct($oTemplate);
+
+        $this->_sModule = 'bx_artificer';
     }
 
     function getMainLogo($aParams = array())
@@ -200,6 +204,10 @@ class BxTemplFunctions extends BxBaseFunctions
             $sSwitcher = $aSwitcher['content'];
 
         return $this->_oTemplate->parsePageByName('sidebar_account.html', [
+            'bx_if:color_scheme_switcher' => [
+                'condition' => BxDolModule::getInstance($this->_sModule)->_oConfig->getColorScheme() == 'auto',
+                'content' => []
+            ],
             'active_profile' => $oProfile->getUnit(),
             'menu_notifications' => BxDolMenu::getObjectInstance('sys_account_notifications')->getCode(),
             'profile_switcher' => $sSwitcher,

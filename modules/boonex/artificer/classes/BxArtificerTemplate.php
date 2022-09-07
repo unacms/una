@@ -33,6 +33,9 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
                 $this->addJs([
                     'utils.js'
                 ]);
+                $sResult .= $this->_oModule->_oTemplate->getJsCode('utils', [
+                    'sColorScheme' => $this->_oConfig->getColorScheme()
+                ]);
 
                 $sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
                 if(!empty($sCss))

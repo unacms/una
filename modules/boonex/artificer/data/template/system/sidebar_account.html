@@ -11,45 +11,47 @@
             </button>
         </div>
         <div class="bx-sb-profile flex-shrink-0 px-4 pb-4 flex justify-between items-center">__active_profile__
-            <div class="bx-sb-theme-switcher">
-                <a class="hover:no-underline" href="javascript:" onclick="bx_artificer_get_color_scheme_menu()"><i class="sys-icon desktop"></i></a>
+            <bx_if:color_scheme_switcher>
+                <div class="bx-sb-theme-switcher">
+                    <a class="hover:no-underline" href="javascript:" onclick="oBxArtificerUtils.getColorSchemeMenu()"><i class="sys-icon desktop"></i></a>
+                </div>
+            </bx_if:color_scheme_switcher>
+            <div id="bx-sb-theme-switcher-menu" class="bx-popup-wrapper bx-popup-responsive bx-popup-trans-wrapper box-border"  style="display: none">
+                <div class="bx-popup-gap mx-4 my-px">
+                    <div class="bx-popup bx-popup-trans bx-popup-border bx-popup-color-bg">
+                        <div class="bx-popup-content overflow-hidden">
+                            <div class="bx-menu-item-more-popup w-full md:w-56 box-border">		
+                                <ul class="bx-menu-custom bx-menu-custom-ver bx-menu-submenu-more-auto bx-clearfix">
+                                    <li class="bx-menu-item bx-menu-item-albums-home  rounded-md bx-def-color-bg-hl-hover" >
+                                        <a href="javascript:" onclick="oBxArtificerUtils.setColorScheme(1)" class="bx-stl-mil group">
+                                            <div class="bx-menu-item-icon bx-menu-floating-blocks-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                                                <i class="sys-icon sun"></i>
+                                            </div>
+                                            <div class="bx-menu-item-title bx-menu-floating-blocks-title bx-stl-mit whitespace-nowrap"><bx_text:_bx_artificer_txt_color_scheme_light /></div>
+                                        </a>
+                                    </li>
+                                    <li class="bx-menu-item bx-menu-item-groups-home  rounded-md bx-def-color-bg-hl-hover">
+                                        <a href="javascript:" onclick="oBxArtificerUtils.setColorScheme(2)" onclick="" class="bx-stl-mil group">
+                                            <div class="bx-menu-item-icon bx-menu-floating-blocks-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                                                <i class="sys-icon moon"></i>
+                                            </div>
+                                            <div class="bx-menu-item-title bx-menu-floating-blocks-title bx-stl-mit whitespace-nowrap"><bx_text:_bx_artificer_txt_color_scheme_dark /></div>
+                                        </a>
+                                    </li>
+                                    <li class="bx-menu-item bx-menu-item-files-home  rounded-md bx-def-color-bg-hl-hover" >
+                                        <a href="javascript:" onclick="oBxArtificerUtils.setColorScheme(0)" onclick="" class="bx-stl-mil group">
+                                            <div class="bx-menu-item-icon bx-menu-floating-blocks-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                                                <i class="sys-icon desktop"></i>
+                                            </div>
+                                            <div class="bx-menu-item-title bx-menu-floating-blocks-title bx-stl-mit whitespace-nowrap"><bx_text:_bx_artificer_txt_color_scheme_system /></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-			<div id="bx-sb-theme-switcher-menu" class="bx-popup-wrapper bx-popup-responsive bx-popup-trans-wrapper box-border"  style="display: none">
-				<div class="bx-popup-gap mx-4 my-px">
-        			<div class="bx-popup bx-popup-trans bx-popup-border bx-popup-color-bg">
-            			<div class="bx-popup-content overflow-hidden">
-							<div class="bx-menu-item-more-popup w-full md:w-56 box-border">		
-								<ul class="bx-menu-custom bx-menu-custom-ver bx-menu-submenu-more-auto bx-clearfix">
-									<li class="bx-menu-item bx-menu-item-albums-home  rounded-md bx-def-color-bg-hl-hover" >
-										<a href="javascript:" onclick="bx_artificer_set_color_scheme(1)" class="bx-stl-mil group">
-											<div class="bx-menu-item-icon bx-menu-floating-blocks-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
-												<i class="sys-icon sun"></i>
-											</div>
-											<div class="bx-menu-item-title bx-menu-floating-blocks-title bx-stl-mit whitespace-nowrap"><bx_text:_bx_artificer_txt_color_scheme_light /></div>
-										</a>
-									</li>
-									<li class="bx-menu-item bx-menu-item-groups-home  rounded-md bx-def-color-bg-hl-hover">
-										<a href="javascript:" onclick="bx_artificer_set_color_scheme(2)" onclick="" class="bx-stl-mil group">
-											<div class="bx-menu-item-icon bx-menu-floating-blocks-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
-												<i class="sys-icon moon"></i>
-											</div>
-											<div class="bx-menu-item-title bx-menu-floating-blocks-title bx-stl-mit whitespace-nowrap"><bx_text:_bx_artificer_txt_color_scheme_dark /></div>
-										</a>
-									</li>
-									<li class="bx-menu-item bx-menu-item-files-home  rounded-md bx-def-color-bg-hl-hover" >
-										<a href="javascript:" onclick="bx_artificer_set_color_scheme(0)" onclick="" class="bx-stl-mil group">
-											<div class="bx-menu-item-icon bx-menu-floating-blocks-icon bx-stl-mii group-hover:text-gray-700 dark:group-hover:text-gray-300">
-												<i class="sys-icon desktop"></i>
-											</div>
-											<div class="bx-menu-item-title bx-menu-floating-blocks-title bx-stl-mit whitespace-nowrap"><bx_text:_bx_artificer_txt_color_scheme_system /></div>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
         </div>
         <hr class="bx-def-hr" />
         <div class="bx-sb-menu flex-1 my-2">__menu_notifications__</div>

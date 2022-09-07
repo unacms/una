@@ -9,6 +9,10 @@
     <string name="_bx_artificer_stg_cpt_option_switcher_name"><![CDATA[Name in Template Switcher]]></string>	
     <string name="_bx_artificer_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
     <string name="_bx_artificer_stg_cpt_option_header_stretched"><![CDATA[Stretched Header]]></string>
+    <string name="_bx_artificer_stg_cpt_option_color_scheme"><![CDATA[Color Scheme]]></string>
+    <string name="_bx_artificer_stg_cpt_option_color_scheme_auto"><![CDATA[Auto with switcher]]></string>
+    <string name="_bx_artificer_stg_cpt_option_color_scheme_light_only"><![CDATA[Light mode only]]></string>
+    <string name="_bx_artificer_stg_cpt_option_color_scheme_dark_only"><![CDATA[Dark mode only]]></string>
 
     <string name="_bx_artificer_stg_cpt_category_styles_custom"><![CDATA[Custom Styles]]></string>
     <string name="_bx_artificer_stg_cpt_option_styles_custom"><![CDATA[Custom Styles]]></string>

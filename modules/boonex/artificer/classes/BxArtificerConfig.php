@@ -23,6 +23,14 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
     {
         parent::__construct($aModule);
 
+        $this->_aJsClasses = array_merge($this->_aJsClasses, array(
+            'utils' => 'BxArtificerUtils'
+        ));
+
+        $this->_aJsObjects = array_merge($this->_aJsObjects, array(
+            'utils' => 'oBxArtificerUtils'
+        ));
+
         $this->_iLogoHeight = 40;
         $this->_iMarkHeight = 40;
 
@@ -44,8 +52,11 @@ class BxArtificerConfig extends BxBaseModTemplateConfig
         $this->_aThumbSizeByTemplate = [
             'unit_with_cover.html' => 'h-24 w-24' //--- 'ava' size
         ];
-        
-        
+    }
+
+    public function getColorScheme()
+    {
+        return getParam('bx_artificer_color_scheme');
     }
 
     public function getLogoParams()
