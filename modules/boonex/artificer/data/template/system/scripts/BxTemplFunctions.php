@@ -203,10 +203,25 @@ class BxTemplFunctions extends BxBaseFunctions
         if(($aSwitcher = bx_srv('system', 'account_profile_switcher', [], 'TemplServiceProfiles')) !== false) 
             $sSwitcher = $aSwitcher['content'];
 
+        $aTmplVarsColorSchemeSwitcher = [];
+        $bTmplVarsColorSchemeSwitcher = BxDolModule::getInstance($this->_sModule)->_oConfig->getColorScheme() == 'auto';
+        if($bTmplVarsColorSchemeSwitcher) {
+            $aMenu = [
+                ['id' => $this->_sModule . '-css-sun', 'name' => $this->_sModule . '-css-sun', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(1)', 'target' => '_self', 'icon' => 'sun', 'title' => _t('_bx_artificer_txt_color_scheme_light')],
+                ['id' => $this->_sModule . '-css-moon', 'name' => $this->_sModule . '-css-moon', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(2)', 'target' => '_self', 'icon' => 'moon', 'title' => _t('_bx_artificer_txt_color_scheme_dark')],
+                ['id' => $this->_sModule . '-css-desktop', 'name' => $this->_sModule . '-css-desktop', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:oBxArtificerUtils.setColorScheme(0)', 'target' => '_self', 'icon' => 'desktop', 'title' => _t('_bx_artificer_txt_color_scheme_system')],
+            ];
+            $oMenu = new BxTemplMenu(['template' => 'menu_vertical.html', 'menu_id'=> $this->_sModule . '-css-menu', 'menu_items' => $aMenu]);
+
+            $aTmplVarsColorSchemeSwitcher = [
+                'popup' => BxTemplFunctions::getInstance()->transBox('bx-sb-theme-switcher-menu', $oMenu->getCode(), true)
+            ];
+        }
+
         return $this->_oTemplate->parsePageByName('sidebar_account.html', [
             'bx_if:color_scheme_switcher' => [
-                'condition' => BxDolModule::getInstance($this->_sModule)->_oConfig->getColorScheme() == 'auto',
-                'content' => []
+                'condition' => $bTmplVarsColorSchemeSwitcher,
+                'content' => $aTmplVarsColorSchemeSwitcher
             ],
             'active_profile' => $oProfile->getUnit(),
             'menu_notifications' => BxDolMenu::getObjectInstance('sys_account_notifications')->getCode(),
