@@ -84,3 +84,6 @@
 .dark .cdx-settings-button:hover {
     background-color: rgb(75 85 99);
 }
+.bx-form-input-html-editor{
+    height: auto !important;
+}
