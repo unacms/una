@@ -81,14 +81,42 @@
 }
 
 /*--- Account Sidebar ---*/
-.bx-sidebar.bx-sidebar-account .bx-sb-profile .bx-base-pofile-unit {
-    margin: 0;
+.bx-sidebar .bx-sb-theme-switcher .sys-icon {
+    font-size: 1.5rem;
 }
-.bx-sidebar .bx-sb-theme-switcher .sys-icon{
-    font-size: 24px;
+
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup > div {
+    flex: 1 1 0%;
 }
-.bx-sidebar.bx-sidebar-account .bx-sb-menu .bx-menu-item-addon.bx-def-unit-alert {
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup > div.bx-menu-account-popup-profile-active {
+    flex-grow: 0;
+}
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup > div.bx-menu-account-popup-profile-switcher {
+    flex-basis: auto;
+    overflow-y: auto;
+}
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup > div.bx-menu-account-popup-profile-create {
+    flex-basis: auto;
+    flex-grow: 2;
+}
+
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup-profile-active .bx-base-pofile-unit {
+    margin: 0 1rem 0.5rem 1rem;
+}
+
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup-profile-notifications {
+    margin: 0.5rem 0;
+}
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup-profile-notifications .bx-menu-item-addon.bx-def-unit-alert {
     top: auto;
     right: 0.5rem;
     padding: 0 0.25rem;
+}
+
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup-profile-create .bx-map-profile-create-cnt {
+    padding-bottom: 0;
+}
+.bx-sidebar.bx-sidebar-account .bx-menu-account-popup-profile-create .bx-btn {
+    justify-content: center;
+    width: 100%;
 }

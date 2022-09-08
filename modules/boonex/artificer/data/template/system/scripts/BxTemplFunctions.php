@@ -217,21 +217,17 @@ class BxTemplFunctions extends BxBaseFunctions
                 'popup' => BxTemplFunctions::getInstance()->transBox('bx-sb-theme-switcher-menu', $oMenu->getCode(), true)
             ];
         }
+        
+        $sMenuAccountPopup = 'sys_account_popup';
+        $oMenuAccountPopup = BxTemplMenu::getObjectInstance($sMenuAccountPopup);
 
         return $this->_oTemplate->parsePageByName('sidebar_account.html', [
             'bx_if:color_scheme_switcher' => [
                 'condition' => $bTmplVarsColorSchemeSwitcher,
                 'content' => $aTmplVarsColorSchemeSwitcher
             ],
-            'active_profile' => $oProfile->getUnit(),
-            'menu_notifications' => BxDolMenu::getObjectInstance('sys_account_notifications')->getCode(),
-            'profile_switcher' => $sSwitcher,
-            'bx_if:multiple_profiles_mode' => [
-                'condition' => BxDolAccount::isAllowedCreateMultiple($oProfile->id()),
-                'content' => [
-                    'url_switch_profile' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher')
-        	]
-            ]
+            'ap_menu_object' => $sMenuAccountPopup,
+            'bx_repeat:ap_menu_items' => $oMenuAccountPopup->getMenuItems(),
         ]);
     }
 }

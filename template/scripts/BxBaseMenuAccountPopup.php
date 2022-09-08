@@ -39,7 +39,9 @@ class BxBaseMenuAccountPopup extends BxTemplMenuCustom
 
     protected function _getMenuItemProfileNotifications ($aItem)
     {
-        return BxDolMenu::getObjectInstance('sys_account_notifications')->getCode();
+        return $this->_oTemplate->parseHtmlByName('map_profile_notifications.html', [
+            'menu' => BxDolMenu::getObjectInstance('sys_account_notifications')->getCode()
+        ]);
     }
 
     protected function _getMenuItemProfileSwitcher ($aItem)
