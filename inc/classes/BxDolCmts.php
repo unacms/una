@@ -1871,6 +1871,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $iCmtUniqId = $this->getCommentUniqId($iCmtId);
 
         return array(
+            'source' => 'sys_cmts_' . $iCmtUniqId,
+
             'object_system' => $this->_sSystem, 
             'object_id' => $iObjId, 
             'object_author_id' => $iObjAthrId,

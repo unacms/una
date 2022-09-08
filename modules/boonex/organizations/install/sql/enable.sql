@@ -127,7 +127,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_organizations_fans', 'organization-profile-fans', '_bx_orgs_page_title_sys_fans', '_bx_orgs_page_title_fans', 'bx_organizations', 5, 2147483647, 1, 'page.php?i=organization-profile-fans', '', '', '', 0, 1, 0, 'BxOrgsPageEntry', 'modules/boonex/organizations/classes/BxOrgsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_organizations_fans', 1, 'bx_organizations', '_bx_orgs_page_block_title_system_fans', '_bx_orgs_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1);
+('bx_organizations_fans', 1, 'bx_organizations', '_bx_orgs_page_block_title_system_fans', '_bx_orgs_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1),
+('bx_organizations_fans', 1, 'bx_organizations', '_bx_orgs_page_block_title_system_invites', '_bx_orgs_page_block_title_fans_invites', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:13:"invites_table";}', 0, 0, 1, 2);
 
 -- PAGE: profile friends
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -517,6 +518,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_organizations', 'delete any entry', NULL, '_bx_orgs_acl_action_delete_any_profile', '', 1, 3);
 SET @iIdActionProfileDeleteAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_organizations', 'delete invites', NULL, '_bx_orgs_acl_action_delete_invites', '', 1, 3);
+SET @iIdActionProfileDeleteInvites = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -568,7 +573,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionProfileEditAny),
 
 -- any profile delete
-(@iAdministrator, @iIdActionProfileDeleteAny);
+(@iAdministrator, @iIdActionProfileDeleteAny),
+
+-- any invites delete
+(@iModerator, @iIdActionProfileDeleteInvites),
+(@iAdministrator, @iIdActionProfileDeleteInvites);
 
 
 -- METATAGS
@@ -622,6 +631,18 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_organizations_fans', 'single', 'set_role', '_bx_orgs_txt_set_role', '', 0, 20),
 ('bx_organizations_fans', 'single', 'set_role_submit', '', '', 0, 21),
 ('bx_organizations_fans', 'single', 'delete', '', 'remove', 1, 40);
+
+-- GRID: invites
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `responsive`, `override_class_name`, `override_class_file`) VALUES
+('bx_organizations_invites', 'Sql', 'SELECT `i`.`id`, `i`.`invited_profile_id`, `i`.`added`, `i`.`author_profile_id` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON `a`.`id` = `p`.`account_id` INNER JOIN `bx_organizations_invites` AS `i` ON `i`.`invited_profile_id` = `p`.`id` ', 'bx_organizations_invites', 'id', 'i`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxOrgsGridInvites', 'modules/boonex/organizations/classes/BxOrgsGridInvites.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
+('bx_organizations_invites', 'name', '_sys_name', '33%', '', 10),
+('bx_organizations_invites', 'added', '_sys_added', '33%', '', 20),
+('bx_organizations_invites', 'actions', '', '34%', '', 30);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_organizations_invites', 'single', 'delete', '', 'remove', 1, 10);
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

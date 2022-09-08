@@ -183,11 +183,11 @@ blockquote {
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
-.bx-db-container.bx-dbc-nopadding .bx-db-header {
+.bx-db-container.bx-dbc-nopadding > .bx-db-header {
     padding-left: 0;
     padding-right: 0;
 }
-.bx-db-container.bx-dbc-nobg .bx-db-divider {
+.bx-db-container.bx-dbc-nobg > .bx-db-divider {
     display: none;
 }
 .bx-db-title {

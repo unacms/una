@@ -76,7 +76,7 @@
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Timezone]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Time]]></string>
     <string name="_bx_events_form_profile_input_time"><![CDATA[Time]]></string>
-    <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Reminder]]></string>
+    <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Reminder (part of Internal Notifications)]]></string>
     <string name="_bx_events_form_profile_input_reminder"><![CDATA[Reminder]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Repeat year]]></string>
@@ -442,8 +442,12 @@
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_events_alert_action_join_invitation_notif"><![CDATA[join invitation]]></string>
     <string name="_bx_events_alert_action_join_request"><![CDATA[join request]]></string>
+    <string name="_bx_events_alert_action_reminder"><![CDATA[reminder]]></string>
+    <string name="_bx_events_alert_action_reminder_follow_context"><![CDATA[New reminders]]></string>
     <string name="_bx_events_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> event's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join event]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_events_txt_ntfs_reminder_1"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> starts in an hour]]></string>
+    <string name="_bx_events_txt_ntfs_reminder_24"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> starts in 24 hours]]></string>
     <string name="_bx_events_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> event timeline]]></string>
 
     <string name="_bx_events_privacy_group_closed"><![CDATA[Closed]]></string>

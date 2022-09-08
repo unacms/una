@@ -18,6 +18,12 @@ function bx_editor_init(oEditor, oParams){
     oParams.toolbar = {
         container: bEmptyToolbar ? [] : oParams.toolbar,
             handlers: {
+            'show-html': function() {
+                 bx_alert('<textarea class="bx-def-font-inputs bx-form-input-textarea bx-form-input-html-quill-code" id="' + oParams.name + '_code">' + oEditor.container.firstChild.innerHTML + '</textarea>',function() {
+                     //console.log($('#'+oParams.name+'_code').val());
+                     oEditor.container.firstChild.innerHTML = $('#'+oParams.name+'_code').val();
+                 });
+            },  
             'embed': function(value) {
                 var range = oEditor.getSelection();
                 bx_prompt(_t('_sys_txt_quill_tooltip_embed_popup_header'), '', function(oPopup){
@@ -192,10 +198,37 @@ function bx_editor_init(oEditor, oParams){
             'formats/embed-link': EmbedCode
         });
         
+        var AlignStyle = Quill.import('attributors/style/align');
+        Quill.register(AlignStyle, true);
+        
+        var DirectionStyle = Quill.import('attributors/style/direction');
+        Quill.register(DirectionStyle, true);
+        
+        const Parchment = Quill.import("parchment");
+        const pixelLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        const TAB_MULTIPLIER = 30
+
+        class IndentAttributor extends Parchment.Attributor.Style {
+            add(node, value) {
+                return super.add(node, `${+value * TAB_MULTIPLIER}px`)
+            }
+            value(node) {
+                return parseFloat(super.value(node)) / TAB_MULTIPLIER || undefined // Don't return NaN
+            }
+        }
+
+        const IndentStyle = new IndentAttributor("indent", "margin-left", {
+            scope: Parchment.Scope.BLOCK,
+            whitelist: pixelLevels.map(value => `${value * TAB_MULTIPLIER}px`),
+        })
+
+        Quill.register({"formats/indent": IndentStyle}, true);
+        
         bQuillRegistred = true; 
         
         var icons = Quill.import('ui/icons');
         icons['embed'] = '<svg class="fr-svg" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="ql-fill" d="M20.73889,15.45929a3.4768,3.4768,0,0,0-5.45965-.28662L9.5661,12.50861a3.49811,3.49811,0,0,0-.00873-1.01331l5.72174-2.66809a3.55783,3.55783,0,1,0-.84527-1.81262L8.70966,9.6839a3.50851,3.50851,0,1,0,.0111,4.63727l5.7132,2.66412a3.49763,3.49763,0,1,0,6.30493-1.526ZM18.00745,5.01056A1.49993,1.49993,0,1,1,16.39551,6.3894,1.49994,1.49994,0,0,1,18.00745,5.01056ZM5.99237,13.49536a1.49989,1.49989,0,1,1,1.61194-1.37878A1.49982,1.49982,0,0,1,5.99237,13.49536Zm11.78211,5.494a1.49993,1.49993,0,1,1,1.61193-1.37885A1.49987,1.49987,0,0,1,17.77448,18.98932Z"></path></svg>';
+        icons['show-html'] = '<svg class="fr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path class="ql-fill" d="M162.1 257.8c-7.812-7.812-20.47-7.812-28.28 0l-48 48c-7.812 7.812-7.812 20.5 0 28.31l48 48C137.8 386.1 142.9 388 148 388s10.23-1.938 14.14-5.844c7.812-7.812 7.812-20.5 0-28.31L128.3 320l33.86-33.84C169.1 278.3 169.1 265.7 162.1 257.8zM365.3 93.38l-74.63-74.64C278.6 6.742 262.3 0 245.4 0H64C28.65 0 0 28.65 0 64l.0065 384c0 35.34 28.65 64 64 64H320c35.2 0 64-28.8 64-64V138.6C384 121.7 377.3 105.4 365.3 93.38zM336 448c0 8.836-7.164 16-16 16H64.02c-8.838 0-16-7.164-16-16L48 64.13c0-8.836 7.164-16 16-16h160L224 128c0 17.67 14.33 32 32 32h79.1V448zM221.9 257.8c-7.812 7.812-7.812 20.5 0 28.31L255.7 320l-33.86 33.84c-7.812 7.812-7.812 20.5 0 28.31C225.8 386.1 230.9 388 236 388s10.23-1.938 14.14-5.844l48-48c7.812-7.812 7.812-20.5 0-28.31l-48-48C242.3 250 229.7 250 221.9 257.8z"/></svg>';
     }
 
     var oConfig = {              

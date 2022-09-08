@@ -25,12 +25,12 @@ class BxTemplCmtsMenuUnitMeta extends BxBaseCmtsMenuUnitMeta
         if(!empty($sAuthorLink))
             $sResult = $this->getUnitMetaItemLink($sAuthorName, array(
                 'href' => $sAuthorLink,
-                'class' => $this->_sStylePrefix . '-username whitespace-nowrap hover:underline text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-semibold',
+                'class' => $this->_sStylePrefix . '-username bx-def-font-author whitespace-nowrap hover:underline',
                 'title' => bx_html_attribute($sAuthorName),
             )). $sAuthorBadges;
         else
             $sResult = $this->getUnitMetaItemText($sAuthorName, array(
-                'class' => $this->_sStylePrefix . '-username whitespace-nowrap text-gray-700 dark:text-gray-200 font-semibold'
+                'class' => $this->_sStylePrefix . '-username bx-def-font-author whitespace-nowrap'
             )). $sAuthorBadges;
 
         return $sResult;

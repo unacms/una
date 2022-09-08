@@ -59,6 +59,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'PARAM_POLL_ANONYMOUS_VOTING' => true,
             'PARAM_MULTICAT_ENABLED' => false,
             'PARAM_LINKS_ENABLED' => false,
+            'PARAM_LINKS_LIMIT' => 'sys_attach_links_max',
 
             // objects
             'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',

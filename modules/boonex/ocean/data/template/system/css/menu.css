@@ -37,13 +37,15 @@ ul.bx-menu-toolbar li a .sys-icon-a {
     height:calc(100% - 4rem);
 }
 
-.bx-menu-account-popup-profile-switcher-link b {
-    vertical-align:baseline;
-}
-
 /* --------------- account popup menu */
-.bx-menu-account-popup-profile {
-	font-weight: bold;
+.bx-menu-account-popup-profile-active .bx-def-hr {
+        display: none;
+}
+.bx-menu-account-popup-profile-notifications {
+    margin-top: 0.5rem;
+}
+.bx-menu-account-popup-profile-create b {
+    vertical-align: baseline;
 }
 
 /* --------------- custom menu */

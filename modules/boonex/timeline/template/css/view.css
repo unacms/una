@@ -329,24 +329,6 @@ div.bx-tl-item div.bx-tl-item-owner {
     text-align: left;
 }
 
-div.bx-tl-item div.bx-tl-owner-avatar {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-div.bx-tl-item div.bx-tl-owner-info {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: flex-start;
-    align-items: flex-start;
-    -webkit-justify-content: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
 div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
     margin-right: 2.5rem;
 }

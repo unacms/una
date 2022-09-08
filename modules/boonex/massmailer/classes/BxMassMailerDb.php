@@ -250,10 +250,10 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         $aTmp = $this->getColumn("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0", $aBindings);
         if (count($aTmp) > 0){
             $sIdList = $this->implode_escape($aTmp);
-            $this->query("DELETE FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
-            $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
-            $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
-            $this->query("DELETE FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+            $this->query("DELETE FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", []);
+            $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", []);
+            $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", []);
+            $this->query("DELETE FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_ID'] . "` IN (" . $sIdList . ")", []);
         }
     }
 }

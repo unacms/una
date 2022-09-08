@@ -1262,7 +1262,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         $sOutput = '';
         
         if(!empty($aError['query']))
-            $sOutput .= '<p><b>Query:</b><br />' . $aError['query'] . '</p>';
+            $sOutput .= '<p><b>Query:</b><br />' . bx_process_output($aError['query']) . '</p>';
 
         if(!empty($aError['message']))
             $sOutput .= '<p><b>Mysql error:</b><br />' . $aError['message'] . '</p>';

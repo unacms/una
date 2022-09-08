@@ -2508,7 +2508,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
         $sError = '_sys_txt_access_denied';
 
-        if(!$this->_oConfig->isAutoApproveEnabled())
+        if($this->_oConfig->isAutoApproveEnabled())
             return _t($sError);
 
         if($aDataEntry[$CNF['FIELD_STATUS_ADMIN']] != BX_BASE_MOD_GENERAL_STATUS_PENDING)

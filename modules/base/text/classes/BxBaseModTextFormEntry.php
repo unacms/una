@@ -49,7 +49,13 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $sInclude .= $this->_oModule->_oTemplate->addCss(array('links.css'), $bDynamicMode);
             $sInclude .= $this->_oModule->_oTemplate->addJs(array('modules/base/text/js/|links.js', 'links.js'), $bDynamicMode);
 
-            $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('links', ['sFormId' => $this->getId(), 'iContentId' => (int)$this->_iContentId,]);
+            $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('links', [
+                'sFormId' => $this->getId(), 
+                'iContentId' => (int)$this->_iContentId,
+                'iLimitAttachLinks' => (int)getParam($CNF['PARAM_LINKS_LIMIT']),
+                'sLimitAttachLinksErr' => bx_js_string(_t('_sys_txt_err_attach_links')),
+                'oAttachedLinks' => []
+            ]);
         }  
 
     	return $sResult;

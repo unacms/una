@@ -42,6 +42,17 @@ class BxArtificerModule extends BxBaseModTemplateModule
         return $this->_oTemplate->getIncludeCssJs($sType);
     }
 
+    public function serviceGetOptionsColorScheme()
+    {
+        $aOptions = ['auto', 'light_only', 'dark_only'];
+
+        $aResult = [];
+        foreach($aOptions as $sOption)
+            $aResult[$sOption] = _t('_bx_artificer_stg_cpt_option_color_scheme_' . $sOption);
+
+        return $aResult;
+    }
+
     public function serviceGetSplashMarker($sName)
     {
         $sResult = '';

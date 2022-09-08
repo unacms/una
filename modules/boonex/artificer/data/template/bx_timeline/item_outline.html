@@ -11,17 +11,17 @@
                         </div>
                     </bx_repeat:notes>
                 </div>
-                <div class="__style_prefix__-in-divider  bx-def-hr mt-3 md:mt-4 lg:mt-4"></div>
+                <div class="__style_prefix__-in-divider  bx-def-hr mt-3 md:mt-4"></div>
             </bx_if:show_note>
             <div class="__style_prefix__-item-owner flex items-center px-3 md:px-4 mt-3 md:mt-4 __class_owner__"> 
                 <div class="__style_prefix__-owner-avatar flex-shrink-0">__item_owner_unit__</div>
                 <div class="__style_prefix__-owner-info ml-3">
-                    <div class="__style_prefix__-owner-name flex flex-wrap">
+                    <div class="__style_prefix__-owner-name flex flex-wrap items-center">
                         <a href="__item_owner_url__" class="__style_prefix__-owner-name bx-def-font-author mr-1 hover:text-gray-900 dark:hover:text-white whitespace-nowrap" title="__item_owner_title__">__item_owner_name__</a>
                         <bx_if:show_owner_actions>
                             <span class="__style_prefix__-owner-actions bx-def-font-meta">
                                 <bx_repeat:owner_actions>
-                                    <span class="__style_prefix__-oa-div mr-1">&#183;</span><a class="__style_prefix__-owner-action" href="__href__" onclick="__onclick__" title="__title__"><i class="sys-icon __icon__"></i></a>
+                                    <span class="__style_prefix__-oa-div mr-1">&#183;</span><a class="__style_prefix__-owner-action hover:underline" href="__href__" onclick="__onclick__" title="__title__"><i class="sys-icon __icon__"></i></a>
                                 </bx_repeat:owner_actions>
                             </span>
                         </bx_if:show_owner_actions>
@@ -37,7 +37,7 @@
                                 <bx_if:show_timeline_owner>
                                     <span class="mr-1"><bx_text:_bx_timeline_txt_to /></span> 
                                     <span class="__style_prefix__-timeline-owner-name mr-1">
-                                        <bx_repeat:owners><span class="__style_prefix__-ton-div">, </span><a href="__owner_url__" class="__style_prefix__-ton-item">__owner_username__</a></bx_repeat:owners>
+                                        <bx_repeat:owners><span class="__style_prefix__-ton-div">, </span><a href="__owner_url__" class="__style_prefix__-ton-item text-blue-600 dark:text-blue-500 font-semibold hover:underline">__owner_username__</a></bx_repeat:owners>
                                     </span> 
                                 </bx_if:show_timeline_owner>
                             </div>

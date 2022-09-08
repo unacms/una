@@ -284,13 +284,19 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sShowData = isset($aParams['show_data']) ? $aParams['show_data'] : '';
         $bShowCover = !isset($aParams['show_cover']) || $aParams['show_cover'] === true;
         $bShowAvatar = !isset($aParams['show_avatar']) || $aParams['show_avatar'] === true;
+        $bShowClickable = !isset($aParams['show_clickable']) || $aParams['show_clickable'] === true; //--- Is available for UseAsBlock appearance only.
         $sAddCode = "";
 
         $bUseAsAuthor = isset($aParams['use_as_author']) && $aParams['use_as_author'] === true;
         $bUseAsBlock = $bUseAsAuthor || (isset($aParams['use_as_block']) && $aParams['use_as_block'] === true);
 
-        if(!$bUseAsAuthor)
+        if($bUseAsAuthor)
+            $sClass .= ' bx-base-author';
+        else
             BxDolTemplate::getInstance()->addInjection('injection_main_class', 'text', 'bx-base-profile-view');
+
+        if($bUseAsBlock && $bShowClickable)
+            $sClass .= ' bx-clickable';
 
         $bProfileViewAllowed = $oModule->checkAllowedView($aData) === CHECK_ACTION_RESULT_ALLOWED;
 
@@ -471,7 +477,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $aTmplVars = [
             'module' => $this->_oConfig->getName(),
-            'class' => $sClass,
+            'class' => trim($sClass),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
@@ -506,6 +512,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         if($bUseAsBlock)
             $aTmplVars = array_merge($aTmplVars, [
+                'bx_if:show_clickable' => [
+                    'condition' => $bShowClickable,
+                    'content' => [
+                        'content_url' => $sUrl
+                    ]
+                ],
                 'bx_if:show_cover' => [
                     'condition' => $bTmplVarsShowCover,
                     'content' => $aTmplVarsShowCover

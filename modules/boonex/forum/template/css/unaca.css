@@ -27,6 +27,7 @@
 .unaca-c {
   justify-content: center;
   transition: 0.3s all;
+    
   z-index: 1;
 }
       
@@ -47,8 +48,10 @@
 }
 
 .unaca-s {
-  overflow: hidden;
-    width: 100%;
+    overflow: hidden;
+    width: calc(100% + 1rem);
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
 }
 
 .unaca-t {
@@ -57,6 +60,8 @@
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     overflow: visible !important;
+    scroll-behavior: smooth;
+    scroll-snap-type: x var(--tw-scroll-snap-strictness);
 }
 
 .unaca-t > div {
@@ -64,6 +69,7 @@
     vertical-align: top !important;
     white-space: normal !important;
     width: 25% !important;
+    scroll-snap-align: center;
 }
 .bx-layout-column-wide .unaca-t > div {
      width: 33.3% !important;
@@ -79,16 +85,13 @@
 
 .unaca-t .bx-base-text-unit-showcase {
     margin: 0;
-    padding: 0.25rem;
+    padding: 0.5rem;
 }
 
 .bx-media-phone .unaca-cc {
     display: none;
 }
-.bx-media-phone .unaca-s {
-    margin-left: 0;
-    margin-right: 0;
-}
+
 .bx-media-phone .unaca-t {
     overflow-x: auto !important;
     width: auto;
@@ -100,10 +103,7 @@
 .bx-media-tablet .unaca-cc {
     display: none;
 }
-.bx-media-tablet .unaca-s {
-    margin-left: 0;
-    margin-right: 0;
-}
+
 .bx-media-tablet .unaca-t {
     overflow-x: auto !important;
     width: auto;

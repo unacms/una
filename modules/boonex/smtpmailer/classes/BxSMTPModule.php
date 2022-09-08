@@ -90,7 +90,15 @@ class BxSMTPModule extends BxDolModule
 
                 $mail->WordWrap = 50; // set word wrap
 
-                $mail->AddAddress($sRecipientEmail);
+                if (getParam('bx_smtp_test_mode')) {
+                    $aCustomHeaders['X-Original-To'] = $sRecipientEmail;
+                    if (isset($aCustomHeaders['Subject']))
+                        $aCustomHeaders['Subject'] = getParam('bx_smtp_test_subj') . $aCustomHeaders['Subject'];
+                    else
+                        $mail->Subject = getParam('bx_smtp_test_subj') . $mail->Subject;
+                }
+
+                $mail->AddAddress(getParam('bx_smtp_test_mode') ? getParam('bx_smtp_test_email') : $sRecipientEmail);
 
                 $mail->IsHTML($isHtml ? true : false);
 
@@ -119,6 +127,7 @@ class BxSMTPModule extends BxDolModule
 
         //--- create system event [begin]
         $aAlertData = array(
+            'test_mode' => (bool)getParam('bx_smtp_test_mode'),
             'email'     => $sRecipientEmail,
             'subject'   => $sMailSubject,
             'body'      => $sMailBody,
@@ -127,7 +136,7 @@ class BxSMTPModule extends BxDolModule
             'recipient' => $aRecipientInfo,
             'html'      => $isHtml,
             'ret'       => $iRet,
-            'error_message' => $sErrorMessage,
+            'error_message' => $sErrorMessage,            
         );
         bx_alert('profile', 'send_mail', $aRecipientInfo && isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
         //--- create system event [ end ]

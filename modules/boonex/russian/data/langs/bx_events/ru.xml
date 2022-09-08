@@ -75,7 +75,7 @@
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Время]]></string>
     <string name="_bx_events_form_profile_input_time"><![CDATA[Время]]></string>
-    <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Напоминание]]></string>
+    <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Напоминание (часть встроенних нотификаций)]]></string>
     <string name="_bx_events_form_profile_input_reminder"><![CDATA[Напоминание]]></string>
     <string name="_bx_events_form_profile_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     
@@ -384,8 +384,12 @@
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый участник <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_events_alert_action_join_invitation_notif"><![CDATA[приглашение вступить в группу]]></string>
     <string name="_bx_events_alert_action_join_request"><![CDATA[запрос на присоединение к событию]]></string>
+    <string name="_bx_events_alert_action_reminder"><![CDATA[напоминание]]></string>
+    <string name="_bx_events_alert_action_reminder_follow_context"><![CDATA[Новые напоминания]]></string>
     <string name="_bx_events_txt_ntfs_join_invitation"><![CDATA[Представитель события <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> присоединиться к событию]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый запрос на присоединение от <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_events_txt_ntfs_reminder_1"><![CDATA[Событие <b class="bx-ntfs-content-profile">{owner_name}</b> начнется через час]]></string>
+    <string name="_bx_events_txt_ntfs_reminder_24"><![CDATA[Событие <b class="bx-ntfs-content-profile">{owner_name}</b> начнется через 24 часа]]></string>
     <string name="_bx_events_txt_ntfs_timeline_post_common"><![CDATA[В событии <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 
     <string name="_bx_events_privacy_group_closed"><![CDATA[Закрытое событие]]></string>

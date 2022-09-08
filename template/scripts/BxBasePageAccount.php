@@ -12,6 +12,7 @@
  */
 class BxBasePageAccount extends BxTemplPage
 {
+    protected $_oInformer;
     protected $_aMapStatus2LangKey = array (
         BX_PROFILE_STATUS_PENDING => '_sys_txt_account_pending',
         BX_PROFILE_STATUS_SUSPENDED => '_sys_txt_account_suspended',
@@ -20,6 +21,10 @@ class BxBasePageAccount extends BxTemplPage
     public function __construct($aObject, $oTemplate)
     {
         parent::__construct($aObject, $oTemplate);
+
+        $this->_oInformer = BxDolInformer::getInstance($this->_oTemplate);
+        if($this->_aObject['uri'] == 'account-profile-switcher')
+            $this->_oInformer->remove('sys-account-profile-system');
 
         $oProfile = BxDolProfile::getInstance();
         $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
@@ -44,11 +49,8 @@ class BxBasePageAccount extends BxTemplPage
         // display message if profile isn't active
         if ($oProfile) {
             $sStatus = $oProfile->getStatus();
-            if (isset($this->_aMapStatus2LangKey[$sStatus])) {
-                $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-                if ($oInformer)
-                    $oInformer->add('sys-account-status-not-active', _t($this->_aMapStatus2LangKey[$sStatus]), BX_INFORMER_ALERT);
-            }
+            if(isset($this->_aMapStatus2LangKey[$sStatus]))
+                $this->_oInformer->add('sys-account-status-not-active', _t($this->_aMapStatus2LangKey[$sStatus]), BX_INFORMER_ALERT);
         }
 
         // switch profile context
@@ -94,10 +96,7 @@ class BxBasePageAccount extends BxTemplPage
                 else
                     $sInformerMsg = $mixedRes;
 
-                $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-                if($oInformer)
-                    $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), true === $mixedRes ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
-
+                $this->_oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), true === $mixedRes ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
             }
         }
     }

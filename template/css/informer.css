@@ -2,30 +2,16 @@
 .bx-informer-msg:first-child {
     margin-top:0;
 }
-
-.bx-informer-msg-info {
-    background-color: rgb(220, 220, 255);
-    background-color: rgba(180, 180, 255, 0.4);
-
-    -moz-box-shadow: inset 0px 0px -1px 0px rgba(180, 180, 255, 0.4);
-    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(180, 180, 255, 0.4);
-    box-shadow: inset 0px 0px -1px 0px rgba(180, 180, 255, 0.4);
+.bx-informer-icon {
+    display: none;
+    vertical-align: top;
 }
-
-.bx-informer-msg-alert {
-    background-color: rgb(255, 244, 213);
-    background-color: rgba(255, 234, 193, 0.5);
-
-    -moz-box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
-    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
-    box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
+.bx-informer-msg-info .bx-informer-icon-info {
+    display: inline-block;
 }
-
-.bx-informer-msg-error {
-    background-color: rgb(255, 200, 200);
-    background-color: rgba(255, 180, 180, 0.5);
-
-    -moz-box-shadow: inset 0px 0px -1px 0px rgba(255, 180, 180, 0.5);
-    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(255, 180, 180, 0.5);
-    box-shadow: inset 0px 0px -1px 0px rgba(255, 180, 180, 0.5);
+.bx-informer-msg-alert .bx-informer-icon-alert {
+    display: inline-block;
+}
+.bx-informer-msg-error .bx-informer-icon-error {
+    display: inline-block;
 }

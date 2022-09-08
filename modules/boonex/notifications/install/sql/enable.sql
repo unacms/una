@@ -57,7 +57,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: member toolbar
 SET @iMenuToolbarMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_toolbar_member' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `markers`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `hidden_on`, `active`, `copyable`, `order`) VALUES 
-('sys_toolbar_member', @sName, 'notifications-preview', '_bx_ntfs_menu_item_title_system_preview', '_bx_ntfs_menu_item_title_preview', 'javascript:void(0)', 'bx_menu_slide(''bx_notifications_preview'', this, ''site'', {id:{value:''bx_notifications_preview'', force:1}, cssClass: ''''});', '', 'bell col-green3', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:28:"get_unread_notifications_num";}', '', 'bx_notifications_preview', 1, 2147483646, 9, 1, 1, 0);
+('sys_toolbar_member', @sName, 'notifications-preview', '_bx_ntfs_menu_item_title_system_preview', '_bx_ntfs_menu_item_title_preview', 'javascript:void(0)', 'bx_menu_slide(''bx_notifications_preview'', $(this).parents(''ul:first''), ''site'', {id:{value:''bx_notifications_preview'', force:1}, pointer:{align:''right''}, cssClass: ''''});', '', 'bell col-green3', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:28:"get_unread_notifications_num";}', '', 'bx_notifications_preview', 1, 2147483646, 9, 1, 1, 0);
 
 -- MENU: Notifications
 SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `order` < 9999);

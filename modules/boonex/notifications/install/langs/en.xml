@@ -51,8 +51,9 @@
 
     <string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
 
+    <string name="_bx_ntfs_alert_action_group_comment"><![CDATA[New comments]]></string>
     <string name="_bx_ntfs_alert_action_group_content_updated"><![CDATA[Content was updated]]></string>
-    <string name="_bx_ntfs_alert_action_group_action_required"><![CDATA[Your action required]]></string>
+    <string name="_bx_ntfs_alert_action_group_action_required"><![CDATA[Your action required]]></string>    
 
     <string name="_bx_ntfs_alert_action_added"><![CDATA[add]]></string>
     <string name="_bx_ntfs_alert_action_commentPost"><![CDATA[add comment]]></string>
@@ -62,6 +63,7 @@
     <string name="_bx_ntfs_alert_action_mention_added_personal"><![CDATA[Someone mentions you]]></string>
     <string name="_bx_ntfs_alert_action_friendship_added_personal"><![CDATA[You get a new friend]]></string>
     <string name="_bx_ntfs_alert_action_subscription_added_personal"><![CDATA[You get a new follower]]></string>
+    <string name="_bx_ntfs_alert_action_comment_added_personal"><![CDATA[Someone adds a comment on a content you've already commented]]></string>
     <string name="_bx_ntfs_alert_action_added_follow_member"><![CDATA[New content]]></string>
     <string name="_bx_ntfs_alert_action_added_follow_context"><![CDATA[New content]]></string>
     <string name="_bx_ntfs_alert_action_commentPost_personal"><![CDATA[Someone adds a comment on your content]]></string>
@@ -98,6 +100,7 @@
     <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Activity in spaces (groups, events, etc.) you follow]]></string>
     <string name="_bx_ntfs_setting_type_other"><![CDATA[Other Activity]]></string>
 
+    <string name="_bx_ntfs_alert_module_comment"><![CDATA[Comments]]></string>
     <string name="_bx_ntfs_alert_module_sys_cmts"><![CDATA[Comments]]></string>
     <string name="_bx_ntfs_alert_module_sys_cmts_reactions"><![CDATA[Comments' Reactions]]></string>
     <string name="_bx_ntfs_alert_module_meta_mention"><![CDATA[Profiles Mentions]]></string>

@@ -40,9 +40,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_azrb2c_secret', '', @iCategId, '_bx_azrb2c_option_secret', 'digit', '', '', 24, ''),
 ('bx_azrb2c_redirect_page', 'index', @iCategId, '_sys_connect_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
 ('bx_azrb2c_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:9:"bx_azrb2c";s:6:"method";s:20:"get_profiles_modules";}'),
-('bx_azrb2c_privacy', '3', @iCategId, '_sys_connect_option_privacy', 'select', '', '', 54, 'a:2:{s:6:"module";s:12:"bx_azrb2c";s:6:"method";s:18:"get_privacy_groups";}'),
+('bx_azrb2c_privacy', '3', @iCategId, '_sys_connect_option_privacy', 'select', '', '', 54, 'a:2:{s:6:"module";s:9:"bx_azrb2c";s:6:"method";s:18:"get_privacy_groups";}'),
 ('bx_azrb2c_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
-('bx_azrb2c_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, '');
+('bx_azrb2c_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, ''),
+('bx_azrb2c_group', '', @iCategId, 'bx_azrb2c_option_group', 'digit', '', '', 90, '');
 
 -- Pages
 

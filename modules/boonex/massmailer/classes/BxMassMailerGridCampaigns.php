@@ -16,6 +16,8 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         $this->MODULE = 'bx_massmailer';
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
         parent::__construct ($aOptions, $oTemplate);
+        
+        $this->_sDefaultSortingOrder = 'DESC';
     }
     
     public function performActionDelete()

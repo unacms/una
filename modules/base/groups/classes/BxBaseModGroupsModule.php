@@ -498,20 +498,24 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function serviceFansTable ()
     {
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID_CONNECTIONS']);
-        if (!$oGrid)
+        $CNF = &$this->_oConfig->CNF;
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_CONNECTIONS']);
+        if(!$oGrid)
             return false;
 
         return $oGrid->getCode();
     }
     
-	public function serviceInvitesTable ()
+    public function serviceInvitesTable ()
     {
-		if (!isset($this->_oConfig->CNF['OBJECT_GRID_INVITES']))
-			return false;
-		
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID_INVITES']);
-        if (!$oGrid)
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_GRID_INVITES']))
+            return false;
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_INVITES']);
+        if(!$oGrid)
             return false;
 
         return $oGrid->getCode();

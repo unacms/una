@@ -212,6 +212,9 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
     height: auto;
     margin: 1rem 0 0 0;
 }
+.bx-base-pofile-cover-wrapper.bx-clickable .bx-base-pofile-cover {
+    cursor: pointer;
+}
 
 .bx-media-phone .bx-base-pofile-cover-wrapper {
     padding-left: 0;
@@ -364,13 +367,25 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     text-align: left;
 }
 
-.bx-base-profile-cover-meta {}
+.bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor {
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li {
+    margin-right: 1.25rem;
+}
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li:last-child {
     margin-right: 0;
 }
 .bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li .sys-meta-div {
     display: none;
 }
+.bx-base-profile-cover-meta .bx-menu-custom.bx-menu-custom-hor li .sys-meta-item {
+    margin-right: 0;
+}
+
 
 .bx-base-pofile-cover-actions {
     position: relative;

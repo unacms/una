@@ -447,7 +447,6 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0, $sButtonTitle = '', $sProfileTemplate = '')
     {
     	$oTemplate = BxDolTemplate::getInstance();
-    	BxDolInformer::getInstance($oTemplate)->setEnabled(false);
 
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 

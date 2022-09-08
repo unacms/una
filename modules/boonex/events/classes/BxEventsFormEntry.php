@@ -15,13 +15,15 @@
 class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 {
     protected static $_isCssJsEventsAdded = false;
-    
+
     protected $_iContentId = 0;
 
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_events';
         parent::__construct($aInfo, $oTemplate);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (isset($this->aInputs['reoccurring'])) {
             $this->aInputs['reoccurring']['ghost_template'] = array (
@@ -107,9 +109,12 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             );
         }
 
-        if (isset($this->aInputs['timezone']) && !$this->aParams['view_mode']) {
-            $this->aInputs['timezone']['values'] = array_combine(timezone_identifiers_list(), timezone_identifiers_list());
-        }        
+        if (isset($this->aInputs[$CNF['FIELD_TIMEZONE']]) && !$this->aParams['view_mode']) {
+            $this->aInputs[$CNF['FIELD_TIMEZONE']]['values'] = array_combine(timezone_identifiers_list(), timezone_identifiers_list());
+        }
+
+        if(isset($this->aInputs[$CNF['FIELD_REMINDER']]) && !$this->_oModule->_oConfig->isInternalNotifications())
+            unset($this->aInputs[$CNF['FIELD_REMINDER']]);
     }
 
     function getCode($bDynamicMode = false)

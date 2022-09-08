@@ -303,18 +303,106 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
      */
     public function serviceProcessReminders()
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $iNow = time();
+        $bUseIn = $this->_oConfig->isInternalNotifications();
+        $sModule = $this->getName();
 
         // get all events for today and tomorrow, since the max reminder is 24 hours
         $aEntries = $this->_oDb->getEntriesByDate('@' . time(), '@' . (time() + 3600 * getParam('bx_events_reminder_interval')));
 
-        foreach ($aEntries as $a) {
-            if (!$a['reminder'])
+        foreach($aEntries as $aEntry) {
+            $aReminders = $bUseIn ? [$aEntry['reminder']] : [24, 1];
+            if(!$aReminders)
                 continue;
-            $iTimestamp = $a['start_utc'] - (3600 * $a['reminder']);
-            if ($iNow > ($iTimestamp - 3600) && $iNow < $iTimestamp)
-                $this->sendReminders($a);
+
+            $oEventProfile = BxDolProfile::getInstanceByContentAndType($aEntry[$CNF['FIELD_ID']], $sModule);
+            if(!$oEventProfile)
+                continue;
+
+            $iEventProfileId = $oEventProfile->id();
+            foreach($aReminders as $iReminder) {
+                $iTimestamp = $aEntry['start_utc'] - (3600 * $iReminder);
+                if($iNow <= ($iTimestamp - 3600) || $iNow >= $iTimestamp)
+                    continue;
+
+                if($bUseIn)
+                    $this->sendReminders($aEntry);
+
+                bx_alert($sModule, 'reminder', $aEntry[$CNF['FIELD_ID']], $iEventProfileId, array(
+                    'object_author_id' => $iEventProfileId,
+                    'reminder' => $iReminder
+                ));
+            }
         }
+    }
+
+    public function serviceGetNotificationsData()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResults = parent::serviceGetNotificationsData();
+        
+        $sModule = $this->_aModule['name'];
+        $aSettingsTypes = ['follow_context'];
+
+        $aResults['handlers'] = array_merge($aResults['handlers'], [
+            ['group' => $sModule . '_reminder', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'reminder', 'module_name' => $sModule, 'module_method' => 'get_notifications_reminder', 'module_class' => 'Module', 'module_event_privacy' => $CNF['OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT']],
+        ]);
+
+        $aResults['settings'] = array_merge($aResults['settings'], [
+            ['group' => 'reminder', 'unit' => $sModule, 'action' => 'reminder', 'types' => $aSettingsTypes],
+        ]);
+
+        $aResults['alerts'] = array_merge($aResults['alerts'], [
+            ['unit' => $sModule, 'action' => 'reminder'],
+        ]);
+
+        return $aResults;
+    }
+
+    public function serviceGetNotificationsInsertData($oAlert, $aHandler, $aDataItems)
+    {
+        if($oAlert->sAction != 'reminder' || empty($aDataItems) || !is_array($aDataItems) || empty($oAlert->aExtras['reminder']))
+            return $aDataItems;
+
+        foreach($aDataItems as $iIndex => $aDataItem) {
+            $aContent = [];
+            if(!empty($aDataItem['content']))
+                $aContent = unserialize($aDataItem['content']);
+
+            $aContent['reminder'] = (int)$oAlert->aExtras['reminder'];
+
+            $aDataItems[$iIndex]['content'] = serialize($aContent);
+        }
+
+        return $aDataItems;
+    }
+
+    public function serviceGetNotificationsReminder($aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($aEvent['content']['reminder']))
+            return [];
+
+        $iContentId = (int)$aEvent['object_id'];
+        $oEventProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if(!$oEventProfile)
+            return [];
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return [];
+
+        return [
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oEventProfile->getUrl()),
+            'entry_caption' => $oEventProfile->getDisplayName(),
+            'entry_author' => $oEventProfile->id(),
+            'lang_key' => '_bx_events_txt_ntfs_reminder_' . $aEvent['content']['reminder']
+        ];
     }
 
     /**

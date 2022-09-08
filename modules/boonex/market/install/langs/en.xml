@@ -297,6 +297,8 @@
     <string name="_bx_market_menu_item_title_entries_top"><![CDATA[Top]]></string>
     <string name="_bx_market_menu_item_title_system_entries_updated"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_menu_item_title_entries_updated"><![CDATA[Updated]]></string>
+    <string name="_bx_market_menu_item_title_system_more_auto"><![CDATA[More]]></string>
+    <string name="_bx_market_menu_item_title_more_auto"><![CDATA[More]]></string>
     <string name="_bx_market_menu_title_view_entry_submenu"><![CDATA[View Product Submenu]]></string>
     <string name="_bx_market_menu_set_title_view_entry_submenu"><![CDATA[View Product Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_view_entry_submenu_entry"><![CDATA[Overview]]></string>

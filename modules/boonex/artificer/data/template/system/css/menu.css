@@ -119,7 +119,7 @@ li.bx-mi-hidden {
     position: relative;
     padding: 0 0.25rem;
 }
-#bx-sliding-menu-account .bx-menu-account-popup-profile-switcher-link {
+#bx-sliding-menu-account .bx-menu-account-popup-profile-create {
     display: -webkit-flex;
     display: flex;
     -webkit-justify-content: center;

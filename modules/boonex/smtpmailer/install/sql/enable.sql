@@ -20,7 +20,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_smtp_secure', 'Not Secure', @iCategId, '_bx_smtp_option_secure', 'select', '', '', 70, 'Not Secure,SSL,TLS'), 
 ('bx_smtp_allow_selfsigned', '', @iCategId, '_bx_smtp_option_allow_selfsigned', 'checkbox', '', '', 74, ''),
 ('bx_smtp_from_name', '', @iCategId, '_bx_smtp_option_from_name', 'digit', '', '', 80, ''),
-('bx_smtp_from_email', '', @iCategId, '_bx_smtp_option_from_email', 'digit', '', '', 90, '');
+('bx_smtp_from_email', '', @iCategId, '_bx_smtp_option_from_email', 'digit', '', '', 90, ''),
+('bx_smtp_test_mode', '', @iCategId, '_bx_smtp_option_test_mode', 'checkbox', '', '', 100, ''),
+('bx_smtp_test_email', '', @iCategId, '_bx_smtp_option_test_email', 'digit', '', '', 102, ''),
+('bx_smtp_test_subj', '[TEST] ', @iCategId, '_bx_smtp_option_test_subj', 'digit', '', '', 104, '');
 
 -- logs
 

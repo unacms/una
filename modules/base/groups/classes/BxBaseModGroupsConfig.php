@@ -71,6 +71,11 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
         return isset($this->CNF['PARAM_PAID_JOIN_ENABLED']) && $this->CNF['PARAM_PAID_JOIN_ENABLED'] === true;
     }
 
+    public function isInternalNotifications()
+    {
+        return !isset($this->CNF['PARAM_USE_IN']) || getParam($this->CNF['PARAM_USE_IN']) == 'on';
+    }
+
     public function getPriceName($sName)
     {
         return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_PRICE_NAME'], ['lowercase' => false]);

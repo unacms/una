@@ -236,24 +236,25 @@ ul.bx-menu-main-submenu {
     padding:0;
 }
 ul.bx-menu-toolbar li {
-	position:relative;
+    position:relative;
     float:left;
     margin:0px;
 } 
 
 ul.bx-menu-toolbar li a {
-    position:relative;
-    display:block;
-    height:48px;
-    height:3rem;
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    
+    height: 3rem;
 
-    line-height:48px;
-    line-height:3rem;
-    font-size:16px;
-    font-size:1rem;
+    font-size: 1rem;
     text-align: center;
-    vertical-align:middle;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 ul.bx-menu-toolbar li a .sys-icon,
@@ -268,7 +269,7 @@ ul.bx-menu-toolbar li a .sys-icon-a {
 }
 
 ul.bx-menu-toolbar li img {
-	max-height:48px;
+    max-height:48px;
     max-height:3rem;
 
     background-position:center center;
@@ -277,14 +278,18 @@ ul.bx-menu-toolbar li img {
 
 ul.bx-menu-toolbar li .sys-icon-a,
 ul.bx-menu-toolbar li .sys-icon {
-    display:inline-block;
-    vertical-align:middle;
+    display: inline-block;
+    vertical-align: middle;
 
-    font-size:24px;
-    font-size:1.5rem;
-    text-align:center;
-    width:1.5rem;
-    height:1.5rem;
+    width: 1.5rem;
+
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+ul.bx-menu-toolbar li img, 
+ul.bx-menu-toolbar li .sys-icon.sys-icon-svg {
+    height: 1.5rem;
 }
 
 ul.bx-menu-toolbar li .bx-menu-toolbar-item-unit {
@@ -359,24 +364,10 @@ ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
     white-space:nowrap;
 }
 
-.bx-sliding-menu-main .bx-menu-account-popup-profile .bx-base-pofile-unit {
-    margin-bottom:0;
-}
-
 .bx-popup-content .bx-menu-floating-blocks-wide,
 .bx-popup-content .bx-menu-floating-blocks {
     width:256px;
     width:16rem;
-}
-.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks-wide,
-.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
-    width:auto;
-}
-
-.bx-menu-account-popup-menu ul.bx-menu-floating-blocks-wide {
-    display:inline-block;
-    max-width:800px;
-    max-width:50rem;
 }
 ul.bx-menu-floating-blocks-dash{
     display: flex;
@@ -667,25 +658,40 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 }
 
 /* --------------- account popup menu */
-
 .bx-popup-content .bx-menu-account-popup {
-    min-width:17em;
+    min-width: 17em;
+}
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks-wide,
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
+    width: auto;
 }
 
-.bx-menu-account-popup-menu {
-    text-align:center;
+.bx-menu-account-popup-profile-active {
+    margin-right: 2rem;
+}
+.bx-menu-account-popup-profile-active .bx-base-pofile-unit {
+    float: none;
+    width: 100%;
+    margin: 0;
 }
 
-.bx-menu-account-popup-profile-switcher-link {
+.bx-menu-account-popup-profile-notifications {
     text-align: center;
 }
+.bx-menu-account-popup-profile-notifications ul.bx-menu-floating-blocks-wide {
+    display: inline-block;
+    max-width: 50rem;
+}
 
-.bx-menu-account-popup-profile-switcher-link a:hover,
-.bx-menu-account-popup-profile-switcher-link a {
+.bx-menu-account-popup-profile-create {
+    text-align: center;
+}
+.bx-menu-account-popup-profile-create a:hover,
+.bx-menu-account-popup-profile-create a {
     text-decoration:none;
 }
 
-.bx-menu-account-popup-profile-switcher-link .bx-btn {
+.bx-menu-account-popup-profile-create .bx-btn {
     float: none;
     display: inline-block;
     width: 100%;

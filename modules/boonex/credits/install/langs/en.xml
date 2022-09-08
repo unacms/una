@@ -55,6 +55,7 @@
     <string name="_bx_credits_form_credit_input_result"><![CDATA[Result]]></string>
     <string name="_bx_credits_form_credit_input_sys_amount"><![CDATA[Amount]]></string>
     <string name="_bx_credits_form_credit_input_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_credits_form_credit_input_amount_err"><![CDATA[This field is essential. Please fill it in.]]></string>
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message_inf_g"><![CDATA[]]></string>

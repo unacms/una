@@ -94,15 +94,21 @@ function bx_ex_editor_init(oEditor, oParams)
         inlineToolbar: oParams.toolbar_inline.concat(['mention']),
         tools: oTools,
         onReady: () => {
-            if ($(oParams.selector).val() != '')
-                oEditor.blocks.renderFromHTML($(oParams.selector).val());
+            if ($(oParams.selector).val() != ''){
+               
+                const doc = new DOMParser().parseFromString($(oParams.selector).val(), "text/html");
+                var a = doc.getElementsByClassName('bx-embed-link');
+                Array.prototype.forEach.call(a, function(i) {
+                    i.innerHTML = i.getAttribute('source');
+                });
+                
+                oEditor.blocks.renderFromHTML(doc.documentElement.getElementsByTagName('body')[0].innerHTML);
+            }
         },
         onChange:() =>{
-            
             oEditor.save().then((savedData) =>{
                 const edjsParser = edjsHTML({embedblock: bx_ex_editor_custom_parser_embedblock});
                 oData = edjsParser.parse(savedData);
-                console.log(oData);
                 var s ='';
                 oData.forEach(function(item){
                     s += item;
@@ -121,7 +127,7 @@ function bx_ex_editor_init(oEditor, oParams)
             {
                 selectTemplate: function(item) {
                     if (this.range.isContentEditable(this.current.element)) {
-                        return ('<a class="bx-menthion-link" dchar="@" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">@' + item.original.label + '</a>');
+                        return ('<a class="bx-mention-link" dchar="@" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">@' + item.original.label + '</a>');
                     }
                     return "@" + item.original.value;
                 },
@@ -137,7 +143,7 @@ function bx_ex_editor_init(oEditor, oParams)
                 trigger: "#",
                 selectTemplate: function(item) {
                     if (this.range.isContentEditable(this.current.element)) {
-                        return ('<a class="bx-menthion-link" dchar="#" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">#' + item.original.label + '</a>');
+                        return ('<a class="bx-mention-link" dchar="#" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">#' + item.original.label + '</a>');
                     }
                     return "#" + item.original.value;
                 },
@@ -160,15 +166,13 @@ function bx_ex_editor_init(oEditor, oParams)
 function bx_ex_editor_custom_parser_embedblock(block)
 {
     if (block.data && block.data.source)
-        return '<div class="bx-embed-link" source="' + block.data.source + '">' + block.data.source + '</div>';
+        return '<div class="bx-embed-link" source="' + block.data.source + '"></div>';
 }
 
 var oLink ='';
 
 class BxEmbedBlock {
     constructor({ data, block }){
-         console.log('--!constructor');
-          console.log(data);
         this.blockAPI = block
 
         this.nodes = {
@@ -190,7 +194,6 @@ class BxEmbedBlock {
 
      render() {
         this.wrapper = document.createElement('p');
-       
         if (this.data && this.data.source){
             this._createEmbed(this.data.source);
             return this.wrapper;
@@ -206,9 +209,9 @@ class BxEmbedBlock {
         var oObj = document.createElement('div');
         oObj.setAttribute('source', sLink)
         oObj.className = 'bx-embed-link';
-        oObj.innerHTML = sLink;
         this.wrapper.removeChild(this.wrapper.querySelector('input'));
         this.wrapper.appendChild(oObj);
+        this.blockAPI.dispatchChange();
     }
     
      _createInput(){
@@ -225,7 +228,6 @@ class BxEmbedBlock {
    
     save(blockContent){
         const div = blockContent.querySelector('div');
-        console.log(div);
         if (div){
             return {
                 source: div.getAttribute('source')
@@ -240,7 +242,6 @@ class BxEmbedBlock {
     }
     
     onPaste(event) {
-        console.log(8);
         if (event.detail.data.attributes.source){
             var sSource = event.detail.data.attributes.source.nodeValue;
             this._createEmbed(sSource);
@@ -263,7 +264,7 @@ class BxEmbedBlock {
 class BxMention {
 
     static get CSS() {
-        return 'bx-menthion-link';
+        return 'bx-mention-link';
     };
 
     constructor({api}) {

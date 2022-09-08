@@ -43,6 +43,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
             'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
 
             // database fields
@@ -168,6 +169,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
             'OBJECT_GRID_COMMON' => 'bx_organizations_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_organizations_fans',
+            'OBJECT_GRID_INVITES' => 'bx_organizations_invites',
             'OBJECT_GRID_PRICES_MANAGE' => 'bx_organizations_prices_manage',
             'OBJECT_GRID_PRICES_VIEW' => 'bx_organizations_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
@@ -177,6 +179,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_PRE_LIST_PERIOD_UNITS' => 'bx_organizations_period_units',
             
             'BADGES_AVALIABLE' => true,
+            'INVITES_KEYS_LIFETIME' => 86400,
 
             'EMAIL_FRIEND_REQUEST' => 'bx_organizations_friend_request',
             'EMAIL_INVITATION' => 'bx_organizations_invitation',
@@ -273,6 +276,12 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             	'option_activation_off' => '_bx_orgs_option_activation_off',
             	'option_activation_add' => '_bx_orgs_option_activation_add',
                 'option_activation_edit' => '_bx_orgs_option_activation_edit',
+                'txt_invitation_popup_title' => '_bx_orgs_txt_invite_popup_title',
+                'txt_invitation_popup_text' => '_bx_orgs_txt_invite_popup_text',
+                'txt_invitation_popup_accept_button' => '_bx_orgs_txt_invite_popup_button_accept',
+                'txt_invitation_popup_decline_button' => '_bx_orgs_txt_invite_popup_button_decline',
+                'txt_invitation_popup_error_invitation_absent' => '_bx_orgs_txt_invite_popup_error_invitation_absent',
+                'txt_invitation_popup_error_wrong_user' => '_bx_orgs_txt_invite_popup_error_invitation_wrong_user',
                 'txt_n_unit' => '_bx_orgs_txt_n_unit',
                 'txt_buy_title' => '_bx_orgs_grid_action_title_buy_title',
                 'txt_cart_item_title' => '_bx_orgs_txt_cart_item_title',
@@ -291,6 +300,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'main' => 'BxOrgsMain',
             'manage_tools' => 'BxOrgsManageTools',
             'categories' => 'BxDolCategories',
+            'invite_popup' => 'BxOrgsInvitePopup',
             'prices' => 'BxOrgsPrices'
         );
 
@@ -298,6 +308,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'main' => 'oBxOrgsMain',
             'manage_tools' => 'oBxOrgsManageTools',
             'categories' => 'oBxDolCategories',
+            'invite_popup' => 'oBxOrgsInvitePopup',
             'prices' => 'oBxOrgsPrices'
         );
 
@@ -306,7 +317,6 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
     }
-
 }
 
 /** @} */
