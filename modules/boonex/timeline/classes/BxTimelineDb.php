@@ -107,6 +107,15 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return (int)$this->query($sQuery) > 0;
     }
 
+    public function updateRepostTrack($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        $sSql = "UPDATE `{$this->_sTableRepostsTrack}` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
+        return $this->query($sSql);
+    }
+
     public function deleteRepostTrack($iEventId)
     {
         $sQuery = $this->prepare("DELETE FROM `{$this->_sTableRepostsTrack}` WHERE `event_id` = ?", $iEventId);

@@ -314,7 +314,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedAllowed !== true)
             return echoJson(array('code' => 2, 'message' => strip_tags($mixedAllowed)));
 
-        if(!$this->deleteEvent($aEvent))
+        if(!$this->{$this->_oConfig->isHideUponDelete() ? 'hideEvent' : 'deleteEvent'}($aEvent))
             return echoJson(array('code' => 3));
 
         echoJson(array(
@@ -3294,6 +3294,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array('code' => 0, 'content' => $sContent, 'event' => $aEvent);
     }
 
+    public function hideEvent($aEvent)
+    {
+    	if(empty($aEvent) || !is_array($aEvent) || !$this->_oDb->updateEvent(['status' => 'hidden'], ['id' => (int)$aEvent['id']]))
+            return false;
+
+        $this->onHide($aEvent);
+        return true;
+    }
+
     public function deleteEvent($aEvent)
     {
     	if(empty($aEvent) || !is_array($aEvent) || !$this->_oDb->deleteEvent(array('id' => (int)$aEvent['id'])))
@@ -4363,6 +4372,108 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Timeline -> Update for Alerts Engine ---//
     }
 
+    public function onHide($aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iUserId = $this->getUserId();
+    	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+
+    	//--- Update parent event when repost event was deactivated.
+    	$bRepost = $aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_REPOST;
+        if($bRepost) {
+            $this->_oDb->updateRepostTrack(['active' => 0], ['event_id' => $aEvent[$CNF['FIELD_ID']]]);
+
+            $aContent = unserialize($aEvent['content']);
+            $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
+            if(!empty($aReposted) && is_array($aReposted))
+                $this->_oDb->updateRepostCounter($aReposted[$CNF['FIELD_ID']], $aReposted['reposts'], -1);
+        }
+
+        //--- Find and hide repost events when parent event was deactivated.
+        $aRepostEvents = $this->_oDb->getEvents(['browse' => 'reposted_by_track', 'value' => $aEvent[$CNF['FIELD_ID']]]);
+        foreach($aRepostEvents as $aRepostEvent) {
+            if((int)$this->_oDb->updateEvent(['active' => 0], ['id' => (int)$aRepostEvent[$CNF['FIELD_ID']]]) == 0) 
+                continue;
+
+            $this->_oDb->updateRepostTrack(['active' => 0], ['event_id' => $aRepostEvent[$CNF['FIELD_ID']]]);
+
+            bx_alert($this->_oConfig->getObject('alert'), 'hide_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+                'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
+            ));
+        }
+
+        //--- Delete associated meta for Common events.
+        if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+            $oMetatags->onDeleteContent($aEvent[$CNF['FIELD_ID']]);
+        }
+
+        //--- Delete item cache.
+        $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
+        $this->getCacheItemObject()->delData($sCacheItemKey);
+
+        //--- Event -> Hide for Alerts Engine ---//
+        if($bRepost)
+            bx_alert($this->_oConfig->getObject('alert'), 'hide_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
+                'repost_id' => $aEvent[$CNF['FIELD_ID']],
+            ));
+        else
+            bx_alert($this->_oConfig->getObject('alert'), 'hide', $aEvent[$CNF['FIELD_ID']], $iUserId);
+        //--- Event -> Hide for Alerts Engine ---//
+    }
+
+    public function onUnhide($aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iUserId = $this->getUserId();
+    	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+
+    	//--- Update parent event when repost event was activated back.
+    	$bRepost = $aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_REPOST;
+        if($bRepost) {
+            $this->_oDb->updateRepostTrack(['active' => 1], ['event_id' => $aEvent[$CNF['FIELD_ID']]]);
+
+            $aContent = unserialize($aEvent['content']);
+            $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
+            if(!empty($aReposted) && is_array($aReposted))
+                $this->_oDb->updateRepostCounter($aReposted[$CNF['FIELD_ID']], $aReposted['reposts'], 1);
+        }
+
+        //--- Find and hide repost events when parent event was activated back.
+        $aRepostEvents = $this->_oDb->getEvents(['browse' => 'reposted_by_track', 'value' => $aEvent[$CNF['FIELD_ID']]]);
+        foreach($aRepostEvents as $aRepostEvent) {
+            if((int)$this->_oDb->updateEvent(['active' => 1], ['id' => (int)$aRepostEvent[$CNF['FIELD_ID']]]) == 0) 
+                continue;
+
+            $this->_oDb->updateRepostTrack(['active' => 1], ['event_id' => $aRepostEvent[$CNF['FIELD_ID']]]);
+
+            bx_alert($this->_oConfig->getObject('alert'), 'unhide_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+                'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
+            ));
+        }
+
+        //--- Process meta for Common events.
+        if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
+            $aContent = unserialize($aEvent['content']);
+
+            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+            if(!empty($aContent['text']))
+                $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']], $aContent['text']);
+            $oMetatags->locationsAddFromForm($aEvent[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+        }
+
+        //--- Event -> Unhide for Alerts Engine ---//
+        if($bRepost)
+            bx_alert($this->_oConfig->getObject('alert'), 'unhide_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
+                'repost_id' => $aEvent[$CNF['FIELD_ID']],
+            ));
+        else
+            bx_alert($this->_oConfig->getObject('alert'), 'unhide', $aEvent[$CNF['FIELD_ID']], $iUserId);
+        //--- Event -> Unhide for Alerts Engine ---//
+    }
+
     public function onDelete($aEvent)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -4398,7 +4509,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         //--- Find and delete repost events when parent event was deleted.
-        $bSystem = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']);
         $aRepostEvents = $this->_oDb->getEvents(array('browse' => 'reposted_by_track', 'value' => $aEvent[$CNF['FIELD_ID']]));
         foreach($aRepostEvents as $aRepostEvent) {
             if((int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent[$CNF['FIELD_ID']])) == 0) 
@@ -4415,9 +4525,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             ));
         }
 
-        //--- Delete associated meta.
-        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-        $oMetatags->onDeleteContent($aEvent[$CNF['FIELD_ID']]);
+        //--- Delete associated meta for Common events.
+        if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+            $oMetatags->onDeleteContent($aEvent[$CNF['FIELD_ID']]);
+        }
         
         //--- Delete item cache.
         $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);

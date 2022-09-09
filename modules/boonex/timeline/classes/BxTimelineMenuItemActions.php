@@ -111,7 +111,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
             'repost_onclick' => $sRepostOnclick,
 
-            'delete_title' => _t('_bx_timeline_menu_item_title_item_delete_' . ($bSystem ? 'system' : 'common'))
+            'delete_title' => _t('_bx_timeline_menu_item_title_item_delete_' . ($bSystem || $this->_oModule->_oConfig->isHideUponDelete() ? 'system' : 'common'))
         ));
 
         return true;
