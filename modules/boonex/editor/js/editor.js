@@ -114,7 +114,9 @@ function bx_ex_editor_init(oEditor, oParams)
                     s += item;
                 })
                 
-                $(oParams.selector).val(s)
+                $(oParams.selector).val(s);
+                
+                bx_editor_on_space_enter (s, oParams.selector);
                 
             }).catch((error) =>{
                 console.log("error", error)
@@ -351,5 +353,41 @@ class BxMention {
                 }
             }
         };
+    }
+}
+
+function bx_editor_on_space_enter (sCode, sEditorId, bSpace = true)
+{
+    if (typeof glBxEditorOnSpaceEnterTimer !== 'undefined')
+        clearTimeout(glBxEditorOnSpaceEnterTimer);
+    
+    if (bSpace)
+        glBxEditorOnSpaceEnterTimer = setTimeout(bx_editor_on_space_enter_in, 500, sCode, sEditorId);
+    else
+        bx_editor_on_space_enter_in(sCode, sEditorId);
+}
+
+function bx_editor_on_space_enter_in(sCode, sEditorId) {
+    glBxEditorOnSpaceEnterTimer = undefined;
+    if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
+        for (var i = 0; i < glOnSpaceEnterInEditor.length; i++) {
+            if (typeof glOnSpaceEnterInEditor[i] === "function") {;                                             
+                glOnSpaceEnterInEditor[i](sCode, sEditorId);
+            }
+        }
+    }
+}
+
+function bx_editor_remove_img (aEditorIds, aMarkers) 
+{
+    for (var i = 0; i < aEditorIds.length; i++) {
+        var eEditor = $('#' + $('#' + aEditorIds[i]).attr('object_editor'));
+        // delete images in html editor
+        for (var k = 0; k < aMarkers.length; k++) {
+            var jFiles = eEditor.find(aMarkers[k]);
+            jFiles.each(function () {
+                $(this).remove(); 
+            });
+        }
     }
 }
