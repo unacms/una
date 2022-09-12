@@ -31,11 +31,11 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         $bLoggedContextModerator = false;
         if($this->_aContentInfo && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
             $iContextProfileId = abs((int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
-            $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
-
-            $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
-            if(in_array($iProfileId, $aAdmins))
-                $bLoggedContextModerator = true;
+            if(($oContextProfile = BxDolProfile::getInstance($iContextProfileId)) !== false) {
+                $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
+                if(in_array($iProfileId, $aAdmins))
+                    $bLoggedContextModerator = true;
+            }
         }
 
         $sTitle = $sUrl = $sIcon = "";
