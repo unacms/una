@@ -251,7 +251,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
                         $sWhereClauseConnections = "NOT ISNULL(`c`.`content`) ";
                         if(!empty($aQueryParts['fields']['added']))
-                            $sWhereClauseConnections .= "AND `{$this->_sTable}`.`date` > `" . $aQueryParts['fields']['added']['table_alias'] . "`.`" . $aQueryParts['fields']['added']['name'] . "` ";
+                            $sWhereClauseConnections .= "AND `{$this->_sTable}`.`date` >= `" . $aQueryParts['fields']['added']['table_alias'] . "`.`" . $aQueryParts['fields']['added']['name'] . "` ";
                     }
 
                     list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();

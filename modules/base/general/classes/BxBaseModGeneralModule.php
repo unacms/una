@@ -165,18 +165,20 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
         if(empty($CNF['OBJECT_NOTES']))
-            return echoJson(array());
+            return echoJson([]);
 
         $iContentId = (int)bx_get('content_id');
 
         $oCmtsNotes = BxDolCmts::getObjectInstance($CNF['OBJECT_NOTES'], $iContentId, true, $this->_oTemplate);
-        $aCmtsNotes = $oCmtsNotes->getCommentsBlock(array(), array('in_designbox' => false));
+        $aCmtsNotes = $oCmtsNotes->getCommentsBlock([], ['in_designbox' => false]);
         if(empty($aCmtsNotes) || !is_array($aCmtsNotes))
-            return echoJson(array());
+            return echoJson([]);
+
+        $sPostfix = $iContentId < 0 ? '_rc' : '';
 
         $sPopupId = $this->getName() . '_notes_' . $iContentId;
-        $sPopupTitle = !empty($CNF['T']['txt_cmts_notes_popup_view_title']) ? $CNF['T']['txt_cmts_notes_popup_view_title'] : '_cmt_nts_popup_view_title';
-        echoJson(array('popup' => BxTemplFunctions::getInstance()->popupBox($sPopupId, _t($sPopupTitle), $aCmtsNotes['content'])));
+        $sPopupTitle = !empty($CNF['T']['txt_cmts_notes_popup_view_title' . $sPostfix]) ? $CNF['T']['txt_cmts_notes_popup_view_title' . $sPostfix] : '_cmt_nts_popup_view_title' . $sPostfix;
+        echoJson(['popup' => BxTemplFunctions::getInstance()->popupBox($sPopupId, _t($sPopupTitle), $aCmtsNotes['content'])]);
     }
     
     public function actionNested()

@@ -20,6 +20,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bShowAll;
     protected $_bCountAllViews;
     protected $_bRepostOwnActions;
+    protected $_bHideUponDelete;
 
     protected $_bCacheItem;
     protected $_sCacheItemEngine;
@@ -394,6 +395,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bShowAll = getParam($sOptionPrefix . 'enable_show_all') == 'on';
         $this->_bCountAllViews = getParam($sOptionPrefix . 'enable_count_all_views') == 'on';
         $this->_bRepostOwnActions = getParam($sOptionPrefix . 'enable_repost_own_actions') == 'on';
+        $this->_bHideUponDelete = getParam($sOptionPrefix . 'enable_hide_upon_delete') == 'on';
 
         $this->_bCacheItem = getParam($sOptionPrefix . 'enable_cache_item') == 'on';
         $this->_sCacheItemEngine = getParam($sOptionPrefix . 'cache_item_engine');
@@ -522,6 +524,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isRepostOwnActions()
     {
         return $this->_bRepostOwnActions;
+    }
+
+    public function isHideUponDelete()
+    {
+        return $this->_bHideUponDelete;
     }
 
     public function isBriefCards()

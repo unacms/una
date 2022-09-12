@@ -26,6 +26,21 @@ class BxTimelineGridCommon extends BxTimelineGridManageTools
         $this->_sManageType = BX_DOL_MANAGE_TOOLS_COMMON;
     }
 
+    protected function _enable ($mixedId, $isChecked)
+    {
+        $bResult = parent::_enable($mixedId, $isChecked);
+        if(!$bResult) 
+            return $bResult;
+        
+        $aEvent = $this->_oModule->_oDb->getEvents(['browse' => 'id', 'value' => (int)$mixedId]);
+        if(empty($aEvent) || !is_array($aEvent))
+            return $bResult;
+
+        $this->_oModule->{$isChecked ? 'onUnhide' : 'onHide'}($aEvent);
+
+        return $bResult;
+    }
+
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {
         if(!$this->_switcherState2Checked($aRow['status_admin']))

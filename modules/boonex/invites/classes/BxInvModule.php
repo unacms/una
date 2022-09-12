@@ -164,15 +164,12 @@ class BxInvModule extends BxDolModule
 
         $sResult = '';
         $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-            
-            $sResult = $this->processFormObjectInvite($oForm);
-            $sResult = MsgBox($sResult);
-        }
+        if($oForm->isSubmittedAndValid())
+            $sResult = MsgBox($this->processFormObjectInvite($oForm));
 
-        return array(
+        return [
             'content' => $sResult . $oForm->getCode()
-        );
+        ];
     }
 
     /**
@@ -371,13 +368,13 @@ class BxInvModule extends BxDolModule
         $this->_oDb->attachAccountIdToInvite($iAccountId, $sKey);
     }
     
-    public function invite($sType, $sEmails, $sText, $mixedLimit = false, $oForm = null)
+    public function invite($sType, $aEmails, $sText, $mixedLimit)
     {
-        $iProfileId = $this->getProfileId();
-        $iAccountId = $this->getAccountId($iProfileId);
+        if(empty($aEmails) || !is_array($aEmails))
+            return false;
 
         $oKeys = BxDolKey::getInstance();
-        if(!$oKeys || !in_array($sType, array(BX_INV_TYPE_FROM_MEMBER, BX_INV_TYPE_FROM_SYSTEM)))
+        if(!$oKeys || !in_array($sType, [BX_INV_TYPE_FROM_MEMBER, BX_INV_TYPE_FROM_SYSTEM]))
             return false;
 
         $iKeyLifetime = $this->_oConfig->getKeyLifetime();
@@ -393,41 +390,38 @@ class BxInvModule extends BxDolModule
                 break;
         }
 
-        if(empty($oForm))
-            $oForm = $this->getFormObjectInvite();
-
+        $iDate = time();
+        $iProfileId = $this->getProfileId();
+        $iAccountId = $this->getAccountId($iProfileId);
         $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate($sEmailTemplate, array(
             'text' => $sText
         ), $iAccountId, $iProfileId);
 
-        $aAccountIds = array();
-        $iDate = time();
-        $aEmails = preg_split("/[\s\n,;]+/", $sEmails);
-        if(is_array($aEmails) && !empty($aEmails)){
-            foreach($aEmails as $sEmail) {
-                if($mixedLimit !== false && (int)$mixedLimit <= 0)
-                    break;
+        $aResults = [];
+        foreach($aEmails as $sEmail) {
+            if($mixedLimit !== false && (int)$mixedLimit <= 0)
+                break;
 
-                $sEmail = trim($sEmail);
-                if(empty($sEmail))
-                    continue;
+            $sEmail = trim($sEmail);
+            if(empty($sEmail))
+                continue;
 
-                $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-                if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey), 'seen_image_url' => $this->getSeenImageUrl($sKey)), BX_EMAIL_SYSTEM)) {
-                    $iInviteId = (int)$this->_oDb->insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate);
-                    array_push($aAccountIds, $iInviteId);
-                    
-                    $this->onInvite($iProfileId);
-                    
-                    if($mixedLimit !== false)
-                        $mixedLimit -= 1;
-                }
+            $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
+            if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey), 'seen_image_url' => $this->getSeenImageUrl($sKey)), BX_EMAIL_SYSTEM)) {
+                $iInviteId = (int)$this->_oDb->insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate);
+
+                $this->onInvite($iProfileId);
+
+                $aResults[] = $sEmail;
+                if($mixedLimit !== false)
+                    $mixedLimit -= 1;
             }
         }
-        return $aAccountIds;
+
+        return $aResults;
     }
     
-    public function processFormObjectInvite($oForm)
+    public function processFormObjectInvite(&$oForm)
     {
         $iProfileId = $this->getProfileId();
         $iAccountId = $this->getAccountId($iProfileId);
@@ -438,20 +432,26 @@ class BxInvModule extends BxDolModule
 
         $mixedInvites = false;
         if(!isAdmin($iAccountId)) {
-            if( $this->_oConfig->getCountPerUser() <= 0)
+            if(($mixedInvites = $this->_oConfig->getCountPerUser()) <= 0)
                 return _t('_bx_invites_err_limit_reached');
         }
-        
+
         $sEmails = bx_process_input($oForm->getCleanValue('emails'));
+        $aEmails = preg_split("/[\s\n,;]+/", $sEmails);
+
         $sText = bx_process_pass($oForm->getCleanValue('text'));
 
-        $mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $mixedInvites, $oForm);
-        if($mixedResult !== false)
-            $sResult = _t('_bx_invites_msg_invitation_sent', count($mixedResult));
-        else
-            $sResult = _t('_bx_invites_err_not_available');
-        
-        return  $sResult;
+        $sResult = _t('_bx_invites_err_not_available');
+        if(($aEmailsSent = $this->invite(BX_INV_TYPE_FROM_MEMBER, $aEmails, $sText, $mixedInvites)) !== false) {
+            $sEmailsResult = '';
+            if(count($aEmails) != count($aEmailsSent))
+                $sEmailsResult = implode('; ', array_diff($aEmails, $aEmailsSent));
+            $oForm->aInputs['emails']['value'] = $sEmailsResult;
+
+            $sResult = _t('_bx_invites_msg_invitation_sent', count($aEmailsSent));
+        }           
+
+        return $sResult;
     }
 
     public function isAllowedInvite($iProfileId, $bPerform = false)

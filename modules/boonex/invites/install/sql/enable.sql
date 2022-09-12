@@ -105,7 +105,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`, `AllowedCount`) VALUES
 (@iPending, @iIdActionInvite, 5),
 (@iSuspended, @iIdActionInvite, 5),
 (@iModerator, @iIdActionInvite, 5),
-(@iAdministrator, @iIdActionInvite, 5),
+(@iAdministrator, @iIdActionInvite, NULL),
 (@iPremium, @iIdActionInvite, 5);
 
 -- GRIDS

@@ -16,6 +16,7 @@
     <string name="_bx_timeline_option_enable_show_all"><![CDATA[Показывать все сообщения в 'Общей хронике', включая те, что были написаны в персональных Хрониках]]></string>
     <string name="_bx_timeline_option_enable_count_all_views"><![CDATA[Считать просмотры для всех событий в хронике]]></string>
     <string name="_bx_timeline_option_enable_repost_own_actions"><![CDATA[Репост использует собственные действия (просмотры, голосование и тп.)]]></string>
+    <string name="_bx_timeline_option_enable_hide_upon_delete"><![CDATA[Деактивировать сообщения при скрывании вместо удаления]]></string>
     <string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
     <string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов на странице "панель аккаунта"]]></string>
     <string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов на главной странице сайта]]></string>

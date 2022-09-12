@@ -292,7 +292,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_enable_count_all_views', '', @iCategId, '_bx_timeline_option_enable_count_all_views', 'checkbox', '', '', '', '', 3),
 ('bx_timeline_enable_repost_own_actions', 'on', @iCategId, '_bx_timeline_option_enable_repost_own_actions', 'checkbox', '', '', '', '', 4),
-('bx_timeline_events_hide', CONCAT_WS(',', @iHdrIdComment), @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 5);
+('bx_timeline_enable_hide_upon_delete', '', @iCategId, '_bx_timeline_option_enable_hide_upon_delete', 'checkbox', '', '', '', '', 5),
+('bx_timeline_events_hide', CONCAT_WS(',', @iHdrIdComment), @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 6);
 
 -- Category: Browse
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
