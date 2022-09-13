@@ -14,6 +14,8 @@ function BxDolGrid (sObject, oOptions) {
     this._sIdTable = 'bx-grid-table-' + sObject;
     this._oOptions = oOptions;
     
+    this._sCsrfToken = oOptions.csrf_token;
+
     this._sOrderField = undefined == oOptions.order_field ? '' : oOptions.order_field;
     this._sOrderDir = undefined == oOptions.order_dir ? 'ASC' : oOptions.order_dir;
     this._sSearchInputText = undefined == oOptions.text_search_input ? '' : oOptions.text_search_input;
@@ -217,6 +219,8 @@ BxDolGrid.prototype.action = function (sAction, oData, sData, isDisableLoading, 
             sUrl += '&' + $this._oOptions.order_get_field + '=' + encodeURIComponent ($this._sOrderField);
         if ($this._sOrderDir.length)
             sUrl += '&' + $this._oOptions.order_get_dir + '=' + encodeURIComponent ($this._sOrderDir);
+        if ($this._sCsrfToken.length)
+            sUrl += '&csrf_token=' + encodeURIComponent ($this._sCsrfToken);
         sUrl += '&_r=' + Math.random();
 
         if (typeof(isDisableLoading) == 'undefined' || !isDisableLoading)

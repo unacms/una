@@ -1112,7 +1112,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         return $oKeys->getNewKey (false, (int)getParam('sys_security_form_token_lifetime'), BxDolSession::getInstance()->getId());
     }
     
-    public static function isCsrfTokenValid($s)
+    public static function isCsrfTokenValid($s, $bDeleteToken = true)
     {
         if (getParam('sys_security_form_token_enable') != 'on')
             return true;
@@ -1122,7 +1122,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         if ($oKeys->isKeyExists($s)) {
             $bRet = $oKeys->isKeyExists($s, BxDolSession::getInstance()->getId());
-            $oKeys->removeKey($s);
+            if ($bDeleteToken)
+                $oKeys->removeKey($s);
             return $bRet;
         }
         return false;
