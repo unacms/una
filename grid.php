@@ -32,7 +32,12 @@ if(method_exists($oGrid, 'init'))
 
 $sAction = 'performAction' . bx_gen_method_name(bx_process_input(bx_get('a')));
 if (method_exists($oGrid, $sAction)) {
-    $oGrid->$sAction();
+    if (BxDolForm::isCsrfTokenValid(bx_get('csrf_token'), false)) {
+        $oGrid->$sAction();
+    }
+    else {
+        echoJson(['msg' => _t('_sys_txt_form_submission_error_csrf_expired'), 'grid' => $oGrid->getCode(false)]);
+    }
 }
 
 /** @} */

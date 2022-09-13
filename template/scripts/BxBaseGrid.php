@@ -211,6 +211,7 @@ class BxBaseGrid extends BxDolGrid
 
         $aVars = array (
             'object' => $this->_sObject,
+            'csrf_token' => BxDolForm::getCsrfToken(),
             'id_table' => $sIdTable,
             'id_cont' => $sIdContainer,
             'id_wrap' => $sIdWrapper,
