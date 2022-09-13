@@ -197,8 +197,6 @@
     <string name="_bx_persons_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра персоны]]></string>
     <string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_persons_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
-    <string name="_bx_persons_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
-    <string name="_bx_persons_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_persons_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_persons_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_persons_menu_item_title_system_clear_reports"><![CDATA[Очистить жалобы]]></string>
@@ -299,7 +297,6 @@
     <string name="_bx_persons_grid_column_title_adm_fullname"><![CDATA[Имя]]></string>
     <string name="_bx_persons_grid_column_title_adm_last_online"><![CDATA[Последнее посещение]]></string>
     <string name="_bx_persons_grid_column_title_adm_account"><![CDATA[Аккаунт]]></string>
-    <string name="_bx_persons_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_persons_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_persons_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_persons_grid_action_title_adm_set_acl_level"><![CDATA[Назначить членство]]></string>
