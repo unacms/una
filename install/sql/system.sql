@@ -4920,6 +4920,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
   `icon` varchar(255) NOT NULL,
   `icon_only` tinyint(4) NOT NULL DEFAULT '0',
   `confirm` tinyint(4) NOT NULL DEFAULT '1',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object_name_type` (`object`(64),`type`,`name`(123))

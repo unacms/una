@@ -79,7 +79,13 @@ class BxDolGridQuery extends BxDolDb
             if (!$aActions || !is_array($aActions))
                 continue;
             foreach ($aActions as $sKey => $aRow)
-                $aObject[$sActionField][$sKey] = $aRow['title'] || $aRow['icon'] ? array('title' => _t($aRow['title']), 'icon' => $aRow['icon'], 'confirm' => $aRow['confirm'], 'icon_only' => $aRow['icon_only']) : array();
+                $aObject[$sActionField][$sKey] = [
+                    'title' => _t($aRow['title']), 
+                    'icon' => $aRow['icon'], 
+                    'icon_only' => $aRow['icon_only'],
+                    'confirm' => $aRow['confirm'], 
+                    'active' => $aRow['active']
+                ];
         }
 
         return $aObject;
