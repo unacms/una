@@ -65,25 +65,28 @@ class BxBasePage extends BxDolPage
     public function performActionGetShare ()
     {
         $aEmbedData = BxDolPage::getEmbedData(bx_get('url'));
-        if (isset($aEmbedData['url'])){
-            $aMarkers = array(
-                'url' => bx_get('url'),
-                'img_url_encoded' => '',
-                'title_encoded' => '',
-            );
+        if(!isset($aEmbedData['url'])) 
+            return; 
 
-            $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
-            $oMenu->addMarkers($aMarkers);
-            $sMenu = $oMenu->getCode();
-
-            echo PopupBox('sys_share_popup', _t('_sys_txt_share_popup_header'), 
-                $this->_oTemplate->parseHtmlByName('designbox_share_popup.html', [
-                    'url' => bx_process_output($aEmbedData['url']),
-                    'menu' => $sMenu,
-                    'code' => htmlspecialchars($aEmbedData['html']),
-                ]
-            ), true);
+        $sMenu = '';
+        if(getParam('sys_a2a_enable') != 'on') {
+            if(($oMenu = BxDolMenu::getObjectInstance('sys_social_sharing')) !== false) {
+                $oMenu->addMarkers([
+                    'url' => $aEmbedData['url'],
+                    'img_url_encoded' => '',
+                    'title_encoded' => ''
+                ]);
+                $sMenu = $oMenu->getCode();
+            }
         }
+        else
+            $sMenu = getParam('sys_a2a_code');
+
+        echo PopupBox('sys_share_popup', _t('_sys_txt_share_popup_header'), $this->_oTemplate->parseHtmlByName('designbox_share_popup.html', [
+            'url' => bx_process_output($aEmbedData['url']),
+            'menu' => $sMenu,
+            'code' => htmlspecialchars($aEmbedData['html']),
+        ]), true);
     }
     
     public function performActionEmbed ()

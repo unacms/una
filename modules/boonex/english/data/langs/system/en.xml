@@ -1472,38 +1472,39 @@
 	<string name="_adm_rl_btn_role_cancel"><![CDATA[Cancel]]></string>
         <string name="_adm_rl_btn_role_save"><![CDATA[Save]]></string>
         
-	<string name="_adm_scs_operation_done"><![CDATA[]]></string>
-	<string name="_adm_stg_cpt_category_account"><![CDATA[Account]]></string>
-	<string name="_adm_stg_cpt_category_acl"><![CDATA[ACL]]></string>
-        <string name="_adm_stg_cpt_category_audit"><![CDATA[Audit]]></string>
-	<string name="_adm_stg_cpt_category_notifications"><![CDATA[Notifications]]></string>
-	<string name="_adm_stg_cpt_category_notifications_push"><![CDATA[Push Notifications]]></string>
-	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
-	<string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
-	<string name="_adm_stg_cpt_category_hidden"><![CDATA[Hidden]]></string>
-	<string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
-	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
-	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
-	<string name="_adm_stg_cpt_category_site_settings"><![CDATA[Site Settings]]></string>
-	<string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
-	<string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
-	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
+    <string name="_adm_scs_operation_done"><![CDATA[]]></string>
+    <string name="_adm_stg_cpt_category_account"><![CDATA[Account]]></string>
+    <string name="_adm_stg_cpt_category_acl"><![CDATA[ACL]]></string>
+    <string name="_adm_stg_cpt_category_audit"><![CDATA[Audit]]></string>
+    <string name="_adm_stg_cpt_category_notifications"><![CDATA[Notifications]]></string>
+    <string name="_adm_stg_cpt_category_notifications_push"><![CDATA[Push Notifications]]></string>
+    <string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
+    <string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_adm_stg_cpt_category_hidden"><![CDATA[Hidden]]></string>
+    <string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
+    <string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
+    <string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
+    <string name="_adm_stg_cpt_category_site_settings"><![CDATA[Site Settings]]></string>
+    <string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
+    <string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
+    <string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Location]]></string>
+    <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Social Settings]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Image height to resize before upload (0 - disable)]]></string>
-	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
-	<string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
-	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
-	<string name="_adm_stg_err_option_currency_sign"><![CDATA[Cannot be empty.]]></string>
-	<string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
-	<string name="_adm_stg_cpt_option_enable_notification_account"><![CDATA[Notify about new accounts]]></string>
-	<string name="_adm_stg_cpt_option_enable_notification_pruning"><![CDATA[Notify about pruning results]]></string>
-	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
-	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
-	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
-	<string name="_adm_stg_cpt_option_lang_subst_from_en"><![CDATA[Substitute (during compilation) missing translations with english ones]]></string>	
-	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
+    <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
+    <string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
+    <string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
+    <string name="_adm_stg_err_option_currency_sign"><![CDATA[Cannot be empty.]]></string>
+    <string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
+    <string name="_adm_stg_cpt_option_enable_notification_account"><![CDATA[Notify about new accounts]]></string>
+    <string name="_adm_stg_cpt_option_enable_notification_pruning"><![CDATA[Notify about pruning results]]></string>
+    <string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
+    <string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
+    <string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
+    <string name="_adm_stg_cpt_option_lang_subst_from_en"><![CDATA[Substitute (during compilation) missing translations with english ones]]></string>	
+    <string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
     <string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
     <string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Enable friendly permalinks for local Storage]]></string>
     <string name="_adm_stg_cpt_option_permalinks_seo_links"><![CDATA[Enable SEO links]]></string>
@@ -1665,8 +1666,8 @@
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
     <string name="_adm_stg_cpt_option_sys_samesite_cookies"><![CDATA[SameSite value for sensitive cookies]]></string>
     <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Notify context member with necessary role to approve content in the context]]></string>
-	<string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Fixed header]]></string>
-	<string name="_adm_stg_cpt_option_sys_css_media_classes"><![CDATA[CSS @media intervals]]></string>
+    <string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Fixed header]]></string>
+    <string name="_adm_stg_cpt_option_sys_css_media_classes"><![CDATA[CSS @media intervals]]></string>
     <string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
     <string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
@@ -1674,8 +1675,7 @@
     <string name="_adm_stg_cpt_option_sys_quill_allow_empty_tags"><![CDATA[Quill - allow empty tags]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_allowed_tags_mini"><![CDATA[Quill - allowed formats for mini editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_allowed_tags_standard"><![CDATA[Quill - allowed formats for standard editor]]></string>
-     <string name="_adm_stg_cpt_option_sys_quill_allowed_tags_full"><![CDATA[Quill - allowed formats for full editor]]></string>
-    
+    <string name="_adm_stg_cpt_option_sys_quill_allowed_tags_full"><![CDATA[Quill - allowed formats for full editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_mini"><![CDATA[Quill buttons for mini editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_standard"><![CDATA[Quill buttons for standard editor]]></string>
     <string name="_adm_stg_cpt_option_sys_quill_toolbar_full"><![CDATA[Quill buttons for full editor]]></string>
@@ -1688,6 +1688,11 @@
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Default logs storage]]></string>
     <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Enable 'Quick Reactions' mode - vote with default reaction when clicked]]></string>
     <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Auto approve a comment after creation]]></string>
+    <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Use Add2Any code instead of default sharing menu]]></string>
+    <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any code]]></string>
+    <string name=""><![CDATA[]]></string>
+    
+    
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
