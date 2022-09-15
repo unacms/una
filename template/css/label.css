@@ -67,6 +67,10 @@
 
 
 /*-- Labels Popup List and Labels Browse  --*/
+.sys-labels-list-cnt {
+    max-height: 20rem;
+    overflow-y: auto;
+}
 .sys-labels-level {
     position: relative;
     

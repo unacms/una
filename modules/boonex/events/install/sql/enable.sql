@@ -25,6 +25,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_events_searchable_fields', 'event_name,event_desc', @iCategId, '_bx_events_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
 ('bx_events_members_mode', '', @iCategId, '_bx_events_option_members_mode', 'select', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:24:"get_options_members_mode";}', '', '', 40),
 ('bx_events_public_subscribed_me', 'on', @iCategId, '_bx_events_option_public_subscribed_me', 'checkbox', '', '', '', 50),
+('bx_events_enable_subscribe_wo_join', '', @iCategId, '_bx_events_option_enable_subscribe_wo_join', 'checkbox', '', '', '', 55),
 ('bx_events_internal_notifications', '', @iCategId, '_bx_events_option_internal_notifications', 'checkbox', '', '', '', 60),
 ('bx_events_reminder_interval', '24', @iCategId, '_bx_events_option_reminder_interval', 'select', '24,48', '', '', 70);
 

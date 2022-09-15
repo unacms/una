@@ -16,6 +16,7 @@
     <string name="_bx_events_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Public list of interested members]]></string>
     <string name="_bx_events_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_events_option_enable_subscribe_wo_join"><![CDATA[Allow to mark as Interested without joining (marking as Going)]]></string>
     <string name="_bx_events_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
     <string name="_bx_events_form_profile"><![CDATA[Events]]></string>
@@ -203,9 +204,9 @@
     <string name="_bx_events_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_events_page_block_title_system_profile_info"><![CDATA[Info]]></string>
-<string name="_bx_events_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
-        <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
-        <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_events_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
+    <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_description"><![CDATA[Description]]></string>
     <string name="_bx_events_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_friends"><![CDATA[Friends]]></string>
@@ -220,7 +221,7 @@
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Interested]]></string>
     <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Interested]]></string>
     <string name="_bx_events_page_block_title_profile_comments"><![CDATA[Comments]]></string>
-	<string name="_bx_events_page_block_title_entry_reports"><![CDATA[Reports]]></string>
+    <string name="_bx_events_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_events_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_actions"><![CDATA[Actions]]></string>
     <string name="_bx_events_page_block_title_featured_profiles"><![CDATA[Featured Events]]></string>

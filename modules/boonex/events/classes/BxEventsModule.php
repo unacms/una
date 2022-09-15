@@ -261,25 +261,16 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
      */
     public function serviceCalendar($aData = array(), $sTemplate = 'calendar.html')
     {
-        if (isset($aData['event'])) {
-            $aContentInfo = $this->_oDb->getContentInfoById ((int)$aData['event']);
-            if ('' == $aContentInfo['repeat_stop']) // don't display calendar for non repeating events
-                return '';
-        } 
+        if(isset($aData['context_id']) && !$this->serviceIsEnableForContext($aData['context_id']))
+            return '';
 
-        if (isset($aData['context_id'])) {
-            if (!$this->serviceIsEnableForContext($aData['context_id'])){
-                return '';
-            }                
-        } 
-
-        $oCalendar = new BxTemplCalendar(array(
-            'eventSources' => array (
+        $oCalendar = new BxTemplCalendar([
+            'eventSources' => [
                 bx_append_url_params(BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data', $aData),
-            ),
-        ), $this->_oTemplate);
+            ],
+        ], $this->_oTemplate);
 
-        $this->_oTemplate->addCss(array('main.css'));
+        $this->_oTemplate->addCss(['main.css']);
         return $oCalendar->display($sTemplate);
     }
 

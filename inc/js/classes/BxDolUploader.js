@@ -140,11 +140,7 @@ BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onCompl
 
     bInitReordering = bInitReordering !== undefined ? bInitReordering : this._isReordering;
 
-    bx_loading(this._sResultContainerId, true);
-
     $.getJSON(sUrl, function (aData) {
-
-        bx_loading($this._sResultContainerId, false);
 
         if (!$this.isMultiple())
             $('#' + $this._sResultContainerId + ' .bx-uploader-ghost').remove();
