@@ -194,6 +194,8 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
             // create profile
             if (isset($oFormProfile) && $oFormProfile) {
                 
+                $aFieldsProfile['author'] = $iAccountProfileId;
+
                 $aFieldsProfile['picture'] = $this->_processImage($aFieldsProfile, $iAccountProfileId, $oFormHelperProfile);
                 $_POST['picture'] = $aFieldsProfile['picture']; // set POST variable to correctly process images in processFiles method in form object
 

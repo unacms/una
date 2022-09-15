@@ -1539,6 +1539,8 @@
     <string name="_adm_stg_cpt_option_sys_accounts_pruning"><![CDATA[Accounts pruning]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Accounts pruning period (in days)]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_password_log_count"><![CDATA[Number of stored old passwords  (0 = do not store)]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_force_password_change_after_expiration"><![CDATA[Force password change after password expiration]]></string>
+    
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Lock site from unauthenticated users]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Comma separated list of pages URIs, which are avalilable for unauthenticated users]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[No pruning]]></string>
@@ -3527,6 +3529,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_account_unconfirmed_email"><![CDATA[Your email address is unconfirmed. Please, check your email ({1}) for a confirmation letter and click email confirmation link. Can't find the letter? Check your SPAM folder or <a href="{0}">send the verification letter again</a>.]]></string>
     <string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Your phone is unconfirmed. Please, confirm it on <a href="{0}">verification page</a>.]]></string>
     <string name="_sys_txt_account_profile_system"><![CDATA[Please <a href="{0}">create a profile</a> to start using the site.]]></string>
+    <string name="_sys_txt_account_need_to_change_password"><![CDATA[Your password has been expired. Please <a href="{0}">change your password</a>.]]></string>
+    
     <string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA not available]]></string>
     <string name="_sys_txt_categories_button_caption_add"><![CDATA[Add]]></string>
     <string name="_sys_txt_categories_button_caption_addnew"><![CDATA[Create own category]]></string>

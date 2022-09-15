@@ -1523,6 +1523,7 @@
     <string name="_adm_stg_cpt_option_sys_accounts_pruning"><![CDATA[Удалять учетные записи]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_pruning_interval"><![CDATA[Период удаления учетных записей (в днях)]]></string>
     <string name="_adm_stg_cpt_option_sys_accounts_password_log_count"><![CDATA[Количество хранимых использованных паролей]]></string>
+    <string name="_adm_stg_cpt_option_sys_accounts_force_password_change_after_expiration"><![CDATA[Принудительная смена пароля после истечения срока действия пароля]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated"><![CDATA[Заблокировать сайт от неавторизованных пользователей]]></string>
     <string name="_adm_stg_cpt_option_sys_lock_from_unauthenticated_exceptions"><![CDATA[Cписок URI страниц (разделенный запятыми), которые доступны для неавторизованных пользователей]]></string>
     <string name="_adm_stg_cpt_option_value_sys_account_pruning_no"><![CDATA[Не удалять]]></string>
@@ -3456,6 +3457,7 @@
     <string name="_sys_txt_account_unconfirmed_email"><![CDATA[Ваш email не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
     <string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Ваш телефон не подтверждён. Пожалуйста, подтвердите его на  <a href="{0}">странице верификации</a>.]]></string>
     <string name="_sys_txt_account_profile_system"><![CDATA[Пожалуйста, <a href="{0}">создайте профиль</a>, чтобы начать пользоваться сайтом.]]></string>
+    <string name="_sys_txt_account_need_to_change_password"><![CDATA[Ваш пароль устарел. Пожалуйста <a href="{0}">измените Ваш пароль</a>.]]></string>
     <string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA недоступна]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Изменить картинку]]></string>
     <string name="_sys_txt_cmt_loading"><![CDATA[Загрузка...]]></string>
