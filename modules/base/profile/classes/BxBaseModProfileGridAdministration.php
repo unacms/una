@@ -278,25 +278,19 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	return $this->_getProfileObject($iId)->id();
     }
 
-	protected function _doDelete($iId, $aParams = array())
+    protected function _doDelete($iId, $aParams = array())
     {
         $oProfile = $this->_getProfileObject($iId);
-        
-        if (!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $oProfile->id()))
+        if(!$oProfile || $oProfile instanceof BxDolProfileUndefined)
             return false;
-        
+
+        if(!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $oProfile->id()))
+            return false;
+
     	if($this->_oModule->checkMyself($iId))
-    		return false;
+            return false;
 
-    	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
-
-    		if($oProfile instanceof BxDolProfileUndefined)
-    			return false;
-
-	    	return $oProfile->delete($oProfile->id(), true);
-    	}
-
-    	return parent::_doDelete($iId, $aParams);
+        return $oProfile->delete($oProfile->id(), isset($aParams['with_content']) && $aParams['with_content'] === true);
     }
 
     protected function _getId()

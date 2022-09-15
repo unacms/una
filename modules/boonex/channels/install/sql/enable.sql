@@ -232,7 +232,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_channels_submenu', 'bx_channels', 'channels-home', '_bx_channels_menu_item_title_system_entries_recent', '_bx_channels_menu_item_title_entries_recent', 'page.php?i=channels-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_channels_submenu', 'bx_channels', 'channels-top', '_bx_channels_menu_item_title_system_entries_top', '_bx_channels_menu_item_title_entries_top', 'page.php?i=channels-top', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_channels_submenu', 'bx_channels', 'channels-toplevel', '_bx_channels_menu_item_title_system_entries_toplevel', '_bx_channels_menu_item_title_entries_toplevel', 'page.php?i=channels-toplevel', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_channels_submenu', 'bx_channels', 'channels-search', '_bx_channels_menu_item_title_system_entries_search', '_bx_channels_menu_item_title_entries_search', 'page.php?i=channels-search', '', '', '', '', 2147483647, 1, 1, 4);
+('bx_channels_submenu', 'bx_channels', 'channels-search', '_bx_channels_menu_item_title_system_entries_search', '_bx_channels_menu_item_title_entries_search', 'page.php?i=channels-search', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_channels_submenu', 'bx_channels', 'channels-administration', '_bx_channels_menu_item_title_system_entries_manage', '_bx_courses_menu_item_title_entries_manage', 'page.php?i=channels-administration', '', '', '', '', 192, 1, 1, 5);
+
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_channels_snippet_meta', '_sys_menu_title_snippet_meta', 'bx_channels_snippet_meta', 'bx_channels', 15, 0, 1, 'BxCnlMenuSnippetMeta', 'modules/boonex/channels/classes/BxCnlMenuSnippetMeta.php');
@@ -260,7 +262,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_channels_menu_manage_tools', 'bx_channels', 'delete', '_bx_channels_menu_item_title_system_delete', '_bx_channels_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 1),
-('bx_channels_menu_manage_tools', 'bx_channels', 'delete-with-content', '_bx_channels_menu_item_title_system_delete_with_content', '_bx_channels_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 2);
+('bx_channels_menu_manage_tools', 'bx_channels', 'delete-with-content', '_bx_channels_menu_item_title_system_delete_with_content', '_bx_channels_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 0, 0, 2);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -374,12 +376,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_channels_administration', 'added_ts', '_bx_channels_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_channels_administration', 'actions', '', '20%', 0, '', '', 6);
 
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_channels_administration', 'bulk', 'delete', '_bx_channels_grid_action_title_adm_delete', '', 0, 1, 2),
-('bx_channels_administration', 'bulk', 'delete_with_content', '_bx_channels_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
-('bx_channels_administration', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
-('bx_channels_administration', 'single', 'audit_content', '_bx_channels_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
-('bx_channels_administration', 'single', 'audit_profile', '_bx_channels_grid_action_title_adm_audit_context', 'search-location', 1, 0, 4);
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `active`, `order`) VALUES
+('bx_channels_administration', 'bulk', 'delete', '_bx_channels_grid_action_title_adm_delete', '', 0, 1, 1, 2),
+('bx_channels_administration', 'bulk', 'delete_with_content', '_bx_channels_grid_action_title_adm_delete_with_content', '', 0, 1, 0, 3),
+('bx_channels_administration', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 1, 2),
+('bx_channels_administration', 'single', 'audit_content', '_bx_channels_grid_action_title_adm_audit_content', 'search', 1, 0, 1, 3),
+('bx_channels_administration', 'single', 'audit_profile', '_bx_channels_grid_action_title_adm_audit_context', 'search-location', 1, 0, 1, 4);
 
 
 -- ALERTS

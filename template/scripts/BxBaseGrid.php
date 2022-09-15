@@ -211,6 +211,7 @@ class BxBaseGrid extends BxDolGrid
 
         $aVars = array (
             'object' => $this->_sObject,
+            'csrf_token' => BxDolForm::getCsrfToken(),
             'id_table' => $sIdTable,
             'id_cont' => $sIdContainer,
             'id_wrap' => $sIdWrapper,
@@ -567,8 +568,12 @@ class BxBaseGrid extends BxDolGrid
         $sActionsType = 'actions_' . $sType;
         if (empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
             return '';
+
         $sRet = '';
         foreach ($this->_aOptions[$sActionsType] as $sKey => $a) {
+            if(!$a['active'] || (!$a['title'] && !$a['icon']))
+                continue;
+
             $sFunc = '_getAction' . $this->_genMethodName($sKey);
             if (!method_exists($this, $sFunc))
                 $sFunc = empty($a) ? '_getActionDivider' : '_getActionDefault';

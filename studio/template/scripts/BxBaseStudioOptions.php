@@ -540,6 +540,17 @@ class BxBaseStudioOptions extends BxDolStudioOptions
                     'db' => ['pass' => 'XssHtml'],
                 ];
                 break;
+            case 'code':
+                $aField = [
+                    'type' => 'textarea',
+                    'code' => true,
+                    'name' => $aItem['name'],
+                    'caption' => _t($aItem['caption']),
+                    'value' => $mixedValue,
+                    'attrs' => $aAttributes,
+                    'db' => ['pass' => 'XssHtml'],
+                ];
+                break;
             case 'checkbox':
                 $aField = [
                     'type' => 'checkbox',

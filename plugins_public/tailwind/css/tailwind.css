@@ -183,6 +183,9 @@
     .bx-artificer .bx-def-margin {
         @apply m-4;
     }
+    .bx-artificer .bx-def-margin-neg {
+        @apply -m-4;
+    }
     .bx-artificer .bx-def-margin-left {
         @apply ml-4;
     }
@@ -222,6 +225,9 @@
     
     .bx-artificer .bx-def-margin-sec {
         @apply m-2;
+    }
+    .bx-artificer .bx-def-margin-sec-neg {
+        @apply -m-2;
     }
     .bx-artificer .bx-def-margin-sec-left {
         @apply ml-2;
@@ -268,6 +274,9 @@
 
     .bx-artificer .bx-def-margin-thd {
         @apply m-1;
+    }
+    .bx-artificer .bx-def-margin-thd-neg {
+        @apply -m-1;
     }
     .bx-artificer .bx-def-margin-thd-left {
         @apply ml-1;

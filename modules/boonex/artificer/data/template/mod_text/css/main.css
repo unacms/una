@@ -13,6 +13,9 @@
     height: 300px;
     object-fit: cover;
 }
+.bx-base-text-unit-ext .bx-base-text-unit-text {
+    text-align: left;
+}
 
 /*-- Browsing: Search results --*/
 .bx-base-text-unit-gallery-wrapper {

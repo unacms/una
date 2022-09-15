@@ -397,7 +397,6 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_persons_menu_manage_tools', 'bx_persons', 'clear-reports', '_bx_persons_menu_item_title_system_clear_reports', '_bx_persons_menu_item_title_clear_reports', 'javascript:void(0)', 'javascript:{js_object}.onClickClearReports({content_id});', '_self', 'eraser', '', 2147483647, 1, 0, 1),
 ('bx_persons_menu_manage_tools', 'bx_persons', 'manage-cf', '_bx_persons_menu_item_title_system_manage_cf', '_bx_persons_menu_item_title_manage_cf', 'javascript:void(0)', 'javascript:{js_object}.onClickManageCf({content_id});', '_self', 'filter', '', 2147483647, 1, 0, 6),
-('bx_persons_menu_manage_tools', 'bx_persons', 'delete', '_bx_persons_menu_item_title_system_delete', '_bx_persons_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 98),
 ('bx_persons_menu_manage_tools', 'bx_persons', 'delete-with-content', '_bx_persons_menu_item_title_system_delete_with_content', '_bx_persons_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 99);
 
 -- MENU: dashboard manage tools
@@ -509,6 +508,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_persons_administration', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '20%', 1, '25', '', 5),
 ('bx_persons_administration', 'account', '_bx_persons_grid_column_title_adm_account', '20%', 0, '25', '', 6),
 ('bx_persons_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_persons_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_persons_common', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '48%', 0, '', '', 2),
 ('bx_persons_common', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '30%', 1, '25', '', 3),
@@ -516,16 +516,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_persons_administration', 'bulk', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', '', 0, 0, 1),
-('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1, 2),
-('bx_persons_administration', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
-('bx_persons_administration', 'bulk', 'clear_reports', '_bx_persons_grid_action_title_adm_clear_reports', '', 0, 1, 4),
+('bx_persons_administration', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
+('bx_persons_administration', 'bulk', 'clear_reports', '_bx_persons_grid_action_title_adm_clear_reports', '', 0, 1, 3),
 ('bx_persons_administration', 'single', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', 'certificate', 1, 0, 1),
 ('bx_persons_administration', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_persons_administration', 'single', 'audit_content', '_bx_persons_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
 ('bx_persons_administration', 'single', 'audit_profile', '_bx_persons_grid_action_title_adm_audit_profile', 'search-location', 1, 0, 4),
 
-('bx_persons_common', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_persons_common', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
+('bx_persons_common', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 1),
 ('bx_persons_common', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
 
 -- LIVE UPDATES

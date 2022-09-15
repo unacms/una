@@ -245,7 +245,7 @@ CREATE TABLE `sys_options` (
   `name` varchar(64) NOT NULL default '',
   `caption` varchar(255) NOT NULL default '',
   `value` mediumtext NOT NULL,
-  `type` enum('value','digit','text','checkbox','select','combobox','file','image','list','rlist','rgb','rgba','datetime') NOT NULL default 'digit',
+  `type` enum('value','digit','text','code','checkbox','select','combobox','file','image','list','rlist','rgb','rgba','datetime') NOT NULL default 'digit',
   `extra` text NOT NULL default '',
   `check` varchar(32) NOT NULL,
   `check_params` text NOT NULL,
@@ -516,7 +516,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3),
 (@iCategoryId, 'site_tour_home', '_adm_stg_cpt_option_site_tour_home', 'on', 'checkbox', '', '', '', 6),
 (@iCategoryId, 'site_tour_studio', '_adm_stg_cpt_option_site_tour_studio', 'on', 'checkbox', '', '', '', 7),
-(@iCategoryId, 'site_login_social_compact', '_adm_stg_cpt_option_site_login_social_compact', 'on', 'checkbox', '', '', '', 9),
 
 (@iCategoryId, 'sys_autoupdate', '_adm_stg_cpt_option_sys_autoupdate', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '', 'checkbox', '', '', '', 12),
@@ -659,6 +658,16 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_location_leaflet_provider', '_adm_stg_cpt_option_sys_location_leaflet_provider', 'OpenStreetMap.Mapnik', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:42:"get_options_location_leaflet_get_providers";s:5:"class";s:13:"TemplServices";}', '', '', 50);
 
+--
+-- CATEGORY: Social Settings
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'social_settings','_adm_stg_cpt_category_social_settings', 0, 21);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'site_login_social_compact', '_adm_stg_cpt_option_site_login_social_compact', 'on', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'sys_a2a_enable', '_adm_stg_cpt_option_sys_a2a_enable', '', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_a2a_code', '_adm_stg_cpt_option_sys_a2a_code', '', 'code', '', '', '', 11);
 
 --
 -- CATEGORY (HIDDEN): Audit
@@ -4921,6 +4930,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
   `icon` varchar(255) NOT NULL,
   `icon_only` tinyint(4) NOT NULL DEFAULT '0',
   `confirm` tinyint(4) NOT NULL DEFAULT '1',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object_name_type` (`object`(64),`type`,`name`(123))

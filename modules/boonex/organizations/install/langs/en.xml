@@ -277,8 +277,6 @@
     <string name="_bx_orgs_menu_set_title_entries_my"><![CDATA[Profile Organizations Menu]]></string>
     <string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
-    <string name="_bx_orgs_menu_item_title_system_delete"><![CDATA[Delete]]></string>
-    <string name="_bx_orgs_menu_item_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_orgs_menu_item_title_system_clear_reports"><![CDATA[Clear reports]]></string>
@@ -396,7 +394,6 @@
     <string name="_bx_orgs_grid_column_title_adm_fullname"><![CDATA[Name]]></string>
     <string name="_bx_orgs_grid_column_title_adm_last_online"><![CDATA[Last Logged]]></string>
     <string name="_bx_orgs_grid_column_title_adm_account"><![CDATA[Account]]></string>
-    <string name="_bx_orgs_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_orgs_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_orgs_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_orgs_grid_action_title_adm_set_acl_level"><![CDATA[Set Membership]]></string>

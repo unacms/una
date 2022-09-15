@@ -16,6 +16,7 @@
     <string name="_bx_spaces_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Открытый список заинтересованных пользователей]]></string>
     <string name="_bx_events_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_events_option_enable_subscribe_wo_join"><![CDATA[Разрешить помечать как 'Заинтересован' пользователям, не являющимся участниками события]]></string>
     <string name="_bx_events_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
     <string name="_bx_events_form_profile"><![CDATA[События]]></string>

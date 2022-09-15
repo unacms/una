@@ -47,6 +47,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
+            'FIELD_STATUS_ADMIN' => '',
             'FIELDS_QUICK_SEARCH' => array('channel_name'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
@@ -154,6 +155,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
                 'grid_action_err_delete' => '_bx_channels_grid_action_err_delete',
                 'grid_txt_account_manager' => '_bx_channels_grid_txt_account_manager',
                 'filter_item_active' => '_bx_channels_grid_filter_item_title_adm_active',
+                'filter_item_hidden' => '_bx_channels_grid_filter_item_title_adm_hidden',
                 'filter_item_pending' => '_bx_channels_grid_filter_item_title_adm_pending',
                 'filter_item_suspended' => '_bx_channels_grid_filter_item_title_adm_suspended',
                 'filter_item_select_one_filter1' => '_bx_channels_grid_filter_item_title_adm_select_one_filter1',
