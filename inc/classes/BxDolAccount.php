@@ -760,8 +760,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             $bNeedRedirectToChangePassword = false;
 
         if ($aAccountInfo['password_expired'] >0 && $aAccountInfo['password_expired'] < time() && $bNeedRedirectToChangePassword){
-            header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'));
-            exit;
+            if (getParam('sys_account_accounts_force_password_change_after_expiration') == 'on'){
+                header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'));
+                exit;
+            }
+            else{
+                $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
+                $oInformer->add('sys-account-need-to-change-password', _t('_sys_txt_account_need_to_change_password', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'), ), BX_INFORMER_ALERT);
+            }
         }
     }
     
