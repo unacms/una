@@ -319,6 +319,27 @@ class BxDolPrivacyQuery extends BxDolDb
         );
     }
 
+    public function getContentByContextAsSQLPart($sField, $mixedContextId)
+    {
+        if(!empty($mixedContextId))
+            return $this->getContentByGroupAsSQLPart($sField, $mixedContextId);
+
+        return [
+            'where' => " AND `" . $this->_sTable . "`.`" . $sField . "` < 0"
+        ];
+    }
+
+    public function getContentByGroupAndContextAsSQLPart($sField, $mixedGroupId, $mixedContextId)
+    {
+        $aResultGroup = $this->getContentByGroupAsSQLPart($sField, $mixedGroupId);
+        $aResultContext = $this->getContentByContextAsSQLPart($sField, $mixedContextId);
+
+        $sPattern = "/^\s*AND\s*/i";
+        return [
+            'where' => " AND (" . preg_replace($sPattern, '', $aResultGroup['where']) . " OR " . preg_replace($sPattern, '', $aResultContext['where']) . ")"
+        ];
+    }
+
     protected function _getAction($sModule, $sAction)
     {
         $sQuery = $this->prepare("SELECT

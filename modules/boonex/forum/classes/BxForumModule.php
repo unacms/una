@@ -386,18 +386,43 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_partaken "browse_partaken"
      */
-    public function serviceBrowsePartaken ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowsePartaken ($iProfileId = 0, $aParams = [])
     {
         $sType = 'partaken';
 
-        if($sUnitView != 'table')
-            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
 
-        return $this->_serviceBrowseTable(array(
+        $bEmptyMessage = true;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+        
+        $bShowHeader = false;
+        if(isset($aParams['show_header'])) {
+            $bShowHeader = (bool)$aParams['show_header'];
+            unset($aParams['show_header']);
+        }
+
+        if(isset($aParams['unit_view']) && $aParams['unit_view'] != 'table')
+            return $this->_serviceBrowse($sType, array_merge(['author' => $iProfileId], $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+        return $this->_serviceBrowseTable([
             'type' => $sType,
+            'author' => $iProfileId,
+            'include_contexts' => isset($aParams['include_contexts']) && $aParams['include_contexts'],
             'empty_message' => $bEmptyMessage,
             'ajax_paginate' => $bAjaxPaginate
-        ), $bShowHeader);
+        ], $bShowHeader);
     }
 
     /**

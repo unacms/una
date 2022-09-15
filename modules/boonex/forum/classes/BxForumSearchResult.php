@@ -147,7 +147,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case 'partaken':
-                $this->aCurrent['restriction']['cmt_author']['value'] = bx_get_logged_profile_id();
+                $this->aCurrent['restriction']['cmt_author']['value'] = (int)$aParams['author'];
 
                 if(!isset($this->aCurrent['join']))
                     $this->aCurrent['join'] = array();

@@ -251,7 +251,14 @@ class BxForumGrid extends BxTemplGrid
         
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
-        
+
+        $iAuthorId = 0;
+    	if(!empty($this->_aBrowseParams['author'])) {
+            $oProfileAuthor = BxDolProfile::getInstance((int)$this->_aBrowseParams['author']);
+            if($oProfileAuthor)
+                $iAuthorId = $oProfileAuthor->id();
+    	}
+
         // featured
         if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FEATURED){
             $this->_aBrowseParams['where'] = ['fld' => 'featured', 'val' => 0, 'opr' => '<>'];
@@ -276,7 +283,7 @@ class BxForumGrid extends BxTemplGrid
             $this->_aBrowseParams['where'] = array(
                 'tbl' => 'tco', 
                 'fld' => 'cmt_author_id', 
-                'val' => bx_get_logged_profile_id(), 
+                'val' => $iAuthorId, 
                 'opr' => '='
             );
 
@@ -330,25 +337,18 @@ class BxForumGrid extends BxTemplGrid
             $this->_aBrowseParams['where'] = $aWhereGroup; 
         }
         
-        $CNF = $this->_oModule->_oConfig->CNF;
-        
     	$sSelectClause = $sJoinClause = $sWhereClause = $sGroupByClause = '';
 
     	//--- Check status
-    	$sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $this->_oModule->_oConfig->CNF['FIELD_STATUS'] . "`='active'";
-    	$sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $this->_oModule->_oConfig->CNF['FIELD_STATUS_ADMIN'] . "`='active'";
+    	$sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_STATUS'] . "`='active'";
+    	$sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_STATUS_ADMIN'] . "`='active'";
 
     	//--- Check privacy
-    	$iAuthorId = 0;
-    	if(!empty($this->_aBrowseParams['author'])) {
-            $oProfileAuthor = BxDolProfile::getInstance((int)$this->_aBrowseParams['author']);
-            if($oProfileAuthor)
-                $iAuthorId = $oProfileAuthor->id();
-    	}
+        $bIncludeContexts = isset($this->_aBrowseParams['include_contexts']) && $this->_aBrowseParams['include_contexts'];
 
-        $sPrivacy = $this->_oModule->_oConfig->CNF['OBJECT_PRIVACY_VIEW'];
+        $sPrivacy = $CNF['OBJECT_PRIVACY_VIEW'];
         $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
-        $aCondition = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart($iAuthorId) : array();
+        $aCondition = $oPrivacy ? $oPrivacy->{'getContentPublic' . ($bIncludeContexts ? 'AndInContext' : '') . 'AsSQLPart'}($iAuthorId) : array();
         if(isset($aCondition['join']))
             $sJoinClause .= $aCondition['join'];
         if(isset($aCondition['where']))

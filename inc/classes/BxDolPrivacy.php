@@ -556,7 +556,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return $this->_oDb->getContentByGroupAsSQLPart($sField, $mixedGroupId);
     }
 
-	/**
+    /**
      * Get necessary parts of SQL query to use privacy in other queries
      * @param $iProfileIdOwner owner profile ID
      * @return array of SQL string parts, for now 'where' part only is returned
@@ -564,10 +564,25 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     public function getContentPublicAsSQLPart($iProfileIdOwner = 0, $aCustomGroups = array())
     {
         $mixedPrivacyGroups = $this->getPrivacyGroupsForContentPublic($iProfileIdOwner, $aCustomGroups);
-		if($mixedPrivacyGroups === true)
-        	return array();
+        if($mixedPrivacyGroups === true)
+            return array();
 
         return $this->getContentByGroupAsSQLPart($mixedPrivacyGroups);
+    }
+    
+    /**
+     * Get necessary parts of SQL query to use privacy in other queries
+     * @param $iProfileIdOwner owner profile ID
+     * @return array of SQL string parts, for now 'where' part only is returned
+     */
+    public function getContentPublicAndInContextAsSQLPart($iProfileIdOwner = 0, $aCustomGroups = [], $aCustomContexts = [])
+    {
+        $mixedPrivacyGroups = $this->getPrivacyGroupsForContentPublic($iProfileIdOwner, $aCustomGroups);
+        if($mixedPrivacyGroups === true)
+            return [];
+
+        $sField = $this->convertActionToField($this->_aObject['action']);
+        return $this->_oDb->getContentByGroupAndContextAsSQLPart($sField, $mixedPrivacyGroups, $aCustomContexts);
     }
 
     /**

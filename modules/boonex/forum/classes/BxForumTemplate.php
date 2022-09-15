@@ -138,6 +138,9 @@ class BxForumTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
+        if($this->_oModule->checkAllowedView($aRow) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $this->parseHtmlByName('entry-preview-private.html', []);
+
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
         $sTitle = $aRow[$CNF['FIELD_TITLE']];
@@ -186,7 +189,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
                 'condition' => (int)$aRow[$CNF['FIELD_LOCK']] == 1,
                 'content' => array()
             ),
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]),
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]),
             'title' => $sTitle ? $sTitle : _t('_Empty'),
             'participants' => $sParticipants,
             'badges' => $this->_oModule->serviceGetBadges($aRow[$CNF['FIELD_ID']]),
