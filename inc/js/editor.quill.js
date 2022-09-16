@@ -160,7 +160,7 @@ function bx_editor_init(oEditor, oParams){
                 let node = super.create(value);
                 if (value.source && value.inlinecode){
                     node.setAttribute('source', value.source);
-                    node.innerHTML = value.inlinecode;
+                    node.innerHTML = value.inlinecode + "&nbsp;";
                     return node;
                 }
                 return node;

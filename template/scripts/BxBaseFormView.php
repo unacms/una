@@ -1326,9 +1326,12 @@ BLAH;
     {
         $aAttrs = $this->_genInputTextareaAttrs($aInput);
 
+        $sUniq = genRndPwd(10, false);
+        
         $sClassAdd = "bx-def-font-inputs bx-form-input-{$aInput['type']}";
-        if(isset($aInput['html']) && $aInput['html'] && $this->addHtmlEditor($aInput['html'], $aInput))
-              $sClassAdd .= ' bx-form-input-html';
+        if(isset($aInput['html']) && $aInput['html'] && $this->addHtmlEditor($aInput['html'], $aInput, $sUniq)){
+            $sClassAdd .= ' bx-form-input-html ' . $sUniq;
+        }
 
         $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value']), BX_DATA_TEXT, array('no_process_macros')) : '';
 
@@ -1356,13 +1359,13 @@ BLAH;
 		return BxDolEditor::getObjectInstance(false, $this->oTemplate) !== false;
     }
 
-    function addHtmlEditor($iViewMode, &$aInput)
+    function addHtmlEditor($iViewMode, &$aInput, $sUniq)
     {
         $oEditor = BxDolEditor::getObjectInstance(false, $this->oTemplate);
         if (!$oEditor)
             return false;
 
-        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode, ['form_id' => $this->aFormAttrs['id'], 'element_name' => $aInput['name'], 'query_params' => $this->getHtmlEditorQueryParams($aInput)]);
+        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name=' . $aInput['name'] . ']', $iViewMode, $this->_bDynamicMode, ['form_id' => $this->aFormAttrs['id'], 'element_name' => $aInput['name'], 'query_params' => $this->getHtmlEditorQueryParams($aInput), 'uniq' => $sUniq]);
 
         return true;
     }

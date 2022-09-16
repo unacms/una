@@ -95,7 +95,7 @@ class BxBaseEditorQuill extends BxDolEditor
             $sToolbarItems = $this->_sButtonsCustom;
         }
         
-        $sEditorName = 'quill_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name']);
+        $sEditorName = 'quill_' . str_replace(['-', ' '], '_', $aAttrs['form_id'] . '_' . $aAttrs['element_name'] . '_' . $aAttrs['uniq']);
         $this->_oTemplate->addJsTranslation([
             '_sys_txt_quill_tooltip_bold',
             '_sys_txt_quill_tooltip_italic',
@@ -123,7 +123,7 @@ class BxBaseEditorQuill extends BxDolEditor
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
-            'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
+            'bx_var_selector' => bx_js_string($sSelector. '.' . $aAttrs['uniq'], BX_ESCAPE_STR_APOS),
             'bx_var_query_params' => isset($aAttrs['query_params']) ? json_encode($aAttrs['query_params']) : "''",
             'bx_var_form_id' => $aAttrs['form_id'],
             'toolbar' => $sToolbarItems ? '[' . $sToolbarItems . ']' : 'false',
@@ -145,7 +145,9 @@ class BxBaseEditorQuill extends BxDolEditor
         if ($bDynamicMode) {
             list($aJs, $aCss) = $this->_getJsCss(true);
 
-            $sScript = "var " . $sEditorName . "; " . $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bQuillEditorInited === 'undefined'", $sInitEditor);
+            $sScript = "var " . $sEditorName . ";"; 
+            $sScript .= $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bQuillEditorInited === 'undefined'", $sInitEditor.';console.log(6);');
+           
             $sScript = $this->_oTemplate->_wrapInTagJsCode($sScript);
             $sScript = $this->_oTemplate->addCss($aCss, true) . $sScript;
 
