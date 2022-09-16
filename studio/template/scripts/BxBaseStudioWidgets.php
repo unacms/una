@@ -90,7 +90,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                     'name' => 'account',
                     'icon' => 'tmi-account.svg',
                     'link' => 'javascript:void(0);',
-                    'onclick' => 'bx_menu_popup(\'sys_studio_account_popup\', this);',
+                    'onclick' => 'bx_menu_popup_inline(\'#bx-std-pcap-menu-popup-account\', this);',
                     'title' => '_adm_tmi_cpt_account'
                 )
             )

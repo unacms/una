@@ -27,7 +27,7 @@ class BxDolStudioMenuAccountPopup extends BxTemplStudioMenu
                 if(!BxDolStudioRolesUtils::getInstance()->isActionAllowed(BX_SRA_MANAGE_APPS))
                     break;
 
-                list($sPageLink) = bx_get_base_url_popup();
+                list($sPageLink) = bx_get_base_url_inline();
                 $sLauncherLink = BxTemplStudioLauncher::getInstance()->getPageUrl();
                 if(strcmp($sPageLink, $sLauncherLink) != 0)
                     break;

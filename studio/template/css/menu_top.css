@@ -205,21 +205,23 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
     text-shadow: 0 0 4px #ffe900;
 }
 
-/*--- Account and Settings popups ---*/
+/*--- Account, Actions, Help and Settings popups ---*/
 body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
+#bx-std-pcap-menu-popup-help,
 #bx-std-pcap-menu-popup-actions,
-#bx-popup-ajax-wrapper-sys_studio_account_popup {
+#bx-std-pcap-menu-popup-account {
     overflow: visible;
 }
 .bx-std-mod-popup-settings-wrapper::before,
+#bx-std-pcap-menu-popup-help:before,
 #bx-std-pcap-menu-popup-actions:before,
-#bx-popup-ajax-wrapper-sys_studio_account_popup::before {
+#bx-std-pcap-menu-popup-account::before {
     position: absolute;
     display: block;
     content: '';
 
     top: 0.3rem;
-    right: 1.5rem;
+    right: 1.0rem;
     width: 0.5rem;
     height: 0.5rem;
 
@@ -228,21 +230,27 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
 
     transform: rotate(45deg);
 }
-.bx-std-mod-popup-settings-wrapper .bx-popup,
+.bx-std-mod-popup-settings-wrapper .bx-popup-gap,
+#bx-std-pcap-menu-popup-help .bx-popup-gap,
+#bx-std-pcap-menu-popup-actions .bx-popup-gap,
+#bx-std-pcap-menu-popup-account .bx-popup-gap {
+    margin-left: 0;
+    margin-right: 0;
+}
+#bx-std-pcap-menu-popup-help .bx-popup,
 #bx-std-pcap-menu-popup-actions .bx-popup,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup {
+#bx-std-pcap-menu-popup-account .bx-popup,
+.bx-std-mod-popup-settings-wrapper.bx-popup-applied:not(.bx-popup-chain) .bx-popup {
     box-shadow: inset -1px -1px 0px rgba(240, 240, 240, 0.2), inset 1px 1px 0px rgba(240, 240, 240, 0.2);
     background-color: #001529;
 }
-.bx-std-mod-popup-settings-wrapper .bx-popup-content-indent,
-#bx-std-pcap-menu-popup-actions .bx-popup-content-indent,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-content-indent {
-    padding: 0;
+#bx-std-pcap-menu-popup-actions .bx-popup-content {
+    padding: 1.0rem;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-content-indent {
+#bx-std-pcap-menu-popup-account .bx-popup-content {
     padding: 0.5rem 0;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li {
+#bx-std-pcap-menu-popup-account .bx-popup li {
     position: relative;
     height: 2.5rem;
     margin: 0;
@@ -254,35 +262,44 @@ body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
     font-weight: 400;
     overflow: hidden;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li a {
+#bx-std-pcap-menu-popup-account .bx-popup li a {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li svg {
+#bx-std-pcap-menu-popup-account .bx-popup li svg {
     margin-right: 0.25rem;
 }
 
 .bx-std-mod-popup-settings-wrapper,
+#bx-std-pcap-menu-popup-help .bx-popup,
+#bx-std-pcap-menu-popup-help .bx-popup a,
+#bx-std-pcap-menu-popup-help .bx-popup .sys-icon,
 #bx-std-pcap-menu-popup-actions .bx-popup,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li a,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li .sys-icon {
+#bx-std-pcap-menu-popup-account .bx-popup li a,
+#bx-std-pcap-menu-popup-account .bx-popup li .sys-icon {
     color: rgba(255, 255, 255, 0.7);
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li svg g {
+#bx-std-pcap-menu-popup-account .bx-popup li svg g {
     opacity: 0.7;
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li:hover a,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li:hover a .sys-icon {
+#bx-std-pcap-menu-popup-help .bx-popup a:hover,
+#bx-std-pcap-menu-popup-account .bx-popup li:hover a,
+#bx-std-pcap-menu-popup-account .bx-popup li:hover a .sys-icon {
     color: rgba(255, 255, 255, 0.85);
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li.bx-menu-tab-active {
+#bx-std-pcap-menu-popup-account .bx-popup li.bx-menu-tab-active {
     background-color: rgba(24, 144, 255, 0.2);
     box-shadow: inset 3px 0px 0px rgba(24, 144, 255, 1.0);
 }
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li:hover svg g,
-#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup li.bx-menu-tab-active svg g {
+#bx-std-pcap-menu-popup-account .bx-popup li:hover svg g,
+#bx-std-pcap-menu-popup-account .bx-popup li.bx-menu-tab-active svg g {
     opacity: 0.85;
+}
+
+.bx-std-mod-popup-settings-wrapper .bx-form-input-select {
+    border-color: rgb(55, 65, 81, 1.0);
+    background-color: rgb(17, 24, 39, 1.0);
 }

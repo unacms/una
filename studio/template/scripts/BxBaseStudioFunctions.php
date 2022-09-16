@@ -183,7 +183,13 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
 
     protected function getInjFooterPopupMenus() 
     {
-        return '';
+        $sResult = '';
+
+        $oAccounMenu = BxDolMenu::getObjectInstance('sys_studio_account_popup');
+        if($oAccounMenu)
+            $sResult .= $this->transBox('bx-std-pcap-menu-popup-account', $oAccounMenu->getCode(), true);
+
+        return $sResult;
     }
 }
 
