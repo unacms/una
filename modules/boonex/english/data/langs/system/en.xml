@@ -1692,9 +1692,7 @@
     <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Auto approve a comment after creation]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Use Add2Any code instead of default sharing menu]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any code]]></string>
-    <string name=""><![CDATA[]]></string>
-    
-    
+
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>

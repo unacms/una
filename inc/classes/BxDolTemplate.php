@@ -1850,6 +1850,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
             case 'class_name':
                 $sRet = $this->getCssClassName();
+    
+                if (preg_match('/^[A-Za-z0-9_\-]+$/', bx_get('i')))
+                    $sRet .= ' bx-page-' . bx_get('i');
 
                 if(!empty($this->_iMix)) {
                     $aMix = BxDolDb::getInstance()->getParamsMix($this->_iMix);

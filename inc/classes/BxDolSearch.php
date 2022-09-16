@@ -842,7 +842,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     function getNum ()
     {
         $aJoins = $this->getJoins(false);
-        $sqlQuery =  "SELECT * FROM `{$this->aCurrent['table']}` " . (isset($aJoins['join']) ? $aJoins['join'] : '' ). $this->getRestriction() . (isset($aJoins['groupBy']) ? $aJoins['groupBy'] : '') . ' ' . $this->getLimit(true);
+        $sqlQuery =  "SELECT * FROM `{$this->aCurrent['table']}` " . (isset($aJoins['join']) ? ' ' . $aJoins['join'] : '' ). $this->getRestriction() . (isset($aJoins['groupBy']) ? ' ' . $aJoins['groupBy'] : '') . ' ' . $this->getLimit(true);
         return count(BxDolDb::getInstance()->getAll($sqlQuery));
     }
 
