@@ -22,8 +22,11 @@
             return {html: oParams.event.extendedProps.card};
         }
     };
-    var oOptions = __options__;    
+    var oOptions = __options__;
+
+    var oBxFullCalendar = null;
     document.addEventListener('DOMContentLoaded', function() {
-        new FullCalendar.Calendar(document.getElementById('__id__'), $.extend({}, oDefaults, oOptions)).render();
+        oBxFullCalendar = new FullCalendar.Calendar(document.getElementById('__id__'), $.extend({}, oDefaults, oOptions));
+        oBxFullCalendar.render();
     });
 </script>
