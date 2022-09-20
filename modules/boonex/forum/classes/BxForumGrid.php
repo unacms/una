@@ -260,39 +260,45 @@ class BxForumGrid extends BxTemplGrid
     	}
 
         // featured
-        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FEATURED){
+        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FEATURED) {
             $this->_aBrowseParams['where'] = ['fld' => 'featured', 'val' => 0, 'opr' => '<>'];
         }
         
         // partaken
-        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_PARTAKEN){
-            $this->_aBrowseParams['select'] = array(
+        if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_PARTAKEN) {
+            $this->_aBrowseParams['select'] = [
                 'tbla' => 'tco', 
                 'fld' => 'cmt_author_id',
-            );
+            ];
 
-            $this->_aBrowseParams['join'] = array(
-                'tp' => 'INNER',
+            $this->_aBrowseParams['join'] = [
+                'tp' => 'LEFT',
                 'tbl1' => 'bx_forum_cmts',
                 'tbl1a' => 'tco',
                 'fld1' => 'cmt_object_id',
                 'tbl2' => 'bx_forum_discussions',
                 'fld2' => 'id'
-            );
+            ];
 
-            $this->_aBrowseParams['where'] = array(
-                'tbl' => 'tco', 
-                'fld' => 'cmt_author_id', 
-                'val' => $iAuthorId, 
-                'opr' => '='
-            );
+            $this->_aBrowseParams['where'] = ['grp' => true, 'opr' => 'OR', 'cnds' => [[
+                    'tbl' => 'bx_forum_discussions',
+                    'fld' => 'author',
+                    'val' => $iAuthorId, 
+                    'opr' => '='
+                ], [
+                    'tbl' => 'tco', 
+                    'fld' => 'cmt_author_id', 
+                    'val' => $iAuthorId, 
+                    'opr' => '='
+                ]
+            ]];
 
-            $this->_aBrowseParams['group_by'] = array(
+            $this->_aBrowseParams['group_by'] = [
                 'tbl' => 'bx_forum_discussions', 
                 'fld' => 'id',
-            );
+            ];
         }
-        
+
         //FAVORITE
         if ($this->_sFilter3Value == BX_FORUM_FILTER_ORDER_FAVORITE){
             $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
@@ -382,7 +388,7 @@ class BxForumGrid extends BxTemplGrid
         $sFilterSql = "";
 
         // filter by resolved status
-        if(isset($this->_sFilter1Value) && $this->_sFilter1Value != ''){
+        if(isset($this->_sFilter1Value) && $this->_sFilter1Value != '') {
             $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVABLE'] . "` = 1 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_RESOLVE'] . "` = " . $this->_sFilter1Value;
         }
         
@@ -395,11 +401,11 @@ class BxForumGrid extends BxTemplGrid
             $sWhereClause .= $oCf->getSQLParts ($CNF['TABLE_ENTRIES'], $CNF['FIELD_CF']);
 
         // filter by badges
-        if(isset($this->_sFilter2Value) && $this->_sFilter2Value != ''){
-            
+        if(isset($this->_sFilter2Value) && $this->_sFilter2Value != '') {
             $aObjects = BxDolBadges::getInstance()->getData(['type' => 'by_module&badge', 'badge_id' => $this->_sFilter2Value, 'module' => $this->_oModule->_aModule['name']]);
             $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` IN (" . implode(',', $aObjects ) . ")";
         }
+
         $this->_aOptions['source'] = sprintf($this->_sDefaultSource, $sSelectClause, $sJoinClause, $sWhereClause, $sGroupByClause);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -445,11 +451,11 @@ class BxForumGrid extends BxTemplGrid
                     break;
 
                 case 'partaken':
-                    $sOrder = 'MAX(`tco`.`cmt_time`) ' . $this->_sDefaultSortingOrder;
+                    $sOrder = 'MAX(IF(`tco`.`cmt_time`, `tco`.`cmt_time`, `' . $CNF['TABLE_ENTRIES'] . '`.`' . $CNF['FIELD_ADDED'] . '`)) ' . $this->_sDefaultSortingOrder;
                     break;
             }           
 
-    	return " ORDER BY `" . $CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
+    	return " ORDER BY `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
     }
 
     protected function _getSqlSelectFromGroup($aGrp)
