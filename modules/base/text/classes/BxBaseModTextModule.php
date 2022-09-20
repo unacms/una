@@ -125,7 +125,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $sUrl = htmlspecialchars_decode($sUrl);
 
         $sHeader = 'Content-Type';
-        $aHeaders = get_headers($sUrl, 1);
+        $aHeaders = @get_headers($sUrl, 1);
         if(!empty($aHeaders) && is_array($aHeaders) && !empty($aHeaders[$sHeader])) {
             $mixedContentType = $aHeaders[$sHeader];
             if(!is_array($mixedContentType))
