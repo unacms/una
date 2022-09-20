@@ -394,7 +394,7 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
-        if(($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR])) {
+        if($this->_isAllowShowComments($aCmt)) {
             $sContent = $this->_getContent($aCmt, $aBp, $aDp);
         }
         else {
@@ -720,6 +720,13 @@ class BxBaseCmts extends BxDolCmts
     protected function _getCounterItems($iCmtsLimit, $iCmtsStart = 0)
     {
         return $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => $iCmtsStart, 'per_page' => $iCmtsLimit * 4));
+    }
+    
+    private function _isAllowShowComments($aCmt)
+    {
+        $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
+        return ($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR]);
+          
     }
     
     public function getCounter($aParams = [])
