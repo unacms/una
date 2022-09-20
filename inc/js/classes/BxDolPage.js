@@ -57,7 +57,6 @@ BxDolPage.prototype.share = function(oLink, sUrl)
         url: bx_append_url_params(this._sActionsUri, oData),
         displayMode: 'box',
         closeOnOuterClick: false,
-        removeOnClose: true,
         id: {value: 'sys_share_popup', force: true}
     });
 }
