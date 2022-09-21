@@ -395,5 +395,12 @@ div.bx-std-widget-caption a {
     display: none;
 }
 
-
-
+#bx-informer{
+    position: fixed;
+    bottom: 0px;
+    width: calc(100% - 2.5rem);
+    left: 0px
+}
+#bx-informer .bx-informer-msg{
+    background-color: rgba(255, 234, 193, 1);
+}
