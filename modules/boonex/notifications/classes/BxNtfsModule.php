@@ -307,19 +307,20 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         if(!$iOwnerId)
             return 0;
 
-        $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId, 0, PHP_INT_MAX);
+        $sModule = $this->_oConfig->getName();
+        $aBrowseParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId, 0, PHP_INT_MAX);
 
         $sParamCheck = 'perform_privacy_check';
         $sParamCheckFor = 'perform_privacy_check_for';
 
         $iEvents = 0;
         if($this->_oConfig->isEventsGrouped()) {
-            $aEvents = $this->_oDb->getEvents($aParams);
+            $aEvents = $this->_oDb->getEvents($aBrowseParams);
 
             $this->groupEvents($aEvents);
 
             $iCount = 0;
-            $iLastRead = $this->_oDb->getLastRead((int)$aParams['owner_id']);
+            $iLastRead = $this->_oDb->getLastRead((int)$aBrowseParams['owner_id']);
             foreach($aEvents as $aEvent)
                 if($aEvent['id'] > $iLastRead)
                     $iCount++;
@@ -327,11 +328,11 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             $aEvents = array_slice($aEvents, 0, $iCount);
         }
         else {
-            $aParams = array_merge($aParams, [
+            $aBrowseParams = array_merge($aBrowseParams, [
                 'new' => 1,
             ]);
 
-            $aEvents = $this->_oDb->getEvents($aParams);
+            $aEvents = $this->_oDb->getEvents($aBrowseParams);
         }
 
         foreach($aEvents as $aEvent) {
@@ -351,6 +352,16 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             $sSrvModule = $this->_oConfig->getContentModule($aEvent);
             $sSrvMethod = 'check_allowed_with_content_for_profile';
             if($sSrvModule && BxDolRequest::serviceExists($sSrvModule, $sSrvMethod) && BxDolService::call($sSrvModule, $sSrvMethod, array('view', $this->_oConfig->getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
+                continue;
+
+            $bEventCanceled = false;
+            bx_alert($sModule, 'is_notification', 0, 0, [
+                'event' => &$aEvent, 
+                'event_canceled' => &$bEventCanceled,
+                'browse_params' => $aBrowseParams
+            ]);
+
+            if($bEventCanceled)
                 continue;
 
             $iEvents++;
