@@ -88,6 +88,8 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         if (getParam('site_tour_studio') == 'on')
             $sResult .= $oTemplate->parseHtmlByName('launcher_tour.html', array());
 
+        $sResult .= BxDolInformer::getInstance($oTemplate)->display();
+        
         $oTemplate->addInjection('injection_body_style', 'text', ' bx-std-page-launcher');
         return $sResult;
     }

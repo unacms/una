@@ -680,6 +680,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
                 $oInformer->add('sys-account-unconfirmed-phone', _t('_sys_txt_account_unconfirmed_phone', $sUrl), BX_INFORMER_ALERT);
             }
         }
+        $this->isNeedChangePassword();
     }
 
     /**
@@ -759,6 +760,9 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         if (isset($aPageParams['i']) && $aPageParams['i'] == 'account-settings-password')
             $bNeedRedirectToChangePassword = false;
 
+        
+        bx_alert('account', 'is_need_to_change_password',  $iAccountId, false, array('override_result' => &$bNeedRedirectToChangePassword));
+        
         if ($aAccountInfo['password_expired'] >0 && $aAccountInfo['password_expired'] < time() && $bNeedRedirectToChangePassword){
             if (getParam('sys_account_accounts_force_password_change_after_expiration') == 'on'){
                 header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'));
