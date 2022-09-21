@@ -2895,8 +2895,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if($oMetatags->keywordsIsEnabled() && !empty($CNF[$sKey]) && !empty($aContentInfo[$CNF[$sKey]])) {
             $aLabels = unserialize($aContentInfo[$CNF[$sKey]]);
             if(!empty($aLabels) && is_array($aLabels))
-                foreach ($aLabels as $sLabel)
+                foreach ($aLabels as $sLabel) {
+                    if(!preg_match("/(\pL[\pL\pN_]+)/u", $sLabel)) 
+                        continue;
+
                     $oMetatags->keywordsAddOne($iContentId, $sLabel, false);
+                }
         }
         
         return true;
@@ -2931,8 +2935,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if($oMetatags->keywordsIsEnabled() && !empty($CNF[$sKey]) && !empty($aContentInfo[$CNF[$sKey]])) {
             $aLabels = unserialize($aContentInfo[$CNF[$sKey]]);
             if(!empty($aLabels) && is_array($aLabels))
-                foreach ($aLabels as $sLabel)
+                foreach ($aLabels as $sLabel) {
+                    if(!preg_match("/(\pL[\pL\pN_]+)/u", $sLabel))
+                        continue;
+
                     $oMetatags->keywordsAddOne($iContentId, $sLabel, false);
+                }
         }
 
         return true;

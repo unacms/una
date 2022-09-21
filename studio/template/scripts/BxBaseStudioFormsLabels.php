@@ -12,15 +12,18 @@ bx_import('BxTemplStudioFormView');
 
 class BxStudioFormsLabelsCheckerHelper extends BxDolFormCheckerHelper
 {
-    public function checkAvailUnique($s, $aExclude = array())
+    public function checkAvailUnique($s, $aExclude = [])
     {
-        $aLabel = BxDolLabel::getInstance()->getLabels(array(
+        if(!preg_match("/(\pL[\pL\pN_]+)/u", $s))
+            return false;
+
+        $aLabel = BxDolLabel::getInstance()->getLabels([
             'type' => 'value', 
             'value' => $s
-        ));
+        ]);
 
         if(!is_array($aExclude))
-            $aExclude = array($aExclude);
+            $aExclude = [$aExclude];
 
         return empty($aLabel) || !is_array($aLabel) || in_array($aLabel['id'], $aExclude);
     }

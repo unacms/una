@@ -400,8 +400,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             $f = function ($a) use ($sKeyword, $iId) {
                 return $a[1] . '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '"><s>#</s><b>' . $sKeyword . '</b></a>';
             };
-            $s = preg_replace_callback('/([^\pN^\pL])\#(' . preg_quote($sKeyword) . ')/u', $f, $s);
-            $s = preg_replace_callback('/^()\#(' . preg_quote($sKeyword) . ')/u', $f, $s);
+
+            $s = preg_replace_callback('/([^\pN^\pL])\#(' . preg_quote($sKeyword, '/') . ')/u', $f, $s);
+            $s = preg_replace_callback('/^()\#(' . preg_quote($sKeyword, '/') . ')/u', $f, $s);
         }
 
         return $s;
