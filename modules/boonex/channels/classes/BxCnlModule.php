@@ -418,7 +418,7 @@ class BxCnlModule extends BxBaseModGroupsModule
     {
         return $this->_serviceBrowseWithParam ('followed_entries', 'profile_id', $iProfileId, $aParams);
     }
-    
+
     public function serviceBrowseAuthor($iProfileId = 0, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -429,32 +429,30 @@ class BxCnlModule extends BxBaseModGroupsModule
         $sResult = isset($aParams['empty_message']) && (bool)$aParams['empty_message'] === true ? MsgBox(_t('_Empty')) : '';
 
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        $aProfile = $oConnection->getConnectedContent($iProfileId);
-        $aVars = array();
-        foreach ($aProfile as $iProfileId) {
-            $oProfile = BxDolProfile::getInstance($iProfileId);
-            if (!$oProfile || $oProfile->getModule() != $this->getName())
-                continue;
-
-            $iContentId = $oProfile->getContentId();
-            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-            if (isset($aContentInfo[$CNF['FIELD_NAME']]))
-                array_push($aVars, array('title' => $aContentInfo[$CNF['FIELD_NAME']], 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
-        }
-
-        if(empty($aVars) || !is_array($aVars))
+        if(!$oConnection)
             return $sResult;
 
-        return $this->_oTemplate->parseHtmlByName('my_channels.html', array(
-            'bx_if:show_list' => array(
-                'condition' => count($aVars) > 0,
-                'content' => array(
-                    'bx_repeat:items' => $aVars
-                )
-            )
-        ));
+        $aProfiles = $oConnection->getConnectedContentByType($iProfileId, $this->getName());
+
+        $aTmplVars = [];
+        foreach ($aProfiles as $iProfileId) {
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            if(!$oProfile)
+                continue;
+
+            $aTmplVars[] = [
+                'unit' => $oProfile->getUnit(0, ['template' => 'unit_wo_cover'])
+            ];
+        }
+
+        if(empty($aTmplVars) || !is_array($aTmplVars))
+            return $sResult;
+
+        return $this->_oTemplate->parseHtmlByName('my_channels.html', [
+            'bx_repeat:items' => $aTmplVars
+        ]);
     }
-    
+
     public function serviceDeleteProfileFromFansAndAdmins ($iProfileId)
     {
         return true;
