@@ -55,7 +55,7 @@ import url(../../../../../../../template/css/forms.css);
     cursor: pointer;
 }
 
-.bx-form-section-header span {
+.bx-form-section-header .bx-form-section-title span {
     width: 100%;
     padding-left: 1.25rem;
 
