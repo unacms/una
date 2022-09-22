@@ -18,6 +18,12 @@ class BxBaseAuditGrid extends BxDolAuditGrid
     
     public function getCode($isDisplayHeader = true)
     {
+        list($aCssCalendar, $aJsCalendar) = BxBaseFormView::getCssJsCalendar();
+
+        $this->_oTemplate->addCss(array_merge($aCssCalendar, ['manage_tools.css']));
+        $this->_oTemplate->addJs(array_merge($aJsCalendar, ['BxDolAuditManageTools.js', 'BxDolGrid.js']));
+        $this->_oTemplate->addJsTranslation(['_sys_grid_search']);
+
         return $this->getJsCode() . parent::getCode($isDisplayHeader);
     }
     

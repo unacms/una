@@ -23,13 +23,9 @@ class BxBaseAuditServices extends BxDol
         if(!$oGrid)
             return '';
 
-        $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js'));
-        $oTemplate->addCss(array('manage_tools.css'));
-        $oTemplate->addJsTranslation(array('_sys_grid_search'));
-        return array(
+        return [
             'content' =>  $oGrid->getCode()
-        );
+        ];
     }
     
     public function serviceGetMemberships()

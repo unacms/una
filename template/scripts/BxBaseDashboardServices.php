@@ -71,9 +71,13 @@ class BxBaseDashboardServices extends BxDol
     	$aModulesList = [];
         foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
-            if($oModule instanceof iBxDolContentInfoService && BxDolRequest::serviceExists($aModule['name'], 'manage_tools')) {
-                $aModulesList[$aModule['uri']] = $aModule;
-            }
+            if(!$oModule || !($oModule instanceof iBxDolContentInfoService))
+                continue;
+
+            if(empty($oModule->_oConfig->CNF['OBJECT_GRID_ADMINISTRATION']) || !bx_is_srv($aModule['name'], 'manage_tools'))
+                continue;
+
+            $aModulesList[$aModule['uri']] = $aModule;
         }
 
         $sSelected = bx_get('module');        
