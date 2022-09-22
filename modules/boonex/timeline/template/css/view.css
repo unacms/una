@@ -173,11 +173,7 @@ div.bx-tl-jump-to .bx-btn {
     float: none;
 }
 div.bx-tl-jump-to .bx-tl-jump-to-calendar {
-    position: relative;
-    display: inline-block;
-    visibility: hidden;
-    width: 0;
-    height: 100%;
+    width: 100%;
 }
 
 

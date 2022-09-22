@@ -638,17 +638,25 @@ BxTimelineView.prototype.initCalendar = function()
     if(!oInput.length)
         return;
 
-    flatpickr(oInput.parents('.flatpickr').get(0), {
+    var oInputPicker = oInput.parents('.flatpickr:first');
+    if(!oInputPicker.length)
+        return;
+
+    flatpickr(oInputPicker.get(0), {
         wrap: true,
         dateFormat: "Y-m-d",
         minDate: 1900,
         maxDate: "today",
         onValueUpdate: function(aDates, sDate, oPicker){
-            $this.changeTimeline(oInput.parent(), sDate);
+            $this.changeTimeline(oInputPicker.find('.bx-btn'), sDate);
         }
     });
 };
 
+/**
+ * Isn't needed for now, because 'flatpickr' picker is used.
+ * Saved for possible future usage.
+ */
 BxTimelineView.prototype.showCalendar = function(oLink)
 {
 };

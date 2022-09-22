@@ -64,8 +64,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'repost.css',
                 );
 
-                if($this->_oConfig->isJumpTo())
-                    $aCss[] = BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flatpickr/dist/|flatpickr.min.css';
+                if($this->_oConfig->isJumpTo()) {
+                    list($aCssCalendar, $aJsCalendar) = BxBaseFormView::getCssJsCalendar();
+                    $aCss = array_merge($aCss, $aCssCalendar);
+                }
                 break;
 
             case 'post':
@@ -100,12 +102,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 ));
 
                 if ($this->_oConfig->isJumpTo()) {
-                    $a = array('flatpickr/dist/flatpickr.min.js');
-                    $aLangs = BxBaseFormView::getJsCalendarLangs();
-                    $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aLangs);
-                    if ($sLang)
-                        $a[] = 'flatpickr/dist/l10n/' . $sLang . '.js';
-                    $aJs = array_merge($aJs, $a);
+                    list($aCssCalendar, $aJsCalendar) = BxBaseFormView::getCssJsCalendar();
+                    $aJs = array_merge($aJs, $aJsCalendar);
                 }
                 break;
 
