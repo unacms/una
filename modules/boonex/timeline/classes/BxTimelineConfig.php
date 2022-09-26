@@ -42,6 +42,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iPreloadCommentsMax;
     protected $_bJumpTo;
     protected $_bSortByReaction;
+    protected $_bSortByUnread;
     protected $_sAttachmentsLayout;
 
     protected $_bHot;
@@ -432,6 +433,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_bJumpTo = getParam($sOptionPrefix . 'enable_jump_to_switcher') == 'on';
         $this->_bSortByReaction = getParam($sOptionPrefix . 'enable_sort_by_reaction') == 'on';
+        $this->_bSortByUnread = getParam($sOptionPrefix . 'enable_sort_by_unread') == 'on';
         $this->_sAttachmentsLayout = getParam($sOptionPrefix . 'attachments_layout');
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
@@ -547,6 +549,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isSortByReaction()
     {
         return $this->_bSortByReaction;
+    }
+
+    public function isSortByUnread()
+    {
+        return $this->_bSortByUnread;
     }
 
     public function isHot()

@@ -12,6 +12,7 @@
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTableEvent2User;
+
     protected $_sTableRepostsTrack;
     protected $_sTableHotTrack;
 
@@ -28,6 +29,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $CNF = &$this->_oConfig->CNF;
 
         $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
+
         $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
         $this->_sTableHotTrack = $this->_sPrefix . 'hot_track';
 
@@ -96,6 +98,27 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $iNowYear = date('Y', time());
         return (int)$aEvent['year'] < $iNowYear ? (int)$aEvent['year'] : 0;
+    }
+
+    public function markAsRead($iUserId, $iEventId)
+    {
+        return (int)$this->query("INSERT IGNORE INTO `{$this->_sTableEvent2User}` SET `user_id` = :user_id, `event_id` = :event_id", [
+            'user_id' => $iUserId,
+            'event_id' => $iEventId
+        ]) !== false;
+    }
+
+    public function cleanRead($iLimit)
+    {
+        $aUsers = $this->getAll("SELECT `user_id` AS `id`, COUNT(`event_id`) AS `reads` FROM `{$this->_sTableEvent2User}` WHERE 1 GROUP BY `user_id` HAVING `reads`>:limit", [
+            'limit' => $iLimit
+        ]);
+        
+        foreach($aUsers as $aUser)
+            $this->query("DELETE FROM `{$this->_sTableEvent2User}` WHERE `user_id`=:user_id ORDER BY `event_id` LIMIT :limit", [
+                'user_id' => $aUser['id'],
+                'limit' => (int)$aUser['reads'] - $iLimit
+            ]);
     }
 
     //--- Repost related methods ---//
@@ -747,6 +770,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     case BX_BASE_MOD_NTFS_TYPE_OWNER:
                         $sOrderClause = "`{$this->_sTable}`.`pinned` DESC, ";
                         break;
+            }
+            
+            if($this->_oConfig->isSortByUnread()) {
+                $sSelectClause .= ", IF(NOT ISNULL(`teu`.`id`), 1, 0) AS `read`";
+                $sJoinClause .= $this->prepareAsString(" LEFT JOIN `{$this->_sTableEvent2User}` AS `teu` ON `{$this->_sTable}`.`id`=`teu`.`event_id` AND `teu`.`user_id`=? ", $aParams['viewer_id']);
+                $sOrderClause .= "`read` ASC, ";
             }
 
             if($this->_oConfig->isSortByReaction())

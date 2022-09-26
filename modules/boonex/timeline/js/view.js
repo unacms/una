@@ -24,6 +24,8 @@ function BxTimelineView(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
     this._bEventsToLoad = oOptions.bEventsToLoad == undefined ? false : oOptions.bEventsToLoad;
+    this._bAutoMarkAsViewed = oOptions.bAutoMarkAsViewed == undefined ? false : oOptions.bAutoMarkAsViewed;
+    this._aMarkedAsViewed = oOptions.aMarkedAsViewed == undefined ? [] : oOptions.aMarkedAsViewed;
     this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
     this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
     this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
@@ -54,6 +56,9 @@ function BxTimelineView(oOptions) {
     //--- Use Scroll for Attachments.
     this._bScrollForFiles = true;
 
+    this._fAutoMarkOffsetViewed = 0.5;
+    this._bAutoMarkBusy = false;
+    
     //--- Get currently active 'view'.
     this.initView();
 
@@ -105,8 +110,25 @@ BxTimelineView.prototype.init = function(bForceInit)
         //--- Init 'Infinite Scroll'
         this.initInfiniteScroll(this.oView);
 
-        // Init calendar
+        //--- Init calendar
         this.initCalendar();
+
+        //--- Init mark as viewed
+        if(this._bAutoMarkAsViewed) {
+            $(window).on('scroll', function() {
+                if(!$this.oView.is(':visible'))
+                    return;
+
+                if(!window.requestAnimationFrame) 
+                    setTimeout(function() {
+                        $this.markPostAsViewed($this.oView, $this._fAutoMarkOffsetViewed);
+                    }, 100);
+                else
+                    window.requestAnimationFrame(function() {
+                        $this.markPostAsViewed($this.oView, $this._fAutoMarkOffsetViewed);
+                    });
+            });
+        }
     }
 
     if(this.bViewOutline) {
@@ -782,6 +804,47 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay)
         },
         'json'
     );
+};
+
+BxTimelineView.prototype.markPostAsViewed = function(oView, fOffsetViewed)
+{
+    var $this = this;
+
+    var oItems = oView.find('.' + this.sClassItem);
+    var sPrefix = this._getHtmlId('item', this._oRequestParams, {whole: false}).replace('#', '');
+
+    oItems.each(function() {
+        if($this._bAutoMarkBusy)
+            return;
+
+        var oItem = $(this);
+        var iId = parseInt(oItem.attr('id').replace(sPrefix, ''));
+        if($this._aMarkedAsViewed.includes(iId))
+            return;
+
+        var iItemTop = oItem.offset().top;
+        var iItemBottom = iItemTop + oItem.height();
+        var iWindowTop = $(window).scrollTop();
+        var iWindowHeight = $(window).height();
+        if(iItemBottom > iWindowTop && iItemTop <= iWindowTop + iWindowHeight * fOffsetViewed) {
+            $this._bAutoMarkBusy = true;
+
+            var oData = $this._getDefaultData();
+            oData['id'] = iId;
+
+            $.post(
+                $this._sActionsUrl + 'mark_as_read/',
+                oData,
+                function(oData) {
+                    if(oData && oData.id != undefined)
+                        $this._aMarkedAsViewed.push(oData.id);
+
+                    $this._bAutoMarkBusy = false;
+                },
+                'json'
+            );
+        }
+    });
 };
 
 BxTimelineView.prototype.muteAuthor = function(oLink, iId)

@@ -365,6 +365,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'sType' => $aParams['type'],
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             'bEventsToLoad' => $bEventsToLoad,
+            'bAutoMarkAsViewed' => $this->_oConfig->isSortByUnread(),
             'oRequestParams' => $aParams
         ), array(
             'wrap' => true,

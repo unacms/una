@@ -271,6 +271,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    function actionMarkAsRead()
+    {
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+        if(empty($aEvent) || !is_array($aEvent))
+            return echoJson(['code' => 1]);
+
+        $aParams = $this->_prepareParamsGet();
+        if(!$this->_oDb->markAsRead($aParams['viewer_id'], $iId))
+            return echoJson(['code' => 2]);
+
+        echoJson([
+            'code' => 0, 
+            'id' => $iId
+        ]);
+    }
+
     function actionMute()
     {
         $CNF = &$this->_oConfig->CNF;

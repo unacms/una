@@ -304,6 +304,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_enable_show_all', '', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_jump_to_switcher', '', @iCategId, '_bx_timeline_option_enable_jump_to_switcher', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_enable_sort_by_reaction', '', @iCategId, '_bx_timeline_option_enable_sort_by_reaction', 'checkbox', '', '', '', '', 3),
+('bx_timeline_enable_sort_by_unread', '', @iCategId, '_bx_timeline_option_enable_sort_by_unread', 'checkbox', '', '', '', '', 4),
 
 ('bx_timeline_events_per_page_profile', '12', @iCategId, '_bx_timeline_option_events_per_page_profile', 'digit', '', '', '', '', 10),
 ('bx_timeline_events_per_page_account', '12', @iCategId, '_bx_timeline_option_events_per_page_account', 'digit', '', '', '', '', 11),
@@ -559,7 +560,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_timeline_hot', '0 * * * *', 'BxTimelineCronHot', 'modules/boonex/timeline/classes/BxTimelineCronHot.php', ''),
-('bx_timeline_publishing', '* * * * *', 'BxTimelineCronPublishing', 'modules/boonex/timeline/classes/BxTimelineCronPublishing.php', '');
+('bx_timeline_publishing', '* * * * *', 'BxTimelineCronPublishing', 'modules/boonex/timeline/classes/BxTimelineCronPublishing.php', ''),
+('bx_timeline_clean', '0 0 * * *', 'BxTimelineCronClean', 'modules/boonex/timeline/classes/BxTimelineCronClean.php', '');
 
 
 -- PRELOADER
