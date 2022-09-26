@@ -2834,6 +2834,7 @@
     <string name="_sys_menu_item_title_sm_tags"><![CDATA[Тэги]]></string>
     <string name="_sys_menu_item_title_sm_views"><![CDATA[Просмотры]]></string>
     <string name="_sys_menu_item_title_sm_votes"><![CDATA[Голоса]]></string>
+    <string name="_sys_menu_item_title_sm_scores"><![CDATA[Голоса (за/против)]]></string>
     <string name="_sys_menu_item_title_sm_rating"><![CDATA[Рейтинг]]></string>
     <string name="_sys_menu_item_title_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_sm_actions"><![CDATA[Действия]]></string>
@@ -2954,6 +2955,7 @@
     <string name="_sys_menu_item_title_system_sm_tags"><![CDATA[Тэги]]></string>
     <string name="_sys_menu_item_title_system_sm_views"><![CDATA[Просмотры]]></string>
     <string name="_sys_menu_item_title_system_sm_votes"><![CDATA[Голоса]]></string>
+    <string name="_sys_menu_item_title_system_sm_scores"><![CDATA[Голоса (за/против)]]></string>
     <string name="_sys_menu_item_title_system_sm_rating"><![CDATA[Рейтинг]]></string>
     <string name="_sys_menu_item_title_system_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_system_sm_actions"><![CDATA[Действия]]></string>
