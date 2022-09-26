@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `reposts` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   `published` int(11) NOT NULL default '0',
+  `reacted` int(11) NOT NULL default '0',
   `status` enum ('active', 'awaiting', 'failed', 'hidden', 'deleted') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   `active` tinyint(4) NOT NULL default '1',

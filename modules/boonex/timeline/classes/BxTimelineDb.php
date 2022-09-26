@@ -749,7 +749,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                         break;
             }
 
-            $sOrderClause = "ORDER BY " . $sOrderClause . "`{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
+            if($this->_oConfig->isSortByReaction())
+                $sOrderClause .= "`{$this->_sTable}`.`reacted` DESC, ";
+            else
+                $sOrderClause .= "`{$this->_sTable}`.`date` DESC, ";
+
+            $sOrderClause = "ORDER BY " . $sOrderClause . "`{$this->_sTable}`.`id` DESC";
         }
 
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);

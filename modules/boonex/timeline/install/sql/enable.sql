@@ -303,6 +303,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_timeline_enable_show_all', '', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_jump_to_switcher', '', @iCategId, '_bx_timeline_option_enable_jump_to_switcher', 'checkbox', '', '', '', '', 2),
+('bx_timeline_enable_sort_by_reaction', '', @iCategId, '_bx_timeline_option_enable_sort_by_reaction', 'checkbox', '', '', '', '', 3),
 
 ('bx_timeline_events_per_page_profile', '12', @iCategId, '_bx_timeline_option_events_per_page_profile', 'digit', '', '', '', '', 10),
 ('bx_timeline_events_per_page_account', '12', @iCategId, '_bx_timeline_option_events_per_page_account', 'digit', '', '', '', '', 11),

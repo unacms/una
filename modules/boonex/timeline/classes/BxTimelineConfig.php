@@ -41,6 +41,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iPreloadComments;
     protected $_iPreloadCommentsMax;
     protected $_bJumpTo;
+    protected $_bSortByReaction;
     protected $_sAttachmentsLayout;
 
     protected $_bHot;
@@ -110,6 +111,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_STICKED' => 'sticked',
             'FIELD_DATE' => 'date',
+            'FIELD_REACTED' => 'reacted',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_CONTROLS' => 'controls',
             'FIELD_LOCATION' => 'location',
@@ -429,6 +431,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             $this->_iPreloadComments = $this->_iPreloadCommentsMax;
 
         $this->_bJumpTo = getParam($sOptionPrefix . 'enable_jump_to_switcher') == 'on';
+        $this->_bSortByReaction = getParam($sOptionPrefix . 'enable_sort_by_reaction') == 'on';
         $this->_sAttachmentsLayout = getParam($sOptionPrefix . 'attachments_layout');
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
@@ -539,6 +542,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isJumpTo()
     {
         return $this->_bJumpTo;
+    }
+
+    public function isSortByReaction()
+    {
+        return $this->_bSortByReaction;
     }
 
     public function isHot()
