@@ -15,6 +15,7 @@ class BxDevFunctions
 
     /*
      * Is needed to change fields in "Form's Field" creation form.
+     * When the form is inited.
      *
      * @see BxDevFormsField
      */
@@ -80,6 +81,31 @@ class BxDevFunctions
             ),
         );
         $aInputs = BxDolStudioUtils::addInArray($aInputs, 'controls', $aFields, false);
+    }
+
+    /*
+     * Is needed to change form's array in "Form's Field" add/edit form. 
+     * It's called just before the form is displayed with "getCode" method.
+     *
+     * @see BxDevFormsField
+     */
+    public static function changeForm($sAction, &$aForm, &$oForm)
+    {
+        switch($sAction) {
+            case 'add':
+                break;
+
+            case 'edit':
+                if(isset($aForm['inputs']['checker_func'])) {
+                    if(isset($aForm['inputs']['checker_func']['attrs']['disabled']))
+                        unset($aForm['inputs']['checker_func']['attrs']['disabled']);
+
+                    $sCfValue = $aForm['inputs']['checker_func']['value'];
+                    if(!empty($sCfValue) && !in_array($sCfValue, $oForm->getCheckFunctions()))
+                        $aForm['inputs']['checker_func']['info'] = _t('_adm_form_txt_field_checker_func_info_custom');
+                }
+                break;
+        }
     }
 
     public static function serializeString($sValue)

@@ -89,6 +89,11 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         return BX_DOL_STUDIO_FORMS_FIELDS_JS_OBJECT;
     }
 
+    public function getCheckFunctions()
+    {
+        return $this->aCheckFunctions;
+    }
+
     public function getCode($sAction, $sObject)
     {
         $sFunction = 'getCode' . $this->getClassName($sAction);
@@ -327,11 +332,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         }
 
                         if(!empty($sCfValue) && !in_array($sCfValue, $this->aCheckFunctions)) {
-                            $aForm['inputs'][$sKey]['info'] = _t('_adm_form_txt_field_checker_func_info_custom');
                             $aForm['inputs'][$sKey]['values'][] = array(
                                 'key' => $sCfValue, 
                                 'value' => _t('_adm_form_txt_field_checker_custom')
                             );
+                            if(!isset($aForm['inputs'][$sKey]['attrs']))
+                                $aForm['inputs'][$sKey]['attrs'] = [];
+                            $aForm['inputs'][$sKey]['attrs']['disabled'] = 'disabled';
                         }
                         break;
 
