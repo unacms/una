@@ -2875,8 +2875,8 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
 
-        $bFldStatus = isset($CNF['FIELD_STATUS']);
-        $bFldStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']);
+        $bFldStatus = !empty($CNF['FIELD_STATUS']);
+        $bFldStatusAdmin = !empty($CNF['FIELD_STATUS_ADMIN']);
         $bContentInfo = $aContentInfo && (!$bFldStatus || ($bFldStatus && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')) && (!$bFldStatusAdmin || ($bFldStatusAdmin && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'active'));
         if(!$bContentInfo)
             return false;
