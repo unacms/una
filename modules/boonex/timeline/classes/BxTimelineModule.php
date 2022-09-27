@@ -167,9 +167,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
-        $aBrowseParams = array();
-        if(bx_get('bp') !== false)
+        $aBrowseParams = [];
+        if(bx_get('bp') !== false) {
             $aBrowseParams = $this->_oConfig->getBrowseParams(bx_process_input(bx_get('bp')));
+            $aBrowseParams = $this->_prepareParamsGet($aBrowseParams);
+        }
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true)
@@ -5219,50 +5221,46 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aParams;
     }
 
-    protected function _prepareParamsGet()
+    protected function _prepareParamsGet($mParams = false)
     {
-        $aParams = [
-            'name' => $this->_oConfig->prepareParam('name'),
-            'view' => $this->_oConfig->prepareParamWithDefault('view', BX_TIMELINE_VIEW_DEFAULT),
-            'type' => $this->_oConfig->prepareParamWithDefault('type', BX_TIMELINE_TYPE_DEFAULT),
-        ];
+        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'timeline', 'filter', 'modules', 'context', 'blink', 'viewer_id'];
 
-        $aParams['owner_id'] = bx_get('owner_id');
+        $aParams = [];
+        if(!empty($mParams) && is_array($mParams))
+            foreach($aKeys as $sKey)
+                $aParams[$sKey] = isset($mParams[$sKey]) ? $mParams[$sKey] : false;
+        else
+            foreach($aKeys as $sKey)
+                $aParams[$sKey] = bx_get($sKey);
+
+        $aParams['name'] = $this->_oConfig->processParam($aParams['name']);
+        $aParams['view'] = $this->_oConfig->processParamWithDefault($aParams['view'], BX_TIMELINE_VIEW_DEFAULT);
+        $aParams['type'] = $this->_oConfig->processParamWithDefault($aParams['type'], BX_TIMELINE_TYPE_DEFAULT);
         $aParams['owner_id'] = $aParams['owner_id'] !== false ? bx_process_input($aParams['owner_id'], BX_DATA_INT) : $this->getUserId();
-
-        $aParams['start'] = bx_get('start');
         $aParams['start'] = $aParams['start'] !== false ? bx_process_input($aParams['start'], BX_DATA_INT) : 0;
-
-        $aParams['per_page'] = bx_get('per_page');
         $aParams['per_page'] = $aParams['per_page'] !== false ? bx_process_input($aParams['per_page'], BX_DATA_INT) : $this->_oConfig->getPerPage();
-
-        $aParams['timeline'] = bx_get('timeline');
         $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline']) : '';
-
-        $aParams['filter'] = bx_get('filter');
         $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;
-
-        $aParams['modules'] = bx_get('modules');
-        $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : array();
-
-        $aParams['context'] = bx_get('context');
+        $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : [];
         $aParams['context'] = $aParams['context'] !== false ? bx_process_input($aParams['context'], BX_DATA_INT) : 0;
 
-        $aParams['blink'] = bx_get('blink');
-        $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();
+        if($aParams['blink'] !== false)
+            $aParams['blink'] = bx_process_input(is_string($aParams['blink']) ? explode(',', $aParams['blink']) : $aParams['blink'], BX_DATA_TEXT);
+        else
+            $aParams['blink'] = [];
 
         $iViewerId = $this->getUserId();
-        if(($aParams['viewer_id'] = bx_get('viewer_id')) !== false)
+        if($aParams['viewer_id'] !== false)
             $aParams['viewer_id'] = bx_process_input($aParams['viewer_id'], BX_DATA_INT);
         if(!$aParams['viewer_id'] || $aParams['viewer_id'] != $iViewerId)
             $aParams['viewer_id'] = $iViewerId;
 
-        $aParams = array_merge($aParams, array(
+        $aParams = array_merge($aParams, [
             'browse' => 'list',
             'status' => BX_TIMELINE_STATUS_ACTIVE,
             'moderator' => $this->isModeratorForProfile($aParams['viewer_id']),
             'dynamic_mode' => true,
-        ));
+        ]);
 
         return $aParams;
     }

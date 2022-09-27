@@ -881,14 +881,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function addBrowseParams($sUrl, $aParams, $sKey = 'bp')
     {
-        return bx_append_url_params($sUrl, array($sKey => base64_encode(serialize($aParams))));
+        return bx_append_url_params($sUrl, [$sKey => base64_encode(json_encode($aParams))]);
     }
 
     public function getBrowseParams($sValue)
     {
-        return unserialize(base64_decode(urldecode($sValue)));
+        return json_decode(base64_decode(urldecode($sValue)), true);
     }
-    
+
     public function setUserChoice($aChoices = array())
     {
         if(!isLogged() || empty($aChoices))
@@ -918,13 +918,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function prepareParam($sName, $sPattern = "/^[\d\w_]+$/")
     {
-        $mixedValue = bx_process_input(bx_get($sName));
-        return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
+        return $this->processParam(bx_get($sName), $sPattern);
     }
 
     public function prepareParamWithDefault($sName, $sDefault, $sPattern = "/^[\d\w_]+$/")
     {
         return ($sValue = $this->prepareParam($sName, $sPattern)) != '' ? $sValue : $sDefault;
+    }
+
+    public function processParam($sValue, $sPattern = "/^[\d\w_]+$/")
+    {
+        $mixedValue = bx_process_input($sValue);
+        return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
+    }
+
+    public function processParamWithDefault($sValue, $sDefault, $sPattern = "/^[\d\w_]+$/")
+    {
+        return ($sValue = $this->processParam($sValue, $sPattern)) != '' ? $sValue : $sDefault;
     }
 }
 
