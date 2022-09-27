@@ -615,9 +615,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'limit_clause' => &$sLimitClause
         ));
 
+        $sJoinClauseAddon = '';
+        if($this->_oConfig->isSortByUnread() && $this->_isList($aParams))
+            $sJoinClauseAddon = $this->prepareAsString(" LEFT JOIN `{$this->_sTableEvent2User}` AS `teu` ON `{$this->_sTable}`.`id`=`teu`.`event_id` AND `teu`.`user_id`=? ", $aParams['viewer_id']);
+
         $sSqlMask = "SELECT {select}
             FROM `{$this->_sTable}`
-            INNER JOIN `sys_profiles` ON `{$this->_sTable}`.`object_owner_id`=`sys_profiles`.`id` AND `sys_profiles`.`status`='active' LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` {join}
+            INNER JOIN `sys_profiles` ON `{$this->_sTable}`.`object_owner_id`=`sys_profiles`.`id` AND `sys_profiles`.`status`='active' LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` {$sJoinClauseAddon} {join}
             WHERE 1 {where} {order} {limit}";
 
         if(is_string($mixedWhereClause)) {
@@ -751,7 +755,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
         $sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
-        if(in_array($aParams['browse'], array('list', 'ids')) && (!isset($aParams['newest']) || $aParams['newest'] === false)) {
+        if($this->_isList($aParams)) {
             $sOrderClause = "";
 
             switch($aParams['type']) {
@@ -774,7 +778,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             
             if($this->_oConfig->isSortByUnread()) {
                 $sSelectClause .= ", IF(NOT ISNULL(`teu`.`id`), 1, 0) AS `read`";
-                $sJoinClause .= $this->prepareAsString(" LEFT JOIN `{$this->_sTableEvent2User}` AS `teu` ON `{$this->_sTable}`.`id`=`teu`.`event_id` AND `teu`.`user_id`=? ", $aParams['viewer_id']);
                 $sOrderClause .= "`read` ASC, ";
             }
 
@@ -1143,6 +1146,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
         return array($mixedJoinClause, $mixedWhereClause);
+    }
+
+    protected function _isList($aParams)
+    {
+        return in_array($aParams['browse'], ['list', 'ids']) && (!isset($aParams['newest']) || $aParams['newest'] === false);
     }
 
     public function getMenuItemMaxOrder($sSetName)
