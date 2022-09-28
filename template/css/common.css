@@ -309,7 +309,8 @@ blockquote {
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li a > span {
     vertical-align: middle;
 }
-.bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .sys-icon {
+.bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .sys-icon,
+.bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .sys-icon-image {
     display: none;
 }
 .bx-db-menu ul.bx-menu-submenu-more-auto {
