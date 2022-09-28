@@ -94,6 +94,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 'day_of_month' => $oDateIter->format('j'),
                 'day_of_week' => $oDateIter->format('N'),
             );
+            $sJoin = isset($aSQLPart['join']) ? $aSQLPart['join'] : '';
             $sWhere = isset($aSQLPart['where']) ? $aSQLPart['where'] : '';
             if ((int)$iEventId) {
                 $aBindings['event'] = (int)$iEventId;
@@ -103,7 +104,7 @@ class BxEventsDb extends BxBaseModGroupsDb
 
             // search for regular events
             $a = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 0 AS `repeating`
-                FROM `bx_events_data`
+                FROM `bx_events_data` $sJoin 
                 WHERE `bx_events_data`.`date_start` >= :timestamp_min AND `bx_events_data`.`date_start` <= :timestamp_max $sWhere
             ", 'id', $aBindings);
 
@@ -129,7 +130,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                         AND 
                         (0 = `i`.`repeat_day_of_week` OR :day_of_week = `i`.`repeat_day_of_week`)
                     )
-                )
+                ) $sJoin 
                 WHERE `i`.`interval_id` IS NOT NULL $sWhere
             ", 'id', $aBindingsRepeating);
 
