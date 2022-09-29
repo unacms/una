@@ -88,16 +88,34 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
     {
         $sMimeType = strtolower($sMimeType);
         switch ($sMimeType) {
-        case 'image/gif':
-        case 'image/jpeg':
-        case 'image/pjpeg':
-        case 'image/png':
-            return true;
+            case 'image/gif':
+            case 'image/jpeg':
+            case 'image/pjpeg':
+            case 'image/png':
+                return true;
         }
 
         return false;
     }
     
+    /**
+     * Get transcoded file url.
+     * If transcoded file is ready then direct url to the file is returned.
+     * If there is no transcoded data available, then special url is returned, upon opening this url image is transcoded automatically and redirects to the ready transcoed image.
+     * @param $mixedHandler - file handler
+     * @return file url, or false on error.
+     */
+    public function getFileUrl($mixedHandler)
+    {
+        if(($sFileUrl = $this->getOrigFileUrl($mixedHandler)) !== false) {
+            $sFileMimeType = $this->_oStorage->getMimeTypeByFileName($sFileUrl);
+            if (strncmp('image/svg', $sFileMimeType, 9) === 0)
+                return $sFileUrl;
+        }
+
+        return parent::getFileUrl($mixedHandler);
+    }
+
     /**
      * Get file url when file isn't transcoded yet
      */
