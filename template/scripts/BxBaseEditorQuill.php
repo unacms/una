@@ -146,7 +146,7 @@ class BxBaseEditorQuill extends BxDolEditor
             list($aJs, $aCss) = $this->_getJsCss(true);
 
             $sScript = "var " . $sEditorName . ";"; 
-            $sScript .= $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bQuillEditorInited === 'undefined'", $sInitEditor.';console.log(6);');
+            $sScript .= $this->_oTemplate->addJsPreloaded($aJs, $sInitCallBack, "typeof bQuillEditorInited === 'undefined'", $sInitEditor.';');
            
             $sScript = $this->_oTemplate->_wrapInTagJsCode($sScript);
             $sScript = $this->_oTemplate->addCss($aCss, true) . $sScript;
