@@ -2799,7 +2799,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($bReposted)
             return array('code' => 3, 'message' => _t('_bx_timeline_txt_err_already_reposted'));
 
-        $iId = $this->_oDb->insertEvent(array(
+        $iDate = time();
+        $iId = $this->_oDb->insertEvent([
             'owner_id' => $iOwnerId,
             'system' => 0,
             'type' => $this->_oConfig->getPrefix('common_post') . 'repost',
@@ -2807,16 +2808,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'object_id' => $iAuthorId,
             'object_owner_id' => $iAuthorId,
             'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
-            'content' => serialize(array(
+            'content' => serialize([
                 'type' => $sType,
                 'action' => $sAction,
                 'object_id' => $iObjectId,
                 'rdata' => $mixedData
-            )),
+            ]),
             'title' => '',
             'description' => '',
+            'date' => $iDate,
+            'reacted' => $iDate,
             'status_admin' => $this->getStatusAdmin()
-        ));
+        ]);
 
         if(empty($iId))
             return array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost'));
