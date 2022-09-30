@@ -135,18 +135,18 @@ class BxBaseCmts extends BxDolCmts
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($aBp = array(), $aDp = array())
+    function getCommentsBlock($aBp = [], $aDp = [])
     {
         $mixedResult = $this->isViewAllowed();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
-        
+
         $this->_getParams($aBp, $aDp);
 
         //add live update
         $this->actionResumeLiveUpdate();
 
-        $sServiceCall = BxDolService::getSerializedService('system', 'get_live_update', array($this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'), 'TemplCmtsServices');
+        $sServiceCall = BxDolService::getSerializedService('system', 'get_live_update', [$this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'], 'TemplCmtsServices');
         BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
         //add live update
 
@@ -154,14 +154,14 @@ class BxBaseCmts extends BxDolCmts
         $sCommentsPinned = $this->getCommentsPinned(array_merge($aBp, ['pinned' => 1]), $aDp);
         $sContentBefore = $this->_getContentBefore($aBp, $aDp);
         $sContentAfter = $this->_getContentAfter($aBp, $aDp);
-        $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)));
-        $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)));
+        $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP]));
+        $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM]));
         $sJsContent = $this->getJsScript($aBp, $aDp);
 
         $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll(0, true));
         $sBlockMenu = $this->_getControlsBox();
 
-        bx_alert('system', 'view_comments', 0, 0, array(
+        bx_alert('system', 'view_comments', 0, 0, [
             'object' => $this,
             'system' => $this->_sSystem,
             'id' => $this->getId(),
@@ -176,32 +176,31 @@ class BxBaseCmts extends BxDolCmts
             'js_content' => &$sJsContent,
             'block_title' => &$sBlockTitle,
             'block_menu' => &$sBlockMenu,
-        ));
+        ]);
 
-        $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', array(
+        $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', [
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
             'content_before' => $sContentBefore,
             'comments' => $sComments,
             'comments_pinned' => $sCommentsPinned,
-            'bx_if:show_divider_hidden' => array(
+            'bx_if:show_divider_hidden' => [
                 'condition' => empty($sCommentsPinned),
-                'content' => array()
-            ),
+                'content' => []
+            ],
             'content_after' => $sContentAfter,
             'post_form_top' => $sPostFormTop,
             'post_form_bottom'  => $sPostFormBottom,
+            'image_preview' => $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []),
             'script' => $sJsContent
-        ));
+        ]);
 
-        BxDolTemplate::getInstance()->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
-
-        return $aDp['in_designbox'] ? DesignBoxContent($sBlockTitle, $sContent, BX_DB_DEF, $sBlockMenu) : array(
+        return $aDp['in_designbox'] ? DesignBoxContent($sBlockTitle, $sContent, BX_DB_DEF, $sBlockMenu) : [
             'title' => $sBlockTitle,
             'content' => $sContent,
             'menu' => $sBlockMenu,
-        );
+        ];
     }
 
     /**
