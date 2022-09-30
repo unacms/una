@@ -56,7 +56,6 @@ function BxTimelineView(oOptions) {
     //--- Use Scroll for Attachments.
     this._bScrollForFiles = true;
 
-    this._fAutoMarkOffsetViewed = 0.5;
     this._bAutoMarkBusy = false;
     
     //--- Get currently active 'view'.
@@ -121,11 +120,11 @@ BxTimelineView.prototype.init = function(bForceInit)
 
                 if(!window.requestAnimationFrame) 
                     setTimeout(function() {
-                        $this.markPostAsViewed($this.oView, $this._fAutoMarkOffsetViewed);
+                        $this.markPostAsViewed($this.oView);
                     }, 100);
                 else
                     window.requestAnimationFrame(function() {
-                        $this.markPostAsViewed($this.oView, $this._fAutoMarkOffsetViewed);
+                        $this.markPostAsViewed($this.oView);
                     });
             });
         }
@@ -806,7 +805,7 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay)
     );
 };
 
-BxTimelineView.prototype.markPostAsViewed = function(oView, fOffsetViewed)
+BxTimelineView.prototype.markPostAsViewed = function(oView)
 {
     var $this = this;
 
@@ -826,7 +825,7 @@ BxTimelineView.prototype.markPostAsViewed = function(oView, fOffsetViewed)
         var iItemBottom = iItemTop + oItem.height();
         var iWindowTop = $(window).scrollTop();
         var iWindowHeight = $(window).height();
-        if(iItemBottom > iWindowTop && iItemTop <= iWindowTop + iWindowHeight * fOffsetViewed) {
+        if(iItemBottom < iWindowTop + iWindowHeight) {
             $this._bAutoMarkBusy = true;
 
             var oData = $this._getDefaultData();

@@ -106,6 +106,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                  $iAdded = time();
 
             $aValsToAdd[$CNF['FIELD_ADDED']] = $iAdded;
+            if(isset($CNF['FIELD_REACTED']))
+                $aValsToAdd[$CNF['FIELD_REACTED']] = $iAdded;
         }
 
         if(empty($aValsToAdd[$CNF['FIELD_PUBLISHED']])) {

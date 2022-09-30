@@ -184,6 +184,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 'title' => '',
                 'description' => '',
                 'date' => $iDate,
+                'reacted' => $iDate,
                 'status' => $sStatus
             ));
 

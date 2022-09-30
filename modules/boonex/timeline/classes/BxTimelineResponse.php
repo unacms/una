@@ -54,7 +54,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(!empty($oAlert->aExtras) && is_array($oAlert->aExtras))
                     $sContent = serialize(bx_process_input($oAlert->aExtras));
 
-                $aEvent = array(
+                $iDate = time();
+                $aEvent = [
                     'owner_id' => $iOwnerId,
                     'type' => $oAlert->sUnit,
                     'action' => $oAlert->sAction,
@@ -64,8 +65,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'object_cf' => $this->_getObjectCf($oAlert->aExtras),
                     'content' => $sContent,
                     'title' => '',
-                    'description' => ''
-                );
+                    'description' => '',
+                    'date' => $iDate,
+                    'reacted' => $iDate,
+                ];
 
                 $sMethod = '_prepareEvent' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
                 if(method_exists($this, $sMethod))
