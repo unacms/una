@@ -1062,6 +1062,7 @@ class BxAdsModule extends BxBaseModTextModule
     public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
         $CNF = &$this->_oConfig->CNF;
+        $sModule = $this->getName();
 
     	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
@@ -1082,7 +1083,7 @@ class BxAdsModule extends BxBaseModTextModule
             $CNF['FIELD_SOLD'] => $iEntryQnt == 0 ? time() : 0,
         ), array($CNF['FIELD_ID'] => $iItemId));
 
-        bx_alert($this->getName(), 'license_register', 0, false, array(
+        bx_alert($sModule, 'license_register', 0, false, array(
             'product_id' => $iItemId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
@@ -1092,7 +1093,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         if($iEntryQnt == 0) {
             $aParams = $this->_alertParams($aEntry);
-            bx_alert($this->getName(), 'sold', $iItemId, false, $aParams);
+            bx_alert($sModule, 'sold', $iItemId, false, $aParams);
         }
 
         $oClient = BxDolProfile::getInstanceMagic($iClientId);
@@ -1104,16 +1105,30 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($sNote))
             $sNote = _t('_bx_ads_txt_purchased_note', $sSellerUrl, $sSellerName);
 
-        sendMailTemplate($CNF['ETEMPLATE_PURCHASED'], 0, $iClientId, array(
+        $sEmailTemplate = $CNF['ETEMPLATE_PURCHASED'];
+        $aEmailParams = [
             'client_name' => $oClient->getDisplayName(),
             'entry_name' => $aEntry[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aEntry[$CNF['FIELD_ID']])),
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $aEntry[$CNF['FIELD_ID']]]),
             'vendor_url' => $sSellerUrl,
             'vendor_name' => $sSellerName,
             'count' => (int)$iItemCount,
             'license' => $sLicense,
             'notes' => $sNote,
-        ));
+        ];
+
+        $bCancel = false;
+        bx_alert($sModule, 'license_register_notif', 0, false, [
+            'entry_id' => $iItemId,
+            'order' => $sOrder,
+            'recipient_id' => &$iClientId,
+            'email_template' => &$sEmailTemplate,
+            'email_params' => &$aEmailParams,
+            'cancel' => &$bCancel
+        ]);
+
+        if(!$bCancel)
+            sendMailTemplate($sEmailTemplate, 0, $iClientId, $aEmailParams);
 
         return $aItem;
     }

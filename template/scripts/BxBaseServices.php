@@ -980,6 +980,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     }
     
 
+    public function serviceGetOptionsCaptchaDefault()
+    {
+        $aResults = [];
+        $aObjects = BxDolCaptchaQuery::getObjects();
+        foreach($aObjects as $aObject)
+            $aResults[$aObject['object']] = $aObject['title'];
+
+        return $aResults;
+    }
+
     public function serviceGetOptionsEmbedDefault()
     {
         $aResults = array(

@@ -192,7 +192,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
                 break;
         }
 
-        return (float)$fPrice;
+        return round((float)$fPrice, 2);
     }
 
     public function getTrial($sType, $aItem)
