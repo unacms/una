@@ -27,6 +27,9 @@ form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {
 }
 
 /*--- Comment ---*/
+span.cmt-reply-to a {
+    display: inline-block !important;
+}
 span.cmt-reply-to a .bx-base-pofile-unit-wo-info .bx-base-pofile-unit-online {
     display: none;
 }

@@ -15,3 +15,12 @@
     height: 100%;
     border: 0;
 }
+
+.bx-base-attach-link-form-field .embera-embed-responsive {
+    padding-bottom: 0;
+}
+.bx-base-attach-link-form-field .embera-embed-responsive-item {
+    position: relative;
+    width: auto;
+    height: auto;
+}
