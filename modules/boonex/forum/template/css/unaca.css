@@ -56,12 +56,14 @@
 
 .unaca-t {
     font-size: 0;
+     margin-bottom: 0px !important;
     transition: all 0.3s ease 0s;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     overflow: visible !important;
     scroll-behavior: smooth;
     scroll-snap-type: x var(--tw-scroll-snap-strictness);
+    text-align: left !important;
 }
 
 .unaca-t > div {
