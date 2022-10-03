@@ -770,7 +770,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             }
             else{
                 $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
-                $oInformer->add('sys-account-need-to-change-password', _t('_sys_txt_account_need_to_change_password', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password'), ), BX_INFORMER_ALERT);
+                $oInformer->add('sys-account-need-to-change-password', _t('_sys_txt_account_need_to_change_password', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-password')), BX_INFORMER_ALERT);
             }
         }
     }
