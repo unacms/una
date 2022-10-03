@@ -209,8 +209,8 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
     function displayResultBlock()
     {
         if ($this->bShowcaseView) {
-            $this->oModule->_oTemplate->addCss(array('unaca.css'));
-            $this->oModule->_oTemplate->addJs(array('unaca.js'));
+            $this->oModule->_oTemplate->addCss(array('carusel.css'));
+            $this->oModule->_oTemplate->addJs(array('carusel.js'));
             
             return $this->oModule->_oTemplate->parseHtmlByName('unaca.html', ['content' => str_replace(['bx-forum-wrapper', 'bx-base-unit-showcase-wrapper'], '' ,str_replace('bx-search-result-block', 'bx-search-result-block unaca-t', parent::displayResultBlock()))]);
             

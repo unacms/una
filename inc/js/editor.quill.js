@@ -20,7 +20,6 @@ function bx_editor_init(oEditor, oParams){
             handlers: {
             'show-html': function() {
                  bx_alert('<textarea class="bx-def-font-inputs bx-form-input-textarea bx-form-input-html-quill-code" id="' + oParams.name + '_code">' + oEditor.container.firstChild.innerHTML + '</textarea>',function() {
-                     //console.log($('#'+oParams.name+'_code').val());
                      oEditor.container.firstChild.innerHTML = $('#'+oParams.name+'_code').val();
                  });
             },  
@@ -334,14 +333,6 @@ function bx_editor_init(oEditor, oParams){
     if (bEmptyToolbar)
         $(oParams.selector).next().hide();
 
-    oEditor.keyboard.addBinding({
-        key: ' ',
-        handler: function(range, context) {
-            bx_editor_on_space_enter (oEditor.container.firstChild.innerHTML, oParams.selector);
-            return true;
-        }
-    });
-    
     oEditor.clipboard.addMatcher (Node.TEXT_NODE, function (node, delta) {
         const Delta = Quill.import('delta')
         bx_editor_on_space_enter(node.data, oParams.selector, false);
@@ -362,14 +353,6 @@ function bx_editor_init(oEditor, oParams){
 			return delta
         });
     }
-    
-    oEditor.keyboard.bindings[13].unshift({
-        key: 13,
-        handler: (range, context) => {
-            bx_editor_on_space_enter (oEditor.container.firstChild.innerHTML, oParams.selector)
-            return true;
-        }
-    });
     
     oEditor.on('text-change', function(delta, oldDelta, source) {
         sVal = oEditor.container.firstChild.innerHTML;
@@ -408,6 +391,7 @@ function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
 
 function bx_editor_on_space_enter (sCode, sEditorId, bSpace = true)
 {
+    console.log(10);
     if (typeof glBxEditorOnSpaceEnterTimer !== 'undefined')
         clearTimeout(glBxEditorOnSpaceEnterTimer);
     
@@ -418,11 +402,13 @@ function bx_editor_on_space_enter (sCode, sEditorId, bSpace = true)
 }
 
 function bx_editor_on_space_enter_in(sCode, sEditorId) {
+     console.log(11);
     glBxEditorOnSpaceEnterTimer = undefined;
     if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
         for (var i = 0; i < glOnSpaceEnterInEditor.length; i++) {
             if (typeof glOnSpaceEnterInEditor[i] === "function") {;                                             
                 glOnSpaceEnterInEditor[i](sCode, sEditorId);
+                    console.log(12);                                               
             }
         }
     }
