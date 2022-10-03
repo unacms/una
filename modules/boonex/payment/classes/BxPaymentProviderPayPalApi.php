@@ -603,11 +603,13 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             $aItems[] = array(
                 'name' => $aItem['title'],
                 'unit_amount' => array(
-                    'value' => $this->_oModule->_oConfig->getPrice(BX_PAYMENT_TYPE_SINGLE, $aItem),
+                    'value' => sprintf("%.2f", $this->_oModule->_oConfig->getPrice(BX_PAYMENT_TYPE_SINGLE, $aItem)),
                     'currency_code' => $aCartInfo['vendor_currency_code']
                 ),
                 'quantity' => $aItem['quantity']
             );
+
+        $sItemsPrice = sprintf("%.2f", round($aCartInfo['items_price'], 2));
 
         $oRequest = new OrdersCreateRequest();
         $oRequest->prefer('return=representation');
@@ -618,11 +620,11 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
                     'reference_id' => $iPendingId,
                     'amount' => array(
                         'currency_code' => $aCartInfo['vendor_currency_code'],
-                        'value' => sprintf("%.2f", (float)$aCartInfo['items_price']),
+                        'value' => $sItemsPrice,
                         'breakdown' => array(
                             'item_total' => array(
                                 'currency_code' => $aCartInfo['vendor_currency_code'],
-                                'value' => sprintf("%.2f", (float)$aCartInfo['items_price']),
+                                'value' => $sItemsPrice,
                             )
                         )
                     ),
