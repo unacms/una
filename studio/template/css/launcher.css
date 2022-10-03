@@ -403,4 +403,9 @@ div.bx-std-widget-caption a {
 }
 #bx-informer .bx-informer-msg{
     background-color: rgba(255, 234, 193, 1);
+    display: none;
+    z-index: 10;
+}
+#bx-informer #sys-account-need-to-change-password.bx-informer-msg{
+    display: block;
 }
