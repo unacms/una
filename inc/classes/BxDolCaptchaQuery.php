@@ -11,7 +11,7 @@
  * Database queries for captcha objects.
  * @see BxDolCaptcha
  */
-class BxDolCaptchaQuery extends BxDolDb
+class BxDolCaptchaQuery extends BxDolFactoryObjectQuery
 {
     protected $_aObject;
 
@@ -23,6 +23,7 @@ class BxDolCaptchaQuery extends BxDolDb
 
     static public function getCaptchaObject ($sObject)
     {
+        return parent::getObjectFromTable($sObject, 'sys_objects_captcha');
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_captcha` WHERE `object` = ?", $sObject);
         $aObject = $oDb->getRow($sQuery);
@@ -32,6 +33,10 @@ class BxDolCaptchaQuery extends BxDolDb
         return $aObject;
     }
 
+    static public function getObjects ()
+    {
+        return parent::getObjectsFromTable('sys_objects_captcha');
+    }
 }
 
 /** @} */
