@@ -316,7 +316,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_redirect_after_email_confirmation', '_adm_stg_cpt_option_sys_redirect_after_email_confirmation', '', 'digit', '', '', '', '', 41),
 
 (@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_quill', 'digit', '', '', '', '', 50),
-(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'select', 'sys_recaptcha_new,sys_recaptcha_invisible,sys_hcaptcha', '', '', '', 51),
 (@iCategoryId, 'sys_player_default', '_adm_stg_cpt_option_sys_player_default', 'sys_html5', 'digit', '', '', '', '', 55),
 (@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_quality', 'sd', 'select', 'sd,hd', '', '', '', 56),
 
@@ -492,6 +491,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_security_form_token_enable', '_adm_stg_cpt_option_sys_security_form_token_enable', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_security_form_token_lifetime', '_adm_stg_cpt_option_sys_security_form_token_lifetime', '86400', 'digit', '', '', '', 11),
+(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'select', 'sys_recaptcha_new,sys_recaptcha_invisible,sys_hcaptcha', '', '', '', 19),
 (@iCategoryId, 'sys_recaptcha_key_public', '_adm_stg_cpt_option_sys_recaptcha_key_public', '', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_recaptcha_key_private', '_adm_stg_cpt_option_sys_recaptcha_key_private', '', 'digit', '', '', '', 21),
 (@iCategoryId, 'sys_add_nofollow', '_adm_stg_cpt_option_sys_add_nofollow', 'on', 'checkbox', '', '', '', 30),
