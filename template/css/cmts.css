@@ -64,3 +64,8 @@ span.cmt-reply-to a .bx-def-icon-size {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
+
+/*--- PhotoSwipe Styles ---*/
+.cmts.pswp {
+    z-index: 15000;
+}

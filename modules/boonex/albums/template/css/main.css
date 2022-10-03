@@ -212,6 +212,11 @@
     right:0;
 }
 
+/*--- PhotoSwipe Styles ---*/
+.bx-albums.pswp {
+    z-index: 15000;
+}
+
 .pswp__caption .pswp__caption__center {
     text-align: center;
 }
