@@ -36,7 +36,7 @@
         var sStreet = $('input[name="__name___street"]').val();
         var sNum = $('input[name="__name___street_number"]').val();
 
-        if (!sCountry || !sCountry.length)
+        if (!sCountryCode || !sCountryCode.length)
             return '';
 
         sRet = '&country=' + encodeURIComponent(sCountry);
