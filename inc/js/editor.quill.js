@@ -391,7 +391,6 @@ function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
 
 function bx_editor_on_space_enter (sCode, sEditorId, bSpace = true)
 {
-    console.log(10);
     if (typeof glBxEditorOnSpaceEnterTimer !== 'undefined')
         clearTimeout(glBxEditorOnSpaceEnterTimer);
     
@@ -402,13 +401,11 @@ function bx_editor_on_space_enter (sCode, sEditorId, bSpace = true)
 }
 
 function bx_editor_on_space_enter_in(sCode, sEditorId) {
-     console.log(11);
     glBxEditorOnSpaceEnterTimer = undefined;
     if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
         for (var i = 0; i < glOnSpaceEnterInEditor.length; i++) {
-            if (typeof glOnSpaceEnterInEditor[i] === "function") {;                                             
+            if (typeof glOnSpaceEnterInEditor[i] === "function") {
                 glOnSpaceEnterInEditor[i](sCode, sEditorId);
-                    console.log(12);                                               
             }
         }
     }
