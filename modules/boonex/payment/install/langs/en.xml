@@ -433,6 +433,7 @@
     <string name="_bx_payment_cdt_msg_charged"><![CDATA[Payment was successfully processed.]]></string>
     <string name="_bx_payment_cdt_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
     <string name="_bx_payment_cdt_err_not_available"><![CDATA[Checkout with Credits isn't available now.]]></string>
+    <string name="_bx_payment_cdt_err_wrong_balance"><![CDATA[Insufficient funds to write off.]]></string>
     <string name="_bx_payment_cdt_err_wrong_transaction"><![CDATA[Transaction verification failed.]]></string>
     <string name="_bx_payment_txt_name_credits"><![CDATA[Credits]]></string>
     <string name="_bx_payment_txt_cart_credits"><![CDATA[Credits]]></string>

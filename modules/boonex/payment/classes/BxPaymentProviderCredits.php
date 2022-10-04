@@ -113,13 +113,13 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
     public function makePayment($mixedPending)
     {
         if(!BxDolModuleQuery::getInstance()->isEnabledByName($this->_sModuleCredits))
-            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'cdt_err_not_available');
+            return ['code' => 1, 'message' => $this->_sLangsPrefix . 'cdt_err_not_available'];
 
         if(!is_array($mixedPending))
-            $mixedPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+            $mixedPending = $this->_oModule->_oDb->getOrderPending(['type' => 'id', 'id' => (int)$mixedPending]);
 
         if(empty($mixedPending) || !is_array($mixedPending))
-            return array('code' => 2, 'message' => $this->_sLangsPrefix . 'err_not_found_pending');
+            return ['code' => 2, 'message' => $this->_sLangsPrefix . 'err_not_found_pending'];
 
         $iClient = (int)$mixedPending['client_id'];
         $oClient = BxDolProfile::getInstance($iClient);
@@ -128,11 +128,15 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
         $oSeller = BxDolProfile::getInstance($iSeller);
 
         if(!$oClient || !$oSeller)
-            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
+            return ['code' => 3, 'message' => $this->_sLangsPrefix . 'err_wrong_data'];
 
         $fAmount = (float)$mixedPending['amount'];
-        if(!bx_srv($this->_sModuleCredits, 'make_payment', array($iClient, $fAmount, $iSeller, $mixedPending['order'])))
-            return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+        $fClientBalance = bx_srv($this->_sModuleCredits, 'get_profile_balance', [$iClient]);
+        if($fAmount > $fClientBalance)
+            return ['code' => 4, 'message' => $this->_sLangsPrefix . 'cdt_err_wrong_balance'];
+
+        if(!bx_srv($this->_sModuleCredits, 'make_payment', [$iClient, $fAmount, $iSeller, $mixedPending['order']]))
+            return ['code' => 5, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
 
         return true;        
     }

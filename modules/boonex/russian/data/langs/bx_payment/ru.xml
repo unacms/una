@@ -435,6 +435,7 @@
     <string name="_bx_payment_cdt_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
     <string name="_bx_payment_cdt_msg_subscribed"><![CDATA[Спасибо! Подписка создана. Пожалуйста, проверьте ваш email для получения дальнейших инструкций.]]></string>
     <string name="_bx_payment_cdt_err_not_available"><![CDATA[В данное время оплата Кредитами не доступна.]]></string>
+    <string name="_bx_payment_cdt_err_wrong_balance"><![CDATA[Недостаточно средств для списания.]]></string>
     <string name="_bx_payment_cdt_err_wrong_transaction"><![CDATA[Не удалось верифицировать транзакцию.]]></string>
     <string name="_bx_payment_txt_name_credits"><![CDATA[Кредиты]]></string>
     <string name="_bx_payment_txt_cart_credits"><![CDATA[Кредиты]]></string>
