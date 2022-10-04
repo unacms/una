@@ -360,7 +360,9 @@ BxTimelineMain.prototype.addAttachLink = function(oElement, iId, sUrl)
             $this._oAttachedLinks[sUrl] = oData.id;
 
             var oItem = $(oData.item).hide();
-            $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
+            $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
+                $(this).bxProcessHtml();
+            });
 
             $this.unlockForm($('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first'));
         },
