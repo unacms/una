@@ -2290,7 +2290,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `profile_id` int(11) NOT NULL,
-  `current_size` int(11) NOT NULL,
+  `current_size` bigint(20) NOT NULL,
   `current_number` int(11) NOT NULL,
   `ts` int(11) NOT NULL,
   PRIMARY KEY (`profile_id`)
