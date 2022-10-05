@@ -240,10 +240,12 @@ class BxDolCmtsQuery extends BxDolDb
     function getCommentsCount ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {
     	$aBindings = array(
-            'cmt_object_id' => $iId
+            'cmt_object_id' => $iId,
+            'system_id' => $this->_oMain->getSystemId()
     	);
 
-        $sWhereClause = '';
+        $sWhereClause = $this->getCommentsCheckStatus($iAuthorId);
+
         if((int)$iCmtVParentId >= 0) {
             $aBindings['cmt_vparent_id'] = $iCmtVParentId;
 
@@ -270,7 +272,11 @@ class BxDolCmtsQuery extends BxDolDb
         if(($oCf = $this->_oMain->getObjectContentFilter()) !== false)
             $sWhereClause .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
-        $sQuery = "SELECT COUNT(*) FROM `{$this->_sTable}` $sJoinClause WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
+        $sQuery = "SELECT
+                COUNT(*) 
+            FROM `{$this->_sTable}` 
+            LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id) $sJoinClause 
+            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
         return (int)$this->getOne($sQuery, $aBindings);
     }
 
