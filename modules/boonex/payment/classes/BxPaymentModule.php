@@ -1598,8 +1598,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 continue;
             }
 
-            if(!$oProvider->makePayment($aPending)) {
-                $this->log($aSubscription, 'Time Tracker', 'Payment cannot be processed.');
+            if(($mixedResult = $oProvider->makePayment($aPending)) !== true) {
+                $this->log($aSubscription, 'Time Tracker', 'Payment cannot be processed.' . (!empty($mixedResult['message']) ? ' ' . $mixedResult['message'] : ''));
                 continue;
             }
 
