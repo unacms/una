@@ -3,8 +3,6 @@ SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_sto
 
 ALTER TABLE `sys_options` CHANGE `type` `type` ENUM('value','digit','text','code','checkbox','select','combobox','file','image','list','rlist','rgb','rgba','datetime') NOT NULL DEFAULT 'digit';
 
-ALTER TABLE `sys_storage_user_quotas` CHANGE `current_size` `current_size` bigint(20) NOT NULL;
-
 -- Options
 
 SET @iCategoryIdSecurity = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'security');
