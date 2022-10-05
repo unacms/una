@@ -8,7 +8,7 @@ ALTER TABLE `sys_options` CHANGE `type` `type` ENUM('value','digit','text','code
 SET @iCategoryIdSecurity = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'security');
 UPDATE `sys_options` SET `category_id` = @iCategoryIdSecurity, `extra` = 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_options_captcha_default";s:5:"class";s:13:"TemplServices";}', `order` = 19 WHERE `name` = 'sys_captcha_default';
 
-UPDATE `sys_options` SET `value` = '' WHERE `name` = 'sys_quill_allowed_tags_mini';
+UPDATE `sys_options` SET `value` = '' WHERE `name` = 'sys_quill_allowed_tags_mini' AND `value` = '[\'link\', \'size\', \'image\', \'menthion-link\', \'embed-link\']';
 UPDATE `sys_options` SET `value` = '[{ \'header\': [1, 2, 3, 4, 5, 6, false] },\'bold\',\'italic\',\'underline\',\'clean\'],
   [{ \'align\': [] },{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'},\'blockquote\',{ \'color\': [] }, { \'background\': [] },{ \'direction\': \'rtl\' },\'link\',\'image\',\'embed\',\'code-block\',\'emoji\',\'show-html\']' WHERE `name` = 'sys_quill_toolbar_full';
 
