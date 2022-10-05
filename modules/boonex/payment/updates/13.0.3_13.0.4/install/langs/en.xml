@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_payment_cdt_err_wrong_balance"><![CDATA[Insufficient funds to write off.]]></string_add>
+</resources>
