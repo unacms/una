@@ -183,7 +183,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
                 'unread_messages' => $r['unread_messages'],
                 'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
                 'font_weight' => $r['unread_messages'] > 0 ? 'bold' : 'normal',
-                'label' => $this->getMessageLabel($r, $oProfileLast),
+                'label' => $this->getMessageLabel($r['comments'] + 1, $r, $oProfileLast),
 
                 'author_id' => $oProfileAuthor->id(),
                 'author_url' => $oProfileAuthor->getUrl(),
