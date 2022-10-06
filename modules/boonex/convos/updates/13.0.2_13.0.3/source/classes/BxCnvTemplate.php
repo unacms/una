@@ -210,7 +210,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             $oProfileLast = BxDolProfileUndefined::getInstance();
 
         $sText = strmaxtextlen($r['text'], 100);
-        $sTextCmt = strmaxtextlen($r['cmt_text'], 100);
+        $sTextCmt = $r['cmt_text'] ? strmaxtextlen($r['cmt_text'], 100) : '';
 
         if (!isset($r['unread_messages']))
             $r['unread_messages'] = $r['comments'] - $r['read_comments'];
