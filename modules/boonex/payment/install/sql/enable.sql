@@ -186,7 +186,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 (@sName, '_bx_payment_et_txt_name_expiration_notification_client', 'bx_payment_expiration_notification_client', '_bx_payment_et_txt_subject_expiration_notification_client', '_bx_payment_et_txt_body_expiration_notification_client'),
 (@sName, '_bx_payment_et_txt_name_expiring_notification_committent', 'bx_payment_expiring_notification_committent', '_bx_payment_et_txt_subject_expiring_notification_committent', '_bx_payment_et_txt_body_expiring_notification_committent'),
 (@sName, '_bx_payment_et_txt_name_overdue_notification_committent', 'bx_payment_overdue_notification_committent', '_bx_payment_et_txt_subject_overdue_notification_committent', '_bx_payment_et_txt_body_overdue_notification_committent'),
-(@sName, '_bx_payment_et_txt_name_checkout_offline', 'bx_payment_checkout_offline', '_bx_payment_et_txt_subject_checkout_offline', '_bx_payment_et_txt_body_checkout_offline');
+(@sName, '_bx_payment_et_txt_name_checkout_offline', 'bx_payment_checkout_offline', '_bx_payment_et_txt_subject_checkout_offline', '_bx_payment_et_txt_body_checkout_offline'),
+(@sName, '_bx_payment_et_txt_name_wrong_balance', 'bx_payment_wrong_balance', '_bx_payment_et_txt_subject_wrong_balance', '_bx_payment_et_txt_body_wrong_balance');
 
 
 -- CRON

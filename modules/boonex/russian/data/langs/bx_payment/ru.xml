@@ -340,6 +340,14 @@
 <p>Перейдите на <a href="{pending_orders_link}">страницу неоплаченных заказов</a> для обработки заказа, когда оплата будет получена.</p>
 {email_footer}]]></string>
 
+    <string name="_bx_payment_et_txt_name_wrong_balance"><![CDATA[Недостаточно средств для списания.]]></string>
+    <string name="_bx_payment_et_txt_subject_wrong_balance"><![CDATA[Недостаточно средств для списания.]]></string>
+    <string name="_bx_payment_et_txt_body_wrong_balance"><![CDATA[{email_header}
+<p>Привет,</p>
+<p>У вас недостаточно средств для списания на оплату подписки.</p>
+<p>Информация о подписке:<br />ID: {sibscription_id}<br />Клиент: {sibscription_customer}<br />Система оплаты: {sibscription_provider}<br />Дата: {sibscription_date}</p>
+{email_footer}]]></string>
+
 
     <!-- MESSAGES, WARNINGS and ERRORS -->
     <string name="_bx_payment_msg_no_results"><![CDATA[Пусто]]></string>

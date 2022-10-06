@@ -132,8 +132,28 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
 
         $fAmount = (float)$mixedPending['amount'];
         $fClientBalance = bx_srv($this->_sModuleCredits, 'get_profile_balance', [$iClient]);
-        if($fAmount > $fClientBalance)
+        if($fAmount > $fClientBalance) {
+            $aSubscription = $this->_oModule->_oDb->getSubscription([
+                'type' => 'pending_id', 
+                'pending_id' => $mixedPending['id']
+            ]);
+
+            if(!empty($aSubscription) && is_array($aSubscription)) {
+                $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oModule->_oConfig->getPrefix('general') . 'wrong_balance', [
+                    'profile_name' => $oClient->getDisplayName(),
+                    'profile_link' => $oClient->getUrl(),
+                    'sibscription_id' => $aSubscription['subscription_id'],
+                    'sibscription_customer' => $aSubscription['customer_id'],
+                    'sibscription_provider' => _t('_bx_payment_txt_name_' . $mixedPending['provider']),
+                    'sibscription_date' => bx_time_js($aSubscription['date_add'], BX_FORMAT_DATE, true)
+                ], 0, $iClient);
+
+                if($aTemplate !== false)
+                    sendMail($oClient->getAccountObject()->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, [], BX_EMAIL_SYSTEM);
+            }
+
             return ['code' => 4, 'message' => $this->_sLangsPrefix . 'cdt_err_wrong_balance'];
+        }
 
         if(!bx_srv($this->_sModuleCredits, 'make_payment', [$iClient, $fAmount, $iSeller, $mixedPending['order']]))
             return ['code' => 5, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];

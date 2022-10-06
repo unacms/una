@@ -1598,8 +1598,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 continue;
             }
 
+            $this->_oDb->updateSubscription(['pay_attempts' => (int)$aSubscription['pay_attempts'] + 1], ['id' => $aSubscription['id']]);
+
             if(($mixedResult = $oProvider->makePayment($aPending)) !== true) {
-                $this->log($aSubscription, 'Time Tracker', 'Payment cannot be processed.' . (!empty($mixedResult['message']) ? ' ' . $mixedResult['message'] : ''));
+                $this->_oDb->updateSubscription(['status' => BX_PAYMENT_SBS_STATUS_UNPAID], ['id' => $aSubscription['id']]);
+
+                $this->log($aSubscription, 'Time Tracker', 'Payment cannot be processed (code: ' . (!empty($mixedResult['code']) ? (int)$mixedResult['code'] : 0) . ').');
                 continue;
             }
 
