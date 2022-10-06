@@ -1,0 +1,40 @@
+/*--- General ---*/
+div.bx-grid-header div.bx-form-element-wrapper {
+    position: relative;
+    float: left;
+    width: 10rem;
+}
+
+/*--- Administration tools ---*/
+div.bx-grid-header div.bx-form-element-wrapper {
+    margin-right: 0.5rem;
+}
+div.bx-grid-header div.bx-form-element-wrapper:last-child {
+    margin-right: 0;
+}
+div.bx-grid-header div#bx-form-element-search {
+    margin-top: 0px !important;
+}
+
+/*+++ Controls filter +++*/
+div.bx-grid-header div.bx-grid-header-controls-filter {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+div.bx-grid-header div.bx-grid-header-controls-filter > .bx-form-element-wrapper {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-datepicker {
+    width: 11.375rem;
+}
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-label {
+    width: auto;
+}
+div.bx-grid-header .bx-form-element-wrapper.bx-grid-controls-filter-label .bx-form-input-wrapper{
+    height:2.5rem;
+    line-height:2.4rem;
+}
