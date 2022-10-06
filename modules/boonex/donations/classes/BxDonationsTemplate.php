@@ -43,7 +43,7 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
         $iPaymentSeller = $this->_oConfig->getOwner();
         $sPaymentModule = $this->_oConfig->getName();
 
-        $sJsCode = '';
+        $aJsCodes = [];
         $sJsObject = $this->_oConfig->getJsObject('main');
         $sHtmlIdBTypeLink = $this->_oConfig->getHtmlIds('link_billing_type');
 
@@ -82,13 +82,17 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
                         break;
                 }
 
-                list($sJsCode, $sOnclick) = $aJs;
+                list($sJsCode, $sJsMethod) = $aJs;
+
+                $sJsCodeHash = md5($sJsCode);
+                if(!isset($aJsCodes[$sJsCodeHash]))
+                    $aJsCodes[$sJsCodeHash] = $sJsCode;
 
                 $sAmount = _t_format_currency($aType[$CNF['FIELD_AMOUNT']], getParam($CNF['PARAM_AMOUNT_PRECISION']));
                 $sAmount = _t('_bx_donations_txt_amount_' . $sBillingType, $sAmount, $sDuration);
 
                 $aTmplVarsTypes[] = array(
-                    'onclick' => $sOnclick,
+                    'onclick' => $sJsMethod,
                     'bx_if:show_title' => array(
                         'condition' => $bShowTitle,
                         'content' => array(
@@ -142,7 +146,7 @@ class BxDonationsTemplate extends BxBaseModGeneralTemplate
                 'content' => $aTmplVarsMenu
             ),
             'bx_repeat:billing_types' => array_values($aTmplVarsBillingTypes),
-            'js_code' => $sJsCode . $this->getJsCode('main')
+            'js_code' => implode('', $aJsCodes) . $this->getJsCode('main')
         );
 
         $sResult = null;
