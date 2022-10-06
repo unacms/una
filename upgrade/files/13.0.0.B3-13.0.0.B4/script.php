@@ -26,8 +26,11 @@
         $iNum = 0;
         $aTables = $this->oDb->getColumn("SELECT `table_files` FROM `sys_objects_storage`");
         foreach ($aTables as $sTable) {
-            $iSize += $this->oDb->getOne("SELECT SUM(`size`) FROM `$sTable` WHERE `profile_id` = :id", ['id' => $iProfileId]);
-            ++$iNum;
+            $r = $this->oDb->getRow("SELECT SUM(`size`) AS `size`, COUNT(*) AS `count` FROM `$sTable` WHERE `profile_id` = :id", ['id' => $iProfileId]);
+            if ($r) {
+                $iSize += $r['size'];
+                $iNum += $r['count'];
+            }
         }
         $this->oDb->query("UPDATE `sys_storage_user_quotas` SET `current_size` = :size, `current_number` = :num WHERE `profile_id` = :id", ['id' => $iProfileId, 'size' => $iSize, 'num' => $iNum]);
     }
