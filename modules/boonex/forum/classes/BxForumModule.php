@@ -222,6 +222,7 @@ class BxForumModule extends BxBaseModTextModule
 
         return $this->_serviceBrowseTable(array(
             'type' => $sType,
+            'author' => bx_get_logged_profile_id(),
             'empty_message' => $bEmptyMessage, 
             'ajax_paginate' => $bAjaxPaginate
         ), $bShowHeader);
