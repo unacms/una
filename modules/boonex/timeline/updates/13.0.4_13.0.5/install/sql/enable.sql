@@ -8,7 +8,7 @@ UPDATE `sys_objects_page` SET `url`='' WHERE `object`='bx_timeline_item_brief';
 
 -- SETTINGS
 SET @iHdrIdComment = (SELECT `id` FROM `bx_timeline_handlers` WHERE `group`='comment' AND `type`='insert' AND `alert_unit`='comment' AND `alert_action`='added' LIMIT 1);
-UPDATE `sys_options` SET `value`=CONCAT_WS(',', @iHdrIdComment) WHERE `name`='bx_timeline_events_hide';
+UPDATE `sys_options` SET `value`=@iHdrIdComment WHERE `name`='bx_timeline_events_hide' AND `value`='';
 
 
 SET @iCategId = (SELECT `id` FROM `sys_options_categories` WHERE `name`='bx_timeline_general' LIMIT 1);
