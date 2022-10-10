@@ -159,12 +159,17 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
         if(!$oComments || !$oComments->isEnabled())
             return false;
-        
-        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
-        
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
-        return $oObject ? $oObject->getCounter(['overwrite_counter_link_onclick' => 'javascript:', 'show_counter_empty' => false, 'dynamic_mode' => true, 'caption' => '_cmt_txt_n_comments', 'custom_icon' => $sIcon]) : '';
+        $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]) : null;
+
+        return $oObject ? $oObject->getCounter([
+            'overwrite_counter_link_onclick' => 'javascript:void(0)', 
+            'show_counter_empty' => false, 
+            'recalculate_counter' => true,
+            'dynamic_mode' => true, 
+            'caption' => '_cmt_txt_n_comments', 
+            'custom_icon' => BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '')
+        ]) : '';
     }
 
     protected function _retrieveContentId()

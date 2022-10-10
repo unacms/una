@@ -222,10 +222,10 @@ class BxDolCmtsQuery extends BxDolDb
     	$this->_sTableFiles2Entries = $sTable;
     }
 
-    function getCommentsCountAll ($iId, $bForceCalculate = false)
+    function getCommentsCountAll ($iId, $iAuthorId = 0, $bForceCalculate = false)
     {
         $iCount = false;
-        bx_alert('comment', 'get_comments_count', 0, bx_get_logged_profile_id(), array('system' => $this->_oMain->getSystemInfo(), 'object_id' => $iId, 'result' => &$iCount));
+        bx_alert('comment', 'get_comments_count', 0, $iAuthorId, ['system' => $this->_oMain->getSystemInfo(), 'object_id' => $iId, 'result' => &$iCount]);
         if ($iCount !== false)
             return $iCount;
 
@@ -234,7 +234,7 @@ class BxDolCmtsQuery extends BxDolDb
                 'id' => $iId
             ]);
         else
-            return $this->getCommentsCount($iId);
+            return $this->getCommentsCount($iId, -1, $iAuthorId);
     }
 
     function getCommentsCount ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')

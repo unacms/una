@@ -57,7 +57,8 @@ class BxBaseCmts extends BxDolCmts
             'show_do_comment_label' => false,
             'show_counter' => true,
             'show_counter_only' => true,
-            'show_counter_empty' => false
+            'show_counter_empty' => false,
+            'recalculate_counter' => false
         );
 
         $this->_aAclId2Name = array();
@@ -647,12 +648,13 @@ class BxBaseCmts extends BxDolCmts
         $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
         $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
         $bShowCounterEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
+        $bRecalculateCounter = isset($aParams['recalculate_counter']) && $aParams['recalculate_counter'] == true;
 
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
         $iAuthorIp = $this->_getAuthorIp();
 
-        $iCount = $this->getCommentsCountAll();
+        $iCount = $this->getCommentsCountAll(0, $bRecalculateCounter);
         $bCount = (int)$iCount != 0;
 
         $isAllowedComment = $this->isPostAllowed();
@@ -731,11 +733,12 @@ class BxBaseCmts extends BxDolCmts
     {
         $aParams = array_merge($this->_aElementDefaults, $aParams);
 
-        $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
         $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
         $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
+        $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
+        $bRecalculateCounter = isset($aParams['recalculate_counter']) && $aParams['recalculate_counter'] == true;
 
-        $iCount = (int)$this->getCommentsCountAll();
+        $iCount = (int)$this->getCommentsCountAll(0, $bRecalculateCounter);
         if($iCount == 0 && !$bShowEmpty)
             return '';
 

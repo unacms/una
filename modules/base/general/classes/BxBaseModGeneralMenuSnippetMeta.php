@@ -157,7 +157,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         if(!$oComments || !$oComments->isEnabled())
             return false;
 
-        return $this->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $this->_aContentInfo[$CNF['FIELD_COMMENTS']]), array(
+        return $this->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $oComments->getCommentsCountAll(0, true)), array(
             'href' => $oComments->getListUrl()
         ));
     }

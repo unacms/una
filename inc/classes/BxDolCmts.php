@@ -746,7 +746,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function getCommentsCountAll ($iObjectId = 0, $bForceCalculate = false)
     {
-        return $this->_oQuery->getCommentsCountAll ($iObjectId ? $iObjectId : $this->getId(), $bForceCalculate);
+        return $this->_oQuery->getCommentsCountAll ($iObjectId ? $iObjectId : $this->getId(), $this->_getAuthorId(), $bForceCalculate);
     }
 
     public function getCommentsCount ($iObjectId = 0, $iCmtVParentId = -1, $sFilter = '')
