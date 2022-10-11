@@ -217,7 +217,7 @@ class BxBaseCmts extends BxDolCmts
 
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
         if(empty($aCmts) || !is_array($aCmts)) {
-            if((int)$aBp['parent_id'] == 0 && !isLogged()) {
+            if((int)$aBp['parent_id'] == 0 && !$this->isPostAllowed()) {
                 $oPermalink = BxDolPermalinks::getInstance();
                 return MsgBox(_t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account')));
             }
@@ -726,7 +726,7 @@ class BxBaseCmts extends BxDolCmts
     private function _isShowContent($aCmt)
     {
         $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
-        return ($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR]);
+        return (int)$aCmt['cmt_author_id'] == 0 || ($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR]);
     }
     
     public function getCounter($aParams = [])

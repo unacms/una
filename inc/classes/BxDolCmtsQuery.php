@@ -391,11 +391,11 @@ class BxDolCmtsQuery extends BxDolDb
                     break;
             }
         }
-        
+
        	$sLimit = $iCount != -1 ? $this->prepareAsString(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sWhereClause = $sWhereStatus . $sWhereParent . $sWhereFilter . $sWhereCf;
-           
+
         $sQuery = "SELECT
                 `{$this->_sTable}`.*,
                 `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
@@ -403,9 +403,9 @@ class BxDolCmtsQuery extends BxDolDb
                 $sFields
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id) 
-            INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `{$this->_sTable}`.`cmt_author_id` AND (`p`.`status` = 'active' OR `{$this->_sTable}`.`cmt_replies` != 0))";
-           
-        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array(
+            LEFT JOIN `sys_profiles` AS `p` ON `p`.`id` = `{$this->_sTable}`.`cmt_author_id`";
+
+        bx_alert('comment', 'get_comments', 0, $iAuthorId, array(
             'system' => $this->_oMain->getSystemInfo(), 
             'select_clause' => &$sQuery, 
             'join_clause' => &$sJoin, 
@@ -415,8 +415,8 @@ class BxDolCmtsQuery extends BxDolDb
             'params' => &$aBindings
         ));
 
-        $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause . $sOrder . $sLimit;
-        
+        $sQuery = $sQuery . $sJoin . " WHERE `{$this->_sTable}`.`cmt_object_id`=:cmt_object_id AND (ISNULL(`p`.`status`) OR `p`.`status`='active' OR `{$this->_sTable}`.`cmt_replies`!=0)" . $sWhereClause . $sOrder . $sLimit;
+
         return $this->getAll($sQuery, $aBindings);
     }
 

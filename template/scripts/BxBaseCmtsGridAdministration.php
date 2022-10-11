@@ -126,31 +126,33 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
     
     protected function _getCellCmtAuthorId($mixedValue, $sKey, $aField, $aRow)
     {
-    	$oProfile = BxDolProfile::getInstance($aRow['cmt_author_id']);
-    	$sProfile = $oProfile->getDisplayName();
+        if((int)$aRow['cmt_author_id'] != 0)
+            $oProfile = BxDolProfile::getInstance($aRow['cmt_author_id']);
+        else
+            $oProfile = BxDolProfileUndefined::getInstance();
 
-        $oAcl = BxDolAcl::getInstance();
+        $sProfile = $oProfile->getDisplayName();
 
     	$sAccountEmail = '';
     	$sManageAccountUrl = '';
-    	if($oProfile && $oProfile instanceof BxDolProfile && $oAcl->isMemberLevelInSet(128)) {
+    	if($oProfile && $oProfile instanceof BxDolProfile && BxDolAcl::getInstance()->isMemberLevelInSet(128)) {
             $sAccountEmail = $oProfile->getAccountObject()->getEmail();
             $sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
     	}
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('author_link.html', array(
+        $mixedValue = $this->_oTemplate->parseHtmlByName('author_link.html', [
             'href' => $oProfile->getUrl(),
-            'title' => $sProfile,
+            'title' => bx_html_attribute($sProfile),
             'content' => $sProfile,
-        	'bx_if:show_account' => array(
+        	'bx_if:show_account' => [
                     'condition' => !empty($sManageAccountUrl), 
-                    'content' => array(
+                    'content' => [
                         'href' => $sManageAccountUrl,
                         'title' => _t('_sys_grid_txt_account_manager'),
                         'content' => $sAccountEmail
-                    )
-        	)
-        ));
+                    ]
+        	]
+        ]);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
