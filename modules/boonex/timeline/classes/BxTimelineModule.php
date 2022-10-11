@@ -3953,10 +3953,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedComments === false)
             return false;
 
-        list($sSystem, $iObjectId) = $mixedComments;
+        list($sSystem, $iObjectId, $iCount) = $mixedComments;
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
-        
-        if($oCmts->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
+
+        if($oCmts->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED || ($iCount == 0 && !$oCmts->isPostAllowed()))
             return false;
 
         $oCmts->addCssJs();
@@ -4245,6 +4245,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    /**
+     * Checks if it's allowed to view a comment by checking the availability to view the content which was commented. 
+     * Note. Don't check the related comments object for view action accessibility because this method is called from there.
+     */
     public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
     {
         $CNF = $this->_oConfig->CNF;
@@ -4264,16 +4268,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->checkAllowedView($aContentInfo, $isPerformAction);
     }
 
+    /**
+     * Checks if it's allowed to post a comment by checking the availability to post anything in the content. 
+     * Note. Don't check the related comments object for post action accessibility because this method is called from there.
+     */
     public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
     {
-        $sError = '_sys_txt_access_denied';
+        $CNF = $this->_oConfig->CNF;
 
-        $aContentInfo = array_merge($aContentInfo, $this->_oTemplate->getDataCached($aContentInfo));
-        if($aContentInfo === false)
-            return _t($sError);
+        $iOwner = (int)$aContentInfo[$CNF['FIELD_OWNER_ID']];
+        if($iOwner == 0) //--- in case of Public Timeline.
+            return CHECK_ACTION_RESULT_ALLOWED;
 
-        if(!$this->isAllowedComment($aContentInfo, $isPerformAction))
-            return _t($sError);
+        $oOwner = BxDolProfile::getInstance($iOwner);
+        if(!$oOwner) //--- in case of non-existed Timeline owner.
+            return _t('_sys_txt_access_denied');
+
+        if(($mixedResult = $oOwner->checkAllowedPostInProfile()) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
@@ -4307,7 +4319,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $CNF = &$this->_oConfig->CNF;
 
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
-
         if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
             //--- Request event's data from content module and update it in the Timeline DB.
             $this->_oTemplate->getDataCached($aEvent);
@@ -4664,10 +4675,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sSystem = isset($aComments['system']) ? $aComments['system'] : '';
         $iObjectId = isset($aComments['object_id']) ? (int)$aComments['object_id'] : 0;
         $iCount = isset($aComments['count']) ? (int)$aComments['count'] : 0;
-        if($sSystem == '' || $iObjectId == 0 || ($iCount == 0 && !isLogged()))
+        if($sSystem == '' || $iObjectId == 0)
             return false;
 
-        return array($sSystem, $iObjectId, $iCount);
+        return [$sSystem, $iObjectId, $iCount];
     }
 
     public function getEventLinks($iEventId)

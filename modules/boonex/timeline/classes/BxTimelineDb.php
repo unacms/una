@@ -622,8 +622,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sSqlMask = "SELECT {select}
             FROM `{$this->_sTable}`
-            INNER JOIN `sys_profiles` ON `{$this->_sTable}`.`object_owner_id`=`sys_profiles`.`id` AND `sys_profiles`.`status`='active' LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` {$sJoinClauseAddon} {join}
-            WHERE 1 {where} {order} {limit}";
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` 
+            LEFT JOIN `sys_profiles` ON `{$this->_sTable}`.`object_owner_id`=`sys_profiles`.`id` {$sJoinClauseAddon} {join}
+            WHERE 1 AND (ISNULL(`sys_profiles`.`status`) OR `sys_profiles`.`status`='active') {where} {order} {limit}";
 
         if(is_string($mixedWhereClause)) {
             $aSqlMarkers = array(

@@ -596,21 +596,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getItemBlockComments($iId) {
-        $CNF = &$this->_oConfig->CNF;
-
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+    public function getItemBlockComments($iId)
+    {
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
         if(empty($aEvent))
             return '';
 
-        $aResult = $this->getDataCached($aEvent);
-        if($aResult === false)
+        $aEventData = $this->getDataCached($aEvent);
+        if($aEventData === false)
             return '';
 
-        return $this->parseHtmlByName('block_item_comments.html', array(
+        if(!$this->getModule()->isAllowedComment(array_merge($aEvent, $aEventData)))
+            return '';
+
+        return $this->parseHtmlByName('block_item_comments.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'content' => $this->_getComments($aResult['comments'])
-        ));
+            'content' => $this->_getComments($aEventData['comments'])
+        ]);
                 
     }
 
