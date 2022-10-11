@@ -232,7 +232,7 @@ class BxBaseServiceLogin extends BxDol
             if ($ret === null) 
             {
                 $oTwilio = BxDolTwilio::getInstance();
-                if(!$oTwilio->sendSms($sPhoneNumber,  $sActivationText)){
+                if(!$oTwilio->sendSms($sNewPhoneNumber, $sActivationText)){
                     return MsgBox(_t('_sys_txt_login_2fa_sms_error_occured'));
                 }
             }
@@ -251,6 +251,7 @@ class BxBaseServiceLogin extends BxDol
         }
         
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login_step3');
+        $oForm->aInputs['back']['caption'] = _t( $oForm->aInputs['back']['caption_src'], BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2'));
         $oForm->aFormAttrs['action'] = '';
         $oForm->initChecker();
         
