@@ -2226,6 +2226,11 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
 {
     $aUrl = 'auto' === $sPath || 'auto' === $bSecure ? parse_url(BX_DOL_URL_ROOT) : [];
 
+    if (defined('BX_MULTISITE_URL_COOKIE')) {
+        $aUrl = parse_url(BX_MULTISITE_URL_COOKIE);
+        $sDomain = $aUrl['host'];
+    }
+
     if ('auto' === $sPath)
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 

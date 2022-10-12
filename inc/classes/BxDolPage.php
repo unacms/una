@@ -242,6 +242,73 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return true;
     }
 
+    static public function multisiteLinkCheck ($sLink, $sPageUri = '', $sPageModule = '', $aQueryParams = [])
+    {
+        $sMultisiteDomain = self::getMultisite($sLink, $sPageUri, $sPageModule, $aQueryParams);
+        if ($sMultisiteDomain) {
+            if (parse_url($sMultisiteDomain, PHP_URL_HOST) !== $_SERVER['HTTP_HOST'])
+                return $sMultisiteDomain . $sLink;
+        }
+
+        if (!$sMultisiteDomain && parse_url(BX_MULTISITE_URL_MAIN, PHP_URL_HOST) !== $_SERVER['HTTP_HOST']) {
+            return BX_MULTISITE_URL_MAIN . $sLink;
+        }
+
+        return false;
+
+    }
+
+	/**
+     * Get multisite link
+     * @param $sLink link to check
+     * @return return multisite link if provided link is multisite, or false is other case
+     */
+    static public function getMultisite ($sLink, $sPageUri = '', $sPageModule = '', $aQueryParams = [])
+    {
+        $sMultisiteDomain = '';
+        if (!$sPageModule || !$aQueryParams) {
+
+            $sQuery = parse_url($sLink, PHP_URL_QUERY);
+            if ($sQuery) {
+
+                $aQueryParams = bx_parse_str($sQuery);
+                $sPageUri = !empty($aQueryParams['i']) ? $aQueryParams['i'] : false;
+                if ($sPageUri) {
+                    $sPageName = BxDolPageQuery::getPageObjectNameByURI($sPageUri);
+                    $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
+                    $sPageModule = $aPage ? $aPage['module'] : '';
+                }
+            }
+        }
+
+        $sMultisiteDomain = '';
+        if (!empty($aQueryParams['profile_id'])) {
+            $oProfile = BxDolProfile::getInstance($aQueryParams['profile_id']);
+            if (BX_MULTISITE_MODULE == $oProfile->getModule())
+                $sMultisiteDomain = $oProfile->getDisplayName();
+        }
+        elseif (!empty($aQueryParams['id']) && $sPageModule) {
+            $sContentInfo = !empty($aPage['content_info']) ? $aPage['content_info'] : $sPageModule;
+            $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfo);
+            if ($oContentInfo && BX_MULTISITE_MODULE == $sPageModule) {
+                $sMultisiteDomain = $oContentInfo->getContentTitle($aQueryParams['id']);
+            }
+            elseif ($oContentInfo && BX_MULTISITE_MODULE != $sPageModule) {
+                $iPrivacy = $oContentInfo->getContentPrivacy($aQueryParams['id']);
+                if (0 > $iPrivacy) {
+                    $oProfile = BxDolProfile::getInstance(abs($iPrivacy));
+                    if (BX_MULTISITE_MODULE == $oProfile->getModule())
+                        $sMultisiteDomain = $oProfile->getDisplayName();
+                }
+            }
+        }
+
+        if ($sMultisiteDomain)
+            return str_replace('{domain}', mb_strtolower($sMultisiteDomain), BX_MULTISITE_URL_PATTERN);
+
+        return false;
+    }
+
 	/**
      * Delete SEO link
      * @param $sModule module name
@@ -327,6 +394,21 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $_GET[$r['param_name']] = $_REQUEST[$r['param_name']] = $r['param_value'];
         }
 
+        // multisite redirect
+        if (defined('BX_MULTISITE_MODULE')) {
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+            unset($aPageParams['_q']);
+            $sLink = bx_append_url_params($sPageLink, $aPageParams);
+            if (0 === strpos($sLink, BX_DOL_URL_ROOT))
+                $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
+
+            $s = BxDolPage::multisiteLinkCheck ('', $a[0], $aPage['module'], $_GET);
+            if (false !== $s) {
+                header('Location:' . $s . $sLink, true, 301);
+                exit;
+            }
+        }
+
         // display page
         $_REQUEST['i'] = $_GET['i'] = $a[0];
         $oPage = BxDolPage::getObjectInstanceByURI($a[0], false, true);
@@ -365,6 +447,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (!$sPageUri) // page URI wasn't found
             return false;
 
+        $sPageModule = '';
         $aSeoParams = array('id', 'profile_id'); // supported SEO params which are transformed to SEO strings
         $sSeoParamName = '';
         $sSeoParamValue = '';
@@ -390,7 +473,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $sPageName = BxDolPageQuery::getPageObjectNameByURI($sPageUri);
             $aPage = $sPageName ? BxDolPageQuery::getPageObject($sPageName) : false;
             if ($aPage) {
-                $sModule = $aPage['module'];
+                $sPageModule = $aPage['module'];
                 $sContentInfo = !empty($aPage['content_info']) ? $aPage['content_info'] : $aPage['module'];
                 if ('id' == $sSeoParamName) {
                     $oContentInfo = BxDolContentInfo::getObjectInstance($sContentInfo);
@@ -403,13 +486,13 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                     $sSeoTitle = $oProfile ? $oProfile->getDisplayName() : self::getSeoHash($sSeoParamValue);
                 }
                 
-                $r = BxDolPageQuery::getSeoLink($sModule, $sPageUri, ['param_value' => $sSeoParamValue]);
+                $r = BxDolPageQuery::getSeoLink($sPageModule, $sPageUri, ['param_value' => $sSeoParamValue]);
                 if (!$r) {
                     $sSeoTitleLimited = BxTemplFunctions::getInstance()->getStringWithLimitedLength($sSeoTitle, 45);
-                    $sUri = uriGenerate ($sSeoTitleLimited, 'sys_seo_links', 'uri', ['cond' => ['module' => $sModule, 'page_uri' => $sPageUri]]);
+                    $sUri = uriGenerate ($sSeoTitleLimited, 'sys_seo_links', 'uri', ['cond' => ['module' => $sPageModule, 'page_uri' => $sPageUri]]);
 
                     bx_alert('system', 'uri-generate', 0, false, [
-                        'module' => $sModule,
+                        'module' => $sPageModule,
                         'page_uri' =>$sPageUri,
                         'param_name' => $sSeoParamName,
                         'param_value' => $sSeoParamValue,
@@ -417,7 +500,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                         'uri' => &$sUri,
                     ]);
 
-                    BxDolPageQuery::insertSeoLink($sModule, $sPageUri, $sSeoParamName, $sSeoParamValue, $sUri);
+                    BxDolPageQuery::insertSeoLink($sPageModule, $sPageUri, $sSeoParamName, $sSeoParamValue, $sUri);
                 }
                 elseif ($r['param_name'] == $sSeoParamName) {
                     $sUri = $r['uri'];
@@ -436,7 +519,14 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (!$sSeoPageUri)
             return false;
 
-        return $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams), false);
+        $sLink = $sPrefix . bx_append_url_params($sSeoPageUri, array_merge($aQueryParams, $aParams), false);
+        if (defined('BX_MULTISITE_MODULE')) {
+
+            $s = BxDolPage::multisiteLinkCheck ($sLink, $sPageUri, $sPageModule, [$sSeoParamName => $sSeoParamValue]);
+            if (false !== $s) 
+                return $s;
+        }
+        return $sLink;
     }
 
 	/**
@@ -495,6 +585,14 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $sLink = bx_append_url_params($sPageLink, $aPageParams);
         if (0 === strpos($sLink, BX_DOL_URL_ROOT))
             $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
+
+        if (defined('BX_MULTISITE_MODULE')) {
+            $s = BxDolPage::multisiteLinkCheck ($sLink);
+            if (false !== $s) {
+                header('Location:' . $s, true, 301);
+                exit;
+            }
+        }
 
         if ($sSeoLink = self::transformSeoLink ($sLink, BX_DOL_URL_ROOT)) {
             header("Location:{$sSeoLink}", true, 301);
@@ -589,7 +687,18 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     public function getType ()
     {
-    	return (int)$this->_aObject['type_id'];
+        if (defined('BX_MULTISITE_FORCE_PAGETYPE') && defined('BX_MULTISITE_MODULE')) {
+
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+            $sLink = bx_append_url_params($sPageLink, $aPageParams);
+            if (0 === strpos($sLink, BX_DOL_URL_ROOT))
+                $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
+
+            if (BxDolPage::getMultisite ($sLink))
+                return BX_MULTISITE_FORCE_PAGETYPE;
+        }
+
+        return (int)$this->_aObject['type_id'];
     }
 
     public function getModule ()
