@@ -114,7 +114,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
                 $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
                 $iCount = $oConnection->getConnectedContentCount($oProfile->id(), true);
                 return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
-                    'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $oProfile->id()),
+                    'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $oProfile->id())),
                     'title' => '',
                     'content' => $iCount
                 ));
@@ -131,7 +131,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
                 $oConnectionFollow = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
                 $iCount = $oConnectionFollow->getConnectedInitiatorsCount($oProfile->id());
                 return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
-                    'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_SUBSCRIPTIONS'] . '&profile_id=' . $oProfile->id()),
+                    'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_SUBSCRIPTIONS'] . '&profile_id=' . $oProfile->id())),
                     'title' => '',
                     'content' => $iCount
                 ));
@@ -157,9 +157,9 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 			return $sValue;
 
         return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
-            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION'], array(
+            'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION'], array(
             	'filter' => urlencode($sValue)
-            )),
+            ))),
             'title' => '',
             'content' => $sValue
         ));
@@ -176,9 +176,9 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             return $sStatus;
 
         return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
-            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_ADMINISTRATION'], array(
+            'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_ADMINISTRATION'], array(
             	'filter' => urlencode($this->aInputs[$CNF['FIELD_TITLE']]['value'])
-            )),
+            ))),
             'title' => '',
             'content' => $sStatus
         ));

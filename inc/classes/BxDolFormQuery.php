@@ -87,7 +87,7 @@ class BxDolFormQuery extends BxDolDb
 
         // form action
         if (!empty($aForm['form_attrs']['action']) && 0 !== strncasecmp($aForm['form_attrs']['action'], 'http://', 7) && 0 !== strncasecmp($aForm['form_attrs']['action'], 'https://', 8))
-            $aForm['form_attrs']['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($aForm['form_attrs']['action']);
+            $aForm['form_attrs']['action'] = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($aForm['form_attrs']['action']));
 
         // params
         if (!empty($aObject['params']))

@@ -58,7 +58,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $aTmplVarsItems = array_reverse($aTmplVarsItems);
         
         $aTmplVarsItems[] = array(
-            'url' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'url' => bx_absolute_url($oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']])),
             'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
         );
 
@@ -70,7 +70,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $sResult = $this->_categoriesList(0, array(
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array('category' => ''))
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array('category' => '')))
         ));
 
         if(empty($sResult) && isset($aParams['show_empty']) && $aParams['show_empty'] === true)
@@ -84,9 +84,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $CNF = &$this->_oConfig->CNF;
 
         return $this->getLink('entry-link', array(
-            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array(
+            'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array(
                 'id' => $aEntry[$CNF['FIELD_ID']]
-            )),
+            ))),
             'title' => bx_html_attribute($aEntry[$CNF['FIELD_TITLE']]),
             'content' => $aEntry[$CNF['FIELD_TITLE']]
         ));
@@ -155,7 +155,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
             return;
 
         $aTmplVarsItems[] = array(
-            'url' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $aCategory['id'])),
+            'url' => bx_absolute_url($oPermalink->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $aCategory['id']))),
             'title' => bx_process_output(_t($aCategory['title']))
         );
 

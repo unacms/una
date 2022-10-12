@@ -139,7 +139,7 @@ class BxDolStorageLocal extends BxDolStorage
     protected function getObjectBaseUrl ($isPrivate = false)
     {
         $o = BxDolPermalinks::getInstance();
-        return BX_DOL_URL_ROOT . $o->permalink('storage.php?o=') . $this->_aObject['object'] . ($o->_isEnabled('storage.php?o=') ? '/' : '&f=');
+        return bx_absolute_url($o->permalink('storage.php?o=') . $this->_aObject['object'] . ($o->_isEnabled('storage.php?o=') ? '/' : '&f='));
     }
 
     protected function mkdir($sDirName, $sRights = false)

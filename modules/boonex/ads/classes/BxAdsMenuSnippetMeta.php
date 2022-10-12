@@ -21,7 +21,7 @@ class BxAdsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_sCategoryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => ''));
+        $this->_sCategoryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => '')));
     }
 
     protected function _getMenuItemCategory($aItem)

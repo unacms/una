@@ -85,10 +85,10 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
 
             $sKey = BxDolKey::getInstance()->getNewKey(false, $CNF["INVITES_KEYS_LIFETIME"]);
             $this->_oModule->_oDb->insertInvite($sKey, $oAlert->iSender, $iInviter, $iInvited);
-            $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], [
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], [
                 'id' => $oAlert->iObject,
                 'key' => $sKey
-            ]);
+            ]));
         }
 
         sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iInvited, array(

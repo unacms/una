@@ -400,7 +400,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $sEntryTitle = $aContentInfo[$CNF['FIELD_NAME']];
-        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
 
         // send invitation to the group 
         $sModule = $this->getName();

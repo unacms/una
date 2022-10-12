@@ -93,7 +93,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
             return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? _t('_sys_form_account_input_email_uniq_error_loggedin') : true;
         }
 
-        return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? _t('_sys_form_account_input_email_uniq_error', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')) : true;
+        return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? _t('_sys_form_account_input_email_uniq_error', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))) : true;
     }
 }
 
@@ -204,7 +204,7 @@ class BxBaseFormAccount extends BxTemplFormView
 	protected function genCustomInputAgreement ($aInput)
     {
     	$oPermalink = BxDolPermalinks::getInstance();
-        return '<div>' . _t('_sys_form_account_input_agreement_value', BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=terms'), BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=privacy')) . '</div>';
+        return '<div>' . _t('_sys_form_account_input_agreement_value', bx_absolute_url($oPermalink->permalink('page.php?i=terms')), bx_absolute_url($oPermalink->permalink('page.php?i=privacy'))) . '</div>';
     }
     
     protected function _setCustomError ($s)

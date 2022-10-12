@@ -171,7 +171,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 		if(strncmp($this->CNF[$sType], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) === 0)
 			$sResult = bx_append_url_params($this->CNF[$sType], $aParams);
 		else
-			$sResult = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF[$sType], $aParams);
+			$sResult = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->CNF[$sType], $aParams));
 
     	return $bSsl ? $this->http2https($sResult) : $sResult;
     }

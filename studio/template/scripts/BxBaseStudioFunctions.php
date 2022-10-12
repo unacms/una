@@ -44,7 +44,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
             'csrf_token' => BxDolForm::getCsrfToken(),
             'relocate_url' => bx_html_attribute($sUrlRelocate),
             'action_url' => BX_DOL_URL_ROOT . 'member.php',
-            'forgot_password_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'),
+            'forgot_password_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')),
         ));
         $sHtml = $oTemplate->parseHtmlByName('login.html', array (
             'form' => $this->transBox('bx-std-login-form-box', $sHtml, true),

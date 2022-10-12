@@ -436,7 +436,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileEditUrl ($iContentId)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_EDIT_ENTRY'] . '&id=' . $iContentId);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_EDIT_ENTRY'] . '&id=' . $iContentId));
     }
 
     public function serviceProfileThumb ($iContentId)
@@ -469,7 +469,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     	if(empty($CNF['URL_CREATE']))
     		return false;
 
-    	return $bAbsolute ? BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CREATE']) : $CNF['URL_CREATE'];
+    	return $bAbsolute ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_CREATE'])) : $CNF['URL_CREATE'];
     }
 
     /**
@@ -496,7 +496,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if (!$aContentInfo)
             return false;
         $CNF = $this->_oConfig->CNF;
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
     }
 
     /**
@@ -1989,7 +1989,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'sample' => $sSample,
             'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
             'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']])),
             'content' => $this->_getContentForTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams, $aContentInfo, $aFileInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => '',
@@ -2020,7 +2020,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+    	$sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
 
     	//--- Image(s)
         $sImage = $this->_oConfig->getImageUrl($aFileInfo['id'], $aBuildParams['trans']);

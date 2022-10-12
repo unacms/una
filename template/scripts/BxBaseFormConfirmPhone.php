@@ -39,7 +39,7 @@ class BxFormConfirmPhoneCheckerHelper extends BxDolFormCheckerHelper
         }
         
         $oSession = BxDolSession::getInstance();
-        return $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE) != $s ? _t('_sys_form_confirm_phone_input_code_error_invalid', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone') . '?step=1') : true;
+        return $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE) != $s ? _t('_sys_form_confirm_phone_input_code_error_invalid', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone')) . '?step=1') : true;
     }
 }
 

@@ -463,11 +463,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	if(empty($this->_aSystem['trigger_field_title']))
             return '';
 
-    	return ($bAbsolute ? BX_DOL_URL_ROOT : '') . BxDolPermalinks::getInstance()->permalink($this->_sViewUrl, [
+        $s = BxDolPermalinks::getInstance()->permalink($this->_sViewUrl, [
             'sys' => $this->_sSystem,
             'id' => $this->_iId,
             'cmt_id' => $iCmtId
         ]);
+
+    	return $bAbsolute ? bx_absolute_url($s) : $s;
     }
 
     public function getViewText($mixedItem)

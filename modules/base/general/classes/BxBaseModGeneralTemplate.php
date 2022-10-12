@@ -213,7 +213,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
     	return $this->parseHtmlByName('breadcrumb.html', array(
-    		'url_home' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
+    		'url_home' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME'])),
     		'icon_home' => $CNF['ICON'],
     		'bx_repeat:items' => $aTmplVarsItems
     	));

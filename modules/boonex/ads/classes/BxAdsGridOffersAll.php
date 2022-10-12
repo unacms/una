@@ -46,7 +46,7 @@ class BxAdsGridOffersAll extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_OFFERS'], array('id' => $aRow['content_id']));
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY_OFFERS'], array('id' => $aRow['content_id'])));
 
     	$a['attr'] = array_merge($a['attr'], array(
             "onclick" => "window.open('" . $sUrl . "','_self');"

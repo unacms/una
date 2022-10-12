@@ -89,7 +89,7 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
         if(empty($aMedia) || !is_array($aMedia))
             return '';
 
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $iContentId);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $iContentId));
     }
 
     public function getContentText ($iContentId)

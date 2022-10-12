@@ -166,7 +166,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if ($bRedirectCheck && !$sObject && '/' == substr($sURI, -1)) {
             header("HTTP/1.1 301 Moved Permanently");
             unset($_GET['i']);
-            header ('Location:' . bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . trim($sURI, '/')), $_GET));
+            header ('Location:' . bx_append_url_params(bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . trim($sURI, '/'))), $_GET));
             exit;
         }
 
@@ -814,7 +814,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     public static function redirectToLoginForm ()
     {
-        header("Location: " . bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login'), ['relocate' => bx_get_self_url()]));
+        header("Location: " . bx_append_url_params(bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=login')), ['relocate' => bx_get_self_url()]));
         exit;
     }
 }

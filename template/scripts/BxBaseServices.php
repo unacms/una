@@ -504,7 +504,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceProfileEditUrl ($iContentId)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-info');
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-info'));
     }
 
     public function serviceProfileThumb ($iContentId)
