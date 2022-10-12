@@ -84,8 +84,8 @@ class BxArtificerModule extends BxBaseModTemplateModule
 
             case 'login_agreement':
                 $oPermalink = BxDolPermalinks::getInstance();
-                $sLinkTerms = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=terms');
-                $sLinkPrivacy = BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=privacy');
+                $sLinkTerms = bx_absolute_url($oPermalink->permalink('page.php?i=terms'));
+                $sLinkPrivacy = bx_absolute_url($oPermalink->permalink('page.php?i=privacy'));
 
                 $sResult = _t('_bx_artificer_txt_splash_login_agreement', $sLinkTerms, $sLinkPrivacy);
                 break;

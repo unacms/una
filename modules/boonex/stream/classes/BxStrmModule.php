@@ -192,7 +192,7 @@ class BxStrmModule extends BxBaseModTextModule
 
         if ($this->getStreamEngine()->isSreamFromBrowser()) {
             $sUrl = 'page.php?i=broadcast-stream&id=' . (int)$iContentId;
-            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrl);
+            $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($sUrl));
             $aForm['inputs']['header_div'] = array (
                 'type' => 'custom',
                 'content' => _t('_bx_stream_manual_settings_or_stream_from_webcam'),

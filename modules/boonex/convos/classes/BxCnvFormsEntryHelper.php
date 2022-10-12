@@ -55,7 +55,7 @@ class BxCnvFormsEntryHelper extends BxBaseModTextFormsEntryHelper
                 'SenderDisplayName' => $oProfile->getDisplayName(),
                 'SenderUrl' => $oProfile->getUrl(),
                 'Message' => $aContentInfo[$CNF['FIELD_TEXT']],
-                'PageUrl' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+                'PageUrl' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']])),
                 'PageTitle' => strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 100),
             ), BX_EMAIL_NOTIFY);
         }

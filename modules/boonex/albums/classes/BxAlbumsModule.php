@@ -239,7 +239,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         return parent::serviceEntityAllActions (array($iMediaId, $aMediaInfo), array_merge(array(
             'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA_ALL'],
             'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG'],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId),
+            'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId)),
             'entry_title' => $aMediaInfo['title'],
             'entry_thumb' => $aMediaInfo['file_id']
         ), $aParams));
@@ -548,7 +548,7 @@ class BxAlbumsModule extends BxBaseModTextModule
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
             'sample_wo_article' => $CNF['T']['txt_sample_single'],
     	    'sample_action' => $CNF['T']['txt_sample_action_changed'],
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)),
             'content' => $this->_getContentForTimelineMedia($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
@@ -774,7 +774,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oUploader = BxDolUploader::getObjectInstance($CNF['OBJECT_UPLOADERS'][0], $CNF['OBJECT_STORAGE'], '');
         $oUploader->deleteGhost($aMediaInfo['file_id'], bx_get_logged_profile_id());
         
-        echoJson(['redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aMediaInfo['content_id'])]);
+        echoJson(['redirect' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aMediaInfo['content_id']))]);
     }
 
     public function actionMoveMedia($iMediaId)
@@ -978,7 +978,7 @@ class BxAlbumsModule extends BxBaseModTextModule
     {
     	$CNF = &$this->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
         $sTitle = isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : (isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : '');
 
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);

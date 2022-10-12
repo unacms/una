@@ -168,7 +168,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 $a[$k]['end'] = $oEnd ? $oEnd->format('c') : 0;
                 $a[$k]['start_utc'] = $oDateStart ? $oDateStart->getTimestamp() : 0;
                 $a[$k]['end_utc'] = $oDateEnd ? $oDateEnd->getTimestamp() : 0;
-                $a[$k]['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']);
+                $a[$k]['url'] = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']));
                 if(($oEvent = BxDolProfile::getInstanceByContentAndType($r['id'], $sModule)) !== false)
                     $a[$k]['extendedProps'] = [
                         'class' => 'bx-events-calendar-unit',

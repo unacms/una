@@ -43,7 +43,7 @@ class BxHelpToursGridTours extends BxTemplGrid
         if (!$sUrl) return '';
         $sUrl = trim($sUrl, '/');
 
-        $a['attr']['href'] = BX_DOL_URL_ROOT.bx_append_url_params(BxDolPermalinks::getInstance()->permalink($sUrl), ['help_tour_preview' => $aRow['id']]);
+        $a['attr']['href'] = bx_absolute_url(bx_append_url_params(BxDolPermalinks::getInstance()->permalink($sUrl), ['help_tour_preview' => $aRow['id']]));
         $a['attr']['target'] = '_blank';
 
         $sButton = $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);

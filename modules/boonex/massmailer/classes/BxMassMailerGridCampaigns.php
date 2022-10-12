@@ -152,7 +152,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_CAMPAIGN']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_CAMPAIGN']));
 
         unset($a['attr']['bx_grid_action_independent']);
         $a['attr'] = array_merge($a['attr'], array(
@@ -169,7 +169,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_CAMPAIGN'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_CAMPAIGN'] . '&id=' . $aRow[$CNF['FIELD_ID']]));
 
         $a['attr'] = array_merge($a['attr'], array(
             "onclick" => "window.open('" . $sUrl . "','_self');"
@@ -185,7 +185,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         
         $CNF = &$this->_oModule->_oConfig->CNF;
         
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_CAMPAIGN'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_CAMPAIGN'] . '&id=' . $aRow[$CNF['FIELD_ID']]));
 
         unset($a['attr']['bx_grid_action_independent']);
         $a['attr'] = array_merge($a['attr'], array(

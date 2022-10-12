@@ -129,8 +129,8 @@ class BxDonationsModule extends BxBaseModGeneralModule
         $oPermalink = BxDolPermalinks::getInstance();
 
         $aResult = $this->_aModule;
-        $aResult['url_browse_order_common'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LIST'], array('filter' => '{order}'));
-        $aResult['url_browse_order_administration'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LIST_ALL'], array('filter' => '{order}'));
+        $aResult['url_browse_order_common'] = bx_absolute_url($oPermalink->permalink($CNF['URL_LIST'], array('filter' => '{order}')));
+        $aResult['url_browse_order_administration'] = bx_absolute_url($oPermalink->permalink($CNF['URL_LIST_ALL'], array('filter' => '{order}')));
 
         return $aResult;
     }
@@ -156,7 +156,7 @@ class BxDonationsModule extends BxBaseModGeneralModule
             'name' => $aItem[$CNF['FIELD_NAME']],
             'title' => _t($this->_oConfig->isShowTitle() && !empty($aItem[$CNF['FIELD_TITLE']]) ? $aItem[$CNF['FIELD_TITLE']] : '_bx_donations_txt_cart_item_title'),
             'description' => _t('_bx_donations_txt_cart_item_description', getParam('site_title')),
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MAKE']),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_MAKE'])),
             'price_single' => $aItem[$CNF['FIELD_AMOUNT']],
             'price_recurring' => $aItem[$CNF['FIELD_AMOUNT']],
             'period_recurring' => $aItem[$CNF['FIELD_PERIOD']],
@@ -187,7 +187,7 @@ class BxDonationsModule extends BxBaseModGeneralModule
                 'name' => $aItem[$CNF['FIELD_NAME']],
                 'title' => _t($bShowTitle && !empty($aItem[$CNF['FIELD_TITLE']]) ? $aItem[$CNF['FIELD_TITLE']] : '_bx_donations_txt_cart_item_title'),
                 'description' => _t('_bx_donations_txt_cart_item_description', getParam('site_title')),
-                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MAKE']),
+                'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_MAKE'])),
                 'price_single' => $aItem[$CNF['FIELD_AMOUNT']],
                 'price_recurring' => $aItem[$CNF['FIELD_AMOUNT']],
                 'period_recurring' => $aItem[$CNF['FIELD_PERIOD']],

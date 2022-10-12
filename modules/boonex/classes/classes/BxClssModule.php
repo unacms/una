@@ -405,7 +405,7 @@ class BxClssModule extends BxBaseModTextModule
                 'condition' => $bAdmin,
                 'content' => array(
                     'context_profile_id' => $iContextProfileId,
-                    'new_class_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-class&profile_id=' . $oContextProfile->id()),
+                    'new_class_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=create-class&profile_id=' . $oContextProfile->id())),
                 ),
             ),
         ));

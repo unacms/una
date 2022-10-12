@@ -159,7 +159,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
 
         $aVars = array(
-            'see_all_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($oModule->_oConfig->CNF['URL_HOME']),
+            'see_all_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($oModule->_oConfig->CNF['URL_HOME'])),
             'bx_repeat:messages' => array(),
         );
         foreach ($a as $r) {
@@ -177,7 +177,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
 
             $aVars['bx_repeat:messages'][] = array (
                 'id' => $r['id'],
-                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']),
+                'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id'])),
                 'text' => $sText ? $sText : $oProfileAuthor->getDisplayName(),
                 'cmt_text' => $sTextCmt,
                 'unread_messages' => $r['unread_messages'],
@@ -216,7 +216,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             $r['unread_messages'] = $r['comments'] - $r['read_comments'];
 
         $aVars = array (
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id'])),
             'text' => $sText ? $sText : _t('_Empty'),
             'cmt_text' => $sTextCmt,
             'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
@@ -248,10 +248,10 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         $iFolder = $this->_oDb->getConversationFolder($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id());
 
     	$aTmplVarsItems = array(array(
-        	'url' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_FOLDER'] . $iFolder),
+        	'url' => bx_absolute_url($oPermalink->permalink($CNF['URL_FOLDER'] . $iFolder)),
         	'title' => _t($CNF['T']['txt_folder_' . $iFolder])
         ), array(
-        	'url' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+        	'url' => bx_absolute_url($oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']])),
         	'title' => $sText ? $sText : $oAuthor->getDisplayName(),
         ));
 

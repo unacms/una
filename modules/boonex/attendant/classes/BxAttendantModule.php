@@ -41,7 +41,7 @@ class BxAttendantModule extends BxDolModule
        
         if ($sFirstPage){
             if (getParam('bx_attendant_redirect_to_entered_page') == 'on'){
-                echo json_encode(['redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sFirstPage)]);  
+                echo json_encode(['redirect' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($sFirstPage))]);
                 exit();
             }
             else{

@@ -549,7 +549,7 @@ class BxCnlModule extends BxBaseModGroupsModule
             if (isset($aContentInfo[$CNF['FIELD_NAME']]))
                 array_push($aVars, array(
                     'title' => $aContentInfo[$CNF['FIELD_NAME']],
-                    'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId),
+                    'link' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)),
                     'followers' => $oConnection -> getConnectedInitiatorsCount($iProfileId),
                     'id' => $iProfileId,
                     'icon' => $oProfile -> getThumb()

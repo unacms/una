@@ -555,7 +555,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         foreach ($aParticipants as $iProfileId) {
 
             $b = sendMailTemplate($CNF['EMAIL_REMINDER'], 0, $iProfileId, array(
-                'EntryUrl' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+                'EntryUrl' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']])),
                 'EntryTitle' => $aContentInfo['title'],
                 'EntryBegin' => $sEntryBegin,
                 'EntryBeginShort' => $sEntryBeginShort,

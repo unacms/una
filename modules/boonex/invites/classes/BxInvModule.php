@@ -551,7 +551,7 @@ class BxInvModule extends BxDolModule
     {
         $sKeyCode = $this->_oConfig->getKeyCode();
 
-        $sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+        $sJoinUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'));
         return bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey));
     }
     

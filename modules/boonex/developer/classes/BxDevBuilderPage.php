@@ -459,7 +459,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
 
         return array(
             'js_object' => $sJsObject,
-            'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
+            'url_view' => bx_absolute_url($oPermalinks->permalink($this->aPageRebuild['url'])),
             'action_page_export' => $this->sActionPageExport,
             'action_page_edit' => $this->sActionPageEdit,
             'action_block_create' => $this->sActionBlockCreate,
