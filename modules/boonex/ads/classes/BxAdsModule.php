@@ -1436,7 +1436,15 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if($aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_isModerator())
+        $iViewer = bx_get_logged_profile_id();
+        $bModerator = $this->_isModerator();
+
+        $mixedResult = null;
+        bx_alert($this->getName(), 'is_entry_active', 0, 0, ['viewer_id' => $iViewer, 'is_moderator' => $bModerator, 'content_info' => $aContentInfo, 'override_result' => &$mixedResult]);
+        if($mixedResult !== null)
+            return $mixedResult;
+
+        if($aContentInfo[$CNF['FIELD_AUTHOR']] == $iViewer || $bModerator)
             return true;
 
         if(isset($CNF['FIELD_STATUS']) && !in_array($aContentInfo[$CNF['FIELD_STATUS']], array(BX_BASE_MOD_TEXT_STATUS_ACTIVE, BX_ADS_STATUS_OFFER, BX_ADS_STATUS_SOLD)))
