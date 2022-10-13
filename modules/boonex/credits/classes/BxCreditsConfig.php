@@ -228,12 +228,12 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
 
     public function getCheckoutUrl()
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_CHECKOUT']);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->CNF['URL_CHECKOUT']));
     }
 
     public function getBundleUrl($aBundle)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']));
     }
 
     public function getBundleName($sName)

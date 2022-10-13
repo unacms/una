@@ -425,7 +425,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $oSubmenuSystem->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU'], array (
             'title' => _t('_bx_ntfs'),
-            'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
+            'link' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME'])),
             'icon' => '',
         ));
 

@@ -462,7 +462,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($_SERVER['HTTP_REFERER']) && mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT) === 0)
             $sReferrer = $_SERVER['HTTP_REFERER'];
         else 
-            $sReferrer = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_HOME']);
+            $sReferrer = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_HOME']));
 
         $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
         return array('content' => $this->parseHtmlByName('block_item.html', array(

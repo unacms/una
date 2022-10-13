@@ -158,7 +158,7 @@ class BxStrmGridRecordings extends BxTemplGrid
             return false;
         }
 
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_ADD_ENTRY']);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_ADD_ENTRY']));
     }
 
     protected function _actionWithStorage($iFileId)

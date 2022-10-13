@@ -253,7 +253,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function getRssUnitLink (&$a)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']));
     }
 
     protected function _updateCurrentForOrderByGhosts()

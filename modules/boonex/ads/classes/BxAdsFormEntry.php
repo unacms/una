@@ -181,7 +181,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         if(empty($aCategory) || !is_array($aCategory))
             return '';
 
-        $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $aCategory['id']));
+        $sLink = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $aCategory['id'])));
         return $this->_oModule->_oTemplate->parseLink($sLink, bx_process_output(_t($aCategory['title'])));
     }
 

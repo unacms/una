@@ -271,8 +271,8 @@ class BxAntispamModule extends BxDolModule
         if ('on' == $this->_oConfig->getAntispamOption('toxicity_report') && $sModule) {
             $oModule = BxDolModule::getInstance($sModule);
             $CNF = &$oModule->_oConfig->CNF;
-            $sContentUrl = isset($CNF['URI_VIEW_ENTRY']) ? BX_DOL_URL_ROOT.BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId) : false;
-            $sManageContentUrl = isset($CNF['URL_MANAGE_ADMINISTRATION']) ? BX_DOL_URL_ROOT.BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URL_MANAGE_ADMINISTRATION']) : false;
+            $sContentUrl = isset($CNF['URI_VIEW_ENTRY']) ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)) : false;
+            $sManageContentUrl = isset($CNF['URL_MANAGE_ADMINISTRATION']) ? bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URL_MANAGE_ADMINISTRATION'])) : false;
 
             $oProfile = BxDolProfile::getInstance();
             if (!$oProfile) return;

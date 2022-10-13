@@ -173,7 +173,7 @@ class BxBaseServiceLogin extends BxDol
 
         $aTmplVarsJoin = [];
         if(strpos($sParams, 'no_join_text') === false)
-            $aTmplVarsJoin['url'] = BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=create-account');
+            $aTmplVarsJoin['url'] = bx_absolute_url($oPemalink->permalink('page.php?i=create-account'));
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addJs(array('jquery.form.min.js'));        
@@ -192,7 +192,7 @@ class BxBaseServiceLogin extends BxDol
                 'condition' => !empty($aTmplVarsJoin),
                 'content' => $aTmplVarsJoin
             ],
-            'agreement' => _t('_sys_form_login_input_agreement_value', BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=terms'), BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=privacy')),
+            'agreement' => _t('_sys_form_login_input_agreement_value', bx_absolute_url($oPemalink->permalink('page.php?i=terms')), bx_absolute_url($oPemalink->permalink('page.php?i=privacy'))),
             'bx_if:show_js_code' => [
                 'condition' => strpos($sParams, 'ajax_form') !== false,
                 'content' => []
@@ -238,7 +238,7 @@ class BxBaseServiceLogin extends BxDol
             }
             $oSession = BxDolSession::getInstance();
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE, $sActivationCode);
-            header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step3'));
+            header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=login-step3')));
         }
         return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_login_2fa_description") . '</div>' .$oForm->getCode();
     }
@@ -251,7 +251,7 @@ class BxBaseServiceLogin extends BxDol
         }
         
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login_step3');
-        $oForm->aInputs['back']['caption'] = _t( $oForm->aInputs['back']['caption_src'], BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2'));
+        $oForm->aInputs['back']['caption'] = _t( $oForm->aInputs['back']['caption_src'], bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2')));
         $oForm->aFormAttrs['action'] = '';
         $oForm->initChecker();
         

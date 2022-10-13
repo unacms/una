@@ -150,7 +150,7 @@ class BxContactModule extends BxDolModule
         //if (true !== $this->isAllowedContact())
         //    return false;
 
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=contact');
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=contact'));
     }
 
     /*

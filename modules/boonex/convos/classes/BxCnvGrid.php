@@ -95,7 +95,7 @@ class BxCnvGrid extends BxBaseModGeneralGridAdministration
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']));
 
         header('Location:' . $sUrl);
     }
@@ -104,7 +104,7 @@ class BxCnvGrid extends BxBaseModGeneralGridAdministration
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']));
 
         $a['attr']['onclick'] = "document.location='$sUrl'";
         unset($a['attr']['bx_grid_action_independent']);

@@ -108,7 +108,7 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
         $sCode = $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
             'sPopupId' => $sId,
             'sKey' => $sKey,
-            'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
+            'sAcceptUrl' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id'])),
             'sDeclineUrl' => BX_DOL_URL_ROOT,
             'iGroupProfileId' => $this->_oProfile->id(),
         ));

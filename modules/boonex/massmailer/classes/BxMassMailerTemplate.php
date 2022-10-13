@@ -160,7 +160,7 @@ class BxMassMailerTemplate extends BxBaseModGeneralTemplate
         ));
 
         return $this->parseHtmlByName('breadcrumb.html', array(
-            'url_home' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_CAMPAIGNS']),
+            'url_home' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_CAMPAIGNS'])),
             'icon_home' => $CNF['ICON'],
             'bx_repeat:items' => $aTmplVarsItems
         ));

@@ -1220,7 +1220,7 @@ function bx_get_reset_password_link($sValue, $sField = 'email', $iLifetime = 0)
 
 function bx_get_reset_password_link_by_key($sKey)
 {
-    return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $sKey));
+    return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $sKey)));
 }
 
 function bx_get_reset_password_redirect($iAccountId)
@@ -1257,8 +1257,8 @@ function bx_get_reset_password_redirect($iAccountId)
             break;
     }
 
-    if(!empty($sResult) && mb_stripos($sResult, BX_DOL_URL_ROOT) !== 0)
-        $sResult = BX_DOL_URL_ROOT . $sResult;
+    if(!empty($sResult))
+        $sResult = bx_absolute_url($sResult);
 
     return $sResult;
 }
@@ -2226,6 +2226,11 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
 {
     $aUrl = 'auto' === $sPath || 'auto' === $bSecure ? parse_url(BX_DOL_URL_ROOT) : [];
 
+    if (defined('BX_MULTISITE_URL_COOKIE')) {
+        $aUrl = parse_url(BX_MULTISITE_URL_COOKIE);
+        $sDomain = $aUrl['host'];
+    }
+
     if ('auto' === $sPath)
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 
@@ -2263,6 +2268,13 @@ function is_private_ip ($sIp)
         return false;
 
     return filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== $sIp;
+}
+
+function bx_absolute_url($sUrl)
+{
+    if (!preg_match('/^https?:\/\//', $sUrl))
+        $sUrl = BX_DOL_URL_ROOT . $sUrl;
+    return $sUrl;
 }
 
 /** @} */

@@ -41,7 +41,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         $sTitle = $sUrl = $sIcon = "";
         if ($this->_aContentInfo && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedView($this->_aContentInfo)) {
             $sTitle = $this->_oModule->_oTemplate->getTitleAuto($this->_aContentInfo);
-            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]);
+            $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]));
             $sIcon = $CNF['ICON'];
 
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker

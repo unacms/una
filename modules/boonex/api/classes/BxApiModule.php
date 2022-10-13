@@ -381,7 +381,7 @@ class BxApiModule extends BxDolModule
 		
 		$oKey = BxDolKey::getInstance();
 		$aPlus['key'] = $oKey->getNewKey(array('email' => $sEmail));
-		$aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key']));
+		$aPlus['forgot_password_url'] = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key'])));
         $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_Forgot', $aPlus, $iAccountId);
         if ($aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM)){
             return array('code' => 200);

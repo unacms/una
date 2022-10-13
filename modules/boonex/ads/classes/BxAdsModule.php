@@ -105,10 +105,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'viewer_name' => $oViewer->getDisplayName(),
                 'viewer_url' => $oViewer->getUrl(),
                 'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-                'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'ad_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_author_notified')));
@@ -873,8 +873,8 @@ class BxAdsModule extends BxBaseModTextModule
         $oPermalink = BxDolPermalinks::getInstance();
 
         $aResult = $this->_aModule;
-        $aResult['url_browse_order_common'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LICENSES_COMMON'], array('filter' => '{order}'));
-        $aResult['url_browse_order_administration'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LICENSES_ADMINISTRATION'], array('filter' => '{order}'));
+        $aResult['url_browse_order_common'] = bx_absolute_url($oPermalink->permalink($CNF['URL_LICENSES_COMMON'], array('filter' => '{order}')));
+        $aResult['url_browse_order_administration'] = bx_absolute_url($oPermalink->permalink($CNF['URL_LICENSES_ADMINISTRATION'], array('filter' => '{order}')));
 
         return $aResult;
     }
@@ -932,7 +932,7 @@ class BxAdsModule extends BxBaseModTextModule
             'name' => $aItem[$CNF['FIELD_NAME']],
             'title' => $aItem[$CNF['FIELD_TITLE']],
             'description' => $aItem[$CNF['FIELD_TEXT']],
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aItem[$CNF['FIELD_ID']])),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aItem[$CNF['FIELD_ID']]))),
             'price_single' => $fItemPrice,
             'price_recurring' => '',
             'period_recurring' => 0,
@@ -980,7 +980,7 @@ class BxAdsModule extends BxBaseModTextModule
                 'name' => $aItem[$CNF['FIELD_NAME']],
                 'title' => $aItem[$CNF['FIELD_TITLE']],
                 'description' => $aItem[$CNF['FIELD_TEXT']],
-                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aItem[$CNF['FIELD_ID']])),
+                'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aItem[$CNF['FIELD_ID']]))),
                 'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
                 'price_recurring' => '',
                 'period_recurring' => 0,
@@ -1109,7 +1109,7 @@ class BxAdsModule extends BxBaseModTextModule
         $aEmailParams = [
             'client_name' => $oClient->getDisplayName(),
             'entry_name' => $aEntry[$CNF['FIELD_TITLE']],
-            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $aEntry[$CNF['FIELD_ID']]]),
+            'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $aEntry[$CNF['FIELD_ID']]])),
             'vendor_url' => $sSellerUrl,
             'vendor_name' => $sSellerName,
             'count' => (int)$iItemCount,
@@ -1610,10 +1610,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'viewer_name' => $oViewer->getDisplayName(),
                 'viewer_url' => $oViewer->getUrl(),
                 'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
@@ -1645,10 +1645,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'offerer_name' => $oOfferer->getDisplayName(),
                 'offerer_url' => $oOfferer->getUrl(),
                 'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
@@ -1676,10 +1676,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'offerer_name' => $oOfferer->getDisplayName(),
                 'offerer_url' => $oOfferer->getUrl(),
                 'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
@@ -1710,10 +1710,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'offerer_name' => $oOfferer->getDisplayName(),
                 'offerer_url' => $oOfferer->getUrl(),
                 'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
@@ -1747,10 +1747,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'vendor_name' => $oProfileSrc->getDisplayName(),
                 'vendor_url' => $oProfileSrc->getUrl(),
                 'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
-                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         $aParams = $this->_alertParams($mixedContent);
@@ -1786,10 +1786,10 @@ class BxAdsModule extends BxBaseModTextModule
                 'client_name' => $oProfileSrc->getDisplayName(),
                 'client_url' => $oProfileSrc->getUrl(),
                 'entry_name' => $mixedContent[$CNF['FIELD_TITLE']],
-                'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                ))
+                )))
             ));
 
         $aParams = $this->_alertParams($mixedContent);
@@ -1848,10 +1848,10 @@ class BxAdsModule extends BxBaseModTextModule
         $iContentAuthor = (int)$aContent[$CNF['FIELD_AUTHOR']];
 
         $aReturn = array(
-            'redirect' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+            'redirect' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
                 'i' => $CNF['URI_VIEW_ENTRY'], 
                 $CNF['FIELD_ID'] => $aOffer[$CNF['FIELD_OFR_CONTENT']]
-            ))
+            )))
         );
 
         $oPayments = BxDolPayments::getInstance();
@@ -2025,7 +2025,7 @@ class BxAdsModule extends BxBaseModTextModule
             $iCategory = (int)$aContentInfo[$CNF['FIELD_CATEGORY']];
             $aCategory = $this->_oDb->getCategories(array('type' => 'id', 'id' => $iCategory));
             $sCategory = _t($aCategory['title']);
-            $sCategoryLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $iCategory));
+            $sCategoryLink = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $iCategory)));
         }
 
         $sPrice = _t('_bx_ads_txt_free');

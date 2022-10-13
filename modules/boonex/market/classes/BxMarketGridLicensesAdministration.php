@@ -62,7 +62,7 @@ class BxMarketGridLicensesAdministration extends BxTemplGrid
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW_ENTRY'] . $aRow['product_id']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW_ENTRY'] . $aRow['product_id']));
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('product_link.html', array(
             'href' => $sUrl,

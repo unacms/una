@@ -379,7 +379,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($aContentInfo))
             return '';
 
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
     }
 
     public function serviceGetTitle ($iContentId)
@@ -1435,7 +1435,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $sEntryUrl = !empty($aParams['entry_url']) ? $aParams['entry_url'] : '';
         if(empty($sEntryUrl) && !empty($CNF['URI_VIEW_ENTRY']))
-            $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
 
         $iEntryThumb = !empty($aParams['entry_thumb']) ? (int)$aParams['entry_thumb'] : 0;
         if(empty($iEntryThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
@@ -1615,7 +1615,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $aMarkers = array(
             'id' => $iContentId,
             'module' => $this->_aModule['name'],
-            'url' => BX_DOL_URL_ROOT . $sUrl,
+            'url' => bx_absolute_url($sUrl),
             'title' => $sTitle,
         );
 
@@ -2229,7 +2229,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
             'sample_wo_article' => $CNF['T']['txt_sample_single'],
             'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']])),
             'content' => $aContent, //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
@@ -3128,7 +3128,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _getFavoriteListUrl ($iListId, $iProfileId)
     {
         $CNF = &$this->_oConfig->CNF;
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_FAVORITES_LIST'] . '&profile_id=' . $iProfileId . '&list_id=' . $iListId);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_FAVORITES_LIST'] . '&profile_id=' . $iProfileId . '&list_id=' . $iListId));
     }
     
     
@@ -3305,7 +3305,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+    	$sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]));
 
     	//--- Image(s)
         $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);

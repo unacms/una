@@ -24,7 +24,7 @@ class BxBasePageHome extends BxTemplPage
 
         BxDolCover::getInstance()->set(array(
             'class' => 'bx-cover-homepage',
-            'title' => _t('_sys_txt_homepage_cover', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')),
+            'title' => _t('_sys_txt_homepage_cover', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'))),
             'bx_if:empty_cover_class' => array (
                 'condition' => !$bTmplVarsCover,
                 'content' => array(),
@@ -65,10 +65,10 @@ class BxBasePageHome extends BxTemplPage
             $oTemplate = BxDolTemplate::getInstance();
             $oTemplate->addJs(array('lottie.min.js'));
             $aBlock['content'] = $oTemplate->parseHtmlByContent($aBlock['content'], array(
-                'join_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=create-account'),
+                'join_link' => bx_absolute_url($oPermalink->permalink('page.php?i=create-account')),
                 'join_form' => $sJoinForm,
                 'join_form_in_box' => !empty($sJoinForm) ? DesignBoxContent(_t('_sys_txt_splash_join'), $sJoinForm, BX_DB_PADDING_DEF) : '',
-                'login_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=login'),
+                'login_link' => bx_absolute_url($oPermalink->permalink('page.php?i=login')),
                 'login_form' => $sLoginForm,
                 'login_form_in_box' => !empty($sLoginForm) ? DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF) : '',
             ));

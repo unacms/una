@@ -1907,7 +1907,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         return array(
             'js_object' => $sJsObject,
-            'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
+            'url_view' => bx_absolute_url($oPermalinks->permalink($this->aPageRebuild['url'])),
             'action_page_edit' => $this->sActionPageEdit,
             'bx_if:can_delete' => array(
                 'condition' => (int)$this->aPageRebuild['deletable'] == 1,

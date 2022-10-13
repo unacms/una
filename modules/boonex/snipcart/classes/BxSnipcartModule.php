@@ -117,7 +117,7 @@ class BxSnipcartModule extends BxBaseModTextModule
 
     	$aSettings = $this->_oDb->getSettings(array('type' => 'author', 'author' => $this->_iProfileId));
         if(empty($aSettings) || !is_array($aSettings))
-    		return MsgBox(_t('_bx_snipcart_err_not_configured', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_SETTINGS'])));
+    		return MsgBox(_t('_bx_snipcart_err_not_configured', bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_SETTINGS']))));
 
     	return parent::serviceEntityCreate($sDisplay);
     }

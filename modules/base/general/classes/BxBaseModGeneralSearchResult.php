@@ -33,7 +33,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     {
         $CNF = &$this->oModule->_oConfig->CNF;
 
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]);
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]));
     }
 
     function getRssPageUrl ()
@@ -42,7 +42,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
             return false;
 
         $oPermalinks = BxDolPermalinks::getInstance();
-        return BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aCurrent['rss']['link']);
+        return bx_absolute_url($oPermalinks->permalink($this->aCurrent['rss']['link']));
     }
 
     function rss ()

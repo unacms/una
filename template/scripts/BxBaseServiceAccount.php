@@ -75,7 +75,7 @@ class BxBaseServiceAccount extends BxDol
 
         $aTmplVarsLogin = [];
         if(!isset($aParams['no_login_text']) || false === (bool)$aParams['no_login_text'])
-            $aTmplVarsLogin['url'] = BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=login');
+            $aTmplVarsLogin['url'] = bx_absolute_url($oPemalink->permalink('page.php?i=login'));
         
         return BxDolTemplate::getInstance()->parseHtmlByName('block_join.html', [
             'bx_if:show_auth' => [
@@ -90,7 +90,7 @@ class BxBaseServiceAccount extends BxDol
                 'condition' => !empty($aTmplVarsLogin),
                 'content' => $aTmplVarsLogin
             ],
-            'agreement' => _t('_sys_form_account_input_agreement_value', BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=terms'), BX_DOL_URL_ROOT . $oPemalink->permalink('page.php?i=privacy')),
+            'agreement' => _t('_sys_form_account_input_agreement_value', bx_absolute_url($oPemalink->permalink('page.php?i=terms')), bx_absolute_url($oPemalink->permalink('page.php?i=privacy'))),
         ]);
     }
 
@@ -281,7 +281,7 @@ class BxBaseServiceAccount extends BxDol
                     }
 
                     $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE, $sActivationCode);
-                    header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone'));
+                    header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone')));
                 } 
                 return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_confirm_phone_set_phone_desc_set_phone") . '</div>' .$oForm->getCode();
             }
@@ -340,7 +340,7 @@ class BxBaseServiceAccount extends BxDol
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
         $oTemplate->setPageHeader (_t('_sys_txt_confirm_email_success'));
         $oTemplate->setPageContent ('page_main_code', MsgBox(_t('_sys_txt_confirm_email_success')));
-        $oTemplate->setPageContent ('url_relocate', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrl));
+        $oTemplate->setPageContent ('url_relocate', bx_absolute_url(BxDolPermalinks::getInstance()->permalink($sUrl)));
 
         BxDolTemplate::getInstance()->getPageCode();
         exit;
@@ -553,7 +553,7 @@ class BxBaseServiceAccount extends BxDol
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sErrorUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password');
+            $sErrorUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'));
 
             // check if key exists
             $oKey = BxDolKey::getInstance();

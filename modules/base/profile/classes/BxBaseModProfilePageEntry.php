@@ -90,7 +90,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
                 $sStatus = $this->_aContentInfo['profile_status'];
                 $sManageUrl = '#';
                 if(!empty($CNF['FIELD_TITLE']) && !empty($CNF['URL_MANAGE_ADMINISTRATION']))
-                    $sManageUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_ADMINISTRATION'], array('filter' => urlencode($this->_aContentInfo[$CNF['FIELD_TITLE']])));
+                    $sManageUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_ADMINISTRATION'], array('filter' => urlencode($this->_aContentInfo[$CNF['FIELD_TITLE']]))));
 
                 $aInformer = $CNF['INFORMERS']['status_moderation'];
                 if (isset($aInformer['map'][$sStatus]))

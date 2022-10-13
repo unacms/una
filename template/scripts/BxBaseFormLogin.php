@@ -37,7 +37,7 @@ class BxFormLoginCheckerHelper extends BxDolFormCheckerHelper
         }
        
         $oSession = BxDolSession::getInstance();
-        return $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE) != $s ? _t('_sys_form_login_input_code_error_invalid', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2')) : true;          
+        return $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE) != $s ? _t('_sys_form_login_input_code_error_invalid', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2'))) : true;          
     }   
 }
 
@@ -99,7 +99,7 @@ class BxBaseFormLogin extends BxTemplFormView
 
     protected function genCustomInputSubmitText ($aInput)
     {
-        return '<div><a href="' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password') . '">' . _t("_sys_txt_forgot_pasword") . '</a></div>';
+        return '<div><a href="' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')) . '">' . _t("_sys_txt_forgot_pasword") . '</a></div>';
     }
 
     public function getRole()

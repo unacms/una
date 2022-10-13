@@ -372,8 +372,8 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $oPermalink = BxDolPermalinks::getInstance();
 
         $aResult = $this->_aModule;
-        $aResult['url_browse_order_common'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_ORDERS_COMMON'], array('filter' => '{order}'));
-        $aResult['url_browse_order_administration'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_ORDERS_ADMINISTRATION'], array('filter' => '{order}'));
+        $aResult['url_browse_order_common'] = bx_absolute_url($oPermalink->permalink($CNF['URL_ORDERS_COMMON'], array('filter' => '{order}')));
+        $aResult['url_browse_order_administration'] = bx_absolute_url($oPermalink->permalink($CNF['URL_ORDERS_ADMINISTRATION'], array('filter' => '{order}')));
 
         return $aResult;
     }
@@ -901,7 +901,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'amount' => $fAmount,
             'rate' => $fRate,
             'message' => $sMessage,
-            'confirm_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HISTORY_ADMINISTRATION'])
+            'confirm_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_HISTORY_ADMINISTRATION']))
         ];
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($CNF['ETEMPLATE_WITHDRAW_REQUESTED'], $aTemplateVars);
         if(!$aTemplate)

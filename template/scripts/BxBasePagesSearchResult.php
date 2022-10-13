@@ -70,7 +70,7 @@ class BxBasePagesSearchResult extends BxTemplSearchResult
             if (isset($CNF['ICON']))
                 $sIcon = $CNF['ICON'];
         }
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($aData['url']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($aData['url']));
         
         $sTitle = _t($aData['title']);
         if (preg_match ('/{.*?}/', $sTitle))

@@ -19,7 +19,7 @@ class BxInvStudioPage extends BxTemplStudioModule
 
         $this->aMenuItems = array(
             array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'manage', 'icon' => 'edit', 'title' => '_bx_invites_menu_item_title_requests', 'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=invites-requests')),
+            array('name' => 'manage', 'icon' => 'edit', 'title' => '_bx_invites_menu_item_title_requests', 'link' => bx_absolute_url($oPermalink->permalink('page.php?i=invites-requests'))),
         );
     }
 }

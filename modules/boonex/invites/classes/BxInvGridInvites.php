@@ -219,7 +219,7 @@ class BxInvGridInvites extends BxTemplGrid
         $aRequest = $this->_oModule->_oDb->getRequests(array('type' => 'by_id', 'value' => $aRow['request_id']));
         if ($aRequest || true){
             $CNF = &$this->_oModule->_oConfig->CNF;
-            $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_REQUESTS']);
+            $sLink = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_REQUESTS']));
             $sLink = bx_append_url_params($sLink, array('filter' => $aRequest['email']));
             $sAddon = $this->_oTemplate->parseHtmlByName('account_link.html', array(
                     'href' => $sLink,
@@ -271,7 +271,7 @@ class BxInvGridInvites extends BxTemplGrid
 
 		$sLink = $oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION'];
 
-		$sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sLink);
+		$sLink = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($sLink));
 		
 		if(!empty($sFilter))
 			$sLink = bx_append_url_params($sLink, array('filter' => $sFilter));

@@ -180,7 +180,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]));
 
     	$a['attr'] = array_merge($a['attr'], array(
     		"onclick" => "window.open('" . $sUrl . "','_self');"
@@ -193,7 +193,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]));
 
         return $this->_oTemplate->parseHtmlByName('title_link.html', array(
             'href' => $sUrl,

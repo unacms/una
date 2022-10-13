@@ -198,7 +198,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
      */
     public function getViewUrl()
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=notifications-view');
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=notifications-view'));
     }
 
     public function getContentModule(&$aEvent)

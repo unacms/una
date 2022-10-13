@@ -1261,7 +1261,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sRet .= "<link rel=\"alternate\" type=\"application/json+oembed\" href=\"" . BX_DOL_URL_ROOT ."em.php?url=" . urlencode($_SERVER["REQUEST_URI"]) . "&format=json\" title=\"". (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . "\" />";
         
         if (!empty($this->aPage['url'])){
-            $sRet .= "<link rel=\"canonical\" href=\"" . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->aPage['url']). "\" />";
+            $sRet .= '<link rel="canonical" href="' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->aPage['url'])) . '" />';
         }
         
         return $sRet;

@@ -632,10 +632,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         );
         $s = str_replace($aMarkers, $aReplacements, $s);
 
-        $s = BxDolPermalinks::getInstance()->permalink($s);
-
-        if (false === strpos($s, 'http://') && false === strpos($s, 'https://'))
-            $s = BX_DOL_URL_ROOT . $s;
+        $s = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($s));
         
         return $s;
     }
@@ -664,7 +661,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(empty($CNF[$sKeyUri]))
             return;
 
-        $oForm->setAbsoluteActionUrl(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF[$sKeyUri]));
+        $oForm->setAbsoluteActionUrl(bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF[$sKeyUri])));
     }
 }
 

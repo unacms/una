@@ -759,8 +759,8 @@ class BxMarketModule extends BxBaseModTextModule
         $oPermalink = BxDolPermalinks::getInstance();
 
         $aResult = $this->_aModule;
-        $aResult['url_browse_order_common'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LICENSES_COMMON'], array('filter' => '{order}'));
-        $aResult['url_browse_order_administration'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LICENSES_ADMINISTRATION'], array('filter' => '{order}'));
+        $aResult['url_browse_order_common'] = bx_absolute_url($oPermalink->permalink($CNF['URL_LICENSES_COMMON'], array('filter' => '{order}')));
+        $aResult['url_browse_order_administration'] = bx_absolute_url($oPermalink->permalink($CNF['URL_LICENSES_ADMINISTRATION'], array('filter' => '{order}')));
 
         return $aResult;
     }
@@ -804,7 +804,7 @@ class BxMarketModule extends BxBaseModTextModule
             'name' => $aItem[$CNF['FIELD_NAME']],
             'title' => $aItem[$CNF['FIELD_TITLE']],
             'description' => $aItem[$CNF['FIELD_TEXT']],
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']])),
             'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
             'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
             'period_recurring' => 1,
@@ -849,7 +849,7 @@ class BxMarketModule extends BxBaseModTextModule
                 'name' => $aItem[$CNF['FIELD_NAME']],
                 'title' => $aItem[$CNF['FIELD_TITLE']],
                 'description' => $aItem[$CNF['FIELD_TEXT']],
-                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
+                'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']])),
                 'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
                 'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
                 'period_recurring' => 1,
@@ -1106,7 +1106,7 @@ class BxMarketModule extends BxBaseModTextModule
         sendMailTemplate($CNF['ETEMPLATE_PURCHASED'], 0, $iClientId, array(
             'client_name' => $oClient->getDisplayName(),
             'product_name' => $aProduct[$CNF['FIELD_TITLE']],
-            'product_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aProduct[$CNF['FIELD_ID']]),
+            'product_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aProduct[$CNF['FIELD_ID']])),
             'vendor_url' => $sSellerUrl,
             'vendor_name' => $sSellerName,
             'license' => $sLicense,

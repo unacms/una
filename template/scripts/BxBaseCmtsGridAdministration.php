@@ -189,7 +189,7 @@ class BxBaseCmtsGridAdministration extends BxDolCmtsGridAdministration
             return '';
 
         $sLink = $oModuleAccounts->_oConfig->CNF['URL_MANAGE_' . $sTypeUpc];
-        $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sLink);
+        $sLink = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($sLink));
         if(!empty($sFilter))
             $sLink = bx_append_url_params($sLink, array('filter' => $sFilter));
 

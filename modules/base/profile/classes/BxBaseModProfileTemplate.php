@@ -132,7 +132,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $iProfile = $oProfile->id();
 
         // get profile's url
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
 
         // get profile's title
         $sTitle = $oModule->getProfileName($aData);
@@ -309,7 +309,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
         $iProfile = $oProfile->id();
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]));
         $sTitle = bx_process_output($oProfile->getDisplayName());
 
         //--- Process Cover
@@ -342,7 +342,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             else
                 $sUrlCover = $this->getImageUrl('cover.svg');
 
-            $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+            $sUrlCoverChange = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]));
 
             $sAddClassCover = "";
             if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
@@ -398,7 +398,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $bIsAllowEditPicture = $oModule->checkAllowedEdit($aData) === CHECK_ACTION_RESULT_ALLOWED;
 
             $sUrlPicture = $this->urlPicture ($aData);
-            $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+            $sUrlPictureChange = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]));
 
             $sAddClassPicture = "";
             if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){

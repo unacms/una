@@ -555,7 +555,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 					'due' => $aTask[$CNF['FIELD_DUEDATE']] > 0 ? bx_time_js($aTask[$CNF['FIELD_DUEDATE']]) : '',
 					'bx_repeat:members' => $aMembersVars,
 					'badges' => $this->serviceGetBadges($aTask[$CNF['FIELD_ID']], true),
-					'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aTask[$CNF['FIELD_ID']]),
+					'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aTask[$CNF['FIELD_ID']])),
 					'object' => $this->_oConfig->getJsObject('tasks'),
                     'bx_if:allow_manage' => array(
 				        'condition' => $bAllowManage,

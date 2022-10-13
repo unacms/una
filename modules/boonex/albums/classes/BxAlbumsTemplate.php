@@ -38,7 +38,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             return $s;
 
         // get entry url        
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]));
 
         $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
         if (!$oProfile) 
@@ -197,7 +197,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!($aAlbumInfo = $oModule->_oDb->getContentInfoById($aMediaInfo['content_id'])))
             return '';        
 
-        $sUrlAlbum = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aAlbumInfo[$CNF['FIELD_ID']]);
+        $sUrlAlbum = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aAlbumInfo[$CNF['FIELD_ID']]));
 
         $iProfileId = $aAlbumInfo[$CNF['FIELD_AUTHOR']];
         $oProfile = BxDolProfile::getInstance($iProfileId);
@@ -331,7 +331,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
     public function getViewMediaUrl($CNF, $iMediaId, $sContext = '')
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId . (!empty($sContext) ? '&context=' . $sContext : ''));
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId . (!empty($sContext) ? '&context=' . $sContext : '')));
     }
 
     public function getNextPrevMedia($aMediaInfo, $isNext, $sContext, $aParamsSearchResult = array())

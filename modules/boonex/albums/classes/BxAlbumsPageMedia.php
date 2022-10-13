@@ -43,7 +43,7 @@ class BxAlbumsPageMedia extends BxTemplPage
             ));
 
             $sTitle = isset($this->_aAlbumInfo[$CNF['FIELD_TITLE']]) ? $this->_aAlbumInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aAlbumInfo[$CNF['FIELD_TEXT']], 20, '...');
-            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aAlbumInfo[$CNF['FIELD_ID']]);
+            $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aAlbumInfo[$CNF['FIELD_ID']]));
 
             // select view entry submenu
             $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');

@@ -167,7 +167,7 @@ class BxForumGrid extends BxTemplGrid
         if($this->_oModule->checkAllowedAdd() !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_ADD_ENTRY']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_ADD_ENTRY']));
 
         unset($a['attr']['bx_grid_action_independent']);
         $a['attr'] = array_merge($a['attr'], array(

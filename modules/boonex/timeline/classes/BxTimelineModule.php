@@ -4955,7 +4955,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$CNF = &$this->_oConfig->CNF;
 
         $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
-    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iId);
+    	$sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iId));
 
         $sText = ''; 
         if(isset($aContentInfo['content'])){

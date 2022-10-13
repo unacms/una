@@ -190,7 +190,7 @@ class BxReviewsTemplate extends BxBaseModTextTemplate
     public function browseReviewedContent() {
         $CNF = &$this->_oConfig->CNF;
 
-        $sPageUrl = BX_DOL_URL_ROOT.BxDolPermalinks::getInstance()->permalink('page.php?i='.bx_get('i'));
+        $sPageUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i='.bx_get('i')));
 
         $sOrderBy = bx_get('order_by');
         if ($sOrderBy != 'avg_rating' && $sOrderBy != 'reviews_num') $sOrderBy = 'avg_rating';

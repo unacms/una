@@ -66,7 +66,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 		if ($mInvitesRemain === true)
 			$mInvitesRemain = _t('_bx_invites_txt_unlimited');
            
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']));
 
         $this->getCssJs();
         return $this->parseHtmlByName('block_invite.html', array(
@@ -80,7 +80,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
     public function getBlockRequest()
     {
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_REQUEST']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_REQUEST']));
 
         $this->getCssJs();
         return $this->parseHtmlByName('block_request.html', array(
@@ -109,7 +109,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         $oPermalink = BxDolPermalinks::getInstance();
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_request'), $this->_oConfig->getObject('form_display_request_send'));
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_REQUEST']);
+        $oForm->aFormAttrs['action'] = bx_absolute_url($oPermalink->permalink($CNF['URL_REQUEST']));
 
         $sFormId = $oForm->getId();
         $sEval = $sJsObject . '.onRequestFormSubmit(oData)';
@@ -136,7 +136,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $iAccount = $oAccountQuery->getIdByEmail($sEmail);
         if ($iAccount > 0)
-            return array('content' => MsgBox(_t('_bx_invites_err_already_registed', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'))), 'content_id' => $sFormId, 'eval' => $sEval);
+            return array('content' => MsgBox(_t('_bx_invites_err_already_registed', bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')))), 'content_id' => $sFormId, 'eval' => $sEval);
         $iCountByEmail = $this->_oDb->getRequests(array('type' => 'count_by_email', 'value' => $sEmail));
         if ($iCountByEmail > 0)
             return array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
@@ -148,7 +148,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         $this->getModule()->onRequest($iId);
         $sRequestsEmail = $this->_oConfig->getRequestsEmail();
         if(!empty($sRequestsEmail)) {
-            $sManageUrl = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_REQUESTS']);
+            $sManageUrl = bx_absolute_url($oPermalink->permalink($CNF['URL_REQUESTS']));
 
             $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_invites_request_form_message', array(
                 'sender_name' => bx_process_output($oForm->getCleanValue('name')),

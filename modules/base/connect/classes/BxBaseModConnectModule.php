@@ -283,13 +283,13 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
             case 'settings':
                 if (!$isExistingProfile) { 
-                    $sRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-email');
+                    $sRedirectUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-email'));
                     break;
                 }
 
             case 'dashboard':
             default:
-                $sRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=dashboard');
+                $sRedirectUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=dashboard'));
                 break;
             }
 

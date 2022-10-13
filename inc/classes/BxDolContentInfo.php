@@ -272,6 +272,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('get_text', $iContentId);
     }
     
+    public function getContentPrivacy ($iContentId)
+    {
+        return $this->_call('get_privacy_view', $iContentId);
+    }
+
     public function getContentEmbed ($iContentId)
     {
         return $this->_call('get_embed', $iContentId);

@@ -85,7 +85,7 @@ class BxAclModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-    	return  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']);
+    	return  bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']));
     }
 
     /**
@@ -216,7 +216,7 @@ class BxAclModule extends BxDolModule
             'name' => $aItem['name'],
             'title' => $sTitle,
             'description' => $sDescription,
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW'])),
             'price_single' => $aItem['price'],
             'price_recurring' => $aItem['price'],
             'period_recurring' => $aItem['period'],
@@ -252,7 +252,7 @@ class BxAclModule extends BxDolModule
     	    return array();
 
         $aItems = $this->_oDb->getPrices(array('type' => 'all_full'));
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']);
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']));
 
         $aResult = array();
         foreach($aItems as $aItem) {

@@ -164,7 +164,7 @@ class BxBaseSearchResult extends BxDolSearchResult
             return false;
 
         $oPermalinks = BxDolPermalinks::getInstance();
-        return BX_DOL_URL_ROOT . bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1');
+        return bx_absolute_url(bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1'));
     }
 
     function showAdminActionsPanel($sWrapperId, $aButtons, $sCheckboxName = 'entry', $bSelectAll = true, $bSelectAllChecked = false, $sCustomHtml = '')
@@ -251,7 +251,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
         $oPermalinks = BxDolPermalinks::getInstance();
 
-        $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
+        $sUrlStart = bx_absolute_url($oPermalinks->permalink($this->sBrowseUrl));
 
         return $this->addAdditionalUrlParams($sUrlStart, $aAdditionalParams, $bReplacePagesParams);
     }
