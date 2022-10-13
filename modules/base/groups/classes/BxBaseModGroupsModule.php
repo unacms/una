@@ -1206,7 +1206,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
-        $a['content']['url'] = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl());
+        $a['content']['url'] = $oGroupProfile->getUrl();
         $a['content']['title'] = $oGroupProfile->getDisplayName();
 
         if(isset($CNF['FIELD_PUBLISHED'])) {
