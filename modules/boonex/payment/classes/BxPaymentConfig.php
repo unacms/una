@@ -178,7 +178,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         return $this->_iPayAttemptsInterval;
     }
 
-    public function getPrice($sType, $aItem)
+    public function getPrice($sType, $aItem, $iPrecision = 2)
     {
     	$fPrice = 0;
 
@@ -192,7 +192,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
                 break;
         }
 
-        return round((float)$fPrice, 2);
+        return round((float)$fPrice, $iPrecision);
     }
 
     public function getTrial($sType, $aItem)

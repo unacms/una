@@ -30,6 +30,7 @@ BxPaymentProviderStripeV3.prototype.init = function(oOptions) {
     this._iModuleId  = oOptions.iModuleId;
     this._iItemId  = oOptions.iItemId;
     this._iItemCount  = oOptions.iItemCount;
+    this._sItemAddons  = oOptions.sItemAddons == undefined ? '' : oOptions.sItemAddons;
     this._sRedirect  = oOptions.sRedirect;
     this._sCustom  = oOptions.sCustom;
 
@@ -55,6 +56,10 @@ BxPaymentProviderStripeV3.prototype.onCartCheckout = function(oData) {
 };
 
 BxPaymentProviderStripeV3.prototype.subscribe = function(oLink) {
+    return this.subscribeWithAddons(oLink);
+};
+    
+BxPaymentProviderStripeV3.prototype.subscribeWithAddons = function(oLink, mixedAddons) {
     var oDate = new Date();
 
     oLink = jQuery(oLink);
@@ -71,6 +76,7 @@ BxPaymentProviderStripeV3.prototype.subscribe = function(oLink) {
         module_id: this._iModuleId,
         item_id: this._iItemId,
         item_count: this._iItemCount,
+        item_addons: mixedAddons != undefined ? mixedAddons : this._sItemAddons,
         redirect: this._sRedirect,
         custom: this._sCustom,
         _t: oDate.getTime()

@@ -40,16 +40,25 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'module_id' => (int)bx_get('module_id'),
             'item_id' => (int)bx_get('item_id'),
             'item_count' => (int)bx_get('item_count'),
-            'item_addons' => bx_get('item_addons'),
+            'item_addons' => '',
             'redirect' => bx_process_input(bx_get('redirect')),
             'custom' => bx_process_input(bx_get('custom')),
         );
+        
+        if(($mixedItemAddons = bx_get('item_addons')) !== false) {
+            $mixedItemAddons = bx_process_input($mixedItemAddons);
+            if(!is_array($mixedItemAddons))
+                $mixedItemAddons = strpos($mixedItemAddons, ',') !== false ? explode(',', $mixedItemAddons) : [$mixedItemAddons];
+
+            $aParams['item_addons'] = $this->_oModule->_oConfig->a2s($mixedItemAddons);
+        }
 
         $aItems = array($this->_oModule->_oConfig->descriptorA2S(array(
             'seller_id' => $aParams['seller_id'],
             'module_id' => $aParams['module_id'],
             'item_id' => $aParams['item_id'],
             'item_count' => $aParams['item_count'],
+            'item_addons' => $aParams['item_addons'],
         )));
 
         $oCart = $this->_oModule->getObjectCart();
@@ -496,8 +505,12 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $sMode = 'setup';
                 $bVerify = false;
 
-                foreach($aCartInfo['items'] as $aItem)
+                foreach($aCartInfo['items'] as $aItem) {
                     $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
+                    if(!empty($aItem['addons']) && is_array($aItem['addons']))
+                        foreach($aItem['addons'] as $aAddon)
+                            $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
+                }
 
                 $aParams['customer_creation'] = 'always';
                 break;
@@ -516,12 +529,32 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         'price_data' => [
                             'currency' => $aCartInfo['vendor_currency_code'],
                             'product_data' => $aProductData,
-                            'unit_amount' => 100 * round($this->_oModule->_oConfig->getPrice($sType, $aItem), $this->_iAmountPrecision),
+                            'unit_amount' => 100 * $this->_oModule->_oConfig->getPrice($sType, $aItem, $this->_iAmountPrecision),
                         ],
                         'quantity' => $aItem['quantity'],
                     ];
 
                     $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
+
+                    if(!empty($aItem['addons']) && is_array($aItem['addons']))
+                        foreach($aItem['addons'] as $aAddon) {
+                            $aAddonData = [
+                                'name' => $aAddon['title']
+                            ];
+                            if(!empty($aAddon['description']))
+                                $aAddonData['description'] = strmaxtextlen(strip_tags($aAddon['description']), 60, '...');
+
+                            $aLineItems[] = [
+                                'price_data' => [
+                                    'currency' => $aCartInfo['vendor_currency_code'],
+                                    'product_data' => $aAddonData,
+                                    'unit_amount' => 100 * $this->_oModule->_oConfig->getPrice($sType, $aAddon, $this->_iAmountPrecision),
+                                ],
+                                'quantity' => $aAddon['quantity'],
+                            ];
+
+                            $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
+                        }
                 }
                 break;
 
@@ -535,6 +568,16 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                     ];
 
                     $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
+                    
+                    if(!empty($aItem['addons']) && is_array($aItem['addons']))
+                        foreach($aItem['addons'] as $aAddon) {
+                            $aLineItems[] = [
+                                'price' => $aAddon['name'],
+                                'quantity' => $aAddon['quantity'],
+                            ];
+
+                            $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
+                        }
                 }
                 break;
         }
