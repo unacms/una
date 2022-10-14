@@ -1277,8 +1277,11 @@ BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
                     $this.initVideos($this.oView);
             });
 
-    	if(oData && oData.load_more != undefined)
+    	if(oData && oData.load_more != undefined) {
             $this.oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
+
+            $this.initCalendar();
+        }
 
     	if(oData && oData.back != undefined)
             $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
@@ -1320,16 +1323,17 @@ BxTimelineView.prototype._onGetPosts = function(oData)
         if(oData && oData.go_to != undefined)
             location.hash = oData.go_to;
 
-        if(oData && oData.load_more != undefined)
+        if(oData && oData.load_more != undefined) {
             $this.oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
+
+            $this.initCalendar();
+        }
 
         if(oData && oData.back != undefined)
             $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
 
         if(oData && oData.empty != undefined)
             $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
-
-        $this.initCalendar();
     };
 
     if(oData && oData.items != undefined) {
