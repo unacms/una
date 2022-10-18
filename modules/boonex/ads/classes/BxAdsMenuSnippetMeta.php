@@ -49,7 +49,9 @@ class BxAdsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
             return false;
 
         if(!empty($this->_aContentInfo[$CNF['FIELD_PRICE']]))
-            $sPrice = _t_format_currency((float)$this->_aContentInfo[$CNF['FIELD_PRICE']]);
+            $sPrice = _t_format_currency_ext((float)$this->_aContentInfo[$CNF['FIELD_PRICE']], [
+                'sign' => BxDolPayments::getInstance()->getCurrencySign((int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']])
+            ]);
         else
             $sPrice = _t('_bx_ads_txt_free');
 

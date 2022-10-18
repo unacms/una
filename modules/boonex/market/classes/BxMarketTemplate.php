@@ -14,18 +14,11 @@
  */
 class BxMarketTemplate extends BxBaseModTextTemplate
 {
-	protected $_aCurrency;
-
-    /**
-     * Constructor
-     */
-    function __construct(&$oConfig, &$oDb)
+    public function __construct(&$oConfig, &$oDb)
     {
         $this->MODULE = 'bx_market';
 
         parent::__construct($oConfig, $oDb);
-
-        $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
     public function entryRating($aData)
@@ -166,7 +159,9 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $oPayment = BxDolPayments::getInstance();
         $oPermalinks = BxDolPermalinks::getInstance();
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($aData[$CNF['FIELD_AUTHOR']]);
+        $iAuthorId = (int)$aData[$CNF['FIELD_AUTHOR']];
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($iAuthorId);
+        $sAuthorCurrencySign = $oPayment->getCurrencySign($iAuthorId);
 
         $aTmplVarsSectionAuthor = array();
         if($bTmplVarsSectionAuthor) {
@@ -254,13 +249,13 @@ class BxMarketTemplate extends BxBaseModTextTemplate
             $bTmplVarsSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
             $aTmplVarsSingle = array();
             if($bTmplVarsSingle) {
-                $aJsSingle = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1, true);
+                $aJsSingle = $oPayment->getAddToCartJs($iAuthorId, $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1, true);
                 if(!empty($aJsSingle) && is_array($aJsSingle)) {
                     list($sJsCode, $sSingleOnclick) = $aJsSingle;
 
                     $aTmplVarsSingle = array(
                         'price_single_onclick' => $sSingleOnclick,
-                        'price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
+                        'price_single' => _t('_bx_market_txt_price_single', $sAuthorCurrencySign, $aData[$CNF['FIELD_PRICE_SINGLE']])
                     );
                 }
                 else 
@@ -271,13 +266,13 @@ class BxMarketTemplate extends BxBaseModTextTemplate
             $bTmplVarsRecurring = !$oPayment->isCreditsOnly() && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
             $aTmplVarsRecurring = array();
             if($bTmplVarsRecurring) {
-                $aJsRecurring = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+                $aJsRecurring = $oPayment->getSubscribeJs($iAuthorId, '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
                 if(!empty($aJsRecurring) && is_array($aJsRecurring)) {
                     list($sJsCode, $sRecurringOnclick) = $aJsRecurring;
 
                     $aTmplVarsRecurring = array(
                         'price_recurring_onclick' => $sRecurringOnclick,
-                        'price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']))
+                        'price_recurring' => _t('_bx_market_txt_price_recurring', $sAuthorCurrencySign, $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']))
                     );
                 }
                 else 
@@ -314,11 +309,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 $sDuration = 'txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short';
                 $sDuration = _t(!empty($CNF['T'][$sDuration]) ? $CNF['T'][$sDuration] : '_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short');
 
-                $sPricing = _t('_bx_market_txt_price_recurring_short', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], $sDuration);
+                $sPricing = _t('_bx_market_txt_price_recurring_short', $sAuthorCurrencySign, $aData[$CNF['FIELD_PRICE_RECURRING']], $sDuration);
             }
 
             if(empty($sPricing) && (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0)
-                $sPricing = _t('_bx_market_txt_price_single_short', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']]);
+                $sPricing = _t('_bx_market_txt_price_single_short', $sAuthorCurrencySign, $aData[$CNF['FIELD_PRICE_SINGLE']]);
 
             if(empty($sPricing))
                  $sPricing = _t('_bx_market_txt_price_free');

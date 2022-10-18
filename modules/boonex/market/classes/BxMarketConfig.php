@@ -11,9 +11,7 @@
 
 class BxMarketConfig extends BxBaseModTextConfig
 {
-    protected $_aCurrency;
-
-    function __construct($aModule)
+    public function __construct($aModule)
     {
         parent::__construct($aModule);
 
@@ -232,36 +230,25 @@ class BxMarketConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
-        	'form' => 'BxMarketForm',
-        	'entry' => 'BxMarketEntry',
-        	'manage_tools' => 'BxMarketManageTools',
-        	'licenses' => 'BxMarketLicenses'
+            'form' => 'BxMarketForm',
+            'entry' => 'BxMarketEntry',
+            'manage_tools' => 'BxMarketManageTools',
+            'licenses' => 'BxMarketLicenses'
         );
 
         $this->_aJsObjects = array(
-        	'form' => 'oBxMarketForm',
-        	'entry' => 'oBxMarketEntry',
-        	'manage_tools' => 'oBxMarketManageTools',
-        	'licenses' => 'oBxMarketLicenses'
+            'form' => 'oBxMarketForm',
+            'entry' => 'oBxMarketEntry',
+            'manage_tools' => 'oBxMarketManageTools',
+            'licenses' => 'oBxMarketLicenses'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-                'licenses_administration' => $this->CNF['OBJECT_GRID_LICENSES_ADMINISTRATION'],
-        	'licenses' => $this->CNF['OBJECT_GRID_LICENSES'],
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+            'licenses_administration' => $this->CNF['OBJECT_GRID_LICENSES_ADMINISTRATION'],
+            'licenses' => $this->CNF['OBJECT_GRID_LICENSES'],
         );
-
-        $oPayments = BxDolPayments::getInstance();
-        $this->_aCurrency = array(
-        	'code' => $oPayments->getOption('default_currency_code'),
-        	'sign' => $oPayments->getOption('default_currency_sign')
-        );
-    }
-
-    public function getCurrency()
-    {
-    	return $this->_aCurrency;
     }
 
     public function getEntryName($sName)

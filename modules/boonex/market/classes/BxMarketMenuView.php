@@ -71,7 +71,8 @@ class BxMarketMenuView extends BxBaseModTextMenuView
                 if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
                     break;
 
-                $aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1, true);
+                $iAuthorId = (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
+                $aJs = $oPayment->getAddToCartJs($iAuthorId, $this->MODULE, $this->_aContentInfo[$CNF['FIELD_ID']], 1, true);
                 if(empty($aJs) || !is_array($aJs))
                     break;
 
@@ -81,11 +82,9 @@ class BxMarketMenuView extends BxBaseModTextMenuView
                 if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
                     $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
 
-                $aCurrency = $this->_oModule->_oConfig->getCurrency();
-
                 $bResult = true;
                 $this->addMarkers(array(
-                    'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
+                    'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', BxDolPayments::getInstance()->getCurrencySign($iAuthorId), $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
                     'add_to_cart_onclick' => $sJsMethod
                 ));
                 break;
@@ -104,7 +103,8 @@ class BxMarketMenuView extends BxBaseModTextMenuView
                 if($oPayment->isCreditsOnly())
                     break;
 
-                $aJs = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
+                $iAuthorId = (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
+                $aJs = $oPayment->getSubscribeJs($iAuthorId, '', $this->MODULE, $this->_aContentInfo[$CNF['FIELD_ID']], 1);
                 if(empty($aJs) || !is_array($aJs))
                     break;
 
@@ -114,11 +114,9 @@ class BxMarketMenuView extends BxBaseModTextMenuView
                 if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
                     $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
 
-                $aCurrency = $this->_oModule->_oConfig->getCurrency();
-
                 $bResult = true;
                 $this->addMarkers(array(
-                    'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
+                    'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', BxDolPayments::getInstance()->getCurrencySign($iAuthorId), $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
                     'subscribe_onclick' => $sJsMethod
                 )); 
                 break;

@@ -81,10 +81,7 @@ class BxAclConfig extends BxBaseModGeneralConfig
 
         $oPayments = BxDolPayments::getInstance();
         $this->_iOwner = (int)$oPayments->getOption('site_admin');
-        $this->_aCurrency = array(
-            'code' => $oPayments->getOption('default_currency_code'),
-            'sign' => $oPayments->getOption('default_currency_sign')
-        );
+        $this->_aCurrency = $oPayments->getCurrencyInfo($this->_iOwner);
 
         $this->_bExpireNotifyOnce = true;
         $this->_iExpireNotificationDays = 1;

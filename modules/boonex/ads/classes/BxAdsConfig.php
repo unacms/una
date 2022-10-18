@@ -15,11 +15,9 @@ class BxAdsConfig extends BxBaseModTextConfig
 {
     protected $_oDb;
 
-    protected $_aCurrency;
-
     protected $_bAuction;
 
-    function __construct($aModule)
+    public function __construct($aModule)
     {
         parent::__construct($aModule);
 
@@ -298,30 +296,19 @@ class BxAdsConfig extends BxBaseModTextConfig
             'offer_popup' =>  $sPrefix . '-offer-popup',
         );
 
-        $oPayments = BxDolPayments::getInstance();
-        $this->_aCurrency = array(
-            'code' => $oPayments->getOption('default_currency_code'),
-            'sign' => $oPayments->getOption('default_currency_sign')
-        );
-
         $this->_bAttachmentsInTimeline = true;
     }
 
     public function init(&$oDb)
     {
         $this->_oDb = &$oDb;
-        
+
         $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
     }
 
     public function isAuction()
     {
         return $this->_bAuction;
-    }
-
-    public function getCurrency()
-    {
-    	return $this->_aCurrency;
     }
 
     public function getEntryName($sName)

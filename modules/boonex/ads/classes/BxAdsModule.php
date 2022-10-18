@@ -1096,6 +1096,7 @@ class BxAdsModule extends BxBaseModTextModule
             bx_alert($sModule, 'sold', $iItemId, false, $aParams);
         }
 
+        $oAuthor = BxDolProfile::getInstanceMagic($aEntry[$CNF['FIELD_AUTHOR']]);
         $oClient = BxDolProfile::getInstanceMagic($iClientId);
         $oSeller = BxDolProfile::getInstanceMagic($iSellerId);
         $sSellerUrl = $oSeller->getUrl();
@@ -1110,6 +1111,8 @@ class BxAdsModule extends BxBaseModTextModule
             'client_name' => $oClient->getDisplayName(),
             'entry_name' => $aEntry[$CNF['FIELD_TITLE']],
             'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $aEntry[$CNF['FIELD_ID']]])),
+            'author_url' => $oAuthor->getUrl(),
+            'author_name' => $oAuthor->getDisplayName(),
             'vendor_url' => $sSellerUrl,
             'vendor_name' => $sSellerName,
             'count' => (int)$iItemCount,

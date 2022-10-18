@@ -61,7 +61,8 @@ class BxAdsMenuView extends BxBaseModTextMenuView
                 if((float)$this->_aContentInfo[$CNF['FIELD_PRICE']] == 0 || (int)$this->_aContentInfo[$CNF['FIELD_QUANTITY']] <= 0) 
                     break;
 
-                $aJs = $oPayment->getAddToCartJs($this->_aContentInfo[$CNF['FIELD_AUTHOR']], $this->MODULE, $this->_aContentInfo[$CNF['FIELD_ID']], 1, true);
+                $iAuthorId = (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
+                $aJs = $oPayment->getAddToCartJs($iAuthorId, $this->MODULE, $this->_aContentInfo[$CNF['FIELD_ID']], 1, true);
                 if(empty($aJs) || !is_array($aJs))
                     break;
 
@@ -71,11 +72,9 @@ class BxAdsMenuView extends BxBaseModTextMenuView
                 if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
                     $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
 
-                $aCurrency = $this->_oModule->_oConfig->getCurrency();
-
                 $bResult = true;
                 $this->addMarkers(array(
-                    'add_to_cart_title' => _t('_bx_ads_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE']]),
+                    'add_to_cart_title' => _t('_bx_ads_menu_item_title_add_to_cart', BxDolPayments::getInstance()->getCurrencySign($iAuthorId), $this->_aContentInfo[$CNF['FIELD_PRICE']]),
                     'add_to_cart_onclick' => $sJsMethod
                 ));
                 break;
