@@ -59,9 +59,9 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     	)), $sKey, $aField, $aRow);
     }
 
-	protected function _getCellPriceSingle($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellPriceSingle($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault($this->_sCurrencySign . $mixedValue, $sKey, $aField, $aRow);
+        return parent::_getCellDefault(_t_format_currency_ext($mixedValue, ['sign' => $this->_sCurrencySign]), $sKey, $aField, $aRow);
     }
 
     protected function _getActionCheckout ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

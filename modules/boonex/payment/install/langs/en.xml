@@ -422,6 +422,14 @@
     <string name="_bx_payment_txt_invoice_description"><![CDATA[For a period between {0} and {1}]]></string>
     <string name="_bx_payment_txt_payment_description"><![CDATA[Payment on {0} site.]]></string>
 
+    <!-- Generic payment provider -->
+    <string name="_bx_payment_gc_cpt"><![CDATA[Generic]]></string>
+    <string name="_bx_payment_gc_dsc"><![CDATA[Isn't used to process payments directly. Is needed to store personal settings for usage in the other providers.]]></string>
+    <string name="_bx_payment_gc_currency_code_cpt"><![CDATA[Currency]]></string>
+    <string name="_bx_payment_gc_currency_code_dsc"><![CDATA[Select your own currency instead the default one]]></string>
+    <string name="_bx_payment_gc_currency_code_default"><![CDATA[Default]]></string>
+    <string name="_bx_payment_gc_err_not_available"><![CDATA[Generic payment provider isn't available for payments.]]></string>
+
     <!-- Offline payment provider -->
     <string name="_bx_payment_off_cpt"><![CDATA[Offline]]></string>
     <string name="_bx_payment_off_dsc"><![CDATA[For offline payments like cash, etransfer, etc.]]></string>

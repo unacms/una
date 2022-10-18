@@ -101,12 +101,36 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     /** 
      * @ref bx_base_payment-get_currency_info "get_currency_info"
      */
-    public function serviceGetCurrencyInfo()
+    public function serviceGetCurrencyInfo($iVendorId = 0)
     {
-        return array(
+        if((int)$iVendorId != 0) {
+            $aVendorInfo = $this->getVendorInfo ($iVendorId);
+            return [
+                'sign' => $aVendorInfo['currency_sign'],
+                'code' => $aVendorInfo['currency_code']
+            ];
+        }
+
+        return [
             'sign' => $this->_oConfig->getDefaultCurrencySign(),
             'code' => $this->_oConfig->getDefaultCurrencyCode()
-        );
+        ];
+    }
+
+    public function serviceGetCurrencyCode($iVendorId = 0)
+    {
+        if((int)$iVendorId != 0)
+            return $this->getVendorCurrencyCode($iVendorId);
+
+        return $this->_oConfig->getDefaultCurrencyCode();
+    }
+
+    public function serviceGetCurrencySign($iVendorId = 0)
+    {
+        if((int)$iVendorId != 0)
+            return $this->getVendorCurrencySign($iVendorId);
+
+        return $this->_oConfig->getDefaultCurrencySign();
     }
 
     /**
@@ -131,7 +155,7 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     {
     	$sMethod = 'get' . bx_gen_method_name($sOption);
     	if(method_exists($this->_oConfig, $sMethod))
-    		return $this->_oConfig->$sMethod();
+            return $this->_oConfig->$sMethod();
 
     	return $this->_oDb->getParam($this->_oConfig->getPrefix('options') . $sOption);
     }
@@ -199,28 +223,69 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
 
     public function getVendorInfo($iUserId)
     {
-        return array_merge($this->getProfileInfo($iUserId), array(
-            'currency_code' => $this->_oConfig->getDefaultCurrencyCode(),
-            'currency_sign' => $this->_oConfig->getDefaultCurrencySign()
-        ));
+        $CNF = &$this->_oConfig->CNF;
+
+        $sCode = $sSign = '';
+        if(!$this->_oConfig->isSingleSeller() && ($oProvider = $this->getObjectProvider($CNF['PROVIDER_GENERIC'], $iUserId)) !== false) {
+            $sCode = $oProvider->getOption('currency_code');
+            $sSign = $this->_oConfig->retrieveCurrencySign($sCode);            
+        }
+
+        if(empty($sCode) || empty($sSign)) {
+            $sCode = $this->_oConfig->getDefaultCurrencyCode();
+            $sSign = $this->_oConfig->getDefaultCurrencySign();
+        }
+
+        return array_merge($this->getProfileInfo($iUserId), [
+            'currency_code' => $sCode,
+            'currency_sign' => $sSign
+        ]);
     }
 
-	public function getObjectJoin()
+    public function getVendorCurrencyCode($iUserId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sCode = '';
+        if(!$this->_oConfig->isSingleSeller() && ($oProvider = $this->getObjectProvider($CNF['PROVIDER_GENERIC'], $iUserId)) !== false)
+            $sCode = $oProvider->getOption('currency_code');
+
+        if(empty($sCode))
+            $sCode = $this->_oConfig->getDefaultCurrencyCode();
+
+        return $sCode;
+    }
+    
+    public function getVendorCurrencySign($iUserId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sSign = '';
+        if(!$this->_oConfig->isSingleSeller() && ($oProvider = $this->getObjectProvider($CNF['PROVIDER_GENERIC'], $iUserId)) !== false)
+            $sSign = $this->_oConfig->retrieveCurrencySign($oProvider->getOption('currency_code'));
+
+        if(empty($sSign))
+            $sSign = $this->_oConfig->getDefaultCurrencySign();
+
+        return $sSign;
+    }
+
+    public function getObjectJoin()
     {
         $sClassName = $this->_oConfig->getClassPrefix() . 'Join';
         if(!isset($GLOBALS['bxDolClasses'][$sClassName])) {
-        	bx_import('Join', $this->_aModule);
+            bx_import('Join', $this->_aModule);
             $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
         }
 
         return $GLOBALS['bxDolClasses'][$sClassName];
     }
 
-	public function getObjectCart()
+    public function getObjectCart()
     {
         $sClassName = $this->_oConfig->getClassPrefix() . 'Cart';
         if(!isset($GLOBALS['bxDolClasses'][$sClassName])) {
-        	bx_import('Cart', $this->_aModule);
+            bx_import('Cart', $this->_aModule);
             $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
         }
 
@@ -231,18 +296,18 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     {
     	$sClassName = $this->_oConfig->getClassPrefix() . 'Orders';
         if(!isset($GLOBALS['bxDolClasses'][$sClassName])) {
-        	bx_import('Orders', $this->_aModule);
+            bx_import('Orders', $this->_aModule);
             $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
         }
 
         return $GLOBALS['bxDolClasses'][$sClassName];
     }
 
-	public function getObjectDetails()
+    public function getObjectDetails()
     {
     	$sClassName = $this->_oConfig->getClassPrefix() . 'Details';
         if(!isset($GLOBALS['bxDolClasses'][$sClassName])) {
-        	bx_import('Details', $this->_aModule);
+            bx_import('Details', $this->_aModule);
             $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
         }
 
@@ -253,7 +318,7 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     {
     	$sClassName = $this->_oConfig->getClassPrefix() . 'Subscriptions';
         if(!isset($GLOBALS['bxDolClasses'][$sClassName])) {
-        	bx_import('Subscriptions', $this->_aModule);
+            bx_import('Subscriptions', $this->_aModule);
             $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
         }
 
@@ -294,10 +359,10 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     public function callGetPaymentData($mixedModule)
     {
     	$sMethod = 'get_payment_data';
-		if(!BxDolRequest::serviceExists($mixedModule, $sMethod)) 
-			return false;
+        if(!BxDolRequest::serviceExists($mixedModule, $sMethod)) 
+            return false;
 
-		return BxDolService::call($mixedModule, $sMethod);
+        return BxDolService::call($mixedModule, $sMethod);
     }
 
     public function callGetCartItem($mixedModule, $aParams)

@@ -105,12 +105,16 @@ class BxPaymentFormDetails extends BxTemplFormView
                     if(empty($aInput['extra']))
                        break;
 
-                    $aAddon = array('values' => array());
+                    $aAddon = ['values' => []];
 
-                    $aPairs = explode(',', $aInput['extra']);
-                    foreach($aPairs as $sPair) {
-                        $aPair = explode('|', $sPair);
-                        $aAddon['values'][] = array('key' => $aPair[0], 'value' => _t($aPair[1]));
+                    if(BxDolService::isSerializedService($aInput['extra']))
+                        $aAddon['values'] = BxDolService::callSerialized($aInput['extra']);
+                    else {
+                        $aPairs = explode(',', $aInput['extra']);
+                        foreach($aPairs as $sPair) {
+                            $aPair = explode('|', $sPair);
+                            $aAddon['values'][] = ['key' => $aPair[0], 'value' => _t($aPair[1])];
+                        }
                     }
                     break;
 

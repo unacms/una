@@ -40,6 +40,8 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
             // objects
             'OBJECT_FORM_PRELISTS_CURRENCIES' => '',
 
+            'PROVIDER_GENERIC' => 'generic',
+
             'KEY_SESSION_PENDING' => $this->_sName . '_pending_id',
             'KEY_REQUEST_PENDING' => $this->_sName . '_pending_id',
 
@@ -99,9 +101,8 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
         $sPrefix = $this->getPrefix('options');
 
-        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
         $this->_sCurrencyCode = (string)$this->_oDb->getParam($sPrefix . 'default_currency_code');
-        $this->_sCurrencySign = !empty($this->_sCurrencyCode) && isset($aCurrencies[$this->_sCurrencyCode]) ? $aCurrencies[$this->_sCurrencyCode] : '';
+        $this->_sCurrencySign = $this->retrieveCurrencySign($this->_sCurrencyCode);
 
         $this->_iSiteAdmin = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
         $this->_bSingleSeller = $this->_oDb->getParam($sPrefix . 'single_seller') == 'on';
@@ -164,14 +165,14 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
     public function getUrl($sType, $aParams = array(), $bSsl = false)
     {
-		$sResult = '';
-		if(empty($sType) || !isset($this->CNF[$sType]))
-			return $sResult;
+        $sResult = '';
+        if(empty($sType) || !isset($this->CNF[$sType]))
+            return $sResult;
 
-		if(strncmp($this->CNF[$sType], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) === 0)
-			$sResult = bx_append_url_params($this->CNF[$sType], $aParams);
-		else
-			$sResult = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->CNF[$sType], $aParams));
+        if(strncmp($this->CNF[$sType], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) === 0)
+            $sResult = bx_append_url_params($this->CNF[$sType], $aParams);
+        else
+            $sResult = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->CNF[$sType], $aParams));
 
     	return $bSsl ? $this->http2https($sResult) : $sResult;
     }
@@ -241,6 +242,18 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     public function formatDateTime($iTs)
     {
         return gmdate($this->CNF['PARAM_CMSN_DATE_TIME_FORMAT'], $iTs);
+    }
+
+    public function retrieveCurrencySign($sCode)
+    {
+        if(empty($sCode))
+            return '';
+
+        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
+        if(!isset($aCurrencies[$sCode]))
+            return '';
+
+        return $aCurrencies[$sCode];
     }
 }
 

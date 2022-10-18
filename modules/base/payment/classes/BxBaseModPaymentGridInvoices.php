@@ -122,6 +122,13 @@ class BxBaseModPaymentGridInvoices extends BxTemplGrid
         return parent::_getCellDefault($this->_oModule->_oConfig->formatDate($mixedValue), $sKey, $aField, $aRow);
     }
 
+    protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t_format_currency_ext($mixedValue, [
+            'sign' => $this->_oModule->getVendorCurrencySign((int)$aRow['commissionaire_id'])
+        ]), $sKey, $aField, $aRow);
+    }
+
     protected function _getCellDateIssue($mixedValue, $sKey, $aField, $aRow)
     {
         return $this->_getCellDefaultDate($mixedValue, $sKey, $aField, $aRow);

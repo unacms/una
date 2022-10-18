@@ -424,6 +424,14 @@
     <string name="_bx_payment_txt_invoice_description"><![CDATA[За период между {0} и {1}]]></string>
     <string name="_bx_payment_txt_payment_description"><![CDATA[Выплата на сайте {0}.]]></string>
 
+    <!-- Generic payment provider -->
+    <string name="_bx_payment_gc_cpt"><![CDATA[Общая]]></string>
+    <string name="_bx_payment_gc_dsc"><![CDATA[Не используется для обработки платежей напрямую. Требуется для хранения личных настроек для использования в других провайдерах.]]></string>
+    <string name="_bx_payment_gc_currency_code_cpt"><![CDATA[Валюта]]></string>
+    <string name="_bx_payment_gc_currency_code_dsc"><![CDATA[Выберите собственную валюту вместо валюты по умолчанию]]></string>
+    <string name="_bx_payment_gc_currency_code_default"><![CDATA[Значение по умолчанию]]></string>
+    <string name="_bx_payment_gc_err_not_available"><![CDATA[Платежная система 'Общая' не доступна для совершения платежей.]]></string>
+
     <!-- Offline payment provider -->
     <string name="_bx_payment_off_cpt"><![CDATA[Офлайн]]></string>
     <string name="_bx_payment_off_dsc"><![CDATA[Для вне сетевых методов оплаты, таких как наличные, электронный перевод и тп.]]></string>

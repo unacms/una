@@ -41,8 +41,13 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         $this->_sDefaultSortingOrder = 'DESC';
 
         $iSellerId = bx_get('seller_id');
-        if($iSellerId !== false)
-            $this->_aQueryAppend['seller_id'] = (int)$iSellerId;
+        if($iSellerId !== false) {
+            $iSellerId = (int)$iSellerId;
+            $this->_aQueryAppend['seller_id'] = $iSellerId;
+
+            if(!$this->_bSingleSeller)
+                $this->_sCurrencySign = $this->_oModule->getVendorCurrencySign($iSellerId);
+        }
 
         $iClientId = bx_get('client_id');
         if($iClientId !== false)
@@ -148,7 +153,11 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
     protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault($this->_sCurrencySign . $mixedValue, $sKey, $aField, $aRow);
+        $sSign = $this->_sCurrencySign;
+        if(!$this->_bSingleSeller)
+            $sSign = $this->_oModule->getVendorCurrencySign((int)$aRow['seller_id']);
+
+        return parent::_getCellDefault(_t_format_currency_ext($mixedValue, ['sign' => $sSign]), $sKey, $aField, $aRow);
     }
 
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)

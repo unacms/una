@@ -381,6 +381,14 @@ class BxPaymentModule extends BxBaseModPaymentModule
         return $aResult;
     }
 
+    public function serviceGetOptionsPersonalCurrencyCode()
+    {
+        return array_merge([[
+            'key' => '',
+            'value' => _t('_bx_payment_gc_currency_code_default')
+        ]], $this->serviceGetOptionsDefaultCurrencyCode());
+    }
+
     /**
      * @page service Service Calls
      * @section bx_payment Payment

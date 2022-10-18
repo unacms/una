@@ -77,10 +77,37 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     	return bx_srv($this->_sActive, 'get_details_url', array(), 'Details');
     }
 
+    public function getCurrencyInfo($iVendorId = 0)
+    {
+    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_currency_info'))
+            return [];
+
+    	$aSrvParams = [$iVendorId];
+        return bx_srv($this->_sActive, 'get_currency_info', $aSrvParams);
+    }
+    
+    public function getCurrencyCode($iVendorId = 0)
+    {
+    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_currency_code'))
+            return '';
+
+    	$aSrvParams = [$iVendorId];
+        return bx_srv($this->_sActive, 'get_currency_code', $aSrvParams);
+    }
+
+    public function getCurrencySign($iVendorId = 0)
+    {
+    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_currency_sign'))
+            return '';
+
+    	$aSrvParams = [$iVendorId];
+        return bx_srv($this->_sActive, 'get_currency_sign', $aSrvParams);
+    }
+
     public function isAcceptingPayments($iVendorId, $sPaymentType = '')
     {
     	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'is_accepting_payments'))
-    		return false;
+            return false;
 
     	$aSrvParams = array($iVendorId, $sPaymentType);
         return bx_srv($this->_sActive, 'is_accepting_payments', $aSrvParams);
