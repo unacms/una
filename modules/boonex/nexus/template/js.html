@@ -1,7 +1,11 @@
 <script>
     function bx_mobile_apps_show_main_menu () {
         if ('__main_menu__' == 'default') {
-            if ($('.bx-sidebar-site-trigger').size())
+            if ($('#toggleSidebarMobile').size() && $(window).width() < 1280)
+                $('#toggleSidebarMobile').trigger('click');
+            else if ($('#toggleSidebar').size() && $(window).width() >= 1280)
+                $('#toggleSidebar').trigger('click');
+            else if ($('.bx-sidebar-site-trigger').size())
                 bx_sidebar_toggle('site');
             else if ($('.cd-dropdown-trigger').size())
                 $('.cd-dropdown-trigger').click();
@@ -23,6 +27,9 @@
     }
 
     function bx_mobile_apps_show_add_menu () {
+        if ('undefined' !== typeof(oBxArtificerUtils))
+            $('#bx-sliding-menu-sys_add_content').css({visibility:'visible', top:'0'});
+        
         bx_menu_slide_inline('#bx-sliding-menu-sys_add_content', null, 'site');
     }
 
