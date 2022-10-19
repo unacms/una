@@ -1997,22 +1997,6 @@ BLAH;
 
     function genInputPrice(&$aInput)
     {
-        /*
-        if(!isset($aInput['attrs_wrapper']['class'])) {
-            if(!isset($aInput['attrs_wrapper'])) 
-                $aInput['attrs_wrapper'] = [];
-            $aInput['attrs_wrapper']['class'] = '';
-        }
-        $aInput['attrs_wrapper']['class'] .= 'bx-form-input-wrapper-text';
-
-        if(!isset($aInput['attrs']['class'])) {
-            if(!isset($aInput['attrs'])) 
-                $aInput['attrs'] = [];
-            $aInput['attrs']['class'] = '';
-        }
-        $aInput['attrs']['class'] .= 'bx-form-input-text';
-         */
-
         $sCurrency = '';
         if(!isset($aInput['value_currency'])) {
             $sCurrency = BxDolPayments::getInstance()->getOption('default_currency_code');

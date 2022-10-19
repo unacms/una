@@ -27,15 +27,20 @@ class BxAdsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $oPayments = BxDolPayments::getInstance();
+        $iContentAuthorId = (int)$aContent[$CNF['FIELD_AUTHOR']];
+
         $sJsCodePay = $sJsMethodPay = '';
-        $aJsPay = BxDolPayments::getInstance()->getAddToCartJs($aContent[$CNF['FIELD_AUTHOR']], $this->MODULE, $aContent[$CNF['FIELD_ID']], $aOffer[$CNF['FIELD_OFR_QUANTITY']], true);
+        $aJsPay = $oPayments->getAddToCartJs($iContentAuthorId, $this->MODULE, $aContent[$CNF['FIELD_ID']], $aOffer[$CNF['FIELD_OFR_QUANTITY']], true);
         if(!empty($aJsPay) && is_array($aJsPay))
             list($sJsCodePay, $sJsMethodPay) = $aJsPay;
 
         return $this->parseHtmlByName('entry-offer-accepted.html', array(
             'js_object' => $this->_oConfig->getJsObject('entry'),
             'id' => $aOffer['id'],
-            'amount' => _t_format_currency($aOffer['amount']),
+            'amount' => _t_format_currency_ext($aOffer['amount'], [
+                'sign' => $oPayments->getCurrencySign($iContentAuthorId)
+            ]),
             'quantity' => _t('_bx_ads_txt_n_items', $aOffer['quantity']),
             'bx_if:show_pay' => array(
                 'condition' => !empty($sJsMethodPay),

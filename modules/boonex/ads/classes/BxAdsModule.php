@@ -130,7 +130,7 @@ class BxAdsModule extends BxBaseModTextModule
         $sJsObject = $this->_oConfig->getJsObject('entry');
 
         $iAuthorId = bx_get_logged_profile_id();
-        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $iContentId = bx_process_input(bx_get('content_id'), BX_DATA_INT);
 
         if(empty($iAuthorId))
             return echoJson(array('code' => 1, 'eval' => 'window.open("' . BxDolPermalinks::getInstance()->permalink('page.php?i=login') . '", "_self");'));
@@ -163,7 +163,7 @@ class BxAdsModule extends BxBaseModTextModule
             return echoJson(array('code' => 4, 'msg' => _t('_bx_ads_txt_err_offer_accepted')));
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_OFFER'], $CNF['OBJECT_FORM_OFFER_DISPLAY_ADD']);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'make_offer', array('id' => $iContentId));
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'make_offer', ['content_id' => $iContentId]);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
@@ -2033,7 +2033,9 @@ class BxAdsModule extends BxBaseModTextModule
 
         $sPrice = _t('_bx_ads_txt_free');
         if(!empty($CNF['FIELD_PRICE']) && !empty($aContentInfo[$CNF['FIELD_PRICE']]))
-            $sPrice = _t_format_currency((float)$aContentInfo[$CNF['FIELD_PRICE']]);
+            $sPrice = _t_format_currency_ext((float)$aContentInfo[$CNF['FIELD_PRICE']], [
+                'sign' => BxDolPayments::getInstance()->getCurrencySign((int)$aContentInfo[$CNF['FIELD_AUTHOR']])
+            ]);
 
         $sInclude = $this->_oTemplate->addCss(array('timeline.css'), $bDynamic);
 

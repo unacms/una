@@ -63,7 +63,13 @@ class BxAdsGridOffers extends BxTemplGrid
 
     protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault(_t_format_currency($mixedValue), $sKey, $aField, $aRow);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById((int)$aRow[$CNF['FIELD_OFR_CONTENT']]);
+
+        return parent::_getCellDefault(_t_format_currency_ext($mixedValue, [
+            'sign' => BxDolPayments::getInstance()->getCurrencySign((int)$aContentInfo[$CNF['FIELD_AUTHOR']])
+        ]), $sKey, $aField, $aRow);
     }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)

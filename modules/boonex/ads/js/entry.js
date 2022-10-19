@@ -31,7 +31,7 @@ BxAdsEntry.prototype.hide = function(oElement, iContentId) {
 };
 
 BxAdsEntry.prototype.makeOffer = function(oElement, iContentId) {
-    this._performAction(oElement, 'make_offer', iContentId);
+    this._performAction(oElement, 'make_offer', iContentId, 'content_id');
 };
 
 BxAdsEntry.prototype.onMakeOffer = function(oData) {};
@@ -88,10 +88,10 @@ BxAdsEntry.prototype.loadingInBox = function(e, bShow) {
     bx_loading(oParent, bShow);
 };
 
-BxAdsEntry.prototype._performAction = function(oElement, sAction, iContentId) {
+BxAdsEntry.prototype._performAction = function(oElement, sAction, iContentId, sContentIdKey) {
     var $this = this;
     var oParams = this._getDefaultData();
-    oParams['id'] = iContentId;
+    oParams[sContentIdKey ? sContentIdKey : 'id'] = iContentId;
 
     if(oElement)
         this.loadingInButton(oElement, true);
