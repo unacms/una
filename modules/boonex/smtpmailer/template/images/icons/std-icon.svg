@@ -1,37 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
-    <title>smtp mailer</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M32,64 C46.0222222,64 53.8173667,64 58.9086889,58.9086889 C64,53.8173667 64,46.0222222 64,32 C64,17.9777778 64,10.1826333 58.9086889,5.09131111 C53.8173667,0 46.0222222,0 32,0 C17.9777778,0 10.1826333,0 5.09131111,5.09131111 C0,10.1826333 0,17.9777778 0,32 C0,46.0222222 0,53.8173667 5.09131111,58.9086889 C10.1826333,64 17.9777778,64 32,64 Z" id="path-1"></path>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
-            <stop stop-color="#FDFEFF" offset="0%"></stop>
-            <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
-        </linearGradient>
-        <path d="M35.7142857,0 L4.28571429,0 C1.91875,0 0,1.91875 0,4.28571429 L0,35.7142857 C0,38.08125 1.91875,40 4.28571429,40 L35.7142857,40 C38.08125,40 40,38.08125 40,35.7142857 L40,4.28571429 C40,1.91875 38.08125,0 35.7142857,0 Z M15.9033036,20.545 C7.80616071,14.6684821 7.88866071,14.6536607 5.71428571,12.9613393 L5.71428571,10.7142857 C5.71428571,9.53080357 6.67366071,8.57142857 7.85714286,8.57142857 L32.1428571,8.57142857 C33.3263393,8.57142857 34.2857143,9.53080357 34.2857143,10.7142857 L34.2857143,12.9613393 C32.1097321,14.655 32.1933929,14.6688393 24.0966964,20.5450893 C23.1591964,21.2285714 21.2938393,22.8772321 20,22.8570536 C18.7050893,22.8765179 16.8422321,21.2296429 15.9033036,20.545 L15.9033036,20.545 Z M34.2857143,16.5870536 L34.2857143,29.2857143 C34.2857143,30.4691964 33.3263393,31.4285714 32.1428571,31.4285714 L7.85714286,31.4285714 C6.67366071,31.4285714 5.71428571,30.4691964 5.71428571,29.2857143 L5.71428571,16.5870536 C6.96053571,17.5508036 8.69008929,18.8402679 14.2234821,22.8561607 C15.4879464,23.7794643 17.6141071,25.72625 19.9997321,25.7141964 C22.4003571,25.7261607 24.5566071,23.74625 25.7783036,22.8548214 C31.3102679,18.8400893 33.0394643,17.5507143 34.2857143,16.5870536 Z" id="path-4"></path>
-        <filter x="-5.0%" y="-2.5%" width="110.0%" height="110.0%" filterUnits="objectBoundingBox" id="filter-5">
-            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-        </filter>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-502.000000, -184.000000)">
-            <g id="smtp-mailer" transform="translate(502.000000, 184.000000)">
-                <mask id="mask-2" fill="white">
-                    <use xlink:href="#path-1"></use>
-                </mask>
-                <use id="Path" fill="#738088" xlink:href="#path-1"></use>
-                <g id="envelope-square" mask="url(#mask-2)" fill-rule="nonzero">
-                    <g transform="translate(12.000000, 12.000000)" id="Shape">
-                        <g>
-                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
-                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
-                        </g>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_817_5934)">
+<path d="M160 0C281.326 0 320 38.6737 320 160C320 281.326 281.326 320 160 320C38.6736 320 0 281.326 0 160C0 38.6737 38.6736 0 160 0Z" fill="url(#paint0_linear_817_5934)"/>
+<path d="M160 2C220.573 2 259.85 11.6833 284.083 35.9168C308.317 60.1504 318 99.4272 318 160C318 220.573 308.317 259.85 284.083 284.083C259.85 308.317 220.573 318 160 318C99.4272 318 60.1504 308.317 35.9168 284.083C11.6833 259.85 2 220.573 2 160C2 99.4272 11.6833 60.1504 35.9168 35.9168C60.1504 11.6833 99.4272 2 160 2Z" stroke="#0F172A" stroke-opacity="0.2" stroke-width="4"/>
+<g clip-path="url(#clip1_817_5934)">
+<path d="M110 170C155.497 170 170 182.086 170 220C170 257.914 155.497 270 110 270C64.5026 270 50 257.914 50 220C50 182.086 64.5026 170 110 170Z" fill="url(#paint1_linear_817_5934)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M220 160C220 122.086 205.498 110 160 110C117.021 110 101.7 120.785 100.136 153.94C100.002 156.789 102.385 159.092 105.237 159.041C106.792 159.014 108.379 159 110 159C156.622 159 175.347 170.188 179.214 203.738C179.542 206.582 182.08 208.731 184.9 208.242C210.992 203.72 220 189.882 220 160Z" fill="url(#paint2_linear_817_5934)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M270 100C270 62.0855 255.498 50 210 50C167.021 50 151.7 60.7848 150.136 93.9397C150.002 96.7889 152.385 99.0916 155.237 99.0411C156.792 99.0135 158.379 99 160 99C206.622 99 225.347 110.188 229.214 143.738C229.542 146.582 232.08 148.731 234.9 148.242C260.992 143.72 270 129.882 270 100Z" fill="url(#paint3_linear_817_5934)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_817_5934" x1="160" y1="0" x2="160" y2="320" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F8FAFC"/>
+<stop offset="1" stop-color="#E2E8F0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_817_5934" x1="110" y1="170" x2="110" y2="270" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7DD3FC"/>
+<stop offset="1" stop-color="#0EA5E9"/>
+</linearGradient>
+<linearGradient id="paint2_linear_817_5934" x1="160.066" y1="110" x2="160.066" y2="208.312" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FB923C"/>
+<stop offset="1" stop-color="#EA580C"/>
+</linearGradient>
+<linearGradient id="paint3_linear_817_5934" x1="210.066" y1="50" x2="210.066" y2="148.312" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2DD4BF"/>
+<stop offset="1" stop-color="#0D9488"/>
+</linearGradient>
+<clipPath id="clip0_817_5934">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+<clipPath id="clip1_817_5934">
+<rect width="240" height="240" fill="white" transform="translate(40 40)"/>
+</clipPath>
+</defs>
 </svg>

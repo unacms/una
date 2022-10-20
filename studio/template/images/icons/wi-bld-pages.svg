@@ -1,37 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
-    <title>pages</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M32,64 C46.0222222,64 53.8173667,64 58.9086889,58.9086889 C64,53.8173667 64,46.0222222 64,32 C64,17.9777778 64,10.1826333 58.9086889,5.09131111 C53.8173667,0 46.0222222,0 32,0 C17.9777778,0 10.1826333,0 5.09131111,5.09131111 C0,10.1826333 0,17.9777778 0,32 C0,46.0222222 0,53.8173667 5.09131111,58.9086889 C10.1826333,64 17.9777778,64 32,64 Z" id="path-1"></path>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
-            <stop stop-color="#FDFEFF" offset="0%"></stop>
-            <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
-        </linearGradient>
-        <path d="M25,35 L25,38.125 C25,39.1605469 24.1605469,40 23.125,40 L1.875,40 C0.839453125,40 0,39.1605469 0,38.125 L0,9.375 C0,8.33945312 0.839453125,7.5 1.875,7.5 L7.5,7.5 L7.5,30.625 C7.5,33.0374219 9.46257813,35 11.875,35 L25,35 Z M25,8.125 L25,0 L11.875,0 C10.8394531,0 10,0.839453125 10,1.875 L10,30.625 C10,31.6605469 10.8394531,32.5 11.875,32.5 L33.125,32.5 C34.1605469,32.5 35,31.6605469 35,30.625 L35,10 L26.875,10 C25.84375,10 25,9.15625 25,8.125 Z M34.4508594,5.70085937 L29.2991406,0.549140625 C28.9475151,0.197533215 28.4706202,2.59996977e-06 27.9733594,0 L27.5,0 L27.5,7.5 L35,7.5 L35,7.02664062 C34.9999974,6.52937984 34.8024668,6.0524849 34.4508594,5.70085937 L34.4508594,5.70085937 Z" id="path-4"></path>
-        <filter x="-5.7%" y="-2.5%" width="111.4%" height="110.0%" filterUnits="objectBoundingBox" id="filter-5">
-            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-        </filter>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-421.000000, -512.000000)">
-            <g id="pages" transform="translate(421.000000, 512.000000)">
-                <mask id="mask-2" fill="white">
-                    <use xlink:href="#path-1"></use>
-                </mask>
-                <use id="Path" fill="#2085FD" xlink:href="#path-1"></use>
-                <g id="copy" mask="url(#mask-2)" fill-rule="nonzero">
-                    <g transform="translate(15.000000, 12.000000)" id="Shape">
-                        <g>
-                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
-                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
-                        </g>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_908_6517)">
+<path d="M160 0C281.326 0 320 38.6737 320 160C320 281.326 281.326 320 160 320C38.6736 320 0 281.326 0 160C0 38.6737 38.6736 0 160 0Z" fill="url(#paint0_linear_908_6517)"/>
+<g clip-path="url(#clip1_908_6517)">
+<path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M111.097 234.537C107.259 234.262 104.36 238.106 106.359 241.395C116.764 258.513 135.173 265 164.999 265C218.079 265 234.999 244.455 234.999 180C234.999 139.511 228.322 116.348 210.198 104.722C206.896 102.603 203.025 105.632 203.477 109.529C204.521 118.538 205 128.661 205 140C205 212.038 185.663 235 125 235C120.1 235 115.47 234.85 111.097 234.537Z" fill="url(#paint1_linear_908_6517)"/>
+<path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd" d="M198.635 85.9577C199.179 87.6279 200.515 88.9266 202.196 89.4359C233.914 99.0456 245 125.455 245 180C245 192.1 244.454 202.815 243.259 212.27C242.692 216.755 247.515 219.676 250.333 216.142C260.881 202.912 264.999 181.8 264.999 150C264.999 85.5459 248.08 65.0005 194.999 65.0005V65.0005C191.946 65.0005 190.296 68.635 191.917 71.223C194.606 75.5154 196.83 80.4094 198.635 85.9577Z" fill="url(#paint2_linear_908_6517)"/>
+<path d="M125 55C178.08 55 195 75.5454 195 140C195 204.455 178.08 225 125 225C71.9197 225 55 204.455 55 140C55 75.5454 71.9197 55 125 55Z" fill="url(#paint3_linear_908_6517)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_908_6517" x1="160" y1="0" x2="160" y2="320" gradientUnits="userSpaceOnUse">
+<stop stop-color="#60A5FA"/>
+<stop offset="1" stop-color="#2563EB"/>
+</linearGradient>
+<linearGradient id="paint1_linear_908_6517" x1="170.354" y1="104.025" x2="170.354" y2="265" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#BFDBFE"/>
+</linearGradient>
+<linearGradient id="paint2_linear_908_6517" x1="228.141" y1="65.0005" x2="228.141" y2="217.713" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#BFDBFE"/>
+</linearGradient>
+<linearGradient id="paint3_linear_908_6517" x1="125" y1="55" x2="125" y2="225" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#BFDBFE"/>
+</linearGradient>
+<clipPath id="clip0_908_6517">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+<clipPath id="clip1_908_6517">
+<rect width="240" height="240" fill="white" transform="translate(40 40)"/>
+</clipPath>
+</defs>
 </svg>
