@@ -114,7 +114,7 @@ BxTimelineView.prototype.init = function(bForceInit)
 
         //--- Init mark as viewed
         if(this._bAutoMarkAsViewed) {
-            $(window).on('scroll', function() {
+            $(window).on('load scroll', function() {
                 if(!$this.oView.is(':visible'))
                     return;
 
