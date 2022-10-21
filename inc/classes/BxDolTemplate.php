@@ -3497,15 +3497,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (empty($oTemplate))
            $oTemplate = $this;
 
-        $oZ = new BxDolAlerts('system', 'design_before_output', 0, 0, array('page' => &$this->aPage, 'page_content' => &$this->aPageContent));
-        $oZ->alert();
+        bx_alert('system', 'design_before_output', 0, 0, ['page' => &$this->aPage, 'page_content' => &$this->aPageContent]);
 
         header( 'Content-type: text/html; charset=utf-8' );
         header( 'X-Frame-Options: sameorigin' );
         if (BX_PAGE_EMBED == $oTemplate->getPageNameIndex())
             header('Content-Security-Policy: frame-ancestors ' . getParam('sys_csp_frame_ancestors'));
 
-        echo $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
+        $sResult = $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
+        
+        bx_alert('system', 'design_after_output', 0, false, ['override_result' => &$sResult]);
+        
+        echo $sResult;
     }
 }
 
