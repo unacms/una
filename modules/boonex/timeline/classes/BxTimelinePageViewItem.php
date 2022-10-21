@@ -35,11 +35,18 @@ class BxTimelinePageViewItem extends BxBaseModTextPageAuthor
         $aItemData = $this->_oModule->getItemData($this->_iItemId);
 
         if($aItemData['code'] != 0) {
-            if($aItemData['code'] == 1)
-                $this->_oTemplate->displayPageNotFound();
-            else
-                $this->_oTemplate->displayMsg($aItemData['content']);
-            exit;
+            switch($aItemData['code']) {
+                case 1:
+                    $this->_oTemplate->displayPageNotFound();
+                    break;
+
+                case 2: 
+                    $this->_oTemplate->displayAccessDenied($aItemData['content']);
+                    break;
+
+                default:
+                    $this->_oTemplate->displayMsg($aItemData['content']);
+            }
         }
 
         BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&id=' . $this->_iItemId);
