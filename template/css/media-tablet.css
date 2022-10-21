@@ -33,7 +33,6 @@ html.bx-media-tablet {
 
 
 /* default.css */
-
 .bx-media-tablet .bx-def-page-width {
     width:auto;
 }
@@ -41,14 +40,3 @@ html.bx-media-tablet {
 .bx-media-tablet .bx-pt-application .bx-main-content.bx-def-page-width {
     width: 100%;
 }
-
-/* page layouts */
-.bx-media-tablet .bx-layout-wrapper.bx-layout-top-area-bcb .bx-layout-col {
-    float:none !important;
-    width:auto !important;
-}
-.bx-media-tablet .bx-layout-wrapper.bx-layout-top-area-bcb .bx-layout-col .bx-layout-cell {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-

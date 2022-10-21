@@ -326,7 +326,7 @@ div.bx-tl-item div.bx-tl-item-owner {
 }
 
 div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
-    margin-right: 2.5rem;
+    margin-right: 2.0rem;
 }
 
 div.bx-tl-item div.bx-tl-owner-name {
@@ -393,11 +393,8 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
     text-align: left;
 }
 .bx-tl-item-meta ul.bx-menu-custom.bx-menu-custom-hor {
-    position: relative;
-    display: inline-block;
-}
-.bx-tl-item-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
-    vertical-align: top;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 .bx-tl-item-meta ul.bx-menu-custom.bx-menu-custom-hor > li > span {
     margin-right: 0;
@@ -699,10 +696,6 @@ div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
 /*--- Item Style: Outline ---*/
 div.bx-tl-view-outline div.bx-tl-item {
 	position: relative;
-}
-div.bx-tl-view-outline div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
-    margin-right: 48px;
-    margin-right: 3.0rem;
 }
 div.bx-tl-view-outline div.bx-tl-item-ind {
 	position: relative;
