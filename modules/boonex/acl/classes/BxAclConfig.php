@@ -30,6 +30,7 @@ class BxAclConfig extends BxBaseModGeneralConfig
         $this->CNF = array (
             // database tables
             'TABLE_PRICES' => $aModule['db_prefix'] . 'level_prices',
+            'TABLE_LICENSES' => $aModule['db_prefix'] . 'licenses',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -41,6 +42,7 @@ class BxAclConfig extends BxBaseModGeneralConfig
             'URL_VIEW' => 'page.php?i=acl-view',
 
             // some params
+            'PARAM_DATE_FORMAT' => 'd.m.Y',
             'PARAM_RECURRING_RESERVE' => 'bx_acl_recurring_reserve',
             'PARAM_RECURRING_PRIORITIZE' => 'bx_acl_recurring_prioritize',
 
@@ -51,6 +53,9 @@ class BxAclConfig extends BxBaseModGeneralConfig
             'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_acl_price_add',
             'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_acl_price_edit',
             'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_acl_period_units',
+
+            // email templates
+            'ETEMPLATE_SBS_CANCEL_REQUIRED' => 'bx_acl_subscription_cancel_required',
         );
 
         $this->_aGridObjects = array(
@@ -135,6 +140,11 @@ class BxAclConfig extends BxBaseModGeneralConfig
     public function getPriceName($sName)
     {
         return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_NAME'], ['lowercase' => false]);
+    }
+
+    public function formatDate($iTs)
+    {
+        return gmdate($this->CNF['PARAM_DATE_FORMAT'], $iTs);
     }
 }
 

@@ -540,23 +540,65 @@ class BxAclModule extends BxDolModule
 
     	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
-            return array();
+            return [];
 
         $oAcl = BxDolAcl::getInstance();
 
-        $aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
+        $aItemInfo = $this->_oDb->getPrices(['type' => 'by_id', 'value' => $iItemId]);
         $aMembershipInfo = $oAcl->getMemberMembershipInfo($iClientId);
 
-        $aPeriod = array('period' => (int)$aItemInfo['period'], 'period_unit' => $aItemInfo['period_unit']);
+        $aPeriod = ['period' => (int)$aItemInfo['period'], 'period_unit' => $aItemInfo['period_unit']];
         if($sType == BX_ACL_LICENSE_TYPE_RECURRING && (int)$aItemInfo['trial'] > 0 && (int)$aItemInfo['level_id'] != (int)$aMembershipInfo['id'])
-            $aPeriod = array('period' => (int)$aItemInfo['trial'], 'period_unit' => 'day', 'period_trial' => true);
+            $aPeriod = ['period' => (int)$aItemInfo['trial'], 'period_unit' => 'day', 'period_trial' => true];
 
         $iReserve = (int)getParam($CNF['PARAM_RECURRING_RESERVE']);
         if(!empty($iReserve))
             $aPeriod['period_reserve'] = $iReserve;
 
-        if(!$oAcl->setMembership($iClientId, $aItemInfo['level_id'], $aPeriod, true, $sLicense))
-            return array();
+        $bImmediate = (int)$aItemInfo['immediate'] != 0;
+        if(!$oAcl->setMembership($iClientId, $aItemInfo['level_id'], $aPeriod, $bImmediate, $sLicense))
+            return [];
+
+        $this->_oDb->insertLicense([
+            'profile_id' => $iClientId,
+            'price_id' => $iItemId,
+            'type' => $sType,
+            'order' => $sOrder,
+            'license' => $sLicense,
+            'added' => time()
+        ]);
+
+        if($bImmediate && !empty($aMembershipInfo['transaction_id'])) {
+            $oPayments = BxDolPayments::getInstance();
+
+            $sLicenseOld = $aMembershipInfo['transaction_id'];
+            $aLicenseOld = $this->_oDb->getLicenses(['type' => 'by_license', 'license' => $sLicenseOld]);
+
+            $sPpOrder = '';
+            if(empty($aLicenseOld) || !is_array($aLicenseOld)) {
+                $aOrders = $oPayments->getOrdersInfo(['license' => $sLicenseOld]);
+                if(!empty($aOrders) && is_array($aOrders)) {
+                    $aOrder = reset($aOrders);
+                    $aPendings = $oPayments->getPendingOrdersInfo(['id' => $aOrder['pending_id']]);
+                    if(!empty($aPendings) && is_array($aPendings)) {
+                        $aPpPending = reset($aPendings);
+                        if($aPpPending['type'] == BX_ACL_LICENSE_TYPE_RECURRING)
+                            $sPpOrder = $aPpPending['order'];
+                    }
+                }    
+            }
+            else if($aLicenseOld['type'] == BX_ACL_LICENSE_TYPE_RECURRING)
+                $sPpOrder = $aLicenseOld['order'];
+
+            if(!empty($sPpOrder) && (($aResult = $oPayments->cancelSubscription($sPpOrder)) === false || (int)$aResult['code'] != 0)) {
+                sendMailTemplate($CNF['ETEMPLATE_SBS_CANCEL_REQUIRED'], 0, $iClientId, [
+                    'level' => _t($aMembershipInfo['name']),
+                    'order' => $sPpOrder,
+                    'date_starts' => $this->_oConfig->formatDate($aMembershipInfo['date_starts']),
+                    'date_expires' => $this->_oConfig->formatDate($aMembershipInfo['date_expires']),
+                ], BX_EMAIL_NOTIFY, true);
+            }
+        }
 
         return $aItem;
     }

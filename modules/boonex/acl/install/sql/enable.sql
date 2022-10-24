@@ -30,6 +30,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_settings', 'bx_acl', 'acl-view', '_bx_acl_menu_item_title_system_acl_view', '_bx_acl_menu_item_title_acl_view', 'page.php?i=acl-view', '', '', 'shield-alt col-red2', '', '', 2147483646, 1, 0, 1, @iMoAccountSettings + 1);
 
 
+-- EMAIL TEMPLATES
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
+(@sName, '_bx_acl_et_txt_name_subscription_cancel_required', 'bx_acl_subscription_cancel_required', '_bx_acl_et_txt_subject_subscription_cancel_required', '_bx_acl_et_txt_body_subscription_cancel_required');
+
+
 -- ALERTS
 INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUES 
 (@sName, 'BxAclResponse', 'modules/boonex/acl/classes/BxAclResponse.php', '');

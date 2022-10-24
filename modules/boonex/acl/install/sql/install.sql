@@ -10,10 +10,25 @@ CREATE TABLE `bx_acl_level_prices` (
   `period_unit` varchar(32) NOT NULL default '',
   `trial` int(11) unsigned NOT NULL default '0',
   `price` float unsigned NOT NULL default '1',
+  `immediate` tinyint(4) NOT NULL default '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `type` (`level_id`,`period`, `period_unit`)
+);
+
+-- TABLE: licenses
+CREATE TABLE IF NOT EXISTS `bx_acl_licenses` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL default '0',
+  `price_id` int(11) unsigned NOT NULL default '0',
+  `type` varchar(16) NOT NULL default 'single',
+  `order` varchar(32) NOT NULL default '',
+  `license` varchar(32) NOT NULL default '',
+  `added` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `price_id` (`price_id`, `profile_id`),
+  KEY `license` (`license`)
 );
 
 
@@ -33,6 +48,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_acl_price', @sName, 'period_unit', '', '#!bx_acl_period_units', 0, 'select', '_bx_acl_form_price_input_sys_period_unit', '_bx_acl_form_price_input_period_unit', '_bx_acl_form_price_input_inf_period_unit', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_acl_price', @sName, 'trial', '', '', 0, 'text', '_bx_acl_form_price_input_sys_trial', '_bx_acl_form_price_input_trial', '_bx_acl_form_price_input_inf_trial', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'price', '', '', 0, 'price', '_bx_acl_form_price_input_sys_price', '_bx_acl_form_price_input_price', '_bx_acl_form_price_input_inf_price', 1, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
+('bx_acl_price', @sName, 'immediate', 1, '', 1, 'switcher', '_bx_acl_form_price_input_sys_immediate', '_bx_acl_form_price_input_immediate', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_acl_price', @sName, 'do_submit', '_bx_acl_form_price_input_do_submit', '', 0, 'submit', '_bx_acl_form_price_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_acl_price', @sName, 'do_cancel', '_bx_acl_form_price_input_do_cancel', '', 0, 'button', '_bx_acl_form_price_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
@@ -45,9 +61,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_acl_price_add', 'period', 2147483647, 1, 5),
 ('bx_acl_price_add', 'period_unit', 2147483647, 1, 6),
 ('bx_acl_price_add', 'trial', 2147483647, 1, 7),
-('bx_acl_price_add', 'controls', 2147483647, 1, 8),
-('bx_acl_price_add', 'do_submit', 2147483647, 1, 9),
-('bx_acl_price_add', 'do_cancel', 2147483647, 1, 10),
+('bx_acl_price_add', 'immediate', 2147483647, 1, 8),
+('bx_acl_price_add', 'controls', 2147483647, 1, 9),
+('bx_acl_price_add', 'do_submit', 2147483647, 1, 10),
+('bx_acl_price_add', 'do_cancel', 2147483647, 1, 11),
 
 ('bx_acl_price_edit', 'id', 2147483647, 1, 1),
 ('bx_acl_price_edit', 'level_id', 2147483647, 1, 2),
@@ -56,9 +73,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_acl_price_edit', 'period', 2147483647, 1, 5),
 ('bx_acl_price_edit', 'period_unit', 2147483647, 1, 6),
 ('bx_acl_price_edit', 'trial', 2147483647, 1, 7),
-('bx_acl_price_edit', 'controls', 2147483647, 1, 8),
-('bx_acl_price_edit', 'do_submit', 2147483647, 1, 9),
-('bx_acl_price_edit', 'do_cancel', 2147483647, 1, 10);
+('bx_acl_price_edit', 'immediate', 2147483647, 1, 8),
+('bx_acl_price_edit', 'controls', 2147483647, 1, 9),
+('bx_acl_price_edit', 'do_submit', 2147483647, 1, 10),
+('bx_acl_price_edit', 'do_cancel', 2147483647, 1, 11);
 
 
 -- PRE-VALUES
