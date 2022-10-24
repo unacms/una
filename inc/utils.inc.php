@@ -439,6 +439,13 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         'custom_headers' => $aCustomHeaders,
         'override_result' => &$bResult,
     );
+    
+    // alert for disable sending
+    bx_alert('system', 'check_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
+    
+    if ($bResult !== null)
+        return $bResult;
+    unset($aAlert['override_result']);
 
     // system alert
     if (!$isDisableAlert) {
