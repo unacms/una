@@ -206,7 +206,12 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
 
     public function getMenuItemsActionsRecurring($iClientId, $iVendorId, $aParams = array())
     {
-        return array();
+        return [];
+    }
+
+    public function cancelRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        return $this->_cancelSubscription($sSubscriptionId);
     }
 
     protected function _finalizeCheckoutSingle(&$aData)
@@ -384,6 +389,21 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         return $mixedResult;
     }
 
+    protected function _cancelSubscription($sSubscriptionId)
+    {
+        list($sCode, $sResponse) = $this->_apiCallAuthorized($this->_sEndpoint . 'v1/billing/subscriptions/' . $sSubscriptionId . '/cancel', [
+            'reason' => 'Not needed anymore'
+        ], [], 'post-json', true);
+
+        if($sCode != 204) {
+            $this->log($mixedResult, 'Cancel Subscription:');
+
+            return false;
+        }
+
+        return true;
+    }
+
     protected function _createProduct($aItem)
     {
         if(empty($aItem['description']))
@@ -521,12 +541,12 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
 
     protected function _getToken()
     {
-        $mixedResult = $this->_apiCall($this->_sEndpoint . 'v1/oauth2/token', array(
+        $mixedResult = $this->_apiCallAuthorize($this->_sEndpoint . 'v1/oauth2/token', [
             'grant_type' => 'client_credentials'
-        ), array(), 'post', array(
+        ], [
             'user' => $this->getClientId(),
             'password' => $this->getSecret()
-        ));
+        ]);
 
         if($mixedResult === false || empty($mixedResult['access_token'])) {
             $this->log($mixedResult, 'Get Token:');
@@ -537,32 +557,40 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         return $mixedResult['access_token'];
     }
 
-    protected function _apiCallAuthorized($sEndpoint, $aParams = array(), $aHeaders = array(), $sMethod = 'post-json')
+    protected function _apiCallAuthorize($sEndpoint, $aParams = [], $aBasicAuth = [], $sMethod = 'post')
+    {
+        $sResponse = $this->_apiCall($sEndpoint, $aParams, [], $sMethod, $aBasicAuth);
+
+        return !empty($sResponse) ? json_decode($sResponse, true) : false;
+    }
+
+    protected function _apiCallAuthorized($sEndpoint, $aParams = [], $aHeaders = [], $sMethod = 'post-json', $bRawResponse = false)
     {
         if(!$this->_sToken)
             $this->_sToken = $this->_getToken();
 
-        $aHeaders = array_merge(array(
+        $aHeaders = array_merge([
             'Authorization: Bearer ' . $this->_sToken,
             'Prefer: return=representation'
-        ), $aHeaders);
+        ], $aHeaders);
 
-        return $this->_apiCall($sEndpoint, $aParams, $aHeaders, $sMethod);
+        $sHttpCode = $bRawResponse ? true : null;
+
+        $sResponse = $this->_apiCall($sEndpoint, $aParams, $aHeaders, $sMethod, [], $sHttpCode);
+        if($bRawResponse)
+            return [$sHttpCode, $sResponse];
+
+        return !empty($sResponse) ? json_decode($sResponse, true) : false;
     }
 
-    protected function _apiCall($sEndpoint, $aParams = array(), $aHeaders = array(), $sMethod = 'post-json', $aBasicAuth = array())
+    protected function _apiCall($sEndpoint, $aParams = [], $aHeaders = [], $sMethod = 'post-json', $aBasicAuth = [], &$sHttpCode = null)
     {
-        $sHttpCode = null;
-        $aHeaders = array_merge(array(
+        $aHeaders = array_merge([
             'Accept: application/json',
             'Content-Type: application/json'
-        ), $aHeaders);
+        ], $aHeaders);
 
-        $sResult = bx_file_get_contents($sEndpoint, $aParams, $sMethod, $aHeaders, $sHttpCode, $aBasicAuth);
-        if(empty($sResult))
-            return false;
-
-        return json_decode($sResult, true);
+        return bx_file_get_contents($sEndpoint, $aParams, $sMethod, $aHeaders, $sHttpCode, $aBasicAuth);
     }
 
     protected function _getIntervalUnit($sPeriodUnit)

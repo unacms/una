@@ -504,16 +504,13 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'initialize_checkout', $aSrvParams);
     }
 
-    /**
-     * Isn't used anywhere for now. Is needed when license 'prolong' is requested from license keeping module like Market and ACL.  
-     */
-    public function prolongSubscription($sOrderId)
+    public function cancelSubscription($sOrderId)
     {
-        if(!BxDolRequest::serviceExists($this->_sActive, 'prolong_subscription'))
-            return '';
+        if(!BxDolRequest::serviceExists($this->_sActive, 'cancel', 'Subscriptions'))
+            return false;
 
-        $aSrvParams = array($sOrderId);
-        return bx_srv($this->_sActive, 'prolong_subscription', $aSrvParams);
+        $aSrvParams = [$sOrderId];
+        return bx_srv($this->_sActive, 'cancel', $aSrvParams, 'Subscriptions');
     }
 
     public function processOrder($iSellerId, $iClientId, $iModuleId, $aItems, $sType, $sOrder)
