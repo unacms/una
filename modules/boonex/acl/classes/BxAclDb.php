@@ -22,40 +22,39 @@ class BxAclDb extends BxDolModuleDb
 
     public function getProductsNames ($iVendor = 0, $iLimit = 1000)
     {
-        $aBindings = array('limit' => $iLimit);
-        return $this->getColumn("SELECT `name` FROM `bx_acl_level_prices` WHERE 1 LIMIT :limit", $aBindings);
+        return $this->getColumn("SELECT `name` FROM `bx_acl_level_prices` WHERE 1 LIMIT :limit", ['limit' => $iLimit]);
     }
 
-	public function getLevels($aParams, $bReturnCount = false)
+    public function getLevels($aParams, $bReturnCount = false)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "
-			`tal`.`ID` AS `id`,
-			`tal`.`Name` AS `name`,
-			`tal`.`Icon` AS `icon`,
-			`tal`.`Description` AS `description`,
-			`tal`.`Active` AS `active`,
-			`tal`.`Purchasable` AS `purchasable`,
-			`tal`.`Removable` AS `removable`,
-			`tal`.`QuotaSize` AS `quota_size`,
-			`tal`.`QuotaNumber` AS `quota_number`,
-			`tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
-			`tal`.`Order` AS `order`";
+            `tal`.`ID` AS `id`,
+            `tal`.`Name` AS `name`,
+            `tal`.`Icon` AS `icon`,
+            `tal`.`Description` AS `description`,
+            `tal`.`Active` AS `active`,
+            `tal`.`Purchasable` AS `purchasable`,
+            `tal`.`Removable` AS `removable`,
+            `tal`.`QuotaSize` AS `quota_size`,
+            `tal`.`QuotaNumber` AS `quota_number`,
+            `tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
+            `tal`.`Order` AS `order`";
 
         if(!isset($aParams['order']) || empty($aParams['order']))
             $sOrderClause = "ORDER BY `tal`.`Order` ASC";
 
         switch($aParams['type']) {
-        	case 'by_id':
-        		$aMethod['name'] = 'getRow';
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
                 $sWhereClause .= "AND `tal`.`id`=:id";
-        		break;
+                break;
 
             case 'for_selector':
                 $aMethod['name'] = 'getPairs';
@@ -73,35 +72,36 @@ class BxAclDb extends BxDolModuleDb
         if(!$bReturnCount)
             return $aItems;
 
-		$aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+        $aMethod['name'] = 'getOne';
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
-		return array(
-			'items' => $aItems, 
-			'count' => (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params'])
-		);
+        return array(
+            'items' => $aItems, 
+            'count' => (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params'])
+        );
     }
 
-	public function updateLevels($aSet, $aWhere)
+    public function updateLevels($aSet, $aWhere)
     {
-    	$sSql = "UPDATE `sys_acl_levels` SET " . $this->arrayToSQL($aSet, " AND ") . " WHERE " . $this->arrayToSQL($aWhere, " AND ");
+        $sSql = "UPDATE `sys_acl_levels` SET " . $this->arrayToSQL($aSet, " AND ") . " WHERE " . $this->arrayToSQL($aWhere, " AND ");
         return (int)$this->query($sSql) > 0;
     }
 
-	public function getPrices($aParams, $bReturnCount = false)
+    public function getPrices($aParams, $bReturnCount = false)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "
-			`tap`.`id` AS `id`,
-			`tap`.`level_id` AS `level_id`,
-			`tap`.`name` AS `name`,
-			`tap`.`period` AS `period`,
-			`tap`.`period_unit` AS `period_unit`,
-			`tap`.`price` AS `price`,
-			`tap`.`trial` AS `trial`,
-			`tap`.`order` AS `order`";
+            `tap`.`id` AS `id`,
+            `tap`.`level_id` AS `level_id`,
+            `tap`.`name` AS `name`,
+            `tap`.`period` AS `period`,
+            `tap`.`period_unit` AS `period_unit`,
+            `tap`.`price` AS `price`,
+            `tap`.`trial` AS `trial`,
+            `tap`.`immediate` AS `immediate`,
+            `tap`.`order` AS `order`";
 
         if(!isset($aParams['order']) || empty($aParams['order']))
             $sOrderClause = "ORDER BY `tap`.`Order` ASC";
@@ -139,7 +139,7 @@ class BxAclDb extends BxDolModuleDb
                 break;
 
             case 'by_level_id':
-            	$aMethod['params'][1] = array(
+                $aMethod['params'][1] = array(
                     'level_id' => $aParams['value']
                 );
 
@@ -171,12 +171,12 @@ class BxAclDb extends BxDolModuleDb
         if(!$bReturnCount)
             return $aItems;
 
-		$aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+        $aMethod['name'] = 'getOne';
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
         return array(
-        	'items' => $aItems, 
-        	'count' => (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params'])
+            'items' => $aItems, 
+            'count' => (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params'])
         );
     }
 
@@ -188,8 +188,71 @@ class BxAclDb extends BxDolModuleDb
 
     public function deletePrices($aWhere)
     {
-    	$sSql = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` WHERE " . $this->arrayToSQL($aWhere, " AND ");
+        $sSql = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` WHERE " . $this->arrayToSQL($aWhere, " AND ");
         return (int)$this->query($sSql) > 0;
+    }
+    
+    public function getLicenses($aParams, $bReturnCount = false)
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+        $sSelectClause = "`tl`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        switch($aParams['type']) {
+            case 'by_order':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'order' => $aParams['order']
+                ];
+
+                $sWhereClause .= "AND `tl`.`order`=:order";
+                break;
+
+            case 'by_license':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'license' => $aParams['license']
+                ];
+
+                $sWhereClause .= "AND `tl`.`license`=:license";
+                break;
+        }
+
+        $sSql = "SELECT {select} FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
+
+        $aMethod['params'][0] = str_replace(['{select}', '{order}', '{limit}'], [$sSelectClause, $sOrderClause, $sLimitClause], $sSql);
+        $aItems = call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+
+        if(!$bReturnCount)
+            return $aItems;
+
+        $aMethod['name'] = 'getOne';
+        $aMethod['params'][0] = str_replace(['{select}', '{order}', '{limit}'], ['COUNT(*)', '', ''], $sSql);
+
+        return [
+            'items' => $aItems, 
+            'count' => (int)call_user_func_array([$this, $aMethod['name']], $aMethod['params'])
+        ];
+    }
+
+    public function insertLicense($aSet)
+    {
+        $sSetClause = $this->arrayToSQL($aSet);
+        return (int)$this->query("INSERT INTO `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` SET " . $sSetClause) > 0;
+    }
+
+    public function updateLicenses($aSet, $aWhere)
+    {
+        $sSetClause = $this->arrayToSQL($aSet);
+        $sWhereClause = $this->arrayToSQL($aWhere, " AND ");
+        return (int)$this->query("UPDATE `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` SET " . $sSetClause . " WHERE " . $sWhereClause) > 0;
+    }
+
+    public function deleteLicenses($aWhere)
+    {
+        $sWhereClause = $this->arrayToSQL($aWhere, " AND ");
+        return (int)$this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause) > 0;
     }
 }
 

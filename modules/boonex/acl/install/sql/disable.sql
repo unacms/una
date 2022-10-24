@@ -20,6 +20,10 @@ DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
 DELETE FROM `sys_menu_items` WHERE `module` = @sName;
 
 
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
+
+
 -- ALERTS
 SET @iHandlerId = (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;

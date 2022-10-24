@@ -57,6 +57,9 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
 
     	$sAction = 'add';
 
+        if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aGroupContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(['msg' => $mixedResult]);
+
         $sFilter = bx_get('filter');
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_iRoleId, $sFilter) = explode($this->_sParamsDivider, $sFilter);

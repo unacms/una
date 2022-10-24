@@ -257,6 +257,18 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 
         return $mixedResult;
     }
+    
+    public function serviceCancel($sOrder)
+    {
+        $aPending = $this->_oModule->_oDb->getOrderPending(['type' => 'order', 'order' => $sOrder]);
+        if(empty($aPending) || !is_array($aPending))
+            return ['code' => 1, 'message' => _t('_bx_payment_err_not_found_pending')];
+        
+        if(!$this->cancel((int)$aPending['id']))
+            return ['code' => 2, 'message' => _t('_bx_payment_err_cannot_perform')];
+
+        return ['code' => 0, 'message' => _t('_bx_payment_msg_successfully_performed')];
+    }
 
     /**
      * @page service Service Calls

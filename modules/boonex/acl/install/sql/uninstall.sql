@@ -2,7 +2,7 @@ SET @sName = 'bx_acl';
 
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_acl_level_prices`;
+DROP TABLE IF EXISTS `bx_acl_level_prices`, `bx_acl_licenses`;
 
 
 -- FORMS
