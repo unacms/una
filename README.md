@@ -73,4 +73,7 @@ MIT
 
 > Twitter [@unaplatform](https://twitter.com/unaplatform)
 
+---
+
+This project is tested with [BrowserStack](https://email.browserstack.com/c/eJwlzE1uhDAMQOHTlF2i_NghLHKWkRPbGjQMdAgU9fZF6vrpe1J8SikGnzwOXLAij8NcUsTgWtNJNaaH5xiqS6jqQTkHCCPC1GyfWV7zx-gun1PWwyib743PLtQPb940r9HU5RSDWRNyGyGZccr55wuc3HmxN-1Plv6ybXsPz8IhkjiokLMSoZCjiJwBpEVo5IelXNdl675dXfZ-UPuXe6Hfe3quZOftD8PYQwM).
 
