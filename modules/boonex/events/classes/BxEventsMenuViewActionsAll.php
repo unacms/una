@@ -9,8 +9,6 @@
  * @{
  */
 
-use Spatie\CalendarLinks\Link;
-
 /**
  * View entry all actions menu
  */
@@ -21,44 +19,6 @@ class BxEventsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         $this->_sModule = 'bx_events';
 
         parent::__construct($aObject, $oTemplate);
-    }
-
-    public function setContentId($iContentId)
-    {
-        parent::setContentId($iContentId);
-
-        if (!isset($this->_aContentInfo['date_start']) || !$this->_aContentInfo['date_start'] || !isset($this->_aContentInfo['date_end']) || !$this->_aContentInfo['date_end'])
-            return;
-
-        $oDateStart = new DateTime('@' . $this->_aContentInfo['date_start']);
-        $oDateEnd = new DateTime('@' . ($this->_aContentInfo['date_end'] > $this->_aContentInfo['repeat_stop'] ? $this->_aContentInfo['date_end'] : $this->_aContentInfo['repeat_stop']));
-
-        $CNF = $this->_oModule->_oConfig->CNF;
-
-        if ($this->_aContentInfo[$CNF['FIELD_TIMEZONE']]) {
-            $oTz = new DateTimeZone($this->_aContentInfo[$CNF['FIELD_TIMEZONE']]);
-            $oDateStart->setTimezone($oTz);
-            $oDateEnd->setTimezone($oTz);
-        }
-
-        $oICalLink = $oDateStart && $oDateEnd ? Link::create(
-            $this->_aContentInfo[$CNF['FIELD_TITLE']],
-            $oDateStart,
-            $oDateEnd
-        ) : null;
-
-        if (!empty($CNF['OBJECT_METATAGS'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            if ($oMetatags->locationsIsEnabled()) {
-                $sLocation = $oMetatags->locationsString($this->_aContentInfo[$CNF['FIELD_ID']], false);
-                if ($sLocation)
-                    $oICalLink->address($sLocation);
-            }
-        }
-
-        $this->addMarkers([
-            'ical_url' => $oICalLink ? $oICalLink->ics() : '',
-        ]);
     }
 
     protected function _getMenuAttrs ($aMenuItem)

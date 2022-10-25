@@ -9,6 +9,8 @@
  * @{
  */
 
+use Spatie\CalendarLinks\Link;
+
 /**
  * Events profiles module.
  */
@@ -24,6 +26,59 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             $CNF['FIELD_JOIN_CONFIRMATION'],
             $CNF['FIELD_REMINDER']
         ));
+    }
+
+    public function actionCalendarSync($iContentId = 0)
+    {
+        $aContentInfo = (int)$iContentId ? $this->_oDb->getContentInfoById((int)$iContentId) : null;
+        if (!$aContentInfo) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aContentInfo)) {
+            $this->_oTemplate->displayAccessDenied();
+            exit;
+        }
+
+        $CNF = $this->_oConfig->CNF;
+
+        if (!isset($aContentInfo['date_start']) || !$aContentInfo['date_start'] || !isset($aContentInfo['date_end']) || !$aContentInfo['date_end'] || !$aContentInfo[$CNF['FIELD_TIMEZONE']] || empty($CNF['OBJECT_METATAGS'])) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $sLocation = $oMetatags && $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : '';
+        if (!$sLocation) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
+        $oDateStart = new DateTime('@' . $aContentInfo['date_start']);
+        $oDateEnd = new DateTime('@' . ($aContentInfo['date_end'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_end'] : $aContentInfo['repeat_stop']));
+
+        $oTz = new DateTimeZone($aContentInfo[$CNF['FIELD_TIMEZONE']]);
+        $oDateStart->setTimezone($oTz);
+        $oDateEnd->setTimezone($oTz);
+
+        $oICalLink = $oDateStart && $oDateEnd ? Link::create(
+            $aContentInfo[$CNF['FIELD_TITLE']],
+            $oDateStart,
+            $oDateEnd
+        ) : null;
+
+        $oICalLink->address($sLocation);
+        $s = $oICalLink->ics();
+
+        if (!preg_match('/^data:([a-zA-Z0-9\/]+);charset=[a-zA-Z0-9]+;base64,(.*)$/', $s, $m)) {
+            $this->_oTemplate->displayErrorOccured();
+            exit;
+        }
+
+        header('Content-type: ' . $m[1] . '; charset=utf-8');
+        header('Content-Disposition: inline; filename="event.ics"');
+        echo base64_decode($m[2]);
     }
 
     public function actionCalendarData()
