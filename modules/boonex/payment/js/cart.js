@@ -41,8 +41,10 @@ BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iIte
             _t: oDate.getTime()
         },
         function(oData) {
-            if(oData && oData.code == 0 && sRedirect)
+            if(oData && oData.code == 0 && sRedirect) {
+                oData.message = '';
                 oData.redirect = sRedirect;
+            }
 
             processJsonData(oData);
         },
