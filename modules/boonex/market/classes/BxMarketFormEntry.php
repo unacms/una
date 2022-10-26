@@ -289,8 +289,20 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
     function genInputPrice(&$aInput)
     {
-        if(!isset($aInput['value_currency']))
-            $aInput['value_currency'] = BxDolPayments::getInstance()->getCurrencyCode(bx_get_logged_profile_id());
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($aInput['value_currency'])) {
+            $iAuthorId = 0;
+            if(!empty($this->_iContentId)) {
+                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
+                if(!empty($aContentInfo) || is_array($aContentInfo))
+                    $iAuthorId = $aContentInfo[$CNF['FIELD_AUTHOR']];
+            }
+            else
+                $iAuthorId = bx_get_logged_profile_id();
+
+            $aInput['value_currency'] = BxDolPayments::getInstance()->getCurrencyCode($iAuthorId);
+        }
 
         return parent::genInputPrice($aInput);
     }
