@@ -135,7 +135,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
 
         // get profile's title
-        $sTitle = $oModule->getProfileName($aData);
+        $sTitle = $oModule->serviceProfileName($iContentId);
 
         $sText = $sSummary = '';
         if(!empty($CNF['FIELD_TEXT']) && !empty($aData[$CNF['FIELD_TEXT']])) {
