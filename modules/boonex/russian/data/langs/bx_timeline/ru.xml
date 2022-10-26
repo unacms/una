@@ -367,7 +367,7 @@
     <string name="_bx_timeline_txt_sample_score_down_single"><![CDATA[голос против сообщения в ленте]]></string>
     <string name="_bx_timeline_txt_sample_with_link"><![CDATA[со ссылкой]]></string>
     <string name="_bx_timeline_txt_sample_with_image"><![CDATA[с изображением]]></string>
-    <string name="_bx_timeline_txt_sample_with_video"><![CDATA[с видео]]></string>
+    <string name="_bx_timeline_txt_sample_with_video"><![CDATA[с медиа]]></string>
     <string name="_bx_timeline_txt_sample_with_media"><![CDATA[с медиа]]></string>
     <string name="_bx_timeline_txt_sample_with_file"><![CDATA[с файлом]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>

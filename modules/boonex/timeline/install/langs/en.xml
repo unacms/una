@@ -382,7 +382,7 @@
     <string name="_bx_timeline_txt_sample_score_down_single"><![CDATA[score down vote to timeline post]]></string>
     <string name="_bx_timeline_txt_sample_with_link"><![CDATA[with link]]></string>
     <string name="_bx_timeline_txt_sample_with_image"><![CDATA[with image]]></string>
-    <string name="_bx_timeline_txt_sample_with_video"><![CDATA[with video]]></string>
+    <string name="_bx_timeline_txt_sample_with_video"><![CDATA[with media]]></string>
     <string name="_bx_timeline_txt_sample_with_media"><![CDATA[with media]]></string>
     <string name="_bx_timeline_txt_sample_with_file"><![CDATA[with file]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
