@@ -66,40 +66,51 @@ class BxCreditsModule extends BxBaseModGeneralModule
     {
         $iBuyerId = bx_get_logged_profile_id();
         if(!$iBuyerId)
-            return echoJson(array('code' => 1, 'msg' => _t('_bx_credits_err_unknown_buyer')));
+            return echoJson(['code' => 1, 'msg' => _t('_bx_credits_err_unknown_buyer')]);
 
         $aData = $this->_oConfig->getCheckoutData();
         if(empty($aData) || !is_array($aData))
-            return echoJson(array('code' => 2, 'msg' => _t('_bx_credits_err_incorrect_data')));
+            return echoJson(['code' => 2, 'msg' => _t('_bx_credits_err_incorrect_data')]);
+
+        $fConversion = $this->_oConfig->getConversionRateUse();
+        $iPrecision = $this->_oConfig->getPrecision();
 
         $iSellerId = (int)$aData['seller'];
         $fAmount = (float)$aData['amount'];
+        $aCustomData = $this->_oConfig->deconstructCheckoutCustomData($aData['custom']);
 
-        $fBalance = (float)$this->_oDb->getProfile(array('type' => 'balance', 'id' => $iBuyerId));
+        $aPpOrders = BxDolPayments::getInstance()->getPendingOrdersInfo(['id' => (int)$aCustomData[1]]);
+        if(!empty($aPpOrders) && is_array($aPpOrders)) {
+            $aPpOrder = reset($aPpOrders);
+            if(!empty($aPpOrder) && is_array($aPpOrder) && ((int)$aPpOrder['seller_id'] != $iSellerId || $this->_oConfig->convertM2C((float)$aPpOrder['amount'], $fConversion, $iPrecision) != $fAmount))
+                return echoJson(['code' => 3, 'msg' => _t('_bx_credits_err_incorrect_data')]);
+        }
+
+        $fBalance = (float)$this->_oDb->getProfile(['type' => 'balance', 'id' => $iBuyerId]);
         if($fAmount > $fBalance)
-            return echoJson(array('code' => 3, 'msg' => _t('_bx_credits_err_low_balance')));
+            return echoJson(['code' => 4, 'msg' => _t('_bx_credits_err_low_balance')]);
 
         $sOrder = $this->_oConfig->getOrder();
         $sInfo = '_bx_credits_txt_history_info_checkout';
-        $sData = serialize(array(
-            'conversion' => $this->_oConfig->getConversionRateUse(),
-            'precision' => $this->_oConfig->getPrecision()
-        ));
+        $sData = serialize([
+            'conversion' => $fConversion,
+            'precision' => $iPrecision
+        ]);
 
         $this->updateProfileBalance($iBuyerId, $iSellerId, -$fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo, $sData);
         $this->updateProfileBalance($iSellerId, $iBuyerId, $fAmount, BX_CREDITS_TRANSFER_TYPE_CHECKOUT, $sOrder, $sInfo, $sData);
 
-        bx_alert($this->getName(), 'checkout', 0, false, array(
+        bx_alert($this->getName(), 'checkout', 0, false, [
             'seller' => $iSellerId,
             'buyer' => $iBuyerId,
             'amount' => $fAmount, 
             'order' => $sOrder
-        ));
+        ]);
 
-        return echoJson(array(
+        return echoJson([
             'code' => 0,
-            'redirect' => bx_append_url_params($aData['return_data_url'], array('o' => $sOrder, 'c' => $aData['custom']))
-        ));
+            'redirect' => bx_append_url_params($aData['return_data_url'], ['o' => $sOrder, 'c' => $aData['custom']])
+        ]);
     }
 
     public function actionSubscribe()

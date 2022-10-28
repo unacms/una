@@ -445,7 +445,6 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     
     if ($bResult !== null)
         return $bResult;
-    unset($aAlert['override_result']);
 
     // system alert
     if (!$isDisableAlert) {
