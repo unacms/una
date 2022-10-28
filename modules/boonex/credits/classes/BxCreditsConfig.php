@@ -264,6 +264,17 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
         return strtoupper(genRndPwd($iLength, false));
     }
 
+    public function constructCheckoutCustomData()
+    {
+        $aParams = func_get_args();
+        return urlencode(base64_encode(implode('|', $aParams)));
+    }
+
+    public function deconstructCheckoutCustomData($sData)
+    {
+        return explode('|', base64_decode(urldecode($sData)));
+    }
+
     /**
      * Convert Credits to Money
      */
