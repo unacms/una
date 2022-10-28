@@ -8,7 +8,7 @@
  */
 
 if (!defined('BX_DOL_SESSION_LIFETIME'))
-    define('BX_DOL_SESSION_LIFETIME', 3600);
+    define('BX_DOL_SESSION_LIFETIME', 7*24*60*60);
 if (!defined('BX_DOL_SESSION_SKIP_UPDATE'))
     define('BX_DOL_SESSION_SKIP_UPDATE', 30);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
@@ -81,7 +81,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 			bx_logout();
 
 		// try to restore user's old session
-		if (isLogged()) {
+		if (isLogged() && defined('BX_DOL_SESSION_RESTORATION') && constant('BX_DOL_SESSION_RESTORATION')) {
 		    $this->sId = $this->oDb->getOldSession(getLoggedId());
 		    if ($this->sId)
 		        $this->exists($this->sId); // it exists for sure but required for initializing some data there
@@ -91,7 +91,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 		if (!$this->sId)
             $this->sId = genRndPwd(32, true);
 
-        bx_setcookie(BX_DOL_SESSION_COOKIE, $this->sId, 0, 'auto', '', 'auto', true);
+        bx_setcookie(BX_DOL_SESSION_COOKIE, $this->sId, time() + BX_DOL_SESSION_LIFETIME, 'auto', '', 'auto', true);
 
         $this->save();
         return true;
