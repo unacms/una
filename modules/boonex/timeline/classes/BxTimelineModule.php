@@ -1957,12 +1957,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockMenuDb($aParams = array())
     {
-        $aParams = $this->_prepareParams(array_merge($aParams, [
+        $aParams = $this->_prepareParams(array_merge([
             'name' => BX_TIMELINE_NAME_VIEWS_DB,
             'view' => BX_TIMELINE_VIEW_TIMELINE,
             'type' => BX_TIMELINE_TYPE_FEED,
             'owner_id' => $this->getProfileId()
-        ]));
+        ], $aParams));
 
         if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
             $aParams['type'] = $sType;
