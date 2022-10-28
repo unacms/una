@@ -15,8 +15,9 @@ module.exports = {
     './modules/boonex/**/js/*.js',
     './modules/boonex/**/template/*.html',
 
-    // templates
     './modules/boonex/**/data/template/**/*.html',
+
+    './studio/template/*.html',
 
     './template/*.html',
   ],

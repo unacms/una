@@ -33,12 +33,15 @@ define('BX_DIRECTORY_STORAGE', BX_DIRECTORY_PATH_ROOT . 'storage/');
 define('BX_DOL_DIR_RIGHTS', 0777);
 define('BX_DOL_FILE_RIGHTS', 0666);
 
+define('BX_DOL_STORAGE_OBJ_FILES', 'sys_files');
 define('BX_DOL_STORAGE_OBJ_IMAGES', 'sys_images');
 
 if (!defined('BX_DOL_INT_MAX'))
     define('BX_DOL_INT_MAX', 2147483647);
 
 define('BX_DOL_TRANSCODER_OBJ_ICON_APPLE', 'sys_icon_apple');
+define('BX_DOL_TRANSCODER_OBJ_ICON_ANDROID', 'sys_icon_android');
+define('BX_DOL_TRANSCODER_OBJ_ICON_ANDROID_SPLASH', 'sys_icon_android_splash');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK', 'sys_icon_facebook');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FAVICON', 'sys_icon_favicon');
 define('BX_DOL_TRANSCODER_OBJ_COVER', 'sys_cover');

@@ -938,6 +938,7 @@ BLAH;
             'bx_if:show_caption' => array(
                 'condition' => !empty($sCaption),
                 'content' => array(
+                    'class_caption' => '',
                     'caption' => $sCaption,
                     'required' => $sRequired,
                     'help' => $sHelp

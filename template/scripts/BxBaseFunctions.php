@@ -578,23 +578,13 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      */
     function getManifests()
     {
-        $sRet = '';
-        $bLogged = isLogged();
+        $aUrlRoot = parse_url(BX_DOL_URL_ROOT);
 
-        /*
-         * OneSignal manifest must appear before any other <link rel="manifest" ...> in <head>
-         */
-        $sPushAppId = getParam('sys_push_app_id');
-        if($bLogged && !empty($sPushAppId)) {
-            $aUrlRoot = parse_url(BX_DOL_URL_ROOT);
+        $sUrl = bx_append_url_params(BX_DOL_URL_ROOT .  'manifest.json.php', [
+            'bx_name' => $aUrlRoot['host']
+        ]);
 
-            $sUrl = BX_DOL_URL_PLUGINS_PUBLIC .  'onesignal/manifest.json.php';
-            $sUrl = bx_append_url_params($sUrl, array('bx_name' => $aUrlRoot['host']));
-
-            $sRet .= '<link rel="manifest" href="' . $sUrl . '" />';
-        }
-
-        return $sRet;
+        return '<link rel="manifest" href="' . $sUrl . '" />';
     }
 
     /**
@@ -603,37 +593,48 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      */
     function getMetaIcons()
     {
-        $iId = (int)getParam('sys_site_icon');
-        $sImageUrlFav = $sImageUrlFcb = $sImageUrlApl = '';
-
-        if(!empty($iId)) {
-
-            // favicon icon
-            $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);
-            $sImageUrlFav = $oTranscoder->getFileUrl($iId);
-
-            // facebook icon
-            $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
-            $sImageUrlFcb = $oTranscoder->getFileUrl($iId);
-
-            // apple touch icon
-            $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
-            $sImageUrlApl = $oTranscoder->getFileUrl($iId);
-        }
-
+        // favicon icon
+        $sImageUrlFav = '';
+        if(($iId = (int)getParam('sys_site_icon')) != 0)
+            $sImageUrlFav = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_FILES)->getFileUrlById($iId);
         if(empty($sImageUrlFav))
             $sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.svg');
 
-        if(empty($sImageUrlFcb))
-            $sImageUrlFcb = $this->_oTemplate->getIconUrl('facebook-icon.png');
+        // svg icon
+        $sImageUrlSvg = '';
+        if(($iId = (int)getParam('sys_site_icon_svg')) != 0)
+            $sImageUrlSvg = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->getFileUrlById($iId);
+        if(empty($sImageUrlSvg))
+            $sImageUrlSvg = $this->_oTemplate->getIconUrl('favicon.svg');
 
+        // apple device icon
+        $sImageUrlApl = '';
+        if(($iId = (int)getParam('sys_site_icon_apple')) != 0)
+            $sImageUrlApl = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE)->getFileUrl($iId);
         if(empty($sImageUrlApl))
             $sImageUrlApl = $this->_oTemplate->getIconUrl('apple-touch-icon.png');
 
+/* 
+ * TODO: 
+ * 1. Remove commented code later if it won't be used.
+ * 2. Remove 'sys_icon_favicon' and 'sys_icon_facebook' transcoders and related transcoder filters.
+ * 
+        // facebook icon
+        $sImageUrlFcb = '';
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
+        $sImageUrlFcb = $oTranscoder->getFileUrl($iId);
+        if(empty($sImageUrlFcb))
+            $sImageUrlFcb = $this->_oTemplate->getIconUrl('facebook-icon.png');
+*/
+
         $sRet = '';
-        $sRet .= '<link rel="shortcut icon" type="image/x-icon" href="' . $sImageUrlFav . '" />';
+        $sRet .= '<link rel="icon" href="' . $sImageUrlFav . '" sizes="any" />';
+        $sRet .= '<link rel="icon" href="' . $sImageUrlSvg . '" type="image/svg+xml" />';
+        $sRet .= '<link rel="apple-touch-icon" href="' . $sImageUrlApl . '" />';
+
+/*
         $sRet .= '<link rel="image_src" sizes="100x100" href="' . $sImageUrlFcb . '" />';
-        $sRet .= '<link rel="apple-touch-icon" sizes="152x152" href="' . $sImageUrlApl . '" />';
+*/
 
         return $sRet;
     }

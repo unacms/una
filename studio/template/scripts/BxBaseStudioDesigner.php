@@ -220,49 +220,60 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     protected function getIcon()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
+        $oDbSettings = new BxDolStudioSettingsQuery();
 
-        $sPreview = "";
-        $aTmplVars = array('bx_repeat:images' => array());
+        $aTmplVarsPreview = ['bx_repeat:images' => []];
+        foreach($this->aIcons as $sIcon => $aIcon) {
+            $sSetting = 'sys_site_' . $sIcon;
+            $iIconValue = (int)getParam($sSetting);
 
-        if(($iId = (int)getParam('sys_site_icon')) != 0) {
-            $aTranscoders = array(
-                BX_DOL_TRANSCODER_OBJ_ICON_APPLE => '_adm_dsg_txt_icon_apple',
-                BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK => '_adm_dsg_txt_icon_facebook',
-                BX_DOL_TRANSCODER_OBJ_ICON_FAVICON => '_adm_dsg_txt_icon_favicon'
-            );
+            $aSetting = [];
+            $oDbSettings->getOptions(['type' => 'by_name', 'value' => $sSetting], $aSetting, false);
+            if(!empty($aSetting) && is_array($aSetting))
+                $this->aIcons[$sIcon]['id'] = (int)$aSetting['id'];
 
-            foreach($aTranscoders as $sTranscoder => $sTitle) {
-                $oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
+            if(empty($iIconValue))
+                continue;
 
-                $sImageUrl = $oTranscoder->getFileUrl($iId);
-                if($sImageUrl === false) {
-                    setParam('sys_site_icon', 0);
-                    break;
-                }
-
-                $aFilterParams = $oTranscoder->getFilterParams('Resize');
-				$bFilterWidth = !empty($aFilterParams['w']);
-				$bFilterHeight = !empty($aFilterParams['h']);
-
-                $aTmplVars['bx_repeat:images'][] = array(
-                    'caption' => _t($sTitle),
-                    'url' => $sImageUrl,
-                	'bx_if:show_width' => array(
-                		'condition' => $bFilterWidth,
-                		'content' => array(
-                			'width' => $bFilterWidth ? (int)$aFilterParams['w'] : 0
-                		)
-                	),
-                	'bx_if:show_height' => array(
-                		'condition' => $bFilterHeight,
-                		'content' => array(
-                			'height' => $bFilterHeight ? (int)$aFilterParams['h'] : 0
-                		)
-                	), 
-                );
+            $sIconUrl = '';
+            $aIconParams = [];
+            if(!empty($aIcon['transcoder'])) {
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($aIcon['transcoder']);
+                $sIconUrl = $oTranscoder->getFileUrl($iIconValue);
+                $aIconParams = $oTranscoder->getFilterParams('Resize');
+            }
+            else {
+                $oStorage = BxDolStorage::getObjectInstance($aIcon['storage']);
+                $sIconUrl = $oStorage->getFileUrlById($iIconValue);
             }
 
-            $sPreview = $oTemplate->parseHtmlByName('dsr_icon_preview.html', $aTmplVars);
+            if($sIconUrl === false) {
+                setParam($sSetting, 0);
+                continue;
+            }
+
+            $bIconWidth = !empty($aIconParams['w']);
+            $bIconHeight = !empty($aIconParams['h']);
+
+            $aTmplVarsPreview['bx_repeat:images'][] = array(
+                'js_object' => $this->getPageJsObject(),
+                'id' => $iIconValue,
+                'name' => $sIcon,
+                'caption' => _t('_adm_dsg_txt_' . $sIcon),
+                'url' => $sIconUrl,
+                'bx_if:show_width' => array(
+                    'condition' => $bIconWidth,
+                    'content' => array(
+                        'width' => $bIconWidth ? (int)$aIconParams['w'] : 0
+                    )
+                ),
+                'bx_if:show_height' => array(
+                    'condition' => $bIconHeight,
+                    'content' => array(
+                        'height' => $bIconHeight ? (int)$aIconParams['h'] : 0
+                    )
+                ), 
+            );
         }
 
         $aForm = array(
@@ -289,15 +300,61 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'name' => 'page',
                     'value' => $this->sPage
                 ),
-                'preview' => array(
-                    'type' => 'custom',
-                    'name' => 'preview',
-                    'content' => $sPreview
-                ),
-                'image' => array(
+                'icon' => array(
                     'type' => 'file',
-                    'name' => 'image',
-                    'caption' => _t('_adm_dsg_txt_upload_icon')
+                    'name' => 'icon',
+                    'caption' => _t('_adm_dsg_txt_upload_icon'),
+                    'info' => _t('_adm_dsg_txt_upload_icon_inf'),
+                    'attrs' => ['accept' => '.ico']
+                ),
+                'icon_svg' => array(
+                    'type' => 'file',
+                    'name' => 'icon_svg',
+                    'caption' => _t('_adm_dsg_txt_upload_icon_svg'),
+                    'info' => _t('_adm_dsg_txt_upload_icon_svg_inf'),
+                    'attrs' => ['accept' => '.svg']
+                ),
+                'icon_apple' => array(
+                    'type' => 'files',
+                    'name' => 'icon_apple',
+                    'storage_object' => $this->aIcons['icon_apple']['storage'],
+                    'images_transcoder' => $this->aIcons['icon_apple']['transcoder'],
+                    'uploaders' => ['sys_html5'],
+                    'multiple' => false,
+                    'content_id' => $this->aIcons['icon_apple']['id'],
+                    'ghost_template' => $oTemplate->parseHtmlByName('uploader_fgt_icon.html', array(
+                        'name' => 'icon_apple',
+                    )),
+                    'caption' => _t('_adm_dsg_txt_upload_icon_apple'),
+                    'info' => _t('_adm_dsg_txt_upload_icon_apple_inf'),
+                ),
+                'icon_android' => array(
+                    'type' => 'files',
+                    'name' => 'icon_android',
+                    'storage_object' => $this->aIcons['icon_android']['storage'],
+                    'images_transcoder' => $this->aIcons['icon_android']['transcoder'],
+                    'uploaders' => ['sys_html5'],
+                    'multiple' => false,
+                    'content_id' => $this->aIcons['icon_android']['id'],
+                    'ghost_template' => $oTemplate->parseHtmlByName('uploader_fgt_icon.html', array(
+                        'name' => 'icon_android',
+                    )),
+                    'caption' => _t('_adm_dsg_txt_upload_icon_android'),
+                    'info' => _t('_adm_dsg_txt_upload_icon_android_inf'),
+                ),
+                'icon_android_splash' => array(
+                    'type' => 'files',
+                    'name' => 'icon_android_splash',
+                    'storage_object' => $this->aIcons['icon_android_splash']['storage'],
+                    'images_transcoder' => $this->aIcons['icon_android_splash']['transcoder'],
+                    'uploaders' => ['sys_html5'],
+                    'multiple' => false,
+                    'content_id' => $this->aIcons['icon_android_splash']['id'],
+                    'ghost_template' => $oTemplate->parseHtmlByName('uploader_fgt_icon.html', array(
+                        'name' => 'icon_android_splash',
+                    )),
+                    'caption' => _t('_adm_dsg_txt_upload_icon_android_splash'),
+                    'info' => _t('_adm_dsg_txt_upload_icon_android_splash_inf'),
                 ),
                 'save' => array(
                     'type' => 'submit',
@@ -315,13 +372,17 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             exit;
         }
 
-        return $oTemplate->parseHtmlByName('designer.html', array(
-            'content' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
+        return $oTemplate->parseHtmlByName('designer.html', [
+            'content' => $oTemplate->parseHtmlByName('dsr_icon.html', [
+                'preview' => $oTemplate->parseHtmlByName('dsr_icon_preview.html', $aTmplVarsPreview),
+                'icon_iframe_id' => $this->sIconIframeId, 
+                'form' => $oForm->getCode()
+            ]),
             'js_content' => $this->getPageJsCode()
-        ));
+        ]);
     }
 
-	protected function getCover()
+    protected function getCover()
     {
     	$sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();

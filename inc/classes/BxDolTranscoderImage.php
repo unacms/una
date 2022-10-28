@@ -116,6 +116,11 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         return parent::getFileUrl($mixedHandler);
     }
 
+    public function getFileMimeType($mixedHandler)
+    {
+        return $this->_oStorage->getMimeTypeByFileName($this->getFileUrl($mixedHandler));
+    }
+
     /**
      * Get file url when file isn't transcoded yet
      */

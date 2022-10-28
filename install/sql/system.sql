@@ -369,10 +369,15 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'site_email_html_template_header', '_adm_stg_cpt_option_site_email_html_template_header', '<html>\r\n    <head></head>\r\n    <body bgcolor="#eee" style="margin:0; padding:0;">\r\n        <div style="padding:20px; background-color:#eee;">\r\n            <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">\r\n                <tr><td valign="top">\r\n                    <div style="color:#333; padding:20px; border:1px solid #ccc; border-radius:3px; background-color:#fff; font:14px Helvetica, Arial, sans-serif;">\r\n                        <div style="border-bottom:2px solid #eee; padding-bottom:10px; margin-bottom:20px; font-weight:bold; font-size:22px; color:#999;">{site_name}</div>', 'text', '', '', '', 1),
 (@iCategoryId, 'site_email_html_template_footer', '_adm_stg_cpt_option_site_email_html_template_footer', '\r\n                    </div>\r\n                </td></tr>\r\n                <tr><td valign="top">\r\n                    <div style="margin-top:5px; text-align:center; color:#999; font:11px Helvetica, Arial, sans-serif;">{about_us}&nbsp;&nbsp;&nbsp;{unsubscribe}</div>\r\n                </td></tr>\r\n            </table>\r\n        </div>\r\n    </body>\r\n</html>', 'text', '', '', '', 2),
 
+(@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 15),
+(@iCategoryId, 'sys_site_icon_svg', '', '0', 'digit', '', '', '', 16),
+(@iCategoryId, 'sys_site_icon_apple', '', '0', 'digit', '', '', '', 17),
+(@iCategoryId, 'sys_site_icon_android', '', '0', 'digit', '', '', '', 18),
+(@iCategoryId, 'sys_site_icon_android_splash', '', '0', 'digit', '', '', '', 19),
+
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 21),
-(@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 22),
-(@iCategoryId, 'sys_site_logo_aspect_ratio', '_adm_stg_cpt_option_sys_site_logo_aspect_ratio', '', 'digit', '', '', '', 23),
+(@iCategoryId, 'sys_site_logo_aspect_ratio', '_adm_stg_cpt_option_sys_site_logo_aspect_ratio', '', 'digit', '', '', '', 22),
 -- (@iCategoryId, 'sys_site_logo_width', '_adm_stg_cpt_option_sys_site_logo_width', '240', 'digit', '', '', '', 23),
 -- (@iCategoryId, 'sys_site_logo_height', '_adm_stg_cpt_option_sys_site_logo_height', '48', 'digit', '', '', '', 24),
 
@@ -5225,6 +5230,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_transcoder` (
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('sys_image_resize', 'sys_images_resized', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
 ('sys_icon_apple', 'sys_images_resized', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
+('sys_icon_android', 'sys_images_resized', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
+('sys_icon_android_splash', 'sys_images_resized', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
 ('sys_icon_facebook', 'sys_images_resized', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
 ('sys_icon_favicon', 'sys_images_resized', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0', '', ''),
 ('sys_cover', 'sys_images_resized', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0', '', ''),
@@ -5290,7 +5297,9 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_filters` (
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
 ('sys_image_resize', 'ResizeVar', '', '0'),
-('sys_icon_apple', 'Resize', 'a:4:{s:1:"w";s:3:"152";s:1:"h";s:3:"152";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
+('sys_icon_apple', 'Resize', 'a:3:{s:1:"w";s:3:"180";s:1:"h";s:3:"180";s:13:"square_resize";s:1:"1";}', '0'),
+('sys_icon_android', 'Resize', 'a:3:{s:1:"w";s:3:"192";s:1:"h";s:3:"192";s:13:"square_resize";s:1:"1";}', '0'),
+('sys_icon_android_splash', 'Resize', 'a:3:{s:1:"w";s:3:"512";s:1:"h";s:3:"512";s:13:"square_resize";s:1:"1";}', '0'),
 ('sys_icon_facebook', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_icon_favicon', 'Resize', 'a:4:{s:1:"w";s:2:"16";s:1:"h";s:2:"16";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_cover', 'Resize', 'a:3:{s:1:"w";s:4:"1920";s:1:"h";s:3:"720";s:10:"force_type";s:3:"png";}', '0'),

@@ -28,6 +28,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
     protected $sParamMark;
     protected $sParamLogoAlt;
 
+    protected $aIcons;
     protected $aCovers;
 
     function __construct($sPage = "")
@@ -46,6 +47,27 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         $this->sParamLogo = 'sys_site_logo';
         $this->sParamMark = '';
         $this->sParamLogoAlt = 'sys_site_logo_alt';
+
+        $this->aIcons = [
+            'icon' => [
+                'storage' => BX_DOL_STORAGE_OBJ_FILES
+            ],
+            'icon_svg' => [
+                'storage' => BX_DOL_STORAGE_OBJ_IMAGES
+            ],
+            'icon_apple' => [
+                'storage' => BX_DOL_STORAGE_OBJ_IMAGES,
+                'transcoder' => BX_DOL_TRANSCODER_OBJ_ICON_APPLE
+            ],
+            'icon_android' => [
+                'storage' => BX_DOL_STORAGE_OBJ_IMAGES,
+                'transcoder' => BX_DOL_TRANSCODER_OBJ_ICON_ANDROID
+            ],
+            'icon_android_splash' => [
+                'storage' => BX_DOL_STORAGE_OBJ_IMAGES,
+                'transcoder' => BX_DOL_TRANSCODER_OBJ_ICON_ANDROID_SPLASH
+            ]
+        ];
 
         $this->aCovers = array(
             'cover_common' => array(
@@ -83,6 +105,14 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
                 $aResult = array('code' => 0, 'message' => '', 'reload' => 1);
                 if(!$this->deleteMark())
                     $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_mark'));
+                break;
+
+            case 'delete_icon':
+                $sValue = bx_process_input(bx_get($this->sParamPrefix . '_value'));
+
+                $aResult = ['code' => 0, 'message' => ''];
+                if(empty($sValue) || !$this->deleteIcon($sValue))
+                    $aResult = ['code' => 2, 'message' => _t('_adm_dsg_err_remove_old_icon')];
                 break;
 
             case 'delete_cover':
@@ -211,24 +241,50 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
     function submitIcon(&$oForm)
     {
-        $iProfileId = getLoggedId();
+        $iProfileId = bx_get_logged_profile_id();
 
-        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        foreach($this->aIcons as $sIcon => $aIcon) {
+            $bValue = bx_get($sIcon) !== false;
+            $bFile = isset($_FILES[$sIcon]) && !empty($_FILES[$sIcon]['tmp_name']);
 
-        $iId = (int)getParam('sys_site_icon');
-        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))
-            return $this->getJsResult('_adm_dsg_err_remove_old_icon');
+            if(!$bValue && !$bFile)
+                continue;
 
-        $iId = $oStorage->storeFileFromForm($_FILES['image'], true, $iProfileId);
-        if($iId === false) {
-            $this->oDb->setParam('sys_site_icon', 0);
-            return $this->getJsResult(_t('_adm_dsg_err_save') . $oStorage->getErrorString(), false);
+            $sSetting = 'sys_site_' . $sIcon;
+            $oStorage = BxDolStorage::getObjectInstance($aIcon['storage']);
+
+            if(($bValue || $bFile) && (int)getParam($sSetting) != 0)
+                $this->deleteIcon($sIcon);
+
+            $iId = 0;
+            if($bValue)
+                $iId = (int)bx_get($sIcon);
+            else if($bFile) {
+                $iId = $oStorage->storeFileFromForm($_FILES[$sIcon], true, $iProfileId);
+                if($iId === false)
+                    continue;
+            }
+
+            $oStorage->afterUploadCleanup($iId, $iProfileId);
+            $this->oDb->setParam($sSetting, $iId);
         }
 
-        $this->oDb->setParam('sys_site_icon', $iId);
-        $oStorage->afterUploadCleanup($iId, $iProfileId);
-
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_ICON);
+    }
+
+    function deleteIcon($sIcon)
+    {
+        $iProfile = bx_get_logged_profile_id();
+
+        $sSetting = 'sys_site_' . $sIcon;
+        $oStorage = BxDolStorage::getObjectInstance($this->aIcons[$sIcon]['storage']);
+
+        $iId = (int)getParam($sSetting);
+        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfile) && $oStorage->getErrorCode() != BX_DOL_STORAGE_ERR_FILE_NOT_FOUND)
+            return false;
+
+        $this->oDb->setParam($sSetting, 0);
+        return true;
     }
 
     function submitCover(&$oForm)

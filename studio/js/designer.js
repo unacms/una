@@ -84,6 +84,30 @@ BxDolStudioDesigner.prototype.deleteMark = function() {
     );
 };
 
+BxDolStudioDesigner.prototype.deleteIcon = function(sName) {
+    var $this = this;
+    var oDate = new Date();
+    var aParams = {_t: oDate.getTime()};
+    aParams[this.sParamPrefix + '_action'] = 'delete_icon';
+    aParams[this.sParamPrefix + '_value'] = sName;
+
+    $.post(
+        this.sActionsUrl,
+        aParams,
+        function(oData) {
+            if(oData.code != 0 && oData.message.length > 0) {
+                bx_alert(oData.message);
+                return;
+            }
+
+            $('.adm-dsg-ip-' + sName).bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
+                $(this).remove();
+            });
+        },
+        'json'
+    );
+};
+
 BxDolStudioDesigner.prototype.deleteCover = function(sType, iId) {
     var $this = this;
     var oDate = new Date();
