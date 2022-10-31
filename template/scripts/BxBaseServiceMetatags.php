@@ -93,8 +93,16 @@ class BxBaseServiceMetatags extends BxDol
             return [];
 
         $sEntryUrl = '';
-        if(isset($aEvent['content']['module']) && isset($aEvent['content']['content_id']) && BxDolRequest::serviceExists($aEvent['content']['module'], 'get_link'))
-            $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', bx_srv($aEvent['content']['module'], 'get_link', [$aEvent['content']['content_id']]));
+        if (isset($aEvent['content']['module']) && isset($aEvent['content']['content_id'])) {
+            if ('sys_cmts' == $aEvent['content']['module']) {
+                $oCmts = BxDolCmts::getObjectInstanceByUniqId($aEvent['content']['content_id']);
+                $aCmt = BxDolCmtsQuery::getCommentExtendedByUniqId($aEvent['content']['content_id']);
+                if ($oCmts && $aCmt)
+                    $sEntryUrl = $oCmts->getViewUrl($aCmt['cmt_id']);
+            } elseif (BxDolRequest::serviceExists($aEvent['content']['module'], 'get_link')) {
+                $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', bx_srv($aEvent['content']['module'], 'get_link', [$aEvent['content']['content_id']]));
+            }
+        }
 
         if(!$sEntryUrl)
             $sEntryUrl = '{bx_url_root}' . bx_append_url_params('searchKeyword.php', ['type' => 'mention', 'keyword' => $iProfile]);
