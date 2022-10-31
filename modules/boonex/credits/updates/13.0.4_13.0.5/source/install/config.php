@@ -18,12 +18,12 @@ $aConfig = array(
     'name' => 'bx_credits',
     'title' => 'Credits',
     'note' => 'Credits module.',
-    'version' => '13.0.6.DEV',
+    'version' => '13.0.5',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '13.0.0-B4'
     ),
 
     /**
