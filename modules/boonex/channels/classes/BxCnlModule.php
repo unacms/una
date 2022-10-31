@@ -85,7 +85,10 @@ class BxCnlModule extends BxBaseModGroupsModule
         bx_alert($this->_aModule['name'], 'hashtag_added', $iId, $iCnlProfileId, array(
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId,
-
+            'subobject_id' => $iId,
+			'content_module' => $sModuleName,
+            'content_id' => $iContentId,
+            'content_author_id' => $iAuthorId,
             'timeline_group' => array(
                 'by' => $sModuleName . '_' . $iAuthorId . '_' . $iContentId,
                 'field' => 'owner_id'

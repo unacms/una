@@ -25,6 +25,12 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
+        bx_alert($this->_oModule->getName(), 'before_register_alert', 0, 0, array(
+            'unit' => $oAlert->sUnit,
+            'action' => $oAlert->sAction,
+            'alert' => &$oAlert,
+        ));
+        
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
