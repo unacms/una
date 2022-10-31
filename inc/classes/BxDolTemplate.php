@@ -1226,23 +1226,44 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
-        // set cover image as meta[image] value
-        if (empty($this->aPage['image']) && $bPage) {
-            $aCover = $oPage->getPageCoverImage();
-            if ($aCover) {
-                $oCover = BxDolCover::getInstance($this);
-                $this->aPage['image'] =  $oCover->getCoverImageUrl($aCover);
+        //set meta[image] value
+        if(empty($this->aPage['image'])) {
+            // use cover image if exists
+            if($bPage && ($aCover = $oPage->getPageCoverImage()))
+                $this->aPage['image'] = BxDolCover::getInstance($this)->getCoverImageUrl($aCover);
+
+            // use system Apple/Android icons if exists
+            if(empty($this->aPage['image'])) {
+                $sImgUrl = '';
+                $iImgSquare = 0;
+                $oImgStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+                foreach(['icon_apple', 'icon_android', 'icon_android_splash'] as $sIcon) {
+                    $iIcon = (int)getParam('sys_site_' . $sIcon);
+                    if(!$iIcon)
+                        continue;
+
+                    $sUrl = $oImgStorage->getFileUrlById($iIcon);
+                    if(!$sUrl)
+                        continue;
+
+                    if(($aSize = BxDolImageResize::getImageSize($sUrl)) !== false && ($iSquare = (int)$aSize['w'] * (int)$aSize['h']) > $iImgSquare) {
+                        $sImgUrl = $sUrl;
+                        $iImgSquare = $iSquare;
+                    }
+                }
+
+                if(!empty($sImgUrl))
+                    $this->aPage['image'] = $sImgUrl;
             }
-        }	
+        }
 
         // facebook / twitter
         $bPageImage = !empty($this->aPage['image']);
         $sRet .= '<meta name="twitter:card" content="' . ($bPageImage ? 'summary_large_image' : 'summary') . '" />';
         if ($bPageImage)
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
-        $sRet .= '
-			<meta property="og:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />
-			<meta property="og:description" content="' . ($bDescription ? bx_html_attribute($sDescription) : '') . '" />';
+        $sRet .= '<meta property="og:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />';
+        $sRet .= '<meta property="og:description" content="' . ($bDescription ? bx_html_attribute($sDescription) : '') . '" />';
 
         // Smart App Banner
         if (getParam('smart_app_banner') && false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) {
