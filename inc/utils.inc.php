@@ -445,6 +445,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     
     if ($bResult !== null)
         return $bResult;
+    unset($aAlert['override_result']);
 
     // system alert
     if (!$isDisableAlert) {
@@ -1486,6 +1487,12 @@ function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgn
         $sParams .= $mixedParams;
     }
     return $sUrl . $sParams;
+}
+
+function bx_process_url_param($sValue, $sPattern = "/^[\d\w_]+$/")
+{
+    $mixedValue = bx_process_input($sValue);
+    return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
 }
 
 function bx_rrmdir($directory)

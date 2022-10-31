@@ -19,12 +19,12 @@ bx_require_authentication(true);
 $sType = bx_get('type');
 if($sType === false)
     $sType = bx_get('bp_type');
-$sType = $sType !== false ? bx_process_input($sType) : '';
+$sType = $sType !== false ? bx_process_url_param($sType) : '';
 
 $sPage = bx_get('page');
 if($sPage === false)
     $sPage = bx_get('bp_page');
-$sPage = $sPage !== false ? bx_process_input($sPage) : '';
+$sPage = $sPage !== false ? bx_process_url_param($sPage) : '';
 
 $oPage = new BxTemplStudioBuilderPage($sType, $sPage);
 

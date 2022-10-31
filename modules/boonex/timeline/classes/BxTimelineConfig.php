@@ -927,8 +927,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function processParam($sValue, $sPattern = "/^[\d\w_]+$/")
     {
-        $mixedValue = bx_process_input($sValue);
-        return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
+        return bx_process_url_param($sValue, $sPattern);
     }
 
     public function processParamWithDefault($sValue, $sDefault, $sPattern = "/^[\d\w_]+$/")
