@@ -865,7 +865,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, $s, '/data\-profile\-id="([0-9a-fA-F]+)"/u', 'mentionsDelete', 'mentionsAdd', 'mentionsGet', (int)getParam('sys_metatags_mentions_max'), 'mention');
+        return $this->_metaAdd($iId, $s, '/data\-profile\-id="([0-9a-zA-Z]+)"/u', 'mentionsDelete', 'mentionsAdd', 'mentionsGet', (int)getParam('sys_metatags_mentions_max'), 'mention');
     }
 
     /**

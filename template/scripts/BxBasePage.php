@@ -181,7 +181,7 @@ class BxBasePage extends BxDolPage
 
             $sCss = bx_get('includedCss');
             $sJs = bx_get('includedJs');
-            echo BxDolTemplate::getInstance()->collectingEndGetCode($sCss ? json_decode($sCss) : array(), $sJs ? json_decode($sJs) : array());
+            echo BxDolTemplate::getInstance()->collectingEndGetCode($sCss ? @json_decode($sCss) : [], $sJs ? @json_decode($sJs) : []);
 
             echo $s;
             exit;
