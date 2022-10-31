@@ -484,6 +484,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     public function collectingEndGetCode($aExcludeCss = array(), $aExcludeJs = array(), $sFormat = 'html')
     {
+        if (!is_array($aExcludeCss))
+            $aExcludeCss = [];
+        if (!is_array($aExcludeJs))
+            $aExcludeJs = [];
+
         $aPageSave = $this->aPage; // save current state to restore later
 
         // filter funcs
