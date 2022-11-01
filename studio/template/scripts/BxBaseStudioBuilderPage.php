@@ -1600,8 +1600,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'info' => _t('_adm_bp_dsc_block_content_lang'),
                         'value' => $aBlock['content'],
                         'required' => '0',
-                        'html' => 0,
-                		'code' => 1,
+                        'html' => 2,
                         'db' => array (
                             'pass' => 'XssHtml',
                         ),
