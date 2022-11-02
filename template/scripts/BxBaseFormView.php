@@ -698,7 +698,7 @@ BLAH;
                     break;
 
                 if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass']) && !is_numeric($aInput['value'])) 
-                    $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'] . " Z", isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
+                    $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format']: BX_FORMAT_DATE, true, true);
                 else
                     $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
             break;
@@ -710,7 +710,7 @@ BLAH;
                     break;
 
                 if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass']) && !is_numeric($aInput['value'])) 
-                    $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'] . " Z", isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
+                    $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true, true);
                 else
                     $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
             break;

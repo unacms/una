@@ -284,19 +284,55 @@
                     });
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
+
                     var oPickerOptions = {
                         enableTime: true,
                         altInput: true,
-                        altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-datetime") : "F j, Y H:i",
-                        dateFormat: "Y-m-d H:i",
+                        altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-datetime") : "D MMM YYYY h:mma",
+                        dateFormat: "YYYY-MM-DD\\THH:mm:ssZ",
                         time_24hr: null === this.getAttribute("data-frmt-24h") || 'on' == this.getAttribute("data-frmt-24h") ? true : false,
                         minDate: sYearMin,
                         maxDate: sYearMax,
-                        onOpen: onBeforeShow
+                        onOpen: onBeforeShow,
+                        parseDate: function (dateString, format) {
+                            let timezonedDate = moment.utc(dateString);
+                            return timezonedDate.toDate();
+                        },
+                        formatDate: function (date, format, locale) {
+                            let o;
+                            if (format.endsWith('Z'))
+                                o = moment.utc(date);
+                            else
+                                o = moment(date);
+                            return o.format(format);
+                        }
                     };
-                    if (1 == $(this).attr('data-utc'))
-                        oPickerOptions.dateFormat = "Y-m-d H:i:00 \\Z";
+
+                    if (1 == $(this).attr('data-utc')) {
+                        oPickerOptions.parseDate = function (dateString, format) {
+                            let timezonedDate = moment.utc(dateString);
+                            return new Date(
+                                timezonedDate.year(),
+                                timezonedDate.month(),
+                                timezonedDate.date(),
+                                timezonedDate.hour(),
+                                timezonedDate.minute(),
+                                timezonedDate.second()
+                            );
+                        }
+                        oPickerOptions.formatDate = function (date, format) {
+                            return moment.utc([
+                                date.getFullYear(),
+                                date.getMonth(),
+                                date.getDate(),
+                                date.getHours(),
+                                date.getMinutes(),
+                                date.getSeconds()
+                            ]).format(format);
+                        }
+                    }
                     flatpickr(this, oPickerOptions);
+
                 } else if(this.getAttribute("type") == "dateselect") { // DateTime selector
                     moment.locale(sLang);
                     $(this).combodate({

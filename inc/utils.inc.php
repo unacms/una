@@ -221,7 +221,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATETIME_TS:
         return empty($mixedData) ? '' : date("Y-m-d H:i", (int)$mixedData);
     case BX_DATA_DATETIME_TS_UTC:
-        return empty($mixedData) ? '' : gmdate("Y-m-d H:i", (int)$mixedData);
+        return empty($mixedData) ? '' : gmdate("Y-m-d H:i:s\Z", (int)$mixedData);
 
     case BX_DATA_HTML:
         $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
