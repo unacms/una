@@ -272,15 +272,39 @@
                 	$(oInstance.dpDiv).addClass('bx-form-datepicker-modal');
                 };
 
+                var parseDateUtc = function (sDate, sFormat) {
+                    let oDate = moment.utc(sDate);
+                    return new Date(
+                        oDate.year(),
+                        oDate.month(),
+                        oDate.date(),
+                        oDate.hour(),
+                        oDate.minute(),
+                        oDate.second()
+                    );
+                }
+                var formatDateUtc = function (oDate, sFormat) {
+                    return moment.utc([
+                        oDate.getFullYear(),
+                        oDate.getMonth(),
+                        oDate.getDate(),
+                        oDate.getHours(),
+                        oDate.getMinutes(),
+                        oDate.getSeconds()
+                    ]).format(sFormat);
+                }
+
                 if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
                     flatpickr(this, {
                         altInput: true,
                         altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-date") : "F j, Y",
-                        dateFormat: "Y-m-d",
+                        dateFormat: "YYYY-MM-DD",
                         minDate: sYearMin,
                         maxDate: sYearMax,
-                        onOpen: onBeforeShow
+                        onOpen: onBeforeShow,
+                        parseDate: parseDateUtc,
+                        formatDate: formatDateUtc,
                     });
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
@@ -294,42 +318,23 @@
                         minDate: sYearMin,
                         maxDate: sYearMax,
                         onOpen: onBeforeShow,
-                        parseDate: function (dateString, format) {
-                            let timezonedDate = moment.utc(dateString);
-                            return timezonedDate.toDate();
+                        parseDate: function (sDate, sFormat) {
+                            let oDate = moment.utc(sDate);
+                            return oDate.toDate();
                         },
-                        formatDate: function (date, format, locale) {
+                        formatDate: function (oDate, sFormat, locale) {
                             let o;
-                            if (format.endsWith('Z'))
-                                o = moment.utc(date);
+                            if (sFormat.endsWith('Z'))
+                                o = moment.utc(oDate);
                             else
-                                o = moment(date);
-                            return o.format(format);
+                                o = moment(oDate);
+                            return o.format(sFormat);
                         }
                     };
 
                     if (1 == $(this).attr('data-utc')) {
-                        oPickerOptions.parseDate = function (dateString, format) {
-                            let timezonedDate = moment.utc(dateString);
-                            return new Date(
-                                timezonedDate.year(),
-                                timezonedDate.month(),
-                                timezonedDate.date(),
-                                timezonedDate.hour(),
-                                timezonedDate.minute(),
-                                timezonedDate.second()
-                            );
-                        }
-                        oPickerOptions.formatDate = function (date, format) {
-                            return moment.utc([
-                                date.getFullYear(),
-                                date.getMonth(),
-                                date.getDate(),
-                                date.getHours(),
-                                date.getMinutes(),
-                                date.getSeconds()
-                            ]).format(format);
-                        }
+                        oPickerOptions.parseDate = parseDateUtc;
+                        oPickerOptions.formatDate = formatDateUtc;
                     }
                     flatpickr(this, oPickerOptions);
 
