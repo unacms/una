@@ -1244,9 +1244,9 @@ BLAH;
         if (!isset($aAttrs['data-format-24h']))
             $aAttrs['data-frmt-24h'] = getParam('sys_format_input_24h');
         if (!isset($aAttrs['data-format-date']))
-            $aAttrs['data-frmt-date'] = getParam('sys_format_input_date');
+            $aAttrs['data-frmt-date'] = getParam('sys_format_date');
         if (!isset($aAttrs['data-format-datetime']))
-            $aAttrs['data-frmt-datetime'] = getParam('sys_format_input_datetime');
+            $aAttrs['data-frmt-datetime'] = getParam('sys_format_datetime');
 
         // for inputs with labels generate id
         if (isset($aInput['label']))
