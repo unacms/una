@@ -364,7 +364,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_event', 'bx_events', 'timezone', 'UTC', '', 0, 'select', '_bx_events_form_profile_input_sys_timezone', '_bx_events_form_profile_input_timezone', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_event', 'bx_events', 'added', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_added', '_bx_events_form_profile_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'changed', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_changed', '_bx_events_form_profile_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_event', 'bx_events', 'published', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_published', '_bx_events_form_profile_input_date_published', '_bx_events_form_profile_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
+('bx_event', 'bx_events', 'published', '', '', 0, 'datetime', '_bx_events_form_profile_input_sys_date_published', '_bx_events_form_profile_input_date_published', '_bx_events_form_profile_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeTs', '', 1, 0),
 ('bx_event', 'bx_events', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
