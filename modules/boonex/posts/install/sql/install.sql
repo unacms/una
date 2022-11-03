@@ -505,7 +505,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_posts', 'bx_posts', 'multicat', '', '', 0, 'custom', '_bx_posts_form_entry_input_sys_multicat', '_bx_posts_form_entry_input_multicat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_posts_form_entry_input_multicat_err', 'Xss', '', 1, 0),
 ('bx_posts', 'bx_posts', 'added', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_added', '_bx_posts_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'changed', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_changed', '_bx_posts_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_posts', 'bx_posts', 'published', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_published', '_bx_posts_form_entry_input_date_published', '_bx_posts_form_entry_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
+('bx_posts', 'bx_posts', 'published', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_published', '_bx_posts_form_entry_input_date_published', '_bx_posts_form_entry_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeTs', '', 1, 0),
 ('bx_posts', 'bx_posts', 'attachments', '', '', 0, 'custom', '_bx_posts_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

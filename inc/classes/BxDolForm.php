@@ -1915,23 +1915,23 @@ class BxDolFormCheckerHelper
 
     static public function displayDate ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATE);
+        return bx_process_output ($i, BX_DATA_DATE_UTC);
     }
     static public function displayDateTs ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATE_TS);
+        return bx_process_output ($i, BX_DATA_DATETIME_TS_UTC);
     }
     static public function displayDateUtc ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATE_TS_UTC);
+        return bx_process_output ($i, BX_DATA_DATETIME_TS_UTC);
     }    
     static public function displayDateTime ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATETIME);
+        return bx_process_output ($i, BX_DATA_DATETIME_UTC);
     }
     static public function displayDateTimeTs ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATETIME_TS);
+        return bx_process_output ($i, BX_DATA_DATETIME_TS_UTC);
     }
     static public function displayDateTimeUtc ($i)
     {

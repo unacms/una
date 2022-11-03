@@ -142,7 +142,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             if (!isset($aValues[$sField]) && isset($this->aInputs[$sField]['value']) && $this->aInputs[$sField]['value']) {
                 $aValues[$sField] = $this->getCleanValue($sField);
             }
-            if (isset($aValues[$sField]) && $aValues[$sField] && isset($this->aInputs[$sField]) && isset($this->aInputs[$sField]['db']['pass']) && 'DateTimeTs' == $this->aInputs[$sField]['db']['pass']) {
+            if (isset($aValues[$sField]) && $aValues[$sField] && isset($this->aInputs[$sField]) && isset($this->aInputs[$sField]['db']['pass']) && 'DateTimeUtc' == $this->aInputs[$sField]['db']['pass']) {
                 $aValues[$sField] += ($bAdd ? $iTimeOffset : -$iTimeOffset);
             }
         }

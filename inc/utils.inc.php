@@ -21,6 +21,8 @@ define('BX_DATA_DATE_TS', 8); ///< date data type stored as unixtimestamp
 define('BX_DATA_DATETIME_TS', 9); ///< date/time data type stored as unixtimestamp
 define('BX_DATA_DATE_TS_UTC', 10); ///< date data type stored as unixtimestamp from UTC time
 define('BX_DATA_DATETIME_TS_UTC', 11); ///< date/time data type stored as unixtimestamp from UTC time
+define('BX_DATA_DATE_UTC', 13); ///< date data type stored as yyyy-mm-dd in UTC time
+define('BX_DATA_DATETIME_UTC', 14); ///< date/time data type stored as yyyy-mm-dd in UTC time
 
 define('BX_SLASHES_AUTO', 0);
 define('BX_SLASHES_ADD', 1);
@@ -214,6 +216,10 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATE:
     case BX_DATA_DATETIME:
         return $mixedData;
+    case BX_DATA_DATE_UTC:
+        return $mixedData . "Z";
+    case BX_DATA_DATETIME_UTC:
+        return $mixedData . "Z";
     case BX_DATA_DATE_TS:
         return empty($mixedData) ? '' : date("Y-m-d", (int)$mixedData);
     case BX_DATA_DATE_TS_UTC:
@@ -221,7 +227,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATETIME_TS:
         return empty($mixedData) ? '' : date("Y-m-d H:i", (int)$mixedData);
     case BX_DATA_DATETIME_TS_UTC:
-        return empty($mixedData) ? '' : gmdate("Y-m-d H:i", (int)$mixedData);
+        return empty($mixedData) ? '' : gmdate("Y-m-d H:i:s\Z", (int)$mixedData);
 
     case BX_DATA_HTML:
         $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
@@ -445,7 +451,6 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     
     if ($bResult !== null)
         return $bResult;
-    unset($aAlert['override_result']);
 
     // system alert
     if (!$isDisableAlert) {
