@@ -11,6 +11,7 @@
     <string name="_bx_ads_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
     <string name="_bx_ads_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_ads_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Автоматически деактивировать по истечении (в днях)]]></string>
     <string name="_bx_ads_option_offer_lifetime"><![CDATA[Автоматически отклонять предложения по истечении (в часах)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string>
@@ -106,6 +107,7 @@
     <string name="_bx_ads_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
     <string name="_bx_ads_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_ads_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_ads_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     <string name="_bx_ads_form_entry_input_sys_date_added"><![CDATA[Создано]]></string>
     <string name="_bx_ads_form_entry_input_date_added"><![CDATA[Создано]]></string>
     <string name="_bx_ads_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
@@ -195,6 +197,8 @@
     <string name="_bx_ads_page_title_sys_entries_updated"><![CDATA[Обновленные объявления]]></string>
     <string name="_bx_ads_page_title_entries_updated"><![CDATA[Обновленные объявления]]></string>
     <string name="_bx_ads_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_ads_page_title_sys_entries_favorites"><![CDATA[Избранные видео]]></string>
+    <string name="_bx_ads_page_title_entries_favorites"><![CDATA[Избранные видео]]></string>
     <string name="_bx_ads_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_ads_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_ads_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
@@ -204,6 +208,8 @@
     <string name="_bx_ads_page_block_title_popular_entries_view_extended"><![CDATA[Популярные объявления (Расширенный просмотр)]]></string>
     <string name="_bx_ads_page_block_title_popular_entries_view_full"><![CDATA[Популярные объявления (Полный просмотр)]]></string>
     <string name="_bx_ads_page_block_title_updated_entries"><![CDATA[Обновленные объявления]]></string>
+    <string name="_bx_ads_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_ads_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
     <string name="_bx_ads_page_title_sys_view_entry_comments"><![CDATA[Комментарии к объявлению]]></string>
     <string name="_bx_ads_page_title_view_entry_comments"><![CDATA[Комментарии к  {title}]]></string>
     <string name="_bx_ads_page_title_sys_entries_of_author"><![CDATA[Объявления автора]]></string>
