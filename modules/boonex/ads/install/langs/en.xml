@@ -11,6 +11,7 @@
     <string name="_bx_ads_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
     <string name="_bx_ads_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+    <string name="_bx_ads_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Deactivate automatically after (in days)]]></string>
     <string name="_bx_ads_option_offer_lifetime"><![CDATA[Decline offers automatically after (in hours)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Use internal notification about Interested action]]></string>
@@ -106,6 +107,7 @@
     <string name="_bx_ads_form_entry_input_sys_polls"><![CDATA[Polls]]></string>
     <string name="_bx_ads_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_ads_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
+    <string name="_bx_ads_form_entry_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
     <string name="_bx_ads_form_entry_input_sys_date_added"><![CDATA[Created]]></string>
     <string name="_bx_ads_form_entry_input_date_added"><![CDATA[Created]]></string>
     <string name="_bx_ads_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
@@ -196,6 +198,8 @@
     <string name="_bx_ads_page_title_entries_updated"><![CDATA[Updated Ads]]></string>
     <string name="_bx_ads_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_ads_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_ads_page_title_sys_entries_favorites"><![CDATA[Favorives Reviews]]></string>
+    <string name="_bx_ads_page_title_entries_favorites"><![CDATA[Favorives Reviews]]></string>
     <string name="_bx_ads_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_ads_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_ads_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
@@ -204,6 +208,8 @@
     <string name="_bx_ads_page_block_title_popular_entries_view_extended"><![CDATA[Popular Ads (Extended View)]]></string>
     <string name="_bx_ads_page_block_title_popular_entries_view_full"><![CDATA[Popular Ads (Full View)]]></string>
     <string name="_bx_ads_page_block_title_updated_entries"><![CDATA[Updated Ads]]></string>
+    <string name="_bx_ads_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+    <string name="_bx_ads_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_ads_page_title_sys_view_entry_comments"><![CDATA[Ad Comments]]></string>
     <string name="_bx_ads_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_ads_page_title_sys_entries_of_author"><![CDATA[Ads of author]]></string>

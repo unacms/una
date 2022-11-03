@@ -107,6 +107,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'URL_CATEGORIES' => 'page.php?i=ads-categories',
             'URL_MANAGE_COMMON' => 'page.php?i=ads-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=ads-administration',
+            'URI_FAVORITES_LIST' => 'ads-favorites',
             'URL_LICENSES_COMMON' => 'page.php?i=ads-licenses',
             'URL_LICENSES_ADMINISTRATION' => 'page.php?i=ads-licenses-administration',
 
@@ -118,6 +119,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_ads_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_ads_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_ads_searchable_fields',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_ads_per_page_for_favorites_lists',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_ads_per_page_browse_showcase',
             'PARAM_LIFETIME' => 'bx_ads_lifetime',
             'PARAM_LIFETIME_OFFERS' => 'bx_ads_offer_lifetime',
@@ -158,6 +160,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_REVIEWS' => 'bx_ads_reviews',
             'OBJECT_CATEGORY' => '',
             'OBJECT_PRIVACY_VIEW' => 'bx_ads_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_ads_allow_view_favorite_list',
             'OBJECT_FORM_CATEGORY' => 'bx_ads_category',
             'OBJECT_FORM_CATEGORY_DISPLAY_ADD' => 'bx_ads_category_add',
             'OBJECT_FORM_CATEGORY_DISPLAY_EDIT' => 'bx_ads_category_edit',

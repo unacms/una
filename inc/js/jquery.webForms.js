@@ -272,31 +272,72 @@
                 	$(oInstance.dpDiv).addClass('bx-form-datepicker-modal');
                 };
 
+                var parseDateUtc = function (sDate, sFormat) {
+                    let oDate = moment.utc(sDate);
+                    return new Date(
+                        oDate.year(),
+                        oDate.month(),
+                        oDate.date(),
+                        oDate.hour(),
+                        oDate.minute(),
+                        oDate.second()
+                    );
+                }
+                var formatDateUtc = function (oDate, sFormat) {
+                    return moment.utc([
+                        oDate.getFullYear(),
+                        oDate.getMonth(),
+                        oDate.getDate(),
+                        oDate.getHours(),
+                        oDate.getMinutes(),
+                        oDate.getSeconds()
+                    ]).format(sFormat);
+                }
+
                 if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
                     flatpickr(this, {
                         altInput: true,
                         altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-date") : "F j, Y",
-                        dateFormat: "Y-m-d",
+                        dateFormat: "YYYY-MM-DD",
                         minDate: sYearMin,
                         maxDate: sYearMax,
-                        onOpen: onBeforeShow
+                        onOpen: onBeforeShow,
+                        parseDate: parseDateUtc,
+                        formatDate: formatDateUtc,
                     });
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
+
                     var oPickerOptions = {
                         enableTime: true,
                         altInput: true,
-                        altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-datetime") : "F j, Y H:i",
-                        dateFormat: "Y-m-d H:i",
+                        altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-datetime") : "D MMM YYYY h:mma",
+                        dateFormat: "YYYY-MM-DD\\THH:mm:ssZ",
                         time_24hr: null === this.getAttribute("data-frmt-24h") || 'on' == this.getAttribute("data-frmt-24h") ? true : false,
                         minDate: sYearMin,
                         maxDate: sYearMax,
-                        onOpen: onBeforeShow
+                        onOpen: onBeforeShow,
+                        parseDate: function (sDate, sFormat) {
+                            let oDate = moment.utc(sDate);
+                            return oDate.toDate();
+                        },
+                        formatDate: function (oDate, sFormat, locale) {
+                            let o;
+                            if (sFormat.endsWith('Z'))
+                                o = moment.utc(oDate);
+                            else
+                                o = moment(oDate);
+                            return o.format(sFormat);
+                        }
                     };
-                    if (1 == $(this).attr('data-utc'))
-                        oPickerOptions.dateFormat = "Y-m-d H:i:00 \\Z";
+
+                    if (1 == $(this).attr('data-utc')) {
+                        oPickerOptions.parseDate = parseDateUtc;
+                        oPickerOptions.formatDate = formatDateUtc;
+                    }
                     flatpickr(this, oPickerOptions);
+
                 } else if(this.getAttribute("type") == "dateselect") { // DateTime selector
                     moment.locale(sLang);
                     $(this).combodate({

@@ -50,10 +50,6 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $sLocation = $oMetatags && $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : '';
-        if (!$sLocation) {
-            $this->_oTemplate->displayPageNotFound();
-            exit;
-        }
 
         $oDateStart = new DateTime('@' . $aContentInfo['date_start']);
         $oDateEnd = new DateTime('@' . ($aContentInfo['date_end'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_end'] : $aContentInfo['repeat_stop']));
@@ -68,7 +64,9 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             $oDateEnd
         ) : null;
 
-        $oICalLink->address($sLocation);
+        if ($sLocation)
+            $oICalLink->address($sLocation);
+
         $s = $oICalLink->ics();
 
         if (!preg_match('/^data:([a-zA-Z0-9\/]+);charset=[a-zA-Z0-9]+;base64,(.*)$/', $s, $m)) {
@@ -495,7 +493,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             'bx_if:date' => [
                 'condition' => $oDateStart,
                 'content' => [
-                    'date' => $oDateStart ? bx_time_js($aContentInfo['date_start'], BX_FORMAT_DATE_TIME) : '',
+                    'date' => $oDateStart ? bx_time_js($aContentInfo['date_start'], BX_FORMAT_DATE_TIME, true) : '',
                     'date_c' => $oDateStart->format('c'),
             ]],
             'bx_if:location' => array(

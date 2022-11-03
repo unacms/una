@@ -921,8 +921,10 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
 
         if (iSecondsDiff < $(this).attr('data-bx-autoformat'))
             s = moment(sTime).locale(sLang).fromNow(); // 'time ago' format
+        else if (1 == $(this).attr('data-bx-utc'))
+            s = moment.utc(sTime).locale(sLang).format($(this).attr('data-bx-format')); 
         else
-            s = moment(sTime).locale(sLang).format($(this).attr('data-bx-format')); // custom format
+            s = moment(sTime).locale(sLang).format($(this).attr('data-bx-format'));
 
         if (iSecondsDiff < iAutoupdate)
             $(this).addClass('bx-time-autoupdate');
