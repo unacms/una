@@ -83,6 +83,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'OBJECT_FORM_BUNDLE' => 'bx_credits_bundle',
             'OBJECT_FORM_BUNDLE_DISPLAY_ADD' => 'bx_credits_bundle_add',
             'OBJECT_FORM_BUNDLE_DISPLAY_EDIT' => 'bx_credits_bundle_edit',
+            'OBJECT_FORM_PROFILE' => 'bx_credits_profile',
+            'OBJECT_FORM_PROFILE_DISPLAY_EDIT' => 'bx_credits_profile_edit',
             'OBJECT_MENU_SUBMENU' => 'bx_credits_submenu', 
             'OBJECT_MENU_MANAGE_SUBMENU' => 'bx_credits_manage_submenu',
             'OBJECT_GRID_BUNDLES' => 'bx_credits_bundles',
@@ -90,6 +92,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'OBJECT_GRID_ORDERS_COMMON' => 'bx_credits_orders_common',
             'OBJECT_GRID_HISTORY_ADMINISTRATION' => 'bx_credits_history_administration',
             'OBJECT_GRID_HISTORY_COMMON' => 'bx_credits_history_common',
+            'OBJECT_GRID_PROFILES_ADMINISTRATION' => 'bx_credits_profiles_administration',
 
             // email templates
             'ETEMPLATE_GRANTED' => 'bx_credits_granted',
@@ -136,6 +139,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'withdraw_field_rate' => $sPrefix . '-wff-rate',
             'withdraw_field_amount' => $sPrefix . '-wff-amount',
             'withdraw_field_result' => $sPrefix . '-wff-result',
+
+            'edit_profile_popup' =>  $sPrefix . '-edit-profile-popup',
 
             'subscribe_popup' =>  $sPrefix . '-subscribe-popup',
         );
@@ -207,6 +212,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
         return [
             BX_CREDITS_TRANSFER_TYPE_CHECKOUT,
             BX_CREDITS_TRANSFER_TYPE_SEND,
+            BX_CREDITS_TRANSFER_TYPE_WITHDRAW,
             BX_CREDITS_TRANSFER_TYPE_SERVICE
         ];
     }

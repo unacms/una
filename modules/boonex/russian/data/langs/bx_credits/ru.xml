@@ -68,6 +68,21 @@
     <string name="_bx_credits_form_credit_input_sys_do_cancel"><![CDATA[Отмена]]></string>
     <string name="_bx_credits_form_credit_input_do_cancel"><![CDATA[Отмена]]></string>
 
+    <string name="_bx_credits_form_profile"><![CDATA[Профиль]]></string>
+    <string name="_bx_credits_form_profile_display_edit"><![CDATA[Редактировать профиль]]></string>
+    <string name="_bx_credits_form_profile_input_sys_wdw_clearing"><![CDATA[Клиринговый период]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_clearing"><![CDATA[Клиринговый период (в днях)]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_clearing_inf"><![CDATA[Оставьте пустым (0), чтобы использовать глобальное значение]]></string>
+    <string name="_bx_credits_form_profile_input_sys_wdw_minimum"><![CDATA[Минимальная сумма вывода]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_minimum"><![CDATA[Минимальная сумма вывода]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_minimum_inf"><![CDATA[Оставьте пустым (0), чтобы использовать глобальное значение]]></string>
+    <string name="_bx_credits_form_profile_input_sys_wdw_remaining"><![CDATA[Минимальная оставшаяся сумма]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_remaining"><![CDATA[Минимальная оставшаяся сумма]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_remaining_inf"><![CDATA[Оставьте пустым (0), чтобы использовать глобальное значение]]></string>
+    <string name="_bx_credits_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_credits_form_profile_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_credits_form_profile_input_sys_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_credits_form_profile_input_do_cancel"><![CDATA[Отмена]]></string>
 
     <!-- Pages -->
     <string name="_bx_credits_page_title_sys_home"><![CDATA[Кредиты]]></string>
@@ -97,6 +112,10 @@
     <string name="_bx_credits_page_title_orders_administration"><![CDATA[Ордеры]]></string>
     <string name="_bx_credits_page_block_title_sys_orders_administration"><![CDATA[Все ордеры]]></string>
     <string name="_bx_credits_page_block_title_orders_administration"><![CDATA[Ордеры]]></string>
+    <string name="_bx_credits_page_title_sys_profiles_administration"><![CDATA[Все профили]]></string>
+    <string name="_bx_credits_page_title_profiles_administration"><![CDATA[Профили]]></string>
+    <string name="_bx_credits_page_block_title_sys_profiles_administration"><![CDATA[Все профили]]></string>
+    <string name="_bx_credits_page_block_title_profiles_administration"><![CDATA[Профили]]></string>
 
 
     <!-- Menus -->
@@ -125,6 +144,8 @@
     <string name="_bx_credits_menu_item_title_history_administration"><![CDATA[Вся история]]></string>
     <string name="_bx_credits_menu_item_title_system_history_common"><![CDATA[Моя история]]></string>
     <string name="_bx_credits_menu_item_title_history_common"><![CDATA[Моя история]]></string>
+    <string name="_bx_credits_menu_item_title_system_profiles_administration"><![CDATA[Все профили]]></string>
+    <string name="_bx_credits_menu_item_title_profiles_administration"><![CDATA[Все профили]]></string>
 
 
     <!-- Grids -->
@@ -166,6 +187,14 @@
     <string name="_bx_credits_grid_column_title_ord_added"><![CDATA[Добавлено]]></string>
     <string name="_bx_credits_grid_column_title_ord_expired"><![CDATA[Закончится]]></string>
 
+    <string name="_bx_credits_grid_column_title_pfl_id"><![CDATA[Профиль]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_wdw_clearing"><![CDATA[Клиринговый период (в днях)]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_wdw_minimum"><![CDATA[Минимальная сумма вывода]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_wdw_remaining"><![CDATA[Минимальная оставшаяся сумма]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_balance"><![CDATA[Баланс]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_balance_cleared"><![CDATA[Очищенный баланс]]></string>
+    <string name="_bx_credits_grid_action_title_pfl_edit"><![CDATA[Редактировать]]></string>
+    <string name="_bx_credits_grid_popup_title_pfl_edit"><![CDATA[Редактировать ограничения профиля '{0}']]></string>
 
     <!-- Email templates -->
     <string name="_bx_credits_et_txt_name_granted"><![CDATA[Кредиты подарены.]]></string>

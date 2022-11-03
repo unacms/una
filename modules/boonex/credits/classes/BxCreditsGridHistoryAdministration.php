@@ -110,9 +110,12 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
 
         if($aRow[$CNF['FIELD_H_DIRECTION']] == BX_CREDITS_DIRECTION_IN) {
             if(empty($mixedValue)) {
-                $iPeriod = $this->_oModule->_oConfig->getWithdrawClearing();
-                if($iPeriod == 0)
-                    $iPeriod = 1;
+                $iPeriod = (int)$aRow['wdw_clearing'];
+                if($iPeriod == 0) {
+                    $iPeriod = $this->_oModule->_oConfig->getWithdrawClearing();
+                    if($iPeriod == 0)
+                        $iPeriod = 1;
+                }
 
                 $oDate = date_create('@' . $aRow[$CNF['FIELD_H_DATE']]);
                 date_add($oDate, new DateInterval('P' . $iPeriod . 'D'));

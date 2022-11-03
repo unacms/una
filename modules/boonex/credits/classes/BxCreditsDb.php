@@ -350,7 +350,8 @@ class BxCreditsDb extends BxBaseModGeneralDb
                     'clearing' => $aParams['clearing']
                 ];
 
-                $sWhereClause = " AND `th`.`direction`='in' AND `th`.`type` IN (" . $this->implode_escape($this->_oConfig->getTransferTypesForClearing()) . ") AND `th`.`date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL :clearing DAY)) AND `th`.`cleared`='0'";
+                $sJoinClause = " LEFT JOIN `" . $CNF['TABLE_PROFILES'] . "` AS `tp` ON `th`.`first_pid`=`tp`.`id`";
+                $sWhereClause = " AND `th`.`direction`='in' AND `th`.`type` IN (" . $this->implode_escape($this->_oConfig->getTransferTypesForClearing()) . ") AND `th`.`date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL IF(`tp`.`wdw_clearing` <> 0, `tp`.`wdw_clearing`, :clearing) DAY)) AND `th`.`cleared`='0'";
                 break;
         }
 

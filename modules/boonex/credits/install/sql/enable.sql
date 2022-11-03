@@ -55,19 +55,26 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_credits_orders_administration', 1, 'bx_credits', '_bx_credits_page_block_title_sys_orders_administration', '_bx_credits_page_block_title_orders_administration', 11, 192, 'service', 'a:3:{s:6:"module";s:10:"bx_credits";s:6:"method";s:16:"get_block_orders";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 0, 1, 0);
 
--- PAGE: module manage own
+-- PAGE: profile's history
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_credits_history_common', '_bx_credits_page_title_sys_history_common', '_bx_credits_page_title_history_common', 'bx_credits', 5, 2147483647, 1, 'credits-history-common', 'page.php?i=credits-history-common', '', '', '', 0, 1, 0, 'BxCreditsPageHistory', 'modules/boonex/credits/classes/BxCreditsPageHistory.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_credits_history_common', 1, 'bx_credits', '_bx_credits_page_block_title_sys_history_common', '_bx_credits_page_block_title_history_common', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:17:"get_block_history";}}', 0, 1, 0);
 
--- PAGE: module manage all
+-- PAGE: history administration
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_credits_history_administration', '_bx_credits_page_title_sys_history_administration', '_bx_credits_page_title_history_administration', 'bx_credits', 5, 192, 1, 'credits-history-administration', 'page.php?i=credits-history-administration', '', '', '', 0, 1, 0, 'BxCreditsPageHistory', 'modules/boonex/credits/classes/BxCreditsPageHistory.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_credits_history_administration', 1, 'bx_credits', '_bx_credits_page_block_title_sys_history_administration', '_bx_credits_page_block_title_history_administration', 11, 192, 'service', 'a:3:{s:6:"module";s:10:"bx_credits";s:6:"method";s:17:"get_block_history";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 1, 0);
+
+-- PAGE: profiles administration
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_credits_profiles_administration', '_bx_credits_page_title_sys_profiles_administration', '_bx_credits_page_title_profiles_administration', 'bx_credits', 5, 192, 1, 'credits-profiles-administration', 'page.php?i=credits-profiles-administration', '', '', '', 0, 1, 0, 'BxCreditsPageProfiles', 'modules/boonex/credits/classes/BxCreditsPageProfiles.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_credits_profiles_administration', 1, 'bx_credits', '_bx_credits_page_block_title_sys_profiles_administration', '_bx_credits_page_block_title_profiles_administration', 11, 192, 'service', 'a:3:{s:6:"module";s:10:"bx_credits";s:6:"method";s:18:"get_block_profiles";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 1, 0);
 
 
 -- MENU: add to site menu
@@ -116,7 +123,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_credits_manage_submenu', 'bx_credits', 'credits-history-common', '_bx_credits_menu_item_title_system_history_common', '_bx_credits_menu_item_title_history_common', 'page.php?i=credits-history-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 1),
 ('bx_credits_manage_submenu', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_history_administration', '_bx_credits_menu_item_title_history_administration', 'page.php?i=credits-history-administration', '', '_self', '', '', '', 192, 1, 0, 1, 2),
 ('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-common', '_bx_credits_menu_item_title_system_orders_common', '_bx_credits_menu_item_title_orders_common', 'page.php?i=credits-orders-common', '', '_self', '', '', '', 2147483646, 1, 0, 1, 3),
-('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-administration', '_bx_credits_menu_item_title_system_orders_administration', '_bx_credits_menu_item_title_orders_administration', 'page.php?i=credits-orders-administration', '', '_self', '', '', '', 192, 1, 0, 1, 4);
+('bx_credits_manage_submenu', 'bx_credits', 'credits-orders-administration', '_bx_credits_menu_item_title_system_orders_administration', '_bx_credits_menu_item_title_orders_administration', 'page.php?i=credits-orders-administration', '', '_self', '', '', '', 192, 1, 0, 1, 4),
+('bx_credits_manage_submenu', 'bx_credits', 'credits-profiles-administration', '_bx_credits_menu_item_title_system_profiles_administration', '_bx_credits_menu_item_title_profiles_administration', 'page.php?i=credits-profiles-administration', '', '_self', '', '', '', 192, 1, 0, 1, 5);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -165,8 +173,8 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 -- GRIDS: history
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_credits_history_administration', 'Sql', 'SELECT * FROM `bx_credits_history` WHERE 1 ', 'bx_credits_history', 'id', 'date', '', '', 20, NULL, 'start', '', 'direction,order,info', '', 'like', '', '', 192, 'BxCreditsGridHistoryAdministration', 'modules/boonex/credits/classes/BxCreditsGridHistoryAdministration.php'),
-('bx_credits_history_common', 'Sql', 'SELECT * FROM `bx_credits_history` WHERE 1 ', 'bx_credits_history', 'id', 'date', '', '', 20, NULL, 'start', '', 'direction,order,info', '', 'like', '', '', 2147483647, 'BxCreditsGridHistoryCommon', 'modules/boonex/credits/classes/BxCreditsGridHistoryCommon.php');
+('bx_credits_history_administration', 'Sql', 'SELECT `th`.*, `tp`.`wdw_clearing` FROM `bx_credits_history` AS `th` LEFT JOIN `bx_credits_profiles` AS `tp` ON `th`.`first_pid`=`tp`.`id` WHERE 1 ', 'bx_credits_history', 'id', 'date', '', '', 20, NULL, 'start', '', 'th`.`direction,th`.`order,th`.`info', '', 'like', '', '', 192, 'BxCreditsGridHistoryAdministration', 'modules/boonex/credits/classes/BxCreditsGridHistoryAdministration.php'),
+('bx_credits_history_common', 'Sql', 'SELECT `th`.*, `tp`.`wdw_clearing` FROM `bx_credits_history` AS `th` LEFT JOIN `bx_credits_profiles` AS `tp` ON `th`.`first_pid`=`tp`.`id` WHERE 1 ', 'bx_credits_history', 'id', 'date', '', '', 20, NULL, 'start', '', 'th`.`direction,th`.`order,th`.`info', '', 'like', '', '', 2147483647, 'BxCreditsGridHistoryCommon', 'modules/boonex/credits/classes/BxCreditsGridHistoryCommon.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_credits_history_administration', 'first_pid', '_bx_credits_grid_column_title_htr_first_pid', '15%', 0, '', '', 1),
@@ -192,6 +200,22 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 ('bx_credits_history_common', 'independent', 'send', '_bx_credits_grid_action_title_htr_send', '', 0, 0, 1),
 ('bx_credits_history_common', 'independent', 'withdraw_request', '_bx_credits_grid_action_title_htr_withdraw_request', '', 0, 0, 2);
+
+-- GRIDS: profiles
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_credits_profiles_administration', 'Sql', 'SELECT * FROM `bx_credits_profiles` WHERE 1 ', 'bx_credits_profiles', 'id', '', '', '', 20, NULL, 'start', '', '', '', 'like', '', '', 192, 'BxCreditsGridProfilesAdministration', 'modules/boonex/credits/classes/BxCreditsGridProfilesAdministration.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_credits_profiles_administration', 'id', '_bx_credits_grid_column_title_pfl_id', '40%', 0, '', '', 1),
+('bx_credits_profiles_administration', 'wdw_clearing', '_bx_credits_grid_column_title_pfl_wdw_clearing', '10%', 0, '', '', 2),
+('bx_credits_profiles_administration', 'wdw_minimum', '_bx_credits_grid_column_title_pfl_wdw_minimum', '10%', 0, '', '', 3),
+('bx_credits_profiles_administration', 'wdw_remaining', '_bx_credits_grid_column_title_pfl_wdw_remaining', '10%', 0, '', '', 4),
+('bx_credits_profiles_administration', 'balance', '_bx_credits_grid_column_title_pfl_balance', '15%', 0, '', '', 5),
+('bx_credits_profiles_administration', 'balance_cleared', '_bx_credits_grid_column_title_pfl_balance_cleared', '15%', 0, '', '', 6),
+('bx_credits_profiles_administration', 'actions', '', '20%', 0, '', '', 7);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_credits_profiles_administration', 'single', 'edit', '_bx_credits_grid_action_title_pfl_edit', 'pencil-alt', 1, 0, 1);
 
 
 -- ALERTS

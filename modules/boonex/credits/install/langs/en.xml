@@ -43,8 +43,8 @@
     <string name="_bx_credits_form_credit"><![CDATA[Credit]]></string>
     <string name="_bx_credits_form_credit_display_grant"><![CDATA[Grant]]></string>
     <string name="_bx_credits_form_credit_display_send"><![CDATA[Send]]></string>
-    <string name="_bx_credits_form_credit_display_withdraw_request"><![CDATA[Request Withdraw]]></string>
-    <string name="_bx_credits_form_credit_display_withdraw_confirm"><![CDATA[Confirm withdraw]]></string>
+    <string name="_bx_credits_form_credit_display_withdraw_request"><![CDATA[Request Withdrawal]]></string>
+    <string name="_bx_credits_form_credit_display_withdraw_confirm"><![CDATA[Confirm Withdrawal]]></string>
     <string name="_bx_credits_form_credit_input_sys_balance"><![CDATA[Balance]]></string>
     <string name="_bx_credits_form_credit_input_balance"><![CDATA[Balance]]></string>
     <string name="_bx_credits_form_credit_input_sys_cleared"><![CDATA[Cleared Balance]]></string>
@@ -67,6 +67,22 @@
     <string name="_bx_credits_form_credit_input_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_credits_form_credit_input_sys_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_credits_form_credit_input_do_cancel"><![CDATA[Cancel]]></string>
+
+    <string name="_bx_credits_form_profile"><![CDATA[Profile]]></string>
+    <string name="_bx_credits_form_profile_display_edit"><![CDATA[Edit Profile]]></string>
+    <string name="_bx_credits_form_profile_input_sys_wdw_clearing"><![CDATA[Clearing period]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_clearing"><![CDATA[Clearing period (in days)]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_clearing_inf"><![CDATA[Leave empty (0) to use global value]]></string>
+    <string name="_bx_credits_form_profile_input_sys_wdw_minimum"><![CDATA[Minimum withdrawal amount]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_minimum"><![CDATA[Minimum withdrawal amount]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_minimum_inf"><![CDATA[Leave empty (0) to use global value]]></string>
+    <string name="_bx_credits_form_profile_input_sys_wdw_remaining"><![CDATA[Minimum remaining amount]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_remaining"><![CDATA[Minimum remaining amount]]></string>
+    <string name="_bx_credits_form_profile_input_wdw_remaining_inf"><![CDATA[Leave empty (0) to use global value]]></string>
+    <string name="_bx_credits_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_credits_form_profile_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_credits_form_profile_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_credits_form_profile_input_do_cancel"><![CDATA[Cancel]]></string>
 
 
     <!-- Pages -->
@@ -97,6 +113,10 @@
     <string name="_bx_credits_page_title_orders_administration"><![CDATA[Orders]]></string>
     <string name="_bx_credits_page_block_title_sys_orders_administration"><![CDATA[All Orders]]></string>
     <string name="_bx_credits_page_block_title_orders_administration"><![CDATA[Orders]]></string>
+    <string name="_bx_credits_page_title_sys_profiles_administration"><![CDATA[All Profiles]]></string>
+    <string name="_bx_credits_page_title_profiles_administration"><![CDATA[Profiles]]></string>
+    <string name="_bx_credits_page_block_title_sys_profiles_administration"><![CDATA[All Profiles]]></string>
+    <string name="_bx_credits_page_block_title_profiles_administration"><![CDATA[Profiles]]></string>
 
 
     <!-- Menus -->
@@ -125,6 +145,8 @@
     <string name="_bx_credits_menu_item_title_history_administration"><![CDATA[All History]]></string>
     <string name="_bx_credits_menu_item_title_system_history_common"><![CDATA[My History]]></string>
     <string name="_bx_credits_menu_item_title_history_common"><![CDATA[My History]]></string>
+    <string name="_bx_credits_menu_item_title_system_profiles_administration"><![CDATA[All Profiles]]></string>
+    <string name="_bx_credits_menu_item_title_profiles_administration"><![CDATA[All Profiles]]></string>
 
 
     <!-- Grids -->
@@ -166,6 +188,14 @@
     <string name="_bx_credits_grid_column_title_ord_added"><![CDATA[Added]]></string>
     <string name="_bx_credits_grid_column_title_ord_expired"><![CDATA[Expires]]></string>
 
+    <string name="_bx_credits_grid_column_title_pfl_id"><![CDATA[Profile]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_wdw_clearing"><![CDATA[Clearing period (in days)]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_wdw_minimum"><![CDATA[Min withdrawal amount]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_wdw_remaining"><![CDATA[Min remaining amount]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_balance"><![CDATA[Balance]]></string>
+    <string name="_bx_credits_grid_column_title_pfl_balance_cleared"><![CDATA[Cleared balance]]></string>
+    <string name="_bx_credits_grid_action_title_pfl_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_credits_grid_popup_title_pfl_edit"><![CDATA[Edit '{0}' Profile's Limitations]]></string>
 
     <!-- Email templates -->
     <string name="_bx_credits_et_txt_name_granted"><![CDATA[Credits granted.]]></string>
@@ -232,7 +262,7 @@
     <string name="_bx_credits_txt_history_info_send"><![CDATA[Transfer]]></string>
     <string name="_bx_credits_txt_history_info_purchase"><![CDATA[Bundle purchase]]></string>
     <string name="_bx_credits_txt_history_info_checkout"><![CDATA[Profile to profile checkout]]></string>
-    <string name="_bx_credits_txt_history_info_withdraw"><![CDATA[Withdraw by request]]></string>
+    <string name="_bx_credits_txt_history_info_withdraw"><![CDATA[Withdrawal by request]]></string>
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Artificially initiated transfer]]></string>
     <string name="_bx_credits_txt_history_info_refund"><![CDATA[Refund]]></string>
     <string name="_bx_credits_txt_history_info_cancellation"><![CDATA[Cancellation]]></string>

@@ -319,7 +319,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
      * @page service Service Calls
      * @section bx_credits Credits
      * @subsection bx_credits-page_blocks Page Blocks
-     * @subsubsection bx_credits-block_orders get_block_orders
+     * @subsubsection bx_credits-get_block_orders get_block_orders
      * 
      * @code bx_srv('bx_credits', 'get_block_orders', [...]); @endcode
      * 
@@ -327,7 +327,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
      *
      * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
-     * @see BxCreditsModule::serviceBlockLicenses
+     * @see BxCreditsModule::serviceGetBlockOrders
      */
     /** 
      * @ref bx_credits-get_block_orders "get_block_orders"
@@ -357,6 +357,28 @@ class BxCreditsModule extends BxBaseModGeneralModule
     public function serviceGetBlockHistory($sType = 'common') 
     {
         return $this->_getBlockHistory($sType);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_credits Credits
+     * @subsection bx_credits-page_blocks Page Blocks
+     * @subsubsection bx_credits-get_block_profiles get_block_profiles
+     * 
+     * @code bx_srv('bx_credits', 'get_block_profiles', [...]); @endcode
+     * 
+     * Get page block with a list of profiles for managing their parameters.
+     *
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxCreditsModule::serviceGetBlockProfiles
+     */
+    /** 
+     * @ref bx_credits-get_block_profiles "get_block_profiles"
+     */
+    public function serviceGetBlockProfiles($sType = 'common') 
+    {
+        return $this->_getBlockProfiles($sType);
     }
 
     /**
@@ -895,11 +917,15 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if($fAmount > $fBalanceCleared)
             return ['code' => 2, 'msg' => '_bx_credits_err_low_balance'];
 
-        if($fAmount < ($iWithdrawMinimum = (int)getParam($CNF['PARAM_WITHDRAW_MINIMUM'])))
+        $aProfileInfo = $this->_oDb->getProfile(['type' => 'id', 'id' => $iProfileId]);
+
+        $iWithdrawMinimum = !empty($aProfileInfo['wdw_minimum']) ? (int)$aProfileInfo['wdw_minimum'] : (int)getParam($CNF['PARAM_WITHDRAW_MINIMUM']);
+        if($fAmount < $iWithdrawMinimum)
             return ['code' => 3, 'msg' => _t('_bx_credits_err_withdraw_minimum', $iWithdrawMinimum)];
 
         $fBalance = $this->getProfileBalance($iProfileId);
-        if(($fBalance - $fAmount) < ($iWithdrawRemaining = (int)getParam($CNF['PARAM_WITHDRAW_REMAINING'])))
+        $iWithdrawRemaining = !empty($aProfileInfo['wdw_remaining']) ? (int)$aProfileInfo['wdw_remaining'] : (int)getParam($CNF['PARAM_WITHDRAW_REMAINING']);
+        if(($fBalance - $fAmount) < $iWithdrawRemaining)
             return ['code' => 4, 'msg' => _t('_bx_credits_err_withdraw_remaining', $iWithdrawRemaining)];
 
         $aResult = ['code' => 5, 'msg' => '_bx_credits_err_cannot_send'];
@@ -1082,10 +1108,10 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$oGrid)
             return '';
 
-        return array(
+        return [
             'content' => $oGrid->getCode(),
             'menu' => $CNF['OBJECT_MENU_MANAGE_SUBMENU']
-        );
+        ];
     }
 
     protected function _getBlockHistory($sType) 
@@ -1097,10 +1123,29 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$oGrid)
             return '';
 
-        return array(
+        return [
             'content' => $oGrid->getCode(),
             'menu' => $CNF['OBJECT_MENU_MANAGE_SUBMENU']
-        );
+        ];
+    }
+
+    protected function _getBlockProfiles($sType) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sKey = 'OBJECT_GRID_PROFILES_' . strtoupper($sType);
+        if(empty($CNF[$sKey]))
+            return '';
+
+        $sGrid = $CNF[$sKey];
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
+        if(!$oGrid)
+            return '';
+
+        return [
+            'content' => $oGrid->getCode(),
+            'menu' => $CNF['OBJECT_MENU_MANAGE_SUBMENU']
+        ];
     }
 }
 
