@@ -1915,7 +1915,7 @@ class BxDolFormCheckerHelper
 
     static public function displayDate ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATE);
+        return bx_process_output ($i, BX_DATA_DATE_UTC);
     }
     static public function displayDateTs ($i)
     {
@@ -1927,7 +1927,7 @@ class BxDolFormCheckerHelper
     }    
     static public function displayDateTime ($i)
     {
-        return bx_process_output ($i, BX_DATA_DATETIME);
+        return bx_process_output ($i, BX_DATA_DATETIME_UTC);
     }
     static public function displayDateTimeTs ($i)
     {
