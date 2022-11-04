@@ -18,8 +18,8 @@
     cursor: pointer;
     
 }
-.ql-editor.prose{
-	max-width: none;
+.ql-editor.bx-def-vanilla-html{
+    max-width: none;
 }
 .dark .ql-toolbar.ql-snow{
     border-color: rgb(55 65 81);
@@ -41,7 +41,7 @@
 .dark .ql-picker-options .ql-picker-item{
     color: rgb(209, 213, 219);
 }
-.ql-editor.prose ol li::marker {
+.ql-editor.bx-def-vanilla-html ol li::marker {
     display: none;
     content:'';
 }

@@ -328,7 +328,7 @@ function bx_editor_init(oEditor, oParams){
     $(oParams.selector).next().find('span.ql-align').attr('title', _t('_sys_txt_quill_tooltip_align'));
     $(oParams.selector).next().find('span.ql-header').attr('title', _t('_sys_txt_quill_tooltip_header'));
 	
-	$('#' + oParams.name).find('.ql-editor').addClass('prose dark:prose-invert');
+	$('#' + oParams.name).find('.ql-editor').addClass('bx-def-vanilla-html');
     
     if (bEmptyToolbar)
         $(oParams.selector).next().hide();
