@@ -28,6 +28,14 @@
 
 
     /* Defaults */
+    .bx-def-vanilla-html {
+        @apply prose dark:prose-invert;
+        @apply prose-a:text-blue-500 prose-a:font-medium prose-a:no-underline hover:prose-a:underline visited:prose-a:text-purple-500;
+    }
+    .bx-def-vanilla-html.bx-def-vh-sm {
+        @apply prose-sm;
+    }
+
     .bx-artificer .bx-menthion-link {
         @apply font-normal text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-600;
     }
