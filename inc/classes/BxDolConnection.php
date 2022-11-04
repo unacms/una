@@ -734,6 +734,10 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         return $oConnection['mutual'] ? false : true;
     }
 
+    public function getConnection ($iInitiator, $iContent)
+    {
+        return $this->_oQuery->getConnection($iInitiator, $iContent);
+    }
 
     /**
      * Must be called when some content is deleted which can have connections as 'content' or as 'initiator', to delete any associated data

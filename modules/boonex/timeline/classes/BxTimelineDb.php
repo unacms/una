@@ -779,8 +779,25 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             }
             
             if($this->_oConfig->isSortByUnread()) {
+                $oProfileQuery = BxDolProfileQuery::getInstance();
+
+                $iDate = 0;
+                $iOwner = (int)$aParams['owner_id'];
+                $aOwner = $oProfileQuery->getInfoById($iOwner);
+                $iViewer = !empty($aParams['viewer_id']) ? (int)$aParams['viewer_id'] : bx_get_logged_profile_id();
+                if(!empty($aOwner) && is_array($aOwner) && BxDolRequest::serviceExists($aOwner['type'], 'is_fan') && bx_srv($aOwner['type'], 'is_fan', [$iOwner, $iViewer])) {
+                    $oModule = BxDolModule::getInstance($aOwner['type']);
+                    $aConnection = BxDolConnection::getObjectInstance($oModule->_oConfig->CNF['OBJECT_CONNECTIONS'])->getConnection($iViewer, $iOwner);
+                    $iDate = (int)$aConnection['added'];
+                }
+                else {
+                    $aViewer = $oProfileQuery->getInfoById($iViewer);
+                    if(!empty($aViewer) && is_array($aViewer))
+                        $iDate = bx_srv($aViewer['type'], 'get_date_added', [$aViewer['content_id']]);
+                }
+
                 $sSelectClause .= ", IF(NOT ISNULL(`teu`.`id`), 1, 0) AS `read`";
-                $sOrderClause .= "`read` ASC, ";
+                $sOrderClause .= $this->prepareAsString("IF(`{$this->_sTable}`.`date` > ?, `read`, 1) ASC, ", $iDate);
             }
 
             if($this->_oConfig->isSortByReaction())

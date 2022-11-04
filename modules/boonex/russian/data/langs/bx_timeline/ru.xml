@@ -40,7 +40,7 @@
     <string name="_bx_timeline_option_preload_comments"><![CDATA[Количество предварительно загруженных комментариев (до 7 штук)]]></string>
     <string name="_bx_timeline_option_enable_jump_to_switcher"><![CDATA[Показывать переключатель 'Перейти к']]></string>
     <string name="_bx_timeline_option_enable_sort_by_reaction"><![CDATA[Сортировать по дате последнего комментария (экспериментально, работает только для обновлений)]]></string>
-    <string name="_bx_timeline_option_enable_sort_by_unread"><![CDATA[Сортировать по состоянию "непрочитанный" (показывать непрочитанные первыми).]]></string>
+    <string name="_bx_timeline_option_enable_sort_by_unread"><![CDATA[Сортировать по состоянию "непрочитанный" (показывать непрочитанные первыми, экспериментально).]]></string>
     <string name="_bx_timeline_option_attachments_layout"><![CDATA[Показывать вложения как]]></string>
     <string name="_bx_timeline_option_attachments_layout_gallery"><![CDATA[Галерея]]></string>
     <string name="_bx_timeline_option_attachments_layout_showcase"><![CDATA[Витрина]]></string>

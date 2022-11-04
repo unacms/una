@@ -40,7 +40,7 @@
     <string name="_bx_timeline_option_preload_comments"><![CDATA[Number of preloaded comments (up to 7 items)]]></string>
     <string name="_bx_timeline_option_enable_jump_to_switcher"><![CDATA[Show 'Jump to' switcher]]></string>
     <string name="_bx_timeline_option_enable_sort_by_reaction"><![CDATA[Sort by the date of last comment (experimental, works for updates only)]]></string>
-    <string name="_bx_timeline_option_enable_sort_by_unread"><![CDATA[Sort by 'unread' state (show unread first).]]></string>
+    <string name="_bx_timeline_option_enable_sort_by_unread"><![CDATA[Sort by 'unread' state (show unread first, experimental).]]></string>
     <string name="_bx_timeline_option_attachments_layout"><![CDATA[Show attachments as]]></string>
     <string name="_bx_timeline_option_attachments_layout_gallery"><![CDATA[Gallery]]></string>
     <string name="_bx_timeline_option_attachments_layout_showcase"><![CDATA[Showcase]]></string>
