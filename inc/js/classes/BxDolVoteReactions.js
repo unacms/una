@@ -125,8 +125,11 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
             oCounter.filter('.total-count').each(function() {
                 $(this).html(oData.total.countf).toggleClass('bx-vc-hidden', !oData.total.count);
             });
-        
-        oCounter.parents('.' + this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.count && !oData.total.count);
+
+        //--- Show counter.
+        oCounter.filter('.' + oData.reaction).each(function() {
+            $(this).parents('.' + $this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.count && !oData.total.count);
+        });
     }
 
     if(typeof onComplete == 'function')
