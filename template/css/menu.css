@@ -652,6 +652,13 @@ ul.bx-menu-btns-ver li .bx-btn {
     float:none;
     display:inline-block;
 }
+ul.bx-menu-btns-hor li .bx-btn,
+ul.bx-menu-btns-icon-hor li .bx-btn {
+    height: auto;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    line-height: normal;
+}
 ul.bx-menu-btns-hor li:last-child .bx-btn,
 ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     margin-right:0;
