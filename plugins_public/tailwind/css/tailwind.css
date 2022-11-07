@@ -1071,9 +1071,12 @@
         @apply w-48 h-48;
     }
 
-    .bx-artificer .bx-base-text-unit-title a,
-    .bx-artificer .bx-tl-title a {
-        @apply text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:no-underline;
+    .bx-base-text-unit-title a,
+    .bx-tl-title a {
+        @apply text-gray-800 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-400 hover:no-underline;
+    }
+    .bx-base-text-unit-title a {
+        @apply text-lg lg:text-xl font-semibold;
     }
 
     .bx-artificer .bx-base-pofile-unit-online {

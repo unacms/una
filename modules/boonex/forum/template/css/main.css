@@ -502,10 +502,6 @@
 .bx-forum-grid #bx-form-element-search{
     flex-grow: 3;
 }
-.bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-info .bx-base-pofile-unit A,
-.bx-forum-unit.bx-base-text-unit-gallery .bx-base-text-unit-title A{
-    color:#fff !important;
-}
 .bx-forum-unit .bx-base-text-unit-info .bx-base-pofile-unit .bx-def-unit-info{
     text-align: left;
 }
