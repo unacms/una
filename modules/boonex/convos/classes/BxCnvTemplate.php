@@ -23,13 +23,12 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function entryCollaborators ($aContentInfo, $iMaxVisible = 2, $sFloat = 'left')
+    public function entryCollaborators ($aContentInfo, $iMaxVisible = 2)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
-        //unset($aCollaborators[$aContentInfo[$CNF['FIELD_AUTHOR']]]);
 
         // sort collaborators: first - current user, second - last replier, third - author, all others sorted by max number of posts
         $aCollaborators = $oModule->sortCollaborators($aCollaborators, $aContentInfo['last_reply_profile_id'], $aContentInfo[$CNF['FIELD_AUTHOR']]);
@@ -37,7 +36,6 @@ class BxCnvTemplate extends BxBaseModTextTemplate
 
         // prepare template variables
         $aVarsPopup = array (
-            'float' => 'none',
             'bx_repeat:collaborators' => array(),
             'bx_if:collaborators_more' => array(
                 'condition' => false,
@@ -45,14 +43,12 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             ),
         );
         $aVars = array (
-            'float' => $sFloat,
             'bx_repeat:collaborators' => array(),
             'bx_if:collaborators_more' => array(
                 'condition' => $iCollaboratorsNum > $iMaxVisible,
                 'content' => array(
                     'popup' => '',
                     'title_more' => _t('_bx_cnv_more', $iCollaboratorsNum - $iMaxVisible),
-                    'float' => $sFloat,
                     'id' => $this->MODULE . '-popup-' . $aContentInfo[$CNF['FIELD_ID']],
                 ),
             ),
@@ -65,7 +61,6 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             $aCollaborator = array (
                 'id' => $oProfile->id(),
                 'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
-                'float' => $sFloat,
                 'class' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId ? 'bx-cnv-collaborator-author' : '',
                 'bx_if:last_replier' => array (
                     'condition' => ($aContentInfo['last_reply_profile_id'] == $iProfileId),

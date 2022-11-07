@@ -1,8 +1,12 @@
 .bx-cnv-collaborators {
     white-space:nowrap;
 }
+.bx-grid-table .bx-cnv-collaborators {
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
 .bx-cnv-collaborator {
-	position:relative;
+    position:relative;
     display:block;
 }
 .bx-cnv-collaborator.bx-def-margin-sec-left-auto {

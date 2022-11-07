@@ -411,7 +411,7 @@ class BxCnvModule extends BxBaseModTextModule
         if (!$aContentInfo)
             return false;
 
-        return $this->_oTemplate->entryCollaborators ($aContentInfo, 5, 'right');
+        return $this->_oTemplate->entryCollaborators ($aContentInfo, 5);
     }
 
     /**
