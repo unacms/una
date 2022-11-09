@@ -2288,10 +2288,10 @@ function is_private_ip ($sIp)
     return filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== $sIp;
 }
 
-function bx_absolute_url($sUrl)
+function bx_absolute_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
 {
     if (!preg_match('/^https?:\/\//', $sUrl))
-        $sUrl = BX_DOL_URL_ROOT . $sUrl;
+        $sUrl = $sPrefix . $sUrl;
     return $sUrl;
 }
 

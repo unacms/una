@@ -1117,7 +1117,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
          * should be linked to Group Profile (Group Profile -> Members tab) 
          * instead of Personal Profile of invited member.
          */
-        $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl());
+        $sEntryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}');
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -1169,7 +1169,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
          * instead of Personal Profile of a member, who performed an action.
          */
         if(empty($CNF['URL_ENTRY_FANS']))
-            $sEntryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl());
+            $sEntryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}');
         else
             $sEntryUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], [
                 'profile_id' => $oGroupProfile->id()

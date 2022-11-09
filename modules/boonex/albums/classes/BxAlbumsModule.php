@@ -625,8 +625,8 @@ class BxAlbumsModule extends BxBaseModTextModule
             return array();
 
         $oPermalinks = BxDolPermalinks::getInstance();
-        $sEntryUrl = '{bx_url_root}' . $oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
-        $sSubentryUrl = '{bx_url_root}' . $oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId);
+        $sEntryUrl = bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId), '{bx_url_root}');
+        $sSubentryUrl = bx_absolute_url($oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId), '{bx_url_root}');
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(
@@ -653,7 +653,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
-        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']), '{bx_url_root}');
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(
@@ -662,7 +662,7 @@ class BxAlbumsModule extends BxBaseModTextModule
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aMediaInfo['author'],
             'subentry_sample' => $CNF['T']['txt_media_comment_single'],
-            'subentry_url' => '{bx_url_root}' . $oComment->getViewUrl((int)$aEvent['subobject_id'], false),
+            'subentry_url' => bx_absolute_url($oComment->getViewUrl((int)$aEvent['subobject_id'], false), '{bx_url_root}'),
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
@@ -680,7 +680,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
-        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']), '{bx_url_root}');
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(
@@ -717,7 +717,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
-        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']), '{bx_url_root}');
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
         return array(

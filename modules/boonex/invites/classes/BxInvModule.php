@@ -351,7 +351,7 @@ class BxInvModule extends BxDolModule
             return [];
 
         $CNF = &$this->_oConfig->CNF;
-        $sEntryUrl = '{bx_url_root}' . BxDolPermalinks::getInstance()->permalink($CNF['URL_REQUESTS']);
+        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_REQUESTS']), '{bx_url_root}');
 
         return [
             'entry_sample' => $aRequest['name'] . '(' . $aRequest['email'] . ')',

@@ -442,7 +442,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
 
         return [
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oEventProfile->getUrl()),
+            'entry_url' => bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oEventProfile->getUrl()), '{bx_url_root}'),
             'entry_caption' => $oEventProfile->getDisplayName(),
             'entry_author' => $oEventProfile->id(),
             'lang_key' => '_bx_events_txt_ntfs_reminder_' . $aEvent['content']['reminder']
