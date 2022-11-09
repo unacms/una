@@ -87,7 +87,7 @@ class BxRemindersModule extends BxBaseModGeneralModule
 
         $aReturn = array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $this->getEntryUrl($aEntry)),
+            'entry_url' => bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $this->getEntryUrl($aEntry)), '{bx_url_root}'),
             'lang_key' => $aEntry[$CNF['FIELD_TEXT']]
         );
 

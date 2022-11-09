@@ -1212,14 +1212,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(empty($aSubcontentInfo) || !is_array($aSubcontentInfo))
             return array();
 
-        $sSubentryUrl = str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', BxDolService::call('bx_timeline', 'get_link', array((int)$aEvent['subobject_id'])));
+        $sSubentryUrl = bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', BxDolService::call('bx_timeline', 'get_link', array((int)$aEvent['subobject_id']))), '{bx_url_root}');
         $sSubentrySample = $aSubcontentInfo['title'];
         if(empty($sSubentrySample))
             $sSubentrySample = strmaxtextlen($aSubcontentInfo['description'], 20, '...');
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
-            'entry_url' => str_replace(BX_DOL_URL_ROOT, '{bx_url_root}', $oGroupProfile->getUrl()),
+            'entry_url' => bx_absolute_url(str_replace(BX_DOL_URL_ROOT, '', $oGroupProfile->getUrl()), '{bx_url_root}'),
             'entry_caption' => $oGroupProfile->getDisplayName(),
             'entry_author' => $oGroupProfile->id(),
             'subentry_sample' => $sSubentrySample,
