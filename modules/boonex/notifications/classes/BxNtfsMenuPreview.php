@@ -56,7 +56,9 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
     protected function getMenuItemsRaw ()
     {
-        $aItems = $this->_oModule->serviceGetNotifications($this->_iOwnerId);
+        $iPerPage = $this->_oModule->_oConfig->getPerPage('preview');
+
+        $aItems = $this->_oModule->serviceGetNotifications($this->_iOwnerId, ['per_page' => 3 * $iPerPage]);
         if(empty($aItems) || !is_array($aItems))
             return array();
 
@@ -69,8 +71,7 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
             $aResults[] = $aItem;
         }
-
-        $iPerPage = $this->_oModule->_oConfig->getPerPage('preview');
+        
         if(count($aResults) > $iPerPage)
             $aResults = array_slice($aResults, 0, $iPerPage);
 
