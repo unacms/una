@@ -354,7 +354,7 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
 /**
  * Send email function
  *
- * @param $sRecipientEmail - Email where email should be send
+ * @param $mRecipientEmails - Email where email should be send, can be array, string with one email or comma separated
  * @param $sMailSubject - subject of the message
  * @param $sMailBody - Body of the message
  * @param $iRecipientID - ID of recipient profile
@@ -366,7 +366,29 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  * @param $bAddToQueue - add message to email queue
  * @return true if message was send or false otherwise
  */
-function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
+function sendMail($mRecipientEmails, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
+{
+    if (is_string($mRecipientEmails)){
+        if(strpos($mRecipientEmails, ',') !== false){
+            $mRecipientEmails = explode(',', $mRecipientEmails);
+        }
+        else{
+            return _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders, $bAddToQueue);
+        }
+    }
+    
+    if (is_array($mRecipientEmails)) {
+        $bReturn = false;
+        foreach($mRecipientEmails as $sRecipientEmail) {
+            $sRecipientEmail = trim($sRecipientEmail);
+            if (_sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders, $bAddToQueue))
+                $bReturn = true;
+        }
+        return $bReturn;
+    }
+}
+
+function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
 {
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
