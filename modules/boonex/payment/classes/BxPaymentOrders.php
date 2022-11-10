@@ -178,32 +178,39 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
         if($iSellerId == $aData['client_id'])
-            return array('msg' => $this->_sLangsPrefix . 'err_self_purchase');
+            return ['msg' => $this->_sLangsPrefix . 'err_self_purchase'];
 
         $sOrder = trim($aData['order']);
         if(empty($sOrder))
-            return array('msg' => $this->_sLangsPrefix . 'form_processed_input_order_err');
+            return ['msg' => $this->_sLangsPrefix . 'form_processed_input_order_err'];
 
-        $aCartInfo = array('vendor_id' => $iSellerId, 'items_price' => 0, 'items' => array());
+        $aItems = [];
+        $fItemsPrice = 0;
         foreach($aData['items'] as $aItem) {
-        	if(!$this->_oModule->isAllowedSell(array('module_id' => $aData['module_id'], 'item_id' => $aItem['id']), true))
-        		continue;
+            if(!$this->_oModule->isAllowedSell(['module_id' => $aData['module_id'], 'item_id' => $aItem['id']], true))
+                continue;
 
-            $aCartInfo['items_price'] += $this->_oModule->_oConfig->getPrice($aData['type'], $aItem) * $aItem['quantity'];
-            $aCartInfo['items'][] = array(
+            $aItems[] = [
                 'author_id' => $iSellerId,
                 'module_id' => $aData['module_id'],
                 'id' => $aItem['id'],
                 'quantity' => $aItem['quantity']
-            );
+            ];
+            $fItemsPrice += $this->_oModule->_oConfig->getPrice($aData['type'], $aItem) * $aItem['quantity'];
         }
 
-        $iPendingId = $this->_oModule->_oDb->insertOrderPending($aData['client_id'], $aData['type'], $aData['provider'], $aCartInfo);
-        $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
+        $iPendingId = $this->_oModule->_oDb->insertOrderPending($aData['client_id'], $aData['type'], $aData['provider'], [
+            'vendor_id' => $iSellerId, 
+            'vendor_currency_code' => $this->_oModule->getVendorCurrencyCode($iSellerId),
+            'items_price' => $fItemsPrice, 
+            'items' => $aItems
+        ]);
+
+        $this->_oModule->_oDb->updateOrderPending($iPendingId, [
             'order' => $sOrder,
             'error_code' => $aData['error_code'],
             'error_msg' => $aData['error_msg']
-        ));
+        ]);
 
         return (int)$iPendingId;
     }

@@ -1326,7 +1326,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     
     public function registerPayment($mixedPending)
     {
-    	$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+    	$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(['type' => 'id', 'id' => (int)$mixedPending]);
     	if(empty($aPending) || !is_array($aPending))
             return false;
 
@@ -1337,37 +1337,39 @@ class BxPaymentModule extends BxBaseModPaymentModule
             return true;
 
         $iClientId = (int)$aPending['client_id'];
+        $iSellerId = (int)$aPending['seller_id'];
         $sLicense = $this->_oConfig->getLicense();
-        $aCustoms = !empty($aPending['customs']) ? unserialize($aPending['customs']) : array();
+        $aCustoms = !empty($aPending['customs']) ? unserialize($aPending['customs']) : [];
 
-        $aCart = array();
+        $aCart = [];
         if($bTypeSingle) {
             $aCart = $this->_oDb->getCartContent($iClientId);
-            $aCart['customs'] = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
+            $aCart['customs'] = !empty($aCart['customs']) ? unserialize($aCart['customs']) : [];
         }
 
         $bResult = false;
         $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
         foreach($aItems as $aItem) {
-            $sItem = $this->_oConfig->descriptorA2S(array($aItem['vendor_id'], $aItem['module_id'], $aItem['item_id']));
+            $sItem = $this->_oConfig->descriptorA2S([$aItem['vendor_id'], $aItem['module_id'], $aItem['item_id']]);
             $aItemCustom = $this->_oConfig->getCustom($sItem, $aCustoms);
 
             $sMethod = $bTypeSingle ? 'callRegisterCartItem' : 'callRegisterSubscriptionItem';
-            $aItemInfo = $this->$sMethod((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense, $aItemCustom));
+            $aItemInfo = $this->$sMethod((int)$aItem['module_id'], [$iClientId, $iSellerId, $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense, $aItemCustom]);
             if(empty($aItemInfo) || !is_array($aItemInfo))
                 continue;
 
-            $this->_oDb->insertOrderProcessed(array(
+            $this->_oDb->insertOrderProcessed([
                 'pending_id' => $aPending['id'],
-                'client_id' => $aPending['client_id'],
-                'seller_id' => $aPending['seller_id'],
-                'author_id' => $aItem['vendor_id'],
+                'client_id' => $iClientId,
+                'seller_id' => $iSellerId,
+                'author_id' => (int)$aItem['vendor_id'],
                 'module_id' => (int)$aItem['module_id'],
                 'item_id' => (int)$aItem['item_id'],
                 'item_count' => (int)$aItem['item_count'],
                 'amount' => (int)$aItem['item_count'] * $this->_oConfig->getPrice($sType, $aItemInfo),
+                'currency' => $this->getVendorCurrencyCode($iSellerId),
             	'license' => $sLicense,
-            ));
+            ]);
 
             if($bTypeSingle) {
                 $this->_oConfig->pullCustom($sItem, $aCart['customs']);
@@ -1382,7 +1384,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             $this->_oDb->setCartItems($iClientId, $aCart['items'], $aCart['customs']);
 
         if($bResult) {
-            $this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
+            $this->_oDb->updateOrderPending($aPending['id'], ['processed' => 1]);
 
             $this->onPaymentRegister($aPending);
         }

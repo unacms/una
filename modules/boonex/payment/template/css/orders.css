@@ -14,20 +14,20 @@ div.bx-payment-pa-items {
 	overflow-y: auto;
 }
 div.bx-payment-pa-item {
-	width: 100%;
-	white-space: nowrap;
+    display: -webkit-flex; 
+    display: flex;
+    width: 100%;
+
+    -webkit-align-items: center;
+    align-items: center;
 }
 div.bx-payment-pa-item-chb,
 div.bx-payment-pa-item-title,
 div.bx-payment-pa-item-quantity {
     position: relative;
-    display: inline-block;
-	vertical-align: middle;
-}
-div.bx-payment-pa-item-chb {
-    width: 4%;
 }
 div.bx-payment-pa-item-chb input {
+    display: block;
     margin: 0px;
     padding: 0px;
 }

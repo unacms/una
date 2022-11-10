@@ -425,9 +425,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                             'title' => $aItem['title']
                         )
                     ),
-                    'input_hidden' => $oForm->genRow($aInputHidden),
-                    'input_checkbox' => $oForm->genRow($aInputCheckbox),
-                    'input_text' => $oForm->genRow($aInputText),
+                    'input_hidden' => $oForm->genInput($aInputHidden),
+                    'input_checkbox' => $oForm->genInput($aInputCheckbox),
+                    'input_text' => $oForm->genInput($aInputText),
                 );
             }
 

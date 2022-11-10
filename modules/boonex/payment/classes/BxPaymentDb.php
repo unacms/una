@@ -294,7 +294,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
-    public function insertOrderPending($iClientId, $sType, $sProvider, $aCartInfo, $aCustom = array())
+    public function insertOrderPending($iClientId, $sType, $sProvider, $aCartInfo, $aCustom = [])
     {
         $sItems = "";
         foreach($aCartInfo['items'] as $aItem) {
@@ -307,15 +307,18 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sItems .= $this->_oConfig->descriptorA2S(array($aAddon['author_id'], $aAddon['module_id'], $aAddon['id'], $aAddon['quantity'])) . ':';
         }
 
-        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET `client_id`=:client_id, `seller_id`=:seller_id, `type`=:type, `provider`=:provider, `items`=:items, `customs`=:customs, `amount`=:amount, `date`=UNIX_TIMESTAMP()", array(
+        $aSet = [
             'client_id' => $iClientId,
             'seller_id' => $aCartInfo['vendor_id'],
             'type' => $sType, 
             'provider' => $sProvider,
             'items' => trim($sItems, ':'),
             'customs' => !empty($aCustom) && is_array($aCustom) ? serialize($aCustom) : '',
-            'amount' => $aCartInfo['items_price']
-        )) > 0 ? $this->lastId() : 0;
+            'amount' => $aCartInfo['items_price'],
+            'currency' => $aCartInfo['vendor_currency_code'],
+        ];
+
+        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET " . $this->arrayToSQL($aSet) . ", `date`=UNIX_TIMESTAMP()") > 0 ? $this->lastId() : 0;
     }
 
     public function updateOrderPending($iId, $aValues)

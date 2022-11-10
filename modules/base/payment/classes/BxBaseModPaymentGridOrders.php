@@ -153,9 +153,11 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
     protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
     {
-        $sSign = $this->_sCurrencySign;
-        if(!$this->_bSingleSeller)
-            $sSign = $this->_oModule->getVendorCurrencySign((int)$aRow['seller_id']);
+        $sSign = '';
+        if(!empty($aRow['currency']))
+            $sSign = $this->_oModule->_oConfig->retrieveCurrencySign($aRow['currency']);
+        else
+            $sSign = !$this->_bSingleSeller ? $this->_oModule->getVendorCurrencySign((int)$aRow['seller_id']) : $this->_sCurrencySign;
 
         return parent::_getCellDefault(_t_format_currency_ext($mixedValue, ['sign' => $sSign]), $sKey, $aField, $aRow);
     }
