@@ -373,7 +373,7 @@ function sendMail($mRecipientEmails, $sMailSubject, $sMailBody, $iRecipientID = 
             $mRecipientEmails = explode(',', $mRecipientEmails);
         }
         else{
-            return _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders, $bAddToQueue);
+            return _sendMail($mRecipientEmails, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders, $bAddToQueue);
         }
     }
     
