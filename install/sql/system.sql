@@ -498,6 +498,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_recaptcha_key_public', '_adm_stg_cpt_option_sys_recaptcha_key_public', '', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_recaptcha_key_private', '_adm_stg_cpt_option_sys_recaptcha_key_private', '', 'digit', '', '', '', 21),
 (@iCategoryId, 'sys_add_nofollow', '_adm_stg_cpt_option_sys_add_nofollow', 'on', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_confirmation_before_redirect', '_adm_stg_cpt_option_sys_confirmation_before_redirect', 'on', 'checkbox', '', '', '', 31),
 (@iCategoryId, 'sys_security_block_content_after_n_reports', '_adm_stg_cpt_option_sys_security_block_content_after_n_reports', '0', 'digit', '', '', '', 35),
 
 (@iCategoryId, 'sys_cf_enable', '_adm_stg_cpt_option_sys_cf_enable', '', 'checkbox', '', '', '', 40),
@@ -5996,7 +5997,8 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_translation', '_Are_you_sure', 1, 1),
 ('system', 'js_translation', '_error occured', 1, 2),
 ('system', 'js_translation', '_sys_loading', 1, 3),
-('system', 'js_translation', '_copyright', 1, 4);
+('system', 'js_translation', '_copyright', 1, 4),
+('system', 'js_translation', '_sys_redirect_confirmation', 1, 5);
             
 -- --------------------------------------------------------
 

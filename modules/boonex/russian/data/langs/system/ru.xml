@@ -1563,6 +1563,7 @@
     <string name="_adm_stg_cpt_option_sys_cf_enable"><![CDATA[Включить контентные фильтры]]></string>
     <string name="_adm_stg_cpt_option_sys_cf_enable_comments"><![CDATA[Включить контентные фильтры для комментариев]]></string>
     <string name="_adm_stg_cpt_option_sys_cf_prohibited"><![CDATA[Запрещенный контент]]></string>
+    <string name="_adm_stg_cpt_option_sys_confirmation_before_redirect"><![CDATA[Требовать подтверждение перед переходом по ссылке на внешний сайт]]></string>
     <string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых email темплейтов]]></string>
     <string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
     <string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
@@ -3730,10 +3731,11 @@
   <string name="_sys_txt_quill_tooltip_align"><![CDATA[Выравнивание текста]]></string>
   <string name="_sys_txt_quill_tooltip_header"><![CDATA[Стиль текста]]></string>
   <string name="_sys_txt_quill_tooltip_embed"><![CDATA[Вставить ембед]]></string>
-  <string name="_sys_txt_quill_tooltip_embed_popup_header"><![CDATA[Вставить адрес дла ембеда]]></string>
-  <string name="_sys_txt_quill_tooltip_link_popup_header"><![CDATA[Вставить адрес]]></string>
+  <string name="_sys_txt_quill_tooltip_embed_popup_header"><![CDATA[Введите адрес ембеда]]></string>
+  <string name="_sys_txt_quill_tooltip_link_popup_header"><![CDATA[Введите адрес]]></string>
   <string name="_sys_queue_emails"><![CDATA[Emails]]></string>
   <string name="_sys_queue_push"><![CDATA[PUSH]]></string>
   <string name="_sys_queue_transcoding"><![CDATA[Транскодирование видео]]></string>
   <string name="_sys_queue_storage"><![CDATA[Хранилище файлов]]></string>
+  <string name="_sys_redirect_confirmation"><![CDATA[<div class="bx-def-font-h2">Вы переходите по ссылке за пределы этого сайта</div><div class="bx-def-font-small">Ссылка: {0}</div><div class="bx-def-margin-sec-top">Вы действительно хотите перейти по этой ссылке?</div>]]></string>
 </resources>

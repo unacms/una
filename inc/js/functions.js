@@ -968,6 +968,9 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             if ('undefined' !== typeof(Prism) && eElement.size())
                 Prism.highlightAllUnder(eElement[0]);
 
+            // process links
+            bx_redirect_for_external_links(eElement);
+
             // flickity update
             setTimeout(function () {
                 const oFlickity = eElement.find('.flickity-enabled');
@@ -1415,6 +1418,37 @@ function bx_click_area(link, event)
     if (oEl.parents('A').length == 0){
         location.href = link;
     }
+}
+
+function bx_redirect_for_external_links (e)
+{
+    if ('undefined' === typeof(aDolOptions.sys_confirmation_before_redirect) || 'on' !== aDolOptions.sys_confirmation_before_redirect)
+        return;
+
+    var aExclude = ['javascript:', 'about:', sUrlRoot];
+    var sPattern = 'a';
+    $(aExclude).each(function () {
+        sPattern += ':not([href^="' + this + '"])';
+    });
+    sPattern += ":is([href^='http://'],[href^='https://'])";
+
+    if ('undefined' === typeof(e))
+        e = $('document');
+
+    e.find(sPattern).each(function() {
+        $(this).on('click', function() {
+        	var $this = $(this);
+            bx_redirect_for_external_links_open($this.attr('href'));
+	        return false;
+        });
+    });
+}
+
+function bx_redirect_for_external_links_open (sHref)
+{
+    bx_confirm(_t('_sys_redirect_confirmation', sHref).replace(/\&quot;/g, ''), function () {
+        window.open(sHref, '_blank').focus();
+    });
 }
 
 /** @} */

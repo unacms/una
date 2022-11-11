@@ -676,6 +676,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
 
         $this->addJsOption('sys_fixed_header');
+        $this->addJsOption('sys_confirmation_before_redirect');
     }
     
     protected function initImages()

@@ -25,6 +25,10 @@ $(document).ready(function () {
         $card_parent.css('height', $card.height());
     });
 
+    embedly('on', 'card.rendered', function(iframe){
+        bx_redirect_for_external_links($(iframe).contents());
+    });
+
     function bx_embedly_process_links(e) {
         $(e).find('.bx-embed-link').each(function () { 
             $(this).html('');
