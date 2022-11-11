@@ -601,10 +601,14 @@
 
     .bx-btn i, 
     .bx-btn img {
-        @apply w-5 h-5 leading-5 text-gray-600 dark:text-gray-300;
+        @apply w-5 h-5 leading-5;
+    }
+    .bx-btn i:not(.sys-colored),
+    .bx-btn img {
+        @apply text-gray-600 dark:text-gray-300;
     }
 
-    .bx-btn:hover i, 
+    .bx-btn:hover i:not(.sys-colored), 
     .bx-btn:hover img {
         @apply text-gray-800 dark:text-gray-100;
     }
