@@ -7,7 +7,6 @@
 .bx-chart-growth-graph {
 	position: relative;
 	min-height: 9rem;
-	background-color: #ffffff;
 }
 
 .bx-chart-growth-graph-error {
@@ -48,5 +47,7 @@ div.bx-chart-stats-graph {
 	width: 100%;
 	min-width: 18rem;
 	max-width: 28rem;
-    background-color: #ffffff;
+}
+ .bx-canvas {
+    filter: invert(1) hue-rotate(180deg);
 }

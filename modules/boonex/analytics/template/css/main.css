@@ -49,7 +49,9 @@
     background-color: rgba(210, 230, 250, 0.3);
 }
 .bx_analytics_data .bottom {
-    margin-top:1rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 /* datatables fix*/
 table.dataTable thead .sorting:after { margin-left:10px; font-family: "sys-user", "sys-user-fal", sans-serif; content: "\f0dc"; display:inline-block }
@@ -62,3 +64,25 @@ table.dataTable thead .sorting {background-image: none !important}
 {
 	min-width: inherit !important;
 }
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate{
+    color:inherit !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    padding: 0em 0.25em !important;
+    background: none !important;
+    border: none !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active{
+    cursor: pointer;
+    color: inherit !important;
+    border: none !important;
+}
+html.dark .bx-canvas {
+    filter: invert(1) hue-rotate(180deg);
+}
+html.dark .dataTables_wrapper select{
+    background-color: #11182780;
+    border:1px solid rgb(55 65 81);
+    margin: 0px 0.5rem;
+}    
