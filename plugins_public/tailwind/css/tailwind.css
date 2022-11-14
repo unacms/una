@@ -54,6 +54,12 @@
 
 
     /* Color Palette */
+    .bx-artificer .bx-def-color-bg-hl,
+    .bx-artificer .bx-def-color-bg-hl-even:nth-child(even),
+    .bx-artificer .bx-def-color-bg-hl-hover:hover {
+        @apply bg-gray-100/50 dark:bg-gray-700/50;
+    }
+
     .bx-artificer .col-red1 {
         @apply text-red-500;
     }
