@@ -68,9 +68,11 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$iBuyerId)
             return echoJson(['code' => 1, 'msg' => _t('_bx_credits_err_unknown_buyer')]);
 
+        $sErrIncorrectData = _t('_bx_credits_err_incorrect_data');
+
         $aData = $this->_oConfig->getCheckoutData();
         if(empty($aData) || !is_array($aData))
-            return echoJson(['code' => 2, 'msg' => _t('_bx_credits_err_incorrect_data')]);
+            return echoJson(['code' => 2, 'msg' => $sErrIncorrectData]);
 
         $fConversion = $this->_oConfig->getConversionRateUse();
         $iPrecision = $this->_oConfig->getPrecision();
@@ -79,11 +81,20 @@ class BxCreditsModule extends BxBaseModGeneralModule
         $fAmount = (float)$aData['amount'];
         $aCustomData = $this->_oConfig->deconstructCheckoutCustomData($aData['custom']);
 
-        $aPpOrders = BxDolPayments::getInstance()->getPendingOrdersInfo(['id' => (int)$aCustomData[1]]);
+        $oPayments = BxDolPayments::getInstance();
+        $aPpOrders = $oPayments->getPendingOrdersInfo(['id' => (int)$aCustomData[1]]);
         if(!empty($aPpOrders) && is_array($aPpOrders)) {
             $aPpOrder = reset($aPpOrders);
-            if(!empty($aPpOrder) && is_array($aPpOrder) && ((int)$aPpOrder['seller_id'] != $iSellerId || $this->_oConfig->convertM2C((float)$aPpOrder['amount'], $fConversion, $iPrecision) != $fAmount))
-                return echoJson(['code' => 3, 'msg' => _t('_bx_credits_err_incorrect_data')]);
+            if(empty($aPpOrder) || !is_array($aPpOrder) || (int)$aPpOrder['seller_id'] != $iSellerId)
+                return echoJson(['code' => 3, 'msg' => $sErrIncorrectData]);
+
+            $fAmountM = (float)$aPpOrder['amount'];
+            $sCurrencyDefault = $oPayments->getCurrencyCode();
+            if(strcmp($aPpOrder['currency'], $sCurrencyDefault) != 0)
+                $fAmountM = $oPayments->convert ($fAmountM, $aPpOrder['currency'], $sCurrencyDefault);
+
+            if($this->_oConfig->convertM2C($fAmountM, $fConversion, $iPrecision) != $fAmount)
+                return echoJson(['code' => 3, 'msg' => $sErrIncorrectData]);
         }
 
         $fBalance = (float)$this->_oDb->getProfile(['type' => 'balance', 'id' => $iBuyerId]);
@@ -168,6 +179,16 @@ class BxCreditsModule extends BxBaseModGeneralModule
         return $this->_oConfig->getCheckoutUrl();
     }
 
+    public function serviceConvertMoneyToCredits($fMoney, $fRate = false, $iPrecision = false)
+    {
+        return $this->_oConfig->convertM2C($fMoney, $fRate, $iPrecision);
+    }
+
+    public function serviceConvertCreditsToMoney($fCredits, $fRate = false, $iPrecision = false)
+    {
+        return $this->_oConfig->convertC2M($fCredits, $fRate, $iPrecision);
+    }
+
     public function serviceValidateCheckout($iSeller, $iBuyer, $fAmount, $sOrder)
     {
         $fAmount = (float)$fAmount;
@@ -202,33 +223,40 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$oSeller)
             return MsgBox(_t('_bx_credits_err_unknown_seller'));
 
-        $fAmountM = (float)bx_get('amount');
-        $fAmountC = $this->_oConfig->convertM2C($fAmountM);
+        $fAmountM = $fAmountMInDef = (float)bx_get('amount');
 
-        $aData = array(
+        $oPayments = BxDolPayments::getInstance();
+        $sCurrency = bx_process_input(bx_get('currency_code'));
+        $sCurrencyDefault = $oPayments->getCurrencyCode();
+        if(strcmp($sCurrency, $sCurrencyDefault) != 0)
+            $fAmountMInDef = $oPayments->convert($fAmountM, $sCurrency, $sCurrencyDefault);
+
+        $fAmountC = $this->_oConfig->convertM2C($fAmountMInDef);
+
+        $aData = [
             'seller' => $iSeller,
-            'currency' => array(
-                'code' => bx_process_input(bx_get('currency_code')),
+            'currency' => [
+                'code' => $sCurrency,
                 'sign' => bx_process_input(bx_get('currency_sign')),
-            ),
+            ],
             'amountm' => $fAmountM,
             'amountc' => $fAmountC
-        );
+        ];
 
         $iItemsCount = (int)bx_get('items_count');
         for($i = 0; $i < $iItemsCount; $i++) {
-            $aData['items'][] = array(
+            $aData['items'][] = [
                 'title' => bx_process_input(bx_get('item_title_' . $i)),
                 'quantity' => (int)bx_get('item_quantity_' . $i)
-            );
+            ];
         }
 
-        $this->_oConfig->setCheckoutData(array(
+        $this->_oConfig->setCheckoutData([
             'seller' => $iSeller,
             'amount' => $fAmountC,
             'custom' => bx_process_input(bx_get('custom')),
             'return_data_url' => bx_process_input(bx_get('return_data_url')),
-        ));
+        ]);
         return $this->_oTemplate->getBlockCheckout($oBuyer, $oSeller, $aData);
     }
 
@@ -236,28 +264,39 @@ class BxCreditsModule extends BxBaseModGeneralModule
     {
         $oBuyer = BxDolProfile::getInstance();
         if(!$oBuyer)
-            return array('msg' => _t('_bx_credits_err_unknown_buyer'));
+            return ['msg' => _t('_bx_credits_err_unknown_buyer')];
 
         $iSeller = (int)$aData['seller'];
         $oSeller = BxDolProfile::getInstance($iSeller);
         if(!$oSeller)
-            return array('msg' => _t('_bx_credits_err_unknown_seller'));
+            return ['msg' => _t('_bx_credits_err_unknown_seller')];
 
-        $fAmountM = (float)$aData['amount'];
-        $fAmountC = $this->_oConfig->convertM2C($fAmountM);
+        $fAmountM = $fAmountMInDef = (float)$aData['amount'];
 
-        $aData = array_merge($aData, array(
+        $oPayments = BxDolPayments::getInstance();
+        $sCurrency = $aData['currency_code'];
+        $sCurrencyDefault = $oPayments->getCurrencyCode();
+        if(strcmp($sCurrency, $sCurrencyDefault) != 0)
+            $fAmountMInDef = $oPayments->convert($fAmountM, $sCurrency, $sCurrencyDefault);
+
+        $fAmountC = $this->_oConfig->convertM2C($fAmountMInDef);
+
+        $aData = array_merge($aData, [
+            'currency' => [
+                'code' => $sCurrency,
+                'sign' => $aData['currency_sign'],
+            ],
             'amountm' => $fAmountM,
             'amountc' => $fAmountC
-        ));
+        ]);
 
-        $this->_oConfig->setCheckoutData(array(
+        $this->_oConfig->setCheckoutData([
             'seller' => $iSeller,
             'amount' => $fAmountC,
             'trial' => (int)$aData['trial'] > 0,
             'custom' => bx_process_input($aData['custom']),
             'return_data_url' => bx_process_input($aData['return_data_url']),
-        ));
+        ]);
         return $this->_oTemplate->getPopupSubscribe($oBuyer, $oSeller, $aData);
     }
 

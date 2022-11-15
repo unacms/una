@@ -10,8 +10,8 @@
     <string name="_bx_credits_option_withdraw_minimum"><![CDATA[Минимальная сумма очищенных кредитов, которая может быть снята]]></string>
     <string name="_bx_credits_option_withdraw_remaining"><![CDATA[Минимальный баланс кредитов после снятия]]></string>
     <string name="_bx_credits_option_precision"><![CDATA[Точность (количество цифр после десятичной точки)]]></string>
-    <string name="_bx_credits_option_conversion_rate_use"><![CDATA[Коэффициент конвертации для оплаты кредитами]]></string>
-    <string name="_bx_credits_option_conversion_rate_withdraw"><![CDATA[Коэффициент конвертации для снятия кредитов]]></string>
+    <string name="_bx_credits_option_conversion_rate_use"><![CDATA[Коэффициент конвертации для оплаты кредитами (для валюты сайта)]]></string>
+    <string name="_bx_credits_option_conversion_rate_withdraw"><![CDATA[Коэффициент конвертации для снятия кредитов (для валюты сайта)]]></string>
     <string name="_bx_credits_option_code"><![CDATA[Код для префикса суммы]]></string>
     <string name="_bx_credits_option_icon"><![CDATA[Иконка для префикса суммы]]></string>
     <string name="_bx_credits_enable_provider"><![CDATA[Активировать платежную систему 'Credits' для всех новосозданных профилей]]></string>

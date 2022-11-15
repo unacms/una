@@ -10,8 +10,8 @@
     <string name="_bx_credits_option_withdraw_minimum"><![CDATA[Minimum amount of cleared credits which can be withdrawn]]></string>
     <string name="_bx_credits_option_withdraw_remaining"><![CDATA[Minimum credits balance after withdrawal]]></string>
     <string name="_bx_credits_option_precision"><![CDATA[Precision (number of digits after the decimal point)]]></string>
-    <string name="_bx_credits_option_conversion_rate_use"><![CDATA[Conversion rate to pay with credits]]></string>
-    <string name="_bx_credits_option_conversion_rate_withdraw"><![CDATA[Conversion rate to withdraw credits]]></string>
+    <string name="_bx_credits_option_conversion_rate_use"><![CDATA[Conversion rate to pay with credits (for site currency)]]></string>
+    <string name="_bx_credits_option_conversion_rate_withdraw"><![CDATA[Conversion rate to withdraw credits (for site currency)]]></string>
     <string name="_bx_credits_option_code"><![CDATA[Code to prefix amount]]></string>
     <string name="_bx_credits_option_icon"><![CDATA[Icon to prefix amount]]></string>
     <string name="_bx_credits_enable_provider"><![CDATA[Auto activate 'Credits' provider for all newly created profiles]]></string>
