@@ -1963,7 +1963,58 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     	return true;
     }
-    
+
+    public function serviceConvert($fAmount, $sCurrencyFrom, $sCurrencyTo, $fRate = false)
+    {
+        $sCurrencyDefault = $this->_oConfig->getDefaultCurrencyCode();
+        $bFromDefault = strcmp($sCurrencyFrom, $sCurrencyDefault) == 0;
+        $bToDefault = strcmp($sCurrencyTo, $sCurrencyDefault) == 0;
+
+        if(!$bFromDefault && !$bToDefault)
+            return false;
+
+        if($fRate === false)
+            $fRate = $this->_oDb->getCurrencyExchangeRate($bFromDefault ? $sCurrencyTo : $sCurrencyFrom);
+        if($fRate === false)
+            return false;
+
+        $fRate = (float)$fRate;
+        if($bToDefault)
+            $fRate = 1/$fRate;
+
+        return $fAmount * $fRate;
+    }
+
+    public function updateCurrencyExchangeRates()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sApiKey = getParam($CNF['PARAM_CURRENCY_EXCHANGE_API']);
+        if(empty($sApiKey))
+            return;
+
+        $sCurrency = $this->_oDb->getParam($CNF['PARAM_CURRENCY_CODE'], false);
+        $aCurrencies = BxDolForm::getDataItems($CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
+        unset($aCurrencies[$sCurrency]);
+
+        $sApiEndpoint = 'https://api.apilayer.com/exchangerates_data/latest';
+        $aApiParams = [
+            'symbols' => implode(',', array_keys($aCurrencies)), 
+            'base' => $sCurrency
+        ];
+        $sResponse = bx_file_get_contents($sApiEndpoint, $aApiParams, 'get', [
+            'apikey: ' . $sApiKey
+        ]);
+
+        $aResponse = json_decode($sResponse, true);
+        if(empty($aResponse['rates']) || !is_array($aResponse['rates']))
+            return;
+
+        $this->_oDb->deleteCurrencyExchangeRate($sCurrency);
+
+        foreach($aResponse['rates'] as $sCode => $fRate)
+            $this->_oDb->updateCurrencyExchangeRate($sCode, $fRate);
+    }
 }
 
 /** @} */

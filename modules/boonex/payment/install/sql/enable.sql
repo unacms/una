@@ -12,10 +12,17 @@ VALUES (@iTypeId, 'bx_payment_general', '_bx_payment_options_category_general', 
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
-('bx_payment_default_currency_code', 'USD', @iCategoryId, '_bx_payment_option_default_currency_code', 'select', 'Avail', '', '_bx_payment_option_err_default_currency_code', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:33:"get_options_default_currency_code";}', 0),
-('bx_payment_site_admin', '', @iCategoryId, '_bx_payment_option_site_admin', 'select', '', '', '', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:22:"get_options_site_admin";}', 1), 
+('bx_payment_site_admin', '', @iCategoryId, '_bx_payment_option_site_admin', 'select', '', '', '', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:22:"get_options_site_admin";}', 1),
 ('bx_payment_credits_only', '', @iCategoryId, '_bx_payment_option_credits_only', 'checkbox', '', '', '', '', 10),
 ('bx_payment_single_seller', '', @iCategoryId, '_bx_payment_option_single_seller', 'checkbox', '', '', '', '', 11);
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_payment_currency', '_bx_payment_options_category_currency', 5);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_payment_default_currency_code', 'USD', @iCategoryId, '_bx_payment_option_default_currency_code', 'select', 'Avail', '', '_bx_payment_option_err_default_currency_code', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:33:"get_options_default_currency_code";}', 1),
+('bx_payment_currency_exchange_api', '', @iCategoryId, '_bx_payment_option_currency_exchange_api', 'digit', '', '', '', '', 10);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_payment_commissions', '_bx_payment_options_category_commissions', 10);
@@ -132,6 +139,7 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUE
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'save_setting', @iHandler),
 ('profile', 'join', @iHandler),
 ('profile', 'delete', @iHandler);
 
@@ -193,6 +201,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_payment_commissions', '0 * * * *', 'BxPaymentCronCommissions', 'modules/boonex/payment/classes/BxPaymentCronCommissions.php', ''),
+('bx_payment_currency', '0 0 * * *', 'BxPaymentCronCurrency', 'modules/boonex/payment/classes/BxPaymentCronCurrency.php', ''),
 ('bx_payment_time_tracker', '* * * * *', 'BxPaymentCronTimeTracker', 'modules/boonex/payment/classes/BxPaymentCronTimeTracker.php', '');
 
 

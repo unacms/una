@@ -104,6 +104,15 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'get_currency_sign', $aSrvParams);
     }
 
+    public function convert($fAmount, $sCurrencyFrom, $sCurrencyTo)
+    {
+        if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'convert'))
+            return false;
+
+    	$aSrvParams = [$fAmount, $sCurrencyFrom, $sCurrencyTo];
+        return bx_srv($this->_sActive, 'convert', $aSrvParams);
+    }
+
     public function isAcceptingPayments($iVendorId, $sPaymentType = '')
     {
     	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'is_accepting_payments'))

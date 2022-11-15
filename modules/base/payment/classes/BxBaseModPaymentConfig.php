@@ -31,6 +31,8 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
         $this->CNF = array_merge($this->CNF, array(
             // some params
+            'PARAM_CURRENCY_CODE' => $this->_sName . '_default_currency_code',
+
             'PARAM_CMSN_INVOICE_ISSUE_DAY' => 1, //the first day of month
             'PARAM_CMSN_INVOICE_LIFETIME' => 4, //in days
             'PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY' => 1, //in days, before expiration date
@@ -101,7 +103,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
         $sPrefix = $this->getPrefix('options');
 
-        $this->_sCurrencyCode = (string)$this->_oDb->getParam($sPrefix . 'default_currency_code');
+        $this->_sCurrencyCode = (string)$this->_oDb->getParam($this->CNF['PARAM_CURRENCY_CODE']);
         $this->_sCurrencySign = $this->retrieveCurrencySign($this->_sCurrencyCode);
 
         $this->_iSiteAdmin = (int)$this->_oDb->getParam($sPrefix . 'site_admin');

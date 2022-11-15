@@ -2,7 +2,7 @@ SET @sName = 'bx_payment';
 
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_payment_providers`, `bx_payment_providers_options`, `bx_payment_user_values`;
+DROP TABLE IF EXISTS `bx_payment_currencies`, `bx_payment_providers`, `bx_payment_providers_options`, `bx_payment_user_values`;
 DROP TABLE IF EXISTS `bx_payment_cart`;
 DROP TABLE IF EXISTS `bx_payment_transactions`, `bx_payment_transactions_pending`;
 DROP TABLE IF EXISTS `bx_payment_subscriptions`, `bx_payment_subscriptions_deleted`;

@@ -130,9 +130,11 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
         if(!$oClient || !$oSeller)
             return ['code' => 3, 'message' => $this->_sLangsPrefix . 'err_wrong_data'];
 
-        $fAmount = (float)$mixedPending['amount'];
+        $fAmountM = $this->_getAmountByPending($mixedPending);
+        $fAmountC = bx_srv($this->_sModuleCredits, 'convert_money_to_credits', [$fAmountM]);
+
         $fClientBalance = bx_srv($this->_sModuleCredits, 'get_profile_balance', [$iClient]);
-        if($fAmount > $fClientBalance) {
+        if($fAmountC > $fClientBalance) {
             $aSubscription = $this->_oModule->_oDb->getSubscription([
                 'type' => 'pending_id', 
                 'pending_id' => $mixedPending['id']
@@ -155,7 +157,7 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
             return ['code' => 4, 'message' => $this->_sLangsPrefix . 'cdt_err_wrong_balance'];
         }
 
-        if(!bx_srv($this->_sModuleCredits, 'make_payment', [$iClient, $fAmount, $iSeller, $mixedPending['order']]))
+        if(!bx_srv($this->_sModuleCredits, 'make_payment', [$iClient, $fAmountC, $iSeller, $mixedPending['order']]))
             return ['code' => 5, 'message' => $this->_sLangsPrefix . 'err_cannot_perform'];
 
         return true;        
@@ -196,12 +198,13 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
                     return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
                 $sOrder = $aData['o'];
-                if(!bx_srv($this->_sModuleCredits, 'validate_checkout', array((int)$aPending['seller_id'], (int)$aPending['client_id'], (float)$aPending['amount'], $sOrder)))
+                $fAmount = $this->_getAmountByPending($aPending);
+                if(!bx_srv($this->_sModuleCredits, 'validate_checkout', array((int)$aPending['seller_id'], (int)$aPending['client_id'], $fAmount, $sOrder)))
                     return array('code' => 4, 'message' => $this->_sLangsPrefix . 'cdt_err_wrong_transaction', 'pending_id' => $iPendingId);
 
                 $aResult = array(
                     'message' => $this->_sLangsPrefix . 'cdt_msg_charged',
-                    'order' => !empty($aData['o']) ? $aData['o'] : '',
+                    'order' => $sOrder,
                     'paid' => true
                 );
                 break;
@@ -239,6 +242,27 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
     protected function _deconstructCustomData($data)
     {
         return explode('|', base64_decode(urldecode($data)));
+    }
+
+    protected function _getAmountByPending($aPending)
+    {
+        $fCurrencyRate = false;
+        $sCurrencyDefault = $this->_oModule->_oConfig->getDefaultCurrencyCode();
+        if(!empty($aPending['data'])) {
+            $aPendingData = unserialize($aPending['data']);
+
+            if(!empty($aPendingData['cur_rate']))
+                $fCurrencyRate = (float)$aPendingData['cur_rate'];
+
+            if(!empty($aPendingData['cur_def']))
+                $sCurrencyDefault = $aPendingData['cur_def'];
+        }
+
+        $fAmount = (float)$aPending['amount'];
+        if(strcmp($aPending['currency'], $sCurrencyDefault) != 0)
+            $fAmount = $this->_oModule->serviceConvert($fAmount, $aPending['currency'], $sCurrencyDefault, $fCurrencyRate);
+
+        return $fAmount;
     }
 }
 

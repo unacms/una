@@ -2,6 +2,14 @@ SET @sName = 'bx_payment';
 
 
 -- TABLES
+CREATE TABLE IF NOT EXISTS `bx_payment_currencies` (
+  `id` int(11) NOT NULL auto_increment,
+  `code` varchar(4) NOT NULL default '',
+  `rate` float NOT NULL default '0',
+  PRIMARY KEY(`id`),
+  UNIQUE KEY `code`(`code`)
+);
+
 CREATE TABLE IF NOT EXISTS `bx_payment_providers` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL default '',
@@ -115,6 +123,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
   `amount` float NOT NULL default '0',
   `currency` varchar(4) NOT NULL default '',
   `order` varchar(32) NOT NULL default '',
+  `data` text NOT NULL,
   `error_code` varchar(16) NOT NULL default '',
   `error_msg` varchar(255) NOT NULL default '',
   `date` int(11) NOT NULL default '0',
@@ -646,7 +655,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_payment_currencies', 'EUR', 3, 'EUR', '&#8364;'),
 ('bx_payment_currencies', 'GBP', 4, 'GBP', '&#163;'),
 ('bx_payment_currencies', 'USD', 5, 'USD', '&#36;'),
-('bx_payment_currencies', 'YEN', 6, 'YEN', '&#165;');
+('bx_payment_currencies', 'JPY', 6, 'YEN', '&#165;');
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

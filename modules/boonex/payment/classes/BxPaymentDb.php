@@ -164,6 +164,27 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->query($sQuery);
     }
 
+    public function getCurrencyExchangeRate($sCode)
+    {
+        return $this->getOne("SELECT `rate` FROM `" . $this->_sPrefix . "currencies` WHERE `code`=:code LIMIT 1", [
+            'code' => $sCode
+        ]);
+    }
+
+    public function updateCurrencyExchangeRate($sCode, $fRate)
+    {
+        return $this->query("INSERT INTO `" . $this->_sPrefix . "currencies`(`code`, `rate`) VALUES(:code, :rate) ON DUPLICATE KEY UPDATE `rate`=:rate", [
+            'code' => $sCode,
+            'rate' => $fRate
+        ]);
+    }
+
+    public function deleteCurrencyExchangeRate($sCode)
+    {
+        return $this->query("DELETE FROM `" . $this->_sPrefix . "currencies` WHERE `code`=:code", [
+            'code' => $sCode
+        ]) !== false;
+    }
 
     /**
      * Shopping cart methods.
@@ -307,6 +328,13 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sItems .= $this->_oConfig->descriptorA2S(array($aAddon['author_id'], $aAddon['module_id'], $aAddon['id'], $aAddon['quantity'])) . ':';
         }
 
+        $sCurrency = $aCartInfo['vendor_currency_code'];
+        $sCurrencyDefault = $this->_oConfig->getDefaultCurrencyCode();
+
+        $aData = ['cur_def' => $sCurrencyDefault];
+        if(strcmp($sCurrency, $sCurrencyDefault) != 0)
+            $aData['cur_rate'] = $this->getCurrencyExchangeRate($sCurrency);
+
         $aSet = [
             'client_id' => $iClientId,
             'seller_id' => $aCartInfo['vendor_id'],
@@ -315,7 +343,8 @@ class BxPaymentDb extends BxBaseModPaymentDb
             'items' => trim($sItems, ':'),
             'customs' => !empty($aCustom) && is_array($aCustom) ? serialize($aCustom) : '',
             'amount' => $aCartInfo['items_price'],
-            'currency' => $aCartInfo['vendor_currency_code'],
+            'currency' => $sCurrency,
+            'data' => !empty($aData) ? serialize($aData) : ''
         ];
 
         return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET " . $this->arrayToSQL($aSet) . ", `date`=UNIX_TIMESTAMP()") > 0 ? $this->lastId() : 0;

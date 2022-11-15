@@ -11,37 +11,53 @@
 
 class BxPaymentResponse extends BxDolAlertsResponse
 {
-	protected $MODULE;
+    protected $_sModule;
     protected $_oModule;
 
-	public function __construct()
+    public function __construct()
     {
-    	$this->MODULE = 'bx_payment';
-
         parent::__construct();
 
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
+        $this->_sModule = 'bx_payment';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
 
-	/**
+    /**
      * Overwtire the method of parent class.
      *
      * @param BxDolAlerts $oAlert an instance of alert.
      */
     public function response($oAlert)
     {
-    	if($oAlert->sUnit != 'profile' || !in_array($oAlert->sAction, array('join', 'delete')))
-    		return;
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+        if(method_exists($this, $sMethod))
+            return $this->$sMethod($oAlert);
 
-		switch($oAlert->sAction) {
-			case 'join':
-				$this->_oModule->onProfileJoin($oAlert->iObject);
-				break;
+    	if($oAlert->sUnit != 'profile' || !in_array($oAlert->sAction, ['join', 'delete']))
+            return;
 
-			case 'delete':
-				$this->_oModule->onProfileDelete($oAlert->iObject);
-				break;
-		}
+        switch($oAlert->sAction) {
+            case 'join':
+                $this->_oModule->onProfileJoin($oAlert->iObject);
+                break;
+
+            case 'delete':
+                $this->_oModule->onProfileDelete($oAlert->iObject);
+                break;
+        }
+    }
+
+    protected function _processSystemSaveSetting($oAlert)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($oAlert->aExtras['option'] != $CNF['PARAM_CURRENCY_CODE'])
+            return;
+        
+        if(strcmp($oAlert->aExtras['value'], $oAlert->aExtras['value_prior']) == 0)
+            return;
+
+        $this->_oModule->updateCurrencyExchangeRates();
     }
 }
 

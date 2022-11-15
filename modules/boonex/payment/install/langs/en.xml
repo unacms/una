@@ -4,9 +4,11 @@
 
     <!-- OPTIONS -->
     <string name="_bx_payment_options_category_general"><![CDATA[General]]></string>
+    <string name="_bx_payment_options_category_currency"><![CDATA[Сurrency]]></string>
     <string name="_bx_payment_options_category_commissions"><![CDATA[Commissions]]></string>
     <string name="_bx_payment_option_default_currency_code"><![CDATA[Currency]]></string>
     <string name="_bx_payment_option_err_default_currency_code"><![CDATA[Currency code cannot be empty.]]></string>
+    <string name="_bx_payment_option_currency_exchange_api"><![CDATA[Exchange currency API key (by exchangeratesapi.io)]]></string>
     <string name="_bx_payment_option_site_admin"><![CDATA[Main seller (To sell on behalf of the site)]]></string>
     <string name="_bx_payment_option_credits_only"><![CDATA[Pay with Credits only mode ('Credits' app should be installed).]]></string>
     <string name="_bx_payment_option_single_seller"><![CDATA[Single seller mode (To sell everything on behalf of the 'Main seller').]]></string>
