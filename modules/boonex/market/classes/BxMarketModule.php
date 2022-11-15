@@ -1178,6 +1178,8 @@ class BxMarketModule extends BxBaseModTextModule
         $bFileInfoTitle = $bFileInfo && isset($aFileInfo['title']);
 
         $aTmplVars = [
+            'js_object' => $this->_oConfig->getJsObject('form'),
+
             'file_title' => $bFileInfoTitle ? $aFileInfo['title'] : '',
             'file_title_attr' => $bFileInfoTitle ? bx_html_attribute($aFileInfo['title']) : '',
         ];
@@ -1193,8 +1195,6 @@ class BxMarketModule extends BxBaseModTextModule
         $aVersions = $this->_oDb->$sMethod(array('type' => 'content_id', 'content_id' => $iContentId));
 
         $aTmplVars = array_merge($aTmplVars, [
-            'js_object' => $this->_oConfig->getJsObject('form'),
-
             'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
             'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
 

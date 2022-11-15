@@ -36,9 +36,9 @@ BxMarketForm.prototype.init = function() {
 };
 
 BxMarketForm.prototype.initGhost = function(oGhost, iFileId, iThumbnailId, iCoverId) {
-    oGhost.find('.bx-base-general-use-as-thumb input[value="' + iThumbnailId + '"]').attr('checked', true);
+    oGhost.find('.bx-base-general-use-as-thumb input[value="' + iThumbnailId + '"]').prop('checked', true);
     if(iCoverId != undefined)
-        oGhost.find('.bx-base-general-use-as-cover input[value="' + iCoverId + '"]').attr('checked', true);
+        oGhost.find('.bx-base-general-use-as-cover input[value="' + iCoverId + '"]').prop('checked', true);
 
     oGhost.find('.bx-base-general-intert-to-post-link').show();
 
