@@ -297,7 +297,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $iPrivacy = $oContentInfo->getContentPrivacy($aQueryParams['id']);
                 if (0 > $iPrivacy) {
                     $oProfile = BxDolProfile::getInstance(abs($iPrivacy));
-                    if (BX_MULTISITE_MODULE == $oProfile->getModule())
+                    if ($oProfile && BX_MULTISITE_MODULE == $oProfile->getModule())
                         $sMultisiteDomain = $oProfile->getDisplayName();
                 }
             }

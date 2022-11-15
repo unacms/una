@@ -78,8 +78,6 @@ BxAnalytics.prototype.reloadData = function () {
                 return label;
         };
 
-        
-        
         bx_loading($($this._sContainerDataSelector), false);
         var oDataForChart = oData.data || false;
         var oChartOptions = oData.options || oOptionsDefault;
@@ -144,7 +142,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
     if (oDataIn.options.scales.xAxes[0].type == 'time') {
         $aOrder = [[0, 'desc']];
     }
-    $this._oTable = $('.bx_analytics_table').DataTable({ dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: $aOrder });
+    $this._oTable = $('.bx_analytics_table').DataTable({ "stripeClasses": ['bx-def-color-bg-hl', ''], dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: $aOrder });
    
 };
 
