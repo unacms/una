@@ -2278,7 +2278,7 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
         $bSecure = 0 === strcasecmp('https', $aUrl['scheme']);
 
     if (PHP_VERSION_ID < 70300) {
-        if ('memberPassword' == $sName || 'memberSession' == $sName)
+        if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName))
             $sPath .= '; SameSite=' . getParam('sys_samesite_cookies');
         return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
     } 
@@ -2290,7 +2290,7 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
             'secure' => $bSecure, 
             'httponly' => $bHttpOnly,
         ];
-        if (!isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
+        if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
             $aOptions['samesite'] = getParam('sys_samesite_cookies');
 
         return setcookie($sName, $sValue, $aOptions);
