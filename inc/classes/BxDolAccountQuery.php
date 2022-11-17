@@ -336,7 +336,7 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      * @param  mixed     $sValue          database field value
      * @return specified account field value
      */
-    protected function _updateField ($iId, $sFieldForUpdate, $sValue)
+    public function _updateField ($iId, $sFieldForUpdate, $sValue)
     {
         $sSql = $this->prepare("UPDATE `sys_accounts` SET `$sFieldForUpdate` = ? WHERE `id` = ? LIMIT 1", $sValue, $iId);
         return $this->query($sSql);

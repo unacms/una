@@ -1210,6 +1210,7 @@ CREATE TABLE `sys_accounts` (
   `login_attempts` tinyint(4) NOT NULL DEFAULT '0',
   `locked` tinyint(4) NOT NULL DEFAULT '0',
   `password_expired` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT '0',    
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`(191)),
   KEY `added` (`added`),

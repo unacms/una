@@ -66,7 +66,8 @@
     <string name="_bx_accnt_grid_column_title_adm_ip"><![CDATA[IP]]></string>
     <string name="_bx_accnt_grid_column_title_adm_is_confirmed"><![CDATA[Подтверждён]]></string>
     <string name="_bx_accnt_grid_column_title_adm_profiles"><![CDATA[Профили]]></string>
-    <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Последнее посещение]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Последний вход]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_last_active"><![CDATA[Последняя активность]]></string>
     <string name="_bx_accnt_grid_column_title_adm_added"><![CDATA[Создана]]></string>
     <string name="_bx_accnt_grid_action_title_adm_activate"><![CDATA[Активировать]]></string>
     <string name="_bx_accnt_grid_action_title_adm_suspend"><![CDATA[Заблокировать]]></string>
