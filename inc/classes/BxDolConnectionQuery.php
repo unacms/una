@@ -302,6 +302,12 @@ class BxDolConnectionQuery extends BxDolDb
         return $this->fromMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . '_' . $iContent, 'getRow', $sQuery);
     }
 
+    public function getConnectionById ($iId)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `" . $this->_sTable . "` WHERE `id` = ?", $iId);
+        return $this->fromMemory('BxDolConnectionQuery::getConnectionById' . $this->_sTable . $iId, 'getRow', $sQuery);
+    }
+
     public function addConnection ($iInitiator, $iContent, &$iMutualParam = null)
     {
         if ($this->getConnection($iInitiator, $iContent)) // connection already exists

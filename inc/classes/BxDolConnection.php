@@ -289,10 +289,10 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function addConnection ($iInitiator, $iContent, $aParams = array())
     {
         $iMutual = 0;
-		$iInitiator = (int)$iInitiator;
-		$iContent = (int)$iContent;
-		
-		$aAlertExtras = array(
+        $iInitiator = (int)$iInitiator;
+        $iContent = (int)$iContent;
+
+        $aAlertExtras = array(
             'initiator' => &$iInitiator,
             'content' => &$iContent,
             'mutual' => &$iMutual,
@@ -737,6 +737,11 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function getConnection ($iInitiator, $iContent)
     {
         return $this->_oQuery->getConnection($iInitiator, $iContent);
+    }
+
+    public function getConnectionById ($iId)
+    {
+        return $this->_oQuery->getConnectionById($iId);
     }
 
     /**

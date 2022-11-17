@@ -93,6 +93,23 @@ class BxDolRelation extends BxDolConnection
     }
 
     /**
+     * Add new connection.
+     * @param $iInitiator initiator of the connection, in most cases some profile id
+     * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
+     * @return true - if connection was added, false - if connection already exists or error occured
+     */
+    public function addConnection($iInitiator, $iContent, $aParams = [])
+    {
+        $bResult = parent::addConnection($iInitiator, $iContent, $aParams);
+        if($bResult && !empty($aParams['relation']))
+            $this->_oQuery->updateConnection($iInitiator, $iContent, [
+                'relation' => (int)$aParams['relation']
+            ]);
+
+        return $bResult;
+    }
+
+    /**
      * Confirm relation request without creation of retroactive relation.
      * @param $iInitiator initiator of the connection, in most cases some profile id
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
