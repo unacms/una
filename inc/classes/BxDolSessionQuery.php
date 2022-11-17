@@ -54,17 +54,35 @@ class BxDolSessionQuery extends BxDolDb
     }
     function delete($sId)
     {
+        $sSql = $this->prepare("SELECT `user_id`, `date` FROM `" . $this->sTable . "` WHERE `id`=? LIMIT 1", $sId);
+        $aRow = $this->getRow($sSql);
+        $this->updateLastActivityAccount($aRow['user_id'], $aRow['date']);
+        
         $sSql = $this->prepare("DELETE FROM `" . $this->sTable . "` WHERE `id`=? LIMIT 1", $sId);
         return (int)$this->query($sSql) > 0;
     }
     function deleteExpired()
     {
+        $sSql = $this->prepare("SELECT `user_id`, `date` FROM `" . $this->sTable . "` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_SESSION_LIFETIME);
+        $aRows = $this->getAll($sSql);
+        
+        foreach ($aRows as $aRow) {
+            $this->updateLastActivityAccount($aRow['user_id'], $aRow['date']);
+        }
+        
         $sSql = $this->prepare("DELETE FROM `" . $this->sTable . "` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_SESSION_LIFETIME);
         $iRet = (int)$this->query($sSql);
         if ($iRet)
             $this->query("OPTIMIZE TABLE `" . $this->sTable . "`");
         return $iRet;
     }
+    
+    function updateLastActivityAccount($iId, $iDate)
+    {
+        if ($iDate > 0)
+            BxDolAccountQuery::getInstance()->_updateField($iId, 'active', $iDate);
+    }
+    
     function getOldSession($iUserId) {
         $sSql = $this->prepare("SELECT `id` FROM `" . $this->sTable . "` WHERE `user_id`=? LIMIT 1", $iUserId);
         $sSession = $this->getOne($sSql);

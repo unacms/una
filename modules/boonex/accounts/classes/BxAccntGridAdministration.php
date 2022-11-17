@@ -611,6 +611,13 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     } 
     
+    protected function _getCellLastActive($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = !empty($mixedValue) ? bx_time_js($mixedValue) : _t('_sys_not_available');
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    } 
+    
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = !empty($mixedValue) ? bx_time_js($mixedValue) : _t('_sys_not_available');
