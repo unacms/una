@@ -1,9 +1,9 @@
 <script>
     function bx_mobile_apps_show_main_menu () {
         if ('__main_menu__' == 'default') {
-            if ($('#toggleSidebarMobile').size() && $(window).width() < 1280)
+            if ($('.bx-pt-application #toggleSidebarMobile').size() && $(window).width() < 1280)
                 $('#toggleSidebarMobile').trigger('click');
-            else if ($('#toggleSidebar').size() && $(window).width() >= 1280)
+            else if ($('.bx-pt-application #toggleSidebar').size() && $(window).width() >= 1280)
                 $('#toggleSidebar').trigger('click');
             else if ($('.bx-sidebar-site-trigger').size())
                 bx_sidebar_toggle('site');
