@@ -28,7 +28,7 @@ CREATE TABLE `bx_antispam_dnsbl_rules` (
 INSERT INTO `bx_antispam_dnsbl_rules` (`chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active`) VALUES
 ('spammers', 'sbl.spamhaus.org.', 'any', 'http://www.spamhaus.org/sbl/', 'http://www.spamhaus.org/query/bl?ip=%s', '_bx_antispam_rule_note_spamhaus_org', 0, 1),
 ('spammers', 'dnsbl.tornevall.org.', '230', 'http://dnsbl.tornevall.org/', '', '_bx_antispam_rule_note_dnsbl_tornevall_org', 0, 0),
-('uridns', 'multi.surbl.org.', 'any', 'http://www.surbl.org/', 'http://george.surbl.org/lookup.html', '_bx_antispam_rule_note_surbl_org', 0, 1),
+('uridns', 'multi.surbl.org.', 'any', 'http://www.surbl.org/', 'https://surbl.org/surbl-analysis', '_bx_antispam_rule_note_surbl_org', 0, 1),
 ('spammers', 'zomgbl.spameatingmonkey.net.', 'any', 'http://spameatingmonkey.com/index.html', '', '_bx_antispam_rule_note_zomgbl_spameatingmonkey_net', 0, 0);
 
 CREATE TABLE `bx_antispam_dnsbluri_zones` (

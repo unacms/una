@@ -1056,6 +1056,31 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return BxDolFormQuery::getDataItems('sys_content_filter');
     }
 
+    public function serviceRedirect($sUrl = false)
+    {
+        if (false === $sUrl)
+            $sUrl = bx_get('url');
+
+        if (!$sUrl || !preg_match('@^https?://@', $sUrl)) {
+            return MsgBox(_t('_error occured'));
+        }
+        else {
+
+            $bSpam = null;
+            bx_alert('system', 'check_spam_url', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sUrl, 'where' => 'redirect'));
+
+            if (false === $bSpam) {
+                header('Location: ' . $sUrl);
+            } 
+            elseif (true === $bSpam || null === $bSpam) {
+                return BxDolTemplate::getInstance()->parseHtmlByName('redirect.html', [
+                    'text' => _t('_sys_redirect_confirmation', bx_process_output($sUrl), getParam('site_title')),
+                    'url' => bx_js_string($sUrl, BX_ESCAPE_STR_APOS),
+                ]);
+            }
+        }
+    }
+
     public function serviceGetBadge($aBadge, $bIsCompact = false)
     {
         $sClass = '';

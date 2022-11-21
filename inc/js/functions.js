@@ -1436,6 +1436,9 @@ function bx_redirect_for_external_links (e)
         e = $('document');
 
     e.find(sPattern).each(function() {
+        $(this).on('contextmenu', function(e) {
+            e.preventDefault();
+        });
         $(this).on('click', function() {
         	var $this = $(this);
             bx_redirect_for_external_links_open($this.attr('href'));
@@ -1446,9 +1449,10 @@ function bx_redirect_for_external_links (e)
 
 function bx_redirect_for_external_links_open (sHref)
 {
-    bx_confirm(_t('_sys_redirect_confirmation', sHref).replace(/\&quot;/g, ''), function () {
-        window.open(sHref, '_blank').focus();
-    });
+    //bx_confirm(_t('_sys_redirect_confirmation', sHref).replace(/\&quot;/g, ''), function () {
+    //    window.open(sHref, '_blank').focus();
+    //});
+    window.open(sUrlRoot + 'page.php?i=redirect&url=' + encodeURIComponent(sHref), '_blank').focus();
 }
 
 /** @} */

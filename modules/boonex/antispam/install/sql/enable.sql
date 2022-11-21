@@ -224,6 +224,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('account', 'check_login', @iHandler),
 ('account', 'check_join', @iHandler),
 ('system', 'check_spam', @iHandler),
+('system', 'check_spam_url', @iHandler),
 ('system', 'form_check', @iHandler),
 ('system', 'form_submitted', @iHandler),
 ('comment', 'added', @iHandler),

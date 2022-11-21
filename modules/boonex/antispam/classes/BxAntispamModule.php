@@ -71,6 +71,29 @@ class BxAntispamModule extends BxDolModule
     }
     
     /**
+     * Check text for spam URL.
+     * It checks URLs found in text for DNSURI black lists (@see BxAntispamDNSURIBlacklists),
+     *
+     * @param $sContent content to check for spam
+     * @return true if spam detected, false if spam isn't detected, null if detection wasn't performed.
+     */
+    public function serviceIsSpamUrl ($sContent)
+    {
+        $bRet = null;
+        if ('on' == $this->_oConfig->getAntispamOption('uridnsbl_enable')) {
+            $oDNSURIBlacklists = bx_instance('BxAntispamDNSURIBlacklists', array(), $this->_aModule);
+            if ($oDNSURIBlacklists->isSpam($sContent)) {
+                $oDNSURIBlacklists->onPositiveDetection($sContent);
+                $bRet = true;
+            } 
+            else {
+                $bRet = false;
+            }
+        }
+        return $bRet;
+    }
+
+    /**
      * Check text for spam.
      * First it check if IP is whitelisted(or under cron execution or user is admin) - for whitelisted IPs check for spam isn't performed,
      * then it checks URLs found in text for DNSURI black lists (@see BxAntispamDNSURIBlacklists),

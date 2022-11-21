@@ -3737,5 +3737,7 @@
   <string name="_sys_queue_push"><![CDATA[PUSH]]></string>
   <string name="_sys_queue_transcoding"><![CDATA[Транскодирование видео]]></string>
   <string name="_sys_queue_storage"><![CDATA[Хранилище файлов]]></string>
-  <string name="_sys_redirect_confirmation"><![CDATA[<div class="bx-def-font-h2">Вы переходите по ссылке за пределы этого сайта</div><div class="bx-def-font-small">Ссылка: {0}</div><div class="bx-def-margin-sec-top">Вы действительно хотите перейти по этой ссылке?</div>]]></string>
+  <string name="_sys_page_title_redirect"><![CDATA[Подтверждение перехода на другой сайт]]></string>
+  <string name="_sys_page_block_title_redirect"><![CDATA[Подтвердите переход на другой сайт]]></string>
+  <string name="_sys_redirect_confirmation"><![CDATA[<div class="bx-def-font-h2 bx-def-margin-sec-bottom">Вы переходите по ссылке за пределы сайта "{1}"</div><div class="bx-def-font-small">Ссылка: {0}</div><div class="bx-def-margin-sec-top">Вы действительно хотите перейти по этой ссылке?</div>]]></string>
 </resources>
