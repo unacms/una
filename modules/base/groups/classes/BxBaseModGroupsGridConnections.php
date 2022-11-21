@@ -349,7 +349,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         }
 
         // delete admin associated with profile
-        $this->_oModule->_oDb->deleteAdminsByProfileId($iProfileId);
+        $this->_oModule->_oDb->deleteAdminsByGroupId($iGroupProfileId, $iProfileId);
 
         return parent::_delete ($mixedId);
     }
