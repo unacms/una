@@ -75,9 +75,13 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         return true;
     }
 
-    public function deleteAdminsByGroupId ($iGroupProfileId)
+    public function deleteAdminsByGroupId ($iGroupProfileId, $iProfileId = 0)
     {
-        $sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+        if ($iProfileId != 0)
+            $sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? AND `fan_id` = ?", $iGroupProfileId, $iProfileId);
+        else
+            $sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+        
         return $this->res($sQuery);
     }
 
