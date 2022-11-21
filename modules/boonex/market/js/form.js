@@ -61,14 +61,15 @@ BxMarketForm.prototype.toggleGhost = function(oLink) {
     });
 };
 
-BxMarketForm.prototype.checkName = function(sTitleId, sNameId, iId) {
+BxMarketForm.prototype.checkName = function(oSource, sTitleId, sNameId, iId) {
     var oDate = new Date();
+    var oForm = jQuery(oSource).parents('.bx-form-advanced:first');
 
-    var oName = jQuery("[name='" + sNameId + "']");
+    var oName = oForm.find("[name='" + sNameId + "']");
     var sName = oName.val();
     var bName = sName.length != 0;
 
-    var oTitle = jQuery("[name='" + sTitleId + "']");
+    var oTitle = oForm.find("[name='" + sTitleId + "']");
     var sTitle = oTitle.val();
     var bTitle = sTitle.length != 0;
 

@@ -26,9 +26,9 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
             $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
 
-            $aMask = array('mask' => "javascript:%s.checkName('%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
+            $aMask = array('mask' => "javascript:%s.checkName(this, '%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
             if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && bx_get('id') !== false) {
-                $aMask['mask'] = "javascript:%s.checkName('%s', '%s', %d);";
+                $aMask['mask'] = "javascript:%s.checkName(this, '%s', '%s', %d);";
                 $aMask[] = (int)bx_get('id');
             }
 
