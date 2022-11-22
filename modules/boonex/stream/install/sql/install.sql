@@ -271,7 +271,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 ('bx_stream_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 
-('bx_stream_recordings', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_recordings', 'allow-deny', '{video},ts', '', 0, 0, 0, 0, 0, 0);
+('bx_stream_recordings', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_recordings', 'allow-deny', '{video}', '', 0, 0, 0, 0, 0, 0);
 
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 
