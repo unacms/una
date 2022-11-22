@@ -18,7 +18,7 @@ class BxBaseModGroupsPrivacyPost extends BxBaseModProfilePrivacyPost
     {
         parent::__construct($aOptions, $oTemplate);
 
-        $this->_aGroupsExclude = array(BX_DOL_PG_FRIENDS, BX_DOL_PG_RELATIONS);
+        $this->_aGroupsExclude = [BX_DOL_PG_FRIENDS, BX_DOL_PG_FRIENDS_SELECTED, BX_DOL_PG_RELATIONS, BX_DOL_PG_RELATIONS_SELECTED];
     }
 
     /**
