@@ -48,6 +48,6 @@ div.bx-chart-stats-graph {
 	min-width: 18rem;
 	max-width: 28rem;
 }
- .bx-canvas {
+html.dark .bx-canvas {
     filter: invert(1) hue-rotate(180deg);
 }
