@@ -552,14 +552,12 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                     
             });
         }
-        console.log(aAcceptableFiles);
         
         if (aAcceptableFiles.length){
             _options.acceptedFileTypes = aAcceptableFiles;
         }
         
         if (o.resizeWidth || o.resizeHeight){
-            console.log(o.resizeWidth);
             _options.allowImageResize = true;
             _options.imageResizeTargetWidth = o.resizeWidth;
             _options.imageResizeTargetHeight = o.resizeHeight;
