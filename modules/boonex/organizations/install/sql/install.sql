@@ -290,8 +290,8 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_prices` (
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_organizations_pics', @sStorageEngine, '', 360, 2592000, 3, 'bx_organizations_pics', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('bx_organizations_pics_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_organizations_pics_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('bx_organizations_pics', @sStorageEngine, '', 360, 2592000, 3, 'bx_organizations_pics', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
+('bx_organizations_pics_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_organizations_pics_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_organizations_icon', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0'),

@@ -268,8 +268,8 @@ CREATE TABLE IF NOT EXISTS `bx_files_scores_track` (
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_files_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0),
-('bx_files_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('bx_files_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_files', 'deny-allow', '', '{dangerous}', 0, 0, 0, 0, 0, 0),
+('bx_files_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_files_preview', 'bx_files_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_files_files";}', 'no', '1', '2592000', '0'),

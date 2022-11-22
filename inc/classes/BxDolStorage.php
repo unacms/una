@@ -195,7 +195,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     protected $_iErrorCode; ///< last error code
     protected $_oDb; ///< database relates function are in this object
     protected $_aMimeTypesViewable = ['audio/', 'image/', 'video/']; ///< file types (by mime type) to allow view file in browser instead of downloading
-
+    
     /**
      * constructor
      */
@@ -219,6 +219,18 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             return $GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject];
 
         $aObject = BxDolStorageQuery::getStorageObject($sObject);
+        
+        $aExtMarkers = [
+            'image' => getParam('sys_files_ext_images'),
+            'video' => getParam('sys_files_ext_video'),
+            'imagevideo' => getParam('sys_files_ext_imagevideo'), 
+            'audio' => getParam('sys_files_ext_audio'),
+            'dangerous' => getParam('sys_files_ext_dangerous')
+        ];
+        
+        $aObject['ext_allow'] = bx_replace_markers($aObject['ext_allow'], $aExtMarkers);
+        $aObject['ext_deny'] = bx_replace_markers($aObject['ext_deny'], $aExtMarkers);
+        
         if (!$aObject || !is_array($aObject))
             return false;
 
