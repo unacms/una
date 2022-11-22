@@ -1659,6 +1659,11 @@
     <string name="_adm_stg_cpt_option_sys_notify_to_approve_by_role"><![CDATA[Оповещать участников контекста с определенной ролью о необходимости одобрять контент в контексте]]></string>
     <string name="_adm_stg_cpt_option_sys_fixed_header"><![CDATA[Статический заголовок]]></string>
     <string name="_adm_stg_cpt_option_sys_css_media_classes"><![CDATA[CSS @media интервалы]]></string>
+    <string name="_adm_stg_cpt_option_sys_files_ext_images"><![CDATA[Разрешенные расширения для файлов изображений]]></string>
+    <string name="_adm_stg_cpt_option_sys_files_ext_video"><![CDATA[Разрешенные расширения для видеофайлов]]></string>
+    <string name="_adm_stg_cpt_option_sys_files_ext_imagevideo"><![CDATA[Разрешенные расширения для файлов изображений и видео]]></string>
+    <string name="_adm_stg_cpt_option_sys_files_ext_dangerous"><![CDATA[Запрешенные расширения для файлов]]></string>
+    <string name="_adm_stg_cpt_option_sys_files_ext_audio"><![CDATA[Разрешенные расширения для аудиофайлов]]></string>
     <string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
     <string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
