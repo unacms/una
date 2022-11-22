@@ -91,6 +91,16 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
         $this->_setAccountConfirmationConditions($aParams);
 
         switch ($sMode) {
+            case 'created_entries':
+                if(!$this->_setAuthorConditions($sMode, $aParams, $oJoinedProfile))
+                    $this->isError = true;
+                break;
+
+            case 'context':
+                $oProfileContext = null;
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileContext))
+                    $this->isError = true;
+                break;
 
             case 'joined_entries':
                 $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['joined_profile']);
