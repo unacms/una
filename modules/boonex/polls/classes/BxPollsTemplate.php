@@ -105,22 +105,24 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         };
 
         $sSubentries = $this->$sMethod($aData);
-        $oMenu = $this->_getGetBlockMenu($aData, $sMenuItem);
 
-        $sMenu = str_replace('_', '-', $this->_oConfig->getName()) . '-menu-db';
-        $sMenuId = $sMenu . '-' . $aData['salt'];        
+        $sTmplVarsMenu = '';
+        if(($oMenu = $this->_getGetBlockMenu($aData, $sMenuItem)) !== '') {
+            $sMenu = str_replace('_', '-', $this->_oConfig->getName()) . '-menu-db';
+            $sMenuId = $sMenu . '-' . $aData['salt'];        
+
+            $sTmplVarsMenu = BxTemplFunctions::getInstance()->designBoxMenu($oMenu, [[
+                 'menu' => [
+                     'id' => $sMenuId, 
+                     'class' => $sMenu, 
+                     'onclick' => "bx_menu_popup_inline('#" . $sMenuId . "', this)"
+                 ]
+             ]]);
+        }
 
         $aTmplVars = parent::getTmplVarsText($aData);
         $aTmplVars = array_merge($aTmplVars, array(
-            'menu' => BxTemplFunctions::getInstance()->designBoxMenu($oMenu, array(
-                array(
-                    'menu' => array(
-                        'id' => $sMenuId, 
-                        'class' => $sMenu, 
-                        'onclick' => "bx_menu_popup_inline('#" . $sMenuId . "', this)"
-                    )
-                )
-            )),
+            'menu' => $sTmplVarsMenu,
             'bx_if:show_subentries' => array(
                 'condition' => !empty($sSubentries),
                 'content' => array(
@@ -261,14 +263,20 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     
     protected function _getGetBlockContentResults($aData, $bDynamic = false)
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         $bAnonymous = (int)$aData[$CNF['FIELD_ANONYMOUS_VOTING']] == 1;
+        $bHiddenResults = (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 1;
 
-        $aSubentries = $this->_oDb->getSubentries(array('type' => 'entry_id', 'entry_id' => $aData[$CNF['FIELD_ID']]));
+        $iContentId = (int)$aData[$CNF['FIELD_ID']];
+        $aSubentries = $this->_oDb->getSubentries(['type' => 'entry_id', 'entry_id' => $iContentId]);
         if(empty($aSubentries) || !is_array($aSubentries))
             return '';
 
+        if($bHiddenResults && !$oModule->isPerformed($iContentId))
+            return '';
+        
         $iTotal = 0;
         foreach($aSubentries as $aSubentry)
             $iTotal += $aSubentry['votes'];
@@ -289,7 +297,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         }
 
         return $this->parseHtmlByName('subentries_results.html', array(
-            'html_id' => $this->_oConfig->getHtmlIds('content') . $aData[$CNF['FIELD_ID']],
+            'html_id' => $this->_oConfig->getHtmlIds('content') . $iContentId,
             'bx_repeat:subentries' => $aTmplVarsSubentries,
         ));
     }

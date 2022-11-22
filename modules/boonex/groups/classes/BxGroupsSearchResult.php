@@ -80,15 +80,13 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
         $bProcessConditionsForPrivateContent = true;
         switch ($sMode) {
             case 'created_entries':
-                if(!$this->_setAuthorConditions($sMode, $aParams, $oJoinedProfile)) {
+                if(!$this->_setAuthorConditions($sMode, $aParams, $oJoinedProfile))
                     $this->isError = true;
-                    break;
-                }
                 break;
 
             case 'context':
                 $oProfileContext = null;
-                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileContext))
                     $this->isError = true;
                 break;
 

@@ -736,6 +736,10 @@ class BxAlbumsModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
 
         $iMediaId = (int)$iMediaId;
+        $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        $aContentInfo = $this->_oDb->getContentInfoById($aMediaInfo['content_id']);
+        if(($sMsg = $this->checkAllowedEdit($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(['msg' => $sMsg]);
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_MEDIA'], $CNF['OBJECT_FORM_MEDIA_DISPLAY_EDIT']);
         $oForm->initForm('edit', $iMediaId);

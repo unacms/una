@@ -18,8 +18,8 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
     {
         parent::__construct($aOptions, $oTemplate);
 
-        $this->_aGroupsExclude = array(BX_DOL_PG_FRIENDS, BX_DOL_PG_RELATIONS);
-        $this->_aPrivacyParticallyVisible = array('c');
+        $this->_aGroupsExclude = [BX_DOL_PG_FRIENDS, BX_DOL_PG_FRIENDS_SELECTED, BX_DOL_PG_RELATIONS, BX_DOL_PG_RELATIONS_SELECTED];
+        $this->_aPrivacyParticallyVisible = [BX_BASE_MOD_GROUPS_PG_CLOSED];
     }
 
     /**
