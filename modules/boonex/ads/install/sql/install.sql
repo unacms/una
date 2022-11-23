@@ -700,6 +700,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_ads_entry_add', 'category_select', 2147483647, 1, 1),
+('bx_ads_entry_add', 'do_submit', 2147483647, 1, 2),
 
 ('bx_ads_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_ads_entry_delete', 'do_submit', 2147483647, 1, 2),
