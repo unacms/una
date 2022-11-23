@@ -97,6 +97,17 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         if(isset($this->aInputs[$CNF['FIELD_POLL']])) {
             $this->aInputs[$CNF['FIELD_POLL']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
+
+        if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'] && isset($this->aInputs['do_submit'])) {
+            $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
+
+            $this->aInputs['do_submit'] = array_merge($this->aInputs['do_submit'], [
+                'type' => 'button',
+                'attrs' => [
+                    'onclick' => $sJsObject . '.selectCategory(this);'
+                ]
+            ]);
+        }
     }
 
     function getCode($bDynamicMode = false)

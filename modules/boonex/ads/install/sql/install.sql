@@ -691,7 +691,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_ads', 'bx_ads', 'year', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_year', '_bx_ads_form_entry_input_year', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_ads', 'bx_ads', 'category', '', '', 0, 'hidden', '_bx_ads_form_entry_input_sys_category', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_ads', 'bx_ads', 'category_view', '', '', 0, 'text', '_bx_ads_form_entry_input_sys_category_view', '_bx_ads_form_entry_input_category_view', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', '', '', 1, 0),
-('bx_ads', 'bx_ads', 'category_select', '', '', 0, 'select', '_bx_ads_form_entry_input_sys_category_select', '_bx_ads_form_entry_input_category_select', '', 1, 0, 0, 'a:1:{s:8:"onchange";s:34:"oBxAdsForm.onChangeCategory(this);";}', '', '', '', '', '', '', '', 0, 0),
+('bx_ads', 'bx_ads', 'category_select', '', '', 0, 'select', '_bx_ads_form_entry_input_sys_category_select', '_bx_ads_form_entry_input_category_select', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_entry_input_category_select_err', 'Int', '', 0, 0),
 ('bx_ads', 'bx_ads', 'notes_purchased', '', '', 0, 'textarea', '_bx_ads_form_entry_input_sys_notes_purchased', '_bx_ads_form_entry_input_notes_purchased', '_bx_ads_form_entry_input_notes_purchased_inf', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_ads', 'bx_ads', 'added', '', '', 0, 'datetime', '_bx_ads_form_entry_input_sys_date_added', '_bx_ads_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads', 'bx_ads', 'changed', '', '', 0, 'datetime', '_bx_ads_form_entry_input_sys_date_changed', '_bx_ads_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -905,4 +905,3 @@ INSERT INTO `sys_std_widgets` (`page_id`, `module`, `type`, `url`, `click`, `ico
 (@iPageId, 'bx_ads', 'content', '{url_studio}module.php?name=bx_ads', '', 'bx_ads@modules/boonex/ads/|std-icon.svg', '_bx_ads', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets` (`page_id`, `widget_id`, `order`) VALUES
 (@iParentPageId, LAST_INSERT_ID(), IF(ISNULL(@iParentPageOrder), 1, @iParentPageOrder + 1));
-

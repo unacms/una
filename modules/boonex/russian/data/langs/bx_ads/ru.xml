@@ -84,6 +84,7 @@
     <string name="_bx_ads_form_entry_input_category_view"><![CDATA[Категория]]></string>
     <string name="_bx_ads_form_entry_input_sys_category_select"><![CDATA[Категория]]></string>
     <string name="_bx_ads_form_entry_input_category_select"><![CDATA[Категория]]></string>
+    <string name="_bx_ads_form_entry_input_category_select_err"><![CDATA[Поле категории обязательно. Пожалуйста, заполните его.]]></string>
     <string name="_bx_ads_form_entry_input_sys_text"><![CDATA[Текст]]></string>
     <string name="_bx_ads_form_entry_input_text"><![CDATA[Текст]]></string>
     <string name="_bx_ads_form_entry_input_text_err"><![CDATA[Поле Текст не может быть пустым.]]></string>

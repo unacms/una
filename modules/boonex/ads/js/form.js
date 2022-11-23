@@ -19,32 +19,40 @@ function BxAdsForm(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxAdsForm.prototype.onChangeCategory = function(oElement) {
+BxAdsForm.prototype.selectCategory = function(oButton) {   
+    var oCategory = $(oButton).parents('form:first').find("[name='category_select']");
+    if(!oCategory || oCategory.length == 0)
+        return;
+
     var $this = this;
     var oParams = this._getDefaultData();
-    oParams['category'] = $(oElement).val();
+    oParams['category'] = oCategory.val();
 
-    this.loadingInBlock(oElement, true);
+    this.loadingInBlock(oButton, true);
 
     jQuery.get (
         this._sActionsUrl + 'get_category_form',
         oParams,
         function(oData) {
-            if(oElement)
-                $this.loadingInBlock(oElement, false);
+            if(oButton)
+                $this.loadingInBlock(oButton, false);
 
-            if(!oData || !oData.content && oData.content.length == 0) 
-                return;
-
-            var oContent = $(oData.content);
-            var sFormId = oContent.filter('form').attr('id');
-            if(!sFormId)
-                return;
-
-            $('form#' + sFormId).replaceWith(oContent);
+            processJsonData(oData);
         },
         'json'
     );
+};
+
+BxAdsForm.prototype.onSelectCategory = function(oData) {
+    if(!oData || !oData.content && oData.content.length == 0) 
+        return;
+
+    var oContent = $(oData.content);
+    var sFormId = oContent.filter('form').attr('id');
+    if(!sFormId)
+        return;
+
+    $('form#' + sFormId).replaceWith(oContent);
 };
 
 BxAdsForm.prototype.checkName = function(oSource, sTitleId, sNameId, iId) {

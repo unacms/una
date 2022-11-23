@@ -46,15 +46,16 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function actionGetCategoryForm()
     {
-        if(bx_get('category') === false)
-            return echoJson(array());
+        if(($iCategory = bx_get('category')) === false || (int)$iCategory == 0)
+            return echoJson(['msg' => _t('_bx_ads_form_entry_input_category_select_err')]);
 
-        return echoJson(array(
-            'content' => $this->serviceGetCreatePostForm(array(
+        return echoJson([
+            'eval' => $this->_oConfig->getJsObject('form') . '.onSelectCategory(oData)',
+            'content' => $this->serviceGetCreatePostForm([
                 'absolute_action_url' => true,
                 'dynamic_mode' => true
-            ))
-        ));
+            ])
+        ]);
     }
 
     public function actionCheckName()
