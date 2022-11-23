@@ -414,6 +414,7 @@ BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
         'ustar'  : 'application/x-ustar',
         'vcf'    : 'text/x-vcard',
         'wav'    : 'audio/x-wav',
+        'wav'    : 'audio/wav',
         'webm'   : 'video/webm',
         'wmv'    : 'video/wmv',
         'wiz'    : 'application/msword',
@@ -427,7 +428,7 @@ BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
         'xpm'    : 'image/x-xpixmap',
         'xsl'    : 'application/xml',
         'xvid'   : 'video/xvid',
-        
+        'webp'   : 'image/webp',
         'xwd'    : 'image/x-xwindowdump',
         'svg'    : 'image/svg+xml',
         'zip'    : ['application/zip', 'application/x-zip-compressed']
@@ -557,7 +558,6 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         }
         
         if (o.resizeWidth || o.resizeHeight){
-            console.log(o.resizeWidth);
             _options.allowImageResize = true;
             _options.imageResizeTargetWidth = o.resizeWidth;
             _options.imageResizeTargetHeight = o.resizeHeight;
@@ -681,7 +681,7 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
 
         var $this = this;
 
-        var aExt = ['jpg', 'jpeg', 'png', 'gif'];
+        var aExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
         var eCroppie = $("#" + this._sFormContainerId + " .bx-croppie-element").croppie(oOptions);
 

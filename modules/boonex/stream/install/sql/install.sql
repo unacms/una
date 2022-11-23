@@ -267,11 +267,11 @@ CREATE TABLE IF NOT EXISTS `bx_stream_scores_track` (
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_stream_covers', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_covers', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_stream_covers', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_covers', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 
-('bx_stream_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_stream_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 
-('bx_stream_recordings', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_recordings', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc,ts', '', 0, 0, 0, 0, 0, 0);
+('bx_stream_recordings', @sStorageEngine, '', 360, 2592000, 3, 'bx_stream_recordings', 'allow-deny', '{video}', '', 0, 0, 0, 0, 0, 0);
 
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 

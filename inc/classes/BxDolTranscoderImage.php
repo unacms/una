@@ -92,6 +92,7 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
             case 'image/jpeg':
             case 'image/pjpeg':
             case 'image/png':
+            case 'image/webp':
                 return true;
         }
 
