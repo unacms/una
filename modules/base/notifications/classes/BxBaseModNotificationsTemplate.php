@@ -89,13 +89,17 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aData['object_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
+        $sTitle = bx_process_output($aData['title'], BX_DATA_HTML);
+        if(get_mb_substr($sTitle, 0, 1) == '_')
+            $sTitle = _t($CNF['T']['txt_sample_single']) . ' ' . _t($sTitle);
+
         // generate html
         $aVars = array (
             'id' => $aData['id'],
             'author' => $sAuthorName,
             'author_url' => $sAuthorUrl,
-            'title' => bx_process_output($aData['title'], BX_DATA_HTML),
-        	'item_url' => $this->_oConfig->getItemViewUrl($aData),
+            'title' => $sTitle,
+            'item_url' => $this->_oConfig->getItemViewUrl($aData),
             'item_date' => bx_time_js($aData['date'], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single_ext']),
             'ts' => $aData['date'],
