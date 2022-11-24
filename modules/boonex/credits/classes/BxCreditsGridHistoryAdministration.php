@@ -184,6 +184,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_CREDIT'], $CNF['OBJECT_FORM_CREDIT_DISPLAY_' . strtoupper($sAction)]);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
+        $oForm->setUserId($this->_iUserId);
 
         return $oForm;
     }

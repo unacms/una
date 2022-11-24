@@ -18,6 +18,7 @@ class BxCreditsFormCredit extends BxTemplFormView
     protected $_oModule;
 
     protected $_fRate;
+    protected $_iUserId;
 
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -29,6 +30,9 @@ class BxCreditsFormCredit extends BxTemplFormView
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $this->_fRate = $this->_oModule->_oConfig->getConversionRateWithdraw();
+
+        if(($iUserId = bx_get('user_id')) !== false)
+                $this->_iUserId = (int)$iUserId;
 
         if(isset($this->aInputs[$CNF['FIELD_C_MESSAGE']])) {
             $sInfo = '_bx_credits_form_credit_input_message_inf_';
@@ -54,6 +58,27 @@ class BxCreditsFormCredit extends BxTemplFormView
         }
     }
 
+    public function initChecker($aValues = [], $aSpecificValues = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aLimits = $this->_oModule->getProfileLimits($this->_iUserId);
+
+        if(isset($this->aInputs[$CNF['FIELD_C_CLEARED']])) {
+            $this->aInputs[$CNF['FIELD_C_CLEARED']]['info'] = bx_replace_markers($this->aInputs[$CNF['FIELD_C_CLEARED']]['info'], $aLimits);
+        }
+
+        if(isset($this->aInputs[$CNF['FIELD_C_AMOUNT']]))
+            $this->aInputs[$CNF['FIELD_C_AMOUNT']]['info'] = bx_replace_markers($this->aInputs[$CNF['FIELD_C_AMOUNT']]['info'], $aLimits);
+
+        parent::initChecker($aValues, $aSpecificValues);
+    }
+
+    public function setUserId($iUserId)
+    {
+        $this->_iUserId = $iUserId;
+    }
+
     protected function genCustomRowRate(&$aInput)
     {
         if($this->_fRate == 1)
@@ -72,14 +97,14 @@ class BxCreditsFormCredit extends BxTemplFormView
 
     protected function genCustomInputBalance(&$aInput)
     {
-        $aInput['value'] = $this->_oModule->getProfileBalance();
+        $aInput['value'] = $this->_oModule->getProfileBalance($this->_iUserId);
 
         return $this->genInputStandard($aInput);
     }
 
     protected function genCustomInputCleared(&$aInput)
     {
-        $aInput['value'] = $this->_oModule->getProfileBalanceCleared();
+        $aInput['value'] = $this->_oModule->getProfileBalanceCleared($this->_iUserId);
 
         return $this->genInputStandard($aInput);
     }

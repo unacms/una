@@ -789,6 +789,29 @@ class BxCreditsModule extends BxBaseModGeneralModule
         return $sResult;
     }
 
+    public function getProfileLimits($iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        $aResults = [
+            'wdw_clearing' => $this->_oConfig->getWithdrawClearing(),
+            'wdw_minimum' => $this->_oConfig->getWithdrawMinimum(),
+            'wdw_remaining' => $this->_oConfig->getWithdrawRemaining(),
+        ];
+
+        if(empty($iProfileId))
+            return $aResults;
+
+        $aProfile = $this->_oDb->getProfile(['type' => 'id', 'id' => $iProfileId]);
+
+        foreach($aResults as $sKey => $mixedValue)
+            if(!empty($aProfile[$sKey]))
+                $aResults[$sKey] = $aProfile[$sKey];
+
+        return $aResults;
+    }
+
     public function getProfileBalance($iProfileId = 0)
     {
         if(empty($iProfileId))

@@ -49,12 +49,14 @@
     <string name="_bx_credits_form_credit_input_balance"><![CDATA[Баланс]]></string>
     <string name="_bx_credits_form_credit_input_sys_cleared"><![CDATA[Очищенный баланс]]></string>
     <string name="_bx_credits_form_credit_input_cleared"><![CDATA[Очищенный баланс]]></string>
+    <string name="_bx_credits_form_credit_input_cleared_inf"><![CDATA[Период клиринга составляет {wdw_clearing} дней, прежде чем полученные кредиты можно будет снять.]]></string>
     <string name="_bx_credits_form_credit_input_sys_rate"><![CDATA[Коэффициент конвертации]]></string>
     <string name="_bx_credits_form_credit_input_rate"><![CDATA[Коэффициент конвертации]]></string>
     <string name="_bx_credits_form_credit_input_sys_result"><![CDATA[Результат]]></string>
     <string name="_bx_credits_form_credit_input_result"><![CDATA[Результат]]></string>
     <string name="_bx_credits_form_credit_input_sys_amount"><![CDATA[Количество]]></string>
     <string name="_bx_credits_form_credit_input_amount"><![CDATA[Количество]]></string>
+    <string name="_bx_credits_form_credit_input_amount_inf"><![CDATA[Минимальная сумма составляет {wdw_minimum} кредитов, а остаток после снятия должен составлять {wdw_remaining} кредитов.]]></string>
     <string name="_bx_credits_form_credit_input_amount_err"><![CDATA[Это поле обязательно. Пожалуйста, заполните его.]]></string>
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Сообщение]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Сообщение]]></string>

@@ -49,12 +49,14 @@
     <string name="_bx_credits_form_credit_input_balance"><![CDATA[Balance]]></string>
     <string name="_bx_credits_form_credit_input_sys_cleared"><![CDATA[Cleared Balance]]></string>
     <string name="_bx_credits_form_credit_input_cleared"><![CDATA[Cleared Balance]]></string>
+    <string name="_bx_credits_form_credit_input_cleared_inf"><![CDATA[Clearing period is {wdw_clearing} days before received credits can be withdrawn.]]></string>
     <string name="_bx_credits_form_credit_input_sys_rate"><![CDATA[Conversion rate]]></string>
     <string name="_bx_credits_form_credit_input_rate"><![CDATA[Conversion rate]]></string>
     <string name="_bx_credits_form_credit_input_sys_result"><![CDATA[Result]]></string>
     <string name="_bx_credits_form_credit_input_result"><![CDATA[Result]]></string>
     <string name="_bx_credits_form_credit_input_sys_amount"><![CDATA[Amount]]></string>
     <string name="_bx_credits_form_credit_input_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_credits_form_credit_input_amount_inf"><![CDATA[Minimum amount is {wdw_minimum} credits and remaining balance after withdrawal should be {wdw_remaining} credits.]]></string>
     <string name="_bx_credits_form_credit_input_amount_err"><![CDATA[This field is essential. Please fill it in.]]></string>
     <string name="_bx_credits_form_credit_input_sys_message"><![CDATA[Message]]></string>
     <string name="_bx_credits_form_credit_input_message"><![CDATA[Message]]></string>

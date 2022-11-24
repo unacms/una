@@ -44,6 +44,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'FIELD_PRICE' => 'price',
             'FIELD_STATUS' => 'active',
 
+            'FIELD_C_CLEARED' => 'cleared',
+            'FIELD_C_AMOUNT' => 'amount',
             'FIELD_C_MESSAGE' => 'message',
 
             'FIELD_H_ID' => 'id',
@@ -194,6 +196,16 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
     public function getWithdrawClearing()
     {
         return (int)getParam($this->CNF['PARAM_WITHDRAW_CLEARING']);
+    }
+
+    public function getWithdrawMinimum()
+    {
+        return (int)getParam($this->CNF['PARAM_WITHDRAW_MINIMUM']);
+    }
+
+    public function getWithdrawRemaining()
+    {
+        return (int)getParam($this->CNF['PARAM_WITHDRAW_REMAINING']);
     }
 
     public function getTransferTypesForClearing()
