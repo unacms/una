@@ -1353,6 +1353,7 @@
 	<string name="_adm_prm_dsc_level_quota_number"><![CDATA[Ограничить количество файлов для пользователей данного членства (0 - без ограничений).]]></string>
 	<string name="_adm_prm_dsc_level_quota_size"><![CDATA[Ограничить дисковое пространство для пользователей данного членства во всех модулях (0 - без ограничений).]]></string>
 	<string name="_adm_prm_dsc_price_add_days"><![CDATA[Используйте 0 для отсутствия ограничений]]></string>
+        <string name="_adm_prm_err_action_edit"><![CDATA[Невозможно обновить параметры действия членства]]></string>
 	<string name="_adm_prm_err_level_create"><![CDATA[Невозможно создать членство]]></string>
 	<string name="_adm_prm_err_level_delete"><![CDATA[Невозможно удалить членство]]></string>
 	<string name="_adm_prm_err_level_edit"><![CDATA[Невозможно обновить членство]]></string>

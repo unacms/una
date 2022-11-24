@@ -1370,7 +1370,8 @@
         <string name="_adm_prm_dsc_level_password_expired_notify"><![CDATA[The period for which the notification of an expired password will be sent, in days (0 - unlimited).]]></string>    
 	<string name="_adm_prm_dsc_level_quota_size"><![CDATA[Limit how much space can be used by user with this level across all modules (0 - unlimited).]]></string>
 	<string name="_adm_prm_dsc_price_add_days"><![CDATA[Use 0 for life-time]]></string>
-	<string name="_adm_prm_err_level_create"><![CDATA[Cannot create membership level]]></string>
+	<string name="_adm_prm_err_action_edit"><![CDATA[Cannot update membership action's options]]></string>
+        <string name="_adm_prm_err_level_create"><![CDATA[Cannot create membership level]]></string>
 	<string name="_adm_prm_err_level_delete"><![CDATA[Cannot delete membership level]]></string>
 	<string name="_adm_prm_err_level_edit"><![CDATA[Cannot update membership level]]></string>
 	<string name="_adm_prm_err_level_icon"><![CDATA[You need to enter font icon name here.]]></string>

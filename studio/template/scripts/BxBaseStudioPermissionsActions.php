@@ -44,38 +44,41 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
 
     public function performActionOptions()
     {
+        $sAction = 'options';
+
         if((int)$this->iLevel == 0)
             $this->iLevel = (int)bx_get('IDLevel');
 
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
+        if(empty($aIds) || !is_array($aIds)) {
             $iId = (int)bx_get('IDAction');
-            if(!$iId) {
-                echoJson(array());
-                exit;
-            }
+            if(!$iId)
+                return echoJson([]);
 
-            $aIds = array($iId);
+            $aIds = [$iId];
         }
 
-        $sAction = 'options';
-        $iId = $aIds[0];
-        if(strpos($iId, $this->sParamsDivider) !== false)
-            list($this->iLevel, $iId) = explode($this->sParamsDivider, urldecode($iId));
+        $sId = array_shift($aIds);
+        if(strpos($sId, $this->sParamsDivider) !== false)
+            list($this->iLevel, $iId) = explode($this->sParamsDivider, urldecode($sId));
+        else
+            $iId = $sId;
 
-        $aOption = array();
+        $aOption = [];
         $iOption = $this->oDb->getOptions(array('type' => 'by_level_action_ids', 'level_id' => $this->iLevel, 'action_id' => $iId), $aOption);
-        if($iOption != 1 || empty($aOption)) {
-            echoJson(array());
-            exit;
-        }
+        if($iOption != 1 || empty($aOption))
+            return echoJson([]);
 
         bx_import('BxTemplStudioFormView');
+
+        $aActionParams = ['o' => $this->_sObject, 'a' => $sAction, 'level' => $this->iLevel];
+        if(!empty($this->sModule))
+            $aActionParams['module'] = $this->sModule;
 
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-prm-action-options',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params('grid.php', $aActionParams),
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),
             'params' => array (
@@ -178,7 +181,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $aUpdate = array();
+            $aUpdate = [];
             foreach($aForm['inputs'] as $sName => $aInput) {
                 if(in_array($aInput['type'], array('hidden', 'input_set')))
                     continue;
@@ -187,17 +190,23 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
                 if(empty($aUpdate[$sName]))
                     $aUpdate[$sName] = null;
             }
-            $this->oDb->updateOptions((int)$oForm->getCleanValue('IDLevel'), (int)$oForm->getCleanValue('IDAction'), $aUpdate);
+
+            if($this->oDb->updateOptions((int)$oForm->getCleanValue('IDLevel'), (int)$oForm->getCleanValue('IDAction'), $aUpdate))
+                $aRes = ['grid' => $this->getCode(false), 'blink' => $sId];
+            else
+                $aRes = ['msg' => _t('_adm_prm_err_action_edit')];
+
+            echoJson($aRes);
         }
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-action-options-popup', _t('_adm_prm_txt_actions_options_popup', _t($aOption['action_title'])), $this->_oTemplate->parseHtmlByName('prm_edit_option.html', array(
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-action-options-popup', _t('_adm_prm_txt_actions_options_popup', _t($aOption['action_title'])), $this->_oTemplate->parseHtmlByName('prm_edit_option.html', [
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
-            )));
+            ]));
 
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+            echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
         }
     }
 
