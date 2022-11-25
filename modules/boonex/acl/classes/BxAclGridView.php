@@ -89,7 +89,7 @@ class BxAclGridView extends BxAclGridLevels
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if((float)$aRow['price'] == 0 || !$this->_bTypeSingle || ($this->_bTypeRecurring && getParam($CNF['PARAM_RECURRING_PRIORITIZE']) == 'on'))
+        if((float)$aRow['price'] == 0 || !$this->_bTypeSingle || ($this->_bTypeRecurring && getParam($CNF['PARAM_RECURRING_PRIORITIZE']) == 'on' && !$this->_isLifetime($aRow)))
             return '';
 
     	$aJs = $this->_oPayment->getAddToCartJs($this->_iOwner, $this->MODULE, $aRow['id'], 1, true);
@@ -111,7 +111,7 @@ class BxAclGridView extends BxAclGridLevels
 
     protected function _getActionSubscribe ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if((float)$aRow['price'] == 0 || !$this->_bTypeRecurring)
+        if((float)$aRow['price'] == 0 || !$this->_bTypeRecurring || ($this->_bTypeSingle && $this->_isLifetime($aRow)))
             return '';
 
     	$aJs = $this->_oPayment->getSubscribeJs($this->_iOwner, '', $this->MODULE, $aRow['id'], 1);
@@ -129,6 +129,11 @@ class BxAclGridView extends BxAclGridLevels
         }
 
     	return parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+    }
+
+    protected function _isLifetime($aRow)
+    {
+        return empty($aRow['period']) && empty($aRow['period_unit']);
     }
 }
 
