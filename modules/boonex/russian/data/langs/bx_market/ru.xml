@@ -427,7 +427,7 @@
     <string name="_bx_market_txt_msg_status_pending"><![CDATA[Данный продукт ожидает утверждения.]]></string>
     <string name="_bx_market_err_access_denied"><![CDATA[Доступ запрещен.]]></string>
     <string name="_bx_market_err_no_payments"><![CDATA[Нет ни одного установленного модуля обработки платежей.]]></string>
-    <string name="_bx_market_err_not_accept_payments"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
+    <string name="_bx_market_err_not_accept_payments"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему. Вы можете сделать это через меню Мой аккаунт -> страница Настройки -> <a href="{0}">вкладка Платёжи</a>.]]></string>
     <string name="_bx_market_err_not_accept_payments_single"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с корзиной. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
     <string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с подписками. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
 

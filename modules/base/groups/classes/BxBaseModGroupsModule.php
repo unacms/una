@@ -668,6 +668,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$this->_oConfig->isPaidJoin())
             return '';
 
+        $oPayments = BxDolPayments::getInstance();
+    	if(!$oPayments->isActive())
+            return MsgBox(_t('_sys_payments_err_no_payments'));
+
         if($this->checkAllowedUsePaidJoin() !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox(_t('_Access denied'));
 
@@ -678,7 +682,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oGrid)
             return '';
 
-        return $oGrid->getCode();
+        $sNote = '';
+        if(!$oPayments->isAcceptingPayments($this->_iProfileId))
+            $sNote = MsgBox(_t('_sys_payments_err_not_accept_payments', $oPayments->getDetailsUrl()));
+
+        return $sNote . $oGrid->getCode();
     }
 
     public function serviceEntityJoin($iProfileId = 0)
