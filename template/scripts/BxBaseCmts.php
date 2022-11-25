@@ -1090,7 +1090,7 @@ class BxBaseCmts extends BxDolCmts
         return $mixedResult;
     }
 
-    protected function _getFormPost($iCmtParentId = 0, $aDp = array())
+    protected function _getFormPost($iCmtParentId = 0, $aDp = [])
     {
         $bCmtParentId = !empty($iCmtParentId);
         if(!$bCmtParentId && !$this->isPostAllowed())
@@ -1176,7 +1176,7 @@ class BxBaseCmts extends BxDolCmts
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
                     $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
-                if(($mixedResult = $this->onPostAfter($iCmtId)) !== false)
+                if(($mixedResult = $this->onPostAfter($iCmtId, $aDp)) !== false)
                     return $mixedResult;
             }
 
@@ -1186,7 +1186,7 @@ class BxBaseCmts extends BxDolCmts
         return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
     }
 
-    protected function _getFormEdit($iCmtId, $aDp = array())
+    protected function _getFormEdit($iCmtId, $aDp = [])
     {
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
 
@@ -1221,7 +1221,7 @@ class BxBaseCmts extends BxDolCmts
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
                     $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
-                if(($mixedResult = $this->onEditAfter($iCmtId)) !== false)
+                if(($mixedResult = $this->onEditAfter($iCmtId, $aDp)) !== false)
                     return $mixedResult;
             }
 

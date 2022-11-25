@@ -14,6 +14,8 @@
 </div>
 <bx_if:show_init>
     <script language="javascript">
-        __js_object__.cmtInitRating($('#__form_id__ .__style_prefix__-rating-element'));
+        $(document).ready(function() {
+            __js_object__.cmtInitRating($('#__form_id__ .__style_prefix__-rating-element'));
+        });
     </script>
 </bx_if:show_init>

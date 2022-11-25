@@ -58,11 +58,11 @@ class BxForumCmts extends BxTemplCmts
     	return parent::isPostAllowed($isPerformAction);
     }
 
-    public function onPostAfter($iId)
+    public function onPostAfter($iId, $aDp = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $mixedResult = parent::onPostAfter($iId);
+        $mixedResult = parent::onPostAfter($iId, $aDp);
         if($mixedResult === false)
             return $mixedResult;
 

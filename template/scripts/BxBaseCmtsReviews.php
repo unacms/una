@@ -102,6 +102,21 @@ class BxBaseCmtsReviews extends BxDolCmtsReviews
         return $oForm;
     }
 
+    protected function _getContent($aCmt, $aBp = [], $aDp = [])
+    {
+        $sMood = $this->_getMood($aCmt, $aDp);
+        $sContent = parent::_getContent($aCmt, $aBp, $aDp);
+        return $this->_oTemplate->parseHtmlByContent($sContent, [
+            'bx_if:show_mood' => [
+                'condition' => !empty($sMood),
+                'content' => [
+                    'style_prefix' => $this->_sStylePrefix,
+                    'mood' => $sMood
+                ]
+            ]
+        ]);
+    }
+
     protected function _getMood(&$aCmt, $aDp = array())
     {
         if(!is_array($aCmt))

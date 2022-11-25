@@ -1532,7 +1532,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return echoJson($aSiblings);
     }
 
-    public function onPostAfter($iCmtId)
+    public function onPostAfter($iCmtId, $aDp = [])
     {
         $iObjId = (int)$this->getId();
 
@@ -1562,11 +1562,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return array('id' => $iCmtId, 'parent_id' => $iCmtPrntId);
     }
 
-    public function onEditAfter($iCmtId)
+    public function onEditAfter($iCmtId, $aDp = [])
     {
     	$aCmt = $this->getCommentRow($iCmtId);
         if(empty($aCmt) || !is_array($aCmt))
             return false;
+
+        $aBp = [];
+        $this->_getParams($aBp, $aDp);
 
         $iObjId = (int)$this->getId();
         $iPerformerId = $this->_getAuthorId();
@@ -1575,10 +1578,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, $aAlertParams);
         bx_alert('comment', 'edited', $iCmtId, $iPerformerId, $aAlertParams);
 
-        $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
+        $aAuditParams = $this->_prepareAuditParams($iCmtId, ['comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']]);
         bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_edit_comment', $aAuditParams);
 
-        return array('id' => $iCmtId, 'content' => $this->_getContent($aCmt));
+        return ['id' => $iCmtId, 'content' => $this->_getContent($aCmt, $aBp, $aDp)];
     }
 
     public function serviceGetAuthor ($iContentId)

@@ -24,11 +24,11 @@ class BxTimelineCmts extends BxTemplCmts
         $this->_aSystem['trigger_field_privacy_view'] = 'object_privacy_view';
     }
     
-    public function onPostAfter($iCmtId)
+    public function onPostAfter($iCmtId, $aDp = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $mixedResult = parent::onPostAfter($iCmtId);
+        $mixedResult = parent::onPostAfter($iCmtId, $aDp);
         if($mixedResult !== false)
             $this->_oModule->_oDb->updateEvent([$CNF['FIELD_REACTED'] => time()], [$CNF['FIELD_ID'] => $this->getId()]);
 

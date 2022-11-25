@@ -147,18 +147,18 @@ class BxDolCmtsReviews extends BxTemplCmts
         return $this->_oQuery->getReviewAuthorId($this->getId(), $mixedCmt);
     }
 
-    public function onEditAfter($iCmtId)
+    public function onEditAfter($iCmtId, $aDp = [])
     {
-        $mixedResult = parent::onEditAfter($iCmtId);
+        $mixedResult = parent::onEditAfter($iCmtId, $aDp);
         if($mixedResult === false)
             return $mixedResult;
 
         $aCmt = $this->getCommentSimple($iCmtId);
 
-        return array_merge($mixedResult, array(
+        return array_merge($mixedResult, [
             'mood' => (int)$aCmt['cmt_mood'],
             'mood_legend_id' => $this->getMoodLegendId($iCmtId)
-        ));
+        ]);
     }
 
     protected function _triggerComment()
