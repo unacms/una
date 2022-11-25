@@ -1001,6 +1001,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         return $this->id;
     }
 
+    function getName ()
+    {
+        return $this->aFormAttrs['name'];
+    }
+
     function setId ($sId)
     {
         $this->id = $sId;
@@ -1010,6 +1015,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function setName($sName)
     {
         $this->aFormAttrs['name'] = $sName;
+    }
+
+    function setAction($sAction)
+    {
+        $this->aFormAttrs['action'] = $sAction;
     }
 
     function setForceSetToPending ($isValid)

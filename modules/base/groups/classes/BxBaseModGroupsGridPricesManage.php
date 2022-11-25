@@ -40,7 +40,10 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
 
         $sJsCode = '';
         if($isDisplayHeader) {
-            $this->_oModule->_oTemplate->addJs(array('prices.js'));
+            $this->_oModule->_oTemplate->addJs([
+                'modules/base/groups/js/|prices.js',
+                'prices.js'
+            ]);
 
             $sJsCode = $this->_oModule->_oTemplate->getJsCode('prices', array(
                 'sObjNameGrid' => $this->_sObject, 
@@ -67,8 +70,11 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
         if(!is_numeric($this->_iRoleId) && ($iRoleId = bx_get('role_id')) !== false)
             $this->_iRoleId = (int)$iRoleId;
 
+        $sForm = $CNF['OBJECT_FORM_PRICE_DISPLAY_ADD'];
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_PRICE'], $CNF['OBJECT_FORM_PRICE_DISPLAY_ADD']);
-    	$oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId)));
+    	$oForm->setId($sForm);
+        $oForm->setName($sForm);
+        $oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId)));
         $oForm->setRoleId($this->_iRoleId);
 
         $oForm->initChecker();
@@ -95,7 +101,7 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
 
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t($CNF['T']['popup_title_price_add']), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
-            'form_id' => $oForm->aFormAttrs['id'],
+            'form_id' => $oForm->getId(),
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,
             'action' => $sAction
@@ -118,8 +124,11 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
         if(!is_array($aItem) || empty($aItem))
             return echoJson(array());
 
+        $sForm = $CNF['OBJECT_FORM_PRICE_DISPLAY_EDIT'];
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_PRICE'], $CNF['OBJECT_FORM_PRICE_DISPLAY_EDIT']);
-    	$oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', array('o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId)));
+        $oForm->setId($sForm);
+        $oForm->setName($sForm);
+    	$oForm->setAction(BX_DOL_URL_ROOT . bx_append_url_params('grid.php', ['o' => $this->_sObject, 'a' => $sAction, 'profile_id' => $this->_iGroupProfileId, 'role_id' => $this->_iRoleId]));
 
         $oForm->initChecker($aItem);
         if($oForm->isSubmittedAndValid()) {
@@ -133,7 +142,7 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
 
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t($CNF['T']['popup_title_price_edit']), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
-            'form_id' => $oForm->aFormAttrs['id'],
+            'form_id' => $oForm->getId(),
             'form' => $oForm->getCode(true),
             'object' => $this->_sObject,
             'action' => $sAction
@@ -167,8 +176,15 @@ class BxBaseModGroupsGridPricesManage extends BxBaseModGroupsGridPrices
     {
         parent::_addJsCss();
 
-        $this->_oModule->_oTemplate->addJs(array('jquery.form.min.js', 'prices.js'));
-        $this->_oModule->_oTemplate->addCss(array('prices.css'));
+        $this->_oModule->_oTemplate->addJs([
+            'jquery.form.min.js', 
+            'modules/base/groups/js/|prices.js', 
+            'prices.js'
+        ]);
+
+        $this->_oModule->_oTemplate->addCss([
+            'prices.css'
+        ]);
     }
 
     protected function _getFilterControls()

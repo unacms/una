@@ -119,7 +119,7 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if((float)$aRow['price'] == 0 || !$this->_bTypeSingle || $this->_bTypeRecurring)
+        if((float)$aRow['price'] == 0 || !$this->_bTypeSingle || ($this->_bTypeRecurring && !$this->_isLifetime($aRow)))
             return '';
 
         $aJs = $this->_oPayment->getAddToCartJs($this->_iSeller, $this->_sModule, $aRow['id'], 1, true);
@@ -143,7 +143,7 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if((float)$aRow['price'] == 0 || !$this->_bTypeRecurring)
+        if((float)$aRow['price'] == 0 || !$this->_bTypeRecurring || ($this->_bTypeSingle && $this->_isLifetime($aRow)))
             return '';
 
         $aJs = $this->_oPayment->getSubscribeJs($this->_iSeller, '', $this->_sModule, $aRow['id'], 1);
@@ -168,6 +168,11 @@ class BxBaseModGroupsGridPricesView extends BxBaseModGroupsGridPrices
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString("AND `profile_id`=? ", $this->_iGroupProfileId);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);;
+    }
+
+    protected function _isLifetime($aRow)
+    {
+        return empty($aRow['period']) && empty($aRow['period_unit']);
     }
 }
 

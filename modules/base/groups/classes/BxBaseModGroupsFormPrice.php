@@ -17,7 +17,7 @@ class BxBaseModGroupsFormPrice extends BxTemplFormView
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);        
-        
+
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -25,21 +25,16 @@ class BxBaseModGroupsFormPrice extends BxTemplFormView
         if(isset($this->aInputs[$CNF['FIELD_PRICE_NAME']])) {
             $sJsObject = $this->_oModule->_oConfig->getJsObject('prices');
 
-            $iId = $this->getId();
-            $aMask = array('mask' => "javascript:%s.checkName('%s');", $sJsObject, $CNF['FIELD_PRICE_NAME']);
+            $iId = $this->getItemId();
+            $aMask = array('mask' => "javascript:%s.checkName(this, '%s');", $sJsObject, $CNF['FIELD_PRICE_NAME']);
             if(!empty($iId) && $this->aParams['display'] == $CNF['OBJECT_FORM_PRICE_DISPLAY_EDIT']) {
-                $aMask['mask'] = "javascript:%s.checkName('%s', %d);";
+                $aMask['mask'] = "javascript:%s.checkName(this, '%s', %d);";
                 $aMask[] = $iId;
             }
 
             $sOnBlur = call_user_func_array('sprintf', array_values($aMask)); 
             $this->aInputs[$CNF['FIELD_PRICE_NAME']]['attrs']['onblur'] = $sOnBlur;
         }
-    }
-
-    public function setAction($sAction)
-    {
-        $this->aFormAttrs['action'] = $sAction;
     }
 
     public function setRoleId($iRoleId)
@@ -84,7 +79,7 @@ class BxBaseModGroupsFormPrice extends BxTemplFormView
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
-    public function getId()
+    public function getItemId()
     {
         $iResult = 0;
 
