@@ -473,17 +473,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $aParams = $this->_prepareParamsGet();
 
+        $this->_iOwnerId = $aParams['owner_id'];
+        $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
+        if(!$oProfileOwner)
+            return echoJson([]);
+
+        $mixedResult = $oProfileOwner->checkAllowedProfileView();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(['code' => 1, 'msg' => $mixedResult]);
+
         $sContent = $this->_oTemplate->getViewBlock($aParams);
         if(empty($sContent))
-            return echoJson(array());
+            return echoJson([]);
 
         if(!empty($aParams['type']))
-            $this->_oConfig->setUserChoice(array('type' => $aParams['type']));
+            $this->_oConfig->setUserChoice(['type' => $aParams['type']]);
 
-        echoJson(array(
+        echoJson([
             'code' => 0, 
             'content' => $sContent,
-        ));
+        ]);
     }
 
     function actionGetViewFilters()
