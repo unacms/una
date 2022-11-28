@@ -1516,7 +1516,7 @@ function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgn
     return $sUrl . $sParams;
 }
 
-function bx_process_url_param($sValue, $sPattern = "/^[\d\w_]+$/")
+function bx_process_url_param($sValue, $sPattern = "/^[\d\w_-]+$/")
 {
     $mixedValue = bx_process_input($sValue);
     return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
