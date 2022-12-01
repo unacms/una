@@ -12,6 +12,51 @@
  */
 class BxDolLocationFieldNominatim extends BxDolLocationField
 {
+    protected $_sEndpoint;
+
+    protected function __construct($aObject)
+    {
+        parent::__construct($aObject);
+
+        $this->_sEndpoint = bx_append_url_params($this->getNominatimServer() . '/search/', [
+            'email' => $this->getNominatimEmail(),
+            'addressdetails' => 1
+        ]);
+    }
+
+    public function getLocation($aAddress, $sFormat = 'json', $iLimit = 1) 
+    {
+        $sEndpoint = bx_append_url_params($this->_sEndpoint, array_merge([
+            'format' => $sFormat,
+            'limit' => $iLimit
+        ], $aAddress));
+
+        $sResults = bx_file_get_contents($sEndpoint);
+        if(empty($sResults))
+            return false;
+        
+        $aResults = json_decode($sResults, true);
+        if(empty($aResults) || !is_array($aResults))
+            return false;
+        
+        $aLocations = [];
+        foreach($aResults as $aResult) {
+            if(empty($aResult) || !is_array($aResult))
+                continue;
+            
+            $aLocations[] = [
+                'lat' => $aResult['lat'],
+                'lon' => $aResult['lon'],
+                'address' => $aResult['address'],
+            ];
+        }
+
+        if(empty($aLocations))
+            return false;
+
+        return $iLimit == 1 ? array_shift($aLocations) : $aLocations;
+    }
+
     public function genInputLocation (&$aInput, $oForm)
     {        
         $isManualInput = (int)(isset($aInput['manual_input']) && $aInput['manual_input']);
