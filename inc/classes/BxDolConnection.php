@@ -192,6 +192,10 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
+        // check content's visibility
+        if(($mixedResult = $oContent->checkAllowedProfileView()) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
         if($isSwap)
             $isConnected = $this->isConnected($iContent, $iInitiator, $isMutual);
         else
@@ -232,7 +236,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
                 return $a;
         }
 
-        return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists');
+        return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
     }
 
     /**
@@ -245,24 +249,27 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if (!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
 
-        return $this->_action ($iContent, $iInitiator ? $iInitiator : bx_get_logged_profile_id(), 'removeConnection', '_sys_conn_err_connection_does_not_exists');
+        return $this->_action($iContent, $iInitiator ? $iInitiator : bx_get_logged_profile_id(), 'removeConnection', '_sys_conn_err_connection_does_not_exists', false, true);
     }
 
-    protected function _action ($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false)
+    protected function _action ($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false, $isInvert = false)
     {
         bx_import('BxDolLanguages');
 
-        if (!$iContent || !$iInitiator)
-            return array ('err' => true, 'msg' => _t('_sys_conn_err_input_data_is_not_defined'));
+        if(!$iContent || !$iInitiator)
+            return ['err' => true, 'msg' => _t('_sys_conn_err_input_data_is_not_defined')];
+
+        if(($mixedResult = $this->checkAllowedConnect($iInitiator, $iContent, false, false, $isInvert)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return ['err' => true, 'msg' => $mixedResult];
 
         if (!$this->$sMethod((int)$iInitiator, (int)$iContent)) {
             if ($isMutual && BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType && $this->isConnected((int)$iInitiator, (int)$iContent, false) && !$this->isConnected((int)$iInitiator, (int)$iContent, true))
-                return array ('err' => true, 'msg' => _t('_sys_conn_err_connection_is_awaiting_confirmation'));
+                return ['err' => true, 'msg' => _t('_sys_conn_err_connection_is_awaiting_confirmation')];
 
-            return array ('err' => true, 'msg' => _t($sErrorKey));
+            return ['err' => true, 'msg' => _t($sErrorKey)];
         }
 
-        return array ('err' => false, 'msg' => _t('_sys_conn_msg_success'));
+        return ['err' => false, 'msg' => _t('_sys_conn_msg_success')];
     }
 
     public function outputActionResult ($mixed, $sFormat = 'json')
