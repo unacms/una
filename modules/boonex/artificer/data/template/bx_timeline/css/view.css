@@ -67,7 +67,10 @@ div.bx-tl-view-item div.bx-tl-items {
 div.bx-tl-item-content form {
     padding: 1rem 1rem 0 1rem;
 }
-
+div.bx-tl-item-content div.bx-tl-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 div.bx-tl-item-text div.bx-tl-content {
     position: relative;
     max-height: 16rem;
