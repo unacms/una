@@ -108,6 +108,11 @@
 }
 
 /*-- Entry: Text block --*/
+.bx-base-text-title-bages h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .bx-base-text-entity-image img {
     width: 100%;
 }

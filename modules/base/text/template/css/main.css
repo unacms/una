@@ -216,6 +216,11 @@
 
     
 /* view page */
+.bx-base-text-title-bages h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .bx-content-description-after .bx-vote-counter-wrapper {
     padding-top: 1rem;
     line-height: 2.5rem;
