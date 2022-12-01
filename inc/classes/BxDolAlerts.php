@@ -48,6 +48,8 @@ class BxDolAlerts extends BxDol
     protected $_aCacheTriggers;
     protected $_aCacheTriggersMarkers;
     protected $_oCacheObject;
+    
+    protected static $_aCacheData;
 
     /**
      * Constructor
@@ -60,26 +62,12 @@ class BxDolAlerts extends BxDol
     {
         parent::__construct();
 
-        if (getParam('sys_db_cache_enable')) {
-
-            $oDb = BxDolDb::getInstance();
-            $oCache = $oDb->getDbCacheObject();
-            $sCacheKey = $oDb->genDbCacheKey('sys_alerts');
-            $aData = $oCache->getData($sCacheKey);
-            if (null === $aData) {
-                $aData = $this->getAlertsData();
-                $oCache->setData ($sCacheKey, $aData);
-            }
-
-        } else {
-
-            $aData = $this->getAlertsData();
-
-        }
-
-        $this->_aAlerts = $aData['alerts'];
-        $this->_aHandlers = $aData['handlers'];
-        $this->_aCacheTriggers = isset($aData['cache_triggers']) ? $aData['cache_triggers'] : [];
+        if (!isset(self::$_aCacheData))
+            self::$_aCacheData = $this->getAlertsData();
+        
+        $this->_aAlerts = self::$_aCacheData['alerts'];
+        $this->_aHandlers = self::$_aCacheData['handlers'];
+        $this->_aCacheTriggers = isset(self::$_aCacheData['cache_triggers']) ? self::$_aCacheData['cache_triggers'] : [];
 
         $this->sUnit = $sUnit;
         $this->sAction = $sAction;
