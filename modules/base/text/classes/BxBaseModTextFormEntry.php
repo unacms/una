@@ -109,7 +109,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     
     protected function genCustomInputAttachments ($aInput)
     {
-        return '__attachments_menu__';
+        return '__attachments_menu__' . $this->_oModule->_oTemplate->parseHtmlByName('uploader_progress.html', []);
     }
 
     protected function genCustomInputPolls ($aInput)

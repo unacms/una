@@ -3525,6 +3525,7 @@
     <string name="_sys_txt_forgot_pasword_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
     <string name="_sys_txt_forgot_pasword_sms_text"><![CDATA[Чтобы восстановить пароль нажмите на ссылку {0}]]></string>
 
+    <string name="_sys_txt_form_entry_input_picture_copy"><![CDATA[Скопировать ссылку]]></string>
     <string name="_sys_txt_form_entry_input_picture_delete"><![CDATA[Удалить]]></string>
     <string name="_sys_txt_form_entry_input_picture_insert"><![CDATA[Вставить в сообщение]]></string>
     <string name="_sys_txt_form_entry_input_picture_pic_url"><![CDATA[URL прикрепления:]]></string>

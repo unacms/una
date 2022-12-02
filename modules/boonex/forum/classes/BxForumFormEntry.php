@@ -156,7 +156,11 @@ class BxForumFormEntry extends BxBaseModTextFormEntry
     	return array (
             'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
             'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
-            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
+            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
+            'bx_if:set_thumb' => [
+				'condition' => false,
+				'content' => []
+			],
     	);
     }
 }

@@ -2,6 +2,46 @@
 .bx-uploader-msg-err {
     color:#900;
 }
+.bx-uploader-ghost{
+    width: 290px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 0.5rem;
+}
+.bx-uploader-ghost.bx-uploader-ghost-single{
+    width: auto;
+}
+.bx-uploader-ghost-cnt{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.bx-form-input-files-result{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    grid-gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.bx-base-general-icon-wrapper{
+    position: relative;
+}
+.bx-base-general-uploader-ghost{
+    position: absolute;
+    bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.bx-base-general-uploader-ghost .bx-btn.bx-btn-small{
+    height: auto !important;
+    line-height: normal !important;
+    min-height: 30px;
+    display: flex;
+}
 
 .bx-uploader-ghost-preview {
     width:101px; 

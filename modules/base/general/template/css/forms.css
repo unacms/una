@@ -12,10 +12,6 @@
     float:left;
 }
 
-.bx-uploader-ghost .bx-base-general-icon-wrapper img {
-    max-height:12.5rem;
-}
-
 .bx-uploader-ghost .bx-btn {
 	float: none;
 	display: inline-block;

@@ -6,6 +6,3 @@
 .bx-form-input-files-result.ui-sortable .bx-uploader-ghost-reorder {
     cursor: move;
 }
-.bx-uploader-ghost .bx-base-general-icon-wrapper img {
-    max-height: 12.5rem;
-}

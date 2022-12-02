@@ -31,11 +31,12 @@ BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, 
 
     this._sResultContainerId = 'bx-form-input-files-' + sUniqId + '-upload-result';
     this._sErrorsContainerId = 'bx-form-input-files-' + sUniqId + '-errors'; 
+    this._sProgressContainerId = 'bx-form-input-files-' + sUniqId + '-progress'; 
 
     this._sFormContainerId = 'bx-form-input-files-' + sUniqId + '-form-cont';
 
     this._sTemplateGhost = options.template_ghost ? options.template_ghost : '<div id="' + this._getFileContainerId('{file_id}') + '"><input type="hidden" name="f[]" value="{file_id}" />{file_name} (<a href="javascript:void(0);" onclick="{js_instance_name}.deleteGhost(\'{file_id}\')">delete</a>)</div>';
-    this._sTemplateReorder = options.template_reorder ? options.template_reorder : '<div class="bx-uploader-ghost-reorder"><i class="sys-icon bars"></i></div>';
+    this._sTemplateReorder = options.template_reorder ? options.template_reorder : '<div class="bx-uploader-ghost-reorder bx-btn bx-btn-small"><i class="sys-icon bars"></i></div>';
     this._sTemplateError = options.template_error_msg ? options.template_error_msg : '<div>{error}</div>' ;
     this._sTemplateErrorGhosts = options.template_error_ghosts ? options.template_error_ghosts : this._sTemplateError;
 
@@ -162,7 +163,7 @@ BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onCompl
                 var sClassGhost = 'bx-uploader-ghost';
                 $('#' + $this._sResultContainerId).find('.' + sClassGhost).each(function() {
                     if($(this).find('.bx-uploader-ghost-reorder').length == 0)
-                        $(this).prepend($this._sTemplateReorder);
+                        $(this).find('.bx-base-general-uploader-ghost').prepend($this._sTemplateReorder);
                 });
 
                 var fInitReordering = function() {                    
@@ -452,6 +453,9 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     this._sFocusDivId = 'bx-form-input-files-' + sUniqId + '-focus-' + this._sUploaderObject;
 
     this._uploader = null;
+    
+    this._aFiles = [];
+  
 
     this.initUploader = function (o) {
 
@@ -490,7 +494,32 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 $this.onUploadCompleted(''); 
             },
             onprocessfileprogress(file, progress) {
-               
+                $this._aFiles[file.source.lastModified+'-'+file.source.size+'-'+file.source.name] = progress * file.source.size;
+                iTotal = 0;
+                iUploaded = 0; 
+                for (const propertyName in $this._aFiles) {
+                    iUploaded += $this._aFiles[propertyName];
+                }
+                
+                for (i = 0; i < $this._uploader.getFiles().length; i++){
+                    iTotal += $this._uploader.getFiles()[i].source.size;
+                }
+            
+                iProgress = iUploaded / iTotal * 100;
+            
+                oProgress =  $('#' + $this._sProgressContainerId);
+                
+                if (oProgress.parents('form').find('.uploader_progress').length > 0){
+                    oProgress = oProgress.parents('form').find('.uploader_progress');
+                }
+                if (iProgress == 100){
+                    oProgress.hide();
+                    $this._aFiles = [];
+                }
+                else{
+                    oProgress.show();
+                    oProgress.find('.progress_line').css('width', iProgress + '%');
+                }
             },
             server: {
 				process: (fieldName, file, metadata, load, error, progress, abort) => {
@@ -582,7 +611,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
         );    
-
+        console.log(1);
         this.initPasteEditor();
     }
 
@@ -618,7 +647,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     }
 
     this.onProgress = function (params) {
-
+        console.log(params);    
     }
 
     this.onClickCancel = function () {
@@ -664,6 +693,22 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             }
         });
     }
+    
+    this.showUploaderForm = function() {
+        this._uploader.browse();
+    }
+    
+    this.initUploader({
+        'maxFilesize': options.maxFilesize,
+        'acceptedFiles': options.acceptedFiles,
+        'resizeWidth': options.resizeWidth,
+        'resizeHeight': options.resizeHeight,
+        'resizeMethod': options.resizeMethod,
+        'dictDefaultMessage': options.dictDefaultMessage,
+        'dictFileTooBig': options.dictFileTooBig,
+        'dictMaxFilesExceeded': options.dictMaxFilesExceeded,
+        'dictInvalidFileType': options.dictInvalidFileType,
+    });
 }
 
 BxDolUploaderHTML5.prototype = BxDolUploaderSimple.prototype;
@@ -816,27 +861,28 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
 
     this.onShowPopup = function () {
         var $this = this;
+        try {
+            navigator.mediaDevices.getUserMedia({ audio: true, video: {facingMode: this._camera_type} }).then(function(camera) {
+                $this._camera = camera;
+                $this.showCameraCapture();
 
-        navigator.mediaDevices.getUserMedia({ audio: true, video: {facingMode: this._camera_type} }).then(function(camera) {
-            $this._camera = camera;
-            $this.showCameraCapture();
+                $('#' + $this._sFormContainerId + ' .bx-uploader-recording-start').show();
+                $('#' + $this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
+                $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').show();
 
-            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-start').show();
-            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
-            $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').show();
+                navigator.mediaDevices.enumerateDevices().then(function(mediaDevices){
+                    let constraints = navigator.mediaDevices.getSupportedConstraints();
+                    if ($this.getDevicesNum(mediaDevices) > 1 && typeof constraints.facingMode != 'undefined' && constraints.facingMode) {
+                        $('#' + $this._sFormContainerId + ' .bx-record-camera-switch').show();
+                    } else {
+                        $('#' + $this._sFormContainerId + ' .bx-record-camera-switch').hide();
+                    }
+                });
 
-            navigator.mediaDevices.enumerateDevices().then(function(mediaDevices){
-                let constraints = navigator.mediaDevices.getSupportedConstraints();
-                if ($this.getDevicesNum(mediaDevices) > 1 && typeof constraints.facingMode != 'undefined' && constraints.facingMode) {
-                    $('#' + $this._sFormContainerId + ' .bx-record-camera-switch').show();
-                } else {
-                    $('#' + $this._sFormContainerId + ' .bx-record-camera-switch').hide();
-                }
-            });
-
-        }).catch(function(error) {
+            })
+        } catch (err) {
             $this._showError(_t('_sys_uploader_camera_capture_failed'));
-        });
+        }
     }
 
     this.onClickCancel = function () {

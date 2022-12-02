@@ -16,6 +16,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
 {
     protected $_sDivId; ///< div id where upload button will be placed
     protected $_sFocusDivId;
+    protected $_sProgressDivId;
 
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
@@ -23,6 +24,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
 
         $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
         $this->_sFocusDivId = 'bx-form-input-files-' . $sUniqId . '-focus-' . $this->_aObject['object'];
+        $this->_sProgressDivId = 'bx-form-input-files-' . $sUniqId . '-progress';
 
         $this->_sButtonTemplate = 'uploader_button_html5.html';
         $this->_sJsTemplate = 'uploader_button_html5_js.html';
@@ -56,7 +58,55 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         else
             return _t('_sys_uploader_html5_button_name');
     }
+    
+    /**
+     * Show uploader button.
+     * @return HTML string
+     */
+    public function getUploaderButton($aParams = array())
+    {
+        $iResizeWidth = (int)getParam('client_image_resize_width');
+        $iResizeHeight = (int)getParam('client_image_resize_height');
+        $sAcceptedFiles = $this->getAcceptedFilesExtensions();
 
+        $iContentId = $aParams['content_id'];
+        $isPrivate  = $aParams['storage_private'];
+        
+        $aParams = array_merge(
+            $aParams,
+            [
+                'form_container_id' => $this->_sFormContainerId,
+                'errors_container_id' => $this->_sErrorsContainerId,
+                'uploader_instance_name' => $this->getNameJsInstanceUploader(),
+                'restrictions_text' => $this->getRestrictionsText(),
+                'div_id' => $this->_sDivId,
+                'focus_div_id' => $this->_sFocusDivId,
+                'progress_div_id' => $this->_sProgressDivId,
+                'content_id' => $iContentId,
+                'storage_private' => $isPrivate,
+                'max_file_size' => $this->getMaxUploadFileSize(),
+                'accepted_files' => null === $sAcceptedFiles ? 'null' : "'" . bx_js_string($sAcceptedFiles) . "'",
+                'resize_width' => $iResizeWidth ? $iResizeWidth : 'null',
+                'resize_height' => $iResizeHeight ? $iResizeHeight : 'null',
+                'resize_method' => $iResizeWidth && $iResizeHeight ? "'contain'" : 'null',
+            ]
+        );
+        return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+    }
+
+    public function getUploaderJsParams(){
+        $iResizeWidth = (int)getParam('client_image_resize_width');
+        $iResizeHeight = (int)getParam('client_image_resize_height');
+        $sAcceptedFiles = $this->getAcceptedFilesExtensions();
+        return [
+            'max_file_size' => $this->getMaxUploadFileSize(),
+            'accepted_files' => null === $sAcceptedFiles ? 'null' : "'" . bx_js_string($sAcceptedFiles) . "'",
+            'resize_width' => $iResizeWidth ? $iResizeWidth : 'null',
+            'resize_height' => $iResizeHeight ? $iResizeHeight : 'null',
+            'resize_method' => $iResizeWidth && $iResizeHeight ? "'contain'" : 'null',
+        ];
+    }                                     
+    
     /**
      * Show uploader form.
      * @return HTML string

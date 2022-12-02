@@ -23,11 +23,27 @@
 
     content: '';
 }
-
+#bx_market #bx-form-element-files .bx-form-input-files-result{
+    flex-direction: column;
+    align-items: flex-start;
+}
+#bx_market #bx-form-element-files .bx-uploader-ghost{
+    width: 100%;
+    display: block;
+}
+#bx_market #bx-form-element-files .bx-base-general-uploader-ghost{
+    position: relative;
+    display: block;
+}
+#bx_market #bx-form-element-files .bx-base-general-uploader-ghost .bx-btn.bx-btn-small{
+    display: inline-block;
+    min-height: inherit;
+}
 .bx-uploader-ghost-header {
     position: relative;
     line-height: 1.5rem;
 }
+
 
 .bx-uploader-ghost .bx-uploader-ghost-header .sys-icon {
     display: inline-block;

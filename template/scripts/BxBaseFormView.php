@@ -1453,6 +1453,8 @@ BLAH;
                 $aAttrs = array_merge($aAttrs, array('onclick' => $oUploader->getNameJsInstanceUploader() . '.showUploaderForm();'));
 
             $aParamsButtons = [
+                'content_id' => isset($aInput['content_id']) ? $aInput['content_id'] : '',
+                'storage_private' => isset($aInput['storage_private']) ? $aInput['storage_private'] : '1',
                 'attrs' => bx_convert_array2attrs($aAttrs),
                 'btn_class' => !empty($aInput['attrs']['disabled']) ? 'bx-btn-disabled' : '',
                 'button_title' => bx_js_string($oUploader->getUploaderButtonTitle(isset($aInput['upload_buttons_titles']) ? $aInput['upload_buttons_titles'] : false)),
@@ -1463,12 +1465,14 @@ BLAH;
             //--- Get JS code.
             $sGhostTemplate = $this->genGhostTemplate($aInput);
 
-            $aParamsJs = [
-                'content_id' => isset($aInput['content_id']) ? $aInput['content_id'] : '',
-                'storage_private' => isset($aInput['storage_private']) ? $aInput['storage_private'] : '1',
-                'is_init_ghosts' => $bInitGhosts,
-                'is_init_reordering' => $bInitReordering
-            ];
+            $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
+                [
+                    'content_id' => isset($aInput['content_id']) ? $aInput['content_id'] : '',
+                    'storage_private' => isset($aInput['storage_private']) ? $aInput['storage_private'] : '1',
+                    'is_init_ghosts' => $bInitGhosts,
+                    'is_init_reordering' => $bInitReordering
+                ]
+            );
             if(isset($aInput['images_transcoder']) && $aInput['images_transcoder'])
                 $aParamsJs['images_transcoder'] = bx_js_string($aInput['images_transcoder']);
 

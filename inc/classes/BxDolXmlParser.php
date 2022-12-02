@@ -83,8 +83,10 @@ class BxDolXmlParser extends BxDolFactory implements iBxDolSingleton
                 $aResult[] = $aValues[$iTagIndex]['attributes'];
             return $aResult;
         } else {
-            $iTagIndex = $aIndexes[strtoupper($sXmlTagName)][$sXmlTagIndex];
-            return $aValues[$iTagIndex]['attributes'];
+            if (isset($aIndexes[strtoupper($sXmlTagName)][$sXmlTagIndex])){
+                $iTagIndex = $aIndexes[strtoupper($sXmlTagName)][$sXmlTagIndex];
+                return $aValues[$iTagIndex]['attributes'];
+            }
         }
     }
 

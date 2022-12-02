@@ -172,7 +172,7 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             'content_id' => $this->aInputs[$CNF['FIELD_COVER']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
             'thumb_id' => isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
-            'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : ''
+            'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
         );
     }
 
@@ -183,7 +183,11 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
     	return array (
             'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
             'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
-            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
+            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
+            'bx_if:set_thumb' => [
+				'condition' => false,
+				'content' => []
+			],
     	);
     }
 }

@@ -254,7 +254,12 @@ abstract class BxDolUploader extends BxDolFactory
     {
         return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
     }
-
+    
+    public function getUploaderJsParams()
+    {
+        return [];
+    }
+    
     /**
      * Show uploader JS.
      * @return HTML string
