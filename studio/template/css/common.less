@@ -107,13 +107,13 @@ a:hover > .sys-icon-a i {
     .background-color(rgba(68, 134, 244, 0.8));
     color: rgba(251, 252, 253, 1.0);
 }
-.bx-btn .sys-icon {
+.bx-btn .sys-icon:not(.sys-colored) {
     color: rgba(255, 255, 255, 0.9);
 }
-.bx-btn:hover .sys-icon,
-.bx-btn:active .sys-icon,
-.bx-btn.bx-btn-primary:hover .sys-icon,
-.bx-btn.bx-btn-primary:active .sys-icon {
+.bx-btn:hover .sys-icon:not(.sys-colored),
+.bx-btn:active .sys-icon:not(.sys-colored),
+.bx-btn.bx-btn-primary:hover .sys-icon:not(.sys-colored),
+.bx-btn.bx-btn-primary:active .sys-icon:not(.sys-colored) {
     color: rgba(255, 255, 255, 1);
 }
 
