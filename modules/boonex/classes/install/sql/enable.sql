@@ -370,17 +370,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 -- UPLOADERS
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_classes_simple', 1, 'BxClssUploaderSimple', 'modules/boonex/classes/classes/BxClssUploaderSimple.php'),
 ('bx_classes_html5', 1, 'BxClssUploaderHTML5', 'modules/boonex/classes/classes/BxClssUploaderHTML5.php'),
 ('bx_classes_record_video', 1, 'BxClssUploaderRecordVideo', 'modules/boonex/classes/classes/BxClssUploaderRecordVideo.php'),
-('bx_classes_photos_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_photos_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php'),
-('bx_classes_videos_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_videos_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php'),
 ('bx_classes_videos_record_video', 1, 'BxClssUploaderRecordVideoAttach', 'modules/boonex/classes/classes/BxClssUploaderRecordVideoAttach.php'),
-('bx_classes_sounds_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_sounds_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php'),
-('bx_classes_files_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_files_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php');
 
 -- ALERTS

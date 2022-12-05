@@ -270,15 +270,11 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 -- UPLOADERS
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_tasks_simple', 1, 'BxTasksUploaderSimple', 'modules/boonex/tasks/classes/BxTasksUploaderSimple.php'),
 ('bx_tasks_html5', 1, 'BxTasksUploaderHTML5', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5.php'),
 ('bx_tasks_record_video', 1, 'BxTasksUploaderRecordVideo', 'modules/boonex/tasks/classes/BxTasksUploaderRecordVideo.php'),
-('bx_tasks_photos_simple', 1, 'BxTasksUploaderSimpleAttach', 'modules/boonex/tasks/classes/BxTasksUploaderSimpleAttach.php'),
 ('bx_tasks_photos_html5', 1, 'BxTasksUploaderHTML5Attach', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5Attach.php'),
-('bx_tasks_videos_simple', 1, 'BxTasksUploaderSimpleAttach', 'modules/boonex/tasks/classes/BxTasksUploaderSimpleAttach.php'),
 ('bx_tasks_videos_html5', 1, 'BxTasksUploaderHTML5Attach', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5Attach.php'),
 ('bx_tasks_videos_record_video', 1, 'BxTasksUploaderRecordVideoAttach', 'modules/boonex/tasks/classes/BxTasksUploaderRecordVideoAttach.php'),
-('bx_tasks_files_simple', 1, 'BxTasksUploaderSimpleAttach', 'modules/boonex/tasks/classes/BxTasksUploaderSimpleAttach.php'),
 ('bx_tasks_files_html5', 1, 'BxTasksUploaderHTML5Attach', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5Attach.php');
 
 -- ALERTS

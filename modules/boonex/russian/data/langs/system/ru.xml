@@ -3629,7 +3629,6 @@
 	<string name="_sys_uploader_simple_attach_one_more_file"><![CDATA[+ Добавить ещё файлы]]></string>
 	<string name="_sys_uploader_simple_button_name"><![CDATA[Обычная загрузка]]></string>
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Загрузить]]></string>
-	<string name="_sys_uploader_simple_title"><![CDATA[Обычная загрузка]]></string>
 	<string name="_sys_uploader_record_video_button_name"><![CDATA[Записать Видео]]></string>
 	<string name="_sys_uploader_record_video_submit_button"><![CDATA[Загрузить]]></string>
 	<string name="_sys_uploader_record_video_title"><![CDATA[Записать Видео]]></string>

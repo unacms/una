@@ -144,7 +144,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_convos', 'bx_convos', 'draft_id', '0', '', 0, 'hidden', '_bx_cnv_form_entry_input_sys_draft_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_convos', 'bx_convos', 'text', '', '', 0, 'textarea', '_bx_cnv_form_entry_input_sys_text', '_bx_cnv_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_cnv_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_convos', 'bx_convos', 'recipients', '', '', 0, 'custom', '_bx_cnv_form_entry_input_sys_recipients', '_bx_cnv_form_entry_input_recipients', '', 1, 0, 0, '', '', '', 'Recipients', '', '_bx_cnv_form_entry_input_recipients_err', '', '', 1, 0),
-('bx_convos', 'bx_convos', 'attachments', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_cnv_form_entry_input_sys_attachments', '_bx_cnv_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_convos', 'bx_convos', 'attachments', 'a:1:{i:0;s:9:"sys_html5";}', 'a:1:{s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_cnv_form_entry_input_sys_attachments', '_bx_cnv_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_convos_entry_add', 'delete_confirm', 2147483647, 0, 0),

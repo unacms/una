@@ -597,15 +597,11 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_forum_simple', 1, 'BxForumUploaderSimple', 'modules/boonex/forum/classes/BxForumUploaderSimple.php'),
 ('bx_forum_html5', 1, 'BxForumUploaderHTML5', 'modules/boonex/forum/classes/BxForumUploaderHTML5.php'),
 ('bx_forum_record_video', 1, 'BxForumUploaderRecordVideo', 'modules/boonex/forum/classes/BxForumUploaderRecordVideo.php'),
-('bx_forum_photos_simple', 1, 'BxForumUploaderSimpleAttach', 'modules/boonex/forum/classes/BxForumUploaderSimpleAttach.php'),
 ('bx_forum_photos_html5', 1, 'BxForumUploaderHTML5Attach', 'modules/boonex/forum/classes/BxForumUploaderHTML5Attach.php'),
-('bx_forum_videos_simple', 1, 'BxForumUploaderSimpleAttach', 'modules/boonex/forum/classes/BxForumUploaderSimpleAttach.php'),
 ('bx_forum_videos_html5', 1, 'BxForumUploaderHTML5Attach', 'modules/boonex/forum/classes/BxForumUploaderHTML5Attach.php'),
 ('bx_forum_videos_record_video', 1, 'BxForumUploaderRecordVideoAttach', 'modules/boonex/forum/classes/BxForumUploaderRecordVideoAttach.php'),
-('bx_forum_files_simple', 1, 'BxForumUploaderSimpleAttach', 'modules/boonex/forum/classes/BxForumUploaderSimpleAttach.php'),
 ('bx_forum_files_html5', 1, 'BxForumUploaderHTML5Attach', 'modules/boonex/forum/classes/BxForumUploaderHTML5Attach.php');
 
 

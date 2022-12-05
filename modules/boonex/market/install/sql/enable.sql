@@ -641,7 +641,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_market_simple', 1, 'BxMarketUploaderSimple', 'modules/boonex/market/classes/BxMarketUploaderSimple.php'),
 ('bx_market_html5', 1, 'BxMarketUploaderHTML5', 'modules/boonex/market/classes/BxMarketUploaderHTML5.php');
 
 

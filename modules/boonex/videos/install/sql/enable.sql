@@ -454,7 +454,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_videos_simple', 1, 'BxVideosUploaderSimple', 'modules/boonex/videos/classes/BxVideosUploaderSimple.php'),
 ('bx_videos_html5', 1, 'BxVideosUploaderHTML5', 'modules/boonex/videos/classes/BxVideosUploaderHTML5.php'),
 ('bx_videos_record_video', 1, 'BxVideosUploaderRecordVideo', 'modules/boonex/videos/classes/BxVideosUploaderRecordVideo.php');
 

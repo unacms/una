@@ -119,7 +119,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_polls_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_polls_administration',
             'OBJECT_GRID_COMMON' => 'bx_polls_common',
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            'OBJECT_UPLOADERS' => array('sys_html5'),
 
             // styles
             'STYLES_POLLS_EMBED_CLASS' => 'body.bx-page-iframe.bx-def-color-bg-page',

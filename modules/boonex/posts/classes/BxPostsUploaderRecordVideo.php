@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxPostsUploaderSimple extends BxBaseModTextUploaderSimple
+class BxPostsUploaderRecordVideo extends BxTemplUploaderRecordVideo
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
