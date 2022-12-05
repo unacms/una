@@ -177,7 +177,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_forum_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'forum', // first item in view entry submenu from main module submenu
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            'OBJECT_UPLOADERS' => array('sys_html5'),
             'OBJECT_CONNECTION_SUBSCRIBERS' => 'bx_forum_subscribers',
 
             'BADGES_AVALIABLE' => true,

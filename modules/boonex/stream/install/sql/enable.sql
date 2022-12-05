@@ -386,7 +386,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 -- UPLOADERS
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_stream_simple', 1, 'BxStrmUploaderSimple', 'modules/boonex/stream/classes/BxStrmUploaderSimple.php'),
 ('bx_stream_html5', 1, 'BxStrmUploaderHTML5', 'modules/boonex/stream/classes/BxStrmUploaderHTML5.php');
 
 -- ALERTS

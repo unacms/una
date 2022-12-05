@@ -3711,7 +3711,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_simple_attach_one_more_file"><![CDATA[+ Add more files]]></string>
 	<string name="_sys_uploader_simple_button_name"><![CDATA[Simple Upload]]></string>
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Upload]]></string>
-	<string name="_sys_uploader_simple_title"><![CDATA[Simple Upload]]></string>
 	<string name="_sys_uploader_record_video_button_name"><![CDATA[Record]]></string>
 	<string name="_sys_uploader_record_video_submit_button"><![CDATA[Upload]]></string>
 	<string name="_sys_uploader_record_video_title"><![CDATA[Record Video]]></string>

@@ -518,15 +518,11 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_reviews_simple', 1, 'BxReviewsUploaderSimple', 'modules/boonex/reviews/classes/BxReviewsUploaderSimple.php'),
 ('bx_reviews_html5', 1, 'BxReviewsUploaderHTML5', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5.php'),
 ('bx_reviews_record_video', 1, 'BxReviewsUploaderRecordVideo', 'modules/boonex/reviews/classes/BxReviewsUploaderRecordVideo.php'),
-('bx_reviews_photos_simple', 1, 'BxReviewsUploaderSimpleAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderSimpleAttach.php'),
 ('bx_reviews_photos_html5', 1, 'BxReviewsUploaderHTML5Attach', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5Attach.php'),
-('bx_reviews_videos_simple', 1, 'BxReviewsUploaderSimpleAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderSimpleAttach.php'),
 ('bx_reviews_videos_html5', 1, 'BxReviewsUploaderHTML5Attach', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5Attach.php'),
 ('bx_reviews_videos_record_video', 1, 'BxReviewsUploaderRecordVideoAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderRecordVideoAttach.php'),
-('bx_reviews_files_simple', 1, 'BxReviewsUploaderSimpleAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderSimpleAttach.php'),
 ('bx_reviews_files_html5', 1, 'BxReviewsUploaderHTML5Attach', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5Attach.php');
 
 -- ALERTS

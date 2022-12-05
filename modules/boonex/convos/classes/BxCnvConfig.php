@@ -76,7 +76,7 @@ class BxCnvConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_convos_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'convos', // first item in view entry submenu from main module submenu
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            'OBJECT_UPLOADERS' => array('sys_html5'),
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

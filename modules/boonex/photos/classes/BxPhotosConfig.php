@@ -120,7 +120,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_photos_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_photos_administration',
             'OBJECT_GRID_COMMON' => 'bx_photos_common',
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            'OBJECT_UPLOADERS' => array('sys_html5'),
             
             'FUNCTION_FOR_GET_ITEM_INFO' => 'getContentInfoById',
 

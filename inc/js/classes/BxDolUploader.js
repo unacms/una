@@ -9,7 +9,7 @@
 /**
  * Simple Uploader js class
  */
-function BxDolUploaderSimple (sUploaderObject, sStorageObject, sUniqId, options) {
+function BxDolUploaderBase (sUploaderObject, sStorageObject, sUniqId, options) {
 
     this.init(sUploaderObject, sStorageObject, sUniqId, options);
 
@@ -17,7 +17,7 @@ function BxDolUploaderSimple (sUploaderObject, sStorageObject, sUniqId, options)
     this._eForm = null;
 }
 
-BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, sUniqId, options) {
+BxDolUploaderBase.prototype.init = function (sUploaderObject, sStorageObject, sUniqId, options) {
     this._isUploadsInProgress = false;
 
     this._sUploaderObject = sUploaderObject;
@@ -52,15 +52,15 @@ BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, 
     this._isErrorShown = false;
 }
 
-BxDolUploaderSimple.prototype.isMultiple = function () {    
+BxDolUploaderBase.prototype.isMultiple = function () {    
     return this._isMultiple;
 }
 
-BxDolUploaderSimple.prototype.getCurrentFilesCount = function () {
+BxDolUploaderBase.prototype.getCurrentFilesCount = function () {
     return $('#' + $this._sResultContainerId + ' .bx-uploader-ghost').length;
 }
 
-BxDolUploaderSimple.prototype.showUploaderForm = function () {
+BxDolUploaderBase.prototype.showUploaderForm = function () {
     var $this = this;
     var sUrl = this._getUrlWithStandardParams() + '&a=show_uploader_form&m=' + (this._isMultiple ? 1 : 0) + '&c=' + this._iContentId + '&p=' + this._isPrivate + '&_t=' + escape(new Date());
 
@@ -88,7 +88,7 @@ BxDolUploaderSimple.prototype.showUploaderForm = function () {
     });
 }
 
-BxDolUploaderSimple.prototype.onClickCancel = function () {
+BxDolUploaderBase.prototype.onClickCancel = function () {
 	var $this = this;
     if (this._isUploadsInProgress) {
     	bx_confirm(_t('_sys_uploader_confirm_close_popup'), function() {
@@ -100,7 +100,7 @@ BxDolUploaderSimple.prototype.onClickCancel = function () {
     }
 }
 
-BxDolUploaderSimple.prototype.onBeforeUpload = function (params) {
+BxDolUploaderBase.prototype.onBeforeUpload = function (params) {
 
     this._eForm = params;
 
@@ -111,11 +111,11 @@ BxDolUploaderSimple.prototype.onBeforeUpload = function (params) {
     this._clearErrors();
 }
 
-BxDolUploaderSimple.prototype.onProgress = function (params) {
+BxDolUploaderBase.prototype.onProgress = function (params) {
 
 }
 
-BxDolUploaderSimple.prototype.onUploadCompleted = function (sErrorMsg) {
+BxDolUploaderBase.prototype.onUploadCompleted = function (sErrorMsg) {
 
     this._isUploadsInProgress = false;
     this._unlockPageFromLeaving();
@@ -130,12 +130,12 @@ BxDolUploaderSimple.prototype.onUploadCompleted = function (sErrorMsg) {
     }
 }
 
-BxDolUploaderSimple.prototype.cancelAll = function () {
+BxDolUploaderBase.prototype.cancelAll = function () {
     $('#' + this._sIframeId).attr('src', 'javascript:false;');
     this.onUploadCompleted(_t('_sys_uploader_upload_canceled'));
 }
 
-BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onComplete) {
+BxDolUploaderBase.prototype.restoreGhosts = function (bInitReordering, onComplete) {
     var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&_t=' + escape(new Date());
     var $this = this;
 
@@ -192,7 +192,7 @@ BxDolUploaderSimple.prototype.restoreGhosts = function (bInitReordering, onCompl
     });
 };
 
-BxDolUploaderSimple.prototype.reorderGhosts = function(oDraggable) {
+BxDolUploaderBase.prototype.reorderGhosts = function(oDraggable) {
     var sUrl = this._getUrlWithStandardParams() + '&a=reorder_ghosts&f=json' + '&c=' + this._iContentId + '&' + $('#' + this._sResultContainerId).sortable('serialize', {key: 'ghosts[]'}) + '&_t=' + escape(new Date());
 
     $.getJSON(sUrl, function (aData) {
@@ -200,7 +200,7 @@ BxDolUploaderSimple.prototype.reorderGhosts = function(oDraggable) {
     });
 };
 
-BxDolUploaderSimple.prototype.showGhost = function(iId, oVars) {
+BxDolUploaderBase.prototype.showGhost = function(iId, oVars) {
     var oFileContainer = $('#' + this._getFileContainerId(iId));
     if(oFileContainer.length > 0)
         return;
@@ -219,7 +219,7 @@ BxDolUploaderSimple.prototype.showGhost = function(iId, oVars) {
     oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
 };
 
-BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {
+BxDolUploaderBase.prototype.deleteGhost = function (iFileId) {
     var sUrl = this._getUrlWithStandardParams() + '&a=delete&id=' + iFileId;
     var $this = this;
 
@@ -238,12 +238,12 @@ BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {
     });
 };
 
-BxDolUploaderSimple.prototype._clearErrors = function () {
+BxDolUploaderBase.prototype._clearErrors = function () {
     $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).html('');
     this._isErrorShown = false;
 }
 
-BxDolUploaderSimple.prototype._showError = function (s, bAppend) {
+BxDolUploaderBase.prototype._showError = function (s, bAppend) {
     if (s == undefined || !s.length)
         return;
     if (!bAppend)
@@ -253,15 +253,15 @@ BxDolUploaderSimple.prototype._showError = function (s, bAppend) {
     this._isErrorShown = true;
 };
 
-BxDolUploaderSimple.prototype._getFileContainerId = function (iFileId) {
+BxDolUploaderBase.prototype._getFileContainerId = function (iFileId) {
 	return 'bx-uploader-file-' + this._sStorageObject + '-' + iFileId;
 };
 
-BxDolUploaderSimple.prototype._getUrlWithStandardParams = function () {
+BxDolUploaderBase.prototype._getUrlWithStandardParams = function () {
     return sUrlRoot + 'storage_uploader.php?uo=' + this._sUploaderObject + '&so=' + this._sStorageObject + '&uid=' + this._sUniqId;
 }
 
-BxDolUploaderSimple.prototype._lockPageFromLeaving = function () {
+BxDolUploaderBase.prototype._lockPageFromLeaving = function () {
     $(window).bind('beforeunload', function (e) {
         var e = e || window.event;
         // for ie, ff
@@ -271,11 +271,11 @@ BxDolUploaderSimple.prototype._lockPageFromLeaving = function () {
     });
 }
 
-BxDolUploaderSimple.prototype._unlockPageFromLeaving = function () {
+BxDolUploaderBase.prototype._unlockPageFromLeaving = function () {
     $(window).unbind('beforeunload');
 }
 
-BxDolUploaderSimple.prototype._loading = function (bShowProgress, bShowForm) {
+BxDolUploaderBase.prototype._loading = function (bShowProgress, bShowForm) {
 
     var eForm = $('#' + this._sFormContainerId + ' .bx-uploader-files-list');
     var eBtn = $('#' + this._sFormContainerId + ' .bx-btn-primary');
@@ -296,7 +296,7 @@ BxDolUploaderSimple.prototype._loading = function (bShowProgress, bShowForm) {
     bx_loading($('#' + this._sFormContainerId + ' .bx-uploader-loading').get(0), bShowProgress);
 }
 
-BxDolUploaderSimple.prototype.getMimeTypefromString  = function (ext) {
+BxDolUploaderBase.prototype.getMimeTypefromString  = function (ext) {
     
     var mimeTypes = 
     {
@@ -447,13 +447,9 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
 
     this._sIframeId = 'bx-form-input-files-' + sUniqId + '-iframe';
     this._eForm = null;    
-
     this._sDivId = 'bx-form-input-files-' + sUniqId + '-div-' + this._sUploaderObject;
-
     this._sFocusDivId = 'bx-form-input-files-' + sUniqId + '-focus-' + this._sUploaderObject;
-
     this._uploader = null;
-    
     this._aFiles = [];
   
 
@@ -611,7 +607,6 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
         );    
-        console.log(1);
         this.initPasteEditor();
     }
 
@@ -647,7 +642,6 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     }
 
     this.onProgress = function (params) {
-        console.log(params);    
     }
 
     this.onClickCancel = function () {
@@ -663,7 +657,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             $('#' + this._sPopupContainerId).dolPopupHide();
         }
         
-        BxDolUploaderSimple.prototype._clearErrors.call(this);
+        BxDolUploaderBase.prototype._clearErrors.call(this);
     }
 
     this.onShowPopup = function () {
@@ -711,7 +705,15 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     });
 }
 
-BxDolUploaderHTML5.prototype = BxDolUploaderSimple.prototype;
+BxDolUploaderHTML5.prototype = BxDolUploaderBase.prototype;
+
+function BxDolUploaderSimple(sUploaderObject, sStorageObject, sUniqId, options)
+{
+    BxDolUploaderHTML5.call(this, sUploaderObject, sStorageObject, sUniqId, options);
+}
+
+BxDolUploaderSimple.prototype = Object.create(BxDolUploaderHTML5.prototype);
+BxDolUploaderSimple.prototype.constructor = BxDolUploaderSimple;
 
 /**
  * Crop Image Uploader js class
@@ -814,7 +816,7 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
     };
 }
 
-BxDolUploaderCrop.prototype = BxDolUploaderSimple.prototype;
+BxDolUploaderCrop.prototype = BxDolUploaderBase.prototype;
 
 
 /**
@@ -837,7 +839,7 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
             return;
         }
 
-        BxDolUploaderSimple.prototype.showUploaderForm.call(this);
+        BxDolUploaderBase.prototype.showUploaderForm.call(this);
     }
 
     this.onBeforeShowPopup = function() {
@@ -888,7 +890,7 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
     this.onClickCancel = function () {
         this.releaseCamera();
 
-        BxDolUploaderSimple.prototype.onClickCancel.call(this);
+        BxDolUploaderBase.prototype.onClickCancel.call(this);
     }
 
     this.startRecording = function() {
@@ -1008,6 +1010,6 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
     }
 }
 
-BxDolUploaderRecordVideo.prototype = BxDolUploaderSimple.prototype;
+BxDolUploaderRecordVideo.prototype = BxDolUploaderBase.prototype;
 
 /** @} */
