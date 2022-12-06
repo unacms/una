@@ -61,7 +61,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $oMenu->setEventById($iValueId);
             $oMenu->setUploadersInfo($this->_aUploadersInfo);
 
-            $this->aInputs['attachments']['content'] = $oMenu->getCode();
+            $this->aInputs['attachments']['content'] = $oMenu->getCode() . $this->_oModule->_oTemplate->parseHtmlByName('uploader_progress.html', []);;
         }
 
         if(isset($this->aInputs[$CNF['FIELD_LINK']]))
@@ -291,7 +291,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     {
         return;
     }
-
+    
+    
     protected function _initPrivacyField($sField, $sPrivacyObject)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
