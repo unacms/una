@@ -871,19 +871,7 @@ svg .gray .outer .p2 {
 /* --------------- button at the end of cut string */
 
 .bx-str-limit {
-    height:10px;
-    width:14px;    
-    margin-left:3px;
-
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-    border-collapse:separate;
-
-	-moz-box-shadow:0px 0px 1px rgba(92, 92, 92, 0.8);
-	-webkit-box-shadow:0px 0px 1px rgba(92, 92, 92, 0.8);
-    box-shadow:0px 0px 1px rgba(92, 92, 92, 0.8);
-
+    margin-left:0.5rem;
     cursor:pointer;
 }
 
