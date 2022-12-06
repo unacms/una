@@ -154,9 +154,7 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
 					'uploaders' => $this->_aUploaders,
 					'multiple' => true,
 					'content_id' => 0,
-					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('strg_fgt_' . $this->_sType . '.html', array(
-						'name' => $this->_sType . '[]'
-					)),
+					'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate($this->_sType . '[]'),
 					'caption' => ''
                 ),
                 'submit' => array(
@@ -172,3 +170,5 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
 }
 
 /** @} */
+
+

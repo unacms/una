@@ -275,7 +275,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                 ), 
             );
         }
-
+        
         $aForm = array(
             'form_attrs' => array(
                 'id' => $this->sIconFormId,
@@ -322,9 +322,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => ['sys_html5'],
                     'multiple' => false,
                     'content_id' => $this->aIcons['icon_apple']['id'],
-                    'ghost_template' => $oTemplate->parseHtmlByName('uploader_fgt_icon.html', array(
-                        'name' => 'icon_apple',
-                    )),
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('icon_apple'),
                     'caption' => _t('_adm_dsg_txt_upload_icon_apple'),
                     'info' => _t('_adm_dsg_txt_upload_icon_apple_inf'),
                 ),
@@ -336,9 +334,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => ['sys_html5'],
                     'multiple' => false,
                     'content_id' => $this->aIcons['icon_android']['id'],
-                    'ghost_template' => $oTemplate->parseHtmlByName('uploader_fgt_icon.html', array(
-                        'name' => 'icon_android',
-                    )),
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('icon_android'),
                     'caption' => _t('_adm_dsg_txt_upload_icon_android'),
                     'info' => _t('_adm_dsg_txt_upload_icon_android_inf'),
                 ),
@@ -350,9 +346,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => ['sys_html5'],
                     'multiple' => false,
                     'content_id' => $this->aIcons['icon_android_splash']['id'],
-                    'ghost_template' => $oTemplate->parseHtmlByName('uploader_fgt_icon.html', array(
-                        'name' => 'icon_android_splash',
-                    )),
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('icon_android_splash'),
                     'caption' => _t('_adm_dsg_txt_upload_icon_android_splash'),
                     'info' => _t('_adm_dsg_txt_upload_icon_android_splash_inf'),
                 ),
@@ -405,9 +399,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => array('sys_std_crop_cover'),
                     'multiple' => false,
                     'content_id' => $aSetting['id'],
-                    'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
-                        'name' => $sCover,
-                    )),
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate($sCover),
                     'caption' => _t('_adm_dsg_txt_upload_' . $sCover),
                     'db' => array (
                     'pass' => 'Int',

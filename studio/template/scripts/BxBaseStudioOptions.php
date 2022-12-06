@@ -621,7 +621,7 @@ class BxBaseStudioOptions extends BxDolStudioOptions
                     'upload_buttons_titles' => ['HTML5' => _t('_sys_uploader_button_name_single')],
                     'multiple' => false,
                     'content_id' => $iContentId,
-                    'ghost_template' => ['inputs' => []],
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate($aItem['name']),
                     'caption' => _t($aItem['caption']),
                     'value' => $mixedValue,
                     'attrs' => $aAttributes,

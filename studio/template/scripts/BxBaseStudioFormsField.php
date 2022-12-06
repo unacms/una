@@ -1576,7 +1576,6 @@ class BxBaseStudioFormsFieldFiles extends BxBaseStudioFormsFieldFile
         );
 
         $aUploaders = array(
-            'sys_simple' => '_sys_uploader_simple_title', 
             'sys_html5' => '_sys_uploader_html5_title'
         );
         foreach($aUploaders as $sObject => $sTitle) {

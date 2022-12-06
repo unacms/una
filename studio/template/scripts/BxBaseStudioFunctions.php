@@ -176,6 +176,15 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         ));
     }
 
+        
+    public function getDefaultGhostTemplate($mParams, $sTemplateName = 'form_ghost_template.html') 
+    {
+        if (!is_array($mParams))
+            $mParams = ['name' => $mParams];
+        
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName($sTemplateName, $mParams);
+    }
+    
     protected function getInjHeadLiveUpdates() 
     {
         return '';

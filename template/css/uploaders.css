@@ -3,7 +3,7 @@
     color:#900;
 }
 .bx-uploader-ghost{
-    width: 290px;
+    max-width: 290px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,11 +55,6 @@
     background-repeat:no-repeat;
     background-position:center center;
     -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(.7, transparent), to(rgba(0,0,0,0.4)));
-}
-
-.bx-uploader-ghost-form {
-    width:500px; 
-    float:left;
 }
 
 .bx-uploader-ghost-form-filename {

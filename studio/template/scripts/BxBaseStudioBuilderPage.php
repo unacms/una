@@ -1162,9 +1162,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'uploaders' => $this->aUploadersCover,
                     'multiple' => false,
                     'content_id' => isset($aPage['id']) ? $aPage['id'] : 0,
-                    'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
-                        'name' => 'cover_image',
-                    )),
+                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('cover_image'),
                     'caption' => _t('_adm_bp_txt_page_cover_image'),
                     'db' => array (
                         'pass' => 'Int',
