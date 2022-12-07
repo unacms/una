@@ -62,7 +62,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $this->sStorage = BX_DOL_STORAGE_OBJ_IMAGES;
         $this->sTranscoder = 'sys_builder_page_preview';
-        $this->aUploaders = array('sys_builder_page_simple', 'sys_builder_page_html5');
+        $this->aUploaders = array('sys_builder_page_html5');
 
         $this->sTranscoderCover = 'sys_cover_preview';
         $this->aUploadersCover = array('sys_std_crop_cover');

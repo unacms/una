@@ -41,8 +41,8 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
             'bx-color-label' => '#e8e8e8',
             'bx-color-label-menu' => '#999999',
             'bx-color-sec' => '#f2f2f2',
-            'bx-color-hl' => 'rgba(196, 248, 156, 0.2)',
-            'bx-color-active' => 'rgba(196, 248, 156, 0.4)',
+            'bx-color-hl' => 'rgba(243, 244, 246, 1)',
+            'bx-color-active' => 'rgba(24, 144, 255, 0.2)',
             'bx-color-disabled' => 'rgba(221, 221, 221, 1.0)',
 
             'bx-border-width' => '1px',

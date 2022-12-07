@@ -3400,7 +3400,6 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('sys_crop', 1, 'BxTemplUploaderCrop', ''),
 ('sys_cmts_html5', 1, 'BxTemplCmtsUploaderHTML5', ''),
 ('sys_settings_html5', 1, 'BxTemplStudioSettingsUploaderHTML5', ''),
-('sys_builder_page_simple', 1, 'BxTemplStudioBuilderPageUploaderSimple', ''),
 ('sys_builder_page_html5', 1, 'BxTemplStudioBuilderPageUploaderHTML5', ''),
 ('sys_std_crop_cover', 1, 'BxTemplStudioUploaderCropCover', '');
 
