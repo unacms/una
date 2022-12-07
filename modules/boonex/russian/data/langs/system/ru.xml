@@ -657,8 +657,6 @@
 	<string name="_adm_dsg_err_make_default"><![CDATA[Невозможно сделать тему основной.]]></string>
 	<string name="_adm_dsg_err_remove_old_cover"><![CDATA[Невозможно удалить текущее изображение обложки.]]></string>
 	<string name="_adm_dsg_err_remove_old_icon"><![CDATA[Невозможно удалить текущую иконку.]]></string>
-	<string name="_adm_dsg_err_remove_old_logo"><![CDATA[Невозможно удалить текущую лого-картинку.]]></string>
-        <string name="_adm_dsg_err_remove_old_mark"><![CDATA[Невозможно удалить текущую марку.]]></string>
 	<string name="_adm_dsg_err_save"><![CDATA[Невозможно сохранить: ]]></string>
 	<string name="_adm_dsg_err_save_changes"><![CDATA[Невозможно сохранить изменения.]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[Изменения удачно сохранены]]></string>
@@ -686,10 +684,8 @@
         <string name="_adm_dsg_txt_upload_icon_android_inf"><![CDATA[Для домашнего экрана Android]]></string>
         <string name="_adm_dsg_txt_upload_icon_android_splash"><![CDATA[Заставка для устройств Android]]></string>
         <string name="_adm_dsg_txt_upload_icon_android_splash_inf"><![CDATA[Для экрана-заставки Android]]></string>
-	<string name="_adm_dsg_txt_upload_image"><![CDATA[Загрузить новую лого-картинку]]></string>
-	<string name="_adm_dsg_txt_upload_image_preview"><![CDATA[Текущая лого-картинка]]></string>
-        <string name="_adm_dsg_txt_upload_mark"><![CDATA[Загрузить новую марку]]></string>
-	<string name="_adm_dsg_txt_upload_mark_preview"><![CDATA[Текущая марка]]></string>
+	<string name="_adm_dsg_txt_upload_logo"><![CDATA[Изображение логотипа]]></string>
+        <string name="_adm_dsg_txt_upload_mark"><![CDATA[Изображение метки]]></string>
 	<string name="_adm_dsg_txt_inj_head"><![CDATA[&lt;HEAD&gt; инъекция]]></string>
 	<string name="_adm_dsg_txt_inj_head_inf"><![CDATA[Код для вставки перед закрывающим HEAD тагом]]></string>
 	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; инъекция]]></string>

@@ -330,6 +330,9 @@ class BxBaseFormView extends BxDolForm
             'include' => &$sInclude
         ));
 
+        if (defined('BX_API'))
+            return ['inputs' => $this->aInputs, 'attrs' => $this->aFormAttrs, 'params' => $this->aParams];
+
         if($this->sCode === false)
             $this->sCode = $this->genForm();
 

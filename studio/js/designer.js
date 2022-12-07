@@ -54,36 +54,6 @@ BxDolStudioDesigner.prototype.makeDefault = function(sUri) {
     );
 };
 
-BxDolStudioDesigner.prototype.deleteLogo = function() {
-    var oDate = new Date();
-    var aParams = {_t: oDate.getTime()};
-    aParams[this.sParamPrefix + '_action'] = 'delete_logo';
-
-    $.post(
-        this.sActionsUrl,
-        aParams,
-        function(oData) {
-            processJsonData(oData);
-        },
-        'json'
-    );
-};
-
-BxDolStudioDesigner.prototype.deleteMark = function() {
-    var oDate = new Date();
-    var aParams = {_t: oDate.getTime()};
-    aParams[this.sParamPrefix + '_action'] = 'delete_mark';
-
-    $.post(
-        this.sActionsUrl,
-        aParams,
-        function(oData) {
-            processJsonData(oData);
-        },
-        'json'
-    );
-};
-
 BxDolStudioDesigner.prototype.deleteIcon = function(sName) {
     var $this = this;
     var oDate = new Date();

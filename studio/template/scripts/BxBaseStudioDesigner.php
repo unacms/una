@@ -10,6 +10,8 @@
 
 class BxBaseStudioDesigner extends BxDolStudioDesigner
 {
+    protected $oDbSettings;
+
     protected $sLogoFormId = 'adm-dsg-logo-form';
     protected $sLogoIframeId = 'adm-dsg-logo-iframe';
 
@@ -37,6 +39,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $this->aPageJs = array_merge($this->aPageJs, ['designer.js']);
         $this->sPageJsClass = 'BxDolStudioDesigner';
         $this->sPageJsObject = 'oBxDolStudioDesigner';
+
+        $this->oDbSettings = new BxDolStudioSettingsQuery();
     }
 
     public function getPageJsCode($aOptions = array(), $bWrap = true)
@@ -124,84 +128,80 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         return $oTemplate->parseHtmlByName('designer.html', array(
             'content' => $sContent,
-        	'js_content' => $this->getPageJsCode()
+            'js_content' => $this->getPageJsCode()
         ));
     }
 
     protected function getLogo()
     {
-        $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aForm = array(
-            'form_attrs' => array(
+            'form_attrs' => [
                 'id' => $this->sLogoFormId,
                 'name' => $this->sLogoFormId,
                 'action' => $this->sManageUrl,
                 'method' => 'post',
                 'enctype' => 'multipart/form-data',
                 'target' => $this->sLogoIframeId
-            ),
-            'params' => array(
-                'db' => array(
+            ],
+            'params' => [
+                'db' => [
                     'table' => '',
                     'key' => '',
                     'uri' => '',
                     'uri_title' => '',
                     'submit_name' => 'save'
-                ),
-            ),
-            'inputs' => array(
-                'page' => array(
+                ],
+            ],
+            'inputs' => [
+                'page' => [
                     'type' => 'hidden',
                     'name' => 'page',
                     'value' => $this->sPage
-                ),
-                'image' => array(
-                    'type' => 'image_uploader',
-                    'name' => 'image',
-                    'caption' => _t('_adm_dsg_txt_upload_image'),
-                    'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
-                    'ajax_action_delete' => $sJsObject . '.deleteLogo()',
-                    'storage_object' => 'sys_images_custom',
-                    'value' => (int)getParam($this->sParamLogo),
-                ),
-                'mark' => array(
-                    'type' => 'image_uploader',
-                    'name' => 'mark',
-                    'caption' => _t('_adm_dsg_txt_upload_mark'),
-                    'caption_preview' => _t('_adm_dsg_txt_upload_mark_preview'),
-                    'ajax_action_delete' => $sJsObject . '.deleteMark()',
-                    'storage_object' => 'sys_images_custom',
-                    'value' => '',
-                ),
-                'alt' => array(
+                ],
+                'alt' => [
                     'type' => 'text',
                     'name' => 'alt',
                     'caption' => _t('_adm_dsg_txt_alt_text'),
                     'info' => _t('_adm_dsg_dsc_alt_text'),
                     'value' => getParam($this->sParamLogoAlt),
-                    'checker' => array(
+                    'checker' => [
                         'func' => '',
-                        'params' => array(),
+                        'params' => [],
                         'error' => ''
-                    ),
-                    'db' => array (
+                    ],
+                    'db' => [
                         'pass' => 'Xss',
-                    ),
-                ),
-                'save' => array(
+                    ],
+                ],
+                'save' => [
                     'type' => 'submit',
                     'name' => 'save',
                     'value' => _t('_adm_btn_designer_submit'),
-                )
-            )
+                ]
+            ]
         );
 
-        if(!empty($this->sParamMark))
-            $aForm['inputs']['mark']['value'] = (int)getParam($this->sParamMark);
-        else
-            unset($aForm['inputs']['mark']);
+        $aLogos = $this->aLogos;
+        if(empty($this->sParamMark))
+            unset($aLogos['mark']);
+
+        $aInputs = [];
+        foreach($aLogos as $sLogo => $aLogo)
+            $aInputs[$sLogo] = [
+                'type' => 'files',
+                'name' => $sLogo,
+                'storage_object' => $aLogo['storage'],
+                'images_transcoder' => $aLogo['transcoder'],
+                'uploaders' => ['sys_html5'],
+                'multiple' => false,
+                'content_id' => $this->getOptionId($this->{$aLogo['param']}),
+                'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate($sLogo),
+                'caption' => _t('_adm_dsg_txt_upload_' . $sLogo),
+            ];
+
+        $aForm['inputs'] = bx_array_insert_after($aInputs, $aForm['inputs'], 'page');
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
@@ -220,17 +220,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     protected function getIcon()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
-        $oDbSettings = new BxDolStudioSettingsQuery();
+        $oFunctions = BxTemplStudioFunctions::getInstance();
 
         $aTmplVarsPreview = ['bx_repeat:images' => []];
         foreach($this->aIcons as $sIcon => $aIcon) {
             $sSetting = 'sys_site_' . $sIcon;
             $iIconValue = (int)getParam($sSetting);
 
-            $aSetting = [];
-            $oDbSettings->getOptions(['type' => 'by_name', 'value' => $sSetting], $aSetting, false);
-            if(!empty($aSetting) && is_array($aSetting))
-                $this->aIcons[$sIcon]['id'] = (int)$aSetting['id'];
+            if(($iOptionId = $this->getOptionId($sSetting)) != 0)
+                $this->aIcons[$sIcon]['id'] = $iOptionId;
 
             if(empty($iIconValue))
                 continue;
@@ -322,7 +320,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => ['sys_html5'],
                     'multiple' => false,
                     'content_id' => $this->aIcons['icon_apple']['id'],
-                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('icon_apple'),
+                    'ghost_template' => $oFunctions->getDefaultGhostTemplate('icon_apple'),
                     'caption' => _t('_adm_dsg_txt_upload_icon_apple'),
                     'info' => _t('_adm_dsg_txt_upload_icon_apple_inf'),
                 ),
@@ -334,7 +332,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => ['sys_html5'],
                     'multiple' => false,
                     'content_id' => $this->aIcons['icon_android']['id'],
-                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('icon_android'),
+                    'ghost_template' => $oFunctions->getDefaultGhostTemplate('icon_android'),
                     'caption' => _t('_adm_dsg_txt_upload_icon_android'),
                     'info' => _t('_adm_dsg_txt_upload_icon_android_inf'),
                 ),
@@ -346,7 +344,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'uploaders' => ['sys_html5'],
                     'multiple' => false,
                     'content_id' => $this->aIcons['icon_android_splash']['id'],
-                    'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('icon_android_splash'),
+                    'ghost_template' => $oFunctions->getDefaultGhostTemplate('icon_android_splash'),
                     'caption' => _t('_adm_dsg_txt_upload_icon_android_splash'),
                     'info' => _t('_adm_dsg_txt_upload_icon_android_splash_inf'),
                 ),
@@ -659,6 +657,16 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             'content' => $oOptions->getCode(),
             'js_content' => $this->getPageJsCode()
         ));
+    }
+
+    protected function getOptionId($sName)
+    {
+        $aSetting = [];
+        $this->oDbSettings->getOptions(['type' => 'by_name', 'value' => $sName], $aSetting, false);
+        if(empty($aSetting) || !is_array($aSetting))
+            return 0;
+
+        return (int)$aSetting['id'];
     }
 }
 

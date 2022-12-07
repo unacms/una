@@ -41,24 +41,8 @@ class BxDolStudioDesign extends BxTemplStudioModule
 
         $sAction = bx_process_input($sAction);
 
-        $aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
+        $aResult = ['code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action')];
         switch($sAction) {
-            case 'delete_logo':
-                $oPage = $this->getObjectDesigner();
-
-                $aResult = array('code' => 0, 'message' => '', 'reload' => 1);
-                if(!$oPage->deleteLogo())
-                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_logo'));
-                break;
-
-            case 'delete_mark':
-                $oPage = $this->getObjectDesigner();
-
-                $aResult = array('code' => 0, 'message' => '', 'reload' => 1);
-                if(!$oPage->deleteMark())
-                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_mark'));
-                break;
-
             default:
                 $aResult = parent::checkAction();
         }

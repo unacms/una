@@ -176,15 +176,17 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         ));
     }
 
-        
+    /*
+     * Note. For multi upload form field add [] at the end of the field name in $mParams parameter.
+     */
     public function getDefaultGhostTemplate($mParams, $sTemplateName = 'form_ghost_template.html') 
     {
         if (!is_array($mParams))
             $mParams = ['name' => $mParams];
-        
+
         return BxDolStudioTemplate::getInstance()->parseHtmlByName($sTemplateName, $mParams);
     }
-    
+
     protected function getInjHeadLiveUpdates() 
     {
         return '';

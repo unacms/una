@@ -28,6 +28,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
     protected $sParamMark;
     protected $sParamLogoAlt;
 
+    protected $aLogos;
     protected $aIcons;
     protected $aCovers;
 
@@ -47,6 +48,19 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         $this->sParamLogo = 'sys_site_logo';
         $this->sParamMark = '';
         $this->sParamLogoAlt = 'sys_site_logo_alt';
+
+        $this->aLogos = [
+            'logo' => [
+                'param' => 'sParamLogo',
+                'storage' => 'sys_images_custom',
+                'transcoder' => 'sys_custom_images'
+            ],
+            'mark' => [
+                'param' => 'sParamMark',
+                'storage' => 'sys_images_custom',
+                'transcoder' => 'sys_custom_images'
+            ],
+        ];
 
         $this->aIcons = [
             'icon' => [
@@ -95,18 +109,6 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
         $aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
         switch($sAction) {
-            case 'delete_logo':
-                $aResult = array('code' => 0, 'message' => '', 'reload' => 1);
-                if(!$this->deleteLogo())
-                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_logo'));
-                break;
-
-            case 'delete_mark':
-                $aResult = array('code' => 0, 'message' => '', 'reload' => 1);
-                if(!$this->deleteMark())
-                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_mark'));
-                break;
-
             case 'delete_icon':
                 $sValue = bx_process_input(bx_get($this->sParamPrefix . '_value'));
 
@@ -172,71 +174,72 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
             return false;
 
         $sValue = bx_process_input($sValue);
-        return $this->oDb->setParam('template', $sValue);
+        return setParam('template', $sValue);
     }
 
     public function submitLogo(&$oForm)
     {
-        $iProfileId = getLoggedId();
+        $iProfileId = bx_get_logged_profile_id();
 
-        if(!empty($_FILES['image']['tmp_name'])) {
-            $iValuePrior = $this->oDb->getParam($this->sParamLogo);
-            $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
+        $aLogos = $this->aLogos;
+        if(empty($this->sParamMark))
+            unset($aLogos['mark']);
 
-            if(!$this->deleteLogo())
-                return $this->getJsResult('_adm_dsg_err_remove_old_logo');
+        foreach($aLogos as $sLogo => $aLogo) {
+            $bValue = bx_get($sLogo) !== false;
+            $bFile = isset($_FILES[$sLogo]) && !empty($_FILES[$sLogo]['tmp_name']);
 
-            $iId = $oStorage->storeFileFromForm($_FILES['image'], false, $iProfileId);
-            if($iId === false) {
-                $this->oDb->setParam($this->sParamLogo, 0);
-                return $this->getJsResult(_t('_adm_dsg_err_save') . $oStorage->getErrorString(), false);
+            if(!$bValue && !$bFile)
+                continue;
+
+            $oStorage = BxDolStorage::getObjectInstance($aLogo['storage']);
+
+            $iValuePrior = (int)getParam($this->{$aLogo['param']});
+            if(($bValue || $bFile) && $iValuePrior != 0)
+                $this->deleteLogo($sLogo);
+
+            $iId = 0;
+            if($bValue)
+                $iId = (int)bx_get($sLogo);
+            else if($bFile) {
+                $iId = $oStorage->storeFileFromForm($_FILES[$sLogo], true, $iProfileId);
+                if($iId === false)
+                    continue;
             }
 
-            $this->oDb->setParam($this->sParamLogo, $iId);
-            $oStorage->afterUploadCleanup($iId, $iProfileId);
+            setParam($this->{$aLogo['param']}, $iId);
 
-            bx_alert('system', 'change_logo', 0, 0, [
-                'option' => $this->sParamLogo, 
+            bx_alert('system', 'change_' . $sLogo, 0, 0, [
+                'option' => $aLogo['param'], 
                 'value' => $iId,
                 'value_prior' => $iValuePrior
             ]);
         }
 
-        if(!empty($this->sParamMark) && !empty($_FILES['mark']['tmp_name'])) {
-            $iValuePrior = $this->oDb->getParam($this->sParamMark);
-            $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
-
-            if(!$this->deleteMark())
-                return $this->getJsResult('_adm_dsg_err_remove_old_mark');
-
-            $iId = $oStorage->storeFileFromForm($_FILES['mark'], false, $iProfileId);
-            if($iId === false) {
-                $this->oDb->setParam($this->sParamMark, 0);
-                return $this->getJsResult(_t('_adm_dsg_err_save') . $oStorage->getErrorString(), false);
-            }
-
-            $this->oDb->setParam($this->sParamMark, $iId);
-            $oStorage->afterUploadCleanup($iId, $iProfileId);
-
-            bx_alert('system', 'change_mark', 0, 0, [
-                'option' => $this->sParamMark, 
-                'value' => $iId,
-                'value_prior' => $iValuePrior
-            ]);
-        }
-
-        $this->oDb->setParam($this->sParamLogoAlt, $oForm->getCleanValue('alt'));
+        setParam($this->sParamLogoAlt, $oForm->getCleanValue('alt'));
         return $this->getJsResult('_adm_dsg_scs_save', true, true, bx_append_url_params($this->sManageUrl, array('page' => BX_DOL_STUDIO_DSG_TYPE_LOGO)));
     }
 
-    public function deleteLogo()
+    public function deleteLogo($sLogo)
     {
-        return $this->_deleteImage('logo');
-    }
+        $iProfileId = getLoggedId();
 
-    public function deleteMark()
-    {
-        return $this->_deleteImage('mark');
+        $sParamByType = $this->aLogos[$sLogo]['param'];
+        $oStorage = BxDolStorage::getObjectInstance($this->aLogos[$sLogo]['storage']);
+
+        $iId = (int)getParam($this->$sParamByType);
+        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))
+            return false;
+
+        setParam($this->$sParamByType, 0);
+
+        bx_alert('system', 'change_' . $sLogo, 0, 0, [
+            'option' => $this->$sParamByType, 
+            'value' => 0,
+            'value_prior' => $iId
+        ]);
+
+        return true;
     }
 
     function submitIcon(&$oForm)
@@ -266,7 +269,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
             }
 
             $oStorage->afterUploadCleanup($iId, $iProfileId);
-            $this->oDb->setParam($sSetting, $iId);
+            setParam($sSetting, $iId);
         }
 
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_ICON);
@@ -283,7 +286,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         if($iId != 0 && !$oStorage->deleteFile($iId, $iProfile) && $oStorage->getErrorCode() != BX_DOL_STORAGE_ERR_FILE_NOT_FOUND)
             return false;
 
-        $this->oDb->setParam($sSetting, 0);
+        setParam($sSetting, 0);
         return true;
     }
 
@@ -301,11 +304,11 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
             if(!$this->deleteCover($sCover))
                     return $this->getJsResult('_adm_dsg_err_remove_old_cover');
 
-            $this->oDb->setParam($aCover['setting'], $iIdNew);
+            setParam($aCover['setting'], $iIdNew);
             $oStorage->afterUploadCleanup($iIdNew, $iProfile);
         }
 
-        $this->oDb->setParam('sys_site_cover_disabled', $oForm->getCleanValue('disabled') == 'on' ? 'on' : '');
+        setParam('sys_site_cover_disabled', $oForm->getCleanValue('disabled') == 'on' ? 'on' : '');
 
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
     }
@@ -319,14 +322,14 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         if($iId != 0 && !$oStorage->deleteFile($iId, $iProfile) && $oStorage->getErrorCode() != BX_DOL_STORAGE_ERR_FILE_NOT_FOUND)
             return false;
 
-        $this->oDb->setParam($this->aCovers[$sCover]['setting'], 0);
+        setParam($this->aCovers[$sCover]['setting'], 0);
         return true;
     }
 
     function submitSplash(&$oForm)
     {
-    	$this->oDb->setParam('sys_site_splash_code', $oForm->getCleanValue('code'));
-        $this->oDb->setParam('sys_site_splash_enabled', $oForm->getCleanValue('enabled') == 'on' ? 'on' : '');
+    	setParam('sys_site_splash_code', $oForm->getCleanValue('code'));
+        setParam('sys_site_splash_enabled', $oForm->getCleanValue('enabled') == 'on' ? 'on' : '');
 
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_SPLASH);
     }
@@ -345,27 +348,6 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
         }
 
         return $this->getJsResult($sResult, true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_INJECTIONS);
-    }
-
-    protected function _deleteImage($sType)
-    {
-        $iProfileId = getLoggedId();
-        $sParamByType = 'sParam' . ucfirst($sType);
-        $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
-
-        $iId = (int)getParam($this->$sParamByType);
-        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))
-            return false;
-
-        $this->oDb->setParam($this->$sParamByType, 0);
-
-        bx_alert('system', 'change_' . $sType, 0, 0, [
-            'option' => $this->$sParamByType, 
-            'value' => 0,
-            'value_prior' => $iId
-        ]);
-
-        return true;
     }
 }
 

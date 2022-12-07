@@ -1630,6 +1630,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function parseHtmlByName($sName, $aVariables, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
     {
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginTemplate($sName, $sRand = time().rand());
+        
+        if (defined('BX_API') && constant('BX_API')) {
+            if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endTemplate($sName, $sRand, $sContent, false);
+            return $aVariables;
+        }
 
         if (($sContent = $this->getCached($sName, $aVariables, $mixedKeyWrapperHtml, $sCheckIn)) !== false) {
             if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endTemplate($sName, $sRand, $sContent, true);
@@ -2842,7 +2847,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 continue;
 
             $aKeys[] = "'" . $aKeyWrappers['left'] . $aKeysSrc[$i] . $aKeyWrappers['right'] . "'s";
-            $aValues[] = is_null($aValuesSrc[$i]) ? '' : str_replace('$', '\\$', str_replace('\\', '\\\\', $aValuesSrc[$i]));
+            if (is_string($aValuesSrc[$i]) || is_null($aValuesSrc[$i]))
+                $aValues[] = is_null($aValuesSrc[$i]) ? '' : str_replace('$', '\\$', str_replace('\\', '\\\\', $aValuesSrc[$i]));
+            else
+                $aValues[] = $aValuesSrc[$i];
         }
 
         //--- Parse keys with constructions ---//
@@ -2931,7 +2939,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         ));
 
         //--- Parse Predefined Keys ---//
-        $sContent = preg_replace($aKeys, $aValues, $sContent);
+        if (!defined('BX_API') || !constant('BX_API'))
+            $sContent = preg_replace($aKeys, $aValues, $sContent);
 
         //--- Parse System Keys ---//
         try {
