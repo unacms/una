@@ -119,13 +119,17 @@ class BxContactModule extends BxDolModule
                 } else
                     $sResult = '_Email sent failed';
 
-                $sResult = MsgBox(_t($sResult));
+                $sResult = _t($sResult);
             }
         }
 
-        return array(
-            'content' => $sResult . $oForm->getCode()
-        );
+        if (defined('BX_API'))
+            return [
+                ['id' => 1, 'type' => 'form', 'data' => $oForm->getCode(), 'request' => ['url' => '/api.php?r=bx_contact/get_block_form', 'immutable' => true]],
+                ['id' => 2, 'type' => 'msg', 'data' => $sResult],
+            ];
+
+        return ['content' => ($sResult ?  MsgBox($sResult) : '') . $oForm->getCode()];
     }
 
     /**
