@@ -691,7 +691,7 @@
     .bx-artificer .bx-form-input-time,
     .bx-artificer .bx-form-input-datepicker,
     .bx-artificer .bx-form-input-datetime,
-    .bx-artificer .bx-form-input-textarea,
+    .bx-artificer .bx-form-input-textarea:not(.bx-form-input-html),
     .bx-artificer .bx-form-input-text,
     .bx-artificer .bx-form-input-price,
     .bx-artificer .bx-form-input-wrapper-price span {
