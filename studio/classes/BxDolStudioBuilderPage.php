@@ -139,20 +139,41 @@ class BxDolStudioBuilderPage extends BxTemplStudioWidget
 
     protected function onSaveBlockImage(&$oForm, &$aBlock)
     {
+        $sInput = 'image_file';
+        $iProfileId = bx_get_logged_profile_id();
+
         $iImageId = 0;
         if($aBlock['content'] != '')
             list($iImageId) = explode($this->sParamsDivider, $aBlock['content']);
+        $iImageIdOld = $iImageId;
 
-        $iImageId = $oForm->processImageUploaderSave('image_file', $iImageId);
+        $bValue = bx_get($sInput) !== false;
+        $bFile = isset($_FILES[$sInput]) && !empty($_FILES[$sInput]['tmp_name']);
+
+        if($bValue || $bFile) {
+            $oStorage = BxDolStorage::getObjectInstance($oForm->aInputs[$sInput]['storage_object']);
+
+            $iImageId = 0;
+            if($bValue)
+                $iImageId = (int)bx_get($sInput);
+            else if($bFile) {
+                $iImageId = $oStorage->storeFileFromForm($_FILES[$sInput], false, $iProfileId);
+                $iImageId = $iImageId !== false ? (int)$iImageId : $oStorage->getErrorString();
+            }
+
+            if(is_int($iImageId) && $iImageId != 0 && $iImageId != $iImageIdOld)
+                $oStorage->deleteFile($iImageIdOld);
+        }
+
         if(is_string($iImageId) && !is_numeric($iImageId))
-            return array('msg' => $iImageId);
+            return ['msg' => $iImageId];
 
         $sImageAlign = $oForm->getCleanValue('image_align');
 
         unset($oForm->aInputs['image_file'], $oForm->aInputs['image_align']);
-        BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, array($iImageId, $sImageAlign)), $oForm->aFormAttrs['method']);
+        BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, [$iImageId, $sImageAlign]), $oForm->aFormAttrs['method']);
     }
-    
+
     protected function onSaveBlockRss(&$oForm, &$aBlock)
     {
         $aRss = array(

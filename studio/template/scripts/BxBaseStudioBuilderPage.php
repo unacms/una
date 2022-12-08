@@ -921,30 +921,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return array('eval' => $sJsObject . '.onDeleteBlock(' . $iId . ', oData)');
     }
 
-    protected function actionImageDelete()
-    {
-        $sJsObject = $this->getPageJsObject();
-        $iId = (int)bx_get('id');
-
-        $aBlock = array();
-        $this->oDb->getBlocks(array('type' => 'by_id', 'value' => $iId), $aBlock, false);
-        if(empty($aBlock) || !is_array($aBlock))
-            return array('msg' => _t('_adm_bp_err_block_not_found'));
-
-        $iImageId = $sImageAlign = '';
-        if($aBlock['content'] != '')
-            list($iImageId, $sImageAlign) = explode($this->sParamsDivider, $aBlock['content']);
-
-        if(is_numeric($iImageId) && (int)$iImageId != 0) {
-            if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$iImageId, 0))
-                return array('msg' => _t('_adm_bp_err_block_content_image_preview_delete'));
-
-            $this->oDb->updateBlock($iId, array('content' => ''));
-        }
-
-        return $this->actionBlockEdit();
-    }
-
     protected function actionUriGet()
     {
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
@@ -1538,8 +1514,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         switch($aBlock['type']) {
             case BX_DOL_STUDIO_BP_BLOCK_CUSTOM:
             case BX_DOL_STUDIO_BP_BLOCK_RAW:
-                $aFields = array(
-                    'content' => array(
+                $aFields = [
+                    'content' => [
                         'type' => 'textarea',
                         'name' => 'content',
                         'caption' => _t('_adm_bp_txt_block_content_raw'),
@@ -1547,18 +1523,19 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'value' => $aBlock['content'],
                         'required' => '0',
                         'code' => 1,
-                        'attrs' => array('class' => 'bx-form-input-textarea-codemirror'),
-                        'db' => array (
+                        'attrs' => [
+                            'class' => 'bx-form-input-textarea-codemirror'
+                        ],
+                        'db' => [
                             'pass' => 'XssHtml',
-                        ),
-                    ),
-                );
+                        ],
+                    ],
+                ];
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_HTML:
-            	
-                $aFields = array(
-                    'content' => array(
+                $aFields = [
+                    'content' => [
                         'type' => 'textarea',
                         'name' => 'content',
                         'caption' => _t('_adm_bp_txt_block_content_raw'),
@@ -1566,32 +1543,34 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'value' => $aBlock['content'],
                         'required' => '0',
                         'html' => 2,
-                		'attrs' => array('id' => $this->aHtmlIds['edit_block_editor_id']),
-                        'db' => array (
+                        'attrs' => [
+                            'id' => $this->aHtmlIds['edit_block_editor_id']
+                        ],
+                        'db' => [
                             'pass' => 'XssHtml',
-                        ),
-                    ),
-                    'attachments' => array(
+                        ],
+                    ],
+                    'attachments' => [
                     	'type' => 'files',
-	                    'name' => 'attachments',
-						'storage_object' => $this->sStorage,
-	 					'images_transcoder' => $this->sTranscoder,
-	 					'uploaders' => $this->aUploaders,
-						'multiple' => true,
-	 					'content_id' => $aBlock['id'],
-	 					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_fgt_attachments.html', array(
-                    		'js_object' => $this->getPageJsObject(),
-                    		'name' => 'attachments',
-							'editor_id' => $this->aHtmlIds['edit_block_editor_id'],
-                    	)),
-	                    'caption' => _t('_adm_bp_txt_block_content_attachments_html')
-                    )
-                );
+                        'name' => 'attachments',
+                        'storage_object' => $this->sStorage,
+                        'images_transcoder' => $this->sTranscoder,
+                        'uploaders' => $this->aUploaders,
+                        'multiple' => true,
+                        'content_id' => $aBlock['id'],
+                        'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_fgt_attachments.html', [
+                            'js_object' => $this->getPageJsObject(),
+                            'name' => 'attachments',
+                            'editor_id' => $this->aHtmlIds['edit_block_editor_id'],
+                    	]),
+                        'caption' => _t('_adm_bp_txt_block_content_attachments_html')
+                    ]
+                ];
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_LANG:
-                $aFields = array(
-                    'content' => array(
+                $aFields = [
+                    'content' => [
                         'type' => 'textarea_translatable',
                         'name' => 'content',
                         'caption' => _t('_adm_bp_txt_block_content_lang'),
@@ -1599,11 +1578,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'value' => $aBlock['content'],
                         'required' => '0',
                         'html' => 2,
-                        'db' => array (
+                        'db' => [
                             'pass' => 'XssHtml',
-                        ),
-                    ),
-                );
+                        ],
+                    ],
+                ];
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_IMAGE:
@@ -1611,42 +1590,44 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 if($aBlock['content'] != '')
                     list($iImageId, $sImageAlign) = explode($this->sParamsDivider, $aBlock['content']);
 
-                $aFields = array(
-                    'content' => array(
+                $aFields = [
+                    'content' => [
                         'type' => 'hidden',
                         'name' => 'content',
                         'value' => '',
-                        'db' => array (
+                        'db' => [
                             'pass' => 'Xss',
-                        ),
-                    ),
-                    'image_file' => array(
-                        'type' => 'image_uploader',
+                        ],
+                    ],
+                    'image_file' => [
+                        'type' => 'files',
                         'name' => 'image_file',
+                        'storage_object' => BX_DOL_STORAGE_OBJ_IMAGES,
+                        'images_transcoder' => 'sys_image_resize',
+                        'uploaders' => ['sys_html5'],
+                        'multiple' => false,
+                        'content_id' => $aBlock['id'],
+                        'ghost_template' => BxTemplStudioFunctions::getInstance()->getDefaultGhostTemplate('image_file'),
                         'caption' => _t('_adm_bp_txt_block_content_image_file'),
-                        'caption_preview' => _t('_adm_bp_txt_block_content_image_preview'),
-                        'info' => _t('_adm_bp_dsc_block_content_image_file'),
-                        'ajax_action_delete' => $this->getPageJsObject() . '.deleteBlockImage(' . $aBlock['id'] . ')',
-                        'value' => (int)$iImageId
-                    ),
-                    'image_align' => array(
+                    ],
+                    'image_align' => [
                         'type' => 'select',
                         'name' => 'image_align',
                         'caption' => _t('_adm_bp_txt_block_content_image_align'),
                         'info' => '',
                         'value' => $sImageAlign,
-                        'values' => array(
-                            array('key' => '', 'value' => _t('_adm_bp_txt_block_content_image_align_empty')),
-                            array('key' => 'left', 'value' => _t('_adm_bp_txt_block_content_image_align_left')),
-                            array('key' => 'center', 'value' => _t('_adm_bp_txt_block_content_image_align_center')),
-                            array('key' => 'right', 'value' => _t('_adm_bp_txt_block_content_image_align_right')),
-                        ),
+                        'values' => [
+                            ['key' => '', 'value' => _t('_adm_bp_txt_block_content_image_align_empty')],
+                            ['key' => 'left', 'value' => _t('_adm_bp_txt_block_content_image_align_left')],
+                            ['key' => 'center', 'value' => _t('_adm_bp_txt_block_content_image_align_center')],
+                            ['key' => 'right', 'value' => _t('_adm_bp_txt_block_content_image_align_right')],
+                        ],
                         'required' => '0',
-                        'db' => array (
+                        'db' => [
                             'pass' => 'Xss',
-                        ),
-                    ),
-                );
+                        ],
+                    ],
+                ];
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_RSS:
@@ -1654,92 +1635,92 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 if($aBlock['content'] != '')
                     list($sRssUrl, $sRssLength) = explode($this->sParamsDivider, $aBlock['content']);
 
-                $aFields = array(
-                    'content' => array(
+                $aFields = [
+                    'content' => [
                         'type' => 'hidden',
                         'name' => 'content',
                         'value' => '',
-                        'db' => array (
+                        'db' => [
                             'pass' => 'Xss',
-                        ),
-                    ),
-                    'rss_url' => array(
+                        ],
+                    ],
+                    'rss_url' => [
                         'type' => 'text',
                         'name' => 'rss_url',
                         'caption' => _t('_adm_bp_txt_block_content_rss_url'),
                         'info' => _t('_adm_bp_dsc_block_content_rss_url'),
                         'value' => $sRssUrl,
                         'required' => '0',
-                        'db' => array (
+                        'db' => [
                             'pass' => 'Xss',
-                        ),
-                    ),
-                    'rss_length' => array(
+                        ],
+                    ],
+                    'rss_length' => [
                         'type' => 'text',
                         'name' => 'rss_length',
                         'caption' => _t('_adm_bp_txt_block_content_rss_length'),
                         'info' => _t('_adm_bp_dsc_block_content_rss_length'),
                         'value' => $sRssLength,
                         'required' => '0',
-                        'db' => array (
+                        'db' => [
                             'pass' => 'Int',
-                        ),
-                    ),
-                );
+                        ],
+                    ],
+                ];
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_MENU:
-                $aFields = array(
-                    'content' => array(
+                $aFields = [
+                    'content' => [
                         'type' => 'select',
                         'name' => 'content',
                         'caption' => _t('_adm_bp_txt_block_content_menu'),
                         'info' => '',
                         'value' => $aBlock['content'],
-                        'values' => array(),
+                        'values' => [],
                         'required' => '0',
-                        'db' => array (
+                        'db' => [
                             'pass' => 'Xss',
-                        ),
-                    )
-                );
+                        ],
+                    ]
+                ];
 
                 $sGroup = '';
                 $aMenus = $this->oDb->getMenus(true);
                 foreach($aMenus as $sKey => $aMenu) {
                     if($sGroup != $aMenu['module']) {
                         if(!empty($sGroup))
-                            $aFields['content']['values'][$sGroup . '_end'] = array('type' => 'group_end');
+                            $aFields['content']['values'][$sGroup . '_end'] = ['type' => 'group_end'];
 
                         $sGroup = $aMenu['module'];
-                        $aFields['content']['values'][$sGroup . '_beg'] = array('type' => 'group_header', 'value' => BxDolStudioUtils::getModuleTitle($sGroup));
+                        $aFields['content']['values'][$sGroup . '_beg'] = ['type' => 'group_header', 'value' => BxDolStudioUtils::getModuleTitle($sGroup)];
                     }
 
                     $aFields['content']['values'][$sKey] = _t($aMenu['title']);
                 }
 
-                $aFields['content']['values'] = array_merge(array('' => _t('_adm_bp_txt_block_content_menu_empty')), $aFields['content']['values']);
+                $aFields['content']['values'] = array_merge(['' => _t('_adm_bp_txt_block_content_menu_empty')], $aFields['content']['values']);
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_SERVICE:
-                $aService = array('module' => '', 'method' => '');
+                $aService = ['module' => '', 'method' => ''];
                 if($aBlock['content'] != '')
                     $aService = unserialize($aBlock['content']);
 
-                $aFields = array(
-                    'service_module' => array(
+                $aFields = [
+                    'service_module' => [
                         'type' => 'value',
                         'name' => 'service_module',
                         'caption' => _t('_adm_bp_txt_block_content_service_module'),
                         'value' => $this->getModuleTitle($aService['module'])
-                    ),
-                    'service_method' => array(
+                    ],
+                    'service_method' => [
                         'type' => 'value',
                         'name' => 'service_method',
                         'caption' => _t('_adm_bp_txt_block_content_service_method'),
                         'value' => $aService['method']
-                    )
-                );
+                    ]
+                ];
                 break;
         }
 
