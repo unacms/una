@@ -60,31 +60,6 @@ class BxDolStudioForm extends BxBaseFormView
         return $this->update($iId);
     }
 
-    function processImageUploaderSave($sName, $iId = 0)
-    {
-        if($this->aInputs[$sName]['type'] != 'image_uploader')
-            return $iId;
-
-        $aInput = $this->aInputs[$sName];
-        if(!empty($_FILES[$sName]['tmp_name'])) {
-            $iProfileId = getLoggedId();
-
-            $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
-            $oStorage = BxDolStorage::getObjectInstance($sStorage);
-
-            if((int)$iId != 0 && !$oStorage->deleteFile($iId))
-                return _t('_adm_err_form_view_iu_delete');
-
-            $iId = $oStorage->storeFileFromForm($_FILES[$aInput['name']], false, $iProfileId);
-            if($iId === false)
-                return _t('_adm_err_form_view_iu_save') . $oStorage->getErrorString();
-
-            $oStorage->afterUploadCleanup($iId, $iProfileId);
-        }
-
-        return (int)$iId;
-    }
-
     function getCleanValue ($sName)
     {
         $aResult = parent::getCleanValue($sName);

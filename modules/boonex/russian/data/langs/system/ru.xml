@@ -505,7 +505,6 @@
 	<string name="_adm_bp_dsc_page_url"><![CDATA[Ссылка на страницу для доступа к ней.]]></string>
 	<string name="_adm_bp_dsc_page_visible_for_levels"><![CDATA[Выберите уровни пользователей, разрешённые для просмотра этой страницы]]></string>
 	<string name="_adm_bp_err_block_added"><![CDATA[Невозможно добавть блок(и)]]></string>
-	<string name="_adm_bp_err_block_content_image_preview_delete"><![CDATA[Невозможно удалить картинку.]]></string>
 	<string name="_adm_bp_err_block_delete"><![CDATA[Невозможно удалить блок]]></string>
 	<string name="_adm_bp_err_block_designbox"><![CDATA[Выберите способ отображения для блока]]></string>
 	<string name="_adm_bp_err_block_edit"><![CDATA[Невозможно обновить блок]]></string>
@@ -531,16 +530,15 @@
 	<string name="_adm_bp_mi_page_visibility"><![CDATA[Видимость]]></string>
 	<string name="_adm_bp_scs_save"><![CDATA[Изменения успешно сохранены]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Активный]]></string>
-    <string name="_adm_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
-    <string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Кэш для блока (в секундах)]]></string>
+        <string name="_adm_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
+        <string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Кэш для блока (в секундах)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Вложения]]></string>
 	<string name="_adm_bp_txt_block_content_image_align"><![CDATA[Выравнивание]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_center"><![CDATA[по центру]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_empty"><![CDATA[Выбрать выравнивание...]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_left"><![CDATA[слева]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_right"><![CDATA[справа]]></string>
-	<string name="_adm_bp_txt_block_content_image_file"><![CDATA[Загрузить новую картинку]]></string>
-	<string name="_adm_bp_txt_block_content_image_preview"><![CDATA[Текущая картинка]]></string>
+	<string name="_adm_bp_txt_block_content_image_file"><![CDATA[Изображение]]></string>
 	<string name="_adm_bp_txt_block_content_lang"><![CDATA[Содержимое]]></string>
 	<string name="_adm_bp_txt_block_content_menu"><![CDATA[Меню]]></string>
 	<string name="_adm_bp_txt_block_content_menu_empty"><![CDATA[Выбрать меню...]]></string>
@@ -691,8 +689,6 @@
 	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; инъекция]]></string>
 	<string name="_adm_dsg_txt_inj_body_inf"><![CDATA[Код для вставки перед закрывающим BODY тагом]]></string>
 	<string name="_adm_err_cannot_process_action"><![CDATA[Невозможно выполнить действие. Отсутствует связанный обработчик.]]></string>
-	<string name="_adm_err_form_view_iu_delete"><![CDATA[Невозможно удалить текущую картинку.]]></string>
-	<string name="_adm_err_form_view_iu_save"><![CDATA[Невозможно сохранить: ]]></string>
 	<string name="_adm_err_modules_already_disabled"><![CDATA[Модуль уже отключён.]]></string>
 	<string name="_adm_err_modules_already_enabled"><![CDATA[Модуль уже включён.]]></string>
 	<string name="_adm_err_modules_already_installed"><![CDATA[Модуль уже установлен.]]></string>
@@ -1775,9 +1771,6 @@
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Забыли пароль?]]></string>
-	<string name="_adm_txt_form_view_iu_delete"><![CDATA[Удалить]]></string>
-	<string name="_adm_txt_form_view_iu_preview"><![CDATA[Текущее изображение]]></string>
-	<string name="_adm_txt_form_view_iu_preview_empty"><![CDATA[Ни одно изображение не было загружено.]]></string>
 	<string name="_adm_txt_form_view_missing"><![CDATA[отсутствует]]></string>
 	<string name="_adm_txt_login_password"><![CDATA[пароль]]></string>
 	<string name="_adm_txt_login_email"><![CDATA[эл. адрес]]></string>

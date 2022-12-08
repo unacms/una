@@ -194,10 +194,6 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
 
             $oStorage = BxDolStorage::getObjectInstance($aLogo['storage']);
 
-            $iValuePrior = (int)getParam($this->{$aLogo['param']});
-            if(($bValue || $bFile) && $iValuePrior != 0)
-                $this->deleteLogo($sLogo);
-
             $iId = 0;
             if($bValue)
                 $iId = (int)bx_get($sLogo);
@@ -206,6 +202,10 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
                 if($iId === false)
                     continue;
             }
+
+            $iValuePrior = (int)getParam($this->{$aLogo['param']});
+            if($iId != 0 && $iId != $iValuePrior)
+                $this->deleteLogo($sLogo);
 
             setParam($this->{$aLogo['param']}, $iId);
 

@@ -170,11 +170,6 @@ BxDolStudioBuilderPage.prototype.onCreateBlock = function(oData) {
 	window.location.href = this.parsePageUrl({page: this.sPage});
 };
 
-BxDolStudioBuilderPage.prototype.deleteBlockImage = function(iId) {
-	bx_loading(this.oHtmlIds['edit_block_popup_id'], true);
-	this.performAction('image_delete', {id:iId});
-};
-
 BxDolStudioBuilderPage.prototype.onChangeVisibleFor = function(oSelect) {
 	$(oSelect).parents('form:first').find('#bx-form-element-visible_for_levels').bx_anim($(oSelect).val() == 'all' ? 'hide' : 'show', this.sAnimationEffect, this.iAnimationSpeed);
 };

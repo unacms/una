@@ -505,7 +505,6 @@
 	<string name="_adm_bp_dsc_page_url"><![CDATA[Page link to access the page.]]></string>
 	<string name="_adm_bp_dsc_page_visible_for_levels"><![CDATA[Select user levels that can see this page]]></string>
 	<string name="_adm_bp_err_block_added"><![CDATA[Cannot add block(s)]]></string>
-	<string name="_adm_bp_err_block_content_image_preview_delete"><![CDATA[Cannot delete image.]]></string>
 	<string name="_adm_bp_err_block_delete"><![CDATA[Cannot delete block]]></string>
 	<string name="_adm_bp_err_block_designbox"><![CDATA[Select a layout box for the block]]></string>
 	<string name="_adm_bp_err_block_edit"><![CDATA[Cannot update block]]></string>
@@ -539,8 +538,7 @@
 	<string name="_adm_bp_txt_block_content_image_align_empty"><![CDATA[Select alignment...]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_left"><![CDATA[left]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_right"><![CDATA[right]]></string>
-	<string name="_adm_bp_txt_block_content_image_file"><![CDATA[Upload New Image]]></string>
-	<string name="_adm_bp_txt_block_content_image_preview"><![CDATA[Current Image]]></string>
+	<string name="_adm_bp_txt_block_content_image_file"><![CDATA[Image]]></string>
 	<string name="_adm_bp_txt_block_content_lang"><![CDATA[Content]]></string>
 	<string name="_adm_bp_txt_block_content_menu"><![CDATA[Menu]]></string>
 	<string name="_adm_bp_txt_block_content_menu_empty"><![CDATA[Select menu...]]></string>
@@ -692,8 +690,6 @@
 	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; injection]]></string>
 	<string name="_adm_dsg_txt_inj_body_inf"><![CDATA[Code to insert before closing BODY tag]]></string>
 	<string name="_adm_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
-	<string name="_adm_err_form_view_iu_delete"><![CDATA[Cannot remove current image.]]></string>
-	<string name="_adm_err_form_view_iu_save"><![CDATA[Cannot save: ]]></string>
 	<string name="_adm_err_modules_already_disabled"><![CDATA[The module is already disabled.]]></string>
 	<string name="_adm_err_modules_already_enabled"><![CDATA[The module is already enabled.]]></string>
 	<string name="_adm_err_modules_already_installed"><![CDATA[The module was already installed.]]></string>
@@ -1797,9 +1793,6 @@
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>
-	<string name="_adm_txt_form_view_iu_delete"><![CDATA[Delete]]></string>
-	<string name="_adm_txt_form_view_iu_preview"><![CDATA[Current Image]]></string>
-	<string name="_adm_txt_form_view_iu_preview_empty"><![CDATA[No image uploaded.]]></string>
 	<string name="_adm_txt_form_view_missing"><![CDATA[missing]]></string>
 	<string name="_adm_txt_login_password"><![CDATA[password]]></string>
 	<string name="_adm_txt_login_email"><![CDATA[email]]></string>
