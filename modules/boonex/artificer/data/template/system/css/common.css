@@ -89,7 +89,7 @@ import url(../../../../../../../template/css/common.css);
     text-decoration:none;
 }
 
-.bx-db-menu-tab-btn ul > li {
+.bx-db-menu-tab-btn > ul > li {
     display: flex;
 }
 
