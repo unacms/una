@@ -51,3 +51,7 @@
     height: 400px;
     margin-right: 0px;
 }
+.ql-editor ol li:not(.ql-direction-rtl), 
+.ql-editor ul li:not(.ql-direction-rtl){
+    padding-left: 0.375em !important;
+}
