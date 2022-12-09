@@ -246,7 +246,17 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
 
     public function getBillingRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
     {
-        $aCard = $this->_retrieveCard($sCustomerId)->jsonSerialize();
+        $aCard = ['brand' => '', 'country' => '', 'funding' => '', 'last4' => '', 'exp_month' => '', 'exp_year' => '', 'cvc_check' => ''];
+
+        $oCard = $this->_retrieveCard($sCustomerId);
+        if($oCard === false && ($oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId)) !== false) {
+            $sPaymentMethodId = $oSubscription->default_payment_method;
+            if(!empty($sPaymentMethodId) && ($oPaymentMethod = $this->_retrievePaymentMethod($sPaymentMethodId)) !== false)
+                $oCard = $oPaymentMethod->card;
+        }
+
+        if(!empty($oCard))
+            $aCard = $oCard->jsonSerialize();
 
         return $this->_oModule->_oTemplate->parseHtmlByName('strp_billing_recurring.html', array(
             'brand' => $aCard['brand'],
@@ -414,6 +424,11 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
         ));
 
         return $oSubscription;
+    }
+
+    protected function _retrievePaymentMethod($sPaymentMethodId)
+    {
+        return false;
     }
 
     protected function _retrieveProduct($sId)

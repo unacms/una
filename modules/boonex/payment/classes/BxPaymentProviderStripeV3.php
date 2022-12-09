@@ -793,6 +793,54 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         return $oSubscription;
     }
 
+    protected function _createCard($sType, $sCustomerId, $sToken)
+    {
+        try {
+            $oCard = $this->_retrieveCustomer($sType, $sCustomerId)->sources->create([
+                'source' => $sToken
+            ]);
+        }
+        catch (Stripe\Error\Base $oException) {
+            return $this->_processException('Create Card Error: ', $oException);
+        }
+
+        return $oCard->jsonSerialize();
+    }
+
+    protected function _retrieveCard($sCustomerId, $sCardId = '')
+    {
+        try {
+            $oCustomer = $this->_getStripe()->customers->retrieve($sCustomerId);
+
+            if(empty($sCardId))
+                $sCardId = $oCustomer->default_source;
+            if(empty($sCardId))
+                return false;
+
+            $oCard = $this->_getStripe()->customers->retrieveSource($sCustomerId, $sCardId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Card Error: ', $oException);
+        }
+
+        return $oCard;
+    }
+
+    /*
+     * Related Docs: https://stripe.com/docs/api/payment_methods/retrieve
+     */
+    protected function _retrievePaymentMethod($sPaymentMethodId)
+    {
+        try {
+            $oPaymentMethod = $this->_getStripe()->paymentMethods->retrieve($sPaymentMethodId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Payment Method Error: ', $oException);
+        }
+
+        return $oPaymentMethod;
+    }
+
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
     {
         list($sJsCode, $sJsMethod) = $this->_getButtonJs($sType, $iClientId, $iVendorId, $aParams);
