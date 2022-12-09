@@ -270,7 +270,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         $sMessage = $this->_sLangsPrefix . 'strp_msg_authorized';
                         $bAuthorized = $aSetupIntent['status'] == 'succeeded';
                         break;
-                    
+
                     case 'payment':
                         $oPaymentIntent = $this->_retrievePaymentIntent($sOrderId);
                         if($oPaymentIntent === false)
@@ -279,7 +279,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         $aPaymentIntent = $oPaymentIntent->jsonSerialize();
                         if(empty($aPaymentIntent) || !is_array($aPaymentIntent))
                             return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
-                        
+
                         $sMessage = $this->_sLangsPrefix . 'strp_msg_charged';
                         $bPaid = $aPaymentIntent['status'] == 'succeeded';
                         break;
@@ -309,7 +309,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                     'customer_id' => $sCustomerId,
                     'subscription_id' => $sOrderId,
                     'client_email' => $aCustomer['email'],
-                    'paid' => $this->isSubscriptionStatus(BX_PAYMENT_SBS_STATUS_ACTIVE, $aSubscription),
                     'trial' => $this->isSubscriptionStatus(BX_PAYMENT_SBS_STATUS_TRIAL, $aSubscription)
                 ));
                 break;
