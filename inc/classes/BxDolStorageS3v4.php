@@ -24,6 +24,8 @@ class BxDolStorageS3v4 extends BxDolStorageS3
             $this->_sEndpoint ? $this->_sEndpoint : 's3.amazonaws.com',
             getParam('sys_storage_s3_region')
         );
+        if ($this->_bSSL && getParam('sys_curl_ssl_allow_untrusted'))
+             $this->_s3->setSSL($this->_bSSL, false);
     }
 }
 
