@@ -611,10 +611,10 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             $mixedContextId = (int)(!empty($mixedContextId) ? -$mixedContextId : $oProfile->id());
 
     	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
-        $oMenu->setContextId($mixedContextId);
         if(!$oMenu)
             return '';
 
+        $oMenu->setContextId($mixedContextId);
     	$aMenuItems = $oMenu->getMenuItems();
     	if(empty($aMenuItems) || !is_array($aMenuItems))
             return '';
@@ -633,30 +633,71 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $sTitle = _t('_sys_page_block_title_create_post' . (!$bContext ? '_public' : ($mixedContextId < 0 ? '_context' : '')));
         $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
 
+        $oDbModules = BxDolModuleQuery::getInstance();
     	$oTemplate = BxDolTemplate::getInstance();
-    	$oTemplate->addJs(array('BxDolCreatePost.js'));
+    	$oTemplate->addJs(['BxDolCreatePost.js']);
+
+        $aPreloadingList = [];
+        $aModules = explode(',', getParam('sys_create_post_form_preloading_list'));
+        if(!empty($aModules))
+            foreach($aModules as $sModule) {
+                $aModule = $oDbModules->getModuleByName($sModule);
+                if(empty($aModule) || !is_array($aModule))
+                    continue;
+
+                $aPreloadingList[$sModule] = $aModule['uri'];
+            }
 
     	$sJsObject = 'oBxDolCreatePost';
-        $sJsContent = $oTemplate->_wrapInTagJsCode("var " . $sJsObject . " = new BxDolCreatePost(" . json_encode(array(
+        $sJsContent = $oTemplate->_wrapInTagJsCode("var " . $sJsObject . " = new BxDolCreatePost(" . json_encode([
             'sObjName' => $sJsObject,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'sDefault' => $sDefault,
             'iContextId' => $bContext ? $mixedContextId : 0,
+            'oPreloadingList' => $aPreloadingList,
             'oCustom' => $aCustom
-        )) . ");");
+        ]) . ");");
 
-    	return array(
+    	return [
             'title' => $sTitle,
-            'content' => BxDolTemplate::getInstance()->parseHtmlByName('create_post_form.html', array(
+            'content' => $oTemplate->parseHtmlByName('create_post_form.html', [
                 'default' => $sDefault,
                 'placeholder' => $sPlaceholder,
-                'user_thumb' => $oProfile->getUnit(0, array('template' => 'unit_wo_info_links')),
-                'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('context_id' => $mixedContextId, 'ajax_mode' => true, 'absolute_action_url' => true, 'custom' => $aCustom))),
+                'user_thumb' => $oProfile->getUnit(0, ['template' => 'unit_wo_info_links']),
+                'form' => bx_srv($sDefault, 'get_create_post_form', [[
+                    'context_id' => $mixedContextId, 
+                    'ajax_mode' => true, 
+                    'absolute_action_url' => true, 
+                    'custom' => $aCustom
+                ]]),
                 'js_object' => $sJsObject,
                 'js_content' => $sJsContent
-            )),
+            ]),
             'menu' => $oMenu
-        );
+        ];
+    }
+
+    public function serviceGetOptionsCreatePostFormPreloadingList()
+    {
+        $oMenu = BxDolMenu::getObjectInstance('sys_create_post');
+        if(!$oMenu)
+            return [];
+
+        $aMenuItems = $oMenu->getMenuItems();
+
+        $aResult = [];
+        foreach($aMenuItems as $aMenuItem) {
+            $sModule = !empty($aMenuItem['module']) ? $aMenuItem['module'] : $aMenuItem['name'];
+            if(!bx_srv('system', 'is_module_enabled', [$sModule]))
+                continue;
+
+            $aResult[] = [
+                'key' => $sModule, 
+                'value' => _t('_' . $sModule)
+            ];
+        }
+
+        return $aResult;
     }
 
     public function serviceGetBlockAuthor($sModule, $iContentId = 0)

@@ -11,13 +11,47 @@ function BxDolCreatePost(oOptions) {
     this._sRootUrl = oOptions.sRootUrl == undefined ? sUrlRoot : oOptions.sRootUrl;
     this._sDefault = oOptions.sDefault == undefined ? '' : oOptions.sDefault;
     this._iContextId = oOptions.iContextId == undefined ? 0 : oOptions.iContextId;
+    this._oPreloadingList = oOptions.oPreloadingList == undefined ? [] : oOptions.oPreloadingList;
     this._oCustom = oOptions.oCustom == undefined ? {} : oOptions.oCustom;
 
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
+
+    var $this = this;
+    $(document).ready(function() {
+        $this.init();
+    });
 }
+
+BxDolCreatePost.prototype.init = function () {
+    var oDate = new Date();
+
+    for(var sKey in this._oPreloadingList) {
+        var sForm = '.sys-cpf-form.sys-cpf-' + sKey;
+        if($(sForm).length != 0)
+            continue;
+
+        $.get(
+            this._sRootUrl + 'modules/?r=' + this._oPreloadingList[sKey] + '/get_create_post_form/', {
+                ajax_mode: true,
+                dynamic_mode: true,
+                absolute_action_url: true,
+                context_id: this._iContextId,
+                custom: this._oCustom,
+                _t:oDate.getTime()
+            },
+            function(oData) {
+                if(!oData || !oData.content) 
+                    return;
+
+                $('.sys-cpf-close').before($('<div class="sys-cpf-form sys-cpf-' + oData.module + '">' + oData.content + '</div>').hide());
+            }, 
+            'json'
+        );
+    }
+};
 
 BxDolCreatePost.prototype.getForm = function (sModuleName, sModuleUri, oElement) {
     var $this = this;
