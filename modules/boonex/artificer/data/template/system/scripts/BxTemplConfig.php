@@ -19,7 +19,7 @@ class BxTemplConfig extends BxBaseConfig
 
         parent::__construct();
 
-        $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
+        $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], [
             'bx-font-family' => 'Helvetica, Arial, sans-serif',
 
             'bx-color-page' => '#edf1f7',
@@ -31,26 +31,20 @@ class BxTemplConfig extends BxBaseConfig
             'bx-color-active' => 'rgba(202, 242, 252, 0.4)',
 
             'bx-border-color' => '#00a0ce',
-        ));
-        
+        ]);
+
         if($this->_bModule) {
             $this->setPageWidth('bx_artificer_page_width');
-
-            $oModule = BxDolModule::getInstance($this->_sModule);
-            if($oModule)
-                $oModule->_oTemplate->addJs(array(
-                    'jquery.menu-aim.js',
-                ));
         }
 
-        BxDolTemplate::getInstance()->addJs(array(
+        BxDolTemplate::getInstance()->addJs([
             'modernizr.min.js'
-        ));
+        ]);
 
-        BxDolTemplate::getInstance()->addCss(array(
+        BxDolTemplate::getInstance()->addCss([
             'https://rsms.me/inter/inter.css',
             'menu-sidebar.css',
-        ));
+        ]);
     }
 }
 
