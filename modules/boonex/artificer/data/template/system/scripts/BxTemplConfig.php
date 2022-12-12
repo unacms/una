@@ -37,10 +37,6 @@ class BxTemplConfig extends BxBaseConfig
             $this->setPageWidth('bx_artificer_page_width');
         }
 
-        BxDolTemplate::getInstance()->addJs([
-            'modernizr.min.js'
-        ]);
-
         BxDolTemplate::getInstance()->addCss([
             'https://rsms.me/inter/inter.css',
             'menu-sidebar.css',
