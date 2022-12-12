@@ -479,6 +479,10 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function processing ()
     {
+        if (defined('BX_API')) {
+            return $this->processingAPI ();
+        }
+
         $sCode = $this->displayResultBlock();
         if ($this->aCurrent['paginate']['num'] > 0) {
             $sPaginate = $this->showPagination();
@@ -487,6 +491,19 @@ class BxDolSearchResult implements iBxDolReplaceable
             $sCode = $this->bDisplayEmptyMsg ? $this->displaySearchBox(MsgBox(_t($this->sDisplayEmptyMsgKey ? $this->sDisplayEmptyMsgKey : '_Empty'))) : '';
         }
         return $sCode;
+    }
+
+    function processingAPI () 
+    {
+        return [
+            'unit' => 'general',
+            'data' => $this->getSearchData(),
+            'paginate' => [
+                'num' => $this->aCurrent['paginate']['num'],
+                'per_page' => $this->aCurrent['paginate']['perPage'],
+                'start' => $this->aCurrent['paginate']['start'],
+            ]
+        ];
     }
 
     /**
