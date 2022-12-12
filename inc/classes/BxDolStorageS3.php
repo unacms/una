@@ -49,6 +49,8 @@ class BxDolStorageS3 extends BxDolStorage
             $this->_bSSL, 
             $this->_sEndpoint ? $this->_sEndpoint : 's3.amazonaws.com'
         );
+        if ($this->_bSSL && getParam('sys_curl_ssl_allow_untrusted'))
+             $this->_s3->setSSL($this->_bSSL, false);
     }
 
     /**
