@@ -264,7 +264,7 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
             'type' => $aCard['funding'],
             'number' => _t('_bx_payment_strp_txt_card_number_mask', $aCard['last4']),
             'expires' => _t('_bx_payment_strp_txt_card_expires_mask', $aCard['exp_month'], $aCard['exp_year']),
-            'cvc' => _t(strcmp($aCard['cvc_check'], 'pass') === 0 ? '_bx_payment_strp_txt_card_cvc_passed' : '_bx_payment_txt_none'),
+            'cvc' => _t(!empty($aCard['cvc_check']) && strcmp($aCard['cvc_check'], 'pass') === 0 ? '_bx_payment_strp_txt_card_cvc_passed' : '_bx_payment_txt_none'),
         ));
     }
 

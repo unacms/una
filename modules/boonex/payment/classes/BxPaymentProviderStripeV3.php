@@ -466,7 +466,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         return $this->_oStripe;
     }
-            
+
     /*
      * Related Docs: https://stripe.com/docs/api/customers/retrieve
      */
@@ -792,10 +792,28 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         return $oSubscription;
     }
 
+    /*
+     * Related Docs: https://stripe.com/docs/api/tokens/create_card
+     */
+    protected function _createToken($aCard)
+    {
+        try {
+            $oToken = $this->_getStripe()->tokens->create(['card' => $aCard]);
+        }
+        catch (Stripe\Error\Base $oException) {
+            return $this->_processException('Create Token Error: ', $oException);
+        }
+
+        return $oToken->jsonSerialize();
+    }
+
+    /*
+     * Related Docs: https://stripe.com/docs/api/cards/create
+     */
     protected function _createCard($sType, $sCustomerId, $sToken)
     {
         try {
-            $oCard = $this->_retrieveCustomer($sType, $sCustomerId)->sources->create([
+            $oCard = $this->_getStripe()->customers->createSource($sCustomerId, [
                 'source' => $sToken
             ]);
         }
