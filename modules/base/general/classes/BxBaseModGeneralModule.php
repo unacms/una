@@ -2729,7 +2729,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
-            return MsgBox($sMsg);
+            return defined('BX_API') ? [['id' => 1, 'type' => 'msg', 'data' => $sMsg]] : MsgBox($sMsg);
 
         bx_import($sClassSearchResult, $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
@@ -2746,7 +2746,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 
         if ($s = $o->processing())
-            return $s;
+            return defined('BX_API') ? [['id' => 1, 'type' => 'browse', 'data' => $s]] : $s;
         else
             return '';
     }
