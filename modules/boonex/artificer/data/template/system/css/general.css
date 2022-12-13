@@ -108,3 +108,31 @@ import url(../../../../../../../template/css/general.css);
 .bx-menu-panel-item .bx-profile-avatar .bx-profile-avatar-cnt {
     min-height: 2.5rem;
 }
+
+/*--- Create Post Form ---*/
+.sys-cpf-form:not(.sys-cpf-loading) {
+    -webkit-animation: sys-cpf-slide-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+    animation: sys-cpf-slide-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+@keyframes sys-cpf-slide-in {
+    0% {
+        opacity: 0;
+        margin-left: -10rem;
+    }
+    100% {
+        opacity: 1;
+        margin-left: 0px;
+    }
+}
+
+@-webkit-keyframes sys-cpf-slide-in {
+    0% {
+        opacity: 0;
+        margin-left: -10rem;
+    }
+    100% {
+        opacity: 1;
+        margin-left: 0px;
+    }
+}
