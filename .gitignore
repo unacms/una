@@ -28,6 +28,7 @@ composer.phar
 tests/vendor
 tests/composer.phar
 samples/img/*
+modules/boonex/acl_api
 modules/boonex/ether
 modules/boonex/market_api
 modules/boonex/media
