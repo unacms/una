@@ -330,15 +330,21 @@ class BxBaseFormView extends BxDolForm
             'include' => &$sInclude
         ));
 
-        if (defined('BX_API'))
-            return ['inputs' => $this->aInputs, 'attrs' => $this->aFormAttrs, 'params' => $this->aParams];
-
         if($this->sCode === false)
             $this->sCode = $this->genForm();
 
         $this->addCssJs();
         $sDynamicCssJs = $this->_processCssJs();
         return $sInclude . $sDynamicCssJs . $this->sCode;
+    }
+
+    function getCodeAPI()
+    {
+        $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
+    
+        // TODO: process inputs to translate titles, alerts, etc
+    
+        return ['inputs' => $this->aInputs, 'attrs' => $this->aFormAttrs, 'params' => $this->aParams];
     }
 
     public function getJsClassName()
