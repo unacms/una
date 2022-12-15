@@ -1698,6 +1698,7 @@
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Default logs storage]]></string>
     <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Enable 'Quick Reactions' mode - vote with default reaction when clicked]]></string>
     <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Auto approve a comment after creation]]></string>
+    <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Preload forms asynchronously in "Create Post" blocks]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Use Add2Any code instead of default sharing menu]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any code]]></string>
 

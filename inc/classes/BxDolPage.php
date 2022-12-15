@@ -343,12 +343,13 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
 	/**
-     * Process SEO links. It takes request part from SEO link and process it 
-     * to make it work as regular page link
+     * Get page object by SEO link. It takes request part from SEO link and returns page object
      * @param $sRequest request URI with SEO link
-     * @return true - if page was found and processed correctly, false - if page wasn't found
+     * @return false - if page wasn't found,  
+     *         page object - on success,  
+     *         string URL - if permanent redirect is needed
      */
-    static public function processSeoLink ($sRequest)
+    static public function getPageBySeoLink ($sRequest)
     {
         if (!$sRequest || '/' === $sRequest || !getParam('permalinks_seo_links'))
             return false;
@@ -357,8 +358,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if ('/' === $sRequest[-1] || $sRequest != mb_strtolower($sRequest)) {
             unset($_GET['_q']);
             $sUrl = BX_DOL_URL_ROOT . bx_append_url_params(mb_strtolower(trim($sRequest, '/')), $_GET);
-            header('Location:' . $sUrl, true, 301);
-            exit;            
+            return $sUrl;    
         }
 
         // parse URL
@@ -372,8 +372,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             unset($_GET['_q']);
             $a[0] = $aSeoUriRewrites[$a[0]];
             $sUrl = BX_DOL_URL_ROOT . bx_append_url_params(mb_strtolower(implode('/', $a)), $_GET);
-            header('Location:' . $sUrl, true, 301);
-            exit;            
+            return $sUrl;
         }
 
         // check page URI rewrite
@@ -403,18 +402,36 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
 
             $s = BxDolPage::multisiteLinkCheck ('', $a[0], $aPage['module'], $_GET);
-            if (false !== $s) {
-                header('Location:' . $s . $sLink, true, 301);
-                exit;
-            }
+            if (false !== $s)
+                return $s . $sLink;
         }
 
         // display page
         $_REQUEST['i'] = $_GET['i'] = $a[0];
         $oPage = BxDolPage::getObjectInstanceByURI($a[0], false, true);
-        $oPage->displayPage();
-
-        return true;
+        return $oPage;
+    }
+    
+	/**
+     * Process SEO links. It takes request part from SEO link and process it 
+     * to make it work as regular page link
+     * @param $sRequest request URI with SEO link
+     * @return true - if page was found and processed correctly, false - if page wasn't found
+     */
+    static public function processSeoLink ($sRequest)
+    {
+        $mixed = self::getPageBySeoLink($sRequest);
+        if (($sUrl = $mixed) && is_string($sUrl)) {
+            header('Location:' . $sUrl, true, 301);
+            exit;
+        }
+        elseif (($oPage = $mixed) && is_object($oPage)) {
+            $oPage->displayPage();
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 	/**

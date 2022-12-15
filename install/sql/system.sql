@@ -546,7 +546,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_vote_reactions_quick_mode', '_adm_stg_cpt_option_sys_vote_reactions_quick_mode', 'on', 'checkbox', '', '', '', 60),
 
-(@iCategoryId, 'sys_cmts_enable_auto_approve', '_adm_stg_cpt_option_sys_cmts_enable_auto_approve', 'on', 'checkbox', '', '', '', 70);
+(@iCategoryId, 'sys_cmts_enable_auto_approve', '_adm_stg_cpt_option_sys_cmts_enable_auto_approve', 'on', 'checkbox', '', '', '', 70),
+
+(@iCategoryId, 'sys_create_post_form_preloading_list', '_adm_stg_cpt_option_sys_create_post_form_preloading_list', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_create_post_form_preloading_list";s:5:"class";s:13:"TemplServices";}', '', '', 80);
 
 --
 -- CATEGORY: Storage

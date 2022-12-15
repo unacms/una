@@ -1677,6 +1677,7 @@
     <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Система логирования по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_vote_reactions_quick_mode"><![CDATA[Включить режим 'Быстрых реакций' - голосовать при клике, используя реакцию по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_cmts_enable_auto_approve"><![CDATA[Автоматически активировать комментарий после создания]]></string>
+    <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Предварительно загружать формы в асинхронном режиме в "Создать пост" блоках]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Использовать Add2Any код вместо стандартного меню "Поделиться"]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any код]]></string>
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>

@@ -58,7 +58,3 @@ DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_timeline';
 
 -- CRON
 DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_timeline%';
-
-
--- PRELOADER
-DELETE FROM `sys_preloader` WHERE `module` = 'bx_timeline';

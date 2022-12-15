@@ -125,7 +125,7 @@ class BxContactModule extends BxDolModule
 
         if (defined('BX_API'))
             return [
-                ['id' => 1, 'type' => 'form', 'data' => $oForm->getCode(), 'request' => ['url' => '/api.php?r=bx_contact/get_block_form', 'immutable' => true]],
+                ['id' => 1, 'type' => 'form', 'data' => $oForm->getCodeAPI(), 'request' => ['url' => '/api.php?r=bx_contact/get_block_form', 'immutable' => true]],
                 ['id' => 2, 'type' => 'msg', 'data' => $sResult],
             ];
 

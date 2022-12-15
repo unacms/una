@@ -246,7 +246,17 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
 
     public function getBillingRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
     {
-        $aCard = $this->_retrieveCard($sCustomerId)->jsonSerialize();
+        $aCard = ['brand' => '', 'country' => '', 'funding' => '', 'last4' => '', 'exp_month' => '', 'exp_year' => '', 'cvc_check' => ''];
+
+        $oCard = $this->_retrieveCard($sCustomerId);
+        if($oCard === false && ($oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId)) !== false) {
+            $sPaymentMethodId = $oSubscription->default_payment_method;
+            if(!empty($sPaymentMethodId) && ($oPaymentMethod = $this->_retrievePaymentMethod($sPaymentMethodId)) !== false)
+                $oCard = $oPaymentMethod->card;
+        }
+
+        if(!empty($oCard))
+            $aCard = $oCard->jsonSerialize();
 
         return $this->_oModule->_oTemplate->parseHtmlByName('strp_billing_recurring.html', array(
             'brand' => $aCard['brand'],
@@ -254,7 +264,7 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
             'type' => $aCard['funding'],
             'number' => _t('_bx_payment_strp_txt_card_number_mask', $aCard['last4']),
             'expires' => _t('_bx_payment_strp_txt_card_expires_mask', $aCard['exp_month'], $aCard['exp_year']),
-            'cvc' => _t(strcmp($aCard['cvc_check'], 'pass') === 0 ? '_bx_payment_strp_txt_card_cvc_passed' : '_bx_payment_txt_none'),
+            'cvc' => _t(!empty($aCard['cvc_check']) && strcmp($aCard['cvc_check'], 'pass') === 0 ? '_bx_payment_strp_txt_card_cvc_passed' : '_bx_payment_txt_none'),
         ));
     }
 
@@ -414,6 +424,11 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
         ));
 
         return $oSubscription;
+    }
+
+    protected function _retrievePaymentMethod($sPaymentMethodId)
+    {
+        return false;
     }
 
     protected function _retrieveProduct($sId)

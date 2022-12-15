@@ -270,7 +270,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         $sMessage = $this->_sLangsPrefix . 'strp_msg_authorized';
                         $bAuthorized = $aSetupIntent['status'] == 'succeeded';
                         break;
-                    
+
                     case 'payment':
                         $oPaymentIntent = $this->_retrievePaymentIntent($sOrderId);
                         if($oPaymentIntent === false)
@@ -279,7 +279,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                         $aPaymentIntent = $oPaymentIntent->jsonSerialize();
                         if(empty($aPaymentIntent) || !is_array($aPaymentIntent))
                             return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
-                        
+
                         $sMessage = $this->_sLangsPrefix . 'strp_msg_charged';
                         $bPaid = $aPaymentIntent['status'] == 'succeeded';
                         break;
@@ -309,7 +309,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                     'customer_id' => $sCustomerId,
                     'subscription_id' => $sOrderId,
                     'client_email' => $aCustomer['email'],
-                    'paid' => $this->isSubscriptionStatus(BX_PAYMENT_SBS_STATUS_ACTIVE, $aSubscription),
                     'trial' => $this->isSubscriptionStatus(BX_PAYMENT_SBS_STATUS_TRIAL, $aSubscription)
                 ));
                 break;
@@ -467,7 +466,7 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
         return $this->_oStripe;
     }
-            
+
     /*
      * Related Docs: https://stripe.com/docs/api/customers/retrieve
      */
@@ -791,6 +790,72 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         }
 
         return $oSubscription;
+    }
+
+    /*
+     * Related Docs: https://stripe.com/docs/api/tokens/create_card
+     */
+    protected function _createToken($aCard)
+    {
+        try {
+            $oToken = $this->_getStripe()->tokens->create(['card' => $aCard]);
+        }
+        catch (Stripe\Error\Base $oException) {
+            return $this->_processException('Create Token Error: ', $oException);
+        }
+
+        return $oToken->jsonSerialize();
+    }
+
+    /*
+     * Related Docs: https://stripe.com/docs/api/cards/create
+     */
+    protected function _createCard($sType, $sCustomerId, $sToken)
+    {
+        try {
+            $oCard = $this->_getStripe()->customers->createSource($sCustomerId, [
+                'source' => $sToken
+            ]);
+        }
+        catch (Stripe\Error\Base $oException) {
+            return $this->_processException('Create Card Error: ', $oException);
+        }
+
+        return $oCard->jsonSerialize();
+    }
+
+    protected function _retrieveCard($sCustomerId, $sCardId = '')
+    {
+        try {
+            $oCustomer = $this->_getStripe()->customers->retrieve($sCustomerId);
+
+            if(empty($sCardId))
+                $sCardId = $oCustomer->default_source;
+            if(empty($sCardId))
+                return false;
+
+            $oCard = $this->_getStripe()->customers->retrieveSource($sCustomerId, $sCardId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Card Error: ', $oException);
+        }
+
+        return $oCard;
+    }
+
+    /*
+     * Related Docs: https://stripe.com/docs/api/payment_methods/retrieve
+     */
+    protected function _retrievePaymentMethod($sPaymentMethodId)
+    {
+        try {
+            $oPaymentMethod = $this->_getStripe()->paymentMethods->retrieve($sPaymentMethodId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Payment Method Error: ', $oException);
+        }
+
+        return $oPaymentMethod;
     }
 
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())

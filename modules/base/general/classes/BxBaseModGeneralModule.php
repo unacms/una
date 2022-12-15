@@ -1562,7 +1562,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
             return false;
 
-        if(!(BxDolAcl::getInstance()->isMemberLevelInSet(192) || (isset($CNF['FIELD_AUTHOR']) && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']])))
+        if(!$aContentInfo || !(BxDolAcl::getInstance()->isMemberLevelInSet(192) || (isset($CNF['FIELD_AUTHOR']) && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']])))
             return false;
 
         $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId, true);
@@ -2761,7 +2761,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
-            return MsgBox($sMsg);
+            return defined('BX_API') ? [['id' => 1, 'type' => 'msg', 'data' => $sMsg]] : MsgBox($sMsg);
 
         bx_import($sClassSearchResult, $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
@@ -2778,7 +2778,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 
         if ($s = $o->processing())
-            return $s;
+            return defined('BX_API') ? [['id' => 1, 'type' => 'browse', 'data' => $s]] : $s;
         else
             return '';
     }
@@ -3445,6 +3445,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
+
+        
+        if (defined('BX_API'))
+            return [['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI(array(), array('in_designbox' => false, 'show_empty' => false))]];
 
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false));
     }
