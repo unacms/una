@@ -1208,4 +1208,9 @@
     .sys-icon-svg.bx-badge-icon{
         @apply w-4 h-4
     }
+    
+    /* filepond */
+    .filepond--drop-label label{
+        @apply leading-6 text-base font-medium text-gray-700 dark:text-gray-300;
+    }
 }
