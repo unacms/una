@@ -48,7 +48,7 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                     'table' => 'bx_organizations_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'org_name', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
+                    'joinFields' => array('id', 'org_name', 'picture', 'cover', 'cover_data', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_cnl_data` (
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `channel_name` varchar(191) NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',

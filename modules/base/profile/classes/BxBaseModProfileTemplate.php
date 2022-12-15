@@ -190,6 +190,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $aTmplVarsMeta = array();
         if(substr($sTemplate, 0, 8) != 'unit_wo_')
             $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
+        
+        $sCoverData = isset($aData['cover_data']) ? $aData['cover_data'] : '';
 
         return array_merge(array (
             'class' => $this->_getUnitClass($aData, $sTemplate) . (!$bCoverUrl ? ' bx-cover-empty' : ''),
@@ -200,10 +202,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'content' => $aTmplVarsThumbnail
             ),
             'cover_url' => $sCoverUrl,
+            'cover_settings' => $this->_getImageSettings($sCoverData),
             'bx_if:show_cover' => array(
                 'condition' => $bCoverUrl,
                 'content' => array(
                     'cover_url' => $sCoverUrl,
+                    'cover_settins' => $this->_getImageSettings($sCoverData),
                     'title' => $sTitle,
                 )
             ),
@@ -271,21 +275,21 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $aTmplVars = $this->prepareCover($aData, array_merge($aParams, [
             'use_as_block' => true
         ]));
-
+        
         return $this->parseHtmlByName('cover_block.html', $aTmplVars);
     }
-
+    
     function prepareCover($aData, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
         $oModule = $this->getModule();
-
         $sClass = isset($aParams['class']) ? $aParams['class'] : '';
         $sShowData = isset($aParams['show_data']) ? $aParams['show_data'] : '';
         $bShowCover = !isset($aParams['show_cover']) || $aParams['show_cover'] === true;
         $bShowAvatar = !isset($aParams['show_avatar']) || $aParams['show_avatar'] === true;
         $bShowClickable = !isset($aParams['show_clickable']) || $aParams['show_clickable'] === true; //--- Is available for UseAsBlock appearance only.
         $sAddCode = "";
+        
 
         $bUseAsAuthor = isset($aParams['use_as_author']) && $aParams['use_as_author'] === true;
         $bUseAsBlock = $bUseAsAuthor || (isset($aParams['use_as_block']) && $aParams['use_as_block'] === true);
@@ -315,7 +319,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         //--- Process Cover
         $bTmplVarsShowCover = $bShowCover;
         $aTmplVarsShowCover = [];
-        $sCoverPopup = '';
 
         if($bTmplVarsShowCover) {
             $sCoverPopupId = $this->MODULE . '-popup-cover';
@@ -329,6 +332,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sUrlCover = $this->urlCover($aData, false);
             if(!$sUrlCover && $oPage !== false && $oPage->isPageCover()) {
                 $aCover = $oPage->getPageCoverImage();
+                
                 if(!empty($aCover))
                     $sUrlCover = BxDolCover::getCoverImageUrl($aCover);
             }
@@ -342,8 +346,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             else
                 $sUrlCover = $this->getImageUrl('cover.svg');
 
-            $sUrlCoverChange = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]));
-
+            $sCoverTweak = '';
+            $sUniqIdCover = genRndPwd (8, false);
+            if ($bIsAllowEditCover){
+                $sCoverTweak = $this->_prepareImage($aData, $sUniqIdCover, $CNF['OBJECT_UPLOADERS_COVER'], $CNF['OBJECT_STORAGE_COVER'], $CNF['FIELD_COVER'], true);
+            }
+            
             $sAddClassCover = "";
             if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
                 bx_alert('system', 'image_editor', 0, 0, array(
@@ -361,26 +369,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'add_code' => &$sAddCode
                 ));
             }
-
+            
             $aTmplVarsShowCover = [
                 'cover_popup_id' => $sCoverPopupId,
                 'cover_url' => $sUrlCover,
-                'cover_href' => !$aData[$CNF['FIELD_COVER']] && $bIsAllowEditCover ? $sUrlCoverChange : 'javascript:void(0);',
+                'unique_id' => $sUniqIdCover,
+                'cover_settins' => isset($CNF['FIELD_COVER_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_COVER_POSITION']]) : '',
                 'add_class' => $sAddClassCover,
                 'img_class' => $sAddClassCover != '' ? 'bx-media-editable-src' : '',
             ];
-
-            if($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
-                $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
-                    'image_url' => $sUrlCover,
-                    'bx_if:owner' => array (
-                        'condition' => $bIsAllowEditCover && empty($sAddClassCover),
-                        'content' => array (
-                            'change_image_url' => $sUrlCoverChange,
-                        ),
-                    ),
-                )), true, true);
-            }
         }
         else
             $sClass .= ' bx-no-cover';
@@ -391,7 +388,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $bTmplVarsShowAvatar = $bShowAvatar && ($bUrlAvatar || $this->_bLetterAvatar);
         $aTmplVarsShowAvatar = [];
-        $sPicturePopup = '';
 
         if($bTmplVarsShowAvatar) {
             $sPicturePopupId = $this->MODULE . '-popup-picture';
@@ -400,6 +396,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sUrlPicture = $this->urlPicture ($aData);
             $sUrlPictureChange = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]));
 
+            $sPictureTweak = '';
+            $sUniqIdPicture = genRndPwd (8, false);
+            if ($bIsAllowEditPicture){
+                $sPictureTweak = $this->_prepareImage($aData, $sUniqIdPicture, $CNF['OBJECT_UPLOADERS_PICTURE'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_PICTURE'], false);
+            }
+            
             $sAddClassPicture = "";
             if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
                 bx_alert('system', 'image_editor', 0, 0, array(
@@ -439,21 +441,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 ),
                 'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
                 'picture_popup_id' => $sPicturePopupId,
+                'unique_id' => $sUniqIdPicture,
+                'picture_tweak' => $sPictureTweak, 
+                'cover_settins' => isset($CNF['FIELD_PICTURE_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_PICTURE_POSITION']]) : '',
                 'picture_url' => $sUrlPicture,
                 'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
             );
-
-            if($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
-                $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
-                    'image_url' => $sUrlPicture,
-                    'bx_if:owner' => array (
-                        'condition' => $bIsAllowEditPicture && empty($sAddClassPicture),
-                        'content' => array (
-                            'change_image_url' => $sUrlPictureChange,
-                        ),
-                    ),
-                )), true, true);
-            }
         }
 
         //--- Process Actions menu
@@ -480,6 +473,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'class' => trim($sClass),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
+            
             'title' => $sTitle,
             'bx_if:show_title_as_tag' => [
                 'condition' => !$bUseAsAuthor,
@@ -505,9 +499,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'action_menu' => $sActionsMenu,
             'meta' => $sMetaMenu,
             'show_data' => $sShowData,
-            'picture_popup' => $sPicturePopup,
-            'cover_popup' => $sCoverPopup,
             'additional_code' => $sAddCode,
+            'cover_tweak' => $sCoverTweak,
         ];
 
         if($bUseAsBlock)

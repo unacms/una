@@ -3628,6 +3628,12 @@
 	<string name="_sys_uploader_record_video_mb"><![CDATA[Мб]]></string>
 	<string name="_sys_uploader_record_video_switch_camera"><![CDATA[Переключить камеру]]></string>
 	<string name="_sys_uploader_unsupported_browser"><![CDATA[Ваш браузер не поддерживает запись видео. Попробуйте <strong>Google Chrome</strong> или <strong>Mozilla FireFox</strong>.]]></string>
+    <string name="_sys_uploader_image_reposition"><![CDATA[Изменить позицию]]></string>
+    <string name="_sys_uploader_image_reposition_save"><![CDATA[Сохранить]]></string>
+    <string name="_sys_uploader_image_reposition_cancel"><![CDATA[Отменить]]></string>
+    <string name="_sys_uploader_image_upload"><![CDATA[Загрузить новую]]></string>
+    <string name="_sys_uploader_image_reposition_info"><![CDATA[Перетащите, чтобы изменить положение]]></string>
+    
 	<string name="_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_sys_exit"><![CDATA[Закончить]]></string>    
 	<string name="_sys_warn"><![CDATA[предупреждение]]></string>

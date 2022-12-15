@@ -42,6 +42,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'FIELD_TITLE' => 'channel_name',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_CF' => 'cf',
             'FIELD_VIEWS' => 'views',
@@ -54,7 +55,6 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-channel-profile',
             'URI_EDIT_ENTRY' => 'edit-channel-profile',
-            'URI_EDIT_COVER' => 'edit-channel-cover',
             'URI_JOINED_ENTRIES' => 'channels-author',
 
             'URL_HOME' => 'page.php?i=channels-home',

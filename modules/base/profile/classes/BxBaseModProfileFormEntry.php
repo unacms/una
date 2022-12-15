@@ -16,6 +16,8 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 {
     protected $_iAccountProfileId = 0;
     protected $_aImageFields = array ();
+    
+    protected $_aUploadersInfo = [];
 
     public function __construct($aInfo, $oTemplate = false)
     {   
@@ -37,10 +39,23 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         }
 
         if (!empty($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
+            $sStorage = $this->_oModule->_oConfig->getObject($CNF['OBJECT_STORAGE_COVER']);
+            $sUploadersId = genRndPwd(8, false);
+            $aUploaders = !empty($this->aInputs[$CNF['FIELD_COVER']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_COVER']]['value']) : $this->_oModule->_oConfig->getUploaders($CNF['FIELD_COVER']);
+
+            foreach($aUploaders as $sUploader){
+                $this->_aUploadersInfo[$sUploader] = array(
+                    'id' => $sUploadersId, 
+                    'name' => $sUploader,
+                    'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
+                );
+            }
+            
             $this->_aImageFields[$CNF['FIELD_COVER']] = array (
                 'storage_object' => $CNF['OBJECT_STORAGE_COVER'],
                 'images_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER_THUMB'],
-                'uploaders' => $CNF['OBJECT_UPLOADERS_COVER'],
+                'uploaders_id' => $sUploadersId,
+                'uploaders' => $aUploaders
             );
         }
 
@@ -48,6 +63,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$sField]['storage_object'] = $aParams['storage_object'];
             $this->aInputs[$sField]['uploaders'] = !empty($this->aInputs[$sField]['value']) ? unserialize($this->aInputs[$sField]['value']) : $aParams['uploaders'];
             $this->aInputs[$sField]['images_transcoder'] = $aParams['images_transcoder'];
+            $this->aInputs[$sField]['uploaders_id'] = isset($aParams['uploaders_id']) ? $aParams['uploaders_id'] : '';
             $this->aInputs[$sField]['storage_private'] = 0;
             $this->aInputs[$sField]['multiple'] = false;
             $this->aInputs[$sField]['content_id'] = 0;
@@ -59,6 +75,16 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             $this->_iAccountProfileId = $oAccountProfile->id();
     }
 
+    public function getUploadersInfo($sField = '')
+    {
+        if(empty($sField))
+            return $this->_aUploadersInfo;
+
+        $aUploaders = !empty($this->aInputs[$sField]['value']) ? unserialize($this->aInputs[$sField]['value']) : $this->_oModule->_oConfig->getUploaders($sField);
+
+        return $this->_aUploadersInfo[array_shift($aUploaders)];
+    }
+    
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

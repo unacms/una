@@ -49,6 +49,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'FIELD_CATEGORY' => 'space_cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
@@ -70,7 +71,6 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-space-profile',
             'URI_EDIT_ENTRY' => 'edit-space-profile',
-            'URI_EDIT_COVER' => 'edit-space-cover',
             'URI_JOIN_ENTRY' => 'join-space-profile',
             'URI_JOINED_ENTRIES' => 'joined-spaces',
             'URI_MANAGE_COMMON' => 'spaces-manage',

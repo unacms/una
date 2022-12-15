@@ -14,3 +14,40 @@ import url(../../../../../../../template/css/cover.css);
 .dark .bx-cover-wrapper {
     background-image: url(../images/cover-default-dark.svg);
 }
+
+.bx-image-edit-buttons{
+    position: absolute;
+    left:1rem;
+    top:1rem;
+}
+.bx-base-pofile-cover-thumb .bx-image-edit-buttons{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    left:0px;
+    bottom:1rem;
+    top:auto;
+}
+.bx-image-edit-move{
+    cursor:move
+}
+.bx-image-edit-move-info{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    opacity: 0.5;
+    background-color: #000;
+    -webkit-backface-visibility: hidden;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    color:#fff;
+    letter-spacing: 1px;
+}
+.bx-image-edit-move-info i{
+    color:#fff;
+    font-size: 1.25rem;
+    margin-right: 1rem;
+}
+.bx-image-edit-buttons-no-image .bx-image-edit-buttons-edit{
+    display: none;
+}

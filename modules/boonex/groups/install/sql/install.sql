@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_data` (
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `group_name` varchar(255) NOT NULL,
   `group_cat` int(11) NOT NULL,
   `group_desc` text NOT NULL,

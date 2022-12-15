@@ -46,7 +46,9 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_TITLE' => 'fullname',
             'FIELD_TEXT' => 'description',
             'FIELD_PICTURE' => 'picture',
+            'FIELD_PICTURE_POSITION' => 'picture_data',
             'FIELD_COVER' => 'cover',
+            'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_BIRTHDAY' => 'birthday',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
@@ -66,7 +68,6 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'URI_VIEW_FRIEND_REQUESTS' => 'persons-friend-requests',
             'URI_VIEW_FAVORITES' => 'persons-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
-            'URI_EDIT_COVER' => 'edit-persons-cover',
             'URI_MANAGE_COMMON' => 'persons-manage',
             'URI_VIEW_SUBSCRIPTIONS' => 'persons-profile-subscriptions',
 

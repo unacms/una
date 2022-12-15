@@ -676,6 +676,66 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         return array($oPlayer, $oStorage, $aContentInfo, $a);
     }
+    
+    function _getImageSettings($sSettings)
+    {
+        $sCoverSettings = '';
+        $aCoverData = json_decode($sSettings, true);
+        if (!empty($aCoverData)){
+            $sCoverSettings = 'background-position: ' . $aCoverData['x'] . '% ' . $aCoverData['y'] . '%';
+        }
+        return $sCoverSettings;
+    }
+
+    function _prepareImage($aData, $sUniqId, $sUploader, $sStorage, $sField, $bAllowTweak)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $oUploader = null;
+        $sUploadersButtons = $sUploadersJs = '';
+
+        $aUploaders = $sUploader;
+        $sUploadersJs = '';
+        $sJsName = '';
+        foreach ($aUploaders as $sUploaderObject) {
+            $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorage, $sUniqId, $this);
+
+            $sGhostTemplate = '{file_id}';
+
+            $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
+                [
+                    'content_id' => $aData['id'],
+                    'storage_private' => '0',
+                    'is_init_ghosts' => 0,
+                    'is_init_reordering' => 0
+                ]
+            );
+            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs, true);
+            $sJsName = $oUploader->getNameJsInstanceUploader();
+        }
+
+        $aParamsButtons = [
+            'content_id' => $aData['id'],
+            'storage_private' => '0',
+            'btn_class' => '',
+            'button_title' => '',
+        ];
+
+        $sAddCode = $this->parseHtmlByName('image_tweak.html', [
+            'id' => $aData['id'],
+            'js_object' => $sJsName,
+            'unique_id' => $sUniqId,
+            'id' => $aData['id'],
+            'allow_tweak' => $bAllowTweak,
+            'image_exists' => $aData[$sField] == 0 ? 'bx-image-edit-buttons-no-image' : '',
+            'field' => $sField,
+            'action_url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(),
+            'uploader' => $oUploader->getUploaderButton($aParamsButtons),
+            'uploader_js' => $sUploadersJs,
+        ]); 
+        $this->addJsTranslation(['_sys_txt_form_entry_input_image_reposition_info']);
+        return $sAddCode;
+    }
 
     public function addCssJs()
     {

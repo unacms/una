@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `published` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `event_name` varchar(255) NOT NULL,
   `event_cat` int(11) NOT NULL,
   `event_desc` text NOT NULL,

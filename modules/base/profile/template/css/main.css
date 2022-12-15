@@ -239,6 +239,7 @@ div.bx-base-pofile-cover-image {
     height: 24rem;
 }
 a.bx-base-pofile-cover-image,
+p.bx-base-pofile-cover-image,
 a.bx-base-pofile-cover-image:hover {
     position:absolute;
     width:100%;
@@ -253,7 +254,7 @@ a.bx-base-pofile-cover-image:hover {
     -o-background-size: cover;
     background-size: cover;
 }
-a.bx-base-pofile-cover-image img {
+p.bx-base-pofile-cover-image img {
     position: relative;
     display: block;
     width: 100%;

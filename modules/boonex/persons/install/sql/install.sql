@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `description` text NOT NULL,

@@ -73,14 +73,6 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_events_edit_profile', 1, 'bx_events', '_bx_events_page_block_title_edit_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:11:\"entity_edit\";}', 0, 0, 0);
 
--- PAGE: edit profile cover
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_events_edit_profile_cover', 'edit-event-cover', '_bx_events_page_title_sys_edit_profile_cover', '_bx_events_page_title_edit_profile_cover', 'bx_events', 5, 2147483647, 1, 'page.php?i=edit-event-cover', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_events_edit_profile_cover', 1, 'bx_events', '_bx_events_page_block_title_edit_profile_cover', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:17:\"entity_edit_cover\";}', 0, 0, 0);
-
 -- PAGE: invite members
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -310,7 +302,6 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_events_view_actions_more', 'bx_events', 'profile-fan-remove', '_bx_events_menu_item_title_system_leave_group', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_events_fans\', \'remove\', \'{profile_id}\')', '', 'sign-out-alt', '', 2147483647, '', 1, 0, 10),
 ('bx_events_view_actions_more', 'bx_events', 'profile-subscribe-remove', '_bx_events_menu_item_title_system_unsubscribe', '_bx_events_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, '', 1, 0, 20),
-('bx_events_view_actions_more', 'bx_events', 'edit-event-cover', '_bx_events_menu_item_title_system_edit_cover', '_bx_events_menu_item_title_edit_cover', 'page.php?i=edit-event-cover&id={content_id}', '', '', 'edit', '', 2147483647, '', 1, 0, 30),
 ('bx_events_view_actions_more', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '_bx_events_menu_item_title_edit_profile', 'page.php?i=edit-event-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, '', 1, 0, 40),
 ('bx_events_view_actions_more', 'bx_events', 'edit-event-pricing', '_bx_events_menu_item_title_system_edit_pricing', '_bx_events_menu_item_title_edit_pricing', 'page.php?i=edit-event-pricing&profile_id={profile_id}', '', '', 'money-check-alt', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:20:"is_pricing_avaliable";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 41),
 ('bx_events_view_actions_more', 'bx_events', 'invite-to-event', '_bx_events_menu_item_title_system_invite', '_bx_events_menu_item_title_invite', 'page.php?i=invite-to-event&id={content_id}', '', '', 'user-friends', '', 2147483647, '', 1, 0, 42),
@@ -344,7 +335,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_events_view_actions_all', 'bx_events', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, '', 1, 0, 280),
 ('bx_events_view_actions_all', 'bx_events', 'audit', '_sys_menu_item_title_system_va_audit', '_sys_menu_item_title_va_audit', 'page.php?i=dashboard-audit&module=bx_events&content_id={content_id}', '', '', 'history', '', '', 0, 192, '', 1, 0, 290),
 ('bx_events_view_actions_all', 'bx_events', 'social-sharing', '_sys_menu_item_title_system_social_sharing', '_sys_menu_item_title_social_sharing', 'javascript:void(0)', 'oBxDolPage.share(this, \'{url_encoded}\')', '', 'share', '', '', 0, 2147483647, '', 1, 0, 300),
-('bx_events_view_actions_all', 'bx_events', 'edit-event-cover', '_bx_events_menu_item_title_system_edit_cover', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 400),
 ('bx_events_view_actions_all', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 410),
 ('bx_events_view_actions_all', 'bx_events', 'edit-event-pricing', '_bx_events_menu_item_title_system_edit_pricing', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 415),
 ('bx_events_view_actions_all', 'bx_events', 'invite-to-event', '_bx_events_menu_item_title_system_invite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 420),

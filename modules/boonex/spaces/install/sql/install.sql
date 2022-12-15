@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_spaces_data` (
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `space_name` varchar(255) NOT NULL,
   `space_cat` int(11) NOT NULL,
   `space_desc` text NOT NULL,

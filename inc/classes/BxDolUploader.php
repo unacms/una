@@ -313,6 +313,7 @@ abstract class BxDolUploader extends BxDolFactory
             '_sys_uploader_confirm_leaving_page',
             '_sys_uploader_confirm_close_popup',
             '_sys_uploader_upload_canceled',
+            '_sys_uploader_image_reposition_info',
         ], $bDynamic);
         return $bDynamic ? $s : '';
     }

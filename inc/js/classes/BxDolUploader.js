@@ -213,8 +213,8 @@ BxDolUploaderBase.prototype.showGhost = function(iId, oVars) {
 
     for(var i in oVars)
         sHTML = sHTML.replace (new RegExp('{' + i + '}', 'g'), oVars[i]);
-
-    $('#' + this._sResultContainerId).append(sHTML);
+    
+    $('#' + this._sResultContainerId).append(sHTML).trigger( "contentchange" );
 
     oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
 };
@@ -1011,5 +1011,89 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
 }
 
 BxDolUploaderRecordVideo.prototype = BxDolUploaderBase.prototype;
+
+
+function BxDolImageTweak (unique_id, action_url, content_id, field, js_object, allow_tweak) {
+    var $this = this;
+    this._sUniqueId = unique_id;
+    this._sActionUrl = action_url;
+    this._sContentId = content_id;
+    this._sField = field;
+    this._sJsObject = js_object;
+    this._bAllowTweak = allow_tweak;
+    this._oContainerButtons = $('.bx-image-edit-buttons-' + unique_id);
+    
+    $("#bx-form-input-files-" + this._sUniqueId + "-upload-result").bind( "contentchange", function(){ 
+        $this.uploadComplete($(this));
+    });
+    
+    if (this._bAllowTweak){
+        this._oContainerButtons.find('.bx-image-edit-buttons-edit').removeClass('hidden');
+    }
+}
+
+BxDolImageTweak.prototype.showUploaderForm = function(){
+    var $this = this;
+    $('#bx-form-input-files-' + $this._sUniqueId + '-upload-result').html('');
+    eval($this._sJsObject + '.showUploaderForm()');
+}
+    
+BxDolImageTweak.prototype.uploadComplete = function(obj){
+    var $this = this;
+    var sUrl = $this._sActionUrl + "updateImage/" + $this._sField + "/" + $this._sContentId + "/" + obj.html() + "/"; 
+    
+    $this._oContainerButtons.removeClass('bx-image-edit-buttons-no-image');
+    $.post(sUrl, function (aData) {
+        if ($this._bAllowTweak){
+            $(".bx-image-edit-source-" + $this._sUniqueId).css("background-image", "url(" + aData + ")").css('background-position', '');
+        }
+        else{
+            $(".bx-image-edit-source-" + $this._sUniqueId).attr("src", aData);
+        }
+    });
+}
+
+BxDolImageTweak.prototype.changePosition = function (){
+    var $this = this;
+    $(".bx-image-edit-source-" + $this._sUniqueId).parent().append("<div class='bx-image-edit-move-info'><i class='sys-icon sys-colored arrows-alt '></i>" + _t('_sys_txt_form_entry_input_image_reposition_info') + "</div>");
+    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').bind('dragover', function(e){
+        $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
+        $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY/500*100 + '%');
+    });
+    with ($this._oContainerButtons) {
+        find('.bx-image-edit-buttons-cancel').removeClass('hidden');
+        find('.bx-image-edit-buttons-save').removeClass('hidden');
+        find('.bx-image-edit-buttons-edit').addClass('hidden');
+        find('.bx-image-edit-buttons-upload').addClass('hidden');
+    }
+}
+
+BxDolImageTweak.prototype.cancelPosition = function (){
+    var $this = this;
+    $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
+    with ($this._oContainerButtons) {
+        find('.bx-image-edit-buttons-cancel').addClass('hidden');
+        find('.bx-image-edit-buttons-save').addClass('hidden');
+        find('.bx-image-edit-buttons-edit').removeClass('hidden');
+        find('.bx-image-edit-buttons-upload').removeClass('hidden');
+    }
+}
+    
+BxDolImageTweak.prototype.savePosition = function (){
+    var $this = this;
+    
+    $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
+    $(".bx-image-edit-source-" + $this._sUniqueId).removeClass('bx-image-edit-move')
+    
+    aPos = $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position').split(' ');
+    $.post($this._sActionUrl + 'updateImagePosition/' + $this._sContentId + '/' + $this._sField + '/' + aPos[0].replace('%','').replace('px','') + '/' + aPos[1].replace('%','').replace('px','') + '/', function () {
+        with ($this._oContainerButtons) {
+            find('.bx-image-edit-buttons-cancel').addClass('hidden');
+            find('.bx-image-edit-buttons-save').addClass('hidden');
+            find('.bx-image-edit-buttons-edit').removeClass('hidden');
+            find('.bx-image-edit-buttons-upload').removeClass('hidden');
+        }
+    });
+}
 
 /** @} */

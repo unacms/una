@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `org_name` varchar(255) NOT NULL,
   `org_cat` int(11) NOT NULL,
   `multicat` text NOT NULL,

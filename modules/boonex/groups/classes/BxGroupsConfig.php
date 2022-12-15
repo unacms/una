@@ -47,6 +47,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'FIELD_CATEGORY' => 'group_cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
@@ -68,7 +69,6 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
-            'URI_EDIT_COVER' => 'edit-group-cover',
             'URI_JOIN_ENTRY' => 'join-group-profile',
             'URI_JOINED_ENTRIES' => 'joined-groups',
             'URI_ENTRIES_BY_CONTEXT' => 'groups-context',

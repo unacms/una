@@ -3598,7 +3598,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_form_entry_input_picture_pic_url"><![CDATA[Attachment URL:]]></string>
     <string name="_sys_txt_form_entry_input_picture_use_as_thumb"><![CDATA[Use as Thumbnail]]></string>
     <string name="_sys_txt_form_submission_error"><![CDATA[Incorrect info. Please, check your inputs and try to submit again.]]></string>
-    <string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Token expired. Please try again.]]></string>
+    <string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Token expired. Please try again.]]></string> 
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Unity is strength... when there is teamwork and collaboration, wonderful things can be achieved.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Join Now!</button>]]></string>
     <string name="_sys_txt_login_2fa_description"><![CDATA[Two-factor authentication is enabled, please specify the phone number to send verification code to.]]></string>
@@ -3710,6 +3710,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_upload_canceled"><![CDATA[Too bad. Upload canceled.]]></string>
 	<string name="_sys_uploader_camera_capture_failed"><![CDATA[We were unable to initialize your camera.]]></string>
 	<string name="_sys_uploader_unsupported_browser"><![CDATA[Your browser doesn't support video recording. You can try <strong>Google Chrome</strong> or <strong>Mozilla FireFox</strong> instead.]]></string>
+    <string name="_sys_uploader_image_reposition"><![CDATA[Change position]]></string>
+    <string name="_sys_uploader_image_reposition_save"><![CDATA[Save]]></string>
+    <string name="_sys_uploader_image_reposition_cancel"><![CDATA[Cancel]]></string>
+    <string name="_sys_uploader_image_upload"><![CDATA[Upload new]]></string>
+    <string name="_sys_uploader_image_reposition_info"><![CDATA[Drag to reposition]]></string>
 	<string name="_sys_edit_profile"><![CDATA[Edit profile]]></string>    
 	<string name="_sys_exit"><![CDATA[Exit]]></string>    
 	<string name="_sys_warn"><![CDATA[warning]]></string>

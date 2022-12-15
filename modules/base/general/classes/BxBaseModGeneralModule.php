@@ -72,6 +72,38 @@ class BxBaseModGeneralModule extends BxDolModule
         return true;        
     }
 
+    
+    public function actionUpdateImage($sFiledName, $iContentId, $sValue)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aData = $this->_oDb->getContentInfoById($iContentId);
+        if ($this->checkAllowedEdit($aData) === CHECK_ACTION_RESULT_ALLOWED){
+        
+            $this->_oDb->updateEntriesBy([$sFiledName => $sValue], [$CNF['FIELD_ID'] => $iContentId]);
+            //TODO add transcoder settings
+            $oImgStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+            $sImageUrl = $oImgStorage->getFileUrlById($sValue);
+            
+            $this->actionUpdateImagePosition($iContentId, $sFiledName, '', '');
+            
+            echo $sImageUrl;
+        }
+        
+    }
+    
+    public function actionUpdateImagePosition($iContentId, $sFiledName, $sH, $sV)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $sFieldNamePos = 'FIELD_' . strtoupper($sFiledName) . '_POSITION';
+        if (isset($CNF[$sFieldNamePos])){
+            $sValue = '';
+            $CNF = &$this->_oConfig->CNF;
+            if ($sH != '' || $sV != '')
+                $sValue = json_encode(['x' => $sH, 'y' => $sV]);
+            $this->_oDb->updateEntriesBy([$CNF[$sFieldNamePos] => $sValue], [$CNF['FIELD_ID'] => $iContentId]);
+        }
+    }
+    
     public function actionApprove()
     {
         $CNF = &$this->_oConfig->CNF;

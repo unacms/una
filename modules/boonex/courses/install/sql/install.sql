@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_courses_data` (
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
   `cover` int(11) NOT NULL,
+  `cover_data` varchar(50) NOT NULL,
   `name` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `desc` text NOT NULL,

@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderCrop
+class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderHTML5
 {
     protected $_oModule;
 

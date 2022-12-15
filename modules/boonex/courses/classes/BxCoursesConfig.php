@@ -47,6 +47,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'FIELD_CATEGORY' => 'cat',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_ALLOW_POST_TO' => 'allow_post_to',
@@ -68,7 +69,6 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-course-profile',
             'URI_EDIT_ENTRY' => 'edit-course-profile',
-            'URI_EDIT_COVER' => 'edit-course-cover',
             'URI_JOIN_ENTRY' => 'join-course-profile',
             'URI_JOINED_ENTRIES' => 'joined-courses',
             'URI_MANAGE_COMMON' => 'courses-manage',
