@@ -518,8 +518,8 @@ div.bx-account-unit-online {
     position: relative;
 }
 .sys-cpf-form:not(.sys-cpf-loading) {
-    -webkit-animation: sys-cpf-slide-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
-    animation: sys-cpf-slide-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+    -webkit-animation: sys-cpf-scale-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+    animation: sys-cpf-scale-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
 .sys-cpf-form .bx-uploader-ghost .bx-base-general-icon-wrapper img {
     max-width: 9.375rem;
@@ -532,28 +532,27 @@ div.bx-account-unit-online {
     bottom: 0;
 }
 
-@keyframes sys-cpf-slide-in {
+@keyframes sys-cpf-scale-in {
     0% {
         opacity: 0;
-        margin-left: -10rem;
+        transform: scale(0.9);
     }
     100% {
         opacity: 1;
-        margin-left: 0px;
+        transform: scale(1.0);
     }
 }
 
-@-webkit-keyframes sys-cpf-slide-in {
+@-webkit-keyframes sys-cpf-scale-in {
     0% {
         opacity: 0;
-        margin-left: -10rem;
+        transform: scale(0.9);
     }
     100% {
         opacity: 1;
-        margin-left: 0px;
+        transform: scale(1.0);
     }
 }
-
 
 /* --------------- Account Unit */
 .bx-account-unit .bx-def-unit-img, 

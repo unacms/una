@@ -105,7 +105,7 @@ BxDolCreatePost.prototype.getForm = function (sModuleName, sModuleUri, oElement)
 };
 
 BxDolCreatePost.prototype.hideForm = function(oElement) {
-    $(oElement).parents('.sys-cpf-close:first').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed);
+    $(oElement).parents('.sys-cpf-close:first').hide();
 
     var sTabActive = 'bx-menu-tab-active';
     var sTabDefault = 'bx-menu-item-' + this._sDefault;
@@ -116,11 +116,14 @@ BxDolCreatePost.prototype.hideForm = function(oElement) {
     if(bMiChange)
         oMiActive.removeClass(sTabActive);
 
-    $('.sys-cpf-form:visible').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-        $('.sys-cpf-form.sys-cpf-default').show();
+    $('.sys-cpf-form:visible').hide({
+        duration: 0,
+        complete: function() {
+            $('.sys-cpf-form.sys-cpf-default').show();
 
-        if(bMiChange)
-            $('.' + sTabDefault).addClass(sTabActive);
+            if(bMiChange)
+                $('.' + sTabDefault).addClass(sTabActive);
+        }
     });
 };
 

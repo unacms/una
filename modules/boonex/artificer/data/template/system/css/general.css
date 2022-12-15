@@ -111,28 +111,28 @@ import url(../../../../../../../template/css/general.css);
 
 /*--- Create Post Form ---*/
 .sys-cpf-form:not(.sys-cpf-loading) {
-    -webkit-animation: sys-cpf-slide-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
-    animation: sys-cpf-slide-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+    -webkit-animation: sys-cpf-scale-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+    animation: sys-cpf-scale-in 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
 
-@keyframes sys-cpf-slide-in {
+@keyframes sys-cpf-scale-in {
     0% {
         opacity: 0;
-        margin-left: -10rem;
+        transform: scale(0.9);
     }
     100% {
         opacity: 1;
-        margin-left: 0px;
+        transform: scale(1.0);
     }
 }
 
-@-webkit-keyframes sys-cpf-slide-in {
+@-webkit-keyframes sys-cpf-scale-in {
     0% {
         opacity: 0;
-        margin-left: -10rem;
+        transform: scale(0.9);
     }
     100% {
         opacity: 1;
-        margin-left: 0px;
+        transform: scale(1.0);
     }
 }
