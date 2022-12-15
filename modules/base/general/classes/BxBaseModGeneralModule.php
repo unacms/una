@@ -1530,7 +1530,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!isset($CNF['OBJECT_REPORTS']) || !isset($CNF['OBJECT_NOTES']))
             return false;
 
-        if(!(BxDolAcl::getInstance()->isMemberLevelInSet(192) || (isset($CNF['FIELD_AUTHOR']) && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']])))
+        if(!$aContentInfo || !(BxDolAcl::getInstance()->isMemberLevelInSet(192) || (isset($CNF['FIELD_AUTHOR']) && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']])))
             return false;
 
         $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iContentId, true);
@@ -3413,6 +3413,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
+
+        
+        if (defined('BX_API'))
+            return [['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI(array(), array('in_designbox' => false, 'show_empty' => false))]];
 
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false));
     }

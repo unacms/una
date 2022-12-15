@@ -29,6 +29,11 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return BxDolModule::getInstance($this->aCurrent['module_name']);
     }
 
+    function getContentInfoObject()
+    {
+        return BxDolContentInfo::getObjectInstance($this->aCurrent['name']);
+    }
+
     function getRssUnitLink (&$a)
     {
         $CNF = &$this->oModule->_oConfig->CNF;
@@ -205,6 +210,46 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
         return parent::displayResultBlock();
     }
+
+    function decodeData ($a)
+    {
+        $oContentInfo = $this->getContentInfoObject();
+
+        foreach ($a as $i => $r) {
+            if (isset($r['author']))
+                $a[$i]['author_data'] = $this->decodeDataAuthor($oContentInfo, $r);
+
+            $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
+            $a[$i]['url_thumb'] = $oContentInfo->getContentThumb($r['id']);
+            $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+        }
+
+        return $a;
+    }
+
+    function decodeDataUrl ($oContentInfo, $r)
+    {
+        return bx_ltrim_str($oContentInfo->getContentLink($r['id']), BX_DOL_URL_ROOT);
+    }
+
+    function decodeDataAuthor ($oContentInfo, $r) 
+    {
+        $CNF = $this->oModule->_oConfig->CNF;
+        $oProfile = BxDolProfile::getInstanceMagic($r[$CNF['FIELD_AUTHOR']]);
+        return [
+            'display_name' => $oProfile->getDisplayName(),
+            'url' => $oProfile->getUrl(),
+            'url_avatar' => $oProfile->getAvatar(),
+        ];
+    }
+
+    function decodeDataSummaryPlain ($oContentInfo, $r)
+    {
+        $CNF = $this->oModule->_oConfig->CNF;
+        $sSummary = $this->oModule->_oTemplate->getText($r);
+        return isset($CNF['PARAM_CHARS_SUMMARY_PLAIN']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN'] ? BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN'])) : '';
+    }
+
 }
 
 /** @} */

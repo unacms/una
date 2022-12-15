@@ -497,13 +497,18 @@ class BxDolSearchResult implements iBxDolReplaceable
     {
         return [
             'unit' => 'general',
-            'data' => $this->getSearchData(),
+            'data' => $this->decodeData($this->getSearchData()),
             'paginate' => [
                 'num' => $this->aCurrent['paginate']['num'],
                 'per_page' => $this->aCurrent['paginate']['perPage'],
                 'start' => $this->aCurrent['paginate']['start'],
             ]
         ];
+    }
+
+    function decodeData ($a)
+    {
+        return $a;
     }
 
     /**

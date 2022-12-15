@@ -133,6 +133,43 @@ class BxBaseCmts extends BxDolCmts
         return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
 
+    function getCommentsBlockAPI($aBp = [], $aDp = [])
+    {
+        $mixedResult = $this->isViewAllowed();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult; // TODO: error checking
+
+        $this->_getParams($aBp, $aDp);
+        $this->_prepareParams($aBp, $aDp);
+
+        $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
+
+        return [
+            'unit' => 'comments',
+            'data' => $this->decodeData($aCmts),
+        ];
+    }
+
+    function decodeData ($a)
+    {
+        foreach ($a as $i => $r) {
+            if (isset($r['cmt_author_id']))
+                $a[$i]['author_data'] = $this->decodeDataAuthor($r);
+        }
+
+        return $a;
+    }
+
+    function decodeDataAuthor ($r) // TODO: get rid of duplicate code here and in BxBaseModGeneralSearchResult
+    {
+        $oProfile = BxDolProfile::getInstanceMagic($r['cmt_author_id']);
+        return [
+            'display_name' => $oProfile->getDisplayName(),
+            'url' => $oProfile->getUrl(),
+            'url_avatar' => $oProfile->getAvatar(),
+        ];
+    }
+
     /**
      * get full comments block with initializations
      */
