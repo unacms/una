@@ -909,21 +909,38 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $aGhostFiles = $oStorage->getGhosts($this->serviceGetContentOwnerProfileId($iContentId), $iContentId);
         if(!$aGhostFiles)
-            return array();
+            return [];
 
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
+        $oTranscoderSm = false;
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_MINIATURE_PHOTOS']))
+            $oTranscoderSm = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_MINIATURE_PHOTOS']);
 
-        foreach ($aGhostFiles as $k => $a) {
-            $sPhotoSrc = $oTranscoder->getFileUrl($a['id']);
-            if(empty($sPhotoSrc))
+        $oTranscoderMd = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
+
+        $oTranscoderXl = false;
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS']))
+            $oTranscoderXl = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS']);
+
+        foreach($aGhostFiles as $k => $a) {
+            $sPhotoSrcMd = $oTranscoderMd->getFileUrl($a['id']);
+            if(empty($sPhotoSrcMd))
                 continue;
 
-            $aResults[] = array(
+            $sPhotoSrcSm = $oTranscoderSm !== false ? $oTranscoderSm->getFileUrl($a['id']) : '';
+            if(!$sPhotoSrcSm)
+                $sPhotoSrcSm = $sPhotoSrcMd;
+
+            $sPhotoSrcXl = $oTranscoderXl !== false ? $oTranscoderXl->getFileUrl($a['id']) : $oStorage->getFileUrlById($a['id']);
+            if(!$sPhotoSrcXl)
+                $sPhotoSrcXl = $sPhotoSrcMd;
+
+            $aResults[] = [
                 'id' => $a['id'],
-                'src' => $sPhotoSrc,
-                'src_medium' => $sPhotoSrc,
-                'src_orig' => $oStorage->getFileUrlById($a['id']),
-            );
+                'src' => $sPhotoSrcMd,
+                'src_small' => $sPhotoSrcSm,
+                'src_medium' => $sPhotoSrcMd,
+                'src_orig' => $sPhotoSrcXl,
+            ];
         }
         return $aResults;
     }

@@ -2592,7 +2592,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getTmplVarsImages($aImages, $mixedLayout, &$aEvent, &$aBrowseParams)
     {
         if(empty($aImages) || !is_array($aImages))
-            return array();
+            return [];
 
         $iTotal = 0; //--- Total count of images related to the event.
         if(isset($aImages['total']) && isset($aImages['items'])) {
@@ -2608,7 +2608,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
 
         $sDisplay = '';
-        $aTmplVarsImages = array();
+        $aTmplVarsImages = [];
 
         $sImageSrcKey = $sImageSrcKeyBig = '';
         $sImageSrcKeyDefault = 'src';
@@ -2634,6 +2634,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aImageFirst = reset($aImages);
         $iImageFirst = isset($aImageFirst['id']) ? (int)$aImageFirst['id'] : 0;
 
+        $aImageSizes = [
+            'small' => '600w', 
+            'medium' => '1000w', 
+            'orig' => '2400w'
+        ];
         foreach($aImages as $aImage) {
             $sImageSrcKeyCur = $sImageSrcKey;
             if(($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst) || $iTotal == 2)
@@ -2643,8 +2648,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sImageSrc))
                 continue;
 
+            $sImageAttrSrcset = '';
+            foreach($aImageSizes as $sSize => $sWidth)
+                if(isset($aImage['src_' . $sSize]))
+                    $sImageAttrSrcset .= $aImage['src_' . $sSize] . ' ' . $sWidth . ', ';
+
             $sImage = $this->parseImage($sImageSrc, array(
-                'class' => $sStylePrefix . '-item-image'
+                'class' => $sStylePrefix . '-item-image',
+                'srcset' => trim($sImageAttrSrcset, ", "),
+                'sizes' => '100%'
             ));
 
             $aAttrs = array();
