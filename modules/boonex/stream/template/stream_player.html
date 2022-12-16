@@ -13,7 +13,7 @@
         oPlayer = OvenPlayer.create("bx-stream-player-__suffix__",
         {
             sources: aSources,
-            autoStart: true,
+            autoStart: __autostart__,
             autoFallback: true,
             image: '__image__',
             mute: __mute__ // muted player always autoplays
@@ -25,13 +25,23 @@
         });
 
         // reload player when error occured, it's needed to start player automatically when stream starts
-        oPlayer.on('error', function() {
+        var fReloader = function() {
+            if (!__autostart__)
+                return;
+
             setTimeout(function () {
-                if (++iBxStreamCounter > 250)
-                    location.reload();
-                fLoadPlayer();
-            }, 5000)
-        });
+                if ('undefined' !== typeof(document.hidden) && !document.hidden) {
+                    if (++iBxStreamCounter > 250)
+                        location.reload();
+                    fLoadPlayer();
+                }
+                else {
+                    console.log('empty reloader....');
+                    fReloader();
+                }
+            }, 5000);
+        };
+        oPlayer.on('error', fReloader);
     };
     fLoadPlayer();
 </script>

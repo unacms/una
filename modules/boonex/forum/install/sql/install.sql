@@ -418,10 +418,12 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_forum_preview', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_covers";}', 'no', '1', '2592000', '0', '', ''),
+('bx_forum_miniature', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_covers";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_forum_gallery', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_covers";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_forum_cover', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_covers";}', 'no', '1', '2592000', '0', '', ''),
 
 ('bx_forum_preview_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
+('bx_forum_miniature_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_forum_gallery_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_forum_view_photos', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_forum_photos";}', 'no', '1', '2592000', '0', '', ''),
 
@@ -438,11 +440,13 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_forum_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_forum_miniature', 'Resize', 'a:1:{s:1:"w";s:3:"300";}', '0'),
 ('bx_forum_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0'),
 ('bx_forum_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0'),
 
 ('bx_forum_preview_photos', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
-('bx_forum_gallery_photos', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0'),
+('bx_forum_miniature_photos', 'Resize', 'a:4:{s:1:"w";s:3:"300";s:1:"h";s:3:"300";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_forum_gallery_photos', 'Resize', 'a:4:{s:1:"w";s:3:"600";s:1:"h";s:3:"600";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_forum_view_photos', 'Resize',  'a:2:{s:1:"w";s:4:"2000";s:1:"h";s:4:"2000";}', '0'),
 
 ('bx_forum_videos_poster_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', 10),

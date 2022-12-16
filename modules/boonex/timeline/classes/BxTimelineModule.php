@@ -4716,28 +4716,33 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aPhotos = $this->_oDb->getMedia($CNF['FIELD_PHOTO'], $iEventId);
         if(empty($aPhotos) || !is_array($aPhotos))
-            return array();
+            return [];
 
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
-        $oTranscoderMedium = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_medium'));
-        $oTranscoderBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
+        $oTranscoderSm = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
+        $oTranscoderMd = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_medium'));
+        $oTranscoderLg = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
 
-        $aResult = array();
+        $aResult = [];
         foreach($aPhotos as $iPhotoId) {
-            $sPhotoSrc = $oTranscoder->getFileUrl($iPhotoId);
-            $sPhotoSrcMedium = $oTranscoderMedium->getFileUrl($iPhotoId);
-            $sPhotoSrcBig = $oTranscoderBig->getFileUrl($iPhotoId);
-            if(empty($sPhotoSrcMedium) && !empty($sPhotoSrc))
-                $sPhotoSrcMedium = $sPhotoSrc;
-            if(empty($sPhotoSrcBig) && !empty($sPhotoSrcMedium))
-                $sPhotoSrcBig = $sPhotoSrcMedium;
+            $sPhotoSrcMd = $oTranscoderMd->getFileUrl($iPhotoId);
+            if(empty($sPhotoSrcMd))
+                continue;
 
-            $aResult[] = array(
+            $sPhotoSrcSm = $oTranscoderSm->getFileUrl($iPhotoId);
+            if(empty($sPhotoSrcSm))
+                $sPhotoSrcSm = $sPhotoSrcMd;
+
+            $sPhotoSrcLg = $oTranscoderLg->getFileUrl($iPhotoId);
+            if(empty($sPhotoSrcLg))
+                $sPhotoSrcLg = $sPhotoSrcMd;
+
+            $aResult[] = [
                 'id' => $iPhotoId,
-                'src' => $sPhotoSrc,
-                'src_medium' => $sPhotoSrcMedium,
-                'src_orig' => $sPhotoSrcBig,
-            );
+                'src' => $sPhotoSrcMd,
+                'src_small' => $sPhotoSrcSm,
+                'src_medium' => $sPhotoSrcMd,
+                'src_orig' => $sPhotoSrcLg,
+            ];
         }
 
         return $aResult;
