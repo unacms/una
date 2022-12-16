@@ -121,7 +121,7 @@ class BxStrmTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
         return $this->parseHtmlByName('stream_viewers.html', array(
-            'viewers' => _t('_bx_stream_txt_viewers_loading'),
+            'viewers' => _t('_bx_stream_txt_wait_for_stream'),
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'url' => BX_DOL_URL_MODULES . '?r=' . $this->getModule()->_oConfig->getUri() . '/stream_viewers/' . $aContentInfo[$CNF['FIELD_ID']]
         ));
@@ -160,11 +160,17 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         if (!isset($aOptions['mute']))
             $aOptions['mute'] = getParam('bx_stream_mute') ? 1 : 0;
 
+        if (isset($aOptions['autostart']))
+            $aOptions['autostart'] = $aOptions['autostart'] ? 1 : 0;
+        else
+            $aOptions['autostart'] = 1;
+
         return $this->parseHtmlByName('stream_player.html', array(
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'sources' => $sSources,
             'mute' => $aOptions['mute'],
             'image' => $sImage,
+            'autostart' => $aOptions['autostart'],
         ));
     }
 
@@ -175,7 +181,10 @@ class BxStrmTemplate extends BxBaseModTextTemplate
         // TODO: visibility and other checks
 
         $sCode = $this->parseHtmlByName('stream_embed.html', array(
-            'player' => $this->entryStreamPlayer ($aContentInfo, ['mute' => (getParam('bx_stream_mute_embed') ? 1 : 0)]),
+            'player' => $this->entryStreamPlayer ($aContentInfo, [
+                'mute' => getParam('bx_stream_mute_embed') ? 1 : 0,
+                'autostart' => 0,
+            ]),
             'viewers' => $this->entryStreamViewers ($aContentInfo),
         ));
 
