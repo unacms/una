@@ -51,3 +51,6 @@ import url(../../../../../../../template/css/cover.css);
 .bx-image-edit-buttons-no-image .bx-image-edit-buttons-edit{
     display: none;
 }
+.bx-image-edit-buttons .bx-uploader-html5-drop-area{
+    display: none;
+}

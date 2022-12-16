@@ -239,17 +239,18 @@ BxDolUploaderBase.prototype.deleteGhost = function (iFileId) {
 };
 
 BxDolUploaderBase.prototype._clearErrors = function () {
-    $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).html('');
+    $(' #' + this._sErrorsContainerId).html('');
     this._isErrorShown = false;
 }
 
 BxDolUploaderBase.prototype._showError = function (s, bAppend) {
+    console.log('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId);
     if (s == undefined || !s.length)
         return;
     if (!bAppend)
-        $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).html(this._sTemplateError.replace('{error}', s));
+        $('#' + this._sErrorsContainerId).html(this._sTemplateError.replace('{error}', s));
     else
-        $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
+        $('#' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
     this._isErrorShown = true;
 };
 
@@ -461,7 +462,6 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             this._uploader = null;
 
         var $this = this;
-
         var _options = {
             allowProcess: false,
             allowRevert: false,
@@ -484,7 +484,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             },
             onerror: (error) => { 
                 if (error.main)
-                    $this._showError(error.main + '. ' + error.sub, true);
+                    $this._showError(error.main + '. ' + error.sub);
             },
             onprocessfiles: (files) => { 
                 $this.onUploadCompleted(''); 

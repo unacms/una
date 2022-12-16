@@ -8,6 +8,7 @@
  * @{
  */
 
+
 function BxBaseModGroupsInvitePopup(oOptions) {
     this._sActionsUrl = oOptions.sActionUrl;
     this._sPopupId = oOptions.sPopupId == undefined ? {} : oOptions.sPopupId;

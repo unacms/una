@@ -46,7 +46,6 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_TITLE' => 'fullname',
             'FIELD_TEXT' => 'description',
             'FIELD_PICTURE' => 'picture',
-            'FIELD_PICTURE_POSITION' => 'picture_data',
             'FIELD_COVER' => 'cover',
             'FIELD_COVER_POSITION' => 'cover_data',
             'FIELD_BIRTHDAY' => 'birthday',

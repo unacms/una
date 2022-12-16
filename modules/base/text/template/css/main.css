@@ -59,7 +59,7 @@
     display: block;
 
     width: 100%;
-    height: 300px;
+    min-height: 300px;
     object-fit: cover;
 }
 .bx-media-phone .bx-base-text-unit-cover img {

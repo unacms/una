@@ -272,6 +272,13 @@ class BxDolCmtsQuery extends BxDolDb
         if(($oCf = $this->_oMain->getObjectContentFilter()) !== false)
             $sWhereClause .= $oCf->getSQLParts($this->_sTable, 'cmt_cf');
 
+        bx_alert('comment', 'get_comments', 0, bx_get_logged_profile_id(), array(
+            'system' => $this->_oMain->getSystemInfo(), 
+            'join_clause' => &$sJoinClause, 
+            'where_clause' => &$sWhereClause, 
+            'params' => &$aBindings
+        ));
+        
         $sQuery = "SELECT
                 COUNT(*) 
             FROM `{$this->_sTable}` 

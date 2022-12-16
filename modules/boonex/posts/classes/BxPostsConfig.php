@@ -50,6 +50,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_FILE' => 'files',
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_THUMB_POSITION' => 'thumb_data',
             'FIELD_LINK' => 'link',
             'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_VIEWS' => 'views',
@@ -147,7 +148,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_posts_administration',
             'OBJECT_GRID_COMMON' => 'bx_posts_common',
             'OBJECT_GRID_CATEGORIES' => 'bx_posts_categories',
-            'OBJECT_UPLOADERS' => array('bx_posts_simple', 'bx_posts_html5'),
+            'OBJECT_UPLOADERS' => array('bx_posts_html5'),
             'OBJECT_CONTENT_INFO' => 'bx_posts',
             'OBJECT_CMTS_CONTENT_INFO' => 'bx_posts_cmts',
             

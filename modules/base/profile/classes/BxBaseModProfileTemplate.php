@@ -346,12 +346,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             else
                 $sUrlCover = $this->getImageUrl('cover.svg');
 
-            $sCoverTweak = '';
-            $sUniqIdCover = genRndPwd (8, false);
-            if ($bIsAllowEditCover){
-                $sCoverTweak = $this->_prepareImage($aData, $sUniqIdCover, $CNF['OBJECT_UPLOADERS_COVER'], $CNF['OBJECT_STORAGE_COVER'], $CNF['FIELD_COVER'], true);
-            }
-            
             $sAddClassCover = "";
             if(isset($CNF['FIELD_COVER']) && isset($CNF['OBJECT_UPLOADERS_COVER']) && isset($CNF['OBJECT_STORAGE_COVER']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])){
                 bx_alert('system', 'image_editor', 0, 0, array(
@@ -368,6 +362,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'add_class' => &$sAddClassCover,
                    'add_code' => &$sAddCode
                 ));
+            }
+            
+            $sCoverTweak = '';
+            $sUniqIdCover = genRndPwd (8, false);
+            if ($bIsAllowEditCover && empty($sAddCode)){
+                $sCoverTweak = $this->_prepareImage($aData, $sUniqIdCover, $CNF['OBJECT_UPLOADERS_COVER'], $CNF['OBJECT_STORAGE_COVER'], $CNF['FIELD_COVER'], true);
             }
             
             $aTmplVarsShowCover = [
@@ -396,12 +396,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sUrlPicture = $this->urlPicture ($aData);
             $sUrlPictureChange = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]));
 
-            $sPictureTweak = '';
-            $sUniqIdPicture = genRndPwd (8, false);
-            if ($bIsAllowEditPicture){
-                $sPictureTweak = $this->_prepareImage($aData, $sUniqIdPicture, $CNF['OBJECT_UPLOADERS_PICTURE'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_PICTURE'], false);
-            }
-            
             $sAddClassPicture = "";
             if(isset($CNF['FIELD_PICTURE']) && isset($CNF['OBJECT_UPLOADERS_PICTURE']) && isset($CNF['OBJECT_STORAGE']) && isset($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])){
                 bx_alert('system', 'image_editor', 0, 0, array(
@@ -418,6 +412,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                    'add_class' => &$sAddClassPicture,
                    'add_code' => &$sAddCode
                 )); 
+            }
+            
+            $sPictureTweak = '';
+            $sUniqIdPicture = genRndPwd (8, false);
+            if ($bIsAllowEditPicture && empty($sAddCode)){
+                $sPictureTweak = $this->_prepareImage($aData, $sUniqIdPicture, $CNF['OBJECT_UPLOADERS_PICTURE'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_PICTURE'], false);
             }
 
             $aTmplVarsShowAvatar = array(

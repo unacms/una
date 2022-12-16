@@ -719,6 +719,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'storage_private' => '0',
             'btn_class' => '',
             'button_title' => '',
+            'attrs' => "class='hidden'"
         ];
 
         $sAddCode = $this->parseHtmlByName('image_tweak.html', [
@@ -733,7 +734,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'uploader' => $oUploader->getUploaderButton($aParamsButtons),
             'uploader_js' => $sUploadersJs,
         ]); 
-        $this->addJsTranslation(['_sys_txt_form_entry_input_image_reposition_info']);
+        $this->addJsTranslation(['_sys_txt_form_entry_input_image_reposition_info']);        
         return $sAddCode;
     }
 

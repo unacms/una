@@ -56,6 +56,10 @@
     display: none;
 }
 
+.bx-image-edit-buttons .bx-uploader-html5-drop-area{
+    display: none;
+}
+
 .bx-cover-gradient {
     position: absolute;
     width: 100%;

@@ -643,15 +643,25 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             )); 
         }
 
+        $sImageTweak = '';
+        $sUniqIdImage = genRndPwd (8, false);
+        if ($bIsAllowEditPicture && empty($sAddCode)){
+            $sImageTweak = $this->_prepareImage($aData, $sUniqIdImage, $CNF['OBJECT_UPLOADERS'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_THUMB'], true);
+        }
+
+        
         $aVars['content_description_before'] = '';
         $aVars['content_description_after'] = '';
         $aVars['bx_if:show_image'] = array(
             'condition' => !empty($sImage),
             'content' => array(
                 'entry_image' => $sImage,
+                'image_settings' => isset($CNF['FIELD_THUMB_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_THUMB_POSITION']]) : '',
                 'add_class' => $sAddClassPicture,
                 'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
                 'additional_code' => $sAddCode,
+                'image_tweak' => $sImageTweak,
+                'unique_id' => $sUniqIdImage,
             )
         );
         
@@ -888,6 +898,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $bBadgesSingle = isset($aParams['badges_single']) ? $aParams['badges_single'] : false;
         $bBadgesCompact = isset($aParams['badges_compact']) ? $aParams['badges_compact'] : false;
 
+        $sCoverData = isset($aData['thumb_data']) ? $aData['thumb_data'] : '';
+        
         $aTmplVars = array (
             'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
@@ -917,6 +929,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'content_url' => $sUrl,
                     'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
                     'gallery_url' => $sPhotoGallery ? $sPhotoGallery : '',
+                    'image_settings' => $this->_getImageSettings($sCoverData),
                     'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40),
                 ),
             ),

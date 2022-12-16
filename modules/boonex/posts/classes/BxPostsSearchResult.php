@@ -21,7 +21,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_posts',
             'title' => _t('_bx_posts_page_title_browse'),
             'table' => 'bx_posts_posts',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
+            'ownFields' => array('id', 'title', 'text', 'thumb', 'thumb_data', 'author', 'added'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
