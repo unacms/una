@@ -127,11 +127,13 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE_VIDEOS' => 'bx_forum_videos',
             'OBJECT_STORAGE_CMTS' => 'bx_forum_files_cmts', // for comments
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_forum_preview',
+            'OBJECT_IMAGES_TRANSCODER_MINIATURE' => 'bx_forum_miniature',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_forum_gallery',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_forum_cover',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES' => 'bx_forum_preview_files',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_forum_gallery_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_forum_preview_photos',
+            'OBJECT_IMAGES_TRANSCODER_MINIATURE_PHOTOS' => 'bx_forum_miniature_photos',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_forum_gallery_photos',
             'OBJECT_IMAGES_TRANSCODER_VIEW_PHOTOS' => 'bx_forum_view_photos',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts', // for comments

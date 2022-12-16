@@ -71,10 +71,12 @@ $aConfig = array(
      */
     'transcoders' => array(
         'bx_posts_preview',
+        'bx_posts_miniature',
         'bx_posts_gallery',
         'bx_posts_cover',
 
         'bx_posts_preview_photos',
+        'bx_posts_miniature_photos',
         'bx_posts_gallery_photos',
         'bx_posts_view_photos',
 
