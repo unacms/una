@@ -763,7 +763,7 @@ class BxBasePage extends BxDolPage
             $sContent = $oWiki->getBlockContent($aBlock['id'], false, (int)bx_get($aBlock['id'].'rev') ? (int)bx_get($aBlock['id'].'rev') : false);
         }
 
-        $s = '<div id="bx-page-wiki-container-' . $aBlock['id'] . '" class="bx-page-wiki-container markdown-body">' . $sContent . '</div>';
+        $s = '<div id="bx-page-wiki-container-' . $aBlock['id'] . '" class="bx-page-wiki-container markdown-body bx-def-vanilla-html">' . $sContent . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
