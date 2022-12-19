@@ -58,7 +58,7 @@ class BxBaseServiceWiki extends BxDol
                     $this->_addCssJs (true);
                     $s = $oTemplate->parseHtmlByName('wiki_create_page.html', array(
                         'page_uri' => bx_process_output($sUri),
-                        'action_uri' => $oWiki->getWikiUri(),
+                        'action_uri' => $oWiki->getUri(),
                         'create_page' => _t('_sys_wiki_add_page'),
                         'text' => _t('_sys_wiki_add_page_text'),
                     ));
@@ -148,7 +148,7 @@ class BxBaseServiceWiki extends BxDol
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
                 'language' => isset($aWikiVer['language']) ? $aWikiVer['language'] : bx_lang_name(),
-                'wiki_action_uri' => $oWikiObject->getWikiUri(),
+                'wiki_action_uri' => $oWikiObject->getUri(),
                 't_confirm_block_deletion' => _t('_sys_wiki_confirm_block_deletion'),
             )),
             'bx_if:menu' => array(
@@ -186,7 +186,7 @@ class BxBaseServiceWiki extends BxDol
             'add_block' => _t('_sys_wiki_add_block'),
             'page' => $sPageObject,
             'cell_id' => $iCellId,
-            'action_uri' => $oWikiObject->getWikiUri(),
+            'action_uri' => $oWikiObject->getUri(),
         ));
     }
 
@@ -237,7 +237,7 @@ class BxBaseServiceWiki extends BxDol
         if (!($oWiki = BxDolWiki::getObjectInstance($aPage['module'])))
             return '';
 
-        BxDolTemplate::getInstance()->addCss(['wiki.css', 'wiki-github-markdown.css']);
+        BxDolTemplate::getInstance()->addCss(['wiki.css']);
 
         return $oWiki->getContents();
     }
@@ -268,7 +268,7 @@ class BxBaseServiceWiki extends BxDol
             return false;
 
         $o = BxDolTemplate::getInstance();
-        $o->addCss(['wiki.css', 'wiki-github-markdown.css']);
+        $o->addCss(['wiki.css']);
         $o->addJs('BxDolWiki.js');
         $o->addJsTranslation('_sys_wiki_external_editor_references_comment');
         if ($bAddPage)

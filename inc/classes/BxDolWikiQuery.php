@@ -14,6 +14,7 @@
 class BxDolWikiQuery extends BxDolDb
 {
     protected $_aObject;
+    protected $_sTableBlocksWithRevisions = 'sys_pages_wiki_blocks';
 
     public function __construct($aObject)
     {
@@ -21,7 +22,7 @@ class BxDolWikiQuery extends BxDolDb
         $this->_aObject = $aObject;
     }
 
-    static public function getWikiBlocks ($sModule)
+    static public function getBlocks ($sModule)
     {
         $oDb = BxDolDb::getInstance();
         return $oDb->getColumn("SELECT `id` FROM `sys_pages_blocks` WHERE `module` = :module", ['module' => $sModule]);
@@ -75,13 +76,13 @@ class BxDolWikiQuery extends BxDolDb
             }
 
             // get latest revision for specific language
-            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `{$this->_sTableBlocksWithRevisions}` WHERE `block_id` = :block AND `language` = :language $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
         }
 
         // if translation isn't found for specific language then get latest revision for main language 
         if ($bAutoMainLang && !$aRow) {
             unset($aBind['language']);
-            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `{$this->_sTableBlocksWithRevisions}` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
         }
 
         return $aRow ? $aRow : false;
@@ -89,7 +90,7 @@ class BxDolWikiQuery extends BxDolDb
 
     public function getBlockLangs ($iBlockId)
     {
-        return $this->getColumn("SELECT `language` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block GROUP BY `language`", array('block' => $iBlockId));
+        return $this->getColumn("SELECT `language` FROM `{$this->_sTableBlocksWithRevisions}` WHERE `block_id` = :block GROUP BY `language`", array('block' => $iBlockId));
     }
 
     public function updateBlockIndexingData ($iBlockId, $sText)
@@ -100,7 +101,7 @@ class BxDolWikiQuery extends BxDolDb
     public function getBlockHistory ($iBlockId, $sLang)
     {
         $aBind = array('block' => $iBlockId, 'language' => $sLang);
-        return $this->getAll("SELECT `block_id`, `language`, `revision`, `profile_id`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language ORDER BY `revision` DESC", $aBind);
+        return $this->getAll("SELECT `block_id`, `language`, `revision`, `profile_id`, `notes`, `added` FROM `{$this->_sTableBlocksWithRevisions}` WHERE `block_id` = :block AND `language` = :language ORDER BY `revision` DESC", $aBind);
     }
 
     public function getBlocksWithMissingTranslations ($sLang)
@@ -108,9 +109,9 @@ class BxDolWikiQuery extends BxDolDb
         $aBind = array('lang' => $sLang, 'module' => $this->_aObject['module']);
         return $this->getColumn("
             SELECT `wo`.`block_id`
-            FROM `sys_pages_wiki_blocks` AS `wo`
+            FROM `{$this->_sTableBlocksWithRevisions}` AS `wo`
             INNER JOIN `sys_pages_blocks` AS `b` ON (`wo`.`block_id` = `b`.`id` AND `b`.`module` = :module)
-            LEFT JOIN `sys_pages_wiki_blocks` AS `wt` ON (`wo`.`block_id` = `wt`.`block_id` AND `wt`.`language` = :lang AND `wt`.`main_lang` != 1)            
+            LEFT JOIN `{$this->_sTableBlocksWithRevisions}` AS `wt` ON (`wo`.`block_id` = `wt`.`block_id` AND `wt`.`language` = :lang AND `wt`.`main_lang` != 1)            
             WHERE `wo`.`main_lang` = 1 AND `wo`.`language` != :lang AND `wt`.`block_id` IS NULL
             GROUP BY `wo`.`block_id`", $aBind);
     }
@@ -120,9 +121,9 @@ class BxDolWikiQuery extends BxDolDb
         $aBind = array('lang' => $sLang, 'module' => $this->_aObject['module']);
         return $this->getColumn("
             SELECT `wo`.`block_id`
-            FROM `sys_pages_wiki_blocks` AS `wo`
+            FROM `{$this->_sTableBlocksWithRevisions}` AS `wo`
             INNER JOIN `sys_pages_blocks` AS `b` ON (`wo`.`block_id` = `b`.`id` AND `b`.`module` = :module)
-            INNER JOIN `sys_pages_wiki_blocks` AS `wt` ON (`wo`.`block_id` = `wt`.`block_id` AND `wt`.`language` = :lang AND `wt`.`main_lang` != 1)
+            INNER JOIN `{$this->_sTableBlocksWithRevisions}` AS `wt` ON (`wo`.`block_id` = `wt`.`block_id` AND `wt`.`language` = :lang AND `wt`.`main_lang` != 1)
             WHERE `wo`.`main_lang` = 1 AND `wo`.`language` != :lang
             GROUP BY `wo`.`block_id`
             HAVING MAX(`wt`.`added`) < MAX(`wo`.`added`)", $aBind);
@@ -131,13 +132,13 @@ class BxDolWikiQuery extends BxDolDb
     public function deleteRevisions ($iBlockId, $sLang, $aRevisions)
     {
         $aBind = array('block' => $iBlockId, 'language' => $sLang);
-        $i = $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
-        if ($i) { 
+        $i = $this->query("DELETE FROM `{$this->_sTableBlocksWithRevisions}` WHERE `block_id` = :block AND `language` = :language AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
+        if ($i) {
             // check if main language revisions was deleted
-            $aRow = $this->getOne("SELECT `block_id` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 LIMIT 1", array('block' => $iBlockId));
+            $aRow = $this->getOne("SELECT `block_id` FROM `{$this->_sTableBlocksWithRevisions}` WHERE `block_id` = :block AND `main_lang` = 1 LIMIT 1", array('block' => $iBlockId));
             if (!$aRow) {
                 // if main lang was deleted then mark latest translation from any lang as main
-                $this->query("UPDATE `sys_pages_wiki_blocks` SET `main_lang` = 1 WHERE `block_id` = :block ORDER BY `added` DESC LIMIT 1", array('block' => $iBlockId));
+                $this->query("UPDATE `{$this->_sTableBlocksWithRevisions}` SET `main_lang` = 1 WHERE `block_id` = :block ORDER BY `added` DESC LIMIT 1", array('block' => $iBlockId));
             }
         }
         return $i;
@@ -169,6 +170,8 @@ class BxDolWikiQuery extends BxDolDb
         $oDb = BxDolDb::getInstance();
         if (!is_array($mixedBlockIds))
             $mixedBlockId = array($mixedBlockIds);
+
+        // TODO: remake to use $this->_sTableBlocksWithRevisions
         return $oDb->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` IN(" . $oDb->implode_escape($mixedBlockIds) . ")");
     }
 }

@@ -45,6 +45,8 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     protected $_sObject;
     protected $_aObject;
     protected $_sLangCateg = 'Wiki';
+    protected $_sACLprefix = 'wiki ';
+    protected $_bProcessMarkdown = true;
 
     /**
      * Constructor
@@ -98,7 +100,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
     static public function onModuleUninstall($sModule)
     {
-        $aBlockIds = BxDolWikiQuery::getWikiBlocks ($sModule);
+        $aBlockIds = BxDolWikiQuery::getBlocks ($sModule);
         if ($aBlockIds && is_array($aBlockIds))
             self::onBlockDelete($aBlockIds);
     }
@@ -126,9 +128,9 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Get wiki URi
+     * Get URI
      */
-    public function getWikiUri ()
+    public function getUri ()
     {
         return $this->_aObject['uri'];
     }
@@ -149,9 +151,14 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, $iRevision);
         $aWikiLatest = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
         if ($aWikiVer) {
-            $oParsedown = new BxDolParsedown();
-            $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
-            $s = $oParsedown->text($aWikiVer['content']);
+            if ($this->_bProcessMarkdown) {
+                $oParsedown = new BxDolParsedown();
+                $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
+                $s = $oParsedown->text($aWikiVer['content']);
+            }
+            else {
+                $s = $aWikiVer['content'];
+            }
         }
 
         if (!$aWikiVer && $aWikiLatest) {
@@ -339,8 +346,8 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (true === $aTypes[$sType] || false === $aTypes[$sType])
             return $aTypes[$sType];
 
-        // all system actions starts with 'wiki '
-        $sAction = ('system' == $this->_aObject['module'] ? 'wiki ' : '') . $aTypes[$sType];
+        // all system actions starts with special prefix
+        $sAction = ('system' == $this->_aObject['module'] ? $this->_sACLprefix : '') . $aTypes[$sType];
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         $aCheck = checkActionModule($iProfileId, $sAction, $this->_aObject['module']);
@@ -435,7 +442,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return BxDolTemplate::getInstance()->parseHtmlByName('wiki_form.html', array(
                 'form' => $oForm->getCode(),
                 'block_id' => $iBlockId,
-                'wiki_action_uri' => $this->getWikiUri(),
+                'wiki_action_uri' => $this->getUri(),
                 'action' => 'delete-version',
                 'txt_open_editor' => bx_js_string(_t('_sys_wiki_open_in_editor')),
             ));
@@ -548,7 +555,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             // display form
             return BxDolTemplate::getInstance()->parseHtmlByName('wiki_create_page_form.html', array(
                 'form' => $oForm->getCode(),
-                'wiki_action_uri' => $this->getWikiUri(),
+                'wiki_action_uri' => $this->getUri(),
                 'action' => 'add-page',
             ));
         }
@@ -639,7 +646,9 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, bx_lang_name());
         }
 
-        unset($aWikiVer['notes']); // unset notes since we need this field empty in the form
+        if ($aWikiVer) // unset notes since we need this field empty in the form
+            unset($aWikiVer['notes']);
+
         if (!$aWikiVer) { // check for new block, so initialize with default values
             $aWikiVer = array('block_id' => $iBlockId);
             if ($bTranslate)
@@ -666,7 +675,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return BxDolTemplate::getInstance()->parseHtmlByName('wiki_form.html', array(
                 'form' => $oForm->getCode(),
                 'block_id' => $iBlockId,
-                'wiki_action_uri' => $this->getWikiUri(),
+                'wiki_action_uri' => $this->getUri(),
                 'action' => $bTranslate ? 'translate' : 'edit',
                 'txt_open_editor' => bx_js_string(_t('_sys_wiki_open_in_editor')),
             ));
@@ -749,7 +758,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         // add references to existing pages, so short references will work in external editor
         $s .= "\n<!-- " . _t("_sys_wiki_external_editor_references_comment") . " -->\n";
 
-        $this->_aPages = BxDolWikiQuery::getAllPages ();
+        $this->_aPages = $this->_oQuery->getAllPages ();
         if ($this->_aPages) {
             foreach ($this->_aPages as $sUri => $r)
                 $s .= "[{$sUri}]: " . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($r['url']) . "\n";
@@ -901,6 +910,10 @@ class BxDolParsedown extends Parsedown
             }
         }
 
+        if ($a && @isset($a['element']['attributes']['title']) && '#' === $a['element']['attributes']['title']) {
+            $a['element']['attributes']['class'] = 'bx-def-font-grayed';
+        }
+
         return $a;
     }
 
@@ -935,7 +948,7 @@ class BxDolParsedown extends Parsedown
 
 				$aHandler = array(
 					'function' => 'lineElements',
-					'argument' => $sText,
+					'argument' => $sText . (isset($_SERVER['REQUEST_URI']) ? ' [#](' . bx_get_self_url() . '#' . $sLink . ' "#")' : ''),
 					'destination' => 'elements',
 				);
 
