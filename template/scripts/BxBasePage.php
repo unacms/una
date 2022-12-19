@@ -237,7 +237,8 @@ class BxBasePage extends BxDolPage
             'sub_page' => $this->_bSubPage,
         ));
 
-        $sPageCode .= $this->getJsScript();
+        if (!$this->_bSubPage)
+            $sPageCode .= $this->getJsScript();
         
         return $sPageCode;
     }

@@ -162,7 +162,10 @@ class BxDolWikiQuery extends BxDolDb
     public function insertPage ($sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 20, $iVisibleForLevels = 2147483647, $sClass = 'BxTemplPageWiki')
     {
         $oQueryPageBuilder = new BxDolStudioBuilderPageQuery();
-        return $oQueryPageBuilder->insertPage($this->_aObject['module'] . '_' . str_replace('-', '_', $sUri), $this->_aObject['module'], $sUri, $sUrl, $sTitleLangKey, $iType, $iLayoutId, $iVisibleForLevels, $sClass);
+        $iPageId = $oQueryPageBuilder->insertPage($this->_aObject['module'] . '_' . str_replace('-', '_', $sUri), $this->_aObject['module'], $sUri, $sUrl, $sTitleLangKey, $iType, $iLayoutId, $iVisibleForLevels, $sClass);
+        if ($iPageId)
+            $oQueryPageBuilder->updatePage($iPageId, ['sticky_columns' => 1]);
+        return $iPageId;
     }
 
     public static function deleteAllRevisions ($mixedBlockIds)
