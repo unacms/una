@@ -1046,6 +1046,7 @@ BxDolImageTweak.prototype.uploadComplete = function(obj){
     $.post(sUrl, function (aData) {
         if ($this._bAllowTweak){
             $(".bx-image-edit-source-" + $this._sUniqueId).css("background-image", "url(" + aData + ")").css('background-position', '');
+            $(".bx-image-edit-source-" + $this._sUniqueId).parents('.bx-base-pofile-cover-image.bx-bpci-holder').removeClass('bx-bpci-holder h-32 lg:h-32').addClass('h-64 lg:h-80')
         }
         else{
             $(".bx-image-edit-source-" + $this._sUniqueId).attr("src", aData);
