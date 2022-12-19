@@ -295,7 +295,6 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
             'subscription_id' => $sSubscription,
             'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $aSubscriber['client_first_name'], $aSubscriber['client_last_name']),
             'client_email' => $aSubscriber['client_email'],
-            'paid' => $bPaid,
             'trial' => $bTrial,
         );
 
