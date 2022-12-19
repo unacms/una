@@ -92,3 +92,11 @@ html .bx-page-wiki-container pre {
 html .stackedit-container {
     z-index:99999;
 }
+
+.markdown-body h1:first-child,
+.markdown-body h2:first-child,
+.markdown-body h3:first-child,
+.markdown-body h4:first-child,
+.markdown-body p {
+    margin-top:0;
+}
