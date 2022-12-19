@@ -2636,7 +2636,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aImageSizes = [
             'small' => '300w', 
-            'medium' => '5000w', 
+            'medium' => '500w', 
             'orig' => '1200w'
         ];
         foreach($aImages as $aImage) {
