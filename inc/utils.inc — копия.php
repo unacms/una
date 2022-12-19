@@ -21,8 +21,6 @@ define('BX_DATA_DATE_TS', 8); ///< date data type stored as unixtimestamp
 define('BX_DATA_DATETIME_TS', 9); ///< date/time data type stored as unixtimestamp
 define('BX_DATA_DATE_TS_UTC', 10); ///< date data type stored as unixtimestamp from UTC time
 define('BX_DATA_DATETIME_TS_UTC', 11); ///< date/time data type stored as unixtimestamp from UTC time
-define('BX_DATA_DATE_UTC', 13); ///< date data type stored as yyyy-mm-dd in UTC time
-define('BX_DATA_DATETIME_UTC', 14); ///< date/time data type stored as yyyy-mm-dd in UTC time
 
 define('BX_SLASHES_AUTO', 0);
 define('BX_SLASHES_ADD', 1);
@@ -216,10 +214,6 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATE:
     case BX_DATA_DATETIME:
         return $mixedData;
-    case BX_DATA_DATE_UTC:
-        return $mixedData . "Z";
-    case BX_DATA_DATETIME_UTC:
-        return $mixedData . "Z";
     case BX_DATA_DATE_TS:
         return empty($mixedData) ? '' : date("Y-m-d", (int)$mixedData);
     case BX_DATA_DATE_TS_UTC:
@@ -227,7 +221,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATETIME_TS:
         return empty($mixedData) ? '' : date("Y-m-d H:i", (int)$mixedData);
     case BX_DATA_DATETIME_TS_UTC:
-        return empty($mixedData) ? '' : gmdate("Y-m-d H:i:s\Z", (int)$mixedData);
+        return empty($mixedData) ? '' : gmdate("Y-m-d H:i", (int)$mixedData);
 
     case BX_DATA_HTML:
         $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
@@ -354,7 +348,7 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
 /**
  * Send email function
  *
- * @param $mRecipientEmails - Email where email should be send, can be array, string with one email or comma separated
+ * @param $sRecipientEmail - Email where email should be send
  * @param $sMailSubject - subject of the message
  * @param $sMailBody - Body of the message
  * @param $iRecipientID - ID of recipient profile
@@ -366,29 +360,7 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  * @param $bAddToQueue - add message to email queue
  * @return true if message was send or false otherwise
  */
-function sendMail($mRecipientEmails, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
-{
-    if (is_string($mRecipientEmails)){
-        if(strpos($mRecipientEmails, ',') !== false){
-            $mRecipientEmails = explode(',', $mRecipientEmails);
-        }
-        else{
-            return _sendMail($mRecipientEmails, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders, $bAddToQueue);
-        }
-    }
-    
-    if (is_array($mRecipientEmails)) {
-        $bReturn = false;
-        foreach($mRecipientEmails as $sRecipientEmail) {
-            $sRecipientEmail = trim($sRecipientEmail);
-            if (_sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders, $bAddToQueue))
-                $bReturn = true;
-        }
-        return $bReturn;
-    }
-}
-
-function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
+function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
 {
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
@@ -467,12 +439,6 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
         'custom_headers' => $aCustomHeaders,
         'override_result' => &$bResult,
     );
-    
-    // alert for disable sending
-    bx_alert('system', 'check_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
-    
-    if ($bResult !== null)
-        return $bResult;
 
     // system alert
     if (!$isDisableAlert) {
@@ -495,7 +461,8 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
         $sMailSubject = '=?UTF-8?B?' . base64_encode($sMailSubject) . '?=';
 
     // send mail or put it into queue
-    $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);
+    //$sRecipientEmail
+    $bResult = mail('user1@roma1.ru', $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);
 
     // system alert
     if (!$isDisableAlert)
@@ -681,7 +648,7 @@ function clear_xss($val)
 		        'src' => 'URI',
 		        'type' => 'Text',
             ));
-            $def->addAttribute('a', 'data-profile-id', 'Text');
+            $def->addAttribute('a', 'data-profile-id', 'Number');
             $def->addAttribute('div', 'source', 'Text');
 		}
 
@@ -691,23 +658,16 @@ function clear_xss($val)
     if (!$GLOBALS['logged']['admin'])
         $val = $oHtmlPurifier->purify($val);
 
-    $sNewVal = $val;
-    if (!$GLOBALS['logged']['admin'])
-        $sNewVal = $oHtmlPurifier->purify($val);
-
-    bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'input_data' => $val, 'return_data' => &$sNewVal));
+    bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'return_data' => &$val));
 
     return $val;
 }
 
 //--------------------------------------- friendly permalinks --------------------------------------//
 //------------------------------------------- main functions ---------------------------------------//
-function uriGenerate ($sValue, $sTable, $sField, $aParams = [])
+function uriGenerate ($sValue, $sTable, $sField, $sEmpty = '-', $sDivider = '-', $aCond = [])
 {
-    $sDivider = isset($aParams['divider']) ? $aParams['divider'] : '-';
-    $aCond = isset($aParams['cond']) && is_array($aParams['cond']) ? $aParams['cond'] : [];
-
-    $sValue = uriFilter($sValue, $aParams);
+    $sValue = uriFilter($sValue, $sEmpty, $sDivider);
     if(uriCheckUniq($sValue, $sTable, $sField, $aCond))
         return $sValue;
 
@@ -725,22 +685,17 @@ function uriGenerate ($sValue, $sTable, $sField, $aParams = [])
     return rand(0, PHP_INT_MAX);
 }
 
-function uriFilter ($s, $aParams = [])
+function uriFilter ($s, $sEmpty = '-', $sDivider = '-')
 {
-    $sEmpty = isset($aParams['empty']) ? $aParams['empty'] : '-';
-    $sDivider = isset($aParams['divider']) ? $aParams['divider'] : '-';
-
-    if(BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
+    if (BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
         $s = get_mb_replace ('/[^\pL^\pN^_]+/u', $sDivider, $s); // unicode characters
     else
         $s = get_mb_replace ('/([^\d^\w]+)/u', $sDivider, $s); // latin characters only
 
     $s = get_mb_replace ('/([' . $sDivider . '^]+)/', $sDivider, $s);
     $s = get_mb_replace ('/([' . $sDivider . ']+)$/', '', $s); // remove trailing dash
-    if(!$s) 
-        $s = $sEmpty;
-
-    return !isset($aParams['lowercase']) || $aParams['lowercase'] === true ? mb_strtolower($s) : $s;
+    if (!$s) $s = $sEmpty;
+    return mb_strtolower($s);
 }
 
 function uriCheckUniq ($sValue, $sTable, $sField, $aCond = [])
@@ -842,10 +797,6 @@ function bx_import($sClassName, $mixedModule = array())
 
         if (file_exists($sPath)) {
             require_once($sPath);
-            return;
-        }
-        else{
-            require_once(BX_DIRECTORY_PATH_BASE . 'scripts/templ/' . $sClassName . '.php');
             return;
         }
 
@@ -1258,7 +1209,7 @@ function bx_get_reset_password_link($sValue, $sField = 'email', $iLifetime = 0)
 
 function bx_get_reset_password_link_by_key($sKey)
 {
-    return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $sKey)));
+    return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $sKey));
 }
 
 function bx_get_reset_password_redirect($iAccountId)
@@ -1295,8 +1246,8 @@ function bx_get_reset_password_redirect($iAccountId)
             break;
     }
 
-    if(!empty($sResult))
-        $sResult = bx_absolute_url($sResult);
+    if(!empty($sResult) && mb_stripos($sResult, BX_DOL_URL_ROOT) !== 0)
+        $sResult = BX_DOL_URL_ROOT . $sResult;
 
     return $sResult;
 }
@@ -1518,12 +1469,6 @@ function bx_append_url_params ($sUrl, $mixedParams, $bEncodeParams = true, $aIgn
         $sParams .= $mixedParams;
     }
     return $sUrl . $sParams;
-}
-
-function bx_process_url_param($sValue, $sPattern = "/^[\d\w_-]+$/")
-{
-    $mixedValue = bx_process_input($sValue);
-    return $mixedValue !== false && preg_match($sPattern, $mixedValue) ? $mixedValue : '';
 }
 
 function bx_rrmdir($directory)
@@ -2270,11 +2215,6 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
 {
     $aUrl = 'auto' === $sPath || 'auto' === $bSecure ? parse_url(BX_DOL_URL_ROOT) : [];
 
-    if (defined('BX_MULTISITE_URL_COOKIE')) {
-        $aUrl = parse_url(BX_MULTISITE_URL_COOKIE);
-        $sDomain = $aUrl['host'];
-    }
-
     if ('auto' === $sPath)
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 
@@ -2282,7 +2222,7 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
         $bSecure = 0 === strcasecmp('https', $aUrl['scheme']);
 
     if (PHP_VERSION_ID < 70300) {
-        if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName))
+        if ('memberPassword' == $sName || 'memberSession' == $sName)
             $sPath .= '; SameSite=' . getParam('sys_samesite_cookies');
         return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
     } 
@@ -2294,7 +2234,7 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
             'secure' => $bSecure, 
             'httponly' => $bHttpOnly,
         ];
-        if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
+        if (!isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
             $aOptions['samesite'] = getParam('sys_samesite_cookies');
 
         return setcookie($sName, $sValue, $aOptions);
@@ -2312,13 +2252,6 @@ function is_private_ip ($sIp)
         return false;
 
     return filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== $sIp;
-}
-
-function bx_absolute_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
-{
-    if (!preg_match('/^https?:\/\//', $sUrl))
-        $sUrl = $sPrefix . $sUrl;
-    return $sUrl;
 }
 
 /** @} */
