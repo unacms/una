@@ -18,8 +18,8 @@ function bx_base_general_select_ghost(eCheckbox, sName) {
         return;
 
     eCont.find('.bx-base-general-use-as-' + sName + ' input:checked').each (function () {        
-        if($(this).attr('id') != $(eCheckbox).attr('id'))
-        	$(this).css('border', '1px solid red').attr('checked', false);
+        if($(this).prop('id') != $(eCheckbox).prop('id'))
+        	$(this).prop('checked', false);
     });
 }
 
