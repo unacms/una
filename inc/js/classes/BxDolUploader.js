@@ -1071,6 +1071,8 @@ BxDolImageTweak.prototype.changePosition = function (){
 BxDolImageTweak.prototype.cancelPosition = function (){
     var $this = this;
     $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
+    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').unbind('dragover'); 
+    
     with ($this._oContainerButtons) {
         find('.bx-image-edit-buttons-cancel').addClass('hidden');
         find('.bx-image-edit-buttons-save').addClass('hidden');
@@ -1083,6 +1085,7 @@ BxDolImageTweak.prototype.savePosition = function (){
     var $this = this;
     
     $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
+    $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').unbind('dragover'); 
     $(".bx-image-edit-source-" + $this._sUniqueId).removeClass('bx-image-edit-move')
     
     aPos = $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position').split(' ');
