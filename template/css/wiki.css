@@ -100,3 +100,7 @@ html .stackedit-container {
 .markdown-body p {
     margin-top:0;
 }
+
+.markdown-body a[title="#"]:after {
+    content:"#";
+}
