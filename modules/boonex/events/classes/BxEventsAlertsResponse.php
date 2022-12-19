@@ -16,6 +16,19 @@ class BxEventsAlertsResponse extends BxBaseModGroupsAlertsResponse
     	$this->MODULE = 'bx_events';
         parent::__construct();
     }
+    
+    public function response($oAlert)
+    {
+        parent::response($oAlert);
+        if(isset($oAlert->aExtras['module'] ) && $oAlert->aExtras['module'] == $this->MODULE && $oAlert->sAction == 'check_allowed_fan_add' && $oAlert->sUnit == 'system'){
+           if (getParam('bx_events_enable_subscribe_for_past_events') != 'on'){
+               $CNF = $this->_oModule->_oConfig->CNF;
+               if ($oAlert->aExtras['content_info'][$CNF['FIELD_DATE_END']] < time()){
+                   $oAlert->aExtras['override_result'] = false;
+               }
+           }
+        }
+    }
 }
 
 /** @} */

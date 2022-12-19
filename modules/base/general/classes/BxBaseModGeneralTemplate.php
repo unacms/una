@@ -734,7 +734,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'uploader' => $oUploader->getUploaderButton($aParamsButtons),
             'uploader_js' => $sUploadersJs,
         ]); 
-        $this->addJsTranslation(['_sys_txt_form_entry_input_image_reposition_info']);        
+        $this->addJsTranslation(['_sys_uploader_image_reposition_info']);        
         return $sAddCode;
     }
 

@@ -948,7 +948,7 @@ class BxDolParsedown extends Parsedown
 
 				$aHandler = array(
 					'function' => 'lineElements',
-					'argument' => $sText . (isset($_SERVER['REQUEST_URI']) ? ' [#](' . bx_get_self_url() . '#' . $sLink . ' "#")' : ''),
+					'argument' => $sText . (isset($_SERVER['REQUEST_URI']) ? ' [](' . bx_get_self_url() . '#' . $sLink . ' "#")' : ''),
 					'destination' => 'elements',
 				);
 

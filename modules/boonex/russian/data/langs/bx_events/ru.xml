@@ -18,6 +18,7 @@
     <string name="_bx_events_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
     <string name="_bx_events_option_enable_subscribe_wo_join"><![CDATA[Разрешить помечать как 'Заинтересован' пользователям, не являющимся участниками события]]></string>
     <string name="_bx_events_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
+    <string name="_bx_events_option_enable_subscribe_for_past_events"><![CDATA[Разрешить присоединение к прошедшим событиям]]></string>
 
     <string name="_bx_events_form_profile"><![CDATA[События]]></string>
     <string name="_bx_events_form_profile_display_add"><![CDATA[Добавление события]]></string>
