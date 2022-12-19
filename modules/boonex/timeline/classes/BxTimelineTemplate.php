@@ -2635,9 +2635,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iImageFirst = isset($aImageFirst['id']) ? (int)$aImageFirst['id'] : 0;
 
         $aImageSizes = [
-            'small' => '600w', 
-            'medium' => '1000w', 
-            'orig' => '2400w'
+            'small' => '300w', 
+            'medium' => '500w', 
+            'orig' => '1200w'
         ];
         foreach($aImages as $aImage) {
             $sImageSrcKeyCur = $sImageSrcKey;
