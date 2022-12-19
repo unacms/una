@@ -8,10 +8,6 @@
     cursor: move;
 }
 
-.bx-uploader-ghost .bx-base-general-icon-wrapper {
-    float:left;
-}
-
 .bx-uploader-ghost .bx-btn {
 	float: none;
 	display: inline-block;
