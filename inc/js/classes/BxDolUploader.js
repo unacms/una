@@ -1049,7 +1049,8 @@ BxDolImageTweak.prototype.uploadComplete = function(obj){
             $(".bx-image-edit-source-" + $this._sUniqueId).parents('.bx-base-pofile-cover-image.bx-bpci-holder').removeClass('bx-bpci-holder h-32 lg:h-32').addClass('h-64 lg:h-80')
         }
         else{
-            $(".bx-image-edit-source-" + $this._sUniqueId).attr("src", aData);
+            $(".bx-image-edit-source-" + $this._sUniqueId).attr("src", aData).show();
+            $(".bx-image-edit-source-" + $this._sUniqueId).parents('.bx-base-pofile-cover-thumb').find('p.bx-base-pofile-unit-thumb').hide();
         }
     });
 }
