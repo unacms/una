@@ -721,6 +721,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'button_title' => '',
             'attrs' => "class='hidden'"
         ];
+        
+        $this->addJs(['BxDolUploader.js']);
 
         $sAddCode = $this->parseHtmlByName('image_tweak.html', [
             'id' => $aData['id'],
