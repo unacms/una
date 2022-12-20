@@ -845,7 +845,7 @@ function bx_import($sClassName, $mixedModule = array())
             return;
         }
         else{
-            require_once(BX_DIRECTORY_PATH_BASE . 'scripts/templ/' . $sClassName . '.php');
+            require_once(BX_DIRECTORY_PATH_BASE . 'scripts_templ/' . $sClassName . '.php');
             return;
         }
 
