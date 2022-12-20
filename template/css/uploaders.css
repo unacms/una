@@ -18,6 +18,7 @@
     flex-direction: column;
     position: relative;
     min-width: 150px;
+    min-height: 40px;
 }
 
 .bx-form-input-files-result{

@@ -244,7 +244,6 @@ BxDolUploaderBase.prototype._clearErrors = function () {
 }
 
 BxDolUploaderBase.prototype._showError = function (s, bAppend) {
-    console.log('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId);
     if (s == undefined || !s.length)
         return;
     if (!bAppend)
@@ -506,7 +505,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 oProgress =  $('#' + $this._sProgressContainerId);
                 
                 if (oProgress.parents('form').find('.uploader_progress').length > 0){
-                    oProgress = oProgress.parents('form').find('.uploader_progress');
+                    oProgress = oProgress.parents('.bx-db-container').find('.uploader_progress');
                 }
                 if (iProgress == 100){
                     oProgress.hide();
@@ -1022,7 +1021,7 @@ function BxDolImageTweak (unique_id, action_url, content_id, field, js_object, a
     this._sJsObject = js_object;
     this._bAllowTweak = allow_tweak;
     this._oContainerButtons = $('.bx-image-edit-buttons-' + unique_id);
-    
+    this._oContainerButtons.removeClass('hidden');
     $("#bx-form-input-files-" + this._sUniqueId + "-upload-result").bind( "contentchange", function(){ 
         $this.uploadComplete($(this));
     });

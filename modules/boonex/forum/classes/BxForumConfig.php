@@ -62,6 +62,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_FILE' => 'files',
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_THUMB_POSITION' => 'thumb_data',
             'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_LINK' => 'link',
             'FIELD_VIEWS' => 'views',

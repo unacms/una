@@ -699,7 +699,6 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $sJsName = '';
         foreach ($aUploaders as $sUploaderObject) {
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorage, $sUniqId, $this);
-
             $sGhostTemplate = '{file_id}';
 
             $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
@@ -710,7 +709,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                     'is_init_reordering' => 0
                 ]
             );
-            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs, true);
+            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs);
             $sJsName = $oUploader->getNameJsInstanceUploader();
         }
 
@@ -721,6 +720,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'button_title' => '',
             'attrs' => "class='hidden'"
         ];
+        
+        $this->addJs(['BxDolUploader.js']);
 
         $sAddCode = $this->parseHtmlByName('image_tweak.html', [
             'id' => $aData['id'],
