@@ -71,6 +71,8 @@ module.exports = {
 
     'sys-action-counter', 'sys-ac-only', 'sys-ac-link',
 
+    'bx-vote-bls-submenu-cnt', 
+    
     'bx-base-general-unit-meta-username', 'bx-base-text-unit-gallery-wrapper', 'aspect-video', 
 
     'bx-tl-overflow',
