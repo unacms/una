@@ -8,9 +8,9 @@
  */
 
 /**
- * @see BxTemplMenuMoreAuto
+ * @see BxDolMenu
  */
-class BxTemplMenuSite extends BxTemplMenuMoreAuto
+class BxTemplMenuSite extends BxBaseMenuSite
 {
     public function __construct ($aObject, $oTemplate = false)
     {
