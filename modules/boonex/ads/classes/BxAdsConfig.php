@@ -274,30 +274,30 @@ class BxAdsConfig extends BxBaseModTextConfig
             ),
         ));
         
-        $this->_aJsClasses = array_merge($this->_aJsClasses, array(
+        $this->_aJsClasses = array_merge($this->_aJsClasses, [
             'manage_tools' => 'BxAdsManageTools',
             'studio' => 'BxAdsStudio',
             'entry' => 'BxAdsEntry',
             'form' => 'BxAdsForm',
-        ));
+        ]);
 
-        $this->_aJsObjects = array_merge($this->_aJsObjects, array(
+        $this->_aJsObjects = array_merge($this->_aJsObjects, [
             'manage_tools' => 'oBxAdsManageTools',
             'studio' => 'oBxAdsStudio',
             'entry' => 'oBxAdsEntry',
             'form' => 'oBxAdsForm',
-        ));
+        ]);
 
-        $this->_aGridObjects = array(
+        $this->_aGridObjects = [
             'categories' => $this->CNF['OBJECT_GRID_CATEGORIES'],
             'common' => $this->CNF['OBJECT_GRID_COMMON'],
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        );
+        ];
 
         $sPrefix = str_replace('_', '-', $this->_sName);
-        $this->_aHtmlIds = array(
+        $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
             'offer_popup' =>  $sPrefix . '-offer-popup',
-        );
+        ]);
 
         $this->_bAttachmentsInTimeline = true;
     }
