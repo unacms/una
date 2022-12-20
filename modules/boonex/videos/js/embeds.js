@@ -22,13 +22,14 @@ function BxVideosEmbeds(oOptions) {
     this._sLastCodeChecked = '';
 }
 
-BxVideosEmbeds.prototype.changeVideoSource = function(sSource) {
+BxVideosEmbeds.prototype.changeVideoSource = function(oObj) {
+    sSource = $(oObj).val();
 	if (sSource == 'upload') {
-        $('#bx-form-element-videos').show();
-        $('#bx-form-element-video_embed').hide();
+        $(oObj).parents('form').find('#bx-form-element-videos').show();
+        $(oObj).parents('form').find('#bx-form-element-video_embed').hide();
     } else {
-	    $('#bx-form-element-videos').hide();
-        $('#bx-form-element-video_embed').show();
+	    $(oObj).parents('form').find('#bx-form-element-videos').hide();
+        $(oObj).parents('form').find('#bx-form-element-video_embed').show();
     }
 };
 

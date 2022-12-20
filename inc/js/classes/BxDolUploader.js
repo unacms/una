@@ -244,7 +244,6 @@ BxDolUploaderBase.prototype._clearErrors = function () {
 }
 
 BxDolUploaderBase.prototype._showError = function (s, bAppend) {
-    console.log('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId);
     if (s == undefined || !s.length)
         return;
     if (!bAppend)

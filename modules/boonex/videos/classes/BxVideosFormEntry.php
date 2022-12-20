@@ -287,7 +287,7 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
         if ($aInput['name'] == 'video_source' && $aInput['type'] == 'radio_set') {
             if (!is_array($aInput['attrs']))
                 $aInput['attrs'] = [];
-            $aInput['attrs']['onchange'] = $this->_oModule->_oConfig->getJsObject('embeds').'.changeVideoSource(this.value);';
+            $aInput['attrs']['onchange'] = $this->_oModule->_oConfig->getJsObject('embeds').'.changeVideoSource(this);';
             $sJsCode = '';
             if ($this->_bDynamicMode) {
                 $sJsCode .= $this->_oModule->_oTemplate->addJs('embeds.js', true);

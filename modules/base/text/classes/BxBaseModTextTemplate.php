@@ -645,7 +645,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $sImageTweak = '';
         $sUniqIdImage = genRndPwd (8, false);
-        if ($bIsAllowEditPicture && empty($sAddCode)){
+        if ($bIsAllowEditPicture && empty($sAddCode) && isset($CNF['FIELD_THUMB_POSITION'])){
             $sImageTweak = $this->_prepareImage($aData, $sUniqIdImage, $CNF['OBJECT_UPLOADERS'], $CNF['OBJECT_STORAGE'], $CNF['FIELD_THUMB'], true);
         }
 

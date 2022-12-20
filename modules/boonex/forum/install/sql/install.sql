@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
+  `thumb_data` varchar(50) NOT NULL,  
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `multicat` text NOT NULL,
