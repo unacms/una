@@ -505,7 +505,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 oProgress =  $('#' + $this._sProgressContainerId);
                 
                 if (oProgress.parents('form').find('.uploader_progress').length > 0){
-                    oProgress = oProgress.parents('form').find('.uploader_progress');
+                    oProgress = oProgress.parents('.bx-db-container').find('.uploader_progress');
                 }
                 if (iProgress == 100){
                     oProgress.hide();

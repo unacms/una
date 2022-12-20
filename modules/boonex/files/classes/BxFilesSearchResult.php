@@ -414,15 +414,27 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         if ($bUploadAllowed) {
             $sUniqId = genRndPwd (8, false);
             $oUploader = BxDolUploader::getObjectInstance('bx_files_html5', $this->oModule->_oConfig->CNF['OBJECT_STORAGE'], $sUniqId, $this->oModule->_oTemplate);
-
             $iMaxNestingLevel = intval(getParam($this->oModule->_oConfig->CNF['PARAM_MAX_NESTING_LEVEL']));
+            
+            $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
+                [
+                    'content_id' => 0,
+                    'storage_private' => '0',
+                    'acceptedFiles' => '',
+                    'multiple' => 1,
+                    'images_transcoder' => 'bx_files_preview',
+                ]
+            );
+            
+            $aParamsBtn = [
+                    'content_id' => 0,
+                    'storage_private' => '0',
+                    'button_template' => 'uploader_button_html5_attach.html'
+            ];
+            
             $aUploadButtonParams = [
                 'js_object' => $sJsObject,
-                'uploader_code' => $oUploader->getUploaderJs('', true, [
-                    'storage_private' => '0',
-                    'images_transcoder' => 'bx_files_preview',
-                    'content_id' => 0,
-                ], true),
+                'uploader_code' => $oUploader->getUploaderButton($aParamsBtn) . $oUploader->getUploaderJs('', true, $aParamsJs, true),
                 'uploader_js_object' => $oUploader->getNameJsInstanceUploader(),
                 'uploader_click_handler' => $oUploader->getNameJsInstanceUploader() . '.showUploaderForm();',
                 'bx_if:create_folder_allowed' => [

@@ -91,7 +91,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
                 'resize_method' => $iResizeWidth && $iResizeHeight ? "'contain'" : 'null',
             ]
         );
-        return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+        return $this->_oTemplate->parseHtmlByName(isset($aParams['button_template']) ? $aParams['button_template'] : $this->_sButtonTemplate, $aParams);
     }
 
     public function getUploaderJsParams(){

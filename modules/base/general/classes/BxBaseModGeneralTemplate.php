@@ -699,7 +699,6 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $sJsName = '';
         foreach ($aUploaders as $sUploaderObject) {
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorage, $sUniqId, $this);
-
             $sGhostTemplate = '{file_id}';
 
             $aParamsJs = array_merge($oUploader->getUploaderJsParams(), 
@@ -710,7 +709,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                     'is_init_reordering' => 0
                 ]
             );
-            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs, true);
+            $sUploadersJs .= $oUploader->getUploaderJs($sGhostTemplate, false, $aParamsJs);
             $sJsName = $oUploader->getNameJsInstanceUploader();
         }
 
