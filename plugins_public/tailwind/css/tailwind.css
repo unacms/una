@@ -975,20 +975,20 @@
         @apply inline-block py-0.5 px-2 bg-gray-200/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 text-xs rounded-full;
     }
 
-    /* Horizontal menu */
+    /* Common elements: Horizontal menu */
     .bx-artificer .bx-menu-hor li.bx-menu-tab-active a,
     .bx-artificer .bx-menu-custom-hor li.bx-menu-tab-active a {
         @apply text-gray-700 dark:text-gray-200 font-medium;
     }
 
-    /* Vertical menu */
+    /* Common elements: Vertical menu */
     .bx-artificer .bx-menu-ver li.bx-menu-tab-active .bx-mi-highlight,
     .bx-artificer .bx-menu-verlit li.bx-menu-tab-active .bx-mi-highlight,
     .bx-artificer .bx-menu-custom-ver li.bx-menu-tab-active .bx-mi-highlight {
         @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white font-medium;
     }
 
-    /* Vertical menu in Popup */
+    /* Common elements: Vertical menu in Popup */
     .bx-artificer .bx-popup .bx-menu-ver > li:hover {
         @apply hover:text-gray-900 dark:hover:text-gray-100;
     }
@@ -997,7 +997,7 @@
         @apply bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white;
     }
 
-    /* Toolbar menu */
+    /* Common elements: Toolbar menu */
     .bx-artificer .bx-menu-toolbar .bx-menu-toolbar-item .bx-menu-toolbar-item-unit {
         @apply border-4 border-transparent;
     }
@@ -1005,7 +1005,7 @@
         @apply h-6 w-6 md:h-8 md:w-8;
     }
 
-    /* Page Submenu */
+    /* Common elements: Page Submenu */
     .bx-artificer .bx-menu-main-submenu .bx-menu-item.bx-menu-tab-active a {
         @apply text-gray-900 dark:text-gray-100;
     }
@@ -1013,7 +1013,7 @@
         @apply bg-blue-500 group-hover:bg-blue-500;
     }
 
-    /* Profile Stats menu */
+    /* Common elements: Profile Stats menu */
     .bx-artificer .bx-menu-profile-stats.bx-menu-ver li.bx-menu-tab-active {
         @apply bg-slate-900/[.08] dark:bg-slate-900 ring-1 ring-gray-200 dark:ring-gray-800 text-gray-900 dark:text-white;
     }
@@ -1023,7 +1023,7 @@
     }
 
 
-    /* Profile Cover */
+    /* Common elements: Profile Cover */
     .bx-artificer .bx-base-pofile-cover-thumb + .bx-base-pofile-cover-user {
         @apply lg:pl-52;
     }
@@ -1064,6 +1064,14 @@
     /* Common elements: Comments */
     .bx-artificer .cmt .bx-base-general-unit-meta-username {
         @apply text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
+    }
+    
+    /* Common Elements: Votes */
+    .bx-vote-bls-submenu-cnt {
+        @apply border-b-gray-300 dark:border-b-gray-700;
+    }
+    .bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act {
+        @apply border-b-gray-500 dark:border-b-gray-500;
     }
 
     /* Common elements: Units */

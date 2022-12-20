@@ -108,9 +108,6 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     display: flex;
 
     margin: -1.25rem -1.25rem 0 -1.25rem;
-    
-    border-bottom-color: #e6f0fa;
-    border-bottom-width: 2px;
 }
 .bx-vote-bls-content {
     margin-left: -0.5rem;
@@ -151,7 +148,8 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
 .bx-vote-bls-submenu-cnt {
     box-sizing: border-box;
     padding: 0 0.5rem;
-    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
 }
 .bx-vote-bls-submenu::-webkit-scrollbar {
     width: 0.5rem;
@@ -183,17 +181,24 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     box-sizing: border-box;
     height: 3.125rem;
 
-    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
+    border-bottom: 2px solid transparent;
     border-radius: 0;
 
-    line-height: 3.125rem;
+    line-height: 3.0rem;
     white-space: nowrap;
 }
-.bx-vote-bls-submenu-cnt ul li div {
-    padding: 0 0.625rem;
+.bx-vote-bls-submenu-cnt ul li .bx-stl-mil,
+.bx-vote-bls-submenu-cnt ul li .bx-stl-mil-wo-gaps {
+    border-width: 0;
 }
-.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act {
-    border-bottom-color: #364f6b;
+.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-pas .bx-menu-item-cnt,
+.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act .bx-menu-item-inter {
+    line-height: 3.0rem;
+}
+.bx-vote-bls-submenu-cnt ul li a.bx-menu-item-inter,
+.bx-vote-bls-submenu-cnt ul li div.bx-menu-item-inter {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act > div {
     font-weight: bold;
