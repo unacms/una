@@ -13,6 +13,13 @@ div.bx-tl-by-list div.bx-base-pofile-unit {
     margin-bottom: 0px;
 }
 
+/*--- Repost With Text ---*/
+.bx-tl-rw-reposted .bx-tl-rtr-cnt {
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 /*--- Repost To ---*/
 .ui-autocomplete.ui-front {
     z-index: 10001;
