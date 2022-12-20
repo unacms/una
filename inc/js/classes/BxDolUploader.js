@@ -1021,7 +1021,7 @@ function BxDolImageTweak (unique_id, action_url, content_id, field, js_object, a
     this._sJsObject = js_object;
     this._bAllowTweak = allow_tweak;
     this._oContainerButtons = $('.bx-image-edit-buttons-' + unique_id);
-    
+    this._oContainerButtons.removeClass('hidden');
     $("#bx-form-input-files-" + this._sUniqueId + "-upload-result").bind( "contentchange", function(){ 
         $this.uploadComplete($(this));
     });
