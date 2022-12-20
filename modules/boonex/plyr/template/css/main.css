@@ -3,6 +3,10 @@
     width:100%;
 }
 
+.plyr video {
+    margin-top:0;
+}
+
 .bx-page-iframe .plyr,
 .bx-page-iframe .plyr__video-wrapper,
 .bx-page-iframe .plyr video {
