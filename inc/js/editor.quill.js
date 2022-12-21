@@ -76,7 +76,6 @@ function bx_editor_init(oEditor, oParams){
     
     if($(oParams.selector).parents('form').first())
         $(oParams.selector).parents('form').first().submit(function(){ 
-            console.log(oEditor); 
             sVal = oEditor.container.firstChild.innerHTML;
             if(!oParams.empty_tags){
                 sVal = sVal.replaceAll('<p><br></p>','');
