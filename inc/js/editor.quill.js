@@ -73,6 +73,17 @@ function bx_editor_init(oEditor, oParams){
     }
     
     $(oParams.selector).after("<div id='" + oParams.name + "' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill " + oParams.css_class + "'>" + $(oParams.selector).val() + "</div>" );
+    
+    if($(oParams.selector).parents('form').first())
+        $(oParams.selector).parents('form').first().submit(function(){ 
+            console.log(oEditor); 
+            sVal = oEditor.container.firstChild.innerHTML;
+            if(!oParams.empty_tags){
+                sVal = sVal.replaceAll('<p><br></p>','');
+            }
+            $(oParams.selector).val(sVal); 
+            
+        });
     $(oParams.selector).hide();
     
     $(oParams.selector).attr('object_editor', oParams.name);
@@ -354,7 +365,7 @@ function bx_editor_init(oEditor, oParams){
         });
     }
     
-    oEditor.on('text-change', function(delta, oldDelta, source) {
+    oEditor.on('editor-change', function(delta, oldDelta, source) {
         sVal = oEditor.container.firstChild.innerHTML;
         if(!oParams.empty_tags){
             sVal = sVal.replaceAll('<p><br></p>','');
