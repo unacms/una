@@ -24,7 +24,7 @@ div.bx-tl-uploader-file {
     position: relative;
     float: left;
 }
-div.bx-tl-post div.bx-uploader-ghost-cnt {
+#bx_timeline_post div.bx-uploader-ghost-cnt {
     min-width: 6.25rem;
 }
 div.bx-tl-uploader-file-preview {
