@@ -287,7 +287,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sShowData = isset($aParams['show_data']) ? $aParams['show_data'] : '';
         $bShowCover = !isset($aParams['show_cover']) || $aParams['show_cover'] === true;
         $bShowAvatar = !isset($aParams['show_avatar']) || $aParams['show_avatar'] === true;
-        $bShowClickable = !isset($aParams['show_clickable']) || $aParams['show_clickable'] === true; //--- Is available for UseAsBlock appearance only.
         $sAddCode = "";
         
 
@@ -298,9 +297,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sClass .= ' bx-base-author';
         else
             BxDolTemplate::getInstance()->addInjection('injection_main_class', 'text', 'bx-base-profile-view');
-
-        if($bUseAsBlock && $bShowClickable)
-            $sClass .= ' bx-clickable';
 
         $bProfileViewAllowed = $oModule->checkAllowedView($aData) === CHECK_ACTION_RESULT_ALLOWED;
 
@@ -388,6 +384,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $bTmplVarsShowAvatar = $bShowAvatar && ($bUrlAvatar || $this->_bLetterAvatar);
         $aTmplVarsShowAvatar = [];
+        $sPicturePopup = '';
 
         if($bTmplVarsShowAvatar) {
             $sPicturePopupId = $this->MODULE . '-popup-picture';
@@ -447,6 +444,18 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'picture_url' => $sUrlPicture,
                 'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
             );
+            
+            if($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
+                $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
+                    'image_url' => $sUrlPicture,
+                    'bx_if:owner' => array (
+                        'condition' => false,
+                        'content' => array (
+                            'change_image_url' => $sUrlPictureChange,
+                        ),
+                    ),
+                )), true, true);
+            }
         }
 
         //--- Process Actions menu
@@ -499,9 +508,17 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'action_menu' => $sActionsMenu,
             'meta' => $sMetaMenu,
             'show_data' => $sShowData,
+            'picture_popup' => $sPicturePopup,
             'additional_code' => $sAddCode,
             'cover_tweak' => $sCoverTweak,
         ];
+        
+        $bShowClickable = !isset($aParams['show_clickable']) || $aParams['show_clickable'] === true; //--- Is available for UseAsBlock appearance only.
+        if ($sCoverTweak != '')
+            $bShowClickable = false;
+        
+        if($bUseAsBlock && $bShowClickable)
+            $sClass .= ' bx-clickable';
 
         if($bUseAsBlock)
             $aTmplVars = array_merge($aTmplVars, [

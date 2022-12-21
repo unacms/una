@@ -487,6 +487,8 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             },
             onprocessfiles: (files) => { 
                 $this.onUploadCompleted(''); 
+                oProgress.hide();
+                $this._aFiles = [];
             },
             onprocessfileprogress(file, progress) {
                 $this._aFiles[file.source.lastModified+'-'+file.source.size+'-'+file.source.name] = progress * file.source.size;
@@ -504,17 +506,12 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             
                 oProgress =  $('#' + $this._sProgressContainerId);
                 
-                if (oProgress.parents('form').find('.uploader_progress').length > 0){
+                if (oProgress.parents('.bx-db-container').find('.uploader_progress').length > 0){
                     oProgress = oProgress.parents('.bx-db-container').find('.uploader_progress');
                 }
-                if (iProgress == 100){
-                    oProgress.hide();
-                    $this._aFiles = [];
-                }
-                else{
-                    oProgress.show();
-                    oProgress.find('.progress_line').css('width', iProgress + '%');
-                }
+                
+                oProgress.show();
+                oProgress.find('.progress_line').css('width', iProgress + '%');
             },
             server: {
 				process: (fieldName, file, metadata, load, error, progress, abort) => {
@@ -544,7 +541,6 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                             catch (e) {}
                             if (o && 'undefined' !== typeof(o.error)) {
                                 $this._showError(o.error, true);
-                                error('error');
                             }
                             
                             load(request.responseText);
