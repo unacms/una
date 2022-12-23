@@ -166,7 +166,7 @@ class BxInvGridRequests extends BxTemplGrid
             if(empty($aRequest) || !is_array($aRequest))
                 continue;
             
-            $mixedResult = $this->_oModule->invite(BX_INV_TYPE_FROM_SYSTEM, $aRequest['email'], $sText);
+            $mixedResult = $this->_oModule->invite(BX_INV_TYPE_FROM_SYSTEM, $aRequest['email'], $sText, false);
             if(empty($mixedResult) || !is_array($mixedResult))
                 continue;
 
