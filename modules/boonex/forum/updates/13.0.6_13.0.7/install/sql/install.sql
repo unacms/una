@@ -13,6 +13,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_forum_miniature_photos', 'Resize', 'a:4:{s:1:"w";s:3:"300";s:1:"h";s:3:"300";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
 UPDATE `sys_transcoder_filters` SET `filter_params`='a:4:{s:1:"w";s:3:"600";s:1:"h";s:3:"600";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}' WHERE `transcoder_object`='bx_forum_gallery_photos' AND `filter`='Resize';
+UPDATE `sys_objects_transcoder` SET `ts`=UNIX_TIMESTAMP() WHERE `object`='bx_forum_gallery_photos';
 
 
 -- FORMS

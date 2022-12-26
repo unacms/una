@@ -15,11 +15,11 @@ class BxCreditsUpdater extends BxDolStudioUpdater
     {
         if($sOperation == 'install') {
             if(!$this->oDb->isFieldExists('bx_credits_profiles', 'wdw_clearing'))
-                $this->oDb->query("ALTER TABLE `bx_credits_profiles` ADD `wdw_clearing` int(11) unsigned NOT NULL default '0' `id`");
+                $this->oDb->query("ALTER TABLE `bx_credits_profiles` ADD `wdw_clearing` int(11) unsigned NOT NULL default '0' AFTER `id`");
             if(!$this->oDb->isFieldExists('bx_credits_profiles', 'wdw_minimum'))
-                $this->oDb->query("ALTER TABLE `bx_credits_profiles` ADD `wdw_minimum` int(11) unsigned NOT NULL default '0' `wdw_clearing`");
+                $this->oDb->query("ALTER TABLE `bx_credits_profiles` ADD `wdw_minimum` int(11) unsigned NOT NULL default '0' AFTER `wdw_clearing`");
             if(!$this->oDb->isFieldExists('bx_credits_profiles', 'wdw_remaining'))
-                $this->oDb->query("ALTER TABLE `bx_credits_profiles` ADD `wdw_remaining` int(11) unsigned NOT NULL default '0' `wdw_minimum`");
+                $this->oDb->query("ALTER TABLE `bx_credits_profiles` ADD `wdw_remaining` int(11) unsigned NOT NULL default '0' AFTER `wdw_minimum`");
         }
 
         return parent::actionExecuteSql($sOperation);
