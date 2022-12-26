@@ -61,7 +61,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             if(!$bDraft)
                 return 0;
 
-            if(!parent::update($iContentId, $aValsToAdd, $isIgnore))
+            if(!parent::update($iContentId, $aValsToAdd))
                 return 0;
 
         } 
