@@ -742,6 +742,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'show_counter' => true,
                 'show_counter_empty' => false
             ]);
+        
+        $this->addCss(array('cover.css'));
 
         return $aVars;
     }
