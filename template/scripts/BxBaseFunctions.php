@@ -763,9 +763,14 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
     protected function getInjHeadLiveUpdates() 
     {
-        return BxDolLiveUpdates::getInstance()->init();
+        $sContent = '';
+
+        if(($oLiveUpdates = BxDolLiveUpdates::getInstance()) !== false)
+            $sContent .= $oLiveUpdates->init();
+
+        return $sContent;
     }
-    
+
     protected function getInjHeaderPushNotifications() 
     {
         $iProfileId = bx_get_logged_profile_id();

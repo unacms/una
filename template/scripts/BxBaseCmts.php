@@ -184,8 +184,10 @@ class BxBaseCmts extends BxDolCmts
         //add live update
         $this->actionResumeLiveUpdate();
 
-        $sServiceCall = BxDolService::getSerializedService('system', 'get_live_update', [$this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'], 'TemplCmtsServices');
-        BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
+        if(($oLiveUpdates = BxDolLiveUpdates::getInstance())!== false) {
+            $sServiceCall = BxDolService::getSerializedService('system', 'get_live_update', [$this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'], 'TemplCmtsServices');
+            $oLiveUpdates->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
+        }
         //add live update
 
         $sComments = $this->getComments($aBp, $aDp);

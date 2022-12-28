@@ -350,8 +350,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'override_result' => &$sLiveUpdateCode,
         ));
 
-        if($sLiveUpdateCode === null)
-            $sLiveUpdateCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdateParams);
+        if($sLiveUpdateCode === null && ($oLiveUpdates = BxDolLiveUpdates::getInstance()) !== false)
+            $sLiveUpdateCode = call_user_func_array([$oLiveUpdates, 'add'], $aLiveUpdateParams);
         //--- Add live update
 
         $sContentBefore = '';

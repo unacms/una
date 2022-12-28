@@ -84,6 +84,9 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
      */
     public static function getInstance()
     {
+        if(!isLogged())
+            return false;
+
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplLiveUpdates();
 

@@ -19,7 +19,12 @@ class BxBaseLiveUpdatesServices extends BxDol
 
     public function serviceInit()
     {
-        return BxDolLiveUpdates::getInstance()->init();
+        $sContent = '';
+
+        if(($oLiveUpdates = BxDolLiveUpdates::getInstance()) !== false)
+            $sContent .= $oLiveUpdates->init();
+
+        return $sContent;
     }
 }
 
