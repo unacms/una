@@ -274,6 +274,9 @@ class BxDolConnectionQuery extends BxDolDb
 
     protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false, $sFields = '`id`')
     {
+        if($this->_aObject['profile_content'])
+            $sJoin .= "INNER JOIN `sys_profiles` AS `p1` ON (`p1`.`id` = `c`.`content` AND `p1`.`status` = 'active') INNER JOIN `sys_profiles` AS `p2` ON (`p2`.`id` = `c2`.`content` AND `p2`.`status` = 'active')";
+        
         $sWhere .= (false !== $isMutual) ? $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual) : '';
         return "SELECT COUNT(" . $sFields . ") FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere";
     }
