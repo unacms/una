@@ -1,0 +1,39 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_910_7712)">
+<path d="M160 0C281.326 0 320 38.6737 320 160C320 281.326 281.326 320 160 320C38.6736 320 0 281.326 0 160C0 38.6737 38.6736 0 160 0Z" fill="url(#paint0_linear_910_7712)"/>
+<g clip-path="url(#clip1_910_7712)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M152.904 181.707C153.612 179.003 153.495 176.05 151.827 173.807C144.385 163.796 131.249 160 110 160C72.0855 160 60 172.086 60 210C60 247.914 72.0855 260 110 260C131.248 260 144.384 256.204 151.827 246.194C153.495 243.95 153.612 240.998 152.903 238.294C150.885 230.589 150 221.241 150 210.001C150 198.761 150.885 189.412 152.904 181.707Z" fill="url(#paint1_linear_910_7712)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M181.706 167.096C179.002 166.388 176.05 166.505 173.807 168.173C163.796 175.616 160 188.752 160 210C160 247.914 172.086 260 210 260C247.914 260 260 247.914 260 210C260 188.751 256.204 175.615 246.193 168.173C243.95 166.505 240.998 166.388 238.294 167.096C230.588 169.115 221.24 170 210 170C198.76 170 189.411 169.115 181.706 167.096Z" fill="url(#paint2_linear_910_7712)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M160 110C160 72.0855 147.914 60 110 60C72.0855 60 60 72.0855 60 110C60 131.25 63.7963 144.386 73.8085 151.829C76.0515 153.496 79.0036 153.613 81.7072 152.905C89.4122 150.886 98.7601 150.001 110 150.001C121.239 150.001 130.587 150.886 138.292 152.905C140.996 153.613 143.948 153.496 146.191 151.829C156.204 144.386 160 131.25 160 110Z" fill="url(#paint3_linear_910_7712)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M167.096 138.293C166.388 140.997 166.505 143.95 168.172 146.193C175.615 156.204 188.751 160 210 160C247.915 160 260 147.914 260 110C260 72.0855 247.915 60 210 60C188.751 60 175.615 63.796 168.172 73.8074C166.505 76.0505 166.388 79.0028 167.096 81.7066C169.115 89.4118 170 98.7601 170 110C170 121.24 169.115 130.588 167.096 138.293Z" fill="url(#paint4_linear_910_7712)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_910_7712" x1="160" y1="0" x2="160" y2="320" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FB7185"/>
+<stop offset="1" stop-color="#E11D48"/>
+</linearGradient>
+<linearGradient id="paint1_linear_910_7712" x1="60" y1="214" x2="148.189" y2="213.509" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#FECDD3" stop-opacity="0.67"/>
+</linearGradient>
+<linearGradient id="paint2_linear_910_7712" x1="213" y1="258.514" x2="220.171" y2="171.159" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#FECDD3" stop-opacity="0.67"/>
+</linearGradient>
+<linearGradient id="paint3_linear_910_7712" x1="110" y1="60" x2="99.7522" y2="148.489" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#FECDD3" stop-opacity="0.67"/>
+</linearGradient>
+<linearGradient id="paint4_linear_910_7712" x1="260" y1="110" x2="170.816" y2="114.418" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#FECDD3" stop-opacity="0.67"/>
+</linearGradient>
+<clipPath id="clip0_910_7712">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+<clipPath id="clip1_910_7712">
+<rect width="240" height="240" fill="white" transform="translate(40 40)"/>
+</clipPath>
+</defs>
+</svg>

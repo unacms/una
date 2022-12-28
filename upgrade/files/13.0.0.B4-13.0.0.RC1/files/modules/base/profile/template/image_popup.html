@@ -1,0 +1,12 @@
+<div class="bx-base-pofile-popup-wrapper">
+
+    <div class="bx-base-pofile-popup-btn bx-def-padding">
+        <bx_if:owner>
+            <a class="bx-btn" href="__change_image_url__"><bx_text:_sys_txt_change_image /></a>
+            
+        </bx_if:owner>
+        <a class="bx-btn bx-def-margin-sec-left" title="<bx_text_attribute:_sys_close />" href="javascript:void(0);" onclick="$(this).parents().filter('.bx-popup-wrapper').dolPopupHide()"><i class="sys-icon times"></i></a>
+    </div>
+
+    <img class="bx-base-pofile-popup-image" src="__image_url__" />
+</div>
