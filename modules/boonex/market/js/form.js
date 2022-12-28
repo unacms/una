@@ -49,16 +49,12 @@ BxMarketForm.prototype.initGhost = function(oGhost, iFileId, iThumbnailId, iCove
 
     oGhost.parent().children('.bx-uploader-ghost').each(function(iIndex, oElement) {
         if(iIndex > 0 && !$(oElement).hasClass('closed'))
-            $(oElement).addClass('closed').find('.bx-uploader-ghost-header:first').siblings('.bx-uploader-ghost-body:first').hide();
+            $(oElement).addClass('closed').find('.bx-uploader-ghost-header').siblings('.bx-uploader-ghost-body').hide();
     });
 };
 
 BxMarketForm.prototype.toggleGhost = function(oLink) {
-    $(oLink).parents('.bx-uploader-ghost:first').toggleClass('closed').find('.bx-uploader-ghost-body').resize(function() {
-        $(this).parents('.bx-form-input-files-result:first').bx_show_more_check_overflow();
-    }).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, function() {
-        $(this).siblings('.bx-uploader-ghost-header');
-    });
+    $(oLink).parents('.bx-uploader-ghost:first').toggleClass('closed').find('.bx-uploader-ghost-body').bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
 };
 
 BxMarketForm.prototype.checkName = function(oSource, sTitleId, sNameId, iId) {
