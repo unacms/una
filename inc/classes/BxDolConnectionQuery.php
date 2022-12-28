@@ -260,6 +260,7 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getConnectedContentCount ($iInitiator, $isMutual = false)
     {
+        $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = \'active\'' : ''; 
         $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ?", $iInitiator);
         $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
         return $this->getOne($sQuery);
@@ -267,12 +268,13 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getConnectedInitiatorsCount ($iContent, $isMutual = false)
     {
+        $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`initiator` AND `p`.`status` = \'active\'' : ''; 
         $sWhere = $this->prepareAsString(" AND `c`.`content` = ?", $iContent);
-        $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
+        $sQuery = $this->_getConnectionsQueryCount($sWhere, $sJoin, $isMutual);
         return $this->getOne($sQuery);
     }
 
-    protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false, $sFields = '`id`')
+    protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false, $sFields = '`c`.`id`')
     {
         $sWhere .= (false !== $isMutual) ? $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual) : '';
         return "SELECT COUNT(" . $sFields . ") FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere";
