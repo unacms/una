@@ -111,6 +111,7 @@ DELETE FROM `sys_preloader` WHERE `content` = '_sys_redirect_confirmation';
 INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALUES
 ('system', 'js_translation', '_sys_redirect_confirmation', 1, 5);
 
+UPDATE `sys_preloader` SET `content` = 'moment-with-locales.js' WHERE `content` = 'moment-with-locales.min.js';
 
 
 -- Last step is to update current version
