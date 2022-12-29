@@ -208,12 +208,3 @@ div.bx-popup-menu-main.sys-add-content ul {
 .sys-action-counter-icon .sys-icon.sys-icon-emoji{
     line-height: 1rem;
 }
-.sys-action-counter-iconset .bx-def-icon-size{
-    width: 1.5rem;
-    height: 1.5rem;
-}
-.sys-action-counter-iconset .bx-base-pofile-unit-wo-info,
-.sys-action-counter-iconset .sys-action-counter-icon
-{
-    margin-left: -.25rem;
-}

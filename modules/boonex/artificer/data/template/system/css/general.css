@@ -141,3 +141,27 @@ import url(../../../../../../../template/css/general.css);
 .sys-action-counter.sys-ac-hidden {
     display: none;
 }
+.sys-action-counter.sys-action-counter-iconset .sys-ac-link {
+    padding-left: 0.75rem;
+}
+.bx-media-phone .sys-action-counter.sys-action-counter-iconset .sys-ac-link,
+.bx-media-tablet .bx-layout-column-thin .sys-action-counter.sys-action-counter-iconset .sys-ac-link,
+.bx-media-tablet .bx-layout-column-half .sys-action-counter.sys-action-counter-iconset .sys-ac-link {
+    padding-left: 1.0rem;
+}
+.sys-action-counter.sys-action-counter-iconset .bx-def-icon-size {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.sys-action-counter.sys-action-counter-iconset .bx-base-pofile-unit-wo-info,
+.sys-action-counter.sys-action-counter-iconset .sys-action-counter-icon {
+    margin-left: -0.5rem;
+}
+.bx-media-phone .sys-action-counter.sys-action-counter-iconset .bx-base-pofile-unit-wo-info,
+.bx-media-phone .sys-action-counter.sys-action-counter-iconset .sys-action-counter-icon,
+.bx-media-tablet .bx-layout-column-thin .sys-action-counter.sys-action-counter-iconset .bx-base-pofile-unit-wo-info,
+.bx-media-tablet .bx-layout-column-thin .sys-action-counter.sys-action-counter-iconset .sys-action-counter-icon,
+.bx-media-tablet .bx-layout-column-half .sys-action-counter.sys-action-counter-iconset .bx-base-pofile-unit-wo-info,
+.bx-media-tablet .bx-layout-column-half .sys-action-counter.sys-action-counter-iconset .sys-action-counter-icon {
+    margin-left: -0.75rem;
+}
