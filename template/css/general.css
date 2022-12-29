@@ -215,6 +215,15 @@
 	display: inline-block;
 }
 
+/* --------------- System objects like Views, Votes, Comments, etc, */
+.sys-action-counter.sys-ac-hidden {
+    display: none;
+}
+.sys-action-counter .bx-def-icon-size {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
 /* --------------- 'Add to Homescreen' popup */
 .ath-container {
     color: #333;

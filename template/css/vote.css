@@ -30,6 +30,11 @@
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-divided a.bx-vote-counter {
     margin-right: 0.5rem;
 }
+.bx-media-phone .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .sys-ac-link,
+.bx-media-tablet .bx-layout-column-thin .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .sys-ac-link,
+.bx-media-tablet .bx-layout-column-half .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .sys-ac-link {
+    padding-left: 1.0rem;
+}
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound a.bx-vote-counter.total-count,
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter.total-count {
     width: auto;
@@ -47,7 +52,7 @@
 .bx-media-phone .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
 .bx-media-tablet .bx-layout-column-thin .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
 .bx-media-tablet .bx-layout-column-half .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) {
-    margin-left: -1.0rem;
+    margin-left: -0.75rem;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter-label {
     padding: 0;

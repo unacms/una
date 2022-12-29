@@ -24,6 +24,7 @@ function BxDolCmts (options) {
     this._sBrowseFilter = undefined == options.sBrowseFilter ? 'all' : options.sBrowseFilter;
 
     this._sSP = options.sStylePrefix === undefined ? 'cmt' : options.sStylePrefix;
+    this._aHtmlIds = options.aHtmlIds;
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
 
@@ -94,48 +95,67 @@ BxDolCmts.prototype.cmtBeforePostSubmit = function(oCmtForm)
 
 BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
 {
-	var $this = this;
-	var fContinue = function() {
-            var oParent = oCmtForm.parents('.cmt-reply:first');
+    var $this = this;
+    var fContinue = function() {
+        var oParent = oCmtForm.parents('.cmt-reply:first');
 
-            if(oData && oData.id != undefined) {
-                var iCmtId = parseInt(oData.id);
-                if(iCmtId > 0) {
-                    $this._getCmt(oCmtForm, iCmtId);
+        if(oData && oData.id != undefined) {
+            var iCmtId = parseInt(oData.id);
+            if(iCmtId > 0) {
+                $this._getCmt(oCmtForm, iCmtId);
 
-                    var iCmtParentId = parseInt(oData.parent_id);
-                    if(iCmtParentId == 0)
-                        $this._getForm(undefined, {CmtParent: iCmtParentId}, function(sFormWrp) {
-                            if(sFormWrp && sFormWrp.length > 0)
-                                sFormWrp = $(sFormWrp).html();
+                //--- Update form
+                var iCmtParentId = parseInt(oData.parent_id);
+                if(iCmtParentId == 0)
+                    $this._getForm(undefined, {CmtParent: iCmtParentId}, function(sFormWrp) {
+                        if(sFormWrp && sFormWrp.length > 0)
+                            sFormWrp = $(sFormWrp).html();
 
-                            oParent.hide().html(sFormWrp).bxProcessHtml().show();
+                        oParent.hide().html(sFormWrp).bxProcessHtml().show();
 
-                            $this.cmtInitFormPost(oParent.find('form'));
-                        });
-                    else
-                        oParent.remove();
-                        
+                        $this.cmtInitFormPost(oParent.find('form'));
+                    });
+                else
+                    oParent.remove();
+
+                //--- Update counter
+                if(oData && oData.count != undefined && parseInt(oData.count) > 0) {
+                    if(oData.countf != undefined && oData.countf.length != 0) {
+                        var oCounter = $this._getCounter(oCmtForm);
+                        if(oCounter && oCounter.length > 0)
+                            oCounter.html(oData.countf);
+                    }
+
+                    var oCounter = $this._getCounter(oCmtForm, true);
+                    if(oCounter && oCounter.length > 0)
+                        oCounter.html(oData.count);
+
+                    var sClassHidden = 'sys-ac-hidden';
+                    if(!oCounter.is('.' + sClassHidden))
+                        oCounter = oCounter.parents('.' + sClassHidden + ':first');
+
+                    oCounter.toggleClass(sClassHidden);
                 }
-
-                return;
             }
 
-            if(oData && oData.form != undefined && oData.form_id != undefined) {
-                oParent.find('form').replaceWith(oData.form);
+            return;
+        }
 
-                $this.cmtInitFormPost(oParent.find('form'));
+        if(oData && oData.form != undefined && oData.form_id != undefined) {
+            oParent.find('form').replaceWith(oData.form);
 
-                return;
-            }
-	};
+            $this.cmtInitFormPost(oParent.find('form'));
 
-	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
+            return;
+        }
+    };
 
-	if(oData && oData.msg != undefined)
-            bx_alert(oData.msg, fContinue);
-        else 
-            fContinue();
+    this._loadingInButton($(oCmtForm).children().find(':submit'), false);
+
+    if(oData && oData.msg != undefined)
+        bx_alert(oData.msg, fContinue);
+    else 
+        fContinue();
 };
 
 BxDolCmts.prototype.cmtInitFormEdit = function(sCmtFormId)
@@ -947,15 +967,32 @@ BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent, onLoad)
 
 BxDolCmts.prototype._cmtsBlink = function(oParent)
 {
-	var sBlinkClass = 'cmt-blink';
+    var sBlinkClass = 'cmt-blink';
 
-	oParent.find('.' + sBlinkClass + '-plate:visible').animate({
-		opacity: 0
-	}, 
-	5000, 
-	function() {
-		oParent.find('.' + sBlinkClass).removeClass(sBlinkClass);
-	});
+    oParent.find('.' + sBlinkClass + '-plate:visible').animate({
+        opacity: 0
+    }, 5000, function() {
+        oParent.find('.' + sBlinkClass).removeClass(sBlinkClass);
+    });
+};
+
+BxDolCmts.prototype._getCounter = function(oElement, bText)
+{
+    var oCounter = null;
+    var sSelector = '.' + this._sSP + '-counter' + (bText ? '-text' : '');
+
+    if($(oElement).hasClass(this._sSP))
+        oCounter = $(oElement).find(sSelector);
+    else 
+        oCounter = $(oElement).parents('.' + this._sSP + ':first').find(sSelector);
+
+    if(!oCounter.length && this._aHtmlIds['counter'] != undefined) {
+        oCounter = $('#' + this._aHtmlIds['counter']);
+        if(!oCounter.is(sSelector))
+            oCounter = oCounter.find(sSelector);
+    }
+
+    return oCounter;
 };
 
 BxDolCmts.prototype._getDefaultActions = function() {

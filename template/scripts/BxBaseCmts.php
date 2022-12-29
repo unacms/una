@@ -127,6 +127,7 @@ class BxBaseCmts extends BxDolCmts
             'iDisplayStructure' => isset($aDp['structure']) && !empty($aDp['structure']) ? 1 : 0,
             'iMinPostForm' => $bMinPostForm ? 1 : 0,
             'sStylePrefix' => $this->_sStylePrefix,
+            'aHtmlIds' => $this->_aHtmlIds,
         );
 
         $this->addCssJs();
@@ -777,13 +778,13 @@ class BxBaseCmts extends BxDolCmts
         $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
         $bRecalculateCounter = isset($aParams['recalculate_counter']) && $aParams['recalculate_counter'] == true;
 
-        $iCount = (int)$this->getCommentsCountAll(0, $bRecalculateCounter);
-        if($iCount == 0 && !$bShowEmpty)
-            return '';
-
         $sClass = 'sys-action-counter';
         if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
             $sClass .= ' sys-ac-only';
+
+        $iCount = (int)$this->getCommentsCountAll(0, $bRecalculateCounter);        
+        if($iCount == 0 && !$bShowEmpty)
+            $sClass .= ' sys-ac-hidden';
 
         $sClass .= ' ' . $this->_sStylePrefix . '-counter';
         if($bShowDoCommentAsButtonSmall)
@@ -795,7 +796,7 @@ class BxBaseCmts extends BxDolCmts
         $aCmts = $this->_getCounterItems($iCmtsLimit);
         $aCmts = array_reverse($aCmts);
 
-        $aTmplVarsProfiles = array();
+        $aTmplVarsProfiles = [];
         foreach($aCmts as $aCmt) {
             $iAuthor = (int)$aCmt['cmt_author_id'];
             if(array_key_exists($iAuthor, $aTmplVarsProfiles))
@@ -805,9 +806,9 @@ class BxBaseCmts extends BxDolCmts
             if(!$oAuthor)
                 continue;
 
-            $aTmplVarsProfiles[$iAuthor] = array(
-                'icon' => $oAuthor->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon'))) 
-            );
+            $aTmplVarsProfiles[$iAuthor] = [
+                'icon' => $oAuthor->getUnit(0, ['template' => ['name' => 'unit_wo_info_links', 'size' => 'icon']]) 
+            ];
 
             if(count($aTmplVarsProfiles) >= $iCmtsLimit)
                 break;
@@ -819,53 +820,61 @@ class BxBaseCmts extends BxDolCmts
         if(!empty($aParams['overwrite_counter_link_onclick']))
             $sOnclick = $aParams['overwrite_counter_link_onclick'];
 
-        return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), [
             'style_prefix' => $this->_sStylePrefix,
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass,
             'href' => $sHref,
-            'bx_if:show_onclick' => array(
+            'bx_if:show_onclick' => [
                 'condition' => !empty($sOnclick),
-                'content' => array(
+                'content' => [
                     'onclick' => $sOnclick
-                )
-            ),
+                ]
+            ],
             'content' => $this->_getCounterLabel($iCount, $aParams),
             'bx_repeat:profiles' => $aTmplVarsProfiles,
-            'bx_if:show_icon' => array(
+            'bx_if:show_icon' => [
                 'condition' => ($bShowEmpty || !empty($aTmplVarsProfiles)) && (!isset($aParams['show_icon']) || $aParams['show_icon']),
-                'content' => array(
+                'content' => [
                     'style_prefix' => $this->_sStylePrefix,
                     'icon' => !empty($aParams['custom_icon']) ? $aParams['custom_icon'] : $this->_oTemplate->getImageAuto('comment|' . $this->_sStylePrefix . '-counter-icon')
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
     }
 
-    protected function _getLabelDo($aParams = array())
+    protected function _getLabelDo($aParams = [])
     {
-        return $this->_oTemplate->parseHtmlByContent($this->_getTmplLabelDo(), array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplLabelDo(), [
             'style_prefix' => $this->_sStylePrefix,
-            'bx_if:show_icon' => array(
+            'bx_if:show_icon' => [
                 'condition' => isset($aParams['show_do_comment_icon']) && $aParams['show_do_comment_icon'] == true,
-                'content' => array(
+                'content' => [
                     'style_prefix' => $this->_sStylePrefix,
                     'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo())
-                )
-            ),
-            'bx_if:show_text' => array(
+                ]
+            ],
+            'bx_if:show_text' => [
                 'condition' => isset($aParams['show_do_comment_label']) && $aParams['show_do_comment_label'] == true,
-                'content' => array(
+                'content' => [
                     'style_prefix' => $this->_sStylePrefix,
                     'text' => _t($this->_getTitleDo())
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
     }
 
-    protected function _getCounterLabel($iCount, $aParams = array())
+    protected function _getCounterLabel($iCount, $aParams = [])
     {
-        return (int)$iCount != 0 ? _t(isset($aParams['caption']) ? $aParams['caption'] : '_cmt_txt_counter', $iCount) : _t(isset($aParams['caption_empty']) ? $aParams['caption_empty'] : '_cmt_txt_counter_empty').'';
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
+        $sResult = '';
+        if((int)$iCount != 0)
+            $sResult = _t(isset($aParams['caption']) ? $aParams['caption'] : '_cmt_txt_counter', $iCount);
+        else
+            $sResult = _t(isset($aParams['caption_empty']) ? $aParams['caption_empty'] : '_cmt_txt_counter_empty');
+        
+        return $sResult;
     }
 
     protected function _getTmplElementBlock()

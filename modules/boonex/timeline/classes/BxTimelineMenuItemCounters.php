@@ -41,6 +41,7 @@ class BxTimelineMenuItemCounters extends BxTimelineMenuItemActions
             'overwrite_counter_link_onclick' => bx_replace_markers('{comment_onclick}', $this->_aMarkers),
             'show_do_comment_label' => $this->_bShowTitles,
             'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
             'show_counter_label_icon' => true,
             'dynamic_mode' => $this->_bDynamicMode,
         );

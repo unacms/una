@@ -1300,7 +1300,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function actionGetCmt ()
     {
-        if (!$this->isEnabled())
+        if(!$this->isEnabled())
             return '';
 
         if($this->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
@@ -1311,11 +1311,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
         $aCmt = $this->getCommentRow($iCmtId);
-        echoJson(array(
+        echoJson([
             'parent_id' => $aCmt['cmt_parent_id'],
             'vparent_id' => $aCmt['cmt_parent_id'],
-            'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true))
-        ));
+            'content' => $this->getComment($aCmt, ['type' => $sCmtBrowse], ['type' => $sCmtDisplay, 'dynamic_mode' => true])
+        ]);
     }
 
     public function actionGetCmts ()
@@ -1559,7 +1559,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             }
         }
 
-        return array('id' => $iCmtId, 'parent_id' => $iCmtPrntId);
+        $iCount = (int)$this->getCommentsCountAll(0, true);
+
+        return [
+            'id' => $iCmtId, 
+            'parent_id' => $iCmtPrntId,
+            'count' => $iCount,
+            'countf' => $iCount > 0 ? $this->getCounter() : ''
+        ];
     }
 
     public function onEditAfter($iCmtId, $aDp = [])

@@ -136,3 +136,8 @@ import url(../../../../../../../template/css/general.css);
         transform: scale(1.0);
     }
 }
+
+/* --------------- System objects like Views, Votes, Comments, etc, */
+.sys-action-counter.sys-ac-hidden {
+    display: none;
+}
