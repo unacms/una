@@ -7,6 +7,6 @@
  * @{
  */
 
-define('BX_DOL_VERSION', '13.0.0-RC1'); ///< system files version, for DB version @see bx_get_ver, DB and files version must match
+define('BX_DOL_VERSION', '13.0.0-DEV9'); ///< system files version, for DB version @see bx_get_ver, DB and files version must match
 
 /** @} */
