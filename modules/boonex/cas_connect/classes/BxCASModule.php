@@ -38,6 +38,7 @@ class BxCASModule extends BxBaseModConnectModule
             $as = new \SimpleSAML\Auth\Simple('default-sp');
 
             $as->requireAuth();
+            // $as->login(['saml:idp' => 'https://url.to/saml/metadata.php']);
 
             $aAttributes = $as->getAttributes();
 			
@@ -48,7 +49,7 @@ class BxCASModule extends BxBaseModConnectModule
 
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
-                $this->setLogged($oProfile->id());
+                $this->setLogged($oProfile->id(), '', true, true); // remember user
             }
             else {
                 // register new user
@@ -67,8 +68,8 @@ class BxCASModule extends BxBaseModConnectModule
     {
         $aProfileFields = [];
 
-        $aProfileFields['id'] = $this->_getAttrValue($aProfileInfo['id']); // TODO: change to actial field
-        $aProfileFields['name'] = $this->_getAttrValue($aProfileInfo['name']); // TODO: change to actial field
+        $aProfileFields['id'] = $this->_getAttrValue($aProfileInfo['some_id']); // TODO: change to actual value
+        $aProfileFields['name'] = $this->_getAttrValue($aProfileInfo['some_name']); // TODO: change to actual value
         $aProfileFields['fullname'] = $this->_getAttrValue($aProfileInfo['first_name']) . ' ' . (isset($aProfileInfo['last_name']) ? $this->_getAttrValue($aProfileInfo['last_name']) : '');
 
 		if (isset($aProfileInfo['first_name']))
@@ -78,7 +79,7 @@ class BxCASModule extends BxBaseModConnectModule
             $aProfileFields['last_name'] = $this->_getAttrValue($aProfileInfo['last_name']);
 
         $aProfileFields['email'] = isset($aProfileInfo['email']) ? $this->_getAttrValue($aProfileInfo['email']) : '';
-        $aProfileFields['allow_view_to'] = getParam('bx_cas_privacy');
+		$aProfileFields['allow_view_to'] = getParam('bx_cas_privacy');
 
         return $aProfileFields;
     }
