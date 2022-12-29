@@ -75,14 +75,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         switch($sName) {
             case 'tailwind':
-                /**
-                 * Note. For now Tailwind isn't needed in Studio.
-                 */
-                //list($sPageUrl, $sPageParams) = bx_get_base_url_inline();
-               // if(!empty($sPageUrl) && strncmp($sPageUrl, BX_DOL_URL_STUDIO, strlen(BX_DOL_URL_STUDIO)) == 0)
-                //    break;
+                $sFile = getParam('sys_css_tailwind_default');
+                if(empty($sFile))
+                    $sFile = 'tailwind.min.css';
 
-                $sResult = '{dir_plugins_public}tailwind/css/|tailwind.min.css';
+                $sResult = '{dir_plugins_public}tailwind/css/|' . $sFile;
                 break;
         }
 
@@ -1095,6 +1092,32 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceGetOptionsCfProhibited()
     {
         return BxDolFormQuery::getDataItems('sys_content_filter');
+    }
+
+    public function serviceGetOptionsTaiwindDefault()
+    {
+        $sPath = BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'tailwind/css';
+        $aExcludes = ['.', '..', 'tailwind.css'];
+
+        $aResults = [];
+        if(($oHandle = opendir($sPath)) !== false) {
+            while(($sFile = readdir($oHandle)) !== false) {
+                if(in_array($sFile, $aExcludes))
+                    continue;
+
+                if(($oHandlerFile = fopen($sPath . '/' . $sFile, 'r')) === false)
+                    continue;
+
+                if(($sContent = fread($oHandlerFile, 1024)) !== false && strpos($sContent, '@tailwind base') === false)
+                    $aResults[$sFile] = $sFile;
+
+                fclose($oHandlerFile);
+            }
+
+            closedir($oHandle);
+        }
+
+        return $aResults;
     }
 
     public function serviceRedirect($sUrl = false)
