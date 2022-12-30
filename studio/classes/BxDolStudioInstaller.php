@@ -170,7 +170,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             return $aResult;
 
         //--- Check mandatory settings ---//
-        if($this->oDb->isModuleParamsUsed($this->_aConfig['home_uri'], $this->_aConfig['home_dir'], $this->_aConfig['db_prefix'], $this->_aConfig['class_prefix']))
+        if($this->oDb->isModuleParamsUsed($this->_aConfig['name'], $this->_aConfig['home_uri'], $this->_aConfig['home_dir'], $this->_aConfig['db_prefix'], $this->_aConfig['class_prefix']))
             return array(
                 'code' => BX_DOL_STUDIO_IU_RCE_UNIQUE_PARAMS_USED,
                 'message' => _t('_adm_txt_modules_params_used'),
