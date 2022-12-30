@@ -596,16 +596,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         // favicon icon
         $sImageUrlFav = '';
         if(($iId = (int)getParam('sys_site_icon')) != 0)
-            $sImageUrlFav = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_FILES)->getFileUrlById($iId);
-        if(empty($sImageUrlFav))
-            $sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.svg');
+            $sImageUrlFav = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_FILES)->getFileUrlById($iId);          
 
         // svg icon
         $sImageUrlSvg = '';
         if(($iId = (int)getParam('sys_site_icon_svg')) != 0)
             $sImageUrlSvg = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->getFileUrlById($iId);
-        if(empty($sImageUrlSvg))
-            $sImageUrlSvg = $this->_oTemplate->getIconUrl('favicon.svg');
+
+        if(empty($sImageUrlFav) && empty($sImageUrlSvg))
+            $sImageUrlFav = $sImageUrlSvg = $this->_oTemplate->getIconUrl('favicon.svg');
 
         // apple device icon
         $sImageUrlApl = '';
@@ -628,8 +627,10 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 */
 
         $sRet = '';
-        $sRet .= '<link rel="icon" href="' . $sImageUrlFav . '" sizes="any" />';
-        $sRet .= '<link rel="icon" href="' . $sImageUrlSvg . '" type="image/svg+xml" />';
+        if($sImageUrlFav)
+            $sRet .= '<link rel="icon" href="' . $sImageUrlFav . '" sizes="any" />';
+        if($sImageUrlFav)
+            $sRet .= '<link rel="icon" href="' . $sImageUrlSvg . '" type="image/svg+xml" />';
         $sRet .= '<link rel="apple-touch-icon" href="' . $sImageUrlApl . '" />';
 
 /*
