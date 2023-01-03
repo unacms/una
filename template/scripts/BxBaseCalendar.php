@@ -61,14 +61,14 @@ class BxBaseCalendar extends BxDolCalendar
             return;
 
         $this->_oTemplate->addCss(array(
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'fullcalendar/|fullcalendar.min.css',
+             'fullcalendar.css',
         ));
-
+        
         $sCalendarLang = $this->_getLang();
             
         $this->_oTemplate->addJs(array(
-            'fullcalendar/fullcalendar.min.js',
-            'fullcalendar/locale/' . $sCalendarLang . '.js',
+            'fullcalendar/index.global.min.js',
+            'fullcalendar/locales/' . $sCalendarLang . '.global.min.js',
         ));
         
         $this->_bJsCssAdded = true;
