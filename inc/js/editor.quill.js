@@ -144,6 +144,9 @@ function bx_editor_init(oEditor, oParams){
                 if (node.hasAttribute('title')) {
                     format.title = node.getAttribute('title');
                 }
+                else{
+                     format.title = node.innerText.replace(node.getAttribute('dchar'), '');
+                }
                 if (node.hasAttribute('dchar')) {
                     format.dchar = node.getAttribute('dchar');
                 }
