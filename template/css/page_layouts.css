@@ -12,7 +12,9 @@
 .bx-layout-col {
     float:left;
 }
-
+section .bx-layout-col{
+    float:none;
+}
 
 /* layout 1 column */
 .bx-layout-1-column-column1 {
