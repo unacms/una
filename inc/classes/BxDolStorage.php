@@ -218,8 +218,10 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         if (isset($GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject];
 
-        $aObject = BxDolStorageQuery::getStorageObject($sObject);
-        
+        $aObject = BxDolStorageQuery::getStorageObject($sObject);        
+        if (!$aObject || !is_array($aObject))
+            return false;
+
         $aExtMarkers = [
             'image' => getParam('sys_files_ext_images'),
             'video' => getParam('sys_files_ext_video'),
@@ -230,9 +232,6 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         
         $aObject['ext_allow'] = bx_replace_markers($aObject['ext_allow'], $aExtMarkers);
         $aObject['ext_deny'] = bx_replace_markers($aObject['ext_deny'], $aExtMarkers);
-        
-        if (!$aObject || !is_array($aObject))
-            return false;
 
         $sClass = 'BxDolStorage' . $aObject['engine'];
         $o = new $sClass($aObject);
