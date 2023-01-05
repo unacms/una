@@ -2250,7 +2250,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sUrl);
 
         $sContent = "\r\n/*--- BEGIN: " . $sUrl . $sName . "---*/\r\n" . $sContent . ";\r\n/*--- END: " . $sUrl . $sName . "---*/\r\n";
-        $sContent = str_replace(array("\n\r", "\r\n", "\r"), "\n", $sContent);
+        $sContent = preg_replace("/\/\/# sourceMappingURL\s*=.*/si", "", $sContent);
+        $sContent = str_replace(["\n\r", "\r\n", "\r"], "\n", $sContent);
 
         $aIncluded[$sAbsolutePath] = 1;
 

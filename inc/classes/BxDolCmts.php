@@ -1375,14 +1375,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function actionRemove()
     {
-        if (!$this->isEnabled()) {
-            echoJson(array());
-            return;
-        };
+        if (!$this->isEnabled())
+            return echoJson([]);
 
         $iCmtId = 0;
         if(bx_get('Cmt') !== false)
             $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
+
         echoJson($this->remove($iCmtId));
     }
     
@@ -1457,7 +1456,12 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->deleteUniqueIds($iCmtId);
 
-        return array('id' => $iCmtId);
+        $iCount = (int)$this->getCommentsCountAll(0, true);
+        return [
+            'id' => $iCmtId,
+            'count' => $iCount,
+            'countf' => $iCount > 0 ? $this->getCounter() : ''
+        ];
     }
 
     public function add($aValues)
