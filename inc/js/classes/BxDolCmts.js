@@ -327,16 +327,30 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
 	        function(oData) {
 	            var fContinue = function() {
 	            	if(oData && oData.id != undefined) {
-		            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
+                            $(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-		            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-		                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
-		                	if(oCounter)
-		                		oCounter.html(oCounter.html() - 1);
+                            $('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                                    //--- Update counter
+                                    if(oData && oData.count != undefined && parseInt(oData.count) >= 0) {
+                                        var oSource = $(this);
 
-		                	$(this).remove();
-		                });
-		            }
+                                        var oCounter = $this._getCounter(oSource);
+                                        if(oCounter && oCounter.length > 0) {
+                                            if(oData.countf != undefined && oData.countf.length != 0)
+                                                oCounter.html(oData.countf);
+
+                                            if(parseInt(oData.count) == 0)
+                                                oCounter.toggleClass('sys-ac-hidden');
+                                        }
+
+                                        var oCounter = $this._getCounter(oSource, true);
+                                        if(oCounter && oCounter.length > 0)
+                                            oCounter.html(oData.count);
+                                    }
+
+                                    $(this).remove();
+                            });
+                        }
 	            };
 
 	            $this._loadingInContent(e, false);
