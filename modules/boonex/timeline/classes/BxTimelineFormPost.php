@@ -204,6 +204,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 );
 
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $sStorage;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['storage_private'] = 0;
             $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_photos_preview');
             $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders_id'] = $sUploadersId;
             $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = $aUploaders;
@@ -226,6 +227,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 );
 
             $this->aInputs[$CNF['FIELD_VIDEO']]['storage_object'] = $sStorage;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['storage_private'] = 0;
             $this->aInputs[$CNF['FIELD_VIDEO']]['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_preview');
             $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders_id'] = $sUploadersId;
             $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders'] = $aUploaders;
@@ -249,6 +251,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             }
             
             $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $sStorage;
+            $this->aInputs[$CNF['FIELD_FILE']]['storage_private'] = 0;
             $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = '';
             $this->aInputs[$CNF['FIELD_FILE']]['uploaders_id'] = $sUploadersId;
             $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] = $aUploaders;
