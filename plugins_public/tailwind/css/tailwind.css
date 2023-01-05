@@ -504,8 +504,20 @@
     }
 
     /* Common elements: Pages. */
+    .bx-layout-wrapper{
+        @apply gap-4 lg:gap-6 xl:gap-8 flex flex-col;
+    }
+    .bx-layout-row{
+        @apply w-full flex relative flex-wrap md:flex-nowrap gap-4 lg:gap-6 xl:gap-8;
+    }
+    .bx-layout-col{
+        @apply max-w-full w-full;
+    }
+    .bx-layout-cell{
+        @apply flex flex-col gap-4 lg:gap-6 xl:gap-8;
+    }
     .bx-def-color-bg-page{
-	@apply bg-gray-100 dark:bg-gray-900;
+	    @apply bg-gray-100 dark:bg-gray-900;
     }
 
     /* Common elements: Blocks, Boxes, etc. */

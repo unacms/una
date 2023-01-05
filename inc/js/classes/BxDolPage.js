@@ -25,7 +25,7 @@ function BxDolPage(oOptions) {
 BxDolPage.prototype.init = function() {
     var $this = this;
     if ($this._isStickyColumns && !$('html').hasClass('bx-media-phone')) {
-        $('.bx-layout-col').addClass('sticky top-4');
+        $('.bx-layout-cell').addClass('sticky top-4');
     }
     // process embeds
     $(".bx-embed-link").each(function() {
