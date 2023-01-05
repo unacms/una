@@ -505,16 +505,19 @@
 
     /* Common elements: Pages. */
     .bx-layout-wrapper{
-        @apply gap-4 lg:gap-6 xl:gap-8 flex flex-col;
+        @apply gap-4 lg:gap-6 flex flex-col;
     }
     .bx-layout-row{
-        @apply w-full flex relative flex-wrap md:flex-nowrap gap-4 lg:gap-6 xl:gap-8;
+        @apply w-full flex relative flex-wrap md:flex-nowrap gap-4 lg:gap-6;
     }
     .bx-layout-col{
         @apply max-w-full w-full;
     }
     .bx-layout-cell{
-        @apply flex flex-col gap-4 lg:gap-6 xl:gap-8;
+        @apply flex flex-col gap-4 lg:gap-6;
+    }
+    .bx-layout-gap{
+        @apply gap-4 lg:gap-6;
     }
     .bx-def-color-bg-page{
 	    @apply bg-gray-100 dark:bg-gray-900;
@@ -530,12 +533,12 @@
     .bx-def-color-bg-block,
     .bx-def-color-bg-box,
     .bx-popup-color-bg {
-        @apply bg-white dark:bg-gray-800 shadow;
+        @apply bg-white dark:bg-gray-800 shadow-md;
     }
     .bx-def-border-block,
     .bx-def-box,
     .bx-popup-border {
-        @apply ring-1 ring-gray-300 dark:ring-gray-700;
+        @apply ring-1 ring-gray-300/50 dark:ring-gray-600/50;
     }
     .bx-def-border-radius-block,
     .bx-def-box-round-corners,
