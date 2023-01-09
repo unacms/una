@@ -508,7 +508,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                     $sSeoTitleLimited = BxTemplFunctions::getInstance()->getStringWithLimitedLength($sSeoTitle, 45);
                     $sUri = uriGenerate ($sSeoTitleLimited, 'sys_seo_links', 'uri', ['cond' => ['module' => $sPageModule, 'page_uri' => $sPageUri]]);
 
-                    bx_alert('system', 'uri-generate', 0, false, [
+                    bx_alert('system', 'uri_generate', 0, false, [
                         'module' => $sPageModule,
                         'page_uri' =>$sPageUri,
                         'param_name' => $sSeoParamName,

@@ -956,7 +956,18 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
         if ('undefined' !== typeof(eElement)) {
             // process js time
             eElement.bxTime();
-
+            
+            // process links in container
+            $('.bx-lnk-cnt .bx-lnk-src:not(.bx-inited)').each(function() {
+                $(this).addClass('bx-inited');
+                var sUrl = $(this).prop('href');
+                $(this).parents('.bx-lnk-cnt').first().addClass('cursor-pointer').click(function(oEvent){
+                    if ($(oEvent.target).closest('a').length == 0 && $(oEvent.target).closest('button').length == 0 && $(oEvent.target).closest('form').length == 0 &&  $(oEvent.target).closest('input').length == 0){
+                        location.href = sUrl;
+                    }
+                });
+            });
+            
             // process web forms
             if ($.isFunction($.fn.addWebForms))
 	            eElement.addWebForms();

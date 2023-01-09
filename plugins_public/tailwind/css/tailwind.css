@@ -556,7 +556,7 @@
     }
 
     .bx-db-title {
-        @apply leading-8 text-lg lg:text-xl text-gray-800 dark:text-gray-100 font-semibold align-middle;
+        @apply text-lg xl:text-xl font-bold text-gray-800 dark:text-gray-100 align-middle;
     }
 
     /* Common Elements: HR */
@@ -1109,6 +1109,10 @@
     .bx-tl-title a {
         @apply text-gray-800 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-400 hover:no-underline;
     }
+    img.bx-tl-item-image{
+        @apply aspect-video rounded-lg;
+    }
+    
     .bx-base-text-unit-title a {
         @apply text-lg lg:text-xl font-semibold;
     }

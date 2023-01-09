@@ -23,6 +23,7 @@ class BxMailchimpModule extends BxDolModule
         'PROFILES' => 'text',
         'PROFILE_URL' => 'url',
         'IMAGE_URL' => 'imageurl',
+        'PHONE' => 'phone',
     );
 
     function __construct(&$aModule)
@@ -224,6 +225,7 @@ class BxMailchimpModule extends BxDolModule
         }
         $sProfiles = trim($sProfiles, ', ');
         $sEmail = $oAccount->getEmail();
+        $aInfo = $oAccount->getInfo();
         $iAccountId = $oAccount->id();
         $iProfileId = $oProfile->id();
 
@@ -237,6 +239,7 @@ class BxMailchimpModule extends BxDolModule
             'PROFILES' => $sProfiles,
             'PROFILEURL' => $oProfile->getUrl(),
             'IMAGE_URL' => $oProfile->getAvatar(),
+            'PHONE' => $aInfo['phone'],
             'RPASS_URL' => ''
         );
 
