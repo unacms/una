@@ -1774,7 +1774,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oConnection || !$oGroupProfile)
             return false;
 
-        if(!$oConnection->isConnected($iFanProfileId, $iGroupProfileId, true) && !($oConnection->addConnection($iFanProfileId, $iGroupProfileId) && $oConnection->addConnection($iGroupProfileId, $iFanProfileId)))
+        if(!$oConnection->isConnected($iFanProfileId, $iGroupProfileId, true) && !$oConnection->addConnection($iFanProfileId, $iGroupProfileId))
             return false;
 
         if(!$this->_oDb->setRole($iGroupProfileId, $iFanProfileId, $mixedRole, $mixedPeriod, $sOrder))

@@ -363,6 +363,8 @@
     <string name="_bx_events_txt_status_hidden"><![CDATA[Это событие было скрыто.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_events_txt_role"><![CDATA[Роль]]></string>
+    <string name="_bx_events_txt_role_added"><![CDATA[Начало]]></string>
+    <string name="_bx_events_txt_role_expired"><![CDATA[Окончание]]></string>
     <string name="_bx_events_txt_sample_single"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_single_with_article"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_comment_single"><![CDATA[комментарий к событию]]></string>

@@ -417,6 +417,8 @@
     <string name="_bx_events_txt_status_hidden"><![CDATA[This event was hidden.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} members]]></string>
     <string name="_bx_events_txt_role"><![CDATA[Role]]></string>
+    <string name="_bx_events_txt_role_added"><![CDATA[Added]]></string>
+    <string name="_bx_events_txt_role_expired"><![CDATA[Expires]]></string>
     <string name="_bx_events_txt_sample_single"><![CDATA[event]]></string>
     <string name="_bx_events_txt_sample_single_with_article"><![CDATA[an event]]></string>
     <string name="_bx_events_txt_sample_comment_single"><![CDATA[comment to event]]></string>
