@@ -647,7 +647,11 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
 	protected function _doDelete($iId, $aParams = array())
     {
-    	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
+        $oAccount = BxDolAccount::getInstance($iId);
+        if($oAccount)
+            return $oAccount->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
+        
+        return false;
     }
     
     
