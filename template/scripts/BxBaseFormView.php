@@ -809,7 +809,7 @@ BLAH;
 
     protected function genCustomViewRowValueBirthday(&$aInput)
     {
-        if(!isset($aInput['value']) || !$aInput['value'] || in_array($aInput['value'], array('0000-00-00', '0000-00-00 00:00:00')))
+        if(!isset($aInput['value']) || !$aInput['value'] || in_array($aInput['value'], array('0000-00-00', '0000-00-00 00:00:00', '0000-00-00Z', '0000-00-00 00:00:00Z')))
             return null;
 
         return bx_birthday2age($aInput['value']);
