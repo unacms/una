@@ -17,6 +17,8 @@
     <string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Автоподписка на отвеченные обсуждения]]></string>
     <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Автоактивация для категорий]]></string>
     <string name="_bx_forum_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_forum_option_visible_categories"><![CDATA[Количество отображаемых категорий]]></string>
+    <string name="_bx_forum_option_visible_hashtags"><![CDATA[Количество отображаемых хештегов]]></string>
 
     <string name="_bx_forum_form_entry"><![CDATA[Форум]]></string>
     <string name="_bx_forum_form_entry_display_add"><![CDATA[Создание обсуждения]]></string>
@@ -46,8 +48,10 @@
     <string name="_bx_forum_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
     <string name="_bx_forum_form_entry_input_files"><![CDATA[]]></string>
     <string name="_bx_forum_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
+    <string name="_bx_forum_form_entry_input_media"><![CDATA[Медиа]]></string>
     <string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_forum_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
     <string name="_bx_forum_form_entry_input_sys_date_added"><![CDATA[Дата создания]]></string>
     <string name="_bx_forum_form_entry_input_date_added"><![CDATA[Дата создания]]></string>
@@ -62,7 +66,8 @@
     <string name="_bx_forum_form_entry_input_sys_multicat"><![CDATA[Категории]]></string>
     <string name="_bx_forum_form_entry_input_multicat"><![CDATA[Категории]]></string>
     <string name="_bx_forum_form_entry_input_multicat_err"><![CDATA[Нужно обязательно выбрать категории]]></string>
-    <string name="_bx_forum_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
+    <string name="_bx_forum_form_entry_input_resolvable"><![CDATA[Решаемый]]></string>
+    <string name="_bx_forum_form_entry_input_sys_resolvable"><![CDATA[Решаемый]]></string>
 
     <string name="_bx_forum_form_poll"><![CDATA[Голосования]]></string>
     <string name="_bx_forum_form_poll_display_add"><![CDATA[Добавить голосование]]></string>
@@ -97,6 +102,7 @@
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Закреплять любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Блокировать любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_hide_any_entry"><![CDATA[Скрывать любое обсуждение]]></string>
+    <string name="_bx_forum_acl_action_resolve_any_entry"><![CDATA[Отмечать как решенное любое обсуждение]]></string>
 
 	<string name="_bx_forum_page_title_sys_create_entry"><![CDATA[Новое обсуждение]]></string>
 	<string name="_bx_forum_page_title_create_entry"><![CDATA[Новое обсуждение]]></string>
@@ -123,7 +129,7 @@
     <string name="_bx_forum_page_title_browse"><![CDATA[Обсуждения]]></string>
 	<string name="_bx_forum_page_title_search_results"><![CDATA[Обсуждения, соответствующие "{0}"]]></string>
 	<string name="_bx_forum_page_title_browse_by_author"><![CDATA[Обсуждения {display_name}]]></string>
-  <string name="_bx_forum_page_title_browse_by_context"><![CDATA[Обсуждения в контексте: {display_name}]]></string>
+    <string name="_bx_forum_page_title_browse_by_context"><![CDATA[Обсуждения в контексте: {display_name}]]></string>
 	<string name="_bx_forum_page_title_browse_featured"><![CDATA[Продвинутые обсуждения]]></string>
 	<string name="_bx_forum_page_title_browse_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
 	<string name="_bx_forum_page_title_browse_new"><![CDATA[Новые обсуждения]]></string>
@@ -135,6 +141,11 @@
     <string name="_bx_forum_page_title_sys_home"><![CDATA[Обсуждения - Домой]]></string>
     <string name="_bx_forum_page_title_home"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_page_block_title_featured_entries"><![CDATA[Продвинутые обсуждения]]></string>
+    <string name="_bx_forum_page_block_title_featured_entries_view_showcase"><![CDATA[Избранные обсуждения]]></string>
+    <string name="_bx_forum_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Избранные обсуждения (Витринный просмотр)]]></string>
+    <string name="_bx_forum_page_block_title_featured_entries_view_gallery"><![CDATA[Избранные обсуждения (Галерея)]]></string>
+    <string name="_bx_forum_page_block_title_featured_entries_view_extended"><![CDATA[Избранные обсуждения (Табличный просмотр)]]></string>
+    
     <string name="_bx_forum_page_title_sys_entries_new"><![CDATA[Новые обсуждения]]></string>
     <string name="_bx_forum_page_title_entries_new"><![CDATA[Новые обсуждения]]></string>
     <string name="_bx_forum_page_title_sys_entries_top"><![CDATA[ТОП обсуждения]]></string>
@@ -150,12 +161,17 @@
     <string name="_bx_forum_page_block_title_latest_entries_view_extended"><![CDATA[Обсуждения с последними сообщениями (Расширенный просмотр)]]></string>
     <string name="_bx_forum_page_block_title_latest_entries_view_full"><![CDATA[Обсуждения с последними сообщениями (Полный просмотр)]]></string>
     <string name="_bx_forum_page_block_title_top_entries"><![CDATA[ТОП обсуждений]]></string>
-    <string name="_bx_forum_page_block_title_top_entries_view_extended"><![CDATA[ТОП обсуждений (Расширенный просмотр)]]></string>
-    <string name="_bx_forum_page_block_title_top_entries_view_full"><![CDATA[ТОП обсуждений (Полный просмотр)]]></string>
+    <string name="_bx_forum_page_block_title_top_entries_view_gallery"><![CDATA[ТОП обсуждений (Галерея)]]></string>
+    <string name="_bx_forum_page_block_title_top_entries_view_showcase"><![CDATA[ТОП обсуждений (Витринный просмотр)]]></string>
     <string name="_bx_forum_page_block_title_popular_entries"><![CDATA[Популярные обсуждения]]></string>
     <string name="_bx_forum_page_block_title_popular_entries_view_extended"><![CDATA[Популярные обсуждения (Расширенный просмотр)]]></string>
-    <string name="_bx_forum_page_block_title_popular_entries_view_full"><![CDATA[Популярные обсуждения (Полный просмотр)]]></string>
+    <string name="_bx_forum_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные обсуждения (Витринный просмотр)]]></string>
+    <string name="_bx_forum_page_block_title_popular_entries_view_gallery"><![CDATA[Популярные обсуждения (Галерея)]]></string>
     <string name="_bx_forum_page_block_title_updated_entries"><![CDATA[Обновленные обсуждения]]></string>
+    <string name="_bx_forum_page_block_title_sys_favorites_entries"><![CDATA[Избранные списки]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries"><![CDATA["{title}" Список]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries_actions"><![CDATA[Действия с избранными списками]]></string>
     <string name="_bx_forum_page_title_sys_entries_categories"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_page_title_entries_categories"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_page_block_title_entries_categories"><![CDATA[Категории обсуждений]]></string>
@@ -180,9 +196,9 @@
     <string name="_bx_forum_page_block_title_sys_multi_categories_in_context"><![CDATA[Категории обсуждений в контексте(Мульти)]]></string>
     <string name="_bx_forum_page_block_title_multi_categories_in_context"><![CDATA[Категории в <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Обсуждения - Действия]]></string>
-    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Форум - Комментарии]]></string>
     <string name="_bx_forum_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_forum_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Форум - Комментарии]]></string>
     <string name="_bx_forum_page_title_sys_manage"><![CDATA[Управление собственными обсуждениями]]></string>
     <string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Управление всеми обсуждениями]]></string>
     <string name="_bx_forum_page_title_manage"><![CDATA[Управление]]></string>
@@ -191,6 +207,7 @@
     <string name="_bx_forum_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_forum_page_block_title_popular_keywords"><![CDATA[Популярные хэштеги]]></string>
     <string name="_bx_forum_page_block_title_cats"><![CDATA[Категории обсуждений]]></string>
+    <string name="_bx_forum_page_block_title_browse_labels"><![CDATA[Просмотр этикеток]]></string>
     <string name="_bx_forum_page_block_title_sys_multicats"><![CDATA[Категории обсуждений(Мульти)]]></string>
     <string name="_bx_forum_page_block_title_multicats"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_page_block_title_sys_my_entries"><![CDATA[Обсуждения пользователя]]></string>
@@ -208,10 +225,6 @@
     <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Отвеченные мной]]></string>
-    <string name="_bx_forum_page_block_title_sys_favorites_entries"><![CDATA[Избранное]]></string>
-    <string name="_bx_forum_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
-    <string name="_bx_forum_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
-    <string name="_bx_forum_page_block_title_favorites_entries_actions"><![CDATA[Действия]]></string>
 
     <string name="_bx_forum_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_forum_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
@@ -255,6 +268,10 @@
     <string name="_bx_forum_menu_item_title_edit_entry"><![CDATA[Редактировать обсуждение]]></string>
     <string name="_bx_forum_menu_item_title_system_delete_entry"><![CDATA[Удалить обсуждение]]></string>
     <string name="_bx_forum_menu_item_title_delete_entry"><![CDATA[Удалить обсуждение]]></string>
+    <string name="_bx_forum_menu_item_title_resolve_entry"><![CDATA[Пометить как решенный]]></string>
+    <string name="_bx_forum_menu_item_title_unresolve_entry"><![CDATA[Пометить как нерешенный]]></string>
+    <string name="_bx_forum_menu_item_title_system_resolve_entry"><![CDATA[Пометить как решенный]]></string>
+    <string name="_bx_forum_menu_item_title_system_unresolve_entry"><![CDATA[Пометить как нерешенный]]></string>
 	<string name="_bx_forum_menu_item_title_system_stick_entry"><![CDATA[Закрепить]]></string>
     <string name="_bx_forum_menu_item_title_stick_entry"><![CDATA[Закрепить]]></string>
     <string name="_bx_forum_menu_item_title_system_unstick_entry"><![CDATA[Открепить]]></string>
@@ -266,13 +283,13 @@
     <string name="_bx_forum_menu_item_title_system_hide_entry"><![CDATA[Скрыть]]></string>
     <string name="_bx_forum_menu_item_title_hide_entry"><![CDATA[Скрыть]]></string>
     <string name="_bx_forum_menu_item_title_system_unhide_entry"><![CDATA[Показать]]></string>
+    <string name="_bx_forum_menu_item_title_unhide_entry"><![CDATA[Показать]]></string>
     <string name="_bx_forum_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
     <string name="_bx_forum_menu_item_title_subscribe"><![CDATA[Подписаться]]></string>
     <string name="_bx_forum_menu_item_title_system_unsubscribe"><![CDATA[Отписаться]]></string>
     <string name="_bx_forum_menu_item_title_unsubscribe"><![CDATA[Отписаться]]></string>
     <string name="_bx_forum_menu_item_title_system_more"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_forum_menu_item_title_more"><![CDATA[]]></string>
-    <string name="_bx_forum_menu_item_title_unhide_entry"><![CDATA[Показать]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_home"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_entries_home"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_partaken"><![CDATA[Отвеченные]]></string>
@@ -318,6 +335,12 @@
     <string name="_bx_forum_menu_set_title_snippet_meta_reply"><![CDATA[Мета информация в карточке: Ответ]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_reply_text"><![CDATA[Текст ответа]]></string>
     <string name="_bx_forum_menu_item_title_sm_reply_text"><![CDATA[Текст ответа]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_status"><![CDATA[Статус]]></string>
+    <string name="_bx_forum_menu_item_title_sm_status"><![CDATA[Статус]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_badges"><![CDATA[Бейджи]]></string>
+    <string name="_bx_forum_menu_item_title_sm_badges"><![CDATA[Бейджи]]></string>
+    <string name="_bx_forum_menu_title_categories"><![CDATA[Категории]]></string>
+    
 
     <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
     <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Любая аудитория]]></string>
@@ -330,6 +353,8 @@
     <string name="_bx_forum_grid_column_title_adm_author"><![CDATA[Автор]]></string>
     <string name="_bx_forum_grid_column_title_title"><![CDATA[Категория]]></string>
     <string name="_bx_forum_grid_column_title_visible_for_levels"><![CDATA[Видимо для]]></string>
+    <string name="_bx_forum_grid_column_title_icon"><![CDATA[Иконка]]></string>
+    <string name="_bx_forum_grid_action_title_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_forum_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_forum_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_forum_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
@@ -348,6 +373,33 @@
     <string name="_bx_forum_grid_txt_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
     <string name="_bx_forum_grid_inf_visible_for_levels"><![CDATA[Выбрать членства, которым разрешено просматривать данную категорию.]]></string>
     <string name="_bx_forum_grid_err_show_to"><![CDATA[Невозможно обновить категорию.]]></string>
+    <string name="_bx_forum_grid_edit_popup"><![CDATA[Редактировать категорию]]></string>
+    <string name="_bx_forum_grid_err_items_icon_image_remove"><![CDATA[Невозможно изменить иконку: ]]></string>
+    <string name="_bx_forum_grid_err_items_icon_image"><![CDATA[Невозможно обработать иконку: ]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon"><![CDATA[Иконка]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon_image"><![CDATA[]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon_image_new"><![CDATA[]]></string>
+    <string name="_bx_forum_grid_form_txt_badges_icon_image_old"><![CDATA[Ткушая иконка]]></string>
+    <string name="_bx_forum_grid_form_dsc_badges_icon"><![CDATA[Вы можете использовать: 1) иконки шрифта, 2) SVG код, 3) эмодзи]]></string>
+    <string name="_bx_forum_grid_form_dsc_badges_icon_image"><![CDATA[или загрузите небольшое изображение, которое будет отображаться рядом со ссылкой.]]></string>
+    <string name="_bx_forum_grid_form_dsc_badges_icon_image_current"><![CDATA[Иконка не загружена. Текст используется в пункте меню.]]></string>
+    <string name="_bx_forum_grid_form_btn_badges_submit"><![CDATA[Отправить]]></string>
+    <string name="_bx_forum_grid_form_btn_badges_cancel"><![CDATA[Отменить]]></string>
+    
+    <string name="_bx_forum_grid_filter_resolved_all"><![CDATA[Любой статус]]></string>
+    <string name="_bx_forum_grid_filter_badges_all"><![CDATA[Все бейджи]]></string>
+    <string name="_bx_forum_grid_filter_resolved_resolved"><![CDATA[Решенные]]></string>
+    <string name="_bx_forum_grid_filter_resolved_unresolved"><![CDATA[Нерешенные]]></string>
+    
+    <string name="_bx_forum_grid_filter_order_recent"><![CDATA[Недавние сообщения]]></string>
+    <string name="_bx_forum_grid_filter_order_new"><![CDATA[Новые]]></string>
+    <string name="_bx_forum_grid_filter_order_top"><![CDATA[Топ]]></string>
+    <string name="_bx_forum_grid_filter_order_updated"><![CDATA[Обновленные]]></string>
+    <string name="_bx_forum_grid_filter_order_popular"><![CDATA[Популярные]]></string>
+    <string name="_bx_forum_grid_filter_order_featured"><![CDATA[Избранные]]></string>
+    <string name="_bx_forum_grid_filter_order_favorite"><![CDATA[Любимые]]></string>
+    <string name="_bx_forum_grid_filter_order_partaken"><![CDATA[Ваше участие]]></string>
+    
     <string name="_bx_forum_grid_btn_save"><![CDATA[Сохранить]]></string>
     <string name="_bx_forum_grid_btn_cancel"><![CDATA[Отменить]]></string>
 
@@ -360,6 +412,7 @@
     <string name="_bx_forum_search_extended"><![CDATA[Поиск обсуждений]]></string>
     <string name="_bx_forum_search_extended_cmts"><![CDATA[Поиск комментариев к обсуждениям]]></string>
 
+    <string name="_bx_forum_txt_all_categories"><![CDATA[Все категории]]></string>
     <string name="_bx_forum_txt_msg_status_hidden"><![CDATA[Данное обсуждение было скрыто.]]></string>
     <string name="_bx_forum_txt_msg_status_pending"><![CDATA[Данное обсуждение ожидает утверждения.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Обсуждение не найдено.]]></string>
@@ -373,7 +426,7 @@
     <string name="_bx_forum_txt_sample_reaction_single"><![CDATA[реакция '{0}' к обсуждению]]></string>
     <string name="_bx_forum_txt_sample_score_up_single"><![CDATA[голос за обсуждение]]></string>
     <string name="_bx_forum_txt_sample_score_down_single"><![CDATA[голос против обсуждения]]></string>
-    <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>
+    
     <string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[обсуждение]]></string>
 
@@ -383,6 +436,7 @@
     <string name="_bx_forum_txt_poll_answer_vote_counter"><![CDATA[{0} голосов]]></string>
     <string name="_bx_forum_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
+    <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>
     <string name="_bx_forum_email_new_reply"><![CDATA[Новый ответ]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[Новый ответ в "{PageTitle}" дискуссии]]></string>
     <string name="_bx_forum_email_new_reply_body"><![CDATA[{email_header}
