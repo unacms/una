@@ -2201,7 +2201,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         if(!empty($sUrl) && !empty($sTitle))
             $sTitle = $this->parseLink($sUrl, $sTitle, array(
-            	'class' => $sStylePrefix . '-title',
+            	'class' => $sStylePrefix . '-title bx-lnk-src',
                 'title' => $sTitle
             ));
 
