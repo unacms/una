@@ -5,7 +5,16 @@ a {
     transition: color .1s ease;
 }
 
-/* --- Loading indicator --- */
+/*-- Application mode: Toolbar --*/
+.bx-main.bx-pt-application .bx-toolbar-content #bx-logo-container {
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    
+    margin: 0;
+}
+
+/*-- Loading indicator --*/
 .bx-loading-ajax-btn {
     margin-left: 10px;
 }

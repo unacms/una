@@ -18,6 +18,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
     protected $_bSiteMenu;
     protected $_bSiteMenuInPanel;
     protected $_bSiteMenuSubmenu;
+    protected $_bApplicationMenu;
 
     protected $_aHideFromSiteMenuInPanel;
 
@@ -34,6 +35,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
         $this->_bSiteMenuInPanel = $this->_sObject == 'sys_site_in_panel';
         $this->_bSiteMenuSubmenu = false;
+        $this->_bApplicationMenu = $this->_sObject == 'sys_application';
 
         $this->_aHideFromSiteMenuInPanel = ['more-auto'];
     }
@@ -42,7 +44,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
     {
         $sClass = 'bx-sliding-menu-main';
         $sStyle = 'display:none';
-        if($this->_bSiteMenu || $this->_bSiteMenuInPanel) {
+        if($this->_bSiteMenu || $this->_bSiteMenuInPanel || $this->_bApplicationMenu) {
             $sClass = 'bx-sliding-smenu-main';
             $sStyle = '';
         }

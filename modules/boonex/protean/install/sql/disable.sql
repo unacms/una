@@ -8,4 +8,4 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 
 -- INJECTIONS
-DELETE FROM `sys_injections` WHERE `name` = @sName;
+DELETE FROM `sys_injections` WHERE `name` IN (@sName, 'bx_protean_footer');

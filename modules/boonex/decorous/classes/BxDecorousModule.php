@@ -18,13 +18,31 @@ class BxDecorousModule extends BxBaseModTemplateModule
         parent::__construct($aModule);
     }
 
-	function serviceIncludeCssJs()
+    function serviceIncludeCssJs($sType)
     {
+        $sResult = '';
         if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
-            return '';
-		
-    	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
-        return (!empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '') . $this->_oTemplate->_wrapInTagJs(BX_DOL_URL_MODULES . 'boonex/decorous/template/js/custom.js');
+            return $sResult;
+
+        switch($sType) {
+            case 'head':
+                $sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
+                if(!empty($sCss))
+                    $sResult .= $this->_oTemplate->_wrapInTagCssCode($sCss);
+
+                $sResult .= $this->_oTemplate->addJs([
+                    'custom.js'
+                ], true);
+            break;
+
+            case 'footer':
+                $sResult .= $this->_oTemplate->addJs([
+                    'modules/base/template/js/|sidebar.js'
+                ], true);
+                break;
+        }
+
+        return $sResult;
     }
 }
 
