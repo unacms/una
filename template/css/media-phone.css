@@ -52,7 +52,7 @@ html.bx-media-phone {
 
 
 /* general.css */
-.bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
+.bx-media-phone .bx-main:not(.bx-pt-application) #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
     margin-left: 0.625rem;
     margin-right: 0.625rem;
 }

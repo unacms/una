@@ -13,6 +13,8 @@
 class BxBaseMenuSite extends BxTemplMenu
 {
     protected $_bSiteMenuInPanel;
+    protected $_bApplicationMenu;
+
     protected $_aHideFromSiteMenuInPanel;
 
     public function __construct ($aObject, $oTemplate)
@@ -20,6 +22,7 @@ class BxBaseMenuSite extends BxTemplMenu
         parent::__construct ($aObject, $oTemplate);
 
         $this->_bSiteMenuInPanel = $this->_sObject == 'sys_site_in_panel';
+        $this->_bApplicationMenu = $this->_sObject == 'sys_application';
 
         $this->_aHideFromSiteMenuInPanel = ['more-auto'];
     }
@@ -28,11 +31,12 @@ class BxBaseMenuSite extends BxTemplMenu
     {
         $sClass = 'bx-sliding-menu-main';
         $sStyle = 'display:none';
-        if($this->_bSiteMenuInPanel)
+        if($this->_bSiteMenuInPanel || $this->_bApplicationMenu) {
+            $sClass = 'bx-sliding-smenu-main';
             $sStyle = '';
+        }
 
-        $s = parent::getCode();
-        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav bx-def-border-bottom" style="' . $sStyle . '"><div class="bx-sliding-menu-main-cnt">' . $s . '</div></div>';
+        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav bx-def-border-bottom" style="' . $sStyle . '"><div class="bx-sliding-menu-main-cnt">' . parent::getCode() . '</div></div>';
     }
     
     protected function _getMenuItem ($a)

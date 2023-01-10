@@ -1,30 +1,15 @@
 @import url(../../../../../../../template/css/common.css);
 
-.bx-main.bx-pt-application .bx-toolbar-content {
-    position: relative;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-}
-.bx-main.bx-pt-application .bx-toolbar-content .bx-toolbar-1-container {
-    -webkit-flex: 0 0 auto;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
-}
+
+/*-- Application mode: Toolbar --*/
 .bx-main.bx-pt-application .bx-toolbar-content #bx-logo-container {
-    -webkit-flex: 3 1 auto;
-    -ms-flex: 3 1 auto;
-    flex: 3 1 auto;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
     
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
 }
-.bx-main.bx-pt-application .bx-toolbar-content .bx-toolbar-2-container {
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-}
+
 
 .bx-btn {
     transition: all .3s cubic-bezier(.645,.045,.355,1);
