@@ -18,12 +18,16 @@ div.cmt-reply.cmt-reply-min div.cmt-body {
 form.cmt-post-reply div#bx-form-element-cmt_image,
 form.cmt-post-reply .bx-form-input-files-uploaders {
     margin-top: 0px;
+    position: relative;
 }
 
 form.cmt-post-reply .bx-form-input-files-uploaders a.cmts-uploader-button {
     position: absolute;
     z-index: 1;
     right: 0px;
+    -webkit-transform: translateY(-100%); 
+    transform: translateY(-100%);  
+    margin-top: 0px;
 }
 
 /*--- Comment ---*/
