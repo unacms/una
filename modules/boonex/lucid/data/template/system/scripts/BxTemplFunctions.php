@@ -24,7 +24,14 @@ class BxTemplFunctions extends BxBaseFunctions
         return !empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '';
     }
 
-	protected function getInjFooterPopupMenus() 
+    protected function getInjFooterIncludeCssJs() 
+    {
+        return $this->_oTemplate->addJs([
+            'modules/base/template/js/|sidebar.js',
+        ], true);
+    }
+
+    protected function getInjFooterPopupMenus() 
     {
         $sContent = '';
 
@@ -43,7 +50,7 @@ class BxTemplFunctions extends BxBaseFunctions
         return $sContent;
     }
 
-	protected function getInjFooterMenuDropdown() 
+    protected function getInjFooterMenuDropdown() 
     {
         $bLogged = isLogged();
         $sCode = '';

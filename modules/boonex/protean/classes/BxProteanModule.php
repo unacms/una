@@ -37,13 +37,27 @@ class BxProteanModule extends BxBaseModTemplateModule
         ), $aSkins);
     }
 
-    function serviceIncludeCssJs()
+    function serviceIncludeCssJs($sType)
     {
+        $sResult = '';
         if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
-            return '';
+            return $sResult;
 
-    	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
-        return !empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '';
+        switch($sType) {
+            case 'head':
+                $sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
+                if(!empty($sCss))
+                    $sResult .= $this->_oTemplate->_wrapInTagCssCode($sCss);
+                break;
+
+            case 'footer':
+                $sResult .= $this->_oTemplate->addJs([
+                    'modules/base/template/js/|sidebar.js',
+                ], true);
+                break;
+        }
+
+        return $sResult;
     }
 }
 

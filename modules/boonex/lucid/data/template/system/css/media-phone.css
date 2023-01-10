@@ -21,14 +21,14 @@
     padding-left: 0;
     padding-right: 0;
 }
-.bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
+.bx-media-phone .bx-main:not(.bx-pt-application) #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
     -webkit-flex-grow: 1; 
     flex-grow: 1;
 
     text-align: center;
     overflow: hidden;
 }
-.bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-menu {
+.bx-media-phone .bx-main:not(.bx-pt-application) #bx-toolbar-content .bx-toolbar-item.bx-ti-menu {
     -webkit-flex-grow: 0; 
     flex-grow: 0;
 
