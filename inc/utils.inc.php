@@ -231,6 +231,9 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
 
     case BX_DATA_HTML:
         $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
+            
+        // remove empty tags from html content https://github.com/unaio/una/issues/4203
+        $s = preg_replace("/(((<\w+>)+[ \n(<br>)]*(<\/\w+>)+)+)|<br>/", '', $s);    
         return $mixedParams && is_array($mixedParams) && in_array('no_process_macro', $mixedParams) ? $s : bx_process_macros($s);
     case BX_DATA_TEXT_MULTILINE:
         $s = $mixedData;

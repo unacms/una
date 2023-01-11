@@ -246,6 +246,9 @@ function bx_editor_init(oEditor, oParams){
     var oConfig = {              
          theme: oParams.skin,
          modules: {
+            clipboard: {
+                matchVisual: false
+            },
             syntax: true, 
             imageResize: {},
             toolbar: oParams.toolbar,
