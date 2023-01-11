@@ -1647,7 +1647,7 @@ class BxDolFormCheckerHelper
         $s = str_replace('T', ' ', $s);
         $s = str_replace('Z', ':00', $s);
 
-        return self::checkPreg ($s, '#^\d+\-\d+\-\d+[\sT]{1}\d+:\d+[:\d+]$#');
+        return self::checkPreg ($s, '#^\d+\-\d+\-\d+[\sT]{1}\d+:\d+(:\d+)?(\+\d+:\d+)?$#');
     }
     static public function checkPreg ($s, $r)
     {
