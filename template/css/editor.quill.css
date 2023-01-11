@@ -55,3 +55,6 @@
 .ql-editor ul li:not(.ql-direction-rtl){
     padding-left: 0.375em !important;
 }
+.ql-editor{
+    padding: 0px 15px !important;
+}
