@@ -32,16 +32,19 @@
         @apply prose dark:prose-invert;
         @apply prose-a:text-blue-500 prose-a:font-medium prose-a:no-underline hover:prose-a:underline visited:prose-a:text-purple-500;
     }
-    .bx-def-vanilla-html div > :where(:first-child):not(:where([class~="not-prose"] *)),
-    .bx-def-vanilla-html > :where(:first-child):not(:where([class~="not-prose"] *)){
-        margin-top: 0;
-    }
-    .bx-def-vanilla-html div > :where(:last-child):not(:where([class~="not-prose"] *)),
-    .bx-def-vanilla-html > :where(:last-child):not(:where([class~="not-prose"] *)) {
-        margin-bottom: 0;
-    }
+    
     .bx-def-vanilla-html.bx-def-vh-sm {
         @apply prose-sm;
+    }
+    
+    .bx-def-vanilla-html div > :where(:first-child):not(:where([class~="not-prose"] *)),
+    .bx-def-vanilla-html > :where(:first-child):not(:where([class~="not-prose"] *)){
+        margin-top: 0 !important;
+    }
+    
+    .bx-def-vanilla-html div > :where(:last-child):not(:where([class~="not-prose"] *)),
+    .bx-def-vanilla-html > :where(:last-child):not(:where([class~="not-prose"] *)) {
+        margin-bottom: 0 !important;
     }
 
     .bx-artificer .bx-menthion-link {
