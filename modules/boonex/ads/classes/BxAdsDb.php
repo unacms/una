@@ -224,7 +224,10 @@ class BxAdsDb extends BxBaseModTextDb
             case 'collect_stats':
                 $aMethod['params'][1] = [];
 
-                $sCountClause = "SELECT COUNT(`te`.`id`) FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te` INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `te`.`" . $CNF['FIELD_AUTHOR'] . "` AND `p`.`status` = 'active') WHERE `tc`.`id`=`te`.`" . $CNF['FIELD_CATEGORY'] . "` AND `te`.`" . $CNF['FIELD_STATUS'] . "`='active' AND `te`.`" . $CNF['FIELD_STATUS_ADMIN'] . "`='active' AND (`te`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "`=" . BX_DOL_PG_ALL . " OR `te`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "`<0)";
+                $aStatusActive = $this->_oConfig->getActiveStatus();
+                $aStatusActiveAdmin = $this->_oConfig->getActiveStatusAdmin();
+
+                $sCountClause = "SELECT COUNT(`te`.`id`) FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te` INNER JOIN `sys_profiles` AS `p` ON (`p`.`id` = `te`.`" . $CNF['FIELD_AUTHOR'] . "` AND `p`.`status` = 'active') WHERE `tc`.`id`=`te`.`" . $CNF['FIELD_CATEGORY'] . "` AND `te`.`" . $CNF['FIELD_STATUS'] . "` IN (" . $this->implode_escape($aStatusActive) . ") AND `te`.`" . $CNF['FIELD_STATUS_ADMIN'] . "` IN (" . $this->implode_escape($aStatusActiveAdmin) . ") AND (`te`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "`=" . BX_DOL_PG_ALL . " OR `te`.`" . $CNF['FIELD_ALLOW_VIEW_TO'] . "`<0)";
                 $sSelectClause = "`tc`.`id`, (" . $sCountClause . ") AS `count`";
 
                 if(isset($aParams['category_id'])) {
@@ -461,6 +464,13 @@ class BxAdsDb extends BxBaseModTextDb
         return (int)$this->query("UPDATE `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
     }
 
+    public function deleteLicense($aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+
     public function hasLicense($iProfileId, $iEntryId)
     {
     	return (int)$this->getLicense(array(
@@ -510,6 +520,15 @@ class BxAdsDb extends BxBaseModTextDb
 
         if(!empty($aParams['type']))
             switch($aParams['type']) {
+                case 'quantity_reserved':
+                    $aMethod['name'] = 'getOne';
+                    $aMethod['params'][1]['content_id'] = (int)$aParams['content_id'];
+                    $aMethod['params'][1]['status'] = BX_ADS_OFFER_STATUS_ACCEPTED;
+
+                    $sSelectClause = "SUM(`to`.`quantity`)";
+                    $sWhereClause = " AND `to`.`content_id`=:content_id AND `to`.`status`=:status";
+                    break;
+                
                 case 'id':
                     $aMethod['name'] = 'getRow';
                     $aMethod['params'][1]['id'] = (int)$aParams['id'];

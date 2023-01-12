@@ -137,6 +137,8 @@
     <string name="_bx_ads_form_offer_input_sys_quantity"><![CDATA[Quantity]]></string>
     <string name="_bx_ads_form_offer_input_quantity"><![CDATA[Quantity]]></string>
     <string name="_bx_ads_form_offer_input_quantity_err"><![CDATA[Quantity is essential. Please, fill in this field.]]></string>
+    <string name="_bx_ads_form_offer_input_sys_total"><![CDATA[Total]]></string>
+    <string name="_bx_ads_form_offer_input_total"><![CDATA[Total]]></string>
     <string name="_bx_ads_form_offer_input_sys_message"><![CDATA[Message]]></string>
     <string name="_bx_ads_form_offer_input_message"><![CDATA[Message]]></string>
     <string name="_bx_ads_form_offer_input_sys_do_submit"><![CDATA[Add]]></string>
@@ -301,10 +303,10 @@
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
-    <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Shipped]]></string>
-    <string name="_bx_ads_menu_item_title_mark_shipped"><![CDATA[Shipped]]></string>
-    <string name="_bx_ads_menu_item_title_system_mark_received"><![CDATA[Received]]></string>
-    <string name="_bx_ads_menu_item_title_mark_received"><![CDATA[Received]]></string>
+    <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Mark as shipped]]></string>
+    <string name="_bx_ads_menu_item_title_mark_shipped"><![CDATA[Mark as shipped]]></string>
+    <string name="_bx_ads_menu_item_title_system_mark_received"><![CDATA[Mark as received]]></string>
+    <string name="_bx_ads_menu_item_title_mark_received"><![CDATA[Mark as received]]></string>
     <string name="_bx_ads_menu_item_title_system_review_entry"><![CDATA[Review]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entry"><![CDATA[View Ad]]></string>
     <string name="_bx_ads_menu_item_title_system_entries_home"><![CDATA[Ads]]></string>
@@ -529,6 +531,8 @@
     <string name="_bx_ads_txt_sample_score_up_single"><![CDATA[score up vote to ad]]></string>
     <string name="_bx_ads_txt_sample_score_down_single"><![CDATA[score down vote to ad]]></string>
     <string name="_bx_ads_txt_sample_interest_single"><![CDATA[interested in ad]]></string>
+    <string name="_bx_ads_txt_status_offer"><![CDATA[Reserved]]></string>
+    <string name="_bx_ads_txt_status_sold"><![CDATA[Sold]]></string>
     <string name="_bx_ads_txt_display_title_add"><![CDATA[{0}: Add]]></string>
     <string name="_bx_ads_txt_display_title_edit"><![CDATA[{0}: Edit]]></string>
     <string name="_bx_ads_txt_display_title_view"><![CDATA[{0}: View]]></string>
@@ -540,6 +544,7 @@
     <string name="_bx_ads_txt_offer_status_accepted"><![CDATA[Accepted]]></string>
     <string name="_bx_ads_txt_offer_status_declined"><![CDATA[Declined]]></string>
     <string name="_bx_ads_txt_offer_status_canceled"><![CDATA[Canceled]]></string>
+    <string name="_bx_ads_txt_offer_status_paid"><![CDATA[Paid]]></string>
     <string name="_bx_ads_txt_your_offer"><![CDATA[Your offer]]></string>
     <string name="_bx_ads_txt_accepted"><![CDATA[was accepted]]></string>
     <string name="_bx_ads_txt_n_items"><![CDATA[{0} item(s)]]></string>
@@ -556,6 +561,7 @@
     <string name="_bx_ads_txt_msg_offer_declined"><![CDATA[The offer was declined.]]></string>
     <string name="_bx_ads_txt_msg_offer_canceled"><![CDATA[The offer was canceled.]]></string>
     <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[You already made an offer. Please wait for the results.]]></string>
+    <string name="_bx_ads_txt_err_offer_wrong_quantity"><![CDATA[Offered quantity is out of stock. Only {0} items are available.]]></string>
     <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Your offer was already accepted.]]></string>
     <string name="_bx_ads_txt_err_your_own"><![CDATA[You cannot do the action because it's your own ad.]]></string>
     <string name="_bx_ads_txt_err_duplicate"><![CDATA[You already performed the action.]]></string>

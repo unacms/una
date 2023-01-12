@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `price` float NOT NULL,
   `auction` tinyint(4) NOT NULL DEFAULT '0',
   `quantity` int(11) NOT NULL default '1',
+  `single` tinyint(4) NOT NULL DEFAULT '1',
   `year` int(11) NOT NULL,
   `text` mediumtext NOT NULL,
   `notes_purchased` text NOT NULL,
@@ -554,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `bx_ads_offers` (
   `amount` float NOT NULL default '0',
   `quantity` int(11) NOT NULL default '0',
   `message` text NOT NULL,
-  `status` enum('accepted','awaiting','declined','canceled') NOT NULL DEFAULT 'awaiting',
+  `status` enum('accepted','awaiting','declined','canceled','paid') NOT NULL DEFAULT 'awaiting',
   PRIMARY KEY (`id`)
 );
 
@@ -829,6 +830,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_ads_offer', 'bx_ads', 'amount', '', '', 0, 'text', '_bx_ads_form_offer_input_sys_amount', '_bx_ads_form_offer_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_offer_input_amount_err', 'Xss', '', 1, 0),
 ('bx_ads_offer', 'bx_ads', 'quantity', '1', '', 0, 'text', '_bx_ads_form_offer_input_sys_quantity', '_bx_ads_form_offer_input_quantity', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_ads_form_offer_input_quantity_err', 'Xss', '', 1, 0),
+('bx_ads_offer', 'bx_ads', 'total', '', '', 0, 'text', '_bx_ads_form_offer_input_sys_total', '_bx_ads_form_offer_input_total', '', 0, 0, 0, 'a:1:{s:8:"readonly";s:8:"readonly";}', '', '', '', '', '', '', '', 1, 0),
 ('bx_ads_offer', 'bx_ads', 'message', '', '', 0, 'textarea', '_bx_ads_form_offer_input_sys_message', '_bx_ads_form_offer_input_message', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_ads_offer', 'bx_ads', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_ads_offer', 'bx_ads', 'do_submit', '_bx_ads_form_offer_input_do_submit', '', 0, 'submit', '_bx_ads_form_offer_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -837,14 +839,16 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_ads_offer_add', 'amount', 2147483647, 1, 1),
 ('bx_ads_offer_add', 'quantity', 2147483647, 1, 2),
-('bx_ads_offer_add', 'message', 2147483647, 1, 3),
-('bx_ads_offer_add', 'controls', 2147483647, 1, 4),
-('bx_ads_offer_add', 'do_submit', 2147483647, 1, 5),
-('bx_ads_offer_add', 'do_cancel', 2147483647, 1, 6),
+('bx_ads_offer_add', 'total', 2147483647, 1, 3),
+('bx_ads_offer_add', 'message', 2147483647, 1, 4),
+('bx_ads_offer_add', 'controls', 2147483647, 1, 5),
+('bx_ads_offer_add', 'do_submit', 2147483647, 1, 6),
+('bx_ads_offer_add', 'do_cancel', 2147483647, 1, 7),
 
 ('bx_ads_offer_view', 'amount', 2147483647, 1, 1),
 ('bx_ads_offer_view', 'quantity', 2147483647, 1, 2),
-('bx_ads_offer_view', 'message', 2147483647, 1, 3);
+('bx_ads_offer_view', 'total', 2147483647, 1, 3),
+('bx_ads_offer_view', 'message', 2147483647, 1, 4);
 
 
 -- COMMENTS
