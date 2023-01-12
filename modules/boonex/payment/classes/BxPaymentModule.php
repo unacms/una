@@ -1194,7 +1194,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     {
         $iUserId = (int)$this->getProfileId();
 
-        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], isset($aItem['custom']) ? $aItem['custom'] : array()));
+        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $iUserId, isset($aItem['custom']) ? $aItem['custom'] : array()));
         if(empty($aItemInfo))
             return false;
 
@@ -1214,7 +1214,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if(!$iUserId)
             return false;
 
-        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $iUserId));
         if(empty($aItemInfo))
             return false;
 

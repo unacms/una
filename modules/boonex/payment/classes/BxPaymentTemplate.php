@@ -347,7 +347,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             $aItems = $this->_oConfig->descriptorsM2A($this->_oConfig->descriptorA2S(array($aOrder['seller_id'], $aOrder['module_id'], $aOrder['item_id'], $aOrder['item_count'])));
 
         foreach($aItems as $aItem) {
-            $aInfo = $oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+            $aInfo = $oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $aOrder['client_id']));
             if(!empty($aInfo) && is_array($aInfo))
 	            $aResult['bx_repeat:items'][] = array(
 	                'bx_if:link' => array(

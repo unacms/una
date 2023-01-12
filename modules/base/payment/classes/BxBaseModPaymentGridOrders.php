@@ -140,7 +140,7 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         if(empty($aRow['module_id']) || empty($aRow['item_id']))
             return parent::_getCellDefault($sTxtUnknown, $sKey, $aField, $aRow);
 
-        $aItemInfo = $this->_oModule->callGetCartItem((int)$aRow['module_id'], array((int)$aRow['item_id']));
+        $aItemInfo = $this->_oModule->callGetCartItem((int)$aRow['module_id'], array((int)$aRow['item_id'], $aRow['client_id']));
         if(empty($aItemInfo) || !is_array($aItemInfo))
             return parent::_getCellDefault($sTxtUnknown, $sKey, $aField, $aRow);
 

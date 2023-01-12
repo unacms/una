@@ -306,10 +306,10 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $fItemsPrice = 0;
         $aItemsInfo = array();
         foreach($aItems as $aItem) {
-            $aCustom = isset($aItem['custom']) ? $aItem['custom'] : array();
+            $aCustom = isset($aItem['custom']) ? $aItem['custom'] : array(123);
 
             //--- Get item main info
-            $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $aCustom));
+            $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $iClientId, $aCustom));
             if(empty($aItemInfo) || !is_array($aItemInfo)) {
                 if($bTypeSingle) {
                     $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
@@ -333,7 +333,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
                         continue;
                     }
 
-                    $aAddonInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($sAddon, $aCustom));
+                    $aAddonInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($sAddon, $iClientId, $aCustom));
                     if(empty($aAddonInfo) || !is_array($aAddonInfo))
                         continue;
 
