@@ -18,6 +18,7 @@ import url(../../../../../../../template/css/cover.css);
     position: absolute;
     left:1rem;
     top:1rem;
+    z-index: 100;
 }
 .bx-image-edit-buttons .bx-btn.bx-btn-small{
     padding: 0.375rem 0.5rem;
@@ -31,7 +32,9 @@ import url(../../../../../../../template/css/cover.css);
     top:auto;
 }
 .bx-image-edit-move{
-    cursor:move
+    cursor:move;
+    position: relative;
+    z-index: 99;
 }
 .bx-image-edit-move-info{
     display: flex;

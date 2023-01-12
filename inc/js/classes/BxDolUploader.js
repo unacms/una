@@ -9,6 +9,8 @@
 /**
  * Simple Uploader js class
  */
+
+
 function BxDolUploaderBase (sUploaderObject, sStorageObject, sUniqId, options) {
 
     this.init(sUploaderObject, sStorageObject, sUniqId, options);
@@ -463,6 +465,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         var $this = this;
         var _options = {
             allowProcess: false,
+            allowPaste: false,
             allowRevert: false,
             allowRemove: false,
             imagePreviewHeight: 100,
@@ -577,6 +580,8 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             _options.acceptedFileTypes = aAcceptableFiles;
         }
         
+      
+        
         if (o.resizeWidth || o.resizeHeight){
             _options.allowImageResize = true;
             _options.imageResizeTargetWidth = o.resizeWidth;
@@ -597,12 +602,12 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             FilePondPluginImageResize,
             
         );
-
         this._uploader = FilePond.create(
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
         );    
-        this.initPasteEditor();
+        // need to be activated if catch paste needed
+        //this.initPasteEditor();
     }
 
     this.onUploadCompleted = function (sErrorMsg) {        
@@ -1055,7 +1060,7 @@ BxDolImageTweak.prototype.changePosition = function (){
     $(".bx-image-edit-source-" + $this._sUniqueId).parent().append("<div class='bx-image-edit-move-info'><i class='sys-icon sys-colored arrows-alt '></i>" + _t('_sys_uploader_image_reposition_info') + "</div>");
     $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').bind('dragover', function(e){
         $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
-        $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY/500*100 + '%');
+        $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY / $(e.currentTarget).height() * 100 + '%');
     });
     with ($this._oContainerButtons) {
         find('.bx-image-edit-buttons-cancel').removeClass('hidden');

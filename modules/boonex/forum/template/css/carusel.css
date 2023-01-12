@@ -72,6 +72,8 @@
     white-space: normal !important;
     width: 25% !important;
     scroll-snap-align: center;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
 }
 .bx-layout-column-wide .unaca-t > div {
      width: 33.3% !important;

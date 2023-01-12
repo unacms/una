@@ -488,7 +488,7 @@ abstract class BxDolUploader extends BxDolFactory
         $this->_sUploadErrorMessages = '';
     }
 
-    protected function appendUploadErrorMessage ($s)
+    public function appendUploadErrorMessage ($s)
     {
         $this->_sUploadErrorMessages .= ($this->_sUploadErrorMessages ? "\n" : '') . $s;
     }
