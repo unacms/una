@@ -12,23 +12,6 @@
                 </div>
             </bx_if:show_cover>
             <div class="bx-base-pofile-cover-info relative mx-auto px-6">
-                <div class="bx-base-pofile-ci-cnt relative flex flex-col items-center -mt-24">
-                    <bx_if:show_avatar>
-                        <div class="bx-base-pofile-cover-thumb relative inline-flex justify-center __add_class__">
-                            <a class="bx-base-pofile-cover-thumb" href="__picture_href__" href="javascript:" <bx_if:is_avatar>onclick="$('#__picture_popup_id__').dolPopupImage('__picture_url__', $(this).parent()); event.stopPropagation();"</bx_if:is_avatar>>
-                                <img class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size rounded-full ring-4 mx-auto ring-white dark:ring-gray-900 h-48 w-48 lg:h-32 lg:w-32 __img_class__ bx-image-edit-source-__unique_id__" src="__ava_url__"  <bx_if:show_ava_letter> style="display:none" </bx_if:show_ava_letter> />
-                                <p class="bx-base-pofile-unit-thumb bx-def-ava-big bx-def-ava-big-size flex items-center justify-center box-border m-0 rounded-full ring-4 mx-auto ring-white dark:ring-gray-900 h-48 w-48 lg:h-32 lg:w-32 text-white font-bold text-5xl __img_class__-placeholder" style="background-color:rgba(__color__);<bx_if:show_ava_image>display:none</bx_if:show_ava_image>" >__letter__</p>
-                            </a>
-                            <bx_if:show_online>
-                                <div class="bx-base-pofile-unit-online"></div>
-                            </bx_if:show_online>
-                            __picture_tweak__
-                        </div>
-                    </bx_if:show_avatar>
-                    <bx_if:show_avatar_placeholder>
-                        <div class="bx-base-pofile-cover-thumb-placeholder h-24 lg:h-36"></div>
-                    </bx_if:show_avatar_placeholder>
-                </div>
                 <div class="bx-base-pofile-cover-user relative flex flex-col flex-colmt-6 pt-6 sm:pb-1">
                     <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 mb-4">
                         <bx_if:show_title_as_tag>

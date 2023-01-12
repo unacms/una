@@ -956,17 +956,7 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
         if ('undefined' !== typeof(eElement)) {
             // process js time
             eElement.bxTime();
-            
-            // process links in container
-            $('.bx-lnk-cnt .bx-lnk-src:not(.bx-inited)').each(function() {
-                $(this).addClass('bx-inited');
-                var sUrl = $(this).prop('href');
-                $(this).parents('.bx-lnk-cnt').first().addClass('cursor-pointer').click(function(oEvent){
-                    if ($(oEvent.target).closest('a').length == 0 && $(oEvent.target).closest('button').length == 0 && $(oEvent.target).closest('form').length == 0 &&  $(oEvent.target).closest('input').length == 0){
-                        location.href = sUrl;
-                    }
-                });
-            });
+            bx_process_links();
             
             // process web forms
             if ($.isFunction($.fn.addWebForms))
@@ -1422,14 +1412,20 @@ function bx_regexp_escape(s)
         .replace(/[|\\{}()[\]^$+*?.]/mg, '\\$&')
         .replace(/-/mg, '\\x2d');
 }
-
-function bx_click_area(link, event)
+function bx_process_links()
 {
-    var oEl = $(event.srcElement);
-    if (oEl.parents('A').length == 0){
-        location.href = link;
-    }
+    // process links in container
+    $('.bx-lnk-cnt .bx-lnk-src:not(.bx-inited)').each(function() {
+        $(this).addClass('bx-inited');
+        var sUrl = $(this).prop('href');
+        $(this).parents('.bx-lnk-cnt').first().addClass('cursor-pointer').click(function(oEvent){
+            if ($(oEvent.target).closest('a').length == 0 && $(oEvent.target).closest('button').length == 0 && $(oEvent.target).closest('form').length == 0 &&  $(oEvent.target).closest('input').length == 0){
+                location.href = sUrl;
+            }
+        });
+    });
 }
+
 
 function bx_redirect_for_external_links (e)
 {

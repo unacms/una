@@ -32,6 +32,8 @@ BxDolPage.prototype.init = function() {
         $(this).html($(this).attr('source'));
         $.getJSON(sUrlRoot + '/embed.php?', {a: 'get_link', l: $(this).attr('source')}, $this.embededCallback($(this)));
     });
+    
+    bx_process_links();
 };
 
 BxDolPage.prototype.embededCallback = function(item)

@@ -275,6 +275,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $aTmplVars = $this->prepareCover($aData, array_merge($aParams, [
             'use_as_block' => true
         ]));
+    
+        $this->addCss(array('cover.css'));
         
         return $this->parseHtmlByName('cover_block.html', $aTmplVars);
     }
@@ -419,29 +421,34 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $aTmplVarsShowAvatar = array(
                 'add_class' => $sAddClassPicture,
-                'letter' => mb_substr($sTitle, 0, 1),
+                'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1)),
                 'img_class' => $sAddClassPicture != '' ? 'bx-media-editable-src' : '',
                 'ava_url' => $sUrlAvatar,
                 'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
                 
                 'bx_if:show_ava_image' => array(
                     'condition' => $bUrlAvatar,
-                    'content' => array()
+                    'content' => []
                 ),
                 'bx_if:show_ava_letter' => array(
                     'condition' => !$bUrlAvatar,
-                    'content' => array()
+                    'content' => []
                 ),
                 'bx_if:show_online' => array(
                     'condition' => $oProfile->isOnline(),
-                    'content' => array()
+                    'content' => []
+                ),
+                'bx_if:is_avatar' => array(
+                    'condition' => $bUrlAvatar,
+                    'content' => [
+                        'picture_popup_id' => $sPicturePopupId,
+                        'picture_url' => $sUrlPicture,
+                    ]
                 ),
                 'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
-                'picture_popup_id' => $sPicturePopupId,
                 'unique_id' => $sUniqIdPicture,
                 'picture_tweak' => $sPictureTweak, 
                 'cover_settins' => isset($CNF['FIELD_PICTURE_POSITION']) ? $this->_getImageSettings($aData[$CNF['FIELD_PICTURE_POSITION']]) : '',
-                'picture_url' => $sUrlPicture,
                 'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
             );
             

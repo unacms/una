@@ -1060,7 +1060,7 @@ BxDolImageTweak.prototype.changePosition = function (){
     $(".bx-image-edit-source-" + $this._sUniqueId).parent().append("<div class='bx-image-edit-move-info'><i class='sys-icon sys-colored arrows-alt '></i>" + _t('_sys_uploader_image_reposition_info') + "</div>");
     $(".bx-image-edit-source-" + $this._sUniqueId).addClass('bx-image-edit-move').bind('dragover', function(e){
         $(".bx-image-edit-source-" + $this._sUniqueId).parent().find('.bx-image-edit-move-info').remove();
-        $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY/500*100 + '%');
+        $(".bx-image-edit-source-" + $this._sUniqueId).css('background-position', " 0px " + e.offsetY / $(e.currentTarget).height() * 100 + '%');
     });
     with ($this._oContainerButtons) {
         find('.bx-image-edit-buttons-cancel').removeClass('hidden');
