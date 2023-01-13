@@ -263,9 +263,6 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     margin-left: -1rem;
 }
 
-.bx-badge-icon{
-    color:inherit;
-}
 
 #bx-popup-ajax-wrapper-sys_set_badges li span{
     display: flex;

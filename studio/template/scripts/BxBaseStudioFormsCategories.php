@@ -196,7 +196,7 @@ class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
     {
         $aForm = array(
             'form_attrs' => array(
-                'id' => 'adm-form-search-form-edit',
+                'id' => 'adm-form-cats-form-' . $sAction,
                 'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&module=' . $this->sModule . '&a=' . $sAction,
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),

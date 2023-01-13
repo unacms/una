@@ -1238,9 +1238,12 @@
         @apply inline-flex grow-0 space-x-1 w-min
     }
     .bx-badge{
-        @apply inline-flex items-center w-min space-x-1 px-1.5 py-0.5 rounded-full;
+        @apply inline-flex items-center w-max space-x-1 px-1.5 py-0.5 rounded-full;
         @apply text-white text-xs font-medium whitespace-nowrap;
         @apply opacity-90 hover:opacity-100 active:translate-y-0.5
+    }
+    .bx-badge img{
+        @apply max-h-4;
     }
     .sys-icon-image.bx-badge-icon,
     .sys-icon-svg.bx-badge-icon{
