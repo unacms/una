@@ -100,9 +100,9 @@ blockquote {
     flex: 2 1 auto;
 }
 .bx-main.bx-pt-application .bx-toolbar-content .bx-toolbar-item.bx-ti-right {
-    -webkit-flex: 1 1 0%;
-    -ms-flex: 1 1 0%;
-    flex: 1 1 0%;
+    -webkit-flex: 0 1 0%;
+    -ms-flex: 0 1 0%;
+    flex: 0 1 0%;
 }
 
 .bx-clear {
