@@ -191,7 +191,7 @@ class BxBaseStudioFormsLabels extends BxDolStudioFormsLabels
     {
         $aForm = array(
             'form_attrs' => array(
-                'id' => 'adm-form-search-form-edit',
+                'id' => 'adm-form-labels-form-' . $sAction,
                 'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&parent=' . $this->_iParent,
                 'method' => BX_DOL_STUDIO_METHOD_DEFAULT
             ),
