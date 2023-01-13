@@ -10,8 +10,13 @@
 	<string_add name="_bx_forum_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Избранные обсуждения (Витринный просмотр)]]></string_add>
 	<string_add name="_bx_forum_page_block_title_featured_entries_view_gallery"><![CDATA[Избранные обсуждения (Галерея)]]></string_add>
 	<string_add name="_bx_forum_page_block_title_featured_entries_view_extended"><![CDATA[Избранные обсуждения (Табличный просмотр)]]></string_add>
-	<string_add name="_bx_forum_page_block_title_top_entries_view_gallery"><![CDATA[ТОП обсуждений (Галерея)]]></string_add>
-	<string_add name="_bx_forum_page_block_title_top_entries_view_showcase"><![CDATA[ТОП обсуждений (Витринный просмотр)]]></string_add>
+	<string_add name="_bx_forum_page_block_title_new_entries_view_gallery"><![CDATA[Новые обсуждения (Галерея)]]></string_add>
+	<string_add name="_bx_forum_page_block_title_new_entries_view_showcase"><![CDATA[Новые обсуждения (Витринный просмотр)]]></string_add>
+	<string_add name="_bx_forum_page_block_title_home"><![CDATA[Список обсуждений]]></string_add>
+	<string_add name="_bx_forum_page_block_title_latest_entries_view_gallery"><![CDATA[Обсуждения с последними сообщениями (Галерея)]]></string_add>
+	<string_add name="_bx_forum_page_block_title_latest_entries_view_showcase"><![CDATA[Обсуждения с последними сообщениями (Витринный просмотр)]]></string_add>
+	<string_add name="_bx_forum_page_block_title_top_entries_view_gallery"><![CDATA[Топ обсуждений (Галерея)]]></string_add>
+	<string_add name="_bx_forum_page_block_title_top_entries_view_showcase"><![CDATA[Топ обсуждений (Витринный просмотр)]]></string_add>
 	<string_add name="_bx_forum_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные обсуждения (Витринный просмотр)]]></string_add>
 	<string_add name="_bx_forum_page_block_title_popular_entries_view_gallery"><![CDATA[Популярные обсуждения (Галерея)]]></string_add>
 	<string_add name="_bx_forum_page_block_title_browse_labels"><![CDATA[Просмотр этикеток]]></string_add>
@@ -52,11 +57,13 @@
 	<string_add name="_bx_forum_grid_filter_order_partaken"><![CDATA[Ваше участие]]></string_add>
 	<string_add name="_bx_forum_txt_all_categories"><![CDATA[Все категории]]></string_add>
 
+	<string_upd name="_bx_forum_page_block_title_top_entries_view_extended"><![CDATA[Топ обсуждений (Расширенный просмотр)]]></string_upd>
 	<string_upd name="_bx_forum_page_block_title_sys_favorites_entries"><![CDATA[Избранные списки]]></string_upd>
 	<string_upd name="_bx_forum_page_block_title_favorites_entries"><![CDATA["{title}" Список]]></string_upd>
 	<string_upd name="_bx_forum_page_block_title_favorites_entries_actions"><![CDATA[Действия с избранными списками]]></string_upd>
 
-	<string_del name="_bx_forum_page_block_title_top_entries_view_extended"><![CDATA[ТОП обсуждений (Расширенный просмотр)]]></string_del>
+	<string_del name="_bx_forum_page_block_title_new_entries_view_full"><![CDATA[Новые  обсуждения (Полный просмотр)]]></string_del>
+	<string_del name="_bx_forum_page_block_title_latest_entries_view_full"><![CDATA[Обсуждения с последними сообщениями (Полный просмотр)]]></string_del>
 	<string_del name="_bx_forum_page_block_title_top_entries_view_full"><![CDATA[ТОП обсуждений (Полный просмотр)]]></string_del>
 	<string_del name="_bx_forum_page_block_title_popular_entries_view_full"><![CDATA[Популярные обсуждения (Полный просмотр)]]></string_del>
 </resources>
