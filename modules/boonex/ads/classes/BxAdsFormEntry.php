@@ -124,11 +124,11 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         return $sCode;
     }
 
-    function initChecker ($aValues = array (), $aSpecificValues = array())
+    function initChecker ($aValues = [], $aSpecificValues = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aContentInfo = array();
+        $aContentInfo = [];
         if($aValues && !empty($aValues['id']))
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($aValues['id']);
         $bContentInfo = !empty($aContentInfo) && is_array($aContentInfo);
@@ -146,9 +146,11 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         parent::initChecker ($aValues, $aSpecificValues);
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false)
+    public function insert ($aValsToAdd = [], $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aValsToAdd[$CNF['FIELD_SINGLE']] = $this->_getSingleField();
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
@@ -157,15 +159,25 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         return $iContentId;
     }
 
-    public function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    public function update ($iContentId, $aValsToAdd = [], &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        $aValsToAdd[$CNF['FIELD_SINGLE']] = $this->_getSingleField();
+
+        $iResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
 
         $this->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
         return $iResult;
+    }
+
+    public function delete ($iContentId, $aContentInfo = [])
+    {
+        $this->_oModule->_oDb->deleteOffer(['content_id' => $iContentId]);
+        $this->_oModule->_oDb->deleteLicense(['entry_id' => $iContentId]);
+
+        return parent::delete($iContentId, $aContentInfo);
     }
 
     public function genInputPrice(&$aInput)
@@ -247,6 +259,21 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 				'content' => []
 			],
     	);
+    }
+
+    protected function _getSingleField()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($this->aInputs[$CNF['FIELD_QUANTITY']])) 
+            return;
+
+        $iSingle = 1;
+        $iQuantity = (int)$this->getCleanValue($CNF['FIELD_QUANTITY']);
+        if($iQuantity > 1)
+            $iSingle = 0;
+
+        return $iSingle;
     }
 
     protected function _initCategoryFields($iCategory = 0)

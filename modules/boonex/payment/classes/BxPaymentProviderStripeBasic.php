@@ -214,7 +214,7 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
             $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
             list($iVendorId, $iModuleId, $iItemId, $iItemCount) = $this->_oModule->_oConfig->descriptorS2A($aPending['items']);
 
-            $aItem = $this->_oModule->callGetCartItem($iModuleId, array($oForm->getCleanValue('item_id')));
+            $aItem = $this->_oModule->callGetCartItem($iModuleId, array($oForm->getCleanValue('item_id'), $aPending['client_id']));
     		if(empty($aItem) || !is_array($aItem))
     			return $aResultError;
 

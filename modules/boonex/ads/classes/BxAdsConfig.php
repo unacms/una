@@ -61,6 +61,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_PRICE_SINGLE' => 'price',
             'FIELD_AUCTION' => 'auction',
             'FIELD_QUANTITY' => 'quantity',
+            'FIELD_SINGLE' => 'single',
             'FIELD_YEAR' => 'year',
             'FIELD_NOTES_PURCHASED' => 'notes_purchased',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
@@ -90,6 +91,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_OFR_CHANGED' => 'changed',
             'FIELD_OFR_AMOUNT' => 'amount',
             'FIELD_OFR_QUANTITY' => 'quantity',
+            'FIELD_OFR_TOTAL' => 'total', // form field only
             'FIELD_OFR_STATUS' => 'status',
 
             // page URIs
@@ -247,6 +249,8 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'txt_sample_score_up_single' => '_bx_ads_txt_sample_score_up_single',
                 'txt_sample_score_down_single' => '_bx_ads_txt_sample_score_down_single',
                 'txt_sample_interest_single' => '_bx_ads_txt_sample_interest_single',
+                'txt_status_offer' => '_bx_ads_txt_status_offer',
+                'txt_status_sold' => '_bx_ads_txt_status_sold',
                 'form_field_author' => '_bx_ads_form_entry_input_author',
             	'grid_action_err_delete' => '_bx_ads_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_ads_grid_txt_account_manager',
@@ -279,6 +283,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'studio' => 'BxAdsStudio',
             'entry' => 'BxAdsEntry',
             'form' => 'BxAdsForm',
+            'form_offer' => 'BxAdsFormOffer',
         ]);
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, [
@@ -286,6 +291,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'studio' => 'oBxAdsStudio',
             'entry' => 'oBxAdsEntry',
             'form' => 'oBxAdsForm',
+            'form_offer' => 'oBxAdsFormOffer',
         ]);
 
         $this->_aGridObjects = [
@@ -307,6 +313,16 @@ class BxAdsConfig extends BxBaseModTextConfig
         $this->_oDb = &$oDb;
 
         $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
+    }
+
+    public function getActiveStatus()
+    {
+        return [BX_BASE_MOD_TEXT_STATUS_ACTIVE];
+    }
+
+    public function getActiveStatusAdmin()
+    {
+        return [BX_BASE_MOD_TEXT_STATUS_ACTIVE];
     }
 
     public function isAuction()

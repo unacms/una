@@ -16,6 +16,7 @@ define('BX_ADS_OFFER_STATUS_ACCEPTED', 'accepted');
 define('BX_ADS_OFFER_STATUS_AWAITING', 'awaiting');
 define('BX_ADS_OFFER_STATUS_DECLINED', 'declined');
 define('BX_ADS_OFFER_STATUS_CANCELED', 'canceled');
+define('BX_ADS_OFFER_STATUS_PAID', 'paid');
 
 /**
  * Ads module
@@ -134,52 +135,55 @@ class BxAdsModule extends BxBaseModTextModule
         $iContentId = bx_process_input(bx_get('content_id'), BX_DATA_INT);
 
         if(empty($iAuthorId))
-            return echoJson(array('code' => 1, 'eval' => 'window.open("' . BxDolPermalinks::getInstance()->permalink('page.php?i=login') . '", "_self");'));
+            return echoJson(['code' => 1, 'eval' => 'window.open("' . BxDolPermalinks::getInstance()->permalink('page.php?i=login') . '", "_self");']);
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return echoJson(array());
+            return echoJson([]);
 
         if(($mixedCheck = $this->checkAllowedMakeOffer($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(array('code' => 2, 'msg' => $mixedCheck));
+            return echoJson(['code' => 2, 'msg' => $mixedCheck]);
 
-        $aOffer = $this->_oDb->getOffersBy(array(
+        $aOffer = $this->_oDb->getOffersBy([
             'type' => 'content_and_author_ids', 
             'content_id' => $iContentId, 
             'author_id' => $iAuthorId, 
             'status' => BX_ADS_OFFER_STATUS_AWAITING
-        ));
+        ]);
 
         if(!empty($aOffer) && is_array($aOffer))
-            return echoJson(array('code' => 3, 'msg' => _t('_bx_ads_txt_err_duplicate')));
+            return echoJson(['code' => 3, 'msg' => _t('_bx_ads_txt_err_duplicate')]);
 
-        $aOffer = $this->_oDb->getOffersBy(array(
+        $aOffer = $this->_oDb->getOffersBy([
             'type' => 'content_and_author_ids', 
             'content_id' => $iContentId, 
             'author_id' => $iAuthorId, 
             'status' => BX_ADS_OFFER_STATUS_ACCEPTED
-        ));
+        ]);
 
         if(!empty($aOffer) && is_array($aOffer))
-            return echoJson(array('code' => 4, 'msg' => _t('_bx_ads_txt_err_offer_accepted')));
+            return echoJson(['code' => 4, 'msg' => _t('_bx_ads_txt_err_offer_accepted')]);
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_OFFER'], $CNF['OBJECT_FORM_OFFER_DISPLAY_ADD']);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'make_offer', ['content_id' => $iContentId]);
         $oForm->initChecker();
-
         if($oForm->isSubmittedAndValid()) {
-            $aValToAdd = array('content_id' => $iContentId, 'author_id' => $iAuthorId);
+            $iQuantity = (int)$oForm->getCleanValue($CNF['FIELD_OFR_QUANTITY']);
+            $iQuantityAvailable = $this->getAvailableQuantity($aContentInfo);
+            if($iQuantity > $iQuantityAvailable)
+                return echoJson(['code' => 5, 'msg' => _t('_bx_ads_txt_err_offer_wrong_quantity', $iQuantityAvailable)]);
 
-            $iId = (int)$oForm->insert($aValToAdd);
-            if($iId != 0) {
+            $aValToAdd = ['content_id' => $iContentId, 'author_id' => $iAuthorId];
+
+            if(($iId = (int)$oForm->insert($aValToAdd)) != 0) {
                 $this->checkAllowedMakeOffer($aContentInfo, true);
 
                 $this->onOfferAdded($iId, $aResult);
 
-                $aResult = array('code' => 0, 'msg' => _t('_bx_ads_txt_msg_offer_added'), 'eval' => $sJsObject . '.onMakeOffer(oData);', 'id' => $iId);
+                $aResult = ['code' => 0, 'msg' => _t('_bx_ads_txt_msg_offer_added'), 'eval' => $sJsObject . '.onMakeOffer(oData);', 'id' => $iId];
             }
             else
-                $aResult = array('code' => 5, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+                $aResult = ['code' => 6, 'msg' => _t('_bx_ads_txt_err_cannot_perform_action')];
 
             return echoJson($aResult);
         }
@@ -218,10 +222,10 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        if(!$this->offerAccept($iId))
-            return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
+        if(($mixedResult = $this->offerAccept($iId)) !== true)
+            return echoJson(['msg' => $mixedResult !== false ? $mixedResult : _t('_bx_ads_txt_err_cannot_perform_action')]);
 
-        return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_accepted'), 'reload' => 1));
+        return echoJson(['msg' => _t('_bx_ads_txt_msg_offer_accepted'), 'reload' => 1]);
     }
 
     public function actionDeclineOffer()
@@ -233,17 +237,17 @@ class BxAdsModule extends BxBaseModTextModule
 
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_declined'), 'reload' => 1));
     }
-            
+
     public function actionCancelOffer()
     {
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
         if(!$this->offerCancel($iId))
-            return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));     
+            return echoJson(['msg' => _t('_bx_ads_txt_err_cannot_perform_action')]);
 
-        return echoJson(array('msg' => _t('_bx_ads_txt_msg_offer_canceled'), 'reload' => 1));
+        return echoJson(['msg' => _t('_bx_ads_txt_msg_offer_canceled'), 'reload' => 1]);
     }
-    
+
     public function actionPayOffer()
     {
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -898,12 +902,12 @@ class BxAdsModule extends BxBaseModTextModule
     /** 
      * @ref bx_ads-get_cart_item "get_cart_item"
      */
-    public function serviceGetCartItem($mixedItemId)
+    public function serviceGetCartItem($mixedItemId, $iClientId = 0)
     {
     	$CNF = &$this->_oConfig->CNF;
 
         if(!$mixedItemId)
-            return array();
+            return [];
 
         if(is_numeric($mixedItemId))
             $aItem = $this->_oDb->getContentInfoById((int)$mixedItemId);
@@ -911,17 +915,21 @@ class BxAdsModule extends BxBaseModTextModule
             $aItem = $this->_oDb->getContentInfoByName($mixedItemId);
 
         if(empty($aItem) || !is_array($aItem))
-            return array();
+            return [];
+
+        if(!$iClientId)
+            $iClientId = bx_get_logged_profile_id();
 
         $iItemId = (int)$aItem[$CNF['FIELD_ID']];
         $fItemPrice = (float)$aItem[$CNF['FIELD_PRICE']];
 
         if($this->isAuction($aItem)) {
-            $aOffer = $this->_oDb->getOffersBy(array(
-                'type' => 'accepted', 
+            $aOffer = $this->_oDb->getOffersBy([
+                'type' => 'content_and_author_ids', 
                 'content_id' => $iItemId, 
+                'author_id' => $iClientId,
                 'status' => BX_ADS_OFFER_STATUS_ACCEPTED
-            ));
+            ]);
 
             if(!empty($aOffer) && is_array($aOffer))
                 $fItemPrice = (float)$aOffer[$CNF['FIELD_OFR_AMOUNT']];
@@ -1067,32 +1075,49 @@ class BxAdsModule extends BxBaseModTextModule
 
     	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
-            return array();
+            return [];
 
         $aEntry = $this->_oDb->getContentInfoById($iItemId);
         $iEntryQnt = (int)$aEntry[$CNF['FIELD_QUANTITY']];
         if(empty($aEntry) || !is_array($aEntry) || ($iEntryQnt - $iItemCount) < 0)
-            return array();
+            return [];
 
         if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
-            return array();
+            return [];
+
+        $aOffer = $this->_oDb->getOffersBy([
+            'type' => 'content_and_author_ids', 
+            'content_id' => $iItemId, 
+            'author_id' => $iClientId,
+            'status' => BX_ADS_OFFER_STATUS_ACCEPTED
+        ]);
+
+        if(!empty($aOffer) && is_array($aOffer))
+            $this->_oDb->updateOffer([$CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_PAID], [$CNF['FIELD_OFR_ID'] => $aOffer[$CNF['FIELD_OFR_ID']]]);
 
         $iEntryQnt -= $iItemCount;
-        $this->_oDb->updateEntriesBy(array(
-            $CNF['FIELD_QUANTITY'] => $iEntryQnt,
-            $CNF['FIELD_STATUS'] => $iEntryQnt == 0 ? BX_ADS_STATUS_SOLD : BX_BASE_MOD_TEXT_STATUS_ACTIVE,
-            $CNF['FIELD_SOLD'] => $iEntryQnt == 0 ? time() : 0,
-        ), array($CNF['FIELD_ID'] => $iItemId));
+        $bEntrySold = $iEntryQnt == 0;
 
-        bx_alert($sModule, 'license_register', 0, false, array(
+        $aUpdate = [
+            $CNF['FIELD_QUANTITY'] => $iEntryQnt
+        ];
+        if($bEntrySold)
+            $aUpdate = array_merge($aUpdate, [
+                $CNF['FIELD_STATUS'] =>  BX_ADS_STATUS_SOLD,
+                $CNF['FIELD_SOLD'] => time()
+            ]);
+
+        $this->_oDb->updateEntriesBy($aUpdate, [$CNF['FIELD_ID'] => $iItemId]);
+
+        bx_alert($sModule, 'license_register', 0, false, [
             'product_id' => $iItemId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'license' => $sLicense,
             'count' => $iItemCount
-        ));
+        ]);
 
-        if($iEntryQnt == 0) {
+        if($bEntrySold) {
             $aParams = $this->_alertParams($aEntry);
             bx_alert($sModule, 'sold', $iItemId, false, $aParams);
         }
@@ -1547,10 +1572,10 @@ class BxAdsModule extends BxBaseModTextModule
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
-        if(empty($mixedContent) || !is_array($mixedContent))
+        if(empty($mixedContent) || !is_array($mixedContent) || !$this->isSingle($mixedContent))
             return _t($sTxtError);
 
-        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != $iProfileId)
+        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_STATUS']] != BX_ADS_STATUS_SOLD || $mixedContent[$CNF['FIELD_AUTHOR']] != $iProfileId)
             return _t($sTxtError);
 
         return CHECK_ACTION_RESULT_ALLOWED;
@@ -1577,7 +1602,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(!is_array($mixedContent))
             $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
 
-        if(empty($mixedContent) || !is_array($mixedContent))
+        if(empty($mixedContent) || !is_array($mixedContent) || !$this->isSingle($mixedContent))
             return _t($sTxtError);
 
         if((int)$mixedContent[$CNF['FIELD_RECEIVED']] != 0 || !$this->_oDb->hasLicense($iProfileId, $mixedContent[$CNF['FIELD_ID']]))
@@ -1638,8 +1663,11 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
-        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => BX_ADS_STATUS_OFFER), array($CNF['FIELD_ID'] => $iContentId)))
-            return;
+        if($aContentInfo[$CNF['FIELD_STATUS']] != BX_ADS_STATUS_OFFER && ($this->isSingle($aContentInfo) || $this->getAvailableQuantity($aContentInfo) <= 0))
+            if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => BX_ADS_STATUS_OFFER], [$CNF['FIELD_ID'] => $iContentId]))
+                return;
+
+        $this->serviceUpdateCategoriesStats($iContentId);
 
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
@@ -1694,7 +1722,7 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aOfferInfo = $this->_oDb->getOffersBy(array('type' => 'id', 'id' => $iOfferId));
+        $aOfferInfo = $this->_oDb->getOffersBy(['type' => 'id', 'id' => $iOfferId]);
         if(empty($aOfferInfo) || !is_array($aOfferInfo))
             return;
 
@@ -1703,22 +1731,24 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
-        if(!$this->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE), array($CNF['FIELD_ID'] => $iContentId)))
+        if(!$this->_oDb->updateEntriesBy([$CNF['FIELD_STATUS'] => BX_BASE_MOD_TEXT_STATUS_ACTIVE], [$CNF['FIELD_ID'] => $iContentId]))
             return;
+
+        $this->serviceUpdateCategoriesStats($iContentId);
 
         $iOfferer = (int)$aOfferInfo[$CNF['FIELD_OFR_AUTHOR']];
         $oOfferer = BxDolProfile::getInstanceMagic($iOfferer);
 
         if(getParam($CNF['PARAM_USE_IIN']) == 'on')
-            sendMailTemplate($CNF['ETEMPLATE_OFFER_CANCELED'], 0, (int)$aContentInfo[$CNF['FIELD_AUTHOR']], array(
+            sendMailTemplate($CNF['ETEMPLATE_OFFER_CANCELED'], 0, (int)$aContentInfo[$CNF['FIELD_AUTHOR']], [
                 'offerer_name' => $oOfferer->getDisplayName(),
                 'offerer_url' => $oOfferer->getUrl(),
                 'entry_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php', [
                     'i' => $CNF['URI_VIEW_ENTRY'], 
                     $CNF['FIELD_ID'] => $iContentId
-                )))
-            ));
+                ]))
+            ]);
 
         $aParams = $this->_alertParamsOffer($aContentInfo, $aOfferInfo);
         bx_alert($this->getName(), 'offer_canceled', $iOfferId, $aOfferInfo[$CNF['FIELD_OFR_AUTHOR']], $aParams);
@@ -1810,20 +1840,34 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_ACCEPTED), array($CNF['FIELD_OFR_ID'] => $iId)))
+        $aOfferInfo = $this->_oDb->getOffersBy(['type' => 'id', 'id' => $iId]);
+        if(empty($aOfferInfo) || !is_array($aOfferInfo))
             return false;
-    
+
+        $iContentId = (int)$aOfferInfo[$CNF['FIELD_OFR_CONTENT']];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return false;
+
+        $iQuantity = (int)$aOfferInfo[$CNF['FIELD_OFR_QUANTITY']];
+        $iQuantityAvailable = $this->getAvailableQuantity($aContentInfo);
+        if($iQuantity > $iQuantityAvailable)
+            return _t('_bx_ads_txt_err_offer_wrong_quantity', $iQuantityAvailable);
+
+        if(!$this->_oDb->updateOffer([$CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_ACCEPTED], [$CNF['FIELD_OFR_ID'] => $iId]))
+            return false;
+
         $this->onOfferAccepted($iId);
-        return true;        
+        return true;
     }
 
     public function offerDecline($iId) 
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_DECLINED), array($CNF['FIELD_OFR_ID'] => $iId)))
+        if(!$this->_oDb->updateOffer([$CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_DECLINED], [$CNF['FIELD_OFR_ID'] => $iId]))
             return false;
-    
+
         $this->onOfferDeclined($iId);
         return true;        
     }
@@ -1832,7 +1876,7 @@ class BxAdsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!$this->_oDb->updateOffer(array($CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_CANCELED), array($CNF['FIELD_OFR_ID'] => $iId)))
+        if(!$this->_oDb->updateOffer([$CNF['FIELD_OFR_STATUS'] => BX_ADS_OFFER_STATUS_CANCELED], [$CNF['FIELD_OFR_ID'] => $iId]))
             return false;
 
         $this->onOfferCanceled($iId);
@@ -1920,6 +1964,35 @@ class BxAdsModule extends BxBaseModTextModule
             return false;
 
         return $aCategory[$sKey];
+    }
+
+    public function isSingle($mixedContent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        return (int)$mixedContent[$CNF['FIELD_SINGLE']] == 1;
+    }
+
+    public function getAvailableQuantity($mixedContent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedContent))
+            $mixedContent = $this->_oDb->getContentInfoById((int)$mixedContent);
+
+        if(!$this->_oConfig->isAuction() || (int)$mixedContent[$CNF['FIELD_AUCTION']] == 0)
+            return (int)$mixedContent[$CNF['FIELD_QUANTITY']];
+
+        $iQuantity = (int)$this->_oDb->getOffersBy([
+            'type' => 'quantity_reserved', 
+            'content_id' => $mixedContent[$CNF['FIELD_ID']], 
+            'status' => BX_ADS_OFFER_STATUS_ACCEPTED
+        ]);
+
+        return (int)$mixedContent[$CNF['FIELD_QUANTITY']] - $iQuantity;
     }
 
 

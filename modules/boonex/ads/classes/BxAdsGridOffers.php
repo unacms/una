@@ -37,10 +37,10 @@ class BxAdsGridOffers extends BxTemplGrid
     public function performActionAccept()
     {
         $iId = $this->_getId();
-        if($iId && $this->_oModule->offerAccept($iId))
-            $aResult = array('grid' => $this->getCode(false), 'blick' => $iId);
+        if($iId && ($mixedResult = $this->_oModule->offerAccept($iId)) === true)
+            $aResult = ['grid' => $this->getCode(false), 'blick' => $iId];
         else
-            $aResult = array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+            $aResult = ['msg' => $mixedResult !== false ? $mixedResult : _t('_bx_ads_txt_err_cannot_perform_action')];
 
         echoJson($aResult);
     }
@@ -49,9 +49,9 @@ class BxAdsGridOffers extends BxTemplGrid
     {
         $iId = $this->_getId();
         if($iId && $this->_oModule->offerDecline($iId))
-            $aResult = array('grid' => $this->getCode(false), 'blick' => $iId);
+            $aResult = ['grid' => $this->getCode(false), 'blick' => $iId];
         else
-            $aResult = array('msg' => _t('_bx_ads_txt_err_cannot_perform_action'));
+            $aResult = ['msg' => _t('_bx_ads_txt_err_cannot_perform_action')];
 
         echoJson($aResult);
     }
