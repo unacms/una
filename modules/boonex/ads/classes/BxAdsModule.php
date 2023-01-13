@@ -1575,7 +1575,7 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($mixedContent) || !is_array($mixedContent) || !$this->isSingle($mixedContent))
             return _t($sTxtError);
 
-        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_AUTHOR']] != $iProfileId)
+        if((int)$mixedContent[$CNF['FIELD_SHIPPED']] != 0 || $mixedContent[$CNF['FIELD_STATUS']] != BX_ADS_STATUS_SOLD || $mixedContent[$CNF['FIELD_AUTHOR']] != $iProfileId)
             return _t($sTxtError);
 
         return CHECK_ACTION_RESULT_ALLOWED;
