@@ -137,14 +137,18 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $sMsgCnt = '';
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
+            $sMsgCnt = _t('_sys_txt_error_entry_is_not_defined');
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
-            return MsgBox($sMsg);
+        if (empty($sMsgCnt) && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
+            $sMsgCnt = $sMsg;
+        
+        if ($sMsgCnt)
+            return bx_api_rv([['id' => 1, 'type' => 'msg', 'data' => $sMsgCnt]], MsgBox($sMsgCnt));
 
         $oForm = $this->getObjectFormView();
         if (!$oForm)
@@ -153,9 +157,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $oForm->initChecker($aContentInfo);
 
         if(!empty($CNF['FIELD_TEXT']) &&  !$oForm->isInputVisible($CNF['FIELD_TEXT']))
-            return '';
-
-        return $this->_oModule->_oTemplate->entryText($aContentInfo);
+            $s = '';
+        else
+            $s = $this->_oModule->_oTemplate->entryText($aContentInfo);
+        
+        return bx_api_rv([['id' => 1, 'type' => 'entry', 'data' => $s]], $s);
     }
 
     public function addData ($iProfile, $aValues, $sDisplay = false)
