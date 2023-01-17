@@ -2761,7 +2761,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
-            return bx_api_rv([['id' => 1, 'type' => 'msg', 'data' => $sMsg]], MsgBox($sMsg));
+            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => $sMsg]] : MsgBox($sMsg);
 
         bx_import($sClassSearchResult, $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
@@ -2778,7 +2778,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 
         if ($s = $o->processing())
-            return bx_api_rv([['id' => 1, 'type' => 'browse', 'data' => $s]], $s);
+            return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => $s]] : $s;
         else
             return '';
     }
@@ -3457,7 +3457,11 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
 
-        return bx_api_rv([['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI(array(), array('in_designbox' => false, 'show_empty' => false))]], $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false)));
+        
+        if (bx_is_api())
+            return [['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI(array(), array('in_designbox' => false, 'show_empty' => false))]];
+
+        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false));
     }
 
     protected function _getFields($iContentId)

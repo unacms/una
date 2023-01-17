@@ -226,7 +226,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if (empty($aVars['entry_text']))
             return false;
         
-        return bx_api_rv($aVars, $this->parseHtmlByName($sTemplateName, $aVars));
+        return bx_is_api() ? $aVars : $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryLocation ($iContentId)

@@ -148,7 +148,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $sMsgCnt = $sMsg;
         
         if ($sMsgCnt)
-            return bx_api_rv([['id' => 1, 'type' => 'msg', 'data' => $sMsgCnt]], MsgBox($sMsgCnt));
+            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => $sMsgCnt]] : MsgBox($sMsgCnt);
 
         $oForm = $this->getObjectFormView();
         if (!$oForm)
@@ -161,7 +161,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         else
             $s = $this->_oModule->_oTemplate->entryText($aContentInfo);
         
-        return bx_api_rv([['id' => 1, 'type' => 'entry', 'data' => $s]], $s);
+        return bx_is_api() ? [['id' => 1, 'type' => 'entry', 'data' => $s]] : $s;
     }
 
     public function addData ($iProfile, $aValues, $sDisplay = false)
