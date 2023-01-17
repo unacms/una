@@ -2324,9 +2324,9 @@ function bx_absolute_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
     return $sUrl;
 }
 
-function bx_api_rv($mJson, $mHtml)
+function bx_is_api()
 {
-    return defined('BX_API') ? $mJson : $mHtml;
+    return defined('BX_API') ? true : false;
 }
 
 /** @} */
