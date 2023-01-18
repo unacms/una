@@ -128,18 +128,21 @@
 			}
         });
 
-        if (!$(".bx-form-input-wrapper-password").hasClass("bx-inited")) {
-            var sClassFocus = "bx-form-input-focus";
+        $(".bx-form-input-wrapper-password", this).each(function() {
+            var sClassInited = "bx-inited";
+            if($(this).hasClass(sClassInited))
+                return;
 
-            $(".bx-form-input-wrapper-password input").bind('focus', function() {
+            var sClassFocus = "bx-form-input-focus";
+            $(this).find("input").bind("focus", function() {
                 $(this).parents(".bx-form-input-wrapper-password:first").addClass(sClassFocus);
-            }).bind('blur', function() {
+            }).bind("blur", function() {
                 $(this).parents(".bx-form-input-wrapper-password:first").removeClass(sClassFocus);
             });
 
-            $(".bx-form-input-wrapper-password a").on("click", function () {
+            $(this).find("a").on("click", function () {
                 var oIcon = $(this).find("i");
-                var oFld = $(this).parents(".bx-form-input-wrapper-password").find("input");
+                var oFld = $(this).parents(".bx-form-input-wrapper-password:first").find("input");
                 if (oIcon.hasClass("eye")) {
                     oIcon.removeClass("eye").addClass("eye-slash");
                     oFld.attr("type", "text");
@@ -149,11 +152,12 @@
                     oFld.attr("type", "password");
                 }
             });
-            $(".bx-form-input-wrapper-password").addClass("bx-inited");
-        }
-           
+
+            $(this).addClass(sClassInited);
+        });
+
         $("input", this).each(function() {
-        	var oInput = $(this);
+            var oInput = $(this);
 
             var onCreateRange = function (event, ui) {
                 var eInput = $(this).parent().find('input');
