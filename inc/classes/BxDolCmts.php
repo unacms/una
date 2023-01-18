@@ -422,6 +422,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
     	return $this->_getFormObject()->getTranscoderPreviewName();
     }
+    
+    public function getFormObject()
+    {
+    	return $this->_getFormObject();
+    }
 
     public function getTableNameImages()
     {
@@ -1782,7 +1787,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return BxDolProfile::getInstanceMagic((int)$iAuthorId);
     }
 
-    public function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
     {
         $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
 
