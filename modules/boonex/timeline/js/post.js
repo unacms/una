@@ -240,6 +240,9 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId)
                 if(oData && oData.code != undefined && oData.code == 0) {
                     oAttachLink.bx_anim('hide', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
                         $(this).remove;
+
+                        if(oData.url != undefined && oData.url.length != 0)
+                            delete $this._oAttachedLinks[oData.url];
                     });
                 }
             };

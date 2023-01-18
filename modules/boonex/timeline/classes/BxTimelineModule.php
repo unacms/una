@@ -643,20 +643,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$iUserId = $this->getUserId();
         $iLinkId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iLinkId))
-            return echoJson(array());
+            return echoJson([]);
 
-        $aLink = $this->_oDb->getLinksBy(array('type' => 'id', 'id' => $iLinkId, 'profile_id' => $iUserId));
+        $aLink = $this->_oDb->getLinksBy(['type' => 'id', 'id' => $iLinkId, 'profile_id' => $iUserId]);
     	if(empty($aLink) || !is_array($aLink))
-            return echoJson(array());
+            return echoJson([]);
 
         if(!empty($aLink['media_id']))
             BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'))->deleteFile($aLink['media_id']);
 
-        $aResult = array();
+        $aResult = [];
         if($this->_oDb->deleteLink($iLinkId))
-            $aResult = array('code' => 0);
+            $aResult = ['code' => 0, 'url' => $aLink['url']];
         else
-            $aResult = array('code' => 1, 'message' => _t('_bx_timeline_form_post_input_link_err_delete'));
+            $aResult = ['code' => 1, 'message' => _t('_bx_timeline_form_post_input_link_err_delete')];
 
         echoJson($aResult);
     }
