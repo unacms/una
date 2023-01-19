@@ -521,8 +521,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         ];
         
         $bShowClickable = !isset($aParams['show_clickable']) || $aParams['show_clickable'] === true; //--- Is available for UseAsBlock appearance only.
-        if ($sCoverTweak != '')
-            $bShowClickable = false;
         
         if($bUseAsBlock && $bShowClickable)
             $sClass .= ' bx-clickable';

@@ -91,6 +91,41 @@ function bx_editor_init(oEditor, oParams){
         
         var Embed = Quill.import('blots/embed');
         
+        const BaseLink = Quill.import("formats/link");
+        class Link extends BaseLink {
+            format(name, value) {
+                if (["href", "target"].indexOf(name) > -1) {
+                    if (value) {
+                        this.domNode.setAttribute(name, value);
+                    } else {
+                        this.domNode.removeAttribute(name);
+                    }
+                } else {
+                    super.format(name, value);
+                    if (name == 'link'){
+                         if (!value.startsWith(oParams.root_url) && (value.startsWith('http://') || value.startsWith('https://'))){
+                            this.domNode.setAttribute("target", "_blank");  
+                        }
+                        else{
+                            this.domNode.removeAttribute('target');
+                        }
+                    }
+                }
+            }
+            static create(value) {
+                const node = super.create(value);
+                node.setAttribute("href", this.sanitize(value));
+                if (!value.startsWith(oParams.root_url) && (value.startsWith('http://') || value.startsWith('https://'))){
+                    node.setAttribute("target", "_blank");  
+                }
+                else{
+                    node.removeAttribute('target');
+                }
+                return node;
+            }
+        }
+        Quill.register(Link, true);
+        
         class MenthionLink extends Embed {
             static create(value) {
                 let node = super.create(value);
