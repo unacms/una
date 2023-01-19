@@ -104,7 +104,7 @@ class BxBaseCmts extends BxDolCmts
     {
         return $this->_sJsObjName;
     }
-
+    
     /**
      * Get initialization section of comments box
      *
@@ -1138,15 +1138,17 @@ class BxBaseCmts extends BxDolCmts
         return $mixedResult;
     }
 
-    protected function _getFormPost($iCmtParentId = 0, $aDp = [])
+    public function _getFormPost($iCmtParentId = 0, $aDp = [])
     {
         $bCmtParentId = !empty($iCmtParentId);
-        if(!$bCmtParentId && !$this->isPostAllowed())
-            return array('msg' => $this->msgErrPostAllowed());
+        
+        if (!bx_is_api()){
+            if(!$bCmtParentId && !$this->isPostAllowed())
+                return array('msg' => $this->msgErrPostAllowed());
 
-        if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
-            return array('msg' => $this->msgErrReplyAllowed());
-
+            if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
+                return array('msg' => $this->msgErrReplyAllowed());
+        }
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
 
@@ -1230,8 +1232,7 @@ class BxBaseCmts extends BxDolCmts
 
             return array('msg' => _t('_cmt_err_cannot_perform_action'));
         }
-
-        return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
+        return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id, 'frm' => $oForm);
     }
 
     protected function _getFormEdit($iCmtId, $aDp = [])
