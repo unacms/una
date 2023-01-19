@@ -422,6 +422,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
     	return $this->_getFormObject()->getTranscoderPreviewName();
     }
+    
+    public function getFormObject()
+    {
+    	return $this->_getFormObject();
+    }
 
     public function getTableNameImages()
     {
