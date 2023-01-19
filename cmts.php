@@ -12,6 +12,8 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
 
+bx_api_check_origins();
+
 check_logged();
 
 $sSys = isset($_REQUEST['sys']) ? bx_process_input($_REQUEST['sys']) : '';
