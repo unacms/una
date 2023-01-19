@@ -109,7 +109,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             ),
         );
-        return $this->parseHtmlByName($sTemplateName, $aVars);
+
+        return bx_is_api() ? [['id' => 1, 'type' => 'author', 'data' => $aVars]] : $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
