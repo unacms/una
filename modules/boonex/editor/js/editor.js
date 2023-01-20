@@ -129,7 +129,7 @@ function bx_ex_editor_init(oEditor, oParams)
             {
                 selectTemplate: function(item) {
                     if (this.range.isContentEditable(this.current.element)) {
-                        return ('<a class="bx-mention-link" dchar="@" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">@' + item.original.label + '</a>');
+                        return ('<a class="bx-mention-link" title="' + item.original.label + '" dchar="@" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">@' + item.original.label + '</a>');
                     }
                     return "@" + item.original.value;
                 },
@@ -145,7 +145,7 @@ function bx_ex_editor_init(oEditor, oParams)
                 trigger: "#",
                 selectTemplate: function(item) {
                     if (this.range.isContentEditable(this.current.element)) {
-                        return ('<a class="bx-mention-link" dchar="#" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">#' + item.original.label + '</a>');
+                        return ('<a class="bx-mention-link" title="' + item.original.label + '" dchar="#" data-profile-id="' + item.original.value + '" href="' + item.original.url + '">#' + item.original.label + '</a>');
                     }
                     return "#" + item.original.value;
                 },

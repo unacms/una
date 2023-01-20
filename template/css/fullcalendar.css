@@ -1,0 +1,5 @@
+.fc-header-toolbar{
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 5px;
+}

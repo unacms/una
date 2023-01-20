@@ -231,6 +231,9 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
 
     case BX_DATA_HTML:
         $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
+            
+        // remove empty tags from html content https://github.com/unaio/una/issues/4203
+        $s = preg_replace("/(((<\w+>)+[ \n(<br>)]*(<\/\w+>)+)+)|<br>/", '', $s);    
         return $mixedParams && is_array($mixedParams) && in_array('no_process_macro', $mixedParams) ? $s : bx_process_macros($s);
     case BX_DATA_TEXT_MULTILINE:
         $s = $mixedData;
@@ -2319,6 +2322,37 @@ function bx_absolute_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
     if (!preg_match('/^https?:\/\//', $sUrl))
         $sUrl = $sPrefix . $sUrl;
     return $sUrl;
+}
+
+function bx_is_api()
+{
+    if (bx_get('api-acc')){
+        $iCookieTime = true ? time() + 60 * getParam('sys_session_lifetime_in_min') : 0;
+        bx_setcookie("memberID", 1, $iCookieTime, 'auto');
+        check_logged();
+    }
+    return defined('BX_API') || bx_get('api') ? true : false;
+}
+
+function bx_api_check_origins()
+{
+    if (isset($_SERVER['HTTP_ORIGIN']) && parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
+
+        $aAllowedOrigins = ['http://app.una.io:3000', 'http://ci.una.io:3000', 'http://localhost:3000', 'https://una.io']; // TODO: separate config
+        if (!in_array($_SERVER['HTTP_ORIGIN'], $aAllowedOrigins)) {
+            header('HTTP/1.0 403 Forbidden');
+            echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
+            exit;
+        } 
+
+        header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+
+        if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
+            header('Access-Control-Allow-Methods: POST, GET');
+            header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
+            exit;
+        }            
+    }
 }
 
 /** @} */

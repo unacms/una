@@ -8,9 +8,9 @@
                         <div class="absolute top-6 -right-1/4 w-2/3 h-2/3 bg-green-700 filter blur-3xl z-0 opacity-50 animate-goo"></div>
                     </div>
                     <div class="bx-base-pofile-cover-image relative h-64 lg:h-40 max-w-7xl mx-auto opacity-100 __add_class__">
-                        <a class="bx-base-pofile-cover-image box-border absolute h-full w-full" href="__cover_href__" >
+                        <p class="bx-base-pofile-cover-image box-border absolute h-full w-full" >
                             <img class="bx-base-pofile-cover-image h-64 mx-auto w-full object-cover bg-cover lg:h-40 rounded-t z-10 __img_class__ bx-image-edit-source-__unique_id__" style="background-image:url(__cover_url__);__cover_settins__" src="<bx_icon_url:spacer.gif />" />
-                        </a>
+                        </p>
                     </div>
                 </div>
             </bx_if:show_cover>
@@ -18,10 +18,10 @@
                 <div class="bx-base-pofile-cover-user relative flex flex-col flex-colmt-6 pt-6 sm:pb-1">
                     <div class="bx-base-profile-cover-title-bages min-w-0 flex-1 mb-4">
                         <bx_if:show_title_as_tag>
-                            <h1 class="bx-def-unit-info text-4xl font-bold text-gray-900 dark:text-gray-50 text-center sm:truncate">__title__</h1>
+                            <h1 class="bx-def-unit-info text-2xl font-bold text-gray-900 dark:text-gray-50 text-center sm:truncate">__title__</h1>
                         </bx_if:show_title_as_tag>
                         <bx_if:show_title_as_text>
-                            <div class="bx-def-unit-info text-4xl font-bold text-gray-900 dark:text-gray-50 text-center sm:truncate">__title__</div>
+                            <div class="bx-def-unit-info text-2xl font-bold text-gray-900 dark:text-gray-50 text-center sm:truncate">__title__</div>
                         </bx_if:show_title_as_text>
                         <div class="bx-base-profile-cover-meta-holder">
                             <div class="bx-base-profile-cover-meta flex flex-row flex-wrap justify-center mt-6 md:mt-2 -ml-1  text-base font-medium">__meta__</div>
@@ -36,6 +36,7 @@
                 </div>
                 __show_data__
             </div>
+            __cover_tweak__
         </div>
     </div>
 </div>
