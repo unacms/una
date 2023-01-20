@@ -3456,13 +3456,13 @@ class BxBaseModGeneralModule extends BxDolModule
         $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
-
         
         if (bx_is_api()){
-            $aData = $oCmts->getFormPost(0);
+            $aForm = $oCmts->getFormPost(0)->getCodeAPI();
+          
             return [
-                ['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI(array(), array('in_designbox' => false, 'show_empty' => false))],
-                ['id' => 2, 'type' => 'form', 'data' => $aData['frm']->getCodeAPI(), 'request' => ['url' => '/cmts.php?api=1', 'immutable' => true]]
+                ['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI([], ['in_designbox' => false, 'show_empty' => false])],
+                ['id' => 2, 'type' => 'form', 'data' => $aForm, 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_comments', 'immutable' => true]]
             ];
         }
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false));

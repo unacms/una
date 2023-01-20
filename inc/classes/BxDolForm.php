@@ -803,6 +803,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
+    
+     static public function unSetObjectInstance($sObject, $sDisplayName, $oTemplate = false, $sParam = '')
+     {
+        $sKey = 'BxDolForm!'.$sObject.'!'.$sDisplayName.'!'.$sParam;
+         unset($GLOBALS['bxDolClasses'][$sKey]);
+     }
 
     /**
      * Get data items array
