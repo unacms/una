@@ -1135,11 +1135,11 @@ class BxBaseCmts extends BxDolCmts
             else
                 $sMsg = $this->msgErrPostAllowed();
 
-            return ['msg' => $sMsg];
+            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => $sMsg]] : ['msg' => $sMsg];
         }
 
         if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
-            return ['msg' => $this->msgErrReplyAllowed()];
+            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => $sMsg]] : ['msg' => $this->msgErrReplyAllowed()];
 
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
@@ -1171,8 +1171,7 @@ class BxBaseCmts extends BxDolCmts
             if(!$bCmtText && !$bImageIds) {
                 $oForm->aInputs['cmt_text']['error'] =  _t('_Please enter characters');
                 $oForm->setValid(false);
-
-            	return ['form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id];
+                return bx_is_api() ? $oForm : ['form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id];
             }
 
             $aParent = [];
@@ -1218,14 +1217,19 @@ class BxBaseCmts extends BxDolCmts
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
                     $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
-                if(($mixedResult = $this->onPostAfter($iCmtId, $aDp)) !== false)
-                    return $mixedResult;
+                if(($mixedResult = $this->onPostAfter($iCmtId, $aDp)) !== false){
+                    if (bx_is_api()){
+                        $this->_unsetFormObject(BX_CMT_ACTION_POST);
+                        return $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
+                    }
+                    else{
+                        return $mixedResult;
+                    }
+                }
             }
-
-            return ['msg' => _t('_cmt_err_cannot_perform_action')];
+            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => _t('_cmt_err_cannot_perform_action')]] : ['msg' => _t('_cmt_err_cannot_perform_action')];
         }
-
-        return ['form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id, 'frm' => $oForm];
+        return bx_is_api() ? $oForm : ['form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id];
     }
 
     protected function _getFormEdit($iCmtId, $aDp = [])

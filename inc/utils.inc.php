@@ -2347,13 +2347,10 @@ function bx_api_check_origins()
             header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
             exit;
         } 
-        
-      
     }
     //TODO: Temporatery for use logged state 
     bx_login(1);
     check_logged();
-    //echoDbgLog($_SERVER);
 }
 
 /** @} */
