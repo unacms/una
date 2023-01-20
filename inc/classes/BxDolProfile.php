@@ -132,7 +132,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
     public static function getData($mixedProfileId = false, $aParams = [])
     {
-        $sDisplayType = 'unit_wo_info';
+        $sDisplayType = 'unit';
         if(isset($aParams['display_type']))
             $sDisplayType = $aParams['display_type'];
 
