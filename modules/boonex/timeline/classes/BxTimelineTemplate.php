@@ -331,6 +331,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oModule = $this->getModule();
 
         list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
+        
+        if (bx_is_api()){
+            $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
+            foreach($aPosts as &$aPost)  {
+                $aPost['author_data'] = BxDolProfile::getData($aPost['object_owner_id']);
+                $aPost['url'] = bx_ltrim_str($aPost['content']['url'], BX_DOL_URL_ROOT);
+            }
+            return $aPosts;
+        }
 
         //--- Add live update
         $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);

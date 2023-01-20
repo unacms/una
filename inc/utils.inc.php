@@ -2326,11 +2326,6 @@ function bx_absolute_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
 
 function bx_is_api()
 {
-    if (bx_get('api-acc')){
-        $iCookieTime = true ? time() + 60 * getParam('sys_session_lifetime_in_min') : 0;
-        bx_setcookie("memberID", 1, $iCookieTime, 'auto');
-        check_logged();
-    }
     return defined('BX_API') || bx_get('api') ? true : false;
 }
 
@@ -2351,8 +2346,14 @@ function bx_api_check_origins()
             header('Access-Control-Allow-Methods: POST, GET');
             header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
             exit;
-        }            
+        } 
+        
+      
     }
+    //TODO: Temporatery for use logged state 
+    bx_login(1);
+    check_logged();
+    //echoDbgLog($_SERVER);
 }
 
 /** @} */

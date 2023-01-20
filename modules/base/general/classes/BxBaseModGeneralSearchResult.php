@@ -214,10 +214,11 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     function decodeData ($a)
     {
         $oContentInfo = $this->getContentInfoObject();
-
+        $CNF = $this->oModule->_oConfig->CNF;
+        
         foreach ($a as $i => $r) {
             if (isset($r['author']))
-                $a[$i]['author_data'] = $this->decodeDataAuthor($oContentInfo, $r);
+                $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
 
             $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
             $a[$i]['url_thumb'] = $oContentInfo->getContentThumb($r['id']);
@@ -230,17 +231,6 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     function decodeDataUrl ($oContentInfo, $r)
     {
         return bx_ltrim_str($oContentInfo->getContentLink($r['id']), BX_DOL_URL_ROOT);
-    }
-
-    function decodeDataAuthor ($oContentInfo, $r) 
-    {
-        $CNF = $this->oModule->_oConfig->CNF;
-        $oProfile = BxDolProfile::getInstanceMagic($r[$CNF['FIELD_AUTHOR']]);
-        return [
-            'display_name' => $oProfile->getDisplayName(),
-            'url' => $oProfile->getUrl(),
-            'url_avatar' => $oProfile->getAvatar(),
-        ];
     }
 
     function decodeDataSummaryPlain ($oContentInfo, $r)

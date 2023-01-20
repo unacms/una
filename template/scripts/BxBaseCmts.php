@@ -155,20 +155,10 @@ class BxBaseCmts extends BxDolCmts
     {
         foreach ($a as $i => $r) {
             if (isset($r['cmt_author_id']))
-                $a[$i]['author_data'] = $this->decodeDataAuthor($r);
+                $a[$i]['author_data'] = BxDolProfile::getData($r['cmt_author_id']);
         }
 
         return $a;
-    }
-
-    function decodeDataAuthor ($r) // TODO: get rid of duplicate code here and in BxBaseModGeneralSearchResult
-    {
-        $oProfile = BxDolProfile::getInstanceMagic($r['cmt_author_id']);
-        return [
-            'display_name' => $oProfile->getDisplayName(),
-            'url' => $oProfile->getUrl(),
-            'url_avatar' => $oProfile->getAvatar(),
-        ];
     }
 
     /**
@@ -1135,22 +1125,21 @@ class BxBaseCmts extends BxDolCmts
     protected function _getFormPost($iCmtParentId = 0, $aDp = [])
     {
         $bCmtParentId = !empty($iCmtParentId);
-        if (!bx_is_api()){
-            if(!$bCmtParentId && !$this->isPostAllowed()) {
-                $sMsg = '';
-                if(!isLogged()) {
-                    $oPermalink = BxDolPermalinks::getInstance();
-                    $sMsg = _t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account'));
-                }
-                else
-                    $sMsg = $this->msgErrPostAllowed();
 
-                return ['msg' => $sMsg];
+        if(!$bCmtParentId && !$this->isPostAllowed()) {
+            $sMsg = '';
+            if(!isLogged()) {
+                $oPermalink = BxDolPermalinks::getInstance();
+                $sMsg = _t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account'));
             }
+            else
+                $sMsg = $this->msgErrPostAllowed();
 
-            if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
-                return ['msg' => $this->msgErrReplyAllowed()];
+            return ['msg' => $sMsg];
         }
+
+        if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
+            return ['msg' => $this->msgErrReplyAllowed()];
 
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
