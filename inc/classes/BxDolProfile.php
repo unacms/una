@@ -130,10 +130,19 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return $GLOBALS['bxDolClasses'][$sClass];
     }
 
-    public static function getData($mixedProfileId = false)
+    public static function getData($mixedProfileId = false, $aParams = [])
     {
-        $oProfile = BxDolProfile::getInstanceMagic($mixedProfileId);
+        $sDisplayType = 'unit_wo_info';
+        if(isset($aParams['display_type']))
+            $sDisplayType = $aParams['display_type'];
+
+        if(!($mixedProfileId instanceof BxDolProfile))
+            $oProfile = BxDolProfile::getInstanceMagic($mixedProfileId);
+        else
+            $oProfile = $mixedProfileId;
+
         return [
+            'display_type' =>  $sDisplayType,
             'display_name' => $oProfile->getDisplayName(),
             'url' => $oProfile->getUrl(),
             'url_avatar' => $oProfile->getAvatar(),

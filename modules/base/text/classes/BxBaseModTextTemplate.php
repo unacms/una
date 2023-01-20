@@ -94,23 +94,25 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $sName = $oProfile->getDisplayName();
         $sAddon = $sFuncAuthorAddon && is_a($oProfile, 'BxDolProfile') ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
 
-        $aVars = array (
+        $bIsApi = bx_is_api();
+
+        $aVars = [
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
-            'author_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+            'author_unit' => $bIsApi ? BxDolProfile::getData($oProfile, ['display_type' => 'unit_wo_info']) : $oProfile->getUnit(0, ['template' => 'unit_wo_info']),
             'author_title' => $sName,
             'author_title_attr' => bx_html_attribute($sName),
             'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData, $oProfile) : '',
             'author_profile_desc' => $this->getAuthorProfileDesc($aData, $oProfile),
-            'bx_if:addon' => array (
+            'bx_if:addon' => [
                 'condition' => (bool)$sAddon,
-                'content' => array (
+                'content' => [
                     'content' => $sAddon,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        return bx_is_api() ? [['id' => 1, 'type' => 'author', 'data' => $aVars]] : $this->parseHtmlByName($sTemplateName, $aVars);
+        return $bIsApi ? [['id' => 1, 'type' => 'author', 'data' => $aVars]] : $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
