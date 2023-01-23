@@ -342,6 +342,18 @@ class BxBaseFormView extends BxDolForm
     {
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
     
+        
+        $this->sCode = false;
+        bx_alert('system', 'form_output', 0, 0, array(
+            'dynamic' => $this->_bDynamicMode,
+            'object' => &$this,
+            'code' => &$this->sCode,
+            'include' => &$sInclude
+        ));
+
+        if($this->sCode === false)
+            $this->genForm();
+        
         // TODO: process inputs to translate titles, alerts, etc
     
         return ['inputs' => $this->aInputs, 'attrs' => $this->aFormAttrs, 'params' => $this->aParams];
@@ -496,7 +508,8 @@ BLAH;
         $sContHeader = '';
         $sContFields = '';
         $sFuncGenRow = isset($this->aParams['view_mode']) && $this->aParams['view_mode'] ? 'genViewRow' : 'genRow';
-        foreach ($this->aInputs as $aInput) {
+        foreach ($this->aInputs as &$aInput) {
+    
             if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput)) {
                 if ('block_header' == $aInput['type'] && !$this->_bShowEmptySections) {
                     // don't show section with no fields or with empty fields

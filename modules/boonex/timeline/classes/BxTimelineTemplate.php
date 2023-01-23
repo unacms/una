@@ -209,6 +209,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sTitle = _t('_bx_timeline_page_block_title_views_' . $aParams['view']);
 
+        if (bx_is_api())
+            return $this->getViewBlock($aParams);
+        
         return [
             'content' => $this->parseHtmlByName('block_views.html', [
                 'style_prefix' => $sStylePrefix,
