@@ -3458,11 +3458,17 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
         
         if (bx_is_api()){
-            $aForm = $oCmts->getFormPost(0)->getCodeAPI();
-          
+            $aForm = $oCmts->getFormPost(0);
+            if (is_array($aForm)){
+                $aForm['id'] = 2;
+            }
+            else
+                $aData = ['id' => 2, 'type' => 'form', 'data' => $aForm->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_comments', 'immutable' => true]];
+            
+            
             return [
                 ['id' => 1, 'type' => 'browse', 'data' => $oCmts->getCommentsBlockAPI([], ['in_designbox' => false, 'show_empty' => false])],
-                ['id' => 2, 'type' => 'form', 'data' => $aForm, 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_comments', 'immutable' => true]]
+                $aForm 
             ];
         }
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => false));
