@@ -597,6 +597,9 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      */
     public function serviceGetCreatePostForm($mixedContextId = false, $sDefault = '', $aCustom = array())
     {
+        if (bx_is_api())
+            return ;
+        
     	if(!isLogged() || ($mixedContextId !== false && !is_numeric($mixedContextId)))
             return '';
 
