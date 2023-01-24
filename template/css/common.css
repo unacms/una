@@ -223,6 +223,10 @@ blockquote {
     text-align: right;
 }
 
+.bx-db-menu-tab .bx-menu-custom-hor:not(.bx-menu-more-auto) {
+    width: max-content;
+}
+
 .bx-db-menu-tab-active {
     text-decoration:underline;
 }
