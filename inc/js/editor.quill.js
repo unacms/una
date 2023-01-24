@@ -390,20 +390,30 @@ function bx_editor_init(oEditor, oParams){
         return new Delta().insert(node.data); 
     });
 
-    if (oParams.insert_as_plain_text){
-        oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
-			let ops = []
-			delta.ops.forEach(op => {
-				if (op.insert && typeof op.insert === 'string') {
-					ops.push({
-						insert: op.insert
-					})
-				}
-			})
-			delta.ops = ops
-			return delta
-        });
-    }
+    
+    oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
+        if (oParams.insert_as_plain_text){
+            let ops = []
+            delta.ops.forEach(op => {
+                if (op.insert && typeof op.insert === 'string') {
+                    ops.push({
+                        insert: op.insert
+                    })
+                }
+            })
+            delta.ops = ops
+        }
+        else{
+            delta.forEach(e => {
+                if(e.attributes){
+                    e.attributes.color = '';
+                    e.attributes.background = '';
+                }
+            });
+        }
+        return delta;
+    });
+
     
     oEditor.on('editor-change', function(delta, oldDelta, source) {
         sVal = oEditor.container.firstChild.innerHTML;
