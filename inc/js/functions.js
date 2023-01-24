@@ -667,8 +667,12 @@ function bx_menu_show_live_update(oData) {
         var oMenuItem = $('.bx-menu-object-' + oData.mi_parent.menu_object + ' .bx-menu-item-' + oData.mi_parent.menu_item);
         var oMenuItemAddon = oMenuItem.find(sSelectorAddon);
 
+        var sMediaType = bx_check_mq();
+        if(sMediaType == 'mobile')
+            sMediaType = 'phone';
+
         var iSum = 0;
-        $('.bx-menu-object-' + oData.mi_child.menu_object + ' .bx-menu-item:visible .bx-menu-item-addon').each(function() {
+        $('.bx-media-' + sMediaType + ' .bx-menu-object-' + oData.mi_child.menu_object + ' .bx-menu-item:not(.bx-def-media-' + sMediaType + '-hide) .bx-menu-item-addon').each(function() {
             iValue = parseInt($(this).html());
             if(iValue && iValue > 0)
                 iSum += iValue;
