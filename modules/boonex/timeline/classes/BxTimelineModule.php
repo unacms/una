@@ -4901,7 +4901,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->_iOwnerId = $aParams['owner_id'];
 
-        return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => ['unit' => 'feed', 'data' => $this->_oTemplate->getViewBlock($aParams)]]] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
+        return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => ['list' => 'feed', 'data' => $this->_oTemplate->getViewBlock($aParams)]]] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
     }
 
     protected function _getBlockPost($iProfileId, $aParams = array())

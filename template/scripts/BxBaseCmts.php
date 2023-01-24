@@ -146,7 +146,7 @@ class BxBaseCmts extends BxDolCmts
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
 
         return [
-            'unit' => 'comments',
+            'list' => 'comments',
             'data' => $this->decodeData($aCmts),
         ];
     }

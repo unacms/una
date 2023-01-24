@@ -496,7 +496,8 @@ class BxDolSearchResult implements iBxDolReplaceable
     function processingAPI () 
     {
         return [
-            'unit' => 'general',
+            'list' => 'general',
+            'unit' => $this->sUnitViewDefault,
             'data' => $this->decodeData($this->getSearchData()),
             'paginate' => [
                 'num' => $this->aCurrent['paginate']['num'],
