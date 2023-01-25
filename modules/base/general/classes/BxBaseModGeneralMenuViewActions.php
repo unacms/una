@@ -125,7 +125,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$this->_bShowTitle)
             $aItem['bx_if:title']['condition'] = false;
 
-        return parent::_getMenuItemDefault ($aItem);
+        if($this->_bIsApi)
+            return $aItem;
+        else
+            return parent::_getMenuItemDefault ($aItem);
     }
 
     protected function _getMenuItemView($aItem, $aParams = array())
@@ -151,6 +154,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         );
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
 
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
@@ -184,6 +190,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
@@ -215,6 +224,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+        
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
@@ -245,6 +257,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         );
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
 
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
@@ -277,6 +292,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
@@ -307,6 +325,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         );
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
 
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
@@ -342,6 +363,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';
@@ -376,6 +400,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
 
         if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
             return '';
+
+        if($this->_bIsApi)
+            return $aItem;
 
         $sResult = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
             'do' => !empty($aParams['do']) ? $aParams['do'] : 'repost',
@@ -480,7 +507,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(empty($aItem) || !is_array($aItem))
             return false;
 
-        return $this->_getMenuItemDefault($aItem);
+        if($this->_bIsApi)
+            return $aItem;
+        else
+            return $this->_getMenuItemDefault($aItem);
     }
 
     protected function _getMenuItemByNameSocialSharing($aItem, $aParams = array())
@@ -498,7 +528,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(empty($aItem) || !is_array($aItem))
             return false;
 
-        return $this->_getMenuItemDefault($aItem);
+        if($this->_bIsApi)
+            return $aItem;
+        else
+            return $this->_getMenuItemDefault($aItem);
     }
 
     protected function _getMenuItemByNameActionDelete($aItem)
@@ -531,7 +564,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(empty($aItem) || !is_array($aItem))
             return false;
 
-        return $this->_getMenuItemDefault($aItem);
+        if($this->_bIsApi)
+            return $aItem;
+        else
+            return $this->_getMenuItemDefault($aItem);
     }
 }
 

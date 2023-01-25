@@ -2845,6 +2845,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $aKeys[] = "'" . $aKeyWrappers['left'] . $aKeysSrc[$i] . $aKeyWrappers['right'] . "'s";
             if (is_string($aValuesSrc[$i]) || is_null($aValuesSrc[$i]))
                 $aValues[] = is_null($aValuesSrc[$i]) ? '' : str_replace('$', '\\$', str_replace('\\', '\\\\', $aValuesSrc[$i]));
+            else if(is_array($aValuesSrc[$i]))
+                $aValues[] = _t('_error occured');
             else
                 $aValues[] = $aValuesSrc[$i];
         }

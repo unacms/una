@@ -68,6 +68,24 @@ class BxBaseMenu extends BxDolMenu
         return $s;
     }
 
+    /**
+     * Get menu code API.
+     * @return array
+     */
+    public function getCodeAPI ()
+    {
+        $aItems = [];
+
+        $aVars = $this->_getTemplateVars();
+        if(!empty($aVars['bx_repeat:menu_items']))
+            $aItems = $aVars['bx_repeat:menu_items'];
+
+        return [
+            'object' => $this->_sObject, 
+            'items' => $aItems
+        ];
+    }
+
     protected function _getCode($sTmplName, $aTmplVars)
     {
         return $this->_oTemplate->parseHtmlByName($this->getTemplateName($sTmplName), $aTmplVars);

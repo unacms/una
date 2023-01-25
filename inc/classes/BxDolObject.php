@@ -228,6 +228,14 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return true;
     }
 
+    public function getElementApi($aParams = [])
+    {
+        //TODO: Implement for Objects like Views, Votes, etc.
+        return [
+            'title' => get_class($this)
+        ];
+    }
+
     /**
      * Database functions
      */

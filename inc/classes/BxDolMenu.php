@@ -81,6 +81,8 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected static $SEL_MODULE = '';
     protected static $SEL_NAME = '';
 
+    protected $_bIsApi;
+
     protected $_bDynamicMode;
     protected $_bAddNoFollow;
 
@@ -103,6 +105,8 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected function __construct($aObject)
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_bDynamicMode = false;
         $this->_bAddNoFollow = getParam('sys_add_nofollow') == 'on';

@@ -1504,7 +1504,11 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $oActions->setContentId($iContentId);
         $oActions->addMarkers($aMarkers);
-        return $this->_oTemplate->entryAllActions($oActions->getCode());
+
+        if(bx_is_api())
+            return [['id' => 1, 'type' => 'actions', 'data' => $oActions->getCodeAPI()]];
+        else
+            return $this->_oTemplate->entryAllActions($oActions->getCode());
     }
 
     /**

@@ -90,6 +90,9 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
     	if(empty($mixedItem))
             return false;
 
+        if($this->_bIsApi)
+            return $mixedItem;
+
         $sItem = $sClass = '';
         if(is_array($mixedItem)) 
             list($sItem, $sClass) = $mixedItem;
@@ -102,12 +105,12 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
             $sClass .= ' bx-menu-tab-active';
 
         $sClass .= $this->_getVisibilityClass($aItem);
-        
-        return array(
+
+        return [
             'name' => $aItem['name'],
             'class' => $sClass,
             'item' => $sItem
-        );
+        ];
     }
 
     protected function _getMenuItemMoreAuto ($aItem)
