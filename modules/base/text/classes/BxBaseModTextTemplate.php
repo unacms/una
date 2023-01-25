@@ -803,12 +803,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $aResult = ['object' => '', 'items' => []];
         if(!empty($CNF['FIELD_ADDED']) && !empty($aData[$CNF['FIELD_ADDED']]))
             $aResult['items'][] = [
+                'id' => 1,
                 'display_type' => 'time',
                 'title' => $aData[$CNF['FIELD_ADDED']]
             ];
 
         if(!empty($CNF['URI_AUTHOR_ENTRIES']))
             $aResult['items'][] = [
+                'id' => 2,
                 'link' => BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id()),
                 'title' => _t($CNF['T']['txt_all_entries_by'], $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()))
             ];

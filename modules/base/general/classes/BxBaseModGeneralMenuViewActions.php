@@ -453,6 +453,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))
             return '';

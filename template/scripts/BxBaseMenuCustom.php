@@ -121,6 +121,9 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
         if($aItem === false)
             return false;
 
+        if($this->_bIsApi)
+            return $aItem;
+
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentItemMore(), array(
             'item' => $this->_getMenuItemDefault($aItem),
             'popup' => BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['more_auto_popup'], $this->_oTemplate->parseHtmlByContent($this->_getTmplContentItemMorePopup(), array(
