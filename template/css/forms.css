@@ -258,17 +258,12 @@
     padding-left: 0.25rem;
 }
 
-
 .bx-form-input-textarea {
     padding:0.5rem;
     height:150px;
     height:10rem;
 
     line-height:normal;
-}
-
-.bx-form-input-datepicker {
-    width:7.5rem;
 }
 
 .bx-form-input-wrapper-dateselect select{
