@@ -125,6 +125,7 @@
     <string name="_bx_posts_page_block_title_recent_entries_view_full"><![CDATA[Latest Posts (Full View)]]></string>
     <string name="_bx_posts_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_posts_page_block_title_entry_author"><![CDATA[Author]]></string>
+    <string name="_bx_posts_page_block_title_entry_breadcrumb"><![CDATA[Breadcrumb]]></string>
     <string name="_bx_posts_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_posts_page_block_title_entry_comments"><![CDATA[Comments]]></string>
     <string name="_bx_posts_page_block_title_entry_reports"><![CDATA[Reports]]></string>
