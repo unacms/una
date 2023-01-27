@@ -85,7 +85,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         if (!$iProfileId)
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
@@ -114,7 +115,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             ],
         ];
 
-        return $bIsApi ? [['id' => 1, 'type' => 'author', 'data' => $aVars]] : $this->parseHtmlByName($sTemplateName, $aVars);
+        return $bIsApi ? [['id' => 1, 'type' => 'author', 'data' => [
+            'author' => $aVars, 
+            'menu_manage' => $oModule->getEntryAllActions()
+        ]]] : $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
@@ -804,7 +808,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(!empty($CNF['FIELD_ADDED']) && !empty($aData[$CNF['FIELD_ADDED']]))
             $aResult['items'][] = [
                 'id' => 1,
-                'display_type' => 'time',
+                'content_type' => 'time',
                 'title' => $aData[$CNF['FIELD_ADDED']]
             ];
 

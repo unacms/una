@@ -1440,75 +1440,12 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityAllActions ($mixedContent = false, $aParams = array())
     {
-        $CNF = &$this->_oConfig->CNF;
-
-        if(!empty($mixedContent)) {
-            if(!is_array($mixedContent))
-                $mixedContent = array((int)$mixedContent, (method_exists($this->_oDb, 'getContentInfoById')) ? $this->_oDb->getContentInfoById((int)$mixedContent) : array());
-        }
-        else {
-            $mixedContent = $this->_getContent();
-            if($mixedContent === false)
-                return false;
-        }
-
-        list($iContentId, $aContentInfo) = $mixedContent;
-
-        $sObjectMenu = !empty($aParams['object_menu']) ? $aParams['object_menu'] : '';
-        if(empty($sObjectMenu) && !empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
-            $sObjectMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'];
-
-        if(empty($sObjectMenu))
-            return false;
-
-        $sEntryTitle = !empty($aParams['entry_title']) ? $aParams['entry_title'] : '';
-        if(empty($sEntryTitle) && !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
-            $sEntryTitle = $aContentInfo[$CNF['FIELD_TITLE']];
-
-        $sEntryUrl = !empty($aParams['entry_url']) ? $aParams['entry_url'] : '';
-        if(empty($sEntryUrl) && !empty($CNF['URI_VIEW_ENTRY']))
-            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
-
-        $iEntryThumb = !empty($aParams['entry_thumb']) ? (int)$aParams['entry_thumb'] : 0;
-        if(empty($iEntryThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
-            $iEntryThumb = (int)$aContentInfo[$CNF['FIELD_THUMB']];
-
-        $sObjectStorage = !empty($aParams['object_storage']) ? $aParams['object_storage'] : false;
-        if(empty($sObjectStorage) && !empty($CNF['OBJECT_STORAGE']))
-            $sObjectStorage = $CNF['OBJECT_STORAGE'];
-
-        $sObjectTranscoder = !empty($aParams['object_transcoder']) ? $aParams['object_transcoder'] : false;
-
-        $aMarkers = array(
-            'id' => $iContentId,
-            'module' => $this->_oConfig->getName(),
-            'title' => !empty($sEntryTitle) ? $sEntryTitle : '',
-            'url' => !empty($sEntryUrl) ? $sEntryUrl : '',
-            'img_url' => ''
-        );
-
-        if(!empty($iEntryThumb)) {
-            if(!empty($sObjectTranscoder))
-                $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
-            else if(!empty($sObjectStorage))
-                $o = BxDolStorage::getObjectInstance($sObjectStorage);
-
-            $sImageUrl = $o ? $o->getFileUrlById($iEntryThumb) : '';
-            if(!empty($sImageUrl))
-                $aMarkers['img_url'] = $sImageUrl;
-        }
-
-        $oActions = BxDolMenu::getObjectInstance($sObjectMenu, $this->_oTemplate);
-        if(!$oActions)
-            return false;
-
-        $oActions->setContentId($iContentId);
-        $oActions->addMarkers($aMarkers);
+        $mixedResult = $this->getEntryAllActions($mixedContent, $aParams);
 
         if(bx_is_api())
-            return [['id' => 1, 'type' => 'actions', 'data' => $oActions->getCodeAPI()]];
+            return [['id' => 1, 'type' => 'actions', 'data' => $mixedResult]];
         else
-            return $this->_oTemplate->entryAllActions($oActions->getCode());
+            return $this->_oTemplate->entryAllActions($mixedResult);
     }
 
     /**
@@ -3001,6 +2938,76 @@ class BxBaseModGeneralModule extends BxDolModule
                 return array('id' => $iId, 'transcoder' => $CNF[$sTranscoder]);
 
         return array('id' => $iId, 'object' => $CNF['OBJECT_STORAGE']);
+    }
+
+    public function getEntryAllActions ($mixedContent = false, $aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+                $mixedContent = array((int)$mixedContent, (method_exists($this->_oDb, 'getContentInfoById')) ? $this->_oDb->getContentInfoById((int)$mixedContent) : array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
+        }
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $sObjectMenu = !empty($aParams['object_menu']) ? $aParams['object_menu'] : '';
+        if(empty($sObjectMenu) && !empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
+            $sObjectMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'];
+
+        if(empty($sObjectMenu))
+            return false;
+
+        $sEntryTitle = !empty($aParams['entry_title']) ? $aParams['entry_title'] : '';
+        if(empty($sEntryTitle) && !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
+            $sEntryTitle = $aContentInfo[$CNF['FIELD_TITLE']];
+
+        $sEntryUrl = !empty($aParams['entry_url']) ? $aParams['entry_url'] : '';
+        if(empty($sEntryUrl) && !empty($CNF['URI_VIEW_ENTRY']))
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
+
+        $iEntryThumb = !empty($aParams['entry_thumb']) ? (int)$aParams['entry_thumb'] : 0;
+        if(empty($iEntryThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
+            $iEntryThumb = (int)$aContentInfo[$CNF['FIELD_THUMB']];
+
+        $sObjectStorage = !empty($aParams['object_storage']) ? $aParams['object_storage'] : false;
+        if(empty($sObjectStorage) && !empty($CNF['OBJECT_STORAGE']))
+            $sObjectStorage = $CNF['OBJECT_STORAGE'];
+
+        $sObjectTranscoder = !empty($aParams['object_transcoder']) ? $aParams['object_transcoder'] : false;
+
+        $aMarkers = [
+            'id' => $iContentId,
+            'module' => $this->_oConfig->getName(),
+            'title' => !empty($sEntryTitle) ? $sEntryTitle : '',
+            'url' => !empty($sEntryUrl) ? $sEntryUrl : '',
+            'img_url' => ''
+        ];
+
+        if(!empty($iEntryThumb)) {
+            if(!empty($sObjectTranscoder))
+                $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
+            else if(!empty($sObjectStorage))
+                $o = BxDolStorage::getObjectInstance($sObjectStorage);
+
+            $sImageUrl = $o ? $o->getFileUrlById($iEntryThumb) : '';
+            if(!empty($sImageUrl))
+                $aMarkers['img_url'] = $sImageUrl;
+        }
+
+        $oActions = BxDolMenu::getObjectInstance($sObjectMenu, $this->_oTemplate);
+        if(!$oActions)
+            return false;
+
+        $oActions->setContentId($iContentId);
+        $oActions->addMarkers($aMarkers);
+
+        return $oActions->{bx_is_api() ? 'getCodeAPI' : 'getCode'}();
     }
 
     public function getProfileId()
