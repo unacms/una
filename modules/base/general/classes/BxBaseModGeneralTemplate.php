@@ -211,12 +211,11 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
     {
     	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
-
-    	return $this->parseHtmlByName('breadcrumb.html', array(
+    	return bx_is_api() ? ['id' => 2, 'type' => 'breadcrumb', 'data' => ['name' => BxDolModule::getInstance($this->MODULE)->_aModule['title'], 'url' => BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME'])]] : $this->parseHtmlByName('breadcrumb.html', [
     		'url_home' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME'])),
     		'icon_home' => $CNF['ICON'],
     		'bx_repeat:items' => $aTmplVarsItems
-    	));
+    	]);
     }
 
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
