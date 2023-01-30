@@ -630,6 +630,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 $sImage = $o->getFileUrlById($mixedImage['id']);
         }
         
+        if(bx_is_api() ){
+            if($sImage){
+                $aVars['image'] = bx_get_image_api($CNF['OBJECT_STORAGE'], $mixedImage['id']);
+            }
+            return $aVars;
+        }
+        
         $sAddClassPicture = "";
         $sAddCode = "";
         $oModule = $this->getModule();
