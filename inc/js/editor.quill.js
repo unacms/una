@@ -103,11 +103,13 @@ function bx_editor_init(oEditor, oParams){
                 } else {
                     super.format(name, value);
                     if (name == 'link'){
-                         if (!value.startsWith(oParams.root_url) && (value.startsWith('http://') || value.startsWith('https://'))){
-                            this.domNode.setAttribute("target", "_blank");  
-                        }
-                        else{
-                            this.domNode.removeAttribute('target');
+                        if (value){
+                            if (!value.startsWith(oParams.root_url) && (value.startsWith('http://') || value.startsWith('https://'))){
+                                this.domNode.setAttribute("target", "_blank");  
+                            }
+                            else{
+                                this.domNode.removeAttribute('target');
+                            }
                         }
                     }
                 }
