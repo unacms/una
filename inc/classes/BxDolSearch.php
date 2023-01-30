@@ -497,6 +497,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     {
         return [
             'list' => 'general',
+            'module' => $this->oModule->getName(),
             'unit' => $this->sUnitViewDefault,
             'data' => $this->decodeData($this->getSearchData()),
             'paginate' => [
