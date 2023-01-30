@@ -416,7 +416,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_timeline_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 ('bx_timeline_photos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos_processed', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 
-('bx_timeline_videos', @sStorageEngine, 'a:1:{s:6:"fields";a:1:{s:10:"dimensions";s:17:"getFileDimensions";}}', 360, 2592000, 3, 'bx_timeline_videos', 'allow-deny', '{imagevideo}', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_videos', 'allow-deny', '{imagevideo}', '', 0, 0, 0, 0, 0, 0),
 ('bx_timeline_videos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_videos_processed', 'allow-deny', '{imagevideo}', '', 0, 0, 0, 0, 0, 0),
 
 ('bx_timeline_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_files', 'deny-allow', '', 'jpg,jpeg,jpe,gif,png,{dangerous}', 0, 0, 0, 0, 0, 0);

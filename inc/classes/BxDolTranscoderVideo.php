@@ -77,7 +77,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         $this->_sQueueTable = $this->_oDb->getQueueTable();
     }
 
-    public static function getObjectVideoAbstract()
+    public static function getObjectAbstract()
     {
         if (isset($GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract']))
             return $GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract'];
@@ -250,7 +250,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
      * @param $sFile path to the video file
      * @return array where 'w' key is width and 'h' key is height
      */
-    public function getVideoSize ($sFile)
+    public function getSize ($sFile)
     {
         $sFileOut = $this->getTmpFilename('.jpg');
 
@@ -294,7 +294,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             $aParams['h'] = '360';
 
         $fRatio = 16/9;
-        $aSize = $this->getVideoSize($sFile);
+        $aSize = $this->getSize($sFile);
         if ($aSize)
             $fRatio = $aSize['w'] / $aSize['h'];
 

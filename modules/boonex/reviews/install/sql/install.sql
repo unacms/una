@@ -410,7 +410,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_reviews_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_reviews_photos', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 ('bx_reviews_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_reviews_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 
-('bx_reviews_videos', @sStorageEngine, 'a:1:{s:6:"fields";a:1:{s:10:"dimensions";s:17:"getFileDimensions";}}', 360, 2592000, 3, 'bx_reviews_videos', 'allow-deny', '{video}', '', 0, 0, 0, 0, 0, 0),
+('bx_reviews_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_reviews_videos', 'allow-deny', '{video}', '', 0, 0, 0, 0, 0, 0),
 ('bx_reviews_videos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_reviews_videos_resized', 'allow-deny', '{imagevideo}', '', 0, 0, 0, 0, 0, 0),
 
 ('bx_reviews_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_reviews_files', 'deny-allow', '', '{dangerous}', 0, 0, 0, 0, 0, 0);

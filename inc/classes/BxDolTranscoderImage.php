@@ -80,7 +80,17 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         $this->_oDb = new BxDolTranscoderImageQuery($aObject, false);
         $this->_sQueueTable = $this->_oDb->getQueueTable();
     }
+    
+    public static function getObjectAbstract()
+    {
+        if (isset($GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract']))
+            return $GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract'];
 
+        $aObject = array('object' => 'abstract');
+        $o = new BxDolTranscoderImage ($aObject, null);
+        return ($GLOBALS['bxDolClasses'][__CLASS__ . '!Abstract'] = $o);
+    }
+    
     /**
      * check if transcoder suppors given file mime type
      */ 
@@ -151,6 +161,14 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
             }
         }
         return parent::isFileReady ($mixedHandlerOrig, $isCheckOutdated);
+    }
+    
+    public function getSize ($sFile)
+    {
+        $oImage = BxDolImageResize::getInstance();
+        $aSize = $oImage->getImageSize($sFile);
+
+        return $aSize;
     }
 
     protected function getCustomResizeDimension ($sName)

@@ -867,6 +867,26 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return 'db_' . $sName . '_' . bx_site_hash() . '.php';
     }
 
+    public function getCache ($sName, $sFunc)
+    {
+        if (!$this->getParam('sys_db_cache_enable'))
+            return false;
+        
+        $oCache = $this->getDbCacheObject ();
+        $sKey = $this->genDbCacheKey($sName);
+        return $oCache->getData($sKey);
+    }
+    
+    public function setCache ($sName, $mData)
+    {
+        if (!$this->getParam('sys_db_cache_enable'))
+            return false;
+        
+        $oCache = $this->getDbCacheObject ();
+        $sKey = $this->genDbCacheKey($sName);
+        $oCache->setData($sKey, $mData);
+    }
+    
     public function fromCache ($sName, $sFunc)
     {
         $aArgs = func_get_args();

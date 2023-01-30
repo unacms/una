@@ -27,7 +27,26 @@ class BxDolStorageQuery extends BxDolDb
     {
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_storage` WHERE `object` = ?", $sObject);
-        return $oDb->fromCache('sys_objects_storage_' . $sObject, 'getRow', $sQuery);
+        
+        $aTmp = $oDb->getCache('sys_objects_storage_' . $sObject, 'getRow', $sQuery);
+        if ($aTmp)
+            return $aTmp;
+        
+        $aRow = $oDb->getRow($sQuery);
+        $mParams = unserialize($aRow['params']);
+        if ($oDb->isFieldExists($aRow['table_files'], 'dimensions')){
+            $aDim =  ['fields' => ['dimensions' => 'getFileDimensions']];
+            if (is_array($mTmp)){
+                $mParams = array_merge($mParams, $aDim);
+            }
+            else{
+                $mParams = $aDim;
+            }
+        }
+        
+        $aRow['params'] = serialize($mParams);
+        $oDb->setCache('sys_objects_storage_' . $sObject, $aRow);
+        return $aRow;
     }
 
     static public function getStorageObjects ()

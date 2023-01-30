@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_covers` (
   `added` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `private` int(11) NOT NULL,
+  `dimensions` varchar(12) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `remote_id` (`remote_id`)
 );
@@ -79,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_photos` (
   `added` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `private` int(11) NOT NULL,
+  `dimensions` varchar(12) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `remote_id` (`remote_id`)
 );
@@ -428,7 +430,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_posts_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_photos', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 ('bx_posts_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_photos_resized', 'allow-deny', '{image}', '', 0, 0, 0, 0, 0, 0),
 
-('bx_posts_videos', @sStorageEngine, 'a:1:{s:6:"fields";a:1:{s:10:"dimensions";s:17:"getFileDimensions";}}', 360, 2592000, 3, 'bx_posts_videos', 'allow-deny', '{video}', '', 0, 0, 0, 0, 0, 0),
+('bx_posts_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_videos', 'allow-deny', '{video}', '', 0, 0, 0, 0, 0, 0),
 ('bx_posts_videos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_videos_resized', 'allow-deny', '{imagevideo}', '', 0, 0, 0, 0, 0, 0),
 
 ('bx_posts_sounds', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_sounds', 'allow-deny', '{audio}', '', 0, 0, 0, 0, 0, 0),

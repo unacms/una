@@ -1281,8 +1281,14 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
 
     protected function getFileDimensions($sFilePath, $sMimeType, $sExt, $oStorage)
     {
-        if (strncmp('video/', $sMimeType, 6) === 0 && $o = BxDolTranscoderVideo::getObjectVideoAbstract()) {
-            $a = $o->getVideoSize($sFilePath);
+        if (strncmp('image/', $sMimeType, 6) === 0 && $o = BxDolTranscoderImage::getObjectAbstract()) {
+            $a = $o->getSize($sFilePath);
+            if ($a && isset($a['w']) && isset($a['h']))
+                return $a['w'] . 'x' . $a['h'];
+        }
+        
+        if (strncmp('video/', $sMimeType, 6) === 0 && $o = BxDolTranscoderVideo::getObjectAbstract()) {
+            $a = $o->getSize($sFilePath);
             if ($a && isset($a['w']) && isset($a['h']))
                 return $a['w'] . 'x' . $a['h'];
         }
