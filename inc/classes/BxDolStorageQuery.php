@@ -36,7 +36,7 @@ class BxDolStorageQuery extends BxDolDb
         $mParams = unserialize($aRow['params']);
         if ($oDb->isFieldExists($aRow['table_files'], 'dimensions')){
             $aDim =  ['fields' => ['dimensions' => 'getFileDimensions']];
-            if (is_array($mTmp)){
+            if (is_array($mParams)){
                 $mParams = array_merge($mParams, $aDim);
             }
             else{

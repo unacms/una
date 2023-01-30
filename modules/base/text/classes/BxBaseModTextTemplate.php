@@ -632,7 +632,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         
         if(bx_is_api() ){
             if($sImage){
-                $aVars['image'] = bx_get_image_api($CNF['OBJECT_STORAGE'], $mixedImage['id']);
+                $aVars['image'] = bx_api_get_image($CNF['OBJECT_STORAGE'], $mixedImage['id']);
             }
             return $aVars;
         }

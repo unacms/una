@@ -2353,7 +2353,7 @@ function bx_api_check_origins()
     check_logged();
 }
 
-function bx_get_image_api($sStorage, $iId)
+function bx_api_get_image($sStorage, $iId)
 {
     $oS = BxDolStorage::getObjectInstance($sStorage);
     $aFile = $oS->getFile($iId);
