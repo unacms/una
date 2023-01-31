@@ -221,7 +221,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
                 $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
 
             $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
-            $a[$i]['url_thumb'] = $oContentInfo->getContentThumb($r['id']);
+            $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
             $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
         }
 

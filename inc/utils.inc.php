@@ -2353,4 +2353,27 @@ function bx_api_check_origins()
     check_logged();
 }
 
+function bx_api_get_image($sStorage, $iId)
+{
+    $oS = BxDolStorage::getObjectInstance($sStorage);
+    $aFile = $oS->getFile($iId);
+    $sUrl = $oS->getFileUrlById($iId);
+    $iWidth = 500;
+    $iHeight = 500;
+    
+    if(!empty($aFile['dimensions'])){
+        $aTmp = explode('x', $aFile['dimensions']);
+        $iWidth = (int) $aTmp[0];
+        $$iHeight = (int) $aTmp[1];
+    }
+    if (!empty($sUrl)){
+        return [
+            'src' => $sUrl,
+            'width' => $iWidth,
+            'height' => $iHeight,
+        ];
+    }    
+    return false;
+}
+
 /** @} */

@@ -318,7 +318,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
     {
         $CNF = &$this->_oConfig->CNF;
-
+        if(bx_is_api()){
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            return bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_THUMB']]);
+        }
+            
         if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
             $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'];
 
