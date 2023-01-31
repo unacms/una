@@ -1191,7 +1191,19 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityEdit ($iContentId = 0, $sDisplay = false)
     {
-        return $this->_serviceEntityForm ('editDataForm', $iContentId, $sDisplay);
+        $mixedResult = $this->_serviceEntityForm ('editDataForm', $iContentId, $sDisplay);
+        if(!bx_is_api()) 
+            return $mixedResult;
+
+        $aResult = [];
+        if(is_a($mixedResult, 'BxTemplFormView'))
+            $aResult = ['id' => 1, 'type' => 'form', 'data' => $mixedResult->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_edit', 'immutable' => true]];
+        else
+            $aResult = $mixedResult;
+
+        return [
+            $aResult
+        ];
     }
 
     /**
@@ -1212,7 +1224,19 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityDelete ($iContentId = 0)
     {
-        return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
+        $mixedResult = $this->_serviceEntityForm ('deleteDataForm', $iContentId);
+        if(!bx_is_api()) 
+            return $mixedResult;
+
+        $aResult = [];
+        if(is_a($mixedResult, 'BxTemplFormView'))
+            $aResult = ['id' => 1, 'type' => 'form', 'data' => $mixedResult->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_delete', 'immutable' => true]];
+        else
+            $aResult = $mixedResult;
+
+        return [
+            $aResult
+        ];
     }
 
     /**

@@ -16,6 +16,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 {
     protected $_oModule;
 
+    protected $_bIsApi;
+
     /**
      * 'Ajax Mode' determines the format of response. If it's TRUE the response 
      * (a form or an error appeared during form creation) should be returned 
@@ -36,6 +38,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         parent::__construct();
         $this->_oModule = $oModule;
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_bDynamicMode = false;
 
@@ -337,16 +341,16 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_entry_is_not_defined')) : '';
+            return $bErrorMsg && ($sMsg = '_sys_txt_error_entry_is_not_defined') ? ($this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg))) : '';
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
-            return $bErrorMsg ? MsgBox($sMsg) : '';
+            return $bErrorMsg ? ($this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sMsg] : MsgBox($sMsg)) : '';
 
         // check and display form
         $oForm = $this->getObjectFormEdit($sDisplay);
         if (!$oForm)
-            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_occured')) : '';
+            return $bErrorMsg && ($sMsg = '_sys_txt_error_occured') ? ($this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg))) : '';
 
         $aSpecificValues = array();        
         if (!empty($CNF['OBJECT_METATAGS'])) {
@@ -354,10 +358,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if ($oMetatags->locationsIsEnabled())
                 $aSpecificValues = $oMetatags->locationGet($iContentId, empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }
-        $oForm->initChecker($aContentInfo, $aSpecificValues);
 
+        $oForm->initChecker($aContentInfo, $aSpecificValues);
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $this->_bIsApi ? $oForm : $oForm->getCode();
 
         // update data in the DB
         $aTrackTextFieldsChanges = null;
@@ -366,15 +370,15 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         if (!$oForm->update ($aContentInfo[$CNF['FIELD_ID']], array(), $aTrackTextFieldsChanges)) {
             if (!$oForm->isValid())
-                return $oForm->getCode();
+                return $this->_bIsApi ? $oForm : $oForm->getCode();
             else
-                return MsgBox(_t('_sys_txt_error_entry_update'));
+                return ($sMsg = '_sys_txt_error_entry_update') && $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg));
         }
 
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
         if ($sResult)
-            return $sResult;
+            return $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sResult] : $sResult;
 
         /*
          * Process metas.
@@ -417,24 +421,23 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
+            return ($sMsg = '_sys_txt_error_entry_is_not_defined') && $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
-            return MsgBox($sMsg);
+            return $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sMsg] : MsgBox($sMsg);
 
         // check and display form
         $oForm = $this->getObjectFormDelete($sDisplay);
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return ($sMsg = '_sys_txt_error_occured') && $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg));
 
         $oForm->initChecker($aContentInfo);
-
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $this->_bIsApi ? $oForm : $oForm->getCode();
 
         if ($sError = $this->deleteData($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile, $oForm))
-            return MsgBox($sError);
+            return $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sError] : MsgBox($sError);
 
         // perform action
         $this->_oModule->$sCheckFunction($aContentInfo, true);
