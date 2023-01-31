@@ -495,10 +495,19 @@ class BxDolSearchResult implements iBxDolReplaceable
 
     function processingAPI () 
     {
+        $sUnitType = 'content';
+        if(method_exists($this->oModule, 'serviceActAsProfile') && $this->oModule->serviceActAsProfile())
+             $sUnitType = 'profile';
+        if(method_exists($this->oModule, 'serviceIsGroupProfile') && $this->oModule->serviceIsGroupProfile())
+             $sUnitType = 'context';
+
+        $sUnit =  'list';
+        if ($this->sUnitViewDefault == 'showcase' || $this->sUnitViewDefault == 'gallery')
+            $sUnit = 'card';
+        
         return [
-            'list' => 'general',
             'module' => $this->oModule->getName(),
-            'unit' => $this->sUnitViewDefault,
+            'unit' => 'general-' . $sUnitType . '-' . $sUnit,
             'data' => $this->decodeData($this->getSearchData()),
             'paginate' => [
                 'num' => $this->aCurrent['paginate']['num'],

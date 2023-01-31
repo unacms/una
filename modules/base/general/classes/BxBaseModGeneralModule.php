@@ -3498,7 +3498,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aForm['id'] = 2;
             }
             else
-                $aForm = ['id' => 2, 'type' => 'form', 'data' => $aForm->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_comments', 'immutable' => true]];
+                $aForm = ['id' => 2, 'type' => 'form', 'name' => 'comment', 'data' => $aForm->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_comments', 'immutable' => true]];
             
             
             return [
