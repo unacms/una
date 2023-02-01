@@ -83,6 +83,7 @@ class BxDolVote extends BxDolObject
     protected $_aVote;
 
     protected $_aElementDefaults;
+    protected $_aElementDefaultsApi;
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {

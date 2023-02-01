@@ -28,7 +28,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'do_popup' => 'bx-vr-do-popup-' . $sHtmlId
         ));
 
-        $this->_aElementDefaults = array(
+        $this->_aElementDefaults = [
             'show_do_vote_as_button' => false,
             'show_do_vote_as_button_small' => false,
             'show_do_vote_icon' => true,
@@ -39,7 +39,10 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'show_counter_style' => self::$_sCounterStyleDivided, //--- Alloved styles are 'simple', 'divided' and 'compound'
             'show_legend' => false,
             'show_script' => true
-        );
+        ];
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_counter' => true,
+        ]);
 
         $this->_sTmplNameBySummary = 'vote_by_summary_reactions.html';
         $this->_sTmplNameByList = 'vote_by_list_reactions.html';
@@ -96,6 +99,33 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             $sMethod = $sMethodPrefix . bx_gen_method_name($sDefault);
 
         return $this->$sMethod($aParams);
+    }
+
+    public function getCounterAPI($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $bVote = $this->_isVote();
+        $aVote = $this->_getVote();
+        $aReactions = $this->getReactions();
+
+        $aItems = [];
+        foreach($aReactions as $sName) {
+            $iCount = (int)$aVote['count_' . $sName];
+            $aItems[] = [
+                'name' => $sName,
+                'count' => $iCount,
+                'sum' => $aVote['sum_' . $sName],
+                'rate' => $aVote['rate_' . $sName],
+                'icon' => $this->getIcon($sName, false),
+                'emoji' => $this->getEmoji($sName),
+                'title' => _t($this->_aDataList[$sName]['title']),
+            ];
+        }
+
+        $sStyle = !empty($aParams['show_counter_style']) ? $aParams['show_counter_style'] : $this->_aElementDefaults['show_counter_style'];
+
+        return ['type' => $sStyle, 'items' => $aItems];
     }
 
     public function _getCounterSimple($aParams = array())
@@ -311,6 +341,16 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
         return parent::getElement($aParams);
     }
+    
+    public function getElementAPI($aParams = [])
+    {
+        $aResult = parent::getElementAPI($aParams);
+
+        if(($oDoVoteMenu = $this->_getDoVoteMenu()) !== false)
+            $aResult['action']['menu'] = $oDoVoteMenu->getCodeAPI();
+
+        return $aResult;
+    }
 
     /**
      * Internal methods.
@@ -365,6 +405,17 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         else
             $sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : ' ' . $this->_sStylePrefix . '-disabled';
 
+        if($this->_bApi)
+            return [
+                'is_undo' => $bUndo,
+                'is_voted' => $bVoted,
+                'is_disabled' => $bDisabled,
+                'value' => $iValue,
+                'reaction' => $sReaction,
+                'icon' => ($sEmoji = $this->getEmoji($sReaction)) != '' ? $sEmoji : '', 
+                'title' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track'])),
+            ];
+
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getDoVoteLabel($aParams), array(
             'class' => $this->_sStylePrefix . '-do-vote' . $sClass,
             'title' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track'])),
@@ -398,19 +449,28 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         ));
     }
 
-    public function _getDoVotePopup($iValue = 0)
+    public function _getDoVoteMenu($iValue = 0)
     {
         if(empty($iValue))
             $iValue = $this->getValue();
 
         $oMenu = BxTemplMenu::getObjectInstance($this->_sMenuDoVote);
         if(!$oMenu)
-            return '';
+            return false;
 
         $oMenu->setParams(array(
             'object' => &$this,
             'value' => $iValue,
         ));
+        return $oMenu;
+    }
+
+    public function _getDoVotePopup($iValue = 0)
+    {
+        $oMenu = $this->_getDoVoteMenu($iValue);
+        if($oMenu === false)
+            return '';
+
         return $oMenu->getCode();
     }
 
