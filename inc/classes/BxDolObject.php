@@ -16,6 +16,8 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
     protected $_oTemplate = null;
     protected $_oQuery = null;
 
+    protected $_bApi = false;
+
     protected $_iId = 0; ///< item id the action to be performed with
     protected $_sSystem = ''; ///< current system name
     protected $_aSystem = array(); ///< current system array
@@ -228,8 +230,11 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return true;
     }
 
-    public function getElementApi($aParams = [])
+    public function getElementAPI($aParams = [])
     {
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
         //TODO: Implement for Objects like Views, Votes, etc.
         $sClass = get_class($this);
         return [

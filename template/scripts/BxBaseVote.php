@@ -27,7 +27,8 @@ class BxBaseVote extends BxDolVote
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
-        $this->_aElementDefaults = array();
+        $this->_aElementDefaults = [];
+        $this->_aElementDefaultsApi = [];
 
         $this->_bCssJsAdded = false;
         $this->_sStylePrefix = 'bx-vote';
@@ -171,6 +172,52 @@ class BxBaseVote extends BxDolVote
 
         return $this->_oTemplate->parseHtmlByContent($this->$sMethod(), $aTmplVars);
     }
+    
+    public function getElementAPI($aParams = [])
+    {
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
+        if(!$this->isEnabled())
+            return ['id' => 1, 'type' => 'msg', 'data' => _t('_vote_err_not_enabled')];
+
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $bCount = $this->_isCount();
+        $isAllowedVote = $this->isAllowedVote();
+        $isAllowedVoteView = $this->isAllowedVoteView();
+        $aParams['is_voted'] = $this->isPerformed($iObjectId, $iAuthorId);
+        $aParams['track'] = $aParams['is_voted'] ? $this->_getTrack($iObjectId, $iAuthorId) : array();
+
+        //--- Do Vote
+        $bDoVote = $this->_isShowDoVote($aParams, $isAllowedVote, $bCount);
+        $aDoVote = $bDoVote ? $this->_getDoVote($aParams, $isAllowedVote) : [];
+
+        //--- Counter
+        $bCounter = $this->_isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
+        $aCounter = $bCounter ? $this->getCounterAPI(array_merge($aParams, [
+            'show_counter_only' => false, 
+            'show_script' => false
+        ])) : [];
+
+        //--- Legend
+        $bLegend = $this->_isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
+        $aLegend = $bLegend ? $this->getLegend($aParams) : [];
+
+        if(!$bDoVote && !$bCounter && !$bLegend)
+            return ['id' => 1, 'type' => 'msg', 'data' => ''];
+
+        return [
+            'type' => $this->_sType,
+            'params' => $aParams,
+            'action' => $aDoVote,
+            'counter' => $aCounter,
+            'legend' => $aLegend,
+        ];
+    }
 
     /**
      * Internal methods.
@@ -269,7 +316,7 @@ class BxBaseVote extends BxDolVote
 
     protected function _getDoVote($aParams = array(), $isAllowedVote = true)
     {
-        return '';
+        return $this->_bApi ? [] : '';
     }
 
     protected function _getCounterLabel($iCount, $aParams = array())
