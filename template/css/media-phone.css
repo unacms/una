@@ -115,15 +115,6 @@ html.bx-media-phone {
 
 /* page layouts */
 
-.bx-media-phone .bx-layout-col {
-    float:none !important;
-    width:auto !important;
-}
-
-.bx-media-phone .bx-layout-cell {
-    padding:0 !important;
-}
-
 /* menu.css */
 
 .bx-media-phone ul.bx-menu-toolbar li a span.bx-menu-toolbar-item-title,

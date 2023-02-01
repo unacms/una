@@ -519,16 +519,18 @@
         @apply gap-4 lg:gap-6 flex flex-col;
     }
     .bx-layout-row{
-        @apply w-full flex relative flex-wrap md:flex-nowrap gap-4 lg:gap-6;
+        @apply w-full flex relative flex-wrap md:flex-nowrap gap-y-4 lg:gap-y-6;
     }
     .bx-layout-col{
         @apply max-w-full w-full;
+        flex-shrink: 2 !important;
     }
+
     .bx-layout-cell{
         @apply flex flex-col gap-4 lg:gap-6;
     }
     .bx-layout-gap{
-        @apply gap-4 lg:gap-6;
+        @apply gap-y-4 lg:gap-y-6;
     }
     .bx-def-color-bg-page{
 	    @apply bg-gray-100 dark:bg-gray-900;
