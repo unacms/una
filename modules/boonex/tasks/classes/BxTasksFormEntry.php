@@ -76,7 +76,7 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
 		if (isset($this->aInputs['initial_members']) && !isset($this->aInputs['initial_members']['value'])) {
 			if (bx_get('id')){
 				$oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
-				$this->aInputs['initial_members']['value'] = $oConn->getConnectedContent(bx_get('id'));
+				$this->aInputs['initial_members']['value'] = $oConn->getConnectedInitiators(bx_get('id'));
 			}
 			else{
 				$this->aInputs['initial_members']['value'] = array(bx_get_logged_profile_id());
@@ -224,7 +224,7 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
         foreach($aMembersToAdd as $iProfileId){
-            $oConn->actionAdd($iProfileId, $iContentId);
+            $oConn->addConnection($iProfileId, $iContentId);
 
             bx_alert($this->MODULE, 'assigned', $iContentId, false, array(
                 'object_author_id' => $iProfileId,
@@ -233,7 +233,7 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
         }
 
         foreach($aMembersToRemove as $iProfileId){
-            $oConn->actionRemove($iProfileId, $iContentId);
+            $oConn->removeConnection($iProfileId, $iContentId);
 
             bx_alert($this->MODULE, 'unassigned', $iContentId, false, array(
                 'object_author_id' => $iProfileId,
