@@ -3419,40 +3419,51 @@ class BxBaseModGeneralModule extends BxDolModule
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
-        
-        $iImageId = 0;
-        $sImageSm = $sImageMd = $sImageXl = '';
-        if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']])) {
-            $iImageId = (int)$aContentInfo[$CNF['FIELD_COVER']];
-            $sImageSm = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_MINIATURE', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
-            $sImageMd = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
-            $sImageXl = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_COVER']);
+        if (bx_is_api()){
+            $aResult = [];
+            if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']])) {
+                $aResult[] = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aContentInfo[$CNF['FIELD_COVER']]);
+            }
+            if(isset($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']])) {
+                $aResult[] = bx_api_get_image($CNF['OBJECT_STORAGE'], (int)$aContentInfo[$CNF['FIELD_THUMB']]);
+            }
+            return $aResult;
         }
+        else{
+            $iImageId = 0;
+            $sImageSm = $sImageMd = $sImageXl = '';
+            if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']])) {
+                $iImageId = (int)$aContentInfo[$CNF['FIELD_COVER']];
+                $sImageSm = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_MINIATURE', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
+                $sImageMd = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
+                $sImageXl = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_COVER']);
+            }
 
-        if($sImageMd == '' && isset($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']])) {
-            $iImageId = (int)$aContentInfo[$CNF['FIELD_THUMB']];
-            $sImageSm = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_MINIATURE', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
-            $sImageMd = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
-            $sImageXl = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_COVER']);
+            if($sImageMd == '' && isset($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']])) {
+                $iImageId = (int)$aContentInfo[$CNF['FIELD_THUMB']];
+                $sImageSm = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_MINIATURE', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
+                $sImageMd = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_THUMB']);
+                $sImageXl = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_COVER']);
+            }
+
+            if(empty($sImageMd))
+                return [];
+
+            if($sImageSm == '')
+                $sImageSm = $sImageMd;
+
+            if($sImageXl == '')
+                $sImageXl = $sImageMd;
+
+            return [[
+                'id' => $iImageId, 
+                'url' => $sUrl, 
+                'src' => $sImageMd, 
+                'src_small' => $sImageSm, 
+                'src_medium' => $sImageMd, 
+                'src_orig' => $sImageXl
+            ]];
         }
-
-        if(empty($sImageMd))
-            return [];
-
-        if($sImageSm == '')
-            $sImageSm = $sImageMd;
-
-        if($sImageXl == '')
-            $sImageXl = $sImageMd;
-
-        return [[
-            'id' => $iImageId, 
-            'url' => $sUrl, 
-            'src' => $sImageMd, 
-            'src_small' => $sImageSm, 
-            'src_medium' => $sImageMd, 
-            'src_orig' => $sImageXl
-        ]];
     }
 
     protected function _getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
