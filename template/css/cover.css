@@ -23,7 +23,7 @@
     position: absolute;
     left:1rem;
     top:1rem;
-    z-index: 100;
+    z-index: 10;
 }
 .bx-image-edit-buttons .bx-btn.bx-btn-small{
     padding: 0.375rem 0.5rem;
