@@ -312,14 +312,14 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     public function keywordsAdd($iId, $s) 
     {
         //--- Remove <a> tags WITH their content first.
-        $s = preg_replace("/<a\b[^>]*>(.*?)<\/a>/si", '', $s);
+        $s = preg_replace("/<a\b((?!bx-mention-link)[^>])*>(.*?)<\/a>/si", '', $s);
 
         //--- Strip the other HTML tags.
         $s = strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s));
 
         // process spaces
         $s = str_ireplace('&nbsp;', ' ', $s);
-
+        
         return $this->_metaAdd($iId, ' ' . $s, '/[\pCc\pZ\p{Ps}\p{Pe}\p{Pi}\p{Pf}]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', 'keywordsGet', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
     }
 
