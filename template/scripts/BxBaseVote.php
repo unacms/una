@@ -212,6 +212,8 @@ class BxBaseVote extends BxDolVote
 
         return [
             'type' => $this->_sType,
+            'system' => $this->_sSystem,
+            'object_id' => $this->_iId,
             'params' => $aParams,
             'action' => $aDoVote,
             'counter' => $aCounter,

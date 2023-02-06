@@ -2333,7 +2333,7 @@ function bx_api_check_origins()
 {
     if (isset($_SERVER['HTTP_ORIGIN']) && parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
 
-        $aAllowedOrigins = ['http://app.una.io:3000', 'http://ci.una.io:3000', 'http://localhost:3000', 'https://una.io']; // TODO: separate config
+        $aAllowedOrigins = ['http://app.una.io:3000', 'http://ci.una.io:3000', 'http://localhost:3000', 'http://single.me:3000', 'https://una.io']; // TODO: separate config
         if (!in_array($_SERVER['HTTP_ORIGIN'], $aAllowedOrigins)) {
             header('HTTP/1.0 403 Forbidden');
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);

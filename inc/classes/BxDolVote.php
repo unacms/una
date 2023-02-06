@@ -207,8 +207,18 @@ class BxDolVote extends BxDolObject
     public function actionVote()
     {
         if(!$this->isEnabled())
-            return echoJson(array('code' => 1, 'message' => _t('_vote_err_not_enabled')));
+            return echoJson(['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE, 'message' => _t('_vote_err_not_enabled')]);
 
+        $aVoteData = $this->_getVoteData();
+        $aRequestParamsData = $this->_getRequestParamsData();
+        if($aVoteData === false)
+            return echoJson(['code' => BX_DOL_OBJECT_ERR_WRONG_DATE]);
+
+        return echoJson($this->vote($aVoteData, $aRequestParamsData));
+    }
+
+    public function vote($aVoteData = [], $aRequestParamsData = [])
+    {
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
         $iAuthorId = $this->_getAuthorId();
@@ -219,29 +229,24 @@ class BxDolVote extends BxDolObject
         $bPerformUndo = $bVoted && $bUndo;
 
         if(!$bPerformUndo && !$this->isAllowedVote())
-            return echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
+            return ['code' => BX_DOL_OBJECT_ERR_ACCESS_DENIED, 'message' => $this->msgErrAllowedVote()];
 
         if($this->_isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted))
-            return echoJson(array('code' => 3, 'message' => _t('_vote_err_duplicate_vote')));
+            return ['code' => BX_DOL_OBJECT_ERR_DUPLICATE, 'message' => _t('_vote_err_duplicate_vote')];
 
-        $aData = $this->_getVoteData();
-        $aParams = $this->_getRequestParamsData();
-        if($aData === false)
-            return echoJson(array('code' => 4));
-
-        $iId = $this->_putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo);
+        $iId = $this->_putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, $bPerformUndo);
         if($iId === false)
-            return echoJson(array('code' => 5));
+            return ['code' => BX_DOL_OBJECT_ERR_CANNOT_PERFORM];
 
         if(!$bPerformUndo)
             $this->isAllowedVote(true);
 
         $this->_trigger();
 
-        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId), $aData));
-        bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId), $aData));
+        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(['vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
+        bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(['object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
 
-        echoJson($this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, !$bVoted, $aParams));
+        return $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);
     }
 
     public function actionGetVotedBy()
