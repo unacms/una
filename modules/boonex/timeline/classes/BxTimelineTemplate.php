@@ -332,18 +332,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getViewBlock($aParams)
     {
         $oModule = $this->getModule();
-
-        list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
         
         if (bx_is_api()){
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
             foreach($aPosts as &$aPost)  {
                 $aPost['author_data'] = BxDolProfile::getData($aPost['object_owner_id']);
                 $aPost['url'] = bx_ltrim_str($aPost['content']['url'], BX_DOL_URL_ROOT);
+                
+                $aCmts = [];
+                $oCmts = $oModule->getCmtsObject($aPost['comments']['system'], $aPost['comments']['object_id']);
+                if($oCmts !== false){
+                    $aCmts = $oCmts->getCommentsBlockAPI(['per_view' => 1, 'order_by' => 'date', 'order_way' => 'desc', 'type' => 'head'], ['in_designbox' => false, 'show_empty' => false]);
+                    $aPost['cmts'] = $aCmts;
+                    $aPost['cmts']['count'] = $aPost['comments']['count'];
+                }
             }
             return $aPosts;
         }
-
+        
+        list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
         //--- Add live update
         $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
 
@@ -987,11 +994,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-
         $oCmts = $oModule->getCmtsObject($sSystem, $iId);
         if($oCmts === false)
             return '';
 
+        if (bx_is_api())
+            return $oCmts->getCommentsBlockAPI([], ['in_designbox' => false, 'show_empty' => false]);
+        
         $aCmtsBp = array();
         if(!empty($aBrowseParams['cmts_preload_number']))
             $aCmtsBp['init_view'] = $aBrowseParams['cmts_preload_number'];
@@ -1516,7 +1525,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getDataCached($aEvent, $aBrowseParams = array())
     {
-        if(!$this->_oConfig->isCacheItem()) 
+        if(!$this->_oConfig->isCacheItem() || bx_is_api()) 
             return $this->getData($aEvent, $aBrowseParams);
 
         /**
@@ -1918,6 +1927,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getComments($aComments, $aBrowseParams = array())
     {
+        
         $mixedComments = $this->getModule()->getCommentsData($aComments);
         if($mixedComments === false)
             return '';

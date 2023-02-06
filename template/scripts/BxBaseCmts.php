@@ -144,10 +144,17 @@ class BxBaseCmts extends BxDolCmts
         $this->_prepareParams($aBp, $aDp);
 
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
+        $aCmtsRv = [];
+        
+        foreach ($aCmts as $aCmt) {
+            $aCmtsRv[] = $this->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
+        }
 
+       // print_r($aCmtsRv);
+        
         return [
             'unit' => 'comments',
-            'data' => $this->decodeData($aCmts),
+            'data' => $aCmtsRv,
         ];
     }
 
