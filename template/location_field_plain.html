@@ -70,7 +70,7 @@
                 if ('undefined' !== typeof(oResult[0].address)) {
                     if ('undefined' !== typeof(oResult[0].address.state) && 0 == $('input[name="__name___state"]').val().length)
                         $('input[name="__name___state"]').val(oResult[0].address.state);
-                    else if (__normalize_names __ && $('input[name="__name___state"]').val() != oResult[0].address.state)
+                    else if (__normalize_names__ && $('input[name="__name___state"]').val() != oResult[0].address.state)
                         $('input[name="__name___state"]').val(oResult[0].address.state);
 
                     var sCity = '';
@@ -83,7 +83,7 @@
 
                     if (sCity && 0 == $('input[name="__name___city"]').val().length)
                         $('input[name="__name___city"]').val(sCity);
-                    else if (__normalize_names __ && sCity && $('input[name="__name___city"]').val() != sCity)
+                    else if (__normalize_names__ && sCity && $('input[name="__name___city"]').val() != sCity)
                         $('input[name="__name___city"]').val(sCity);
                 }
                 if ('undefined' !== typeof(oResult[0].licence))
