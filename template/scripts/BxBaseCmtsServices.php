@@ -407,6 +407,47 @@ class BxBaseCmtsServices extends BxDol
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
+    
+    public function serviceGetForm($sObject, $iId, $iParent)
+    {
+        $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
+        if (!$oCmts || !$oCmts->isEnabled())
+            return false;
+        
+        $oForm = $oCmts->getFormPost($iParent);
+        
+        if (isset($oForm['form'])){
+            $aRv = [
+                'id' => '1', 
+                'type' => 'comments', 
+                'form' => ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $oForm['form']->getCodeAPI(), 'request' => ['url' => '/api.php?r=system/get_form/TemplCmtsServices/&params=' . json_encode([$sObject, $iId, $iParent]), 'immutable' => true]]];
+            
+            $aRv['browse'] = [
+               'id' => 'cmt_list', 
+               'type' => 'browse', 
+               'insert' => 'before', 
+               'data' => $oCmts->getCommentsBlockAPI([], ['in_designbox' => false, 'show_empty' => false], $oForm['res'] > 0 ? $oForm['res'] : 0)
+            ];
+        }
+        
+        return $aRv;
+    }
+    
+    public function serviceGetList($sObject, $iId, $iStart)
+    {
+        $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
+        
+        if (!$oCmts || !$oCmts->isEnabled())
+            return false;
+        
+        $aRv['browse'] = [
+            'id' => 'cmt_list', 
+            'type' => 'browse', 
+            'insert' => 'after', 
+            'data' => $oCmts->getCommentsBlockAPI([], ['in_designbox' => false, 'show_empty' => false], 0, $iStart)
+        ];
+        return $aRv;
+    }
 }
 
 /** @} */
