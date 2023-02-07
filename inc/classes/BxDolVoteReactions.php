@@ -220,6 +220,7 @@ class BxDolVoteReactions extends BxTemplVote
             'label_emoji' => $this->_getEmojiDoWithTrack($bVoted, $aTrack),
             'label_title' => _t($this->_getTitleDoWithTrack($bVoted, $aTrack)),
             'label_click' => $sJsClick,
+            'voted' => $bVoted,
             'disabled' => $bVoted && !$this->isUndo(),
             'total' => array(
                 'rate' => $fTotalR,

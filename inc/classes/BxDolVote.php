@@ -91,7 +91,7 @@ class BxDolVote extends BxDolObject
         if(empty($this->_sSystem))
             return;
 
-        $this->_aVote = array();
+        $this->_aVote = [];
     }
 
     /**
@@ -177,6 +177,11 @@ class BxDolVote extends BxDolObject
     public function isUndo()
     {
         return (int)$this->_aSystem['is_undo'] == 1;
+    }
+
+    public function getType()
+    {
+        return $this->_sType;
     }
 
     public function getMinValue()
