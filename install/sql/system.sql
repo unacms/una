@@ -669,7 +669,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_nominatim_server', '_adm_stg_cpt_option_sys_nominatim_server', 'https://nominatim.openstreetmap.org', 'digit', '', '', '', 40),
 (@iCategoryId, 'sys_nominatim_email', '_adm_stg_cpt_option_sys_nominatim_email', '', 'digit', '', '', '', 42),
 
-(@iCategoryId, 'sys_location_leaflet_provider', '_adm_stg_cpt_option_sys_location_leaflet_provider', 'OpenStreetMap.Mapnik', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:42:"get_options_location_leaflet_get_providers";s:5:"class";s:13:"TemplServices";}', '', '', 50);
+(@iCategoryId, 'sys_location_leaflet_provider', '_adm_stg_cpt_option_sys_location_leaflet_provider', 'OpenStreetMap.Mapnik', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:42:"get_options_location_leaflet_get_providers";s:5:"class";s:13:"TemplServices";}', '', '', 50),
+
+(@iCategoryId, 'sys_location_normalize_names', '_adm_stg_cpt_option_sys_location_normalize_names', '', 'checkbox', '', '', '', 60);
 
 --
 -- CATEGORY: Social Settings
