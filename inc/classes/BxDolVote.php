@@ -355,7 +355,9 @@ class BxDolVote extends BxDolObject
             'count' => $aVote['count'],
             'countf' => (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count'], $aParams) : '',
             'label_icon' => $this->_getIconDo($bVoted),
+            'label_emoji' => $this->_getEmojiDo($bVoted),
             'label_title' => _t($this->_getTitleDo($bVoted)),
+            'voted' => $bVoted,
             'disabled' => $bVoted && !$bUndo,
         );
     }
@@ -383,11 +385,8 @@ class BxDolVote extends BxDolObject
     protected function _isVote($iObjectId = 0, $bForceGet = false)
     {
         $aVote = $this->_getVote($iObjectId, $bForceGet);
-        foreach($aVote as $sKey => $iValue)
-            if(strpos($sKey, 'count_') !== false && !empty($iValue))
-                return true;
 
-        return false;
+        return (int)$aVote['count'] > 0;
     }
 
     protected function _getTrack($iObjectId, $iAuthorId)

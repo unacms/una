@@ -41,6 +41,11 @@ class BxDolVoteLikes extends BxTemplVote
     	return $bVoted && $this->isUndo() ? 'thumbs-up' : 'thumbs-up';
     }
 
+    protected function _getEmojiDo($bVoted)
+    {
+    	return $bVoted && $this->isUndo() ? '👍' : '👍';
+    }
+
     protected function _getTitleDo($bVoted)
     {
     	return $bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like';

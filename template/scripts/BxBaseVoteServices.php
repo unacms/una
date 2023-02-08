@@ -45,8 +45,8 @@ class BxBaseVoteServices extends BxDol
         return [
             'is_voted' => $aResult['voted'],
             'is_disabled' => $aResult['disabled'],
-            'icon' => !empty($aResult['label_emoji']) ? $aResult['label_emoji'] : $aDefaultInfo['emoji'],
-            'title' => !empty($aResult['label_title']) ? $aResult['label_title'] : '',
+            'icon' => $aResult['label_emoji'],
+            'title' => $aResult['label_title'],
             'counter' => $oVote->getVote()
         ];
     }
@@ -87,6 +87,22 @@ class BxBaseVoteServices extends BxDol
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         return $this->$sMethod($aParams, $oVote);
+    }
+
+    protected function _serviceGetPerformedByLikes($aParams, &$oVote)
+    {
+        $aValues = $oVote->getQueryObject()->getPerformedBy($oVote->getId());
+
+        $aTmplUsers = [];
+        foreach($aValues as $mValue) {
+            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+
+            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+        }
+
+        return [
+            'performed_by' => $aTmplUsers
+        ];
     }
 
     protected function _serviceGetPerformedByReactions($aParams, &$oVote)

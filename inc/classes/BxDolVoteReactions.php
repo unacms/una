@@ -156,6 +156,16 @@ class BxDolVoteReactions extends BxTemplVote
     /**
      * Internal functions
      */
+    protected function _isVote($iObjectId = 0, $bForceGet = false)
+    {
+        $aVote = $this->_getVote($iObjectId, $bForceGet);
+        foreach($aVote as $sKey => $iValue)
+            if(strpos($sKey, 'count_') !== false && !empty($iValue))
+                return true;
+
+        return false;
+    }
+
     protected function _isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted)
     {
         return $bVoted && !$this->isUndo();

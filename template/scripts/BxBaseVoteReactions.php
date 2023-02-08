@@ -105,7 +105,6 @@ class BxBaseVoteReactions extends BxDolVoteReactions
     {
         $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
 
-        $bVote = $this->_isVote();
         $aVote = $this->_getVote();
         $aReactions = $this->getReactions();
 
@@ -117,8 +116,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'count' => $iCount,
                 'sum' => $aVote['sum_' . $sName],
                 'rate' => $aVote['rate_' . $sName],
-                'icon' => $this->getIcon($sName, false),
-                'emoji' => $this->getEmoji($sName),
+                'icon' => $this->getEmoji($sName),
                 'title' => _t($this->_aDataList[$sName]['title']),
             ];
         }
