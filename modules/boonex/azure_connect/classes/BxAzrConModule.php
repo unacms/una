@@ -117,7 +117,7 @@ class BxAzrConModule extends BxBaseModConnectModule
             
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
-                $this->setLogged($oProfile ->id());
+                $this->setLogged($oProfile ->id(), '', true, true); // remember user
             }             
             else {  
                 // register new user

@@ -70,15 +70,21 @@
                 if ('undefined' !== typeof(oResult[0].address)) {
                     if ('undefined' !== typeof(oResult[0].address.state) && 0 == $('input[name="__name___state"]').val().length)
                         $('input[name="__name___state"]').val(oResult[0].address.state);
+                    else if (__normalize_names__ && $('input[name="__name___state"]').val() != oResult[0].address.state)
+                        $('input[name="__name___state"]').val(oResult[0].address.state);
 
-                    if (0 == $('input[name="__name___city"]').val().length) {
-                        if ('undefined' !== typeof(oResult[0].address.city))
-                            $('input[name="__name___city"]').val(oResult[0].address.city);
-                        else if ('undefined' !== typeof(oResult[0].address.town))
-                            $('input[name="__name___city"]').val(oResult[0].address.town);
-                        else if ('undefined' !== typeof(oResult[0].address.village))
-                            $('input[name="__name___city"]').val(oResult[0].address.village);
-                    }
+                    var sCity = '';
+                    if ('undefined' !== typeof(oResult[0].address.city))
+                        sCity = oResult[0].address.city;
+                    else if ('undefined' !== typeof(oResult[0].address.town))
+                        sCity = oResult[0].address.town;
+                    else if ('undefined' !== typeof(oResult[0].address.village))
+                        sCity = oResult[0].address.village;
+
+                    if (sCity && 0 == $('input[name="__name___city"]').val().length)
+                        $('input[name="__name___city"]').val(sCity);
+                    else if (__normalize_names__ && sCity && $('input[name="__name___city"]').val() != sCity)
+                        $('input[name="__name___city"]').val(sCity);
                 }
                 if ('undefined' !== typeof(oResult[0].licence))
                     $('.bx-form-input-location-__name__ .bx-form-input-location-copyright').html(oResult[0].licence);
