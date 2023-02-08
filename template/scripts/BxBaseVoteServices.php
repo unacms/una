@@ -23,16 +23,21 @@ class BxBaseVoteServices extends BxDol
             $aParams = json_decode($aParams, true);
 
         if(!$aParams['s'] || !$aParams['o'])
-            return ['code' => 1];
+            return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         $oVote = BxDolVote::getObjectInstance($aParams['s'], $aParams['o']);
         if(!$oVote)
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
-        $sMethod = 'serviceDo' . bx_gen_method_name($oVote->getType());
-        if(method_exists($this, $sMethod))
-            return $this->$sMethod($aParams, $oVote);
+        $sMethod = '_serviceDo' . bx_gen_method_name($oVote->getType());
+        if(!method_exists($this, $sMethod))
+            return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
+        return $this->$sMethod($aParams, $oVote);
+    }
+
+    protected function _serviceDoLikes($aParams, &$oVote)
+    {
         $aResult = $oVote->vote($aParams);
         if((int)$aResult['code'] != 0)
             return $aResult;
@@ -46,7 +51,7 @@ class BxBaseVoteServices extends BxDol
         ];
     }
 
-    public function serviceDoReactions($aParams, &$oVote)
+    protected function _serviceDoReactions($aParams, &$oVote)
     {
         $aResult = $oVote->vote($aParams);
         if((int)$aResult['code'] != 0)
@@ -62,6 +67,45 @@ class BxBaseVoteServices extends BxDol
             'icon' => !empty($aResult['label_emoji']) ? $aResult['label_emoji'] : $aDefaultInfo['emoji'],
             'title' => !empty($aResult['label_title']) ? $aResult['label_title'] : '',
             'counter' => $oVote->getVote()
+        ];
+    }
+    
+    public function serviceGetPerformedBy($aParams)
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        if(!$aParams['s'] || !$aParams['o'])
+            return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
+
+        $oVote = BxDolVote::getObjectInstance($aParams['s'], $aParams['o']);
+        if(!$oVote)
+            return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
+
+        $sMethod = '_serviceGetPerformedBy' . bx_gen_method_name($oVote->getType());
+        if(!method_exists($this, $sMethod))
+            return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
+
+        return $this->$sMethod($aParams, $oVote);
+    }
+
+    protected function _serviceGetPerformedByReactions($aParams, &$oVote)
+    {
+        $sReaction = $aParams['reaction'];
+
+        $aValues = $oVote->getQueryObject()->getPerformed(['type' => 'by', 'object_id' => $oVote->getId(), 'reaction'=> $sReaction]);
+
+        $aTmplUsers = [];
+        foreach($aValues as $mValue) {
+            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+
+            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+        }
+
+        return [
+            'performed_by' => [
+                $sReaction => $aTmplUsers
+            ]
         ];
     }
 }
