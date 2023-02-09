@@ -1746,6 +1746,16 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         return $this->_getAuthorInfo($iAuthorId);
     }
+    
+    public function getParams(&$aBp, &$aDp)
+    {
+        return $this->_getParams($aBp, $aDp);
+    }
+    
+    public function prepareParams(&$aBp, &$aDp)
+    {
+         return $this->_prepareParams($aBp, $aDp);
+    }
 
     /**
      * Internal functions
@@ -2175,7 +2185,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $bItem = !empty($mixedItem) && is_array($mixedItem);
 
         if($bItem) {
-            $iI = $mixedItem['cmt_id'];
+            $iI = 'i' . $mixedItem['cmt_id'];
             $aStructure[$iI] = array(
                 'id' => $mixedItem['cmt_id'], 
                 'order' => isset($mixedItem['cmt_order']) ? $mixedItem['cmt_order'] : 0, 
@@ -2202,12 +2212,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
                 //--- Sort subitems
                 $iWay = isset($aBp['order']['way']) && $aBp['order']['way'] == 'desc' ? -1 : 1;
+
+                //tODO fix
+               // print_r($aPassStructure);
                 uasort($aPassStructure, function($aItem1, $aItem2) use ($iWay) {
                     if($aItem1['order'] == $aItem2['order'])
                         return 0;
 
                     return $iWay * ($aItem1['order'] < $aItem2['order'] ? -1 : 1);
                 });
+                $aStructure[$iI]['items'] = $aPassStructure;
+               // print_r($aPassStructure);
+            //    echo '-----------------';
             }
         }
     }
