@@ -502,7 +502,7 @@ class BxBaseCmtsServices extends BxDol
             'object_id' => $oCmts->getId(),
             'data' => $aCmtsRv
         ];
-        if ($aParams['mode'] == 'feed')
+        if (isset($aParams['mode']) &&  $aParams['mode'] == 'feed')
             return $aData;
         
         $aRv = [
