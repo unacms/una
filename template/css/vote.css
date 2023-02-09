@@ -1,3 +1,8 @@
+.bx-vote .sys-action-element-holder .sys-action-do-icon svg,
+.bx-vote-counter .bx-vote-counter-label .bx-vote-counter-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
 .bx-vote .bx-vote-counter .bx-vote-counter-label {
     padding: 0;
 }

@@ -60,8 +60,10 @@ class BxDolVoteReactions extends BxTemplVote
                 'name' => $sReaction,
                 'title' => $aReaction['LKey'],
                 'title_aux' => $aReaction['LKey2'],
+                'use' => isset($aData['use']) ? $aData['use'] : 'emoji',
                 'icon' => isset($aData['icon']) ? $aData['icon'] : '',
                 'emoji' => isset($aData['emoji']) ? $aData['emoji'] : '',
+                'image' => isset($aData['image']) ? $aData['image'] : '',
                 'color' => isset($aData['color']) ? $aData['color'] : '',
                 'weight' => isset($aData['weight']) ? $aData['weight'] : 1,
                 'default' => isset($aData['default']) ? $aData['default'] : '',
@@ -71,10 +73,12 @@ class BxDolVoteReactions extends BxTemplVote
         if(empty($sDefault) && !empty($this->_aDataList))
             $sDefault = current(array_keys($this->_aDataList));
 
-        $this->_aDataList[$this->_sDefault] = $this->_aDataList[$sDefault];
-        $this->_aDataList[$this->_sDefault]['icon'] = $this->_aDataList[$sDefault]['default'];
-        $this->_aDataList[$this->_sDefault]['emoji'] = '';
-        $this->_aDataList[$this->_sDefault]['color'] = '';
+        $this->_aDataList[$this->_sDefault] = array_merge($this->_aDataList[$sDefault], [
+            'icon' => $this->_aDataList[$sDefault]['default'],
+            'emoji' => '',
+            'image' => '',
+            'color' => ''
+        ]);
     }
     /**
      * Interface functions for outer usage
@@ -111,7 +115,7 @@ class BxDolVoteReactions extends BxTemplVote
     {
         $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
 
-    	return $aReaction['icon'] . ($bWithColor && !empty($aReaction['color']) ? ' sys-icon-emoji ' . $aReaction['color'] : ' sys-icon-emoji ');
+    	return $aReaction['icon'] . ($bWithColor && !empty($aReaction['color']) ? ' ' . $aReaction['color'] : '');
     }
     
     public function getEmoji($sReaction, $bWithColor = true)
@@ -119,6 +123,13 @@ class BxDolVoteReactions extends BxTemplVote
         $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
 
     	return $aReaction['emoji'];
+    }
+
+    public function getImage($sReaction, $bWithColor = true)
+    {
+        $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
+
+    	return $aReaction['image'];
     }
 
     /**
@@ -199,21 +210,30 @@ class BxDolVoteReactions extends BxTemplVote
 
     protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = array())
     {
-        $aReactions = $this->getReactions();
+        $aReactions = $this->getReactions(true);
         $sReaction = $aData['reaction'];
 
         $bUndo = $this->isUndo();
         $bDisabled = $bVoted && !$bUndo;
 
         $aVote = $this->_getVote($iObjectId, true);
-        $aTrack = $bVoted ? $this->_getTrack($iObjectId, $iAuthorId) : array();
+        $aTrack = $bVoted ? $this->_getTrack($iObjectId, $iAuthorId) : [];
+
+        $sSwitchTo = $bVoted ? $sReaction : $this->_sDefault;
+
+        $sLabelUse = !empty($aReactions[$sSwitchTo]['use']) ? $aReactions[$sSwitchTo]['use'] : 'emoji';
+        $sLabelIcon = $this->_getIconDoWithTrack($bVoted, $aTrack);
+        if(!$bVoted && $sLabelUse != 'icon') {
+            $sLabelUse = 'icon';
+            $sLabelIcon = $this->_oTemplate->parseIcon($sLabelIcon);
+        }
 
         $sJsClick = '';
         if(!$bDisabled)
             $sJsClick = $bVoted && $bUndo ? $this->getJsClickDo($sReaction) : $this->getJsClick();
 
         $iTotalC = $iTotalS = 0;
-        foreach($aReactions as $sName) {
+        foreach(array_keys($aReactions) as $sName) {
             $iTotalC += (int)$aVote['count_' . $sName];
             $iTotalS += (int)$aVote['sum_' . $sName];
         }
@@ -226,8 +246,10 @@ class BxDolVoteReactions extends BxTemplVote
             'rate' => $aVote['rate_' . $sReaction],
             'count' => $iCount,
             'countf' => $iCount > 0 ? $this->_getCounterLabel($iCount, array('reaction' => $sReaction)) : '',
-            'label_icon' => $this->_getIconDoWithTrack($bVoted, $aTrack),
+            'label_use' => $sLabelUse,
+            'label_icon' => $sLabelIcon,
             'label_emoji' => $this->_getEmojiDoWithTrack($bVoted, $aTrack),
+            'label_image' => $this->_getImageDoWithTrack($bVoted, $aTrack),
             'label_title' => _t($this->_getTitleDoWithTrack($bVoted, $aTrack)),
             'label_click' => $sJsClick,
             'voted' => $bVoted,
@@ -254,6 +276,13 @@ class BxDolVoteReactions extends BxTemplVote
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
     	return $this->getEmoji($sReaction);
+    }
+    
+    protected function _getImageDoWithTrack($bVoted, $aTrack = array())
+    {
+        $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
+
+    	return $this->getImage($sReaction);
     }
 
     protected function _getTitleDoWithTrack($bVoted, $aTrack = array())

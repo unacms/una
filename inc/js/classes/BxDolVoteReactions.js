@@ -88,17 +88,24 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
     //--- Update Do button.
     oLink.each(function() {
-        if(oData && oData.label_icon){
-            $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon).html('');
-        }
-        if(oData && oData.label_emoji){
-            $(this).find('.sys-action-do-icon .sys-icon').html(oData.label_emoji);
-        }
-        else{
-            $(this).find('.sys-action-do-icon .sys-icon').removeClass('sys-icon-emoji');
-        }
-        
-        
+        if(oData && oData.label_use)
+            switch(oData.label_use) {
+                case 'icon':
+                    if($(this).find('.sys-action-do-icon .sys-icon').length != 0)
+                        $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon).html('');
+                    else
+                        $(this).find('.sys-action-do-icon').html(oData.label_icon);
+                    break;
+
+                case 'emoji':
+                    $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon sys-icon-emoji').html(oData.label_emoji);
+                    break;
+
+                case 'image':
+                    $(this).find('.sys-action-do-icon').html(oData.label_image);
+                    break;
+            }
+
         if(oData && oData.label_title) {
             $(this).attr('title', oData.label_title);
             $(this).find('.sys-action-do-text').html(oData.label_title);
