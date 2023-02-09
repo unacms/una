@@ -134,48 +134,50 @@ class BxBaseCmts extends BxDolCmts
         return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
 
-    function getCommentsBlockAPI($aBp = [], $aDp = [], $iCommentId = 0, $iStart = 0)
+    function getCommentsBlockAPI($aParams, $aBp = [], $aDp = ['in_designbox' => false, 'show_empty' => false])
     {
+
         $mixedResult = $this->isViewAllowed();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult; // TODO: error checking
-        
+
         $aBp['type'] = 'head';
         $this->_getParams($aBp, $aDp);
         $this->_prepareParams($aBp, $aDp);
+        
         $aBp['order']['way'] = 'desc';
-        $aBp['order_way'] = 'desc';
-        $aBp['start'] = $iStart ; 
+        $aBp['order_way'] =  'desc';
+        $aBp['start'] = 0 ; 
         $aPp = $aBp['per_view'];
         $aBp['per_view'] =  $aBp['per_view'] + 1; 
 
         $aCmts = [];
-        
-        if ($iCommentId == 0)
+
+        if (!isset($aParams['comment_id']))
             $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
         else
-            $aCmts = [['cmt_id' => $iCommentId]];
+            $aCmts = [['cmt_id' => $aParams['comment_id']]];
         
-        $iStartFrom = 0;
+        $aParams['start_from'] = 0;
         if (count($aCmts) == $aBp['per_view']){
             $aBp['per_view'] = $aPp;
             $aCmts = array_slice($aCmts, 0, $aBp['per_view']); 
-            $iStartFrom = $aBp['start'] + $aBp['per_view'];
+            $aParams['start_from'] = $aBp['start'] + $aBp['per_view'];
         }
             
         $aCmtsRv = [];
-        
         foreach ($aCmts as $aCmt) {
             $aCmtsRv[] = $this->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
         }
-        
         return [
             'unit' => 'comments',
-            'start' => $iStartFrom,
+            'start' => 0,
+            'order' => 'a',
             'module' => $this->_sSystem, 
             'object_id' => $this->_iId,
             'data' => $aCmtsRv,
         ];
+        
     }
 
     function decodeData ($a)

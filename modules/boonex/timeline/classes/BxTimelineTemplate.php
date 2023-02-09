@@ -342,7 +342,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aCmts = [];
                 $oCmts = $oModule->getCmtsObject($aPost['comments']['system'], $aPost['comments']['object_id']);
                 if($oCmts !== false){
-                    $aCmts = $oCmts->getCommentsBlockAPI(['per_view' => 1, 'order_by' => 'date', 'order_way' => 'desc', 'type' => 'head'], ['in_designbox' => false, 'show_empty' => false]);
+                    $aParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0, 'per_view' => 1];
+                    $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aParams], 'TemplCmtsServices');
+                    
                     $aPost['cmts'] = $aCmts;
                     $aPost['cmts']['count'] = $aPost['comments']['count'];
                 }
@@ -998,8 +1000,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($oCmts === false)
             return '';
 
-        if (bx_is_api())
-            return $oCmts->getCommentsBlockAPI([], ['in_designbox' => false, 'show_empty' => false]);
+        if (bx_is_api()){
+            $aParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0];
+            return [bx_srv('system', 'get_comments_api', [$oCmts, $aParams], 'TemplCmtsServices')];
+        }
         
         $aCmtsBp = array();
         if(!empty($aBrowseParams['cmts_preload_number']))
