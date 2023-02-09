@@ -348,18 +348,20 @@ class BxDolVote extends BxDolObject
     {
         $bUndo = $this->isUndo();
         $aVote = $this->_getVote($iObjectId, true);
-
-        return array(
+        
+        return [
             'code' => 0,
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
             'countf' => (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count'], $aParams) : '',
+            'label_use' => $this->_useIconAs($aParams),
             'label_icon' => $this->_getIconDo($bVoted),
             'label_emoji' => $this->_getEmojiDo($bVoted),
+            'label_image' => $this->_getImageDo($bVoted),
             'label_title' => _t($this->_getTitleDo($bVoted)),
             'voted' => $bVoted,
             'disabled' => $bVoted && !$bUndo,
-        );
+        ];
     }
 
     protected function _prepareRequestParamsData($aParams, $aParamsAdd = array())
@@ -404,9 +406,14 @@ class BxDolVote extends BxDolObject
     	return '';
     }
 
-    protected function _getTitleDoBy($aParams = array())
+    protected function _getTitleDoBy($aParams = [])
     {
     	return _t('_vote_do_by');
+    }
+
+    protected function _useIconAs($aParams = [])
+    {
+    	return 'emoji';
     }
 }
 

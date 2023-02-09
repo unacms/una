@@ -19,8 +19,20 @@ BxDolVoteLikes.prototype.onVote = function (oLink, oData, onComplete)
     if(oData && oData.code != 0)
         return;
 
-    if(oData && oData.label_icon)
-        $(oLink).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+    if(oData && oData.label_use)
+        switch(oData.label_use) {
+            case 'icon':
+                $(oLink).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+                break;
+
+            case 'emoji':
+                $(oLink).find('.sys-action-do-icon .sys-icon').html(oData.label_emoji);
+                break;
+
+            case 'image':
+                $(oLink).find('.sys-action-do-icon').html(oData.label_image);
+                break;
+        }
 
     if(oData && oData.label_title) {
         $(oLink).attr('title', oData.label_title);

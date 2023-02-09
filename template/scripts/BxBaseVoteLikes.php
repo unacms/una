@@ -24,6 +24,7 @@ class BxBaseVoteLikes extends BxDolVoteLikes
         ));
 
         $this->_aElementDefaults = [
+            'use_icon_as' => 'icon',
             'show_do_vote_as_button' => false,
             'show_do_vote_as_button_small' => false,
             'show_do_vote_icon' => true,
@@ -140,7 +141,7 @@ class BxBaseVoteLikes extends BxDolVoteLikes
                 'condition' => isset($aParams['show_do_vote_icon']) && (bool)$aParams['show_do_vote_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'icon' => $this->_oTemplate->getImageAuto($this->_getIconDo($bVoted))
+                    'icon' => $this->_oTemplate->getImageAuto($this->{'_get' . bx_gen_method_name($this->_useIconAs($aParams)) . 'Do'}($bVoted))
                 )
             ),
             'bx_if:show_text' => array(
