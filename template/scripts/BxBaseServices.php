@@ -493,8 +493,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         return BxDolTemplate::getInstance()->getImageUrl('account.svg');
     }
-	
-	public function serviceProfileCover ($iContentId)
+
+    public function serviceProfileCover ($iContentId)
     {
         return '';
     }
