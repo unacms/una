@@ -58,6 +58,7 @@ class BxBaseCmts extends BxDolCmts
             'show_counter' => true,
             'show_counter_only' => true,
             'show_counter_empty' => false,
+            'show_counter_reversed' => false,
             'recalculate_counter' => false
         );
 
@@ -789,6 +790,7 @@ class BxBaseCmts extends BxDolCmts
         $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
         $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
         $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
+        $bShowReversed = isset($aParams['show_counter_reversed']) && $aParams['show_counter_reversed'] == true;
         $bRecalculateCounter = isset($aParams['recalculate_counter']) && $aParams['recalculate_counter'] == true;
 
         $sClass = 'sys-action-counter';
@@ -807,7 +809,8 @@ class BxBaseCmts extends BxDolCmts
 
         $iCmtsLimit = 5;
         $aCmts = $this->_getCounterItems($iCmtsLimit);
-        $aCmts = array_reverse($aCmts);
+        if(!$bShowReversed)
+            $aCmts = array_reverse($aCmts);
 
         $aTmplVarsProfiles = [];
         foreach($aCmts as $aCmt) {

@@ -166,7 +166,16 @@ class BxForumTemplate extends BxBaseModTextTemplate
         }
         
         $oObject = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aRow[$CNF['FIELD_ID']]) : null;
-        $sParticipants = $oObject ? $oObject->getCounter(['show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => true, 'caption' => '', 'show_icon' => false, 'caption_empty' => '']) : '';
+        $sParticipants = $oObject ? $oObject->getCounter([
+            'caption' => '', 
+            'caption_empty' => '',
+            'show_icon' => false, 
+            'show_counter' => false, 
+            'show_counter_empty' => true, 
+            'show_counter_style' => 'simple', 
+            'show_counter_reversed' => true,
+            'dynamic_mode' => true
+        ]) : '';
         
         $sImage = '';
         $mixedImage = $this->_getHeaderImage($aRow);
