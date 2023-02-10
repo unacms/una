@@ -1252,7 +1252,7 @@ class BxBaseCmts extends BxDolCmts
                         return ['form' => $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId), 'res' => $iCmtId];
                     }
                     else{
-                         return ['form' => $mixedResult, 'res' => $iCmtId];
+                        return $mixedResult;
                     }
                 }
             }
