@@ -252,7 +252,7 @@ class BxForumGrid extends BxTemplGrid
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $this->_sFilter3Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
-        $iAuthorId = 0;
+        $iAuthorId = bx_get_logged_profile_id();
     	if(!empty($this->_aBrowseParams['author'])) {
             $oProfileAuthor = BxDolProfile::getInstance((int)$this->_aBrowseParams['author']);
             if($oProfileAuthor)
