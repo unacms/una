@@ -1375,6 +1375,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function serviceCheckAllowedPostInProfile($iContentId, $sPostModule = '')
     {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && getParam('sys_treat_cxt_in_cxt_as_cnt') == 'on') {
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            if($aContentInfo && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0)
+                return _t('_sys_txt_access_denied');
+        }
+
         // for groups based profiles we do have a Role permissions which have a higher priority than the site-wide permissions.
         if (method_exists($this, 'isAllowedModuleActionByProfile')) {
             $bResult = $this->isAllowedModuleActionByProfile($iContentId, $sPostModule, 'post');
