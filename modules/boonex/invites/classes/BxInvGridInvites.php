@@ -240,7 +240,7 @@ class BxInvGridInvites extends BxTemplGrid
 
     	$sAccountEmail = '';
     	$sManageAccountUrl = '';
-    	if($oProfile && $oProfile instanceof BxDolProfile && $oAcl->isMemberLevelInSet(128)) {
+    	if($oProfile && $oProfile instanceof BxDolProfile && $oAcl->isMemberLevelInSet(128) && $oProfile->getAccountObject()) {
             $sAccountEmail = $oProfile->getAccountObject()->getEmail();
             $sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
     	}
