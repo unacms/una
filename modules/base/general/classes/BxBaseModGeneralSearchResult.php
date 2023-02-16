@@ -230,7 +230,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function decodeDataUrl ($oContentInfo, $r)
     {
-        return bx_ltrim_str($oContentInfo->getContentLink($r['id']), BX_DOL_URL_ROOT);
+        return '/' . bx_ltrim_str($oContentInfo->getContentLink($r['id']), BX_DOL_URL_ROOT);
     }
 
     function decodeDataSummaryPlain ($oContentInfo, $r)
