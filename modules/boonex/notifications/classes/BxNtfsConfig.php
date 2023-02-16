@@ -34,6 +34,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
     protected $_bEventsGrouped;
 
+    protected $_bClickedIndicator;
+
     /**
      * Constructor
      */
@@ -136,6 +138,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         $this->_iProcessedEvent = (int)getParam($sOptionPrefix . 'processed_event');
 
         $this->_bEventsGrouped = getParam($sOptionPrefix . 'enable_group_events') == 'on';
+
+        $this->_bClickedIndicator = getParam($sOptionPrefix . 'enable_clicked_indicator') == 'on';        
     }
 
     public function getOwnerNameMaxLen()
@@ -181,6 +185,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         return $this->_bEventsGrouped;
     }
 
+    public function isClickedIndicator()
+    {
+        return $this->_bClickedIndicator;
+    }
+            
     public function getProcessedEvent()
     {
         return $this->_iProcessedEvent;

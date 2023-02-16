@@ -44,6 +44,7 @@
     <string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push-уведомления]]></string>
     <string name="_bx_ntfs_option_enable_group_settings"><![CDATA[Сгруппировать настройки по категориям]]></string>
     <string name="_bx_ntfs_option_enable_group_events"><![CDATA[Сгруппировать оповещения по принадлежности к событию]]></string>
+    <string name="_bx_ntfs_option_enable_clicked_indicator"><![CDATA[Включить индикатор перехода по ссылке уведомления]]></string>
     <string name="_bx_ntfs_option_delivery_timeout"><![CDATA[Задержка перед отправкой Email и/или Push уведомлений (в секундах)]]></string>
     <string name="_bx_ntfs_option_clear_interval"><![CDATA[Срок жизни уведомления, в днях (0 - без ограничений)]]></string>
     <string name="_bx_ntfs_option_processed_event"><![CDATA[Последнее событие, обработанное в процессе отправки оповещений]]></string>

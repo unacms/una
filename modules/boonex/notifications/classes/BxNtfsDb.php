@@ -29,13 +29,22 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
         $this->_sTableEvt2Usr = $this->_sPrefix . 'events2users';
         $this->_sTableQueue = $this->_sPrefix . 'queue';
+        $this->_sTableRead = $this->_sPrefix . 'read';
+    }
+
+    public function markAsClicked($iUserId, $iEventId)
+    {
+        return (int)$this->query("INSERT INTO `" . $this->_sTableEvt2Usr . "` (`user_id`, `event_id`, `clicked`) VALUES (:user_id, :event_id, 1) ON DUPLICATE KEY UPDATE `clicked`=1", [
+            'user_id' => $iUserId,
+            'event_id' => $iEventId
+        ]) > 0;
     }
 
     public function markAsRead($iUserId, $iEventId)
     {
         $this->queueDeleteByProfile($iUserId, $iEventId);
 
-        return (int)$this->query("INSERT INTO `" . $this->_sTableEvt2Usr . "` (`user_id`, `event_id`) VALUES (:user_id, :event_id) ON DUPLICATE KEY UPDATE `event_id`=:event_id", array(
+        return (int)$this->query("INSERT INTO `" . $this->_sTableRead . "` (`user_id`, `event_id`) VALUES (:user_id, :event_id) ON DUPLICATE KEY UPDATE `event_id`=:event_id", array(
             'user_id' => $iUserId,
             'event_id' => $iEventId
         )) > 0;
@@ -43,7 +52,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
     public function getLastRead($iUserId)
     {
-        return (int)$this->getOne("SELECT `event_id` FROM `" . $this->_sTableEvt2Usr . "` WHERE `user_id`=:user_id LIMIT 1", array(
+        return (int)$this->getOne("SELECT `event_id` FROM `" . $this->_sTableRead . "` WHERE `user_id`=:user_id LIMIT 1", array(
             'user_id' => (int)$iUserId
         ));
     }
@@ -67,13 +76,20 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         if($aParams['browse'] != 'list' || $aParams['type'] != BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)
             return parent::getEvents($aParams);
 
+        $bClickedIndicator = $this->_oConfig->isClickedIndicator();
         $bCountOnly = !empty($aParams['count_only']);
+        $bViewerId = !empty($aParams['viewer_id']);
 
         //--- Get query for 'Object Owner' notifications
         $sLimitClause = isset($aParams['per_page']) ? "LIMIT 0, " . ($aParams['start'] + $aParams['per_page']) : "";
 
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER;
         list($sMethod, $sSelectClause, $sJoinClausePo, $sWhereClausePo, $sOrderClausePo) = $this->_getSqlPartsEvents($aParams);
+
+        if($bClickedIndicator && $bViewerId) {
+            $sSelectClause .= ", IF(ISNULL(`{$this->_sTableEvt2Usr}`.`clicked`) OR `{$this->_sTableEvt2Usr}`.`clicked`=0, 0, 1) AS `clicked`";
+            $sJoinClausePo .= $this->prepareAsString(" LEFT JOIN `{$this->_sTableEvt2Usr}` ON `{$this->_sTable}`.`id`=`{$this->_sTableEvt2Usr}`.`event_id` AND `{$this->_sTableEvt2Usr}`.`user_id`=?", $aParams['viewer_id']);
+        }
 
         $sQueryOwner = "SELECT {select}
             FROM `{$this->_sTable}`
@@ -83,6 +99,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         //--- Get query for 'Connections based' notifications
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_CONNECTIONS;
         list($sMethod, $sSelectClause, $sJoinClausePc, $sWhereClausePc, $sOrderClausePc) = $this->_getSqlPartsEvents($aParams);
+
+        if($bClickedIndicator && $bViewerId) {
+            $sSelectClause .= ", IF(ISNULL(`{$this->_sTableEvt2Usr}`.`clicked`) OR `{$this->_sTableEvt2Usr}`.`clicked`=0, 0, 1) AS `clicked`";
+            $sJoinClausePc .= $this->prepareAsString(" LEFT JOIN `{$this->_sTableEvt2Usr}` ON `{$this->_sTable}`.`id`=`{$this->_sTableEvt2Usr}`.`event_id` AND `{$this->_sTableEvt2Usr}`.`user_id`=?", $aParams['viewer_id']);
+        }
 
         $sQueryConnections = "SELECT {select}
             FROM `{$this->_sTable}`

@@ -59,6 +59,23 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     /**
      * ACTION METHODS
      */
+    function actionMarkAsClicked()
+    {
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+        if(empty($aEvent) || !is_array($aEvent))
+            return echoJson(['code' => 1]);
+
+        $aParams = $this->_prepareParamsGet();
+        if(!$this->_oDb->markAsClicked($aParams['viewer_id'], $iId))
+            return echoJson(['code' => 2]);
+
+        echoJson([
+            'code' => 0, 
+            'id' => $iId
+        ]);
+    }
+
     function actionGetPosts()
     {
         $aParams = $this->_prepareParamsGet();
@@ -582,24 +599,29 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     /*
      * INTERNAL METHODS
      */
-    protected function _prepareParams($sType = '', $iOwnerId = 0, $iStart = -1, $iPerPage = -1, $aModules = array())
+    protected function _prepareParams($sType = '', $iOwnerId = 0, $iStart = -1, $iPerPage = -1, $aModules = [])
     {
-        $aParams = array();
-        $aParams['browse'] = 'list';
-        $aParams['type'] = !empty($sType) ? $sType : BX_NTFS_TYPE_DEFAULT;
-        $aParams['owner_id'] = (int)$iOwnerId != 0 ? $iOwnerId : $this->getUserId();
-        $aParams['start'] = (int)$iStart > 0 ? $iStart : 0;
-        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
-        $aParams['modules'] = is_array($aModules) && !empty($aModules) ? $aModules : array();
-        $aParams['last_read'] = $this->_oDb->getLastRead($aParams['owner_id']);
-        $aParams['active'] = 1;
+        $iUserId = $this->getUserId();
+        $iOwnerId = (int)$iOwnerId != 0 ? $iOwnerId : $iUserId;
+
+        $aParams = [
+            'browse' => 'list',
+            'type' => !empty($sType) ? $sType : BX_NTFS_TYPE_DEFAULT,
+            'owner_id' => $iOwnerId,
+            'start' => (int)$iStart > 0 ? $iStart : 0,
+            'per_page' => (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage(),
+            'modules' => is_array($aModules) && !empty($aModules) ? $aModules : [],
+            'last_read' => $this->_oDb->getLastRead($iOwnerId),
+            'viewer_id' => $iUserId,
+            'active' => 1
+        ];
 
         return $aParams;
     }
 
     protected function _prepareParamsGet()
     {
-        $aParams = array();
+        $aParams = [];
         $aParams['browse'] = 'list';
 
         $sType = bx_get('type');
@@ -614,7 +636,13 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aParams['per_page'] = $iPerPage !== false ? bx_process_input($iPerPage, BX_DATA_INT) : $this->_oConfig->getPerPage();
 
         $aModules = bx_get('modules');
-        $aParams['modules'] = $aModules !== false ? bx_process_input($aModules, BX_DATA_TEXT) : array();
+        $aParams['modules'] = $aModules !== false ? bx_process_input($aModules, BX_DATA_TEXT) : [];
+
+        $iViewerId = $this->getUserId();
+        if(($aParams['viewer_id'] = bx_get('viewer_id')) !== false)
+            $aParams['viewer_id'] = bx_process_input($aParams['viewer_id'], BX_DATA_INT);
+        if(!$aParams['viewer_id'] || $aParams['viewer_id'] != $iViewerId)
+            $aParams['viewer_id'] = $iViewerId;
 
         $aParams['active'] = 1;
 

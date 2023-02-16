@@ -1,7 +1,9 @@
 SET @sName = 'bx_notifications';
 
 
-DROP TABLE IF EXISTS `bx_notifications_events`, `bx_notifications_events2users`, `bx_notifications_handlers`, `bx_notifications_settings`, `bx_notifications_settings2users`, `bx_notifications_queue`;
+DROP TABLE IF EXISTS `bx_notifications_events`, `bx_notifications_events2users`, `bx_notifications_read`;
+DROP TABLE IF EXISTS `bx_notifications_handlers`, `bx_notifications_settings`, `bx_notifications_settings2users`;
+DROP TABLE IF EXISTS `bx_notifications_queue`;
 
 
 -- STUDIO PAGE & WIDGET

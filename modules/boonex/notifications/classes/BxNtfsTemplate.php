@@ -240,16 +240,30 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(isset($aBrowseParams['return_parsed_content']))
             return $aEvent;
 
+        $bClickedIndicator = $this->_oConfig->isClickedIndicator();
+        $sJsObject = $this->_oConfig->getJsObject('view');
+
         return $this->parseHtmlByName('event.html', array (
             'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'js_object' => $this->_oConfig->getJsObject('view'),
+            'js_object' => $sJsObject,
             'class' => !empty($aBrowseParams['last_read']) && $aEvent['id'] > $aBrowseParams['last_read'] ? ' bx-def-color-bg-box-active' : '', 
             'id' => $aEvent['id'],
             'author_unit' => $sOwnerUnit,
             'link' => $this->_getContentLink($aEvent),
             'content' => is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['site']) ? $aEvent['content_parsed']['site'] : $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
+            'bx_if:show_onclick' => [
+                'condition' => $bClickedIndicator,
+                'content' => [
+                    'js_object' => $sJsObject,
+                    'id' => $aEvent['id']
+                ]
+            ],
+            'bx_if:show_clicked_indicator' => [
+                'condition' => $bClickedIndicator && (int)$aEvent['clicked'] != 0,
+                'content' => []
+            ],
         ));
     }
 

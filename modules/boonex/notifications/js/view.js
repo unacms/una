@@ -29,6 +29,18 @@ BxNtfsView.prototype.changePage = function(oElement, iStart, iPerPage) {
     this._getPosts(oElement);
 };
 
+BxNtfsView.prototype.markAsClicked = function(oElement, iId) {
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    jQuery.get(
+        this._sActionsUrl + 'mark_as_clicked/',
+        oData,
+    );
+
+    return true;
+};
+
 BxNtfsView.prototype._getPosts = function(oElement) {
     var $this = this;
 
