@@ -283,8 +283,8 @@ blockquote {
 .bx-db-menu ul.bx-menu-hor,
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor,
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) {
-    display: -webkit-flex;
-    display: flex;
+    display: -webkit-inline-flex;
+    display: inline-flex;
     -webkit-justify-content: flex-end;
     justify-content: flex-end;
 }
