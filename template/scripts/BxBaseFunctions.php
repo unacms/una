@@ -375,7 +375,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     {
         $bUseTabs = is_bool($mixedButtons) && $mixedButtons === true;
 
-        $sMenu = '';
+        $sClass = $sMenu = '';
         if(!empty($mixedMenu)) {
             if(is_string($mixedMenu)) {
                 if(($oMenu = BxTemplMenu::getObjectInstance($mixedMenu)) !== false) {
@@ -402,6 +402,8 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             }
             else if(is_object($mixedMenu) && is_a($mixedMenu, 'BxTemplMenu')) {
                 $mixedMenu->setTemplateById($bUseTabs ? BX_DB_MENU_TEMPLATE_TABS : BX_DB_MENU_TEMPLATE_POPUP);
+                if(($mixedMenu instanceof BxBaseMenuMoreAuto) && $mixedMenu->isMoreAuto())
+                    $sClass = ' bx-db-menu-tab-more-auto';
 
                 $sMenu = $mixedMenu->getCode();
             }
@@ -484,6 +486,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         if(!empty($sResult))
             $sResult = $this->_oTemplate->parseHtmlByName('designbox_menu.html', array(
+                'class' => $sClass,
                 'content' => $sResult
             ));
 

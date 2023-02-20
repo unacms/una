@@ -79,6 +79,10 @@ import url(../../../../../../../template/css/common.css);
 .bx-db-menu-tab {
     margin-left: 5px;
     text-align: right;
+    overflow-x: auto;
+}
+.bx-db-menu-tab.bx-db-menu-tab-more-auto {
+    overflow-x: visible;
 }
 
 .bx-db-menu-tab .bx-menu-custom-hor:not(.bx-menu-more-auto) {

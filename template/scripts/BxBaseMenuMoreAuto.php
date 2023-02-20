@@ -66,6 +66,11 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         return $sResult;
     }
 
+    public function isMoreAuto()
+    {
+        return $this->_isMoreAuto();
+    }
+
     protected function _isMoreAuto()
     {
         if(is_bool($this->_bMoreAuto))
