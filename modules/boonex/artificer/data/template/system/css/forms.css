@@ -116,6 +116,12 @@ import url(../../../../../../../template/css/forms.css);
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
+.bx-form-input-wrapper-submit .bx-btn {
+    float: none;
+}
+.bx-form-input-wrapper-input_set .bx-btn {
+    float: left;
+}
 
 
 /*-- Form field: Password --*/
