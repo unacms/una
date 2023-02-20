@@ -340,6 +340,10 @@
     <string name="_bx_forum_menu_set_title_snippet_meta_reply"><![CDATA[Snippet Meta Info: Reply]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_reply_text"><![CDATA[Reply text]]></string>
     <string name="_bx_forum_menu_item_title_sm_reply_text"><![CDATA[Reply text]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_sticked"><![CDATA[Pinned]]></string>
+    <string name="_bx_forum_menu_item_title_sm_sticked"><![CDATA[Pinned]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_locked"><![CDATA[Locked]]></string>
+    <string name="_bx_forum_menu_item_title_sm_locked"><![CDATA[Locked]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_status"><![CDATA[Status]]></string>
     <string name="_bx_forum_menu_item_title_sm_status"><![CDATA[Status]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_badges"><![CDATA[Badges]]></string>

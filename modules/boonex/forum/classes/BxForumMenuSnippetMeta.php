@@ -137,6 +137,26 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         return $this->getUnitMetaItemExtended($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true), '', '', false, true); 
     }
     
+    protected function _getMenuItemSticked($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if((int)$this->_aContentInfo[$CNF['FIELD_STICK']] == 0)
+            return false;
+
+        return $this->getUnitMetaItemExtended(_t($aItem['title']), $aItem['icon'], '');
+    }
+
+    protected function _getMenuItemLocked($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if((int)$this->_aContentInfo[$CNF['FIELD_LOCK']] == 0)
+            return false;
+
+        return $this->getUnitMetaItemExtended(_t($aItem['title']), $aItem['icon'], '');
+    }
+
     protected function _getMenuItemStatus($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
