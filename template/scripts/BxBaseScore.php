@@ -129,25 +129,25 @@ class BxBaseScore extends BxDolScore
         $bLink = $bAllowedViewViewVoters && !$bEmpty;
         $sCounter = !$bEmpty || $bShowEmpty ? $this->_getCounterLabel($iCup - $iCdown, $aParams) : '';
 
-        $aTmplVars = array(
+        $aTmplVarsText = [
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass,
-            'content' => $sCounter
-        );
-        if($bLink)
-            $aTmplVars = array_merge($aTmplVars, array(
-                'title' => _t($this->_getTitleDoBy()),
-                'onclick' => 'javascript:' . $this->getJsClickCounter()
-            ));
+            'content' => $sCounter,
+            'title' => _t($this->_getTitleDoBy()),
+        ];
+
+        $aTmplVarsLink = array_merge($aTmplVarsText, [
+            'onclick' => $bLink ? 'javascript:' . $this->getJsClickCounter() : ''
+        ]);
 
         return $this->_oTemplate->parseHtmlByName('score_counter.html', array(
             'bx_if:show_link' => array(
                 'condition' => $bLink,
-                'content' => $aTmplVars
+                'content' => $aTmplVarsLink
             ),
             'bx_if:show_text' => array(
                 'condition' => !$bLink,
-                'content' => $aTmplVars
+                'content' => $aTmplVarsText
             ),
             'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ));
@@ -345,29 +345,32 @@ class BxBaseScore extends BxDolScore
 
     protected function _getVotedBy($aParams)
     {
-        $aParams['show_do_vote_label'] = false;
+        $aParams = array_merge($this->_aElementDefaults, $aParams, [
+            'show_do_vote_icon' => true,
+            'show_do_vote_label' => false
+        ]);
 
-        $aTmplUsers = array();
+        $aTmplUsers = [];
         $aUsers = $this->_oQuery->getPerformedBy($this->getId());
         foreach($aUsers as $aUser) {
             list($sUserName, $sUserLink, $sUserIcon, $sUserUnit, $sUserUnitWoInfo) = $this->_getAuthorInfo($aUser['id']);
-            $aTmplUsers[] = array(
+            $aTmplUsers[] = [
                 'style_prefix' => $this->_sStylePrefix,
             	'user_name' => $sUserName,
             	'user_link' => $sUserLink,
                 'user_unit' => $sUserUnitWoInfo,
                 'vote' => $this->_getLabelDo($aUser['vote_type'], $aParams),
                 'date' => bx_time_js($aUser['vote_date']),
-            );
+            ];
         }
 
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameByList, array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameByList, [
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplUsers
-        ));
+        ]);
     }
 
     protected function _isShowDoVote($aParams, $isAllowedVote, $bCount)
