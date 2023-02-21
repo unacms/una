@@ -36,9 +36,18 @@ BxNtfsView.prototype.markAsClicked = function(oElement, iId) {
     jQuery.get(
         this._sActionsUrl + 'mark_as_clicked/',
         oData,
+        function(oData) {
+            if(!oData || parseInt(oData.code) !== 0)
+                return;
+
+            var sLink = $(oElement).attr('href');
+            if(sLink)
+                document.location = sLink;
+        },
+        'json'
     );
 
-    return true;
+    return false;
 };
 
 BxNtfsView.prototype._getPosts = function(oElement) {

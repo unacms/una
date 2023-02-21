@@ -1122,10 +1122,14 @@
     .bx-tl-title a {
         @apply text-gray-800 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-400 hover:no-underline;
     }
-    img.bx-tl-item-image{
-        @apply aspect-video rounded-lg;
+
+    div.bx-tl-item-image{
+        @apply aspect-video lg:aspect-auto rounded-lg;
     }
-    
+    img.bx-tl-item-image {
+        @apply w-full h-full object-center object-cover lg:w-full lg:h-full rounded-lg;
+    }
+
     .bx-base-text-unit-title a {
         @apply text-lg lg:text-xl font-semibold;
     }

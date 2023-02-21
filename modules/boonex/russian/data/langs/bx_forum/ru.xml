@@ -339,8 +339,8 @@
     <string name="_bx_forum_menu_set_title_snippet_meta_reply"><![CDATA[Мета информация в карточке: Ответ]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_reply_text"><![CDATA[Текст ответа]]></string>
     <string name="_bx_forum_menu_item_title_sm_reply_text"><![CDATA[Текст ответа]]></string>
-    <string name="_bx_forum_menu_item_title_system_sm_pinned"><![CDATA[Закреплено]]></string>
-    <string name="_bx_forum_menu_item_title_sm_pinned"><![CDATA[Закреплено]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_sticked"><![CDATA[Закреплено]]></string>
+    <string name="_bx_forum_menu_item_title_sm_sticked"><![CDATA[Закреплено]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_locked"><![CDATA[Заблокировано]]></string>
     <string name="_bx_forum_menu_item_title_sm_locked"><![CDATA[Заблокировано]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_status"><![CDATA[Статус]]></string>

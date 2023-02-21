@@ -617,7 +617,7 @@ BxDolCmts.prototype.showImage = function(eve, oLink)
     return false;
 };
 
-BxDolCmts.prototype.toggleReply = function(e, iCmtParentId, iQuote)
+BxDolCmts.prototype.toggleReply = function(oElement, iCmtParentId, iQuote)
 {
     var $this = this;
     var aParams = {
@@ -628,7 +628,12 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId, iQuote)
         $(this).find('textarea:first').focus();
     };
 
-    var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
+    var oParentId = null;
+    if(oElement)
+        oParentId = $(oElement).parents('#cmt' + iCmtParentId);
+    else
+        oParentId = $(this._sRootId + ' #cmt' + iCmtParentId);
+
     var sReplyQuoteId = '.cmt-reply-quote';
     var sReplyQuoteIdOpst = ':not(' + sReplyQuoteId + ')';
 
@@ -644,17 +649,17 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId, iQuote)
     }
 
     //--- Hide opposite form.
-    if ($(sParentId + ' > ' + sReplyIdOpst + ':visible').length)
-        $(sParentId + ' > ' + sReplyIdOpst).hide();
+    if (oParentId.find('> ' + sReplyIdOpst + ':visible').length)
+        oParentId.find('> ' + sReplyIdOpst).hide();
 
-    if ($(sParentId + ' > ' + sReplyId).length) {
-        $(sParentId + ' > ' + sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
+    if (oParentId.find('> ' + sReplyId).length) {
+        oParentId.find('> ' + sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
         return;
     }
 
-    this._getForm(e, aParams, function(sForm) {
+    this._getForm(oElement, aParams, function(sForm) {
         var oForm = $(sForm).hide().addClass('cmt-reply-' + $this._sPostFormPosition).addClass('cmt-reply-margin');
-        var oFormSibling = $(sParentId + ' > ul.cmts:first');
+        var oFormSibling = oParentId.find('> ul.cmts:first');
         switch($this._sPostFormPosition) {
             case 'top':
                 oFormSibling.before(oForm);
@@ -667,7 +672,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId, iQuote)
 
         $this.cmtInitFormPost(oForm.find('form'));
 
-        $(sParentId).children(sReplyId).bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);
+        oParentId.children(sReplyId).bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);
     });
 };
 
