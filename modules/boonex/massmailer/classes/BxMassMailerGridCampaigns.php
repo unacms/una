@@ -37,6 +37,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         $oForm = BxDolForm::getObjectInstance('bx_massmailer', 'bx_massmailer_campaign_send_test');
         if (!$oForm)
             return '';
+        $oForm->setId('bx_massmailer_campaign_send_test');
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
         $aContentInfo = array('email' => BxDolProfile::getInstance()->getAccountObject()->getEmail());
         $oForm->initChecker($aContentInfo, array());
@@ -68,6 +69,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         $oForm = BxDolForm::getObjectInstance('bx_massmailer', 'bx_massmailer_campaign_send_all');
         if (!$oForm)
             return '';
+        $oForm->setId('bx_massmailer_campaign_send_all');
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
         $oForm->initChecker(array(), array());
         $oForm->aInputs['campaign_info']['value'] = _t($oForm->aInputs['campaign_info']['value'], $this->_oModule->getEmailCountInSegment($iId));
