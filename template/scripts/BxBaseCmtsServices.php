@@ -126,6 +126,30 @@ class BxBaseCmtsServices extends BxDol
         );
     }
 
+    public function serviceGetMenuAddonManageTools()
+    {
+        $iNumTotal = BxDolCmts::getGlobalNumByParams();
+
+        $iNum1 = BxDolCmts::getGlobalNumByParams([[
+            'key' => 'status_admin', 
+            'value' => 'pending', 
+            'operator' => '='
+        ]]);
+
+        $iNum2 = BxDolCmts::getGlobalNumByParams([[
+            'key' => 'reports',
+            'value' => '0', 
+            'operator' => '>'
+        ]]);
+
+        return [
+            'counter1_value' => $iNum1, 
+            'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default'), 
+            'counter2_value' => $iNum2, 
+            'counter3_value' => $iNumTotal
+        ];
+    }
+
     /**
      * Comment Added for Timeline module
      */

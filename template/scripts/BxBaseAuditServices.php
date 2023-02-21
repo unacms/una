@@ -27,7 +27,12 @@ class BxBaseAuditServices extends BxDol
             'content' =>  $oGrid->getCode()
         ];
     }
-    
+
+    public function serviceGetMenuAddonManageTools()
+    {
+        return [];
+    }
+
     public function serviceGetMemberships()
     {
         $aLevels = BxDolAcl::getInstance()->getMemberships(false, false, true, false);

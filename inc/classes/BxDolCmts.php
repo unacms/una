@@ -377,6 +377,15 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         ));
     }
 
+    public static function getGlobalNumByParams($aParams = [])
+    {
+        $sQuery = "SELECT COUNT(*) FROM `" . self::$sTableIds . "` WHERE 1";
+        foreach($aParams as $aValue)
+            $sQuery .= " AND `" . $aValue['key'] ."` " . $aValue['operator'] . " '" . $aValue['value'] . "'";
+
+        return BxDolDb::getInstance()->getOne($sQuery);
+    }
+
     public function init ($iId)
     {
         if (empty($this->iId) && $iId)
