@@ -4278,7 +4278,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     }
 
     /**
-     * Checks if it's allowed to post a comment by checking the availability to post anything in the content. 
+     * Checks if it's allowed to post a comment by checking the availability to post anything in the context. 
      * Note. Don't check the related comments object for post action accessibility because this method is called from there.
      */
     public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
@@ -4293,8 +4293,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$oOwner) //--- in case of non-existed Timeline owner.
             return _t('_sys_txt_access_denied');
 
+        /*
+         * Disabled in accordance with #4238 ticket.
+         * 
         if(($mixedResult = $oOwner->checkAllowedPostInProfile()) !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
+         */
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
