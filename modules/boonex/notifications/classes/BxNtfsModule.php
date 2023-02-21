@@ -67,7 +67,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             return echoJson(['code' => 1]);
 
         $aParams = $this->_prepareParamsGet();
-        if(!$this->_oDb->markAsClicked($aParams['viewer_id'], $iId))
+        if($this->_oDb->markAsClicked($aParams['viewer_id'], $iId) === false)
             return echoJson(['code' => 2]);
 
         echoJson([

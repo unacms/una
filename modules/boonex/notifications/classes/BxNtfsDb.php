@@ -34,20 +34,20 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
     public function markAsClicked($iUserId, $iEventId)
     {
-        return (int)$this->query("INSERT INTO `" . $this->_sTableEvt2Usr . "` (`user_id`, `event_id`, `clicked`) VALUES (:user_id, :event_id, 1) ON DUPLICATE KEY UPDATE `clicked`=1", [
+        return $this->query("INSERT INTO `" . $this->_sTableEvt2Usr . "` (`user_id`, `event_id`, `clicked`) VALUES (:user_id, :event_id, 1) ON DUPLICATE KEY UPDATE `clicked`=1", [
             'user_id' => $iUserId,
             'event_id' => $iEventId
-        ]) > 0;
+        ]);
     }
 
     public function markAsRead($iUserId, $iEventId)
     {
         $this->queueDeleteByProfile($iUserId, $iEventId);
 
-        return (int)$this->query("INSERT INTO `" . $this->_sTableRead . "` (`user_id`, `event_id`) VALUES (:user_id, :event_id) ON DUPLICATE KEY UPDATE `event_id`=:event_id", array(
+        return $this->query("INSERT INTO `" . $this->_sTableRead . "` (`user_id`, `event_id`) VALUES (:user_id, :event_id) ON DUPLICATE KEY UPDATE `event_id`=:event_id", array(
             'user_id' => $iUserId,
             'event_id' => $iEventId
-        )) > 0;
+        ));
     }
 
     public function getLastRead($iUserId)
