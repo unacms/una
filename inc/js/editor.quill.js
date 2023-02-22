@@ -74,15 +74,6 @@ function bx_editor_init(oEditor, oParams){
     
     $(oParams.selector).after("<div id='" + oParams.name + "' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill " + oParams.css_class + "'>" + $(oParams.selector).val() + "</div>" );
     
-    if($(oParams.selector).parents('form').first())
-        $(oParams.selector).parents('form').first().submit(function(){ 
-            sVal = oEditor.container.firstChild.innerHTML;
-            if(!oParams.empty_tags){
-                sVal = sVal.replaceAll('<p><br></p>','');
-            }
-            $(oParams.selector).val(sVal); 
-            
-        });
     $(oParams.selector).hide();
     
     $(oParams.selector).attr('object_editor', oParams.name);
@@ -422,9 +413,13 @@ function bx_editor_init(oEditor, oParams){
 
     
     oEditor.on('editor-change', function(delta, oldDelta, source) {
+        console.log( oEditor.getContents())
         sVal = oEditor.container.firstChild.innerHTML;
         if(!oParams.empty_tags){
             sVal = sVal.replaceAll('<p><br></p>','');
+        }
+        if ((oEditor.getContents()['ops'] || []).length == 1 && oEditor.getText().trim().length === 0) { 
+            sVal = '' 
         }
         $(oParams.selector).val(sVal); 
     });
