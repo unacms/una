@@ -93,15 +93,19 @@ class BxBasePageHome extends BxTemplPage
 
     protected function _getPageMetaImage()
     {
-        $iImage = (int)getParam('sys_site_icon');
+        $iImage = 0;
+        foreach(['icon_apple', 'icon_android', 'icon_android_splash'] as $sIcon)
+            if(($iImage = (int)getParam('sys_site_' . $sIcon)) != 0)
+                break;
+
         if(empty($iImage))
             return '';
 
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
-        if(!$oTranscoder)
+        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        if(!$oStorage)
             return '';
 
-        return $oTranscoder->getFileUrl($iImage);
+        return $oStorage->getFileUrlById($iImage);
     }
 }
 

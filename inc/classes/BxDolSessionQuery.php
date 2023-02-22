@@ -54,10 +54,10 @@ class BxDolSessionQuery extends BxDolDb
     }
     function delete($sId)
     {
-        $sSql = $this->prepare("SELECT `user_id`, `date` FROM `" . $this->sTable . "` WHERE `id`=? LIMIT 1", $sId);
-        $aRow = $this->getRow($sSql);
-        $this->updateLastActivityAccount($aRow['user_id'], $aRow['date']);
-        
+        $aRow = $this->getRow("SELECT `user_id`, `date` FROM `" . $this->sTable . "` WHERE `id`=:id LIMIT 1", ['id' => $sId]);
+        if(!empty($aRow) && is_array($aRow))
+            $this->updateLastActivityAccount($aRow['user_id'], $aRow['date']);
+
         $sSql = $this->prepare("DELETE FROM `" . $this->sTable . "` WHERE `id`=? LIMIT 1", $sId);
         return (int)$this->query($sSql) > 0;
     }
