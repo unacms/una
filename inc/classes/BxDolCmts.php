@@ -1139,7 +1139,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function isPinAllowed ($aCmt, $isPerformAction = false)
     {
-        if((int)$aCmt['cmt_pinned'] != 0)
+        if((int)$aCmt['cmt_parent_id'] != 0 || (int)$aCmt['cmt_pinned'] != 0)
             return false;
 
         if(isAdmin())

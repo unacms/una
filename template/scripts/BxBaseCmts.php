@@ -421,7 +421,7 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $sReplies = '';
-        if(!empty($aDp)) {
+        if(!(isset($aBp['pinned']) && (int)$aBp['pinned'] != 0 && (int)$aCmt['cmt_pinned'] != 0) && !empty($aDp)) {
             $aDp['show_empty'] = false;
 
             if(!empty($aDp['structure'][$aCmt['cmt_id']]) && is_array($aDp['structure'][$aCmt['cmt_id']])) {
