@@ -132,17 +132,21 @@ function bx_editor_init(oEditor, oParams){
             static create(value) {
                 let node = super.create(value);
                 if (value.id && value.value){
+                    
                     node.setAttribute('href', value.id);
                     node.innerHTML = value.denotationChar + value.value;
                     node.setAttribute('title', value.value);
                     node.setAttribute('dchar', value.denotationChar);
                     node.setAttribute('data-profile-id', value.dataProfileId);
                 }
-                if (value.url && value.dchar && value.title && value.dataProfileId){
+                if (value.url && value.title && value.dataProfileId){
                     node.setAttribute('href', value.url);
                     node.innerHTML = value.text;
                     node.setAttribute('title', value.title);
-                    node.setAttribute('dchar', value.dchar);
+                    if (value.dchar)
+                        node.setAttribute('dchar', value.dchar);
+                    else
+                        node.setAttribute('dchar', '@');
                     node.setAttribute('data-profile-id', value.dataProfileId);
                 }
                 return node;
