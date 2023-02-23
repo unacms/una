@@ -33,7 +33,7 @@ class BxCnlModule extends BxBaseModGroupsModule
      * @param integer $iContentId - ID of the content which has the hashtag.
      * @param integer $iAuthorId - action's author id.
      */
-    function processHashtag($sHashtag, $sModuleName, $iContentId, $iAuthorId)
+    function processHashtag($sHashtag, $sModuleName, $iContentId, $iAuthorId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -53,7 +53,7 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($iAuthorId))
             $iAuthorId = BxDolService::call($sModuleName, 'get_author', array($iContentId));
 
-        $aCheck = checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), false);
+        $aCheck = checkActionModule($iAuthorId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
         if(empty($mixedCnlId) && ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)) {
             $iProfileId = (int)$this->_oDb->getParam($CNF['PARAM_DEFAULT_AUTHOR']);
@@ -64,7 +64,7 @@ class BxCnlModule extends BxBaseModGroupsModule
             }
 
             $aContent = $this->serviceEntityAdd($iProfileId, array($CNF['FIELD_NAME'] => $sHashtag, $CNF['FIELD_CF'] => 1));
-            checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), true);
+            checkActionModule($iAuthorId, 'create channel auto', $this->getName(), true);
             if(isset($aContent['content']) && isset($aContent['content']['id']))
                 $mixedCnlId = $aContent['content']['id'];
         }
