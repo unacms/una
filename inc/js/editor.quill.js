@@ -413,7 +413,6 @@ function bx_editor_init(oEditor, oParams){
 
     
     oEditor.on('editor-change', function(delta, oldDelta, source) {
-        console.log( oEditor.getContents())
         sVal = oEditor.container.firstChild.innerHTML;
         if(!oParams.empty_tags){
             sVal = sVal.replaceAll('<p><br></p>','');
