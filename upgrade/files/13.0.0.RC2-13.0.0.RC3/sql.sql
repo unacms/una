@@ -33,6 +33,10 @@ UPDATE `sys_menu_items` SET `addon` = 'a:3:{s:6:"module";s:6:"system";s:6:"metho
 UPDATE `sys_menu_items` SET `addon` = 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_manage_tools";s:5:"class";s:18:"TemplAuditServices";}', `icon` = 'history' WHERE `set_name` = 'sys_account_dashboard_manage_tools' AND `name` = 'audit-administration';
 
 
+-- Storage
+
+UPDATE `sys_objects_storage` SET `params` = '' WHERE `params` = 'a:1:{s:6:"fields";a:1:{s:10:"dimensions";s:17:"getFileDimensions";}}';
+
 
 -- Last step is to update current version
 
