@@ -47,8 +47,16 @@ function BxTimelineMain() {
     this._oAttachedLinks = {};
 }
 
-BxTimelineMain.prototype.initView = function() 
-{
+BxTimelineMain.prototype.updateOptions = function(oOptions) {
+    var $this = this;
+    Object.keys(oOptions).map(function(sOption) {
+        var sField = '_' + sOption;
+        if($this[sField] != undefined)
+            $this[sField] = oOptions[sOption];
+    });
+};
+
+BxTimelineMain.prototype.initView = function() {
     //Do some basic initialization here.
 };
 
@@ -281,6 +289,27 @@ BxTimelineMain.prototype.initTrackerInsertSpace = function(sFormId, iEventId)
             return;
 
         $this.parseContent(oForm, iEventId, sData, true);
+    });
+};
+
+BxTimelineMain.prototype.initTrackerInsertImage = function()
+{
+    var $this = this;
+
+    if (typeof window.glOnInsertImageInEditor === 'undefined')
+        window.glOnInsertImageInEditor = [];
+
+    window.glOnInsertImageInEditor.push(function (oFile) {
+        const oFormData = new FormData();
+        oFormData.append('file', oFile);
+        oFormData.append('u', $this._sAutoUploader);
+        oFormData.append('uid', $this._sAutoUploaderId);
+
+        fetch($this._sActionsUrl + 'auto_attach_insertion/', {method: "POST", body: oFormData})
+        .then(response => response.json())
+        .then(result => {
+            processJsonData(result)
+        });
     });
 };
 

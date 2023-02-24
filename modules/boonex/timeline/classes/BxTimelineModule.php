@@ -577,13 +577,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetPostForm()
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
         $sType = bx_process_input(bx_get('type'));
 
-        echoJson($this->getFormPost(array(
+        $aResult = $this->getFormPost([
             'type' => $sType,
             'form_display' => $this->_oConfig->getPostFormDisplay($sType)
-        )));
+        ]);
+
+        if($this->_oConfig->isEditorAutoattach() && !empty($aResult['form_object'])) {
+            $aUploadersInfo = $aResult['form_object']->getUploadersInfo($CNF['FIELD_PHOTO']);
+            if(!empty($aUploadersInfo) && is_array($aUploadersInfo))
+                $aResult = array_merge($aResult, ['options' => [
+                    'sAutoUploader' => $aUploadersInfo['name'], 
+                    'sAutoUploaderId' => $aUploadersInfo['id']
+                ]]);
+
+            unset($aResult['form_object']);
+        }
+
+        echoJson($aResult);
     }
 
     public function actionGetEditForm($iId)
@@ -688,7 +703,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return echoJson(['code' => 1, 'msg' => $sTxtError]);
 
         ob_start();
-        $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['file']) ? $_FILES['file'] : null, false, false, false);
+        $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['file']) ? $_FILES['file'] : null, true, false, false);
         ob_end_clean();
 
         $sError = $oUploader->getUploadErrorMessages();
