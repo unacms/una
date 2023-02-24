@@ -386,30 +386,32 @@ function bx_editor_init(oEditor, oParams){
         bx_editor_on_space_enter(node.data, oParams.selector, false);
         return new Delta().insert(node.data); 
     });
-
     
-    oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
-        if (oParams.insert_as_plain_text){
-            let ops = []
-            delta.ops.forEach(op => {
-                if (op.insert && typeof op.insert === 'string') {
-                    ops.push({
-                        insert: op.insert
-                    })
-                }
-            })
-            delta.ops = ops
-        }
-        else{
-            delta.forEach(e => {
+    if (oParams.insert_as_plain_text){
+        oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
+			let ops = []
+			delta.ops.forEach(op => {
+				if (op.insert && typeof op.insert === 'string') {
+					ops.push({
+						insert: op.insert
+					})
+				}
+			})
+			delta.ops = ops
+			return delta
+        });
+    }
+    else{
+        oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
+			delta.forEach(e => {
                 if(e.attributes){
                     e.attributes.color = '';
                     e.attributes.background = '';
                 }
             });
-        }
-        return delta;
-    });
+            return delta;
+        });
+    }
 
     
     oEditor.on('editor-change', function(delta, oldDelta, source) {
