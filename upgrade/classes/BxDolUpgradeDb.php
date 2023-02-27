@@ -717,6 +717,11 @@ class BxDolUpgradeDb
         return trim($s, $sDiv);
     }
 
+    public function getCache ($sName, $sFunc)
+    {
+        return false;
+    }
+
     protected function log($s)
     {
         if (defined('BX_DIRECTORY_PATH_LOGS')) {
