@@ -182,15 +182,25 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     	$sResults = '';
     	foreach($aResults as $iId)
     	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate); 
-        
+
+        $aTxtDirection = [
+            'asc' => _t('_order_asc'),
+            'desc' => _t('_order_desc')
+        ];
+
         $sSort = '';
         if ($sResults != ''){
 
             $aData = $this->_aObject['sortable_fields'];
             $aValues = [];
             foreach($aData as $aField) {
-                if ($aField['active'] == 1)
-                    $aValues[$aField['name'] . ':' . $aField['direction']] = _t($aField['caption']) . ' ' . $aField['direction'];
+                if ($aField['active'] == 0)
+                    continue;
+
+                $sLangKey = $aField['caption'] . '_' . $aField['direction'];
+                $sLangVal = _t($sLangKey);
+
+                $aValues[$aField['name'] . ':' . $aField['direction']] = strcmp($sLangKey, $sLangVal) != 0 ? $sLangVal : _t($aField['caption']) . ' ' . $aTxtDirection[$aField['direction']];
             }
             
             if (!empty($aValues)){
