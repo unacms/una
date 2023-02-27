@@ -11,7 +11,7 @@ INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `typ
 
 SET @iCategoryIdLocation = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'location');
 
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryIdLocation, 'sys_location_normalize_names', '_adm_stg_cpt_option_sys_location_normalize_names', '', 'checkbox', '', '', '', 60);
 
 -- Forms
