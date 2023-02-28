@@ -206,7 +206,7 @@ class BxDolInstallSiteConfig
             BX_DOL_MODULE_TYPE_TEMPLATE => array(
                 'name' => _t('_sys_inst_conf_field_template'),
                 'desc' => _t('_sys_inst_conf_desc_template'),
-                'def' => 'protean',
+                'def' => 'artificer',
                 'func' => 'rowSelect',
                 'vals' => $this->getSelectValues(BX_DOL_MODULE_TYPE_TEMPLATE),
             ),
