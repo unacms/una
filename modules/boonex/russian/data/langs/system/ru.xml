@@ -82,6 +82,8 @@
 	<string name="_No actions allowed for this membership"><![CDATA[Нет разрешённых действий для данного членства]]></string>
 	<string name="_No such comment"><![CDATA[Нет такого комментария]]></string>
 	<string name="_Ok"><![CDATA[ОК]]></string>
+        <string name="_order_asc"><![CDATA[по возрастанию]]></string>
+        <string name="_order_desc"><![CDATA[по убыванию]]></string>
 	<string name="_Period"><![CDATA[Период]]></string>
 	<string name="_Please Wait"><![CDATA[Пожалуйста, подождите]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Пожалуйста, введите {0}-{1} символов]]></string>
