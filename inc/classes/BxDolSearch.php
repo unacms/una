@@ -504,10 +504,10 @@ class BxDolSearchResult implements iBxDolReplaceable
         $sUnit =  'list';
         if ($this->sUnitViewDefault == 'showcase' || $this->sUnitViewDefault == 'gallery')
             $sUnit = 'card';
-        
         return [
             'module' => $this->oModule->getName(),
             'unit' => 'general-' . $sUnitType . '-' . $sUnit,
+            'mode' => $this->_sMode,
             'data' => $this->decodeData($this->getSearchData()),
             'paginate' => [
                 'num' => $this->aCurrent['paginate']['num'],

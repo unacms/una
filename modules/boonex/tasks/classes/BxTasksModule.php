@@ -411,7 +411,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         if (!$iContentId)
             return false;
 
-		$mixedResult = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTION'])->getConnectedContent($iContentId);
+		$mixedResult = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTION'])->getConnectedInitiators($iContentId);
         if(!$bAsArray) {
 			$s = '';
             foreach ($mixedResult as $mixedProfile) {

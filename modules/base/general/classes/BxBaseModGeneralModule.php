@@ -734,7 +734,18 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceBrowse ($aParams = array())
     {
-        unset($aParams['params']['condition']);
+        if(is_string($aParams)){
+            $aParams = json_decode($aParams, true);
+            if (isset($aParams['params']['paginate'])){
+                //TODO: improve
+                $_GET['start'] = $aParams['params']['paginate']['start'];
+                $_GET['per_page'] = $aParams['params']['paginate']['per_page'];
+            }
+        }
+        
+        if (isset($aParams['params']['condition']))
+            unset($aParams['params']['condition']);
+        
         return $this->serviceBrowseWithCondition ($aParams);
     }
 
@@ -748,7 +759,9 @@ class BxBaseModGeneralModule extends BxDolModule
             'ajax_paginate' => true,
             'class_search_result' => 'SearchResult'
         );
+
         $aParams = array_merge($aDefaults, $aParams);
+        
         return $this->_serviceBrowse ($aParams['mode'], $aParams['params'], $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate'], $aParams['class_search_result']);
     }
 

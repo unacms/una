@@ -33,18 +33,20 @@ class BxDolStorageQuery extends BxDolDb
             return $aTmp;
         
         $aRow = $oDb->getRow($sQuery);
-        $mParams = unserialize($aRow['params']);
-        if ($oDb->isFieldExists($aRow['table_files'], 'dimensions')){
-            $aDim =  ['fields' => ['dimensions' => 'getFileDimensions']];
-            if (is_array($mParams)){
-                $mParams = array_merge($mParams, $aDim);
+        if (isset($aRow['params'])){
+            $mParams = unserialize($aRow['params']);
+            if ($oDb->isFieldExists($aRow['table_files'], 'dimensions')){
+                $aDim =  ['fields' => ['dimensions' => 'getFileDimensions']];
+                if (is_array($mParams)){
+                    $mParams = array_merge($mParams, $aDim);
+                }
+                else{
+                    $mParams = $aDim;
+                }
             }
-            else{
-                $mParams = $aDim;
-            }
+
+            $aRow['params'] = serialize($mParams);
         }
-        
-        $aRow['params'] = serialize($mParams);
         $oDb->setCache('sys_objects_storage_' . $sObject, $aRow);
         return $aRow;
     }
