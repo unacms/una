@@ -504,16 +504,16 @@ class BxDolSearchResult implements iBxDolReplaceable
         $sUnit =  'list';
         if ($this->sUnitViewDefault == 'showcase' || $this->sUnitViewDefault == 'gallery')
             $sUnit = 'card';
+        
         return [
             'module' => $this->oModule->getName(),
             'unit' => 'general-' . $sUnitType . '-' . $sUnit,
-            'mode' => $this->_sMode,
             'data' => $this->decodeData($this->getSearchData()),
-            'paginate' => [
-                'num' => $this->aCurrent['paginate']['num'],
+            'params' => [
                 'per_page' => $this->aCurrent['paginate']['perPage'],
                 'start' => $this->aCurrent['paginate']['start'],
-            ]
+                'type' => $this->_sMode,
+            ],
         ];
     }
 
@@ -1031,7 +1031,7 @@ class BxDolSearchResult implements iBxDolReplaceable
             $iPerPage = $this->iPaginatePerPage;
 
         $this->aCurrent['paginate']['perPage'] = $iPerPage;
-            
+
         $this->aCurrent['paginate']['start'] = isset($this->aCurrent['paginate']['forceStart'])
             ? (int)$this->aCurrent['paginate']['forceStart']
             : (empty($_GET['start']) ? 0 : (int)$_GET['start']);

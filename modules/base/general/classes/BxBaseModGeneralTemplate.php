@@ -116,7 +116,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
         
-        if(!isset($aData[$CNF['FIELD_TEXT']]))
+        if(!isset($CNF['FIELD_TEXT']) || !isset($aData[$CNF['FIELD_TEXT']]))
             return '';
 
         $sResult = $aData[$CNF['FIELD_TEXT']];
