@@ -574,26 +574,26 @@ class BxAclModule extends BxDolModule
             $sLicenseOld = $aMembershipInfo['transaction_id'];
             $aLicenseOld = $this->_oDb->getLicenses(['type' => 'by_license', 'license' => $sLicenseOld]);
 
-            $sPpOrder = '';
+            $sOrderOld = '';
             if(empty($aLicenseOld) || !is_array($aLicenseOld)) {
                 $aOrders = $oPayments->getOrdersInfo(['license' => $sLicenseOld]);
                 if(!empty($aOrders) && is_array($aOrders)) {
                     $aOrder = reset($aOrders);
                     $aPendings = $oPayments->getPendingOrdersInfo(['id' => $aOrder['pending_id']]);
                     if(!empty($aPendings) && is_array($aPendings)) {
-                        $aPpPending = reset($aPendings);
-                        if($aPpPending['type'] == BX_ACL_LICENSE_TYPE_RECURRING)
-                            $sPpOrder = $aPpPending['order'];
+                        $aPending = reset($aPendings);
+                        if($aPending['type'] == BX_ACL_LICENSE_TYPE_RECURRING)
+                            $sOrderOld = $aPending['order'];
                     }
                 }    
             }
             else if($aLicenseOld['type'] == BX_ACL_LICENSE_TYPE_RECURRING)
-                $sPpOrder = $aLicenseOld['order'];
+                $sOrderOld = $aLicenseOld['order'];
 
-            if(!empty($sPpOrder) && (($aResult = $oPayments->cancelSubscription($sPpOrder)) === false || (int)$aResult['code'] != 0)) {
+            if(!empty($sOrderOld) && $sOrderOld != $sOrder && (($aResult = $oPayments->cancelSubscription($sOrderOld)) === false || (int)$aResult['code'] != 0)) {
                 sendMailTemplate($CNF['ETEMPLATE_SBS_CANCEL_REQUIRED'], 0, $iClientId, [
                     'level' => _t($aMembershipInfo['name']),
-                    'order' => $sPpOrder,
+                    'order' => $sOrderOld,
                     'date_starts' => $this->_oConfig->formatDate($aMembershipInfo['date_starts']),
                     'date_expires' => $this->_oConfig->formatDate($aMembershipInfo['date_expires']),
                 ], BX_EMAIL_NOTIFY, true);
