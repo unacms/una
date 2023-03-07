@@ -589,7 +589,7 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_organizations_fans', 'bx_organizations_fans', 1, 1, 'mutual', '', '');
+('bx_organizations_fans', 'bx_organizations_fans', 1, 1, 'mutual', 'BxOrgsConnectionFans', 'modules/boonex/organizations/classes/BxOrgsConnectionFans.php');
 
 
 -- STATS

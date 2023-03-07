@@ -188,12 +188,11 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             return _t('_sys_txt_access_denied');
 
         // check ACL
-        $aCheck = checkActionModule($iInitiator, 'connect', 'system', $isPerformAction);
-        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
+        if(($mixedResult = $this->_checkAllowedConnectInitiator($oInitiator, $isPerformAction)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
 
         // check content's visibility
-        if(($mixedResult = $oContent->checkAllowedProfileView()) !== CHECK_ACTION_RESULT_ALLOWED)
+        if(($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
         if($isSwap)
@@ -205,6 +204,20 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             $isConnected = !$isConnected;
 
         return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    protected function _checkAllowedConnectInitiator ($oInitiator, $isPerformAction = false)
+    {
+        $aCheck = checkActionModule($oInitiator->id(), 'connect', 'system', $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    protected function _checkAllowedConnectContent ($oContent)
+    {
+        return $oContent->checkAllowedProfileView();
     }
 
     /**
