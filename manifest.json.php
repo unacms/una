@@ -16,7 +16,7 @@ require_once('./inc/header.inc.php');
 $aContent = [
     'name' => '',
     'short_name' => '',
-    'start_url' => '/',
+    'start_url' => parse_url(BX_DOL_URL_ROOT, PHP_URL_PATH),
     'display' => 'standalone',
 ];
 

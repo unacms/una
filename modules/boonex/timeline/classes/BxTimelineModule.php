@@ -574,6 +574,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'eval' => $this->_oConfig->getJsObjectView($aParams) . "._onGetPosts(oData)"
         ));
     }
+    
+    function serviceGetPosts($aParams)
+    {
+        if(is_string($aParams)){
+            $aParams = json_decode($aParams, true);
+        }
+
+        return $this->_serviceGetBlockViewByType($aParams['params']);
+    }
 
     public function actionGetPostForm()
     {
@@ -4917,10 +4926,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     protected function _serviceGetBlockViewByType($aBrowseParams = array())
     {
         $aParams = $this->_prepareParams($aBrowseParams);
-
         $this->_iOwnerId = $aParams['owner_id'];
-
-        return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => ['unit' => 'feed', 'data' => $this->_oTemplate->getViewBlock($aParams)]]] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
+        return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => [
+            'unit' => 'feed',  
+            'params' => $aParams,
+            'data' => $this->_oTemplate->getViewBlock($aParams)]],
+        ] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
     }
 
     protected function _getBlockPost($iProfileId, $aParams = array())

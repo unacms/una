@@ -758,10 +758,10 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         if(is_string($aParams)){
             $aParams = json_decode($aParams, true);
-            if (isset($aParams['params']['paginate'])){
+            if (isset($aParams['params'])){
                 //TODO: improve
-                $_GET['start'] = $aParams['params']['paginate']['start'];
-                $_GET['per_page'] = $aParams['params']['paginate']['per_page'];
+                $_GET['start'] = $aParams['params']['start'];
+                $_GET['per_page'] = $aParams['params']['per_page'];
             }
         }
         
