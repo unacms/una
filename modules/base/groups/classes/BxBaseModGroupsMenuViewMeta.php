@@ -34,22 +34,6 @@ class BxBaseModGroupsMenuViewMeta extends BxBaseModProfileMenuViewMeta
 
         return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => '_sys_menu_item_title_sm_members', 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
-
-    protected function _getMenuItemSubscribers($aItem)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(!$this->_bContentPublic || !$this->_oContentProfile)
-            return false;
-
-        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        if(!$oConnection)
-            return false;
-
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
-        
-        return $oConnection->getCounter($this->_oContentProfile->id(), false, ['caption' => '_sys_menu_item_title_sm_subscribers', 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
-    }
 }
 
 /** @} */
