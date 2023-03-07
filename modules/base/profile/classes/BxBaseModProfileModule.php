@@ -1864,6 +1864,28 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     // ====== COMMON METHODS
+    public function onUpdateImage($iContentId, $sFiledName, $sFiledValue, $iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sModule = $this->getName();
+
+        if(!$iProfileId && ($oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule)) !== false)
+            $iProfileId = $oProfile->id();
+
+        $aField2Method = [
+            $CNF['FIELD_PICTURE'] => 'picture',
+            $CNF['FIELD_COVER'] => 'cover',
+        ];
+
+        if(!empty($aField2Method[$sFiledName]))
+            bx_alert($sModule, 'profile_' . $aField2Method[$sFiledName] . '_changed', $sFiledValue, $iProfileId, [
+                'object_author_id' => $iProfileId, 
+                'content' => $iContentId, 
+                'field' => $sFiledName
+            ]);
+    }
+
     protected function _alertParams($aContentInfo)
     {
         $aParams = parent::_alertParams($aContentInfo);

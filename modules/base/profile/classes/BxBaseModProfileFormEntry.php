@@ -218,33 +218,21 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         if(!$bResult) 
             return;
 
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $aField2Method = [
-            $CNF['FIELD_PICTURE'] => 'picture',
-            $CNF['FIELD_COVER'] => 'cover',
-        ];
-
-        if(!empty($aField2Method[$sPictureField]))
-            bx_alert($this->_oModule->getName(), 'profile_' . $aField2Method[$sPictureField] . '_changed', $iFileId, $iProfileId, [
-                'object_author_id' => $iProfileId, 
-                'content' => $iContentId, 
-                'field' => $sPictureField
-            ]);
+        $this->_oModule->onUpdateImage($iContentId, $sPictureField, $iFileId, $iProfileId);
     }
 
     protected function _getProfilePhotoGhostTmplVars($sField, $aContentInfo = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-    	return array (
-			'name' => $this->aInputs[$sField]['name'],
+    	return [
+            'name' => $this->aInputs[$sField]['name'],
             'content_id' => $this->aInputs[$sField]['content_id'],
-			'bx_if:set_thumb' => array (
-				'condition' => false,
-				'content' => array (),
-			),
-		);
+            'bx_if:set_thumb' => [
+                'condition' => false,
+                'content' => [],
+            ]
+        ];
     }
 
     protected function _isAdmin ($iContentId = 0)
