@@ -17,3 +17,11 @@
     display: inline-block;
     float: none;
 }
+
+/*--- Profiles popup ---*/
+.bx-accnt-profiles-popup {
+    max-width: 18rem;
+}
+.bx-accnt-profiles-popup-cnt > span:last-child {
+    display: none;
+}

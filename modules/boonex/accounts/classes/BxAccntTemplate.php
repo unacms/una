@@ -17,35 +17,34 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function getProfilesByAccount($aContentInfo, $iMaxVisible = 2)
+    public function getProfilesByAccount($aContentInfo, $iMaxVisible = 2, $iMaxInPopup = 20)
     {
         $CNF = &$this->_oConfig->CNF;
+        $iMax = $iMaxVisible + $iMaxInPopup;
 
         $aProfiles = BxDolAccount::getInstance($aContentInfo['id'])->getProfiles();
         $iProfiles = count($aProfiles);
 
-        $aTmplVars = array (
+        $aTmplVars = [
             'class_cnt' => '',
-            'bx_repeat:profiles' => array(),
-            'bx_if:profiles_more' => array(
+            'bx_repeat:profiles' => [],
+            'bx_if:profiles_more' => [
                 'condition' => $iProfiles > $iMaxVisible,
-                'content' => array(
+                'content' => [
                     'html_id' => $this->_oConfig->getHtmlIds('profile_more_popup') . $aContentInfo['id'],
                     'more' => _t('_bx_accnt_txt_more', $iProfiles - $iMaxVisible),
                     'more_attr' => bx_html_attribute(_t('_bx_accnt_txt_see_more')),
                     'popup' => '',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        $aTmplVarsPopup = array (
-            'class_cnt' => ' bx-def-padding',
-            'bx_repeat:profiles' => array(),
-            'bx_if:profiles_more' => array(
-                'condition' => false,
-                'content' => array(),
-            ),
-        );
+        $aTmplVarsPopup = [
+            'bx_repeat:profiles' => [],
+        ];
+
+        if($iProfiles > $iMax)
+            $aProfiles = array_slice($aProfiles, 0, $iMax);
 
         $i = 0;
         foreach ($aProfiles as $iProfileId => $aProfile) {
@@ -54,25 +53,24 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
                 continue;
 
             $sName = $oProfile->getDisplayName();
-            $aTmplVarsProfile = array (
+            $aTmplVarsProfile = [
             	'html_id' => $this->_oConfig->getHtmlIds('profile') . $aProfile['id'],
                 'id' => $oProfile->id(),
                 'url' => $oProfile->getUrl(),
                 'name' => strmaxtextlen($sName, $CNF['PARAM_PROFILE_NAME_LENGTH_MAX'], '...'),
-                'name_attr' =>  bx_html_attribute($sName)
-            );
+                'name_attr' => bx_html_attribute($sName)
+            ];
 
             if($i < $iMaxVisible)
-				$aTmplVars['bx_repeat:profiles'][] = $aTmplVarsProfile;
+                $aTmplVars['bx_repeat:profiles'][] = $aTmplVarsProfile;
             if($i >= $iMaxVisible)
                 $aTmplVarsPopup['bx_repeat:profiles'][] = $aTmplVarsProfile;
 
             ++$i;
         }
 
-        if($aTmplVarsPopup['bx_repeat:profiles']) {
-            $aTmplVars['bx_if:profiles_more']['content']['popup'] = BxTemplFunctions::getInstance()->transBox('', $this->parseHtmlByName('profiles.html', $aTmplVarsPopup));
-        }
+        if($aTmplVarsPopup['bx_repeat:profiles'])
+            $aTmplVars['bx_if:profiles_more']['content']['popup'] = BxTemplFunctions::getInstance()->transBox('', $this->parseHtmlByName('profiles_more.html', $aTmplVarsPopup));
 
         return $this->parseHtmlByName('profiles.html', $aTmplVars);
     }
