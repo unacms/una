@@ -14,6 +14,7 @@
     <string name="_bx_events_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_events_option_members_mode"><![CDATA[Special mode for event members]]></string>
     <string name="_bx_events_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
+    <string name="_bx_events_option_reminder_interval"><![CDATA[Reminder Interval]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Public list of interested members]]></string>
     <string name="_bx_events_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
     <string name="_bx_events_option_enable_subscribe_wo_join"><![CDATA[Allow to mark as Interested without joining (marking as Going)]]></string>
@@ -88,7 +89,7 @@
     <string name="_bx_events_form_input_repeat_day_of_week"><![CDATA[Repeat day of week]]></string>
     <string name="_bx_events_form_input_stop_repeating"><![CDATA[Stop repeating]]></string>
 
-<string name="_bx_events_form_price"><![CDATA[Price]]></string>
+    <string name="_bx_events_form_price"><![CDATA[Price]]></string>
     <string name="_bx_events_form_price_display_add"><![CDATA[Add]]></string>
     <string name="_bx_events_form_price_display_edit"><![CDATA[Edit]]></string>
     <string name="_bx_events_form_price_input_sys_id"><![CDATA[ID]]></string>
