@@ -1037,6 +1037,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetCreatePostForm($aParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
     	$aParams = array_merge($this->_aFormParams, $aParams);
 
         $bContext = $aParams['context_id'] !== false;
@@ -1065,6 +1067,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$aResult = $this->getFormPost($aParams);
     	if(!empty($aResult['form'])) {
             $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'];
+
+            if($this->_oConfig->isEditorAutoattach() && !empty($aResult['form_object'])) {
+                $aUploadersInfo = $aResult['form_object']->getUploadersInfo($CNF['FIELD_PHOTO']);
+                if(!empty($aUploadersInfo) && is_array($aUploadersInfo))
+                    $aParams = [
+                        'gparams' => ['sAutoUploader' => $aUploadersInfo['name'], 'sAutoUploaderId' => $aUploadersInfo['id']],
+                        'rparams' => $aParams
+                    ];
+            }
 
             $sCode = '';
             $sCode .= $this->_oTemplate->getJsCodePost($this->_iOwnerId, $aParams, true, $bDynamicMode);
