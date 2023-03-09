@@ -123,7 +123,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
     protected function fetch($aParams = array())
     {
         if(!$this->isAuthorized())
-            return array();
+            return [];
 
         $iTimeout = 120;
         if(ini_get('safe_mode') == 0) {
@@ -132,16 +132,16 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         }
 
         $sHttpCode = null;
-        $sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', $aParams, 'get', array(
+        $sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', $aParams, 'post', [
             'Authorization: Bearer ' . $this->oSession->getValue(self::$sSessionKeyToken),
-        ), $sHttpCode, array(), $iTimeout);
+        ], $sHttpCode, [], $iTimeout);
 
         //echo $sResponse; exit;		//--- Uncomment to debug
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error'])) {
-        	if(isset($aResponse['error']) && $this->isReloginRequired($aResponse['error']))
-        		$this->unsetAuthorizedUser();
+            if(isset($aResponse['error']) && $this->isReloginRequired($aResponse['error']))
+                $this->unsetAuthorizedUser();
 
-			return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
+            return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
         }
 
         return $aResponse['data'];

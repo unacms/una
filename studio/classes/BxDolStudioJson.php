@@ -34,7 +34,7 @@ class BxDolStudioJson extends BxDolFactory implements iBxDolSingleton
 
     public function load($sUrl, $aParams = array())
     {
-        $sContent = bx_file_get_contents($sUrl, $aParams);
+        $sContent = bx_file_get_contents($sUrl, $aParams, 'post');
         if(empty($sContent))
             return false;
 
