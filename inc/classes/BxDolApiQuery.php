@@ -43,12 +43,12 @@ class BxDolApiQuery extends BxDolDb implements iBxDolSingleton
 
     public function getOrigin ($sUrl)
     {
-        return $this->getOne("SELECT `url` FROM `sys_api_origins` WHERE `url` = ?", $sUrl);
+        return $this->getOne("SELECT `url` FROM `sys_api_origins` WHERE `url` = :url", ['url' => $sUrl]);
     }
 
     public function getKey ($sKey)
     {
-        return $this->getOne("SELECT `key` FROM `sys_api_keys` WHERE `key` = ?", $sKey);
+        return $this->getOne("SELECT `key` FROM `sys_api_keys` WHERE `key` = :key", ['key' => $sKey]);
     }
 }
 
