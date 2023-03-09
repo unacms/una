@@ -5977,6 +5977,23 @@ CREATE TABLE `sys_seo_uri_rewrites` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE `sys_api_keys` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `key` varchar(48) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `sys_api_origins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `sys_preloader`
 --
