@@ -1257,6 +1257,7 @@
         <string name="_adm_nav_txt_block_hidden_on_col_half"><![CDATA[Половина]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_wide"><![CDATA[Широкая]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_full"><![CDATA[Полная]]></string>
+        <string name="_adm_page_cpt_api"><![CDATA[API]]></string>
         <string name="_adm_page_cpt_audit"><![CDATA[Аудит]]></string>
         <string name="_adm_page_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Формы]]></string>
@@ -1476,6 +1477,7 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Местоположение]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Социальные настройки]]></string>
+    <string name="_adm_stg_cpt_category_api"><![CDATA[API]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Изменять ширину картинки перед загрузкой (0 - отключить)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Изменять высоту картинки перед загрузкой (0 - отключить)]]></string>    
     <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Код валюты (для платёжных систем)]]></string>
@@ -1685,6 +1687,11 @@
     <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Предварительно загружать формы в асинхронном режиме в "Создать пост" блоках]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Использовать Add2Any код вместо стандартного меню "Поделиться"]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any код]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_enable"><![CDATA[Включить API]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_access_by_origin"><![CDATA[Доступ по "origin" заголовку]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_access_by_key"><![CDATA[Доступ по API ключу]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_access_unsafe_services"><![CDATA[Доступ к небезопасным сервисам]]></string>
+
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
     <string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
     <string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
@@ -1840,6 +1847,7 @@
 	<string name="_adm_txt_show_help"><![CDATA[Помощь]]></string>
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Помошь недоступна]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Демонтировать]]></string>
+        <string name="_adm_wgt_cpt_api"><![CDATA[API]]></string>
         <string name="_adm_wgt_cpt_audit"><![CDATA[Аудит]]></string>
         <string name="_adm_wgt_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Формы]]></string>
@@ -3462,6 +3470,7 @@
 	<string name="_sys_tour_homepage_account_menu_title"><![CDATA[Узнай меню своей учётной записи]]></string>
 	<string name="_sys_tour_homepage_account_menu_txt"><![CDATA[Здесь можно добавлять и управлять профилями, следить за уведомлениями, открывать настройки своей учётной записи. Администраторы и модераторы сайта могут использовать это меню, чтобы открыть приборную панель со ссылками по администрации сайта.]]></string>
 
+    <string name="_sys_txt_api_key"><![CDATA[Ключ API]]></string>
     <string name="_sys_txt_access_denied"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_account_pending"><![CDATA[Ваш аккаунт ожидает одобрения, пожалуйста, дождитесь его активации.]]></string>
     <string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[Это Ваш профиль, Вы можете <a href="{0}">изменить свой текущий профиль</a> на этот]]></string>

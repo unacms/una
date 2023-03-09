@@ -1115,6 +1115,7 @@
 	<string name="_adm_lmi_cpt_levels"><![CDATA[Levels]]></string>
 	<string name="_adm_lmi_cpt_logo"><![CDATA[Logo]]></string>
 	<string name="_adm_lmi_cpt_menus"><![CDATA[Menus]]></string>
+	<string name="_adm_lmi_cpt_origins"><![CDATA[Origins]]></string>
 	<string name="_adm_lmi_cpt_pre_lists"><![CDATA[Data Lists]]></string>
 	<string name="_adm_lmi_cpt_pre_values"><![CDATA[Data Items]]></string>
 	<string name="_adm_lmi_cpt_popular"><![CDATA[Popular]]></string>
@@ -1272,6 +1273,7 @@
         <string name="_adm_nav_txt_block_hidden_on_col_half"><![CDATA[Half]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_wide"><![CDATA[Wide]]></string>
         <string name="_adm_nav_txt_block_hidden_on_col_full"><![CDATA[Full]]></string>
+        <string name="_adm_page_cpt_api"><![CDATA[API]]></string>
         <string name="_adm_page_cpt_audit"><![CDATA[Audit]]></string>
         <string name="_adm_page_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Forms]]></string>
@@ -1497,6 +1499,7 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Location]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Social Settings]]></string>
+    <string name="_adm_stg_cpt_category_api"><![CDATA[API]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Image height to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
@@ -1706,6 +1709,10 @@
     <string name="_adm_stg_cpt_option_sys_create_post_form_preloading_list"><![CDATA[Preload forms asynchronously in "Create Post" blocks]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_enable"><![CDATA[Use Add2Any code instead of default sharing menu]]></string>
     <string name="_adm_stg_cpt_option_sys_a2a_code"><![CDATA[Add2Any code]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_enable"><![CDATA[Enable API]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_access_by_origin"><![CDATA[Allow access by origin]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_access_by_key"><![CDATA[Allow access with API key]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_access_unsafe_services"><![CDATA[Access to unsafe services]]></string>
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
@@ -1862,6 +1869,7 @@
 	<string name="_adm_txt_show_help"><![CDATA[Help]]></string>
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Help is not available]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
+        <string name="_adm_wgt_cpt_api"><![CDATA[API]]></string>
         <string name="_adm_wgt_cpt_audit"><![CDATA[Audit]]></string>
         <string name="_adm_wgt_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Forms]]></string>
@@ -3535,6 +3543,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_tour_homepage_account_menu_title"><![CDATA[Get to know your Account Menu]]></string>
 	<string name="_sys_tour_homepage_account_menu_txt"><![CDATA[Add and manage profiles, check notifications, access account settings. Admins and Moderators can use it to access Dash with links to site content and profiles management.]]></string>
 
+    <string name="_sys_txt_api_key"><![CDATA[API Key]]></string>
 	<string name="_sys_txt_access_denied"><![CDATA[Access denied]]></string>
 	<string name="_sys_txt_account_pending"><![CDATA[Your account is pending approval, please wait until it is activated.]]></string>
 	<string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[This is your profile, you can <a href="{0}">change your current profile</a> to this profile]]></string>
@@ -3660,6 +3669,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>
         <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>
+        <string name="_sys_txt_url"><![CDATA[URL]]></string>
         <string name="_sys_txt_user_n"><![CDATA[User #{0}]]></string>
         <string name="_sys_txt_reports_title"><![CDATA[Reports]]></string>
         <string name="_sys_txt_reports_grid_view_notes"><![CDATA[View notes]]></string>
