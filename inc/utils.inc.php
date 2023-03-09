@@ -2361,7 +2361,7 @@ function bx_api_check_access()
         }
     }
     elseif ($sAuthHeader && getParam('sys_api_access_by_key')) {
-        if (!BxDolApiQuery::getInstance()->getKey($sAuthHeader)) {
+        if (!BxDolApiQuery::getInstance()->getKey(str_replace('Bearer ', '', $sAuthHeader))) {
             header('HTTP/1.0 403 Forbidden');
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
