@@ -696,6 +696,20 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_audit_max_records', '_adm_stg_cpt_option_sys_audit_max_records', '10000', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_audit_days_before_expire', '_adm_stg_cpt_option_sys_audit_days_before_expire', '365', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_audit_acl_levels', '_adm_stg_cpt_option_sys_audit_acl_levels', '7,8', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:0:{}s:5:"class";s:18:"TemplAuditServices";}', '', '', 4);
+
+
+--
+-- CATEGORY (HIDDEN): API
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'api', '_adm_stg_cpt_category_api', 1, 2);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_api_enable', '_adm_stg_cpt_option_sys_api_enable', '', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'sys_api_access_by_origin', '_adm_stg_cpt_option_sys_api_access_by_origin', '', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_api_access_by_key', '_adm_stg_cpt_option_sys_api_access_by_key', '', 'checkbox', '', '', '', 20),
+(@iCategoryId, 'sys_api_access_unsafe_services', '_adm_stg_cpt_option_sys_api_access_unsafe_services', '', 'checkbox', '', '', '', 30);
+
 --
 -- Table structure for table `sys_options_mixes`
 --
@@ -5162,6 +5176,35 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_queues', 'single', 'clear', '', 'eraser', 0, 1, 1);
 
+-- GRID: API Origins
+
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
+('sys_studio_api_origins', 'Sql', 'SELECT * FROM `sys_api_origins` WHERE 1 ', 'sys_api_origins', 'id', 'order', '', '', 20, NULL, 'start', '', 'url', '', 'like', '', '', 'BxDolStudioApiOrigins', '');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
+('sys_studio_api_origins', 'order', '', '1%', 0, 0, '', '', 1),
+('sys_studio_api_origins', 'url', '_sys_txt_url', '80%', 0, 0, '', '', 2),
+('sys_studio_api_origins', 'actions', '', '19%', 0, 0, '', '', 3);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('sys_studio_api_origins', 'single', 'delete', '_Delete', 'remove', 1, 1, 1),
+('sys_studio_api_origins', 'independent', 'add', '_adm_form_btn_field_add', '', 0, 0, 1);
+
+-- GRID: API Keys
+
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
+('sys_studio_api_keys', 'Sql', 'SELECT * FROM `sys_api_keys` WHERE 1 ', 'sys_api_keys', 'id', 'order', '', '', 20, NULL, 'start', '', 'key,title', '', 'like', '', '', 'BxDolStudioApiKeys', '');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `hidden_on`, `order`) VALUES
+('sys_studio_api_keys', 'order', '', '1%', 0, 0, '', '', 1),
+('sys_studio_api_keys', 'title', '_Name', '40%', 0, 0, '', '', 2),
+('sys_studio_api_keys', 'key', '_sys_txt_api_key', '40%', 0, 0, '', '', 3),
+('sys_studio_api_keys', 'actions', '', '19%', 0, 0, '', '', 4);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('sys_studio_api_keys', 'single', 'delete', '_Delete', 'remove', 1, 1, 1),
+('sys_studio_api_keys', 'independent', 'add', '_adm_form_btn_field_add', '', 0, 0, 1);
+
 -- --------------------------------------------------------
 
 
@@ -6267,6 +6310,10 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'badges', '_adm_page_cpt_badges', '_adm_page_cpt_badges', 'wi-badges.svg');
 SET @iIdBadges = LAST_INSERT_ID();
 
+INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
+(3, 'api', '_adm_page_cpt_api', '_adm_page_cpt_api', 'wi-api.svg');
+SET @iIdAPI = LAST_INSERT_ID();
+
 --
 -- Dumping data for table `sys_std_widgets` and `sys_std_pages_widgets`
 -- Home Page
@@ -6346,3 +6393,10 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
 (@iIdBadges, 'system', 'structure', '{url_studio}badges.php', '', 'wi-badges.svg', '_adm_wgt_cpt_badges', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 13);
+
+--
+-- API Page
+--
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdAPI, 'system', 'appearance', '{url_studio}api.php', '', 'wi-api.svg', '_adm_wgt_cpt_api', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
+INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 14);
