@@ -8,46 +8,7 @@ define('BX_API', true);
 
 header('Content-Type: application/json');
 
-if (!getParam('sys_api_enable')) {
-    header('HTTP/1.0 403 Forbidden');
-    echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
-    exit;
-}
-
-$sOriginHeader = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : false;
-$sAuthHeader = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : false;
-
-if (getParam('sys_api_access_by_origin') && $sOriginHeader) {
-
-    if (parse_url($sOriginHeader, PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
-
-        if (!BxDolApiQuery::getInstance()->getOrigin($sOriginHeader)) {
-            header('HTTP/1.0 403 Forbidden');
-            echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
-            exit;
-        }
-
-        header('Access-Control-Allow-Origin: ' . $sOriginHeader);
-        
-        if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
-            header('Access-Control-Allow-Methods: POST, GET');
-            header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
-            exit;
-        }
-    }
-}
-elseif ($sAuthHeader && getParam('sys_api_access_by_key')) {
-    if (!BxDolApiQuery::getInstance()->getKey($sAuthHeader)) {
-        header('HTTP/1.0 403 Forbidden');
-        echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
-        exit;
-    }
-}
-else {
-    header('HTTP/1.0 403 Forbidden');
-    echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
-    exit;
-}
+bx_api_check_access();
 
 $aRequest = isset($_GET['r']) ? explode('/', $_GET['r']) : [];
 

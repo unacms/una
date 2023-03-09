@@ -2330,24 +2330,48 @@ function bx_is_api()
     return defined('BX_API') || bx_get('api') ? true : false;
 }
 
-function bx_api_check_origins()
+function bx_api_check_access()
 {
-    if (isset($_SERVER['HTTP_ORIGIN']) && parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
+    if (!getParam('sys_api_enable')) {
+        header('HTTP/1.0 403 Forbidden');
+        echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
+        exit;
+    }
 
-        $aAllowedOrigins = ['http://app.una.io:3000', 'http://ci.una.io:3000', 'http://localhost:3000', 'http://localhost:3001', 'http://single.me:3000', 'https://una.io']; // TODO: separate config
-        if (!in_array($_SERVER['HTTP_ORIGIN'], $aAllowedOrigins)) {
+    $sOriginHeader = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : false;
+    $sAuthHeader = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : false;
+
+    if (getParam('sys_api_access_by_origin') && $sOriginHeader) {
+
+        if (parse_url($sOriginHeader, PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
+
+            if (!BxDolApiQuery::getInstance()->getOrigin($sOriginHeader)) {
+                header('HTTP/1.0 403 Forbidden');
+                echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
+                exit;
+            }
+
+            header('Access-Control-Allow-Origin: ' . $sOriginHeader);
+            
+            if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
+                header('Access-Control-Allow-Methods: POST, GET');
+                header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
+                exit;
+            }
+        }
+    }
+    elseif ($sAuthHeader && getParam('sys_api_access_by_key')) {
+        if (!BxDolApiQuery::getInstance()->getKey($sAuthHeader)) {
             header('HTTP/1.0 403 Forbidden');
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
-        } 
+        }
+    }
+    else {
+        header('HTTP/1.0 403 Forbidden');
+        echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
+        exit;
 
-        header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
-
-        if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
-            header('Access-Control-Allow-Methods: POST, GET');
-            header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
-            exit;
-        } 
     }
     //TODO: Temporatery for use logged state 
     bx_login(1);
