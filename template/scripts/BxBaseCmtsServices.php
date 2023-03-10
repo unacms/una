@@ -434,14 +434,14 @@ class BxBaseCmtsServices extends BxDol
     
     public function serviceGetDataApi($aParams)
     {
-         if(is_string($aParams))
+if(is_string($aParams))
             $aParams = json_decode($aParams, true);
         
         $aParams['parent_id'] = !isset($aParams['parent_id']) ? 0 : $aParams['parent_id'];
-        $aParams['start_from'] = !isset($aParams['start_from']) ? 0 : $aParams['start_from'];
+        $aParams['start_from'] = !isset($aParams['start_from']) ? -1 : $aParams['start_from'];
         $aParams['order_way'] = !isset($aParams['order_way']) ? 'desc' : $aParams['order_way'];
         $aParams['is_form'] = !isset($aParams['is_form']) ? true : $aParams['is_form'];
-        $aParams['insert'] = 'before';
+        $aParams['insert'] = 'after';
         
         $oCmts = BxDolCmts::getObjectInstance($aParams['module'], $aParams['object_id']);
         
@@ -457,14 +457,19 @@ class BxBaseCmtsServices extends BxDol
         $oForm = $oCmts->getFormPost($aParams['parent_id']);
         $bIsList =  false;
         if (isset($oForm['form']) && $aParams['is_form']){
-            $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $oForm['form']->getCodeAPI(), 'request' => ['immutable' => true]];
+            $aForm = $oForm['form']->getCodeAPI();
+            $aForm['inputs']['cmt_text']['numLines'] = 1;
             
             // add view (form + new comment)
             if($oForm['form']->isSubmittedAndValid()){
-                $aParams['insert'] = $aParams['order_way'] == 'desc' ? 'before' : 'after';
+                $aParams['insert'] = $aParams['order_way'] == 'desc' ? 'after' : 'before';
                 $aParams['comment_id'] = $oForm['res'];
                 $bIsList = true;
+                $aForm['inputs']['cmt_parent_id']['value'] = 0;
             }
+            
+            $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $aForm, 'request' => ['immutable' => true]];
+
             // default view (form + list)
             if (!$oForm['form']->isSubmitted()){
                 $bIsList = true;
@@ -473,7 +478,7 @@ class BxBaseCmtsServices extends BxDol
         else{
             // list only view
             $bIsList = true;                  
-            $aParams['insert'] = 'after';
+            $aParams['insert'] = 'before';
         }
         if ($bIsList)
             $aRv['browse'] = $this->serviceGetCommentsApi($oCmts, $aParams);
@@ -490,30 +495,32 @@ class BxBaseCmtsServices extends BxDol
         $aBp = !isset($aParams['aBp']) ? [] : $aParams['aBp'];
         $aDp = ['in_designbox' => false, 'show_empty' => false];
         
-
-        $aBp['type'] = 'head';
+        $aBp['type'] = 'tail';
         $oCmts->getParams($aBp, $aDp);
         $oCmts->prepareParams($aBp, $aDp);
+        $iInitedStartFrom = $aParams['start_from'];
+        if (isset($aParams['per_view']))
+            $aBp['per_view'] = $aParams['per_view'] ; 
+
+        if ($aParams['start_from'] > -1)
+            $aBp['start'] = $aParams['start_from'] ; 
         
-        $aBp['order']['way'] = $aParams['order_way'];
-        $aBp['order_way'] = $aParams['order_way'];
-        $aBp['start'] = $aParams['start_from'] ; 
-        $aPp = $aBp['per_view'];
-        $aBp['per_view'] =  $aBp['per_view'] + 1; 
-        if (isset($aParams['per_view'])){
-             $aBp['per_view'] = $aParams['per_view'];
-        }
 
         $aCmts = isset($aParams['comment_id']) ? [['cmt_id' => $aParams['comment_id']]] : $oCmts->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
 
-        
+        $iPerView = $aBp['per_view'];
+
         $aParams['start_from'] = 0;
         if (count($aCmts) == $aBp['per_view']){
-            $aBp['per_view'] = $aPp;
-            $aCmts = array_slice($aCmts, 0, $aBp['per_view']); 
-            $aParams['start_from'] = $aBp['start'] + $aBp['per_view'];
+            $aParams['start_from'] = $aBp['start'] - $aBp['per_view'];
+            if($aParams['start_from'] < 0) {
+                $iPerView += $aParams['start_from'];
+                $aParams['start_from'] = 0;
+            }
         }
-            
+        if ($iInitedStartFrom > -1)   
+            $aCmts =array_reverse($aCmts);
+        
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
             $aCmtsRv[] = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
@@ -521,6 +528,8 @@ class BxBaseCmtsServices extends BxDol
         $aData = [
             'unit' => 'comments',
             'start' => $aParams['start_from'],
+            'per_view' => $iPerView,
+            'count' => $aBp['count'],
             'order' => $aParams['order_way'],
             'module' => $oCmts->getSystemName(), 
             'object_id' => $oCmts->getId(),
