@@ -242,7 +242,7 @@ class BxDolVoteReactions extends BxTemplVote
         $iCount = (int)$aVote['count_' . $sReaction];
         $aResult = array(
             'code' => 0,
-            'reaction' => $sReaction,
+            'reaction' => $aReactions[$sSwitchTo]['name'],
             'rate' => $aVote['rate_' . $sReaction],
             'count' => $iCount,
             'countf' => $iCount > 0 ? $this->_getCounterLabel($iCount, array('reaction' => $sReaction)) : '',

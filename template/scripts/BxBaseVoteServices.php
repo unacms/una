@@ -107,21 +107,24 @@ class BxBaseVoteServices extends BxDol
 
     protected function _serviceGetPerformedByReactions($aParams, &$oVote)
     {
-        $sReaction = $aParams['reaction'];
+        $aReactions = !empty($aParams['reaction']) ? [$aParams['reaction']] : $oVote->getReactions();
 
-        $aValues = $oVote->getQueryObject()->getPerformed(['type' => 'by', 'object_id' => $oVote->getId(), 'reaction'=> $sReaction]);
+        $aResult = [];
+        foreach($aReactions as $sReaction) {
+            $aValues = $oVote->getQueryObject()->getPerformed(['type' => 'by', 'object_id' => $oVote->getId(), 'reaction'=> $sReaction]);
 
-        $aTmplUsers = [];
-        foreach($aValues as $mValue) {
-            $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
+            $aTmplUsers = [];
+            foreach($aValues as $mValue) {
+                $mValue = is_array($mValue) ? $mValue : ['author_id' => (int)$mValue, 'reaction' => ''];
 
-            $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+                $aTmplUsers[] = BxDolProfile::getData($mValue['author_id']);
+            }
+
+            $aResult[$sReaction] = $aTmplUsers;
         }
 
         return [
-            'performed_by' => [
-                $sReaction => $aTmplUsers
-            ]
+            'performed_by' => $aResult
         ];
     }
 }
