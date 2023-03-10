@@ -50,8 +50,9 @@ if (is_array($mixedRet) && isset($mixedRet['error'])) {
     header('HTTP/1.0 500 Internal Server Error');
     header('Status: 500 Internal Server Error');
     $a = [
-        'status' => 500, 
-        'error' => isset($mixedRet['desc']) ? $mixedRet['desc'] : $mixedRet['error']
+        'status' => isset($mixedRet['code']) ? $mixedRet['code'] : 500,
+        'error' => isset($mixedRet['desc']) ? $mixedRet['desc'] : $mixedRet['error'],
+        'all' => $mixedRet,
     ];
     if (isset($mixedRet['code']))
         $a['code'] = $mixedRet['code'];

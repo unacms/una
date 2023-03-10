@@ -45,7 +45,7 @@ class BxBaseServicePages extends BxDol
             return $oPage->getPage();
         }
         else {
-            $aRes = ['error' => _t("_sys_request_page_not_found_cpt")];
+            $aRes = ['code' => 404, 'error' => _t("_sys_request_page_not_found_cpt")];
         }
         
         return $aRes;
