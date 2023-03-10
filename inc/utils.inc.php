@@ -2338,8 +2338,15 @@ function bx_api_check_access()
         exit;
     }
 
-    $sOriginHeader = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : false;
-    $sAuthHeader = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : false;
+    $aHeaders = function_exists('getallheaders') ? getallheaders() : false;
+    if ($aHeaders) {
+        $sOriginHeader = isset($aHeaders['Origin']) ? $aHeaders['Origin'] : false;
+        $sAuthHeader = isset($aHeaders['Authorization']) ? $aHeaders['Authorization'] : false;
+    }
+    else {
+        $sOriginHeader = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : false;
+        $sAuthHeader = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : false;
+    }
 
     if (getParam('sys_api_access_by_origin') && $sOriginHeader) {
 
