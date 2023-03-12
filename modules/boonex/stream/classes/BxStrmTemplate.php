@@ -44,9 +44,11 @@ class BxStrmTemplate extends BxBaseModTextTemplate
 
         $CNF = &$this->getModule()->_oConfig->CNF;
 
+        $aAspect = preg_split("/[\/:]+/", trim(getParam('bx_stream_aspect_ratio')), 2, PREG_SPLIT_NO_EMPTY);
         return $this->parseHtmlByName('stream_broadcast_ome.html', array(
             'suffix' => md5($aContentInfo[$CNF['FIELD_KEY']]),
             'broadcast_url' => $oEngine->getWebrtcIngestUrl($aContentInfo[$CNF['FIELD_KEY']]),
+            'aspect_ratio' => $aAspect && is_array($aAspect) && $aAspect[0] && $aAspect[1] ? $aAspect[0] / $aAspect[1] : 0,
             'popup_share' => $this->popupShare($aContentInfo),
             'popup_settings' => $this->popupSettings($aContentInfo),
         ));

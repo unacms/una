@@ -26,6 +26,7 @@
     <string name="_bx_stream_option_dash_enabled"><![CDATA[Enable MPEG-DASH streaming]]></string>
     <string name="_bx_stream_option_hls_enabled"><![CDATA[Enable HLS streaming]]></string>
     <string name="_bx_stream_option_recordings_url"><![CDATA[Base URL for recordings (experimental)]]></string>
+    <string name="_bx_stream_option_aspect_ratio"><![CDATA[Preferable video aspect ratio (must match transcoding resolution aspect ratio)]]></string>
     <string name="_bx_stream_option_enable_auto_approve"><![CDATA[Auto approve a stream after creation]]></string>
     <string name="_bx_stream_option_summary_chars"><![CDATA[Number of characters in auto-cropped stream summary]]></string>
     <string name="_bx_stream_option_plain_summary_chars"><![CDATA[Number of characters in plain stream description when stream hasn't thumb]]></string>

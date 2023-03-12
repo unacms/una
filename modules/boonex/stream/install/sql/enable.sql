@@ -19,7 +19,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stream_sources_pattern', '', @iCategId, '_bx_stream_option_sources_pattern', 'text', '', '', '', 24),
 ('bx_stream_dash_enabled', '', @iCategId, '_bx_stream_option_dash_enabled', 'checkbox', '', '', '', 26),
 ('bx_stream_hls_enabled', '', @iCategId, '_bx_stream_option_hls_enabled', 'checkbox', '', '', '', 28),
-('bx_stream_recordings_url', '', @iCategId, '_bx_stream_option_recordings_url', 'digit', '', '', '', 30);
+('bx_stream_recordings_url', '', @iCategId, '_bx_stream_option_recordings_url', 'digit', '', '', '', 30),
+('bx_stream_aspect_ratio', '', @iCategId, '_bx_stream_option_aspect_ratio', 'digit', '', '', '', 40);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_stream_engine_ome', '_bx_stream_options_cat_engine_ome', 2);

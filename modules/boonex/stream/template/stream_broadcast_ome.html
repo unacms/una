@@ -84,6 +84,8 @@ __popup_settings__
                     exact: videoDeviceId
                 }
             };
+            if (__aspect_ratio__)
+                newConstraint.video[aspectRatio] = {ideal: __aspect_ratio__};
         }
 
         if (audioDeviceId) {
