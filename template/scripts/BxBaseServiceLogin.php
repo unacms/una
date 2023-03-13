@@ -32,7 +32,8 @@ class BxBaseServiceLogin extends BxDol
      * @see BxBaseServiceLogin::serviceTest
      */
     /** 
-     * @ref bx_system_general-create_account_form "create_account_form"
+     * @ref bx_system_general-test "test"
+     * @api @ref bx_system_general-test "test"
      */
     public function serviceTest ($n = 1)
     {
@@ -141,12 +142,18 @@ class BxBaseServiceLogin extends BxDol
      */
     /** 
      * @ref bx_system_general-login_form "login_form"
+     * @api @ref bx_system_general-login_form "login_form"
      */
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
         if (isLogged() && 'login' == bx_get('i')) {
-            header('Location: ' . BX_DOL_URL_ROOT);
-            exit;
+            if (!bx_is_api()) {
+                header('Location: ' . BX_DOL_URL_ROOT);
+                exit;
+            } 
+            else {
+                return null;
+            }
         }
 
         $oPemalink = BxDolPermalinks::getInstance();

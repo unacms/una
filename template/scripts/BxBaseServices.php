@@ -56,6 +56,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'Test' => 'BxBaseServiceLogin',
             'MemberAuthCode' => 'BxBaseServiceLogin',
             'LoginForm' => 'BxBaseServiceLogin',
+            'LoginFormOnly' => 'BxBaseServiceLogin',
         
             'KeywordsCloud' => 'BxBaseServiceMetatags',
 
