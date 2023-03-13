@@ -10,6 +10,8 @@ header('Content-Type: application/json');
 
 bx_api_check_access();
 
+// prepare params
+
 $aRequest = isset($_GET['r']) ? explode('/', $_GET['r']) : [];
 
 $a = ['sModule', 'sMethod', 'sClass'];
@@ -29,12 +31,35 @@ foreach ($a as $v) {
     }
 }
 
+// check if service exists
+
 if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass)) {
     header('HTTP/1.0 404 Not Found');
     header('Status: 404 Not Found');
     echo json_encode(['status' => 404, 'error' => _t("_sys_request_page_not_found_cpt")]);
     exit;
 }
+
+// check if service is safe
+
+if (!getParam('sys_api_access_unsafe_services')) {
+    $b = BxDolRequest::serviceExists($sModule, 'is_safe_service', 'system' == $sModule ? 'TemplServices' : $sClass);
+    $bSafe = $b ? BxDolService::call($sModule, 'is_safe_service', array($sMethod), 'system' == $sModule ? 'TemplServices' : $sClass) : false;
+
+    $bPublic = false;
+    if (!$bSafe) {
+        $b = BxDolRequest::serviceExists($sModule, 'is_public_service', 'system' == $sModule ? 'TemplServices' : $sClass);
+        $bPublic = $b ? BxDolService::call($sModule, 'is_public_service', array($sMethod), 'system' == $sModule ? 'TemplServices' : $sClass) : false;
+    } 
+    if (!$bPublic && !$bSafe) {
+        header('HTTP/1.0 403 Forbidden');
+        header('Status: 403 Forbidden');
+        echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
+        exit;
+    }
+}
+
+// call service
 
 if (!($aParams = bx_get('params')))
     $aParams = array();
@@ -46,13 +71,14 @@ if (!is_array($aParams))
 
 $mixedRet = BxDolService::call($sModule, $sMethod, $aParams, $sClass);
 
+// check output and return JSON
+
 if (is_array($mixedRet) && isset($mixedRet['error'])) { 
     header('HTTP/1.0 500 Internal Server Error');
     header('Status: 500 Internal Server Error');
     $a = [
         'status' => isset($mixedRet['code']) ? $mixedRet['code'] : 500,
         'error' => isset($mixedRet['desc']) ? $mixedRet['desc'] : $mixedRet['error'],
-        'all' => $mixedRet,
     ];
     if (isset($mixedRet['code']))
         $a['code'] = $mixedRet['code'];

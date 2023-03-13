@@ -28,6 +28,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         return array (
             'GetProductsNames' => 'BxBaseServices',
+            'GetPageByRequest' => 'BxBaseServicePages',
         );
     }
 
