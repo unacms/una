@@ -177,7 +177,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Check whether connection between Initiator and Content can be established.
      */
-    public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)
+    public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
     {
         if(!$iInitiator || !$iContent || $iInitiator == $iContent)
             return _t('_sys_txt_access_denied');
@@ -194,6 +194,9 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         // check content's visibility
         if(($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
+
+        if(!$isCheckExists)
+            return CHECK_ACTION_RESULT_ALLOWED;
 
         if($isSwap)
             $isConnected = $this->isConnected($iContent, $iInitiator, $isMutual);
@@ -272,7 +275,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if(!$iContent || !$iInitiator)
             return ['err' => true, 'msg' => _t('_sys_conn_err_input_data_is_not_defined')];
 
-        if(($mixedResult = $this->checkAllowedConnect($iInitiator, $iContent, false, false, $isInvert)) !== CHECK_ACTION_RESULT_ALLOWED)
+        $sMethodCheck = 'checkAllowed' . bx_gen_method_name($sMethod);
+        if(($mixedResult = $this->{method_exists($this, $sMethodCheck) ? $sMethodCheck : 'checkAllowedConnect'}($iInitiator, $iContent, false, false, $isInvert)) !== CHECK_ACTION_RESULT_ALLOWED)
             return ['err' => true, 'msg' => $mixedResult];
 
         if (!$this->$sMethod((int)$iInitiator, (int)$iContent)) {

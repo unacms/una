@@ -189,28 +189,33 @@ class BxDolRelation extends BxDolConnection
     /**
      * Check whether connection between Initiator and Content can be established.
      */
-    public function checkAllowedConnect($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)
+    public function checkAllowedConnect($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
     {
         if(!$this->isRelationAvailable($iInitiator, $iContent))
             return _t('_sys_txt_access_denied');
 
-        $mixedResult = $this->checkAllowedConnectCustom($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap);
+        $mixedResult = $this->checkAllowedConnectCustom($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, $isCheckExists);
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
-        return parent::checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap);
+        return parent::checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, $isCheckExists);
     }
 
     /**
      * Custom check action method which can be overwritten.
      * Currently only friends can establish relations.
      */
-    public function checkAllowedConnectCustom($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)
+    public function checkAllowedConnectCustom($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
     {
         if(!BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iInitiator, $iContent, true))
             return _t('_sys_txt_access_denied');
 
         return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedConfirmConnection($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
+    {
+        return $this->checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap, false);
     }
 
     public function isRelationAvailableFromProfile($sModule)
