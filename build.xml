@@ -92,9 +92,13 @@
         <exclude name="plugins_public/**" />
         <exclude name="modules/boonex/sites/**" />
         <exclude name="modules/boonex/membership_pricing/**" />
+        <exclude name="modules/boonex/analytics/plugins/**" />
+        <exclude name="modules/boonex/editor/plugins/**" />
+        <exclude name="modules/boonex/massmailer/plugins/**" />
         <exclude name="modules/boonex/froala/plugins/**" />
         <exclude name="modules/boonex/media/plugins/**" />
         <exclude name="modules/boonex/plyr/plugins/**" />
+        <exclude name="modules/boonex/xero/plugins/**" />
         <exclude name="**/updates/**" />        
     </fileset>
 
