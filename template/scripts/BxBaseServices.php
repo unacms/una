@@ -69,6 +69,9 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
             'GetCartItemsCount' => 'BxBasePaymentsServices',
             'GetOrdersCount' => 'BxBasePaymentsServices',
+
+            'Do' => 'BxBaseVoteServices',
+            'GetPerformedBy' => 'BxBaseVoteServices'
         );
     }
 
