@@ -192,10 +192,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(empty($iProfileId) || empty($CNF[$sCnfKey]) || !is_array($CNF[$sCnfKey]))
             return false;
 
-        if(in_array(BxDolProfile::getInstance($iProfileId)->getModule(), $CNF[$sCnfKey]))
-            return true;
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return false;
 
-        return false;
+        if(!in_array($oProfile->getModule(), $CNF[$sCnfKey]))
+            return false;
+
+        return true;
     }
 
     /**
@@ -204,7 +208,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function serviceIsFan ($iGroupProfileId, $iProfileId = false) 
     {
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
-        return $this->isFan($oGroupProfile->getContentId(), $iProfileId);
+        return $oGroupProfile !== false && $this->isFan($oGroupProfile->getContentId(), $iProfileId);
     }
 
     /**
@@ -216,6 +220,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $iProfileId = bx_get_logged_profile_id();
 
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        if(!$oGroupProfile)
+            return false;
 
         $iGroupContentId = $oGroupProfile->getContentId();
         if(!$this->isFan($iGroupContentId, $iProfileId))
