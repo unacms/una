@@ -575,6 +575,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
     
+  
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_posts get_posts
+     * 
+     * @code bx_srv('bx_timeline', 'get_posts', [...]); @endcode
+     * 
+     * Get a posts list for API.
+     *
+     * @return an array 
+     * 
+     * @see BxTimelineModule::serviceGetPosts
+     */
+     /** 
+     * @ref bx_timeline-get_posts "get_posts"
+     * @api @ref bx_timeline-get_posts "get_posts"
+     */
+    
     function serviceGetPosts($aParams)
     {
         if(is_string($aParams)){
@@ -885,6 +905,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewHotOutline' => '',
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
+            'GetPosts' => '','
         ));
     }
 
