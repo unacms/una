@@ -905,7 +905,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewHotOutline' => '',
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
-            'GetPosts' => '','
+            'GetPosts' => ''
         ));
     }
 
