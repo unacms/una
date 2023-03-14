@@ -481,7 +481,6 @@ class BxBaseCmtsServices extends BxDol
             $aForm['inputs']['cmt_text']['autoheight'] = true;
             $aForm['inputs']['cmt_submit']['icon'] = 'contact';
             $aForm['inputs']['cmt_submit']['rounded'] = true;
-            $aForm['inputs']['cmt_submit']['value'] = '';
             
             // add view (form + new comment)
             if($oForm['form']->isSubmittedAndValid()){
