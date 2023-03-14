@@ -432,6 +432,25 @@ class BxBaseCmtsServices extends BxDol
         );
     }
     
+    /**
+     * @page service Service Calls
+     * @section bx_system_cmts System Services 
+     * @subsection bx_system_cmts-general General
+     * @subsubsection bx_system_cmts-get_data_api get_data_api
+     * 
+     * @code bx_srv('system', 'get_data_api', [], 'TemplCmtsServices'); @endcode
+     * 
+     * Get comments data
+     * @param $aParams array with paramenters :
+     *         "module":"bx_posts","object_id":3,"start_from":5,"order_way":"desc","is_form":false
+     * 
+     * @see TemplCmtsServices::serviceGetDataApi
+     */
+    /** 
+     * @ref bx_system_cmts-get_data_api "get_data_api"
+     * @api @ref bx_system_cmts-get_data_api "get_data_api"
+     */
+    
     public function serviceGetDataApi($aParams)
     {
         if(is_string($aParams))
@@ -460,8 +479,10 @@ class BxBaseCmtsServices extends BxDol
             $aForm = $oForm['form']->getCodeAPI();
             $aForm['inputs']['cmt_text']['numLines'] = 1;
             $aForm['inputs']['cmt_text']['autoheight'] = true;
-            $aForm['inputs']['cmt_submit']['value'] = '>';
-           // print_r($aForm['inputs']);
+            $aForm['inputs']['cmt_submit']['icon'] = 'contact';
+            $aForm['inputs']['cmt_submit']['rounded'] = true;
+            $aForm['inputs']['cmt_submit']['value'] = '';
+            
             // add view (form + new comment)
             if($oForm['form']->isSubmittedAndValid()){
                $aParams['insert'] = $aParams['order_way'] == 'desc' ? 'after' : 'before';
