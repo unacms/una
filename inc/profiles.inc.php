@@ -127,6 +127,9 @@ function bx_login($iId, $bRememberMe = false)
  */
 function bx_logout($bNotify = true)
 {
+    if (!isset($_COOKIE['memberID']))
+        return;
+
     if ($bNotify && isMember())
         bx_alert('account', 'logout', (int)$_COOKIE['memberID']);
 

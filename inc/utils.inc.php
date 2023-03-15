@@ -2280,14 +2280,14 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
     }
 
     if ('auto' === $sPath)
-        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) && !bx_is_api() ? $aUrl['path'] : '/';
 
     if ('auto' === $bSecure)
         $bSecure = 0 === strcasecmp('https', $aUrl['scheme']);
 
     if (PHP_VERSION_ID < 70300) {
-        if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName))
-            $sPath .= '; SameSite=' . getParam('sys_samesite_cookies');
+        if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName || bx_is_api()))
+            $sPath .= '; SameSite=' . (bx_is_api() ? 'None' : getParam('sys_samesite_cookies'));
         return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
     } 
     else {
@@ -2298,8 +2298,8 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
             'secure' => $bSecure, 
             'httponly' => $bHttpOnly,
         ];
-        if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
-            $aOptions['samesite'] = getParam('sys_samesite_cookies');
+        if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName || bx_is_api()))
+            $aOptions['samesite'] = bx_is_api() ? 'None' : getParam('sys_samesite_cookies');
 
         return setcookie($sName, $sValue, $aOptions);
     }
@@ -2364,10 +2364,11 @@ function bx_api_check_access()
             }
 
             header('Access-Control-Allow-Origin: ' . $sOriginHeader);
-            
+            header('Access-Control-Allow-Credentials: true');
+
             if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
                 header('Access-Control-Allow-Methods: POST, GET');
-                header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');                    
+                header('Access-Control-Allow-Headers: Accept-Encoding, Authorization, Cache-Control, Connection, Host, Origin, Pragma, Referer, User-Agent, X-Custom-Header, X-Requested-With');
                 exit;
             }
         }
@@ -2386,8 +2387,8 @@ function bx_api_check_access()
 
     }
     //TODO: Temporatery for use logged state 
-    bx_login(1);
-    check_logged();
+    //bx_login(1);
+    //check_logged();
 }
 
 function bx_api_get_image($sStorage, $iId)
