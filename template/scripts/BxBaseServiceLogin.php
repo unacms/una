@@ -154,7 +154,7 @@ class BxBaseServiceLogin extends BxDol
             else {
                 return [
                     ['id' => 1, 'type' => 'msg', 'data' => 'You are already logged in 🐵! Redirecting...'],
-                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 1000]],
+                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 3000]],
                 ];
             }
         }
@@ -307,6 +307,38 @@ class BxBaseServiceLogin extends BxDol
             header('Location: ' . $sUrlRelocate);
         } 
         return $oForm->getCode();
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-login Login
+     * @subsubsection bx_system_general-logout logout
+     * 
+     * @code bx_srv('system', 'logout', [], 'TemplServiceLogin'); @endcode
+     * 
+     * Logout
+     * 
+     * @see BxBaseServiceLogin::serviceLogout
+     */
+    /** 
+     * @ref bx_system_general-logout "logout"
+     * @api @ref bx_system_general-logout "logout"
+     */
+    public function serviceLogout ()
+    {
+        bx_logout();
+
+        if (bx_is_api()) {
+            return [
+                ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home']],
+            ];
+        }
+        else {
+            header("Location: " . BX_DOL_URL_ROOT);
+        }
+        
+        return true;
     }
 }
 

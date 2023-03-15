@@ -3234,6 +3234,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_block_title_system_cmts_view"><![CDATA[View Comment]]></string>
     <string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
     <string name="_sys_page_block_title_system_audit_administration"><![CDATA[Audit]]></string>
+    <string name="_sys_page_block_title_logout"><![CDATA[Log out]]></string>
     <string name="_sys_page_block_title_login"><![CDATA[Log in]]></string>
     <string name="_sys_page_block_title_login_step2"><![CDATA[Log in - step 2]]></string>
     <string name="_sys_page_block_title_login_step3"><![CDATA[Log in - step 3]]></string>
@@ -3276,6 +3277,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_title_dashboard"><![CDATA[Dashboard]]></string>
     <string name="_sys_page_title_forgot_password"><![CDATA[Forgot Password]]></string>
     <string name="_sys_page_title_home"><![CDATA[{site_title} :: Homepage]]></string>
+    <string name="_sys_page_title_logout"><![CDATA[Log out]]></string>
     <string name="_sys_page_title_login"><![CDATA[Log in]]></string>
     <string name="_sys_page_title_login_step2"><![CDATA[Log in - step 2]]></string>
     <string name="_sys_page_title_login_step3"><![CDATA[Log in - step 3]]></string>
