@@ -152,7 +152,10 @@ class BxBaseServiceLogin extends BxDol
                 exit;
             } 
             else {
-                return null;
+                return [
+                    ['id' => 1, 'type' => 'msg', 'data' => 'You are already logged in 🐵! Redirecting...'],
+                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 1000]],
+                ];
             }
         }
 
@@ -168,6 +171,24 @@ class BxBaseServiceLogin extends BxDol
                 $oForm->aInputs['relocate']['value'] = $sForceRelocate;
             elseif ('homepage' == $sForceRelocate)
                 $oForm->aInputs['relocate']['value'] = BX_DOL_URL_ROOT;
+        }
+
+        if (bx_is_api()) {   
+            
+            if ($oForm->isSubmittedAndValid()) {
+                $oAccount = BxDolAccount::getInstance(trim($oForm->getCleanValue('ID')));
+                bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
+                return [
+                    ['id' => 1, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 1000]],
+                    ['id' => 2, 'type' => 'login', 'data' => ['session' => BxDolSession::getInstance()->getId()]],
+                    ['id' => 3, 'type' => 'msg', 'data' => 'Login Success 👍! Redirecting...'],
+                ];
+            } 
+            else {
+                return getParam('sys_account_disable_login_form') ? null : [
+                    ['id' => 1, 'type' => 'form', 'data' => $oForm->getCodeAPI(), 'request' => ['url' => '/api.php?r=system/login_form/TemplServiceLogin', 'immutable' => true]],
+                ];
+            }
         }
 
         $aTmplVarsForm = [];

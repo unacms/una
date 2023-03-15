@@ -50,6 +50,7 @@ class BxContactModule extends BxDolModule
      */
     /** 
      * @ref bx_contact-get_block_form "get_block_form"
+     * @api @ref bx_contact-get_block_form "get_block_form"
      */
     public function serviceGetBlockForm()
     {
