@@ -261,6 +261,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
     {
         return $this->_call('get_thumb', $iContentId);
     }
+    
+    public function getContentCover ($iContentId)
+    {
+        return $this->_call('get_cover', $iContentId);
+    }
 
     public function getContentLink ($iContentId)
     {

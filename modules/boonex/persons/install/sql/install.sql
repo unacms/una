@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_pictures` (
   `mime_type` varchar(128) NOT NULL,
   `ext` varchar(32) NOT NULL,
   `size` bigint(20) NOT NULL,
+  `dimensions` varchar(12) NOT NULL,
   `added` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `private` int(11) NOT NULL,

@@ -233,6 +233,24 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         return true;
     }
+    
+    function decodeData ($a)
+    {
+        $oContentInfo = $this->getContentInfoObject();
+        $CNF = $this->oModule->_oConfig->CNF;
+        
+        foreach ($a as $i => $r) {
+            if (isset($r['author']))
+                $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
+
+            $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
+            $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
+            $a[$i]['cover'] = $oContentInfo->getContentCover($r['id']);
+            $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+        }
+
+        return $a;
+    }
 	
 	function getItemPerPageInShowCase ()
     {

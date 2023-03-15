@@ -139,11 +139,32 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
     {
         $CNF = &$this->_oConfig->CNF;
+        
+        if(bx_is_api()){
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            return bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_PICTURE']]);
+        }
 
         if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']))
             $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'];
 
         $mixedResult = $this->_getFieldValueThumb('FIELD_PICTURE', $iContentId, $sTranscoder);
+        return $mixedResult !== false ? $mixedResult : '';
+    }
+    
+    public function serviceGetCover ($iContentId, $sTranscoder = '') 
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        if(bx_is_api()){
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            return bx_api_get_image($CNF['OBJECT_STORAGE'], $aContentInfo[$CNF['FIELD_COVER']]);
+        }
+
+        if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER']))
+            $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_COVER'];
+
+        $mixedResult = $this->_getFieldValueThumb('FIELD_COVER', $iContentId, $sTranscoder);
         return $mixedResult !== false ? $mixedResult : '';
     }
 
