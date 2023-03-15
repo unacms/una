@@ -734,7 +734,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         //--- After: Check for Previous
         if($bPrevious) {
             $aEvent = array_shift($aEvents);
-            $iDays = (int)$aEvent['days'];
+            if ($aEvent)
+                $iDays = (int)$aEvent['days'];
         }
 
         //--- After: Check for Next
@@ -2670,7 +2671,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst) || $iTotal == 2)
                 $sImageSrcKeyCur = $sImageSrcKeyBig;
 
-            $sImageSrc = !empty($aImage[$sImageSrcKeyCur]) ? $aImage[$sImageSrcKeyCur] : $aImage[$sImageSrcKeyDefault];
+            if (is_array($aImage))
+                $sImageSrc = !empty($aImage[$sImageSrcKeyCur]) ? $aImage[$sImageSrcKeyCur] : $aImage[$sImageSrcKeyDefault];
             if(empty($sImageSrc))
                 continue;
 
