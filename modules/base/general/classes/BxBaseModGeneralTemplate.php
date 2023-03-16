@@ -382,6 +382,40 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $mixedStorage = array($mixedStorage);
 
         $aResult = array();
+        
+        if (bx_is_api()){
+            foreach($mixedStorage as $sStorage) {
+                $aAttachments = $this->getAttachments($sStorage, $aData, $aParams);
+                if ($aAttachments){
+                    foreach($aAttachments as $aAttachment) {
+                        $aItem = [
+                            'file_name' => $aAttachment['file_name'],
+                            'mime_type' => $aAttachment['mime_type'],
+                            'ext' => $aAttachment['ext'],
+                            'type' => 'other',
+                            'size' => $aAttachment['size'],
+                            'url' => $aAttachment['bx_if:not_image']['content']['url_original']
+                        ];
+                        if ($aAttachment['bx_if:image']['condition'] == 1){
+                            $aItem['type'] = 'image';
+                            $aItem['data'] = bx_api_get_image($sStorage, $aAttachment['id']);
+                        }
+                        if ($aAttachment['bx_if:video']['condition'] == 1){
+                            $aItem['type'] = 'video';
+                            $aItem['data'] = bx_api_get_image($sStorage, $aAttachment['id']);
+                        }
+                        if ($aAttachment['bx_if:sound']['condition'] == 1){
+                            $aItem['type'] = 'sound';
+                            $aItem['data'] = bx_api_get_image($sStorage, $aAttachment['id']);
+                        }
+                        
+                        $aResult[] = $aItem;
+                    }
+                }
+            }
+            return [bx_api_get_block('entity_attachments', $aResult)];
+        }
+        
         foreach($mixedStorage as $sStorage) {
             $aAttachments = $this->getAttachments($sStorage, $aData, $aParams);
             if(empty($aAttachments) || !is_array($aAttachments))
@@ -390,6 +424,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $aResult = array_merge($aResult, $aAttachments);
         }
 
+        
+        
         if(empty($aResult) || !is_array($aResult))
             return '';
 

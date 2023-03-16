@@ -975,7 +975,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return false;
 
         list($iContentId, $aContentInfo) = $mixedContent;
-
+        
+        if(bx_is_api()){
+            $aContentInfo['cover'] = $this->serviceGetCover($iContentId);
+            $aContentInfo['image'] = $this->serviceGetThumb($iContentId);
+            return [bx_api_get_block('entity_cover', $aContentInfo)];
+        }
+        
         return $this->_oTemplate->getBlockCover($aContentInfo, $aParams);
     }
     

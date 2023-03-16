@@ -417,9 +417,9 @@ class BxBasePage extends BxDolPage
     {
         $aFieldsUnset = array('cell_id', 'active', 'copyable', 'deletable', 'object', 'text', 'text_updated', 'title_system', 'visible_for_levels');
         $aCells = $this->_oQuery->getPageBlocks();
-        foreach ($aCells as $sKey => $aCell) {
-            foreach ($aCell as $i => $aBlock) {                
-                if (!$this->_isVisibleBlock($aBlock)){
+        foreach ($aCells as $sKey => &$aCell) {
+            foreach ($aCell as $i => $aBlock) {     
+                if (!$this->_isVisibleBlock($aBlock) || (bx_is_api() && $aCells[$sKey][$i]['hidden_on'] > 0 && ((int)$aCells[$sKey][$i]['hidden_on'] & 8) > 0)){
                     unset($aCells[$sKey][$i]);
                 }
                 else{
@@ -434,6 +434,8 @@ class BxBasePage extends BxDolPage
                 }
             }
         }
+        
+        $aCells = array_map('array_values', $aCells);
         return $aCells;
     }
 

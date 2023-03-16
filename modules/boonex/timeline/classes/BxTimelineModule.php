@@ -4959,10 +4959,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $aParams = $this->_prepareParams($aBrowseParams);
         $this->_iOwnerId = $aParams['owner_id'];
-        return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => [
+
+        return bx_is_api() ? [bx_api_get_block('browse', [
             'unit' => 'feed',  
             'params' => $aParams,
-            'data' => $this->_oTemplate->getViewBlock($aParams)]],
+            'data' => $this->_oTemplate->getViewBlock($aParams)]),
         ] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
     }
 
@@ -5018,6 +5019,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         if (!$sContent)
             $sContent = $this->_oTemplate->getViewBlock($aParams);
+        
+        if(bx_is_api())
+            return [bx_api_get_block('browse', [
+                'unit' => 'feed',  
+                'params' => $aParams,
+                'data' => $sContent
+            ])];
 
         BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view'), $sRssUrl);
 

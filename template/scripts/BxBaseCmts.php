@@ -1167,11 +1167,11 @@ class BxBaseCmts extends BxDolCmts
             else
                 $sMsg = $this->msgErrPostAllowed();
 
-            return bx_is_api() ? ['id' => 1, 'type' => 'msg', 'data' => $sMsg] : ['msg' => $sMsg];
+            return bx_is_api() ? bx_api_get_msg($sMsg) : ['msg' => $sMsg];
         }
 
         if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
-            return bx_is_api() ? ['id' => 1, 'type' => 'msg', 'data' => $sMsg] : ['msg' => $this->msgErrReplyAllowed()];
+            return bx_is_api() ? bx_api_get_msg($sMsg) : ['msg' => $this->msgErrReplyAllowed()];
 
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
@@ -1259,7 +1259,7 @@ class BxBaseCmts extends BxDolCmts
                     }
                 }
             }
-            return bx_is_api() ? ['id' => 1, 'type' => 'msg', 'data' => _t('_cmt_err_cannot_perform_action')] : ['msg' => _t('_cmt_err_cannot_perform_action')];
+            return bx_is_api() ? bx_api_get_msg('_cmt_err_cannot_perform_action') : ['msg' => _t('_cmt_err_cannot_perform_action')];
         }
         return bx_is_api() ? ['form' => $oForm, 'res' => 0] : ['form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id];
     }

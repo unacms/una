@@ -1232,7 +1232,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $aResult = [];
         if(is_a($mixedResult, 'BxTemplFormView'))
-            $aResult = ['id' => 1, 'type' => 'form', 'data' => $mixedResult->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_edit', 'immutable' => true]];
+            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_edit', 'immutable' => true]]]);
         else
             $aResult = $mixedResult;
 
@@ -1265,7 +1265,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $aResult = [];
         if(is_a($mixedResult, 'BxTemplFormView'))
-            $aResult = ['id' => 1, 'type' => 'form', 'data' => $mixedResult->getCodeAPI(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_delete', 'immutable' => true]];
+            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_delete', 'immutable' => true]]]);
         else
             $aResult = $mixedResult;
 
@@ -1502,7 +1502,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $mixedResult = $this->getEntryAllActions($mixedContent, $aParams);
 
         if(bx_is_api())
-            return [['id' => 1, 'type' => 'actions', 'data' => $mixedResult]];
+            return [bx_api_get_block('entity_actions', $mixedResult)];
         else
             return $this->_oTemplate->entryAllActions($mixedResult);
     }
@@ -2761,7 +2761,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
-            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => $sMsg]] : MsgBox($sMsg);
+            return bx_is_api() ? [bx_api_get_msg($sMsg)] : MsgBox($sMsg);
 
         bx_import($sClassSearchResult, $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
@@ -2778,7 +2778,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 
         if ($s = $o->processing())
-            return bx_is_api() ? [['id' => 1, 'type' => 'browse', 'data' => $s]] : $s;
+            return bx_is_api() ? [bx_api_get_block('browse', $s)] : $s;
         else
             return '';
     }

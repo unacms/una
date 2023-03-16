@@ -179,7 +179,7 @@ class BxBaseVote extends BxDolVote
             return;
 
         if(!$this->isEnabled())
-            return ['id' => 1, 'type' => 'msg', 'data' => _t('_vote_err_not_enabled')];
+            return bx_api_get_msg('_vote_err_not_enabled');
 
         $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
 
@@ -208,7 +208,7 @@ class BxBaseVote extends BxDolVote
         $aLegend = $bLegend ? $this->getLegend($aParams) : [];
 
         if(!$bDoVote && !$bCounter && !$bLegend)
-            return ['id' => 1, 'type' => 'msg', 'data' => ''];
+            return bx_api_get_msg('');
 
         return [
             'type' => $this->_sType,

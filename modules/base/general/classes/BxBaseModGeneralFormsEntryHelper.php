@@ -152,7 +152,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $sMsgCnt = $sMsg;
         
         if ($sMsgCnt)
-            return bx_is_api() ? [['id' => 1, 'type' => 'msg', 'data' => $sMsgCnt]] : MsgBox($sMsgCnt);
+            return bx_is_api() ? [bx_api_get_msg($sMsgCnt)] : MsgBox($sMsgCnt);
 
         $oForm = $this->getObjectFormView();
         if (!$oForm)
@@ -165,7 +165,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         else
             $s = $this->_oModule->_oTemplate->entryText($aContentInfo);
         
-        return bx_is_api() ? [['id' => 1, 'type' => 'entry', 'data' => $s]] : $s;
+        return bx_is_api() ? [bx_api_get_block('entity_text', $s)] : $s;
     }
 
     public function addData ($iProfile, $aValues, $sDisplay = false)
@@ -341,16 +341,16 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return $bErrorMsg && ($sMsg = '_sys_txt_error_entry_is_not_defined') ? ($this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg))) : '';
+            return $bErrorMsg && ($sMsg = '_sys_txt_error_entry_is_not_defined') ? ($this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox(_t($sMsg))) : '';
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
-            return $bErrorMsg ? ($this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sMsg] : MsgBox($sMsg)) : '';
+            return $bErrorMsg ? ($this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox($sMsg)) : '';
 
         // check and display form
         $oForm = $this->getObjectFormEdit($sDisplay);
         if (!$oForm)
-            return $bErrorMsg && ($sMsg = '_sys_txt_error_occured') ? ($this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg))) : '';
+            return $bErrorMsg && ($sMsg = '_sys_txt_error_occured') ? ($this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox(_t($sMsg))) : '';
 
         $aSpecificValues = array();        
         if (!empty($CNF['OBJECT_METATAGS'])) {
@@ -372,13 +372,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $this->_bIsApi ? $oForm : $oForm->getCode();
             else
-                return ($sMsg = '_sys_txt_error_entry_update') && $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg));
+                return ($sMsg = '_sys_txt_error_entry_update') && $this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox(_t($sMsg));
         }
 
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
         if ($sResult)
-            return $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sResult] : $sResult;
+            return $this->_bIsApi ? bx_api_get_msg($sResult) : $sResult;
 
         /*
          * Process metas.
@@ -421,23 +421,23 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return ($sMsg = '_sys_txt_error_entry_is_not_defined') && $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg));
+            return ($sMsg = '_sys_txt_error_entry_is_not_defined') && $this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox(_t($sMsg));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
-            return $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sMsg] : MsgBox($sMsg);
+            return $this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox($sMsg);
 
         // check and display form
         $oForm = $this->getObjectFormDelete($sDisplay);
         if (!$oForm)
-            return ($sMsg = '_sys_txt_error_occured') && $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => _t($sMsg)] : MsgBox(_t($sMsg));
+            return ($sMsg = '_sys_txt_error_occured') && $this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox(_t($sMsg));
 
         $oForm->initChecker($aContentInfo);
         if (!$oForm->isSubmittedAndValid())
             return $this->_bIsApi ? $oForm : $oForm->getCode();
 
         if ($sError = $this->deleteData($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile, $oForm))
-            return $this->_bIsApi ? ['id' => 1, 'type' => 'msg', 'data' => $sError] : MsgBox($sError);
+            return $this->_bIsApi ? bx_api_get_msg($sError) : MsgBox($sError);
 
         // perform action
         $this->_oModule->$sCheckFunction($aContentInfo, true);
@@ -513,16 +513,16 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
+            return $this->_bIsApi ? bx_api_get_msg('_sys_txt_error_entry_is_not_defined') : MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
         if ($sMsg = $this->_processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile))
-            return MsgBox($sMsg);
+            return $this->_bIsApi ? bx_api_get_msg($sMsg) : MsgBox($sMsg);
 
         // get form
         $oForm = $this->getObjectFormView($sDisplay);
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return $this->_bIsApi ? bx_api_get_msg('_sys_txt_error_occured') : MsgBox(_t('_sys_txt_error_occured'));
 
         // process metatags
         if (!empty($CNF['OBJECT_METATAGS'])) {
@@ -535,6 +535,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         // display profile
         $oForm->initChecker($aContentInfo);
+        
+        if ($this->_bIsApi)
+            return [bx_api_get_block('entity_info', $oForm->getCodeAPI())];
+        
         return $oForm->getCode();
     }
 

@@ -2387,8 +2387,20 @@ function bx_api_check_access()
 
     }
     //TODO: Temporatery for use logged state 
-    //bx_login(1);
-    //check_logged();
+    bx_login(1);
+    check_logged();
+}
+
+function bx_api_get_block($sType, $sData, $aParams = [])
+{   $aData = ['id' => isset($aParams['id']) ? $aParams['id'] : 1 , 'type' => $sType, 'data' => $sData];
+    if (isset($aParams['ext']))
+        $aData = array_merge($aData, $aParams['ext']);
+    return $aData;
+}
+
+function bx_api_get_msg($sMessage, $aParams = [])
+{
+    return bx_api_get_block('msg', $sMessage != '' ? _t($sMessage) : '', $aParams);
 }
 
 function bx_api_get_image($sStorage, $iId)

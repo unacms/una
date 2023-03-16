@@ -115,10 +115,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             ],
         ];
 
-        return $bIsApi ? [['id' => 1, 'type' => 'author', 'data' => [
+        return $bIsApi ? [bx_api_get_block('entity_author', [
             'author' => $aVars, 
             'menu_manage' => $oModule->getEntryAllActions()
-        ]]] : $this->parseHtmlByName($sTemplateName, $aVars);
+        ])] : $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
