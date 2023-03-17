@@ -399,6 +399,9 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     protected function _isVisible ($a)
     {
+        if($this->_bIsApi && isset($a['hidden_on']) && ((1 << 3) & (int)$a['hidden_on']))
+            return false;
+
         if(isset($a['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
 
