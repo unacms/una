@@ -508,6 +508,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         return [
             'module' => $this->oModule->getName(),
             'unit' => 'general-' . $sUnitType . '-' . $sUnit,
+            'request_url' => '/api.php?r=' . $this->oModule->getName() . '/browse/&params[]=',
             'data' => $this->decodeData($this->getSearchData()),
             'params' => [
                 'per_page' => $this->aCurrent['paginate']['perPage'],

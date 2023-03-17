@@ -303,6 +303,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'BrowseFavorite' => '',
             // forms
             'GetCreatePostForm' => '',
+            'EntityCreate' => '',
             'EntityEdit' => '',
             'EntityDelete' => '',
             // page blocks
@@ -1167,6 +1168,11 @@ class BxBaseModGeneralModule extends BxDolModule
             $oFormsHelper->setDynamicMode($sParams['dynamic_mode']);
 
         $mixedResult = $oFormsHelper->addDataForm($sDisplay);
+        
+        if (bx_is_api()){
+            return $mixedResult;
+        }
+        
         if(isset($mixedResult['_dt']) && $mixedResult['_dt'] == 'json') {
             echoJson($mixedResult);
             exit;

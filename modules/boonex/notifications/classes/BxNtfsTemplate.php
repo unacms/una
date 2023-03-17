@@ -35,6 +35,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getViewBlock($aParams)
     {
+        if (bx_is_api())
+            return $this->getPosts($aParams);
+        
         return $this->parseHtmlByName('block_view.html', array(
         	'html_id_view_block' => $this->_oConfig->getHtmlIds('view', 'block'),
         	'html_id_events' => $this->_oConfig->getHtmlIds('view', 'events'),
@@ -80,22 +83,30 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $aEvents = $this->_oDb->getEvents($aParamsDb);
         if(empty($aEvents))
-            return $this->getEmpty();
+            return bx_is_api() ? [] : $this->getEmpty();
 
         if($this->_oConfig->isEventsGrouped())
             $this->_oModule->groupEvents($aEvents);
 
         $aTmplVarsEvents = array();
+
         foreach($aEvents as $aEvent) {
             $sEvent = $this->getPost($aEvent, $aParams);
             if(empty($sEvent))
                 continue;
-
-            $aTmplVarsEvents[] = array('event' => $sEvent);
+            if (bx_is_api()){
+                $sEvent['author_data'] = BxDolProfile::getData($sEvent['object_owner_id']);
+                $aTmplVarsEvents[] = $sEvent;
+            }
+            else
+                $aTmplVarsEvents[] = ['event' => $sEvent];
             if(count($aTmplVarsEvents) >= ($aParams['per_page'] + 1))
             	break;
         }
 
+        if (bx_is_api())
+            return $aTmplVarsEvents;
+        
         $oPaginate = new BxTemplPaginate(array(
         	'start' => $aParams['start'],
             'per_page' => $aParams['per_page'],
@@ -243,6 +254,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $bClickedIndicator = $this->_oConfig->isClickedIndicator();
         $sJsObject = $this->_oConfig->getJsObject('view');
 
+        if (bx_is_api())
+            return $aEvent;
+             
         return $this->parseHtmlByName('event.html', array (
             'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
             'style_prefix' => $this->_oConfig->getPrefix('style'),

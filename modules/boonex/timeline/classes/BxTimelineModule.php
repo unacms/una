@@ -4962,6 +4962,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return bx_is_api() ? [bx_api_get_block('browse', [
             'unit' => 'feed',  
+            'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
             'params' => $aParams,
             'data' => $this->_oTemplate->getViewBlock($aParams)]),
         ] : ['content' => $this->_oTemplate->getViewBlock($aParams)];
@@ -5023,6 +5024,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(bx_is_api())
             return [bx_api_get_block('browse', [
                 'unit' => 'feed',  
+                'request_url' => '/api.php?r=bx_timeline/get_posts/&params[]=',
                 'params' => $aParams,
                 'data' => $sContent
             ])];

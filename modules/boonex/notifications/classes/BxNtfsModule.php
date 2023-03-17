@@ -95,6 +95,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     {
         return [
             'GetBlockView' => '',
+            'GetData' => '',
         ];
     }
 
@@ -161,6 +162,33 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         );
     }
 
+    
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-page_blocks Page Blocks
+     * @subsubsection bx_notifications-get_data get_data
+     * 
+     * @code bx_srv('bx_notifications', 'get_data', [...]); @endcode
+     * 
+     * Get data for app
+     *
+     * @return an array .
+     * 
+     * @see BxNtfsModule::serviceGetData
+     */
+     /** 
+     * @ref bx_notifications-get_data "get_data"
+     * @api @ref bx_notifications-get_data "get_data"
+     */
+    public function serviceGetData($aParams)
+    {
+        if(is_string($aParams)){
+            $aParams = json_decode($aParams, true);
+        }
+        return $this->serviceGetBlockView($aParams['params']['type'], $aParams['params']['start'], $aParams['params']['per_page'], $aParams['params']['modules']);
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_notifications Notifications
@@ -197,6 +225,16 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
 		$aParams = $this->_prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $aModules);
 		$sContent = $this->_oTemplate->getViewBlock($aParams);
+        
+        if (bx_is_api()){
+            return [bx_api_get_block('browse', [
+                'unit' => 'notifications',  
+                'request_url' => '/api.php?r=bx_notifications/get_data/&params[]=',
+                'params' => $aParams,
+                'id' => bx_get_logged_profile_id(),
+                'data' => $sContent]),
+            ];
+        }
 
 		$aParams['browse'] = 'first';
     	$aEvent = $this->_oDb->getEvents($aParams);
