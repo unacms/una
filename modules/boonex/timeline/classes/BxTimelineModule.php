@@ -814,17 +814,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iOwnerId = 0;
 
         $aArgs = func_get_args();
-        $sType = array_shift($aArgs);
+        $sType = $this->_oConfig->processParam(array_shift($aArgs));
         switch($sType) {
             case BX_BASE_MOD_NTFS_TYPE_OWNER:
-                $iOwnerId = array_shift($aArgs);
+                $iOwnerId = (int)array_shift($aArgs);
                 $sOwnerName = $this->getObjectUser($iOwnerId)->getDisplayName();
 
                 $sRssCaption = _t('_bx_timeline_txt_rss_caption', $sOwnerName);
                 $sRssLink = $this->_oConfig->getViewUrl($iOwnerId);
                 break;
 
-            case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+            default:
                 $sRssCaption = _t('_bx_timeline_page_title_view_home');
                 $sRssLink = $this->_oConfig->getHomeViewUrl();
                 break;
