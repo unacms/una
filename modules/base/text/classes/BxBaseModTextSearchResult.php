@@ -239,9 +239,13 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
     
     function decodeData ($a)
     {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $oMetaMenu = !empty($CNF['OBJECT_MENU_SNIPPET_META']) ? BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->oModule->_oTemplate) : false;
+        $bMetaMenu = $oMetaMenu !== false;       
+
         $oContentInfo = $this->getContentInfoObject();
-        $CNF = $this->oModule->_oConfig->CNF;
-        
+
         foreach ($a as $i => $r) {
             if (isset($r['author']))
                 $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
@@ -249,6 +253,11 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
             $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
             $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+
+            if($bMetaMenu) {
+                $oMetaMenu->setContentId($r['id']);
+                $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
+            }   
         }
 
         return $a;

@@ -48,9 +48,27 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
     }
 
+    protected function _getMenuItemAPI($aItem, $sType = 'link', $aData = [])
+    {
+        $aItemData = array_merge([
+            'id' => $aItem['id'],
+            'name' => $aItem['name'],
+            'content_type' => $sType,
+            'title' => $aItem['title'],
+            'link' => !empty($aItem['link']) && $aItem['link'] != 'javascript:void(0)' ? $aItem['link'] : ''
+        ], $aData);
+
+        return $aItemData;
+    }
+
     protected function _getMenuItemAuthor($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'profile', [
+                'data' => BxDolProfile::getData($this->_aContentInfo[$CNF['FIELD_AUTHOR']])
+            ]);
 
         $oProfile = BxDolProfile::getInstanceMagic($this->_aContentInfo[$CNF['FIELD_AUTHOR']]);
 
@@ -63,6 +81,12 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
     protected function _getMenuItemDate($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'time', [
+                'title' => $this->_aContentInfo[$CNF['FIELD_ADDED']]
+            ]);
+
         if ($aItem['icon'] == '')
             return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE));
         else
@@ -81,6 +105,13 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             return false;
 
         $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'link', [
+                'title' => $sTitle,
+                'link' => $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']])
+            ]);
+        
         return $this->getUnitMetaItemCustom($oCategory->getCategoryLink($sTitle, $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
     }
 
@@ -95,6 +126,9 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         if(!$oMetatags || !$oMetatags->keywordsIsEnabled())
             return false;
 
+        if($this->_bIsApi)
+            return false;
+
         return $this->getUnitMetaItemCustom($oMetatags->getKeywordsList($this->_aContentInfo[$CNF['FIELD_ID']], 3));
     }
 
@@ -105,7 +139,14 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         if(empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
             return false;
 
-        return $this->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
+        $sTitle = _t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'link', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemVotes($aItem)
@@ -114,8 +155,15 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 
         if(empty($CNF['OBJECT_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
             return false;
-        
-        return $this->getUnitMetaItemText(_t('_vote_n_votes', $this->_aContentInfo[$CNF['FIELD_VOTES']]));
+
+        $sTitle = _t('_vote_n_votes', $this->_aContentInfo[$CNF['FIELD_VOTES']]);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'link', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemRating($aItem)
@@ -123,6 +171,9 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_VOTES_STARS']))
+            return false;
+
+        if($this->_bIsApi)
             return false;
 
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
@@ -137,6 +188,9 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_REACTIONS']))
+            return false;
+
+        if($this->_bIsApi)
             return false;
 
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
@@ -156,10 +210,19 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
         if(!$oComments || !$oComments->isEnabled())
             return false;
+        
+        $sTitle = _t('_cmt_txt_n_comments', $oComments->getCommentsCountAll(0, true));
+        $sUrl =  $oComments->getListUrl();
 
-        return $this->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $oComments->getCommentsCountAll(0, true)), array(
-            'href' => $oComments->getListUrl()
-        ));
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'link', [
+                'title' => $sTitle,
+                'link' => $sUrl
+            ]);
+
+        return $this->getUnitMetaItemLink($sTitle, [
+            'href' => $sUrl
+        ]);
     }
 
     protected function _getMenuItemDefault($aItem)
