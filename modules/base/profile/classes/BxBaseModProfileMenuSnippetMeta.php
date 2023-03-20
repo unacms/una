@@ -94,7 +94,14 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$iFriends && !$this->_bShowZeros)
             return false;
 
-        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends', $iFriends));
+        $sTitle = _t('_sys_menu_item_title_sm_friends', $iFriends);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemFriendsMutual($aItem)
@@ -112,7 +119,14 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$iFriends && !$this->_bShowZeros)
             return false;
 
-        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends_mutual', $iFriends));
+        $sTitle = _t('_sys_menu_item_title_sm_friends_mutual', $iFriends);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemSubscribers($aItem)
@@ -131,6 +145,9 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+
+        if($this->_bIsApi)
+            return false;
 
         return $this->getUnitMetaItemCustom($oConnection->getCounter($this->_oContentProfile->id(), false, [
             'caption' => '_sys_menu_item_title_sm_subscribers', 
@@ -154,6 +171,12 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         $sTitle = $this->{$this->_aConnectionToFunctionTitle[$sConnection]}($sAction, $oConnection);
         if(empty($sTitle))
             return false;
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button', 'content' => 'text'], [
+                'title' => $sTitle,
+                'primary' => !empty($aItem['primary'])
+            ]);
 
         return [
             $this->getUnitMetaItemButton($sTitle, array(
@@ -224,7 +247,17 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_oContentProfile->id());
-        return $aMembership ? $this->getUnitMetaItemText(_t($aMembership['name'])) : false;
+        if(empty($aMembership) || !is_array($aMembership))
+            return false;
+
+        $sTitle = _t($aMembership['name']);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
     }
 }
 

@@ -48,12 +48,24 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
     }
 
-    protected function _getMenuItemAPI($aItem, $sType = 'link', $aData = [])
+    protected function _getMenuItemAPI($aItem, $mixedType = 'text', $aData = [])
     {
+        $sDisplayType = 'link';
+        $sContentType = 'text';
+        if(is_array($mixedType)) {
+            if(isset($mixedType['display']))
+                $sDisplayType = $mixedType['display'];
+            if(isset($mixedType['content']))
+                $sContentType = $mixedType['content'];
+        }
+        else
+            $sContentType = $mixedType;
+
         $aItemData = array_merge([
             'id' => $aItem['id'],
             'name' => $aItem['name'],
-            'content_type' => $sType,
+            'display_type' => $sDisplayType,
+            'content_type' => $sContentType,
             'title' => $aItem['title'],
             'link' => !empty($aItem['link']) && $aItem['link'] != 'javascript:void(0)' ? $aItem['link'] : ''
         ], $aData);
@@ -107,7 +119,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, 'link', [
+            return $this->_getMenuItemAPI($aItem, 'text', [
                 'title' => $sTitle,
                 'link' => $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']])
             ]);
@@ -142,7 +154,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $sTitle = _t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]);
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, 'link', [
+            return $this->_getMenuItemAPI($aItem, 'text', [
                 'title' => $sTitle
             ]);
 
@@ -159,7 +171,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $sTitle = _t('_vote_n_votes', $this->_aContentInfo[$CNF['FIELD_VOTES']]);
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, 'link', [
+            return $this->_getMenuItemAPI($aItem, 'text', [
                 'title' => $sTitle
             ]);
 
@@ -215,7 +227,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         $sUrl =  $oComments->getListUrl();
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, 'link', [
+            return $this->_getMenuItemAPI($aItem, 'text', [
                 'title' => $sTitle,
                 'link' => $sUrl
             ]);

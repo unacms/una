@@ -242,7 +242,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         $oMetaMenu = !empty($CNF['OBJECT_MENU_SNIPPET_META']) ? BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->oModule->_oTemplate) : false;
-        $bMetaMenu = $oMetaMenu !== false;       
+        $bMetaMenu = $oMetaMenu !== false;
 
         $oContentInfo = $this->getContentInfoObject();
 
@@ -257,7 +257,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             if($bMetaMenu) {
                 $oMetaMenu->setContentId($r['id']);
                 $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
-            }   
+            }
         }
 
         return $a;

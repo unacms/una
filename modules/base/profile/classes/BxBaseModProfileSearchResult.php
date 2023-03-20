@@ -236,9 +236,16 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     
     function decodeData ($a)
     {
-        $oContentInfo = $this->getContentInfoObject();
         $CNF = $this->oModule->_oConfig->CNF;
-        
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        $bPrivacy = $oPrivacy !== false;
+
+        $oMetaMenu = !empty($CNF['OBJECT_MENU_SNIPPET_META']) ? BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->oModule->_oTemplate) : false;
+        $bMetaMenu = $oMetaMenu !== false;
+
+        $oContentInfo = $this->getContentInfoObject();
+
         foreach ($a as $i => $r) {
             if (isset($r['author']))
                 $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
@@ -247,6 +254,14 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
             $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
             $a[$i]['cover'] = $oContentInfo->getContentCover($r['id']);
             $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+
+            if($bMetaMenu) {
+                $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
+                
+                $oMetaMenu->setContentId($r['id']);
+                $oMetaMenu->setContentPublic($bPublic);
+                $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
+            }
         }
 
         return $a;
