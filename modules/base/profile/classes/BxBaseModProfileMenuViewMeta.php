@@ -107,7 +107,7 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
 
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
-        return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => '_sys_menu_item_title_sm_friends', 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 
     protected function _getMenuItemSubscribers($aItem)
@@ -123,7 +123,7 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
 
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
         
-        return $oConnection->getCounter($this->_oContentProfile->id(), false, ['caption' => '_sys_menu_item_title_sm_subscribers', 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($this->_oContentProfile->id(), false, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 
     protected function _getMenuItemViews($aItem)

@@ -32,7 +32,7 @@ class BxBaseModGroupsMenuViewMeta extends BxBaseModProfileMenuViewMeta
         
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
-        return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => '_sys_menu_item_title_sm_members', 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 }
 
