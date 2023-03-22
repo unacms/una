@@ -400,7 +400,7 @@ class BxBasePage extends BxDolPage
      */
     public function getPage ()
     {
-        return array(
+        $a = array(
             'id' => $this->_aObject['id'],
             'title' => $this->_getPageTitle(),
             'uri' => $this->_aObject['uri'],
@@ -411,6 +411,19 @@ class BxBasePage extends BxDolPage
             'layout' => $this->_aObject['layout_id'],
             'elements' => $this->getPageBlocks (),
         );
+        if (isLogged()) {
+            $o = BxDolProfile::getInstance();
+            $a['user'] = [
+                'id' => $o->id(),
+                'display_name' => $o->getDisplayName(),
+                'url' => $o->getUrl(),
+                'avatar' => $o->getAvatar(),
+                'info' => $o->getInfo(),
+                'active' => $o->isActive(),
+                'status' => $o->getStatus(),
+            ];
+        }
+        return $a;
     }
 
     public function getPageBlocks ()
