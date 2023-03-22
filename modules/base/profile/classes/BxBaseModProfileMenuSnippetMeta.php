@@ -173,9 +173,17 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, ['display' => 'button', 'content' => 'text'], [
+            return $this->_getMenuItemAPI($aItem, ['display' => 'element'], [
                 'title' => $sTitle,
-                'primary' => !empty($aItem['primary'])
+                'data' => [
+                    'type' => 'connections',
+                    'o' => $sConnection,
+                    'a' => $sAction,
+                    'iid' => bx_get_logged_profile_id(),
+                    'cid' => $iContentProfile,
+                    'title' => $sTitle,
+                    'primary' => !empty($aItem['primary']),
+                ]
             ]);
 
         return [

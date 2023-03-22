@@ -18,6 +18,107 @@ class BxBaseServiceConnections extends BxDol
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-connections Connections
+     * @subsubsection bx_system_general-perform perform
+     * 
+     * @code bx_srv('system', 'perform', [[...]], 'TemplVoteServices'); @endcode
+     * @code {{~system:perform:TemplVoteServices[[...]]~}} @endcode
+     * 
+     * Performs Perform an action (add, remove, etc) with connection object.
+     * @param $aParams an array with necessary parameters 
+     * 
+     * @see BxBaseServiceConnections::servicePerform
+     */
+    /** 
+     * @ref bx_system_general-perform "perform"
+     * @api @ref bx_system_general-perform "perform"
+     */
+    public function servicePerform($aParams)
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        if(!$aParams['o'] || !$aParams['a'] || !$aParams['iid'] || !$aParams['cid'])
+            return ['code' => 1];
+
+        $oConnection = BxDolConnection::getObjectInstance($aParams['o']);
+        if(!$oConnection)
+            return ['code' => 2];
+
+        $sMethod = 'action' . bx_gen_method_name($aParams['a']);
+        if(!method_exists($oConnection, $sMethod))
+            return ['code' => 2];
+
+        $aResult = $oConnection->$sMethod($aParams['cid'], $aParams['iid']);
+        if($aResult['err'] !== false)
+            return ['code' => 3, 'message' => $aResult['msg']];
+
+        $aFlip = ['add' => 'remove', 'remove' => 'add'];
+
+        return [
+            'a' => $aFlip[$aParams['a']],
+            'title' => $this->serviceGetActionTitle($aParams['o'], $aParams['a'], $aParams['iid'], $aParams['cid'], true),
+        ];
+    }
+
+    public function serviceGetActionTitle($sObject, $sAction, $iInitiatorId, $iContentId, $bFlip = false)
+    {
+        if(empty($sAction))
+            return '';
+
+        $oConnection = BxDolConnection::getObjectInstance($sObject);
+        if(!$oConnection)
+            return '';
+
+        $aResult = [];
+        switch($sObject) {
+            case 'sys_profiles_friends':
+                if($oConnection->isConnectedNotMutual($iInitiatorId, $iContentId))
+                    $aResult = [
+                        'add' => '',
+                        'remove' => '_sys_menu_item_title_sm_unfriend_cancel',
+                    ];
+                else if($oConnection->isConnectedNotMutual($iContentId, $iInitiatorId))
+                    $aResult = [
+                        'add' => '_sys_menu_item_title_sm_befriend_confirm',
+                        'remove' => '_sys_menu_item_title_sm_unfriend_reject',
+                    ];
+                else if($oConnection->isConnected($iInitiatorId, $iContentId, true))
+                    $aResult = [
+                        'add' => '',
+                        'remove' => '_sys_menu_item_title_sm_unfriend',
+                    ];
+                else
+                    $aResult = [
+                        'add' => '_sys_menu_item_title_sm_befriend',
+                        'remove' => '',
+                    ];
+                break;
+
+            case 'sys_profiles_subscriptions':
+                if($oConnection->isConnected($iInitiatorId, $iContentId))
+                    $aResult = [
+                        'add' => '',
+                        'remove' => '_sys_menu_item_title_sm_unsubscribe',
+                    ];
+                else
+                    $aResult = [
+                        'add' => '_sys_menu_item_title_sm_subscribe',
+                        'remove' => '',
+                    ];
+                break;
+        }
+
+        $aFlip = ['add' => 'remove', 'remove' => 'add'];
+        if($bFlip)
+            $sAction = $aFlip[$sAction];
+
+        return !empty($aResult[$sAction]) ? _t($aResult[$sAction]) : '';
+    }       
+
+    /**
      * get grid with friends connections
      */
     public function serviceConnectionsTable ($iProfileId = 0)
