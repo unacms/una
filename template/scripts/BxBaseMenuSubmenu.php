@@ -134,6 +134,17 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $this->_addJsCss();
         return $this->_oObjectSubmenu->getCode();
     }
+    
+    public function getCodeAPI ()
+    {
+        if(!$this->isVisible())
+            return [];
+
+        if(!empty($this->_iContentId) && method_exists($this->_oObjectSubmenu, 'setContentId'))
+            $this->_oObjectSubmenu->setContentId($this->_iContentId);
+
+        return $this->_oObjectSubmenu->getCodeAPI();
+    }
 
     public function getPageCoverParams ()
     {

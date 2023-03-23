@@ -400,7 +400,7 @@ class BxBasePage extends BxDolPage
      */
     public function getPage ()
     {
-        $a = array(
+        $a = [
             'id' => $this->_aObject['id'],
             'title' => $this->_getPageTitle(),
             'uri' => $this->_aObject['uri'],
@@ -410,7 +410,11 @@ class BxBasePage extends BxDolPage
             'type' => $this->getType (),
             'layout' => $this->_aObject['layout_id'],
             'elements' => $this->getPageBlocks (),
-        );
+        ];
+
+        if (($oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu')) !== false)
+            $a['menu'] = $oMenuSubmenu->getCodeAPI();
+
         if (isLogged()) {
             $o = BxDolProfile::getInstance();
             $a['user'] = [
@@ -423,6 +427,7 @@ class BxBasePage extends BxDolPage
                 'status' => $o->getStatus(),
             ];
         }
+
         return $a;
     }
 

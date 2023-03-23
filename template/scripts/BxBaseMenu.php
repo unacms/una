@@ -174,6 +174,19 @@ class BxBaseMenu extends BxDolMenu
         if (!$this->_isVisible($a))
             return false;
 
+        if ($this->_bIsApi) {
+            list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
+
+            return [
+                'id' => $a['id'],
+                'name' => $a['name'],
+                'title' => _t($a['title']),
+                'link' => isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : '',
+                'icon' => $sIcon ? $sIcon : '',
+                'image' => $sIconUrl ? $sIconUrl : ''
+            ];
+        }
+
         $a['object'] = $this->_sObject;
 
         $a['title'] = _t($a['title']);
