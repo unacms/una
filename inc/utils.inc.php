@@ -2373,7 +2373,7 @@ function bx_api_check_access()
             }
         }
     }
-    elseif ($sAuthHeader && getParam('sys_api_access_by_key')) {
+   /* elseif ($sAuthHeader && getParam('sys_api_access_by_key')) {
         if (!BxDolApiQuery::getInstance()->getKey(str_replace('Bearer ', '', $sAuthHeader))) {
             header('HTTP/1.0 403 Forbidden');
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
@@ -2385,7 +2385,7 @@ function bx_api_check_access()
         echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
         exit;
 
-    }
+    }*/
     //TODO: Temporatery for use logged state 
     bx_login(1);
     check_logged();
