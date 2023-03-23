@@ -57,6 +57,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'MemberAuthCode' => 'BxBaseServiceLogin',
             'LoginForm' => 'BxBaseServiceLogin',
             'LoginFormOnly' => 'BxBaseServiceLogin',
+            'Logout' => 'BxBaseServiceLogin',
         
             'KeywordsCloud' => 'BxBaseServiceMetatags',
 
@@ -73,7 +74,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'Do' => 'BxBaseVoteServices',
             'GetPerformedBy' => 'BxBaseVoteServices',
 
-            'Perform' => 'BxBaseServiceConnections'
+            'Perform' => 'BxBaseServiceConnections',
+            'GetDataApi' => 'BxBaseCmtsServices'
         );
     }
 
