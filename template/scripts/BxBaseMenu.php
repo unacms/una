@@ -177,6 +177,11 @@ class BxBaseMenu extends BxDolMenu
         if ($this->_bIsApi) {
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
+            if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
+                $this->addMarkers($aMarkers);
+
+            $a = $this->_replaceMarkers($a);
+
             return [
                 'id' => $a['id'],
                 'name' => $a['name'],

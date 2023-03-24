@@ -26,7 +26,7 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
     public function getMenuItems ()
     {
         $aItems = parent::getMenuItems();
-        if(empty($aItems) || !is_array($aItems))
+        if(empty($aItems) || !is_array($aItems) || $this->_bIsApi)
             return $aItems;
 
         $iMaxNum = count($aItems);
