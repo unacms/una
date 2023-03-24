@@ -535,9 +535,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_edit', 'resolvable', 2147483647, 1, 13),
 ('bx_forum_entry_edit', 'do_submit', 2147483647, 1, 14),
 
-('bx_forum_entry_view', 'title', 2147483647, 1, 1),
-('bx_forum_entry_view', 'cat', 2147483647, 1, 2),
-('bx_forum_entry_view', 'text', 2147483647, 1, 3),
+('bx_forum_entry_view', 'cat', 2147483647, 1, 1),
+('bx_forum_entry_view', 'added', 2147483647, 1, 2),
+('bx_forum_entry_view', 'changed', 2147483647, 1, 3),
 
 ('bx_forum_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_forum_entry_delete', 'do_submit', 2147483647, 1, 2),
