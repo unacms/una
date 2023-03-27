@@ -84,6 +84,9 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
             if($aItem === false)
                 return false;
 
+            if($this->_bIsApi)
+                return $aItem;
+
             $mixedItem = $this->_getMenuItemDefault($aItem);
     	}
 

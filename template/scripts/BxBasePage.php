@@ -398,7 +398,7 @@ class BxBasePage extends BxDolPage
     /**
      * Get page array with all cells and blocks
      */
-    public function getPage ()
+    public function getPageAPI ()
     {
         $a = [
             'id' => $this->_aObject['id'],
@@ -409,7 +409,7 @@ class BxBasePage extends BxDolPage
             'module' => $this->getModule (),
             'type' => $this->getType (),
             'layout' => $this->_aObject['layout_id'],
-            'elements' => $this->getPageBlocks (),
+            'elements' => $this->getPageBlocksAPI(),
         ];
 
         if (($oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu')) !== false) {
@@ -435,30 +435,33 @@ class BxBasePage extends BxDolPage
         return $a;
     }
 
-    public function getPageBlocks ()
+    public function getPageBlocksAPI()
     {
-        $aFieldsUnset = array('cell_id', 'active', 'copyable', 'deletable', 'object', 'text', 'text_updated', 'title_system', 'visible_for_levels');
-        $aCells = $this->_oQuery->getPageBlocks();
-        foreach ($aCells as $sKey => &$aCell) {
-            foreach ($aCell as $i => $aBlock) {     
-                if (!$this->_isVisibleBlock($aBlock) || (bx_is_api() && $aCells[$sKey][$i]['hidden_on'] > 0 && ((int)$aCells[$sKey][$i]['hidden_on'] & 8) > 0)){
-                    unset($aCells[$sKey][$i]);
-                }
-                else{
-                    $this->processPageBlock($aCells[$sKey][$i], true);
-                    $aBlock = $aCells[$sKey][$i];
+        $aFieldsUnset = ['cell_id', 'active', 'copyable', 'deletable', 'object', 'text', 'text_updated', 'title_system', 'visible_for_levels'];
 
-                    $sFunc = '_getBlock' . ucfirst($aBlock['type']);
-                    $aCells[$sKey][$i]['content'] = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
-                    $aCells[$sKey][$i]['title'] = $this->getBlockTitle($aBlock);
-                    foreach ($aFieldsUnset as $s)
-                        unset($aCells[$sKey][$i][$s]);
+        $aCells = $this->_oQuery->getPageBlocks();
+        foreach($aCells as $sKey => &$aCell) {
+            foreach($aCell as $i => $aBlock) {     
+                if(!$this->_isVisibleBlock($aBlock) || ($aCells[$sKey][$i]['hidden_on'] > 0 && ((int)$aCells[$sKey][$i]['hidden_on'] & 8) > 0)) {
+                    unset($aCells[$sKey][$i]);
+                    continue;
                 }
+
+                $this->processPageBlock($aCells[$sKey][$i], true);
+                $aBlock = $aCells[$sKey][$i];
+
+                $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+                $mBlock = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
+
+                $aCells[$sKey][$i]['title'] = isset($mBlock['title']) ? $mBlock['title'] : $this->getBlockTitle($aBlock);
+                $aCells[$sKey][$i]['content'] = isset($mBlock['content']) ? $mBlock['content'] : $mBlock;
+                $aCells[$sKey][$i]['menu'] = isset($mBlock['menu']) ? $mBlock['menu'] : '';
+
+                $aCells[$sKey][$i] = array_diff_key($aCells[$sKey][$i], array_flip($aFieldsUnset));
             }
         }
-        
-        $aCells = array_map('array_values', $aCells);
-        return $aCells;
+
+        return array_map('array_values', $aCells);
     }
 
     /**

@@ -606,9 +606,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      */
     public function serviceGetCreatePostForm($mixedContextId = false, $sDefault = '', $aCustom = array())
     {
-        if (bx_is_api())
-            return ;
-        
     	if(!isLogged() || ($mixedContextId !== false && !is_numeric($mixedContextId)))
             return '';
 
@@ -656,6 +653,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
                 $aPreloadingList[$sModule] = $aModule['uri'];
             }
+
+        if(bx_is_api()) {
+            return [
+                'title' => $sTitle,
+                'content' => '',
+                'menu' => $oMenu->getCodeAPI()
+            ];
+        }
 
     	$sJsObject = 'oBxDolCreatePost';
         $sJsContent = $oTemplate->_wrapInTagJsCode("var " . $sJsObject . " = new BxDolCreatePost(" . json_encode([

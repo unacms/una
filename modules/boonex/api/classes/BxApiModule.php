@@ -126,7 +126,7 @@ class BxApiModule extends BxDolModule
             );
         }
 
-        return $oPage->getPage ();
+        return $oPage->getPageAPI();
     }
 
     /**

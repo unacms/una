@@ -2287,7 +2287,7 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
 
     if (PHP_VERSION_ID < 70300) {
         if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName || bx_is_api()))
-            $sPath .= '; SameSite=' . (bx_is_api() ? 'None' : getParam('sys_samesite_cookies'));
+            $sPath .= '; SameSite=' . getParam('sys_samesite_cookies');
         return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
     } 
     else {
@@ -2299,7 +2299,7 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
             'httponly' => $bHttpOnly,
         ];
         if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName || bx_is_api()))
-            $aOptions['samesite'] = bx_is_api() ? 'None' : getParam('sys_samesite_cookies');
+            $aOptions['samesite'] = getParam('sys_samesite_cookies');
 
         return setcookie($sName, $sValue, $aOptions);
     }

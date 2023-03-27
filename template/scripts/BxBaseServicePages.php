@@ -42,7 +42,7 @@ class BxBaseServicePages extends BxDol
             $aRes = ['redirect' => $sUrl];
         }
         elseif (($oPage = $mixed) && is_object($oPage)) {
-            return $oPage->getPage();
+            return $oPage->getPageAPI();
         }
         else {
             $aRes = ['code' => 404, 'error' => _t("_sys_request_page_not_found_cpt")];
