@@ -29,6 +29,11 @@ class BxTemplMenuAccountNotifications extends BxBaseMenuAccountNotifications
                 if(isset($a['onclick']))
                     $a['onclick'] = str_replace(['bx_menu_slide_inline', 'bx-menu-toolbar-item-add-content'], ['oBxArtificerUtils.getAddContentMenu', 'bx-menu-toolbar-item-account'], $a['onclick']);
                 break;
+
+            case 'notifications-notifications':
+                if(isset($a['onclick']))
+                    $a['onclick'] = str_replace(['bx_menu_slide', 'this'], ['oBxArtificerUtils.getNotificationsMenu', '$(\'#bx-menu-toolbar-item-account a\').get(0)'], $a['onclick']);
+                break;
         }
 
         return $a;

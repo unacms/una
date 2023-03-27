@@ -95,3 +95,15 @@ BxArtificerUtils.prototype.getAddContentMenu = function(sMenu, e, sPosition) {
 
     bx_menu_popup_inline(sMenu, e, {});
 };
+
+BxArtificerUtils.prototype.getNotificationsMenu = function(sMenu, e, sPosition, oOptions) {
+    $('.bx-popup-applied:visible').dolPopupHide();
+
+    var sSidebar = 'account';
+    if(bx_sidebar_active(sSidebar))
+        bx_sidebar_toggle(sSidebar);
+
+    oOptions = $.extend({}, {pointer: {align:'right'}, cssClass: ''}, oOptions);
+
+    bx_menu_popup(sMenu, e, oOptions);
+};
