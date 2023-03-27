@@ -73,7 +73,6 @@ class BxTasksConfig extends BxBaseModTextConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-task',
-            'URI_AUTHOR_ENTRIES' => 'tasks-author',
             'URI_ENTRIES_BY_CONTEXT' => 'tasks-context',
             'URI_ADD_ENTRY' => 'create-task',
             'URI_EDIT_ENTRY' => 'edit-task',
