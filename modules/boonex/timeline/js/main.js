@@ -292,14 +292,20 @@ BxTimelineMain.prototype.initTrackerInsertSpace = function(sFormId, iEventId)
     });
 };
 
-BxTimelineMain.prototype.initTrackerInsertImage = function()
+BxTimelineMain.prototype.initTrackerInsertImage = function(sFormId)
 {
     var $this = this;
 
+    var oForm = $('#' + sFormId);
+    var oTextarea = oForm.find('textarea');
+    
     if (typeof window.glOnInsertImageInEditor === 'undefined')
         window.glOnInsertImageInEditor = [];
 
-    window.glOnInsertImageInEditor.push(function (oFile) {
+    window.glOnInsertImageInEditor.push(function (oFile, sSelector) {
+        if(!oTextarea.is(sSelector))
+            return false;
+        
         const oFormData = new FormData();
         oFormData.append('file', oFile);
         oFormData.append('u', $this._sAutoUploader);
@@ -310,6 +316,7 @@ BxTimelineMain.prototype.initTrackerInsertImage = function()
         .then(result => {
             processJsonData(result)
         });
+        return true;
     });
 };
 

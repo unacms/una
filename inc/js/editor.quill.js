@@ -324,16 +324,23 @@ function bx_editor_init(oEditor, oParams){
     oConfig.modules.imageUploader = {
         upload: file => {
             return new Promise((resolve, reject) => {
+                var bProcessed = false;
+                
                 if (typeof glOnInsertImageInEditor !== 'undefined' && glOnInsertImageInEditor instanceof Array && glOnInsertImageInEditor.length > 0) {
                     for (var i = 0; i < glOnInsertImageInEditor.length; i++) {
                         if (typeof glOnInsertImageInEditor[i] === "function") {
-                            glOnInsertImageInEditor[i](file);
+                            var bTmp = glOnInsertImageInEditor[i](file,oParams.selector);
+                            if (bTmp)
+                                bProcessed = true;
                         }
                     }
-                    reject("External uploader");
+                    if(bProcessed)
+                        reject("External uploader");
                 }
-                else{
+                
+                if(!bProcessed){
                     const formData = new FormData();
+                   
                     formData.append("file", file);
                     fetch(oParams.root_url + "storage.php?o=sys_images_editor&t=sys_images_editor&a=upload", {
                             method: "POST",
@@ -444,7 +451,9 @@ function bx_editor_insert_html (sEditorId, sImgId, sHtml)
     }
 }
 
-function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
+function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) 
+{
+    console.log(888);
 
     if ('undefined' == typeof(sClasses))
         sClasses = '';
