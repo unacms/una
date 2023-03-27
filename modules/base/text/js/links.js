@@ -57,7 +57,11 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
         if (typeof window.glOnInsertImageInEditor === 'undefined')
             window.glOnInsertImageInEditor = [];
 
-        window.glOnInsertImageInEditor.push(function (oFile) {
+        window.glOnInsertImageInEditor.push(function (oFile, sSelector) {
+            
+            if(!oTextarea.is(sSelector))
+                return false;
+            
             const oFormData = new FormData();
             oFormData.append('file', oFile);
             oFormData.append('u', $this._sAutoUploader);
@@ -68,6 +72,7 @@ BxBaseModTextLinks.prototype.initFormPost = function(sFormId)
             .then(result => {
                 processJsonData(result)
             });
+            return true;
         });
    }
 };

@@ -57,9 +57,8 @@ function BxTimelinePost(oOptions) {
             $this.initFormPost(sId);
 
             $this.initTrackerInsertSpace(sId);
-
             if($this._bAutoAttach) 
-                $this.initTrackerInsertImage();
+                $this.initTrackerInsertImage(sId);
     	});
     });
 }

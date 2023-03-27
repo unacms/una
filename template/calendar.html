@@ -15,7 +15,6 @@
             return oParams.event.extendedProps.class;
         },
         eventContent: function(oParams) {
-            console.log(oParams.view.type);
             if(oParams.view.type != 'dayGridDay' || !oParams.event.extendedProps.card)
                 return oParams.event._def.title;
 
