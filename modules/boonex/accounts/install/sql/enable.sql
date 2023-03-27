@@ -111,4 +111,4 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_accounts_administration', 'single', 'unlock_account', '_bx_accnt_grid_action_title_adm_unlock_account', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'settings', '_bx_accnt_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_accounts_administration', 'independent', 'add', '_bx_accnt_grid_action_title_adm_more_add', 'plus', 0, 0, 0),
-('bx_accounts_administration', 'independent', 'export', '_bx_accnt_grid_action_title_adm_export', 'download', 0, 0, 1);
+('bx_accounts_administration', 'independent', 'export', '_bx_accnt_grid_action_title_adm_export_all', 'download', 0, 0, 1);

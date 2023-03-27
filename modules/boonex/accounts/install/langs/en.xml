@@ -74,6 +74,7 @@
     <string name="_bx_accnt_grid_action_title_adm_confirm"><![CDATA[Confirm]]></string>
     <string name="_bx_accnt_grid_action_title_adm_edit_email"><![CDATA[Edit Email]]></string>
     <string name="_bx_accnt_grid_action_title_adm_export"><![CDATA[Export]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_export_all"><![CDATA[Export All]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_cemail"><![CDATA[Resend Confirmation]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_remail"><![CDATA[Resend Reset Password]]></string>
     <string name="_bx_accnt_grid_action_title_adm_reset_password"><![CDATA[Reset Password]]></string>
