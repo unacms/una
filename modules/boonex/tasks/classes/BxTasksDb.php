@@ -117,10 +117,8 @@ class BxTasksDb extends BxBaseModTextDb
                 $oEnd = $oStart ? clone($oStart) : null;
                 $oEnd = $oEnd ? $oEnd->add($oDuration) : null;
 
-                $a[$k]['start'] = $oStart ? $oStart->format('c') : 0;
-                $a[$k]['end'] = $oEnd ? $oEnd->format('c') : 0;
+                $a[$k]['start'] = $oStart ? $oStart->format('Y-m-d') : 0;
                 $a[$k]['start_utc'] = $oStart ? $oStart->getTimestamp() : 0;
-                $a[$k]['end_utc'] = $oEnd ? $oEnd->getTimestamp() : 0;
                 $a[$k]['url'] = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']));
             }
 
