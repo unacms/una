@@ -26,6 +26,10 @@ class BxTemplServiceProfiles extends BxBaseServiceProfiles
         if(!$oProfile)
             return '';
 
+        $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
+        if(!$oMenu)
+            return '';
+
         $oAcl = BxDolAcl::getInstance();
         $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
         $aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
@@ -44,7 +48,7 @@ class BxTemplServiceProfiles extends BxBaseServiceProfiles
                 'size' => 'thumb'
             ))),
             'profile_acl_title' => _t($aAclInfo['name']),
-            'menu' => BxDolMenu::getObjectInstance('sys_profile_stats')->getCode(),
+            'menu' => $oMenu->getCode(),
         );
 		
         $aVars['bx_if:image'] = array (

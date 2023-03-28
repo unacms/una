@@ -46,6 +46,11 @@ class BxBaseServiceProfiles extends BxDol
         if(!$oProfile)
             return '';
 
+        if(bx_is_api())
+            return [
+                bx_api_get_block ('profile_avatar', $oProfile->getData(), ['id' => 1])
+            ];
+
         $oTemplate = BxDolTemplate::getInstance();
 
         $sSwitcher = '';
@@ -121,12 +126,24 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceProfileMenu ($iProfileId = 0)
     {
-        return BxDolMenu::getObjectInstance('sys_profile_stats')->getCode();
+        if(($oMenu = BxDolMenu::getObjectInstance('sys_profile_stats')) !== false) {
+            if(bx_is_api())
+                return [
+                    bx_api_get_block ('profile_menu', $oMenu->getCodeAPI(), ['id' => 2])
+                ];
+
+            return $oMenu->getCode();
+        }
+        else
+            return '';
     }
 
     public function serviceProfileFollowings ($iProfileId = 0)
     {
-        return BxDolMenu::getObjectInstance('sys_profile_followings')->getCode();
+        if(($oMenu = BxDolMenu::getObjectInstance('sys_profile_followings')) !== false)
+            return $oMenu->getCode();
+        else
+            return '';
     }
 
     public function serviceProfileStats ($iProfileId = 0)
@@ -137,6 +154,16 @@ class BxBaseServiceProfiles extends BxDol
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
             return '';
+
+        $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
+        if(!$oMenu)
+            return '';
+
+        if(bx_is_api())
+            return [
+                bx_api_get_block ('profile_avatar', $oProfile->getData(), ['id' => 1]),
+                bx_api_get_block ('profile_menu', $oMenu->getCodeAPI(), ['id' => 2])
+            ];
 
         $oAcl = BxDolAcl::getInstance();
         $aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
@@ -156,7 +183,7 @@ class BxBaseServiceProfiles extends BxDol
                 'size' => 'ava'
             ))),
             'profile_acl_title' => _t($aAclInfo['name']),
-            'menu' => BxDolMenu::getObjectInstance('sys_profile_stats')->getCode(),
+            'menu' => $oMenu->getCode(),
         );
 		
         $aVars['bx_if:image'] = array (
