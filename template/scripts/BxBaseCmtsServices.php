@@ -518,7 +518,7 @@ class BxBaseCmtsServices extends BxDol
         $aBp = !isset($aParams['aBp']) ? [] : $aParams['aBp'];
         $aDp = ['in_designbox' => false, 'show_empty' => false];
         
-
+        $aDp['type'] = 'flat';//$aDp['type'] = 'threaded';
         $aBp['type'] = 'head';
         $oCmts->getParams($aBp, $aDp);
         $oCmts->prepareParams($aBp, $aDp);
@@ -552,6 +552,7 @@ class BxBaseCmtsServices extends BxDol
             'per_view' => $aBp['per_view'],
             'total_count' => $aBp['count'],
             'order' => $aParams['order_way'],
+            'view' => $aDp['type'],
             'module' => $oCmts->getSystemName(), 
             'object_id' => $oCmts->getId(),
             'data' => $aCmtsRv
@@ -569,7 +570,7 @@ class BxBaseCmtsServices extends BxDol
         if (isset($aParams['comment_id'])){
             $aRv['new'] = $aParams['comment_id'];
         }
-        
+        print_r($aRv);
         return $aRv;
     }
 }
