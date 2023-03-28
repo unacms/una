@@ -48,7 +48,7 @@ class BxBaseServiceProfiles extends BxDol
 
         if(bx_is_api())
             return [
-                bx_api_get_block ('profile_avatar', $oProfile->getData(), ['id' => 1])
+                bx_api_get_block ('profile_avatar', $oProfile->getData())
             ];
 
         $oTemplate = BxDolTemplate::getInstance();
@@ -129,7 +129,7 @@ class BxBaseServiceProfiles extends BxDol
         if(($oMenu = BxDolMenu::getObjectInstance('sys_profile_stats')) !== false) {
             if(bx_is_api())
                 return [
-                    bx_api_get_block ('profile_menu', $oMenu->getCodeAPI(), ['id' => 2])
+                    bx_api_get_block ('profile_menu', $oMenu->getCodeAPI())
                 ];
 
             return $oMenu->getCode();
