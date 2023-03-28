@@ -410,7 +410,13 @@ class BxBasePage extends BxDolPage
             'type' => $this->getType (),
             'layout' => $this->_aObject['layout_id'],
             'elements' => $this->getPageBlocksAPI(),
+            'menu_top' => '',
+            'menu' => '',
+            'menu_bottom' => ''
         ];
+
+        if (($oMenuTop = BxDolMenu::getObjectInstance('sys_site')) !== false)
+            $a['menu_top'] = $oMenuTop->getCodeAPI();
 
         if (($oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu')) !== false) {
             if(($sSubmenu = $this->getSubMenu()) !== '')

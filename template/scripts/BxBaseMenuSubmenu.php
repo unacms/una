@@ -137,12 +137,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     
     public function getCodeAPI ()
     {
-        if(!$this->isVisible()) {
-            if(!$this->_oObjectSubmenu)
-                $this->setObjectSubmenu('sys_homepage_submenu');
-            else
-                return [];
-        }
+        if(!$this->isVisible())
+            return [];
 
         if(!empty($this->_iContentId) && method_exists($this->_oObjectSubmenu, 'setContentId'))
             $this->_oObjectSubmenu->setContentId($this->_iContentId);
