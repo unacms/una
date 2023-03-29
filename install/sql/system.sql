@@ -708,8 +708,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_api_enable', '_adm_stg_cpt_option_sys_api_enable', '', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'sys_api_access_by_origin', '_adm_stg_cpt_option_sys_api_access_by_origin', '', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_api_access_by_key', '_adm_stg_cpt_option_sys_api_access_by_key', '', 'checkbox', '', '', '', 20),
-(@iCategoryId, 'sys_api_access_unsafe_services', '_adm_stg_cpt_option_sys_api_access_unsafe_services', '', 'checkbox', '', '', '', 30);
-(@iCategoryId, 'sys_api_comments_flat', '_adm_stg_cpt_option_sys_api_comments_flat', '', 'checkbox', '', '', '', 30);
+(@iCategoryId, 'sys_api_access_unsafe_services', '_adm_stg_cpt_option_sys_api_access_unsafe_services', '', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_api_comments_flat', '_adm_stg_cpt_option_sys_api_comments_flat', '', 'checkbox', '', '', '', 40);
 --
 -- Table structure for table `sys_options_mixes`
 --
