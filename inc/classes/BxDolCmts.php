@@ -2213,17 +2213,15 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 }
                 else {
                     $iPassLevel = $iLevel;
-                    $aPassStructure = &$aStructure;
+                    $aPassStructure = [];//&$aStructure TODO: need to be checked by author, changed to avoid *RECURSION*;
                 }
-
+                
                 foreach($aItems as $aItem)
                     $this->_getStructure($aItem, $aBp, $iPassLevel, $aPassStructure);
-
+                
                 //--- Sort subitems
                 $iWay = isset($aBp['order']['way']) && $aBp['order']['way'] == 'desc' ? -1 : 1;
 
-                //tODO fix
-               // print_r($aPassStructure);
                 uasort($aPassStructure, function($aItem1, $aItem2) use ($iWay) {
                     if($aItem1['order'] == $aItem2['order'])
                         return 0;
@@ -2231,8 +2229,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     return $iWay * ($aItem1['order'] < $aItem2['order'] ? -1 : 1);
                 });
                 $aStructure[$iI]['items'] = $aPassStructure;
-               // print_r($aPassStructure);
-            //    echo '-----------------';
             }
         }
     }

@@ -511,6 +511,7 @@ class BxBaseCmtsServices extends BxDol
     
     public function serviceGetCommentsApi($oCmts, $aParams)
     {
+        
         $mixedResult = $oCmts->isViewAllowed();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult; // TODO: error checking
@@ -518,7 +519,7 @@ class BxBaseCmtsServices extends BxDol
         $aBp = !isset($aParams['aBp']) ? [] : $aParams['aBp'];
         $aDp = ['in_designbox' => false, 'show_empty' => false];
         
-        $aDp['type'] = !getParam('sys_api_access_unsafe_services') ? 'threaded' : 'flat';
+        $aDp['type'] = !getParam('sys_api_comments_flat') ? 'threaded' : 'flat';
         $aBp['type'] = 'head';
         $oCmts->getParams($aBp, $aDp);
         $oCmts->prepareParams($aBp, $aDp);
@@ -554,6 +555,7 @@ class BxBaseCmtsServices extends BxDol
             }
             $aCmtsRv[] = $oCmt;
         }
+        
         $aData = [
             'unit' => 'comments',
             'start' => $aParams['start_from'],
@@ -579,7 +581,7 @@ class BxBaseCmtsServices extends BxDol
         if (isset($aParams['comment_id'])){
             $aRv['new'] = $aParams['comment_id'];
         }
-        print_r($aRv);
+       
         return $aRv;
     }
 }
