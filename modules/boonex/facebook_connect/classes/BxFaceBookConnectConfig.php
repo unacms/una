@@ -45,7 +45,7 @@ class BxFaceBookConnectConfig extends BxBaseModConnectConfig
 
         $this -> aFaceBookReqParams = array(
             'scope' => getParam('bx_facebook_connect_extended_info') 
-                ? 'email,public_profile,user_friends,user_birthday,user_about_me,user_hometown,user_location'
+                ? 'email,public_profile,user_friends,user_birthday,user_hometown,user_location'
                 : 'email,public_profile',
             'redirect_uri' => $this -> sPageReciver,
         );
