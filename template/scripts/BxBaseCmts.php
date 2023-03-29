@@ -181,16 +181,6 @@ class BxBaseCmts extends BxDolCmts
         
     }
 
-    function decodeData ($a)
-    {
-        foreach ($a as $i => $r) {
-            if (isset($r['cmt_author_id']))
-                $a[$i]['author_data'] = BxDolProfile::getData($r['cmt_author_id']);
-        }
-
-        return $a;
-    }
-
     /**
      * get full comments block with initializations
      */

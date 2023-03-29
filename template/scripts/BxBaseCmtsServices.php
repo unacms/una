@@ -518,7 +518,7 @@ class BxBaseCmtsServices extends BxDol
         $aBp = !isset($aParams['aBp']) ? [] : $aParams['aBp'];
         $aDp = ['in_designbox' => false, 'show_empty' => false];
         
-        $aDp['type'] = 'flat';//$aDp['type'] = 'threaded';
+        $aDp['type'] = !getParam('sys_api_access_unsafe_services') ? 'threaded' : 'flat';
         $aBp['type'] = 'head';
         $oCmts->getParams($aBp, $aDp);
         $oCmts->prepareParams($aBp, $aDp);
@@ -543,7 +543,16 @@ class BxBaseCmtsServices extends BxDol
         
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
-            $aCmtsRv[] = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
+            $oCmt = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
+            $sKey = array_keys($oCmt)[0];
+            if ($oCmt[$sKey]['data']['cmt_parent_id'] > 0){
+                $aParent = $oCmts->getCommentSimple((int)$oCmt[$sKey]['data']['cmt_parent_id']);
+                $oCmt[$sKey]['data']['cmt_parent'] = [
+                    'data' => $aParent,
+                    'author_data' => BxDolProfile::getData($aParent['cmt_author_id'])
+                ];
+            }
+            $aCmtsRv[] = $oCmt;
         }
         $aData = [
             'unit' => 'comments',

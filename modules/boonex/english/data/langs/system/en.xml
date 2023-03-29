@@ -1713,6 +1713,7 @@
     <string name="_adm_stg_cpt_option_sys_api_access_by_origin"><![CDATA[Allow access by origin]]></string>
     <string name="_adm_stg_cpt_option_sys_api_access_by_key"><![CDATA[Allow access with API key]]></string>
     <string name="_adm_stg_cpt_option_sys_api_access_unsafe_services"><![CDATA[Access to unsafe services]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Flat comments]]></string>
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>

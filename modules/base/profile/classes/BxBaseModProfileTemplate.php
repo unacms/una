@@ -689,7 +689,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $sImageUrl = $this->getImageUrl($sNoImage);
         if(!$sImageUrl)
-            $sImageUrl = $this->getImageUrl(substr($sNoImage, 0, strrpos($sNoImage, '-')) . (bx_is_api() ? '.svg' : '.png'));
+            $sImageUrl = bx_is_api() ? '' : $this->getImageUrl(substr($sNoImage, 0, strrpos($sNoImage, '-')) . '.svg');
 
         return $sImageUrl;
     }

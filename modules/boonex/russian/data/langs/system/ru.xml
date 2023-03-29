@@ -1691,6 +1691,7 @@
     <string name="_adm_stg_cpt_option_sys_api_access_by_origin"><![CDATA[Доступ по "origin" заголовку]]></string>
     <string name="_adm_stg_cpt_option_sys_api_access_by_key"><![CDATA[Доступ по API ключу]]></string>
     <string name="_adm_stg_cpt_option_sys_api_access_unsafe_services"><![CDATA[Доступ к небезопасным сервисам]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Линейные комментарии]]></string>
 
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
     <string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
