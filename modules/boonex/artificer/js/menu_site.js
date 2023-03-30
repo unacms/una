@@ -20,12 +20,16 @@ BxArtificerMenuMoreAuto.prototype.init = function(bForceInit)
     BxDolMenuMoreAuto.prototype.init.call(this);
 
     var $this = this;
+    var oImages = $('#bx-toolbar').find('img');
 
-    $(document).ready(function() {
-        $this.update();
-    });
-
-    $('#bx-toolbar').find('img').bind('load', function() {
-        $this.update();
-    });
+    if(!oImages.length)
+        $(document).ready(function() {
+            $this.update(true);
+        });
+    else
+        oImages.bind('load', function() {
+            setTimeout(function() {
+                $this.update(true);
+            }, 100);
+        });
 };
