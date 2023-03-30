@@ -2279,15 +2279,19 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
         $sDomain = $aUrl['host'];
     }
 
-    if ('auto' === $sPath)
-        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) && !bx_is_api() ? $aUrl['path'] : '/';
+    if (bx_is_api())
+        $sPath = trim(getParam('sys_api_cookie_path'));
+    elseif ('auto' === $sPath)
+        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
 
-    if ('auto' === $bSecure)
+    if (bx_is_api())
+        $bSecure = !!getParam('sys_api_cookie_secure');
+    elseif ('auto' === $bSecure)
         $bSecure = 0 === strcasecmp('https', $aUrl['scheme']);
 
     if (PHP_VERSION_ID < 70300) {
-        if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName || bx_is_api()))
-            $sPath .= '; SameSite=' . getParam('sys_samesite_cookies');
+        if (!defined('BX_MULTISITE_URL_COOKIE') && ('memberPassword' == $sName || 'memberSession' == $sName))
+            $sPath .= '; SameSite=' . (bx_is_api() ? getParam('sys_api_cookie_samesite') : getParam('sys_samesite_cookies'));
         return setcookie($sName, $sValue, $oExpiresOrOptions, $sPath, $sDomain, $bSecure, $bHttpOnly);
     } 
     else {
@@ -2298,8 +2302,8 @@ function bx_setcookie($sName, $sValue = "", $oExpiresOrOptions = 0, $sPath = 'au
             'secure' => $bSecure, 
             'httponly' => $bHttpOnly,
         ];
-        if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName || bx_is_api()))
-            $aOptions['samesite'] = getParam('sys_samesite_cookies');
+        if (!defined('BX_MULTISITE_URL_COOKIE') && !isset($aOptions['samesite']) && ('memberPassword' == $sName || 'memberSession' == $sName))
+            $aOptions['samesite'] = bx_is_api() ? getParam('sys_api_cookie_samesite') : getParam('sys_samesite_cookies');
 
         return setcookie($sName, $sValue, $aOptions);
     }
