@@ -350,8 +350,8 @@ class BxDolStudioOptions extends BxDol
             case 'image':
                 $mixedValue = (int)getParam($aOption['name']);
 
-                $aIds = $oForm->getCleanValue($aOption['name']);
-                if(empty($aIds)) {
+                $mixedIds = $oForm->getCleanValue($aOption['name']);
+                if(empty($mixedIds)) {
                     if(!empty($mixedValue))
                         $mixedValue = 0;
 
@@ -364,10 +364,10 @@ class BxDolStudioOptions extends BxDol
 
                 //--- Concatenation integer values as strings is required to get unique content id
                 $iContentId = (int)($aOption['id'] . (int)$oForm->getCleanValue('mix_id'));
-                foreach($aIds as $iId) {
-                    $oStorage->updateGhostsContentId($iId, false, $iContentId);
-                    $mixedValue = $iId;
-                }
+                $iImageId = is_array($mixedIds) ? (int)array_shift($mixedIds) : (int)$mixedIds;
+
+                $oStorage->updateGhostsContentId($iImageId, false, $iContentId);
+                $mixedValue = $iImageId;
                 break;
 
             default: 
