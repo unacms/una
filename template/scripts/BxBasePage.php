@@ -417,7 +417,7 @@ class BxBasePage extends BxDolPage
         ];
         
         
-        if (BxDolCover::getInstance($this)->isCover() && $this->_aProfileInfo){
+        if (BxDolCover::getInstance($this)->isCover() && isset($this->_aProfileInfo)){
             
             $oModule = BxDolModule::getInstance($this->getModule());
             
