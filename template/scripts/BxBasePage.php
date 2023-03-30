@@ -406,15 +406,41 @@ class BxBasePage extends BxDolPage
             'uri' => $this->_aObject['uri'],
             'author' => $this->_aObject['author'],
             'added' => $this->_aObject['added'],
-            'module' => $this->getModule (),
+            'module' => $this->getModule(),
             'type' => $this->getType (),
             'layout' => $this->_aObject['layout_id'],
-            'elements' => $this->getPageBlocksAPI(),
+            'cover_block' => '',
             'menu_top' => '',
             'menu' => '',
-            'menu_bottom' => ''
+            'menu_bottom' => '',
+            'elements' => $this->getPageBlocksAPI(),
         ];
-
+        
+        
+        if (BxDolCover::getInstance($this)->isCover() && $this->_aProfileInfo){
+            
+            $oModule = BxDolModule::getInstance($this->getModule());
+            
+            $a['cover_block'] = [
+                'profile' => BxDolProfile::getInstance()->getData($this->_aProfileInfo['id']),
+                'actions_menu' => '',
+                'meta_menu' => '',
+                'cover' => $oModule->serviceGetCover($this->_aProfileInfo['content_id'])
+            ];
+            
+            $CNF = $oModule->_oConfig->CNF;
+            
+            if(!empty($CNF['OBJECT_MENU_VIEW_ENTRY_META'])){
+                $oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META']);
+                $a['cover_block']['meta_menu'] =  $oMetaMenu->getCodeAPI();
+            }
+            
+            if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])){
+                $oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+                $a['cover_block']['actions_menu'] = $oActionMenu->getCodeAPI();
+            }  
+        }
+        
         if (($oMenuTop = BxDolMenu::getObjectInstance('sys_site')) !== false)
             $a['menu_top'] = $oMenuTop->getCodeAPI();
 

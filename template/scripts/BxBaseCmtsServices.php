@@ -458,7 +458,7 @@ class BxBaseCmtsServices extends BxDol
         
         $aParams['parent_id'] = !isset($aParams['parent_id']) ? 0 : $aParams['parent_id'];
         $aParams['start_from'] = !isset($aParams['start_from']) ? 0 : $aParams['start_from'];
-        $aParams['order_way'] = !isset($aParams['order_way']) ? 'desc' : $aParams['order_way'];
+        $aParams['order_way'] = !isset($aParams['order_way']) ? 'asc' : $aParams['order_way'];
         $aParams['is_form'] = !isset($aParams['is_form']) ? true : $aParams['is_form'];
         $aParams['insert'] = 'before';
         
