@@ -80,9 +80,9 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
     {    
         $iMemberIdCookie = null;
         $bLoggedMemberGlobals = null;
-        if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {            
-            if (!empty($_COOKIE['memberID']))
-                $iMemberIdCookie = $_COOKIE['memberID'];
+        if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {
+            if (getLoggedId())
+                $iMemberIdCookie = getLoggedId();
             if (!empty($GLOBALS['logged']['member']))
                 $bLoggedMemberGlobals = $GLOBALS['logged']['member'];
             $oProfile = BxDolProfile::getInstance($iProfileId);

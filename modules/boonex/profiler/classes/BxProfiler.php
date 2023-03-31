@@ -123,7 +123,7 @@ class BxProfiler extends BxDol
     {
         $sDate = date ($this->_sLogDateFormat);
         return "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" . $sDate . " " . $s . "\n" .
-        (isset($_COOKIE['memberID']) ? "User ID: " . $_COOKIE['memberID']  . "\n" : '') .
+        (getLoggedId() ? "User ID: " . getLoggedId()  . "\n" : '') .
         "User role: " . ($GLOBALS['logged']['admin'] ? 'admin' : ($GLOBALS['logged']['member'] ? 'member' : 'guest')) . "\n";
     }
 

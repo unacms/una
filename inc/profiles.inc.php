@@ -29,7 +29,12 @@ function isLogged()
  */
 function getLoggedId()
 {
-    return isset($_COOKIE['memberID']) && (!empty($GLOBALS['logged']['member']) || !empty($GLOBALS['logged']['admin'])) ? (int)$_COOKIE['memberID'] : 0;
+    if (getParam('sys_session_auth')) {
+        return (!empty($GLOBALS['logged']['member']) || !empty($GLOBALS['logged']['admin'])) ? BxDolSession::getInstance()->getUserId() : 0;
+    }
+    else {
+        return isset($_COOKIE['memberID']) && (!empty($GLOBALS['logged']['member']) || !empty($GLOBALS['logged']['admin'])) ? (int)$_COOKIE['memberID'] : 0;
+    }
 }
 
 /**
@@ -37,7 +42,8 @@ function getLoggedId()
  */
 function getLoggedPassword()
 {
-    return isset($_COOKIE['memberPassword']) && ($GLOBALS['logged']['member'] || $GLOBALS['logged']['admin']) ? $_COOKIE['memberPassword'] : '';
+    $oAccount = BxDolAccount::getInstance();
+    return ($GLOBALS['logged']['member'] || $GLOBALS['logged']['admin']) && $oAccount ? BxDolAccountQuery::getInstance()->getPassword($oAccount->id()) : "";
 }
 
 /**
@@ -100,11 +106,13 @@ function bx_login($iId, $bRememberMe = false)
     if (!$sPassword)
         return false;
 
-    $iCookieTime = $bRememberMe ? time() + 60 * getParam('sys_session_lifetime_in_min') : 0;
-    bx_setcookie("memberID", $iId, $iCookieTime, 'auto');
-    $_COOKIE['memberID'] = $iId;
-    bx_setcookie("memberPassword", $sPassword, $iCookieTime, 'auto', '', 'auto', true /* http only */);
-    $_COOKIE['memberPassword'] = $sPassword;
+    if (!getParam('sys_session_auth')) {
+        $iCookieTime = $bRememberMe ? time() + 60 * getParam('sys_session_lifetime_in_min') : 0;
+        bx_setcookie("memberID", $iId, $iCookieTime, 'auto');
+        $_COOKIE['memberID'] = $iId;
+        bx_setcookie("memberPassword", $sPassword, $iCookieTime, 'auto', '', 'auto', true /* http only */);
+        $_COOKIE['memberPassword'] = $sPassword;
+    }
 
     BxDolSession::getInstance()->setUserId($iId);
 
@@ -127,24 +135,26 @@ function bx_login($iId, $bRememberMe = false)
  */
 function bx_logout($bNotify = true)
 {
-    if (!isset($_COOKIE['memberID']))
+    if (!($iMemberId = BxDolSession::getInstance()->getUserId()))
         return;
 
     if ($bNotify && isMember())
-        bx_alert('account', 'logout', (int)$_COOKIE['memberID']);
+        bx_alert('account', 'logout', $iMemberId);
 
     bx_audit(
-        $_COOKIE['memberID'], 
+        $iMemberId, 
         'bx_accounts', 
         '_sys_audit_action_account_logout',  
         array('content_title' => '', 'data' => ['display_info' => ['User agent' => (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '')]])
     );
 
-    bx_setcookie('memberID', '', time() - 96 * 3600);
-    bx_setcookie('memberPassword', '', time() - 96 * 3600, 'auto', '', 'auto', true /* http only */);
+    if (!getParam('sys_session_auth')) {
+        bx_setcookie('memberID', '', time() - 96 * 3600);
+        bx_setcookie('memberPassword', '', time() - 96 * 3600, 'auto', '', 'auto', true);
 
-    unset($_COOKIE['memberID']);
-    unset($_COOKIE['memberPassword']);
+        unset($_COOKIE['memberID']);
+        unset($_COOKIE['memberPassword']);
+    }
 
     BxDolSession::getInstance()->destroy();
 }
@@ -159,27 +169,46 @@ function check_logged()
        BX_DOL_ROLE_MEMBER => 'member'
     );
 
-    $bID = isset($_COOKIE['memberID']);
-    $sID = $bID ? bx_process_input($_COOKIE['memberID']) : false;
-
-    $bPassword = isset($_COOKIE['memberPassword']);
-    $sPassword = $bPassword ? bx_process_input($_COOKIE['memberPassword']) : false;
-
     $bLogged = false;
-    foreach ($aAccTypes as $iRole => $sValue) {
-        if ($GLOBALS['logged'][$sValue] = ($sID && !bx_check_login($sID, $sPassword, $iRole))) {
-            BxDolSession::getInstance();
-            $bLogged = true;
-            break;
+    $bID = false;
+    $sID = 0;
+
+    if (getParam('sys_session_auth')) {
+        $o = BxDolSession::getInstance();
+        $sID = $o->getUserId();
+        if ($sID && $oAccount = BxDolAccount::getInstance((int)$sID)) {
+            $aAccountInfo = $oAccount->getInfo();
+            foreach ($aAccTypes as $iRole => $sValue) {
+                if ($GLOBALS['logged'][$sValue] = ((int)$aAccountInfo['role'] & $iRole)) {
+                    $bLogged = true;
+                    $bID = true;
+                    break;
+                }
+            }
+        }
+    }
+    else {
+        $bID = isset($_COOKIE['memberID']);
+        $sID = $bID ? bx_process_input($_COOKIE['memberID']) : false;
+
+        $bPassword = isset($_COOKIE['memberPassword']);
+        $sPassword = $bPassword ? bx_process_input($_COOKIE['memberPassword']) : false;
+        
+        foreach ($aAccTypes as $iRole => $sValue) {
+            if ($GLOBALS['logged'][$sValue] = ($sID && !bx_check_login($sID, $sPassword, $iRole))) {
+                BxDolSession::getInstance();
+                $bLogged = true;
+                break;
+            }
         }
     }
 
-    if($bID && $bPassword && $bLogged) {
+    if($bID && $bLogged) {
         header("Cache-Control: no-cache, no-store, must-revalidate");
         bx_alert('account', 'logged', getLoggedId());
     }
 
-    if(($bID || $bPassword) && !$bLogged)
+    if($bID && !$bLogged)
         bx_logout(false);
 }
 
@@ -286,8 +315,18 @@ function bx_require_authentication ($bStudio = false, $bAjaxMode = false, $sForc
     if ($bStudio)
         $iRole = BX_DOL_ROLE_ADMIN;
 
-    $sID = isset($_COOKIE['memberID']) ? bx_process_input($_COOKIE['memberID']) : false;
-    $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
+    $sID = 0;
+    $sPassword = '';
+
+    if (getParam('sys_session_auth')) {
+        $o = BxDolSession::getInstance();
+        $sID = $o->getUserId();
+        $sPassword = $sID ? BxDolAccountQuery::getInstance()->getPassword($sID) : '';
+    } 
+    else {
+        $sID = isset($_COOKIE['memberID']) ? bx_process_input($_COOKIE['memberID']) : false;
+        $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
+    }
 
     if (bx_check_login($sID, $sPassword, $iRole)) {
         bx_login_form($bStudio, $bAjaxMode, $sForceRelocate);
