@@ -64,7 +64,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 
     function start()
     {
-        if (defined('BX_DOL_CRON_EXECUTE'))
+        if (defined('BX_DOL_CRON_EXECUTE') || defined('BX_MANIFEST'))
             return true;
 
         if ($this->exists($this->sId)) {

@@ -7,9 +7,7 @@
  * @{
  */
 
-/**
-* Note: This file is intended to be publicly accessible.
-*/
+define('BX_MANIFEST', true);
 
 require_once('./inc/header.inc.php');
 
