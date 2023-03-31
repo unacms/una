@@ -1650,6 +1650,7 @@
     <string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Задействовать уменьшение для файлов JS (кэш должен быть задействован)]]></string>
     <string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
     <string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
+  	<string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Аутентификация черех сессию]]></string>
     <string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - Таймаут по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - доверять неподписанным сертификатам или неподтвержденным хостам]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA[Значение заголовка 'Content-Security-Policy: frame-ancestors']]></string>

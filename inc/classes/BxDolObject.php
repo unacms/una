@@ -304,7 +304,7 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
 
     protected function _getAuthorPassword ()
     {
-        return isMember() ? $_COOKIE['memberPassword'] : "";
+        return getLoggedPassword();
     }
 
     protected function _getAuthorIp ()

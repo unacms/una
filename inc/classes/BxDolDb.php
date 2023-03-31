@@ -689,7 +689,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         bx_log('sys_db', "$sErrorType\n" . 
             (empty($aError['message']) ? '' : "  Error: {$aError['message']}\n") . 
             (empty($aError['query']) ? '' : "  Query: {$aError['query']}\n") . 
-            (empty($_COOKIE['memberID']) ? '' : "  Account ID: {$_COOKIE['memberID']}\n")
+            (getLoggedId() ? '' : "  Account ID: " . getLoggedId() . "\n")
         );
 
         bx_show_service_unavailable_error_and_exit($sOutput);

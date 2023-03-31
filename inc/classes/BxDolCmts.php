@@ -1776,7 +1776,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getAuthorPassword ()
     {
-        return isMember() ? $_COOKIE['memberPassword'] : "";
+        return getLoggedPassword();
     }
 
     protected function _getAuthorIp ()

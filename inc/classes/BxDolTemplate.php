@@ -2921,7 +2921,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         catch(Exception $oException) {
             bx_log('sys_template', "Error in _parseContent method. Cannot parse template insertion (<bx_include... />).\n" . 
                 "  Error ({$oException->getCode()}): {$oException->getMessage()}\n" . 
-                (!empty($_COOKIE['memberID']) ? "  Account ID: {$_COOKIE['memberID']}\n" : "")
+                (getLoggedId() ? "  Account ID: " . getLoggedId() . "\n" : "")
             );
 
             return '';
@@ -2948,7 +2948,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         catch(Exception $oException) {
             bx_log('sys_template', "Error in _parseContent method. Cannot parse System Keys.\n" . 
                 "  Error ({$oException->getCode()}): {$oException->getMessage()}\n" . 
-                (!empty($_COOKIE['memberID']) ? "  Account ID: {$_COOKIE['memberID']}\n" : "")
+                (getLoggedId() ? "  Account ID: " . getLoggedId() . "\n" : "")
             );
 
             return '';
@@ -3054,7 +3054,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             if(($iCode = $oException->getCode()) != 1)
                 bx_log('sys_template', "Error in _compileContent method. Cannot parse template insertion (<bx_include... />).\n" . 
                     "  Error ({$iCode}): {$oException->getMessage()}\n" . 
-                    (!empty($_COOKIE['memberID']) ? "  Account ID: {$_COOKIE['memberID']}\n" : "")
+                    (getLoggedId() ? "  Account ID: " . getLoggedId() . "\n" : "")
                 );
 
             return false;

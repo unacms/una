@@ -14,8 +14,14 @@ ob_end_clean();
 
 bx_import('BxDolLanguages');
 
-if (isset($_COOKIE['memberID']) && isset($_COOKIE['memberPassword']))
-    bx_logout();
+if (getParam('sys_session_auth')) {    
+    if (isset($_COOKIE['memberSession']) && BxDolSession::getInstance()->getUserId())
+        bx_logout();
+}
+else {
+    if (isset($_COOKIE['memberID']) && isset($_COOKIE['memberPassword']))
+        bx_logout();
+}
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);

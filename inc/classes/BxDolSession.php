@@ -67,10 +67,15 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
         if (defined('BX_DOL_CRON_EXECUTE') || defined('BX_MANIFEST'))
             return true;
 
-        if ($this->exists($this->sId)) {
-            if ($this->iUserId == getLoggedId())
-                return true;
-            $this->destroy(false);
+        if (getParam('sys_session_auth')) {
+            $this->exists($this->sId);
+        }
+        else {
+            if ($this->exists($this->sId)) {
+                if ($this->iUserId == getLoggedId())
+                    return true;
+                $this->destroy(false);
+            }
         }
 
 		/**
@@ -81,7 +86,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 			bx_logout();
 
 		// try to restore user's old session
-		if (isLogged() && defined('BX_DOL_SESSION_RESTORATION') && constant('BX_DOL_SESSION_RESTORATION')) {
+		if (!getParam('sys_session_auth') && isLogged() && defined('BX_DOL_SESSION_RESTORATION') && constant('BX_DOL_SESSION_RESTORATION')) {
 		    $this->sId = $this->oDb->getOldSession(getLoggedId());
 		    if ($this->sId)
 		        $this->exists($this->sId); // it exists for sure but required for initializing some data there
@@ -137,6 +142,11 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
     {
         $this->iUserId = $iUserId;
         $this->save();
+    }
+
+    function getUserId()
+    {
+        return $this->iUserId;
     }
 
     function setValue($sKey, $mixedValue)
