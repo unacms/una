@@ -96,7 +96,10 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 		if (!$this->sId)
             $this->sId = genRndPwd(32, true);
 
-        bx_setcookie(BX_DOL_SESSION_COOKIE, $this->sId, time() + BX_DOL_SESSION_LIFETIME, 'auto', '', 'auto', true);
+        $iTime = time() + BX_DOL_SESSION_LIFETIME;
+        if (getParam('sys_session_auth') && $this->isValue('remember_me') && !$this->getValue('remember_me'))
+            $iTime = 0;
+        bx_setcookie(BX_DOL_SESSION_COOKIE, $this->sId, $iTime, 'auto', '', 'auto', true);
 
         $this->save();
         return true;
