@@ -38,7 +38,6 @@ class BxTemplConfig extends BxBaseConfig
         }
 
         BxDolTemplate::getInstance()->addCss([
-            'https://rsms.me/inter/inter.css',
             'menu-sidebar.css',
         ]);
     }
