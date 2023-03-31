@@ -587,7 +587,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             'bx_name' => $aUrlRoot['host']
         ]);
 
-        return '<link rel="manifest" href="' . $sUrl . '" />';
+        return '<link rel="manifest" href="' . $sUrl . '" crossorigin="use-credentials" />';
     }
 
     /**
