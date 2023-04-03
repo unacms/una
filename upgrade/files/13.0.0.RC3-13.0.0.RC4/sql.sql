@@ -11,10 +11,12 @@ INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `typ
 
 SET @iTypeId = (SELECT `id` FROM `sys_options_types` WHERE `name` = 'system');
 
-INSERT IGNORE INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'api', '_adm_stg_cpt_category_api', 1, 2);
+DELETE FROM `sys_options_categories` WHERE `name` = 'api';
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'api', '_adm_stg_cpt_category_api', 1, 2);
 
 SET @iCategoryIdApi = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'api');
 
+DELETE FROM `sys_options` WHERE `name` IN('sys_api_enable', 'sys_api_access_by_origin', 'sys_api_access_by_key', 'sys_api_access_unsafe_services', 'sys_api_cookie_path', 'sys_api_cookie_secure', 'sys_api_cookie_samesite', 'sys_api_comments_flat', '');
 INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryIdApi, 'sys_api_enable', '_adm_stg_cpt_option_sys_api_enable', '', 'checkbox', '', '', '', 1),
 (@iCategoryIdApi, 'sys_api_access_by_origin', '_adm_stg_cpt_option_sys_api_access_by_origin', '', 'checkbox', '', '', '', 10),
