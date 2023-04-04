@@ -355,6 +355,18 @@ class BxBaseFormView extends BxDolForm
             $this->genForm();
         
         // TODO: process inputs to translate titles, alerts, etc
+        
+        foreach ($this->aInputs as $aInput) {
+            if (isset($aInput['type']) && 'files' == $aInput['type']){
+                $oStorage = BxDolStorage::getObjectInstance($aInput['storage_object']);
+                $aInput['ext_allow'] = $oStorage->getObjectData()['ext_allow'];
+                $aInput['ext_deny'] = $oStorage->getObjectData()['ext_deny'];
+                $aInput['ghost_template'] = '';
+                $aInput['value'] = '';
+                $aInput['values'] = '';
+                $aInput['values_src'] = '';
+            }
+        }
     
         return ['inputs' => $this->aInputs, 'attrs' => $this->aFormAttrs, 'params' => $this->aParams];
     }

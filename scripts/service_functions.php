@@ -55,6 +55,7 @@ class BxDolServiceFunctionsCmd
             'BxBaseTemplateServices' => 'System',
             'BxBaseAclServices' => 'System',
             'BxBaseCmtsServices' => 'System',
+            'BxBaseUploaderServices' => 'System',
             'BxBaseImageServices' => 'System',
             'BxBaseLanguagesServices' => 'System',
             'BxBaseLiveUpdatesServices' => 'System',

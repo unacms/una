@@ -158,8 +158,10 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             $this->appendUploadErrorMessage(_t('_sys_uploader_err_msg', isset($_FILES['file']['name']) ? $_FILES['file']['name'] : bx_get('file'), $oStorage->getErrorString()));
             $aResponse = array ('error' => $this->getUploadErrorMessages());
         }
-
-        echo htmlspecialchars(json_encode($aResponse), ENT_NOQUOTES);
+        if (bx_is_api())
+            return $aResponse;
+        else
+            echo htmlspecialchars(json_encode($aResponse), ENT_NOQUOTES);
     }
 }
 
