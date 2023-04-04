@@ -356,7 +356,7 @@ class BxBaseFormView extends BxDolForm
         
         // TODO: process inputs to translate titles, alerts, etc
         
-        foreach ($this->aInputs as $aInput) {
+        foreach ($this->aInputs as &$aInput) {
             if (isset($aInput['type']) && 'files' == $aInput['type']){
                 $oStorage = BxDolStorage::getObjectInstance($aInput['storage_object']);
                 $aInput['ext_allow'] = $oStorage->getObjectData()['ext_allow'];
