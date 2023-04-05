@@ -53,9 +53,7 @@ class BxBaseUploaderServices extends BxDol
         else
             $iContentId = bx_process_input($iContentId, BX_DATA_INT);
 
-        if (!$sUploaderObject || !$sStorageObject || !$sUniqId)
-            exit;
-
+        
         $isPrivate = (int)bx_get('p') ? 1 : 0;
 
         $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorageObject, $sUniqId);
@@ -79,6 +77,32 @@ class BxBaseUploaderServices extends BxDol
 
             case 'upload':
                 return $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId, $isPrivate);
+                break;
+                
+            case 'upload_inline':
+                $sStorageObject = bx_process_input(bx_get('o'));
+                $sFile = bx_process_input(bx_get('f'));
+
+                $oStorage = BxDolStorage::getObjectInstance($sStorageObject);
+                
+                $iProfileId = bx_get_logged_profile_id();
+
+                if (!($iId = $oStorage->storeFileFromForm($_FILES['file'], false, $iProfileId))) {
+                    return array('error' => '1');
+                    exit;
+                }
+
+                $oStorage->afterUploadCleanup($iId, $iProfileId);
+
+                $aFileInfo = $oStorage->getFile($iId);
+                if ($aFileInfo && in_array($aFileInfo['ext'], array('jpg', 'jpeg', 'jpe', 'png'))) {
+                    $oTranscoder = BxDolTranscoderImage::getObjectInstance(bx_get('t'));
+                    $sUrl = $oTranscoder->getFileUrl($iId);
+                }
+                else {
+                    $sUrl = $oStorage->getFileUrlById($iId);
+                }
+                return ['link' => $sUrl];
                 break;
 
         }
