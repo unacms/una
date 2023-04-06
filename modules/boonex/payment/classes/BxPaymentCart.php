@@ -321,7 +321,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $fItemsPrice = 0;
         $aItemsInfo = array();
         foreach($aItems as $aItem) {
-            $aCustom = isset($aItem['custom']) ? $aItem['custom'] : array(123);
+            $aCustom = isset($aItem['custom']) ? $aItem['custom'] : [];
 
             //--- Get item main info
             $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $iClientId, $aCustom));
