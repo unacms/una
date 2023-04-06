@@ -1480,18 +1480,36 @@ class BxBaseCmts extends BxDolCmts
                     'h' => $iHeight
                 );
 
-                $aTmplImages[] = array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'bx_if:show_image' => array(
-                        'condition' => $bImage,
-                        'content' => $aTmplVarsFile
-                    ),
-                    'bx_if:show_file' => array(
-                        'condition' => !$bImage,
-                        'content' => $aTmplVarsFile
-                    ),
-                );
+                if (bx_is_api()){
+                    $aTmplImages[] = array(
+                        'is_image' => $bImage,
+                        'file' => $aTmplVarsFile['file'],
+                        'file_id' => $aTmplVarsFile['file_id'],
+                        'file_name' => $aTmplVarsFile['file_name'],
+                        'file_icon' => $aTmplVarsFile['file_icon'],
+                        'file_size' => $aTmplVarsFile['file_size'],
+                        'width' => $aTmplVarsFile['w'],
+                        'height' => $aTmplVarsFile['h'],
+                    );
+                }
+                else{
+                    $aTmplImages[] = array(
+                        'style_prefix' => $this->_sStylePrefix,
+                        'bx_if:show_image' => array(
+                            'condition' => $bImage,
+                            'content' => $aTmplVarsFile
+                        ),
+                        'bx_if:show_file' => array(
+                            'condition' => !$bImage,
+                            'content' => $aTmplVarsFile
+                        ),
+                    );
+                }
             }
+        }
+        
+        if (bx_is_api()){
+            return $aTmplImages;
         }
 
         return $this->_oTemplate->parseHtmlByName('comment_attachments.html', array(

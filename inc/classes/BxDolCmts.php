@@ -2199,6 +2199,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 'id' => $mixedItem['cmt_id'], 
                 'order' => isset($mixedItem['cmt_order']) ? $mixedItem['cmt_order'] : 0, 
                 'data' => $this->getCommentSimple((int)$mixedItem['cmt_id']),
+                'files' => $this->_getAttachments($mixedItem),
                 'items' => array(),
             );
             $aStructure[$iI]['data']['author_data'] = BxDolProfile::getData($aStructure[$iI]['data']['cmt_author_id']);
