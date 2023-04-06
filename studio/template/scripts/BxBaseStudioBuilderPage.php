@@ -1883,18 +1883,23 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $oPermalinks = BxDolPermalinks::getInstance();
 
-        return array(
+        return [
             'js_object' => $sJsObject,
-            'url_view' => bx_absolute_url($oPermalinks->permalink($this->aPageRebuild['url'])),
+            'bx_if:can_view' => [
+                'condition' => !empty($this->aPageRebuild['url']),
+                'content' => [
+                    'url_view' => bx_absolute_url($oPermalinks->permalink($this->aPageRebuild['url'])),
+                ]
+            ],
             'action_page_edit' => $this->sActionPageEdit,
-            'bx_if:can_delete' => array(
+            'bx_if:can_delete' => [
                 'condition' => (int)$this->aPageRebuild['deletable'] == 1,
-                'content' => array(
+                'content' => [
                     'js_object' => $sJsObject
-                )
-            ),
+                ]
+            ],
             'action_block_create' => $this->sActionBlockCreate,
-        );
+        ];
     }
 
     protected function _getTmplVarsPageSettings($aPage = array(), $bCreate = true)
