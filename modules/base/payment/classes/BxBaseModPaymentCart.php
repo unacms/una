@@ -169,10 +169,14 @@ class BxBaseModPaymentCart extends BxDol
     /** 
      * @ref bx_base_payment-get_cart_item_descriptor "get_cart_item_descriptor"
      */
-	public function serviceGetCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
-	{
-            return $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, $iItemCount));
-	}
+    public function serviceGetCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount = false)
+    {
+        $aDescriptor = [$iVendorId, $iModuleId, $iItemId];
+        if($iItemCount !== false)
+            $aDescriptor[] = $iItemCount;
+
+        return $this->_oModule->_oConfig->descriptorA2S($aDescriptor);
+    }
 
 	/**
      * @page service Service Calls

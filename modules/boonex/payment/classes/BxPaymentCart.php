@@ -175,9 +175,23 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $aCart = $this->_oModule->_oDb->getCartContent($iClientId);
         $sCartItems = !empty($aCart['items']) ? $aCart['items'] : '';
 
+        $sCartItemsResult = false;
+        $this->_oModule->alert('before_add_to_cart', 0, $iClientId, [
+            'client_id' => $iClientId,
+            'seller_id' => $iSellerId, 
+            'module_id' => $iModuleId,
+            'item_id' => $iItemId,
+            'item_count' => $iItemCount,
+
+            'cart' => &$aCart,
+            'cart_items' => &$sCartItems,
+            'override_result' => &$sCartItemsResult,
+        ]);
+
         $sCiDsc = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId));
+        if($sCartItemsResult === false) {            
         if(strpos($sCartItems, $sCiDsc) !== false)
-            $sCartItems = preg_replace_callback(
+                $sCartItemsResult = preg_replace_callback(
                 "/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9]+)')) . "/", function($aMatches) use($iSellerId, $iModuleId, $iItemId, $iItemCount) {
                     return $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $aMatches[1] + $iItemCount));
                 },
@@ -185,7 +199,8 @@ class BxPaymentCart extends BxBaseModPaymentCart
             );
         else {
             $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $iItemCount));
-            $sCartItems = empty($sCartItems) ? $sCartItem : $sCartItems . $this->_oModule->_oConfig->getDivider('DIVIDER_DESCRIPTORS') . $sCartItem;
+                $sCartItemsResult = empty($sCartItems) ? $sCartItem : $sCartItems . $this->_oModule->_oConfig->getDivider('DIVIDER_DESCRIPTORS') . $sCartItem;
+            }
         }
 
         $aCartCustom = array();
@@ -195,7 +210,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         if(!empty($aCustom) && is_array($aCustom))
             $aCartCustom[$sCiDsc] = !empty($aCartCustom[$sCiDsc]) && is_array($aCartCustom[$sCiDsc]) ? array_merge($aCartCustom[$sCiDsc], $aCustom) : $aCustom;
 
-        $this->_oModule->_oDb->setCartItems($iClientId, $sCartItems, $aCartCustom);
+        $this->_oModule->_oDb->setCartItems($iClientId, $sCartItemsResult, $aCartCustom);
 
         $aInfo = $this->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId);
         $iTotalQuantity = 0;

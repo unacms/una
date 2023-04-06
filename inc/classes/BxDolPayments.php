@@ -338,7 +338,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'get_cart_items', $aSrvParams, 'Cart');
     }
 
-    public function getCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
+    public function getCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount = false)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_item_descriptor', 'Cart'))
             return '';
