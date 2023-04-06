@@ -416,7 +416,7 @@ abstract class BxDolUploader extends BxDolFactory
         if ('json' == $sFormat) {
             return json_encode($a);
         } else { // html format is not suported for this data type
-            return false;
+            return $a;
         }
     }
     
