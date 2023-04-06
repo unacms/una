@@ -20,6 +20,8 @@ class BxAdsAlertsResponse extends BxBaseModTextAlertsResponse
 
     public function response($oAlert)
     {
+        parent::response($oAlert);
+
         $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
         if(!method_exists($this, $sMethod))
             return;
