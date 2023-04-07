@@ -78,7 +78,10 @@ define('BX_DOL_SCORE_DO_DOWN', 'down');
 
 class BxDolScore extends BxDolObject
 {
+    protected $_aScore;
+
     protected $_aElementDefaults;
+    protected $_aElementDefaultsApi;
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -172,19 +175,19 @@ class BxDolScore extends BxDolObject
      */
     public function getStatCounterUp()
     {
-        $aScore = $this->_oQuery->getScore($this->getId());
+        $aScore = $this->_getVote();
         return $aScore['count_up'];
     }
 
     public function getStatCounterDown()
     {
-        $aScore = $this->_oQuery->getScore($this->getId());
+        $aScore = $this->_getVote();
         return $aScore['count_down'];
     }
 
     public function getStatScore()
     {
-        $aScore = $this->_oQuery->getScore($this->getId());
+        $aScore = $this->_getVote();
         return $aScore['score'];
     }
 
@@ -194,12 +197,24 @@ class BxDolScore extends BxDolObject
      */
     public function actionVoteUp()
     {
-        return $this->_doVote(BX_DOL_SCORE_DO_UP);
+        if(!$this->isEnabled())
+            return echoJson(array('code' => 1, 'message' => _t('_sys_score_err_not_enabled')));
+        
+        $aVoteData = ['type' => BX_DOL_SCORE_DO_UP];
+        $aRequestParamsData = $this->_getRequestParamsData();
+        
+        return echoJson($this->vote($aVoteData, $aRequestParamsData));
     }
 
     public function actionVoteDown()
     {
-        return $this->_doVote(BX_DOL_SCORE_DO_DOWN);
+        if(!$this->isEnabled())
+            return echoJson(array('code' => 1, 'message' => _t('_sys_score_err_not_enabled')));
+
+        $aVoteData = ['type' => BX_DOL_SCORE_DO_DOWN];
+        $aRequestParamsData = $this->_getRequestParamsData();
+
+        return echoJson($this->vote($aVoteData, $aRequestParamsData));
     }
 
     public function actionGetVotedBy()
@@ -209,6 +224,51 @@ class BxDolScore extends BxDolObject
 
         $aParams = $this->_getRequestParamsData();
         return $this->_getVotedBy($aParams);
+    }
+
+    public function vote($aVoteData = [], $aRequestParamsData = [])
+    {
+        if(!$this->isAllowedVote(true))
+            return ['code' => BX_DOL_OBJECT_ERR_ACCESS_DENIED, 'message' => $this->msgErrAllowedVote()];
+
+        $sType = $aVoteData['type'];
+        $iObjectId = $this->getId();
+        $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
+        $iAuthorId = $this->_getAuthorId();
+        $iAuthorIp = $this->_getAuthorIp();
+
+        $bVoted = $this->isPerformed($iObjectId, $iAuthorId, $iAuthorIp);
+        if($bVoted)
+            return ['code' => BX_DOL_OBJECT_ERR_DUPLICATE, 'message' => _t('_sys_score_err_duplicate_vote')];
+
+        $iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $sType);
+        if($iId === false)
+            return ['code' => BX_DOL_OBJECT_ERR_CANNOT_PERFORM];
+
+        $this->_trigger();
+
+        $sTypeUc = ucfirst($sType);
+        bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, array('score_id' => $iId, 'score_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+        bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+
+        $aRequestParamsData['show_script'] = false;
+
+        $aScore = $this->_getVote($iObjectId, true);
+        $iCup = (int)$aScore['count_up'];
+        $iCdown = (int)$aScore['count_down'];
+        return [
+            'code' => 0,
+            'type' => $sType,
+            'score' => $aScore['score'],
+            'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getCounterLabel($aScore['score'], $aRequestParamsData) : '',
+            'cup' => $iCup,
+            'cdown' => $iCdown,
+            'counter' => $this->getCounter($aRequestParamsData),
+            'label_icon' => $this->_getIconDo($sType),
+            'label_title' => _t($this->_getTitleDo($sType)),
+            'voted' => !$bVoted,
+            'disabled' => !$bVoted,
+        ];
     }
 
 
@@ -258,51 +318,36 @@ class BxDolScore extends BxDolObject
     /**
      * Internal functions
      */
-    protected function _doVote($sType)
+    protected function _getVote($iObjectId = 0, $bForceGet = false)
     {
-        if(!$this->isEnabled())
-            return echoJson(array('code' => 1, 'message' => _t('_sys_score_err_not_enabled')));
+        if(!empty($this->_aScore) && !$bForceGet)
+            return $this->_aScore;
 
-        if(!$this->isAllowedVote(true))
-            return echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
+        if(empty($iObjectId))
+            $iObjectId = $this->getId();
 
-        $iObjectId = $this->getId();
-        $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
-        $iAuthorId = $this->_getAuthorId();
-        $iAuthorIp = $this->_getAuthorIp();
+        $this->_aScore = $this->_oQuery->getScore($iObjectId);
+        return $this->_aScore;
+    }
 
-        $bVoted = $this->isPerformed($iObjectId, $iAuthorId, $iAuthorIp);
-        if($bVoted)
-            return echoJson(array('code' => 3, 'message' => _t('_sys_score_err_duplicate_vote')));
+    protected function _isVote($iObjectId = 0, $bForceGet = false)
+    {
+        $aScore = $this->_getVote($iObjectId, $bForceGet);
 
-        $iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $sType);
-        if($iId === false)
-            return echoJson(array('code' => 5));
+        return (int)$aScore['count'] > 0;
+    }
 
-        $this->_trigger();
+    protected function _isCount($aScore = [])
+    {
+        if(empty($aScore))
+            $aScore = $this->_getVote();
 
-        $sTypeUc = ucfirst($sType);
-        bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, array('score_id' => $iId, 'score_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+        return isset($aScore['count']) && (int)$aScore['count'] != 0;
+    }
 
-        $aParams = $this->_getRequestParamsData();
-        $aParams['show_script'] = false;
-
-        $aScore = $this->_oQuery->getScore($iObjectId);
-        $iCup = (int)$aScore['count_up'];
-        $iCdown = (int)$aScore['count_down'];
-        echoJson(array(
-            'code' => 0,
-            'type' => $sType,
-            'score' => $aScore['score'],
-            'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getCounterLabel($aScore['score'], $aParams) : '',
-            'cup' => $iCup,
-            'cdown' => $iCdown,
-            'counter' => $this->getCounter($aParams),
-            'label_icon' => $this->_getIconDo($sType),
-            'label_title' => _t($this->_getTitleDo($sType)),
-            'disabled' => !$bVoted,
-        ));
+    protected function _getTrack($iObjectId, $iAuthorId)
+    {
+        return $this->_oQuery->getTrack($iObjectId, $iAuthorId);
     }
 
     /**

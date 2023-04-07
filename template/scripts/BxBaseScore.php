@@ -39,7 +39,7 @@ class BxBaseScore extends BxDolScore
             'legend' => 'bx-score-legend-' . $sHtmlId,
         );
 
-        $this->_aElementDefaults = array(
+        $this->_aElementDefaults = [
             'show_do_vote_as_button' => false,
             'show_do_vote_as_button_small' => false,
             'show_do_vote_icon' => true,
@@ -51,7 +51,10 @@ class BxBaseScore extends BxDolScore
             'show_counter_label_text' => true,
             'show_legend' => false,
             'show_script' => true
-        );
+        ];
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_counter' => true,
+        ]);
 
         $this->_sTmplNameLegend = 'score_legend.html';
         $this->_sTmplNameByList = 'score_by_list.html';
@@ -151,6 +154,24 @@ class BxBaseScore extends BxDolScore
             ),
             'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ));
+    }
+
+    public function getCounterAPI($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $aScore = $this->_getVote();
+
+        return array_merge($aScore, [
+            BX_DOL_SCORE_DO_UP => [
+                'icon' => $this->_getIconDo(BX_DOL_SCORE_DO_UP),
+                'title' => _t($this->_getTitleDo(BX_DOL_SCORE_DO_UP)),
+            ],
+            BX_DOL_SCORE_DO_DOWN => [
+                'icon' => $this->_getIconDo(BX_DOL_SCORE_DO_DOWN),
+                'title' => _t($this->_getTitleDo(BX_DOL_SCORE_DO_DOWN))
+            ]
+        ]);
     }
 
     public function getLegend($aParams = array())
@@ -278,7 +299,59 @@ class BxBaseScore extends BxDolScore
         ));
     }
 
-    protected function _getDoVote($sType, $aParams = array(), $isAllowedVote = true)
+    public function getElementAPI($aParams = [])
+    {
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
+        if(!$this->isEnabled())
+            return bx_api_get_msg('_sys_score_err_not_enabled');
+
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $bCount = $this->_isCount();
+        $isAllowedVote = $this->isAllowedVote();
+        $isAllowedVoteView = $this->isAllowedVoteView();
+        $aParams['is_voted'] = $this->isPerformed($iObjectId, $iAuthorId);
+        $aParams['track'] = $aParams['is_voted'] ? $this->_getTrack($iObjectId, $iAuthorId) : [];
+
+        //--- Do Vote
+        $bDoVote = $this->_isShowDoVote($aParams, $isAllowedVote, $bCount);
+        $aDoVoteUp = $bDoVote ? $this->_getDoVote(BX_DOL_SCORE_DO_UP, $aParams, $isAllowedVote) : [];
+        $aDoVoteDown = $bDoVote ? $this->_getDoVote(BX_DOL_SCORE_DO_DOWN, $aParams, $isAllowedVote) : [];
+
+        //--- Counter
+        $bCounter = $this->_isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
+        $aCounter = $bCounter ? $this->getCounterAPI(array_merge($aParams, [
+            'show_counter_only' => false, 
+            'show_script' => false
+        ])) : [];
+
+        //--- Legend
+        $bLegend = $this->_isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
+        $aLegend = $bLegend ? $this->getLegend($aParams) : [];
+
+        if(!$bDoVote && !$bCounter && !$bLegend)
+            return bx_api_get_msg('');
+
+        return [
+            'type' => 'scores',
+            'system' => $this->_sSystem,
+            'object_id' => $this->_iId,
+            'params' => $aParams,
+            'action' => [
+                BX_DOL_SCORE_DO_UP => $aDoVoteUp,
+                BX_DOL_SCORE_DO_DOWN => $aDoVoteDown
+            ],
+            'counter' => $aCounter,
+            'legend' => $aLegend,
+        ];
+    }
+
+    protected function _getDoVote($sType, $aParams = [], $isAllowedVote = true)
     {
     	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
@@ -293,6 +366,14 @@ class BxBaseScore extends BxDolScore
 
         if($bDisabled)
             $sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-score-disabled';
+
+        if($this->_bApi)
+            return [
+                'is_voted' => $bVoted,
+                'is_disabled' => $bDisabled,
+                'icon' => $this->_getIconDo($sType), 
+                'title' => _t($this->_getTitleDo($sType)),
+            ];
 
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDo($sType, $aParams), array(
             'class' => $this->_sStylePrefix . '-do-vote ' . $this->_sStylePrefix . '-dv-' . $sType . ' ' . $sClass,

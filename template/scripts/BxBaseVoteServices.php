@@ -44,7 +44,7 @@ class BxBaseVoteServices extends BxDol
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         $oVote = BxDolVote::getObjectInstance($aParams['s'], $aParams['o']);
-        if(!$oVote)
+        if(!$oVote || !$oVote->isEnabled())
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         $sMethod = '_serviceDo' . bx_gen_method_name($oVote->getType());
@@ -115,7 +115,7 @@ class BxBaseVoteServices extends BxDol
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         $oVote = BxDolVote::getObjectInstance($aParams['s'], $aParams['o']);
-        if(!$oVote)
+        if(!$oVote || !$oVote->isEnabled())
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         $sMethod = '_serviceGetPerformedBy' . bx_gen_method_name($oVote->getType());
