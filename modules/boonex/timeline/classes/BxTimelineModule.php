@@ -2607,6 +2607,45 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_element_block_api get_repost_element_block_api
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_element_block_api', [...]); @endcode
+     * 
+     * Get repost element for content based modules. 
+     * Note. Response is formated to be used in API calls.
+     * 
+     * @param $iOwnerId integer value with owner profile ID.
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @param $aParams (optional) an array with additional params.
+     * @return HTML string with repost element to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetRepostElementBlockApi
+     */
+    /** 
+     * @ref bx_timeline-get_repost_element_block_api "get_repost_element_block_api"
+     * @api @ref bx_timeline-get_repost_element_block_api "get_repost_element_block_api"
+     */
+    public function serviceGetRepostElementBlockApi($iOwnerId, $sType, $sAction, $iObjectId, $aParams = [])
+    {
+        if(!bx_is_api())
+            return;
+
+        //TODO: Implement the functionality here.
+
+        $sClass = get_class($this);
+        return [
+            'display_type' => 'element',
+            'name' => md5($sClass),
+            'title' => get_class($this)
+        ];
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
      * @subsubsection bx_timeline-get_repost_counter get_repost_counter
      * 
      * @code bx_srv('bx_timeline', 'get_repost_counter', [...]); @endcode
