@@ -408,7 +408,7 @@ class BxBasePage extends BxDolPage
             'added' => $this->_aObject['added'],
             'module' => $this->getModule(),
             'type' => $this->getType (),
-            'layout' => $this->_aObject['layout_id'],
+            'layout' => str_replace('.html', '', $this->_aObject['template']),
             'cover_block' => '',
             'menu_top' => '',
             'menu' => '',
