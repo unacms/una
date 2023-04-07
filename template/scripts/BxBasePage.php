@@ -408,7 +408,7 @@ class BxBasePage extends BxDolPage
             'added' => $this->_aObject['added'],
             'module' => $this->getModule(),
             'type' => $this->getType (),
-            'layout' => $this->_aObject['layout_id'],
+            'layout' => str_replace('.html', '', $this->_aObject['template']),
             'cover_block' => '',
             'menu_top' => '',
             'menu' => '',
@@ -422,7 +422,7 @@ class BxBasePage extends BxDolPage
             $oModule = BxDolModule::getInstance($this->getModule());
             
             $a['cover_block'] = [
-                'profile' => BxDolProfile::getInstance()->getData($this->_aProfileInfo['id']),
+                'profile' => BxDolProfile::getInstance()->getData($this->_aProfileInfo['id'], ['with_info' => true]),
                 'actions_menu' => '',
                 'meta_menu' => '',
                 'cover' => $oModule->serviceGetCover($this->_aProfileInfo['content_id'])

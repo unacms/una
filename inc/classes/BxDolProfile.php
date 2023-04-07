@@ -141,13 +141,19 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         else
             $oProfile = $mixedProfileId;
 
-        return [
+        $aRv = [
             'id' => $oProfile->id(),
             'display_type' =>  $sDisplayType,
             'display_name' => $oProfile->getDisplayName(),
             'url' => bx_relative_url($oProfile->getUrl()),
             'url_avatar' => $oProfile->getAvatar(),
+            'module' => $oProfile->getModule(),
         ];
+        
+        if(isset($aParams['with_info']))
+            $aRv['info'] = bx_srv($oProfile->getModule(), 'get_info', [$oProfile->getContentId(), false]);
+        
+        return $aRv;
     }
     
     /**
