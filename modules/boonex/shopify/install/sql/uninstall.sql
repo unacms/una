@@ -16,7 +16,7 @@ DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_shopify_cats');
 
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_shopify';
+DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_shopify%';
 
 
 -- VOTES

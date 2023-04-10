@@ -25,7 +25,7 @@ DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_snipcart_cats', 'bx_snipcar
 
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_snipcart';
+DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_snipcart%';
 
 
 -- VOTES
