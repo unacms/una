@@ -409,8 +409,8 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'is_voted' => $bVoted,
                 'is_disabled' => $bDisabled,
                 'value' => $iValue,
-                'reaction' => $sReaction,
-                'icon' => ($sEmoji = $this->getEmoji($sReaction)) != '' ? $sEmoji : '', 
+                'reaction' => $bVoted ? $sReaction : $this->_sDefault,
+                'icon' => $this->_getEmojiDoWithTrack($bVoted, $aParams['track']), 
                 'title' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track'])),
             ];
 
