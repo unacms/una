@@ -255,7 +255,21 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         //TODO: Implement for Objects like Views, Votes, etc.
         $sClass = get_class($this);
         return [
-            'display_type' => 'element', // 'element_action', 'element_counter'
+            'display_type' => 'element',
+            'name' => md5($sClass),
+            'title' => get_class($this)
+        ];
+    }
+
+    public function getCounterAPI($aParams = [])
+    {
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
+        //TODO: Implement for Objects like Views, Votes, etc.
+        $sClass = get_class($this);
+        return [
+            'display_type' => 'element',
             'name' => md5($sClass),
             'title' => get_class($this)
         ];

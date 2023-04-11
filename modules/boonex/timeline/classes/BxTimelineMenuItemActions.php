@@ -26,6 +26,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected $_sType;
     protected $_sView;
 
+    protected $_bIsApi;
     protected $_sMode;
     protected $_bShowTitles;
     protected $_bShowCounters;
@@ -45,6 +46,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $this->_setBrowseParams();
 
+        $this->_bIsApi = bx_is_api();
         $this->_sMode = self::$_sModeActions;
         $this->_bShowTitles = true;
         $this->_bShowCounters = false;
@@ -182,7 +184,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 break;
         }
 
-        return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->$sViewsMethod($aViewsParams);
+        $oObject = $this->_oModule->getViewObject($sViewsSystem, $iViewsObject);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aViewsParams, [
+                'show_counter' => true, 
+            ])));
+
+        return $oObject->$sViewsMethod($aViewsParams);
     }
 
     protected function _getMenuItemItemVote($aItem)
@@ -210,7 +219,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 break;
         }
 
-        return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->$sVotesMethod($aVotesParams);
+        $oObject = $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aVotesParams, [
+                'show_counter' => true,
+            ])));
+
+        return $oObject->$sVotesMethod($aVotesParams);
     }
 
     protected function _getMenuItemItemReaction($aItem)
@@ -239,7 +255,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 break;
         }
 
-    	return $this->_oModule->getReactionObject($sReactionsSystem, $iReactionsObject)->$sReactionsMethod($aReactionsParams);
+        $oObject = $this->_oModule->getReactionObject($sReactionsSystem, $iReactionsObject);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aReactionsParams, [
+                'show_counter' => true,
+            ])));
+
+        return $oObject->$sReactionsMethod($aReactionsParams);
     }
 
     protected function _getMenuItemItemScore($aItem)
@@ -267,7 +290,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 break;
         }
 
-        return $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject)->$sScoresMethod($aScoresParams);
+        $oObject = $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aScoresParams, [
+                'show_counter' => true,
+            ])));
+
+        return $oObject->$sScoresMethod($aScoresParams);
     }
 
     protected function _getMenuItemItemReport($aItem)
@@ -339,6 +369,18 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         return parent::_getMenuItemDefault ($aItem);
     }
 
+    protected function _getMenuItemElementApi($aItem, $aElement)
+    {
+        if(!$this->_bIsApi)
+            return $aItem;
+
+        return [
+                'id' => $aItem['id'],
+                'name' => $aItem['name'],
+                'display_type' => 'element',
+                'data' => $aElement
+            ];
+    }
     /**
      * Check if menu items is visible.
      * @param $a menu item array

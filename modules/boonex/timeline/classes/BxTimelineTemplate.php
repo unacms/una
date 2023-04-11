@@ -337,11 +337,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oModule = $this->getModule();
         
         if (bx_is_api()){
+            $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
+            if(!$oMenuActions)
+                $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
+            $bMenuActions = $oMenuActions !== false;
+
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
             foreach($aPosts as &$aPost)  {
                 $aPost['author_data'] = BxDolProfile::getData($aPost['object_owner_id']);
                 $aPost['url'] = bx_ltrim_str($aPost['content']['url'], BX_DOL_URL_ROOT);
-                
+
+                if($bMenuActions) {
+                    $oMenuActions->setEvent($aPost, $aParams);
+
+                    $aPost['menu_actions'] = $oMenuActions->getCodeAPI();
+                }
+
                 $aCmts = [];
                 $oCmts = $oModule->getCmtsObject($aPost['comments']['system'], $aPost['comments']['object_id']);
                 if($oCmts !== false){
