@@ -484,11 +484,15 @@ class BxBasePage extends BxDolPage
 
                 $sFunc = '_getBlock' . ucfirst($aBlock['type']);
                 $mBlock = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
-
+                $aSrc = '';
+                if(method_exists($this, $sFunc)){
+                    $aSrc = @unserialize($aBlock['content']) ;
+                }
+                
                 $aCells[$sKey][$i]['title'] = isset($mBlock['title']) ? $mBlock['title'] : $this->getBlockTitle($aBlock);
                 $aCells[$sKey][$i]['content'] = isset($mBlock['content']) ? $mBlock['content'] : $mBlock;
                 $aCells[$sKey][$i]['menu'] = isset($mBlock['menu']) ? $mBlock['menu'] : '';
-
+                $aCells[$sKey][$i]['source'] = isset($aSrc['module']) ? $aSrc['module'] . '-' . $aSrc['method'] : '';
                 $aCells[$sKey][$i] = array_diff_key($aCells[$sKey][$i], array_flip($aFieldsUnset));
             }
         }

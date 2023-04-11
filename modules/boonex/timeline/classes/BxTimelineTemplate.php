@@ -175,6 +175,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'rparams' => $aParams
                 ];
         }
+        
+        if (bx_is_api()){
+             return [
+                 bx_api_get_block('form', $aForm['form_object']->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_post_home', 'immutable' => true]]])];
+         }
 
         return $this->parseHtmlByName('block_post.html', array (
             'style_prefix' => $this->_oConfig->getPrefix('style'),
