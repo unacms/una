@@ -542,7 +542,7 @@
         "affectsGlobalScope": false
       },
       "../src/plugins/monthselect/index.ts": {
-        "version": "417fddf14f07ac5735f201d1034fe7136ad6424217334262046e234586c9abe7",
+        "version": "601ca634833552bc27d692e2acff25deeea4125714399ada3dae878a51bff5ff",
         "signature": "67a241ae0fe1141ca968431d3f72da39ae4dd02de9eee63b6abb2459504ef4b5",
         "affectsGlobalScope": false
       },

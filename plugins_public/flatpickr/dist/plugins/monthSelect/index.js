@@ -96,6 +96,16 @@
                     frag.appendChild(month);
                 }
                 self.monthsContainer.appendChild(frag);
+                if (fp.config.minDate &&
+                    fp.currentYear === fp.config.minDate.getFullYear())
+                    fp.prevMonthNav.classList.add("flatpickr-disabled");
+                else
+                    fp.prevMonthNav.classList.remove("flatpickr-disabled");
+                if (fp.config.maxDate &&
+                    fp.currentYear === fp.config.maxDate.getFullYear())
+                    fp.nextMonthNav.classList.add("flatpickr-disabled");
+                else
+                    fp.nextMonthNav.classList.remove("flatpickr-disabled");
             }
             function bindEvents() {
                 fp._bind(fp.prevMonthNav, "click", function (e) {
@@ -181,21 +191,25 @@
             }
             function setMonth(date) {
                 var selectedDate = new Date(fp.currentYear, date.getMonth(), date.getDate());
+                var selectedDates = [];
                 switch (fp.config.mode) {
                     case "single":
-                        fp.selectedDates = [selectedDate];
+                        selectedDates = [selectedDate];
+                        break;
+                    case "multiple":
+                        selectedDates.push(selectedDate);
                         break;
                     case "range":
                         if (fp.selectedDates.length === 2) {
-                            fp.clear(false, false);
-                            buildMonths();
+                            selectedDates = [selectedDate];
                         }
-                        fp.selectedDates.push(selectedDate);
-                        fp.selectedDates.sort(function (a, b) { return a.getTime() - b.getTime(); });
+                        else {
+                            selectedDates = fp.selectedDates.concat([selectedDate]);
+                            selectedDates.sort(function (a, b) { return a.getTime() - b.getTime(); });
+                        }
                         break;
                 }
-                fp.latestSelectedDateObj = selectedDate;
-                fp.updateValue();
+                fp.setDate(selectedDates, true);
                 setCurrentlySelected();
             }
             var shifts = {
@@ -236,8 +250,8 @@
             // Help the prev/next year nav honor config.minDate (see 3fa5a69)
             function stubCurrentMonth() {
                 config._stubbedCurrentMonth = fp._initialDate.getMonth();
-                fp._initialDate.setMonth(0);
-                fp.currentMonth = 0;
+                fp._initialDate.setMonth(config._stubbedCurrentMonth);
+                fp.currentMonth = config._stubbedCurrentMonth;
             }
             function unstubCurrentMonth() {
                 if (!config._stubbedCurrentMonth)
