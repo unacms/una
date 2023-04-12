@@ -73,12 +73,17 @@ class BxDolVoteReactions extends BxTemplVote
         if(empty($sDefault) && !empty($this->_aDataList))
             $sDefault = current(array_keys($this->_aDataList));
 
-        $this->_aDataList[$this->_sDefault] = array_merge($this->_aDataList[$sDefault], [
-            'icon' => $this->_aDataList[$sDefault]['default'],
-            'emoji' => '',
-            'image' => '',
-            'color' => ''
-        ]);
+        if(!empty($sDefault)) {
+            $aDefault = $this->_aDataList[$sDefault];
+            if((!$this->_bQuickMode || $this->_bApi) && isset($aDefault['default'])) {
+                if(is_array($aDefault['default']))
+                    $aDefault = array_merge ($aDefault, $aDefault['default']);
+                else
+                    $aDefault['icon'] = $aDefault['default'];
+            }
+
+            $this->_aDataList[$this->_sDefault] = $aDefault;
+        }
     }
     /**
      * Interface functions for outer usage

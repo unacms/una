@@ -42,6 +42,8 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
     {
         parent::__construct();
 
+        $this->_bApi = bx_is_api();
+
         $aSystems = $this->getSystems();
         if(!isset($aSystems[$sSystem]))
             return;
@@ -249,7 +251,7 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
 
     public function getElementAPI($aParams = [])
     {
-        if(!($this->_bApi = bx_is_api()))
+        if(!$this->_bApi)
             return;
 
         //TODO: Implement for Objects like Views, Votes, etc.
@@ -263,7 +265,7 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
 
     public function getCounterAPI($aParams = [])
     {
-        if(!($this->_bApi = bx_is_api()))
+        if(!$this->_bApi)
             return;
 
         //TODO: Implement for Objects like Views, Votes, etc.

@@ -75,13 +75,14 @@ class BxBaseVoteServices extends BxDol
         if((int)$aResult['code'] != 0)
             return $aResult;
 
-        $aDefault = $oVote->getReaction($oVote->getDefault());
+        $sDefault = $oVote->getDefault();
+        $aDefault = $oVote->getReaction($sDefault);
         $aDefaultInfo = $oVote->getReaction($aDefault['name']);
 
         return [
             'is_voted' => $aResult['voted'],
             'is_disabled' => $aResult['disabled'],
-            'reaction' => $aResult['reaction'],
+            'reaction' => $aResult['voted'] ? $aResult['reaction'] : $sDefault,
             'icon' => !empty($aResult['label_emoji']) ? $aResult['label_emoji'] : $aDefaultInfo['emoji'],
             'title' => !empty($aResult['label_title']) ? $aResult['label_title'] : '',
             'counter' => $oVote->getVote()

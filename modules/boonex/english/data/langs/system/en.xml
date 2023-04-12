@@ -1672,7 +1672,6 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Enable lessening for JS files (cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Remote video transcoding (requires special setup)]]></string>
   	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Session lifetime (min)]]></string>
-  	<string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Session authentication]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
@@ -3388,6 +3387,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_pre_lists_report_types_nude"><![CDATA[nude]]></string>
 	<string name="_sys_pre_lists_report_types_other"><![CDATA[other]]></string>
         <string name="_sys_pre_lists_vote_reactions"><![CDATA[Reactions]]></string>
+        <string name="_sys_pre_lists_vote_reactions_default"><![CDATA[React]]></string>
         <string name="_sys_pre_lists_vote_reactions_like"><![CDATA[Like]]></string>
         <string name="_sys_pre_lists_vote_reactions_love"><![CDATA[Love]]></string>
         <string name="_sys_pre_lists_vote_reactions_joy"><![CDATA[Haha]]></string>
