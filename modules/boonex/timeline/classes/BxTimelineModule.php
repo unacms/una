@@ -3556,11 +3556,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-                if (bx_is_api()){
-                    $mixedResult['form_object'] = $oForm;
-                    return $mixedResult;
-                }
-                
+                if(bx_is_api())
+                    return ['form_object' => $oForm];
+
             	return $this->_prepareResponse([
                     'form' => $oForm->getCode($bDynamicMode), 
                     'form_id' => $oForm->id
@@ -3619,12 +3617,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
                 $this->onPost($iId);
 
-                
-                if (bx_is_api()){
-                    $mixedResult['form_object'] = $oForm;
-                    return $mixedResult;
-                }
-                
+                if(bx_is_api())
+                    return ['form_object' => $oForm, 'id' => $iId];
+
                 return $this->_prepareResponse(['id' => $iId], $bAjaxMode, [
                     'redirect' => $this->_oConfig->getItemViewUrl(['id' => $iId])
                 ]);
@@ -3633,12 +3628,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return $this->_prepareResponse(['message' => _t('_bx_timeline_txt_err_cannot_perform_action')], $bAjaxMode);
         }
 
+        if(bx_is_api())
+            return ['form_object' => $oForm];
+
         $mixedResult = $this->_prepareResponse([
             'form' => $oForm->getCode($bDynamicMode), 
             'form_id' => $oForm->id
         ], $bAjaxMode && $oForm->isSubmitted());
 
-        if(is_array($mixedResult) || bx_is_api())
+        if(is_array($mixedResult))
             $mixedResult['form_object'] = $oForm;
 
         return $mixedResult;
@@ -5025,14 +5023,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_iOwnerId = $iProfileId;
 
         if($this->isAllowedPost() !== true)
-            return array();
-        
-        if (bx_is_api())
-            return $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams);
+            return [];
 
-        return array(
-            'content' => $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams)
-        );
+        $mixedResult = $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams);
+
+        return bx_is_api() ? $mixedResult : [
+            'content' => $mixedResult
+        ];
     }
 
     protected function _getBlockView($aBrowseParams = array())
