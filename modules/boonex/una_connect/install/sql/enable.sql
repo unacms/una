@@ -43,10 +43,3 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_unacon_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, ''),
 ('bx_unacon_url_rewrite', 'on', @iCategId, '_bx_unacon_option_rewrite', 'checkbox', '', '', 90, '');
 
--- Pages
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_unacon_error', 'unacon-error', '_bx_unacon_error', '_bx_unacon_error', 'bx_unacon', 5, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxUnaConPage', 'modules/boonex/una_connect/classes/BxUnaConPage.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_unacon_error', 1, 'bx_unacon', '_bx_unacon_error', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_unacon\";s:6:\"method\";s:10:\"last_error\";}', 0, 0, 1, 1);
