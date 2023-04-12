@@ -2105,7 +2105,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aItemData = $this->getItemData($iItemId, $aParams);
         
         if (bx_is_api()){
-            $aItemData['event']['author_data'] = BxDolProfile::getData($aItemData['event']['object_owner_id']);
+            $aEventAdd = [
+                'author_data' => BxDolProfile::getData($aItemData['event']['object_owner_id'])
+            ];
+
+            $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
+            if(!$oMenuActions)
+                $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
+            if($oMenuActions !== false) {
+                $oMenuActions->setEvent($aItemData['event'], $aParams);
+
+                $aEventAdd['menu_actions'] = $oMenuActions->getCodeAPI();
+            }
+
+            $aItemData['event'] = array_merge($aItemData['event'], $aEventAdd);
+
             return [bx_api_get_block('feed_item', $aItemData)];
         }
         
