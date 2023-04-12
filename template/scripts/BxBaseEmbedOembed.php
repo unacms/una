@@ -81,6 +81,11 @@ class BxBaseEmbedOembed extends BxDolEmbed
         }
         return $aResult;
     }
+    
+    public function parseLinkHtml($sLink) {
+        $oEmbera = $this->getEmberaInstance();
+        return $oEmbera->autoEmbed($sLink);
+    }
 
     public function getUrlData($sLink) {
         $oEmbera = $this->getEmberaInstance(['responsive' => false]);
