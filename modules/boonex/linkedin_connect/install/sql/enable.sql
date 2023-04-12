@@ -40,10 +40,3 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_linkedin_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
 ('bx_linkedin_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, '');
 
--- Pages
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_linkedin_error', 'linkedin-error', '_bx_linkedin_error', '_bx_linkedin_error', 'bx_linkedin', 5, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxLinkedinPage', 'modules/boonex/linkedin_connect/classes/BxLinkedinPage.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_linkedin_error', 1, 'bx_linkedin', '_bx_linkedin_error', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_linkedin\";s:6:\"method\";s:10:\"last_error\";}', 0, 0, 1, 1);

@@ -978,10 +978,18 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
+        $oRv = null;
+        
         if ($a && isset($a['db']['pass']))
-            return $oChecker->get ($a['name'], $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
+            $oRv = $oChecker->get ($a['name'], $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
         else
-           return $oChecker->get ($sName);
+            $oRv =  $oChecker->get ($sName);
+        
+        // process comma separated string for api values
+        if (bx_is_api() && isset($this->aInputs[$sName]['type']) && in_array($this->aInputs[$sName]['type'], ['checkbox_set', 'files', 'select_multiple']))
+            $oRv = explode(',', $oRv);
+            
+        return $oRv;
     }
 
     function isSubmitted ()

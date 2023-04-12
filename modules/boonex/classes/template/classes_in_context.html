@@ -20,9 +20,9 @@
         $('.bx-course-classes .bx-form-section').each(function () {
             var iModuleId = parseInt($(this).attr('id').replace('module_', ''));
             var sTmplBtn = $('#bx-classes-tmpl-btn').html();
-            $(this).find('legend').append(sTmplBtn.replace('{icon}', 'pencil-alt').replace('{action}', 'edit').replace('{data}', iModuleId));
+            $(this).find('.bx-form-section-title').append(sTmplBtn.replace('{icon}', 'pencil-alt').replace('{action}', 'edit').replace('{data}', iModuleId));
             if (0 == $(this).find('.bx-classes-class').size())
-                $(this).find('legend').append(sTmplBtn.replace('{icon}', 'times').replace('{action}', 'delete').replace('{data}', iModuleId));
+                $(this).find('.bx-form-section-title').append(sTmplBtn.replace('{icon}', 'times').replace('{action}', 'delete').replace('{data}', iModuleId));
         });
         $('.bx-course-classes .bx-form-section .bx-classes-module-action').each(function () {
             $(this).click(function (eve) {
@@ -43,5 +43,5 @@
 </script>
 </bx_if:edit_modules>
 <template id="bx-classes-tmpl-btn">
-    <a href="#" class="bx-btn bx-btn-small bx-classes-module-action" data-action="{action}" data-val="{data}"><i class="sys-icon {icon}"></i></a>
+    <a href="#" class="bx-btn bx-btn-small bx-classes-module-action bx-def-margin-sec-left" data-action="{action}" data-val="{data}"><i class="sys-icon {icon}"></i></a>
 </template>
