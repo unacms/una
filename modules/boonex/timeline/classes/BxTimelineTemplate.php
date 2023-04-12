@@ -164,28 +164,51 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getPostBlock($iOwnerId, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
+        $oModule = $this->getModule();
 
-        $aForm = $this->getModule()->getFormPost($aParams);
+        $aResult = $oModule->getFormPost($aParams);
 
-        if($this->_oConfig->isEditorAutoattach() && !empty($aForm['form_object'])) {
-            $aUploadersInfo = $aForm['form_object']->getUploadersInfo($CNF['FIELD_PHOTO']);
+        if($this->_oConfig->isEditorAutoattach() && !empty($aResult['form_object'])) {
+            $aUploadersInfo = $aResult['form_object']->getUploadersInfo($CNF['FIELD_PHOTO']);
             if(!empty($aUploadersInfo) && is_array($aUploadersInfo))
                 $aParams = [
                     'gparams' => ['sAutoUploader' => $aUploadersInfo['name'], 'sAutoUploaderId' => $aUploadersInfo['id']],
                     'rparams' => $aParams
                 ];
         }
-        
-        if (bx_is_api()){
-             return [
-                 bx_api_get_block('form', $aForm['form_object']->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/get_block_post_home', 'immutable' => true]]])];
-         }
+
+        if(bx_is_api()) {
+            $aType2Uri = [
+                '' => 'get_block_post_account',
+                'account' => 'get_block_post_account',
+                'owner' => 'get_block_post_profile',
+                'profile' => 'get_block_post_profile',
+                'public' => 'get_block_post_home'
+            ];
+ 
+            $sType = '';
+            if(!isset($aParams['rparams']['type']))
+                $sType = $aParams['rparams']['type'];
+            else
+                $sType = trim(str_replace('bx_timeline_post_add', '', $aResult['form_object']->aParams['display']), '_');
+
+            $aExt = ['request' => ['url' => $sUrl = '/api.php?r=' . $this->_oModule->getName() . '/' . $aType2Uri[$sType], 'immutable' => true]];
+            if(!empty($aResult['id'])) {
+                $aItemData = $oModule->getItemData($aResult['id']);
+                if(is_array($aItemData) && !empty($aItemData['event']))
+                    $aExt['response'] = $this->_getPostApi($aItemData['event'], $aParams);
+            }
+
+            return [
+                bx_api_get_block('form', $aResult['form_object']->getCodeAPI(), ['ext' => $aExt])
+            ];
+        }
 
         return $this->parseHtmlByName('block_post.html', array (
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('post'),
             'js_content' => $this->getJsCodePost($iOwnerId, $aParams),
-            'form' => $aForm['form']
+            'form' => $aResult['form']
         ));
     }
 
@@ -340,34 +363,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getViewBlock($aParams)
     {
         $oModule = $this->getModule();
-        
+
         if (bx_is_api()){
             $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
             if(!$oMenuActions)
                 $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
-            $bMenuActions = $oMenuActions !== false;
 
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
-            foreach($aPosts as &$aPost)  {
-                $aPost['author_data'] = BxDolProfile::getData($aPost['object_owner_id']);
-                $aPost['url'] = bx_ltrim_str($aPost['content']['url'], BX_DOL_URL_ROOT);
+            foreach($aPosts as &$aPost)
+                $aPost = $this->_getPostApi($aPost, $aParams, [
+                    'menu_actions' => $oMenuActions
+                ]);
 
-                if($bMenuActions) {
-                    $oMenuActions->setEvent($aPost, $aParams);
-
-                    $aPost['menu_actions'] = $oMenuActions->getCodeAPI();
-                }
-
-                $aCmts = [];
-                $oCmts = $oModule->getCmtsObject($aPost['comments']['system'], $aPost['comments']['object_id']);
-                if($oCmts !== false){
-                    $aParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0, 'per_view' => 1];
-                    $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aParams], 'TemplCmtsServices');
-                    
-                    $aPost['cmts'] = $aCmts;
-                    $aPost['cmts']['count'] = $aPost['comments']['count'];
-                }
-            }
             return $aPosts;
         }
         
@@ -1923,6 +1930,40 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
 
         return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
+    }
+
+    protected function _getPostApi(&$aEvent, $aParams = [], $aEventAdd = [])
+    {
+        $oModule = $this->getModule();
+
+        $aEvent['author_data'] = BxDolProfile::getData($aEvent['object_owner_id']);
+        $aEvent['url'] = bx_ltrim_str($aEvent['content']['url'], BX_DOL_URL_ROOT);
+
+        if(empty($aEventAdd['menu_actions'])) {
+            $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
+            if(!$oMenuActions)
+                $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
+        }
+        else
+            $oMenuActions = $aEventAdd['menu_actions'];
+
+        if($oMenuActions !== false) {
+            $oMenuActions->setEvent($aEvent, $aParams);
+
+            $aEvent['menu_actions'] = $oMenuActions->getCodeAPI();
+        }
+
+        $aCmts = [];
+        $oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id']);
+        if($oCmts !== false) {
+            $aCmtsParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0, 'per_view' => 1];
+            $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aCmtsParams], 'TemplCmtsServices');
+
+            $aEvent['cmts'] = $aCmts;
+            $aEvent['cmts']['count'] = $aEvent['comments']['count'];
+        }
+
+        return $aEvent;
     }
 
     protected function _getContent($sType, $aEvent, $aBrowseParams = array())
