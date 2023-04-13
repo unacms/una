@@ -244,7 +244,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oSession->unsetValue('custom-referrer');
         }
 
-        parent::redirectAfterAdd($aContentInfo);
+        parent::redirectAfterAdd($aContentInfo, $sRedirectUrl);
     }
 }
 
