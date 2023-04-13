@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_sys_pre_lists_vote_reactions_default"><![CDATA[Отреагировать]]></string_add>
+
+	<string_del name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Аутентификация черех сессию]]></string_del>
+</resources>
