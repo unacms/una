@@ -11,3 +11,10 @@
 div.bx-base-general-unit-meta .bx-menu-item-price span.price {
     color: #307424;
 }
+
+form[name^="cmt-post-form-bx_ads_reviews-"] #bx-form-element-cmt_image{
+    top:10px;
+}
+.bx-artificer form[name^="cmt-post-form-bx_ads_reviews-"] #bx-form-element-cmt_image{
+    top:20px;
+}
