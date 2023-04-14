@@ -3841,9 +3841,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_review_post', 'cmt_parent_id', 2147483647, 1, 5),
 ('sys_review_post', 'cmt_text', 2147483647, 1, 6),
 ('sys_review_post', 'cmt_mood', 2147483647, 1, 7),
-('sys_review_post', 'cmt_image', 2147483647, 1, 8),
 ('sys_review_post', 'cmt_cf', 2147483647, 1, 9),
 ('sys_review_post', 'cmt_submit', 2147483647, 1, 10),
+('sys_review_post', 'cmt_image', 2147483647, 1, 11),
 
 ('sys_review_edit', 'sys', 2147483647, 1, 1),
 ('sys_review_edit', 'id', 2147483647, 1, 2),
@@ -3852,9 +3852,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_review_edit', 'cmt_parent_id', 2147483647, 1, 5),
 ('sys_review_edit', 'cmt_text', 2147483647, 1, 6),
 ('sys_review_edit', 'cmt_mood', 2147483647, 1, 7),
-('sys_review_edit', 'cmt_image', 2147483647, 1, 8),
 ('sys_review_edit', 'cmt_cf', 2147483647, 1, 9),
 ('sys_review_edit', 'cmt_submit', 2147483647, 1, 10),
+('sys_review_edit', 'cmt_image', 2147483647, 1, 11),
 
 ('sys_report_post', 'sys', 2147483647, 1, 1),
 ('sys_report_post', 'object_id', 2147483647, 1, 2),
