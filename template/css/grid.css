@@ -43,6 +43,8 @@
     align-items: center;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    gap:10px;
 }
 .bx-grid-header-controls-filter {
     margin-bottom: -0.25rem;

@@ -2034,6 +2034,7 @@
   <string name="_sys_audit_action_delete_comment"><![CDATA[Комментарий удален]]></string>
   <string name="_sys_audit_action_feature"><![CDATA[Добавлен в продвинутые]]></string>
   <string name="_sys_audit_action_unfeature"><![CDATA[Удален из продвинутых]]></string>
+  <string name="_sys_audit_action_resolve"><![CDATA[Помечена как решеная]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Добавлен в администраторы группы]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Удален из администраторов группы]]></string>
   <string name="_sys_audit_action_group_role_changed"><![CDATA[Роль в группе изменена]]></string>

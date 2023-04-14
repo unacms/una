@@ -2056,6 +2056,7 @@
   <string name="_sys_audit_action_delete_comment"><![CDATA[Comment removed]]></string>
   <string name="_sys_audit_action_feature"><![CDATA[Featured]]></string>
   <string name="_sys_audit_action_unfeature"><![CDATA[Unfeatured]]></string>
+  <string name="_sys_audit_action_resolve"><![CDATA[Marked as resolved]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Added to group admins]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Removed from group admins]]></string>
   <string name="_sys_audit_action_group_role_changed"><![CDATA[Group role was changed]]></string>

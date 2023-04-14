@@ -313,3 +313,12 @@ button.bx-btn:focus .bx-loading-ajax-btn {
     display: inline;
     max-width: none;
 }
+
+.bx-popup-element-close:hover,
+.bx-popup-element-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    font-size: 1.5rem !important;
+}
