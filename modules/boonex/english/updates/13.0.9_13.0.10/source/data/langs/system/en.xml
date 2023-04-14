@@ -1499,7 +1499,8 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Location]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Social Settings]]></string>
-    <string name="_adm_stg_cpt_category_api"><![CDATA[API]]></string>
+    <string name="_adm_stg_cpt_category_api_general"><![CDATA[General]]></string>
+    <string name="_adm_stg_cpt_category_api_layout"><![CDATA[Layout]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Image height to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
@@ -1716,6 +1717,7 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_path"><![CDATA[Cookies path]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_secure"><![CDATA[Secure cookies]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Cookies SameSite attribute]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Top Menu]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Flat comments]]></string>
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
@@ -2054,6 +2056,7 @@
   <string name="_sys_audit_action_delete_comment"><![CDATA[Comment removed]]></string>
   <string name="_sys_audit_action_feature"><![CDATA[Featured]]></string>
   <string name="_sys_audit_action_unfeature"><![CDATA[Unfeatured]]></string>
+  <string name="_sys_audit_action_resolve"><![CDATA[Marked as resolved]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Added to group admins]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Removed from group admins]]></string>
   <string name="_sys_audit_action_group_role_changed"><![CDATA[Group role was changed]]></string>
