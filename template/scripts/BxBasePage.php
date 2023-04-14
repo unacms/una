@@ -441,7 +441,8 @@ class BxBasePage extends BxDolPage
             }  
         }
         
-        if (($oMenuTop = BxDolMenu::getObjectInstance('sys_site')) !== false)
+        $sMenuTop = getParam('sys_api_menu_top');
+        if (!empty($sMenuTop) && ($oMenuTop = BxDolMenu::getObjectInstance($sMenuTop)) !== false)
             $a['menu_top'] = $oMenuTop->getCodeAPI();
 
         if (($oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu')) !== false) {

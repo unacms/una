@@ -1139,6 +1139,18 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsApiMenuTop()
+    {
+        $aMenus = BxDolMenuQuery::getMenuObjects();
+
+        $aResults = [];
+        foreach($aMenus as $aMenu)
+            if($aMenu['module'] == 'system')
+                $aResults[$aMenu['object']] = _t($aMenu['title']);
+
+        return $aResults;
+    }
+
     public function serviceRedirect($sUrl = false)
     {
         if (false === $sUrl)

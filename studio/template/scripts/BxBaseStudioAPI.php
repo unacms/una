@@ -62,7 +62,10 @@ class BxBaseStudioAPI extends BxDolStudioAPI
 
     protected function getSettings()
     {
-        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_DEFAULT, 'api');
+        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_DEFAULT, [
+            'api_general', 
+            'api_layout'
+        ]);
 
         $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
         $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
