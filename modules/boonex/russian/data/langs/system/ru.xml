@@ -1695,6 +1695,7 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_path"><![CDATA[Путь к файлам cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_secure"><![CDATA[Безопасные cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Значение для SameSite атрибута]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Главное меню]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Линейные комментарии]]></string>
 
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
