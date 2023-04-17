@@ -3443,12 +3443,20 @@ class BxBaseModGeneralModule extends BxDolModule
             $sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
         }
 
+        $sCategory = '';
+        if (isset($CNF['OBJECT_CATEGORY']) && isset($CNF['OBJECT_CATEGORY']) && isset($aContentInfo[$CNF['FIELD_CATEGORY']])){
+            $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+            if ($oCategory)
+                $sCategory = $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']]);
+        } 
+        
     	return array(
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
             'sample_wo_article' => $CNF['T']['txt_sample_single'],
             'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
             'url' => $sUrl,
             'title' => $sTitle,
+            'category' => $sCategory,
             'text' => $sText,
             'images' => $aImages,
             'images_attach' => $aImagesAttach,
