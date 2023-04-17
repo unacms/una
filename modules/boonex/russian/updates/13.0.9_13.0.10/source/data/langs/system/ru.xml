@@ -1477,7 +1477,8 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Местоположение]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Социальные настройки]]></string>
-    <string name="_adm_stg_cpt_category_api"><![CDATA[API]]></string>
+    <string name="_adm_stg_cpt_category_api"><![CDATA[Общие]]></string>
+    <string name="_adm_stg_cpt_category_api_layout"><![CDATA[Планировка]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Изменять ширину картинки перед загрузкой (0 - отключить)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Изменять высоту картинки перед загрузкой (0 - отключить)]]></string>    
     <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Код валюты (для платёжных систем)]]></string>
@@ -1694,6 +1695,7 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_path"><![CDATA[Путь к файлам cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_secure"><![CDATA[Безопасные cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Значение для SameSite атрибута]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Главное меню]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Линейные комментарии]]></string>
 
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
@@ -2032,6 +2034,7 @@
   <string name="_sys_audit_action_delete_comment"><![CDATA[Комментарий удален]]></string>
   <string name="_sys_audit_action_feature"><![CDATA[Добавлен в продвинутые]]></string>
   <string name="_sys_audit_action_unfeature"><![CDATA[Удален из продвинутых]]></string>
+  <string name="_sys_audit_action_resolve"><![CDATA[Помечена как решеная]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Добавлен в администраторы группы]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Удален из администраторов группы]]></string>
   <string name="_sys_audit_action_group_role_changed"><![CDATA[Роль в группе изменена]]></string>
