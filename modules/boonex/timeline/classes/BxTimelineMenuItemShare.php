@@ -124,7 +124,30 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             foreach($aItems as $aItem)
                 switch($aItem['name']) {
                     case 'item-repost':
+                        $iOwnerId = $this->_oModule->getUserId();
+                        $sType = $this->_aEvent['type'];
+                        $sAction = $this->_aEvent['action'];
+                        $iObjectId = 0;
+
+                        $sCommonPrefix = $this->_oModule->_oConfig->getPrefix('common_post');
+                        if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+                            $aRepostedData = unserialize($this->_aEvent['content']);
+
+                            $sType = $aRepostedData['type'];
+                            $sAction = $aRepostedData['action'];
+                            $iObjectId = $aRepostedData['object_id'];
+                        }
+                        else
+                            $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
+
                         $aItemsApi['item-repost'] = array_merge($aItem, [
+                            'data' => [
+                                'author_id' => $iOwnerId,
+                                'owner_id' => $iOwnerId,
+                                'type' => $sType,
+                                'action' => $sAction,
+                                'object_id' => $iObjectId
+                            ]
                         ]);
                         break;
 
