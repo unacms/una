@@ -187,7 +187,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ];
  
             $sType = '';
-            if(!isset($aParams['rparams']['type']))
+            if(isset($aParams['rparams']['type']))
                 $sType = $aParams['rparams']['type'];
             else
                 $sType = trim(str_replace('bx_timeline_post_add', '', $aResult['form_object']->aParams['display']), '_');
