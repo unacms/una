@@ -42,6 +42,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         ];
         $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
             'show_counter' => true,
+            'show_counter_style' => self::$_sCounterStyleCompound
         ]);
 
         $this->_sTmplNameBySummary = 'vote_by_summary_reactions.html';

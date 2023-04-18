@@ -31,12 +31,14 @@ class BxTimelineMenuItemShare extends BxTemplMenu
         if(bx_get('content_id') !== false)
             $iContentId = bx_process_input(bx_get('content_id'), BX_DATA_INT);
 
-        $aBrowseParams = array('name' => '', 'view' => '', 'type' => '');
-        foreach($aBrowseParams as $sKey => $sValue)
-            if(bx_get($sKey) !== false)
-                $aBrowseParams[$sKey] = $this->_oModule->_oConfig->prepareParam($sKey);
+        if(!empty($iContentId)) {
+            $aBrowseParams = array('name' => '', 'view' => '', 'type' => '');
+            foreach($aBrowseParams as $sKey => $sValue)
+                if(bx_get($sKey) !== false)
+                    $aBrowseParams[$sKey] = $this->_oModule->_oConfig->prepareParam($sKey);
 
-        $this->setEventById($iContentId, $aBrowseParams);
+            $this->setEventById($iContentId, $aBrowseParams);
+        }
     }
 
     public function setEventById($iEventId, $aBrowseParams = array())
@@ -114,6 +116,49 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             $oSocial->addMarkers($aMarkers);
 
             $aItems = array_merge($aItems, $oSocial->getMenuItems());
+        }
+
+        if($this->_bIsApi) {
+            $aItemsApi = [];
+
+            foreach($aItems as $aItem)
+                switch($aItem['name']) {
+                    case 'item-repost':
+                        $aItemsApi['item-repost'] = array_merge($aItem, [
+                        ]);
+                        break;
+
+                    /**
+                     * TODO: Update when Copy function will be added in Timeline.
+                     */
+                    case 'item-send':
+                        $aItemsApi['item-copy'] = array_merge($aItem, [
+                            'name' => 'item-copy',
+                            'title' => _t('_sys_wiki_copy'),
+                            'link' => $aMarkers['url'],
+                        ]);
+                        break;
+
+                    /**
+                     * TODO: Update when unified Share popup will be used here.
+                     */
+                    case 'social-sharing-facebook':
+                    case 'social-sharing-twitter':
+                    case 'social-sharing-pinterest':
+                    case 'social-sharing-linked_in':
+                    case 'social-sharing-whatsapp':
+                        if(isset($aItemsApi['item-share']))
+                            break;
+
+                        $aItemsApi['item-share'] = array_merge($aItem, [
+                            'name' => 'item-share',
+                            'title' => _t('_sys_menu_item_title_social_sharing'),
+                            'link' => $aMarkers['url'],
+                        ]);
+                        break;
+                }
+
+            return array_values($aItemsApi);
         }
 
         return $aItems;

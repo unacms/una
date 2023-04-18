@@ -188,7 +188,8 @@ class BxBaseMenu extends BxDolMenu
                 'title' => _t($a['title']),
                 'link' => isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : '',
                 'icon' => $sIcon ? $sIcon : '',
-                'image' => $sIconUrl ? $sIconUrl : ''
+                'image' => $sIconUrl ? $sIconUrl : '',
+                'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : ''
             ];
         }
 

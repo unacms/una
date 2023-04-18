@@ -369,6 +369,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         return parent::_getMenuItemDefault ($aItem);
     }
 
+    protected function _getMenuItemDefaultApi ($aItem)
+    {
+        if(!empty($aItem['submenu']) && ($oSubmenu = BxDolMenu::getObjectInstance($aItem['submenu'])) !== false) {
+            $sMethod = 'setEventById';
+            if(method_exists($oSubmenu, $sMethod))
+                $oSubmenu->$sMethod($this->_iEvent);
+
+            $aItem = array_merge($aItem, [
+                'content_type' => 'submenu',
+                'submenu' => $oSubmenu->getCodeAPI()
+            ]);
+        }
+
+        return $aItem;
+    }
+
     protected function _getMenuItemElementApi($aItem, $aElement)
     {
         if(!$this->_bIsApi)

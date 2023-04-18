@@ -84,10 +84,7 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
             if($aItem === false)
                 return false;
 
-            if($this->_bIsApi)
-                return $aItem;
-
-            $mixedItem = $this->_getMenuItemDefault($aItem);
+            $mixedItem = $this->{'_getMenuItemDefault' . ($this->_bIsApi ? 'Api' : '')}($aItem);
     	}
 
     	if(empty($mixedItem))
@@ -144,6 +141,11 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
             $aItem['class_link'] = '';
 
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentItem(), $aItem);
+    }
+
+    protected function _getMenuItemDefaultApi ($aItem)
+    {
+        return $aItem;
     }
 
     protected function _getTmplContentItem()
