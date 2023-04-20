@@ -371,6 +371,9 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     protected function _getMenuItemDefaultApi ($aItem)
     {
+        $sType = $this->_aEvent['type'];
+        $sAction = $this->_aEvent['action'];
+
         if(!empty($aItem['submenu']) && ($oSubmenu = BxDolMenu::getObjectInstance($aItem['submenu'])) !== false) {
             $sMethod = 'setEventById';
             if(method_exists($oSubmenu, $sMethod))
@@ -380,6 +383,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 'content_type' => 'submenu',
                 'submenu' => $oSubmenu->getCodeAPI()
             ]);
+        }
+
+        switch($aItem['name']) {
+            case 'item-comment':
+                $aItem['link'] = $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent);
+                if($this->_oModule->_oConfig->isSystem($sType, $sAction) && !empty($this->_aEvent['content']['url']))
+                    $aItem['link'] = bx_relative_url($this->_aEvent['content']['url']);
+                break;
         }
 
         return $aItem;
