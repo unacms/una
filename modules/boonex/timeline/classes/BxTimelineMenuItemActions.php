@@ -389,7 +389,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             case 'item-comment':
                 $aItem['link'] = $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent);
                 if($this->_oModule->_oConfig->isSystem($sType, $sAction) && !empty($this->_aEvent['content']['url']))
-                    $aItem['link'] = bx_relative_url($this->_aEvent['content']['url']);
+                    $aItem['link'] = $this->_aEvent['content']['url'];
+                $aItem['link'] = bx_relative_url($aItem['link']);
                 break;
         }
 
