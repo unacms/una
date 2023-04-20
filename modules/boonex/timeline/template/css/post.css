@@ -66,12 +66,7 @@ div.bx-tl-ali-actions .bx-btn {
     float: none;
 }
 
-/*--- Add Emoji Styles ---*/
-.bx-menu-btn.add-emoji {
-	position: relative;
-}
-
 /*--- Froala Styles ---*/
 .bx-form-input-wrapper-textarea .fr-toolbar {
-	z-index: 0;
+    z-index: 0;
 }

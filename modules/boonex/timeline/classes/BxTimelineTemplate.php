@@ -71,9 +71,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 break;
 
             case 'post':
-                if($this->_oConfig->isEmoji())
-                    $aCss[] = BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css';
-
                 $aCss[] = 'post.css';
                 break;
         }
@@ -144,7 +141,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         return $this->getJsCode('post', array_merge(array(
-            'bEmoji' => $this->_oConfig->isEmoji(),
             'bAutoAttach' => $this->_oConfig->isEditorAutoAttach(),
             'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
             'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),

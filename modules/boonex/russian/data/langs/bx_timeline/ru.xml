@@ -277,8 +277,6 @@
 
     <string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
-    <string name="_bx_timeline_menu_item_title_system_add_emoji"><![CDATA[Добавить Emoji]]></string>
-    <string name="_bx_timeline_menu_item_title_add_emoji"><![CDATA[Добавить Emoji]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Добавить ссылку]]></string>
     <string name="_bx_timeline_menu_item_title_add_link"><![CDATA[Добавить ссылку]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_photo_simple"><![CDATA[Добавить фото (Обычная загрузка)]]></string>

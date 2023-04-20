@@ -289,8 +289,6 @@
 
     <string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Form Attachments]]></string>
-    <string name="_bx_timeline_menu_item_title_system_add_emoji"><![CDATA[Add Emoji]]></string>
-    <string name="_bx_timeline_menu_item_title_add_emoji"><![CDATA[Add Emoji]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Add Link]]></string>
     <string name="_bx_timeline_menu_item_title_add_link"><![CDATA[Add Link]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_photo_simple"><![CDATA[Add Photo (Simple)]]></string>
