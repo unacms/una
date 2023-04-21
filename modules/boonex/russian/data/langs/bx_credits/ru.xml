@@ -24,6 +24,8 @@
     <string name="_bx_credits_form_bundle_input_sys_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_credits_form_bundle_input_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_credits_form_bundle_input_title_err"><![CDATA[Это поле обязательно. Пожалуйста, заполните его на всех языках.]]></string>
+    <string name="_bx_credits_form_bundle_input_sys_description"><![CDATA[Описание]]></string>
+    <string name="_bx_credits_form_bundle_input_description"><![CDATA[Описание]]></string>
     <string name="_bx_credits_form_bundle_input_sys_name"><![CDATA[Имя]]></string>
     <string name="_bx_credits_form_bundle_input_name"><![CDATA[Имя]]></string>
     <string name="_bx_credits_form_bundle_input_name_err"><![CDATA[Это поле обязательно для использования в API запросах. Пожалуйста, заполните его.]]></string>

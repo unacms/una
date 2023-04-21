@@ -116,6 +116,7 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
             $aTmplVarsBundles[] = array_merge($aBundle, array(
                 'sp' => $sStylePrefix,
                 'title' => _t($aBundle[$CNF['FIELD_TITLE']]),
+                'description' => _t($aBundle[$CNF['FIELD_DESCRIPTION']]),
                 'bx_if:show_bonus' => array(
                     'condition' => (int)$aBundle[$CNF['FIELD_BONUS']] > 0,
                     'content' => array(

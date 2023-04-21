@@ -39,6 +39,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'FIELD_CHANGED' => '',
             'FIELD_NAME' => 'name',
             'FIELD_TITLE' => 'title',
+            'FIELD_DESCRIPTION' => 'description',
             'FIELD_AMOUNT' => 'amount',
             'FIELD_BONUS' => 'bonus',
             'FIELD_PRICE' => 'price',

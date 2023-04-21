@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `bx_credits_bundles` (
   `added` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `amount` int(11) NOT NULL DEFAULT '0',
   `bonus` int(11) NOT NULL DEFAULT '0',
   `price` float NOT NULL DEFAULT '0',
@@ -138,6 +139,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_credits_bundle', 'bx_credits', 'title', '', '', 0, 'text_translatable', '_bx_credits_form_bundle_input_sys_title', '_bx_credits_form_bundle_input_title', '', 1, 0, 0, '', '', '', 'AvailTranslatable', 'a:1:{i:0;s:5:"title";}', '_bx_credits_form_bundle_input_title_err', 'Xss', '', 1, 0),
+('bx_credits_bundle', 'bx_credits', 'description', '', '', 0, 'textarea_translatable', '_bx_credits_form_bundle_input_sys_description', '_bx_credits_form_bundle_input_description', '', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_credits_bundle', 'bx_credits', 'name', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_name', '_bx_credits_form_bundle_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_credits_form_bundle_input_name_err', 'Xss', '', 1, 0),
 ('bx_credits_bundle', 'bx_credits', 'amount', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_amount', '_bx_credits_form_bundle_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_credits_form_bundle_input_amount_err', 'Xss', '', 1, 0),
 ('bx_credits_bundle', 'bx_credits', 'bonus', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_bonus', '_bx_credits_form_bundle_input_bonus', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
@@ -149,21 +151,23 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_credits_bundle_add', 'name', 2147483647, 1, 1),
 ('bx_credits_bundle_add', 'title', 2147483647, 1, 2),
-('bx_credits_bundle_add', 'amount', 2147483647, 1, 3),
-('bx_credits_bundle_add', 'bonus', 2147483647, 1, 4),
-('bx_credits_bundle_add', 'price', 2147483647, 1, 5),
-('bx_credits_bundle_add', 'controls', 2147483647, 1, 6),
-('bx_credits_bundle_add', 'do_submit', 2147483647, 1, 7),
-('bx_credits_bundle_add', 'do_cancel', 2147483647, 1, 8),
+('bx_credits_bundle_add', 'description', 2147483647, 1, 3),
+('bx_credits_bundle_add', 'amount', 2147483647, 1, 4),
+('bx_credits_bundle_add', 'bonus', 2147483647, 1, 5),
+('bx_credits_bundle_add', 'price', 2147483647, 1, 6),
+('bx_credits_bundle_add', 'controls', 2147483647, 1, 7),
+('bx_credits_bundle_add', 'do_submit', 2147483647, 1, 8),
+('bx_credits_bundle_add', 'do_cancel', 2147483647, 1, 9),
 
 ('bx_credits_bundle_edit', 'name', 2147483647, 1, 1),
 ('bx_credits_bundle_edit', 'title', 2147483647, 1, 2),
-('bx_credits_bundle_edit', 'amount', 2147483647, 1, 3),
-('bx_credits_bundle_edit', 'bonus', 2147483647, 1, 4),
-('bx_credits_bundle_edit', 'price', 2147483647, 1, 5),
-('bx_credits_bundle_edit', 'controls', 2147483647, 1, 6),
-('bx_credits_bundle_edit', 'do_submit', 2147483647, 1, 7),
-('bx_credits_bundle_edit', 'do_cancel', 2147483647, 1, 8);
+('bx_credits_bundle_edit', 'description', 2147483647, 1, 3),
+('bx_credits_bundle_edit', 'amount', 2147483647, 1, 4),
+('bx_credits_bundle_edit', 'bonus', 2147483647, 1, 5),
+('bx_credits_bundle_edit', 'price', 2147483647, 1, 6),
+('bx_credits_bundle_edit', 'controls', 2147483647, 1, 7),
+('bx_credits_bundle_edit', 'do_submit', 2147483647, 1, 8),
+('bx_credits_bundle_edit', 'do_cancel', 2147483647, 1, 9);
 
 -- FORMS: profile
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
