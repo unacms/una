@@ -257,8 +257,8 @@
     <string name="_bx_spaces_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_spaces_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>
     <string name="_bx_spaces_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
-    <string name="_bx_spaces_menu_item_title_system_leave_space"><![CDATA[Покинуть пространство]]></string>
-    <string name="_bx_spaces_menu_item_title_leave_space"><![CDATA[Покинуть пространство]]></string>
+    <string name="_bx_spaces_menu_item_title_system_leave_group"><![CDATA[Покинуть пространство]]></string>
+    <string name="_bx_spaces_menu_item_title_leave_group"><![CDATA[Покинуть пространство]]></string>
     <string name="_bx_spaces_menu_item_title_leave_space_cancel_request"><![CDATA[Отменить присоединение]]></string>
     <string name="_bx_spaces_menu_item_title_leave_space_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
 
