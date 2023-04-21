@@ -2322,11 +2322,6 @@ function is_private_ip ($sIp)
     return filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== $sIp;
 }
 
-function bx_relative_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
-{
-    return '/' . bx_ltrim_str($sUrl, $sPrefix);
-}
-
 function bx_absolute_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
 {
     if (!preg_match('/^https?:\/\//', $sUrl))
@@ -2393,6 +2388,11 @@ function bx_api_check_access()
     // TODO: Temporarily to use logged state
     // bx_login(1);
     // check_logged();
+}
+
+function bx_api_get_relative_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
+{
+    return '/' . bx_ltrim_str($sUrl, $sPrefix);
 }
 
 function bx_api_get_block($sType, $sData, $aParams = [])

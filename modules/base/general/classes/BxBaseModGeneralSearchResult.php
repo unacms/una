@@ -213,7 +213,11 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function decodeDataUrl ($oContentInfo, $r)
     {
-        return bx_relative_url($oContentInfo->getContentLink($r['id']));
+        $sLink = $oContentInfo->getContentLink($r['id']);
+        if(bx_is_api())
+            $sLink = bx_api_get_relative_url($sLink);
+
+        return $sLink;
     }
 
     function decodeDataSummaryPlain ($oContentInfo, $r)

@@ -390,7 +390,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 $aItem['link'] = $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent);
                 if($this->_oModule->_oConfig->isSystem($sType, $sAction) && !empty($this->_aEvent['content']['url']))
                     $aItem['link'] = $this->_aEvent['content']['url'];
-                $aItem['link'] = bx_relative_url($aItem['link']);
+                $aItem['link'] = bx_api_get_relative_url($aItem['link']);
                 break;
         }
 
