@@ -64,7 +64,8 @@ class BxBaseVoteReactionsMenuDo extends BxTemplMenu
                 'target' => '_self', 
                 'title' => _t($aReaction['title']), 
                 'icon' => $sIcon,
-                'active' => 1
+                'active' => 1,
+                'active_api' => 1
             );
         }
 
