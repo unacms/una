@@ -285,6 +285,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 `tmi`.`primary` AS `primary`,
                 `tmi`.`collapsed` AS `collapsed`,
                 `tmi`.`active` AS `active`,
+                `tmi`.`active_api` AS `active_api`,
                 `tmi`.`copyable` AS `copyable`,
                 `tmi`.`editable` AS `editable`,
                 `tmi`.`hidden_on` AS `hidden_on`,

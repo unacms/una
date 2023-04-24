@@ -398,7 +398,7 @@ class BxBasePage extends BxDolPage
     /**
      * Get page array with all cells and blocks
      */
-    public function getPageAPI ()
+    public function getPageAPI ($aBlocks = [])
     {
         $a = [
             'id' => $this->_aObject['id'],
@@ -413,7 +413,7 @@ class BxBasePage extends BxDolPage
             'menu_top' => '',
             'menu' => '',
             'menu_bottom' => '',
-            'elements' => $this->getPageBlocksAPI(),
+            'elements' => $this->getPageBlocksAPI($aBlocks),
         ];
         
         
@@ -468,14 +468,15 @@ class BxBasePage extends BxDolPage
         return $a;
     }
 
-    public function getPageBlocksAPI()
+    public function getPageBlocksAPI($aBlocks = [])
     {
-        $aFieldsUnset = ['cell_id', 'active', 'copyable', 'deletable', 'object', 'text', 'text_updated', 'title_system', 'visible_for_levels'];
+        $bBlocks = !empty($aBlocks) && is_array($aBlocks);
+        $aFieldsUnset = ['object', 'cell_id', 'title_system', 'class', 'submenu', 'tabs', 'async', 'visible_for_levels', 'hidden_on', 'type', 'text', 'text_updated', 'help', 'cache_lifetime', 'active', 'active_api', 'copyable', 'deletable', 'order'];
 
         $aCells = $this->_oQuery->getPageBlocks();
         foreach($aCells as $sKey => &$aCell) {
             foreach($aCell as $i => $aBlock) {     
-                if(!$this->_isVisibleBlock($aBlock) || ($aCells[$sKey][$i]['hidden_on'] > 0 && ((int)$aCells[$sKey][$i]['hidden_on'] & 8) > 0)) {
+                if((int)$aBlock['active_api'] == 0 || !$this->_isVisibleBlock($aBlock)) {
                     unset($aCells[$sKey][$i]);
                     continue;
                 }
@@ -483,17 +484,27 @@ class BxBasePage extends BxDolPage
                 $this->processPageBlock($aCells[$sKey][$i], true);
                 $aBlock = $aCells[$sKey][$i];
 
+                $sSource = '';
+                if($aBlock['type'] == 'service') {
+                    $aContent = @unserialize($aBlock['content']);
+                    if(isset($aContent['module'], $aContent['method']))
+                        $sSource = $aContent['module'] . ':' . $aContent['method'];
+                }
+
+                if($bBlocks && !in_array($sSource, $aBlocks)) {
+                    unset($aCells[$sKey][$i]);
+                    continue;
+                }
+
                 $sFunc = '_getBlock' . ucfirst($aBlock['type']);
                 $mBlock = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
-                $aSrc = '';
-                if(method_exists($this, $sFunc)){
-                    $aSrc = @unserialize($aBlock['content']) ;
-                }
-                
-                $aCells[$sKey][$i]['title'] = isset($mBlock['title']) ? $mBlock['title'] : $this->getBlockTitle($aBlock);
-                $aCells[$sKey][$i]['content'] = isset($mBlock['content']) ? $mBlock['content'] : $mBlock;
-                $aCells[$sKey][$i]['menu'] = isset($mBlock['menu']) ? $mBlock['menu'] : '';
-                $aCells[$sKey][$i]['source'] = isset($aSrc['module']) ? $aSrc['module'] . '-' . $aSrc['method'] : '';
+
+                $aCells[$sKey][$i] = array_merge($aCells[$sKey][$i], [
+                    'title' => isset($mBlock['title']) ? $mBlock['title'] : $this->getBlockTitle($aBlock),
+                    'content' => isset($mBlock['content']) ? $mBlock['content'] : $mBlock,
+                    'menu' => isset($mBlock['menu']) ? $mBlock['menu'] : '',
+                    'source' => $sSource
+                ]);
                 $aCells[$sKey][$i] = array_diff_key($aCells[$sKey][$i], array_flip($aFieldsUnset));
             }
         }

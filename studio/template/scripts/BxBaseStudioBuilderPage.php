@@ -202,6 +202,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                             'condition' => false,
                             'content' => array()
                         ),
+                        'bx_if:show_api' => [
+                            'condition' => (int)$aBlock['active_api'] != 0,
+                            'content' => []
+                        ],
                         'bx_if:image' => array (
                             'condition' => (bool)$sIconUrl,
                             'content' => array('icon_url' => $sIconUrl),
@@ -821,6 +825,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'info' => '',
                     'value' => '1',
                     'checked' => $aBlock['active'] == '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
+                'active_api' => array(
+                    'type' => 'switcher',
+                    'name' => 'active_api',
+                    'caption' => _t('_adm_bp_txt_block_active_api'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => $aBlock['active_api'] == '1',
                     'db' => array (
                         'pass' => 'Int',
                     )

@@ -416,6 +416,12 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         if(empty($mixedValue))
             $mixedValue = _t($aRow['title']);
 
+        if((int)$aRow['active_api'] != 0)
+            $mixedValue .= ' ' . $this->_oTemplate->parseIcon('fa-mobile', [
+                'class' => 'sys-colored col-gray',
+                'title' => bx_html_attribute(_t('_adm_txt_active_api'))
+            ]);
+
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
@@ -795,6 +801,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'info' => '',
                     'value' => '1',
                     'checked' => isset($aItem['collapsed']) && (int)$aItem['collapsed'] == 1,
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
+                'active_api' => array(
+                    'type' => 'switcher',
+                    'name' => 'active_api',
+                    'caption' => _t('_adm_nav_txt_items_active_api'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aItem['active_api']) && (int)$aItem['active_api'] == 1,
                     'db' => array (
                         'pass' => 'Int',
                     )
