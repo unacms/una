@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_twitter',
     'title' => 'Twitter connect',
     'note' => 'Join the site using Twitter account.',
-    'version' => '13.0.2.DEV',
+    'version' => '13.0.3.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_linkedin',
     'title' => 'LinkedIn connect',
     'note' => 'Join the site using LinkedIn account.',
-    'version' => '13.0.1.DEV',
+    'version' => '13.0.2.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
