@@ -8,9 +8,9 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Timeline',
-    'version_from' => '13.0.9',
-    'version_to' => '13.0.10',
+    'title' => 'Credits',
+    'version_from' => '13.0.6',
+    'version_to' => '13.0.7',
     'vendor' => 'BoonEx',
 
     'compatible_with' => array(
@@ -20,14 +20,14 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/timeline/updates/update_13.0.9_13.0.10/',
-    'home_uri' => 'timeline_update_1309_13010',
+    'home_dir' => 'boonex/credits/updates/update_13.0.6_13.0.7/',
+    'home_uri' => 'credits_update_1306_1307',
 
-    'module_dir' => 'boonex/timeline/',
-    'module_uri' => 'timeline',
+    'module_dir' => 'boonex/credits/',
+    'module_uri' => 'credits',
 
-    'db_prefix' => 'bx_timeline_',
-    'class_prefix' => 'BxTimeline',
+    'db_prefix' => 'bx_credits_',
+    'class_prefix' => 'BxCredits',
 
     /**
      * Installation/Uninstallation Section.
@@ -42,7 +42,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Timeline',
+    'language_category' => 'Credits',
 
     /**
      * Files Section
