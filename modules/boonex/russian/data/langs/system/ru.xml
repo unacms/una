@@ -1479,7 +1479,7 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Местоположение]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Социальные настройки]]></string>
-    <string name="_adm_stg_cpt_category_api"><![CDATA[Общие]]></string>
+    <string name="_adm_stg_cpt_category_api_general"><![CDATA[Общие]]></string>
     <string name="_adm_stg_cpt_category_api_layout"><![CDATA[Планировка]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Изменять ширину картинки перед загрузкой (0 - отключить)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Изменять высоту картинки перед загрузкой (0 - отключить)]]></string>    
