@@ -11,7 +11,7 @@ INSERT IGNORE INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidde
 
 SET @iCategoryIdApiLayout = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'api_layout');
 
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+INSERT IGNORE INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryIdApiLayout, 'sys_api_menu_top', '_adm_stg_cpt_option_sys_api_menu_top', 'sys_site', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:24:"get_options_api_menu_top";s:5:"class";s:13:"TemplServices";}', '', '', 1);
 
 UPDATE `sys_options` SET `category_id` = @iCategoryIdApiLayout, `order` = 10 WHERE `name` = 'sys_api_comments_flat';
