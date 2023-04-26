@@ -417,8 +417,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             $mixedValue = _t($aRow['title']);
 
         if((int)$aRow['active_api'] != 0)
-            $mixedValue .= ' ' . $this->_oTemplate->parseIcon('fa-mobile', [
-                'class' => 'sys-colored col-gray',
+            $mixedValue .= ' ' . $this->_oTemplate->parseImage($this->_oTemplate->getIconUrl('api.svg'), [
+                'class' => 'bx-std-api',
                 'title' => bx_html_attribute(_t('_adm_txt_active_api'))
             ]);
 
