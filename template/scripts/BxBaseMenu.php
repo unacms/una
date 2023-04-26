@@ -168,10 +168,7 @@ class BxBaseMenu extends BxDolMenu
 
     protected function _getMenuItem ($a)
     {
-        if (isset($a['active']) && !$a['active'])
-            return false;
-
-        if (!$this->_isVisible($a))
+        if (!$this->_isActive($a) || !$this->_isVisible($a))
             return false;
 
         if ($this->_bIsApi) {

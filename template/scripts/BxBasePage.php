@@ -473,10 +473,10 @@ class BxBasePage extends BxDolPage
         $bBlocks = !empty($aBlocks) && is_array($aBlocks);
         $aFieldsUnset = ['object', 'cell_id', 'title_system', 'class', 'submenu', 'tabs', 'async', 'visible_for_levels', 'hidden_on', 'type', 'text', 'text_updated', 'help', 'cache_lifetime', 'active', 'active_api', 'copyable', 'deletable', 'order'];
 
-        $aCells = $this->_oQuery->getPageBlocks();
+        $aCells = $this->_oQuery->getPageBlocks(true);
         foreach($aCells as $sKey => &$aCell) {
             foreach($aCell as $i => $aBlock) {     
-                if((int)$aBlock['active_api'] == 0 || !$this->_isVisibleBlock($aBlock)) {
+                if(!$this->_isVisibleBlock($aBlock)) {
                     unset($aCells[$sKey][$i]);
                     continue;
                 }

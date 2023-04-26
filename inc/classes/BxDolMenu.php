@@ -239,15 +239,15 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return false;
 
     	if(!isset($this->_aObject['menu_items']))
-			$this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+            $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
 
     	$bVisible = false;
     	foreach ($this->_aObject['menu_items'] as $a) {
-    		if((isset($a['active']) && !$a['active']) || (isset($a['visible_for_levels']) && !$this->_isVisible($a)))
-				continue;
-			
-			$bVisible = true;
-			break;
+            if(!$this->_isActive($a) || !$this->_isVisible($a))
+                continue;
+
+            $bVisible = true;
+            break;
     	}
 
     	return $bVisible;
@@ -397,15 +397,25 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
     /**
+     * Check if menu items is active.
+     * @param $a menu item array
+     * @return boolean
+     */
+    protected function _isActive ($a)
+    {
+        if($this->_bIsApi)
+            return !isset($a['active_api']) || (int)$a['active_api'] !=0;
+        else
+            return !isset($a['active']) || (int)$a['active'] != 0;
+    }
+
+    /**
      * Check if menu items is visible.
      * @param $a menu item array
      * @return boolean
      */
     protected function _isVisible ($a)
     {
-        if($this->_bIsApi && (!isset($a['active_api']) || (int)$a['active_api'] == 0))
-            return false;
-
         if(isset($a['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
 
