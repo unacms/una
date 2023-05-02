@@ -93,6 +93,11 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if(!$iMembers && !$this->_bShowZeros)
             return false;
 
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => _t('_sys_menu_item_title_sm_members', $iMembers)
+            ]);
+
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
         return $this->getUnitMetaItemCustom($oConnection->getCounter($this->_oContentProfile->id(), true, [

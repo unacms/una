@@ -72,6 +72,10 @@ class BxBaseServiceConnections extends BxDol
         if(!$oConnection)
             return '';
 
+        $sMethod = 'getActionTitle';
+        if(method_exists($oConnection, $sMethod))
+            return $oConnection->$sMethod($sAction, $iInitiatorId, $iContentId, $bFlip);
+
         $aResult = [];
         switch($sObject) {
             case 'sys_profiles_friends':
@@ -109,6 +113,9 @@ class BxBaseServiceConnections extends BxDol
                         'remove' => '',
                     ];
                 break;
+
+            default:
+                $aResult = $oConnection->getActionTitle($sAction, $iInitiatorId, $iContentId);
         }
 
         $aFlip = ['add' => 'remove', 'remove' => 'add'];
