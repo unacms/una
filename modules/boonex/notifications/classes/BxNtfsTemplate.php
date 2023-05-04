@@ -35,22 +35,19 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getViewBlock($aParams)
     {
-        if (bx_is_api())
-            return $this->getPosts($aParams);
-        
         return $this->parseHtmlByName('block_view.html', array(
-        	'html_id_view_block' => $this->_oConfig->getHtmlIds('view', 'block'),
-        	'html_id_events' => $this->_oConfig->getHtmlIds('view', 'events'),
+            'html_id_view_block' => $this->_oConfig->getHtmlIds('view', 'block'),
+            'html_id_events' => $this->_oConfig->getHtmlIds('view', 'events'),
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'content' => $this->getPosts($aParams),
             'js_content' => $this->getJsCode('view', array(
-        		'oRequestParams' => array(
-	                'type' => $aParams['type'],
-	                'owner_id' => $aParams['owner_id'],
-	                'start' => $aParams['start'],
-	                'per_page' => $aParams['per_page'],
-	                'modules' => $aParams['modules']
-       			)
+                'oRequestParams' => array(
+                    'type' => $aParams['type'],
+                    'owner_id' => $aParams['owner_id'],
+                    'start' => $aParams['start'],
+                    'per_page' => $aParams['per_page'],
+                    'modules' => $aParams['modules']
+                )
             ))
         ));
     }
@@ -106,19 +103,19 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         if (bx_is_api())
             return $aTmplVarsEvents;
-        
+
         $oPaginate = new BxTemplPaginate(array(
-        	'start' => $aParams['start'],
+            'start' => $aParams['start'],
             'per_page' => $aParams['per_page'],
-        	'page_url' => $this->_oConfig->getViewUrl(),
-        	'on_change_page' => $sJsObject . ".changePage(this, {start}, {per_page})"
+            'page_url' => $this->_oConfig->getViewUrl(),
+            'on_change_page' => $sJsObject . ".changePage(this, {start}, {per_page})"
         ));
         $oPaginate->setNumFromDataArray($aTmplVarsEvents);
 
         return $this->parseHtmlByName('events.html', array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
-        	'bx_repeat:events' => $aTmplVarsEvents,
-        	'paginate' => $oPaginate->getSimplePaginate()
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'bx_repeat:events' => $aTmplVarsEvents,
+            'paginate' => $oPaginate->getSimplePaginate()
         ));
     }
 

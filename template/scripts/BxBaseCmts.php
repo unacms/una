@@ -491,7 +491,7 @@ class BxBaseCmts extends BxDolCmts
 
         $iLevel = 0;
         $aStructure = array();
-        $this->_getStructure($aRoot, $aBps, $iLevel, $aStructure);
+        $this->{'_getStructure' . ($this->_bIsApi ? 'API' : '')}($aRoot, $aBps, $iLevel, $aStructure);
 
         return !empty($aStructure) && is_array($aStructure) ? $aStructure : false;
     }

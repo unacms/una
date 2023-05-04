@@ -532,6 +532,7 @@
 	<string name="_adm_bp_mi_page_visibility"><![CDATA[Visibility]]></string>
 	<string name="_adm_bp_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Active]]></string>
+        <string name="_adm_bp_txt_block_active_api"><![CDATA[Active (for App)]]></string>
 	<string name="_adm_bp_txt_block_async"><![CDATA[Asynchronous Mode]]></string>
 	<string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Block Cache Lifetime (in seconds)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Attachments]]></string>
@@ -1225,6 +1226,7 @@
         <string name="_adm_nav_txt_items_parent_id"><![CDATA[Parent Item]]></string>
         <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[No Parent Item]]></string>
         <string name="_adm_nav_txt_items_primary"><![CDATA[Primary]]></string>
+        <string name="_adm_nav_txt_items_active_api"><![CDATA[Active (for App)]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[No Submenu]]></string>
@@ -1673,6 +1675,7 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Enable lessening for JS files (cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Remote video transcoding (requires special setup)]]></string>
   	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Session lifetime (min)]]></string>
+  	<string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Session authentication]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - trust unsigned certificates or not verified hosts]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA['Content-Security-Policy: frame-ancestors' header value]]></string>
@@ -1809,6 +1812,7 @@
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Launcher]]></string>
+        <string name="_adm_txt_active_api"><![CDATA[Available in App]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>

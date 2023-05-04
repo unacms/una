@@ -905,7 +905,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewHotOutline' => '',
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
-            'GetPosts' => ''
+            'GetPosts' => '',
+            'Repost' => ''
         ));
     }
 
@@ -2827,10 +2828,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     /** 
      * @ref bx_timeline-repost "repost"
+     * @api @ref bx_timeline-repost "repost"
      */
     public function serviceRepost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, $bForce = false)
     {
-        return $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, false, $bForce);
+        $mixedResult = $this->repost($iAuthorId, $iOwnerId, $sType, $sAction, $iObjectId, false, $bForce);
+        if(bx_is_api() && !is_array($mixedResult))
+            $mixedResult = ['code' => 0, 'id' => $mixedResult];
+
+        return $mixedResult;
     }
     
     /**

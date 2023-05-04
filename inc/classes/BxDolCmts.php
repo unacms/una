@@ -153,6 +153,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sTableImages = 'sys_cmts_images';
     protected $_sTableImages2Entries = 'sys_cmts_images2entries';
 
+    protected $_bIsApi;
+
     protected $_sType;
     protected $_oQuery = null;
     protected $_oTemplate = null;
@@ -209,6 +211,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_sType = BX_DOL_CMT_TYPE_COMMENT;
 
@@ -2193,32 +2197,83 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $bItem = !empty($mixedItem) && is_array($mixedItem);
 
-        if($bItem) {
-            $iI = 'i' . $mixedItem['cmt_id'];
-            $aStructure[$iI] = array(
+        $iCmtId = $bItem ? (int)$mixedItem['cmt_id'] : 0;
+        $iCmtIndex = $iCmtId;
+
+        if($bItem)
+            $aStructure[$iCmtIndex] = [
                 'id' => $mixedItem['cmt_id'], 
                 'order' => isset($mixedItem['cmt_order']) ? $mixedItem['cmt_order'] : 0, 
-                'data' => $this->getCommentSimple((int)$mixedItem['cmt_id']),
-                'files' => $this->_getAttachments($mixedItem),
-                'items' => array(),
-            );
-            $aStructure[$iI]['data']['author_data'] = BxDolProfile::getData($aStructure[$iI]['data']['cmt_author_id']);
-        }
+                'items' => [],
+            ];
 
         if(!$bItem || (int)$mixedItem['cmt_replies'] > 0) {
-            $aItems = $this->_oQuery->getStructure($this->_iId, $this->_iAuthorId, $bItem ? $mixedItem['cmt_id'] : 0, $aBp['filter'], $aBp['order']);
+            $aItems = $this->_oQuery->getStructure($this->_iId, $this->_iAuthorId, $iCmtId, $aBp['filter'], $aBp['order']);
             if(!empty($aItems)) {
                 if($bItem && $iLevel < (int)$this->_aSystem['number_of_levels']) {
                     $iPassLevel = $iLevel + 1;
-                    $aPassStructure = &$aStructure[$iI]['items'];
+                    $aPassStructure = &$aStructure[$iCmtIndex]['items'];
                 }
                 else {
                     $iPassLevel = $iLevel;
-                    $aPassStructure = [];//&$aStructure TODO: need to be checked by author, changed to avoid *RECURSION*;
+                    $aPassStructure = &$aStructure; //--- Is NEEDED here to correctly check sublevels.
+                }
+
+                foreach($aItems as $aItem)
+                    $this->_getStructure($aItem, $aBp, $iPassLevel, $aPassStructure);
+
+                //--- Sort subitems
+                $iWay = isset($aBp['order']['way']) && $aBp['order']['way'] == 'desc' ? -1 : 1;
+                uasort($aPassStructure, function($aItem1, $aItem2) use ($iWay) {
+                    if($aItem1['order'] == $aItem2['order'])
+                        return 0;
+
+                    return $iWay * ($aItem1['order'] < $aItem2['order'] ? -1 : 1);
+                });
+            }
+        }
+    }
+
+    public function _getStructureAPI($mixedItem, $aBp, &$iLevel, &$aStructure)
+    {
+        $bItem = !empty($mixedItem) && is_array($mixedItem);
+
+        $iCmtId = $bItem ? (int)$mixedItem['cmt_id'] : 0;
+        $sCmtIndex = 'i' . $iCmtId;
+
+        if($bItem) {
+            $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
+            $oMenuActions->setCmtsData($this, $iCmtId, $aBp);
+
+            $aData = $this->getCommentSimple($iCmtId);
+            $aData = array_merge($aData, [
+                'author_data' => BxDolProfile::getData($aData['cmt_author_id']),
+                'menu_actions' => $oMenuActions->getCodeAPI()
+            ]);
+
+            $aStructure[$sCmtIndex] = [
+                'id' => $iCmtId, 
+                'order' => isset($mixedItem['cmt_order']) ? $mixedItem['cmt_order'] : 0, 
+                'data' => $aData,
+                'files' => $this->_getAttachments($mixedItem),
+                'items' => [],
+            ];
+        }
+
+        if(!$bItem || (int)$mixedItem['cmt_replies'] > 0) {
+            $aItems = $this->_oQuery->getStructure($this->_iId, $this->_iAuthorId, $iCmtId, $aBp['filter'], $aBp['order']);
+            if(!empty($aItems)) {
+                if($bItem && $iLevel < (int)$this->_aSystem['number_of_levels']) {
+                    $iPassLevel = $iLevel + 1;
+                    $aPassStructure = &$aStructure[$sCmtIndex]['items'];
+                }
+                else {
+                    $iPassLevel = $iLevel;
+                    $aPassStructure = [];
                 }
                 
                 foreach($aItems as $aItem)
-                    $this->_getStructure($aItem, $aBp, $iPassLevel, $aPassStructure);
+                    $this->_getStructureAPI($aItem, $aBp, $iPassLevel, $aPassStructure);
                 
                 //--- Sort subitems
                 $iWay = isset($aBp['order']['way']) && $aBp['order']['way'] == 'desc' ? -1 : 1;
@@ -2229,7 +2284,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
                     return $iWay * ($aItem1['order'] < $aItem2['order'] ? -1 : 1);
                 });
-                $aStructure[$iI]['items'] = $aPassStructure;
+
+                $aStructure[$sCmtIndex]['items'] = $aPassStructure;
             }
         }
     }

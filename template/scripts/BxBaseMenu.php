@@ -168,10 +168,7 @@ class BxBaseMenu extends BxDolMenu
 
     protected function _getMenuItem ($a)
     {
-        if (isset($a['active']) && !$a['active'])
-            return false;
-
-        if (!$this->_isVisible($a))
+        if (!$this->_isActive($a) || !$this->_isVisible($a))
             return false;
 
         if ($this->_bIsApi) {
@@ -188,7 +185,8 @@ class BxBaseMenu extends BxDolMenu
                 'title' => _t($a['title']),
                 'link' => isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : '',
                 'icon' => $sIcon ? $sIcon : '',
-                'image' => $sIconUrl ? $sIconUrl : ''
+                'image' => $sIconUrl ? $sIconUrl : '',
+                'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : ''
             ];
         }
 

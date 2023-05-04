@@ -97,6 +97,11 @@ div.adm-bpb-info {
     min-height: 2rem;
 }
 div.adm-bpb-title {
+    display: -webkit-flex; 
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
     padding-right: 1rem;
 
     white-space: nowrap;
@@ -104,6 +109,9 @@ div.adm-bpb-title {
     overflow: hidden;
 
     font-weight: bold;
+}
+div.adm-bpb-title .bx-std-api {
+    margin-left: 0.25rem;
 }
 div.adm-bpb-description {
     font-size: 0.75rem;

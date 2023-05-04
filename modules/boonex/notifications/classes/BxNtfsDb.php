@@ -111,12 +111,14 @@ class BxNtfsDb extends BxBaseModNotificationsDb
             WHERE 1 " . $sWhereClausePc . (!$bCountOnly ? " " . $sOrderClausePc . " " . $sLimitClause : "");
 
         //--- Combine both queries in one
+        $bStartFromItem = isset($aParams['start_from_item']) && $aParams['start_from_item'] === true;
+
         $sUnionMethod = 'getColumn';
         $sUnionOrderClause = $sUnionLimitClause = '';
         if(!$bCountOnly) {
             $sUnionMethod = $sMethod;
             $sUnionOrderClause = "ORDER BY `date` DESC, `id` DESC";
-            $sUnionLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+            $sUnionLimitClause = isset($aParams['per_page']) ? "LIMIT " . (!$bStartFromItem ? $aParams['start'] : 0) . ", " . $aParams['per_page'] : "";
         }
 
         $aAlertParams = $aParams;
@@ -181,6 +183,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     protected function _getSqlPartsEventsList($aParams)
     {
         $sJoinClause = $sWhereClause = "";
+
+        //--- Apply 'start from'  filter
+        $sWhereClauseStartFrom = '';
+        if(isset($aParams['start_from_item']) && $aParams['start_from_item'] === true && $aParams['start'] != 0)
+            $sWhereClauseStartFrom = $this->prepareAsString("AND `{$this->_sTable}`.`id`<? ", (int)$aParams['start']);
 
         //--- Apply status filter
         $sWhereClauseStatus = '';
@@ -299,6 +306,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
             'table' => $this->_sTable,
             'join_clause' => &$sJoinClause,
             'where_clause' => &$sWhereClause,
+            'where_clause_start_from' => &$sWhereClauseStartFrom,
             'where_clause_status' => &$sWhereClauseStatus,
             'where_clause_modules' => &$sWhereClauseModules,
             'where_clause_new' => &$sWhereClauseNew,
@@ -306,6 +314,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
             'where_clause_type' => &$sWhereClauseType
         ]);
 
+        $sWhereClause .= $sWhereClauseStartFrom;
         $sWhereClause .= $sWhereClauseStatus;
         $sWhereClause .= $sWhereClauseModules;
         $sWhereClause .= $sWhereClauseNew;

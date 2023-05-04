@@ -186,6 +186,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         if(is_string($aParams)){
             $aParams = json_decode($aParams, true);
         }
+
         return $this->serviceGetBlockView($aParams['params']['type'], $aParams['params']['start'], $aParams['params']['per_page'], $aParams['params']['modules']);
     }
     
@@ -206,45 +207,51 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     /** 
      * @ref bx_notifications-get_block_view "get_block_view"
      */
-    public function serviceGetBlockView($sType = '', $iStart = -1, $iPerPage = -1, $aModules = array())
+    public function serviceGetBlockView($sType = '', $iStart = -1, $iPerPage = -1, $aModules = [])
     {
-    	$aBrowseTypes = array(BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER);
+    	$aBrowseTypes = [BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER];
 
     	if(empty($sType)) {
-    		$mixedType = bx_get('type');
-    		if($mixedType !== false && in_array($mixedType, $aBrowseTypes))
-    			$sType = $mixedType;
+            $mixedType = bx_get('type');
+            if($mixedType !== false && in_array($mixedType, $aBrowseTypes))
+                $sType = $mixedType;
 
-	    	if(empty($sType))
-    			$sType = BX_NTFS_TYPE_DEFAULT;
+            if(empty($sType))
+                $sType = BX_NTFS_TYPE_DEFAULT;
     	}
 
     	$iOwnerId = $this->getUserId();
         if(!$iOwnerId)
-            return array('content' => MsgBox(_t('_bx_ntfs_txt_msg_no_results')));
+            return ['content' => MsgBox(_t('_bx_ntfs_txt_msg_no_results'))];
 
-		$aParams = $this->_prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $aModules);
-		$sContent = $this->_oTemplate->getViewBlock($aParams);
-        
-        if (bx_is_api()){
+        $aParams = $this->_prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $aModules);
+
+        if(bx_is_api()) {
+            $aParams['start_from_item'] = true;
+
+            $aContent = $this->_oTemplate->getPosts($aParams);
+            $iContent = count($aContent);
+            if($iContent > $aParams['per_page'])
+                $aContent = array_slice($aContent, 0, -($iContent - $aParams['per_page']));
+
+            $aParams['start'] = end($aContent)['id'];
             return [bx_api_get_block('browse', [
                 'unit' => 'notifications',  
                 'request_url' => '/api.php?r=bx_notifications/get_data/&params[]=',
                 'params' => $aParams,
-                'id' => bx_get_logged_profile_id(),
-                'data' => $sContent]),
+                'id' => $iOwnerId,
+                'data' => $aContent]),
             ];
         }
 
-		$aParams['browse'] = 'first';
+        $sContent = $this->_oTemplate->getViewBlock($aParams);
+
+        $aParams['browse'] = 'first';
     	$aEvent = $this->_oDb->getEvents($aParams);
     	if(!empty($aEvent))
-			$this->_oDb->markAsRead($iOwnerId, $aEvent['id']);
+            $this->_oDb->markAsRead($iOwnerId, $aEvent['id']);
 
-		$sModule = $this->_oConfig->getName();
-		$sJsObject = $this->_oConfig->getJsObject('view');
-
-        return array('content' => $sContent); 
+        return ['content' => $sContent]; 
     }
 
     /**
@@ -647,6 +654,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             'type' => !empty($sType) ? $sType : BX_NTFS_TYPE_DEFAULT,
             'owner_id' => $iOwnerId,
             'start' => (int)$iStart > 0 ? $iStart : 0,
+            'start_from_item' => false,
             'per_page' => (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage(),
             'modules' => is_array($aModules) && !empty($aModules) ? $aModules : [],
             'last_read' => $this->_oDb->getLastRead($iOwnerId),
@@ -669,6 +677,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $iStart = bx_get('start');
         $aParams['start'] = $iStart !== false ? bx_process_input($iStart, BX_DATA_INT) : 0;
+        $aParams['start_from_item'] = false;
 
         $iPerPage = bx_get('per_page');
         $aParams['per_page'] = $iPerPage !== false ? bx_process_input($iPerPage, BX_DATA_INT) : $this->_oConfig->getPerPage();

@@ -44,6 +44,9 @@ $aConfig = array(
      * Category for language keys.
      */
     'language_category' => array(
+        array('name' => 'Credits', 'path' => 'bx_credits/'),
+        array('name' => 'Spaces', 'path' => 'bx_spaces/'),
+        array('name' => 'Timeline', 'path' => 'bx_timeline/'),
         array('name' => 'System', 'path' => 'system/'),
     ),
 

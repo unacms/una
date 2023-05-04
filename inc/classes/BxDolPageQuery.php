@@ -111,13 +111,17 @@ class BxDolPageQuery extends BxDolDb
         return BxDolDb::getInstance()->getAll("SELECT * FROM `sys_pages_types` WHERE 1");
     }
 
-    public function getPageBlocks()
+    public function getPageBlocks($bIsApi = false)
     {
-        $aRet = array ();
-        for ($i = 1 ; $i <= $this->_aObject['cells_number'] ; ++$i) {
-            $sQuery = $this->prepare("SELECT * FROM `sys_pages_blocks` WHERE `object` = ? AND `cell_id` = ? AND `active` = 1 ORDER BY `order` ASC", $this->_aObject['object'], $i);
-            $aRet['cell_'.$i] = $this->getAll($sQuery);
-        }
+        $sActiveClause = $bIsApi ? "`active_api` = 1" : "`active` = 1";
+
+        $aRet = [];
+        for($i = 1; $i <= $this->_aObject['cells_number']; ++$i)
+            $aRet['cell_'.$i] = $this->getAll("SELECT * FROM `sys_pages_blocks` WHERE `object` = :object AND `cell_id` = :cell_id AND " . $sActiveClause . " ORDER BY `order` ASC", [
+                'object' => $this->_aObject['object'],
+                'cell_id' => $i
+            ]);
+
         return $aRet;
     }
 

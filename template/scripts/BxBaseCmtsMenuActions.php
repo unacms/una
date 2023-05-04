@@ -16,6 +16,8 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     protected static $_sModeActions = 'actions';
     protected static $_sModeCounters = 'counters';
 
+    protected $_bIsApi;
+
     protected $_oCmts;
     protected $_aCmt;
     protected $_aBp;
@@ -30,6 +32,8 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_aBp = [];
         $this->_aDp = [];
@@ -104,6 +108,11 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
                 break;
         }
 
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oVote->getElementApi(array_merge($aVotesParams, [
+                'show_counter' => true,
+            ])));
+
         return $oVote->$sVotesMethod($aVotesParams);
     }
 
@@ -132,6 +141,11 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
                 break;
         }
 
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oReaction->getElementApi(array_merge($aReactionsParams, [
+                'show_counter' => true,
+            ])));
+
         return $oReaction->$sReactionsMethod($aReactionsParams);
     }
 
@@ -159,6 +173,11 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
                 break;
         }
 
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oScore->getElementApi(array_merge($aScoresParams, [
+                'show_counter' => true,
+            ])));
+
     	return $oScore->$sScoresMethod($aScoresParams);
     }
 
@@ -175,6 +194,19 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         ];
 
     	return $oReport->getElementInline($aReportParams);
+    }
+
+    protected function _getMenuItemElementApi($aItem, $aElement)
+    {
+        if(!$this->_bIsApi)
+            return $aItem;
+
+        return [
+                'id' => $aItem['id'],
+                'name' => $aItem['name'],
+                'display_type' => 'element',
+                'data' => $aElement
+            ];
     }
 
     /**
