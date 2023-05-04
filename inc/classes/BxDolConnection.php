@@ -192,7 +192,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             return $mixedResult;
 
         // check content's visibility
-        if(($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
+        if(!$this->isConnected($iContent, $iInitiator) && ($mixedResult = $this->_checkAllowedConnectContent($oContent)) !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
         if(!$isCheckExists)
