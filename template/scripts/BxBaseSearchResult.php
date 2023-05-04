@@ -269,7 +269,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
         if (BX_DOL_SEARCH_KEYWORD_PAGE === $this->sBrowseUrl) {
 
-            $sLoadDynamicUrl = BX_DOL_URL_ROOT . 'searchKeywordContent.php?searchMode=ajax&section[]=' . $this->aCurrent['name'] . ($this->_sCategoryObject ? '&cat=' . $this->_sCategoryObject : '');
+            $sLoadDynamicUrl = BX_DOL_URL_ROOT . 'searchKeywordContent.php?searchMode=ajax&section[]=' . rawurlencode($this->aCurrent['name']) . ($this->_sCategoryObject ? '&cat=' . rawurlencode($this->_sCategoryObject) : '');
             $sLoadDynamicUrl = $this->addAdditionalUrlParams($sLoadDynamicUrl, $aAdditionalParams, $bReplacePagesParams);
 
             $sKeyword = bx_get('keyword');
