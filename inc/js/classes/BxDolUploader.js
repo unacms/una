@@ -609,7 +609,9 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         this._uploader = FilePond.create(
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
-        );    
+        );
+        this._uploader.setOptions(glFilepondLocale);
+
         // need to be activated if catch paste needed
         //this.initPasteEditor();
     }
