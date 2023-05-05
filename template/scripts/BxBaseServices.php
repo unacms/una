@@ -45,6 +45,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetCreatePostForm' => 'BxBaseServices',
             'GetProductsNames' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
+            'GetDataSearch' => 'BxBaseServices',
             'Cmts' => 'BxBaseServices',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
@@ -894,7 +895,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         
         return $oSearch->response();
     }
-    
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -943,7 +944,60 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         return $sCode;
     }
-    
+
+    /** 
+     * @ref bx_system_general-get_date_search "get_date_search"
+     * @api @ref bx_system_general-get_date_search "get_date_search"
+     */
+    public function serviceGetDataSearch ($aParams)
+    {
+        if(!bx_is_api())
+            return false;
+
+        $aParams = array_merge([
+            'keyword' => '',
+            'section' => '',
+            'start' => 0,
+            'per_page' => 12
+        ], is_string($aParams) ? json_decode($aParams, true) : $aParams);
+
+        if(!empty($aParams['section']))
+            $aParams['section'] = explode(',', $aParams['section']);
+
+        $sClass = 'BxTemplSearch';
+        $oSearch = new $sClass($aParams['section']);
+        $oSearch->setLiveSearch(true);
+        $oSearch->setDataProcessing(true);
+        $oSearch->setCustomSearchCondition(['keyword' => $aParams['keyword']]);
+        $oSearch->setCustomCurrentCondition([
+            'paginate' => [
+                'start' => $aParams['start'],
+                'perPage' => $aParams['per_page'],
+            ]
+        ]);
+
+        $aData = [];
+        $aResponse = $oSearch->response();
+        foreach($aResponse as $sSection => $aItems) {
+            if(empty($aItems))
+                continue;
+
+            $aData = array_merge($aData, $aItems);
+        }
+        
+        if(count($aData) > $aParams['per_page'])
+            $aData = array_slice($aData, $aParams['start'], $aParams['per_page']);
+
+        return [
+            bx_api_get_block('browse', [
+                'unit' => 'search-results',  
+                'request_url' => '/api.php?r=system/get_data_search/TemplServices&params[]=',
+                'params' => $aParams,
+                'data' => $aData
+            ])
+        ];
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 

@@ -85,6 +85,7 @@ class BxDolSearch extends BxDol
     {
         $sCode = $this->_bDataProcessing ? array() : '';
 
+        $bIsApi = bx_is_api();
         $bSingle = count($this->aChoice) == 1;
         foreach ($this->aChoice as $sKey => $aValue) {
             if (!$this->_sMetaType && !$aValue['GlobalSearch'])
@@ -107,12 +108,16 @@ class BxDolSearch extends BxDol
             $oEx->setCenterContentUnitSelector(false);
             $oEx->setSingleSearch($bSingle);
             $oEx->setCustomSearchCondition($this->_aCustomSearchCondition);
+            
             $oEx->aCurrent = array_merge_recursive($oEx->aCurrent, $this->_aCustomCurrentCondition);
             if ($this->_sUnitTemplate)
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
 
-            if ($this->_bDataProcessing)
-                $sCode[$sKey] = $oEx->getSearchData();
+            if ($this->_bDataProcessing) {
+                $aSearchData = $oEx->getSearchData();
+
+                $sCode[$sKey] = $bIsApi ? $oEx->decodeData($aSearchData) : $aSearchData;
+            }
             else
                 $sCode .= $this->_bRawProcessing ? $oEx->processingRaw() : $oEx->processing();
         }
