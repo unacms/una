@@ -248,10 +248,14 @@ BxDolUploaderBase.prototype._clearErrors = function () {
 BxDolUploaderBase.prototype._showError = function (s, bAppend) {
     if (s == undefined || !s.length)
         return;
+
+    var eCont = $('#' + this._sPopupContainerId).find('[id=' + this._sErrorsContainerId + ']').size() ? $('#' + this._sPopupContainerId).find('[id=' + this._sErrorsContainerId + ']') : $('#' + this._sErrorsContainerId);
+
     if (!bAppend)
-        $('#' + this._sErrorsContainerId).html(this._sTemplateError.replace('{error}', s));
+        eCont.html(this._sTemplateError.replace('{error}', s));
     else
-        $('#' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
+        eCont.prepend(this._sTemplateError.replace('{error}', s));
+
     this._isErrorShown = true;
 };
 
