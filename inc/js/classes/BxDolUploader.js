@@ -476,7 +476,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             credits: {},
             allowMultiple: $this._isMultiple ? true : false,
             maxFiles: $this.isMultiple() ? 50 : 1,
-            maxFileSize: o.maxFilesize +'MB',
+            maxFileSize: o.maxFilesize > 2 ? Math.round(o.maxFilesize, 1) + 'MB' : Math.round(o.maxFilesize*1024, 1) + 'KB',
             instantUpload: true,
             onaddfile: (error, file) => { 
                 if (error){
@@ -606,6 +606,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             FilePondPluginImageResize,
             
         );
+
         this._uploader = FilePond.create(
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
