@@ -146,7 +146,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
             'display_type' =>  $sDisplayType,
             'display_name' => $oProfile->getDisplayName(),
             'url' => bx_api_get_relative_url($oProfile->getUrl()),
-            'url_avatar' => $oProfile->getAvatar(),
+            'url_avatar' => $oProfile->{isset($aParams['get_avatar']) && method_exists($oProfile, $aParams['get_avatar']) ? $aParams['get_avatar'] : 'getAvatar'}(),
             'module' => $oProfile->getModule(),
         ];
         
