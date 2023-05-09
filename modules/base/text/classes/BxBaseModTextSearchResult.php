@@ -247,12 +247,11 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $oContentInfo = $this->getContentInfoObject();
 
         foreach ($a as $i => $r) {
-            if (isset($r['author']))
-                $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
-
-            $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
-            $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
-            $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+            $a[$i] = array_merge($a[$i], [
+                'url' => $this->decodeDataUrl($oContentInfo, $r),
+                'image' => $oContentInfo->getContentThumb($r['id']),
+                'summary_plain' => $this->decodeDataSummaryPlain($oContentInfo, $r)
+            ]);
 
             if($bMetaMenu) {
                 $oMetaMenu->setContentId($r['id']);
