@@ -116,9 +116,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'name' => $sName,
                 'count' => $iCount,
                 'sum' => $aVote['sum_' . $sName],
-                'rate' => $aVote['rate_' . $sName],
-                'icon' => $this->getEmoji($sName),
-                'title' => _t($this->_aDataList[$sName]['title']),
+                'rate' => $aVote['rate_' . $sName]
             ];
         }
 
@@ -340,16 +338,6 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
         return parent::getElement($aParams);
     }
-    
-    public function getElementAPI($aParams = [])
-    {
-        $aResult = parent::getElementAPI($aParams);
-
-        if(($oDoVoteMenu = $this->_getDoVoteMenu()) !== false)
-            $aResult['action']['menu'] = $oDoVoteMenu->getCodeAPI();
-
-        return $aResult;
-    }
 
     /**
      * Internal methods.
@@ -411,7 +399,6 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'is_disabled' => $bDisabled,
                 'value' => $iValue,
                 'reaction' => $bVoted ? $sReaction : $this->_sDefault,
-                'icon' => $this->_getEmojiDoWithTrack($bVoted, $aParams['track']), 
                 'title' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track'])),
             ];
 

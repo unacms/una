@@ -29,6 +29,7 @@ class BxBaseVote extends BxDolVote
 
         $this->_aElementDefaults = [];
         $this->_aElementDefaultsApi = [];
+        $this->_aElementParamsApi = ['is_voted'];
 
         $this->_bCssJsAdded = false;
         $this->_sStylePrefix = 'bx-vote';
@@ -203,21 +204,17 @@ class BxBaseVote extends BxDolVote
             'show_script' => false
         ])) : [];
 
-        //--- Legend
-        $bLegend = $this->_isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
-        $aLegend = $bLegend ? $this->getLegend($aParams) : [];
 
-        if(!$bDoVote && !$bCounter && !$bLegend)
+        if(!$bDoVote && !$bCounter)
             return bx_api_get_msg('');
 
         return [
             'type' => $this->_sType,
             'system' => $this->_sSystem,
             'object_id' => $this->_iId,
-            'params' => $aParams,
+            'params' => array_intersect_key($aParams, array_flip($this->_aElementParamsApi)),
             'action' => $aDoVote,
-            'counter' => $aCounter,
-            'legend' => $aLegend,
+            'counter' => $aCounter
         ];
     }
 

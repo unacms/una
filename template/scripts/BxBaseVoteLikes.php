@@ -73,13 +73,7 @@ class BxBaseVoteLikes extends BxDolVoteLikes
     {
         $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
 
-        $aVote = $this->_getVote();
-        $bVoted = false;
-
-        return array_merge($aVote, [
-            'icon' => $this->_getEmojiDo($bVoted), 
-            'title' => _t($this->_getTitleDo($bVoted)),
-        ]);
+        return $this->_getVote();
     }
 
     public function getElement($aParams = array())
@@ -121,7 +115,6 @@ class BxBaseVoteLikes extends BxDolVoteLikes
                 'is_voted' => $bVoted,
                 'is_disabled' => $bDisabled,
                 'value' => $this->getValue(),
-                'icon' => $this->_getEmojiDo($bVoted), 
                 'title' => _t($this->_getTitleDo($bVoted)),
             ];
 

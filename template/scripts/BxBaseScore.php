@@ -55,6 +55,7 @@ class BxBaseScore extends BxDolScore
         $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
             'show_counter' => true,
         ]);
+        $this->_aElementParamsApi = ['is_voted'];
 
         $this->_sTmplNameLegend = 'score_legend.html';
         $this->_sTmplNameByList = 'score_by_list.html';
@@ -160,18 +161,7 @@ class BxBaseScore extends BxDolScore
     {
         $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
 
-        $aScore = $this->_getVote();
-
-        return array_merge($aScore, [
-            BX_DOL_SCORE_DO_UP => [
-                'icon' => $this->_getIconDo(BX_DOL_SCORE_DO_UP),
-                'title' => _t($this->_getTitleDo(BX_DOL_SCORE_DO_UP)),
-            ],
-            BX_DOL_SCORE_DO_DOWN => [
-                'icon' => $this->_getIconDo(BX_DOL_SCORE_DO_DOWN),
-                'title' => _t($this->_getTitleDo(BX_DOL_SCORE_DO_DOWN))
-            ]
-        ]);
+        return $this->_getVote();
     }
 
     public function getLegend($aParams = array())
@@ -330,24 +320,19 @@ class BxBaseScore extends BxDolScore
             'show_script' => false
         ])) : [];
 
-        //--- Legend
-        $bLegend = $this->_isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount);
-        $aLegend = $bLegend ? $this->getLegend($aParams) : [];
-
-        if(!$bDoVote && !$bCounter && !$bLegend)
+        if(!$bDoVote && !$bCounter)
             return bx_api_get_msg('');
 
         return [
             'type' => 'scores',
             'system' => $this->_sSystem,
             'object_id' => $this->_iId,
-            'params' => $aParams,
+            'params' => array_intersect_key($aParams, array_flip($this->_aElementParamsApi)),
             'action' => [
                 BX_DOL_SCORE_DO_UP => $aDoVoteUp,
                 BX_DOL_SCORE_DO_DOWN => $aDoVoteDown
             ],
             'counter' => $aCounter,
-            'legend' => $aLegend,
         ];
     }
 
@@ -371,7 +356,6 @@ class BxBaseScore extends BxDolScore
             return [
                 'is_voted' => $bVoted,
                 'is_disabled' => $bDisabled,
-                'icon' => $this->_getIconDo($sType), 
                 'title' => _t($this->_getTitleDo($sType)),
             ];
 

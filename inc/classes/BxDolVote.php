@@ -84,6 +84,7 @@ class BxDolVote extends BxDolObject
 
     protected $_aElementDefaults;
     protected $_aElementDefaultsApi;
+    protected $_aElementParamsApi; //--- Params from DefaultsApi array to be passed to Api
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
