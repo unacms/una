@@ -248,10 +248,14 @@ BxDolUploaderBase.prototype._clearErrors = function () {
 BxDolUploaderBase.prototype._showError = function (s, bAppend) {
     if (s == undefined || !s.length)
         return;
+
+    var eCont = $('#' + this._sPopupContainerId).find('[id=' + this._sErrorsContainerId + ']').size() ? $('#' + this._sPopupContainerId).find('[id=' + this._sErrorsContainerId + ']') : $('#' + this._sErrorsContainerId);
+
     if (!bAppend)
-        $('#' + this._sErrorsContainerId).html(this._sTemplateError.replace('{error}', s));
+        eCont.html(this._sTemplateError.replace('{error}', s));
     else
-        $('#' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
+        eCont.prepend(this._sTemplateError.replace('{error}', s));
+
     this._isErrorShown = true;
 };
 
@@ -472,7 +476,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             credits: {},
             allowMultiple: $this._isMultiple ? true : false,
             maxFiles: $this.isMultiple() ? 50 : 1,
-            maxFileSize: o.maxFilesize +'MB',
+            maxFileSize: o.maxFilesize > 2 ? Math.round(o.maxFilesize) + 'MB' : Math.round(o.maxFilesize*1024) + 'KB',
             instantUpload: true,
             onaddfile: (error, file) => { 
                 if (error){
@@ -602,10 +606,13 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             FilePondPluginImageResize,
             
         );
+
         this._uploader = FilePond.create(
             document.querySelector('#' + this._sDivId),
             $.extend({}, _options, o)
-        );    
+        );
+        this._uploader.setOptions(glFilepondLocale);
+
         // need to be activated if catch paste needed
         //this.initPasteEditor();
     }
