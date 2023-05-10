@@ -23,11 +23,15 @@ class BxBaseEmbedEmbedly extends BxDolEmbed
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
-    public function getLinkHTML ($sLink, $sTitle = '', $sMaxWidth = '')
+    public function getLinkHTML ($sLink, $sTitle = '', $sMaxWidth = '', $sTheme = '')
     {
         $aAttrs = array(
-            'title' => bx_html_attribute($sTitle),
+            'title' => bx_html_attribute($sTitle)
         );
+        
+        if ($sTheme != ''){
+            $aAttrs['data-card-theme'] = $sTheme;
+        }
 
         // check for external link
         if (strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) !== 0) {

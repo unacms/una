@@ -43,8 +43,8 @@ if (bx_get('html')){
     position: relative;
     width: auto;
     height: auto;
-}</style><script language="javascript" src="/plugins_public/jquery/jquery.min.js"></script>' . $oEmbed->addJsCss() . '<div style="max-width:900; margin:0px auto; justify-content: center; display:flex">' . $oEmbed->getLinkHTML($aLinks) .'</div>' . $oEmbed->addProcessLinkMethod() . '</body>';
+}</style><script language="javascript" src="'.BX_DOL_URL_ROOT.'/plugins_public/jquery/jquery.min.js"></script>' . $oEmbed->addJsCss() . '<div style="max-width:900; margin:0px auto; justify-content: center; display:flex">' . $oEmbed->getLinkHTML($aLinks, '', '', bx_get('theme')) .'</div></body>';
     exit();
 }
-
+//data-card-theme
 echoJson($oEmbed->parseLinks($aLinks));
