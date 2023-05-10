@@ -194,7 +194,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if(is_array($aItemData) && !empty($aItemData['event']))
                     $aExt['response'] = $this->_getPostApi($aItemData['event'], $aParams);
             }
-
+            $aExt['name'] = 'feed';
             return [
                 bx_api_get_block('form', $aResult['form_object']->getCodeAPI(), ['ext' => $aExt])
             ];
