@@ -43,7 +43,7 @@ class BxDolCmtsReviews extends BxTemplCmts
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
-        $this->_sType = BX_DOL_CMT_TYPE_REVIEW;
+        $this->_sType = BX_DOL_CMT_TYPE_REVIEWS;
         $this->_oQuery = new BxDolCmtsReviewsQuery($this);
 
         $this->_sFormObject = 'sys_review';

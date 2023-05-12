@@ -194,6 +194,47 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         return $oObject->$sViewsMethod($aViewsParams);
     }
 
+    protected function _getMenuItemItemComment($aItem)
+    {
+        /**
+         * For now use the default link (not Object based) for non-api calls.
+         */
+        if(!$this->_bIsApi)
+            return true;
+
+        if(!isset($this->_aEvent['comments']) || !is_array($this->_aEvent['comments']) || !isset($this->_aEvent['comments']['system'])) 
+            return false;
+
+        $sCommentsSystem = $this->_aEvent['comments']['system'];
+        $iCommentsObject = $this->_aEvent['comments']['object_id'];
+        $aCommentsParams = array(
+            'show_do_comment_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
+
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sCommentsMethod = 'getElementInline';
+                break;
+
+            case self::$_sModeCounters:
+                $sCommentsMethod = 'getCounter';
+                break;
+        }
+
+        $oObject = $this->_oModule->getCmtsObject($sCommentsSystem, $iCommentsObject);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aCommentsParams, [
+                'show_counter' => true,
+            ])));
+
+        return $oObject->$sCommentsMethod($aCommentsParams);
+    }
+
     protected function _getMenuItemItemVote($aItem)
     {
         if(!isset($this->_aEvent['votes']) || !is_array($this->_aEvent['votes']) || !isset($this->_aEvent['votes']['system'])) 
@@ -383,15 +424,6 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 'content_type' => 'submenu',
                 'submenu' => $oSubmenu->getCodeAPI()
             ]);
-        }
-
-        switch($aItem['name']) {
-            case 'item-comment':
-                $aItem['link'] = $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent);
-                if($this->_oModule->_oConfig->isSystem($sType, $sAction) && !empty($this->_aEvent['content']['url']))
-                    $aItem['link'] = $this->_aEvent['content']['url'];
-                $aItem['link'] = bx_api_get_relative_url($aItem['link']);
-                break;
         }
 
         return $aItem;

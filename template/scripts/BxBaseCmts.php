@@ -25,8 +25,6 @@ class BxBaseCmts extends BxDolCmts
     protected $_sStylePrefix;
 
     protected $_aHtmlIds;
-
-    protected $_aElementDefaults;
     
     protected $_aAclId2Name;
 
@@ -50,7 +48,7 @@ class BxBaseCmts extends BxDolCmts
             'counter' => 'bx-cmt-counter-' . $sHtmlId
         );
 
-        $this->_aElementDefaults = array(
+        $this->_aElementDefaults = [
             'show_do_comment_as_button' => false,
             'show_do_comment_as_button_small' => false,
             'show_do_comment_icon' => true,
@@ -60,7 +58,11 @@ class BxBaseCmts extends BxDolCmts
             'show_counter_empty' => false,
             'show_counter_reversed' => false,
             'recalculate_counter' => false
-        );
+        ];
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_counter' => true,
+        ]);
+        $this->_aElementParamsApi = [];
 
         $this->_aAclId2Name = array();
         $aAclLevels = BxDolAcl::getInstance()->getMemberships(false, false, false);
@@ -705,25 +707,12 @@ class BxBaseCmts extends BxDolCmts
 
         //--- Do Comment
         $bTmplVarsDoComment = $this->_isShowDoComment($aParams, $isAllowedComment, $bCount);
-        $aTmplVarsDoComment = array();
-        if($bTmplVarsDoComment) {
-            $sClass = '';
-            if($bShowDoCommentAsButton)
-                $sClass = 'bx-btn';
-            else if ($bShowDoCommentAsButtonSmall)
-                $sClass = 'bx-btn bx-btn-small';
-
-            if(!$isAllowedComment)
-                $sClass .= $bShowDoCommentAsButton || $bShowDoCommentAsButtonSmall ? ' bx-btn-disabled' : 'bx-cmts-disabled';
-
-            $aTmplVarsDoComment = array(
+        $aTmplVarsDoComment = [];
+        if($bTmplVarsDoComment)
+            $aTmplVarsDoComment = [
                 'style_prefix' => $this->_sStylePrefix,
-                'do_comment' => $this->_oTemplate->parseLink($this->getListUrl(), $this->_getLabelDo($aParams), array(
-                    'class' => $this->_sStylePrefix . '-do-comment ' . $this->_sStylePrefix . '-dc ' . $sClass,
-                    'title' => _t($this->_getTitleDo())
-                )),
-            );
-        }
+                'do_comment' => $this->_getDoComment($aParams, $isAllowedComment),
+            ];
 
         //--- Counter
         $bTmplVarsCounter = $this->_isShowCounter($aParams, $isAllowedComment, $bCount);
@@ -762,17 +751,52 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
-    protected function _getCounterItems($iCmtsLimit, $iCmtsStart = 0)
+    public function getElementAPI($aParams = [])
     {
-        return $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => $iCmtsStart, 'per_page' => $iCmtsLimit * 4));
+        if(!($this->_bApi = bx_is_api()))
+            return;
+
+        //TODO: Replace with own lang key in UNA 14.
+        if(!$this->isEnabled())
+            return bx_api_get_msg('_vote_err_not_enabled');
+
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $bRecalculateCounter = isset($aParams['recalculate_counter']) && $aParams['recalculate_counter'] == true;
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $iCount = $this->getCommentsCountAll(0, $bRecalculateCounter);
+        $bCount = (int)$iCount != 0;
+
+        $isAllowedComment = $this->isPostAllowed();
+        $aParams['count'] = $iCount;
+
+        //--- Do Comment
+        $bDoComment = $this->_isShowDoComment($aParams, $isAllowedComment, $bCount);
+        $aDoComment = $bDoComment ? $this->_getDoComment($aParams, $isAllowedComment) : [];
+
+        //--- Counter
+        $bCounter = $this->_isShowCounter($aParams, $isAllowedComment, $bCount);
+        $aCounter = $bCounter ? $this->getCounterAPI(array_merge($aParams, [
+            'show_counter_only' => false, 
+        ])) : [];
+
+
+        if(!$bDoComment && !$bCounter)
+            return bx_api_get_msg('');
+
+        return [
+            'type' => $this->_sType,
+            'system' => $this->_sSystem,
+            'object_id' => $this->_iId,
+            'params' => array_intersect_key($aParams, array_flip($this->_aElementParamsApi)),
+            'action' => $aDoComment,
+            'counter' => $aCounter
+        ];
     }
-    
-    private function _isShowContent($aCmt)
-    {
-        $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
-        return (int)$aCmt['cmt_author_id'] == 0 || ($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR]);
-    }
-    
+
     public function getCounter($aParams = [])
     {
         $aParams = array_merge($this->_aElementDefaults, $aParams);
@@ -849,6 +873,44 @@ class BxBaseCmts extends BxDolCmts
         ]);
     }
 
+    public function getCounterApi($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $bShowReversed = isset($aParams['show_counter_reversed']) && $aParams['show_counter_reversed'] == true;
+        $bRecalculateCounter = isset($aParams['recalculate_counter']) && $aParams['recalculate_counter'] == true;        
+
+        $iCount = (int)$this->getCommentsCountAll(0, $bRecalculateCounter);   
+
+        $iCmtsLimit = 5;
+        $aCmts = $this->_getCounterItems($iCmtsLimit);
+        if(!$bShowReversed)
+            $aCmts = array_reverse($aCmts);
+
+        $aCmtsAuthors = [];
+        foreach($aCmts as $aCmt) {
+            $iAuthor = (int)$aCmt['cmt_author_id'];
+            if(array_key_exists($iAuthor, $aCmtsAuthors))
+                continue;
+
+            $aCmtsAuthors[$iAuthor] = BxDolProfile::getData($iAuthor);
+
+            if(count($aCmtsAuthors) >= $iCmtsLimit)
+                break;
+        }
+        $aCmtsAuthors = array_values($aCmtsAuthors);
+
+        return [
+            'count' => $iCount,
+            'authors' => $aCmtsAuthors
+        ];
+    }
+
+    protected function _getCounterItems($iCmtsLimit, $iCmtsStart = 0)
+    {
+        return $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => $iCmtsStart, 'per_page' => $iCmtsLimit * 4));
+    }
+
     protected function _getLabelDo($aParams = [])
     {
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplLabelDo(), [
@@ -907,6 +969,12 @@ class BxBaseCmts extends BxDolCmts
     /**
      * private functions
      */
+    private function _isShowContent($aCmt)
+    {
+        $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
+        return (int)$aCmt['cmt_author_id'] == 0 || ($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR]);
+    }
+
     protected function _getContentBefore($aBp = array(), $aDp = array())
     {
         return '';
@@ -1608,6 +1676,37 @@ class BxBaseCmts extends BxDolCmts
                 )
             ),
         );
+    }
+
+    protected function _getDoComment($aParams = [], $isAllowedComment = true)
+    {
+        $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
+        $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
+
+        $iCount = isset($aParams['count']) ? (int)$aParams['count'] : 0;
+        $bDisabled = !$isAllowedComment;
+
+        $sClass = '';
+        if($bShowDoCommentAsButton)
+            $sClass = 'bx-btn';
+        else if ($bShowDoCommentAsButtonSmall)
+            $sClass = 'bx-btn bx-btn-small';
+
+        if(!$isAllowedComment)
+            $sClass .= $bShowDoCommentAsButton || $bShowDoCommentAsButtonSmall ? ' bx-btn-disabled' : 'bx-cmts-disabled';
+
+        if($this->_bApi)
+            return [
+                'is_disabled' => $bDisabled,
+                'count' => $iCount,
+                'link' => bx_api_get_relative_url($this->getListUrl()),
+                'title' => _t($this->_getTitleDo(), $iCount)
+            ];
+
+        return $this->_oTemplate->parseLink($this->getListUrl(), $this->_getLabelDo($aParams), [
+            'class' => $this->_sStylePrefix . '-do-comment ' . $this->_sStylePrefix . '-dc ' . $sClass,
+            'title' => _t($this->_getTitleDo(), $iCount)
+        ]);
     }
 }
 

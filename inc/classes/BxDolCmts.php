@@ -10,8 +10,8 @@
 bx_import('BxDolAcl');
 bx_import('BxDolPrivacy');
 
-define('BX_DOL_CMT_TYPE_COMMENT', 'comment');
-define('BX_DOL_CMT_TYPE_REVIEW', 'review');
+define('BX_DOL_CMT_TYPE_COMMENTS', 'comments');
+define('BX_DOL_CMT_TYPE_REVIEWS', 'reviews');
 
 define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically
 
@@ -153,6 +153,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sTableImages = 'sys_cmts_images';
     protected $_sTableImages2Entries = 'sys_cmts_images2entries';
 
+    protected $_aElementDefaults;
+    protected $_aElementDefaultsApi;
+    protected $_aElementParamsApi; //--- Params from DefaultsApi array to be passed to Api
+
     protected $_bIsApi;
 
     protected $_sType;
@@ -214,7 +218,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_bIsApi = bx_is_api();
 
-        $this->_sType = BX_DOL_CMT_TYPE_COMMENT;
+        $this->_sType = BX_DOL_CMT_TYPE_COMMENTS;
 
         $this->_aSystems = $this->getSystems();
         if(!isset($this->_aSystems[$sSystem]))
