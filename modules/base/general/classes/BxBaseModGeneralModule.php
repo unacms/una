@@ -1238,7 +1238,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $aResult = [];
         if(is_a($mixedResult, 'BxTemplFormView'))
-            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_edit', 'immutable' => true]]]);
+            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_edit', 'immutable' => true]]]);
         else
             $aResult = $mixedResult;
 
@@ -1271,7 +1271,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $aResult = [];
         if(is_a($mixedResult, 'BxTemplFormView'))
-            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_delete', 'immutable' => true]]]);
+            $aResult = bx_api_get_block('form', $mixedResult->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->_aModule['name'] . '/entity_delete', 'immutable' => true]]]);
         else
             $aResult = $mixedResult;
 

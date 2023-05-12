@@ -159,7 +159,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         }
 
         if ($iId) {
-            $aResponse = array ('success' => 1);
+            $aResponse = array ('success' => 1, 'id' => $iId);
         } else {
             $this->appendUploadErrorMessage(_t('_sys_uploader_err_msg', isset($_FILES['file']['name']) ? $_FILES['file']['name'] : bx_get('file'), $oStorage->getErrorString()));
             $aResponse = array ('error' => $this->getUploadErrorMessages());
