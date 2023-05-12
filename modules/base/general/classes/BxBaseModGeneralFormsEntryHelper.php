@@ -269,7 +269,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // check and display form
         $oForm->initChecker();
         if (!$oForm->isSubmittedAndValid())
-            return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_create', 'immutable' => true]]])] : $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', array(
+            return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_create', 'immutable' => true]]])] : $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', array(
             	'form_id' => $oForm->getId()
             ));
 
@@ -278,7 +278,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $iContentId = $oForm->insert ($aValsToAdd);
         if (!$iContentId) {
             if (!$oForm->isValid())
-                return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_create', 'immutable' => true]]])] : $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', array(
+                return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->_oModule->getName(), 'request' => ['url' => '/api.php?r=' . $this->_oModule->getName() . '/entity_create', 'immutable' => true]]])] : $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', array(
                     'form_id' => $oForm->getId()
                 ));
             else
