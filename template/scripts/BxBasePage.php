@@ -414,6 +414,7 @@ class BxBasePage extends BxDolPage
             'menu_top' => '',
             'menu' => '',
             'menu_bottom' => '',
+            'menu_add' => '',
             'elements' => $this->getPageBlocksAPI($aBlocks),
         ];
         
@@ -456,6 +457,9 @@ class BxBasePage extends BxDolPage
         }
 
         if (isLogged()) {
+            if(($oMenuAddContent = BxDolMenu::getObjectInstance('sys_add_content')) !== false)
+                $a['menu_add'] = $oMenuAddContent->getCodeAPI();
+
             $o = BxDolProfile::getInstance();
             $a['user'] = [
                 'id' => $o->id(),
