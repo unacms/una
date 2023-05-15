@@ -230,11 +230,14 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             $aParams['start_from_item'] = true;
 
             $aContent = $this->_oTemplate->getPosts($aParams);
-            $iContent = count($aContent);
-            if($iContent > $aParams['per_page'])
-                $aContent = array_slice($aContent, 0, -($iContent - $aParams['per_page']));
+            if(!empty($aContent) && is_array($aContent)) {
+                $iContent = count($aContent);
+                if($iContent > $aParams['per_page'])
+                    $aContent = array_slice($aContent, 0, -($iContent - $aParams['per_page']));
 
-            $aParams['start'] = end($aContent)['id'];
+                $aParams['start'] = end($aContent)['id'];
+            }
+
             return [bx_api_get_block('browse', [
                 'unit' => 'notifications',  
                 'request_url' => '/api.php?r=bx_notifications/get_data/&params[]=',
