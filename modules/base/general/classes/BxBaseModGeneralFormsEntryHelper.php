@@ -402,7 +402,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->alertAfterEdit($aContentInfo);
         
         // Redirect
-        $this->redirectAfterEdit($aContentInfo);
+        if (bx_is_api())
+            return $this->redirectAfterEdit($aContentInfo);
+        else
+            $this->redirectAfterEdit($aContentInfo);
     }
 
     protected function redirectAfterEdit($aContentInfo)
@@ -415,6 +418,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             'override_result' => &$sUrl,
         ));
 
+        if (bx_is_api())
+            return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
+        
         $this->_redirectAndExit($sUrl);
     }
 
@@ -450,7 +456,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->$sCheckFunction($aContentInfo, true);
 
         // redirect
-        $this->redirectAfterDelete($aContentInfo);
+        if (bx_is_api())
+            return $this->redirectAfterDelete($aContentInfo);
+        else
+            $this->redirectAfterDelete($aContentInfo);
     }
 
     protected function redirectAfterDelete($aContentInfo)
@@ -468,6 +477,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             'markers' => &$aMarkers,
             'override_result' => &$sUrl,
         ));
+        
+        if (bx_is_api())
+            return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
 
         $this->_redirectAndExit($sUrl, true, $aMarkers);
     }

@@ -187,8 +187,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sType = $aParams['rparams']['type'];
             else
                 $sType = trim(str_replace('bx_timeline_post_add', '', $aResult['form_object']->aParams['display']), '_');
+            
 
-            $aExt = ['request' => ['url' => $sUrl = '/api.php?r=' . $this->_oModule->getName() . '/' . $aType2Uri[$sType], 'immutable' => true]];
+            $oProfileOwner = BxDolProfile::getInstance($iOwnerId);
+            $aExt = ['request' => ['url' => $sUrl = '/api.php?r=' . $this->_oModule->getName() . '/' . $aType2Uri[$sType] . '&params[]=' . $oProfileOwner->getModule() . '&params[]=' . $oProfileOwner->getContentId(), 'immutable' => true]];
             if(!empty($aResult['id'])) {
                 $aItemData = $oModule->getItemData($aResult['id']);
                 if(is_array($aItemData) && !empty($aItemData['event']))

@@ -160,7 +160,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedAllowed !== true)
             return echoJson(array('message' => strip_tags($mixedAllowed)));
 
-        echoJson($this->getFormPost());
+        if (!bx_is_api())
+            echoJson($this->getFormPost());
+        else
+            $this->getFormPost();
     }
 
     public function actionEdit($iId)
@@ -1478,6 +1481,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0)
     {
+        
         if(empty($sProfileModule))
             return array();
 
@@ -3518,6 +3522,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function getFormPost($aParams = [])
     {
+        
         $CNF = &$this->_oConfig->CNF;
 
         $iUserId = $this->getUserId();
@@ -3537,7 +3542,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $bAjaxMode = $oForm->isAjaxMode();
         $bDynamicMode = $bAjaxMode;
-
         if($oForm->isSubmittedAndValid()) {
             $sType = $oForm->getCleanValue('type');
             $sType = $this->_oConfig->getPrefix('common_post') . $sType;
@@ -3601,7 +3605,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
              * and will be saved via additional values which were passed 
              * to BxDolForm::insert method.
              */
-            unset($oForm->aInputs['text']);
+
+            unset($oForm->aInputs['text']['db']);
+            $oForm->aInputs['text']['value'] = '';
 
             $iId = $oForm->insert([
                 'owner_id' => $iOwnerId,
@@ -5050,9 +5056,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         if($this->isAllowedPost() !== true)
             return [];
-
+        
         $mixedResult = $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams);
 
+        /*if (bx_is_api()){
+            $this->actionPost();
+        }
+        */
         return bx_is_api() ? $mixedResult : [
             'content' => $mixedResult
         ];
