@@ -36,6 +36,12 @@
     .bx-def-vanilla-html.bx-def-vh-sm {
         @apply prose-sm;
     }
+    .bx-def-vanilla-html img::after,
+    .bx-def-vanilla-html p::after{
+        content: '';
+        display: block;
+        clear: both;
+    }
     
     .bx-def-vanilla-html div > :where(:first-child):not(:where([class~="not-prose"] *)),
     .bx-def-vanilla-html > :where(:first-child):not(:where([class~="not-prose"] *)){
