@@ -193,6 +193,11 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
             'show_counter' => $this->_bShowCounters,
         ];
 
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oReport->getElementApi(array_merge($aReportParams, [
+                'show_counter' => true,
+            ])));
+
     	return $oReport->getElementInline($aReportParams);
     }
 
