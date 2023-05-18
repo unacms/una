@@ -71,8 +71,7 @@ function bx_editor_init(oEditor, oParams){
     if(!oParams.empty_tags){
         sVal = sVal.replaceAll('<p><br></p>','');    
     }
-    
-    $(oParams.selector).after("<div id='" + oParams.name + "' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill " + oParams.css_class + "'>" + $(oParams.selector).val() + "</div>" );
+    $(oParams.selector).after("<div id='" + oParams.name + "' class='bx-def-font-inputs bx-form-input-textarea bx-form-input-html bx-form-input-html-quill " + oParams.css_class + "'>" + sVal + "</div>" );
     
     $(oParams.selector).hide();
     
@@ -247,6 +246,40 @@ function bx_editor_init(oEditor, oParams){
         
         var DirectionStyle = Quill.import('attributors/style/direction');
         Quill.register(DirectionStyle, true);
+        
+        const ImageFormatAttributesList = [
+            'alt',
+            'height',
+            'width',
+            'style'
+        ];
+
+        const BaseImageFormat = Quill.import('formats/image');
+        class ImageFormat extends BaseImageFormat {
+            
+            static formats(domNode) {
+                return ImageFormatAttributesList.reduce(function(formats, attribute) {
+                    if (domNode.hasAttribute(attribute)) {
+                        formats[attribute] = domNode.getAttribute(attribute);
+                    }
+                    return formats;
+                }, {});
+            }
+
+            format(name, value) {
+                if (ImageFormatAttributesList.indexOf(name) > -1) {
+                    if (value) {
+                        this.domNode.setAttribute(name, value);
+                    } else {
+                        this.domNode.removeAttribute(name);
+                    }
+                } else {
+                    super.format(name, value);
+                }
+            }
+        }
+
+        Quill.register(ImageFormat, true);
         
         const Parchment = Quill.import("parchment");
         const pixelLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
