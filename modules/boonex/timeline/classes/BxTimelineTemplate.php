@@ -628,6 +628,34 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aResult = $this->getDataCached($aEvent);
         if($aResult === false)
             return '';
+        
+        if (bx_is_api()){
+            $oProfile = BxDolProfile::getInstanceMagic($aResult['object_owner_id']);
+            $sName = $oProfile->getDisplayName();
+            $sFuncAuthorAddon = '';
+            $sAddon = $sFuncAuthorAddon && is_a($oProfile, 'BxDolProfile') ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
+            $sFuncAuthorDesc = '';
+         
+
+            $aVars = [
+                'author_url' => $oProfile->getUrl(),
+                'author_thumb_url' => $oProfile->getThumb(),
+                'author_unit' => BxDolProfile::getData($oProfile, ['display_type' => 'unit_wo_info']),
+                'author_title' => $sName,
+                'author_title_attr' => bx_html_attribute($sName),
+                'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData, $oProfile) : '',
+                'author_profile_desc' => '',
+                'bx_if:addon' => [
+                    'condition' => (bool)$sAddon,
+                    'content' => [
+                        'content' => $sAddon,
+                    ],
+                ],
+            ];
+            return [bx_api_get_block('entity_author', [
+                'author' => $aVars, 
+            ])];
+        }
 
         $sAuthorUnit = $this->getModule()->getObjectUser($aResult['object_owner_id'])->getUnit();
 
