@@ -90,19 +90,22 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         if (!$iProfileId)
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
-        
+
+        if(bx_is_api())
+            return [bx_api_get_block('entity_author', [
+                'author_data' => BxDolProfile::getData($iProfileId),
+                'entry_date' => !empty($CNF['FIELD_ADDED']) && !empty($aData[$CNF['FIELD_ADDED']]) ? $aData[$CNF['FIELD_ADDED']] : '',
+                'menu_manage' => $oModule->getEntryAllActions()
+            ])];
+
         $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
         $sName = $oProfile->getDisplayName();
         $sAddon = $sFuncAuthorAddon && is_a($oProfile, 'BxDolProfile') ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
 
-        $bIsApi = bx_is_api();
-        if($bIsApi)
-            $sFuncAuthorDesc .= 'API';
-
-        $aVars = [
+        return $this->parseHtmlByName($sTemplateName, [
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
-            'author_unit' => $bIsApi ? BxDolProfile::getData($oProfile, ['display_type' => 'unit_wo_info']) : $oProfile->getUnit(0, ['template' => 'unit_wo_info']),
+            'author_unit' => $oProfile->getUnit(0, ['template' => 'unit_wo_info']),
             'author_title' => $sName,
             'author_title_attr' => bx_html_attribute($sName),
             'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData, $oProfile) : '',
@@ -113,12 +116,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'content' => $sAddon,
                 ],
             ],
-        ];
-
-        return $bIsApi ? [bx_api_get_block('entity_author', [
-            'author' => $aVars, 
-            'menu_manage' => $oModule->getEntryAllActions()
-        ])] : $this->parseHtmlByName($sTemplateName, $aVars);
+        ]);
     }
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
@@ -805,31 +803,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName('author_desc.html', array(
             'bx_repeat:items' => $aTmplVarsItems
         ));
-    }
-
-    function getAuthorDescAPI($aData, $oProfile)
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        $aResult = ['object' => '', 'items' => []];
-        if(!empty($CNF['FIELD_ADDED']) && !empty($aData[$CNF['FIELD_ADDED']]))
-            $aResult['items'][] = [
-                'id' => 1,
-                'content_type' => 'time',
-                'title' => $aData[$CNF['FIELD_ADDED']]
-            ];
-
-        /*
-         * Isn't needed for now.
-        if(!empty($CNF['URI_AUTHOR_ENTRIES']))
-            $aResult['items'][] = [
-                'id' => 2,
-                'link' => BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id()),
-                'title' => _t($CNF['T']['txt_all_entries_by'], $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()))
-            ];
-        */
-
-        return $aResult;
     }
 
     function getAuthorProfileDesc ($aData, $oProfile)
