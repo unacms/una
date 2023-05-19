@@ -654,11 +654,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!$this->getModule()->isAllowedComment(array_merge($aEvent, $aEventData)))
             return '';
 
+        if(bx_is_api()) {
+            $mixedComments = $this->getModule()->getCommentsData($aEventData['comments']);
+            if($mixedComments === false)
+                return '';
+
+            list($sSystem, $iObjectId) = $mixedComments;
+            return [bx_srv('system', 'get_data_api', [['module' => $sSystem, 'object_id' => $iObjectId]], 'TemplCmtsServices')];
+        }
+
         return $this->parseHtmlByName('block_item_comments.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'content' => $this->_getComments($aEventData['comments'])
         ]);
-                
     }
 
     public function getUnit(&$aEvent, $aBrowseParams = array())
