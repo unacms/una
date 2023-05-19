@@ -423,7 +423,7 @@ class BxBasePage extends BxDolPage
             $oModule = BxDolModule::getInstance($this->getModule());
 
             $a['cover_block'] = [
-                'profile' => BxDolProfile::getInstance()->getData($this->_aProfileInfo['id'], [
+                'profile' => BxDolProfile::getInstance($this->_aProfileInfo['id'])->getData($this->_aProfileInfo['id'], [
                     'get_avatar' => 'getAvatarBig',
                     'with_info' => true
                 ]),
