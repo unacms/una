@@ -629,16 +629,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        $sAuthorUnit = $this->getModule()->getObjectUser($aResult['object_owner_id'])->getUnit();
+        if(bx_is_api()) {
+            $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+            $oMenuManage->setEvent($aEvent);
+
+            return [bx_api_get_block('entity_author', [
+                'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
+                'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
+                'menu_manage' => $oMenuManage->getCodeApi()
+            ])];
+        }
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this);
         $oForm->initChecker($aEvent);
 
-        return $this->parseHtmlByName('block_item_info.html', array(
+        return $this->parseHtmlByName('block_item_info.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'author' => $sAuthorUnit,
+            'author' => $this->getModule()->getObjectUser($aResult['object_owner_id'])->getUnit(),
             'fields' => $oForm->getCode()
-        ));
+        ]);
     }
 
     public function getItemBlockComments($iId)
@@ -654,11 +663,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!$this->getModule()->isAllowedComment(array_merge($aEvent, $aEventData)))
             return '';
 
+        if(bx_is_api()) {
+            $mixedComments = $this->getModule()->getCommentsData($aEventData['comments']);
+            if($mixedComments === false)
+                return '';
+
+            list($sSystem, $iObjectId) = $mixedComments;
+            return [bx_srv('system', 'get_data_api', [['module' => $sSystem, 'object_id' => $iObjectId]], 'TemplCmtsServices')];
+        }
+
         return $this->parseHtmlByName('block_item_comments.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'content' => $this->_getComments($aEventData['comments'])
         ]);
-                
     }
 
     public function getUnit(&$aEvent, $aBrowseParams = array())
