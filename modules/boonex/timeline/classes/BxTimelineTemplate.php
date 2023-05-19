@@ -628,45 +628,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aResult = $this->getDataCached($aEvent);
         if($aResult === false)
             return '';
-        
-        if (bx_is_api()){
-            $oProfile = BxDolProfile::getInstanceMagic($aResult['object_owner_id']);
-            $sName = $oProfile->getDisplayName();
-            $sFuncAuthorAddon = '';
-            $sAddon = $sFuncAuthorAddon && is_a($oProfile, 'BxDolProfile') ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
-            $sFuncAuthorDesc = '';
-         
 
-            $aVars = [
-                'author_url' => $oProfile->getUrl(),
-                'author_thumb_url' => $oProfile->getThumb(),
-                'author_unit' => BxDolProfile::getData($oProfile, ['display_type' => 'unit_wo_info']),
-                'author_title' => $sName,
-                'author_title_attr' => bx_html_attribute($sName),
-                'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData, $oProfile) : '',
-                'author_profile_desc' => '',
-                'bx_if:addon' => [
-                    'condition' => (bool)$sAddon,
-                    'content' => [
-                        'content' => $sAddon,
-                    ],
-                ],
-            ];
+        if(bx_is_api()) {
+            $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+            $oMenuManage->setEvent($aEvent);
+
             return [bx_api_get_block('entity_author', [
-                'author' => $aVars, 
+                'author_data' => BxDolProfile::getData($aResult[$CNF['FIELD_OBJECT_OWNER_ID']]),
+                'entry_date' => !empty($aEvent[$CNF['FIELD_ADDED']]) ? $aEvent[$CNF['FIELD_ADDED']] : '',
+                'menu_manage' => $oMenuManage->getCodeApi()
             ])];
         }
-
-        $sAuthorUnit = $this->getModule()->getObjectUser($aResult['object_owner_id'])->getUnit();
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this);
         $oForm->initChecker($aEvent);
 
-        return $this->parseHtmlByName('block_item_info.html', array(
+        return $this->parseHtmlByName('block_item_info.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'author' => $sAuthorUnit,
+            'author' => $this->getModule()->getObjectUser($aResult['object_owner_id'])->getUnit(),
             'fields' => $oForm->getCode()
-        ));
+        ]);
     }
 
     public function getItemBlockComments($iId)

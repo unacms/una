@@ -174,12 +174,7 @@ class BxBaseMenu extends BxDolMenu
         if ($this->_bIsApi) {
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
-            if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
-                $this->addMarkers($aMarkers);
-
-            $a = $this->_replaceMarkers($a);
-
-            return [
+            $aResult = [
                 'id' => $a['id'],
                 'name' => $a['name'],
                 'title' => _t($a['title']),
@@ -188,6 +183,11 @@ class BxBaseMenu extends BxDolMenu
                 'image' => $sIconUrl ? $sIconUrl : '',
                 'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : ''
             ];
+
+            if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
+                $this->addMarkers($aMarkers);
+
+            return $this->_replaceMarkers($aResult);
         }
 
         $a['object'] = $this->_sObject;
