@@ -178,7 +178,7 @@ class BxBaseMenu extends BxDolMenu
                 'id' => $a['id'],
                 'name' => $a['name'],
                 'title' => _t($a['title']),
-                'link' => isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : '',
+                'link' => isset($a['link']) ? $a['link'] : '',
                 'icon' => $sIcon ? $sIcon : '',
                 'image' => $sIconUrl ? $sIconUrl : '',
                 'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : ''
@@ -186,8 +186,12 @@ class BxBaseMenu extends BxDolMenu
 
             if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
                 $this->addMarkers($aMarkers);
+            $aResult = $this->_replaceMarkers($aResult);
 
-            return $this->_replaceMarkers($aResult);
+            if(!empty($aResult['link']))
+                $aResult['link'] = $this->_oPermalinks->permalink($aResult['link']);
+
+            return $aResult;
         }
 
         $a['object'] = $this->_sObject;

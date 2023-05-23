@@ -17,9 +17,13 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
     protected $_oProfile;
     protected $_aProfileInfo;
 
+    protected $_aConnectionToFunctionCheck;
+
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
+
+        $this->_aConnectionToFunctionCheck = $this->_oModule->_oConfig->getConnectionToFunctionCheck();
 
         if(empty($this->_iContentId) && bx_get('profile_id') !== false)
             $this->setContentId(BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getContentId());
@@ -41,13 +45,47 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         ));
     }
 
+    protected function _getMenuItemConnectionApi($sConnection, $sAction, &$aItem)
+    {
+        if(!isLogged() || $this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection][$sAction]}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+
+        $iInitiatorProfile = bx_get_logged_profile_id();
+        $iContentProfile = $this->_oProfile->id();
+        $sTitle = $this->_oModule->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfile, $iInitiatorProfile);
+        if(empty($sTitle))
+            return false;
+
+        return [
+            'id' => $aItem['id'],
+            'name' => $aItem['name'],
+            'title' => $sTitle,
+            'display_type' => 'element',
+            'data' => [
+                'type' => 'connections',
+                'o' => $sConnection,
+                'a' => $sAction,
+                'iid' => $iInitiatorProfile,
+                'cid' => $iContentProfile,
+                'title' => $sTitle,
+                'primary' => !empty($aItem['primary']),
+            ]
+        ];
+    }
+
     protected function _getMenuItemProfileFriendAdd($aItem)
     {
+        if($this->_bIsApi)
+            return $this->_getMenuItemConnectionApi('sys_profiles_friends', 'add', $aItem);
+
         return $this->_getMenuItemByNameActions($aItem);
     }
 
     protected function _getMenuItemProfileFriendRemove($aItem)
     {
+        if($this->_bIsApi)
+            return $this->_getMenuItemConnectionApi('sys_profiles_friends', 'remove', $aItem);
+
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
@@ -63,11 +101,17 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
 
     protected function _getMenuItemProfileSubscribeAdd($aItem)
     {
+        if($this->_bIsApi)
+            return $this->_getMenuItemConnectionApi('sys_profiles_subscriptions', 'add', $aItem);
+        
         return $this->_getMenuItemByNameActions($aItem);
     }
 
     protected function _getMenuItemProfileSubscribeRemove($aItem)
     {
+        if($this->_bIsApi)
+            return $this->_getMenuItemConnectionApi('sys_profiles_subscriptions', 'remove', $aItem);
+
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 

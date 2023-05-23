@@ -423,7 +423,7 @@ class BxBasePage extends BxDolPage
             $oModule = BxDolModule::getInstance($this->getModule());
 
             $a['cover_block'] = [
-                'profile' => BxDolProfile::getInstance($this->_aProfileInfo['id'])->getData($this->_aProfileInfo['id'], [
+                'profile' => BxDolProfile::getData($this->_aProfileInfo['id'], [
                     'get_avatar' => 'getAvatarBig',
                     'with_info' => true
                 ]),
@@ -440,7 +440,7 @@ class BxBasePage extends BxDolPage
             }
             
             if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])){
-                $oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+                $oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
                 $a['cover_block']['actions_menu'] = $oActionMenu->getCodeAPI();
             }  
         }

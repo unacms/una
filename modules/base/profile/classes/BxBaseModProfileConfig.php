@@ -14,6 +14,8 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
     protected $_aMenuItems2MethodsActions = array();
     protected $_aMenuItems2MethodsSubmenu = array();
 
+    protected $_aConnectionToFunctionCheck;
+
     protected $_bRoles;
     protected $_aRoles;
 
@@ -37,6 +39,17 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
             'convos-compose' => 'checkAllowedCompose',
             'messenger' => 'checkAllowedCompose',
         );
+
+        $this->_aConnectionToFunctionCheck = [
+            'sys_profiles_friends' => [
+            	'add' => 'checkAllowedFriendAdd', 
+            	'remove' => 'checkAllowedFriendRemove'
+            ],
+            'sys_profiles_subscriptions' => [
+                'add' => 'checkAllowedSubscribeAdd',
+                'remove' => 'checkAllowedSubscribeRemove'
+            ]
+        ];
 
         $this->_bRoles = false;
         $this->_aRoles = false;
@@ -70,6 +83,11 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
 
         $this->_aRoles = BxDolFormQuery::getDataItems($this->CNF['OBJECT_PRE_LIST_ROLES']);
         $this->_bRoles = !empty($this->_aRoles) && is_array($this->_aRoles);
+    }
+
+    public function getConnectionToFunctionCheck()
+    {
+        return $this->_aConnectionToFunctionCheck;
     }
 }
 
