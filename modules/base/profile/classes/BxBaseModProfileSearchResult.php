@@ -124,8 +124,11 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
-        if($this->bConnectionsEverywhere)
+        if($this->bConnectionsEverywhere) {
+            $this->aCurrent['ownFields'] = ['id', 'account_id', 'type', 'content_id'];
+            
             unset($this->aCurrent['restriction']['perofileType'], $this->aCurrent['join']['profile']);
+        }
 
         return true;
     }
@@ -253,26 +256,39 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $oContentInfo = $this->getContentInfoObject();
 
         foreach ($a as $i => $r) {
-            $a[$i] = array_merge($a[$i], [
-                'url' => $this->decodeDataUrl($oContentInfo, $r),
-                'image' => $oContentInfo->getContentThumb($r['id']),
-                'cover' => $oContentInfo->getContentCover($r['id']),
-                'summary_plain' => $this->decodeDataSummaryPlain($oContentInfo, $r)
-            ]);
+            $aAddon = [];
+            if($this->bConnectionsEverywhere) {
+                $oProfile = BxDolProfile::getInstance($r['id']);
 
-            if($bMetaMenu) {
-                $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
-                $oMetaMenu->setContentId($r['id']);
-                $oMetaMenu->setContentPublic($bPublic);
-                $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
+                $aAddon = array_merge(bx_srv($r['type'], 'get_info', [$r['content_id'], false]), [
+                    'url' => bx_api_get_relative_url($oProfile->getUrl()),
+                    'image' => $oProfile->getThumb(),
+                    'cover' => $oProfile->getCover(),
+                ]);
             }
+            else {
+                $aAddon = [
+                    'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
+                    'image' => $oContentInfo->getContentThumb($r['id']),
+                    'cover' => $oContentInfo->getContentCover($r['id']),
+                ];
+
+                if($bMetaMenu) {
+                    $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
+
+                    $oMetaMenu->setContentId($r['id']);
+                    $oMetaMenu->setContentPublic($bPublic);
+                    $aAddon['meta'] = $oMetaMenu->getCodeAPI();
+                }
+            }
+
+            $a[$i] = array_merge($r, $aAddon);
         }
 
         return $a;
     }
 	
-	function getItemPerPageInShowCase ()
+    function getItemPerPageInShowCase ()
     {
         $iPerPageInShowCase = parent::getItemPerPageInShowCase();
         $CNF = &$this->oModule->_oConfig->CNF;

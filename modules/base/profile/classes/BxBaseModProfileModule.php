@@ -108,6 +108,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'BrowseActiveProfiles' => '',
             'BrowseTopProfiles' => '',
             'BrowseOnlineProfiles' => '',
+            'BrowseConnections' => '',
+            'BrowseConnectionsEverywhere' => '',
             'BrowseByAcl' => '',
         ));
     }

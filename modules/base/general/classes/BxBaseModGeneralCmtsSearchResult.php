@@ -98,7 +98,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             if(isset($r['author']))
                 $a[$i]['author_data'] = BxDolProfile::getData($r['author']);
 
-            $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
+            $a[$i]['url'] = bx_api_get_relative_url($oContentInfo->getContentLink($r['id']));
         }
 
         return $a;
