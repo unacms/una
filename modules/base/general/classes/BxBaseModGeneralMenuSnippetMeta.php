@@ -48,31 +48,6 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
     }
 
-    protected function _getMenuItemAPI($aItem, $mixedType = 'text', $aData = [])
-    {
-        $sDisplayType = 'link';
-        $sContentType = 'text';
-        if(is_array($mixedType)) {
-            if(isset($mixedType['display']))
-                $sDisplayType = $mixedType['display'];
-            if(isset($mixedType['content']))
-                $sContentType = $mixedType['content'];
-        }
-        else
-            $sContentType = $mixedType;
-
-        $aItemData = array_merge([
-            'id' => $aItem['id'],
-            'name' => $aItem['name'],
-            'display_type' => $sDisplayType,
-            'content_type' => $sContentType,
-            'title' => $aItem['title'],
-            'link' => !empty($aItem['link']) && $aItem['link'] != 'javascript:void(0)' ? $aItem['link'] : ''
-        ], $aData);
-
-        return $aItemData;
-    }
-
     protected function _getMenuItemAuthor($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

@@ -78,15 +78,24 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
             return false;
 
         $oAcl = BxDolAcl::getInstance();
-        $oTemplate = BxDolTemplate::getInstance();
         $aMembership =  $oAcl->getMemberMembershipInfo($this->_oContentProfile->id());
         $aLevelInfo =  $oAcl->getMembershipInfo($aMembership['id']);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => _t($aMembership['name'])
+            ]);
+
+        $oTemplate = BxDolTemplate::getInstance();
         return $aMembership ? $this->getUnitMetaItemText($oTemplate->parseHtmlByName('menu_meta_item.html', ['icon' => $oTemplate->getImage($aLevelInfo['icon'], array('class' => 'bx-acl-m-thumbnail')), 'caption' => _t($aMembership['name'])])): false;
                                                                                             
     }
     
     protected function _getMenuItemBadges($aItem)
     {
+        if($this->_bIsApi) 
+            return false;
+
         $sResult = $this->_oModule->serviceGetBadges($this->_iContentId);
         if(!empty($sResult))
             $sResult = $this->getUnitMetaItemText($sResult, ['class' => 'bx-base-bages-container']);
@@ -100,14 +109,23 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
 
         if(!$this->_bContentPublic || !$this->_oContentProfile)
             return false;
-
+        
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
         if(!$oConnection)
             return false;
 
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+        $iContentProfileId = $this->_oContentProfile->id();
 
-        return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        if($this->_bIsApi) {
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, true, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
+                'title' => $aCounter['countf'],
+            ]);
+        }
+
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+        return $oConnection->getCounter($iContentProfileId, true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 
     protected function _getMenuItemSubscribers($aItem)
@@ -121,14 +139,26 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         if(!$oConnection)
             return false;
 
+        $iContentProfileId = $this->_oContentProfile->id();
+
+        if($this->_bIsApi) {
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
+                'title' => $aCounter['countf'],
+            ]);
+        }
+
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
-        
         return $oConnection->getCounter($this->_oContentProfile->id(), false, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 
     protected function _getMenuItemViews($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_bIsApi)
+            return false;
 
         if(empty($CNF['OBJECT_VIEWS']) || empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
             return false;
@@ -144,6 +174,9 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if($this->_bIsApi)
+            return false;
+
         if(empty($CNF['OBJECT_VOTES']) || empty($CNF['FIELD_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
             return false;
         
@@ -156,6 +189,9 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
     protected function _getMenuItemReactions($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_bIsApi)
+            return false;
 
         if(empty($CNF['OBJECT_REACTIONS']))
             return false;
@@ -171,6 +207,9 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if($this->_bIsApi)
+            return false;
+
         if(empty($CNF['OBJECT_SCORES']))
             return false;
 
@@ -184,6 +223,9 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
     protected function _getMenuItemComments($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_bIsApi)
+            return false;
 
         if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || (empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]) && !$this->_bShowZeros))
             return false;
