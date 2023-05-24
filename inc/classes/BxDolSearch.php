@@ -328,6 +328,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
     protected $_sMode = '';
+    protected $_aParams = [];
     protected $_sCategoryObject = '';
     protected $_aCustomSearchCondition = array();
 

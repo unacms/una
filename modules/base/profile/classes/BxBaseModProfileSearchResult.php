@@ -12,6 +12,7 @@
 class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 {      
     protected $bRecommendedView = false;
+    protected $bConnectionsEverywhere = false;
     
     public function __construct($sMode = '', $aParams = array())
     {
@@ -51,6 +52,8 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         if ($sMode == 'recommended')
             $this->bRecommendedView=true;
+
+        $this->bConnectionsEverywhere = isset($this->_aParams['everywhere']) && $this->_aParams['everywhere'] === true;
     }
 
     function getRssUnitImage (&$a, $sField)
@@ -120,6 +123,9 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+
+        if($this->bConnectionsEverywhere)
+            unset($this->aCurrent['restriction']['perofileType'], $this->aCurrent['join']['profile']);
 
         return true;
     }
@@ -278,9 +284,22 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     
     function displayResultBlock ()
     {
-		$this->oModule->_oTemplate->addJs(array('modules/base/profile/js/|searchresult.js'));
-		return parent::displayResultBlock ();
-	}
+        $this->oModule->_oTemplate->addJs(array('modules/base/profile/js/|searchresult.js'));
+
+        return parent::displayResultBlock();
+    }
+
+    function displaySearchUnit ($aData)
+    {
+        if(!$this->bConnectionsEverywhere)
+            return parent::displaySearchUnit($aData);
+
+        $oProfile = BxDolProfile::getInstance($aData['id']);
+        if(!$oProfile)
+            return '';
+
+        return $oProfile->getUnit(0, ['template' => rtrim($this->sUnitTemplate, '.html')]);
+    }
 }
 
 /** @} */

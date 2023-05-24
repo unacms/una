@@ -791,14 +791,27 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0)
     {
         return $this->_serviceBrowse (
-            'connections',
-            array(
+            'connections', [
                 'object' => $sObjectConnections,
                 'type' => $sConnectionsType,
                 'mutual' => $iMutual,
                 'profile' => (int)$iProfileId,
-                'profile2' => (int)$iProfileId2),
-            $iDesignBox
+                'profile2' => (int)$iProfileId2
+            ], $iDesignBox
+        );
+    }
+    
+    public function serviceBrowseConnectionsEverywhere ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0)
+    {
+        return $this->_serviceBrowse (
+            'connections', [
+                'object' => $sObjectConnections,
+                'type' => $sConnectionsType,
+                'mutual' => $iMutual,
+                'profile' => (int)$iProfileId,
+                'profile2' => (int)$iProfileId2,
+                'everywhere' => true
+            ], $iDesignBox
         );
     }
 
