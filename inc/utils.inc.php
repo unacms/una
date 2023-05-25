@@ -2359,7 +2359,6 @@ function bx_api_check_access()
             exit;
         }
     }
-/*
     elseif (getParam('sys_api_access_by_origin') && $sOriginHeader) {
 
         if (parse_url($sOriginHeader, PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
@@ -2385,10 +2384,10 @@ function bx_api_check_access()
         echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
         exit;
     }
-*/
+
     // TODO: Temporarily to use logged state
-    bx_login(1);
-    check_logged();
+    // bx_login(1);
+    // check_logged();
 }
 
 function bx_api_get_relative_url($sUrl, $sPrefix = BX_DOL_URL_ROOT)
