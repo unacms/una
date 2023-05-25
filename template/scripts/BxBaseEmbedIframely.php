@@ -15,6 +15,7 @@ class BxBaseEmbedIframely extends BxDolEmbed
 {
     public function __construct ($aObject, $oTemplate)
     {
+        $this->_sTableName = 'sys_iframely_data';
         parent::__construct ($aObject);
 
         if ($oTemplate)
@@ -67,6 +68,17 @@ class BxBaseEmbedIframely extends BxDolEmbed
         return $this->_oTemplate->parseHtmlByName('embed_iframely_integration.html', array(
             'key' => $sKey,
         ));
+    }
+    
+    public function getDataFromApi ($sUrl, $sTheme)
+    {
+        return bx_file_get_contents("https://iframe.ly/api/oembed?theme=" . $sTheme . "&url=" . $sUrl . "&api_key=" . getParam('sys_iframely_api_key'));
+    }
+    
+    public function getDataHtml ($sUrl, $sTheme)
+    {
+        $aData = $this->getData($sUrl, $sTheme);
+        return $aData['html'];
     }
 }
 

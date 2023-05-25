@@ -22,6 +22,20 @@ class BxDolEmbedQuery extends BxDolFactoryObjectQuery
     {
         return parent::getObjectsFromTable('sys_objects_embeds');
     }
+    
+    static public function getLocal ($sUrl, $sTheme, $sTableName)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT `data` FROM `" . $sTableName . "` WHERE `url` = ? AND  `theme` = ?", $sUrl, $sTheme);
+        return $oDb->getOne($sQuery);
+    }
+    
+    static public function setLocal ($sUrl, $sTheme, $sTableName, $sData)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("INSERT INTO `" . $sTableName . "` (`url`, `theme`, `data`, `added`) VALUES (?, ?, ?, ?)", $sUrl, $sTheme, $sData, time());
+        $oDb->query($sQuery);
+    }
 }
 
 /** @} */
