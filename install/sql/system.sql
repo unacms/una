@@ -80,6 +80,15 @@ INSERT INTO `sys_objects_embeds` (`object`, `title`, `override_class_name`, `ove
 ('sys_oembed', 'Oembed', 'BxTemplEmbedOembed', '');
 
 
+CREATE TABLE `sys_iframely_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  `data` text DEFAULT NULL,
+  `added` int(11) DEFAULT NULL,
+  `theme` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
 -- --------------------------------------------------------
 
 
