@@ -105,8 +105,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $aAddon  = [
             'url' => bx_api_get_relative_url($sUrl),
-            'image' => $this->urlThumb($aData),
-            'cover' => $this->urlCover($aData)
+            'image' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_PICTURE']]),
+            'cover' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_COVER']])
         ];
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
