@@ -292,7 +292,16 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id'], $aParams));
     }
-    
+
+    /**
+     * Get profile unit for API calls
+     */
+    public function getUnitAPI($iProfileId = 0, $aParams = array())
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_unit_api', array($aInfo['content_id'], $aParams));
+    }
+
     /**
      * Get badges
      */

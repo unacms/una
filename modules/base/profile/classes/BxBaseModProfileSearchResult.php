@@ -247,6 +247,15 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     {
         $CNF = $this->oModule->_oConfig->CNF;
 
+        if($this->bConnectionsEverywhere) {
+            $aResult = [];
+            foreach ($a as $index => $aItem) 
+                if(($oProfile = BxDolProfile::getInstance($aItem['id'])) !== false)
+                    $aResult[] = $oProfile->getUnitAPI();
+
+            return $aResult;
+        }
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         $bPrivacy = $oPrivacy !== false;
 
@@ -256,30 +265,18 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $oContentInfo = $this->getContentInfoObject();
 
         foreach ($a as $i => $r) {
-            $aAddon = [];
-            if($this->bConnectionsEverywhere) {
-                $oProfile = BxDolProfile::getInstance($r['id']);
+            $aAddon = [
+                'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
+                'image' => $oContentInfo->getContentThumb($r['id']),
+                'cover' => $oContentInfo->getContentCover($r['id']),
+            ];
 
-                $aAddon = array_merge(bx_srv($r['type'], 'get_info', [$r['content_id'], false]), [
-                    'url' => bx_api_get_relative_url($oProfile->getUrl()),
-                    'image' => $oProfile->getThumb(),
-                    'cover' => $oProfile->getCover(),
-                ]);
-            }
-            else {
-                $aAddon = [
-                    'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
-                    'image' => $oContentInfo->getContentThumb($r['id']),
-                    'cover' => $oContentInfo->getContentCover($r['id']),
-                ];
+            if($bMetaMenu) {
+                $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
-                if($bMetaMenu) {
-                    $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
-                    $oMetaMenu->setContentId($r['id']);
-                    $oMetaMenu->setContentPublic($bPublic);
-                    $aAddon['meta'] = $oMetaMenu->getCodeAPI();
-                }
+                $oMetaMenu->setContentId($r['id']);
+                $oMetaMenu->setContentPublic($bPublic);
+                $aAddon['meta'] = $oMetaMenu->getCodeAPI();
             }
 
             $a[$i] = array_merge($r, $aAddon);
