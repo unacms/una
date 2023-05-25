@@ -124,8 +124,11 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
-        if($this->bConnectionsEverywhere)
+        if($this->bConnectionsEverywhere) {
+            $this->aCurrent['ownFields'] = ['id', 'account_id', 'type', 'content_id'];
+            
             unset($this->aCurrent['restriction']['perofileType'], $this->aCurrent['join']['profile']);
+        }
 
         return true;
     }
@@ -244,6 +247,15 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     {
         $CNF = $this->oModule->_oConfig->CNF;
 
+        if($this->bConnectionsEverywhere) {
+            $aResult = [];
+            foreach ($a as $index => $aItem) 
+                if(($oProfile = BxDolProfile::getInstance($aItem['id'])) !== false)
+                    $aResult[] = $oProfile->getUnitAPI();
+
+            return $aResult;
+        }
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         $bPrivacy = $oPrivacy !== false;
 
@@ -253,26 +265,27 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $oContentInfo = $this->getContentInfoObject();
 
         foreach ($a as $i => $r) {
-            $a[$i] = array_merge($a[$i], [
-                'url' => $this->decodeDataUrl($oContentInfo, $r),
+            $aAddon = [
+                'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
                 'image' => $oContentInfo->getContentThumb($r['id']),
                 'cover' => $oContentInfo->getContentCover($r['id']),
-                'summary_plain' => $this->decodeDataSummaryPlain($oContentInfo, $r)
-            ]);
+            ];
 
             if($bMetaMenu) {
                 $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
                 $oMetaMenu->setContentId($r['id']);
                 $oMetaMenu->setContentPublic($bPublic);
-                $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
+                $aAddon['meta'] = $oMetaMenu->getCodeAPI();
             }
+
+            $a[$i] = array_merge($r, $aAddon);
         }
 
         return $a;
     }
 	
-	function getItemPerPageInShowCase ()
+    function getItemPerPageInShowCase ()
     {
         $iPerPageInShowCase = parent::getItemPerPageInShowCase();
         $CNF = &$this->oModule->_oConfig->CNF;

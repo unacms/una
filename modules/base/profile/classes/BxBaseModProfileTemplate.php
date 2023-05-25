@@ -94,6 +94,36 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplate, $aVars);
     }
 
+    public function unitAPI($aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aData[$CNF['FIELD_ID']];
+
+        // get profile's url
+        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
+
+        $aAddon  = [
+            'url' => bx_api_get_relative_url($sUrl),
+            'image' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_PICTURE']]),
+            'cover' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_COVER']])
+        ];
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        $bPrivacy = $oPrivacy !== false;
+
+        $sKey = 'OBJECT_MENU_SNIPPET_META';
+        if(!empty($CNF[$sKey]) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF[$sKey], $this)) !== false) {
+            $bPublic = !$bPrivacy || $oPrivacy->check($iContentId) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
+
+            $oMetaMenu->setContentId($iContentId);
+            $oMetaMenu->setContentPublic($bPublic);
+            $aAddon['meta'] = $oMetaMenu->getCodeAPI();
+        }
+
+        return array_merge($aData, $aAddon);
+    }
+
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;

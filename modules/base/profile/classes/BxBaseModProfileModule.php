@@ -108,6 +108,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'BrowseActiveProfiles' => '',
             'BrowseTopProfiles' => '',
             'BrowseOnlineProfiles' => '',
+            'BrowseConnections' => '',
+            'BrowseConnectionsEverywhere' => '',
             'BrowseByAcl' => '',
         ));
     }
@@ -415,6 +417,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         }
 
         return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array($sTemplate, $sTemplateSize, $aTemplateVars));
+    }
+
+    public function serviceProfileUnitApi ($iContentId, $aParams = array())
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        return $this->_oTemplate->unitAPI($aContentInfo);
     }
 
     public function serviceHasImage ($iContentId)
