@@ -23,23 +23,20 @@ if (bx_get('html')){
             window.parent.postMessage(JSON.stringify(a), "*");
             window.ReactNativeWebView.postMessage(JSON.stringify(a));
          }
-         catch(){}
+         catch (e) {}
     })
     window.addEventListener("message", function(event) {
         if (event.data && event.data!=""){
             try {
-            a = JSON.parse(event.data);
-                    } catch (e) {
-            console.error("Failed to parse JSON:", event.data);
-            throw e;
-        }
+                a = JSON.parse(event.data);
+            } catch (e) {}
             if (a && a.method=="resize"){
                 a = ["' . bx_get('hash') . '",  a.height,$(".iframely-embed").width()];
                 try{
-                window.parent.postMessage(JSON.stringify(a), "*");
-                window.ReactNativeWebView.postMessage(JSON.stringify(a));
+                    window.parent.postMessage(JSON.stringify(a), "*");
+                    window.ReactNativeWebView.postMessage(JSON.stringify(a));
                 }
-                catch(){}  
+                catch (e) {}
             }
         }
        
