@@ -96,6 +96,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return [
             'GetBlockView' => '',
             'GetData' => '',
+            'GetUnreadNotificationsNum'
         ];
     }
 
