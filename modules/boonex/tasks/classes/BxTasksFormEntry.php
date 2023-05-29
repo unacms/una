@@ -212,7 +212,7 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
         $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
 
-        $aMembers2 = $oConn->getConnectedContent($iContentId);
+        $aMembers2 = $oConn->getConnectedInitiators($iContentId);
 
         $aMembersToAdd = [];
         $aMembersToRemove = $aMembers2;
