@@ -467,9 +467,14 @@ class BxBasePage extends BxDolPage
                 'url' => $o->getUrl(),
                 'avatar' => $o->getAvatar(),
                 'info' => $o->getInfo(),
+                'notifications' => 0,
                 'active' => $o->isActive(),
                 'status' => $o->getStatus(),
             ];
+            
+            $sModuleNotifications = 'bx_notifications';
+            if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
+                $a['user']['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$o->id()]);
         }
 
         return $a;

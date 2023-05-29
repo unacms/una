@@ -82,7 +82,7 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         $aLevelInfo =  $oAcl->getMembershipInfo($aMembership['id']);
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, 'text', [
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
                 'title' => _t($aMembership['name'])
             ]);
 
