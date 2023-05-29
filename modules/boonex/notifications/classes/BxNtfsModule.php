@@ -96,7 +96,8 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return [
             'GetBlockView' => '',
             'GetData' => '',
-            'GetUnreadNotificationsNum'
+            'GetUnreadNotificationsNum' => '',
+            'GetUnreadNotificationsNumEx' => '',
         ];
     }
 
@@ -435,6 +436,21 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         return $iEvents;
     }
+    
+    public function serviceGetUnreadNotificationsNumEx($iOwnerId, $iCount)
+    {
+         header('Content-Type: text/event-stream');
+         header('Cache-Control: no-cache');
+         $iTmp = $this->serviceGetUnreadNotificationsNum($iOwnerId);
+         if ($iCount != $iTmp){
+             $time = date('r');
+             echo "id: " . time() . "\n";
+             echo "data: $iTmp\n\n";
+             flush();
+         }
+         exit();
+            
+     }
 
     /**
      * @page service Service Calls
