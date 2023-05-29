@@ -545,7 +545,8 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 				$aMembersVars = array();
 				foreach($aMembers as $iMember) {
 					$oProfile = BxDolProfile::getInstance($iMember);
-					$aMembersVars[] = array('info' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')));
+                    if($oProfile && !($oProfile instanceof BxDolProfileUndefined))
+					   $aMembersVars[] = array('info' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')));
 				}
 				$aTasksVars[] = array(
 					'id' => $aTask[$CNF['FIELD_ID']],
