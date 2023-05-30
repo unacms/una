@@ -1,0 +1,150 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    UnaBaseView UNA Base Representation Classes
+ * @{
+ */
+
+class BxBaseProfileSearchResult extends BxTemplSearchResult
+{
+    protected $_bIsApi;
+
+    protected $aUnitViews;
+    protected $sUnitViewDefault;
+
+    public function __construct($sMode = '', $aParams = [])
+    {
+        parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
+
+        $this->aUnitViews = [
+            'unit' => 'unit_wo_cover.html', 
+            'gallery' => 'unit_with_cover.html'
+        ];
+        if(!empty($aParams['unit_views']) && is_array($aParams['unit_views']))
+            $this->aUnitViews = array_merge($this->aUnitViews, $aParams['unit_views']);
+
+        $this->sUnitViewDefault = 'gallery';
+        if(!empty($aParams['unit_view']))
+            $this->sUnitViewDefault = $aParams['unit_view'];
+
+        $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
+
+        $this->addContainerClass (array(
+            'bx-base-pofile-units-wrapper', 
+            'bx-base-puw-' . str_replace('_' ,  '-', $this->sUnitViewDefault),
+            'bx-def-margin-sec-neg'
+        ));
+
+        $this->aCurrent = [
+            'name' => 'sys_search',
+            'module_name' => 'system',
+            'title' => '',
+            'table' => 'sys_profiles',
+            'ownFields' => ['id', 'account_id', 'type', 'content_id'],
+            'searchFields' => [],
+            'restriction' => [
+                'account_id' => ['value' => '', 'field' => 'account_id', 'operator' => '='],
+                'perofileStatus' => ['value' => 'active', 'field' => 'status', 'operator' => '='],
+                'perofileType' => ['value' => '', 'field' => 'type', 'operator' => '='],
+            ],
+            'join' => [
+                'account' => [
+                    'type' => 'INNER',
+                    'table' => 'sys_accounts',
+                    'mainField' => 'account_id',
+                    'onField' => 'id',
+                    'joinFields' => [],
+                ],
+            ],
+            'paginate' => ['start' => 0],
+            'sorting' => 'last',
+            'ident' => 'id'
+        ];
+
+        switch ($sMode) {
+            case 'connections':
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $oProfile = BxDolProfile::getInstance($aParams['profile']);
+                $oProfile2 = isset($aParams['profile2']) ? BxDolProfile::getInstance($aParams['profile2']) : null;
+
+                $bCommon = isset($aParams['type']) && $aParams['type'] == 'common';
+                if($bCommon && $oProfile && $oProfile2)
+                    $this->aCurrent['title'] = _t('_sys_page_title_browse_connections_mutual', $oProfile->getDisplayName(), $oProfile2->getDisplayName());
+                else if(!$bCommon && $oProfile)
+                    $this->aCurrent['title'] = _t('_sys_page_title_browse_connections', $oProfile->getDisplayName());
+                break;
+        }
+    }
+
+    function displaySearchUnit ($aData)
+    {
+        $oProfile = BxDolProfile::getInstance($aData['id']);
+        if(!$oProfile)
+            return '';
+
+        if($this->_bIsApi)
+            return $oProfile->getUnitAPI();
+
+        return $oProfile->getUnit(0, ['template' => substr($this->sUnitTemplate, 0, -5)]);
+    }
+
+    function getAlterOrder()
+    {
+        $sType = is_array($this->aCurrent['sorting']) ? $this->aCurrent['sorting']['type'] : $this->aCurrent['sorting'];
+
+        switch($sType) {
+            case 'none':
+                return [];
+
+            case 'active':
+                return ['order' => ' ORDER BY `sys_accounts`.`logged` DESC '];
+
+            case 'last_connected':
+                return ['order' => ' ORDER BY `' . $this->aCurrent['sorting']['table'] . '`.`added` DESC '];
+
+            case 'last':
+            default:
+                return ['order' => ' ORDER BY `sys_accounts`.`added` DESC '];
+        }
+    }
+
+    function decodeData ($a)
+    {
+        $aResult = [];
+
+        foreach ($a as $index => $aItem) 
+            if(($oProfile = BxDolProfile::getInstance($aItem['id'])) !== false)
+                $aResult[] = $oProfile->getUnitAPI();
+
+        return $aResult;
+    }
+
+    protected function _setConnectionsConditions ($aParams)
+    {
+        $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
+        if(!$oConnection || empty($aParams['profile']))
+            return false;
+
+        $sContentType = isset($aParams['type']) ? $aParams['type'] : BX_CONNECTIONS_CONTENT_TYPE_CONTENT;
+        $isMutual = isset($aParams['mutual']) ? $aParams['mutual'] : false;
+        $aConnection = $oConnection->getConnectionsAsCondition($sContentType, 'id', (int)$aParams['profile'], (int)$aParams['profile2'], $isMutual);
+
+        $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aConnection['restriction']);
+        $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aConnection['join']);
+
+        $this->aCurrent['sorting'] = [
+            'type' => 'last_connected',
+            'table' => current($aConnection['join'])['table']
+        ];
+
+        return true;
+    }
+}
+
+/** @} */

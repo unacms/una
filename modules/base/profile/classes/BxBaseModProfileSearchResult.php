@@ -124,12 +124,6 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
-        if($this->bConnectionsEverywhere) {
-            $this->aCurrent['ownFields'] = ['id', 'account_id', 'type', 'content_id'];
-            
-            unset($this->aCurrent['restriction']['perofileType'], $this->aCurrent['join']['profile']);
-        }
-
         return true;
     }
     

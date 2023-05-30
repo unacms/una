@@ -470,6 +470,31 @@ class BxBaseServiceProfiles extends BxDol
 
         return $s . '<div class="bx-clear"></div>';
     }
+    
+    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iProfileId2 = 0, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    {
+        $sClass = 'BxTemplProfileSearchResult';
+        bx_import($sClass);
+        $o = new $sClass('connections', [
+            'object' => $sObjectConnections,
+            'type' => $sConnectionsType,
+            'mutual' => $iMutual,
+            'profile' => (int)$iProfileId,
+            'profile2' => (int)$iProfileId2
+        ]);
+
+        $o->setDesignBoxTemplateId($iDesignBox);
+        $o->setDisplayEmptyMsg($bDisplayEmptyMsg);
+        $o->setAjaxPaginate($bAjaxPaginate);
+
+        if ($o->isError)
+            return '';
+
+        if ($s = $o->processing())
+            return bx_is_api() ? [bx_api_get_block('browse', $s)] : $s;
+        else
+            return '';
+    }
 
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0, $sButtonTitle = '', $sProfileTemplate = '')
     {

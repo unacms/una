@@ -501,20 +501,25 @@ class BxDolSearchResult implements iBxDolReplaceable
 
     function processingAPI () 
     {
+        $sModule = 'system';
         $sUnitType = 'content';
-        if(method_exists($this->oModule, 'serviceActAsProfile') && $this->oModule->serviceActAsProfile())
-             $sUnitType = 'profile';
-        if(method_exists($this->oModule, 'serviceIsGroupProfile') && $this->oModule->serviceIsGroupProfile())
-             $sUnitType = 'context';
+        if(!empty($this->oModule)) {
+            $sModule = $this->oModule->getName();
+
+            if(method_exists($this->oModule, 'serviceActAsProfile') && $this->oModule->serviceActAsProfile())
+                 $sUnitType = 'profile';
+            if(method_exists($this->oModule, 'serviceIsGroupProfile') && $this->oModule->serviceIsGroupProfile())
+                 $sUnitType = 'context';
+        }
 
         $sUnit =  'list';
-        if ($this->sUnitViewDefault == 'showcase' || $this->sUnitViewDefault == 'gallery')
+        if(in_array($this->sUnitViewDefault, ['showcase', 'gallery']))
             $sUnit = 'card';
-        
+
         return [
-            'module' => $this->oModule->getName(),
+            'module' => $sModule,
             'unit' => 'general-' . $sUnitType . '-' . $sUnit,
-            'request_url' => '/api.php?r=' . $this->oModule->getName() . '/browse/&params[]=',
+            'request_url' => '/api.php?r=' . $sModule . '/browse/&params[]=',
             'data' => $this->decodeData($this->getSearchData()),
             'params' => [
                 'per_page' => $this->aCurrent['paginate']['perPage'],
