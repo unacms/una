@@ -12,7 +12,6 @@
 class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 {      
     protected $bRecommendedView = false;
-    protected $bConnectionsEverywhere = false;
     
     public function __construct($sMode = '', $aParams = array())
     {
@@ -52,8 +51,6 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         if ($sMode == 'recommended')
             $this->bRecommendedView=true;
-
-        $this->bConnectionsEverywhere = isset($this->_aParams['everywhere']) && $this->_aParams['everywhere'] === true;
     }
 
     function getRssUnitImage (&$a, $sField)
@@ -241,15 +238,6 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     {
         $CNF = $this->oModule->_oConfig->CNF;
 
-        if($this->bConnectionsEverywhere) {
-            $aResult = [];
-            foreach ($a as $index => $aItem) 
-                if(($oProfile = BxDolProfile::getInstance($aItem['id'])) !== false)
-                    $aResult[] = $oProfile->getUnitAPI();
-
-            return $aResult;
-        }
-
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         $bPrivacy = $oPrivacy !== false;
 
@@ -294,18 +282,6 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->oModule->_oTemplate->addJs(array('modules/base/profile/js/|searchresult.js'));
 
         return parent::displayResultBlock();
-    }
-
-    function displaySearchUnit ($aData)
-    {
-        if(!$this->bConnectionsEverywhere)
-            return parent::displaySearchUnit($aData);
-
-        $oProfile = BxDolProfile::getInstance($aData['id']);
-        if(!$oProfile)
-            return '';
-
-        return $oProfile->getUnit(0, ['template' => rtrim($this->sUnitTemplate, '.html')]);
     }
 }
 
