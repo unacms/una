@@ -103,7 +103,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // get profile's url
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
 
-        $aAddon  = [
+        $aResult = [
+            'id' => $iContentId,
+            'module' => $this->_oConfig->getName(),
+            'added' => $aData[$CNF['FIELD_ADDED']],
+            'title' => $aData[$CNF['FIELD_TITLE']],
             'url' => bx_api_get_relative_url($sUrl),
             'image' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_PICTURE']]),
             'cover' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_COVER']])
@@ -118,10 +122,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $oMetaMenu->setContentId($iContentId);
             $oMetaMenu->setContentPublic($bPublic);
-            $aAddon['meta'] = $oMetaMenu->getCodeAPI();
+            $aResult['meta'] = $oMetaMenu->getCodeAPI();
         }
 
-        return array_merge($aData, $aAddon);
+        return $aResult;
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())

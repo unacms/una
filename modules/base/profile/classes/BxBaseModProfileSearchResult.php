@@ -248,6 +248,8 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         foreach ($a as $i => $r) {
             $aAddon = [
+                'module' => $this->oModule->getName(),
+                'title' => $r[$CNF['FIELD_TITLE']],
                 'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
                 'image' => $oContentInfo->getContentThumb($r['id']),
                 'cover' => $oContentInfo->getContentCover($r['id']),
