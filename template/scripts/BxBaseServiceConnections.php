@@ -267,8 +267,7 @@ class BxBaseServiceConnections extends BxDol
         if(!$iProfileId && bx_get('profile_id') !== false)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        $aProfile = $oProfile->getInfo();
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
@@ -306,8 +305,7 @@ class BxBaseServiceConnections extends BxDol
         if(!$iProfileId && bx_get('profile_id') !== false)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        $aProfile = $oProfile->getInfo();
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
