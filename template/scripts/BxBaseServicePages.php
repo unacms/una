@@ -34,7 +34,7 @@ class BxBaseServicePages extends BxDol
     /** 
      * @ref bx_system_general-get_page_by_request "get_page_by_request"
      */
-    public function serviceGetPageByRequest ($sRequest, $sBlocks = '')
+    public function serviceGetPageByRequest ($sRequest, $sBlocks = '', $sParams = '')
     {
         $mixed = BxDolPage::getPageBySeoLink($sRequest);
 
@@ -42,6 +42,12 @@ class BxBaseServicePages extends BxDol
             $aRes = ['redirect' => $sUrl];
         }
         elseif (($oPage = $mixed) && is_object($oPage)) {
+            if(!empty($sParams)) {
+                $aParams = json_decode($sParams, true);
+                if(!empty($aParams) && is_array($aParams))
+                    $_GET = array_merge($_GET, $aParams);
+            }
+
             $aBlocks = [];
             if(!empty($sBlocks))
                 $aBlocks = explode(',', $sBlocks);

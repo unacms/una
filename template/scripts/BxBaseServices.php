@@ -933,12 +933,26 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      */
     public function serviceSearchKeywordResult ()
     {
-        $oSearch = $this->_getSearchObject();
-        
+        $sKeyword = bx_get('keyword');
+        $bKeyword = $sKeyword !== false;
+
+        if(bx_is_api()) {
+            $sSection = bx_get('section');
+            if(empty($sSection))
+                $sSection = BxDolDb::getInstance()->fromCache('sys_global_search_items', 'getColumn', 'SELECT `ObjectName` FROM `sys_objects_search` WHERE `GlobalSearch`=\'1\' ORDER BY `Order` ASC');
+                    
+            return $this->serviceGetDataSearchApi([
+                'keyword' => $sKeyword,
+                'section' => $sSection
+            ]);
+        }
+
         $sCode = '';
-        if (bx_get('keyword') !== false) {
+        if($bKeyword) {
+            $oSearch = $this->_getSearchObject();
+
             $sCode = $oSearch->response();
-            if (!$sCode)
+            if(!$sCode)
                 $sCode = $oSearch->getEmptyResult();
         }
 
