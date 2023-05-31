@@ -45,7 +45,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetCreatePostForm' => 'BxBaseServices',
             'GetProductsNames' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
-            'GetDataSearch' => 'BxBaseServices',
+            'GetDataSearchApi' => 'BxBaseServices',
             'Cmts' => 'BxBaseServices',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
@@ -946,10 +946,10 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     }
 
     /** 
-     * @ref bx_system_general-get_date_search "get_date_search"
-     * @api @ref bx_system_general-get_date_search "get_date_search"
+     * @ref bx_system_general-get_date_search_api "get_date_search_api"
+     * @api @ref bx_system_general-get_date_search_api "get_date_search_api"
      */
-    public function serviceGetDataSearch ($aParams)
+    public function serviceGetDataSearchApi ($aParams)
     {
         if(!bx_is_api())
             return false;
@@ -961,7 +961,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'per_page' => 12
         ], is_string($aParams) ? json_decode($aParams, true) : $aParams);
 
-        if(!empty($aParams['section']))
+        if(!empty($aParams['section']) && is_string($aParams['section']))
             $aParams['section'] = explode(',', $aParams['section']);
 
         $sClass = 'BxTemplSearch';
@@ -984,7 +984,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
             $aData = array_merge($aData, $aItems);
         }
-        
+
         if(count($aData) > $aParams['per_page'])
             $aData = array_slice($aData, $aParams['start'], $aParams['per_page']);
 
