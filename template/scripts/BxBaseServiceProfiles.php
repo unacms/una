@@ -470,30 +470,109 @@ class BxBaseServiceProfiles extends BxDol
 
         return $s . '<div class="bx-clear"></div>';
     }
-    
-    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iProfileId2 = 0, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+
+    public function serviceBrowseFriends ($iProfileId, $aParams = [])
     {
-        $sClass = 'BxTemplProfileSearchResult';
-        bx_import($sClass);
-        $o = new $sClass('connections', [
-            'object' => $sObjectConnections,
-            'type' => $sConnectionsType,
-            'mutual' => $iMutual,
-            'profile' => (int)$iProfileId,
-            'profile2' => (int)$iProfileId2
-        ]);
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
 
-        $o->setDesignBoxTemplateId($iDesignBox);
-        $o->setDisplayEmptyMsg($bDisplayEmptyMsg);
-        $o->setAjaxPaginate($bAjaxPaginate);
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
 
-        if ($o->isError)
-            return '';
+        $aParamsBrowse = ['profile' => $iProfileId];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        if ($s = $o->processing())
-            return bx_is_api() ? [bx_api_get_block('browse', $s)] : $s;
-        else
-            return '';
+        return $this->_serviceBrowseConnections('friends', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+
+    public function serviceBrowseSubscriptions ($iProfileId, $aParams = [])
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
+
+        $aParamsBrowse = ['profile' => $iProfileId];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
+
+        return $this->_serviceBrowseConnections('subscriptions', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+
+    public function serviceBrowseSubscribedMe ($iProfileId, $aParams = [])
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
+
+        $aParamsBrowse = ['profile' => $iProfileId];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
+
+        return $this->_serviceBrowseConnections('subscribed_me', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+
+    public function serviceBrowseMembers($iProfileId, $sObject, $aParams = [])
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
+
+        $aParamsBrowse = [
+            'profile' => $iProfileId, 
+            'object' => $sObject
+        ];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
+
+        return $this->_serviceBrowseConnections('members', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+
+    public function serviceBrowseConnections ($iProfileId, $aParams = [])
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
+
+        $aParamsBrowse = [
+            'profile' => $iProfileId, 
+            'object' => 'sys_profiles_friends',
+            'type' => 'content',
+            'mutual' => false,
+            'profile2' => 0
+        ];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
+
+        return $this->_serviceBrowseConnections('connections', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0, $sButtonTitle = '', $sProfileTemplate = '')
@@ -686,6 +765,28 @@ class BxBaseServiceProfiles extends BxDol
         return $aRet;
     }
 
+    protected function _serviceBrowseConnections ($sMode, $aParams = [], $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    {
+        $sClass = 'BxTemplProfileSearchResult';
+        bx_import($sClass);
+        $o = new $sClass($sMode, $aParams);
+
+        $o->setDesignBoxTemplateId($iDesignBox);
+        $o->setDisplayEmptyMsg($bDisplayEmptyMsg);
+        $o->setAjaxPaginate($bAjaxPaginate);
+
+        if ($o->isError)
+            return '';
+
+        if ($s = $o->processing()) {
+            if(!bx_is_api())
+                return $s;
+
+            return [bx_api_get_block('browse', $s)];
+        }
+        else
+            return '';
+    }
 }
 
 /** @} */

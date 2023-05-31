@@ -136,11 +136,8 @@ class BxBaseServiceConnections extends BxDol
             return false;
 
         if(bx_is_api())
-            return bx_srv('system', 'browse_connections', [
-                'profile_id' => $iProfileId,
-                'connection' => 'sys_profiles_friends',
-                'type' => 'content',
-                'mutual' => 1,
+            return bx_srv('system', 'browse_friends', [
+                'profile_id' => $iProfileId
             ], 'TemplServiceProfiles');
 
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections');
@@ -272,10 +269,8 @@ class BxBaseServiceConnections extends BxDol
             return false;
 
         if(bx_is_api())
-            return bx_srv('system', 'browse_connections', [
+            return bx_srv('system', 'browse_subscriptions', [
                 'profile_id' => $iProfileId,
-                'connection' => 'sys_profiles_subscriptions',
-                'type' => 'content'
             ], 'TemplServiceProfiles');
 
         $CNF = &BxDolModule::getInstance($aProfile['type'])->_oConfig->CNF;
@@ -310,10 +305,8 @@ class BxBaseServiceConnections extends BxDol
             return false;
 
         if(bx_is_api())
-            return bx_srv('system', 'browse_connections', [
+            return bx_srv('system', 'browse_subscribed_me', [
                 'profile_id' => $iProfileId,
-                'connection' => 'sys_profiles_subscriptions',
-                'type' => 'initiators'
             ], 'TemplServiceProfiles');
 
         $CNF = &BxDolModule::getInstance($aProfile['type'])->_oConfig->CNF;

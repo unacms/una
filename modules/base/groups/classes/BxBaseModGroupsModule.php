@@ -511,11 +511,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             if(!$iProfileId)
                 return [];
 
-            return bx_srv('system', 'browse_connections', [
+            return bx_srv('system', 'browse_members', [
                 'profile_id' => $iProfileId,
                 'connection' => $CNF['OBJECT_CONNECTIONS'],
-                'type' => 'content',
-                'mutual' => 1
             ], 'TemplServiceProfiles');
         }
 

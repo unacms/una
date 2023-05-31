@@ -16,6 +16,9 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
 
     public function __construct($sMode = '', $aParams = [])
     {
+        $this->_sMode = $sMode;
+        $this->_aParams = $aParams;
+
         parent::__construct();
 
         $this->_bIsApi = bx_is_api();
@@ -65,7 +68,79 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
             'ident' => 'id'
         ];
 
+        if(!empty($this->_aParams['start']))
+            $this->aCurrent['paginate']['forceStart'] = (int)$this->_aParams['start'];
+        if(!empty($this->_aParams['per_page']))
+            $this->aCurrent['paginate']['perPage'] = (int)$this->_aParams['per_page'];
+
         switch ($sMode) {
+            case 'friends':
+                $aParams = array_merge($aParams, [
+                    'object' => 'sys_profiles_friends', 
+                    'type' => 'content',
+                    'mutual' => true,
+                    'profile2' => 0
+                ]);
+                
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $this->aCurrent = array_merge($this->aCurrent, [
+                    'title' => _t('_sys_page_title_browse_connections', BxDolProfile::getInstanceMagic($aParams['profile'])->getDisplayName()),
+                    'api_request_url' => '/api.php?r=system/browse_friends/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]='
+                ]);
+                break;
+                
+            case 'subscriptions':
+                $aParams = array_merge($aParams, [
+                    'object' => 'sys_profiles_subscriptions', 
+                    'type' => 'content',
+                    'mutual' => false,
+                    'profile2' => 0
+                ]);
+
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $this->aCurrent = array_merge($this->aCurrent, [
+                    'title' => _t('_sys_page_title_browse_connections', BxDolProfile::getInstanceMagic($aParams['profile'])->getDisplayName()),
+                    'api_request_url' => '/api.php?r=system/browse_subscriptions/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]='
+                ]);
+                break;
+            
+            case 'subscribed_me':
+                $aParams = array_merge($aParams, [
+                    'object' => 'sys_profiles_subscriptions', 
+                    'type' => 'initiators',
+                    'mutual' => false,
+                    'profile2' => 0
+                ]);
+
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $this->aCurrent = array_merge($this->aCurrent, [
+                    'title' => _t('_sys_page_title_browse_connections', BxDolProfile::getInstanceMagic($aParams['profile'])->getDisplayName()),
+                    'api_request_url' => '/api.php?r=system/browse_subscribed_me/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]='
+                ]);
+                break;
+
+            case 'members':
+                $aParams = array_merge($aParams, [
+                    'type' => 'content',
+                    'mutual' => true,
+                    'profile2' => 0
+                ]);
+
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $this->aCurrent = array_merge($this->aCurrent, [
+                    'title' => _t('_sys_page_title_browse_connections', BxDolProfile::getInstanceMagic($aParams['profile'])->getDisplayName()),
+                    'api_request_url' => '/api.php?r=system/browse_members/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]=' . $aParams['object'] . '&params[]='
+                ]);
+                break;
+
             case 'connections':
                 if (!$this->_setConnectionsConditions($aParams)) 
                     break;
@@ -78,6 +153,8 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
                     $this->aCurrent['title'] = _t('_sys_page_title_browse_connections_mutual', $oProfile->getDisplayName(), $oProfile2->getDisplayName());
                 else if(!$bCommon && $oProfile)
                     $this->aCurrent['title'] = _t('_sys_page_title_browse_connections', $oProfile->getDisplayName());
+
+                $this->aCurrent['api_request_url'] = '/api.php?r=system/browse_connections/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]=';
                 break;
         }
     }
