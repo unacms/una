@@ -532,6 +532,7 @@
 	<string name="_adm_bp_mi_page_visibility"><![CDATA[Видимость]]></string>
 	<string name="_adm_bp_scs_save"><![CDATA[Изменения успешно сохранены]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Активный]]></string>
+        <string name="_adm_bp_txt_block_active_api"><![CDATA[Активный (для приложения)]]></string>
         <string name="_adm_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
         <string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Кэш для блока (в секундах)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Вложения]]></string>
@@ -1209,6 +1210,7 @@
         <string name="_adm_nav_txt_items_parent_id"><![CDATA[Родительский пункт]]></string>
         <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[Нет родительского пункта]]></string>
         <string name="_adm_nav_txt_items_primary"><![CDATA[Основная]]></string>
+        <string name="_adm_nav_txt_items_active_api"><![CDATA[Активный (для приложения)]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Отображать "{0}" элемент меню для: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Подменю]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[Без подменю]]></string>
@@ -1477,7 +1479,8 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Местоположение]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Социальные настройки]]></string>
-    <string name="_adm_stg_cpt_category_api"><![CDATA[API]]></string>
+    <string name="_adm_stg_cpt_category_api_general"><![CDATA[Общие]]></string>
+    <string name="_adm_stg_cpt_category_api_layout"><![CDATA[Планировка]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Изменять ширину картинки перед загрузкой (0 - отключить)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Изменять высоту картинки перед загрузкой (0 - отключить)]]></string>    
     <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Код валюты (для платёжных систем)]]></string>
@@ -1650,7 +1653,7 @@
     <string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Задействовать уменьшение для файлов JS (кэш должен быть задействован)]]></string>
     <string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
     <string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
-  	<string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Аутентификация черех сессию]]></string>
+    <string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Аутентификация через сессию]]></string>
     <string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - Таймаут по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_ssl_allow_untrusted"><![CDATA[cURL - доверять неподписанным сертификатам или неподтвержденным хостам]]></string>
     <string name="_adm_stg_cpt_option_sys_csp_frame_ancestors"><![CDATA[Значение заголовка 'Content-Security-Policy: frame-ancestors']]></string>
@@ -1695,7 +1698,9 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_path"><![CDATA[Путь к файлам cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_secure"><![CDATA[Безопасные cookie]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Значение для SameSite атрибута]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Главное меню]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Линейные комментарии]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Искать в]]></string>
 
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
     <string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
@@ -1786,6 +1791,7 @@
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Загрузчик]]></string>
+        <string name="_adm_txt_active_api"><![CDATA[Доступно в приложении]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Забыли пароль?]]></string>
@@ -2033,6 +2039,7 @@
   <string name="_sys_audit_action_delete_comment"><![CDATA[Комментарий удален]]></string>
   <string name="_sys_audit_action_feature"><![CDATA[Добавлен в продвинутые]]></string>
   <string name="_sys_audit_action_unfeature"><![CDATA[Удален из продвинутых]]></string>
+  <string name="_sys_audit_action_resolve"><![CDATA[Помечена как решеная]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Добавлен в администраторы группы]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Удален из администраторов группы]]></string>
   <string name="_sys_audit_action_group_role_changed"><![CDATA[Роль в группе изменена]]></string>
@@ -3315,6 +3322,7 @@
 	<string name="_sys_pre_lists_report_types_nude"><![CDATA[обнаженность]]></string>
 	<string name="_sys_pre_lists_report_types_other"><![CDATA[другое]]></string>
         <string name="_sys_pre_lists_vote_reactions"><![CDATA[Реакции]]></string>
+        <string name="_sys_pre_lists_vote_reactions_default"><![CDATA[Отреагировать]]></string>
         <string name="_sys_pre_lists_vote_reactions_like"><![CDATA[Нравится]]></string>
         <string name="_sys_pre_lists_vote_reactions_love"><![CDATA[Люблю]]></string>
         <string name="_sys_pre_lists_vote_reactions_joy"><![CDATA[Ха-ха]]></string>

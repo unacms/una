@@ -247,27 +247,29 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $oContentInfo = $this->getContentInfoObject();
 
         foreach ($a as $i => $r) {
-            if (isset($r['author']))
-                $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
-
-            $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
-            $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
-            $a[$i]['cover'] = $oContentInfo->getContentCover($r['id']);
-            $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+            $aAddon = [
+                'module' => $this->oModule->getName(),
+                'title' => $r[$CNF['FIELD_TITLE']],
+                'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
+                'image' => $oContentInfo->getContentThumb($r['id']),
+                'cover' => $oContentInfo->getContentCover($r['id']),
+            ];
 
             if($bMetaMenu) {
                 $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
-                
+
                 $oMetaMenu->setContentId($r['id']);
                 $oMetaMenu->setContentPublic($bPublic);
-                $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
+                $aAddon['meta'] = $oMetaMenu->getCodeAPI();
             }
+
+            $a[$i] = array_merge($r, $aAddon);
         }
 
         return $a;
     }
 	
-	function getItemPerPageInShowCase ()
+    function getItemPerPageInShowCase ()
     {
         $iPerPageInShowCase = parent::getItemPerPageInShowCase();
         $CNF = &$this->oModule->_oConfig->CNF;
@@ -279,9 +281,10 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     
     function displayResultBlock ()
     {
-		$this->oModule->_oTemplate->addJs(array('modules/base/profile/js/|searchresult.js'));
-		return parent::displayResultBlock ();
-	}
+        $this->oModule->_oTemplate->addJs(array('modules/base/profile/js/|searchresult.js'));
+
+        return parent::displayResultBlock();
+    }
 }
 
 /** @} */

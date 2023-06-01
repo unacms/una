@@ -108,6 +108,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'BrowseActiveProfiles' => '',
             'BrowseTopProfiles' => '',
             'BrowseOnlineProfiles' => '',
+            'BrowseConnections' => '',
+            'BrowseConnectionsEverywhere' => '',
             'BrowseByAcl' => '',
         ));
     }
@@ -415,6 +417,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         }
 
         return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array($sTemplate, $sTemplateSize, $aTemplateVars));
+    }
+
+    public function serviceProfileUnitApi ($iContentId, $aParams = array())
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        return $this->_oTemplate->unitAPI($aContentInfo);
     }
 
     public function serviceHasImage ($iContentId)
@@ -791,14 +804,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0)
     {
         return $this->_serviceBrowse (
-            'connections',
-            array(
+            'connections', [
                 'object' => $sObjectConnections,
                 'type' => $sConnectionsType,
                 'mutual' => $iMutual,
                 'profile' => (int)$iProfileId,
-                'profile2' => (int)$iProfileId2),
-            $iDesignBox
+                'profile2' => (int)$iProfileId2
+            ], $iDesignBox
         );
     }
 
@@ -1971,6 +1983,75 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function getProfileName ($aContentInfo)
     {
         return bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
+    }
+    
+    public function getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
+    {
+        $oConnection = BxDolConnection::getObjectInstance($sConnection);
+        if(!$oConnection)
+            return false;
+        
+        if(!$iInitiatorProfileId)
+            $iInitiatorProfileId = bx_get_logged_profile_id();
+
+        $aResult = [];
+        switch($sConnection) {
+            case 'sys_profiles_friends':
+                $aResult = $this->_getMenuItemTitleProfilesFriends($sAction, $iContentProfileId, $iInitiatorProfileId, $oConnection);
+                break;
+
+            case 'sys_profiles_subscriptions':
+                $aResult = $this->_getMenuItemTitleProfilesSubscriptions($sAction, $iContentProfileId, $iInitiatorProfileId, $oConnection);
+                break;
+        }
+
+        return $aResult;
+    }
+
+    protected function _getMenuItemTitleProfilesFriends($sAction, $iContentProfileId, $iInitiatorProfileId, &$oConnection)
+    {
+        $aResult = [];
+        if($oConnection->isConnectedNotMutual($iInitiatorProfileId, $iContentProfileId))
+            $aResult = [
+                'add' => '',
+                'remove' => _t('_sys_menu_item_title_sm_unfriend_cancel'),
+            ];
+        else if($oConnection->isConnectedNotMutual($iContentProfileId, $iInitiatorProfileId))
+            $aResult = [
+                'add' => _t('_sys_menu_item_title_sm_befriend_confirm'),
+                'remove' => _t('_sys_menu_item_title_sm_unfriend_reject'),
+            ];
+        else if($oConnection->isConnected($iInitiatorProfileId, $iContentProfileId, true))
+            $aResult = [
+                'add' => '',
+                'remove' => _t('_sys_menu_item_title_sm_unfriend'),
+            ];
+        else
+            $aResult = [
+                'add' => _t('_sys_menu_item_title_sm_befriend'),
+                'remove' => '',
+            ];
+
+        return !empty($sAction) && isset($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
+    }
+
+    protected function _getMenuItemTitleProfilesSubscriptions($sAction, $iContentProfileId, $iInitiatorProfileId, &$oConnection)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = [];
+        if($oConnection->isConnected($iInitiatorProfileId, $iContentProfileId))
+            $aResult = [
+                'add' => '',
+                'remove' => _t(!empty($CNF['T']['menu_item_title_unsubscribe']) ? $CNF['T']['menu_item_title_unsubscribe'] : '_sys_menu_item_title_sm_unsubscribe'),
+            ];
+        else
+            $aResult = [
+                'add' => _t(!empty($CNF['T']['menu_item_title_subscribe']) ? $CNF['T']['menu_item_title_subscribe'] : '_sys_menu_item_title_sm_subscribe'),
+                'remove' => '',
+            ];
+
+        return !empty($sAction) && !empty($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
 
 

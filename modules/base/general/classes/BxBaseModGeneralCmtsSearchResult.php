@@ -90,6 +90,20 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
         return array();
     }
 
+    function decodeData ($a)
+    {
+        $oContentInfo = $this->getContentInfoObject();
+
+        foreach($a as $i => $r) {
+            if(isset($r['author']))
+                $a[$i]['author_data'] = BxDolProfile::getData($r['author']);
+
+            $a[$i]['url'] = bx_api_get_relative_url($oContentInfo->getContentLink($r['id']));
+        }
+
+        return $a;
+    }
+
     function _getPseud ()
     {
         return array(

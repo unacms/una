@@ -168,28 +168,30 @@ class BxBaseMenu extends BxDolMenu
 
     protected function _getMenuItem ($a)
     {
-        if (isset($a['active']) && !$a['active'])
-            return false;
-
-        if (!$this->_isVisible($a))
+        if (!$this->_isActive($a) || !$this->_isVisible($a))
             return false;
 
         if ($this->_bIsApi) {
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
-            if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
-                $this->addMarkers($aMarkers);
-
-            $a = $this->_replaceMarkers($a);
-
-            return [
+            $aResult = [
                 'id' => $a['id'],
                 'name' => $a['name'],
                 'title' => _t($a['title']),
-                'link' => isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : '',
+                'link' => isset($a['link']) ? $a['link'] : '',
                 'icon' => $sIcon ? $sIcon : '',
-                'image' => $sIconUrl ? $sIconUrl : ''
+                'image' => $sIconUrl ? $sIconUrl : '',
+                'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : ''
             ];
+
+            if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
+                $this->addMarkers($aMarkers);
+            $aResult = $this->_replaceMarkers($aResult);
+
+            if(!empty($aResult['link']))
+                $aResult['link'] = $this->_oPermalinks->permalink($aResult['link']);
+
+            return $aResult;
         }
 
         $a['object'] = $this->_sObject;

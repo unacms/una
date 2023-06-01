@@ -45,6 +45,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetCreatePostForm' => 'BxBaseServices',
             'GetProductsNames' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
+            'GetDataSearchApi' => 'BxBaseServices',
             'Cmts' => 'BxBaseServices',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
@@ -894,7 +895,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         
         return $oSearch->response();
     }
-    
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -932,18 +933,106 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      */
     public function serviceSearchKeywordResult ()
     {
-        $oSearch = $this->_getSearchObject();
-        
+        $sKeyword = bx_process_input(bx_get('keyword'));
+        $bKeyword = $sKeyword !== false;
+
+        if(bx_is_api())
+            return $this->serviceGetDataSearchApi(['params' => [
+                    'keyword' => $sKeyword,
+                    'section' => bx_process_input(bx_get('section'))
+                ]
+            ]);
+
         $sCode = '';
-        if (bx_get('keyword') !== false) {
+        if($bKeyword) {
+            $oSearch = $this->_getSearchObject();
+
             $sCode = $oSearch->response();
-            if (!$sCode)
+            if(!$sCode)
                 $sCode = $oSearch->getEmptyResult();
         }
 
         return $sCode;
     }
-    
+
+    /** 
+     * @ref bx_system_general-get_date_search_api "get_date_search_api"
+     * @api @ref bx_system_general-get_date_search_api "get_date_search_api"
+     */
+    public function serviceGetDataSearchApi ($aParams)
+    {
+        if(!bx_is_api())
+            return false;
+
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aSections = [];
+        $aSectionsAll = BxDolDb::getInstance()->fromCache(
+            'sys_global_search_pairs', 
+            'getPairs', 
+            'SELECT `ObjectName` AS `name`, `Title` AS `title` FROM `sys_objects_search` WHERE `GlobalSearch`=\'1\' ORDER BY `Order` ASC',
+            'name', 'title'
+        );
+
+        $aSectionNames = explode(',', getParam('sys_api_search_sections'));
+        foreach($aSectionNames as $sSectionName) {
+            if(!isset($aSectionsAll[$sSectionName]))
+                continue;
+
+            $aSections[$sSectionName] = [
+                'name' => $sSectionName,
+                'title' => _t($aSectionsAll[$sSectionName])
+            ];
+        }
+
+        $aParamsBrowse = array_merge([
+            'keyword' => '',
+            'section' => '',
+            'sections' => array_values($aSections),
+            'start' => 0,
+            'per_page' => 12
+        ], !empty($aParams['params']) && is_array($aParams['params']) ? $aParams['params'] : []);
+
+        if(empty($aParamsBrowse['section']))
+            $aParamsBrowse['section'] = array_keys($aSections);
+        else if(is_string($aParamsBrowse['section']))
+            $aParamsBrowse['section'] = explode(',', $aParamsBrowse['section']);
+
+        $sClass = 'BxTemplSearch';
+        $oSearch = new $sClass($aParamsBrowse['section']);
+        $oSearch->setLiveSearch(true);
+        $oSearch->setDataProcessing(true);
+        $oSearch->setCustomSearchCondition(['keyword' => $aParamsBrowse['keyword']]);
+        $oSearch->setCustomCurrentCondition([
+            'paginate' => [
+                'forceStart' => $aParamsBrowse['start'],
+                'perPage' => $aParamsBrowse['per_page'],
+            ]
+        ]);
+
+        $aData = [];
+        $aResponse = $oSearch->response();
+        foreach($aResponse as $sSection => $aItems) {
+            if(empty($aItems))
+                continue;
+
+            $aData = array_merge($aData, $aItems);
+        }
+
+        if(count($aData) > $aParamsBrowse['per_page'])
+            $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
+
+        return [
+            bx_api_get_block('browse', [
+                'unit' => 'search-results',  
+                'request_url' => '/api.php?r=system/get_data_search_api/TemplServices&params[]=',
+                'params' => $aParamsBrowse,
+                'data' => $aData
+            ])
+        ];
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -1135,6 +1224,18 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
             closedir($oHandle);
         }
+
+        return $aResults;
+    }
+
+    public function serviceGetOptionsApiMenuTop()
+    {
+        $aMenus = BxDolMenuQuery::getMenuObjects();
+
+        $aResults = [];
+        foreach($aMenus as $aMenu)
+            if($aMenu['module'] == 'system')
+                $aResults[$aMenu['object']] = _t($aMenu['title']);
 
         return $aResults;
     }

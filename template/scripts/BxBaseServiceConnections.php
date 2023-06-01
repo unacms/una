@@ -72,6 +72,10 @@ class BxBaseServiceConnections extends BxDol
         if(!$oConnection)
             return '';
 
+        $sMethod = 'getActionTitle';
+        if(method_exists($oConnection, $sMethod))
+            return $oConnection->$sMethod($sAction, $iInitiatorId, $iContentId, $bFlip);
+
         $aResult = [];
         switch($sObject) {
             case 'sys_profiles_friends':
@@ -109,6 +113,9 @@ class BxBaseServiceConnections extends BxDol
                         'remove' => '',
                     ];
                 break;
+
+            default:
+                $aResult = $oConnection->getActionTitle($sAction, $iInitiatorId, $iContentId);
         }
 
         $aFlip = ['add' => 'remove', 'remove' => 'add'];
@@ -127,6 +134,11 @@ class BxBaseServiceConnections extends BxDol
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if(!$iProfileId)
             return false;
+
+        if(bx_is_api())
+            return bx_srv('system', 'browse_friends', [
+                'profile_id' => $iProfileId
+            ], 'TemplServiceProfiles');
 
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections');
         if(!$oGrid)
@@ -256,6 +268,11 @@ class BxBaseServiceConnections extends BxDol
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
+        if(bx_is_api())
+            return bx_srv('system', 'browse_subscriptions', [
+                'profile_id' => $iProfileId,
+            ], 'TemplServiceProfiles');
+
         $CNF = &BxDolModule::getInstance($aProfile['type'])->_oConfig->CNF;
         if(getParam($CNF['PARAM_PUBLIC_SBSN']) != 'on' && $aProfile['id'] != bx_get_logged_profile_id())
             return false;
@@ -286,6 +303,11 @@ class BxBaseServiceConnections extends BxDol
         $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
         if(empty($aProfile) || !is_array($aProfile))
             return false;
+
+        if(bx_is_api())
+            return bx_srv('system', 'browse_subscribed_me', [
+                'profile_id' => $iProfileId,
+            ], 'TemplServiceProfiles');
 
         $CNF = &BxDolModule::getInstance($aProfile['type'])->_oConfig->CNF;
         if(getParam($CNF['PARAM_PUBLIC_SBSD']) != 'on' && $aProfile['id'] != bx_get_logged_profile_id())

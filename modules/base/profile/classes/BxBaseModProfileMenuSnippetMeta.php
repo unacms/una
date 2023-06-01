@@ -15,7 +15,6 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
     protected $_oContentProfile;
 
     protected $_aConnectionToFunctionCheck;
-    protected $_aConnectionToFunctionTitle;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -24,21 +23,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         $this->_bShowZeros = true;
         $this->_bContentPublic = false;
 
-        $this->_aConnectionToFunctionCheck = array(
-            'sys_profiles_friends' => array(
-            	'add' => 'checkAllowedFriendAdd', 
-            	'remove' => 'checkAllowedFriendRemove'
-            ),
-            'sys_profiles_subscriptions' => array(
-                'add' => 'checkAllowedSubscribeAdd',
-                'remove' => 'checkAllowedSubscribeRemove'
-            )
-        );
-
-        $this->_aConnectionToFunctionTitle = array(
-            'sys_profiles_friends' => '_getMenuItemProfilesFriendsTitle',
-            'sys_profiles_subscriptions' => '_getMenuItemProfilesSubscriptionsTitle'
-        );
+        $this->_aConnectionToFunctionCheck = $this->_oModule->_oConfig->getConnectionToFunctionCheck();
     }
 
     public function setContentId($iContentId)
@@ -157,18 +142,11 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemConnection($sConnection, $sAction, &$aItem)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         if(!isLogged() || $this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection][$sAction]}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
         $iContentProfile = $this->_oContentProfile->id();
-
-        $oConnection = BxDolConnection::getObjectInstance($sConnection);
-        if(!$oConnection)
-            return false;
-
-        $sTitle = $this->{$this->_aConnectionToFunctionTitle[$sConnection]}($sAction, $oConnection);
+        $sTitle = $this->_oModule->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfile);
         if(empty($sTitle))
             return false;
 
@@ -193,58 +171,6 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             )),
             'bx-menu-item-button'
         ];
-    }
-
-    protected function _getMenuItemProfilesFriendsTitle($sAction, &$oConnection)
-    {
-        $iProfile = bx_get_logged_profile_id();
-        $iContentProfile = $this->_oContentProfile->id();
-
-        $aResult = array();
-        if($oConnection->isConnectedNotMutual($iProfile, $iContentProfile))
-            $aResult = array(
-                'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_unfriend_cancel'),
-            );
-        else if($oConnection->isConnectedNotMutual($iContentProfile, $iProfile))
-            $aResult = array(
-                'add' => _t('_sys_menu_item_title_sm_befriend_confirm'),
-                'remove' => _t('_sys_menu_item_title_sm_unfriend_reject'),
-            );
-        else if($oConnection->isConnected($iProfile, $iContentProfile, true))
-            $aResult = array(
-                'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_unfriend'),
-            );
-        else
-            $aResult = array(
-                'add' => _t('_sys_menu_item_title_sm_befriend'),
-                'remove' => '',
-            );
-
-        return !empty($sAction) && isset($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
-    }
-
-    protected function _getMenuItemProfilesSubscriptionsTitle($sAction, &$oConnection)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $iProfile = bx_get_logged_profile_id();
-        $iContentProfile = $this->_oContentProfile->id();
-
-        $aResult = array();
-        if($oConnection->isConnected($iProfile, $iContentProfile))
-            $aResult = array(
-                'add' => '',
-                'remove' => _t(!empty($CNF['T']['menu_item_title_unsubscribe']) ? $CNF['T']['menu_item_title_unsubscribe'] : '_sys_menu_item_title_sm_unsubscribe'),
-            );
-        else
-            $aResult = array(
-                'add' => _t(!empty($CNF['T']['menu_item_title_subscribe']) ? $CNF['T']['menu_item_title_subscribe'] : '_sys_menu_item_title_sm_subscribe'),
-                'remove' => '',
-            );
-
-        return !empty($sAction) && !empty($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
 
     protected function _getMenuItemMembership($aItem)

@@ -21,6 +21,8 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     function __construct($sMode = '', $aParams = array())
     {
         $this->_sMode = $sMode;
+        $this->_aParams = $aParams;
+
         parent::__construct();
     }
 
@@ -210,19 +212,6 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
         return parent::displayResultBlock();
     }
-
-    function decodeDataUrl ($oContentInfo, $r)
-    {
-        return bx_relative_url($oContentInfo->getContentLink($r['id']));
-    }
-
-    function decodeDataSummaryPlain ($oContentInfo, $r)
-    {
-        $CNF = $this->oModule->_oConfig->CNF;
-        $sSummary = $this->oModule->_oTemplate->getText($r);
-        return isset($CNF['PARAM_CHARS_SUMMARY_PLAIN']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN'] ? BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN'])) : '';
-    }
-
 }
 
 /** @} */

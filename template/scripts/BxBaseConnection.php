@@ -130,7 +130,16 @@ class BxBaseConnection extends BxDolConnection
             ));
         }
     }
-    
+
+    public function getCounterAPI($iProfileId, $bIsMutual, $aParams, $sContentType)
+    {
+        $iCount = $this->{'getConnected' . ($sContentType == BX_CONNECTIONS_CONTENT_TYPE_INITIATORS ? 'Initiators' : 'Content') . 'Count'}($iProfileId, $bIsMutual);
+        return [
+            'count' => $iCount,
+            'countf' => _t(isset($aParams['caption']) ? $aParams['caption'] : '_view_counter', $iCount)
+        ];
+    }
+
     protected function _getJsScript($iProfileId, $sContentType, $bIsMutual, $aHtmlIds, $bDynamicMode = false)
     {
         $sJsObject = $this->getJsObjectName($iProfileId);

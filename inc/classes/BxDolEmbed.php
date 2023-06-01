@@ -39,7 +39,7 @@
 class BxDolEmbed extends BxDolFactoryObject
 {
     protected $_bCssJsAdded = false;
-
+    protected $_sTableName = '';
     /**
      * Get editor object instance by object name
      * @param $sObject object name
@@ -70,6 +70,19 @@ class BxDolEmbed extends BxDolFactoryObject
     public function addJsCss ()
     {
         // override this function in particular editor class
+    }
+    
+    public function getData ($sUrl, $sTheme)
+    {
+        $sData = BxDolEmbedQuery::getLocal($sUrl, $sTheme, $this->_sTableName);
+        if (!$sData){
+            $sData = $this->getDataFromApi($sUrl, $sTheme); 
+            if ($sData){
+                BxDolEmbedQuery::setLocal($sUrl, $sTheme, $this->_sTableName, $sData);
+            }
+        }
+        $aData = json_decode($sData, true);
+        return $aData;
     }
 }
 

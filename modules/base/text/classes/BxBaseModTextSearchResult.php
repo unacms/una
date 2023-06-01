@@ -241,18 +241,34 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
     {
         $CNF = &$this->oModule->_oConfig->CNF;
 
+        $oMetaMenu = null;
+        $bMetaMenu = false;
+
+        /**
+         * Disabled for now, because Author is used only.
         $oMetaMenu = !empty($CNF['OBJECT_MENU_SNIPPET_META']) ? BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->oModule->_oTemplate) : false;
         $bMetaMenu = $oMetaMenu !== false;
+         */
 
+        $oFunctions = BxTemplFunctions::getInstance();
         $oContentInfo = $this->getContentInfoObject();
+        
+        $bSummaryPlain = isset($CNF['PARAM_CHARS_SUMMARY_PLAIN']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN'];
+        $iSummaryPlain = $bSummaryPlain ? (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']) : 0;
 
         foreach ($a as $i => $r) {
-            if (isset($r['author']))
-                $a[$i]['author_data'] = BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]);
+            $sSummary = '';
+            if($bSummaryPlain) {
+                $sSummary = $this->oModule->_oTemplate->getText($r);
+                $sSummary = $oFunctions->getStringWithLimitedLength(strip_tags($sSummary), $iSummaryPlain);
+            }
 
-            $a[$i]['url'] = $this->decodeDataUrl($oContentInfo, $r);
-            $a[$i]['image'] = $oContentInfo->getContentThumb($r['id']);
-            $a[$i]['summary_plain'] = $this->decodeDataSummaryPlain($oContentInfo, $r);
+            $a[$i] = array_merge($a[$i], [
+                'author_data' => isset($r['author']) ? BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]) : '',
+                'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
+                'image' => $oContentInfo->getContentThumb($r['id']),
+                'summary_plain' => $sSummary
+            ]);
 
             if($bMetaMenu) {
                 $oMetaMenu->setContentId($r['id']);

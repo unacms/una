@@ -532,6 +532,7 @@
 	<string name="_adm_bp_mi_page_visibility"><![CDATA[Visibility]]></string>
 	<string name="_adm_bp_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Active]]></string>
+        <string name="_adm_bp_txt_block_active_api"><![CDATA[Active (for App)]]></string>
 	<string name="_adm_bp_txt_block_async"><![CDATA[Asynchronous Mode]]></string>
 	<string name="_adm_bp_txt_block_cache_lifetime"><![CDATA[Block Cache Lifetime (in seconds)]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Attachments]]></string>
@@ -1225,6 +1226,7 @@
         <string name="_adm_nav_txt_items_parent_id"><![CDATA[Parent Item]]></string>
         <string name="_adm_nav_txt_items_parent_id_empty"><![CDATA[No Parent Item]]></string>
         <string name="_adm_nav_txt_items_primary"><![CDATA[Primary]]></string>
+        <string name="_adm_nav_txt_items_active_api"><![CDATA[Active (for App)]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[No Submenu]]></string>
@@ -1499,7 +1501,8 @@
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
     <string name="_adm_stg_cpt_category_location"><![CDATA[Location]]></string>
     <string name="_adm_stg_cpt_category_social_settings"><![CDATA[Social Settings]]></string>
-    <string name="_adm_stg_cpt_category_api"><![CDATA[API]]></string>
+    <string name="_adm_stg_cpt_category_api_general"><![CDATA[General]]></string>
+    <string name="_adm_stg_cpt_category_api_layout"><![CDATA[Layout]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Image height to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
@@ -1717,7 +1720,9 @@
     <string name="_adm_stg_cpt_option_sys_api_cookie_path"><![CDATA[Cookies path]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_secure"><![CDATA[Secure cookies]]></string>
     <string name="_adm_stg_cpt_option_sys_api_cookie_samesite"><![CDATA[Cookies SameSite attribute]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_menu_top"><![CDATA[Top Menu]]></string>
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Flat comments]]></string>
+    <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Search sections]]></string>
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
@@ -1808,6 +1813,7 @@
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_tmi_cpt_launcher"><![CDATA[Launcher]]></string>
+        <string name="_adm_txt_active_api"><![CDATA[Available in App]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>
@@ -2055,6 +2061,7 @@
   <string name="_sys_audit_action_delete_comment"><![CDATA[Comment removed]]></string>
   <string name="_sys_audit_action_feature"><![CDATA[Featured]]></string>
   <string name="_sys_audit_action_unfeature"><![CDATA[Unfeatured]]></string>
+  <string name="_sys_audit_action_resolve"><![CDATA[Marked as resolved]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Added to group admins]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Removed from group admins]]></string>
   <string name="_sys_audit_action_group_role_changed"><![CDATA[Group role was changed]]></string>
@@ -3388,6 +3395,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_pre_lists_report_types_nude"><![CDATA[nude]]></string>
 	<string name="_sys_pre_lists_report_types_other"><![CDATA[other]]></string>
         <string name="_sys_pre_lists_vote_reactions"><![CDATA[Reactions]]></string>
+        <string name="_sys_pre_lists_vote_reactions_default"><![CDATA[React]]></string>
         <string name="_sys_pre_lists_vote_reactions_like"><![CDATA[Like]]></string>
         <string name="_sys_pre_lists_vote_reactions_love"><![CDATA[Love]]></string>
         <string name="_sys_pre_lists_vote_reactions_joy"><![CDATA[Haha]]></string>

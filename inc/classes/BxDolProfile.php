@@ -141,13 +141,19 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         else
             $oProfile = $mixedProfileId;
 
-        return [
+        $aRv = [
             'id' => $oProfile->id(),
             'display_type' =>  $sDisplayType,
             'display_name' => $oProfile->getDisplayName(),
-            'url' => bx_relative_url($oProfile->getUrl()),
-            'url_avatar' => $oProfile->getAvatar(),
+            'url' => bx_api_get_relative_url($oProfile->getUrl()),
+            'url_avatar' => $oProfile->{isset($aParams['get_avatar']) && method_exists($oProfile, $aParams['get_avatar']) ? $aParams['get_avatar'] : 'getAvatar'}(),
+            'module' => $oProfile->getModule(),
         ];
+        
+        if(isset($aParams['with_info']))
+            $aRv['info'] = bx_srv($oProfile->getModule(), 'get_info', [$oProfile->getContentId(), false]);
+        
+        return $aRv;
     }
     
     /**
@@ -286,7 +292,16 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id'], $aParams));
     }
-    
+
+    /**
+     * Get profile unit for API calls
+     */
+    public function getUnitAPI($iProfileId = 0, $aParams = array())
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_unit_api', array($aInfo['content_id'], $aParams));
+    }
+
     /**
      * Get badges
      */

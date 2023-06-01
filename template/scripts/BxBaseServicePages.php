@@ -34,7 +34,7 @@ class BxBaseServicePages extends BxDol
     /** 
      * @ref bx_system_general-get_page_by_request "get_page_by_request"
      */
-    public function serviceGetPageByRequest ($sRequest)
+    public function serviceGetPageByRequest ($sRequest, $sBlocks = '', $sParams = '')
     {
         $mixed = BxDolPage::getPageBySeoLink($sRequest);
 
@@ -42,7 +42,17 @@ class BxBaseServicePages extends BxDol
             $aRes = ['redirect' => $sUrl];
         }
         elseif (($oPage = $mixed) && is_object($oPage)) {
-            return $oPage->getPageAPI();
+            if(!empty($sParams)) {
+                $aParams = json_decode($sParams, true);
+                if(!empty($aParams) && is_array($aParams))
+                    $_GET = array_merge($_GET, $aParams);
+            }
+
+            $aBlocks = [];
+            if(!empty($sBlocks))
+                $aBlocks = explode(',', $sBlocks);
+
+            return $oPage->getPageAPI($aBlocks);
         }
         else {
             $aRes = ['code' => 404, 'error' => _t("_sys_request_page_not_found_cpt")];

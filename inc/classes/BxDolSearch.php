@@ -85,6 +85,7 @@ class BxDolSearch extends BxDol
     {
         $sCode = $this->_bDataProcessing ? array() : '';
 
+        $bIsApi = bx_is_api();
         $bSingle = count($this->aChoice) == 1;
         foreach ($this->aChoice as $sKey => $aValue) {
             if (!$this->_sMetaType && !$aValue['GlobalSearch'])
@@ -107,12 +108,16 @@ class BxDolSearch extends BxDol
             $oEx->setCenterContentUnitSelector(false);
             $oEx->setSingleSearch($bSingle);
             $oEx->setCustomSearchCondition($this->_aCustomSearchCondition);
+            
             $oEx->aCurrent = array_merge_recursive($oEx->aCurrent, $this->_aCustomCurrentCondition);
             if ($this->_sUnitTemplate)
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
 
-            if ($this->_bDataProcessing)
-                $sCode[$sKey] = $oEx->getSearchData();
+            if ($this->_bDataProcessing) {
+                $aSearchData = $oEx->getSearchData();
+
+                $sCode[$sKey] = $bIsApi ? $oEx->decodeData($aSearchData) : $aSearchData;
+            }
             else
                 $sCode .= $this->_bRawProcessing ? $oEx->processingRaw() : $oEx->processing();
         }
@@ -323,6 +328,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
     protected $_sMode = '';
+    protected $_aParams = [];
     protected $_sCategoryObject = '';
     protected $_aCustomSearchCondition = array();
 
@@ -495,20 +501,25 @@ class BxDolSearchResult implements iBxDolReplaceable
 
     function processingAPI () 
     {
+        $sModule = 'system';
         $sUnitType = 'content';
-        if(method_exists($this->oModule, 'serviceActAsProfile') && $this->oModule->serviceActAsProfile())
-             $sUnitType = 'profile';
-        if(method_exists($this->oModule, 'serviceIsGroupProfile') && $this->oModule->serviceIsGroupProfile())
-             $sUnitType = 'context';
+        if(!empty($this->oModule)) {
+            $sModule = $this->oModule->getName();
+
+            if(method_exists($this->oModule, 'serviceActAsProfile') && $this->oModule->serviceActAsProfile())
+                 $sUnitType = 'profile';
+            if(method_exists($this->oModule, 'serviceIsGroupProfile') && $this->oModule->serviceIsGroupProfile())
+                 $sUnitType = 'context';
+        }
 
         $sUnit =  'list';
-        if ($this->sUnitViewDefault == 'showcase' || $this->sUnitViewDefault == 'gallery')
+        if(in_array($this->sUnitViewDefault, ['showcase', 'gallery']))
             $sUnit = 'card';
-        
+
         return [
-            'module' => $this->oModule->getName(),
+            'module' => $sModule,
             'unit' => 'general-' . $sUnitType . '-' . $sUnit,
-            'request_url' => '/api.php?r=' . $this->oModule->getName() . '/browse/&params[]=',
+            'request_url' => !empty($this->aCurrent['api_request_url']) ? $this->aCurrent['api_request_url'] : '/api.php?r=' . $sModule . '/browse/&params[]=',
             'data' => $this->decodeData($this->getSearchData()),
             'params' => [
                 'per_page' => $this->aCurrent['paginate']['perPage'],
