@@ -933,19 +933,15 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      */
     public function serviceSearchKeywordResult ()
     {
-        $sKeyword = bx_get('keyword');
+        $sKeyword = bx_process_input(bx_get('keyword'));
         $bKeyword = $sKeyword !== false;
 
-        if(bx_is_api()) {
-            $sSection = bx_get('section');
-            if(empty($sSection))
-                $sSection = BxDolDb::getInstance()->fromCache('sys_global_search_items', 'getColumn', 'SELECT `ObjectName` FROM `sys_objects_search` WHERE `GlobalSearch`=\'1\' ORDER BY `Order` ASC');
-                    
-            return $this->serviceGetDataSearchApi([
-                'keyword' => $sKeyword,
-                'section' => $sSection
+        if(bx_is_api())
+            return $this->serviceGetDataSearchApi(['params' => [
+                    'keyword' => $sKeyword,
+                    'section' => bx_process_input(bx_get('section'))
+                ]
             ]);
-        }
 
         $sCode = '';
         if($bKeyword) {
@@ -968,25 +964,50 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         if(!bx_is_api())
             return false;
 
-        $aParams = array_merge([
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aSections = [];
+        $aSectionsAll = BxDolDb::getInstance()->fromCache(
+            'sys_global_search_pairs', 
+            'getPairs', 
+            'SELECT `ObjectName` AS `name`, `Title` AS `title` FROM `sys_objects_search` WHERE `GlobalSearch`=\'1\' ORDER BY `Order` ASC',
+            'name', 'title'
+        );
+
+        $aSectionNames = explode(',', getParam('sys_api_search_sections'));
+        foreach($aSectionNames as $sSectionName) {
+            if(!isset($aSectionsAll[$sSectionName]))
+                continue;
+
+            $aSections[$sSectionName] = [
+                'name' => $sSectionName,
+                'title' => _t($aSectionsAll[$sSectionName])
+            ];
+        }
+
+        $aParamsBrowse = array_merge([
             'keyword' => '',
             'section' => '',
+            'sections' => array_values($aSections),
             'start' => 0,
             'per_page' => 12
-        ], is_string($aParams) ? json_decode($aParams, true) : $aParams);
+        ], !empty($aParams['params']) && is_array($aParams['params']) ? $aParams['params'] : []);
 
-        if(!empty($aParams['section']) && is_string($aParams['section']))
-            $aParams['section'] = explode(',', $aParams['section']);
+        if(empty($aParamsBrowse['section']))
+            $aParamsBrowse['section'] = array_keys($aSections);
+        else if(is_string($aParamsBrowse['section']))
+            $aParamsBrowse['section'] = explode(',', $aParamsBrowse['section']);
 
         $sClass = 'BxTemplSearch';
-        $oSearch = new $sClass($aParams['section']);
+        $oSearch = new $sClass($aParamsBrowse['section']);
         $oSearch->setLiveSearch(true);
         $oSearch->setDataProcessing(true);
-        $oSearch->setCustomSearchCondition(['keyword' => $aParams['keyword']]);
+        $oSearch->setCustomSearchCondition(['keyword' => $aParamsBrowse['keyword']]);
         $oSearch->setCustomCurrentCondition([
             'paginate' => [
-                'start' => $aParams['start'],
-                'perPage' => $aParams['per_page'],
+                'forceStart' => $aParamsBrowse['start'],
+                'perPage' => $aParamsBrowse['per_page'],
             ]
         ]);
 
@@ -999,14 +1020,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             $aData = array_merge($aData, $aItems);
         }
 
-        if(count($aData) > $aParams['per_page'])
-            $aData = array_slice($aData, $aParams['start'], $aParams['per_page']);
+        if(count($aData) > $aParamsBrowse['per_page'])
+            $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
 
         return [
             bx_api_get_block('browse', [
                 'unit' => 'search-results',  
-                'request_url' => '/api.php?r=system/get_data_search/TemplServices&params[]=',
-                'params' => $aParams,
+                'request_url' => '/api.php?r=system/get_data_search_api/TemplServices&params[]=',
+                'params' => $aParamsBrowse,
                 'data' => $aData
             ])
         ];
