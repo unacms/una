@@ -1232,7 +1232,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         $aMenus = BxDolMenuQuery::getMenuObjects();
 
-        $aResults = [];
+        $aResults = ['' => _t('_sys_please_select')];
         foreach($aMenus as $aMenu)
             if($aMenu['module'] == 'system')
                 $aResults[$aMenu['object']] = _t($aMenu['title']);
