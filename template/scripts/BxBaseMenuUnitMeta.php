@@ -15,11 +15,26 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
 {
     protected $_sStylePrefix;
 
+    protected $_sContext;
+
+    protected $_iButtons;
+    protected $_iButtonsMax;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
 
         $this->_sStylePrefix = 'sys-meta';
+
+        $this->_sContext = '';
+
+        $this->_iButtons = 0;
+        $this->_iButtonsMax = false;
+    }
+
+    public function setContext($sContext)
+    {
+        $this->_sContext = $sContext;
     }
 
     public function getUnitMetaItemLink($sContent, $aAttrs = array())
@@ -34,12 +49,26 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
 
     public function getUnitMetaItemButton($sContent, $aAttrs = array())
     {
-        return $this->getUnitMetaItemButtonOrLink('button', $sContent, $aAttrs);
+        if(!$this->_buttonsCounterCheck())
+            return false;
+
+        $sResult = $this->getUnitMetaItemButtonOrLink('button', $sContent, $aAttrs);
+        if(!empty($sResult))
+            $this->_buttonsCounterIncrement();
+
+        return $sResult;
     }
 
     public function getUnitMetaItemButtonSmall($sContent, $aAttrs = array())
     {
-        return $this->getUnitMetaItemButtonOrLink('sbutton', $sContent, $aAttrs);
+        if(!$this->_buttonsCounterCheck())
+            return false;
+
+        $sResult = $this->getUnitMetaItemButtonOrLink('sbutton', $sContent, $aAttrs);
+        if(!empty($sResult))
+            $this->_buttonsCounterIncrement();
+
+        return $sResult;
     }
 
     public function getUnitMetaItemNl($sContent = '')
@@ -200,6 +229,39 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         ], $aData);
 
         return $aItemData;
+    }
+
+    protected function _buttonsCounterReset()
+    {
+        if($this->_iButtonsMax === false)
+            return;
+
+        $this->_iButtons = 0;
+    }
+
+    protected function _buttonsCounterIncrement()
+    {
+        if($this->_iButtonsMax === false)
+            return;
+
+        $this->_iButtons++;
+    }
+
+    protected function _buttonsCounterCheck()
+    {
+        if($this->_iButtonsMax === false)
+            return true;
+
+        return $this->_iButtons < $this->_iButtonsMax;
+    }
+
+    protected function _isVisibleInContext($aItem)
+    {
+        if(empty($this->_sContext) || empty($aItem['hidden_on_cxt']))
+            return true;
+
+        $aContexts = explode(',', $aItem['hidden_on_cxt']);
+        return !in_array($this->_sContext, $aContexts);
     }
 }
 

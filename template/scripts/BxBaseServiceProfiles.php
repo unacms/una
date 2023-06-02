@@ -774,6 +774,7 @@ class BxBaseServiceProfiles extends BxDol
         $o->setDesignBoxTemplateId($iDesignBox);
         $o->setDisplayEmptyMsg($bDisplayEmptyMsg);
         $o->setAjaxPaginate($bAjaxPaginate);
+        $o->setUnitParams(['context' => $sMode]);
 
         if ($o->isError)
             return '';

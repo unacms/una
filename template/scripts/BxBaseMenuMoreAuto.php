@@ -76,7 +76,8 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         if(is_bool($this->_bMoreAuto))
             return $this->_bMoreAuto;
 
-        $aResult = $this->getMenuItems();
+        if(!isset($this->_aObject['menu_items']))
+            $this->_aObject['menu_items'] = $this->getMenuItemsRaw();
 
         $sItem = BX_DEF_MENU_ITEM_MORE_AUTO;
         if(!empty($this->_aObject['menu_items'][$sItem]) && is_array($this->_aObject['menu_items'][$sItem]) && (int)$this->_aObject['menu_items'][$sItem]['active'] == 1)
@@ -89,18 +90,18 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
     protected function _getTemplateVars()
     {
+        $aResult = parent::_getTemplateVars();
+
         $bMoreAuto = $this->_isMoreAuto();
 
-        $aResult = array_merge(parent::_getTemplateVars(), array(
+        return array_merge($aResult, [
             'html_id' => $this->_getHtmlIdMain(),
-            'bx_if:show_more_auto_class' => array(
+            'bx_if:show_more_auto_class' => [
                 'condition' => $bMoreAuto,
-                'content' => array()
-            ),
+                'content' => []
+            ],
             'js_code' => $bMoreAuto ? $this->_getJsCodeMoreAuto() : ''
-        ));
-
-        return $aResult;
+        ]);
     }
 
     protected function _getJsCodeMoreAuto()

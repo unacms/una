@@ -20,8 +20,11 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
     {
         parent::__construct($aObject, $oTemplate);
 
+        $this->_iButtonsMax = 2;
         $this->_bShowZeros = true;
+
         $this->_bContentPublic = false;
+        $this->_oContentProfile = null;
 
         $this->_aConnectionToFunctionCheck = $this->_oModule->_oConfig->getConnectionToFunctionCheck();
     }
@@ -66,7 +69,8 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemFriends($aItem)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile)
             return false;
@@ -86,12 +90,19 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
                 'title' => $sTitle
             ]);
 
-        return $this->getUnitMetaItemText($sTitle);
+        //return $this->getUnitMetaItemText($sTitle);
+        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+            'href' => $this->_oContentProfile->getUrl()
+        ]);
+
+        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 
     protected function _getMenuItemFriendsMutual($aItem)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile)
             return false;
@@ -116,7 +127,8 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemSubscribers($aItem)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile)
             return false;
@@ -142,6 +154,9 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemConnection($sConnection, $sAction, &$aItem)
     {
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
+
         if(!isLogged() || $this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection][$sAction]}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
@@ -164,18 +179,18 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
                 ]
             ]);
 
-        return [
-            $this->getUnitMetaItemButton($sTitle, array(
-                'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-                'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
-            )),
-            'bx-menu-item-button'
-        ];
+        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+            'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
+        ]);
+
+        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 
     protected function _getMenuItemMembership($aItem)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile)
             return false;

@@ -41,6 +41,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 
     public function setContentId($iContentId)
     {
+        $this->_iButtons = 0;
         $this->_iContentId = (int)$iContentId;
 
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);

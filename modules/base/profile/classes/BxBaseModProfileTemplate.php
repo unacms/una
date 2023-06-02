@@ -54,7 +54,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile unit
      */
-    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
+    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = [])
     {
         list($sTemplate) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate);
 
@@ -94,7 +94,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplate, $aVars);
     }
 
-    public function unitAPI($aData)
+    public function unitAPI($aData, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -122,13 +122,16 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             $oMetaMenu->setContentId($iContentId);
             $oMetaMenu->setContentPublic($bPublic);
+            if(isset($aParams['context']))
+                $oMetaMenu->setContext($aParams['context']);
+
             $aResult['meta'] = $oMetaMenu->getCodeAPI();
         }
 
         return $aResult;
     }
 
-    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
+    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -223,7 +226,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $aTmplVarsMeta = array();
         if(substr($sTemplate, 0, 8) != 'unit_wo_')
-            $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
+            $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic, $aParams);
         
         $sCoverData = isset($aData['cover_data']) ? $aData['cover_data'] : '';
 
@@ -271,31 +274,31 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         return true;
     }
 
-    function getSnippetMenuVars ($iProfileId, $bPublic = null)
+    function getSnippetMenuVars ($iProfileId, $bPublic = null, $aParams = [])
     {
-        if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
-            return array();
-        
         $CNF = &$this->_oConfig->CNF;
-        
-        if (null === $bPublic) {
+
+        $oProfile = false;
+        if(empty($CNF['OBJECT_MENU_SNIPPET_META']) || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return [];
+
+        $oMetaMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
+        if(!$oMetaMenu) 
+            return [];
+
+        if ($bPublic === null) {
             $aData = $this->getModule()->serviceGetContentInfoById($oProfile->getContentId());
             $bPublic = $this->isProfilePublic($aData);
         }
-        
-        $aTmplVarsMeta = array();
-        if (!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
-            $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
-            if($oMenuMeta) {
-                $oMenuMeta->setContentId($oProfile->getContentId());
-                $oMenuMeta->setContentPublic($bPublic);
-                $aTmplVarsMeta = array(
-                    'meta' => $oMenuMeta->getCode()
-                );
-            }
-        }
 
-        return $aTmplVarsMeta;
+        $oMetaMenu->setContentId($oProfile->getContentId());
+        $oMetaMenu->setContentPublic($bPublic);
+        if(isset($aParams['context']))
+            $oMetaMenu->setContext($aParams['context']);
+
+        return [
+            'meta' => $oMetaMenu->getCode()
+        ];
     }
 
     function getBlockCover($aData, $aParams = [])

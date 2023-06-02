@@ -333,12 +333,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return '';
     }
 
-    public function serviceGetSnippetMenuVars($iProfileId, $bPublic = null)
+    public function serviceGetSnippetMenuVars($iProfileId, $bPublic = null, $aParams = [])
     {
-        return $this->_oTemplate->getSnippetMenuVars($iProfileId, $bPublic);
+        return $this->_oTemplate->getSnippetMenuVars($iProfileId, $bPublic, $aParams);
     }
-        
-	public function serviceGetPageObjectForPageTrigger ($sPageTriggerName)
+
+    public function serviceGetPageObjectForPageTrigger ($sPageTriggerName)
     {
         if (isset($this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY']) && $this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY'] == $sPageTriggerName)
         	return $this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY'];
@@ -388,7 +388,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->serviceProfileUnit ($iContentId, $aParams);
     }
 
-    public function serviceProfileUnit ($iContentId, $aParams = array())
+    public function serviceProfileUnit ($iContentId, $aParams = [])
     {
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
@@ -398,28 +398,33 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         $bCheckPrivateContent = isset($aParams['check_private_content']) ? (bool)$aParams['check_private_content'] : true;
 
-        $sTemplate = 'unit.html';
-        $sTemplateSize = false;
-        $aTemplateVars = array();
+        $aUnitTemplate = ['name' => 'unit.html', 'size' => false, 'vars' => []];
         if(!empty($aParams['template'])) {
-            if(is_string($aParams['template']))
-                $sTemplate = $aParams['template'] . '.html';
-            else if(is_array($aParams['template'])) {
-                if(!empty($aParams['template']['name']))
-                    $sTemplate = $aParams['template']['name'] . '.html';
+            $mixedTemplate = $aParams['template'];
+            unset($aParams['template']);
 
-                if(!empty($aParams['template']['size']))
-                    $sTemplateSize = $aParams['template']['size'];
+            if(is_string($mixedTemplate))
+                $aUnitTemplate['name'] = $mixedTemplate . '.html';
+            else if(is_array($mixedTemplate)) {
+                if(!empty($mixedTemplate['name']))
+                    $aUnitTemplate['name'] = $mixedTemplate['name'] . '.html';
 
-                if(!empty($aParams['template']['vars']))
-                    $aTemplateVars = $aParams['template']['vars'];
+                if(!empty($mixedTemplate['size']))
+                    $aUnitTemplate['size'] = $mixedTemplate['size'];
+
+                if(!empty($mixedTemplate['vars']))
+                    $aUnitTemplate['vars'] = $mixedTemplate['vars'];
             }
         }
 
-        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array($sTemplate, $sTemplateSize, $aTemplateVars));
+        $aUnitParams = [];
+        if(!empty($aParams))
+            $aUnitParams = $aParams;
+
+        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array_values($aUnitTemplate), $aUnitParams);
     }
 
-    public function serviceProfileUnitApi ($iContentId, $aParams = array())
+    public function serviceProfileUnitApi ($iContentId, $aParams = [])
     {
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
@@ -427,7 +432,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         list($iContentId, $aContentInfo) = $mixedContent;
 
-        return $this->_oTemplate->unitAPI($aContentInfo);
+        return $this->_oTemplate->unitAPI($aContentInfo, $aParams);
     }
 
     public function serviceHasImage ($iContentId)

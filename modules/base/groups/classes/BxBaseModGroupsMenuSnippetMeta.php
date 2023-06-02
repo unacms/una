@@ -16,19 +16,20 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         parent::__construct($aObject, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
-        if (isset($CNF['OBJECT_CONNECTIONS'])){
-            $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = array(
+
+        if(isset($CNF['OBJECT_CONNECTIONS']))
+            $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = [
                 'add' => 'checkAllowedFanAdd', 
                 'remove' => 'checkAllowedFanRemove'
-            );
-
-            $this->_aConnectionToFunctionTitle[$CNF['OBJECT_CONNECTIONS']] = '_getMenuItemConnectionsTitle';
-        }
+            ];
     }
 
     protected function _getMenuItemJoinPaid($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!isLogged() || $this->_oModule->checkAllowedFanAdd($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
@@ -36,13 +37,13 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
         if(!$oConnection)
             return false;
-        
-        $sTitle = $this->_getMenuItemConnectionsTitle('add', $oConnection);
+
+        $sTitle = $this->_oModule->getMenuItemTitleByConnection($CNF['OBJECT_CONNECTIONS'], 'add', $this->_oContentProfile->id());
         if(empty($sTitle))
             return false;
 
         return [
-            $this->getUnitMetaItemButton(_t('_bx_groups_menu_item_title_pay_and_join'), [
+            $this->getUnitMetaItemButton(_t(!empty($CNF['T']['menu_item_title_sm_join_paid']) ? $CNF['T']['menu_item_title_sm_join_paid'] : '_sys_menu_item_title_sm_join_paid'), [
                 'href' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_JOIN_ENTRY'], [
                     'profile_id' => $this->_oContentProfile->id()
                 ]))
@@ -53,15 +54,22 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
 
     protected function _getMenuItemJoin($aItem)
     {
-        if (isset($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']))
-            return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return false;
+        if(!isset($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        return $this->_getMenuItemConnection($CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
     }
 
     protected function _getMenuItemLeave($aItem)
     {
-        return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        return $this->_getMenuItemConnection($CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
     }
 
     protected function _getMenuItemPrivacy($aItem)
@@ -81,6 +89,9 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
     protected function _getMenuItemMembers($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile || empty($CNF['OBJECT_CONNECTIONS']))
             return false;
@@ -106,36 +117,6 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         ], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS));
     }
 
-    protected function _getMenuItemConnectionsTitle($sAction, &$oConnection)
-    {
-        $iProfile = bx_get_logged_profile_id();
-        $iContentProfile = $this->_oContentProfile->id();
-
-        $aResult = array();
-        if($oConnection->isConnectedNotMutual($iProfile, $iContentProfile))
-            $aResult = array(
-                'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_leave_cancel'),
-            );
-        else if($oConnection->isConnectedNotMutual($iContentProfile, $iProfile))
-            $aResult = array(
-                'add' => _t('_sys_menu_item_title_sm_join_confirm'),
-                'remove' => _t('_sys_menu_item_title_sm_leave_reject'),
-            );
-        else if($oConnection->isConnected($iProfile, $iContentProfile, true))
-            $aResult = array(
-                'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_leave'),
-            );
-        else
-            $aResult = array(
-                'add' => _t('_sys_menu_item_title_sm_join'),
-                'remove' => '',
-            );
-
-        return !empty($sAction) && isset($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
-    }
-
     protected function _getMenuItemCountry($aItem)
     {
         return $this->_getMenuItemLocation($aItem, true);
@@ -149,6 +130,9 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
     protected function _getMenuItemLocation($aItem, $bCountryOnly = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
 
         if(!$this->_bContentPublic || !$this->_oContentProfile || empty($CNF['OBJECT_CONNECTIONS']))
             return false;

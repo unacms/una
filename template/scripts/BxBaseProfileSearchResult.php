@@ -165,10 +165,13 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
         if(!$oProfile)
             return '';
 
-        if($this->_bIsApi)
-            return $oProfile->getUnitAPI();
+        $aParams = $this->aUnitParams;
 
-        return $oProfile->getUnit(0, ['template' => substr($this->sUnitTemplate, 0, -5)]);
+        if($this->_bIsApi)
+            return $oProfile->getUnitAPI(0, $aParams);
+
+        $aParams['template'] = substr($this->sUnitTemplate, 0, -5);
+        return $oProfile->getUnit(0, $aParams);
     }
 
     function getAlterOrder()

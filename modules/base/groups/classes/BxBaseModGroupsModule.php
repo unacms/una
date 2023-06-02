@@ -506,7 +506,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(bx_is_api()) {
+        if(!bx_is_api()) {
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
             if(!$iProfileId)
                 return [];
@@ -1920,6 +1920,46 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         }
 
         return $aResult;
+    }
+
+    public function getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId);
+        if(!empty($aResult))
+            return $aResult;
+
+        $oConnection = BxDolConnection::getObjectInstance($sConnection);
+        if(!$oConnection)
+            return false;
+
+        if(!$iInitiatorProfileId)
+            $iInitiatorProfileId = bx_get_logged_profile_id();
+
+        $aResult = [];
+        if($oConnection->isConnectedNotMutual($iInitiatorProfileId, $iContentProfileId))
+            $aResult = [
+                'add' => '',
+                'remove' => _t(!empty($CNF['T']['menu_item_title_sm_leave_cancel']) ? $CNF['T']['menu_item_title_sm_leave_cancel'] : '_sys_menu_item_title_sm_leave_cancel'),
+            ];
+        else if($oConnection->isConnectedNotMutual($iContentProfileId, $iInitiatorProfileId))
+            $aResult = [
+                'add' => _t(!empty($CNF['T']['menu_item_title_sm_join_confirm']) ? $CNF['T']['menu_item_title_sm_join_confirm'] : '_sys_menu_item_title_sm_join_confirm'),
+                'remove' => _t(!empty($CNF['T']['menu_item_title_sm_leave_reject']) ? $CNF['T']['menu_item_title_sm_leave_reject'] : '_sys_menu_item_title_sm_leave_reject'),
+            ];
+        else if($oConnection->isConnected($iInitiatorProfileId, $iContentProfileId, true))
+            $aResult = [
+                'add' => '',
+                'remove' => _t(!empty($CNF['T']['menu_item_title_sm_leave']) ? $CNF['T']['menu_item_title_sm_leave'] : '_sys_menu_item_title_sm_leave'),
+            ];
+        else
+            $aResult = [
+                'add' => _t(!empty($CNF['T']['menu_item_title_sm_join']) ? $CNF['T']['menu_item_title_sm_join'] : '_sys_menu_item_title_sm_join'),
+                'remove' => '',
+            ];
+
+        return !empty($sAction) && isset($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())

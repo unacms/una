@@ -900,14 +900,17 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $sText = $oMetatags->metaParse($aData[$CNF['FIELD_ID']], $sText);
         }
 
-        $aTmplVarsMeta = array();
+        $aTmplVarsMeta = [];
         if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
             $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
             if($oMenuMeta) {
                 $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
-                $aTmplVarsMeta = array(
+                if(isset($aParams['context']))
+                    $oMenuMeta->setContext($aParams['context']);
+
+                $aTmplVarsMeta = [
                     'meta' => $oMenuMeta->getCode()
-                );
+                ];
             }
         }
 
