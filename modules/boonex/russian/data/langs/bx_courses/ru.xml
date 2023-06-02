@@ -303,6 +303,7 @@
     <string name="_bx_courses_menu_item_title_sm_members"><![CDATA[{0} студенты]]></string>
     <string name="_bx_courses_menu_item_title_system_sm_join"><![CDATA[Посетить]]></string>
     <string name="_bx_courses_menu_item_title_sm_join"><![CDATA[Посетить]]></string>
+    <string name="_bx_courses_menu_item_title_sm_join_paid"><![CDATA[Оплатить и посетить]]></string>
     <string name="_bx_courses_menu_item_title_sm_join_confirm"><![CDATA[Принять запрос на посещение]]></string>
     <string name="_bx_courses_menu_item_title_sm_leave"><![CDATA[Покинуть]]></string>
     <string name="_bx_courses_menu_item_title_sm_leave_reject"><![CDATA[Отклонить запрос на посещение]]></string>

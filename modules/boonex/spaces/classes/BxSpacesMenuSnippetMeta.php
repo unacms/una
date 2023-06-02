@@ -18,7 +18,6 @@ class BxSpacesMenuSnippetMeta extends BxBaseModGroupsMenuSnippetMeta
         parent::__construct($aObject, $oTemplate);
 
         unset($this->_aConnectionToFunctionCheck['sys_profiles_friends']);
-        unset($this->_aConnectionToFunctionTitle['sys_profiles_friends']);
     }
 
     protected function _getMenuItemParent($aItem)
