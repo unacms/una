@@ -363,6 +363,16 @@
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_tablet"><![CDATA[планшете]]></string>
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_desktop"><![CDATA[настольном компьютере]]></string>
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_mobile"><![CDATA[мобильное приложение]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_hidden_on_pt"><![CDATA[Скрыть на страницах типа]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_pt"><![CDATA[Скрыть на страницах типа]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_hidden_on_col"><![CDATA[Скрыть в колонках]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_col"><![CDATA[Скрыть в колонках]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_col_thin"><![CDATA[Тонкая]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_col_half"><![CDATA[Половина]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_col_wide"><![CDATA[Широкая]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_col_full"><![CDATA[Полная]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_hidden_on_cxt"><![CDATA[Скрыть в контекстах]]></string>
+    <string name="_bx_dev_nav_txt_items_hidden_on_cxt"><![CDATA[Скрыть в контекстах]]></string>
     <string name="_bx_dev_nav_txt_sys_items_copyable"><![CDATA[Можно копировать]]></string>
     <string name="_bx_dev_nav_txt_items_copyable"><![CDATA[Можно копировать]]></string>
     <string name="_bx_dev_nav_btn_sys_items_add"><![CDATA[Добавить]]></string>

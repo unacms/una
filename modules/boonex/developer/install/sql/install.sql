@@ -523,6 +523,9 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_nav_item', @sName, 'submenu_popup', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_submenu_popup', '_bx_dev_nav_txt_items_submenu_popup', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'visibility_custom', '', '', 0, 'textarea', '_bx_dev_nav_txt_sys_items_visibility_custom', '_bx_dev_nav_txt_items_visibility_custom', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'hidden_on', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on', '_bx_dev_nav_txt_items_hidden_on', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
+('bx_developer_nav_item', @sName, 'hidden_on_pt', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on_pt', '_bx_dev_nav_txt_items_hidden_on_pt', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
+('bx_developer_nav_item', @sName, 'hidden_on_col', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on_col', '_bx_dev_nav_txt_items_hidden_on_col', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
+('bx_developer_nav_item', @sName, 'hidden_on_cxt', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_hidden_on_cxt', '_bx_dev_nav_txt_items_hidden_on_cxt', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'do_submit', '_bx_dev_nav_btn_items_add', '', 0, 'submit', '_bx_dev_nav_btn_sys_items_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -543,10 +546,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_add', 'submenu_popup', 2147483647, 1, 12),
 ('bx_developer_nav_item_add', 'visibility_custom', 2147483647, 1, 13),
 ('bx_developer_nav_item_add', 'hidden_on', 2147483647, 1, 14),
-('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 15),
-('bx_developer_nav_item_add', 'controls', 2147483647, 1, 16),
-('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 17),
-('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 18),
+('bx_developer_nav_item_add', 'hidden_on_pt', 2147483647, 1, 15),
+('bx_developer_nav_item_add', 'hidden_on_col', 2147483647, 1, 16),
+('bx_developer_nav_item_add', 'hidden_on_cxt', 2147483647, 1, 17),
+('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 18),
+('bx_developer_nav_item_add', 'controls', 2147483647, 1, 19),
+('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 20),
+('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 21),
 
 ('bx_developer_nav_item_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_nav_item_edit', 'module', 2147483647, 1, 2),
@@ -563,10 +569,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_edit', 'submenu_popup', 2147483647, 1, 13),
 ('bx_developer_nav_item_edit', 'visibility_custom', 2147483647, 1, 14),
 ('bx_developer_nav_item_edit', 'hidden_on', 2147483647, 1, 15),
-('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 16),
-('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 17),
-('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 18),
-('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 19);
+('bx_developer_nav_item_edit', 'hidden_on_pt', 2147483647, 1, 16),
+('bx_developer_nav_item_edit', 'hidden_on_col', 2147483647, 1, 17),
+('bx_developer_nav_item_edit', 'hidden_on_cxt', 2147483647, 1, 18),
+('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 19),
+('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 20),
+('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 21),
+('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 22);
 
 --
 -- Page Builder -> Page.

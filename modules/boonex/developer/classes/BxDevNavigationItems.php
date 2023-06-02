@@ -150,6 +150,23 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
             BX_DB_HIDDEN_DESKTOP => _t('_bx_dev_nav_txt_sys_items_hidden_on_desktop'),
             BX_DB_HIDDEN_MOBILE => _t('_bx_dev_nav_txt_sys_items_hidden_on_mobile')
         );
+
+        $aInputs['hidden_on_pt']['values'] = [];
+        $aPageTypes = BxDolPageQuery::getPageTypes();
+        foreach($aPageTypes as $aPageType) {
+            $iPageType = (int)$aPageType['id'];
+            if($iPageType == 1)
+                continue;
+
+            $aInputs['hidden_on_pt']['values'][$iPageType - 1] = _t($aPageType['title']);
+        }
+
+        $aInputs['hidden_on_col']['values'] = [
+            1 => _t('_adm_nav_txt_block_hidden_on_col_thin'),
+            2 => _t('_adm_nav_txt_block_hidden_on_col_half'),
+            3 => _t('_adm_nav_txt_block_hidden_on_col_wide'),
+            4 => _t('_adm_nav_txt_block_hidden_on_col_full')
+        ];
     }
 }
 /** @} */
