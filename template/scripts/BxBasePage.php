@@ -400,11 +400,18 @@ class BxBasePage extends BxDolPage
      */
     public function getPageAPI ($aBlocks = [])
     {
+        $query_string  = '';
+
+        if (isset(bx_get('params')[2]) && bx_get('params')[2] != ''){
+            $array = json_decode(bx_get('params')[2], true);
+            $query_string = http_build_query($array);
+
+        }
         $a = [
             'id' => $this->_aObject['id'],
             'title' => $this->_getPageTitle(),
             'uri' => $this->_aObject['uri'],
-            'url' => bx_get('params')[0],
+            'url' => bx_get('params')[0] . ($query_string != '' ? '?' . $query_string : ''),
             'author' => $this->_aObject['author'],
             'added' => $this->_aObject['added'],
             'module' => $this->getModule(),
