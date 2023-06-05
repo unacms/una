@@ -471,7 +471,7 @@ class BxBasePage extends BxDolPage
             $a['user'] = [
                 'id' => $o->id(),
                 'display_name' => $o->getDisplayName(),
-                'url' => $o->getUrl(),
+                'url' => bx_api_get_relative_url($o->getUrl()),
                 'avatar' => $o->getAvatar(),
                 'info' => $o->getInfo(),
                 'notifications' => 0,
