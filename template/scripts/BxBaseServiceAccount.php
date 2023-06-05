@@ -45,9 +45,36 @@ class BxBaseServiceAccount extends BxDol
      */
     public function serviceCreateAccountForm ($aParams = array())
     {
-        if (isLogged() && 'create-account' == bx_get('i')){
-            header('Location: ' . BX_DOL_URL_ROOT);
-            exit;
+        $bApi = bx_is_api();
+
+        if (isLogged() && 'create-account' == bx_get('i')) {
+            if (!$bApi) {
+                header('Location: ' . BX_DOL_URL_ROOT);
+                exit;
+            }
+            else
+                return [
+                    bx_api_get_msg('You are already joined 🐵! Redirecting...'),
+                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 3000]],
+                ];
+        }
+
+        if($bApi) {
+            $mixedResult = $this->_oAccountForms->createAccountForm($aParams);
+            if(is_array($mixedResult))
+                return [bx_api_get_block('form', $mixedResult, [
+                    'ext' => [
+                        'request' => ['url' => '/api.php?r=system/create_account_form/TemplServiceAccount', 'immutable' => true]
+                    ]
+                ])];
+            else if($mixedResult === true)
+                return [
+                    bx_api_get_block('redirect', ['uri' => '/posts-home', 'timeout' => 1000]),
+                    bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
+                    bx_api_get_msg('Join Success 👍! Redirecting...', ['id' => 3]),
+                ];
+            else
+                return bx_api_get_msg($mixedResult);
         }
 
         $oPemalink = BxDolPermalinks::getInstance();

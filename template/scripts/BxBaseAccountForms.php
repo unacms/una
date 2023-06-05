@@ -40,6 +40,8 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     public function createAccountForm ($aParams = array())
     {
+        $bIsApi = bx_is_api();
+
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedCreate (0)))
             return MsgBox($sMsg);
@@ -57,12 +59,15 @@ class BxBaseAccountForms extends BxDolProfileForms
         ));
 
         if (!$oForm->isSubmittedAndValid()) {
-        	$sCode = $oForm->getCode();
+            if($bIsApi)
+                return $oForm->getCodeAPI();
 
-        	bx_alert('account', 'add_form', 0, 0, array(
-        		'form_object' => &$oForm,
-        		'form_code' => &$sCode
-        	));
+            $sCode = $oForm->getCode();
+
+            bx_alert('account', 'add_form', 0, 0, array(
+                    'form_object' => &$oForm,
+                    'form_code' => &$sCode
+            ));
 
             return $sCode;
         }
@@ -74,20 +79,23 @@ class BxBaseAccountForms extends BxDolProfileForms
         $iAccountId = $oForm->insert ($aValsToAdd);
         if (!$iAccountId) {
             if (!$oForm->isValid())
-                return $oForm->getCode();
+                return $bIsApi ? $oForm->getCodeAPI() : $oForm->getCode();
             else
                 return MsgBox(_t('_sys_txt_error_account_creation'));
         }
 
         $iProfileId = $this->onAccountCreated($iAccountId, $oForm->isSetPendingApproval());
 
-        $sRelocateCustom = $oForm->getCleanValue('relocate');
-        $bRelocateCustom = !empty($sRelocateCustom);
-
         // perform action
         BxDolAccount::isAllowedCreate ($iProfileId, true);
 
+        if($bIsApi) 
+            return true;
+
         $this->_iProfileId = bx_get_logged_profile_id();
+
+        $sRelocateCustom = $oForm->getCleanValue('relocate');
+        $bRelocateCustom = !empty($sRelocateCustom);
 
         // check and redirect
         $aModulesProfile = array(); 
