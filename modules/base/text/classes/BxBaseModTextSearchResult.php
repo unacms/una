@@ -242,6 +242,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         $aExclude = array_flip([$CNF['FIELD_TEXT'], $CNF['FIELD_THUMB'], 'thumb_data']);
+        $bExclude = getParam('sys_api_extended_units') != 'on';
 
         $oMetaMenu = null;
         $bMetaMenu = false;
@@ -277,7 +278,8 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
                 $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
             }
 
-            $a[$i] = array_diff_key($a[$i], $aExclude);
+            if($bExclude)
+                $a[$i] = array_diff_key($a[$i], $aExclude);
         }
 
         return $a;

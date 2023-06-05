@@ -3425,6 +3425,24 @@ class BxBaseModGeneralModule extends BxDolModule
         $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
         $aImagesAttach = $this->_getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
+        if(bx_is_api() && getParam('sys_api_extended_units') != 'on') {
+            $sTitle = '';
+            if(isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]))
+                $sTitle = $aContentInfo[$CNF['FIELD_TITLE']];
+            else if(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]))
+                $sTitle = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+            $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
+            $sText = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sText), 240);
+
+            return [
+                'url' => $sUrl,
+                'title' => $sTitle,
+                'text' => $sText,
+                'images' => $aImages
+            ];
+        }
+
         //--- Video(s)
         $aVideos = $this->_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
         $aVideosAttach = $this->_getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);

@@ -239,6 +239,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $CNF = $this->oModule->_oConfig->CNF;
 
         $aExclude = array_flip([$CNF['FIELD_TEXT'], $CNF['FIELD_PICTURE'], 'cover_data']);
+        $bExclude = getParam('sys_api_extended_units') != 'on';
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         $bPrivacy = $oPrivacy !== false;
@@ -266,7 +267,9 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
             }
 
             $a[$i] = array_merge($r, $aAddon);
-            $a[$i] = array_diff_key($a[$i], $aExclude);
+
+            if($bExclude)
+                $a[$i] = array_diff_key($a[$i], $aExclude);
         }
 
         return $a;
