@@ -240,6 +240,8 @@ class BxNtfsModule extends BxBaseModNotificationsModule
                 $aParams['start'] = end($aContent)['id'];
             }
 
+            $this->markAsRead($iOwnerId, $aParams);
+
             return [bx_api_get_block('browse', [
                 'unit' => 'notifications',  
                 'request_url' => '/api.php?r=bx_notifications/get_data/&params[]=',
@@ -251,10 +253,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $sContent = $this->_oTemplate->getViewBlock($aParams);
 
-        $aParams['browse'] = 'first';
-    	$aEvent = $this->_oDb->getEvents($aParams);
-    	if(!empty($aEvent))
-            $this->_oDb->markAsRead($iOwnerId, $aEvent['id']);
+        $this->markAsRead($iOwnerId, $aParams);
 
         return ['content' => $sContent]; 
     }
@@ -659,6 +658,16 @@ class BxNtfsModule extends BxBaseModNotificationsModule
                 if($iPriority != $iPriorityMax)
                     unset($aEvents[$iIndex]);
         }
+    }
+
+    public function markAsRead($iOwnerId, $aParams)
+    {
+        $aParams['browse'] = 'first';
+    	$aEvent = $this->_oDb->getEvents($aParams);
+    	if(empty($aEvent) || !is_array($aEvent))
+            return false;
+
+        return $this->_oDb->markAsRead($iOwnerId, $aEvent['id']) !== false;
     }
 
     /*
