@@ -826,6 +826,9 @@ class BxForumModule extends BxBaseModTextModule
      */
     public function serviceEntityAuthor ($iContentId = 0)
     {
+        if (bx_is_api())
+            return $this->_serviceTemplateFunc ('entryAuthor', $iContentId);
+        
         return bx_srv('system', 'get_block_author', ['bx_forum', $iContentId], 'TemplServices');
     }
 

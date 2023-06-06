@@ -36,13 +36,25 @@ class BxBaseServicePages extends BxDol
      */
     public function serviceGetPageByRequest ($sRequest, $sBlocks = '', $sParams = '')
     {
-        $mixed = BxDolPage::getPageBySeoLink($sRequest);
+        $mixed = null;
+        if (substr_count($sRequest, 'page/')> 0){
+            $_GET['i'] = str_replace('page/', '', $sRequest);
+            $aParams = json_decode($sParams, true);
+            if(!empty($aParams) && is_array($aParams))
+                $_GET = array_merge($_GET, $aParams);
+            
+            $mixed = BxDolPage::getObjectInstanceByURI();
+        }
+        else{
+            $mixed = BxDolPage::getPageBySeoLink($sRequest);
+        }
+       
 
         if (($sUrl = $mixed) && is_string($sUrl)) {
             $aRes = ['redirect' => $sUrl];
         }
         elseif (($oPage = $mixed) && is_object($oPage)) {
-            if(!empty($sParams)) {
+			if(!empty($sParams)) {
                 $aParams = json_decode($sParams, true);
                 if(!empty($aParams) && is_array($aParams))
                     $_GET = array_merge($_GET, $aParams);
