@@ -1895,6 +1895,7 @@
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
 	<string name="_adm_wgt_cpt_storages"><![CDATA[Storage]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Apps Market]]></string>
+        <string name="_cmt_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[All]]></string>
 	<string name="_cmt_browse_friends"><![CDATA[Friends]]></string>

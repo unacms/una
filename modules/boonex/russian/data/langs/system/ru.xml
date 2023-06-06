@@ -1873,6 +1873,7 @@
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Настройки]]></string>
 	<string name="_adm_wgt_cpt_storages"><![CDATA[Хранилище]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Магазин приложений]]></string>
+        <string name="_cmt_err_not_enabled"><![CDATA[Действие не доступно в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Комментарии ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[Все]]></string>
 	<string name="_cmt_browse_friends"><![CDATA[Друзья]]></string>

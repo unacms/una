@@ -753,12 +753,11 @@ class BxBaseCmts extends BxDolCmts
 
     public function getElementAPI($aParams = [])
     {
-        if(!($this->_bApi = bx_is_api()))
+        if(!$this->_bIsApi)
             return;
 
-        //TODO: Replace with own lang key in UNA 14.
         if(!$this->isEnabled())
-            return bx_api_get_msg('_vote_err_not_enabled');
+            return bx_api_get_msg('_cmt_err_not_enabled');
 
         $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
 
@@ -1695,7 +1694,7 @@ class BxBaseCmts extends BxDolCmts
         if(!$isAllowedComment)
             $sClass .= $bShowDoCommentAsButton || $bShowDoCommentAsButtonSmall ? ' bx-btn-disabled' : 'bx-cmts-disabled';
 
-        if($this->_bApi)
+        if($this->_bIsApi)
             return [
                 'is_disabled' => $bDisabled,
                 'count' => $iCount,
