@@ -51,7 +51,14 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         $iProfileId = bx_get_logged_profile_id();
-        if($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId || $this->_isModerator())
+        $bModerator = $this->_isModerator();
+
+        $mixedResult = null;
+        bx_alert($this->getName(), 'is_entry_active', 0, 0, ['viewer_id' => $iProfileId, 'is_moderator' => $bModerator, 'content_info' => $aContentInfo, 'override_result' => &$mixedResult]);
+        if($mixedResult !== null)
+            return $mixedResult;
+
+        if($this->isEntryAuthor($aContentInfo, $iProfileId) || $bModerator)
             return true;
 
         if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
@@ -70,6 +77,21 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         return true;        
+    }
+
+    public function isEntryAuthor($aContentInfo, $iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $mixedResult = null;
+        bx_alert($this->getName(), 'is_entry_author', 0, 0, ['viewer_id' => $iProfileId, 'content_info' => $aContentInfo, 'override_result' => &$mixedResult]);
+        if($mixedResult !== null)
+            return $mixedResult;
+
+        return abs($aContentInfo[$CNF['FIELD_AUTHOR']]) == $iProfileId;
     }
 
     public function actionUpdateImage($sFiledName, $iContentId, $sValue)
@@ -2593,7 +2615,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
         // moderator and owner always have access
-        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || -$aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+        if ($this->isEntryAuthor($aDataEntry, $this->_iProfileId) || $this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check for context's admins 
@@ -2632,7 +2654,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
-        if (($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || -$aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId) && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+        if ($this->isEntryAuthor($aDataEntry, $this->_iProfileId) && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check for context's admins 
