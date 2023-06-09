@@ -37,6 +37,8 @@ define('BX_DOL_SEARCH_KEYWORD_PAGE', 'site-search-page');
  */
 class BxDolSearch extends BxDol
 {
+    protected $_bIsApi;
+
     protected $aClasses = array(); ///< array of all search classes
     protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
     protected $_bRawProcessing = false; ///< display search results without design box and paginate
@@ -56,6 +58,8 @@ class BxDolSearch extends BxDol
     public function __construct ($aChoice = '')
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
 
         $this->aClasses = BxDolDb::getInstance()->fromCache('sys_objects_search', 'getAllWithKey',
            'SELECT `ID` as `id`,
@@ -85,7 +89,6 @@ class BxDolSearch extends BxDol
     {
         $sCode = $this->_bDataProcessing ? array() : '';
 
-        $bIsApi = bx_is_api();
         $bSingle = count($this->aChoice) == 1;
         foreach ($this->aChoice as $sKey => $aValue) {
             if (!$this->_sMetaType && !$aValue['GlobalSearch'])
@@ -114,12 +117,31 @@ class BxDolSearch extends BxDol
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
 
             if ($this->_bDataProcessing) {
-                $aSearchData = $oEx->getSearchData();
-
-                $sCode[$sKey] = $bIsApi ? $oEx->decodeData($aSearchData) : $aSearchData;
+                if($this->_bIsApi) {
+                    if($bSingle)
+                        $sCode = $oEx->decodeData($oEx->getSearchData());
+                    else
+                        $sCode[$sKey] = $oEx->getSearchQuery(['for_union' => true]);
+                }
+                else
+                    $sCode[$sKey] = $oEx->getSearchData();
             }
             else
                 $sCode .= $this->_bRawProcessing ? $oEx->processingRaw() : $oEx->processing();
+        }
+
+        if($this->_bIsApi && !$bSingle && is_array($sCode)) {
+            $bExtendedUnits = getParam('sys_api_extended_units') == 'on';
+
+            $aQueries = [];
+            foreach($sCode as $aQuery)
+                $aQueries[] = $aQuery['query'];
+
+            $aItems = BxDolDb::getInstance()->getAll('(' . implode(') UNION (', $aQueries) . ') ORDER BY `added` DESC ' . current($sCode)['limit']);
+
+            $sCode = [];
+            foreach($aItems as $aItem)
+                $sCode[] = bx_srv($aItem['module'], 'get_info_api', [$aItem['id'], $bExtendedUnits]);
         }
 
         return $sCode;
@@ -324,6 +346,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $bForceAjaxPaginate = false; ///< force ajax paginate
     protected $iPaginatePerPage = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT; ///< default 'per page' value for paginate.
 
+    protected $_bIsApi;
     protected $_bSingleSearch = true;
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
@@ -340,6 +363,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function __construct ()
     {
+        $this->_bIsApi = bx_is_api();
+
         if (isset($this->aPseud['id']))
             $this->aCurrent['ident'] = $this->aPseud['id'];
     }
@@ -685,6 +710,14 @@ class BxDolSearchResult implements iBxDolReplaceable
         }
         return array();
     }
+    
+    function getSearchQuery($aParams = [])
+    {
+        $this->aPseud = ['id' => 'id', 'added' => 'added'];
+
+        $this->setConditionParams();
+        return $this->getSearchDataByParams($aParams);
+    }
 
     /**
      * Get array with code for sql elements
@@ -726,17 +759,30 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function getSearchDataByParams ($aParams = '')
     {
+        $bForUnion = isset($aParams['for_union']) && $aParams['for_union'] === true;
+
         $aSql = array('ownFields'=>'', 'joinFields'=>'', 'order'=>'');
 
         // searchFields
-        foreach ($this->aCurrent['ownFields'] as $sValue)
-            $aSql['ownFields'] .= $this->setFieldUnit($sValue, $this->aCurrent['table']);
+        if($bForUnion) {
+            $sTable = isset($this->aCurrent['tableSearch']) ? $this->aCurrent['tableSearch'] : $this->aCurrent['table'];
+
+            $aSql['ownFields'] .= $this->setFieldUnit('id', $sTable);
+            $aSql['ownFields'] .= $this->setFieldUnit('added', $sTable);
+            $aSql['ownFields'] .= "'" . $this->aCurrent['module_name']  . "' AS `module`";
+        }
+        else
+            foreach ($this->aCurrent['ownFields'] as $sValue)
+                $aSql['ownFields'] .= $this->setFieldUnit($sValue, $this->aCurrent['table']);
 
         // joinFields & join
         $aJoins = $this->getJoins();
         if (!empty($aJoins)) {
-            $aSql['ownFields'] .= $aJoins['ownFields'];
-            $aSql['ownFields'] .= $aJoins['joinFields'];
+            if(!$bForUnion) {
+                $aSql['ownFields'] .= $aJoins['ownFields'];
+                $aSql['ownFields'] .= $aJoins['joinFields'];
+            }
+
             $aSql['join'] = $aJoins['join'];
             $aSql['groupBy'] = $aJoins['groupBy'];
         } 
@@ -777,6 +823,12 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         if (isset($aSql['groupBy']))
             $sqlQuery .= ' ' . $aSql['groupBy'];
+
+        if($bForUnion)
+            return [
+                'query' => $sqlQuery, 
+                'limit' => $aSql['limit']
+            ];
 
         if (isset($aSql['order']))
             $sqlQuery .= ' ' . $aSql['order'];

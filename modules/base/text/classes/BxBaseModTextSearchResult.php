@@ -236,54 +236,6 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         return true;
     }
-    
-    function decodeData ($a)
-    {
-        $CNF = &$this->oModule->_oConfig->CNF;
-
-        $aExclude = array_flip([$CNF['FIELD_TEXT'], $CNF['FIELD_THUMB'], 'thumb_data']);
-        $bExclude = getParam('sys_api_extended_units') != 'on';
-
-        $oMetaMenu = null;
-        $bMetaMenu = false;
-
-        /**
-         * Disabled for now, because Author is used only.
-        $oMetaMenu = !empty($CNF['OBJECT_MENU_SNIPPET_META']) ? BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->oModule->_oTemplate) : false;
-        $bMetaMenu = $oMetaMenu !== false;
-         */
-
-        $oFunctions = BxTemplFunctions::getInstance();
-        $oContentInfo = $this->getContentInfoObject();
-        
-        $bSummaryPlain = isset($CNF['PARAM_CHARS_SUMMARY_PLAIN']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN'];
-        $iSummaryPlain = $bSummaryPlain ? (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']) : 0;
-
-        foreach ($a as $i => $r) {
-            $sSummary = '';
-            if($bSummaryPlain) {
-                $sSummary = $this->oModule->_oTemplate->getText($r);
-                $sSummary = $oFunctions->getStringWithLimitedLength(strip_tags($sSummary), $iSummaryPlain);
-            }
-
-            $a[$i] = array_merge($a[$i], [
-                'author_data' => isset($r['author']) ? BxDolProfile::getData($r[$CNF['FIELD_AUTHOR']]) : '',
-                'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
-                'image' => $oContentInfo->getContentThumb($r['id']),
-                'summary_plain' => $sSummary
-            ]);
-
-            if($bMetaMenu) {
-                $oMetaMenu->setContentId($r['id']);
-                $a[$i]['meta'] = $oMetaMenu->getCodeAPI();
-            }
-
-            if($bExclude)
-                $a[$i] = array_diff_key($a[$i], $aExclude);
-        }
-
-        return $a;
-    }
 
     function _getPseud ()
     {

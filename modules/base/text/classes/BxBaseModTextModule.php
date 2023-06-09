@@ -873,6 +873,44 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         
         return $mResult;
     }
+    
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aData[$CNF['FIELD_ID']];
+
+        $sSummary = '';
+        if(!empty($CNF['PARAM_CHARS_SUMMARY_PLAIN'])) {
+            $sSummary = $this->_oTemplate->getText($aData);
+            $sSummary = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
+        }
+
+        $aResult = [
+            'id' => $iId,
+            'added' => $aData[$CNF['FIELD_ADDED']],
+            'author' => $aData[$CNF['FIELD_AUTHOR']],
+            'author_data' => !empty($aData[$CNF['FIELD_AUTHOR']]) ? BxDolProfile::getData($aData[$CNF['FIELD_AUTHOR']]) : '',
+            'title' => $aData[$CNF['FIELD_TITLE']],
+            'url' => bx_api_get_relative_url($this->serviceGetLink($iId)),
+            'image' => $this->serviceGetThumb($iId),
+            'summary_plain' => $sSummary
+        ];
+
+        if($bExtended)
+            $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
+
+        /**
+         * Disabled for now, because Author is used only.
+        if(!empty($CNF['OBJECT_MENU_SNIPPET_META']) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->_oTemplate)) !== false) {
+            $oMetaMenu->setContentId($iId);
+
+            $aResult['meta'] = $oMetaMenu->getCodeAPI();
+        }
+         */
+
+        return $aResult;
+    }
 
 
     // ====== PROTECTED METHODS

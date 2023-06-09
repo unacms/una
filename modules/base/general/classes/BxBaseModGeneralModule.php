@@ -446,7 +446,6 @@ class BxBaseModGeneralModule extends BxDolModule
             'url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'embed/' . $iContentId . '/'
         ]);
     }
-    
 
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
     {
@@ -472,6 +471,15 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aResult[$sField] = $aContentInfo[$sField];
 
         return $aResult;
+    }
+
+    public function serviceGetInfoApi ($iContentId, $bExtendedUnits = false)
+    {
+        $aData = $this->serviceGetInfo($iContentId, false);
+        if($aData)
+            $aData = $this->decodeDataApi($aData, $bExtendedUnits);
+
+        return $aData;
     }
 
     /**
@@ -3266,8 +3274,12 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
         return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_FAVORITES_LIST'] . '&profile_id=' . $iProfileId . '&list_id=' . $iListId));
     }
-    
-    
+
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        return $aData;
+    }
+
     // ====== PROTECTED METHODS
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false, $sCheckFunction = false, $bErrorMsg = true)

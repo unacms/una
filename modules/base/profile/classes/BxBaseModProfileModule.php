@@ -2058,6 +2058,39 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         return !empty($sAction) && !empty($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
+    
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $iId = (int)$aData[$CNF['FIELD_ID']];
+
+        $aResult = [
+            'id' => $iId, 
+            'module' => $this->getName(),
+            'added' => $aData[$CNF['FIELD_ADDED']],
+            'author' => $aData[$CNF['FIELD_AUTHOR']],
+            'title' => $aData[$CNF['FIELD_TITLE']],
+            $CNF['FIELD_TITLE'] => $aData[$CNF['FIELD_TITLE']],
+            'url' => bx_api_get_relative_url($this->serviceGetLink($iId)),
+            'image' => $this->serviceGetThumb($iId),
+            'cover' => $this->serviceGetCover($iId),
+        ];
+
+        if($bExtended)
+            $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
+
+        if(!empty($CNF['OBJECT_MENU_SNIPPET_META']) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->_oTemplate)) !== false) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+            $bPublic = !$oPrivacy || $oPrivacy->check($iId) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
+
+            $oMetaMenu->setContentId($iId);
+            $oMetaMenu->setContentPublic($bPublic);
+            $aResult['meta'] = $oMetaMenu->getCodeAPI();
+        }
+
+        return $aResult;
+    }
 
 
     // ====== PROTECTED METHODS

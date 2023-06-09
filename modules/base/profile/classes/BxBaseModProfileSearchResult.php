@@ -233,47 +233,6 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         return true;
     }
-    
-    function decodeData ($a)
-    {
-        $CNF = $this->oModule->_oConfig->CNF;
-
-        $aExclude = array_flip([$CNF['FIELD_TEXT'], $CNF['FIELD_PICTURE'], 'cover_data']);
-        $bExclude = getParam('sys_api_extended_units') != 'on';
-
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-        $bPrivacy = $oPrivacy !== false;
-
-        $oMetaMenu = !empty($CNF['OBJECT_MENU_SNIPPET_META']) ? BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->oModule->_oTemplate) : false;
-        $bMetaMenu = $oMetaMenu !== false;
-
-        $oContentInfo = $this->getContentInfoObject();
-
-        foreach ($a as $i => $r) {
-            $aAddon = [
-                'module' => $this->oModule->getName(),
-                'title' => $r[$CNF['FIELD_TITLE']],
-                'url' => bx_api_get_relative_url($oContentInfo->getContentLink($r['id'])),
-                'image' => $oContentInfo->getContentThumb($r['id']),
-                'cover' => $oContentInfo->getContentCover($r['id']),
-            ];
-
-            if($bMetaMenu) {
-                $bPublic = !$bPrivacy || $oPrivacy->check($r[$CNF['FIELD_ID']]) || $oPrivacy->isPartiallyVisible($r[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
-                $oMetaMenu->setContentId($r['id']);
-                $oMetaMenu->setContentPublic($bPublic);
-                $aAddon['meta'] = $oMetaMenu->getCodeAPI();
-            }
-
-            $a[$i] = array_merge($r, $aAddon);
-
-            if($bExclude)
-                $a[$i] = array_diff_key($a[$i], $aExclude);
-        }
-
-        return $a;
-    }
 	
     function getItemPerPageInShowCase ()
     {

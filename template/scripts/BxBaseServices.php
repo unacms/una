@@ -1011,15 +1011,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             ]
         ]);
 
-        $aData = [];
-        $aResponse = $oSearch->response();
-        foreach($aResponse as $sSection => $aItems) {
-            if(empty($aItems))
-                continue;
-
-            $aData = array_merge($aData, $aItems);
-        }
-
+        $aData = $oSearch->response();
         if(count($aData) > $aParamsBrowse['per_page'])
             $aData = array_slice($aData, $aParamsBrowse['start'], $aParamsBrowse['per_page']);
 
