@@ -64,6 +64,7 @@
     <string name="_bx_acl_grid_column_name"><![CDATA[Имя]]></string>
     <string name="_bx_acl_grid_column_period"><![CDATA[Период]]></string>
     <string name="_bx_acl_grid_column_price"><![CDATA[Цена]]></string>
+    <string name="_bx_acl_grid_column_price_value"><![CDATA[{0}{1}]]></string>
     <string name="_bx_acl_grid_column_trial"><![CDATA[Проба]]></string>
 
     <string name="_bx_acl_grid_action_add"><![CDATA[Добавить]]></string>

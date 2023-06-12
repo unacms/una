@@ -64,6 +64,7 @@
     <string name="_bx_acl_grid_column_name"><![CDATA[Name]]></string>
     <string name="_bx_acl_grid_column_period"><![CDATA[Period]]></string>
     <string name="_bx_acl_grid_column_price"><![CDATA[Price]]></string>
+    <string name="_bx_acl_grid_column_price_value"><![CDATA[{0}{1}]]></string>
     <string name="_bx_acl_grid_column_trial"><![CDATA[Trial]]></string>
 
     <string name="_bx_acl_grid_action_add"><![CDATA[Add]]></string>
