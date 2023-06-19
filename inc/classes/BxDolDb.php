@@ -1327,7 +1327,7 @@ BxDolDb::getInstance();
 
 function getParam($sParamName, $bUseCache = true)
 {
-    if (bx_is_api())
+    if (bx_is_api() && $sParamName == 'permalinks_seo_links')
         return true;
     
     $oObj = BxDolDb::getInstance();
