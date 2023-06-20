@@ -506,7 +506,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!bx_is_api()) {
+        if(bx_is_api()) {
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
             if(!$iProfileId)
                 return [];
