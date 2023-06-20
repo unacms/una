@@ -42,6 +42,11 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})';
     }
 
+    protected function getMenuItemRecommendationJsCode($sObject, $sAction, $iContentId, $aItem)
+    {
+        return 'bx_recommendation_action(this, \'' . $sObject . '\', \'' . $sAction . '\', \'' . $iContentId . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-base-pofile-unit-with-cover:first\').remove();})';
+    }
+
     public function setContentPublic($bContentPublic)
     {
         $this->_bContentPublic = $bContentPublic;
@@ -65,6 +70,33 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
     protected function _getMenuItemUnsubscribe($aItem)
     {
         return $this->_getMenuItemConnection('sys_profiles_subscriptions', 'remove', $aItem);
+    }
+
+    protected function _getMenuItemIgnoreBefriend($aItem)
+    {
+        return $this->_getMenuItemIgnoreRecommendation('sys_friends', $aItem);
+    }
+
+    protected function _getMenuItemIgnoreSubscribe($aItem)
+    {
+        return $this->_getMenuItemIgnoreRecommendation('sys_subscriptions', $aItem);
+    }
+
+    protected function _getMenuItemIgnoreRecommendation($sObject, $aItem)
+    {
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
+
+        $oRecommendation = BxDolRecommendation::getObjectInstance($sObject);
+        if(!$oRecommendation)
+            return false;
+
+        $mixedItem = $this->getUnitMetaItemButton(_t($aItem['title']), [
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+            'onclick' => $this->getMenuItemRecommendationJsCode($sObject, 'ignore', $this->_oContentProfile->id(), $aItem)
+        ]);
+
+        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 
     protected function _getMenuItemFriends($aItem)

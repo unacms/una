@@ -2890,6 +2890,7 @@
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[Подписчики: {0}]]></string>
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Страна]]></string>
     <string name="_sys_menu_item_title_sm_country_city"><![CDATA[Страна и город]]></string>
+    <string name="_sys_menu_item_title_sm_ignore"><![CDATA[Удалить]]></string>
     <string name="_sys_menu_item_title_vm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_vm_badges"><![CDATA[Значки]]></string>
     <string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
@@ -3006,6 +3007,7 @@
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Участники]]></string>
     <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Подписки]]></string>
+    <string name="_sys_menu_item_title_system_sm_ignore"><![CDATA[Игнорировать рекомендацию]]></string>
     <string name="_sys_menu_item_title_system_vm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_vm_badges"><![CDATA[Значки]]></string>
     <string name="_sys_menu_set_title_account_dashboard"><![CDATA[Панель аккаунта]]></string>
@@ -3180,6 +3182,10 @@
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
         <string name="_sys_page_block_title_sys_author"><![CDATA[Автор]]></string>
 	<string name="_sys_page_block_title_author"><![CDATA[Автор]]></string>
+        <string name="_sys_page_block_title_sys_recom_friends"><![CDATA[Рекомендуемые друзья]]></string>
+        <string name="_sys_page_block_title_recom_friends"><![CDATA[С кем дружить]]></string>
+        <string name="_sys_page_block_title_sys_recom_subscriptions"><![CDATA[Рекомендуемые подписки]]></string>
+        <string name="_sys_page_block_title_recom_subscriptions"><![CDATA[На кого подписаться]]></string>
         <string name="_sys_page_block_title_sys_create_post"><![CDATA[Создать публикацию]]></string>
 	<string name="_sys_page_block_title_create_post"><![CDATA[Добавить...]]></string>
 	<string name="_sys_page_block_title_sys_create_post_context"><![CDATA[Создать публикацию (в контекст)]]></string>
