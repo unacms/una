@@ -167,6 +167,8 @@ function bx_logout($bNotify = true)
  */
 function check_logged()
 {
+    bx_alert('account', 'logged_start', 0);
+
     $aAccTypes = array(
        BX_DOL_ROLE_ADMIN => 'admin',
        BX_DOL_ROLE_MEMBER => 'member'

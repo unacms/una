@@ -363,6 +363,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oModule = $this->getModule();
 
         if (bx_is_api()){
+            if (defined('BX_API_PAGE'))
+                return [];
             $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
             if(!$oMenuActions)
                 $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));

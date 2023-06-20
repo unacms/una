@@ -231,7 +231,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         if(bx_is_api()) {
             $aParams['start_from_item'] = true;
 
-            $aContent = $this->_oTemplate->getPosts($aParams);
+            $aContent = defined('BX_API_PAGE') ? [] : $this->_oTemplate->getPosts($aParams);
             if(!empty($aContent) && is_array($aContent)) {
                 $iContent = count($aContent);
                 if($iContent > $aParams['per_page'])

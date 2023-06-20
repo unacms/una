@@ -179,9 +179,8 @@ class BxBaseServiceLogin extends BxDol
                 $oAccount = BxDolAccount::getInstance(trim($oForm->getCleanValue('ID')));
                 bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
                 return [
-                    bx_api_get_block('redirect', ['uri' => '/posts-home', 'timeout' => 1000]),
+                    bx_api_get_block('redirect', ['uri' => '/']),
                     bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
-                    bx_api_get_msg('Login Success 👍! Redirecting...', ['id' => 3]),
                 ];
             } 
             else {

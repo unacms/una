@@ -400,6 +400,7 @@ class BxBasePage extends BxDolPage
      */
     public function getPageAPI ($aBlocks = [])
     {
+        define('BX_API_PAGE', true);
         $query_string  = '';
 
         if (isset(bx_get('params')[2]) && bx_get('params')[2] != ''){
