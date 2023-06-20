@@ -11,11 +11,16 @@
 
 class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderHTML5
 {
+    protected $_sModule;
     protected $_oModule;
 
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        if(!empty($this->_sModule) && empty($this->_oModule))
+            $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate ? $oTemplate : $this->_oModule->_oTemplate);
+
         $this->_sUploaderFormTemplate = 'uploader_form_crop_cover.html';
     }
 

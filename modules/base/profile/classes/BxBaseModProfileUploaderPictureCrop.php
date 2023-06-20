@@ -11,10 +11,14 @@
 
 class BxBaseModProfileUploaderPictureCrop extends BxTemplUploaderCrop
 {
+    protected $_sModule;
     protected $_oModule;
 
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        if(!empty($this->_sModule))
+            $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
         
     }
