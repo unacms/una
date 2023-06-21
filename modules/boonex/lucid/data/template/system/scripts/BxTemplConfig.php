@@ -432,10 +432,6 @@ class BxTemplConfig extends BxBaseConfig
                 ));
         }
 
-        BxDolTemplate::getInstance()->addJs(array(
-            'modernizr.min.js'
-        ));
-
         BxDolTemplate::getInstance()->addCss(array(
             'custom.css',
             'menu-dropdown.css'
