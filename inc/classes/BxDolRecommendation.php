@@ -36,7 +36,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_iProfileId = bx_get_logged_profile_id();
 
-        $this->_iPerPageDefault = 4;
+        $this->_iPerPageDefault = 6;
         $this->_iReducerDefault = 10;
     }
 

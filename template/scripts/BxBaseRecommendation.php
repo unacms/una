@@ -67,7 +67,7 @@ class BxBaseRecommendation extends BxDolRecommendation
             ]
         ]);
     }
-    
+
     public function getCodeAPI($iProfileId = 0, $iStart = 0, $iPerPage = 0)
     {
         if(!$iProfileId)
