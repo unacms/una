@@ -60,7 +60,6 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
 
         $sEmail = $oAccount->getEmail();
         $a = array (
-            'user' => $iProfileId,
             'user_hash' => encryptUserId($iProfileId),
             'real_name' => $oProfile->getDisplayName(),
             'email' => $sEmail,
