@@ -1327,9 +1327,6 @@ BxDolDb::getInstance();
 
 function getParam($sParamName, $bUseCache = true)
 {
-    if (bx_is_api())
-        return true;
-    
     $oObj = BxDolDb::getInstance();
     if ($oObj === null)
         return false;
