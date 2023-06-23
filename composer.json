@@ -81,7 +81,6 @@
         "snipe/banbuilder": "dev-master",
         "chargebee/chargebee-php": "^3.0",
         "curl/cacert": "*",
-        "facebook/graph-sdk": "^5.6.0",
         "ffmpeg/ffmpeg": "*",
         "ezyang/htmlpurifier": "^4.13",
         "intervention/image": "^2.6",
