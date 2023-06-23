@@ -257,10 +257,22 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
 
     protected function _isVisibleInContext($aItem)
     {
+        $sDiv = ',';
+
         if(empty($this->_sContext) || empty($aItem['hidden_on_cxt']))
             return true;
 
-        $aContexts = explode(',', $aItem['hidden_on_cxt']);
+        //--- Hide everywhere.
+        if($aItem['hidden_on_cxt'] == 'all')
+            return false;
+
+        //--- Hide everywhere except following list.
+        if(substr($aItem['hidden_on_cxt'], 0, 4) == 'all!') {
+            $aContexts = explode($sDiv, substr($aItem['hidden_on_cxt'], 4));
+            return in_array($this->_sContext, $aContexts);
+        }
+
+        $aContexts = explode($sDiv, $aItem['hidden_on_cxt']);
         return !in_array($this->_sContext, $aContexts);
     }
 }

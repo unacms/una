@@ -120,14 +120,15 @@ function bx_login($iId, $bRememberMe = false)
 
     $oAccountQuery->updateLoggedIn($iId);
 
+    if(($iProfileId = BxDolProfileQuery::getInstance()->getCurrentProfileByAccount($iId, true)) !== false)
+        BxDolRecommendation::updateData($iProfileId);
+
     bx_alert('account', 'login',  $iId);
-    
-    bx_audit(
-        $iId, 
-        'bx_accounts', 
-        '_sys_audit_action_account_login',  
-        array('content_title' => '', 'data' => ['display_info' => ['User agent' => (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '')]])
-    );
+
+    bx_audit($iId, 'bx_accounts', '_sys_audit_action_account_login',  array(
+        'content_title' => '', 
+        'data' => ['display_info' => ['User agent' => (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '')]]
+    ));
     
     return $oAccountQuery->getInfoById($iId);
 }

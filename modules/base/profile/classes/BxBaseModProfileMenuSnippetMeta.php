@@ -42,6 +42,11 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})';
     }
 
+    protected function getMenuItemRecommendationJsCode($sObject, $sAction, $iContentId, $aItem)
+    {
+        return 'bx_recommendation_action(this, \'' . $sObject . '\', \'' . $sAction . '\', \'' . $iContentId . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-base-pofile-unit-with-cover:first\').remove();})';
+    }
+
     public function setContentPublic($bContentPublic)
     {
         $this->_bContentPublic = $bContentPublic;
@@ -67,6 +72,33 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return $this->_getMenuItemConnection('sys_profiles_subscriptions', 'remove', $aItem);
     }
 
+    protected function _getMenuItemIgnoreBefriend($aItem)
+    {
+        return $this->_getMenuItemIgnoreRecommendation('sys_friends', $aItem);
+    }
+
+    protected function _getMenuItemIgnoreSubscribe($aItem)
+    {
+        return $this->_getMenuItemIgnoreRecommendation('sys_subscriptions', $aItem);
+    }
+
+    protected function _getMenuItemIgnoreRecommendation($sObject, $aItem)
+    {
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
+
+        $oRecommendation = BxDolRecommendation::getObjectInstance($sObject);
+        if(!$oRecommendation)
+            return false;
+
+        $mixedItem = $this->getUnitMetaItemButton(_t($aItem['title']), [
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+            'onclick' => $this->getMenuItemRecommendationJsCode($sObject, 'ignore', $this->_oContentProfile->id(), $aItem)
+        ]);
+
+        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
+    }
+
     protected function _getMenuItemFriends($aItem)
     {
         if(!$this->_isVisibleInContext($aItem))
@@ -79,21 +111,29 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$oConnection)
             return false;
 
-        $iFriends = $oConnection->getConnectedInitiatorsCount($this->_oContentProfile->id(), true);
+        $iProfileId = $this->_oContentProfile->id();
+
+        $iFriends = $oConnection->getConnectedInitiatorsCount($iProfileId, true);
         if(!$iFriends && !$this->_bShowZeros)
             return false;
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sTitle = _t('_sys_menu_item_title_sm_friends', $iFriends);
+
+        $sUrl = $this->_oContentProfile->getUrl();
+        if(!empty($CNF['URI_VIEW_FRIENDS']))
+            $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $iProfileId));
 
         if($this->_bIsApi)
             return $this->_getMenuItemAPI($aItem, 'text', [
-                'title' => $sTitle
+                'title' => $sTitle,
+                'link' => bx_api_get_relative_url($sUrl),
             ]);
 
-        //return $this->getUnitMetaItemText($sTitle);
         $mixedItem = $this->getUnitMetaItemButton($sTitle, [
             'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-            'href' => $this->_oContentProfile->getUrl()
+            'href' => $sUrl
         ]);
 
         return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
@@ -111,18 +151,32 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$oConnection)
             return false;
 
-        $iFriends = $oConnection->getCommonContentCount($this->_oContentProfile->id(), bx_get_logged_profile_id(), true);
+        $iProfileId = $this->_oContentProfile->id();
+
+        $iFriends = $oConnection->getCommonContentCount($iProfileId, bx_get_logged_profile_id(), true);
         if(!$iFriends && !$this->_bShowZeros)
             return false;
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sTitle = _t('_sys_menu_item_title_sm_friends_mutual', $iFriends);
+
+        $sUrl = $this->_oContentProfile->getUrl();
+        if(!empty($CNF['URI_VIEW_FRIENDS']))
+            $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $iProfileId));
 
         if($this->_bIsApi)
             return $this->_getMenuItemAPI($aItem, 'text', [
-                'title' => $sTitle
+                'title' => $sTitle,
+                'link' => bx_api_get_relative_url($sUrl),
             ]);
 
-        return $this->getUnitMetaItemText($sTitle);
+        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+            'href' => $sUrl
+        ]);
+
+        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 
     protected function _getMenuItemSubscribers($aItem)

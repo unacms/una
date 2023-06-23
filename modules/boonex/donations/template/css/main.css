@@ -2,12 +2,8 @@
 .bx-dnt-make {
     position: relative;
 }
-.bx-dnt-make-billing-types-menu {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: center;
+.bx-dnt-make-billing-types-menu {}
+.bx-dnt-make-billing-types-menu ul {
     justify-content: center;
 }
 .bx-dnt-make-billing-types-menu .bx-menu-tab-active .bx-btn {

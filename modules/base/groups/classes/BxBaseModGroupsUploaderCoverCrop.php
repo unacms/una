@@ -13,7 +13,7 @@ class BxBaseModGroupsUploaderCoverCrop extends BxBaseModProfileUploaderCoverCrop
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate ? $oTemplate : $this->_oModule->_oTemplate);
+        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
     }
 
     protected function isAdmin ($iContentId = 0)

@@ -1049,6 +1049,56 @@ function bx_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
     	fPerform();
 }
 
+/**
+ * Perform recommendations AJAX request. 
+ * In case of error - it shows js alert with error message.
+ * In case of success - the page is reloaded.
+ * 
+ * @param sObj - recommendation object
+ * @param sAction - 'ignore'
+ * @param iContentId - content id, initiator is always current logged in user
+ * @param bConfirm - show confirmation dialog
+ */
+function bx_recommendation_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
+    var fPerform = function() {
+        var aParams = {
+            obj: sObj,
+            act: sAction,
+            id: iContentId
+        };
+
+        var fCallback = function (data) {
+            bx_loading_btn(e, 0);
+            if ('object' != typeof(data))
+                return;
+
+            if (data.msg)
+                bx_alert(data.msg);
+            else {
+                if ('function' == typeof(fOnComplete))
+                    fOnComplete(data, e);
+                else if (!loadDynamicBlockAuto(e))
+                    location.reload();
+            }
+        };
+
+        bx_loading_btn(e, 1);
+
+        $.ajax({
+            dataType: 'json',
+            url: sUrlRoot + 'recommendation.php',
+            data: aParams,
+            type: 'POST',
+            success: fCallback
+        });
+    };
+
+    if (typeof(bConfirm) != 'undefined' && bConfirm)
+    	bx_confirm(_t('_Are_you_sure'), fPerform);
+    else
+    	fPerform();
+}
+
 function bx_append_url_params (sUrl, mixedParams) {
     var sParams = sUrl.indexOf('?') == -1 ? '?' : '&';
 

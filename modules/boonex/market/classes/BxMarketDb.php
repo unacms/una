@@ -69,6 +69,10 @@ class BxMarketDb extends BxBaseModTextDb
     		$sFieldsClause .= " ((" . $sLicDir . ") OR (" . $sLicPack . ")) AS `purchased_on`, ";
     	}
 
+        //--- Include content by ids or names
+        if(!empty($aParams['include_by']) && in_array($aParams['include_by'], array('id', 'name')) && !empty($aParams['include_values']))
+            $sWhereClause .= " AND `te`.`" . $aParams['include_by'] . "` IN (" . $this->implode_escape($aParams['include_values']) . ") ";
+
     	//--- Exclude content by ids or names
         if(!empty($aParams['exclude_by']) && in_array($aParams['exclude_by'], array('id', 'name')) && !empty($aParams['exclude_values']))
             $sWhereClause .= " AND `te`.`" . $aParams['exclude_by'] . "` NOT IN (" . $this->implode_escape($aParams['exclude_values']) . ") ";

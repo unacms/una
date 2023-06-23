@@ -575,6 +575,50 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('connections', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
+    public function serviceBrowseRecommendationsFriends ($iProfileId = 0, $iStart = 0, $iPerPage = 0)
+    {
+        if(($iStartGet = bx_get('start')) !== false)
+            $iStart = (int)$iStartGet;
+
+        if(($iPerPageGet = bx_get('per_page')) !== false)
+            $iPerPage = (int)$iPerPageGet;
+
+        $oRecommendation = BxDolRecommendation::getObjectInstance('sys_friends');
+        if(!$oRecommendation)
+            return false;
+
+        if(bx_is_api()) {
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $iStart, $iPerPage);
+            $aData['request_url'] = '/api.php?r=system/browse_recommendations_friends/TemplServiceProfiles&params[]=';
+
+            return [bx_api_get_block('browse', $aData)];
+        }
+
+        return $oRecommendation->getCode($iProfileId, $iStart, $iPerPage);
+    }
+
+    public function serviceBrowseRecommendationsSubscriptions ($iProfileId = 0, $iStart = 0, $iPerPage = 0)
+    {
+        if(($iStartGet = bx_get('start')) !== false)
+            $iStart = (int)$iStartGet;
+
+        if(($iPerPageGet = bx_get('per_page')) !== false)
+            $iPerPage = (int)$iPerPageGet;
+
+        $oRecommendation = BxDolRecommendation::getObjectInstance('sys_subscriptions');
+        if(!$oRecommendation)
+            return false;
+
+        if(bx_is_api()) {
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $iStart, $iPerPage);
+            $aData['request_url'] = '/api.php?r=system/browse_recommendations_subscriptions/TemplServiceProfiles&params[]=';
+
+            return [bx_api_get_block('browse', $aData)];
+        }
+
+        return $oRecommendation->getCode($iProfileId, $iStart, $iPerPage);
+    }
+
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0, $sButtonTitle = '', $sProfileTemplate = '')
     {
     	$oTemplate = BxDolTemplate::getInstance();
@@ -730,6 +774,13 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceIsEnabledCfilter()
     {
         return BxDolContentFilter::getInstance()->isEnabled();
+    }
+
+    public function serviceUpdateRecommendations($iProfileId)
+    {
+        $aObjects = BxDolRecommendationQuery::getObjects();
+        foreach($aObjects as $aObject)
+            BxDolRecommendation::getObjectInstance($aObject['name'])->processCriteria($iProfileId);
     }
 
     protected function _getIcon ($sIcon)
