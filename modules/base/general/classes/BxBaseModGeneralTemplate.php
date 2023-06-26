@@ -501,7 +501,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return false;
     }
     
-    protected function getAttachments ($sStorage, $aData, $aParams = array())
+    public function getAttachments ($sStorage, $aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
