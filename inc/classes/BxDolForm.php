@@ -981,7 +981,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $oRv = null;
         
         if ($a && isset($a['db']['pass']))
-            $oRv = $oChecker->get ($a['name'], $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
+            $oRv = $oChecker->get ($sName, $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
         else
             $oRv =  $oChecker->get ($sName);
         
