@@ -130,6 +130,7 @@ class BxDolScore extends BxDolObject
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
+                    `module` AS `module`,
                     `table_main` AS `table_main`,
                     `table_track` AS `table_track`,
                     `post_timeout` AS `post_timeout`,
@@ -281,12 +282,23 @@ class BxDolScore extends BxDolObject
         if(isAdmin())
             return true;
 
-        return $this->checkAction('vote', $isPerformAction);
+        if(!$this->checkAction('vote', $isPerformAction))
+            return false;
+
+        $aObject = $this->_oQuery->getObjectInfo($this->_iId);
+        if(empty($aObject) || !is_array($aObject))
+            return false;
+
+        return bx_srv($this->_aSystem['module'], 'check_allowed_view_for_profile', [$aObject]) === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function msgErrAllowedVote()
     {
-        return $this->checkActionErrorMsg('vote');
+        $sMsg = $this->checkActionErrorMsg('vote');
+        if(empty($sMsg))
+            $sMsg = _t('_sys_txt_access_denied');
+
+        return $sMsg;
     }
 
     public function isAllowedVoteView($isPerformAction = false)

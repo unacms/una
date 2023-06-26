@@ -186,6 +186,16 @@ class BxDolObjectQuery extends BxDolDb
         $this->pruningByAuthor($iAuthorId);
     }
 
+    public function getObjectInfo($iId)
+    {
+        if(empty($this->_sTriggerFieldId))
+            return [];
+
+        return $this->getRow("SELECT * FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = :id LIMIT 1", [
+            'id' => $iId
+        ]);
+    }
+
     public function getObjectAuthorId($iId)
     {
         if(empty($this->_sTriggerFieldAuthor))
