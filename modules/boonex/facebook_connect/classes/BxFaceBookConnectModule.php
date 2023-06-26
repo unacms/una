@@ -9,8 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/facebook_connect/plugins/graph-sdk/src/Facebook/autoload.php');
-
 class BxFaceBookConnectModule extends BxBaseModConnectModule
 {
     protected $oFacebook;
@@ -41,7 +39,7 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
                 session_start();
 
             try {
-                $this -> oFacebook = @new Facebook\Facebook(array(
+                $this -> oFacebook = new Facebook\Facebook(array(
                     'app_id'  => $this -> _oConfig -> mApiID,
                     'app_secret' => $this -> _oConfig -> mApiSecret,
                     'default_graph_version' => 'v2.4',  

@@ -56,15 +56,10 @@ class BxAlbumsPageMedia extends BxTemplPage
         }
     }
 
-    public function isAlbumActive()
-    {
-        return $this->_oModule->isEntryActive($this->_aAlbumInfo);
-    }
-
     public function getCode ()
     {
         // check if content exists
-        if (!$this->_aAlbumInfo || !$this->isAlbumActive() || !$this->_aMediaInfo) { // if entry is not found - display standard "404 page not found" page
+        if (!$this->_aAlbumInfo || !$this->_aMediaInfo) { // if entry is not found - display standard "404 page not found" page
             $this->_oTemplate->displayPageNotFound();
             exit;
         }

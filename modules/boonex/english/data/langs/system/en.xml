@@ -1674,6 +1674,7 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_css_enable"><![CDATA[Enable lessening for CSS files (cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Enable lessening for JS files (cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Remote video transcoding (requires special setup)]]></string>
+    <string name="_adm_stg_cpt_option_sys_live_search_limit"><![CDATA[Limit results in live search]]></string>
   	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Session lifetime (min)]]></string>
   	<string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Session authentication]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - default timeout]]></string>

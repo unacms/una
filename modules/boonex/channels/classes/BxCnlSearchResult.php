@@ -30,8 +30,6 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
                 'perofileType' => array('value' => 'bx_channels', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_cnl_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_cnl_data'),
-                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'bx_cnl_data'),
-                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '=', 'table' => 'bx_cnl_data'),
             ),
             'join' => array (
                 'profile' => array(

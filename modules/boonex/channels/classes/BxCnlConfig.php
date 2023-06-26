@@ -48,7 +48,7 @@ class BxCnlConfig extends BxBaseModGroupsConfig
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
-            'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_STATUS_ADMIN' => '',
             'FIELDS_QUICK_SEARCH' => array('channel_name'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 

@@ -37,6 +37,7 @@ class BxBaseServicePages extends BxDol
     public function serviceGetPageByRequest ($sRequest, $sBlocks = '', $sParams = '')
     {
         $mixed = null;
+
         if (substr_count($sRequest, 'page/')> 0){
             $_GET['i'] = str_replace('page/', '', $sRequest);
             $aParams = json_decode($sParams, true);

@@ -33,8 +33,6 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
                 'album' => array('value' => '', 'field' => 'content_id', 'operator' => '='),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
-                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'bx_albums_albums'),
-                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '=', 'table' => 'bx_albums_albums'),
             ),
             'join' => array(
                 'albums' => array(

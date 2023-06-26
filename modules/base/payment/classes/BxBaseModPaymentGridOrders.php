@@ -54,14 +54,6 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
             $this->_aQueryAppend['client_id'] = (int)$iClientId;
     }
 
-    public function getCode ($isDisplayHeader = true)
-    {
-        if(empty($this->_aQueryAppend['seller_id']) || $this->_aQueryAppend['seller_id'] != bx_get_logged_profile_id())
-            return '';
-
-        return parent::getCode($isDisplayHeader);
-    }
-
     public function addQueryParam($sKey, $sValue)
     {
         if(empty($sKey) || !isset($sValue))
