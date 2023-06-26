@@ -90,10 +90,28 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         $oRecommendation = BxDolRecommendation::getObjectInstance($sObject);
         if(!$oRecommendation)
             return false;
+        
+        $iContentProfile = $this->_oContentProfile->id();
+        $sAction = 'ignore';
+        $sTitle = _t($aItem['title']);
+        
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, ['display' => 'element'], [
+                'title' => $sTitle,
+                'data' => [
+                    'type' => 'connections',
+                    'o' => $sObject,
+                    'a' =>  $sAction,
+                    'iid' => bx_get_logged_profile_id(),
+                    'cid' => $iContentProfile,
+                    'title' => $sTitle,
+                    'primary' => !empty($aItem['primary']),
+                ]
+            ]);
 
-        $mixedItem = $this->getUnitMetaItemButton(_t($aItem['title']), [
+        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
             'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-            'onclick' => $this->getMenuItemRecommendationJsCode($sObject, 'ignore', $this->_oContentProfile->id(), $aItem)
+            'onclick' => $this->getMenuItemRecommendationJsCode($sObject, $sAction, $iContentProfile, $aItem)
         ]);
 
         return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
