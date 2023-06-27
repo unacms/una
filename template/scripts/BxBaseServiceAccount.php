@@ -54,8 +54,7 @@ class BxBaseServiceAccount extends BxDol
             }
             else
                 return [
-                    bx_api_get_msg('You are already joined 🐵! Redirecting...'),
-                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 3000]],
+                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/']],
                 ];
         }
 
@@ -69,9 +68,8 @@ class BxBaseServiceAccount extends BxDol
                 ])];
             else if($mixedResult === true)
                 return [
-                    bx_api_get_block('redirect', ['uri' => '/posts-home', 'timeout' => 1000]),
+                    bx_api_get_block('redirect', ['uri' => '/']),
                     bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
-                    bx_api_get_msg('Join Success 👍! Redirecting...', ['id' => 3]),
                 ];
             else
                 return bx_api_get_msg($mixedResult);
