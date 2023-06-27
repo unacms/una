@@ -153,8 +153,7 @@ class BxBaseServiceLogin extends BxDol
             } 
             else {
                 return [
-                    bx_api_get_msg('You are already logged in 🐵! Redirecting...'),
-                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home', 'timeout' => 3000]],
+                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/']],
                 ];
             }
         }
@@ -330,7 +329,7 @@ class BxBaseServiceLogin extends BxDol
 
         if (bx_is_api()) {
             return [
-                ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/posts-home']],
+                ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/']],
             ];
         }
         else {
