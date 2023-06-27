@@ -519,7 +519,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         if($bFieldAuthor) {
             if(isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']])){
-                $aValsToAdd[$CNF['FIELD_AUTHOR']] = ($this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * abs($aContentInfo[$CNF['FIELD_AUTHOR']]);
+                $aValsToAdd[$CNF['FIELD_AUTHOR']] = ($this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * abs($this->getCleanValue($CNF['FIELD_AUTHOR']));
                 $iAuthor = $aValsToAdd[$CNF['FIELD_AUTHOR']];
             }
             else {
