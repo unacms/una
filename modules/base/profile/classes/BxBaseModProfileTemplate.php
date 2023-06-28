@@ -717,8 +717,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sImageUrl = false;
         if ($aData[$sField]) {
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscodeObject);
-            if ($oImagesTranscoder)
-                $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);
+            if ($oImagesTranscoder){
+                 if (bx_is_api())
+                    $sImageUrl = $oImagesTranscoder->getOrigFileUrl($aData[$sField]);
+                else
+                    $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);   
+            }
         }
 
         if(!$bSubstituteNoImage || $sImageUrl)
