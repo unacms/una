@@ -56,6 +56,7 @@ class BxNexusModule extends BxDolModule
                     'email' => $oProfile->getAccountObject()->getEmail(),
                     'avatar' => $oProfile->getAvatar(),
                     'id' => $oProfile->id(),
+                    'module' => $oProfile->getModule(),
                 ) : false,
                 'bubbles_num' => $iBubbles ? $iBubbles : '',
                 'bubbles' => $aBubbles,

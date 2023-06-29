@@ -367,6 +367,9 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getFileUrl($mixedHandler)
     {
+         if (bx_is_api())
+            return $this->getOrigFileUrl($mixedHandler);
+        
         if ($this->isFileReady($mixedHandler)) {
 
             $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
@@ -402,6 +405,9 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getFileUrlById($mixedHandler)
     {
+        if (bx_is_api())
+            return $this->getOrigFileUrl($mixedHandler);
+        
         return $this->getFileUrl($mixedHandler);
     }
 
