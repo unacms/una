@@ -4550,6 +4550,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
 ('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', ''),
 ('sys_favorite_list', '_sys_menu_title_favorite_list', 'sys_favorite_list', 'system', 9, 0, 1, '', ''),
+('sys_con_submenu', '_sys_menu_title_con_submenu', 'sys_con_submenu', 'system', 8, 0, 1, '', ''),
 
 ('sys_studio_account_popup', '_sys_menu_title_studio_account_popup', 'sys_studio_account_popup', 'system', 4, 0, 1, 'BxTemplStudioMenuAccountPopup', '');
 
@@ -4592,6 +4593,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_social_sharing', 'system', '_sys_menu_set_title_sys_social_sharing', 0),
 ('sys_wiki', 'system', '_sys_menu_set_title_sys_wiki', 0),
 ('sys_favorite_list', 'system', '_sys_menu_set_title_sys_favorite_list', 0),
+('sys_con_submenu', 'system', '_sys_menu_set_title_con_submenu', 0),
 
 ('sys_studio_account_popup', 'system', '_sys_menu_set_title_studio_account_popup', 0);
 
@@ -4633,6 +4635,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', '', '', '', 'home col-gray', '', 2147483647, 1, 1, 1),
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2),
 ('sys_site', 'system', 'search', '_sys_menu_item_title_system_search', '_sys_menu_item_title_search', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-search\', this, \'site\');', '', 'search', '', 2147483647, 1, 1, 3),
+('sys_site', 'system', 'recommended-friends', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=recommended-friends', '', '', 'users', '', 2147483647, 1, 1, 4),
 ('sys_site', 'system', 'more-auto', '_sys_menu_item_title_system_more_auto', '_sys_menu_item_title_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', 2147483647, 1, 0, 9999);
 
 -- panel menu
@@ -4778,6 +4781,16 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('sys_favorite_list', 'system', 'edit', '', '_sys_menu_item_title_favorite_list_edit', 'javascript:void(0)', 'javascript:{js_object}.cmtEdit(this, {list_id})', '', 'edit', '', '', 0, 2147483646, '', 1, 0, 1, 1),
 ('sys_favorite_list', 'system', 'delete', '', '_sys_menu_item_title_wiki_favorite_list_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtDelete(this, {list_id})', '', 'times', '', '', 0, 2147483646, '', 1, 0, 1, 2);
+
+-- connections submenu
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
+('sys_con_submenu', 'system', 'recommended-friends', '', '_sys_menu_item_title_recom_friends', 'page.php?i=recommended-friends', '', '', '', '', '', 2147483647, '', 1, 1, 1),
+('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', '', '', 2147483647, '', 1, 1, 2),
+('sys_con_submenu', 'system', 'friend-requests', '', '_sys_menu_item_title_con_friend_requests', 'page.php?i=friend-requests', '', '', '', '', '', 2147483647, '', 1, 1, 3),
+('sys_con_submenu', 'system', 'friend-requested', '', '_sys_menu_item_title_con_friend_requested', 'page.php?i=friend-requested', '', '', '', '', '', 2147483647, '', 1, 1, 4),
+('sys_con_submenu', 'system', 'recommended-subscriptions', '', '_sys_menu_item_title_recom_subscriptions', 'page.php?i=recommended-subscriptions', '', '', '', '', '', 2147483647, '', 1, 1, 5),
+('sys_con_submenu', 'system', 'followers', '', '_sys_menu_item_title_con_followers', 'page.php?i=followers', '', '', '', '', '', 2147483647, '', 1, 1, 6),
+('sys_con_submenu', 'system', 'following', '', '_sys_menu_item_title_con_following', 'page.php?i=following', '', '', '', '', '', 2147483647, '', 1, 1, 7);
 
 -- studio: account menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
@@ -5560,7 +5573,14 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_search_keyword', 'search-keyword', '_sys_page_title_system_search_keyword', '_sys_page_title_search_keyword', 'system', 1, 5, '', 2147483647, 1, 'searchKeyword.php', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_redirect', 'redirect', '', '_sys_page_title_redirect', 'system', 0, 18, '', 2147483647, 1, 'page.php?i=redirect', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_sub_wiki_pages_list', 'wiki-pages-list', '', '_sys_page_title_wiki_pages_list', 'system', 1, 5, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0),
-('sys_sub_wiki_page_contents', 'wiki-page-contents', '', '_sys_page_title_wiki_page_contents', 'system', 1, 5, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0);
+('sys_sub_wiki_page_contents', 'wiki-page-contents', '', '_sys_page_title_wiki_page_contents', 'system', 1, 5, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0),
+('sys_con_friends', 'friends', '_sys_page_title_system_con_friends', '_sys_page_title_con_friends', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friends', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_con_friend_requests', 'friend-requests', '_sys_page_title_system_con_friend_requests', '_sys_page_title_con_friend_requests', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friend-requests', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_con_friend_requested', 'friend-requested', '_sys_page_title_system_con_friend_requested', '_sys_page_title_con_friend_requested', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friend-requested', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_con_following', 'following', '_sys_page_title_system_con_following', '_sys_page_title_con_following', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=following', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_con_followers', 'followers', '_sys_page_title_system_con_followers', '_sys_page_title_con_followers', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=followers', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_recom_friends', 'recommended-friends', '_sys_page_title_system_recom_friends', '_sys_page_title_recom_friends', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=recommended-friends', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_recom_subscriptions', 'recommended-subscriptions', '_sys_page_title_system_recom_subscriptions', '_sys_page_title_recom_subscriptions', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=recommended-subscriptions', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_types` (
@@ -5797,6 +5817,17 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 ('sys_sub_wiki_pages_list', 1, 'system', '', '_sys_page_block_title_wiki_pages_list', 0, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:10:"pages_list";s:6:"params";a:0:{}s:5:"class";s:16:"TemplServiceWiki";}', 0, 1, 1, 1),
 ('sys_sub_wiki_page_contents', 1, 'system', '', '_sys_page_block_title_wiki_page_contents', 0, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"page_contents";s:6:"params";a:0:{}s:5:"class";s:16:"TemplServiceWiki";}', 0, 1, 1, 1),
+
+('sys_con_friends', 1, 'system', '', '_sys_page_block_title_con_friends', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"browse_friends";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+('sys_con_friend_requests', 1, 'system', '', '_sys_page_block_title_con_friend_requests', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:22:"browse_friend_requests";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+('sys_con_friend_requested', 1, 'system', '', '_sys_page_block_title_con_friend_requested', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:23:"browse_friend_requested";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+
+('sys_con_following', 1, 'system', '', '_sys_page_block_title_con_following', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"browse_subscriptions";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+('sys_con_followers', 1, 'system', '', '_sys_page_block_title_con_followers', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"browse_subscribed_me";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+
+('sys_recom_friends', 1, 'system', '', '_sys_page_block_title_recom_friends', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:30:"browse_recommendations_friends";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+('sys_recom_subscriptions', 1, 'system', '', '_sys_page_block_title_recom_subscriptions', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:36:"browse_recommendations_subscriptions";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+
 
 -- studio dashboard blocks
 ('sys_std_dashboard', 1, 'system', '', '_sys_page_block_title_std_dash_version', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_block_version";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1, 1),

@@ -2872,6 +2872,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
     <string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
     <string name="_sys_menu_item_title_cmts_item_more"><![CDATA[]]></string>
+    <string name="_sys_menu_item_title_connections"><![CDATA[Connections]]></string>
     <string name="_sys_menu_item_title_dashboard"><![CDATA[Dash]]></string>
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_invoices"><![CDATA[Invoices]]></string>
@@ -2971,6 +2972,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_cmts_item_score"><![CDATA[Score]]></string>
     <string name="_sys_menu_item_title_system_cmts_item_vote"><![CDATA[Plus]]></string>
     <string name="_sys_menu_item_title_system_cmts_item_more"><![CDATA[More]]></string>
+    <string name="_sys_menu_item_title_system_connections"><![CDATA[Connections]]></string>
     <string name="_sys_menu_item_title_system_dashboard"><![CDATA[Dashboard]]></string>
     <string name="_sys_menu_item_title_system_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_system_invoices"><![CDATA[Invoices]]></string>
@@ -3181,7 +3183,15 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sa_logout"><![CDATA[Sign out]]></string>
     <string name="_sys_menu_item_title_inherited"><![CDATA[Inherited]]></string>
     <string name="_sys_menu_item_title_disabled"><![CDATA[Disabled]]></string>
-    
+    <string name="_sys_menu_title_con_submenu"><![CDATA[Connections]]></string>
+    <string name="_sys_menu_set_title_con_submenu"><![CDATA[Connections]]></string>
+    <string name="_sys_menu_item_title_con_friends"><![CDATA[Friends]]></string>
+    <string name="_sys_menu_item_title_con_friend_requests"><![CDATA[Friend Requests]]></string>
+    <string name="_sys_menu_item_title_con_friend_requested"><![CDATA[Requested Friendship]]></string>
+    <string name="_sys_menu_item_title_con_following"><![CDATA[Following]]></string>
+    <string name="_sys_menu_item_title_con_followers"><![CDATA[Followers]]></string>
+    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
+    <string name="_sys_menu_item_title_recom_subscriptions"><![CDATA[Who to follow]]></string>    
     <string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> mentioned <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_sys_mobile_friends"><![CDATA[Friends]]></string>
     <string name="_sys_mobile_info"><![CDATA[Info]]></string>
@@ -3348,6 +3358,27 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_title_studio_dashboard"><![CDATA[Studio Dashboard]]></string>
     <string name="_sys_page_title_wiki_pages_list"><![CDATA[Subpage: Pages List]]></string>
     <string name="_sys_page_title_wiki_page_contents"><![CDATA[Subpage: Page Contents]]></string>
+    <string name="_sys_page_title_system_con_friends"><![CDATA[Connections: Friends]]></string>
+    <string name="_sys_page_title_con_friends"><![CDATA[Friends]]></string>
+    <string name="_sys_page_block_title_con_friends"><![CDATA[Friends]]></string>
+    <string name="_sys_page_title_system_con_friend_requests"><![CDATA[Connections: Friend Requests]]></string>
+    <string name="_sys_page_title_con_friend_requests"><![CDATA[Friend Requests]]></string>
+    <string name="_sys_page_block_title_con_friend_requests"><![CDATA[Friend Requests]]></string>
+    <string name="_sys_page_title_system_con_friend_requested"><![CDATA[Connections: Requested Friendship]]></string>
+    <string name="_sys_page_title_con_friend_requested"><![CDATA[Requested Friendship]]></string>
+    <string name="_sys_page_block_title_con_friend_requested"><![CDATA[Requested Friendship]]></string>
+    <string name="_sys_page_title_system_con_following"><![CDATA[Connections: Following]]></string>
+    <string name="_sys_page_title_con_following"><![CDATA[Following]]></string>
+    <string name="_sys_page_block_title_con_following"><![CDATA[Following]]></string>
+    <string name="_sys_page_title_system_con_followers"><![CDATA[Connections: Followers]]></string>
+    <string name="_sys_page_title_con_followers"><![CDATA[Followers]]></string>
+    <string name="_sys_page_block_title_con_followers"><![CDATA[Followers]]></string>
+    <string name="_sys_page_title_system_recom_friends"><![CDATA[Recommendations: Friends]]></string>
+    <string name="_sys_page_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
+    <string name="_sys_page_block_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
+    <string name="_sys_page_title_system_recom_subscriptions"><![CDATA[Recommendations: Subscriptions]]></string>
+    <string name="_sys_page_title_recom_subscriptions"><![CDATA[Who to follow]]></string>
+    <string name="_sys_page_block_title_recom_subscriptions"><![CDATA[Who to follow]]></string>
     <string name="_sys_page_type_application"><![CDATA[Application]]></string>
     <string name="_sys_page_type_default"><![CDATA[Default]]></string>
     <string name="_sys_page_type_standard"><![CDATA[Standard]]></string>

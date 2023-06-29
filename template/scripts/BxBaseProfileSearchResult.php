@@ -90,6 +90,40 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
                     'api_request_url' => '/api.php?r=system/browse_friends/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]='
                 ]);
                 break;
+
+            case 'friend_requests':
+                $aParams = array_merge($aParams, [
+                    'object' => 'sys_profiles_friends', 
+                    'type' => 'initiators',
+                    'mutual' => 0,
+                    'profile2' => 0
+                ]);
+                
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $this->aCurrent = array_merge($this->aCurrent, [
+                    'title' => _t('_sys_page_title_browse_connections', BxDolProfile::getInstanceMagic($aParams['profile'])->getDisplayName()),
+                    'api_request_url' => '/api.php?r=system/browse_friend_requests/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]='
+                ]);
+                break;
+                
+            case 'friend_requested':
+                $aParams = array_merge($aParams, [
+                    'object' => 'sys_profiles_friends', 
+                    'type' => 'content',
+                    'mutual' => 0,
+                    'profile2' => 0
+                ]);
+                
+                if (!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $this->aCurrent = array_merge($this->aCurrent, [
+                    'title' => _t('_sys_page_title_browse_connections', BxDolProfile::getInstanceMagic($aParams['profile'])->getDisplayName()),
+                    'api_request_url' => '/api.php?r=system/browse_friend_requested/TemplServiceProfiles&params[]=' . $aParams['profile'] . '&params[]='
+                ]);
+                break;
                 
             case 'subscriptions':
                 $aParams = array_merge($aParams, [

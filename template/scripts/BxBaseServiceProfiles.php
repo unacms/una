@@ -490,6 +490,44 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('friends', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
+    public function serviceBrowseFriendRequests ($iProfileId, $aParams = [])
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
+
+        $aParamsBrowse = ['profile' => $iProfileId];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
+
+        return $this->_serviceBrowseConnections('friend_requests', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+
+    public function serviceBrowseFriendRequested ($iProfileId, $aParams = [])
+    {
+        if(is_string($aParams))
+            $aParams = json_decode($aParams, true);
+
+        $aParams = array_merge([
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        ], $aParams);
+
+        $aParamsBrowse = ['profile' => $iProfileId];
+        if(!empty($aParams['params']) && is_array($aParams['params']))
+            $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
+
+        return $this->_serviceBrowseConnections('friend_requested', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+
     public function serviceBrowseSubscriptions ($iProfileId, $aParams = [])
     {
         if(is_string($aParams))
