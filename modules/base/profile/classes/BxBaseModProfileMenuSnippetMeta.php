@@ -54,7 +54,10 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemBefriend($aItem)
     {
-        return $this->_getMenuItemConnection('sys_profiles_friends', 'add', $aItem);
+        if($this->_sContext == 'recom_friends')
+            return $this->_getMenuItemRecommendation('sys_friends', 'add', $aItem);
+        else
+            return $this->_getMenuItemConnection('sys_profiles_friends', 'add', $aItem);
     }
 
     protected function _getMenuItemUnfriend($aItem)
@@ -74,12 +77,12 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemIgnoreBefriend($aItem)
     {
-        return $this->_getMenuItemIgnoreRecommendation('sys_friends', $aItem);
+        return $this->_getMenuItemRecommendation('sys_friends', 'ignore', $aItem);
     }
 
     protected function _getMenuItemIgnoreSubscribe($aItem)
     {
-        return $this->_getMenuItemIgnoreRecommendation('sys_subscriptions', $aItem);
+        return $this->_getMenuItemRecommendation('sys_subscriptions', 'ignore', $aItem);
     }
 
     protected function _getMenuItemFriends($aItem)
@@ -236,7 +239,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 
-    protected function _getMenuItemIgnoreRecommendation($sObject, $aItem)
+    protected function _getMenuItemRecommendation($sObject, $sAction, $aItem)
     {
         if(!isLogged() || !$this->_isVisibleInContext($aItem))
             return false;
@@ -245,11 +248,13 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$oRecommendation)
             return false;
 
+        /**
+         * Recommendations actions' availability depends on the related connection's action 'Add'.
+         */
         $sConnection = $oRecommendation->getConnection();
         if($this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection]['add']}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        $sAction = 'ignore';
         $sTitle = _t($aItem['title']);
         $iContentProfile = $this->_oContentProfile->id();
 

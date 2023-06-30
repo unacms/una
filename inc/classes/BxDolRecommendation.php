@@ -17,8 +17,10 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
     protected $_iProfileId;
 
+    protected $_iReducerAdd;
+    protected $_iReducerIgnore;
+
     protected $_iPerPageDefault;
-    protected $_iReducerDefault;
 
     protected function __construct($aObject)
     {
@@ -36,8 +38,10 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_iProfileId = bx_get_logged_profile_id();
 
+        $this->_iReducerAdd = 5;
+        $this->_iReducerIgnore = 10;
+
         $this->_iPerPageDefault = 6;
-        $this->_iReducerDefault = 10;
     }
 
     public static function getObjectInstance($sObject)
@@ -92,12 +96,29 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         return ['code' => 0];
     }
 
+    public function add($iProfileId, $iItemId)
+    {
+        $aItem = $this->_oDb->getItem($iProfileId, $this->_iObject, $iItemId);
+
+        /**
+         * Action 'add' moves the item to the end not so much as 'ignore'.
+         * For this purpose (+) is used instead of the (*).
+         */
+        $iReducer = (int)$aItem['item_reducer'] + $this->_iReducerAdd;
+
+        return $this->_oDb->update($iProfileId, $this->_iObject, $iItemId, ['item_reducer' => $iReducer]);
+    }
+
     public function ignore($iProfileId, $iItemId)
     {
         $aItem = $this->_oDb->getItem($iProfileId, $this->_iObject, $iItemId);
 
+        /**
+         * Action 'ignore' moves the item to the end.
+         * Repeated action do it much more, therefore (*) is used.
+         */
         $iReducer = !empty($aItem['item_reducer']) ? (int)$aItem['item_reducer'] : 1;
-        $iReducer *= $this->_iReducerDefault;
+        $iReducer *= $this->_iReducerIgnore;
 
         return $this->_oDb->update($iProfileId, $this->_iObject, $iItemId, ['item_reducer' => $iReducer]);
     }

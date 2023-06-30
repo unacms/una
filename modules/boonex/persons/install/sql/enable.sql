@@ -350,9 +350,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_persons_snippet_meta', 'bx_persons', 'membership', '_sys_menu_item_title_system_sm_membership', '_sys_menu_item_title_sm_membership', '', '', '', '', '', 2147483647, '', 0, 0, 1, 7),
 ('bx_persons_snippet_meta', 'bx_persons', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 8),
 ('bx_persons_snippet_meta', 'bx_persons', 'befriend', '_sys_menu_item_title_system_sm_befriend', '_sys_menu_item_title_sm_befriend', '', '', '', '', '', 2147483647, 'recom_subscriptions', 1, 0, 1, 9),
-('bx_persons_snippet_meta', 'bx_persons', 'unfriend', '_sys_menu_item_title_system_sm_unfriend', '_sys_menu_item_title_sm_unfriend', '', '', '', '', '', 2147483647, 'recom_subscriptions', 1, 0, 1, 10),
+('bx_persons_snippet_meta', 'bx_persons', 'unfriend', '_sys_menu_item_title_system_sm_unfriend', '_sys_menu_item_title_sm_unfriend', '', '', '', '', '', 2147483647, 'recom_friends,recom_subscriptions', 1, 0, 1, 10),
 ('bx_persons_snippet_meta', 'bx_persons', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 'recom_friends', 1, 0, 1, 11),
-('bx_persons_snippet_meta', 'bx_persons', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 'recom_friends', 1, 0, 1, 12),
+('bx_persons_snippet_meta', 'bx_persons', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 'recom_friends,recom_subscriptions', 1, 0, 1, 12),
 ('bx_persons_snippet_meta', 'bx_persons', 'ignore-befriend', '_sys_menu_item_title_system_sm_ignore_befriend', '_sys_menu_item_title_sm_ignore', '', '', '', '', '', 2147483647, 'all!recom_friends', 1, 0, 1, 13),
 ('bx_persons_snippet_meta', 'bx_persons', 'ignore-subscribe', '_sys_menu_item_title_system_sm_ignore_subscribe', '_sys_menu_item_title_sm_ignore', '', '', '', '', '', 2147483647, 'all!recom_subscriptions', 1, 0, 1, 14);
 

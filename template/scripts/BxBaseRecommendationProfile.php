@@ -11,7 +11,7 @@
  * Profile recommendation representation.
  * @see BxDolRecommendation
  */
-class BxBaseRecommendationProfile extends BxTemplRecommendation
+class BxBaseRecommendationProfile extends BxDolRecommendationProfile
 {
     public function __construct ($aOptions, $oTemplate)
     {
