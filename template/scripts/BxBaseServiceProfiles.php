@@ -473,6 +473,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseFriends ($iProfileId, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -492,6 +497,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseFriendRequests ($iProfileId, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -511,6 +521,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseFriendRequested ($iProfileId, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -530,6 +545,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseSubscriptions ($iProfileId, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -549,6 +569,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseSubscribedMe ($iProfileId, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -568,6 +593,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseMembers($iProfileId, $sObject, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -590,6 +620,11 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceBrowseConnections ($iProfileId, $aParams = [])
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
 
@@ -613,8 +648,13 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('connections', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseRecommendationsFriends ($iProfileId = 0, $iStart = 0, $iPerPage = 0)
+    public function serviceBrowseRecommendationsFriends ($iProfileId, $iStart = 0, $iPerPage = 0)
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(($iStartGet = bx_get('start')) !== false)
             $iStart = (int)$iStartGet;
 
@@ -635,8 +675,13 @@ class BxBaseServiceProfiles extends BxDol
         return $oRecommendation->getCode($iProfileId, $iStart, $iPerPage);
     }
 
-    public function serviceBrowseRecommendationsSubscriptions ($iProfileId = 0, $iStart = 0, $iPerPage = 0)
+    public function serviceBrowseRecommendationsSubscriptions ($iProfileId, $iStart = 0, $iPerPage = 0)
     {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
         if(($iStartGet = bx_get('start')) !== false)
             $iStart = (int)$iStartGet;
 
