@@ -86,8 +86,8 @@ class BxBaseRecommendation extends BxDolRecommendation
             'request_url' => '',
             'data' => $aData,
             'params' => [
-                'per_page' => $iStart,
-                'start' => $iPerPage,
+                'start' => $iStart,
+                'per_page' => $iPerPage,
             ],
         ];
     }

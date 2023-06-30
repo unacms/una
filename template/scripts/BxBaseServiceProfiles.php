@@ -705,7 +705,11 @@ class BxBaseServiceProfiles extends BxDol
             return [bx_api_get_block('browse', $aData)];
         }
 
-        return $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        if(!$sCode && $aParams['empty_message'])
+            $sCode = MsgBox(_t('_Empty'));
+
+        return $sCode;
     }
 
     public function serviceBrowseRecommendationsSubscriptions ($iProfileId = 0, $aParams = [])
@@ -741,7 +745,11 @@ class BxBaseServiceProfiles extends BxDol
             return [bx_api_get_block('browse', $aData)];
         }
 
-        return $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        if(!$sCode && $aParams['empty_message'])
+            $sCode = MsgBox(_t('_Empty'));
+
+        return $sCode;
     }
 
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0, $sButtonTitle = '', $sProfileTemplate = '')
