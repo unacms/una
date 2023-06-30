@@ -82,41 +82,6 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return $this->_getMenuItemIgnoreRecommendation('sys_subscriptions', $aItem);
     }
 
-    protected function _getMenuItemIgnoreRecommendation($sObject, $aItem)
-    {
-        if(!$this->_isVisibleInContext($aItem))
-            return false;
-
-        $oRecommendation = BxDolRecommendation::getObjectInstance($sObject);
-        if(!$oRecommendation)
-            return false;
-        
-        $iContentProfile = $this->_oContentProfile->id();
-        $sAction = 'ignore';
-        $sTitle = _t($aItem['title']);
-        
-        if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, ['display' => 'element'], [
-                'title' => $sTitle,
-                'data' => [
-                    'type' => 'connections',
-                    'o' => $sObject,
-                    'a' =>  $sAction,
-                    'iid' => bx_get_logged_profile_id(),
-                    'cid' => $iContentProfile,
-                    'title' => $sTitle,
-                    'primary' => !empty($aItem['primary']),
-                ]
-            ]);
-
-        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
-            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-            'onclick' => $this->getMenuItemRecommendationJsCode($sObject, $sAction, $iContentProfile, $aItem)
-        ]);
-
-        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
-    }
-
     protected function _getMenuItemFriends($aItem)
     {
         if(!$this->_isVisibleInContext($aItem))
@@ -149,12 +114,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
                 'link' => bx_api_get_relative_url($sUrl),
             ]);
 
-        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
-            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-            'href' => $sUrl
-        ]);
-
-        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemFriendsMutual($aItem)
@@ -189,12 +149,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
                 'link' => bx_api_get_relative_url($sUrl),
             ]);
 
-        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
-            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
-            'href' => $sUrl
-        ]);
-
-        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemSubscribers($aItem)
@@ -222,6 +177,28 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             'caption' => '_sys_menu_item_title_sm_subscribers', 
             'custom_icon' => $sIcon
         ], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS));
+    }
+
+    protected function _getMenuItemMembership($aItem)
+    {
+        if(!$this->_isVisibleInContext($aItem))
+            return false;
+
+        if(!$this->_bContentPublic || !$this->_oContentProfile)
+            return false;
+
+        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_oContentProfile->id());
+        if(empty($aMembership) || !is_array($aMembership))
+            return false;
+
+        $sTitle = _t($aMembership['name']);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
     }
 
     protected function _getMenuItemConnection($sConnection, $sAction, &$aItem)
@@ -259,26 +236,43 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 
-    protected function _getMenuItemMembership($aItem)
+    protected function _getMenuItemIgnoreRecommendation($sObject, $aItem)
     {
-        if(!$this->_isVisibleInContext($aItem))
+        if(!isLogged() || !$this->_isVisibleInContext($aItem))
             return false;
 
-        if(!$this->_bContentPublic || !$this->_oContentProfile)
+        $oRecommendation = BxDolRecommendation::getObjectInstance($sObject);
+        if(!$oRecommendation)
             return false;
 
-        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_oContentProfile->id());
-        if(empty($aMembership) || !is_array($aMembership))
+        $sConnection = $oRecommendation->getConnection();
+        if($this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection]['add']}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        $sTitle = _t($aMembership['name']);
+        $sAction = 'ignore';
+        $sTitle = _t($aItem['title']);
+        $iContentProfile = $this->_oContentProfile->id();
 
         if($this->_bIsApi)
-            return $this->_getMenuItemAPI($aItem, 'text', [
-                'title' => $sTitle
+            return $this->_getMenuItemAPI($aItem, ['display' => 'element'], [
+                'title' => $sTitle,
+                'data' => [
+                    'type' => 'recommendation',
+                    'o' => $sObject,
+                    'a' =>  $sAction,
+                    'iid' => bx_get_logged_profile_id(),
+                    'cid' => $iContentProfile,
+                    'title' => $sTitle,
+                    'primary' => !empty($aItem['primary']),
+                ]
             ]);
 
-        return $this->getUnitMetaItemText($sTitle);
+        $mixedItem = $this->getUnitMetaItemButton($sTitle, [
+            'class' => !empty($aItem['primary']) ? 'bx-btn-primary' : '',
+            'onclick' => $this->getMenuItemRecommendationJsCode($sObject, $sAction, $iContentProfile, $aItem)
+        ]);
+
+        return $mixedItem !== false ? [$mixedItem, 'bx-menu-item-button'] : false;
     }
 }
 

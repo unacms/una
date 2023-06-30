@@ -2288,6 +2288,7 @@ CREATE TABLE `sys_objects_recommendation` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL default '',
   `module` varchar(64) NOT NULL default '',
+  `connection` varchar(64) NOT NULL default '',
   `content_info` varchar(64) NOT NULL default '',
   `countable` tinyint(4) NOT NULL DEFAULT '1',
   `active` tinyint(4) NOT NULL DEFAULT '1',
@@ -2310,8 +2311,8 @@ CREATE TABLE `sys_recommendation_criteria` (
   UNIQUE KEY `criterion` (`object_id`, `name`)
 );
 
-INSERT INTO `sys_objects_recommendation` (`name`, `module`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
-('sys_friends', 'system', '', 1, 1, 'BxTemplRecommendationProfile', '');
+INSERT INTO `sys_objects_recommendation` (`name`, `module`, `connection`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
+('sys_friends', 'system', 'sys_profiles_friends', '', 1, 1, 'BxTemplRecommendationProfile', '');
 SET @iRecFriends = LAST_INSERT_ID();
 
 INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `source`, `params`, `weight`, `active`) VALUES
@@ -2319,8 +2320,8 @@ INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `
 (@iRecFriends, 'shared_context', 'sql', 'SELECT `tm`.`initiator`AS `id`, SUM({points}) AS `value` FROM `{connection}` AS `tg` INNER JOIN `{connection}` AS `tm` ON `tg`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tm`.`mutual`=''1'' WHERE `tg`.`initiator`={profile_id} AND `tg`.`mutual`=''1'' GROUP BY `id`', 'a:2:{s:6:"points";i:1;s:10:"connection";s:14:"bx_groups_fans";}', 0.25, 1),
 (@iRecFriends, 'shared_location', 'sql', '', '', 0.25, 0);
 
-INSERT INTO `sys_objects_recommendation` (`name`, `module`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
-('sys_subscriptions', 'system', '', 1, 1, 'BxTemplRecommendationProfile', '');
+INSERT INTO `sys_objects_recommendation` (`name`, `module`, `connection`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
+('sys_subscriptions', 'system', 'sys_profiles_subscriptions', '', 1, 1, 'BxTemplRecommendationProfile', '');
 SET @iRecSubscriptions = LAST_INSERT_ID();
 
 INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `source`, `params`, `weight`, `active`) VALUES

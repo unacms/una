@@ -68,6 +68,16 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         BxDolCronQuery::getInstance()->addTransientJobService('recommendations_for_' . $iProfileId, ['system', 'updateRecommendations', [$iProfileId], 'TemplServiceProfiles']);
     }
 
+    public function getConnection()
+    {
+        return $this->_aObject['connection'];
+    }
+
+    public function getContentInfo()
+    {
+        return $this->_aObject['content_info'];
+    }
+
     public function actionIgnore($iProfileId = 0, $iItemId = 0)
     {
         if(!$iProfileId)

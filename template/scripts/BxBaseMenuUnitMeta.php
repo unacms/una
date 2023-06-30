@@ -259,7 +259,7 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
     {
         $sDiv = ',';
 
-        if(empty($this->_sContext) || empty($aItem['hidden_on_cxt']))
+        if(empty($this->_sContext) && empty($aItem['hidden_on_cxt']))
             return true;
 
         //--- Hide everywhere.

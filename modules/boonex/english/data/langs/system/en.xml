@@ -3046,7 +3046,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_sm_unsubscribe"><![CDATA[Unfollow]]></string>
     <string name="_sys_menu_item_title_system_sm_country"><![CDATA[Country]]></string>
     <string name="_sys_menu_item_title_system_sm_country_city"><![CDATA[Country and City]]></string>
-    <string name="_sys_menu_item_title_system_sm_ignore"><![CDATA[Ignore Recommendation]]></string>
+    <string name="_sys_menu_item_title_system_sm_ignore_befriend"><![CDATA[Ignore Recommendation: Befriend]]></string>
+    <string name="_sys_menu_item_title_system_sm_ignore_subscribe"><![CDATA[Ignore Recommendation: Subscribe]]></string>
     <string name="_sys_menu_item_title_system_vm_membership"><![CDATA[Membership]]></string>
     <string name="_sys_menu_item_title_system_vm_badges"><![CDATA[Badges]]></string>
     
