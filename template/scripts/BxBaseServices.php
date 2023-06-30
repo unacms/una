@@ -66,6 +66,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'ProfileNotifications' => 'BxBaseServiceProfiles',
             'GetCountOnlineProfiles' => 'BxBaseServiceProfiles',
             'BrowseRecommendationsFriends' => 'BxBaseServiceProfiles',
+            'BrowseRecommendationsSubscriptions' => 'BxBaseServiceProfiles',
 
             'GetChartGrowth' => 'BxBaseChartServices',
             'GetChartStats' => 'BxBaseChartServices',
