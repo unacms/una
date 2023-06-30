@@ -4636,7 +4636,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', '', '', '', 'home col-gray', '', 2147483647, 1, 1, 1),
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2),
 ('sys_site', 'system', 'search', '_sys_menu_item_title_system_search', '_sys_menu_item_title_search', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-search\', this, \'site\');', '', 'search', '', 2147483647, 1, 1, 3),
-('sys_site', 'system', 'recommended-friends', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=recommended-friends', '', '', 'users', '', 2147483647, 1, 1, 4),
+('sys_site', 'system', 'recommended-friends', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=recommended-friends', '', '', 'users', '', 2147483646, 1, 1, 4),
 ('sys_site', 'system', 'more-auto', '_sys_menu_item_title_system_more_auto', '_sys_menu_item_title_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', 2147483647, 1, 0, 9999);
 
 -- panel menu
