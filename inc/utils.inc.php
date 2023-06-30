@@ -2430,4 +2430,15 @@ function bx_api_get_image($sStorage, $iId)
     return false;
 }
 
+function bx_api_get_browse_params($sParams)
+{
+    if(!$sParams || !is_string($sParams))
+        return [];
+
+    $aParams = json_decode($sParams, true);
+    if(!isset($aParams['params']))
+        return [];
+
+    return $aParams['params'];
+}
 /** @} */

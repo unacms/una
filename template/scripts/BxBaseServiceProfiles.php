@@ -12,9 +12,12 @@
  */
 class BxBaseServiceProfiles extends BxDol
 {
+    protected $_bIsApi;
     public function __construct()
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
     }
 
     public function serviceGetProfileTypes()
@@ -471,8 +474,11 @@ class BxBaseServiceProfiles extends BxDol
         return $s . '<div class="bx-clear"></div>';
     }
 
-    public function serviceBrowseFriends ($iProfileId, $aParams = [])
+    public function serviceBrowseFriends ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -495,8 +501,11 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('friends', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseFriendRequests ($iProfileId, $aParams = [])
+    public function serviceBrowseFriendRequests ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -519,8 +528,11 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('friend_requests', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseFriendRequested ($iProfileId, $aParams = [])
+    public function serviceBrowseFriendRequested ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -543,8 +555,11 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('friend_requested', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseSubscriptions ($iProfileId, $aParams = [])
+    public function serviceBrowseSubscriptions ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -567,8 +582,11 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('subscriptions', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseSubscribedMe ($iProfileId, $aParams = [])
+    public function serviceBrowseSubscribedMe ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -591,8 +609,11 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('subscribed_me', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseMembers($iProfileId, $sObject, $aParams = [])
+    public function serviceBrowseMembers($iProfileId = 0, $sObject, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -618,8 +639,11 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('members', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseConnections ($iProfileId, $aParams = [])
+    public function serviceBrowseConnections ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
@@ -648,58 +672,76 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('connections', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseRecommendationsFriends ($iProfileId, $iStart = 0, $iPerPage = 0)
+    public function serviceBrowseRecommendationsFriends ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
 
+        $aParams = array_merge([
+            'empty_message' => false,
+            'start' => 0,
+            'per_page' => 0
+        ], $aParams);
+
         if(($iStartGet = bx_get('start')) !== false)
-            $iStart = (int)$iStartGet;
+            $aParams['start'] = (int)$iStartGet;
 
         if(($iPerPageGet = bx_get('per_page')) !== false)
-            $iPerPage = (int)$iPerPageGet;
+            $aParams['per_page'] = (int)$iPerPageGet;
 
         $oRecommendation = BxDolRecommendation::getObjectInstance('sys_friends');
         if(!$oRecommendation)
             return false;
 
         if(bx_is_api()) {
-            $aData = $oRecommendation->getCodeAPI($iProfileId, $iStart, $iPerPage);
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
             $aData['request_url'] = '/api.php?r=system/browse_recommendations_friends/TemplServiceProfiles&params[]=';
 
             return [bx_api_get_block('browse', $aData)];
         }
 
-        return $oRecommendation->getCode($iProfileId, $iStart, $iPerPage);
+        return $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
     }
 
-    public function serviceBrowseRecommendationsSubscriptions ($iProfileId, $iStart = 0, $iPerPage = 0)
+    public function serviceBrowseRecommendationsSubscriptions ($iProfileId = 0, $aParams = [])
     {
+        if($this->_bIsApi)
+            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
 
+        $aParams = array_merge([
+            'empty_message' => false,
+            'start' => 0,
+            'per_page' => 0
+        ], $aParams);
+
         if(($iStartGet = bx_get('start')) !== false)
-            $iStart = (int)$iStartGet;
+            $aParams['start'] = (int)$iStartGet;
 
         if(($iPerPageGet = bx_get('per_page')) !== false)
-            $iPerPage = (int)$iPerPageGet;
+            $aParams['per_page'] = (int)$iPerPageGet;
 
         $oRecommendation = BxDolRecommendation::getObjectInstance('sys_subscriptions');
         if(!$oRecommendation)
             return false;
 
         if(bx_is_api()) {
-            $aData = $oRecommendation->getCodeAPI($iProfileId, $iStart, $iPerPage);
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
             $aData['request_url'] = '/api.php?r=system/browse_recommendations_subscriptions/TemplServiceProfiles&params[]=';
 
             return [bx_api_get_block('browse', $aData)];
         }
 
-        return $oRecommendation->getCode($iProfileId, $iStart, $iPerPage);
+        return $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
     }
 
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0, $sButtonTitle = '', $sProfileTemplate = '')
