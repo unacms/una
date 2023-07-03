@@ -76,7 +76,9 @@ class BxBaseRecommendation extends BxDolRecommendation
         if(!$iPerPage)
             $iPerPage = $this->_iPerPageDefault;
 
-        $aItems = $this->_oDb->get($iProfileId, $this->_aObject['id'], $iStart, $iPerPage);
+        $aItems = [];
+        if (!defined('BX_API_PAGE'))
+            $aItems = $this->_oDb->get($iProfileId, $this->_aObject['id'], $iStart, $iPerPage);
 
         $aData = [];
         foreach($aItems as $iId => $iCount)

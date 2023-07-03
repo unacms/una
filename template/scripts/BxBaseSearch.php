@@ -31,7 +31,7 @@ class BxBaseSearch extends BxDolSearch
 
         $this->_sIdLoading = $this->_sIdForm;
 
-        $this->_iSearchLenth = 5;
+        $this->_iSearchLenth = (int)getParam('sys_live_search_limit');
         $this->_sSearchFunctionParams = "%d, '%s', '%s', '%s', %d, %d";
     }
 
