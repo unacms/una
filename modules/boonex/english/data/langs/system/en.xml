@@ -3191,7 +3191,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_con_friend_requested"><![CDATA[Requested Friendship]]></string>
     <string name="_sys_menu_item_title_con_following"><![CDATA[Following]]></string>
     <string name="_sys_menu_item_title_con_followers"><![CDATA[Followers]]></string>
-    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
+    <string name="_sys_menu_item_title_recom_friends"><![CDATA[Friend Suggestions]]></string>
     <string name="_sys_menu_item_title_recom_subscriptions"><![CDATA[Who to follow]]></string>    
     <string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> mentioned <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_sys_mobile_friends"><![CDATA[Friends]]></string>
@@ -3240,7 +3240,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_block_title_sys_author"><![CDATA[Author]]></string>
     <string name="_sys_page_block_title_author"><![CDATA[Author]]></string>
     <string name="_sys_page_block_title_sys_recom_friends"><![CDATA[Recommended Friends]]></string>
-    <string name="_sys_page_block_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
+    <string name="_sys_page_block_title_recom_friends"><![CDATA[Friend Suggestions]]></string>
     <string name="_sys_page_block_title_sys_recom_subscriptions"><![CDATA[Recommended Subscriptions]]></string>
     <string name="_sys_page_block_title_recom_subscriptions"><![CDATA[Who to follow]]></string>
     <string name="_sys_page_block_title_sys_create_post"><![CDATA[Create Post]]></string>
@@ -3375,8 +3375,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_title_con_followers"><![CDATA[Followers]]></string>
     <string name="_sys_page_block_title_con_followers"><![CDATA[Followers]]></string>
     <string name="_sys_page_title_system_recom_friends"><![CDATA[Recommendations: Friends]]></string>
-    <string name="_sys_page_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
-    <string name="_sys_page_block_title_recom_friends"><![CDATA[Friends Suggestions]]></string>
+    <string name="_sys_page_title_recom_friends"><![CDATA[Friend Suggestions]]></string>
+    <string name="_sys_page_block_title_recom_friends"><![CDATA[Friend Suggestions]]></string>
     <string name="_sys_page_title_system_recom_subscriptions"><![CDATA[Recommendations: Subscriptions]]></string>
     <string name="_sys_page_title_recom_subscriptions"><![CDATA[Who to follow]]></string>
     <string name="_sys_page_block_title_recom_subscriptions"><![CDATA[Who to follow]]></string>
