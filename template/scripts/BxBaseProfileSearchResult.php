@@ -63,7 +63,7 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
                     'joinFields' => [],
                 ],
             ],
-            'paginate' => ['start' => 0],
+            'paginate' => ['start' => 0, 'perPage' => BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT],
             'sorting' => 'last',
             'ident' => 'id'
         ];
