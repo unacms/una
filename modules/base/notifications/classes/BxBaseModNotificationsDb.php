@@ -471,24 +471,17 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
                 break;
 
             case 'first':
-                    $sMethod = 'getRow';
-                    list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
-                    $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
-                    $sLimitClause = "LIMIT 1";
-                    break;
-
-            case 'last':
-                    $sMethod = 'getRow';
-                    list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
-                    $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` ASC, `{$this->_sTable}`.`id` ASC";
-                    $sLimitClause = "LIMIT 1";
-                    break;
+                $sMethod = 'getRow';
+                list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
+                $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
+                $sLimitClause = "LIMIT 1";
+                break;
 
             case 'list':
-                    list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
-                    $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
-                    $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
-                    break;
+                list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
+                $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
+                $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+                break;
         }
 
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);

@@ -24,14 +24,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected static $_sTmplContentTypePost;
     protected static $_sTmplContentTypeRepost;
 
-    protected $_bShowTimelineDividers;
     protected $_aAclId2Name;
 
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
-
-        $this->_bShowTimelineDividers = false;
 
         $this->_aAclId2Name = array();
 
@@ -761,25 +758,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aParamsDb = $aParams;
 
-        //--- Before: Check for Previous
-        $iDays = -1;
-        $bPrevious = false;
-        if($iStart - 1 >= 0) {
-            $aParamsDb['start'] -= 1;
-            $aParamsDb['per_page'] += 1;
-            $bPrevious = true;
-        }
-
         //--- Before: Check for Next
         $aParamsDb['per_page'] += 1;
         $aEvents = $this->_oDb->getEvents($aParamsDb);
-
-        //--- After: Check for Previous
-        if($bPrevious) {
-            $aEvent = array_shift($aEvents);
-            if ($aEvent)
-                $iDays = (int)$aEvent['days'];
-        }
 
         //--- After: Check for Next
         $bNext = false;
@@ -795,8 +776,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iEvents = count($aEvents);
         if($iEvents > 0)
             $iFirst = $this->_getFirst($aEvents, $aParams);
-        else 
-            $sContent .= $bViewTimeline ? $this->getDividerToday() : '';
 
         //--- Check for Visual Grouping
         $aGroups = array();
@@ -839,7 +818,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iExtenalsEvery = $this->_oConfig->getExtenalsEvery($aParams['type']);
 
-        $bFirst = true;
         $iEventIndex = 0;
         $mixedEvents = $bReturnArray ? array() : '';
         foreach($aEvents as $aEvent) {
@@ -854,13 +832,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 continue;
             }
 
-            if($bFirst && $bViewTimeline) {
-                $mixedEvents .= $this->getDividerToday($aEvent);
-
-                $bFirst = false;
-            }
-
-            $mixedEvents .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
             $mixedEvents .= $sEvent;
 
             $iEventIndex++;
@@ -903,45 +874,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'visible' => $bVisible ? 'block' : 'none',
             'content' => MsgBox(_t('_bx_timeline_txt_msg_no_results'))
-        ));
-    }
-
-    public function getDivider(&$iDays, &$aEvent)
-    {
-        if(!$this->_bShowTimelineDividers || $iDays == $aEvent['days'])
-            return '';
-
-        $iDays = $aEvent['days'];
-        $iDaysAgo = (int)$aEvent['ago_days'];
-        if($aEvent['today'] == $aEvent['days'] || (($aEvent['today'] - $aEvent['days']) == 1 && $iDaysAgo == 0))
-            return '';
-
-        return $this->parseHtmlByName('divider.html', array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'type' => 'common',
-            'bx_if:show_hidden' => array(
-                'condition' => false,
-                'content' => array()
-            ),
-            'content' => bx_time_js($aEvent['date'])
-        ));
-    }
-
-    public function getDividerToday($aEvent = array())
-    {
-        if(!$this->_bShowTimelineDividers)
-            return '';
-
-    	$bToday = !empty($aEvent) && ($aEvent['today'] == $aEvent['days'] || (($aEvent['today'] - $aEvent['days']) == 1 && (int)$aEvent['ago_days'] == 0));
-
-        return $this->parseHtmlByName('divider.html', array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'type' => 'today',
-        	'bx_if:show_hidden' => array(
-                'condition' => !$bToday,
-                'content' => array()
-            ),
-            'content' => _t('_bx_timeline_txt_today')
         ));
     }
 

@@ -742,6 +742,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     $sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['action'] . '%');
                 break;
 
+            case 'last':
+                $sMethod = 'getRow';
+                $sSelectClause .= ", YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
+                list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
+                $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` ASC, `{$this->_sTable}`.`id` ASC";
+                $sLimitClause = "LIMIT 1";
+                break;
+
             case 'list':
                 list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
                 if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
@@ -756,7 +764,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             	list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
         }
 
-        $sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
         if($this->_isList($aParams)) {
             $sOrderClause = "";
 
