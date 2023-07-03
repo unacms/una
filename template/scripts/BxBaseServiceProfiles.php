@@ -700,6 +700,8 @@ class BxBaseServiceProfiles extends BxDol
 
         if(bx_is_api()) {
             $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
+            $aData['module'] = 'system';
+            $aData['unit'] = 'mixed';
             $aData['request_url'] = '/api.php?r=system/browse_recommendations_friends/TemplServiceProfiles&params[]=';
 
             return [bx_api_get_block('browse', $aData)];
@@ -740,6 +742,8 @@ class BxBaseServiceProfiles extends BxDol
 
         if(bx_is_api()) {
             $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
+            $aData['module'] = 'system';
+            $aData['unit'] = 'mixed';
             $aData['request_url'] = '/api.php?r=system/browse_recommendations_subscriptions/TemplServiceProfiles&params[]=';
 
             return [bx_api_get_block('browse', $aData)];
