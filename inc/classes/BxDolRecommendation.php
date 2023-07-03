@@ -69,7 +69,11 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
-        BxDolCronQuery::getInstance()->addTransientJobService('recommendations_for_' . $iProfileId, ['system', 'updateRecommendations', [$iProfileId], 'TemplServiceProfiles']);
+        $oCronQuery = BxDolCronQuery::getInstance();
+
+        $sName = 'recommendations_for_' . $iProfileId;
+        if(!$oCronQuery->isTransientJobService($sName))
+            $oCronQuery->addTransientJobService($sName, ['system', 'updateRecommendations', [$iProfileId], 'TemplServiceProfiles']);
     }
 
     public function getConnection()

@@ -58,13 +58,18 @@ class BxDolCronQuery extends BxDolDb implements iBxDolSingleton
         return (int)$this->query($sQuery) > 0;
     }
 
-	public function addTransientJobService($sName, $mixedService)
+    public function isTransientJobService($sName)
+    {
+        return (int)$this->getOne("SELECT `id` FROM `sys_cron_jobs` WHERE `name`=:name LIMIT 1", ['name' => $sName]) > 0; 
+    }
+
+    public function addTransientJobService($sName, $mixedService)
     {
     	if(is_array($mixedService))
-    		$mixedService = call_user_func_array('BxDolService::getSerializedService', $mixedService);
+            $mixedService = call_user_func_array('BxDolService::getSerializedService', $mixedService);
 
     	if(!BxDolService::isSerializedService($mixedService))
-    		return false;
+            return false;
 
     	$sQuery = $this->prepare("INSERT INTO `sys_cron_jobs` SET `name`=?, `time`='transient', `service_call`=?", $sName, $mixedService);
         return (int)$this->query($sQuery) > 0;

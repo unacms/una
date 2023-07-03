@@ -332,9 +332,34 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         
         bx_alert($this->_sObject, 'connection_added', 0, bx_get_logged_profile_id(), $aAlertExtras);
 
-        $this->checkAllowedConnect ($iInitiator, $iContent, true, $iMutual, false);
+        $this->onAdded($iInitiator, $iContent, $iMutual);
 
         return true;
+    }
+
+    public function onAdded($iInitiator, $iContent, $iMutual)
+    {
+        $this->checkAllowedConnect ($iInitiator, $iContent, true, $iMutual, false);
+
+        /**
+         * Update recommendations.
+         */
+        $bMutual = false;
+        if($this->_aObject['type'] == BX_CONNECTIONS_TYPE_ONE_WAY || ($bMutual = ($this->_aObject['type'] == BX_CONNECTIONS_TYPE_MUTUAL && $iMutual))) {
+            $oProfileQuery = BxDolProfileQuery::getInstance();
+
+            if($this->_aObject['profile_initiator']) {
+                $aInitiator = $oProfileQuery->getInfoById($iInitiator);
+                if(bx_srv($aInitiator['type'], 'act_as_profile'))
+                    BxDolRecommendation::updateData($iInitiator);
+            }
+
+            if($bMutual && $this->_aObject['profile_content']) {
+                $aContent = $oProfileQuery->getInfoById($iContent);
+                if(bx_srv($aContent['type'], 'act_as_profile'))
+                    BxDolRecommendation::updateData($iContent);
+            }
+        }
     }
 
     /**
@@ -358,8 +383,12 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             'object' => $this,
         ));
 
+        $this->onRemoved($iInitiator, $iContent);
+
         return true;
     }
+
+    public function onRemoved($iInitiator, $iContent) {}
 
     /**
      * Compound function, which calls getCommonContent, getConnectedContent or getConnectedInitiators depending on $sContentType
