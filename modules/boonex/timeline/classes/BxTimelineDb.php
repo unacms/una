@@ -623,8 +623,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $sSqlMask = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` 
-            LEFT JOIN `sys_profiles` ON `{$this->_sTable}`.`object_owner_id`=`sys_profiles`.`id` {$sJoinClauseAddon} {join}
-            WHERE 1 AND (ISNULL(`sys_profiles`.`status`) OR `sys_profiles`.`status`='active') {where} {order} {limit}";
+            INNER JOIN `sys_profiles` ON `{$this->_sTable}`.`object_owner_id`=`sys_profiles`.`id` {$sJoinClauseAddon} {join}
+            WHERE 1 AND `sys_profiles`.`status`='active' {where} {order} {limit}";
 
         if(is_string($mixedWhereClause)) {
             $aSqlMarkers = array(
@@ -971,8 +971,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
                 $aJoin1 = $aQueryParts['join'];
 
-                $mixedJoinClause['p1'] = "LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
-                $mixedWhereSubclause['p1'] = "NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p1'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedWhereSubclause['p1'] = "1";
 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now.
@@ -986,8 +986,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aJoin2['table_alias'] = 'cc';
                 $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
-                $mixedJoinClause['p2'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'];
-                $mixedWhereSubclause['p2'] = "NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p2'] = "INNER JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'];
+                $mixedWhereSubclause['p2'] = "1";
 
                 //--- Select Promoted posts.
                 $mixedWhereSubclause['p3'] = "`{$this->_sTable}`.`promoted` <> '0'";
@@ -1007,8 +1007,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
                 $aJoin1 = $aQueryParts['join'];
 
-                $mixedJoinClause['p1'] = "LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
-                $mixedWhereSubclause['p1'] = "`{$this->_sTable}`.`type`='bx_channels' AND NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p1'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedWhereSubclause['p1'] = "`{$this->_sTable}`.`type`='bx_channels'";
 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now.
@@ -1040,8 +1040,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
                 $aJoin1 = $aQueryParts['join'];
 
-                $mixedJoinClause['p2'] = "LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
-                $mixedWhereSubclause['p2'] = "`{$this->_sTable}`.`type`<>'bx_channels' AND NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p2'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedWhereSubclause['p2'] = "`{$this->_sTable}`.`type`<>'bx_channels'";
                 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now and next check is used instead. 
@@ -1052,8 +1052,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aJoin2['table_alias'] = 'cc';
                 $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
-                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system` = 0 AND `" . $this->_sTable . "`.`object_privacy_view` > 0 AND " . $aJoin2['condition'];
-                $mixedWhereSubclause['p3'] = "NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p3'] = "INNER JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system` = 0 AND `" . $this->_sTable . "`.`object_privacy_view` > 0 AND " . $aJoin2['condition'];
+                $mixedWhereSubclause['p3'] = "1";
 
                 //--- Select Promoted posts.
                 $mixedWhereSubclause['p4'] = "`{$this->_sTable}`.`promoted` <> '0'";
@@ -1081,8 +1081,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
                 $aJoin1 = $aQueryParts['join'];
 
-                $mixedJoinClause['p2'] = "LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
-                $mixedWhereSubclause['p2'] = "NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p2'] = "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedWhereSubclause['p2'] = "1";
                 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now and next check is used instead. 
@@ -1093,8 +1093,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aJoin2['table_alias'] = 'cc';
                 $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
-                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'];
-                $mixedWhereSubclause['p3'] = "NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p3'] = "INNER JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'];
+                $mixedWhereSubclause['p3'] = "1";
 
                 //--- Select Promoted posts.
                 $mixedWhereSubclause['p4'] = "`{$this->_sTable}`.`promoted` <> '0'";
@@ -1114,10 +1114,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
                 $aJoin1 = $aQueryParts['join'];
 
-                $mixedJoinClause['p1'] = "INNER JOIN `sys_profiles` AS `p` ON `" . $this->_sTable ."`.`owner_id`=`p`.`id` AND `p`.`type`='" . $aParams['type'] . "'";
-                $mixedJoinClause['p1'] .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedJoinClause['p1'] = "INNER JOIN `sys_profiles` AS `p` ON `" . $this->_sTable ."`.`owner_id`=`p`.`id` AND `p`.`type`='" . $aParams['type'] . "' ";
+                $mixedJoinClause['p1'] .= "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
 
-                $mixedWhereSubclause['p1'] = "NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
+                $mixedWhereSubclause['p1'] = "1";
                 if(!empty($aParams['context']))
                     $mixedWhereSubclause['p1'] .= $this->prepareAsString(" AND `" . $aJoin1['table_alias'] . "`.`content`=?", $aParams['context']);
 
