@@ -750,12 +750,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sLimitClause = "LIMIT 1";
                 break;
 
-            case 'list':
-                list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
-                if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
-                    $sSelectClause  = "DISTINCT " . $sSelectClause;
-                break;
-
             case 'ids':
                 $sWhereClause = "AND `{$this->_sTable}`.`id` IN (" . $this->implode_escape($aParams['ids']) . ") ";
                 break;
