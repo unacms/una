@@ -96,7 +96,8 @@
         "twilio/sdk": "^5.19",
         "avto-dev/composer-cleanup-plugin": "dev-master",
         "mpratt/embera": "~2.0",
-        "spatie/calendar-links": "^1.5"
+        "spatie/calendar-links": "^1.5",
+        "pusher/pusher-php-server": "^7.2"
     },
     "scripts": {
         "post-update-cmd": [
