@@ -609,7 +609,7 @@ class BxBaseServiceProfiles extends BxDol
         return $this->_serviceBrowseConnections('subscribed_me', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
 
-    public function serviceBrowseMembers($iProfileId = 0, $sObject, $aParams = [])
+    public function serviceBrowseMembers($iProfileId, $sObject, $aParams = [])
     {
         if($this->_bIsApi)
             list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
