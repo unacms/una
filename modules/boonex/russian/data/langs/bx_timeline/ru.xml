@@ -25,6 +25,7 @@
     <string name="_bx_timeline_option_events_per_preload"><![CDATA[Бесконечная прокрутка: Количество элементов, получаемых при авто-подгрузке]]></string>
     <string name="_bx_timeline_option_auto_preloads"><![CDATA[Бесконечная прокрутка: Количество авто-подгрузок]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
+    <string name="_bx_timeline_option_live_updates_length"><![CDATA[Количество элементов в выборке авто обновления]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
     <string name="_bx_timeline_option_enable_brief_cards"><![CDATA[Включить лаконичные карточки]]></string>
     <string name="_bx_timeline_option_title_chars"><![CDATA[Количество символов в автогенерируемом заголовке сообщения]]></string>

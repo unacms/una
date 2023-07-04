@@ -3212,9 +3212,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         $aParams = $this->_prepareParams($aBrowseParams);
-        $aParams = array_merge($aParams, array(
+        $aParams = array_merge($aParams, [
+            'per_page' => $this->_oConfig->getLiveUpdateLength(),
             'filter' => BX_TIMELINE_FILTER_OTHER_VIEWER
-        ));
+        ]);
         $aEvents = $this->_oDb->getEvents($aParams);
         if(empty($aEvents) || !is_array($aEvents))
             return false;

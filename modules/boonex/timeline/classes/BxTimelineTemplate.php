@@ -381,18 +381,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sModuleName = $oModule->getName();
         $sModuleMethod = !empty($aParams['get_live_updates']) ? $aParams['get_live_updates'] : 'get_live_update';
-        $sService = BxDolService::getSerializedService($sModuleName, $sModuleMethod, array($aParams, $oModule->getUserId(), '{count}', '{init}'));
+        $sService = BxDolService::getSerializedService($sModuleName, $sModuleMethod, [$aParams, $oModule->getUserId(), '{count}', '{init}']);
 
-        $aLiveUpdateParams = array($this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, true);
+        $aLiveUpdateParams = [$this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, [true, false]];
         if($sModuleMethod == 'get_live_update')
             $aLiveUpdateParams[] = $iEvent;
 
         $sLiveUpdateCode = null;
-        bx_alert($sModuleName, 'add_live_update', 0, 0, array(
+        bx_alert($sModuleName, 'add_live_update', 0, 0, [
             'browse_params' => $aParams,
             'live_update_params' => &$aLiveUpdateParams,
             'override_result' => &$sLiveUpdateCode,
-        ));
+        ]);
 
         if($sLiveUpdateCode === null && ($oLiveUpdates = BxDolLiveUpdates::getInstance()) !== false)
             $sLiveUpdateCode = call_user_func_array([$oLiveUpdates, 'add'], $aLiveUpdateParams);

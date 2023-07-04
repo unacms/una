@@ -415,11 +415,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bInfScroll = getParam($sOptionPrefix . 'enable_infinite_scroll') == 'on';
         $this->_iInfScrollAutoPreloads = (int)getParam($sOptionPrefix . 'auto_preloads');
 
-        $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');       
+        $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
+        $this->_iLiveUpdateLength = (int)getParam($sOptionPrefix . 'live_updates_length');
 
         $this->_bBriefCards = getParam($sOptionPrefix . 'enable_brief_cards') == 'on';
 
-        $this->_iLiveUpdateLength = 10;
         $this->_iCharsDisplayMinTitle = (int)getParam($sOptionPrefix . 'title_chars_short');
         $this->_iCharsDisplayMaxTitle = (int)getParam($sOptionPrefix . 'title_chars');
 

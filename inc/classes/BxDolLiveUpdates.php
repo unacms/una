@@ -151,7 +151,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     	return $aResult;
     }
 
-    protected function _addSystem($sName, $iFrequency, $sServiceCall, $bActive = true)
+    protected function _addSystem($sName, $iFrequency, $sServiceCall, $mixedActive = true)
     {
         if(!$this->_iProfileId)
             return false;
@@ -166,13 +166,15 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
             $this->_aSystemsActive[] = $sName;
 
         if(empty($this->_aSystems[$sName])) {
-            $this->_aSystems[$sName] = array(
+            list($bActive, $bInit) = is_array($mixedActive) ? $mixedActive : [$mixedActive, true];
+            
+            $this->_aSystems[$sName] = [
                 'name' => $sName,
-                'init' => 1,
+                'init' => $bInit ? 1 : 0,
                 'frequency' => $iFrequency,
                 'service_call' => $sServiceCall,
                 'active' => $bActive ? 1 : 0
-            );
+            ];
 
             $this->_updateCached('systems', $this->_aSystems);
         }
