@@ -81,7 +81,6 @@
         "snipe/banbuilder": "dev-master",
         "chargebee/chargebee-php": "^3.0",
         "curl/cacert": "*",
-        "facebook/graph-sdk": "^5.6.0",
         "ffmpeg/ffmpeg": "*",
         "ezyang/htmlpurifier": "^4.13",
         "intervention/image": "^2.6",
@@ -96,7 +95,8 @@
         "twilio/sdk": "^5.19",
         "avto-dev/composer-cleanup-plugin": "dev-master",
         "mpratt/embera": "~2.0",
-        "spatie/calendar-links": "^1.5"
+        "spatie/calendar-links": "^1.5",
+        "pusher/pusher-php-server": "^7.2"
     },
     "scripts": {
         "post-update-cmd": [
