@@ -1573,6 +1573,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, $aAlertParams);
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, $aAlertParams);
 
+        BxDolSockets::getInstance()->sendEvent($this->_sSystem , $iObjId, 'comment_added', json_encode(['anchor' => $this->getItemAnchor($iCmtId), 'id' => $iCmtId, 'author_id' => $iPerformerId, 'notif_id' => $this->getNotificationId()]));
+        
         $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
         bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_add_comment', $aAuditParams);
 

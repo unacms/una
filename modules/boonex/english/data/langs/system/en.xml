@@ -1725,6 +1725,15 @@
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Flat comments]]></string>
     <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Search sections]]></string>
     <string name="_adm_stg_cpt_option_sys_api_extended_units"><![CDATA[Use extended units]]></string>
+    
+    <string name="_adm_stg_cpt_category_sockets"><![CDATA[Sockets server]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_type"><![CDATA[Type]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_url"><![CDATA[Url]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_app_id"><![CDATA[App id]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_key"><![CDATA[App key]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_secret"><![CDATA[App secret]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_disabled"><![CDATA[Disabled]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
 
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>

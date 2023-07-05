@@ -1169,6 +1169,15 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         return $aResults;
     }
+    
+    public function serviceGetOptionsSocketsFieldDefault()
+    {
+        $aResults = [];
+        $aObjects = ['sys_sockets_disabled', 'sys_sockets_soketi'];
+        foreach($aObjects as $sObject)
+            $aResults[$sObject] = _t('_adm_stg_cpt_option_sys_sockets_type_' . $sObject);
+        return $aResults;
+    }
 
     public function serviceGetOptionsLocationLeafletGetProviders()
     {

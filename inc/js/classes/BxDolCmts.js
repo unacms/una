@@ -702,6 +702,15 @@ BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
     });
 };
 
+
+BxDolCmts.prototype.showNew = function(sData)
+{
+    let oData = JSON.parse(sData)
+    if ($('#' + oData.notif_id).hasClass('hidden') &&  this._iAuthorId != oData.author_id ){
+        $('#' + oData.notif_id).removeClass('hidden');
+        $('#' + oData.notif_id + ' A').first().attr('onclick', "javascript:oCmtsBxPosts_53.goToBtn(this, '" + oData.anchor + "', " + oData.id + ");")
+    }
+}
 BxDolCmts.prototype.goToBtn = function(oLink, sGoToId, sBlinkIds, onLoad)
 {
     var $this = this;
@@ -722,7 +731,7 @@ BxDolCmts.prototype.goToBtn = function(oLink, sGoToId, sBlinkIds, onLoad)
                 onLoad();
 
             $this._loadingInButton(oLink, false);
-            $(oLink).parents('.cmt-lu-button:first').remove();
+            $(oLink).parents('.cmt-lu-button:first').addClass('hidden');
 
             $this.resumeLiveUpdates();
         });
