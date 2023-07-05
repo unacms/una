@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `bx_cnl_data` (
   `cf` int(11) NOT NULL default '1',
   `allow_view_to` varchar(255) DEFAULT '3',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE INDEX channel_name (`channel_name`),
   FULLTEXT KEY `search_fields` (`channel_name`)
