@@ -174,7 +174,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         return $this->_oModule->registerPayment($iPendingId);
     }
 
-    public function addOrder($aData)
+    public function addOrder($aData, $bForce = false)
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
         if($iSellerId == $aData['client_id'])
@@ -187,7 +187,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         $aItems = [];
         $fItemsPrice = 0;
         foreach($aData['items'] as $aItem) {
-            if(!$this->_oModule->isAllowedSell(['module_id' => $aData['module_id'], 'item_id' => $aItem['id']], true))
+            if(!$bForce && !$this->_oModule->isAllowedSell(['module_id' => $aData['module_id'], 'item_id' => $aItem['id']], true))
                 continue;
 
             $aItems[] = [
