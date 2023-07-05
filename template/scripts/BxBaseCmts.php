@@ -193,15 +193,24 @@ class BxBaseCmts extends BxDolCmts
             return $mixedResult;
 
         $this->_getParams($aBp, $aDp);
-
-        //add live update
-        $this->actionResumeLiveUpdate();
-
-        if(($oLiveUpdates = BxDolLiveUpdates::getInstance())!== false) {
-            $sServiceCall = BxDolService::getSerializedService('system', 'get_live_update', [$this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'], 'TemplCmtsServices');
-            $oLiveUpdates->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
+        
+        $oSockets= BxDolSockets::getInstance();
+        
+        $sJs = '';
+        
+        if ($oSockets->isEnable()){
+            $sJs .= $this->getLiveUpdateButton(-1, 'hidden') . $this->_oTemplate->_wrapInTagJsCode($oSockets->getSubscribeJsCode($this->_sSystem , $this->_iId, 'comment_added', $this->getJsObjectName().'.showNew(data)'));
         }
-        //add live update
+        else{
+            //add live update
+            $this->actionResumeLiveUpdate();
+
+            if(($oLiveUpdates = BxDolLiveUpdates::getInstance())!== false) {
+                $sServiceCall = BxDolService::getSerializedService('system', 'get_live_update', [$this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'], 'TemplCmtsServices');
+                $oLiveUpdates->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
+            }
+            //add live update
+        }
 
         $sComments = $this->getComments($aBp, $aDp);
         $sCommentsPinned = $this->getCommentsPinned(array_merge($aBp, ['pinned' => 1]), $aDp);
@@ -231,7 +240,7 @@ class BxBaseCmts extends BxDolCmts
             'block_menu' => &$sBlockMenu,
         ]);
 
-        $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', [
+        $sContent = $sJs . $this->_oTemplate->parseHtmlByName('comments_block.html', [
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
@@ -590,11 +599,17 @@ class BxBaseCmts extends BxDolCmts
         if(empty($aComment) || !is_array($aComment))
             return '';
 
+        return $this->getLiveUpdateButton($aComment['cmt_id']);
+    }
+    
+    function getLiveUpdateButton($aCommentId, $sCssClass = '')
+    {
         $sJsObject = $this->getJsObjectName();
         return $this->_oTemplate->parseHtmlByName('comments_lu_button.html', array(
             'style_prefix' => $this->_sStylePrefix,
+            'class' => $sCssClass,
             'html_id' => $this->getNotificationId(),
-            'onclick_show' => "javascript:" . $sJsObject . ".goToBtn(this, '" . $this->getItemAnchor($aComment['cmt_id']) . "', '" . $aComment['cmt_id'] . "');",
+            'onclick_show' => "javascript:" . $sJsObject . ".goToBtn(this, '" . $this->getItemAnchor($aCommentId) . "', '" . $aCommentId . "');",
         ));
     }
 

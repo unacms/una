@@ -267,7 +267,8 @@ class BxBasePage extends BxDolPage
             'sObject' => $this->_sObject,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'aHtmlIds' => $this->_aHtmlIds,
-            'isStickyColumns' => $this->_bStickyColumns
+            'isStickyColumns' => $this->_bStickyColumns,
+            'oSocket' => BxDolSockets::getInstance()->getInitJsCode()
         )) . ");";
 
         return $this->_wrapInTagJsCode($sCode);

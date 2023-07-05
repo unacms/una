@@ -695,6 +695,24 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_a2a_enable', '_adm_stg_cpt_option_sys_a2a_enable', '', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_a2a_code', '_adm_stg_cpt_option_sys_a2a_code', '', 'code', '', '', '', 11);
 
+
+--
+-- CATEGORY: Sockets
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'sockets', '_adm_stg_cpt_category_sockets', 0, 22);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_sockets_type', '_adm_stg_cpt_option_sys_sockets_type', 'sys_soketi', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:33:"get_options_sockets_field_default";s:5:"class";s:13:"TemplServices";}', '', '', 1),
+(@iCategoryId, 'sys_sockets_url', '_adm_stg_cpt_option_sys_sockets_url', '', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_sockets_app_id', '_adm_stg_cpt_option_sys_sockets_app_id', '', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_sockets_key', '_adm_stg_cpt_option_sys_sockets_key', '', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_sockets_secret', '_adm_stg_cpt_option_sys_sockets_secret', '', 'digit', '', '', '', 5);
+
+
+(@iCategoryId, 'sys_push_queue_send_per_start', '_adm_stg_cpt_option_sys_push_queue_send_per_start', '500',  'digit', '', '', '', 10),
+(@iCategoryId, 'sys_push_queue_send_per_start_to_recipient', '_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient', '2',  'digit', '', '', '', 11);
+
 --
 -- CATEGORY (HIDDEN): Audit
 --
@@ -6155,6 +6173,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'css_system', 'vote.css', 1, 36),
 ('system', 'css_system', '{dir_plugins_public}spin.js/|spin.css', 1, 37),
 
+('system', 'js_system', 'pusher/pusher.min.js', 1, 0),
 ('system', 'js_system', 'jquery/jquery.min.js', 1, 1),
 ('system', 'js_system', 'jquery/jquery-migrate.min.js', 1, 2),
 ('system', 'js_system', 'jquery-ui/jquery-ui.min.js', 1, 3),
