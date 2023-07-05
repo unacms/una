@@ -477,15 +477,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseFriends ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -504,15 +501,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseFriendRequests ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -531,15 +525,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseFriendRequested ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -558,15 +549,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseSubscriptions ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -585,15 +573,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseSubscribedMe ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -612,15 +597,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseMembers($iProfileId, $sObject, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -642,15 +624,12 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseConnections ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-
-        if(is_string($aParams))
-            $aParams = json_decode($aParams, true);
 
         $aParams = array_merge([
             'params' => false,
@@ -675,7 +654,7 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseRecommendationsFriends ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams, true);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -700,9 +679,11 @@ class BxBaseServiceProfiles extends BxDol
 
         if(bx_is_api()) {
             $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
-            $aData['module'] = 'system';
-            $aData['unit'] = 'mixed';
-            $aData['request_url'] = '/api.php?r=system/browse_recommendations_friends/TemplServiceProfiles&params[]=';
+            $aData = array_merge($aData, [
+                'module' => 'system',
+                'unit' => 'mixed', 
+                'request_url' => '/api.php?r=system/browse_recommendations_friends/TemplServiceProfiles&params[]=' . $iProfileId . '&params[]='
+            ]);
 
             return [bx_api_get_block('browse', $aData)];
         }
@@ -717,7 +698,7 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBrowseRecommendationsSubscriptions ($iProfileId = 0, $aParams = [])
     {
         if($this->_bIsApi)
-            list($iProfileId, $aParams) = [0, bx_api_get_browse_params($iProfileId)];
+            $aParams = bx_api_get_browse_params($aParams, true);
 
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -742,9 +723,11 @@ class BxBaseServiceProfiles extends BxDol
 
         if(bx_is_api()) {
             $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
-            $aData['module'] = 'system';
-            $aData['unit'] = 'mixed';
-            $aData['request_url'] = '/api.php?r=system/browse_recommendations_subscriptions/TemplServiceProfiles&params[]=';
+            $aData = array_merge($aData, [
+                'module' => 'system',
+                'unit' => 'mixed',
+                'request_url' => '/api.php?r=system/browse_recommendations_subscriptions/TemplServiceProfiles&params[]=' . $iProfileId . '&params[]='
+            ]);
 
             return [bx_api_get_block('browse', $aData)];
         }

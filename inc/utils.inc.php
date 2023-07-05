@@ -2430,12 +2430,15 @@ function bx_api_get_image($sStorage, $iId)
     return false;
 }
 
-function bx_api_get_browse_params($sParams)
+function bx_api_get_browse_params($sParams, $bParamsOnly = false)
 {
     if(!$sParams || !is_string($sParams))
         return [];
 
     $aParams = json_decode($sParams, true);
+    if(!$bParamsOnly)
+        return $aParams;
+
     if(!isset($aParams['params']))
         return [];
 
