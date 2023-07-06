@@ -4653,7 +4653,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', '', '', '', 'home col-gray', '', 2147483647, 1, 1, 1),
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2),
 ('sys_site', 'system', 'search', '_sys_menu_item_title_system_search', '_sys_menu_item_title_search', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-search\', this, \'site\');', '', 'search', '', 2147483647, 1, 1, 3),
-('sys_site', 'system', 'recommended-friends', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=recommended-friends', '', '', 'users', '', 2147483646, 1, 1, 4),
+('sys_site', 'system', 'friend-suggestions', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=friend-suggestions', '', '', 'users', '', 2147483646, 1, 1, 4),
 ('sys_site', 'system', 'more-auto', '_sys_menu_item_title_system_more_auto', '_sys_menu_item_title_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', 2147483647, 1, 0, 9999);
 
 -- panel menu
@@ -4802,11 +4802,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- connections submenu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
-('sys_con_submenu', 'system', 'recommended-friends', '', '_sys_menu_item_title_recom_friends', 'page.php?i=recommended-friends', '', '', '', '', '', 2147483647, '', 1, 1, 1),
-('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', '', '', 2147483647, '', 1, 1, 2),
+('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', '', '', 2147483647, '', 1, 1, 1),
+('sys_con_submenu', 'system', 'friend-suggestions', '', '_sys_menu_item_title_recom_friends', 'page.php?i=friend-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 2),
 ('sys_con_submenu', 'system', 'friend-requests', '', '_sys_menu_item_title_con_friend_requests', 'page.php?i=friend-requests', '', '', '', '', '', 2147483647, '', 1, 1, 3),
-('sys_con_submenu', 'system', 'friend-requested', '', '_sys_menu_item_title_con_friend_requested', 'page.php?i=friend-requested', '', '', '', '', '', 2147483647, '', 1, 1, 4),
-('sys_con_submenu', 'system', 'recommended-subscriptions', '', '_sys_menu_item_title_recom_subscriptions', 'page.php?i=recommended-subscriptions', '', '', '', '', '', 2147483647, '', 1, 1, 5),
+('sys_con_submenu', 'system', 'sent-friend-requests', '', '_sys_menu_item_title_con_friend_requested', 'page.php?i=sent-friend-requests', '', '', '', '', '', 2147483647, '', 1, 1, 4),
+('sys_con_submenu', 'system', 'follow-suggestions', '', '_sys_menu_item_title_recom_subscriptions', 'page.php?i=follow-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 5),
 ('sys_con_submenu', 'system', 'followers', '', '_sys_menu_item_title_con_followers', 'page.php?i=followers', '', '', '', '', '', 2147483647, '', 1, 1, 6),
 ('sys_con_submenu', 'system', 'following', '', '_sys_menu_item_title_con_following', 'page.php?i=following', '', '', '', '', '', 2147483647, '', 1, 1, 7);
 
@@ -5594,11 +5594,11 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_sub_wiki_page_contents', 'wiki-page-contents', '', '_sys_page_title_wiki_page_contents', 'system', 1, 5, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_con_friends', 'friends', '_sys_page_title_system_con_friends', '_sys_page_title_con_friends', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friends', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
 ('sys_con_friend_requests', 'friend-requests', '_sys_page_title_system_con_friend_requests', '_sys_page_title_con_friend_requests', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friend-requests', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
-('sys_con_friend_requested', 'friend-requested', '_sys_page_title_system_con_friend_requested', '_sys_page_title_con_friend_requested', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friend-requested', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_con_friend_requested', 'sent-friend-requests', '_sys_page_title_system_con_friend_requested', '_sys_page_title_con_friend_requested', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=sent-friend-requests', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
 ('sys_con_following', 'following', '_sys_page_title_system_con_following', '_sys_page_title_con_following', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=following', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
 ('sys_con_followers', 'followers', '_sys_page_title_system_con_followers', '_sys_page_title_con_followers', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=followers', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
-('sys_recom_friends', 'recommended-friends', '_sys_page_title_system_recom_friends', '_sys_page_title_recom_friends', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=recommended-friends', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
-('sys_recom_subscriptions', 'recommended-subscriptions', '_sys_page_title_system_recom_subscriptions', '_sys_page_title_recom_subscriptions', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=recommended-subscriptions', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0);
+('sys_recom_friends', 'friend-suggestions', '_sys_page_title_system_recom_friends', '_sys_page_title_recom_friends', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=friend-suggestions', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0),
+('sys_recom_subscriptions', 'follow-suggestions', '_sys_page_title_system_recom_subscriptions', '_sys_page_title_recom_subscriptions', 'system', 1, 12, '', 2147483646, 1, 'page.php?i=follow-suggestions', '', '', '', 0, 1, 0, 'BxTemplPageConnections', '', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_types` (
