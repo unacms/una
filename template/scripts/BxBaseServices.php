@@ -83,8 +83,9 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetPerformedBy' => 'BxBaseVoteServices',
 
             'Perform' => 'BxBaseServiceConnections',
+            'Perform' => 'BxBaseServiceRecommendations',
             'GetDataApi' => 'BxBaseCmtsServices',
-            
+
             'GetDataApi' => 'BxBaseUploaderServices',
         );
     }
@@ -1167,15 +1168,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         foreach($aObjects as $aObject)
             $aResults[$aObject['object']] = _t($aObject['title']);
 
-        return $aResults;
-    }
-    
-    public function serviceGetOptionsSocketsFieldDefault()
-    {
-        $aResults = [];
-        $aObjects = ['sys_sockets_disabled', 'sys_sockets_soketi'];
-        foreach($aObjects as $sObject)
-            $aResults[$sObject] = _t('_adm_stg_cpt_option_sys_sockets_type_' . $sObject);
         return $aResults;
     }
 
