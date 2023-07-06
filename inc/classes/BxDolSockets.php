@@ -17,12 +17,13 @@ class BxDolSockets extends BxDolFactory implements iBxDolSingleton
     protected function __construct()
     {
         parent::__construct();
-        $a = parse_url(getParam('sys_sockets_url'));
-        $this->_sHost = $a['host'];
-        $this->_sPort = $a['port'];
-        $this->_sScheme = $a['scheme'];
-        if (getParam('sys_sockets_type') != 'sys_sockets_disabled')
-            $this->_sIsEnabled =true;
+        if (getParam('sys_sockets_type') != 'sys_sockets_disabled' && trim(getParam('sys_sockets_url')) != ''){
+            $this->_sIsEnabled = true;
+            $a = parse_url(getParam('sys_sockets_url'));
+            $this->_sHost = $a['host'];
+            $this->_sPort = $a['port'];
+            $this->_sScheme = $a['scheme'];
+        }    
     }
 
     static public function getInstance()

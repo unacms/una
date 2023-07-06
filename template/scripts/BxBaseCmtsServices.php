@@ -511,11 +511,13 @@ class BxBaseCmtsServices extends BxDol
     
     public function serviceGetCommentsApi($oCmts, $aParams)
     {
-        
         $mixedResult = $oCmts->isViewAllowed();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult; // TODO: error checking
 
+        if (isset($aParams['comment_id']))
+            $aParams['comment_id'] = explode(',', $aParams['comment_id']);
+       
         $aBp = !isset($aParams['aBp']) ? [] : $aParams['aBp'];
         $aDp = ['in_designbox' => false, 'show_empty' => false];
         
@@ -533,7 +535,8 @@ class BxBaseCmtsServices extends BxDol
              $aBp['per_view'] = $aParams['per_view'];
         }
 
-        $aCmts = isset($aParams['comment_id']) ? [['cmt_id' => $aParams['comment_id']]] : $oCmts->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
+        $aCmts = isset($aParams['comment_id']) ? array_map(function($value) {return ['cmt_id' => $value];}, $aParams['comment_id']) : $oCmts->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp[($aBp['init_view'] != -1 ? 'init' : 'per') . '_view']);
+
         
         $aParams['start_from'] = 0;
         if (count($aCmts) == $aBp['per_view']){
