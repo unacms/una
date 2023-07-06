@@ -1710,7 +1710,7 @@
     <string name="_adm_stg_cpt_option_sys_sockets_app_id"><![CDATA[App id]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_key"><![CDATA[App key]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_secret"><![CDATA[App secret]]></string>
-    <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_disabled"><![CDATA[Выкличена]]></string>
+    <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_disabled"><![CDATA[Выключена]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type_sys_sockets_soketi"><![CDATA[Soketi]]></string>
     
     <string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>

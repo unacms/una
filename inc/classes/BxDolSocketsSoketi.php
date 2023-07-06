@@ -34,7 +34,8 @@ class BxDolSocketsSoketi extends BxDolSockets
             wsHost: '" . $this->_sHost . "',
             wsPort: " . $this->_sPort . ",
             forceTLS: false, 
-            enabledTransports: ['ws', 'wss']
+            enabledTransports: ['ws', 'wss'],
+            cluster:''
         });";
     }
     

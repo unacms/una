@@ -45,7 +45,6 @@ BxDolPage.prototype.socketsSubscribe = function(module, content_id, event, cb)
 {
     if (this._oPusher != null){
         var channel = this._oPusher.subscribe(module + '_' + content_id);
-        
         channel.bind(event, function(data) {
             cb(data)
         });
