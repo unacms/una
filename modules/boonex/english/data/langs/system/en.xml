@@ -3195,7 +3195,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_disabled"><![CDATA[Disabled]]></string>
     <string name="_sys_menu_title_con_submenu"><![CDATA[Connections]]></string>
     <string name="_sys_menu_set_title_con_submenu"><![CDATA[Connections]]></string>
-    <string name="_sys_menu_item_title_con_friends"><![CDATA[Friends]]></string>
+    <string name="_sys_menu_item_title_con_friends"><![CDATA[All Friends]]></string>
     <string name="_sys_menu_item_title_con_friend_requests"><![CDATA[Friend Requests]]></string>
     <string name="_sys_menu_item_title_con_friend_requested"><![CDATA[Requested Friendship]]></string>
     <string name="_sys_menu_item_title_con_following"><![CDATA[Following]]></string>

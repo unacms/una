@@ -3153,7 +3153,7 @@
     <string name="_sys_menu_item_title_disabled"><![CDATA[Отключенный]]></string>
     <string name="_sys_menu_title_con_submenu"><![CDATA[Связи]]></string>
     <string name="_sys_menu_set_title_con_submenu"><![CDATA[Связи]]></string>
-    <string name="_sys_menu_item_title_con_friends"><![CDATA[Друзья]]></string>
+    <string name="_sys_menu_item_title_con_friends"><![CDATA[Все друзья]]></string>
     <string name="_sys_menu_item_title_con_friend_requests"><![CDATA[Хотят дружить]]></string>
     <string name="_sys_menu_item_title_con_friend_requested"><![CDATA[Запрошенная дружба]]></string>
     <string name="_sys_menu_item_title_con_following"><![CDATA[Подписан на]]></string>
