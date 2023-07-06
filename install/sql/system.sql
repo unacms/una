@@ -4802,8 +4802,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- connections submenu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
-('sys_con_submenu', 'system', 'friend-suggestions', '', '_sys_menu_item_title_recom_friends', 'page.php?i=friend-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 1),
-('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', '', '', 2147483647, '', 1, 1, 2),
+('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', '', '', 2147483647, '', 1, 1, 1),
+('sys_con_submenu', 'system', 'friend-suggestions', '', '_sys_menu_item_title_recom_friends', 'page.php?i=friend-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 2),
 ('sys_con_submenu', 'system', 'friend-requests', '', '_sys_menu_item_title_con_friend_requests', 'page.php?i=friend-requests', '', '', '', '', '', 2147483647, '', 1, 1, 3),
 ('sys_con_submenu', 'system', 'sent-friend-requests', '', '_sys_menu_item_title_con_friend_requested', 'page.php?i=sent-friend-requests', '', '', '', '', '', 2147483647, '', 1, 1, 4),
 ('sys_con_submenu', 'system', 'follow-suggestions', '', '_sys_menu_item_title_recom_subscriptions', 'page.php?i=follow-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 5),
