@@ -707,8 +707,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_sockets_url', '_adm_stg_cpt_option_sys_sockets_url', '', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_sockets_app_id', '_adm_stg_cpt_option_sys_sockets_app_id', '', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_sockets_key', '_adm_stg_cpt_option_sys_sockets_key', '', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_sockets_secret', '_adm_stg_cpt_option_sys_sockets_secret', '', 'digit', '', '', '', 5);
-
+(@iCategoryId, 'sys_sockets_secret', '_adm_stg_cpt_option_sys_sockets_secret', '', 'digit', '', '', '', 5),
 
 (@iCategoryId, 'sys_push_queue_send_per_start', '_adm_stg_cpt_option_sys_push_queue_send_per_start', '500',  'digit', '', '', '', 10),
 (@iCategoryId, 'sys_push_queue_send_per_start_to_recipient', '_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient', '2',  'digit', '', '', '', 11);
