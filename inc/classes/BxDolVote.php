@@ -252,7 +252,10 @@ class BxDolVote extends BxDolObject
         bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(['vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
         bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(['object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
 
-        return $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);
+        $a = $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);        
+        BxDolSockets::getInstance()->sendEvent($this->_sSystem . '_' . $this->_sType, $iObjectId, 'voted', json_encode($a));
+        
+        return $a;
     }
 
     public function actionGetVotedBy()
