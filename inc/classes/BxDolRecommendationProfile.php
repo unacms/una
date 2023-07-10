@@ -22,11 +22,11 @@ class BxDolRecommendationProfile extends BxTemplRecommendation
         if(!empty($this->_aObject['connection'])) {
             $aResult = BxDolConnection::getObjectInstance($this->_aObject['connection'])->actionAdd($iItemId, $iProfileId);
             if($aResult['err'] == true)
-                return ['msg' => $aResult['msg']];
+                return ['code' => 2, 'msg' => $aResult['msg']];
         }
 
         if(!$this->add($iProfileId, $iItemId))
-            return ['msg' => '_sys_txt_error_occured'];
+            return ['code' => 1, 'msg' => '_sys_txt_error_occured'];
 
         return ['code' => 0];
     }
