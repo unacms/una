@@ -232,6 +232,8 @@
     <string name="_bx_timeline_menu_item_title_item_repost_to"><![CDATA[Сделать репост в контекст]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Послать]]></string>
     <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Послать другу]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_copy"><![CDATA[Скопировать в буфер обмена]]></string>
+    <string name="_bx_timeline_menu_item_title_item_copy"><![CDATA[Скопировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_admt_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Лента]]></string>
 

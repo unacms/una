@@ -157,7 +157,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
                     case 'item-send':
                         $aItemsApi['item-copy'] = array_merge($aItem, [
                             'name' => 'item-copy',
-                            'title' => _t('_sys_wiki_copy'),
+                            'title' => _t('_bx_timeline_menu_item_title_item_copy'),
                             'link' => $aMarkers['url'],
                         ]);
                         break;
