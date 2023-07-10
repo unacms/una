@@ -86,6 +86,20 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         return $this->_aObject['content_info'];
     }
 
+    public function actionAdd($iProfileId = 0, $iItemId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        if(!$iItemId)
+            $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$this->add($iProfileId, $iItemId))
+            return ['code' => 1, 'msg' => '_sys_txt_error_occured'];
+
+        return ['code' => 0];
+    }
+
     public function actionIgnore($iProfileId = 0, $iItemId = 0)
     {
         if(!$iProfileId)
@@ -95,7 +109,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
             $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
         if(!$this->ignore($iProfileId, $iItemId))
-            return ['msg' => '_sys_txt_error_occured'];
+            return ['code' => 1, 'msg' => '_sys_txt_error_occured'];
 
         return ['code' => 0];
     }

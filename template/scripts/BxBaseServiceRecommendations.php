@@ -56,6 +56,7 @@ class BxBaseServiceRecommendations extends BxDol
             return ['code' => 3, 'message' => $aResult['msg']];
 
         $aFlip = [
+            'add' => '',
             'ignore' => ''
         ];
 
