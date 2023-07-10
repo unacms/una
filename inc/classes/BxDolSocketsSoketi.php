@@ -17,14 +17,20 @@ class BxDolSocketsSoketi extends BxDolSockets
     
     public function sendEvent($sModule, $iContentId, $sEvent, $sMessage)
     {
-        $oPusher = new Pusher\Pusher(getParam('sys_sockets_key'), getParam('sys_sockets_secret'), getParam('sys_sockets_app_id'), [
-            'host' => $this->_sHost,
-            'port' => $this->_sPort,
-            'scheme' => $this->_sScheme,
-            'encrypted' => true,
-            'useTLS' => false,
-        ]);
-        $b = $oPusher->trigger($sModule . '_' . $iContentId, $sEvent, $sMessage);
+        try{
+            $oPusher = new Pusher\Pusher(getParam('sys_sockets_key'), getParam('sys_sockets_secret'), getParam('sys_sockets_app_id'), [
+                'host' => $this->_sHost,
+                'port' => $this->_sPort,
+                'scheme' => $this->_sScheme,
+                'encrypted' => true,
+                'useTLS' => false,
+            ]);
+            $b = $oPusher->trigger($sModule . '_' . $iContentId, $sEvent, $sMessage);
+        }
+         catch (Exception $oException) {
+            $this->writeLog($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
+            return false;
+        }
         
     }
     

@@ -37,6 +37,11 @@ class BxDolSockets extends BxDolFactory implements iBxDolSingleton
         return $GLOBALS['bxDolClasses']['BxDolSockets'];
     }
     
+     private function writeLog($sString)
+	{
+        bx_log('sys_sockets', $sString);
+	}
+    
     public function isEnable()
     {
         return $this->_sIsEnabled;

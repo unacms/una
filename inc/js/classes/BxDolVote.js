@@ -64,8 +64,16 @@ BxDolVote.prototype.vote = function(oLink, iValue, onComplete)
     );
 };
 
+BxDolVote.prototype.onVoteAs = function(id, sys, data)
+{
+    var oData = JSON.parse(data);  
+    var oLink = $('#bx-vote-' + sys + '-' + id+' A').first();
+    this.onVote(oLink, oData)
+};
+
 BxDolVote.prototype.onVote = function(oLink, oData, onComplete)
 {
+    console.log(oLink, oData);
     if(oData && oData.code != 0)
         return;
 

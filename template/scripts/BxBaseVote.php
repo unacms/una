@@ -88,7 +88,6 @@ class BxBaseVote extends BxDolVote
     public function getCounter($aParams = [])
     {
         $aParams = array_merge($this->_aElementDefaults, $aParams);
-
         $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
         $bShowEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
         $bShowActive = $this->isAllowedVoteViewVoters() && (!isset($aParams['show_counter_active']) || (bool)$aParams['show_counter_active'] === true);
@@ -118,7 +117,15 @@ class BxBaseVote extends BxDolVote
         $aVote = !empty($aParams['vote']) && is_array($aParams['vote']) ? $aParams['vote'] : $this->_getVote();
         $sContent = $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count'], $aParams) : '';
 
-        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
+        $oSockets= BxDolSockets::getInstance();
+        
+        $sJs = '';
+        
+        if ($oSockets->isEnable()){
+            $sJs .= $this->_oTemplate->_wrapInTagJsCode($oSockets->getSubscribeJsCode($this->_sSystem . '_' . $this->_sType, $this->getId(), 'voted', $this->getJsObjectName().'.onVoteAs('.$this->getId().',"' . $this->_sType . '-' . str_replace('_', '-', $this->_sSystem) . '", data)'));
+        }
+        
+        return $sJs . $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
             'bx_if:show_text' => array(
                 'condition' => !$bShowActive,
                 'content' => array(
