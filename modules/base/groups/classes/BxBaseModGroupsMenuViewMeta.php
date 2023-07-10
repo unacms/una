@@ -29,10 +29,19 @@ class BxBaseModGroupsMenuViewMeta extends BxBaseModProfileMenuViewMeta
         $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
         if(!$oConnection)
             return false;
-        
-        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
 
-        return $oConnection->getCounter($this->_oContentProfile->id(), true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        $iContentProfileId = $this->_oContentProfile->id();
+
+        if($this->_bIsApi) {
+            $aCounter = $oConnection->getCounterAPI($iContentProfileId, false, ['caption' => $aItem['title']], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+
+            return $this->_getMenuItemAPI($aItem, ['display' => 'button'], [
+                'title' => $aCounter['countf'],
+            ]);
+        }
+
+        $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
+        return $oConnection->getCounter($iContentProfileId, true, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 }
 

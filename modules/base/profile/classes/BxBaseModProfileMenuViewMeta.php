@@ -150,7 +150,7 @@ class BxBaseModProfileMenuViewMeta extends BxTemplMenuUnitMeta
         }
 
         $sIcon = BxTemplFunctions::getInstanceWithTemplate($this->_oTemplate)->getIconAsHtml(!empty($aItem['icon']) ? $aItem['icon'] : '');
-        return $oConnection->getCounter($this->_oContentProfile->id(), false, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        return $oConnection->getCounter($iContentProfileId, false, ['caption' => $aItem['title'], 'custom_icon' => $sIcon], BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
     }
 
     protected function _getMenuItemViews($aItem)
