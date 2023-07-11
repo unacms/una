@@ -319,7 +319,7 @@ class BxBaseVote extends BxDolVote
             	'condition' => $bTmplVarsLegend,
             	'content' => $aTmplVarsLegend
             ),
-            'script' => $this->getJsScript($aParams)
+            'script' => $this->getJsScript($aParams) . ($bTmplVarsCounter ? $this->getJsScriptSocket($aParams) : '')
         );
     }
 

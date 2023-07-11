@@ -193,6 +193,10 @@ class BxDolScore extends BxDolObject
         return $aScore['score'];
     }
 
+    public function getSocketName()
+    {
+        return $this->_sSystem;
+    }
 
     /**
      * Actions functions
@@ -258,7 +262,8 @@ class BxDolScore extends BxDolObject
         $aScore = $this->_getVote($iObjectId, true);
         $iCup = (int)$aScore['count_up'];
         $iCdown = (int)$aScore['count_down'];
-        return [
+        
+        $aResult = [
             'code' => 0,
             'type' => $sType,
             'score' => $aScore['score'],
@@ -271,6 +276,10 @@ class BxDolScore extends BxDolObject
             'voted' => !$bVoted,
             'disabled' => !$bVoted,
         ];
+
+        BxDolSockets::getInstance()->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
+
+        return $aResult;
     }
 
 
@@ -331,6 +340,14 @@ class BxDolScore extends BxDolObject
     /**
      * Internal functions
      */
+    protected function _returnVoteDataForSocket($aData, $aMask = [])
+    {
+        if(empty($aMask) || !is_array($aMask))
+            $aMask = ['code', 'type', 'score', 'scoref', 'cup', 'cdown', 'counter'];
+
+        return array_intersect_key($aData, array_flip($aMask));
+    }
+
     protected function _getVote($iObjectId = 0, $bForceGet = false)
     {
         if(!empty($this->_aScore) && !$bForceGet)

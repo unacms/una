@@ -38,12 +38,21 @@ BxDolScore.prototype.toggleByPopup = function(oLink) {
 
 BxDolScore.prototype.voteUp = function (oLink, onComplete)
 {
-	this._vote(oLink, 'up', onComplete);
+    this._vote(oLink, 'up', onComplete);
 };
 
 BxDolScore.prototype.voteDown = function (oLink, onComplete)
 {
-	this._vote(oLink, 'down', onComplete);
+    this._vote(oLink, 'down', onComplete);
+};
+
+BxDolScore.prototype.onVoteAs = function(sData)
+{
+    oData = JSON.parse(sData);
+
+    var oLink = $('#' + this._aHtmlIds['main']).find('.' + this._sSP + '-do-vote.' + this._sSP + '-dv-' + oData.type);
+    if(oLink && oLink.length)
+        this._onVote(oLink, oData);
 };
 
 BxDolScore.prototype._vote = function (oLink, sType, onComplete)
@@ -56,40 +65,43 @@ BxDolScore.prototype._vote = function (oLink, sType, onComplete)
     	this._sActionsUrl,
     	oParams,
     	function(oData) {
-            var fContinue = function() {
-            if(oData && oData.code != 0)
-                return;
-
-            if(oData && oData.label_icon)
-                $(oLink).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
-
-            if(oData && oData.label_title) {
-                $(oLink).attr('title', oData.label_title);
-                $(oLink).find('.sys-action-do-text').html(oData.label_title);
-            }
-
-            if(oData && oData.disabled)
-                $this._getActions(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-score-disabled');
-
-            var oCounter = $this._getCounter(oLink);
-            if(oCounter && oCounter.length > 0) {
-                if(oData && oData.counter)
-                    oCounter.replaceWith(oData.counter);
-                else
-                    oCounter.html(oData.scoref).parents('.' + $this._sSP + '-counter-holder:first:hidden').bx_anim('show');
-            }
-
-            if(typeof onComplete == 'function')
-                onComplete(oLink, oData);
-            };
-
             if(oData && oData.message != undefined)
-                bx_alert(oData.message, fContinue);
+                bx_alert(oData.message, function() {
+                    $this._onVote(oLink, oData, onComplete);
+                });
             else
-                fContinue();
+                $this._onVote(oLink, oData, onComplete);
         },
         'json'
     );
+};
+
+BxDolScore.prototype._onVote = function(oLink, oData, onComplete)
+{
+    if(oData && oData.code != 0)
+        return;
+
+    if(oData && oData.label_icon)
+        $(oLink).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+
+    if(oData && oData.label_title) {
+        $(oLink).attr('title', oData.label_title);
+        $(oLink).find('.sys-action-do-text').html(oData.label_title);
+    }
+
+    if(oData && oData.disabled)
+        this._getActions(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-score-disabled');
+
+    var oCounter = this._getCounter(oLink);
+    if(oCounter && oCounter.length > 0) {
+        if(oData && oData.counter)
+            oCounter.replaceWith(oData.counter);
+        else
+            oCounter.html(oData.scoref).parents('.' + $this._sSP + '-counter-holder:first:hidden').bx_anim('show');
+    }
+
+    if(typeof onComplete == 'function')
+        onComplete(oLink, oData);
 };
 
 BxDolScore.prototype._getActions = function(oElement) {
