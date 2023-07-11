@@ -181,7 +181,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'condition' => false,
                 'content' => array()
             ),
-            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
+            'script' => $bShowScript ? $this->getJsScript($aParams) . $this->getJsScriptSocket($aParams) : ''
         ));
     }
 
@@ -235,7 +235,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                     'counter' => $sResult,
                 )
             ),
-            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
+            'script' => $bShowScript ? $this->getJsScript($aParams) . $this->getJsScriptSocket($aParams) : ''
         ));
     }
 
@@ -321,7 +321,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'condition' => false,
                 'content' => array()
             ),
-            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
+            'script' => $bShowScript ? $this->getJsScript($aParams) . $this->getJsScriptSocket($aParams) : ''
         ));
     }
 

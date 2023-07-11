@@ -61,7 +61,7 @@ class BxBaseVote extends BxDolVote
         return $this->_sJsObjName;
     }
 
-    public function getJsScript($aParams = array())
+    public function getJsScript($aParams = [])
     {
         $sJsObjName = $this->getJsObjectName();
         $sJsObjClass = $this->getJsClassName();
@@ -71,6 +71,17 @@ class BxBaseVote extends BxDolVote
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode($this->_prepareParamsData([
             'aRequestParams' => $this->_prepareRequestParamsData($aParams)
         ])) . ");";
+
+        return $this->_oTemplate->_wrapInTagJsCode($sCode);
+    }
+
+    public function getJsScriptSocket($aParams = [])
+    {
+        $oSockets = BxDolSockets::getInstance();
+        if(!$oSockets->isEnable())
+            return '';
+
+        $sCode = $oSockets->getSubscribeJsCode($this->getSocketName(), $this->getId(), 'voted', $this->getJsObjectName() . '.onVoteAs(data)');
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -117,36 +128,28 @@ class BxBaseVote extends BxDolVote
         $aVote = !empty($aParams['vote']) && is_array($aParams['vote']) ? $aParams['vote'] : $this->_getVote();
         $sContent = $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count'], $aParams) : '';
 
-        $oSockets= BxDolSockets::getInstance();
-        
-        $sJs = '';
-        
-        if ($oSockets->isEnable()){
-            $sJs .= $this->_oTemplate->_wrapInTagJsCode($oSockets->getSubscribeJsCode($this->_sSystem . '_' . $this->_sType, $this->getId(), 'voted', $this->getJsObjectName().'.onVoteAs('.$this->getId().',"' . $this->_sType . '-' . str_replace('_', '-', $this->_sSystem) . '", data)'));
-        }
-        
-        return $sJs . $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
-            'bx_if:show_text' => array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), [
+            'bx_if:show_text' => [
                 'condition' => !$bShowActive,
-                'content' => array(
+                'content' => [
                     'class' => $sClass,
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
-                )
-            ),
-            'bx_if:show_link' => array(
+                ]
+            ],
+            'bx_if:show_link' => [
                 'condition' => $bShowActive,
-                'content' => array(
+                'content' => [
                     'class' => $sClass,
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
-                )
-            ),
+                ]
+            ],
             'class' => $sClass,
             'bx_repeat:attrs' => $aTmplVarsAttrs,
             'content' => $sContent,
-            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
-        ));
+            'script' => $bShowScript ? $this->getJsScript($aParams) . $this->getJsScriptSocket($aParams) : ''
+        ]);
     }
 
     public function getLegend($aParams = array())

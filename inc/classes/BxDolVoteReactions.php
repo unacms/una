@@ -213,7 +213,7 @@ class BxDolVoteReactions extends BxTemplVote
         return $aData;
     }
 
-    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = array())
+    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = [])
     {
         $aReactions = $this->getReactions(true);
         $sReaction = $aData['reaction'];
@@ -245,9 +245,9 @@ class BxDolVoteReactions extends BxTemplVote
         $fTotalR = $iTotalC != 0 ? round($iTotalS / $iTotalC, 2) : 0;
 
         $iCount = (int)$aVote['count_' . $sReaction];
-        $aResult = array(
+        $aResult = [
             'code' => 0,
-            'reaction' => $aReactions[$sSwitchTo]['name'],
+            'reaction' => $this->_bApi ? $aReactions[$sSwitchTo]['name'] : $sReaction,
             'rate' => $aVote['rate_' . $sReaction],
             'count' => $iCount,
             'countf' => $iCount > 0 ? $this->_getCounterLabel($iCount, array('reaction' => $sReaction)) : '',
@@ -259,45 +259,50 @@ class BxDolVoteReactions extends BxTemplVote
             'label_click' => $sJsClick,
             'voted' => $bVoted,
             'disabled' => $bVoted && !$this->isUndo(),
-            'total' => array(
+            'total' => [
                 'rate' => $fTotalR,
                 'count' => $iTotalC,
-                'countf' => $iTotalC > 0 ? $this->_getCounterLabel($iTotalC, array('show_counter_label_icon' => false, 'reaction' => '')) : '',
-            )
-        );
+                'countf' => $iTotalC > 0 ? $this->_getCounterLabel($iTotalC, ['show_counter_label_icon' => false, 'reaction' => '']) : '',
+            ]
+        ];
 
         return $aResult;
     }
 
-    protected function _getIconDoWithTrack($bVoted, $aTrack = array())
+    protected function _returnVoteDataForSocket($aData, $aMask = [])
+    {
+        return parent::_returnVoteDataForSocket($aData, ['code', 'reaction', 'rate', 'count', 'countf', 'total']);
+    }
+
+    protected function _getIconDoWithTrack($bVoted, $aTrack = [])
     {
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
     	return $this->getIcon($sReaction);
     }
-    
-    protected function _getEmojiDoWithTrack($bVoted, $aTrack = array())
+
+    protected function _getEmojiDoWithTrack($bVoted, $aTrack = [])
     {
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
     	return $this->getEmoji($sReaction);
     }
-    
-    protected function _getImageDoWithTrack($bVoted, $aTrack = array())
+
+    protected function _getImageDoWithTrack($bVoted, $aTrack = [])
     {
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
     	return $this->getImage($sReaction);
     }
 
-    protected function _getTitleDoWithTrack($bVoted, $aTrack = array())
+    protected function _getTitleDoWithTrack($bVoted, $aTrack = [])
     {
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
     	return $this->_aDataList[$sReaction]['title'];
     }
-    
-    protected function _getTitleDoBy($aParams = array())
+
+    protected function _getTitleDoBy($aParams = [])
     {
         if(isset($aParams['show_counter_style']) && $aParams['show_counter_style'] == self::$_sCounterStyleCompound)
             return _t('_vote_do_by_reactions');

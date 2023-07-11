@@ -64,16 +64,15 @@ BxDolVote.prototype.vote = function(oLink, iValue, onComplete)
     );
 };
 
-BxDolVote.prototype.onVoteAs = function(id, sys, data)
+BxDolVote.prototype.onVoteAs = function(oData)
 {
-    var oData = JSON.parse(data);  
-    var oLink = $('#bx-vote-' + sys + '-' + id+' A').first();
-    this.onVote(oLink, oData)
+    var oLink = $('#' + this._aHtmlIds['main']).find('.' + this._sSP + '-do-vote');
+    if(oLink && oLink.length)
+        this.onVote(oLink, JSON.parse(oData));
 };
 
 BxDolVote.prototype.onVote = function(oLink, oData, onComplete)
 {
-    console.log(oLink, oData);
     if(oData && oData.code != 0)
         return;
 

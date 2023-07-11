@@ -207,6 +207,11 @@ class BxDolVote extends BxDolObject
         return $aVote['rate'];
     }
 
+    public function getSocketName()
+    {
+        return $this->_sSystem . '_' . $this->_sType;
+    }
+
     /**
      * Actions functions
      */
@@ -252,10 +257,11 @@ class BxDolVote extends BxDolObject
         bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(['vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
         bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(['object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId], $aVoteData));
 
-        $a = $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);        
-        BxDolSockets::getInstance()->sendEvent($this->_sSystem . '_' . $this->_sType, $iObjectId, 'voted', json_encode($a));
-        
-        return $a;
+        $aResult = $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);
+
+        BxDolSockets::getInstance()->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
+
+        return $aResult;
     }
 
     public function actionGetVotedBy()
@@ -348,11 +354,11 @@ class BxDolVote extends BxDolObject
         return $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo);
     }
 
-    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = array())
+    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = [])
     {
         $bUndo = $this->isUndo();
         $aVote = $this->_getVote($iObjectId, true);
-        
+
         return [
             'code' => 0,
             'rate' => $aVote['rate'],
@@ -366,6 +372,14 @@ class BxDolVote extends BxDolObject
             'voted' => $bVoted,
             'disabled' => $bVoted && !$bUndo,
         ];
+    }
+    
+    protected function _returnVoteDataForSocket($aData, $aMask = [])
+    {
+        if(empty($aMask) || !is_array($aMask))
+            $aMask = ['code', 'rate', 'count', 'countf'];
+
+        return array_intersect_key($aData, array_flip($aMask));
     }
 
     protected function _prepareRequestParamsData($aParams, $aParamsAdd = array())
