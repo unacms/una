@@ -195,7 +195,7 @@ class BxDolScore extends BxDolObject
 
     public function getSocketName()
     {
-        return $this->_sSystem;
+        return $this->_sSystem . '_scores';
     }
 
     /**
@@ -277,7 +277,8 @@ class BxDolScore extends BxDolObject
             'disabled' => !$bVoted,
         ];
 
-        BxDolSockets::getInstance()->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
+            $oSockets->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
 
         return $aResult;
     }

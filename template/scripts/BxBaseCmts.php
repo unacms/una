@@ -113,11 +113,11 @@ class BxBaseCmts extends BxDolCmts
      *
      * @return string
      */
-    public function getJsScript($aBp = array(), $aDp = array())
+    public function getJsScript($aBp = [], $aDp = [])
     {
         $bMinPostForm = isset($aDp['min_post_form']) ? $aDp['min_post_form'] : $this->_bMinPostForm;
 
-        $aParams = array(
+        $aParams = [
             'sObjName' => $this->_sJsObjName,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'sSystem' => $this->getSystemName(),
@@ -131,10 +131,21 @@ class BxBaseCmts extends BxDolCmts
             'iMinPostForm' => $bMinPostForm ? 1 : 0,
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds,
-        );
+        ];
 
         $this->addCssJs();
         return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
+    }
+    
+    public function getJsScriptSocket($aBp = [], $aDp = [])
+    {
+        $oSockets = BxDolSockets::getInstance();
+        if(!$oSockets->isEnable())
+            return '';
+
+        $sCode = $oSockets->getSubscribeJsCode($this->getSocketName(), $this->_iId, 'comment_added', $this->getJsObjectName() . '.showLiveUpdateForSocket(data)');
+
+        return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
     function getCommentsBlockAPI($aParams, $aBp = [], $aDp = ['in_designbox' => false, 'show_empty' => false])
@@ -193,15 +204,11 @@ class BxBaseCmts extends BxDolCmts
             return $mixedResult;
 
         $this->_getParams($aBp, $aDp);
-        
-        $oSockets= BxDolSockets::getInstance();
-        
-        $sJs = '';
-        
-        if ($oSockets->isEnable()){
-            $sJs .= $this->getLiveUpdateButton(-1, 'hidden') . $this->_oTemplate->_wrapInTagJsCode($oSockets->getSubscribeJsCode($this->_sSystem , $this->_iId, 'comment_added', $this->getJsObjectName().'.showNew(data)'));
-        }
-        else{
+
+        $oSockets = BxDolSockets::getInstance();
+        $bSockets = $oSockets->isEnable();
+
+        if(!$bSockets) {
             //add live update
             $this->actionResumeLiveUpdate();
 
@@ -216,9 +223,13 @@ class BxBaseCmts extends BxDolCmts
         $sCommentsPinned = $this->getCommentsPinned(array_merge($aBp, ['pinned' => 1]), $aDp);
         $sContentBefore = $this->_getContentBefore($aBp, $aDp);
         $sContentAfter = $this->_getContentAfter($aBp, $aDp);
+        if($bSockets)
+            $sContentAfter .= $this->getLiveUpdateButton();
         $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP]));
         $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM]));
         $sJsContent = $this->getJsScript($aBp, $aDp);
+        if($bSockets)
+            $sJsContent .= $this->getJsScriptSocket($aBp, $aDp);
 
         $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll(0, true));
         $sBlockMenu = $this->_getControlsBox();
@@ -240,7 +251,7 @@ class BxBaseCmts extends BxDolCmts
             'block_menu' => &$sBlockMenu,
         ]);
 
-        $sContent = $sJs . $this->_oTemplate->parseHtmlByName('comments_block.html', [
+        $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', [
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
@@ -601,15 +612,16 @@ class BxBaseCmts extends BxDolCmts
 
         return $this->getLiveUpdateButton($aComment['cmt_id']);
     }
-    
-    function getLiveUpdateButton($aCommentId, $sCssClass = '')
+
+    function getLiveUpdateButton($iCommentId = 0)
     {
         $sJsObject = $this->getJsObjectName();
+
+        $bComment = is_numeric($iCommentId) && (int)$iCommentId != 0;
         return $this->_oTemplate->parseHtmlByName('comments_lu_button.html', array(
             'style_prefix' => $this->_sStylePrefix,
-            'class' => $sCssClass,
-            'html_id' => $this->getNotificationId(),
-            'onclick_show' => "javascript:" . $sJsObject . ".goToBtn(this, '" . $this->getItemAnchor($aCommentId) . "', '" . $aCommentId . "');",
+            'class' => !$bComment ? 'hidden' : '',
+            'onclick_show' => "javascript:" . $sJsObject . ".goToBtn(this, '" . ($bComment ? $this->getItemAnchor($iCommentId) : '{cmt_anchor}') . "', '" . ($bComment ? $iCommentId : '{cmt_id}') . "');",
         ));
     }
 

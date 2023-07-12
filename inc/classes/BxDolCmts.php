@@ -643,9 +643,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $oReport;
     }
 
+    /**
+     * Is used as: 
+     * 1. Live Update's session key.
+     * 2. HTML ID for Live Update's 'New Content' button.
+     * @return string with ID.
+     */
     public function getNotificationId()
     {
         return 'cmts-notification-' . $this->_sSystem . '-' . $this->_iId;
+    }
+
+    public function getSocketName()
+    {
+        return 'cmts_' . $this->_sSystem;
     }
 
     /**
@@ -1573,8 +1584,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, $aAlertParams);
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, $aAlertParams);
 
-        BxDolSockets::getInstance()->sendEvent($this->_sSystem , $iObjId, 'comment_added', json_encode(['anchor' => $this->getItemAnchor($iCmtId), 'id' => $iCmtId, 'author_id' => $iPerformerId, 'notif_id' => $this->getNotificationId()]));
-        
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
+            $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_added', json_encode([
+                'id' => $iCmtId, 
+                'author_id' => $iPerformerId, 
+                'anchor' => $this->getItemAnchor($iCmtId)
+            ]));
+
         $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
         bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_add_comment', $aAuditParams);
 

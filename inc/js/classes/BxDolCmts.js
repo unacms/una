@@ -702,15 +702,6 @@ BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
     });
 };
 
-
-BxDolCmts.prototype.showNew = function(sData)
-{
-    let oData = JSON.parse(sData)
-    if ($('#' + oData.notif_id).hasClass('hidden') &&  this._iAuthorId != oData.author_id ){
-        $('#' + oData.notif_id).removeClass('hidden');
-        $('#' + oData.notif_id + ' A').first().attr('onclick', "javascript:oCmtsBxPosts_53.goToBtn(this, '" + oData.anchor + "', " + oData.id + ");")
-    }
-}
 BxDolCmts.prototype.goToBtn = function(oLink, sGoToId, sBlinkIds, onLoad)
 {
     var $this = this;
@@ -730,8 +721,7 @@ BxDolCmts.prototype.goToBtn = function(oLink, sGoToId, sBlinkIds, onLoad)
             if(typeof onLoad == 'function')
                 onLoad();
 
-            $this._loadingInButton(oLink, false);
-            $(oLink).parents('.cmt-lu-button:first').addClass('hidden');
+            $(oLink).parents('.cmt-lu-button:first').remove();
 
             $this.resumeLiveUpdates();
         });
@@ -762,6 +752,21 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
     $('#' + sId).remove();
 
     oButton.prependTo(this._sRootId);
+};
+
+BxDolCmts.prototype.showLiveUpdateForSocket = function(sData)
+{
+    var oData = JSON.parse(sData);
+    if(this._iAuthorId == oData.author_id)
+        return;
+
+    var oElement = $(this._sRootId + ' .' + this._sSP + '-lu-button:hidden').clone();
+    if(!oElement || oElement.length == 0)
+        return;
+
+    var sOnClick = oElement.find('.bx-btn').attr('onclick');
+    oElement.find('.bx-btn').attr('onclick', sOnClick.replace('{cmt_id}', oData.id).replace('{cmt_anchor}', oData.anchor));
+    oElement.prependTo(this._sRootId).show();
 };
 
 BxDolCmts.prototype.showLiveUpdates = function(oData)
