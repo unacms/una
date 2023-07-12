@@ -1584,13 +1584,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, $aAlertParams);
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, $aAlertParams);
 
-        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
-            $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_added', json_encode([
-                'id' => $iCmtId, 
-                'author_id' => $iPerformerId, 
-                'anchor' => $this->getItemAnchor($iCmtId)
-            ]));
-
         $aAuditParams = $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']));
         bx_audit($iObjId, $this->_aSystem['module'], '_sys_audit_action_add_comment', $aAuditParams);
 
@@ -1604,13 +1597,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         }
 
         $iCount = (int)$this->getCommentsCountAll(0, true);
-
-        return [
+        $aResult = [
             'id' => $iCmtId, 
             'parent_id' => $iCmtPrntId,
             'count' => $iCount,
-            'countf' => $iCount > 0 ? $this->getCounter() : ''
+            'countf' => $iCount > 0 ? $this->getCounter(['show_script' => false]) : ''
         ];
+
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
+            $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_added', json_encode(array_merge($aResult, [
+                'author_id' => $iPerformerId, 
+                'anchor' => $this->getItemAnchor($iCmtId)
+            ])));
+
+        return $aResult;
     }
 
     public function onEditAfter($iCmtId, $aDp = [])

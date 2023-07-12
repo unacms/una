@@ -119,23 +119,7 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
                     oParent.remove();
 
                 //--- Update counter
-                if(oData && oData.count != undefined && parseInt(oData.count) > 0) {
-                    if(oData.countf != undefined && oData.countf.length != 0) {
-                        var oCounter = $this._getCounter(oCmtForm);
-                        if(oCounter && oCounter.length > 0)
-                            oCounter.html(oData.countf);
-                    }
-
-                    var oCounter = $this._getCounter(oCmtForm, true);
-                    if(oCounter && oCounter.length > 0)
-                        oCounter.html(oData.count);
-
-                    var sClassHidden = 'sys-ac-hidden';
-                    if(!oCounter.is('.' + sClassHidden))
-                        oCounter = oCounter.parents('.' + sClassHidden + ':first');
-
-                    oCounter.toggleClass(sClassHidden);
-                }
+                $this.cmtUpdateCounter(oCmtForm, oData);
             }
 
             return;
@@ -207,6 +191,33 @@ BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
         bx_alert(oData.msg, fContinue);
     else 
         fContinue();
+};
+
+BxDolCmts.prototype.cmtUpdateCounter = function (oElement, oData)
+{
+    if(oData && (oData.count == undefined || parseInt(oData.count) == 0))
+        return;
+
+    if(oData.countf != undefined && oData.countf.length != 0) {
+        var oCounter = this._getCounter(oElement);
+        if(oCounter && oCounter.length > 0)
+            oCounter.replaceWith(oData.countf);
+    }
+
+    var oCounter = this._getCounter(oElement, true);
+    if(oCounter && oCounter.length > 0)
+        oCounter.html(oData.count);
+
+    var sClassHidden = 'sys-ac-hidden';
+    if(!oCounter.is('.' + sClassHidden))
+        oCounter = oCounter.parents('.' + sClassHidden + ':first');
+
+    oCounter.toggleClass(sClassHidden);
+};
+
+BxDolCmts.prototype.cmtUpdateCounterAs = function (oData)
+{
+    this.cmtUpdateCounter(null, JSON.parse(oData));
 };
 
 BxDolCmts.prototype.cmtPin = function(oLink, iCmtId, iWay, bHideMenu) {
@@ -760,7 +771,11 @@ BxDolCmts.prototype.showLiveUpdateForSocket = function(sData)
     if(this._iAuthorId == oData.author_id)
         return;
 
-    var oElement = $(this._sRootId + ' .' + this._sSP + '-lu-button:hidden').clone();
+    var sSelector = this._sRootId + ' .' + this._sSP + '-lu-button';
+    if($(sSelector + ':visible').length != 0)
+        return;
+
+    var oElement = $(sSelector + ':hidden').clone();
     if(!oElement || oElement.length == 0)
         return;
 
@@ -1014,12 +1029,14 @@ BxDolCmts.prototype._getCounter = function(oElement, bText)
     var oCounter = null;
     var sSelector = '.' + this._sSP + '-counter' + (bText ? '-text' : '');
 
-    if($(oElement).hasClass(this._sSP))
-        oCounter = $(oElement).find(sSelector);
-    else 
-        oCounter = $(oElement).parents('.' + this._sSP + ':first').find(sSelector);
+    if(oElement) {
+        if($(oElement).hasClass(this._sSP))
+            oCounter = $(oElement).find(sSelector);
+        else 
+            oCounter = $(oElement).parents('.' + this._sSP + ':first').find(sSelector);
+    }
 
-    if(!oCounter.length && this._aHtmlIds['counter'] != undefined) {
+    if((!oCounter || !oCounter.length) && this._aHtmlIds['counter'] != undefined) {
         oCounter = $('#' + this._aHtmlIds['counter']);
         if(!oCounter.is(sSelector))
             oCounter = oCounter.find(sSelector);
