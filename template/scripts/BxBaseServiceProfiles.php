@@ -807,7 +807,7 @@ class BxBaseServiceProfiles extends BxDol
         }
 
         if($this->_bIsApi){
-            return ['active_profile_id' => $iActiveProfileId, 'profiles' => $aProfilesData];
+            return [bx_api_get_block ('profile_switcher', ['active_profile_id' => $iActiveProfileId, 'profiles' => $aProfilesData])];
         }
         
         $oTemplate->addCss('account.css');
