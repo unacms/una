@@ -84,14 +84,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return parent::_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
     
-    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
-    {
-        $sQuery = " GROUP BY `ta`.`id`";
-        $sQuery .= parent::_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly);
-       
-        return $sQuery;
-    }
-    
     protected function _getFilterControls()
     {
         parent::_getFilterControls();
@@ -621,7 +613,9 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     
     protected function _getCellLastActive($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = !empty($mixedValue) ? bx_time_js($mixedValue) : _t('_sys_not_available');
+        $iSessionDate = (new BxDolSessionQuery())->getLastActivityAccount($aRow['id']);
+        $iTs = max($iSessionDate, $aRow['active']);
+        $mixedValue = $iTs ? bx_time_js($iTs) : _t('_sys_not_available');
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     } 

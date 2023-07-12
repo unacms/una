@@ -83,7 +83,13 @@ class BxDolSessionQuery extends BxDolDb
         if ($iDate > 0)
             BxDolAccountQuery::getInstance()->_updateField($iId, 'active', $iDate);
     }
-    
+
+    function getLastActivityAccount($iUserId)
+    {
+        $sSql = $this->prepare("SELECT `date` FROM `" . $this->sTable . "` WHERE `user_id`=? LIMIT 1", $iUserId);
+        return $this->getOne($sSql);
+    }
+
     function getOldSession($iUserId) {
         $sSql = $this->prepare("SELECT `id` FROM `" . $this->sTable . "` WHERE `user_id`=? LIMIT 1", $iUserId);
         $sSession = $this->getOne($sSql);

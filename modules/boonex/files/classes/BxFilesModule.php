@@ -342,6 +342,15 @@ class BxFilesModule extends BxBaseModTextModule
     public function actionEntryInfo($iContentId) {
         $aData = $this->_oDb->getContentInfoById((int)$iContentId);
 
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aData)) {
+            echoJson([
+                'popup' => [
+                    'html' => PopupBox('bx-files-popup', _t('_Access denied'), _t('_Access denied')),
+                ],
+            ]);
+            return;
+        }
+
         echoJson([
             'popup' => [
                 'html' => PopupBox('bx-files-popup', bx_process_output($aData['title']), $this->_oTemplate->entryInfoPopup($aData)),
