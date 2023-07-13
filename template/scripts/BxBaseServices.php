@@ -62,6 +62,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         
             'KeywordsCloud' => 'BxBaseServiceMetatags',
 
+            'AccountProfileSwitcher' => 'BxBaseServiceProfiles',
             'ProfileMembership' => 'BxBaseServiceProfiles',
             'ProfileNotifications' => 'BxBaseServiceProfiles',
             'GetCountOnlineProfiles' => 'BxBaseServiceProfiles',

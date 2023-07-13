@@ -444,6 +444,8 @@ function bx_editor_init(oEditor, oParams){
     else{
         oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
 			delta.forEach(e => {
+                if(typeof e.insert == 'string')
+                    e.insert = e.insert.replace(/\n/g, '') + "\n";
                 if(e.attributes){
                     e.attributes.color = '';
                     e.attributes.background = '';
@@ -475,6 +477,7 @@ function bx_editor_activate(oEditor)
 
 function bx_editor_insert_html (sEditorId, sImgId, sHtml) 
 {
+
     if ($('#' + sEditorId) &&  $('#' + sEditorId).attr('object_editor')){
         eval ('oEditor = ' + $('#' + sEditorId).attr('object_editor'));
         if (oEditor.getSelection())

@@ -777,6 +777,16 @@ class BxBaseServiceProfiles extends BxDol
 
             if (!BxDolService::call($aProfile['type'], 'act_as_profile'))
                 continue;
+            
+            if($this->_bIsApi){
+                $o = BxDolProfile::getInstance($aProfile['id']);
+                $aProfilesData[] = [
+                    'id' => $o->id(),
+                    'display_name' => $o->getDisplayName(),
+                    'url' => bx_api_get_relative_url($o->getUrl()),
+                    'avatar' => $o->getAvatar()
+                ];
+            }
 
             $aVars['bx_repeat:row'][] = array (
                 'class' => $iActiveProfileId == $aProfile['id'] ? '' : 'bx-def-color-bg-box',
@@ -796,6 +806,10 @@ class BxBaseServiceProfiles extends BxDol
             );
         }
 
+        if($this->_bIsApi){
+            return [bx_api_get_block ('profile_switcher', ['active_profile_id' => $iActiveProfileId, 'profiles' => $aProfilesData])];
+        }
+        
         $oTemplate->addCss('account.css');
         return array(
             'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars),
