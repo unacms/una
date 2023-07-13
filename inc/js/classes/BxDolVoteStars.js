@@ -11,11 +11,6 @@ function BxDolVoteStars(oOptions)
     BxDolVote.call(this, oOptions);
 
     this._iSaveWidth = -1;
-
-    var $this = this;
-    $(document).ready(function() {
-    	$this.init();
-    });
 }
 
 BxDolVoteStars.prototype = Object.create(BxDolVote.prototype);
@@ -23,6 +18,8 @@ BxDolVoteStars.prototype.constructor = BxDolVoteStars;
 
 BxDolVoteStars.prototype.init = function ()
 {
+    BxDolVote.prototype.init.call(this);
+
     var $this = this;
 
     $('.' + this._sSP + '.' + this._sSP + '-stars').each(function() {

@@ -1896,6 +1896,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 				$sKey = str_replace('css_media_', '', $sKey);
                 $sRet = $aData[$sKey];
                 break;
+            case 'socket_engine':
+                $sRet = BxDolSockets::getInstance()->getJsCode();
+                break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
         }

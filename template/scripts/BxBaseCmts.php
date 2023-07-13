@@ -124,6 +124,7 @@ class BxBaseCmts extends BxDolCmts
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
             'sBaseUrl' => $this->getBaseUrl(),
+            'sSocket' => $this->getSocketName(),
             'sPostFormPosition' => $this->_aSystem['post_form_position'],
             'sBrowseType' => $this->_sBrowseType,
             'sDisplayType' => $this->_sDisplayType,
@@ -135,28 +136,6 @@ class BxBaseCmts extends BxDolCmts
 
         $this->addCssJs();
         return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
-    }
-    
-    public function getJsScriptSocket($sType, $aBp = [], $aDp = [])
-    {
-        $oSockets = BxDolSockets::getInstance();
-        if(!$oSockets->isEnable())
-            return '';
-
-        $sJsMethod = '';
-        switch($sType) {
-            case 'counter':
-                $sJsMethod = 'cmtUpdateCounterAs';
-                break;
-
-            case 'live_update':
-                $sJsMethod = 'showLiveUpdateForSocket';
-                break;
-        }
-
-        $sCode = $oSockets->getSubscribeJsCode($this->getSocketName(), $this->_iId, 'comment_added', $this->getJsObjectName() . '.' . $sJsMethod . '(data)');
-
-        return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
     function getCommentsBlockAPI($aParams, $aBp = [], $aDp = ['in_designbox' => false, 'show_empty' => false])
@@ -217,7 +196,7 @@ class BxBaseCmts extends BxDolCmts
         $this->_getParams($aBp, $aDp);
 
         $oSockets = BxDolSockets::getInstance();
-        $bSockets = $oSockets->isEnable();
+        $bSockets = $oSockets->isEnabled();
 
         if(!$bSockets) {
             //add live update
@@ -239,8 +218,6 @@ class BxBaseCmts extends BxDolCmts
         $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP]));
         $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, ['type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM]));
         $sJsContent = $this->getJsScript($aBp, $aDp);
-        if($bSockets)
-            $sJsContent .= $this->getJsScriptSocket('live_update', $aBp, $aDp);
 
         $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll(0, true));
         $sBlockMenu = $this->_getControlsBox();
@@ -888,10 +865,6 @@ class BxBaseCmts extends BxDolCmts
         if(!empty($aParams['overwrite_counter_link_onclick']))
             $sOnclick = $aParams['overwrite_counter_link_onclick'];
 
-        $sJsContent = $this->getJsScript();
-        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
-            $sJsContent .= $this->getJsScriptSocket('counter');
-
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), [
             'style_prefix' => $this->_sStylePrefix,
             'id' => $this->_aHtmlIds['counter'],
@@ -912,7 +885,7 @@ class BxBaseCmts extends BxDolCmts
                     'icon' => !empty($aParams['custom_icon']) ? $aParams['custom_icon'] : $this->_oTemplate->getImageAuto('comment|' . $this->_sStylePrefix . '-counter-icon')
                 ]
             ],
-            'script' => $sJsContent
+            'script' => $this->getJsScript()
         ]);
     }
 

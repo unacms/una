@@ -15,6 +15,7 @@ function BxDolScore(oOptions)
 
     this._sActionsUri = 'score.php';
     this._sActionsUrl = oOptions.sRootUrl + this._sActionsUri; // actions url address
+    this._sSocket = oOptions.sSocket === undefined ? this._sSystem : oOptions.sSocket;
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
@@ -23,7 +24,25 @@ function BxDolScore(oOptions)
     this._aRequestParams = oOptions.aRequestParams;
 
     this._iSaveWidth = -1;
+
+    var $this = this;
+    $(document).ready(function() {
+    	$this.init();
+    });
 }
+
+BxDolScore.prototype.init = function()
+{
+    var $this = this; 
+    $(document).ready(function() {
+        if(oBxDolSockets && $this._sSocket)
+            oBxDolSockets.subscribe($this._sSocket, $this._iObjId, 'voted', function(oData) {
+                $this.onVoteAs(oData);
+            });
+    });
+
+    return;
+};
 
 BxDolScore.prototype.toggleByPopup = function(oLink) {
     var $this = this;

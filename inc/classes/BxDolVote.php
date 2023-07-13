@@ -259,7 +259,7 @@ class BxDolVote extends BxDolObject
 
         $aResult = $this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aVoteData, !$bVoted, $aRequestParamsData);
 
-        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
             $oSockets->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
 
         return $aResult;

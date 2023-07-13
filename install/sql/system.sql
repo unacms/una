@@ -6203,6 +6203,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'BxDolForm.js', 1, 42),
 ('system', 'js_system', 'BxDolNestedForm.js', 1, 43),
 ('system', 'js_system', 'BxDolConnection.js', 1, 44),
+('system', 'js_system', 'BxDolSockets.js', 1, 45),
 
 ('system', 'js_translation', '_Are_you_sure', 1, 1),
 ('system', 'js_translation', '_error occured', 1, 2),

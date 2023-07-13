@@ -69,19 +69,9 @@ class BxBaseVote extends BxDolVote
         $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
 
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode($this->_prepareParamsData([
+            'sSocket' => $this->getSocketName(),
             'aRequestParams' => $this->_prepareRequestParamsData($aParams)
         ])) . ");";
-
-        return $this->_oTemplate->_wrapInTagJsCode($sCode);
-    }
-
-    public function getJsScriptSocket($aParams = [])
-    {
-        $oSockets = BxDolSockets::getInstance();
-        if(!$oSockets->isEnable())
-            return '';
-
-        $sCode = $oSockets->getSubscribeJsCode($this->getSocketName(), $this->getId(), 'voted', $this->getJsObjectName() . '.onVoteAs(data)');
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -148,7 +138,7 @@ class BxBaseVote extends BxDolVote
             'class' => $sClass,
             'bx_repeat:attrs' => $aTmplVarsAttrs,
             'content' => $sContent,
-            'script' => $bShowScript ? $this->getJsScript($aParams) . $this->getJsScriptSocket($aParams) : ''
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ]);
     }
 
@@ -319,7 +309,7 @@ class BxBaseVote extends BxDolVote
             	'condition' => $bTmplVarsLegend,
             	'content' => $aTmplVarsLegend
             ),
-            'script' => $this->getJsScript($aParams) . ($bTmplVarsCounter ? $this->getJsScriptSocket($aParams) : '')
+            'script' => $this->getJsScript($aParams)
         );
     }
 
