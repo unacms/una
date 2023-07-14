@@ -277,7 +277,7 @@ class BxDolScore extends BxDolObject
             'disabled' => !$bVoted,
         ];
 
-        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
             $oSockets->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
 
         return $aResult;

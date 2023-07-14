@@ -83,22 +83,12 @@ class BxBaseScore extends BxDolScore
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
             'sRootUrl' => BX_DOL_URL_ROOT,
+            'sSocket' => $this->getSocketName(),
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds,
             'aRequestParams' => $this->_prepareRequestParamsData($aParams)
         );
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new BxDolScore(" . json_encode($aParamsJs) . ");";
-
-        return $this->_oTemplate->_wrapInTagJsCode($sCode);
-    }
-
-    public function getJsScriptSocket($aParams = [])
-    {
-        $oSockets = BxDolSockets::getInstance();
-        if(!$oSockets->isEnable())
-            return '';
-
-        $sCode = $oSockets->getSubscribeJsCode($this->getSocketName(), $this->getId(), 'voted', $this->getJsObjectName() . '.onVoteAs(data)');
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -164,7 +154,7 @@ class BxBaseScore extends BxDolScore
                 'condition' => !$bLink,
                 'content' => $aTmplVarsText
             ),
-            'script' => $bShowScript ? $this->getJsScript($aParams) . $this->getJsScriptSocket($aParams) : ''
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ));
     }
 
@@ -296,7 +286,7 @@ class BxBaseScore extends BxDolScore
             	'condition' => $bTmplVarsLegend,
             	'content' => $aTmplVarsLegend
             ),
-            'script' => $this->getJsScript($aParams) . ($bTmplVarsCounter ? $this->getJsScriptSocket($aParams) : '')
+            'script' => $this->getJsScript($aParams)
         ));
     }
 

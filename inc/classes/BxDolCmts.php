@@ -1604,7 +1604,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'countf' => $iCount > 0 ? $this->getCounter(['show_script' => false]) : ''
         ];
 
-        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnable())
+        if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
             $oSockets->sendEvent($this->getSocketName(), $iObjId, 'comment_added', json_encode(array_merge($aResult, [
                 'author_id' => $iPerformerId, 
                 'anchor' => $this->getItemAnchor($iCmtId)

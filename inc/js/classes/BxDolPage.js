@@ -15,7 +15,6 @@ function BxDolPage(oOptions) {
 
     this._isStickyColumns = oOptions.isStickyColumns == undefined ? false : oOptions.isStickyColumns;
     this._iLastSc = 0;
-    this._oPusher = eval(oOptions.oSocket);
 
     var $this = this;
     $(document).ready(function() {
@@ -39,17 +38,6 @@ BxDolPage.prototype.init = function() {
     bx_process_links();
     
 };
-
-
-BxDolPage.prototype.socketsSubscribe = function(module, content_id, event, cb)
-{
-    if (this._oPusher != null){
-        var channel = this._oPusher.subscribe(module + '_' + content_id);
-        channel.bind(event, function(data) {
-            cb(data)
-        });
-    }
-}
 
 BxDolPage.prototype.embededCallback = function(item)
 {

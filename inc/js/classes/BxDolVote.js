@@ -18,16 +18,30 @@ function BxDolVote(oOptions)
 
     this._sActionsUri = 'vote.php';
     this._sActionsUrl = oOptions.sRootUrl + this._sActionsUri; // actions url address
+    this._sSocket = oOptions.sSocket === undefined ? this._sSystem : oOptions.sSocket;
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
     this._sSP = oOptions.sStylePrefix === undefined ? 'bx-vote' : oOptions.sStylePrefix;
     this._aHtmlIds = oOptions.aHtmlIds;
     this._aRequestParams = oOptions.aRequestParams;
+
+    var $this = this;
+    $(document).ready(function() {
+    	$this.init();
+    });
 }
 
 BxDolVote.prototype.init = function()
 {
+    var $this = this; 
+    $(document).ready(function() {
+        if(oBxDolSockets && $this._sSocket)
+            oBxDolSockets.subscribe($this._sSocket, $this._iObjId, 'voted', function(oData) {
+                $this.onVoteAs(oData);
+            });
+    });
+
     return;
 };
 

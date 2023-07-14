@@ -12,18 +12,27 @@ class BxDolSockets extends BxDolFactory implements iBxDolSingleton
     protected $_sHost;
     protected $_sPort;
     protected $_sScheme;
-    protected $_sIsEnabled = false;
-    
+    protected $_sIsEnabled;
+
     protected function __construct()
     {
         parent::__construct();
-        if (getParam('sys_sockets_type') != 'sys_sockets_disabled' && trim(getParam('sys_sockets_url')) != ''){
-            $this->_sIsEnabled = true;
-            $a = parse_url(getParam('sys_sockets_url'));
-            $this->_sHost = $a['host'];
-            $this->_sPort = $a['port'];
-            $this->_sScheme = $a['scheme'];
-        }    
+
+        $this->_sIsEnabled = false;
+
+        if(getParam('sys_sockets_type') == 'sys_sockets_disabled')
+            return;
+
+        $sUrl = trim(getParam('sys_sockets_url'));
+        if(!$sUrl)
+            return;
+
+        $a = parse_url($sUrl);
+        $this->_sHost = $a['host'];
+        $this->_sPort = $a['port'];
+        $this->_sScheme = $a['scheme'];
+
+        $this->_sIsEnabled = true;
     }
 
     static public function getInstance()
@@ -36,32 +45,26 @@ class BxDolSockets extends BxDolFactory implements iBxDolSingleton
             
         return $GLOBALS['bxDolClasses']['BxDolSockets'];
     }
-    
-     private function writeLog($sString)
-	{
-        bx_log('sys_sockets', $sString);
-	}
-    
-    public function isEnable()
+
+    public function isEnabled()
     {
         return $this->_sIsEnabled;
     }
-    
-    public function sendEvent($sModule, $iContentId, $sEvent, $sMessage)
+
+    public function sendEvent($sSocket, $iContentId, $sEvent, $sMessage)
     {
         return;
     }
-    
-    public function getInitJsCode()
-    {
-        return 'null';
-    }
-    
-    public function getSubscribeJsCode($sModule, $iContentId, $sEvent, $sCb)
+
+    public function getJsCode()
     {
         return '';
     }
-    
+
+    private function writeLog($sString)
+    {
+        bx_log('sys_sockets', $sString);
+    }    
 }
 
 /** @} */

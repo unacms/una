@@ -14,6 +14,7 @@ function BxDolCmts (options) {
     this._iAuthorId = options.iAuthorId; // this comment's author ID.
     this._iObjId = options.iObjId; // this object id comments
     this._sBaseUrl = options.sBaseUrl; // base url to view comment's listing.
+    this._sSocket = options.sSocket === undefined ? this._sSystem : options.sSocket;
 
     this._iMinPostForm = undefined == options.iMinPostForm ? 0 : options.iMinPostForm;
     this._sPostFormPosition = undefined == options.sPostFormPosition ? 'top' : options.sPostFormPosition;
@@ -40,6 +41,13 @@ BxDolCmts.prototype.cmtInit = function()
     var $this = this;
 
     $(document).ready(function() {
+        // init socket
+        if(oBxDolSockets && $this._sSocket)
+            oBxDolSockets.subscribe($this._sSocket, $this._iObjId, 'comment_added', function(oData) {
+                $this.cmtUpdateCounterAs(oData);
+                $this.showLiveUpdateForSocket(oData);
+            });
+
         // init post comment form    
         var sFormId = $this._sRootId + ' .cmt-post-reply form';
         if ($(sFormId).length) {

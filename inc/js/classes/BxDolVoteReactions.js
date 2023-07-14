@@ -22,18 +22,15 @@ function BxDolVoteReactions(oOptions)
 
     this._sClassDo = 'bx-vote-do-vote';
     this._sClassDoVoted = 'bx-vote-voted';
-
-    var $this = this;
-    $(document).ready(function() {
-        $this.initVote();
-    });
 }
 
 BxDolVoteReactions.prototype = Object.create(BxDolVote.prototype);
 BxDolVoteReactions.prototype.constructor = BxDolVoteReactions;
 
-BxDolVoteReactions.prototype.initVote = function()
+BxDolVoteReactions.prototype.init = function()
 {
+    BxDolVote.prototype.init.call(this);
+
     var $this = this;
     var bMobile = bx_check_mq() == 'mobile';
 

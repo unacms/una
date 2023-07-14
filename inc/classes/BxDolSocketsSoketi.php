@@ -9,45 +9,54 @@
 
 class BxDolSocketsSoketi extends BxDolSockets
 {
+    protected $_sKey;
+
+    protected $_sJsClass;
+    protected $_sJsObject;
 
     protected function __construct()
     {
         parent::__construct();
+        
+        $this->_sKey = getParam('sys_sockets_key');
+        
+        $this->_sJsClass = 'BxDolSockets';
+        $this->_sJsObject = 'oBxDolSockets';
     }
     
-    public function sendEvent($sModule, $iContentId, $sEvent, $sMessage)
+    public function sendEvent($sSocket, $iContentId, $sEvent, $sMessage)
     {
-        try{
-            $oPusher = new Pusher\Pusher(getParam('sys_sockets_key'), getParam('sys_sockets_secret'), getParam('sys_sockets_app_id'), [
+        try {
+            $oPusher = new Pusher\Pusher($this->_sKey, getParam('sys_sockets_secret'), getParam('sys_sockets_app_id'), [
                 'host' => $this->_sHost,
                 'port' => $this->_sPort,
                 'scheme' => $this->_sScheme,
                 'encrypted' => true,
                 'useTLS' => false,
             ]);
-            $b = $oPusher->trigger($sModule . '_' . $iContentId, $sEvent, $sMessage);
+            $b = $oPusher->trigger($sSocket . '_' . $iContentId, $sEvent, $sMessage);
         }
-         catch (Exception $oException) {
+        catch (Exception $oException) {
             $this->writeLog($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
             return false;
         }
-        
     }
-    
-    public function getInitJsCode()
+
+    public function getJsCode()
     {
-        return " new Pusher('". getParam('sys_sockets_key') ."', {
-            wsHost: '" . $this->_sHost . "',
-            wsPort: " . $this->_sPort . ",
-            forceTLS: false, 
-            enabledTransports: ['ws', 'wss'],
-            cluster:''
-        });";
-    }
-    
-    public function getSubscribeJsCode($sModule, $iContentId, $sEvent, $sCb)
-    {
-        return " $(document).ready(function() {oBxDolPage.socketsSubscribe('" . $sModule . "', '" . $iContentId . "', '" . $sEvent . "', function(data) {" . $sCb . "})})";
+        $sMask = "{var} {object} = new {class}({params});";
+        $aParams = [
+            'sKey' => $this->_sKey,
+            'sHost' => $this->_sHost,
+            'sPort' => $this->_sPort,
+        ];
+
+        return bx_replace_markers($sMask, [
+            'var' => 'var',
+            'object' => $this->_sJsObject, 
+            'class' => $this->_sJsClass,
+            'params' => json_encode($aParams)
+        ]);
     }
 }
 
