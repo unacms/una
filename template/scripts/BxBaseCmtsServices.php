@@ -467,6 +467,11 @@ class BxBaseCmtsServices extends BxDol
             $iCmtId = $aParams['id'];
             $oCmts = BxDolCmts::getObjectInstance($aParams['module'], $aParams['object_id']);
             $oForm = $oCmts->getFormEdit($iCmtId);
+            if($oForm['form']->isSubmittedAndValid()){
+                $aParams['comment_id'] = $oForm['res'];  
+                $aRv['browse'] = $this->serviceGetCommentsApi($oCmts, $aParams);
+                return $aRv;
+            }
             $aForm = $oForm['form']->getCodeAPI();
             $aForm['inputs']['cmt_text']['numLines'] = 1;
             $aForm['inputs']['cmt_text']['autoheight'] = true;
@@ -479,6 +484,7 @@ class BxBaseCmtsServices extends BxDol
             $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $aForm, 'request' => ['immutable' => true]];
             return $aRv;
         }
+        
         
         $aParams['parent_id'] = !isset($aParams['parent_id']) ? 0 : $aParams['parent_id'];
         $aParams['start_from'] = !isset($aParams['start_from']) ? 0 : $aParams['start_from'];
