@@ -359,22 +359,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
 
-        if (bx_is_api()){
-            if (defined('BX_API_PAGE'))
+        if(bx_is_api()) {
+            if(defined('BX_API_PAGE'))
                 return [];
+
             $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
             if(!$oMenuActions)
                 $oMenuActions = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
 
+            $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
             foreach($aPosts as &$aPost)
                 $aPost = $this->_getPostApi($aPost, $aParams, [
-                    'menu_actions' => $oMenuActions
+                    'menu_actions' => $oMenuActions,
+                    'menu_manage' => $oMenuManage
                 ]);
 
             return $aPosts;
         }
-        
+
         list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
         //--- Add live update
         $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
@@ -1900,6 +1904,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $oMenuActions->setEvent($aEvent, $aParams);
 
             $aEvent['menu_actions'] = $oMenuActions->getCodeAPI();
+        }
+
+        if(empty($aEventAdd['menu_manage']))
+            $oMenuManage = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+        else
+            $oMenuManage = $aEventAdd['menu_manage'];
+
+        if($oMenuManage !== false) {
+            $oMenuManage->setEvent($aEvent);
+
+            $aEvent['menu_manage'] = $oMenuManage->getCodeAPI();
         }
 
         $aCmts = [];
