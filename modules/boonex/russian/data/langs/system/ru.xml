@@ -2480,6 +2480,8 @@
         <string name="_sys_form_forgot_password_input_caption_system_key"><![CDATA[Ключ]]></string>
         <string name="_sys_form_forgot_password_input_caption_system_password"><![CDATA[Пароль]]></string>
         <string name="_sys_form_forgot_password_input_caption_password"><![CDATA[Пароль]]></string>
+        <string name="_sys_form_forgot_password_input_caption_system_password_reset"><![CDATA[Пароль]]></string>
+        <string name="_sys_form_forgot_password_input_caption_password_reset"><![CDATA[Введите новый пароль]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_forgot_password_input_phone"><![CDATA[Телефон]]></string>
@@ -3272,6 +3274,7 @@
 	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_page_title_forgot_password"><![CDATA[Забыли пароль]]></string>
+        <string name="_sys_page_title_forgot_password_reset"><![CDATA[Выберите новый пароль]]></string>
 	<string name="_sys_page_title_home"><![CDATA[{site_title} :: Домашняя страница]]></string>
     <string name="_sys_page_title_logout"><![CDATA[Выход]]></string>
 	<string name="_sys_page_title_login"><![CDATA[Вход]]></string>
