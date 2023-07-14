@@ -425,8 +425,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb() && isset($CNF['FIELD_THUMB'])) {
             $aThumb = isset($_POST[$CNF['FIELD_THUMB']]) ? bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT) : false;
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
-            if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
-                $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
+            if (!empty($aThumb)){
+                if(is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
+                   $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
+               else
+                   $aValsToAdd[$CNF['FIELD_THUMB']] = $aThumb;
+            }
         }
 
         if(!empty($CNF['OBJECT_METATAGS']))
@@ -540,10 +544,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($iContentId) && isset($CNF['FIELD_THUMB'])) {
             $aThumb = bx_process_input (bx_get($CNF['FIELD_THUMB']), BX_DATA_INT);
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
-            if (!is_array($aThumb))
-                $aThumb =[$aThumb];
-            if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
-                $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
+            if (!empty($aThumb)){
+                if(is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
+                   $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
+               else
+                   $aValsToAdd[$CNF['FIELD_THUMB']] = $aThumb;
+            }
         }
 
         if(!empty($CNF['OBJECT_METATAGS']))
