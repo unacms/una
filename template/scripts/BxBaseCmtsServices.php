@@ -456,6 +456,30 @@ class BxBaseCmtsServices extends BxDol
         if(is_string($aParams))
             $aParams = json_decode($aParams, true);
         
+        if (isset($aParams['action']) && isset($aParams['id']) && $aParams['action'] == 'remove'){
+            $iCmtId = $aParams['id'];
+            $oCmts = BxDolCmts::getObjectInstance($aParams['module'], $aParams['object_id']);
+            $oCmts->remove($iCmtId);
+            return 'Ok';
+        }
+        
+        if (isset($aParams['action']) && isset($aParams['id']) && $aParams['action'] == 'edit'){
+            $iCmtId = $aParams['id'];
+            $oCmts = BxDolCmts::getObjectInstance($aParams['module'], $aParams['object_id']);
+            $oForm = $oCmts->getFormEdit($iCmtId);
+            $aForm = $oForm['form']->getCodeAPI();
+            $aForm['inputs']['cmt_text']['numLines'] = 1;
+            $aForm['inputs']['cmt_text']['autoheight'] = true;
+            $aForm['inputs']['cmt_submit'] = $aForm['inputs']['cmt_controls'][0];
+            unset($aForm['inputs']['cmt_controls']);
+            
+            $aForm['inputs']['cmt_submit']['icon'] = 'contact';
+            $aForm['inputs']['cmt_submit']['variant'] = 'text';
+            $aForm['inputs']['cmt_submit']['icon_only'] = true;
+            $aRv['form'] = ['id' => 'cmt_form', 'type' => 'form', 'name' => 'comment', 'data' => $aForm, 'request' => ['immutable' => true]];
+            return $aRv;
+        }
+        
         $aParams['parent_id'] = !isset($aParams['parent_id']) ? 0 : $aParams['parent_id'];
         $aParams['start_from'] = !isset($aParams['start_from']) ? 0 : $aParams['start_from'];
         $aParams['order_way'] = !isset($aParams['order_way']) ? 'asc' : $aParams['order_way'];

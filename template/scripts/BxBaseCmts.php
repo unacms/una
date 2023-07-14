@@ -1338,17 +1338,19 @@ class BxBaseCmts extends BxDolCmts
         return bx_is_api() ? ['form' => $oForm, 'res' => 0] : ['form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id];
     }
 
-    protected function _getFormEdit($iCmtId, $aDp = [])
+   protected function _getFormEdit($iCmtId, $aDp = [])
     {
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
 
         $aCmt = $this->getCommentSimple($iCmtId);
         if(!$aCmt)
-            return array('msg' => _t('_No such comment'));
+            return bx_is_api() ? bx_api_get_msg(_t('_No such comment')) : array('msg' => _t('_No such comment'));
 
         $iCmtAuthorId = $this->_getAuthorId();
-        if(!$this->isEditAllowed($aCmt))
-            return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
+        if(!$this->isEditAllowed($aCmt)){
+            $sMsg = $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied');
+            return bx_is_api() ? bx_api_get_msg($sMsg) : array('msg' => $sMsg);
+        }
 
         $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
 
@@ -1373,14 +1375,21 @@ class BxBaseCmts extends BxDolCmts
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
                     $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
-                if(($mixedResult = $this->onEditAfter($iCmtId, $aDp)) !== false)
-                    return $mixedResult;
-            }
+                if(($mixedResult = $this->onEditAfter($iCmtId, $aDp)) !== false){
+                    if (bx_is_api()){
+                        $this->_unsetFormObject(BX_CMT_ACTION_POST);
+                        return ['form' => $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId), 'res' => $iCmtId];
+                    }
+                    else{
+                        return $mixedResult;
+                    }
+                }
 
-            return array('msg' => _t('_cmt_err_cannot_perform_action'));
+            }
+            return bx_is_api() ? bx_api_get_msg(_t('_cmt_err_cannot_perform_action')) : array('msg' => _t('_cmt_err_cannot_perform_action'));
         }
 
-        return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
+        return bx_is_api() ? ['form' => $oForm, 'res' => 0] :  array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
     }
 
     protected function _getForm($sAction, $iId)
