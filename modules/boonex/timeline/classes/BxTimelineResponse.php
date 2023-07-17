@@ -94,8 +94,12 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
 
+                $aContent = unserilize($aEvent['content']);
+                if(!empty($oAlert->aExtras) && is_array($oAlert->aExtras))
+                    $aContent = array_merge($aContent, bx_process_input($oAlert->aExtras));
+
                 $aParamsSet = [
-                    'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
+                    'content' => serialize($aContent)
                 ];
 
                 if($iObjectPrivacyView > 0 && !empty($iObjectAuthorId) && $iObjectAuthorId == $oAlert->iSender)
