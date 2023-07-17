@@ -640,6 +640,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aParams));
     }
+    
+    public function serviceGetEditForm($iId)
+    {
+        $aFrm = $this->getFormEdit($iId)['form'];
+        $aFrm['inputs']['tlb_do_submit'] = $aFrm['inputs']['controls'][0];
+        unset($aForm['inputs']['controls']);
+        $aRv['form'] = ['id' => 'bx_timeline', 'type' => 'form', 'name' => 'feed_edit', 'data' => $aFrm, 'request' => ['immutable' => true]];
+        $aItemData = $this->getItemData($iId);
+        if(is_array($aItemData) && !empty($aItemData['event']))
+            $aRv['item'] = $this->_oTemplate->_getPostApi($aItemData['event']);
+        return $aRv;
+    }
 
     public function actionGetComments()
     {
@@ -909,7 +921,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'GetBlockViewAccount' => '',
             'GetBlockViewAccountOutline' => '',
             'GetPosts' => '',
-            'Repost' => ''
+            'Repost' => '',
+            'Delete' => '',
+            'GetEditForm' => '',
         ));
     }
 
@@ -3687,7 +3701,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return [];
 
         if(($mixedCheck = $this->isAllowedEdit($aEvent)) !== true)
-            return ['message' => $mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')];
+            return bx_is_api() ? bx_api_get_msg($mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')) : ['message' => $mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')];
         
         $aContent = unserialize($aEvent['content']);
         if(is_array($aContent) && !empty($aContent['text']))
@@ -3789,14 +3803,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-            	return $this->_prepareResponse([
+            	return bx_is_api ? ['form' => $oForm->getCodeAPI()] : $this->_prepareResponse([
                     'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
                     'form_id' => $oForm->id
                 ], $bAjaxMode);
             }
 
             if($oForm->update($iId, $aValsToAdd) === false)
-                return ['message' => _t('_bx_timeline_txt_err_cannot_perform_action')];
+                 return bx_is_api() ? bx_api_get_msg(_t('_bx_timeline_txt_err_cannot_perform_action')) : ['message' => _t('_bx_timeline_txt_err_cannot_perform_action')];
 
             $this->isAllowedEdit($aEvent, true);
 
@@ -3817,12 +3831,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
 
-            return [
-                'id' => $iId
-            ];
+            return bx_is_api() ? [ 'id' => $iId ] : [ 'id' => $iId ];
         }
 
-        return [
+        return bx_is_api() ? ['form' => $oForm->getCodeAPI()] : [
             'id' => $iId, 
             'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
             'form_id' => $oForm->id,

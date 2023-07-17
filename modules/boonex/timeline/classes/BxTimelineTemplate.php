@@ -1885,7 +1885,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
     }
 
-    protected function _getPostApi(&$aEvent, $aParams = [], $aEventAdd = [])
+    public function _getPostApi(&$aEvent, $aParams = [], $aEventAdd = [])
     {
         $oModule = $this->getModule();
 
