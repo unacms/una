@@ -362,10 +362,11 @@ function bx_login_form($bStudio = false, $bAjaxMode = false, $sForceRelocate = '
         exit;
     }
 
-    BxDolTemplate::getInstance()->setPageNameIndex (BX_PAGE_DEFAULT);
-    BxDolTemplate::getInstance()->setPageHeader (getParam('site_title') . ' ' . _t("_Member Login"));
-    BxDolTemplate::getInstance()->setPageContent ('page_main_code', DesignBoxContent(_t("_Member Login"), $sFormCode, BX_DB_PADDING_DEF));
-    BxDolTemplate::getInstance()->getPageCode();
+    $oPage = BxDolPage::getObjectInstance('sys_login');
+    if($oPage)
+        $oPage->displayPage();
+    else 
+        BxDolTemplate::getInstance()->displayPageNotFound();
 
     exit;
 }
