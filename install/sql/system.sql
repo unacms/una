@@ -332,11 +332,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_quill_insert_as_plain_text', '_adm_stg_cpt_option_sys_quill_insert_as_plain_text', '', 'checkbox', '', '', '', '', 65),
 (@iCategoryId, 'sys_quill_allow_empty_tags', '_adm_stg_cpt_option_sys_quill_allow_empty_tags', 'on', 'checkbox', '', '', '', '', 66),
-
 (@iCategoryId, 'sys_quill_allowed_tags_mini', '_adm_stg_cpt_option_sys_quill_allowed_tags_mini', '', 'digit', '', '', '', '', 67),
 (@iCategoryId, 'sys_quill_allowed_tags_standard', '_adm_stg_cpt_option_sys_quill_allowed_tags_standard', '', 'digit', '', '', '', '', 68),
 (@iCategoryId, 'sys_quill_allowed_tags_full', '_adm_stg_cpt_option_sys_quill_allowed_tags_full', '', 'digit', '', '', '', '', 69),
-
 (@iCategoryId, 'sys_quill_toolbar_mini', '_adm_stg_cpt_option_sys_quill_toolbar_mini', '[\'bold\',\'italic\',\'underline\',\'clean\',{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},\'blockquote\',\'link\',\'image\',\'embed\']', 'digit', '', '', '', '', 70),
 (@iCategoryId, 'sys_quill_toolbar_standard', '_adm_stg_cpt_option_sys_quill_toolbar_standard', '[\'bold\',\'italic\',\'underline\',\'clean\',{ \'header\': [1, 2, 3, 4, 5, 6, false] },{\'list\':\'ordered\'}, {\'list\':\'bullet\'},{\'indent\': \'-1\'},{\'indent\': \'+1\'},{ \'align\':\'\'},{\'align\':\'center\'},{\'align\':\'right\'},{\'align\':\'justify\'},\'blockquote\',\'link\',\'image\',\'embed\',\'emoji\']', 'digit', '', '', '', '', 73),
 (@iCategoryId, 'sys_quill_toolbar_full', '_adm_stg_cpt_option_sys_quill_toolbar_full', '[{ \'header\': [1, 2, 3, 4, 5, 6, false] },\'bold\',\'italic\',\'underline\',\'clean\'],
@@ -374,7 +372,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_files_ext_video', '_adm_stg_cpt_option_sys_files_ext_video', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc,ts', 'digit', '', '', '', '', 210),
 (@iCategoryId, 'sys_files_ext_audio', '_adm_stg_cpt_option_sys_files_ext_audio', 'mp3,m4a,m4b,wma,wav,3gp', 'digit', '', '', '', '', 220),
 (@iCategoryId, 'sys_files_ext_imagevideo', '_adm_stg_cpt_option_sys_files_ext_imagevideo', 'jpg,jpeg,jpe,gif,png,svg,webp,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc,ts', 'digit', '', '', '', '', 230),
-(@iCategoryId, 'sys_files_ext_dangerous', '_adm_stg_cpt_option_sys_files_ext_dangerous', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 'digit', '', '', '', '', 240);
+(@iCategoryId, 'sys_files_ext_dangerous', '_adm_stg_cpt_option_sys_files_ext_dangerous', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 'digit', '', '', '', '', 240),
+
+(@iCategoryId, 'sys_viewport_meta_tag', '_adm_stg_cpt_option_sys_viewport_meta_tag', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0', 'digit', '', '', '', '', 250);
 
 --
 -- CATEGORY (HIDDEN): System
@@ -3679,7 +3679,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_profile', 'system', 'do_cancel', '_sys_form_profile_input_do_cancel', '', 0, 'button', '_sys_form_profile_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:5:"class";s:22:"bx-def-margin-sec-left";s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";}', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_forgot_password', 'system', 'key', '', '', 0, 'hidden', '_sys_form_forgot_password_input_caption_system_key', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('sys_forgot_password', 'system', 'password', '', '', 0, 'password', '_sys_form_forgot_password_input_caption_system_password', '_sys_form_forgot_password_input_caption_password', '', 1, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:38:"~^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}~";}', '_sys_form_account_input_password_error', 'Xss', '', 1, 0),
+('sys_forgot_password', 'system', 'password', '', '', 0, 'password', '_sys_form_forgot_password_input_caption_system_password_reset', '_sys_form_forgot_password_input_caption_password_reset', '', 1, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:38:"~^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}~";}', '_sys_form_account_input_password_error', 'Xss', '', 1, 0),
 ('sys_forgot_password', 'system', 'email', '', '', 0, 'text', '_sys_form_forgot_password_input_caption_system_email', '_sys_form_forgot_password_input_email', '', 1, 0, 0, '', '', '', 'EmailExistOrEmpty', '', '_sys_form_account_input_email_error', 'Xss', '', 0, 0),
 ('sys_forgot_password', 'system', 'phone', '', '', 0, 'text', '_sys_form_forgot_password_input_caption_system_phone', '_sys_form_forgot_password_input_phone', '', 1, 0, 0, '', '', '', 'PhoneExistOrEmpty', '', '_sys_form_account_input_phone_error', 'Xss', '', 0, 0),
 ('sys_forgot_password', 'system', 'captcha', '', '', 0, 'captcha', '_sys_form_login_input_caption_system_captcha', '_sys_form_account_input_captcha', '', 1, 0, 0, '', '', '', 'Captcha', '', '_sys_form_account_input_captcha_error', '', '', 1, 0),

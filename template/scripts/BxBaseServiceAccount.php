@@ -607,6 +607,11 @@ class BxBaseServiceAccount extends BxDol
             return MsgBox(_t('_sys_txt_reset_pasword_success'), 3) . bx_srv('system', 'login_form_only', array('', bx_get_reset_password_redirect($iAccountId)), 'TemplServiceLogin');
         }
 
+        $sTitleReset = _t('_sys_page_title_forgot_password_reset');
+        BxDolTemplate::getInstance()->setPageHeader($sTitleReset);
+        if(($oPage = BxDolPage::getObjectInstanceByURI()) !== false)
+            $oPage->setTitle($sTitleReset);
+
         return $oForm->getCode();
     }
 

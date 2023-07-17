@@ -1703,7 +1703,8 @@
     <string name="_adm_stg_cpt_option_sys_api_comments_flat"><![CDATA[Линейные комментарии]]></string>
     <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Искать в]]></string>
     <string name="_adm_stg_cpt_option_sys_api_extended_units"><![CDATA[Использовать расширенные юниты]]></string>
-    
+    <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
+
     <string name="_adm_stg_cpt_category_sockets"><![CDATA[Сервер для сокетов]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type"><![CDATA[Тип]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_url"><![CDATA[Ссылка]]></string>
@@ -2480,6 +2481,8 @@
         <string name="_sys_form_forgot_password_input_caption_system_key"><![CDATA[Ключ]]></string>
         <string name="_sys_form_forgot_password_input_caption_system_password"><![CDATA[Пароль]]></string>
         <string name="_sys_form_forgot_password_input_caption_password"><![CDATA[Пароль]]></string>
+        <string name="_sys_form_forgot_password_input_caption_system_password_reset"><![CDATA[Пароль]]></string>
+        <string name="_sys_form_forgot_password_input_caption_password_reset"><![CDATA[Введите новый пароль]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_forgot_password_input_phone"><![CDATA[Телефон]]></string>
@@ -3272,6 +3275,7 @@
 	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_page_title_forgot_password"><![CDATA[Забыли пароль]]></string>
+        <string name="_sys_page_title_forgot_password_reset"><![CDATA[Выберите новый пароль]]></string>
 	<string name="_sys_page_title_home"><![CDATA[{site_title} :: Домашняя страница]]></string>
     <string name="_sys_page_title_logout"><![CDATA[Выход]]></string>
 	<string name="_sys_page_title_login"><![CDATA[Вход]]></string>

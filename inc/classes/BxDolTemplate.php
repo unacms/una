@@ -1780,6 +1780,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 else
                     $sRet = $this->_oTemplateConfig->aLessConfig['bx-page-width'];
                 break;
+            case 'page_viewport':
+                $sRet = getParam('sys_viewport_meta_tag');
+                break;
             case 'system_injection_head':
                 $sRet = $this->_oTemplateFunctions->getInjectionHead();
                 break;
