@@ -151,6 +151,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->deleteEvent($aEvent);
                 break;
         }
+
+        $this->_oModule->rebuildSlice();
     }
 
     protected function _prepareEventCommentAdded($oAlert, &$aEvent)

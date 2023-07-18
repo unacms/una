@@ -25,6 +25,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bCacheItem;
     protected $_sCacheItemEngine;
     protected $_iCacheItemLifetime;
+    protected $_bCacheTable;
+    protected $_iCacheTableInterval;
+    protected $_aCacheTableCheckFields;
 
     protected $_bInfScroll;
     protected $_iInfScrollAutoPreloads;
@@ -403,6 +406,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bCacheItem = getParam($sOptionPrefix . 'enable_cache_item') == 'on';
         $this->_sCacheItemEngine = getParam($sOptionPrefix . 'cache_item_engine');
         $this->_iCacheItemLifetime = (int)getParam($sOptionPrefix . 'cache_item_lifetime');
+        $this->_bCacheTable = getParam($sOptionPrefix . 'enable_cache_table') == 'on';
+        $this->_iCacheTableInterval = (int)getParam($sOptionPrefix . 'cache_table_interval');
+        $this->_aCacheTableCheckFields = [
+            'date' => 'date',
+            'reacted' => 'date',
+            'sticked' => 'flag'
+        ];
 
         $this->_aPerPage = array(
             'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
@@ -609,6 +619,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_bCacheItem;
     }
 
+    public function isCacheTable()
+    {
+        return $this->_bCacheTable;
+    }
+
     public function getCacheItemEngine()
     {
         return $this->_sCacheItemEngine;
@@ -627,6 +642,21 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCacheHotKey()
     {
         return $this->getPrefix('cache_list_hot');
+    }
+    
+    public function getCacheTableInterval()
+    {
+        return 86400 * $this->_iCacheTableInterval;
+    }
+
+    public function getCacheTableCheckFields()
+    {
+        $mixedResult = null;
+        bx_alert($this->getName(), 'cache_table_check_fields', 0, 0, ['check_fields' => $this->_aCacheTableCheckFields, 'override_result' => &$mixedResult]);
+        if($mixedResult !== null)
+            return $mixedResult;
+        
+        return $this->_aCacheTableCheckFields;
     }
 
     public function getPostFormDisplay($sType)

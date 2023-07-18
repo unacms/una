@@ -59,7 +59,20 @@ class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
 
         return $aValues;
     }
-    
+
+    public function getContentByGroupAsSQLPart($mixedGroupId)
+    {
+        $aResult = parent::getContentByGroupAsSQLPart($mixedGroupId);
+
+        if($this->_oModule->_oDb->isTableAlias()) {
+            $sTable = $this->_oModule->_oDb->getTable();
+            $sTableAlias = $this->_oModule->_oDb->getTableAlias();
+            foreach($aResult as $sKey => $sValue)
+                $aResult[$sKey] = str_replace($sTable, $sTableAlias, $sValue);
+        }
+
+        return $aResult;
+    }
 }
 
 /** @} */

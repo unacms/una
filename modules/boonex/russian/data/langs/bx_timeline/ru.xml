@@ -57,6 +57,8 @@
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>
     <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Механизм кэширования элемента (отличный от FileHtml может потребовать дополнительную настройку сервера)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Время жизни кэша элемента]]></string>
+    <string name="_bx_timeline_option_enable_cache_table"><![CDATA[Включить кэш таблицы (экспериментальный)]]></string>
+    <string name="_bx_timeline_option_cache_table_interval"><![CDATA[Интервал времени (в днях) для получения событий для табличного кэша]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Включить панель инструментов в форме создания сообщения]]></string>
     <string name="_bx_timeline_option_editor_auto_attach_insertion"><![CDATA[Обрабатывать изображения, вставленные в редактор, как вложения]]></string>
     <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Ограничить число присоединенных линок (0 - без ограничений)]]></string>

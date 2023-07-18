@@ -4495,6 +4495,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
         }
 
+        $this->rebuildSlice();
+
         //--- Event -> Post/Defer for Alerts Engine ---//
         $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'defer' : 'post') . '_' . $sPostType;
         bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, array(
@@ -4560,6 +4562,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_oDb->insertRepostTrack($aEvent['id'], $iUserId, $this->getUserIp(), $aReposted['id']);
         $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts']);
 
+        $this->rebuildSlice();
+
         //--- Timeline -> Update for Alerts Engine ---//
         bx_alert($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, array(
             'privacy_view' => $aEvent['object_privacy_view'],
@@ -4609,6 +4613,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Delete item cache.
         $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
         $this->getCacheItemObject()->delData($sCacheItemKey);
+
+        //--- Rebuild cache table.
+        $this->rebuildSlice();
 
         //--- Event -> Hide for Alerts Engine ---//
         if($bRepost)
@@ -4660,6 +4667,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']], $aContent['text']);
             $oMetatags->locationsAddFromForm($aEvent[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
         }
+
+        //--- Rebuild cache table.
+        $this->rebuildSlice();
 
         //--- Event -> Unhide for Alerts Engine ---//
         if($bRepost)
@@ -4984,6 +4994,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $aResult;
     }
+
+    public function rebuildSlice()
+    {
+        if(!$this->_oConfig->isCacheTable())
+            return;
+
+        $this->_oDb->rebuildSlice();
+    }
+
 
     /**
      * Protected Methods 

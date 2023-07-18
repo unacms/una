@@ -764,7 +764,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         //--- Before: Check for Next
         $aParamsDb['per_page'] += 1;
-        $aEvents = $this->_oDb->getEvents($aParamsDb);
+        if($this->_oConfig->isCacheTable()) {
+            $aEvents = $this->_oDb->getEvents(array_merge($aParamsDb, ['from_cache' => true]));
+            if(count($aEvents) < $aParamsDb['per_page'])
+                $aEvents = $this->_oDb->getEvents(array_merge($aParamsDb, ['from_cache' => false]));
+        }
+        else
+            $aEvents = $this->_oDb->getEvents($aParamsDb);
 
         //--- After: Check for Next
         $bNext = false;

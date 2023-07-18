@@ -345,7 +345,9 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_timeline_enable_cache_item', 'on', @iCategId, '_bx_timeline_option_enable_cache_item', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_cache_item_engine', 'File', @iCategId, '_bx_timeline_option_cache_item_engine', 'select', '', '', '', 'File,Memcache,APC,XCache', 2),
-('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 3);
+('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 3),
+('bx_timeline_enable_cache_table', '', @iCategId, '_bx_timeline_option_enable_cache_table', 'checkbox', '', '', '', '', 10),
+('bx_timeline_cache_table_interval', '90', @iCategId, '_bx_timeline_option_cache_table_interval', 'digit', '', '', '', '', 11);
 
 -- Category: Post form
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)

@@ -17,6 +17,7 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
     protected $_oConfig;
 
     protected $_sTable;
+    protected $_sTableAlias;
     protected $_sTableHandlers;
     protected $_sTableSettings;
     protected $_sTableSettings2Users;
@@ -31,12 +32,28 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
         $this->_oConfig = $oConfig;
 
         $this->_sTable = $this->_sPrefix . 'events';
+        $this->_sTableAlias = '';
         $this->_sTableHandlers = $this->_sPrefix . 'handlers';
         $this->_sTableSettings = $this->_sPrefix . 'settings';
         $this->_sTableSettings2Users = $this->_sPrefix . 'settings2users';
 
         $this->_sHandlerMask = "%s-%s";
         $this->_aDeliveryTypes = array(BX_BASE_MOD_NTFS_DTYPE_SITE);
+    }
+
+    public function getTable()
+    {
+        return $this->_sTable;
+    }
+
+    public function isTableAlias()
+    {
+        return !empty($this->_sTableAlias);
+    }
+
+    public function getTableAlias()
+    {
+        return !empty($this->_sTableAlias) ? $this->_sTableAlias : $this->_sTable;
     }
 
     public function getAlertHandlerId()
@@ -447,11 +464,14 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 
     public function getEvents($aParams)
     {
+        $sTableAlias = $this->getTableAlias();
+
+        $sFromClause = "`{$this->_sTable}`" . ($this->isTableAlias() ? " AS `" . $sTableAlias . "`" : "");
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
         $sSql = "SELECT {select}
-            FROM `{$this->_sTable}`
-            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
+            FROM {$sFromClause}
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$sTableAlias}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$sTableAlias}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " {order} {limit}";
 
         return $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
@@ -459,27 +479,29 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 
     protected function _getSqlPartsEvents($aParams)
     {
+        $sTableAlias = $this->getTableAlias();
+
     	$sMethod = 'getAll';
-        $sSelectClause = "`{$this->_sTable}`.*";
+        $sSelectClause = "`{$sTableAlias}`.*";
         $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['browse']) {
             case 'id':
                 $sMethod = 'getRow';
-                $sWhereClause = $this->prepareAsString("AND `{$this->_sTable}`.`id`=? ", $aParams['value']);
+                $sWhereClause = $this->prepareAsString("AND `{$sTableAlias}`.`id`=? ", $aParams['value']);
                 $sLimitClause = "LIMIT 1";
                 break;
 
             case 'first':
                 $sMethod = 'getRow';
                 list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
-                $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
+                $sOrderClause = "ORDER BY `{$sTableAlias}`.`date` DESC, `{$sTableAlias}`.`id` DESC";
                 $sLimitClause = "LIMIT 1";
                 break;
 
             case 'list':
                 list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
-                $sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC, `{$this->_sTable}`.`id` DESC";
+                $sOrderClause = "ORDER BY `{$sTableAlias}`.`date` DESC, `{$sTableAlias}`.`id` DESC";
                 $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
                 break;
         }
