@@ -550,7 +550,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 				}
 				$aTasksVars[] = array(
 					'id' => $aTask[$CNF['FIELD_ID']],
-					'title' => $aTask[$CNF['FIELD_TITLE']],
+					'title' => bx_process_output($aTask[$CNF['FIELD_TITLE']]),
 					'created' => bx_time_js($aTask[$CNF['FIELD_ADDED']]),
 					'class' => $aTask[$CNF['FIELD_COMPLETED']] == 1 ? 'completed' : 'uncompleted',
 					'due' => $aTask[$CNF['FIELD_DUEDATE']] > 0 ? bx_time_js($aTask[$CNF['FIELD_DUEDATE']]) : '',

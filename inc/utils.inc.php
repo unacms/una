@@ -625,7 +625,7 @@ function dbgTiming($sStartMicrotime)
 
 function echoJson($a)
 {
-	header('Content-type: text/html; charset=utf-8');
+	header('Content-Type: application/json; charset=utf-8');
 
 	echo json_encode($a);
 }
