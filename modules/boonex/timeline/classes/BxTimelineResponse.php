@@ -60,6 +60,12 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(!empty($oAlert->aExtras) && is_array($oAlert->aExtras))
                     $sContent = serialize(bx_process_input($oAlert->aExtras));
 
+                $sSource = '';
+                if(!empty($oAlert->aExtras['timeline_group']))
+                    $sSource = $oAlert->aExtras['timeline_group']['by'];
+                else
+                    $sSource = $oAlert->sUnit . '_' . $iObjectAuthorId . '_' . $oAlert->iObject;
+
                 $iDate = time();
                 $aEvent = [
                     'owner_id' => $iOwnerId,
@@ -70,6 +76,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'object_privacy_view' => $iObjectPrivacyView,
                     'object_cf' => $this->_getObjectCf($oAlert->aExtras),
                     'content' => $sContent,
+                    'source' => $sSource,
                     'title' => '',
                     'description' => '',
                     'date' => $iDate,

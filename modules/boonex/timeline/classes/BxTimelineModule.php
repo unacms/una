@@ -3638,13 +3638,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(!empty($iId)) {
                 $this->isAllowedPost(true);
 
+                $sSource = $this->getName() . '_' . $iUserId . '_' . $iId;
                 $aContent = array_merge($aContent, [
                     'timeline_group' => [
-                        'by' => $this->getName() . '_' . $iUserId . '_' . $iId,
+                        'by' => $sSource,
                         'field' => 'owner_id'
                     ]
                 ]);
-                $this->_oDb->updateEvent(['content' => serialize($aContent)], ['id' => $iId]);
+
+                $this->_oDb->updateEvent(['content' => serialize($aContent), 'source' => $sSource], ['id' => $iId]);
 
                 //--- Process Meta ---//
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
