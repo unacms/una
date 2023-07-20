@@ -167,7 +167,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
         $s = $oModule->_oTemplate->parseHtmlByName('recheck.html', array (
             'form' => $oForm->getCode(),
-            'url_recheck_item' => BX_DOL_URL_ROOT . 'grid.php?o=bx_antispam_grid_dnsbl&a=recheck_item',
+            'url_recheck_item' => BX_DOL_URL_ROOT . 'grid.php?o=bx_antispam_grid_dnsbl&a=recheck_item&csrf_token=' . bx_get('csrf_token'),
             'bx_repeat:items' => $oDNSBlacklists->getRules(array(BX_DOL_DNSBL_CHAIN_SPAMMERS, BX_DOL_DNSBL_CHAIN_WHITELIST, BX_DOL_DNSBL_CHAIN_URIDNS)),
         ));
 
@@ -236,9 +236,9 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
             $aCustomValues = array(
                 'chain' => $oForm->getCleanValue('chain'),
-                'zonedomain' => sprintf("%s.countries.nerd.dk.", strtolower($oForm->getCleanValue('country'))),
+                'zonedomain' => sprintf("%s.country.spameatingmonkey.net.", strtolower($oForm->getCleanValue('country'))),
                 'postvresp' => '127.0.0.2',
-                'url' => 'http://countries.nerd.dk/',
+                'url' => 'https://spameatingmonkey.com/services/SEM-COUNTRY',
                 'comment' => '_bx_antispam_rule_note_country',
                 'added' => time(),
                 'active' => 1,
@@ -294,7 +294,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     {
         $sCountry = '';
         $aMatches = array();
-        if (preg_match('/^(\w{2})\.countries\.nerd\.dk\.$/', $aRow['zonedomain'], $aMatches) && isset($aMatches[1])) {
+        if (preg_match('/^(\w{2})\.country\.spameatingmonkey\.net\.$/', $aRow['zonedomain'], $aMatches) && isset($aMatches[1])) {
             $sCountry = $aMatches[1];
         }
 
@@ -303,7 +303,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
     protected function _getCellActions ($mixedValue, $sKey, $aField, $aRow)
     {
-        if (preg_match('/^(\w{2})\.countries\.nerd\.dk\.$/', $aRow['zonedomain'], $aMatches)) {
+        if (preg_match('/^(\w{2})\.country\.spameatingmonkey\.net\.$/', $aRow['zonedomain'], $aMatches)) {
             $aRow['active'] = 1;
             return parent::_getCellActions ($mixedValue, $sKey, $aField, $aRow);
         }
