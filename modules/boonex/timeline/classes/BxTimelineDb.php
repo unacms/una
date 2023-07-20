@@ -215,7 +215,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     	$sQuery = $this->prepare("SELECT 
     			`te`.`id`
     		FROM `{$this->_sTableRepostsTrack}` AS `tst` 
-    		LEFT JOIN `te` AS `te` ON `tst`.`event_id`=`te`.`id` 
+    		LEFT JOIN `{$this->_sTable}` AS `te` ON `tst`.`event_id`=`te`.`id` 
     		WHERE `tst`.`author_id`=? AND `tst`.`reposted_id`=? AND `te`.`owner_id`=?", $iAuthorId, $iRepostedId, $iOwnerId);
 
     	return (int)$this->getOne($sQuery) > 0;
