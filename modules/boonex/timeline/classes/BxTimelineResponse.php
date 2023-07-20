@@ -94,7 +94,9 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
 
-                $aContent = unserilize($aEvent['content']);
+                $aContent = [];
+                if(!empty($aEvent['content']) && is_string($aEvent['content']))
+                    $aContent = unserialize($aEvent['content']);
                 if(!empty($oAlert->aExtras) && is_array($oAlert->aExtras))
                     $aContent = array_merge($aContent, bx_process_input($oAlert->aExtras));
 
