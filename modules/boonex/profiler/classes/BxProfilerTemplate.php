@@ -94,7 +94,7 @@ class BxProfilerTemplate extends BxDolModuleTemplate
 
     function _isAjaxRequest ()
     {
-        if ('application/json' == bx_profiler_get_header_content_type()) 
+        if ('application/json' == $this->getHeaderContentType()) 
             return true;
 
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) and $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
@@ -133,6 +133,20 @@ class BxProfilerTemplate extends BxDolModuleTemplate
         if ($this->_isAjaxOutput)
             return '';
         return parent::addJs($mixedFiles, $bDynamic);
+    }
+
+    function getHeaderContentType()
+    {
+        $aHeaders = headers_list();
+        foreach ($aHeaders as $s) {
+            $a = explode(':', $s);
+            if (isset($a[0]) && isset($a[1]) && 'content-type' == strtolower(trim($a[0]))) {
+                $aa = explode(';', $a[1]);
+                return strtolower(trim($aa[0]));
+            }
+        }
+
+        return false;
     }
 }
 

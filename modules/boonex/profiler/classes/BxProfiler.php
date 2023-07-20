@@ -116,7 +116,7 @@ class BxProfiler extends BxDol
 
         echo ob_get_clean();
 
-        $sContentType = bx_profiler_get_header_content_type();
+        $sContentType = $this->oTemplate->getHeaderContentType();
         if ('text/html' == $sContentType) {            
             echo $sJsCss . $sPlanks;
         } 
@@ -661,20 +661,6 @@ class BxProfiler extends BxDol
         }
         return $s;
     }
-}
-
-function bx_profiler_get_header_content_type()
-{
-    $aHeaders = headers_list();
-    foreach ($aHeaders as $s) {
-        $a = explode(':', $s);
-        if (isset($a[0]) && isset($a[1]) && 'content-type' == strtolower(trim($a[0]))) {
-            $aa = explode(';', $a[1]);
-            return strtolower(trim($aa[0]));
-        }
-    }
-
-    return false;
 }
 
 $GLOBALS['bx_profiler'] = new BxProfiler(BX_DOL_START);
