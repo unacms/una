@@ -22,12 +22,22 @@ class BxProfilerTemplate extends BxDolModuleTemplate
 
     function plank($sTitle, $sContent = '')
     {
+        static $i = 0;
+        $i++;
         if ($this->_isAjaxOutput) {
-            if (function_exists('fb')) {
+            if (!headers_sent() && function_exists('fb')) {
                 if ($sContent && is_array($sContent))
                     fb($sContent, $sTitle, FirePHP::TABLE);
                 else
                     fb($sTitle . $sContent);
+            }
+            elseif (!headers_sent()) {
+                if ($sContent && is_array($sContent)) {
+                    $sContentEnc = json_encode($sContent);
+                    header("X-Una-Profiler-$i: $sTitle" . ($sContent && $sContentEnc < 4000 ? '; ' . $sContentEnc : ''));
+                } else {
+                    header("X-Una-Profiler-$i: $sTitle" . ($sContent && $sContent < 4000 ? '; ' . $sContent : ''));
+                }
             }
             return '';
         }
@@ -84,10 +94,14 @@ class BxProfilerTemplate extends BxDolModuleTemplate
 
     function _isAjaxRequest ()
     {
+        if ('application/json' == bx_profiler_get_header_content_type()) 
+            return true;
+
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) and $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
             return true;
         if (isset($_GET['bx_profiler_ajax_request']))
             return true;
+
         if (preg_match('/vote\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
             return true;
         if (preg_match('/image_transcoder\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
@@ -97,12 +111,29 @@ class BxProfilerTemplate extends BxDolModuleTemplate
         if (preg_match('/storage_uploader\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
             return true;
         if (preg_match('/searchKeywordContent\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
-            return true;
+            return true;        
         if (preg_match('/menu\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
+            return true;
+        if (preg_match('/gzip_loader\.php/', $_SERVER['PHP_SELF']))
+            return true;
+        if (preg_match('/get_rss_feed\.php/', $_SERVER['PHP_SELF']))
             return true;
         return false;
     }
 
+    function addCss($mixedFiles, $bDynamic = false)
+    {
+        if ($this->_isAjaxOutput)
+            return '';
+        return parent::addCss($mixedFiles, $bDynamic);
+    }
+
+    function addJs($mixedFiles, $bDynamic = false)
+    {
+        if ($this->_isAjaxOutput)
+            return '';
+        return parent::addJs($mixedFiles, $bDynamic);
+    }
 }
 
 /** @} */

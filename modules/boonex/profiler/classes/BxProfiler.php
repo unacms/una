@@ -73,15 +73,15 @@ class BxProfiler extends BxDol
     // output profiler debug panel
     function output ()
     {
-        $iPageTIme = $this->_getCurrentDelay ();
-        if (isset($this->aConf['long_page']) && $iPageTIme > $this->aConf['long_page'])
-            $this->logPageOpen ($iPageTIme);
+        $iPageTime = $this->_getCurrentDelay ();
+        if (isset($this->aConf['long_page']) && $iPageTime > $this->aConf['long_page'])
+            $this->logPageOpen ($iPageTime);
 
         switch (getParam('bx_profiler_show_debug_panel')) {
         case 'all':
             break;
         case 'admins':
-            if (!$GLOBALS['logged']['admin'])
+            if (!isset($GLOBALS['logged']) || !$GLOBALS['logged']['admin'])
                 return;
             break;
         case 'none':
@@ -105,17 +105,23 @@ class BxProfiler extends BxDol
         foreach ($aJs as $sJsPath)
             $sJsCss .= $this->oTemplate->addJs($sJsPath, 1);
 
-        $sContentType = $this->_getHeaderContentType();
-        if ('text/html' == $sContentType) {
-            echo $sJsCss;
-            echo $this->_plankMain ();
-            echo $this->_plankMenus ();
-            echo $this->_plankTemplates ();
-            echo $this->_plankInjections ();
-            echo $this->_plankPagesBlocks ();
-            echo $this->_plankSql ();
-            echo $this->_plankModules ();
-            echo $this->_plankAlerts ();
+        $sPlanks  = $this->_plankMain ();
+        $sPlanks .= $this->_plankMenus ();
+        $sPlanks .= $this->_plankTemplates ();
+        $sPlanks .= $this->_plankInjections ();
+        $sPlanks .= $this->_plankPagesBlocks ();
+        $sPlanks .= $this->_plankSql ();
+        $sPlanks .= $this->_plankModules ();
+        $sPlanks .= $this->_plankAlerts ();
+
+        echo ob_get_clean();
+
+        $sContentType = bx_profiler_get_header_content_type();
+        if ('text/html' == $sContentType) {            
+            echo $sJsCss . $sPlanks;
+        } 
+        else if ('application/json' == $sContentType) {
+            echo $sPlanks;
         }
     }
 
@@ -566,7 +572,7 @@ class BxProfiler extends BxDol
         $sAlerts = count($GLOBALS['bx_profiler']->_aAlerts) . ' alerts responses (' . $this->_formatTime($iTimeAlerts, 3) . ')';
 
         return $this->oTemplate->plank(
-            $this->oTemplate->nameValue('Alerts:', $sAlerts) .
+            $this->oTemplate->nameValue('Alerts:', $sAlerts),
             $this->oTemplate->table($GLOBALS['bx_profiler']->_aAlerts)
         );
     }
@@ -590,14 +596,7 @@ class BxProfiler extends BxDol
     {
         if (isset($GLOBALS['bx_profiler_disable']) || isset($_GET['bx_profiler_disable']))
             return true;
-        if (
-            preg_match('/gzip_loader\.php/', $_SERVER['PHP_SELF']) ||
-            preg_match('/get_rss_feed\.php/', $_SERVER['PHP_SELF']) ||
-            preg_match('/fields\.parse\.php/', $_SERVER['PHP_SELF']) ||
-            preg_match('/flash/', $_SERVER['PHP_SELF']) ||
-            preg_match('/forum/', $_SERVER['PHP_SELF'])
-        )
-            return true;
+
         return false;
     }
 
@@ -662,20 +661,20 @@ class BxProfiler extends BxDol
         }
         return $s;
     }
+}
 
-    function _getHeaderContentType()
-    {
-        $aHeaders = headers_list();
-        foreach ($aHeaders as $s) {
-            $a = explode(':', $s);
-            if (isset($a[0]) && isset($a[1]) && 'content-type' == strtolower(trim($a[0]))) {
-                $aa = explode(';', $a[1]);
-                return strtolower(trim($aa[0]));
-            }
+function bx_profiler_get_header_content_type()
+{
+    $aHeaders = headers_list();
+    foreach ($aHeaders as $s) {
+        $a = explode(':', $s);
+        if (isset($a[0]) && isset($a[1]) && 'content-type' == strtolower(trim($a[0]))) {
+            $aa = explode(';', $a[1]);
+            return strtolower(trim($aa[0]));
         }
-
-        return false;
     }
+
+    return false;
 }
 
 $GLOBALS['bx_profiler'] = new BxProfiler(BX_DOL_START);
