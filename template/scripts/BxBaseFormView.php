@@ -664,15 +664,19 @@ BLAH;
 
             case 'block_header':
                 $sRow = $this->genRowBlockHeader($aInput);
-            break;
+                break;
 
             case 'block_end':
                 $sRow = $this->genBlockEnd($aInput);
-            break;
-            
+                break;
+
             case 'nested_form':
                 $sRow =  $this->genNestedForm($aInput);
-            break;
+                break;
+
+            case 'textarea':
+                $sRow = $this->{'genViewRowWrapped' . ($aInput['html'] != 0 ? 'Html' : '')}($aInput);
+                break;
 
             default:
                 $sRow = $this->genViewRowWrapped($aInput);
@@ -689,15 +693,32 @@ BLAH;
      */
     function genViewRowWrapped(&$aInput)
     {
+        return $this->_genViewRowWrapped($aInput);
+    }
+
+    function genViewRowWrappedHtml(&$aInput)
+    {
+        return $this->_genViewRowWrapped($aInput, [
+            'class_value' => 'bx-def-vanilla-html max-w-none'
+        ]);
+    }
+
+    protected function _genViewRowWrapped(&$aInput, $aParams = [])
+    {
         $sValue = $this->genViewRowValue($aInput);
         if (null === $sValue)
             return '';
 
-        return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
+        $sClass = !empty($aParams['class']) ? $aParams['class'] : '';
+        $sClassValue = !empty($aParams['class_value']) ? $aParams['class_value'] : '';
+
+        return $this->oTemplate->parseHtmlByName('form_view_row.html', [
             'type' => $aInput['type'], 
+            'class' => $sClass,
             'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
+            'class_value' => $sClassValue,
             'value' => $sValue
-        ));
+        ]);
     }
 
     /**
