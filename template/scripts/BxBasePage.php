@@ -842,7 +842,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockHtml ($aBlock)
     {
-        $s = '<div class="bx-page-html-container">' . $aBlock['content'] . '</div>';
+        $s = '<div class="bx-page-html-container bx-def-vanilla-html max-w-none">' . $aBlock['content'] . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
@@ -874,7 +874,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockLang ($aBlock)
     {
-        $s = '<div class="bx-page-lang-container">' . _t(trim($aBlock['content'])) . '</div>';
+        $s = '<div class="bx-page-lang-container bx-def-vanilla-html max-w-none">' . _t(trim($aBlock['content'])) . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
