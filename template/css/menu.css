@@ -1054,6 +1054,9 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 #bx-menu-footer.bx-menu-hor > li {
     vertical-align: top;
 }
+#bx-menu-footer.bx-menu-hor > li.bx-menu-item-powered_by .sys-icon-svg {
+    width: auto;
+}
 
 /* --------------- switch language menu (popup) */
 .bx-popup .bx-menu-ver.bx-menu-object-sys_switch_language_popup li a div > span {

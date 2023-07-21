@@ -163,6 +163,11 @@ div.bx-popup-menu-main.sys-add-content ul {
     justify-content: center;
 }
 
+/*--- Footer Menu ---*/
+#bx-menu-footer.bx-menu-hor > li.bx-menu-item-powered_by .sys-icon-svg {
+    width: auto;
+}
+
 /*--- Profile Stats/Followings Menu ---*/
 .bx-db-content .bx-profile-stats .bx-profile-avatar-cnt,
 .bx-db-content .bx-profile-stats .bx-menu-vertical-more-less,
