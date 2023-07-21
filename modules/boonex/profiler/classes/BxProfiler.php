@@ -170,7 +170,7 @@ class BxProfiler extends BxDol
 
     function logPageOpen ($iTime)
     {
-        $s  = $this->_logBegin ('LONG PAGE OPEN: ' . $this->_formatTime($iTime, 5));
+        $s  = $this->_logBegin ('LONG PAGE OPEN: ' . $this->_formatTime($iTime));
         $s .= "Request method: " . $_SERVER['REQUEST_METHOD'] . "\n";
         $s .= "Query string: " . $_SERVER['QUERY_STRING'] . "\n";
         $s .= "Request URI: " . $_SERVER['REQUEST_URI'] . "\n";
@@ -201,7 +201,7 @@ class BxProfiler extends BxDol
         --$this->_aModulesLevel;
         $iTime = $this->_calcTime ($this->_aModules[$sHash]['begin']);
         unset ($this->_aModules[$sHash]['begin']);
-        $this->_aModules[$sHash]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aModules[$sHash]['time'] = $this->_formatTime($iTime);
         $this->_aModules[$sHash]['raw_time'] = $iTime;
         if (isset($this->aConf['long_module']) && $iTime > $this->aConf['long_module'])
             $this->logModuleQuery ($iTime, $this->_aModules[$sHash]);
@@ -227,7 +227,7 @@ class BxProfiler extends BxDol
         $sHash = md5($sUnit . $sAction . $sHandler . $this->_iAlertsLevel);
         $iTime = $this->_calcTime ($this->_aAlerts[$sHash]['begin']);
         unset ($this->_aAlerts[$sHash]['begin']);
-        $this->_aAlerts[$sHash]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aAlerts[$sHash]['time'] = $this->_formatTime($iTime);
         $this->_aAlerts[$sHash]['raw_time'] = $iTime;
     }
 
@@ -246,7 +246,7 @@ class BxProfiler extends BxDol
         $this->_aInjections[$sId]['name'] = isset($aInjection['name']) ? $aInjection['name'] : 'no-name';
         $this->_aInjections[$sId]['key'] = $aInjection['key'];
         $this->_aInjections[$sId]['replace'] = $aInjection['replace'] ? 'yes' : 'no';
-        $this->_aInjections[$sId]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aInjections[$sId]['time'] = $this->_formatTime($iTime);
         $this->_aInjections[$sId]['raw_time'] = $iTime;
     }
 
@@ -265,7 +265,7 @@ class BxProfiler extends BxDol
         unset ($this->_aPagesBlocks[$this->_sPageBlockIndex]['begin']);
         $this->_aPagesBlocks[$this->_sPageBlockIndex]['cached'] = $isCached ? 'yes' : 'no';
         $this->_aPagesBlocks[$this->_sPageBlockIndex]['empty'] = $isEmpty ? 'yes' : 'no';
-        $this->_aPagesBlocks[$this->_sPageBlockIndex]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aPagesBlocks[$this->_sPageBlockIndex]['time'] = $this->_formatTime($iTime);
         $this->_aPagesBlocks[$this->_sPageBlockIndex]['raw_time'] = $iTime;
     }
 
@@ -282,7 +282,7 @@ class BxProfiler extends BxDol
             return;
         $iTime = $this->_calcTime ($this->_aPages[$this->_sPageIndex]['begin']);
         unset ($this->_aPages[$this->_sPageIndex]['begin']);
-        $this->_aPages[$this->_sPageIndex]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aPages[$this->_sPageIndex]['time'] = $this->_formatTime($iTime);
         $this->_aPages[$this->_sPageIndex]['raw_time'] = $iTime;
     }
 
@@ -300,7 +300,7 @@ class BxProfiler extends BxDol
         $iTime = $this->_calcTime ($this->_aTemplates[$sName.$sRand]['begin']);
         unset ($this->_aTemplates[$sName.$sRand]['begin']);
         $this->_aTemplates[$sName.$sRand]['cached'] = $isCached ? 'yes' : 'no';
-        $this->_aTemplates[$sName.$sRand]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aTemplates[$sName.$sRand]['time'] = $this->_formatTime($iTime);
         $this->_aTemplates[$sName.$sRand]['raw_time'] = $iTime;
     }
 
@@ -317,7 +317,7 @@ class BxProfiler extends BxDol
             return;
         $iTime = $this->_calcTime ($this->_aQueries[$this->_sQueryIndex]['begin']);
         unset ($this->_aQueries[$this->_sQueryIndex]['begin']);
-        $this->_aQueries[$this->_sQueryIndex]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aQueries[$this->_sQueryIndex]['time'] = $this->_formatTime($iTime);
         $this->_aQueries[$this->_sQueryIndex]['raw_time'] = $iTime;
         $this->_aQueries[$this->_sQueryIndex]['rows'] = $oStmt ? BxDolDb::getInstance()->getNumRows($oStmt) : '';
         $this->_aQueries[$this->_sQueryIndex]['affected'] = $oStmt ? BxDolDb::getInstance()->getAffectedRows($oStmt) : '';
@@ -337,7 +337,7 @@ class BxProfiler extends BxDol
             return;
         $iTime = $this->_calcTime ($this->_aMenus[$sName]['begin']);
         unset ($this->_aMenus[$sName]['begin']);
-        $this->_aMenus[$sName]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aMenus[$sName]['time'] = $this->_formatTime($iTime);
         $this->_aMenus[$sName]['raw_time'] = $iTime;
     }
 
@@ -350,7 +350,7 @@ class BxProfiler extends BxDol
 
     function _plankMain ()
     {
-        $sTime = $this->_formatTime($this->_getCurrentDelay ());
+        $sTime = $this->_formatTime($this->_getCurrentDelay (), 3);
         if (function_exists('memory_get_usage'))
             $sMemory = $this->_formatBytes(memory_get_usage(true)) . ' of ' . ini_get('memory_limit') . ' allowed';
 
@@ -577,7 +577,7 @@ class BxProfiler extends BxDol
         );
     }
 
-    function _formatTime ($i, $iPrecision = 3)
+    function _formatTime ($i, $iPrecision = 4)
     {
         return round($i, $iPrecision) . ' sec';
     }
