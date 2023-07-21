@@ -217,6 +217,9 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATETIME:
         return $mixedData;
     case BX_DATA_DATE_UTC:
+        if (!preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $mixedData, $m))
+            return '';
+        return sprintf("%04d-%02d-%02d 00:00:00Z", $m[1], $m[2], $m[3]);
         return $mixedData . "Z";
     case BX_DATA_DATETIME_UTC:
         return $mixedData . "Z";
