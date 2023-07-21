@@ -27,6 +27,6 @@
     var sTmpl = $('#bx-page-block-' + iBlockID + ' .bx-cont-ph-profile-unit').html();
     $('#bx-page-block-' + iBlockID + ' .bx-cont-ph-profile-unit').append(sTmpl + sTmpl);
     $(document).ready(function () {
-        getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(document.location.href, 'dynamic=tab&pageBlock=' + iBlockID), undefined, 'post', false, {includedCss: JSON.stringify(aIncludedCss), includedJs: JSON.stringify(aIncludedJs)}, false);
+        getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(document.location.href, 'dynamic=tab&pageBlock=' + iBlockID), onAsyncBlockLoad, 'post', false, {includedCss: JSON.stringify(aIncludedCss), includedJs: JSON.stringify(aIncludedJs)}, false);
     });
 </script>

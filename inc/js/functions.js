@@ -221,6 +221,12 @@ function closeDynamicPopupBlock() {
     $('#dynamicPopup').dolPopupHide();
 }
 
+function onAsyncBlockLoad() {
+    var oBlock = $(this);
+
+    if(!oBlock.html()) 
+        oBlock.remove();
+}
 
 /**
  * Translate string
