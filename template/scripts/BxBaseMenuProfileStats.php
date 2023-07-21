@@ -50,7 +50,12 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
                 'name' => 'show-' . $sLink,
                 'title' => _t($aLink['title']),
                 'link' => 'javascript:void(0)',
-                'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                'bx_if:onclick' => [
+                    'condition' => true,
+                    'content' => [
+                        'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                    ]
+                ],
                 'attrs' => '',
                 'bx_if:image' => [
                     'condition' => false,

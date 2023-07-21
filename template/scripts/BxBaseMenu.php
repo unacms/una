@@ -260,6 +260,16 @@ class BxBaseMenu extends BxDolMenu
             ),
         );
 
+        $bOnClick = !empty($a['onclick']);
+        $aOnClick = $bOnClick ? [
+            'onclick' => $a['onclick'],
+        ] : [];
+
+        $a['bx_if:onclick'] = [
+            'condition' => $bOnClick,
+            'content' => $aOnClick
+        ];
+
         $aTmplVarsAddon = $this->_bDisplayAddons ? $this->_getTmplVarsAddon($mixedAddon, $a) : array('addon' => '', 'addonf' => '');
         $a['bx_if:addon'] = array (
             'condition' => $this->_bDisplayAddons && !empty($aTmplVarsAddon['addon']),

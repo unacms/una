@@ -2,7 +2,7 @@
     <bx_repeat:menu_items>
         <li class=" bx-def-margin-bottom">
             <div class="bx-menu-floating-blocks-dash-item bx-def-padding-sec bx-def-margin-sec-leftright bx-def-round-corners bx-def-box bx-def-box-sizing __class_add__">
-                <a href="__link__" onclick="__onclick__"__attrs__>
+                <a href="__link__" <bx_if:onclick>onclick="__onclick__"</bx_if:onclick> __attrs__>
                     <div class="bx-menu-floating-blocks-icon bx-def-margin-sec-right">
                         <bx_include_auto:menu_icon.html />
                     </div>

@@ -1,7 +1,7 @@
 <ul class="bx-menu-ver bx-menu-object-__object__ bx-clearfix">
     <bx_repeat:menu_items>
         <li class="bx-menu-item __name__ bx-def-round-corners bx-def-color-bg-hl-hover __class_add__">
-            <a class="__name__" href="__link__" onclick="__onclick__"__attrs__>
+            <a class="__name__" href="__link__" <bx_if:onclick>onclick="__onclick__"</bx_if:onclick> __attrs__>
                 <div class="bx-def-padding-sec">
                     <bx_include_auto:menu_icon.html />
 					<span>__title__</span>
