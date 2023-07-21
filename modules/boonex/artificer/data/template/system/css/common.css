@@ -20,6 +20,12 @@ import url(../../../../../../../template/css/common.css);
     clear:both;
 }
 
+.bx-tag b,
+.bx-tag s {
+    text-decoration: none;
+    font-weight: normal;
+}
+
 /*--- Application ---*/
 .bx-main.bx-pt-application .bx-menu-toolbar-padding {
     padding-top: 0;
