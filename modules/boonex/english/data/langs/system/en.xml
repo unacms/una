@@ -2440,6 +2440,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Receive Newsletters]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Receive Site Updates]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Submit]]></string>
+        <string name="_sys_form_account_input_publish"><![CDATA[Create]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[No]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Yes]]></string>
         <string name="_sys_form_input_caption_author"><![CDATA[Author]]></string>
@@ -2544,7 +2545,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_back"><![CDATA[Resend SMS code]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Confirm Delete]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Delete with Content]]></string>
-	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Sign up]]></string>
+	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Submit]]></string>
+        <string name="_sys_form_login_input_caption_system_do_publish"><![CDATA[Sign up]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>
 	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Account name]]></string>

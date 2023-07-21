@@ -2415,6 +2415,7 @@
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Получать новости]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Получать обновления сайта]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Отправить]]></string>
+        <string name="_sys_form_account_input_publish"><![CDATA[Создать]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[Нет]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Да]]></string>
     <string name="_sys_form_input_caption_author"><![CDATA[Автор]]></string>
@@ -2518,7 +2519,8 @@
 	<string name="_sys_form_login_input_caption_system_back"><![CDATA[Отправить SMS ещё раз]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Подтвердить удаление]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Удалить с контентом]]></string>
-	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
+	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Отправить]]></string>
+        <string name="_sys_form_login_input_caption_system_do_publish"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>
 	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Имя пользователя]]></string>
