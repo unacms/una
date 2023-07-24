@@ -352,10 +352,6 @@ div.bx-tl-item div.bx-tl-owner-name .bx-badges-list{
     display:inline-block;
 }
 
-div.bx-tl-item div.bx-tl-owner-name > * {
-    vertical-align: middle;
-}
-
 div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.bx-tl-ton-item {
     font-weight: 700;

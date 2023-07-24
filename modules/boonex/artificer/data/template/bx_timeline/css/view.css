@@ -32,6 +32,17 @@ import url(../../../../../timeline/template/css/view.css);
     display: none;
 }
 
+/*--- View Block Style ---*/
+.bx-tl-grid-sizer {
+    width: 100%;
+}
+.bx-tl-grid-item-sizer {
+    width: 100%;
+}
+.bx-tl-view-sizer {
+    width: 100%;
+}
+
 /*--- Filters Style ---*/
 div.bx-tl-view-filters {
     min-width: 14rem;

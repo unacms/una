@@ -12,9 +12,8 @@
                         </bx_repeat:notes>
                     </div>
                 </bx_if:show_note>
-                <!-- NOTE: Spaces after and between elements in 'owner-name' DIV are needed for better line folding -->
                 <div class="__style_prefix__-owner-name bx-def-font-middle bx-def-font-light bx-def-font-grayed">
-                    <a href="__item_owner_url__" class="__style_prefix__-owner-name" title="__item_owner_title__">__item_owner_name__</a>
+                    <a href="__item_owner_url__" class="__style_prefix__-owner-name flex items-center min-w-0" title="__item_owner_title__"><div class="truncate">__item_owner_name__</div>__item_owner_badges__</a>
                 </div>
                 <div class="__style_prefix__-item-meta bx-def-font-middle bx-def-font-grayed">
                     <bx_if:show_menu_item_meta>
