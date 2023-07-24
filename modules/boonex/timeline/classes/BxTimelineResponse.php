@@ -132,6 +132,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $aReposts = $this->_oModule->_oDb->getReposts($aEvent[$CNF['FIELD_ID']]);
                 foreach($aReposts as $aRepost)
                     $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aRepost['event_id']));
+
+                $this->_oModule->rebuildSlice();
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
@@ -160,8 +162,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->deleteEvent($aEvent);
                 break;
         }
-
-        $this->_oModule->rebuildSlice();
     }
 
     protected function _prepareEventCommentAdded($oAlert, &$aEvent)

@@ -4744,6 +4744,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
         $this->getCacheItemObject()->delData($sCacheItemKey);
 
+        $this->rebuildSlice();
+
         //--- Event -> Delete for Alerts Engine ---//
         if($bRepost)
             bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
