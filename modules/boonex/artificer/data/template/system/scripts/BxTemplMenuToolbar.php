@@ -61,13 +61,13 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
             case 'add-content':
                 $a['class_add'] = str_replace('bx-def-media-phone-hide', '',  $a['class_add']);
 
-                if(isset($a['onclick']))
-                    $a['onclick'] = str_replace('bx_menu_slide_inline', 'bx_menu_popup_inline', $a['onclick']);
+                if(isset($a['bx_if:onclick']['content']['onclick']))
+                    $a['bx_if:onclick']['content']['onclick'] = str_replace('bx_menu_slide_inline', 'bx_menu_popup_inline', $a['bx_if:onclick']['content']['onclick']);
                 break;
 
             case 'notifications-preview':
-                if(isset($a['onclick']))
-                    $a['onclick'] = str_replace(["bx_menu_slide", "'site', "], ['bx_menu_popup'], $a['onclick']);
+                if(isset($a['bx_if:onclick']['content']['onclick']))
+                    $a['bx_if:onclick']['content']['onclick'] = str_replace(["bx_menu_slide", "'site', "], ['bx_menu_popup'], $a['bx_if:onclick']['content']['onclick']);
                 break;
         }
 
