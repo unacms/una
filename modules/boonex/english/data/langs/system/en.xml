@@ -573,6 +573,7 @@
 	<string name="_adm_bp_txt_page_cache_lifetime"><![CDATA[Cache]]></string>
 	<string name="_adm_bp_txt_page_cover"><![CDATA[Cover]]></string>
 	<string name="_adm_bp_txt_page_cover_image"><![CDATA[Custom Cover]]></string>
+        <string name="_adm_bp_txt_page_cover_title"><![CDATA[Custom Title]]></string>
         <string name="_adm_bp_txt_page_cover_0"><![CDATA[Disabled]]></string>
         <string name="_adm_bp_txt_page_cover_1"><![CDATA[Enabled for all]]></string>
         <string name="_adm_bp_txt_page_cover_2"><![CDATA[Enabled for visitors only]]></string>

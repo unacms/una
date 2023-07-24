@@ -1158,7 +1158,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'db' => array (
                         'pass' => 'Int',
                     )
-                )
+                ),
+                'cover_title' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'cover_title',
+                    'caption' => _t('_adm_bp_txt_page_cover_title'),
+                    'info' => '',
+                    'value' => isset($aPage['cover_title']) ? $aPage['cover_title'] : '',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
             )
         );
 

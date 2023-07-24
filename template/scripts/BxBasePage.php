@@ -329,25 +329,32 @@ class BxBasePage extends BxDolPage
 
     public function getPageCoverParams()
     {
-        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        if($oMenuSubmenu) {
-            $aParams = $oMenuSubmenu->getPageCoverParams();
-            if(!empty($aParams) && is_array($aParams))
-                return $aParams;
-        }
-
-    	return array (
+        $aParams = [
             'title' => $this->_getPageTitle(),
             'actions' => '',
-            'bx_if:image' => array (
+            'bx_if:image' => [
                 'condition' => false,
-                'content' => array(),
-            ),
-            'bx_if:icon' => array (
+                'content' => []
+            ],
+            'bx_if:icon' => [
                 'condition' => false,
-                'content' => array(),
-            ),
-        );
+                'content' => []
+            ],
+        ];
+
+        if(($oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu')) !== false) {
+            $aCoverParams = $oMenuSubmenu->getPageCoverParams();
+            if(!empty($aCoverParams) && is_array($aCoverParams))
+                $aParams = $aCoverParams;
+        }
+
+        if(!empty($this->_aObject['cover_title'])) {
+            $sCoverTitle = _t($this->_aObject['cover_title']);
+            if($sCoverTitle && strcmp($sCoverTitle, $this->_aObject['cover_title']) != 0)
+                $aParams['title'] = $sCoverTitle;
+        }
+
+    	return $aParams;
     }
 
     /**

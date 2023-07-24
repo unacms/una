@@ -5531,6 +5531,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `module` varchar(32) NOT NULL,
   `cover` tinyint(4) NOT NULL DEFAULT '1',
   `cover_image` int(11) NOT NULL DEFAULT '0',
+  `cover_title` varchar(255) NOT NULL DEFAULT '',
   `type_id` int(11) NOT NULL DEFAULT '1',
   `layout_id` int(11) NOT NULL,
   `sticky_columns` tinyint(4) NOT NULL DEFAULT '0',

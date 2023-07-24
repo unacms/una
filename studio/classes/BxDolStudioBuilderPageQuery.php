@@ -122,6 +122,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tp`.`module` AS `module`,
                 `tp`.`cover` AS `cover`,
                 `tp`.`cover_image` AS `cover_image`,
+                `tp`.`cover_title` AS `cover_title`,
                 `tp`.`type_id` AS `type_id`,
                 `tp`.`layout_id` AS `layout_id`,
                 `tp`.`submenu` AS `submenu`,

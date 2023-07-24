@@ -573,6 +573,7 @@
 	<string name="_adm_bp_txt_page_cache_lifetime"><![CDATA[Кэш]]></string>
 	<string name="_adm_bp_txt_page_cover"><![CDATA[Обложка]]></string>
 	<string name="_adm_bp_txt_page_cover_image"><![CDATA[Собственная обложка]]></string>
+        <string name="_adm_bp_txt_page_cover_title"><![CDATA[Собственный заголовок]]></string>
         <string name="_adm_bp_txt_page_cover_0"><![CDATA[Отключен]]></string>
         <string name="_adm_bp_txt_page_cover_1"><![CDATA[Включен для всех]]></string>
         <string name="_adm_bp_txt_page_cover_2"><![CDATA[Включен только для гостей]]></string>
