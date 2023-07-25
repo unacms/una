@@ -209,6 +209,8 @@
     <string name="_bx_timeline_menu_item_title_channels"><![CDATA[Каналы]]></string>
     <string name="_bx_timeline_menu_item_title_system_feed"><![CDATA[Хроника]]></string>
     <string name="_bx_timeline_menu_item_title_feed"><![CDATA[Хроника]]></string>
+    <string name="_bx_timeline_menu_item_title_system_feed_and_hot"><![CDATA[Хроника и Популярное]]></string>
+    <string name="_bx_timeline_menu_item_title_feed_and_hot"><![CDATA[Для тебя]]></string>
     <string name="_bx_timeline_menu_item_title_system_public"><![CDATA[Публичное]]></string>
     <string name="_bx_timeline_menu_item_title_public"><![CDATA[Публичное]]></string>
     <string name="_bx_timeline_menu_item_title_system_hot"><![CDATA[Популярное]]></string>

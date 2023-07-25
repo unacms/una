@@ -688,10 +688,15 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $aSqlParts[] = !$bCount ? $sSqlPart : (int)$this->$sMethod($sSqlPart);
         }
 
-        return $bCount ? array_sum($aSqlParts) : $this->$sMethod(bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', [
+        if($bCount)
+            return array_sum($aSqlParts);
+
+        $sSql = bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', [
             'order' => str_replace("`{$sTableAlias}`.", '', $sOrderClause),
             'limit' => str_replace("`{$sTableAlias}`.", '', $sLimitClause),
-        ]));
+        ]);
+
+        return $this->$sMethod($sSql);
     }
 
     protected function _getFilterAddon($iOwnerId, $sFilter)
@@ -1048,6 +1053,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
             //--- Feed: Profile + Profile Connections to Non-Channel contexts
             case BX_TIMELINE_TYPE_FEED:
+            case BX_TIMELINE_TYPE_FEED_AND_HOT:
                 if(empty($aParams['owner_id']))
                     break;
 
@@ -1085,6 +1091,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
                 //--- Select Promoted posts.
                 $mixedWhereSubclause['p4'] = "`{$sTableAlias}`.`promoted` <> '0'";
+
+                //--- Select Hot posts.
+                if($aParams['type'] == BX_TIMELINE_TYPE_FEED_AND_HOT) {
+                    $mixedJoinClause['p5'] = "INNER JOIN `{$this->_sTableHotTrack}` ON `{$sTableAlias}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
+                    $mixedWhereSubclause['p5'] = "1";
+                }
                 break;
 
             //--- Feed: Profile + All Profile Connections

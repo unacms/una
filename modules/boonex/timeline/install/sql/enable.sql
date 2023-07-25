@@ -111,7 +111,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_view', 'bx_timeline', 'feed', '_bx_timeline_menu_item_title_system_feed', '_bx_timeline_menu_item_title_feed', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''feed'')', '_self', '', '', 2147483647, 1, 0, 1),
 ('bx_timeline_menu_view', 'bx_timeline', 'public', '_bx_timeline_menu_item_title_system_public', '_bx_timeline_menu_item_title_public', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''public'')', '_self', '', '', 2147483647, 1, 0, 2),
 ('bx_timeline_menu_view', 'bx_timeline', 'channels', '_bx_timeline_menu_item_title_system_channels', '_bx_timeline_menu_item_title_channels', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''channels'')', '_self', '', '', 2147483647, 0, 0, 3),
-('bx_timeline_menu_view', 'bx_timeline', 'hot', '_bx_timeline_menu_item_title_system_hot', '_bx_timeline_menu_item_title_hot', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''hot'')', '_self', '', '', 2147483647, 1, 0, 4);
+('bx_timeline_menu_view', 'bx_timeline', 'hot', '_bx_timeline_menu_item_title_system_hot', '_bx_timeline_menu_item_title_hot', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''hot'')', '_self', '', '', 2147483647, 1, 0, 4),
+('bx_timeline_menu_view', 'bx_timeline', 'feed_and_hot', '_bx_timeline_menu_item_title_system_feed_and_hot', '_bx_timeline_menu_item_title_feed_and_hot', 'javascript:void(0)', 'javascript:{js_object_view}.changeView(this, ''feed_and_hot'')', '_self', '', '', 2147483647, 0, 0, 5);
 
 -- MENU: Feeds
 INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES

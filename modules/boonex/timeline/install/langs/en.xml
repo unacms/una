@@ -221,6 +221,8 @@
     <string name="_bx_timeline_menu_item_title_channels"><![CDATA[Channels]]></string>
     <string name="_bx_timeline_menu_item_title_system_feed"><![CDATA[Feed]]></string>
     <string name="_bx_timeline_menu_item_title_feed"><![CDATA[Feed]]></string>
+    <string name="_bx_timeline_menu_item_title_system_feed_and_hot"><![CDATA[Feed and Hot]]></string>
+    <string name="_bx_timeline_menu_item_title_feed_and_hot"><![CDATA[For You]]></string>
     <string name="_bx_timeline_menu_item_title_system_public"><![CDATA[Public]]></string>
     <string name="_bx_timeline_menu_item_title_public"><![CDATA[Public]]></string>
     <string name="_bx_timeline_menu_item_title_system_hot"><![CDATA[Hot]]></string>
