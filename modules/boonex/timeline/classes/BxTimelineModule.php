@@ -29,8 +29,9 @@ define('BX_TIMELINE_NAME_VIEWS_DB', 'views_db'); //--- Dynamic browsing feeds.
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
+define('BX_TIMELINE_TYPE_CONNECTED_CONTEXTS', 'connected_contexts'); //--- Followed contexts by type (groups, events, spaces, etc) only.
 define('BX_TIMELINE_TYPE_CHANNELS', 'channels'); //--- Followed channels only.
-define('BX_TIMELINE_TYPE_FEED', 'feed'); //--- Owner and folloved contexts excluding channels.
+define('BX_TIMELINE_TYPE_FEED', 'feed'); //--- Owner and followed contexts excluding channels.
 define('BX_TIMELINE_TYPE_HOT', 'hot'); //--- Aggrigated hot content.
 define('BX_TIMELINE_TYPE_FEED_AND_HOT', 'feed_and_hot'); 
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
@@ -2031,6 +2032,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxTimelineModule::serviceGetBlockViewCustom
+     * 
+     * @example Events from followed contexts by type (groups, events, spaces, etc). Groups in this example.
+     * array ('module' => 'bx_timeline', 'method' => 'get_block_view_custom', 'params' => array (0 => array ('view' => 'timeline', 'type' => 'connected_contexts', 'context' => 'bx_groups')))
+     * 
+     * @example Events from "For You" (Feed + Hot) feed.
+     * array ('module' => 'bx_timeline', 'method' => 'get_block_view_custom', 'params' => array (0 => array ('view' => 'timeline', 'type' => 'feed_and_hot')))
      */
     /** 
      * @ref bx_timeline-get_block_view_custom "get_block_view_custom"

@@ -696,6 +696,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'limit' => str_replace("`{$sTableAlias}`.", '', $sLimitClause),
         ]);
 
+        //echoDbg($sSql); exit;
         return $this->$sMethod($sSql);
     }
 
@@ -805,6 +806,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
                     case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
                     case BX_TIMELINE_TYPE_CHANNELS:
+                    case BX_TIMELINE_TYPE_CONNECTED_CONTEXTS:
                     case BX_TIMELINE_TYPE_FEED:
                     case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
                         $sOrderClause = "`{$sTableAlias}`.`sticked` DESC, ";
@@ -1026,13 +1028,37 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedWhereSubclause['p3'] = "`{$sTableAlias}`.`promoted` <> '0'";
                 break;
 
+            //--- Feed: Profile Connections to contexts by type (groups, events, spaces, etc) only.
+            case BX_TIMELINE_TYPE_CONNECTED_CONTEXTS:
+                if(empty($aParams['owner_id']) || empty($aParams['context']))
+                    break;
+
+                $mixedJoinClause = [];
+                $mixedWhereSubclause = [];
+
+                //--- Filter out unnecessary contexts.
+                $aContexts = is_array($aParams['context']) ? $aParams['context'] : [$aParams['context']];
+                $mixedJoinClause['p1'] = "INNER JOIN `sys_profiles` AS `tpo` ON ABS(`{$sTableAlias}`.`owner_id`)=`tpo`.`id` AND `tpo`.`type` IN (" . $this->implode_escape($aContexts) . ") AND `tpo`.`status`='active' ";
+
+                //--- Join System posts received by following contexts.
+                $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($sTableAlias, 'owner_id', $aParams['owner_id']);
+                $aJoin1 = $aQueryParts['join'];
+
+                $mixedJoinClause['p1'] .= "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedWhereSubclause['p1'] = "1";
+
+                //--- Select Promoted posts.
+                $mixedWhereSubclause['p2'] = "`{$sTableAlias}`.`promoted` <> '0'";
+                break;
+
             //--- Feed: Profile Connections to Channel contexts only
             case BX_TIMELINE_TYPE_CHANNELS:
                 if(empty($aParams['owner_id']))
                     break;
 
-                $mixedJoinClause = array();
-                $mixedWhereSubclause = array();
+                $mixedJoinClause = [];
+                $mixedWhereSubclause = [];
 
                 $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
