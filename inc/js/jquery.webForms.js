@@ -301,6 +301,7 @@
                 if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
                     flatpickr(this, {
+                        locale: sLang,
                         disableMobile: true,
                         altInput: true,
                         altFormat: this.getAttribute("data-frmt-date") ? this.getAttribute("data-frmt-date") : "F j, Y",
@@ -315,6 +316,7 @@
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
 
                     var oPickerOptions = {
+                        locale: sLang,
                         disableMobile: true,
                         enableTime: true,
                         altInput: true,
