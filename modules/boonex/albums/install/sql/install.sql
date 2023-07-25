@@ -534,11 +534,11 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 
 -- VOTES
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_albums', 'bx_albums_votes', 'bx_albums_votes_track', '604800', '1', '1', '0', '1', 'bx_albums_albums', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_albums_media', 'bx_albums_votes_media', 'bx_albums_votes_media_track', '604800', '1', '1', '0', '1', 'bx_albums_files2albums', 'id', 'author', 'rate', 'votes', '', ''),
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_albums', 'bx_albums', 'bx_albums_votes', 'bx_albums_votes_track', '604800', '1', '1', '0', '1', 'bx_albums_albums', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_albums_media', 'bx_albums', 'bx_albums_votes_media', 'bx_albums_votes_media_track', '604800', '1', '1', '0', '1', 'bx_albums_files2albums', 'id', 'author', 'rate', 'votes', '', ''),
 
-('bx_albums_reactions', 'bx_albums_reactions', 'bx_albums_reactions_track', '604800', '1', '1', '1', '1', 'bx_albums_albums', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+('bx_albums_reactions', 'bx_albums', 'bx_albums_reactions', 'bx_albums_reactions_track', '604800', '1', '1', '1', '1', 'bx_albums_albums', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 
 -- SCORES
@@ -554,9 +554,9 @@ INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`,
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_albums', 'bx_albums_views_track', '86400', '1', 'bx_albums_albums', 'id', '', 'views', '', ''),
-('bx_albums_media', 'bx_albums_views_media_track', '86400', '1', 'bx_albums_files2albums', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_albums', 'bx_albums', 'bx_albums_views_track', '86400', '1', 'bx_albums_albums', 'id', '', 'views', '', ''),
+('bx_albums_media', 'bx_albums', 'bx_albums_views_media_track', '86400', '1', 'bx_albums_files2albums', 'id', 'author', 'views', '', '');
 
 
 -- FAFORITES

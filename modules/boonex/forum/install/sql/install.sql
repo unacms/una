@@ -607,15 +607,15 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-(@sName, 'bx_forum_views_track', '86400', '1', 'bx_forum_discussions', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+(@sName, @sName, 'bx_forum_views_track', '86400', '1', 'bx_forum_discussions', 'id', 'author', 'views', '', '');
 
 
 -- VOTES
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-(@sName, 'bx_forum_votes', 'bx_forum_votes_track', '604800', '1', '1', '0', '1', 'bx_forum_discussions', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_forum_reactions', 'bx_forum_reactions', 'bx_forum_reactions_track', '604800', '1', '1', '1', '1', 'bx_forum_discussions', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
-('bx_forum_poll_answers', 'bx_forum_polls_answers_votes', 'bx_forum_polls_answers_votes_track', '604800', '1', '1', '0', '1', 'bx_forum_polls_answers', 'id', 'author_id', 'rate', 'votes', 'BxForumVotePollAnswers', 'modules/boonex/forum/classes/BxForumVotePollAnswers.php');
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+(@sName, @sName, 'bx_forum_votes', 'bx_forum_votes_track', '604800', '1', '1', '0', '1', 'bx_forum_discussions', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_forum_reactions', @sName, 'bx_forum_reactions', 'bx_forum_reactions_track', '604800', '1', '1', '1', '1', 'bx_forum_discussions', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
+('bx_forum_poll_answers', @sName, 'bx_forum_polls_answers_votes', 'bx_forum_polls_answers_votes_track', '604800', '1', '1', '0', '1', 'bx_forum_polls_answers', 'id', 'author_id', 'rate', 'votes', 'BxForumVotePollAnswers', 'modules/boonex/forum/classes/BxForumVotePollAnswers.php');
 
 
 -- SCORES

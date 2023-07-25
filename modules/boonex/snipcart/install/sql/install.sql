@@ -391,9 +391,9 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 
 -- VOTES
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_snipcart', 'bx_snipcart_votes', 'bx_snipcart_votes_track', '604800', '1', '1', '0', '1', 'bx_snipcart_entries', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_snipcart_reactions', 'bx_snipcart_reactions', 'bx_snipcart_reactions_track', '604800', '1', '1', '1', '1', 'bx_snipcart_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_snipcart', 'bx_snipcart', 'bx_snipcart_votes', 'bx_snipcart_votes_track', '604800', '1', '1', '0', '1', 'bx_snipcart_entries', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_snipcart_reactions', 'bx_snipcart', 'bx_snipcart_reactions', 'bx_snipcart_reactions_track', '604800', '1', '1', '1', '1', 'bx_snipcart_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 
 -- SCORES
@@ -407,8 +407,8 @@ INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`,
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_snipcart', 'bx_snipcart_views_track', '86400', '1', 'bx_snipcart_entries', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_snipcart', 'bx_snipcart', 'bx_snipcart_views_track', '86400', '1', 'bx_snipcart_entries', 'id', 'author', 'views', '', '');
 
 
 -- FAFORITES

@@ -387,10 +387,10 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 
 -- VOTES
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_photos', 'bx_photos_votes', 'bx_photos_votes_track', '604800', '1', '1', '0', '1', 'bx_photos_entries', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_photos_stars', 'bx_photos_svotes', 'bx_photos_svotes_track', '604800', '1', '5', '0', '1', 'bx_photos_entries', 'id', 'author', 'srate', 'svotes', 'BxPhotosVoteStars', 'modules/boonex/photos/classes/BxPhotosVoteStars.php'),
-('bx_photos_reactions', 'bx_photos_reactions', 'bx_photos_reactions_track', '604800', '1', '1', '1', '1', 'bx_photos_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_photos', 'bx_photos', 'bx_photos_votes', 'bx_photos_votes_track', '604800', '1', '1', '0', '1', 'bx_photos_entries', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_photos_stars', 'bx_photos', 'bx_photos_svotes', 'bx_photos_svotes_track', '604800', '1', '5', '0', '1', 'bx_photos_entries', 'id', 'author', 'srate', 'svotes', 'BxPhotosVoteStars', 'modules/boonex/photos/classes/BxPhotosVoteStars.php'),
+('bx_photos_reactions', 'bx_photos', 'bx_photos_reactions', 'bx_photos_reactions_track', '604800', '1', '1', '1', '1', 'bx_photos_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 
 -- SCORES
@@ -404,8 +404,8 @@ INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`,
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_photos', 'bx_photos_views_track', '86400', '1', 'bx_photos_entries', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_photos', 'bx_photos', 'bx_photos_views_track', '86400', '1', 'bx_photos_entries', 'id', 'author', 'views', '', '');
 
 
 -- FAVORITES

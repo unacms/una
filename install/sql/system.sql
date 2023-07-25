@@ -1446,6 +1446,7 @@ CREATE TABLE `sys_search_extended_sorting_fields` (
 CREATE TABLE `sys_objects_vote` (
   `ID` int(11) unsigned NOT NULL auto_increment,
   `Name` varchar(50) NOT NULL default '',
+  `Module` varchar(32) NOT NULL default '',
   `TableMain` varchar(50) NOT NULL default '',
   `TableTrack` varchar(50) NOT NULL default '',
   `PostTimeout` int(11) NOT NULL default '0',
@@ -1464,11 +1465,11 @@ CREATE TABLE `sys_objects_vote` (
   PRIMARY KEY  (`ID`)
 );
 
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
-('sys_cmts_reactions', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
-('sys_form_fields_votes', 'sys_form_fields_votes', 'sys_form_fields_votes_track', '604800', '1', '1', '0', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
-('sys_form_fields_reaction', 'sys_form_fields_reaction', 'sys_form_fields_reaction_track', '604800', '1', '1', '1', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('sys_cmts', 'system', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
+('sys_cmts_reactions', 'system', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
+('sys_form_fields_votes', 'system', 'sys_form_fields_votes', 'sys_form_fields_votes_track', '604800', '1', '1', '0', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
+('sys_form_fields_reaction', 'system', 'sys_form_fields_reaction', 'sys_form_fields_reaction_track', '604800', '1', '1', '1', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- --------------------------------------------------------
 

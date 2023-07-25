@@ -398,11 +398,11 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 
 -- VOTES
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_polls', 'bx_polls_votes', 'bx_polls_votes_track', '604800', '1', '1', '0', '1', 'bx_polls_entries', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_polls_subentries', 'bx_polls_votes_subentries', 'bx_polls_votes_subentries_track', '604800', '1', '1', '0', '1', 'bx_polls_subentries', 'id', 'author', 'rate', 'votes', 'BxPollsVoteSubentries', 'modules/boonex/polls/classes/BxPollsVoteSubentries.php'),
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_polls', 'bx_polls', 'bx_polls_votes', 'bx_polls_votes_track', '604800', '1', '1', '0', '1', 'bx_polls_entries', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_polls_subentries', 'bx_polls', 'bx_polls_votes_subentries', 'bx_polls_votes_subentries_track', '604800', '1', '1', '0', '1', 'bx_polls_subentries', 'id', 'author', 'rate', 'votes', 'BxPollsVoteSubentries', 'modules/boonex/polls/classes/BxPollsVoteSubentries.php'),
 
-('bx_polls_reactions', 'bx_polls_reactions', 'bx_polls_reactions_track', '604800', '1', '1', '1', '1', 'bx_polls_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+('bx_polls_reactions', 'bx_polls', 'bx_polls_reactions', 'bx_polls_reactions_track', '604800', '1', '1', '1', '1', 'bx_polls_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 
 -- SCORES
@@ -416,8 +416,8 @@ INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`,
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_polls', 'bx_polls_views_track', '86400', '1', 'bx_polls_entries', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_polls', 'bx_polls', 'bx_polls_views_track', '86400', '1', 'bx_polls_entries', 'id', 'author', 'views', '', '');
 
 
 -- FAFORITES

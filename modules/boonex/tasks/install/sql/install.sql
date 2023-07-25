@@ -511,9 +511,9 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 ('bx_tasks_notes', 'bx_tasks', 'bx_tasks_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-task&id={object_id}', '', 'bx_tasks_tasks', 'id', 'author', 'title', '', 'BxTemplCmtsNotes', '');
 
 -- VOTES
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_tasks', 'bx_tasks_votes', 'bx_tasks_votes_track', '604800', '1', '1', '0', '1', 'bx_tasks_tasks', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_tasks_reactions', 'bx_tasks_reactions', 'bx_tasks_reactions_track', '604800', '1', '1', '1', '1', 'bx_tasks_tasks', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_tasks', 'bx_tasks', 'bx_tasks_votes', 'bx_tasks_votes_track', '604800', '1', '1', '0', '1', 'bx_tasks_tasks', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_tasks_reactions', 'bx_tasks', 'bx_tasks_reactions', 'bx_tasks_reactions_track', '604800', '1', '1', '1', '1', 'bx_tasks_tasks', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
@@ -524,8 +524,8 @@ INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`,
 ('bx_tasks', 'bx_tasks', 'bx_tasks_reports', 'bx_tasks_reports_track', '1', 'page.php?i=view-task&id={object_id}', 'bx_tasks_notes', 'bx_tasks_tasks', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_tasks', 'bx_tasks_views_track', '86400', '1', 'bx_tasks_tasks', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_tasks', 'bx_tasks', 'bx_tasks_views_track', '86400', '1', 'bx_tasks_tasks', 'id', 'author', 'views', '', '');
 
 -- FAFORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
