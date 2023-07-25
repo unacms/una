@@ -360,6 +360,7 @@ class BxBaseServiceAccount extends BxDol
 
         // redirect with success message
         $sUrl = getParam('sys_redirect_after_email_confirmation');
+        bx_alert('account', 'after_email_confirmation', $aData['account_id'], false, ['override_result' => &$sUrl]);
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
