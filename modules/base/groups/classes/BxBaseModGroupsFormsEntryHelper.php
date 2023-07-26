@@ -164,6 +164,9 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
             $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
         }
         
+        if (bx_is_api())
+            return bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($sUrl), 'timeout' => 1000]);
+        
         bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
             'content' => $aContentInfo,
             'override_result' => &$sUrl,
