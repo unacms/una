@@ -1233,6 +1233,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
         $a['content']['url'] = $oGroupProfile->getUrl();
         $a['content']['title'] = $oGroupProfile->getDisplayName();
+        
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if($oConnection)
+            $a['content']['members'] = $oConnection->getConnectedInitiatorsCount($oGroupProfile->id(), true);
+        
+        $a['content']['visibility'] = $aEvent['object_privacy_view'];
 
         if(isset($CNF['FIELD_PUBLISHED'])) {
             $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);

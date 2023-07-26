@@ -502,9 +502,6 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             ),
         ]);
 
-        $a['content']['title'] = '';
-        $a['content']['text'] = '';
-
         return $a;
     }
     
