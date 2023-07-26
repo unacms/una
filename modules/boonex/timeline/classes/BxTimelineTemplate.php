@@ -174,6 +174,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aType2Uri = [
                 '' => 'get_block_post_account',
                 'account' => 'get_block_post_account',
+                'feed' => 'get_block_post_account',
                 'owner' => 'get_block_post_profile',
                 'profile' => 'get_block_post_profile',
                 'public' => 'get_block_post_home'
@@ -1897,6 +1898,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oModule = $this->getModule();
 
         $aEvent['author_data'] = BxDolProfile::getData($aEvent['object_owner_id']);
+        $aEvent['author_actions'] = [];
+
+        $iInitiatorProfile = (int)bx_get_logged_profile_id();
+        $iContentProfile = (int)$aEvent['object_owner_id'];
+
+        $sConnection = 'sys_profiles_subscriptions';      
+        if(($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false && $iInitiatorProfile != $iContentProfile && !$oConnection->isConnected($iInitiatorProfile, $iContentProfile)) {
+            $aEvent['author_actions'][] = [
+                'type' => 'connections',
+                'o' => $sConnection,
+                'a' => 'add',
+                'iid' => $iInitiatorProfile,
+                'cid' => $iContentProfile,
+                'title' => _t('_sys_menu_item_title_sm_subscribe'),
+            ];
+        }
+
         $aEvent['url'] = bx_ltrim_str($aEvent['content']['url'], BX_DOL_URL_ROOT);
 
         if(empty($aEventAdd['menu_actions'])) {
