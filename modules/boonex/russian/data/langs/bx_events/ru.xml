@@ -42,7 +42,7 @@
     <string name="_bx_events_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_events_form_profile_input_sys_event_name"><![CDATA[Название события]]></string>
     <string name="_bx_events_form_profile_input_event_name"><![CDATA[Название события]]></string>
-    <string name="_bx_events_form_profile_input_event_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_events_form_profile_input_event_name_err"><![CDATA[Поле должно содержать от 1 до 80 символов.]]></string>
     <string name="_bx_events_form_profile_input_sys_event_desc"><![CDATA[Описание]]></string>
     <string name="_bx_events_form_profile_input_event_desc"><![CDATA[Описание]]></string>
     <string name="_bx_events_form_profile_input_sys_event_cat"><![CDATA[Категория]]></string>
