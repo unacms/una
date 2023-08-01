@@ -172,17 +172,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
+        $aParams = [
+            'type' => BX_TIMELINE_TYPE_DEFAULT,
+            'dynamic_mode' => true
+        ];
+
         $aBrowseParams = [];
         if(bx_get('bp') !== false) {
             $aBrowseParams = $this->_oConfig->getBrowseParams(bx_process_input(bx_get('bp')));
             $aBrowseParams = $this->_prepareParamsGet($aBrowseParams);
+
+            $aParams['type'] = $aBrowseParams['type'];
         }
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true)
             return echoJson(array('message' => strip_tags($mixedAllowed)));
 
-        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aBrowseParams));
+        echoJson($this->getFormEdit($iId, $aParams, $aBrowseParams));
     }
 
     function actionPin()
@@ -637,10 +644,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetEditForm($iId)
     {
-        $aParams = $this->_prepareParamsGet();
-        $this->_iOwnerId = $aParams['owner_id'];
+        $aBrowseParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aBrowseParams['owner_id'];
 
-        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aParams));
+        echoJson($this->getFormEdit($iId, [
+            'type' => $aBrowseParams['type'],
+            'dynamic_mode' => true
+        ], $aBrowseParams));
     }
     
     public function serviceGetEditForm($iId)
@@ -3861,6 +3871,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oForm->aFormAttrs = bx_replace_markers($oForm->aFormAttrs, [
             'js_object_post' => $this->_oConfig->getJsObject('post')
         ]);
+
+        $sParamsKey = 'type';
+        if(!empty($aParams[$sParamsKey]))
+            $oForm->setType($aParams[$sParamsKey]);
 
         /**
          * Note. 'ajax_mode' parameter isn't checked because

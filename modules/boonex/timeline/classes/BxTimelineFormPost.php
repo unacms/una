@@ -18,6 +18,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     protected $_bPublicMode;
     protected $_bProfileMode;
 
+    protected $_sType; //--- Is needed for Edit form. Determines which timeline the form was called from.
     protected $_bVisibilityAutoselect;
 
     protected $_aUploadersInfo;
@@ -30,13 +31,26 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
         $this->_sGhostTemplate = 'uploader_nfw.html';
 
-        $this->_bAccountMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add');
-        $this->_bPublicMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_public');
-        $this->_bProfileMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_profile');
+        $this->_resetMode();
+        if(isset($this->aParams['display']))
+            switch($this->aParams['display']) {
+                case $this->_oModule->_oConfig->getObject('form_display_post_add'):
+                    $this->setModeAccount();
+                    break;
 
+                case $this->_oModule->_oConfig->getObject('form_display_post_add_public'):
+                    $this->setModePublic();
+                    break;
+
+                case $this->_oModule->_oConfig->getObject('form_display_post_add_profile'):
+                    $this->setModeProfile();
+                    break;
+            }
+
+        $this->_sType = '';
         $this->_bVisibilityAutoselect = true;
 
-        $this->_aUploadersInfo = array();
+        $this->_aUploadersInfo = [];
     }
 
     public function getUploadersInfo($sField = '')
@@ -52,10 +66,15 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     public function initChecker($aValues = array (), $aSpecificValues = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        
+
+        $bEdit = $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit');
+
         $iUserId = $this->_oModule->getUserId();
         $bValueId = $aValues && !empty($aValues['id']);
         $iValueId = $bValueId ? (int)$aValues['id'] : 0;
+
+        if($bEdit && isset($aValues[$CNF['FIELD_OWNER_ID']]) && (int)$aValues[$CNF['FIELD_OWNER_ID']] === 0) 
+            $this->setType(BX_BASE_MOD_NTFS_TYPE_PUBLIC);
 
         if(isset($this->aInputs[$CNF['FIELD_ATTACHMENTS']]) && ($oMenu = $this->_oModule->getAttachmentsMenuObject()) !== false) {
             $oMenu->setEventById($iValueId);
@@ -80,7 +99,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF[$sSetting]]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getGhostTmplVars($CNF[$sSetting], $aContentInfo));
         }
 
-        if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
+        if($bEdit && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
             if(isset($aValues[$CNF['FIELD_STATUS']]) && in_array($aValues[$CNF['FIELD_STATUS']], array(BX_TIMELINE_STATUS_ACTIVE, BX_TIMELINE_STATUS_HIDDEN)))
                 unset($this->aInputs[$CNF['FIELD_PUBLISHED']]);
 
@@ -187,9 +206,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs['text']['attrs']['id'] = $this->_oModule->_oConfig->getHtmlIds('post', 'textarea') . time();
         }
 
-        $aPrivacyFields = $this->_getPrivacyFields();
-        foreach($aPrivacyFields as $sField => $sPrivacyObject)
-            $this->_initPrivacyField($sField, $sPrivacyObject);
+        $this->_initPrivacyFields();
 
         if(isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $sStorage = $this->_oModule->_oConfig->getObject('storage_photos');
@@ -265,6 +282,51 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = false;
     }
 
+    public function setModePublic()
+    {
+        $this->_resetMode();
+
+        $this->_bPublicMode = true;
+    }
+
+    public function setModeProfile()
+    {
+        $this->_resetMode();
+
+        $this->_bProfileMode = true;
+    }
+
+    public function setModeAccount()
+    {
+        $this->_resetMode();
+
+        $this->_bAccountMode = true;
+    }
+
+    public function setType($sType)
+    {
+        $this->_sType = $sType;
+
+        switch($this->_sType) {
+            case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+                $this->setModePublic();
+                break;
+
+            case BX_BASE_MOD_NTFS_TYPE_OWNER:
+                $this->setModeProfile();
+                break;
+
+            case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
+            case BX_TIMELINE_TYPE_CONNECTED_CONTEXTS:
+            case BX_TIMELINE_TYPE_FEED:
+            case BX_TIMELINE_TYPE_FEED_AND_HOT:
+                $this->setModeAccount();
+                break;
+        }
+
+        $this->_initPrivacyFields();
+    }
+
     public function setVisibilityAutoselect($bVisibilityAutoselect)
     {
         $this->_bVisibilityAutoselect = $bVisibilityAutoselect;
@@ -283,6 +345,13 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             );
 
         return parent::_getPrivacyFields($aKeysF2O);
+    }
+
+    protected function _initPrivacyFields()
+    {
+        $aPrivacyFields = $this->_getPrivacyFields();
+        foreach($aPrivacyFields as $sField => $sPrivacyObject)
+            $this->_initPrivacyField($sField, $sPrivacyObject);
     }
 
     /**
@@ -395,6 +464,15 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             'name' => $this->aInputs[$sName]['name'],
             'content_id' => (int)$this->aInputs[$sName]['content_id'],
         );
+    }
+
+    
+    
+    protected function _resetMode()
+    {
+        $this->_bPublicMode = false;
+        $this->_bProfileMode = false;
+        $this->_bAccountMode = false;
     }
 }
 
