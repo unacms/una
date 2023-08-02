@@ -97,7 +97,11 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_account_outline', '_bx_timeline_page_block_title_view_account_outline', 0, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_block_view_account_outline";}', 0, 1, 1, @iBlockOrder + 6),
 
 ('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_menu_db', '_bx_timeline_page_block_title_menu_db', 11, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:17:"get_block_menu_db";}', 0, 1, 1, @iBlockOrder + 7),
-('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_views_db', '_bx_timeline_page_block_title_views_db', 11, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:18:"get_block_views_db";}', 0, 1, 1, @iBlockOrder + 8);
+('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_views_db', '_bx_timeline_page_block_title_views_db', 11, 0, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:18:"get_block_views_db";}', 0, 1, 1, @iBlockOrder + 8),
+
+('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_feed_and_hot', '_bx_timeline_page_block_title_view_feed_and_hot', 0, 0, 2147483644, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_block_view_custom";s:6:"params";a:1:{i:0;a:2:{s:4:"view";s:8:"timeline";s:4:"type";s:12:"feed_and_hot";}}}', 0, 1, 1, @iBlockOrder + 9),
+
+('', 0, 'bx_timeline', '_bx_timeline_page_block_title_system_view_contexts_groups', '_bx_timeline_page_block_title_view_contexts_groups', 0, 0, 2147483644, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_block_view_custom";s:6:"params";a:1:{i:0;a:3:{s:4:"view";s:8:"timeline";s:4:"type";s:18:"connected_contexts";s:7:"context";s:9:"bx_groups";}}}', 0, 1, 1, @iBlockOrder + 10);
 
 
 -- MENU: View
