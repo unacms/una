@@ -458,16 +458,22 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         ));
     }
 
-    protected function _getGhostTmplVars($sName, $aContentInfo = array())
+    protected function _getGhostTmplVars($sName, $aContentInfo = [])
     {
-    	return array (
+    	return [
+            'js_object' => $this->_oModule->_oConfig->getJsObject('post'),
             'name' => $this->aInputs[$sName]['name'],
             'content_id' => (int)$this->aInputs[$sName]['content_id'],
-        );
+        ];
+    }
+    
+    protected function _getPhotoGhostTmplVars($aContentInfo = [])
+    {
+        return array_merge(parent::_getPhotoGhostTmplVars($aContentInfo), [
+            'js_object' => $this->_oModule->_oConfig->getJsObject('post'),
+        ]);
     }
 
-    
-    
     protected function _resetMode()
     {
         $this->_bPublicMode = false;

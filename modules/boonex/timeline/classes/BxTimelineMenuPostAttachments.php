@@ -75,7 +75,16 @@ class BxTimelineMenuPostAttachments extends BxTemplMenu
             ));
         }
 
-        return parent::_getMenuItem($a);
+        $aResult = parent::_getMenuItem($a);
+
+        switch($a['name']) {
+            case 'add-link': 
+                if($this->_oModule->_oConfig->isMediaPriority() && $this->_oModule->hasMedia($this->_iEvent))
+                    $aResult['class_link'] = 'bx-btn-disabled';
+                break;
+        }
+
+        return $aResult;
     }
 }
 

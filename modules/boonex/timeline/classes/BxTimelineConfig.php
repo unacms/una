@@ -59,6 +59,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_bEditorToolbar;
     protected $_bEditorAutoAttach;
+    protected $_bEnableMediaPriority;
     protected $_iLimitAttachLinks;
 
     protected $_bUnhideRestored;
@@ -456,6 +457,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
         $this->_bEditorAutoAttach = getParam($sOptionPrefix . 'editor_auto_attach_insertion') == 'on';
+        $this->_bEnableMediaPriority = getParam($sOptionPrefix . 'enable_media_priority') == 'on';
         $this->_iLimitAttachLinks = (int)getParam($sOptionPrefix . 'limit_attach_links');
 
         $this->_bUnhideRestored = false;
@@ -607,6 +609,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isEditorAutoAttach()
     {
     	return $this->_bEditorAutoAttach;
+    }
+
+    public function isMediaPriority()
+    {
+        return $this->_bEnableMediaPriority;
     }
 
     public function isUnhideRestored()

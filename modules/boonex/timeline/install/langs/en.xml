@@ -61,6 +61,7 @@
     <string name="_bx_timeline_option_cache_table_interval"><![CDATA[Interval of time (in days) to get events for cache table]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Enable post form editor toolbar]]></string>
     <string name="_bx_timeline_option_editor_auto_attach_insertion"><![CDATA[Treat images inserted in the editor as attachments]]></string>
+    <string name="_bx_timeline_option_enable_media_priority"><![CDATA[Enable priority of media content over links in attachments]]></string>
     <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Limit number of attached links (0 - no limit)]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Post]]></string>

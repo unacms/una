@@ -732,6 +732,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echoJson($aResult);
     }
 
+    public function actionDeleteAttachLinks()
+    {
+    	$iUserId = $this->getUserId();
+        $iEventId = bx_process_input(bx_get('event_id'), BX_DATA_INT);
+
+        $aParams = $iEventId > 0 ? ['type' => 'event_id', 'event_id' => $iEventId] : ['type' => 'unused', 'profile_id' => $iUserId];
+        $aLinks = $this->_oDb->getLinksBy($aParams);
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
+
+        $aUrls = [];
+        foreach($aLinks as $aLink) {
+            $aUrls[] = $aLink['url'];
+
+            if(!empty($aLink['media_id']))
+                $oStorage->deleteFile($aLink['media_id']);
+
+            $this->_oDb->deleteLink($aLink['id']);
+        }
+
+        echoJson(['code' => 0, 'urls' => $aUrls]);
+    }
+
     public function actionGetAttachLinkForm()
     {
         $iEventId = 0;
@@ -5019,6 +5042,37 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         return $aResult;
+    }
+
+    public function hasMedia($iEventId, $iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($iEventId))
+            return $this->_oDb->hasMedia($iEventId);
+
+        if(empty($iProfileId))
+            $iProfileId = $this->_iProfileId;
+
+        $aTypes = [
+            $CNF['FIELD_PHOTO'], 
+            $CNF['FIELD_VIDEO'], 
+            $CNF['FIELD_FILE']
+        ];
+
+        $bResult = false;
+        foreach($aTypes as $sType) {
+            $sStorage = $this->_oConfig->getObject('storage_' . strtolower($sType) . 's');
+            if(($oStorage = BxDolStorage::getObjectInstance($sStorage)) !== false) {
+                $aGhosts = $oStorage->getGhosts($iProfileId, 0);
+                if(!empty($aGhosts) && is_array($aGhosts)) {
+                    $bResult = true;
+                    break;
+                }
+            }
+        }
+
+        return $bResult;
     }
 
     public function rebuildSlice()

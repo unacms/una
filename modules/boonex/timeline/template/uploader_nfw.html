@@ -5,7 +5,7 @@
             <img src="<bx_image_url:spacer.gif />" style="background-image:url({file_icon})" />
         </div>
         <span class="bx-base-general-uploader-ghost">
-            <a class="bx-btn bx-btn-small" href="javascript:void(0);" title="<bx_text:_Delete />" onclick="{js_instance_name}.deleteGhost('{file_id}')"><i class="sys-icon times"></i></a>
+            <a class="bx-btn bx-btn-small" href="javascript:void(0);" title="<bx_text:_Delete />" onclick="{js_instance_name}.deleteGhost('{file_id}', function(sMsg){__js_object__.onAttachMediaDeleteGhost(__content_id__, sMsg);})"><i class="sys-icon times"></i></a>
         </span>
     </div>
 </div>

@@ -237,6 +237,21 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         )) > 0;
     }
 
+    public function hasMedia($iEventId)
+    {
+        $bResult = false;
+
+        foreach($this->_aTablesMedia as $sType) {
+            $aMedia = $this->getMedia($sType, $iEventId);
+            if(!empty($aMedia) && is_array($aMedia)) {
+                $bResult = true;
+                break;
+            }
+        }
+
+        return $bResult;
+    }
+
     public function getMedia($sType, $iEventId, $iOffset = 0, $bFullInfo = false)
     {
     	$sTableMedia = $this->_aTablesMedia[$sType];
