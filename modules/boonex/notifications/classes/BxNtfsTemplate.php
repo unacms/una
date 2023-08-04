@@ -284,12 +284,19 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
+        $sContent = is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['email']) ? $aEvent['content_parsed']['email'] : $aEvent['content_parsed'];
+
+        $sSubject = $sContent;
+        if(($iEmailSubjectMaxLen = $this->_oConfig->getEmailSubjectMaxLen()) !== 0)
+            $sSubject = strmaxtextlen($sSubject, $iEmailSubjectMaxLen);
+
         $aContent = &$aEvent['content'];
         return array(
+            'subject' => $sSubject,
             'content' => $this->parseHtmlByName('et_new_event.html', array(
                 'icon_url' => !empty($aContent['owner_icon']) ? $aContent['owner_icon'] : $this->getIconUrl('std-icon.svg'),
                 'content_url' => $this->_getContentLink($aEvent),
-                'content' => is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['email']) ? $aEvent['content_parsed']['email'] : $aEvent['content_parsed'],
+                'content' => $sContent,
                 'date' => bx_process_output($aEvent['date'], BX_DATA_DATE_TS),
             )),
             'settings' => !empty($aContent['settings']['email']) ? $aContent['settings']['email'] : array()

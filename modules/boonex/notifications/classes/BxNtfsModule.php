@@ -591,7 +591,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aSettings = &$aNotification['settings'];
 
         $sTemplate = !empty($aSettings['template']) ? $aSettings['template'] : 'bx_notifications_new_event';
-        $aTemplateMarkers = array('content' => $aNotification['content']);
+        $aTemplateMarkers = ['subject' => $aNotification['subject'], 'content' => $aNotification['content']];
         if(!empty($aSettings['markers']) && is_array($aSettings['markers']))
             $aTemplateMarkers = array_merge($aTemplateMarkers, $aSettings['markers']);              
 
