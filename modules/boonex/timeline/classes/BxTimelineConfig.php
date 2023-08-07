@@ -646,6 +646,15 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->getPrefix('cache_item') . $iId . (bx_is_mobile() ? '_m' : '') . '_r' . bx_get_device_pixel_ratio() . (!empty($sPostfix) ? '_' . $sPostfix : '') . '_' . bx_site_hash() . '.php';
     }
 
+    public function getCacheItemKeys($iId, $sPostfix = '')
+    {
+        $aVariants = ['_r1', '_r2', '_m_r1', '_m_r2'];
+
+        return array_map(function($sValue) use ($iId, $sPostfix) {
+            return $this->getPrefix('cache_item') . $iId . $sValue . (!empty($sPostfix) ? '_' . $sPostfix : '') . '_' . bx_site_hash() . '.php';
+        }, $aVariants);
+    }
+
     public function getCacheHotKey()
     {
         return $this->getPrefix('cache_list_hot');

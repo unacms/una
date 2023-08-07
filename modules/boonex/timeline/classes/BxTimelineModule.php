@@ -4658,8 +4658,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         //--- Delete item cache.
-        $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
-        $this->getCacheItemObject()->delData($sCacheItemKey);
+        $this->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);
 
         //--- Rebuild cache table.
         $this->rebuildSlice();
@@ -4786,9 +4785,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
         
         //--- Delete item cache.
-        $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
-        $this->getCacheItemObject()->delData($sCacheItemKey);
+        $this->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);
 
+        //--- Rebuild cache table.
         $this->rebuildSlice();
 
         //--- Event -> Delete for Alerts Engine ---//
@@ -5073,6 +5072,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         return $bResult;
+    }
+
+    public function deleteCacheItem($iEventId)
+    {
+        $oCacheItem = $this->getCacheItemObject();
+        $aCacheKeys = $this->_oConfig->getCacheItemKeys($iEventId);
+        foreach($aCacheKeys as $sCacheKey)
+            $oCacheItem->delData($sCacheKey);
     }
 
     public function rebuildSlice()
