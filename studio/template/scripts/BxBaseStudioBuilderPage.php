@@ -784,6 +784,16 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Int',
                     )
                 ),
+                'content_empty' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'content_empty',
+                    'caption' => _t('_adm_bp_txt_block_content_empty'),
+                    'info' => _t('_adm_bp_dsc_block_content_empty'),
+                    'value' => $aBlock['content_empty'],
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
                 'help' => array(
                     'type' => 'textarea_translatable',
                     'name' => 'help',

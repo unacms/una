@@ -428,6 +428,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tpb`.`visible_for_levels` AS `visible_for_levels`,
                 `tpb`.`type` AS `type`,
                 `tpb`.`content` AS `content`,
+                `tpb`.`content_empty` AS `content_empty`,
                 `tpb`.`help` AS `help`,
                 `tpb`.`deletable` AS `deletable`,
                 `tpb`.`copyable` AS `copyable`,

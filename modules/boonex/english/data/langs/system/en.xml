@@ -493,6 +493,7 @@
 	<string name="_adm_bp_dsc_block_content_raw"><![CDATA[Enter HTML content here]]></string>
 	<string name="_adm_bp_dsc_block_content_rss_length"><![CDATA[Enter a number of displayed items here]]></string>
 	<string name="_adm_bp_dsc_block_content_rss_url"><![CDATA[Enter URL to RSS resource here]]></string>
+        <string name="_adm_bp_dsc_block_content_empty"><![CDATA[Leave empty to use default one]]></string>
 	<string name="_adm_bp_dsc_block_title"><![CDATA[Short name for the block, visible in block header.]]></string>
 	<string name="_adm_bp_dsc_block_visible_for_levels"><![CDATA[Select user levels that can see this block]]></string>
 	<string name="_adm_bp_dsc_page_cache_lifetime"><![CDATA[Store page in cache for this number of seconds]]></string>
@@ -550,6 +551,7 @@
 	<string name="_adm_bp_txt_block_content_rss_url"><![CDATA[URL]]></string>
 	<string name="_adm_bp_txt_block_content_service_method"><![CDATA[Method]]></string>
 	<string name="_adm_bp_txt_block_content_service_module"><![CDATA[Module]]></string>
+        <string name="_adm_bp_txt_block_content_empty"><![CDATA[Placeholder text for empty block]]></string>
 	<string name="_adm_bp_txt_block_designbox"><![CDATA[Block Layout]]></string>
 	<string name="_adm_bp_txt_block_designbox_empty"><![CDATA[Select layout...]]></string>
         <string name="_adm_bp_txt_block_class"><![CDATA[CSS Class]]></string>
