@@ -139,6 +139,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return $this->getJsCode('post', array_merge(array(
             'bAutoAttach' => $this->_oConfig->isEditorAutoAttach(),
+            'bMediaPriority' => $this->_oConfig->isMediaPriority(),
             'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
             'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),
             'oAttachedLinks' => $this->_oDb->getLinksBy(array(

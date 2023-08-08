@@ -372,7 +372,7 @@ class BxDolVote extends BxDolObject
         $bUndo = $this->isUndo();
         $aVote = $this->_getVote($iObjectId, true);
 
-        return [
+        $aResult = [
             'code' => 0,
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
@@ -385,12 +385,23 @@ class BxDolVote extends BxDolObject
             'voted' => $bVoted,
             'disabled' => $bVoted && !$bUndo,
         ];
+
+        $aResult['api'] = [
+            'performer_id' => $iAuthorId,
+            'is_voted' => $aResult['voted'],
+            'is_disabled' => $aResult['disabled'],
+            'icon' => $aResult['label_emoji'],
+            'title' => $aResult['label_title'],
+            'counter' => $this->getVote()
+        ];
+
+        return $aResult;
     }
-    
+
     protected function _returnVoteDataForSocket($aData, $aMask = [])
     {
         if(empty($aMask) || !is_array($aMask))
-            $aMask = ['code', 'rate', 'count', 'countf'];
+            $aMask = ['code', 'rate', 'count', 'countf', 'api'];
 
         return array_intersect_key($aData, array_flip($aMask));
     }

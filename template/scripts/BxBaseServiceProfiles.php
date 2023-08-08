@@ -495,7 +495,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('friends', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('friends', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseFriendRequests ($iProfileId = 0, $aParams = [])
@@ -519,7 +526,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('friend_requests', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('friend_requests', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseFriendRequested ($iProfileId = 0, $aParams = [])
@@ -543,7 +557,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('friend_requested', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('friend_requested', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseSubscriptions ($iProfileId = 0, $aParams = [])
@@ -567,7 +588,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('subscriptions', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('subscriptions', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseSubscribedMe ($iProfileId = 0, $aParams = [])
@@ -591,7 +619,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('subscribed_me', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('subscribed_me', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseMembers($iProfileId, $sObject, $aParams = [])
@@ -618,7 +653,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('members', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('members', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseConnections ($iProfileId = 0, $aParams = [])
@@ -648,7 +690,14 @@ class BxBaseServiceProfiles extends BxDol
         if(!empty($aParams['params']) && is_array($aParams['params']))
             $aParamsBrowse = array_merge($aParamsBrowse, $aParams['params']);
 
-        return $this->_serviceBrowseConnections('connections', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        $sEmpty = !empty($aParams['empty_message_text']) ? _t($aParams['empty_message_text']) : '';
+        $bEmpty = (bool)$aParams['empty_message'];
+
+        $mixedResult = $this->_serviceBrowseConnections('connections', $aParamsBrowse, $aParams['design_box'], empty($sEmpty) ? $bEmpty : false, $aParams['ajax_paginate']);
+        if(empty($mixedResult) && $bEmpty)
+            $mixedResult = MsgBox($sEmpty);
+
+        return $mixedResult;
     }
 
     public function serviceBrowseRecommendationsFriends ($iProfileId = 0, $aParams = [])
@@ -690,7 +739,7 @@ class BxBaseServiceProfiles extends BxDol
 
         $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
         if(!$sCode && $aParams['empty_message'])
-            $sCode = MsgBox(_t('_Empty'));
+            $sCode = MsgBox(_t(!empty($aParams['empty_message_text']) ? $aParams['empty_message_text'] : '_Empty'));
 
         return $sCode;
     }
@@ -734,7 +783,7 @@ class BxBaseServiceProfiles extends BxDol
 
         $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
         if(!$sCode && $aParams['empty_message'])
-            $sCode = MsgBox(_t('_Empty'));
+            $sCode = MsgBox(_t(!empty($aParams['empty_message_text']) ? $aParams['empty_message_text'] : '_Empty'));
 
         return $sCode;
     }

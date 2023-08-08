@@ -266,12 +266,26 @@ class BxDolVoteReactions extends BxTemplVote
             ]
         ];
 
+        $sDefault = $this->getDefault();
+        $aDefault = $this->getReaction($sDefault);
+        $aDefaultInfo = $this->getReaction($aDefault['name']);
+
+        $aResult['api'] = [
+            'performer_id' => $iAuthorId,
+            'is_voted' => $aResult['voted'],
+            'is_disabled' => $aResult['disabled'],
+            'reaction' => $aResult['voted'] ? $aResult['reaction'] : $sDefault,
+            'icon' => !empty($aResult['label_emoji']) ? $aResult['label_emoji'] : $aDefaultInfo['emoji'],
+            'title' => !empty($aResult['label_title']) ? $aResult['label_title'] : '',
+            'counter' => $this->getVote()
+        ];
+
         return $aResult;
     }
 
     protected function _returnVoteDataForSocket($aData, $aMask = [])
     {
-        return parent::_returnVoteDataForSocket($aData, ['code', 'reaction', 'rate', 'count', 'countf', 'total']);
+        return parent::_returnVoteDataForSocket($aData, ['code', 'reaction', 'rate', 'count', 'countf', 'total', 'api']);
     }
 
     protected function _getIconDoWithTrack($bVoted, $aTrack = [])

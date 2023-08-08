@@ -947,7 +947,12 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockService ($aBlock)
     {
-        return BxDolService::callSerialized($aBlock['content'], $this->_aMarkers);
+        $aMarkers = array_merge($this->_aMarkers, [
+            'block_id' => $aBlock['id'],
+            'content_empty' => $aBlock['content_empty']
+        ]);
+
+        return BxDolService::callSerialized($aBlock['content'], $aMarkers);
     }
 
     /**

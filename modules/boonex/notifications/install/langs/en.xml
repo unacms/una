@@ -49,6 +49,7 @@
     <string name="_bx_ntfs_option_processed_event"><![CDATA[The last processed event upon notifications sending]]></string>
     <string name="_bx_ntfs_option_clear_interval"><![CDATA[Notification lifetime, in days (0 - no limit)]]></string>
     <string name="_bx_ntfs_option_enable_comment_post_ext"><![CDATA[Notify a user about new comments for a content he's previously commented]]></string>
+    <string name="_bx_ntfs_option_email_subject_chars"><![CDATA[Number of characters in auto-cropped email notification subject (0 - no limit)]]></string>
 
     <string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
 
@@ -127,7 +128,7 @@
     <string name="_bx_ntfs_push_new_event_subject"><![CDATA[New on "{0}"]]></string>
 
     <string name="_bx_ntfs_email_new_event"><![CDATA[New notification]]></string>
-    <string name="_bx_ntfs_email_new_event_subject"><![CDATA[New notification on "{site_name}"]]></string>
+    <string name="_bx_ntfs_email_new_event_subject"><![CDATA[{site_name} notification: {subject}]]></string>
     <string name="_bx_ntfs_email_new_event_body"><![CDATA[{email_header}
 <p> </p>
 {content}

@@ -226,6 +226,7 @@ class BxBaseMenu extends BxDolMenu
 
         $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
         $a['class_add'] .= $this->_getVisibilityClass($a);
+        $a['class_link'] = '';
 
         $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
         $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));

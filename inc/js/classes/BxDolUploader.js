@@ -52,6 +52,9 @@ BxDolUploaderBase.prototype.init = function (sUploaderObject, sStorageObject, sU
     this._isPrivate = undefined == options.storage_private || parseInt(options.storage_private) ? 1 : 0;
 
     this._isErrorShown = false;
+
+    this._onUpload = typeof options.on_upload === 'function' ? options.on_upload : function () {};
+    this._onRestoreGhosts = typeof options.on_restore_ghosts === 'function' ? options.on_restore_ghosts : function () {};
 }
 
 BxDolUploaderBase.prototype.isMultiple = function () {    
@@ -124,11 +127,14 @@ BxDolUploaderBase.prototype.onUploadCompleted = function (sErrorMsg) {
     this._loading(false, true);
 
     if (sErrorMsg.length) {
-        this.restoreGhosts();        
+        this.restoreGhosts();
         this._showError(sErrorMsg);
-    } else {        
+    } else {
         this.restoreGhosts();
         $('#' + this._sPopupContainerId).dolPopupHide({});
+
+        if(typeof this._onUpload === 'function')
+            this._onUpload(this._iContentId);
     }
 }
 
@@ -142,6 +148,7 @@ BxDolUploaderBase.prototype.restoreGhosts = function (bInitReordering, onComplet
     var $this = this;
 
     bInitReordering = bInitReordering !== undefined ? bInitReordering : this._isReordering;
+    onComplete = typeof onComplete === 'function' ? onComplete : this._onRestoreGhosts;
 
     $.getJSON(sUrl, function (aData) {
 
@@ -221,7 +228,7 @@ BxDolUploaderBase.prototype.showGhost = function(iId, oVars) {
     oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
 };
 
-BxDolUploaderBase.prototype.deleteGhost = function (iFileId) {
+BxDolUploaderBase.prototype.deleteGhost = function (iFileId, onComplete) {
     var sUrl = this._getUrlWithStandardParams() + '&a=delete&id=' + iFileId;
     var $this = this;
 
@@ -229,14 +236,24 @@ BxDolUploaderBase.prototype.deleteGhost = function (iFileId) {
     bx_loading(sFileContainerId, true);
 
     $.post(sUrl, {_t: escape(new Date())}, function (sMsg) {
+        var fOnComplete = function(sMsg) {
+            if(typeof onComplete === 'function')
+                onComplete(sMsg);
+        };
+
         bx_loading(sFileContainerId, false);
+
         if ('ok' == sMsg) {
             $('#' + sFileContainerId).slideUp('slow', function () {
                 $(this).remove();
+
+                fOnComplete(sMsg);
             });
         } else {
             $('#' + this._sResultContainerId).prepend($this._sTemplateErrorGhosts.replace('{error}', sMsg));
-        }        
+
+            fOnComplete(sMsg);
+        }
     });
 };
 
@@ -622,13 +639,16 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             this._showError(sErrorMsg);        
         
         var $this = this;
-        if($this._uploader.status != 3){
+        if($this._uploader.status != 3) {
             this._isUploadsInProgress = false;
             this.restoreGhosts();
-            if (!this._isErrorShown) {
+            if(!this._isErrorShown) {
                 $('#' + this._sPopupContainerId).dolPopupHide({});
                 this.removeFiles();
             }
+
+            if(typeof this._onUpload === 'function')
+                this._onUpload(this._iContentId);
         }
     }
 

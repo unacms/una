@@ -47,46 +47,8 @@ class BxBaseVoteServices extends BxDol
         if(!$oVote || !$oVote->isEnabled())
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
-        $sMethod = '_serviceDo' . bx_gen_method_name($oVote->getType());
-        if(!method_exists($this, $sMethod))
-            return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
-
-        return $this->$sMethod($aParams, $oVote);
-    }
-
-    protected function _serviceDoLikes($aParams, &$oVote)
-    {
         $aResult = $oVote->vote($aParams);
-        if((int)$aResult['code'] != 0)
-            return $aResult;
-
-        return [
-            'is_voted' => $aResult['voted'],
-            'is_disabled' => $aResult['disabled'],
-            'icon' => $aResult['label_emoji'],
-            'title' => $aResult['label_title'],
-            'counter' => $oVote->getVote()
-        ];
-    }
-
-    protected function _serviceDoReactions($aParams, &$oVote)
-    {
-        $aResult = $oVote->vote($aParams);
-        if((int)$aResult['code'] != 0)
-            return $aResult;
-
-        $sDefault = $oVote->getDefault();
-        $aDefault = $oVote->getReaction($sDefault);
-        $aDefaultInfo = $oVote->getReaction($aDefault['name']);
-
-        return [
-            'is_voted' => $aResult['voted'],
-            'is_disabled' => $aResult['disabled'],
-            'reaction' => $aResult['voted'] ? $aResult['reaction'] : $sDefault,
-            'icon' => !empty($aResult['label_emoji']) ? $aResult['label_emoji'] : $aDefaultInfo['emoji'],
-            'title' => !empty($aResult['label_title']) ? $aResult['label_title'] : '',
-            'counter' => $oVote->getVote()
-        ];
+        return (int)$aResult['code'] != 0 ? $aResult : $aResult['api'];
     }
 
     /**

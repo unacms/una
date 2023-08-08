@@ -289,7 +289,9 @@ abstract class BxDolUploader extends BxDolFactory
                     'uploader_instance_name' => $sJsObject,
                     'is_init_reordering' => isset($aParams['is_init_reordering']) ? $aParams['is_init_reordering'] : 0,
                 ]
-            ]
+            ],
+            'on_upload' => 'false',
+            'on_restore_ghosts' => 'false'
         ], $aParams));
 
         if(!$bDynamic) {

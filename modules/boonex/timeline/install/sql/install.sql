@@ -587,12 +587,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_edit', 'photo', 2147483647, 1, 7),
 ('bx_timeline_post_edit', 'video', 2147483647, 1, 8),
 ('bx_timeline_post_edit', 'file', 2147483647, 1, 9),
-('bx_timeline_post_edit', 'object_cf', 2147483647, 1, 10),
-('bx_timeline_post_edit', 'published', 192, 0, 11),
-('bx_timeline_post_edit', 'location', 2147483647, 1, 12),
-('bx_timeline_post_edit', 'controls', 2147483647, 1, 13),
-('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 14),
-('bx_timeline_post_edit', 'tlb_do_cancel', 2147483647, 1, 15);
+('bx_timeline_post_edit', 'object_privacy_view', 2147483647, 1, 10),
+('bx_timeline_post_edit', 'object_cf', 2147483647, 1, 11),
+('bx_timeline_post_edit', 'published', 192, 0, 12),
+('bx_timeline_post_edit', 'location', 2147483647, 1, 13),
+('bx_timeline_post_edit', 'controls', 2147483647, 1, 14),
+('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 15),
+('bx_timeline_post_edit', 'tlb_do_cancel', 2147483647, 1, 16);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

@@ -125,13 +125,12 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->_oDb->updateEvent($aParamsSet, ['id' => $aEvent[$CNF['FIELD_ID']]]);
 
                 //--- Delete item cache.
-                $oCacheItem = $this->_oModule->getCacheItemObject();
-                $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aEvent['id']));
+                $this->_oModule->deleteCacheItem($aEvent['id']);
 
                 //--- Delete item cache for repost.
                 $aReposts = $this->_oModule->_oDb->getReposts($aEvent[$CNF['FIELD_ID']]);
                 foreach($aReposts as $aRepost)
-                    $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aRepost['event_id']));
+                    $this->_oModule->deleteCacheItem($aRepost['event_id']);
 
                 $this->_oModule->rebuildSlice();
                 break;

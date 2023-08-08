@@ -277,6 +277,17 @@ class BxDolScore extends BxDolObject
             'disabled' => !$bVoted,
         ];
 
+        $aResult['api'] = [
+            'performer_id' => $iAuthorId,
+            'is_voted' => $aResult['voted'],
+            'is_disabled' => $aResult['disabled'],
+            $sType => [
+                'icon' => $aResult['label_icon'],
+                'title' => $aResult['label_title'],
+            ],
+            'counter' => $this->getVote()
+        ];
+
         if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
             $oSockets->sendEvent($this->getSocketName(), $iObjectId, 'voted', json_encode($this->_returnVoteDataForSocket($aResult)));
 
@@ -344,7 +355,7 @@ class BxDolScore extends BxDolObject
     protected function _returnVoteDataForSocket($aData, $aMask = [])
     {
         if(empty($aMask) || !is_array($aMask))
-            $aMask = ['code', 'type', 'score', 'scoref', 'cup', 'cdown', 'counter'];
+            $aMask = ['code', 'type', 'score', 'scoref', 'cup', 'cdown', 'counter', 'api'];
 
         return array_intersect_key($aData, array_flip($aMask));
     }

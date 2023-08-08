@@ -16,6 +16,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     protected $_iOwnerNameMaxLen;
     protected $_iContentMaxLen;
     protected $_iPushMaxLen;
+    protected $_iEmailSubjectMaxLen;
 
     protected $_aHandlersHiddenEmail;
     protected $_aHandlersHiddenPush;
@@ -75,6 +76,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         $this->_iOwnerNameMaxLen = 21;
         $this->_iContentMaxLen = 32;
         $this->_iPushMaxLen = 190;
+        $this->_iEmailSubjectMaxLen = 0;
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');
         $this->_sHandlersMethod = 'get_notifications_data';
@@ -139,7 +141,9 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
         $this->_bEventsGrouped = getParam($sOptionPrefix . 'enable_group_events') == 'on';
 
-        $this->_bClickedIndicator = getParam($sOptionPrefix . 'enable_clicked_indicator') == 'on';        
+        $this->_bClickedIndicator = getParam($sOptionPrefix . 'enable_clicked_indicator') == 'on';
+
+        $this->_iEmailSubjectMaxLen = (int)getParam($sOptionPrefix . 'email_subject_chars');
     }
 
     public function getOwnerNameMaxLen()
@@ -155,6 +159,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     public function getPushMaxLen()
     {
         return $this->_iPushMaxLen;
+    }
+
+    public function getEmailSubjectMaxLen()
+    {
+        return $this->_iEmailSubjectMaxLen;
     }
 
     public function getHandlersHidden($sType = '')

@@ -172,17 +172,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
+        $aParams = [
+            'type' => BX_TIMELINE_TYPE_DEFAULT,
+            'dynamic_mode' => true
+        ];
+
         $aBrowseParams = [];
         if(bx_get('bp') !== false) {
             $aBrowseParams = $this->_oConfig->getBrowseParams(bx_process_input(bx_get('bp')));
             $aBrowseParams = $this->_prepareParamsGet($aBrowseParams);
+
+            $aParams['type'] = $aBrowseParams['type'];
         }
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true)
             return echoJson(array('message' => strip_tags($mixedAllowed)));
 
-        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aBrowseParams));
+        echoJson($this->getFormEdit($iId, $aParams, $aBrowseParams));
     }
 
     function actionPin()
@@ -637,10 +644,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetEditForm($iId)
     {
-        $aParams = $this->_prepareParamsGet();
-        $this->_iOwnerId = $aParams['owner_id'];
+        $aBrowseParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aBrowseParams['owner_id'];
 
-        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aParams));
+        echoJson($this->getFormEdit($iId, [
+            'type' => $aBrowseParams['type'],
+            'dynamic_mode' => true
+        ], $aBrowseParams));
     }
     
     public function serviceGetEditForm($iId)
@@ -720,6 +730,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aResult = ['code' => 1, 'message' => _t('_bx_timeline_form_post_input_link_err_delete')];
 
         echoJson($aResult);
+    }
+
+    public function actionDeleteAttachLinks()
+    {
+    	$iUserId = $this->getUserId();
+        $iEventId = bx_process_input(bx_get('event_id'), BX_DATA_INT);
+
+        $aParams = $iEventId > 0 ? ['type' => 'event_id', 'event_id' => $iEventId] : ['type' => 'unused', 'profile_id' => $iUserId];
+        $aLinks = $this->_oDb->getLinksBy($aParams);
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
+
+        $aUrls = [];
+        foreach($aLinks as $aLink) {
+            $aUrls[] = $aLink['url'];
+
+            if(!empty($aLink['media_id']))
+                $oStorage->deleteFile($aLink['media_id']);
+
+            $this->_oDb->deleteLink($aLink['id']);
+        }
+
+        echoJson(['code' => 0, 'urls' => $aUrls]);
     }
 
     public function actionGetAttachLinkForm()
@@ -3862,6 +3895,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'js_object_post' => $this->_oConfig->getJsObject('post')
         ]);
 
+        $sParamsKey = 'type';
+        if(!empty($aParams[$sParamsKey]))
+            $oForm->setType($aParams[$sParamsKey]);
+
         /**
          * Note. 'ajax_mode' parameter isn't checked because
          * timeline post form works as Ajax form by default.
@@ -4621,8 +4658,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         //--- Delete item cache.
-        $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
-        $this->getCacheItemObject()->delData($sCacheItemKey);
+        $this->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);
 
         //--- Rebuild cache table.
         $this->rebuildSlice();
@@ -4749,9 +4785,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
         
         //--- Delete item cache.
-        $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
-        $this->getCacheItemObject()->delData($sCacheItemKey);
+        $this->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);
 
+        //--- Rebuild cache table.
         $this->rebuildSlice();
 
         //--- Event -> Delete for Alerts Engine ---//
@@ -5005,6 +5041,45 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         return $aResult;
+    }
+
+    public function hasMedia($iEventId, $iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($iEventId))
+            return $this->_oDb->hasMedia($iEventId);
+
+        if(empty($iProfileId))
+            $iProfileId = $this->_iProfileId;
+
+        $aTypes = [
+            $CNF['FIELD_PHOTO'], 
+            $CNF['FIELD_VIDEO'], 
+            $CNF['FIELD_FILE']
+        ];
+
+        $bResult = false;
+        foreach($aTypes as $sType) {
+            $sStorage = $this->_oConfig->getObject('storage_' . strtolower($sType) . 's');
+            if(($oStorage = BxDolStorage::getObjectInstance($sStorage)) !== false) {
+                $aGhosts = $oStorage->getGhosts($iProfileId, 0);
+                if(!empty($aGhosts) && is_array($aGhosts)) {
+                    $bResult = true;
+                    break;
+                }
+            }
+        }
+
+        return $bResult;
+    }
+
+    public function deleteCacheItem($iEventId)
+    {
+        $oCacheItem = $this->getCacheItemObject();
+        $aCacheKeys = $this->_oConfig->getCacheItemKeys($iEventId);
+        foreach($aCacheKeys as $sCacheKey)
+            $oCacheItem->delData($sCacheKey);
     }
 
     public function rebuildSlice()

@@ -61,6 +61,7 @@
     <string name="_bx_timeline_option_cache_table_interval"><![CDATA[Интервал времени (в днях) для получения событий для табличного кэша]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Включить панель инструментов в форме создания сообщения]]></string>
     <string name="_bx_timeline_option_editor_auto_attach_insertion"><![CDATA[Обрабатывать изображения, вставленные в редактор, как вложения]]></string>
+    <string name="_bx_timeline_option_enable_media_priority"><![CDATA[Включить приоритет медиаконтента над ссылками во вложениях]]></string>
     <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Ограничить число присоединенных линок (0 - без ограничений)]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
@@ -189,6 +190,10 @@
     <string name="_bx_timeline_page_block_title_system_view_hot_outline"><![CDATA[Хроника 'горячих' новостей (сводка)]]></string>
     <string name="_bx_timeline_page_block_title_view_hot_outline"><![CDATA[Хроника 'горячих' новостей]]></string>
     <string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Хроника новостей - Комментарии]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_feed_and_hot"><![CDATA[Хроника «Для тебя» (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_feed_and_hot"><![CDATA[Для тебя]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_contexts_groups"><![CDATA[Отслеживаемые группы (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_contexts_groups"><![CDATA[Отслеживаемые группы]]></string>
 
     <string name="_bx_timeline_page_title_sys_manage"><![CDATA[Управление]]></string>
     <string name="_bx_timeline_page_title_manage"><![CDATA[Управление лентой]]></string>

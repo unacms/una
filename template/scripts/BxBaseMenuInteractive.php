@@ -102,6 +102,16 @@ class BxBaseMenuInteractive extends BxTemplMenu
                 'content' => array('icon' => $sIconHtml),
             );
 
+            $bOnClick = !empty($a['onclick']);
+            $aOnClick = $bOnClick ? [
+                'onclick' => $a['onclick'],
+            ] : [];
+
+            $a['bx_if:onclick'] = [
+                'condition' => $bOnClick,
+                'content' => $aOnClick
+            ];
+
             $aRet[] = $a;
         }
 

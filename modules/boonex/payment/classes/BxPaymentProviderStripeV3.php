@@ -559,12 +559,16 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
 
             case BX_PAYMENT_TYPE_RECURRING:
                 $sMode = 'subscription';
+                $iTrial = 0;
 
                 foreach($aCartInfo['items'] as $aItem) {
                     $aLineItems[] = [
                         'price' => $aItem['name'],
                         'quantity' => $aItem['quantity'],
                     ];
+
+                    if((int)$aItem['trial_recurring'] > 0)
+                        $iTrial = (int)$aItem['trial_recurring'];
 
                     $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aItem['module_id'], $aItem['id']]);
                     
@@ -578,6 +582,15 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                             $aMetaItems[] = $this->_oModule->_oConfig->descriptorA2S([$aAddon['module_id'], $aAddon['id']]);
                         }
                 }
+
+                if($iTrial > 0) {
+                    $bVerify = false;
+
+                    $aParams['subscription_data'] = [
+                        'trial_period_days' => $iTrial
+                    ];
+                }
+
                 break;
         }
 

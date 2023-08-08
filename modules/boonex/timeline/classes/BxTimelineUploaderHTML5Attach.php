@@ -23,6 +23,18 @@ class BxTimelineUploaderHTML5Attach extends BxTemplUploaderHTML5
 
         $this->_sButtonTemplate = 'uploader_button_html5_attach.html';
     }
+
+    public function getUploaderJs($mixedGhostTemplate, $isMultiple = true, $aParams = [], $bDynamic = false)
+    {
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('post');
+
+        $aParams = array_merge($aParams, [
+            'on_upload' => 'function(iContentId) {' . $sJsObject . '.onAttachMediaUpload(iContentId);}',
+            'on_restore_ghosts' => 'function(aData) {' . $sJsObject . '.onAttachMediaRestoreGhosts(aData);}',
+        ]);
+
+        return parent::getUploaderJs($mixedGhostTemplate, $isMultiple, $aParams, $bDynamic);
+    }
 }
 
 /** @} */

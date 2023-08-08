@@ -61,6 +61,7 @@
     <string name="_bx_timeline_option_cache_table_interval"><![CDATA[Interval of time (in days) to get events for cache table]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Enable post form editor toolbar]]></string>
     <string name="_bx_timeline_option_editor_auto_attach_insertion"><![CDATA[Treat images inserted in the editor as attachments]]></string>
+    <string name="_bx_timeline_option_enable_media_priority"><![CDATA[Enable priority of media content over links in attachments]]></string>
     <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Limit number of attached links (0 - no limit)]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
@@ -201,6 +202,10 @@
     <string name="_bx_timeline_page_block_title_system_views_db"><![CDATA[Dynamic Browsing: Views]]></string>
     <string name="_bx_timeline_page_block_title_views_db"><![CDATA[Feed]]></string>
     <string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Feeds' Comments]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_feed_and_hot"><![CDATA['For You' Feed (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_feed_and_hot"><![CDATA[For You]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_contexts_groups"><![CDATA[Followed groups (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_contexts_groups"><![CDATA[Followed groups]]></string>
 
     <string name="_bx_timeline_page_title_sys_manage"><![CDATA[Manage]]></string>
     <string name="_bx_timeline_page_title_manage"><![CDATA[Manage Timeline]]></string>

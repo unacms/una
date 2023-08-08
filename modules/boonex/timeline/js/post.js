@@ -18,6 +18,7 @@ function BxTimelinePost(oOptions) {
     this._bAutoAttach = oOptions.bAutoAttach == undefined ? false : oOptions.bAutoAttach;
     this._sAutoUploader = oOptions.sAutoUploader == undefined ? '' : oOptions.sAutoUploader;
     this._sAutoUploaderId = oOptions.sAutoUploaderId == undefined ? '' : oOptions.sAutoUploaderId;
+    this._bMediaPriority = oOptions.bMediaPriority == undefined ? false : oOptions.bMediaPriority;
     this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
     this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
     this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
@@ -214,6 +215,9 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId)
 
 BxTimelinePost.prototype.showAttachLink = function(oLink, iEventId)
 {
+    if($(oLink).hasClass('bx-btn-disabled'))
+        return false;
+
     if(this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length >= this._iLimitAttachLinks) {
         bx_alert(this._sLimitAttachLinksErr);
         return false;
@@ -230,6 +234,68 @@ BxTimelinePost.prototype.showAttachLink = function(oLink, iEventId)
     });
 
     return false;
+};
+
+BxTimelinePost.prototype.onAttachMediaUpload = function(iEventId)
+{
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData['event_id'] = iEventId;
+
+    if(this._bMediaPriority) {
+        var oLinkFormField = $('#' + this._aHtmlIds['attach_link_form_field'] + iEventId);
+
+        oLinkFormField.parents('form:first').find('.bx-menu-item.add-link .bx-btn').addClass('bx-btn-disabled');
+
+        if(oLinkFormField.children().length > 0) {
+            oLinkFormField.hide();
+
+            jQuery.post (
+                this._sActionsUrl + 'delete_attach_links/',
+                oData,
+                function(oData) {
+                    if(!oData)
+                        return;
+
+                    var fContinue = function() {
+                        if(oData.code == undefined)
+                            return;
+
+                        if(oData.code == 0) {
+                            oLinkFormField.html('');
+
+                            if(oData.urls != undefined && oData.urls.length != 0)
+                                for(var i in oData.urls)
+                                    delete $this._oAttachedLinks[oData.urls[i]];
+                        }
+
+                        oLinkFormField.show();
+                    };
+
+                    if(oData.message != undefined)
+                        bx_alert(oData.message, fContinue);
+                    else
+                        fContinue();
+                },
+                'json'
+            );
+        }
+    }
+};
+
+BxTimelinePost.prototype.onAttachMediaRestoreGhosts = function(aData)
+{
+    //perform some action after attached media's ghosts restoration.
+};
+
+BxTimelinePost.prototype.onAttachMediaDeleteGhost = function(iEventId, sMsg)
+{
+    if(sMsg != 'ok') 
+        return;
+
+    var oForm = $('#' + this._aHtmlIds['attach_link_form_field'] + iEventId).parents('form:first');
+    if(!oForm.find('.bx-tl-uploader-file').length)
+        oForm.find('.bx-menu-item.add-link .bx-btn').removeClass('bx-btn-disabled');
 };
 
 BxTimelinePost.prototype._getForm = function(oElement)

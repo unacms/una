@@ -48,20 +48,8 @@ class BxBaseScoreServices extends BxDol
             return ['code' => BX_DOL_OBJECT_ERR_NOT_AVAILABLE];
 
         $aResult = $oScore->vote(['type' => $aParams['a']]);
-        if((int)$aResult['code'] != 0)
-            return $aResult;
-
-        return [
-            'is_voted' => $aResult['voted'],
-            'is_disabled' => $aResult['disabled'],
-            $aParams['a'] => [
-                'icon' => $aResult['label_icon'],
-                'title' => $aResult['label_title'],
-            ],
-            'counter' => $oScore->getVote()
-        ];
+        return (int)$aResult['code'] != 0 ? $aResult : $aResult['api'];
     }
-
 
     /**
      * @page service Service Calls

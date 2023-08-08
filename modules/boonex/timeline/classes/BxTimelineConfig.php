@@ -59,6 +59,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_bEditorToolbar;
     protected $_bEditorAutoAttach;
+    protected $_bEnableMediaPriority;
     protected $_iLimitAttachLinks;
 
     protected $_bUnhideRestored;
@@ -456,6 +457,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
         $this->_bEditorAutoAttach = getParam($sOptionPrefix . 'editor_auto_attach_insertion') == 'on';
+        $this->_bEnableMediaPriority = getParam($sOptionPrefix . 'enable_media_priority') == 'on';
         $this->_iLimitAttachLinks = (int)getParam($sOptionPrefix . 'limit_attach_links');
 
         $this->_bUnhideRestored = false;
@@ -609,6 +611,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     	return $this->_bEditorAutoAttach;
     }
 
+    public function isMediaPriority()
+    {
+        return $this->_bEnableMediaPriority;
+    }
+
     public function isUnhideRestored()
     {
         return $this->_bUnhideRestored;
@@ -637,6 +644,15 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCacheItemKey($iId, $sPostfix = '')
     {
         return $this->getPrefix('cache_item') . $iId . (bx_is_mobile() ? '_m' : '') . '_r' . bx_get_device_pixel_ratio() . (!empty($sPostfix) ? '_' . $sPostfix : '') . '_' . bx_site_hash() . '.php';
+    }
+
+    public function getCacheItemKeys($iId, $sPostfix = '')
+    {
+        $aVariants = ['_r1', '_r2', '_m_r1', '_m_r2'];
+
+        return array_map(function($sValue) use ($iId, $sPostfix) {
+            return $this->getPrefix('cache_item') . $iId . $sValue . (!empty($sPostfix) ? '_' . $sPostfix : '') . '_' . bx_site_hash() . '.php';
+        }, $aVariants);
     }
 
     public function getCacheHotKey()
