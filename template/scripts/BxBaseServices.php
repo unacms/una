@@ -47,6 +47,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'KeywordSearch' => 'BxBaseServices',
             'GetDataSearchApi' => 'BxBaseServices',
             'Cmts' => 'BxBaseServices',
+            'GetFooter' => 'BxBaseServices',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'ForgotPassword' => 'BxBaseServiceAccount',
@@ -1316,6 +1317,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'class' => $sClass,
             )
     	);
+    }
+    
+    public function serviceGetFooter()
+    {
+        return BxDolTemplate::getInstance()->parseHtmlByName('footer.html', []);
     }
 
     private function _getSearchObject()
