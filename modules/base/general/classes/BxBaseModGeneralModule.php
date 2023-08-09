@@ -2409,13 +2409,17 @@ class BxBaseModGeneralModule extends BxDolModule
             }
             else {
                 $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-                $oProfile = $aContentInfo ? BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]) : null;
+                $iContentAuthor = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+                if($iContentAuthor < 0)
+                    $iContentAuthor = abs($iContentAuthor);
+
+                $oProfile = $aContentInfo ? BxDolProfile::getInstance($iContentAuthor) : null;
             }
+
             $iProfileId = $oProfile ? $oProfile->id() : bx_get_logged_profile_id();
         }
-        else {
+        else
             $iProfileId = bx_get_logged_profile_id();
-        }
 
         return $iProfileId;
     }
