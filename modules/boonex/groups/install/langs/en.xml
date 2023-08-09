@@ -183,7 +183,7 @@
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Manage All Groups]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Manage Groups]]></string>
     <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Top Groups]]></string>
-  <string name="_bx_groups_page_block_title_joined_profiles"><![CDATA[Joined Groups]]></string>
+    <string name="_bx_groups_page_block_title_joined_profiles"><![CDATA[Joined Groups]]></string>
     <string name="_bx_groups_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Groups Categories]]></string>
@@ -204,9 +204,11 @@
     <string name="_bx_groups_page_block_title_labels_breadcrumbs"><![CDATA[Labels breadcrumbs]]></string>
     <string name="_bx_groups_page_block_title_sys_cover_block"><![CDATA[Cover]]></string>
     <string name="_bx_groups_page_block_title_cover_block"><![CDATA[Cover]]></string>
-    
+    <string name="_bx_groups_page_block_title_sys_recom_fans"><![CDATA[Recommended groups (Join)]]></string>
+    <string name="_bx_groups_page_block_title_recom_fans"><![CDATA[Group Suggestions]]></string>
 
-  <string name="_bx_groups_menu_title_submenu"><![CDATA[Groups Submenu]]></string>
+
+    <string name="_bx_groups_menu_title_submenu"><![CDATA[Groups Submenu]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Groups Submenu]]></string>
     <string name="_bx_groups_menu_set_title_view_profile_actions"><![CDATA[Group Actions]]></string>
     <string name="_bx_groups_menu_title_view_profile_actions"><![CDATA[Group Actions]]></string>

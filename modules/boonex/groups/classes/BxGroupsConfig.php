@@ -150,6 +150,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_PRICES_MANAGE' => 'bx_groups_prices_manage',
             'OBJECT_GRID_PRICES_VIEW' => 'bx_groups_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
+            'OBJECT_RECOMMENDATIONS_FANS' => 'bx_groups_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_groups_roles',

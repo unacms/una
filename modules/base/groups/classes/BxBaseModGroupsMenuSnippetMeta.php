@@ -72,6 +72,16 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         return $this->_getMenuItemConnection($CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
     }
 
+    protected function _getMenuItemIgnoreJoin($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_RECOMMENDATIONS_FANS']))
+            return false;
+
+        return $this->_getMenuItemRecommendation($CNF['OBJECT_RECOMMENDATIONS_FANS'], 'ignore', $aItem);
+    }
+
     protected function _getMenuItemPrivacy($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

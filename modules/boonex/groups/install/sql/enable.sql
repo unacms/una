@@ -215,7 +215,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_labels_tree', '_bx_groups_page_block_title_labels_tree', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:15:"get_lables_tree";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 4),
 ('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_groups_browse_by_label', '_bx_groups_page_block_title_groups_browse_by_label', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:15:"browse_by_label";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 5),
 ('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_labels_breadcrumbs', '_bx_groups_page_block_title_labels_breadcrumbs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:22:"get_lables_breadcrumbs";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 6),
-('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_cover_block', '_bx_groups_page_block_title_cover_block', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 7);
+('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_cover_block', '_bx_groups_page_block_title_cover_block', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 7),
+('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_recom_fans', '_bx_groups_page_block_title_recom_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:27:\"browse_recommendations_fans\";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 8);
 
  -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`, `active`) VALUES
@@ -370,21 +371,22 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_groups_snippet_meta', 'bx_groups', '_sys_menu_set_title_snippet_meta', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES
-('bx_groups_snippet_meta', 'bx_groups', 'privacy', '_bx_groups_menu_item_title_system_sm_privacy', '_bx_groups_menu_item_title_sm_privacy', '', '', '', '', '', 2147483647, '', 1, 0, 1, 0),
-('bx_groups_snippet_meta', 'bx_groups', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, '', 0, 0, 1, 1),
-('bx_groups_snippet_meta', 'bx_groups', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, '', 0, 0, 1, 5),
-('bx_groups_snippet_meta', 'bx_groups', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', 0, 0, 1, 10),
-('bx_groups_snippet_meta', 'bx_groups', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', 0, 0, 1, 15),
-('bx_groups_snippet_meta', 'bx_groups', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', 0, 0, 1, 20),
-('bx_groups_snippet_meta', 'bx_groups', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', 1, 0, 1, 25),
-('bx_groups_snippet_meta', 'bx_groups', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', 0, 0, 1, 30),
-('bx_groups_snippet_meta', 'bx_groups', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', 1, 0, 1, 35),
-('bx_groups_snippet_meta', 'bx_groups', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_groups";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 40),
-('bx_groups_snippet_meta', 'bx_groups', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_groups";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1, 45),
-('bx_groups_snippet_meta', 'bx_groups', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 0, 0, 1, 50),
-('bx_groups_snippet_meta', 'bx_groups', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 55),
-('bx_groups_snippet_meta', 'bx_groups', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 0, 0, 1, 60);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `hidden_on_cxt`, `active`, `copyable`, `editable`, `order`) VALUES
+('bx_groups_snippet_meta', 'bx_groups', 'privacy', '_bx_groups_menu_item_title_system_sm_privacy', '_bx_groups_menu_item_title_sm_privacy', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 0),
+('bx_groups_snippet_meta', 'bx_groups', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 1),
+('bx_groups_snippet_meta', 'bx_groups', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 5),
+('bx_groups_snippet_meta', 'bx_groups', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 10),
+('bx_groups_snippet_meta', 'bx_groups', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 15),
+('bx_groups_snippet_meta', 'bx_groups', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 20),
+('bx_groups_snippet_meta', 'bx_groups', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 25),
+('bx_groups_snippet_meta', 'bx_groups', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, '', '', 0, 0, 1, 30),
+('bx_groups_snippet_meta', 'bx_groups', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, '', '', 1, 0, 1, 35),
+('bx_groups_snippet_meta', 'bx_groups', 'join-paid', '_sys_menu_item_title_system_sm_join_paid', '_sys_menu_item_title_sm_join_paid', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_groups";s:6:"method";s:33:"is_paid_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', '', 1, 0, 1, 40),
+('bx_groups_snippet_meta', 'bx_groups', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_groups";s:6:"method";s:33:"is_free_join_avaliable_by_content";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', '', 1, 0, 1, 45),
+('bx_groups_snippet_meta', 'bx_groups', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, '', 'recom_groups_fans', 0, 0, 1, 50),
+('bx_groups_snippet_meta', 'bx_groups', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, '', 'recom_groups_fans', 0, 0, 1, 55),
+('bx_groups_snippet_meta', 'bx_groups', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, '', 'recom_groups_fans', 0, 0, 1, 60),
+('bx_groups_snippet_meta', 'bx_groups', 'ignore-join', '_sys_menu_item_title_system_sm_ignore', '_sys_menu_item_title_sm_ignore', '', '', '', '', '', 2147483647, '', 'all!recom_groups_fans', 1, 0, 1, 70);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
@@ -522,6 +524,15 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 INSERT INTO `sys_objects_connection` (`object`, `table`, `profile_initiator`, `profile_content`, `type`, `override_class_name`, `override_class_file`) VALUES
 ('bx_groups_fans', 'bx_groups_fans', 1, 1, 'mutual', 'BxGroupsConnectionFans', 'modules/boonex/groups/classes/BxGroupsConnectionFans.php');
 
+-- RECOMMENDATIONS
+INSERT INTO `sys_objects_recommendation` (`name`, `module`, `connection`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
+('bx_groups_fans', 'system', 'bx_groups_fans', '', 1, 1, 'BxGroupsRecommendationFans', 'modules/boonex/groups/classes/BxGroupsRecommendationFans.php');
+SET @iRecFans = LAST_INSERT_ID();
+
+INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `source`, `params`, `weight`, `active`) VALUES
+(@iRecFans, 'by_friends', 'sql', 'SELECT `tgf`.`content` AS `id`, SUM({points}) AS `value` FROM `sys_profiles_conn_friends` AS `tf` INNER JOIN `bx_groups_fans` AS `tgf` ON `tf`.`content`=`tgf`.`initiator` AND `tgf`.`content` NOT IN (SELECT `content` FROM `bx_groups_fans` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tgf`.`mutual`=''1'' WHERE `tf`.`initiator`={profile_id} AND `tf`.`mutual`=''1'' GROUP BY `id`', 'a:1:{s:6:"points";i:2;}', 0.5, 1),
+(@iRecFans, 'by_subscriptions', 'sql', 'SELECT `tgf`.`content` AS `id`, SUM({points}) AS `value` FROM `sys_profiles_conn_subscriptions` AS `ts` INNER JOIN `sys_profiles` AS `tp` ON `ts`.`content`=`tp`.`id` AND `tp`.`type` IN ({profile_types}) AND `tp`.`status`=''active'' INNER JOIN `bx_groups_fans` AS `tgf` ON `ts`.`content`=`tgf`.`initiator` AND `tgf`.`content` NOT IN (SELECT `content` FROM `bx_groups_fans` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tgf`.`mutual`=''1'' WHERE `ts`.`initiator`={profile_id} GROUP BY `id`', 'a:2:{s:6:"points";i:2;s:13:"profile_types";s:0:"";}', 0.25, 1),
+(@iRecFans, 'by_fans', 'sql', 'SELECT `tg2`.`content` AS `id`, SUM({points}) AS `value` FROM `bx_groups_fans` AS `tg1` INNER JOIN `bx_groups_fans` AS `tm` ON `tg1`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`mutual`=''1'' INNER JOIN `bx_groups_fans` AS `tg2` ON `tm`.`initiator`=`tg2`.`initiator` AND `tg2`.`mutual`=''1'' AND `tg2`.`content` NOT IN (SELECT `content` FROM `bx_groups_fans` WHERE `initiator`={profile_id} AND `mutual`=''1'')  WHERE `tg1`.`initiator`={profile_id} AND `tg1`.`mutual`=''1'' GROUP BY `id`', 'a:1:{s:6:"points";i:1;}', 0.25, 1);
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

@@ -20,6 +20,7 @@ bx_import('BxDolAcl');
  */
 class BxBaseModGeneralModule extends BxDolModule
 {
+    protected $_bIsApi;
     protected $_iProfileId;
     protected $_aSearchableNamesExcept;
     protected $_aFormParams;
@@ -28,6 +29,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         parent::__construct($aModule);
 
+        $this->_bIsApi = bx_is_api();
         $this->_iProfileId = bx_get_logged_profile_id();
         $this->_aSearchableNamesExcept = array(
             'allow_view_to'

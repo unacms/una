@@ -147,14 +147,8 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
         $aCriterionItems = [];
         foreach($this->_aCriteria as $sCriterion => $aCriterion) {
-            $iCriterionWeight = (float)$aCriterion['weight'];
-
-            $aParams = ['profile_id' => $iProfileId];
-            if(!empty($aCriterion['params'])) {
-                $aCriterionParams = unserialize($aCriterion['params']);
-                if(!empty($aCriterionParams) && is_array($aCriterionParams))
-                    $aParams = array_merge($aParams, $aCriterionParams);
-            }
+            $aCriterionParams = $this->_getCriterionParams($iProfileId, $aCriterion['params']);
+            $iCriterionWeight = (float)$aCriterion['weight'];           
 
             switch($aCriterion['source_type']) {
                 case 'sql':
@@ -163,7 +157,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
                     if(empty($aCriterion['source']))
                         break;
 
-                    $sQuery = bx_replace_markers($aCriterion['source'], $aParams);
+                    $sQuery = bx_replace_markers($aCriterion['source'], $aCriterionParams);
                     if($this->_aObject['countable'])
                         $sQuery .= ' ORDER BY `value` DESC';
                     $sQuery .= ' LIMIT ' . $iLimit;
@@ -217,6 +211,21 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         return str_replace('sys_', 'recom_', $this->_sObject); 
     }
 
+    protected function _getCriterionParams($iProfileId, $aParams)
+    {
+        $aResult = ['profile_id' => $iProfileId];
+        if(empty($aParams))
+            return $aResult;
+
+        if(is_string($aParams))
+            $aParams = unserialize($aParams);
+
+        if(!empty($aParams) && is_array($aParams))
+            $aResult = array_merge($aResult, $aParams);
+
+        return $aResult;
+    }
+
     /**
      * The first variant. Isn't used.
      */
@@ -233,15 +242,8 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
         $aCriterionItems = [];
         foreach($this->_aCriteria as $sCriterion => $aCriterion) {
+            $aCriterionParams = $this->_getCriterionParams($iProfileId, $aCriterion['params']);
             $iCriterionWeight = (float)$aCriterion['weight'];
-
-            $aParams = ['profile_id' => $iProfileId];
-            if(!empty($aCriterion['params'])) {
-                $aCriterionParams = unserialize($aCriterion['params']);
-                if(!empty($aCriterionParams) && is_array($aCriterionParams))
-                    $aParams = array_merge($aParams, $aCriterionParams);
-            }
-
             $iCriterionStart = isset($aStarts[$sCriterion]) ? (int)$aStarts[$sCriterion] : $iStart * $iCriterionWeight;
 
             switch($aCriterion['source_type']) {
@@ -251,7 +253,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
                     if(empty($aCriterion['source']))
                         break;
 
-                    $sQuery = bx_replace_markers($aCriterion['source'], $aParams);
+                    $sQuery = bx_replace_markers($aCriterion['source'], $aCriterionParams);
                     if($this->_aObject['countable'])
                         $sQuery .= ' ORDER BY `value` DESC';
                     $sQuery .= ' LIMIT ' . $iCriterionStart . ', ' . $iPerPage;

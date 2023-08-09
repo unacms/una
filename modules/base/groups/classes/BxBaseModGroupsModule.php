@@ -672,7 +672,53 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $this->_serviceBrowse ('created_entries', array('author' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
-    
+
+    public function serviceBrowseRecommendationsFans ($iProfileId = 0, $aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($this->_bIsApi)
+            $aParams = bx_api_get_browse_params($aParams, true);
+
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+
+        $aParams = array_merge([
+            'empty_message' => false,
+            'start' => 0,
+            'per_page' => 0
+        ], $aParams);
+
+        if(($iStartGet = bx_get('start')) !== false)
+            $aParams['start'] = (int)$iStartGet;
+
+        if(($iPerPageGet = bx_get('per_page')) !== false)
+            $aParams['per_page'] = (int)$iPerPageGet;
+
+        $oRecommendation = BxDolRecommendation::getObjectInstance($CNF['OBJECT_RECOMMENDATIONS_FANS']);
+        if(!$oRecommendation)
+            return false;
+
+        if($this->_bIsApi) {
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
+            $aData = array_merge($aData, [
+                'module' => 'system',
+                'unit' => 'mixed', 
+                'request_url' => '/api.php?r=bx_groups/browse_recommendations_fans&params[]=' . $iProfileId . '&params[]='
+            ]);
+
+            return [bx_api_get_block('browse', $aData)];
+        }
+
+        $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        if(!$sCode && $aParams['empty_message'])
+            $sCode = MsgBox(_t(!empty($aParams['empty_message_text']) ? $aParams['empty_message_text'] : '_Empty'));
+
+        return $sCode;
+    }
+
     public function serviceEntityPricing($iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
