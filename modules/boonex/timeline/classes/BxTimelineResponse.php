@@ -111,7 +111,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'content' => serialize($aContent)
                 ];
 
-                if($iObjectPrivacyView > 0 && !empty($iObjectAuthorId) && $iObjectAuthorId == $oAlert->iSender)
+                if($iObjectPrivacyView > 0)
                     $aParamsSet = array_merge($aParamsSet, [
                         'owner_id' => $oAlert->iSender,
                         'object_privacy_view' => $iObjectPrivacyView
