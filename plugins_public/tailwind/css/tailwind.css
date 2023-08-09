@@ -505,20 +505,58 @@
         @apply text-lg;
     }
 
-    .bx-artificer h3,
-    .bx-artificer .bx-def-font-h3 {
-        @apply text-xl;
-    }
-    
-    .bx-artificer h2,
-    .bx-artificer .bx-def-font-h2 {
-        @apply text-2xl;
+    /* Typography in combination with 'bx-def-vanilla-html' class */
+    .bx-def-vanilla-html h1,
+    .bx-def-vanilla-html .bx-def-font-h1 {
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
     }
 
-    .bx-artificer h1,
-    .bx-artificer .bx-def-font-h1 {
-        @apply text-3xl leading-10;
+    .bx-def-vanilla-html h2,
+    .bx-def-vanilla-html .bx-def-font-h2 {
+        @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
     }
+
+    .bx-def-vanilla-html h3,
+    .bx-def-vanilla-html .bx-def-font-h3 {
+        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    .bx-def-vanilla-html h4 {
+        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+
+    .bx-def-vanilla-html p {
+        @apply leading-7 [&:not(:first-child)]:mt-6;
+    }
+
+    .bx-def-vanilla-html blockquote {
+        @apply mt-6 border-l-2 pl-6 italic;
+    }
+
+    .bx-def-vanilla-html table {
+        @apply w-full;
+    }
+
+    .bx-def-vanilla-html tr {
+        @apply m-0 border-t p-0;
+    }
+
+    .bx-def-vanilla-html th {
+        @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+    }
+
+    .bx-def-vanilla-html td {
+        @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+    }
+
+    .bx-def-vanilla-html ul {
+        @apply my-6 ml-6 list-disc [&>li]:mt-2;
+    }
+
+    .bx-def-vanilla-html code {
+        @apply relative rounded px-[0.3rem] py-[0.2rem] text-sm font-semibold;
+    }
+    
 
     /* Common elements: Pages. */
     .bx-layout-wrapper{
