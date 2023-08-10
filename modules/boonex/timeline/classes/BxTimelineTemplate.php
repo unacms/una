@@ -1512,6 +1512,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!empty($aUpdate) && is_array($aUpdate)) 
             $this->_oDb->updateEvent($aUpdate, array('id' => $aEvent['id']));
 
+        //--- Update Flags ---//
+        $aContent = &$aResult['content'];
+        $aFlagTypes = $this->_oDb->getEventFlagTypes();
+        foreach($aFlagTypes as $sFt)
+            if((!empty($aContent[$sFt]) && is_array($aContent[$sFt])) || (!empty($aContent[$sFt . '_attach']) && is_array($aContent[$sFt .'_attach'])))
+                $this->_oDb->updateEventFlagsByType($sFt, $aEvent['id']);
+
         return $aResult;
     }
 

@@ -4734,7 +4734,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = $this->getUserId();
     	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
     	$sCommonPostComment = $this->_oConfig->getObject('comment');
-    	
+
+        //--- Delete related flags.
+        $this->_oDb->deleteEventFlags($aEvent[$CNF['FIELD_ID']]);
+
     	//--- Delete comments for Common posts.
     	if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
             $oComments = $this->getCmtsObject($sCommonPostComment, $aEvent[$CNF['FIELD_ID']]);
@@ -4746,7 +4749,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_POST) {
             $this->_deleteMedia($CNF['FIELD_PHOTO'], $aEvent[$CNF['FIELD_ID']]);
             $this->_deleteMedia($CNF['FIELD_VIDEO'], $aEvent[$CNF['FIELD_ID']]);
-			$this->_deleteMedia($CNF['FIELD_FILE'], $aEvent[$CNF['FIELD_ID']]);
+            $this->_deleteMedia($CNF['FIELD_FILE'], $aEvent[$CNF['FIELD_ID']]);
             $this->_deleteLinks($aEvent[$CNF['FIELD_ID']]);
     	}
 
@@ -5506,6 +5509,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['modules']) || !is_array($aParams['modules']))
             $aParams['modules'] = array();
 
+        if(empty($aParams['media']))
+            $aParams['media'] = '';
+
         if(empty($aParams['context']))
             $aParams['context'] = 0;
 
@@ -5528,7 +5534,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     protected function _prepareParamsGet($mParams = false)
     {
-        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'timeline', 'filter', 'modules', 'context', 'blink', 'viewer_id'];
+        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'timeline', 'filter', 'modules', 'media', 'context', 'blink', 'viewer_id'];
 
         $aParams = [];
         if(!empty($mParams) && is_array($mParams))
@@ -5547,6 +5553,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline']) : '';
         $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;
         $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : [];
+        $aParams['media'] = $aParams['media'] !== false ? bx_process_input($aParams['media'], BX_DATA_TEXT) : '';
         $aParams['context'] = $aParams['context'] !== false ? bx_process_input($aParams['context'], BX_DATA_INT) : 0;
 
         if($aParams['blink'] !== false)

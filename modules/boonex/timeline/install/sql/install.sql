@@ -91,6 +91,30 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events2users` (
   UNIQUE `view` (`user_id`, `event_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_timeline_ef_photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL DEFAULT '0',
+  `media` tinyint(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `event` (`event_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_ef_videos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL DEFAULT '0',
+  `media` tinyint(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `event` (`event_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_ef_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL DEFAULT '0',
+  `media` tinyint(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `event` (`event_id`)
+);
+
 CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
   `id` int(11) NOT NULL auto_increment,
   `group` varchar(64) NOT NULL default '',

@@ -194,6 +194,14 @@
     <string name="_bx_timeline_page_block_title_view_feed_and_hot"><![CDATA[Для тебя]]></string>
     <string name="_bx_timeline_page_block_title_system_view_contexts_groups"><![CDATA[Отслеживаемые группы (лента)]]></string>
     <string name="_bx_timeline_page_block_title_view_contexts_groups"><![CDATA[Отслеживаемые группы]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_files"><![CDATA[Лента файлов (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_files"><![CDATA[Файлы]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_images"><![CDATA[Лента фотографий (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_images"><![CDATA[Фотографии]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_videos"><![CDATA[Лента видео (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_any"><![CDATA[Лента с любым медиа (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_any"><![CDATA[Медиа]]></string>
 
     <string name="_bx_timeline_page_title_sys_manage"><![CDATA[Управление]]></string>
     <string name="_bx_timeline_page_title_manage"><![CDATA[Управление лентой]]></string>

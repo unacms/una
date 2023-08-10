@@ -206,6 +206,14 @@
     <string name="_bx_timeline_page_block_title_view_feed_and_hot"><![CDATA[For You]]></string>
     <string name="_bx_timeline_page_block_title_system_view_contexts_groups"><![CDATA[Followed groups (Timeline)]]></string>
     <string name="_bx_timeline_page_block_title_view_contexts_groups"><![CDATA[Followed groups]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_files"><![CDATA[Files Feed (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_files"><![CDATA[Files]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_images"><![CDATA[Photos Feed (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_images"><![CDATA[Photos]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_videos"><![CDATA[Videos Feed (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_videos"><![CDATA[Videos]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_media_any"><![CDATA[Any Media Feed (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_media_any"><![CDATA[Media]]></string>
 
     <string name="_bx_timeline_page_title_sys_manage"><![CDATA[Manage]]></string>
     <string name="_bx_timeline_page_title_manage"><![CDATA[Manage Timeline]]></string>

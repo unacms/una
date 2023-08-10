@@ -13,6 +13,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTableSlice;
     protected $_sTableEvent2User;
+    protected $_aTablesEventFlags;
 
     protected $_sTableRepostsTrack;
     protected $_sTableHotTrack;
@@ -32,20 +33,25 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $this->_sTableAlias = 'te';
         $this->_sTableSlice = $this->_sPrefix . 'events_slice';
         $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
+        $this->_aTablesEventFlags = [
+            'images' => $this->_sPrefix . 'ef_photos',
+            'videos' => $this->_sPrefix . 'ef_videos',
+            'files' => $this->_sPrefix . 'ef_files'
+        ];
 
         $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
         $this->_sTableHotTrack = $this->_sPrefix . 'hot_track';
 
-        $this->_aTablesMedia = array(
+        $this->_aTablesMedia = [
             $CNF['FIELD_PHOTO'] => $this->_sPrefix . 'photos',
             $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos',
             $CNF['FIELD_FILE'] => $this->_sPrefix . 'files' 
-        );
-        $this->_aTablesMedia2Events = array(
+        ];
+        $this->_aTablesMedia2Events = [
             $CNF['FIELD_PHOTO'] => $this->_sPrefix . 'photos2events',
             $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos2events',
             $CNF['FIELD_FILE'] => $this->_sPrefix . 'files2events'
-        );
+        ];
     }
 
     public function deleteModuleEvents($aData)
@@ -710,6 +716,39 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->$sMethod($sSql);
     }
 
+    public function getEventFlagTypes()
+    {
+        return array_keys($this->_aTablesEventFlags);
+    }
+
+    public function updateEventFlagsByType($sType, $iEventId, $bMedia = true)
+    {
+        if(!isset($this->_aTablesEventFlags[$sType]))
+            return false;
+
+        return $this->query("INSERT INTO `" . $this->_aTablesEventFlags[$sType] . "` (`event_id`, `media`) VALUES (:event_id, :media) ON DUPLICATE KEY UPDATE `media`=:media", [
+            'event_id' => $iEventId,
+            'media' => $bMedia ? 1 : 0
+        ]) !== false;
+    }
+
+    public function deleteEventFlagsByType($sType, $iEventId)
+    {
+        if(!isset($this->_aTablesEventFlags[$sType]))
+            return false;
+
+        return $this->query("DELETE FROM `" . $this->_aTablesEventFlags[$sType] . "` WHERE `event_id`=:event_id", [
+            'event_id' => $iEventId
+        ]) !== false;
+    }
+
+    public function deleteEventFlags($iEventId)
+    {
+        $aTypes = $this->getEventFlagTypes();
+        foreach($aTypes as $sType)
+            $this->deleteEventFlagsByType($sType, $iEventId);
+    }
+
     protected function _getFilterAddon($iOwnerId, $sFilter)
     {
         $sTableAlias = $this->getTableAlias();
@@ -932,6 +971,32 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sWhereClauseHidden = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
         }
 
+        //--- Apply media filter
+        $sWhereClauseMedias = "";
+        if(!empty($aParams['media'])) {
+            if(is_array($aParams['media'])) {
+                $sWhereSubclauseMedias = "0";
+                $aMediaTypes = $aParams['media'];
+                foreach($aMediaTypes as $sMediaType) {
+                    if(!isset($this->_aTablesEventFlags[$sMediaType]))
+                        continue;
+
+                    $sTableAliasFlag = 't' . substr($sMediaType, 0, 2);
+                    $mixedJoinClause .= " LEFT JOIN `" . $this->_aTablesEventFlags[$sMediaType] . "` AS `{$sTableAliasFlag}` ON `{$sTableAlias}`.`id`=`{$sTableAliasFlag}`.`event_id`";
+                    $sWhereSubclauseMedias .= " OR (NOT ISNULL(`{$sTableAliasFlag}`.`media`) AND `{$sTableAliasFlag}`.`media` <> 0)";
+                }
+                $sWhereClauseMedias .= "AND ({$sWhereSubclauseMedias}) ";
+            }
+            else  {
+                $sMediaType = $aParams['media'];
+                if(isset($this->_aTablesEventFlags[$sMediaType])) {
+                    $sTableAliasFlag = 't' . substr($sMediaType, 0, 2);
+                    $mixedJoinClause .= " INNER JOIN `" . $this->_aTablesEventFlags[$sMediaType] . "` AS `{$sTableAliasFlag}` ON `{$sTableAlias}`.`id`=`{$sTableAliasFlag}`.`event_id`";
+                    $sWhereClauseMedias .= "AND `{$sTableAliasFlag}`.`media` <> 0 ";
+                }
+            }
+        }
+
         //--- Apply mute filter
         $sWhereClauseMuted = "";
         $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('connection_mute'));
@@ -1012,8 +1077,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 if(empty($aParams['owner_id']))
                     break;
 
-                $mixedJoinSubclause = array();
-                $mixedWhereSubclause = array();
+                $mixedJoinSubclause = [];
+                $mixedWhereSubclause = [];
 
                 $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
@@ -1040,6 +1105,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedWhereSubclause['p2'] = "1";
 
                 //--- Select Promoted posts.
+                $mixedJoinSubclause['p3'] = "";
                 $mixedWhereSubclause['p3'] = "`{$sTableAlias}`.`promoted` <> '0'";
                 break;
 
@@ -1064,6 +1130,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedWhereSubclause['p1'] = "1";
 
                 //--- Select Promoted posts.
+                $mixedJoinSubclause['p2'] = "";
                 $mixedWhereSubclause['p2'] = "`{$sTableAlias}`.`promoted` <> '0'";
                 break;
 
@@ -1089,6 +1156,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //$mixedWhereSubclause['p1'] = $this->prepareAsString(" AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` <> ?, 1)", $aParams['owner_id']);
 
                 //--- Select Promoted posts.
+                $mixedJoinSubclause['p2'] = "";
                 $mixedWhereSubclause['p2'] = "`{$sTableAlias}`.`promoted` <> '0'";
                 break;
 
@@ -1098,8 +1166,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 if(empty($aParams['owner_id']))
                     break;
 
-                $mixedJoinSubclause = array();
-                $mixedWhereSubclause = array();
+                $mixedJoinSubclause = [];
+                $mixedWhereSubclause = [];
 
                 $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
@@ -1109,6 +1177,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
                 $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$sTableAlias}`.`owner_id` = '0' AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
+                $mixedJoinSubclause['p1'] = "";
                 $mixedWhereSubclause['p1'] = "(" . $sWhereSubclauseOwnProfile . " OR " . $sWhereSubclauseOwnPublic . ")";
 
                 //--- Join System and Direct posts received by and made by following members. 'LEFT' join is essential to apply different conditions.
@@ -1131,6 +1200,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedWhereSubclause['p3'] = "1";
 
                 //--- Select Promoted posts.
+                $mixedJoinSubclause['p4'] = "";
                 $mixedWhereSubclause['p4'] = "`{$sTableAlias}`.`promoted` <> '0'";
 
                 //--- Select Hot posts.
@@ -1145,8 +1215,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 if(empty($aParams['owner_id']))
                     break;
 
-                $mixedJoinSubclause = array();
-                $mixedWhereSubclause = array();
+                $mixedJoinSubclause = [];
+                $mixedWhereSubclause = [];
 
                 $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
@@ -1156,6 +1226,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
                 $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$sTableAlias}`.`owner_id` = '0' AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
+                $mixedJoinSubclause['p1'] = "";
                 $mixedWhereSubclause['p1'] = "(" . $sWhereSubclauseOwnProfile . " OR " . $sWhereSubclauseOwnPublic . ")";
 
                 //--- Join System and Direct posts received by and made by following members. 'LEFT' join is essential to apply different conditions.
@@ -1178,6 +1249,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedWhereSubclause['p3'] = "1";
 
                 //--- Select Promoted posts.
+                $mixedJoinSubclause['p4'] = "";
                 $mixedWhereSubclause['p4'] = "`{$sTableAlias}`.`promoted` <> '0'";
                 break;
 
@@ -1207,6 +1279,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 //$mixedWhereSubclause['p1'] = $this->prepareAsString(" AND IF(`{$sTableAlias}`.`system`='0', `{$sTableAlias}`.`object_id` <> ?, 1)", $aParams['owner_id']);
 
                 //--- Select Promoted posts.
+                $mixedJoinSubclause['p2'] = "";
                 $mixedWhereSubclause['p2'] = "`" . $sTableAlias . "`.`promoted` <> '0'";
                 break;
         }
@@ -1227,6 +1300,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'where_clause_timeline' => &$sWhereClauseTimeline,
             'where_clause_modules' => &$sWhereClauseModules,
             'where_clause_hidden' => &$sWhereClauseHidden,
+            'where_clause_medias' => &$sWhereClauseMedias,
             'where_clause_muted' => &$sWhereClauseMuted,
             'where_clause_unpublished' => &$sWhereClauseUnpublished,
             'where_clause_cf' => &$sWhereClauseCf,
@@ -1238,6 +1312,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $mixedWhereClause .= $sWhereClauseTimeline;
         $mixedWhereClause .= $sWhereClauseModules;
         $mixedWhereClause .= $sWhereClauseHidden;
+        $mixedWhereClause .= $sWhereClauseMedias;
         $mixedWhereClause .= $sWhereClauseMuted;
         $mixedWhereClause .= $sWhereClauseUnpublished;
         $mixedWhereClause .= $sWhereClauseCf;
