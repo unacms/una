@@ -18,7 +18,7 @@ class BxDolLocationFieldNominatim extends BxDolLocationField
     {
         parent::__construct($aObject);
 
-        $this->_sEndpoint = bx_append_url_params($this->getNominatimServer() . '/search/', [
+        $this->_sEndpoint = bx_append_url_params($this->getNominatimServer() . '/search', [
             'email' => $this->getNominatimEmail(),
             'addressdetails' => 1
         ]);

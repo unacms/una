@@ -61,7 +61,7 @@
 
     var geocode = function (a, i) {
         var s = a[i];
-        $.getJSON('__nominatim_server__/search/?addressdetails=1' + s + '&format=json&limit=1&email=__nominatim_email__', function (oResult) {
+        $.getJSON('__nominatim_server__/search?addressdetails=1' + s + '&format=json&limit=1&email=__nominatim_email__', function (oResult) {
             glBxLocationFieldPlainGeocodingRequest = false;
             if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
 
