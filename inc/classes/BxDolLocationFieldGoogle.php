@@ -50,10 +50,11 @@ class BxDolLocationFieldGoogle extends BxDolLocationField
 
         if ($isManualInput) {
             $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
-            $aInput['type'] = 'text';
-            $aInput['attrs']['id'] = $sIdInput;
-            $aInput['attrs'] = array_merge($aAttrs, $aInput['attrs']);
-            $aVars['input'] = $oForm->genInputStandard($aInput);
+            $aInput2 = $aInput;
+            $aInput2['type'] = 'text';
+            $aInput2['attrs']['id'] = $sIdInput;
+            $aInput2['attrs'] = array_merge($aAttrs, $aInput2['attrs']);
+            $aVars['input'] = $oForm->genInputStandard($aInput2);
         } 
         else {
             if ($this->getLocationVal($aInput, 'lat', $oForm) && $this->getLocationVal($aInput, 'lng', $oForm))
