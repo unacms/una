@@ -721,14 +721,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return array_keys($this->_aTablesEventFlags);
     }
 
-    public function updateEventFlagsByType($sType, $iEventId, $bMedia = true)
+    public function updateEventFlagsByType($sType, $iEventId)
     {
         if(!isset($this->_aTablesEventFlags[$sType]))
             return false;
 
-        return $this->query("INSERT INTO `" . $this->_aTablesEventFlags[$sType] . "` (`event_id`, `media`) VALUES (:event_id, :media) ON DUPLICATE KEY UPDATE `media`=:media", [
+        return $this->query("INSERT IGNORE INTO `" . $this->_aTablesEventFlags[$sType] . "` (`event_id`) VALUES (:event_id)", [
             'event_id' => $iEventId,
-            'media' => $bMedia ? 1 : 0
         ]) !== false;
     }
 
@@ -983,16 +982,15 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
                     $sTableAliasFlag = 't' . substr($sMediaType, 0, 2);
                     $mixedJoinClause .= " LEFT JOIN `" . $this->_aTablesEventFlags[$sMediaType] . "` AS `{$sTableAliasFlag}` ON `{$sTableAlias}`.`id`=`{$sTableAliasFlag}`.`event_id`";
-                    $sWhereSubclauseMedias .= " OR (NOT ISNULL(`{$sTableAliasFlag}`.`media`) AND `{$sTableAliasFlag}`.`media` <> 0)";
+                    $sWhereSubclauseMedias .= " OR NOT ISNULL(`{$sTableAliasFlag}`.`event_id`)";
                 }
                 $sWhereClauseMedias .= "AND ({$sWhereSubclauseMedias}) ";
             }
-            else  {
+            else {
                 $sMediaType = $aParams['media'];
                 if(isset($this->_aTablesEventFlags[$sMediaType])) {
                     $sTableAliasFlag = 't' . substr($sMediaType, 0, 2);
                     $mixedJoinClause .= " INNER JOIN `" . $this->_aTablesEventFlags[$sMediaType] . "` AS `{$sTableAliasFlag}` ON `{$sTableAlias}`.`id`=`{$sTableAliasFlag}`.`event_id`";
-                    $sWhereClauseMedias .= "AND `{$sTableAliasFlag}`.`media` <> 0 ";
                 }
             }
         }
