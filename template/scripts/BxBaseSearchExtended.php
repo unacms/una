@@ -274,6 +274,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                     'uri_title' => '',
                     'submit_name' => $sFormSubmit
                 ),
+                'checker_helper' => 'BxBaseSearchExtendedFormCheckerHelper',
             ),
             'inputs' => array()
         );
@@ -314,7 +315,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 'value' => $aField['search_value'],
                 'attrs' => $aAttrs,
                 'db' => array(
-                    'pass' => !empty($aField['pass']) ? $aField['pass'] : 'Xss'
+                    'pass' => 'datepicker_range_age' === $aField['search_type'] ? 'AgeRange' : (!empty($aField['pass']) ? $aField['pass'] : 'Xss')
                 )
             );
 
@@ -343,6 +344,34 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $this->_oForm->initChecker($aValues, $aValues);
 
         return $this->_oForm;
+    }
+}
+
+class BxBaseSearchExtendedFormCheckerHelper extends BxDolFormCheckerHelper
+{
+    static public function passAgeRange ($s)
+    {
+        if (is_array($s)) {
+            $a = array ();
+            foreach ($s as $k => $v)
+                $a[$k] = self::_passAgeRange ($v);
+            return $a;
+        }
+        return self::_passAgeRange ($s);
+    }
+
+    static public function _passAgeRange ($s)
+    {
+        $a = explode ('-', $s);
+        if (!$a || count($a) != 2)
+            return $s;
+        $i0 = new \DateInterval("P".(int)$a[0]."Y");
+        $i1 = new \DateInterval("P".(int)$a[1]."Y");
+
+        return [
+            (new DateTime("now", new DateTimeZone('UTC')))->sub($i1)->format("Y-m-d"),
+            (new DateTime("now", new DateTimeZone('UTC')))->sub($i0)->format("Y-m-d"),
+        ];
     }
 }
 
