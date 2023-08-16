@@ -444,8 +444,10 @@ function bx_editor_init(oEditor, oParams){
     else{
         oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
 			delta.forEach(e => {
-                if(typeof e.insert == 'string')
+                console.log(e);
+                if(typeof e.insert == 'string' && e.attributes == null)
                     e.insert = e.insert.replace(/\n/g, '') + "\n";
+                 console.log(e);
                 if(e.attributes){
                     e.attributes.color = '';
                     e.attributes.background = '';
