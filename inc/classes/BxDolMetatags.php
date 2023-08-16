@@ -315,7 +315,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $s = preg_replace("/<a\b((?!bx-mention-link)[^>])*>(.*?)<\/a>/si", '', $s);
 
         //--- Strip the other HTML tags.
-        $s = strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s));
+        $s = strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>'), "\n", $s));
 
         // process spaces
         $s = str_ireplace('&nbsp;', ' ', $s);
