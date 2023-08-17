@@ -54,7 +54,7 @@ define('BX_DOL_STORAGE_ERR_NOT_IMPLEMENTED', 5005); ///< this feature isn't impl
 
 define('BX_DOL_STORAGE_DEFAULT_MIME_TYPE', 'octet/stream'); ///< default mime type if it is not find by extension
 
-define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if no other icon can be determined by file extension
+define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.svg'); ///< default icon if no other icon can be determined by file extension
 define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'far file'); ///< default font icon if no other icon can be determined by file extension
 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
@@ -970,16 +970,16 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         );
         
         $aIcons = array (
-            'mime-type-psd.png' => array('psd'),
-            'mime-type-png.png' => array('png'),
-            'mime-type-image.png' => 'image/',
-            'mime-type-video.png' => 'video/',
-            'mime-type-audio.png' => 'audio/',
-            'mime-type-presentation.png' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
-            'mime-type-spreadsheet.png' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
-            'mime-type-document.png' => array('doc', 'docx', 'odt', 'ott', 'sxw', 'stw', 'rtf', 'sdw', 'txt', 'pdb', 'psw', 'pdf'),
-            'mime-type-vector.png' => array('ac5', 'ac6', 'aff', 'agd1', 'ai', 'ait', 'art', 'awg', 'b2f', 'cag', 'cbd', 'cdl', 'cdr', 'cdr3', 'cdr4', 'cdr5', 'cdr6', 'cdrw', 'cdx', 'cgm', 'cht', 'cil', 'cit', 'cnv', 'csl', 'ctn', 'cv5', 'cvg', 'cvi', 'cvl', 'cvs', 'cvx', 'dcs', 'ddoc', 'ddrw', 'ded', 'design', 'dmw', 'do', 'dpp', 'dpr', 'draw', 'drw', 'dsf', 'dsf', 'dsx', 'dvg', 'dxb', 'emb', 'evf', 'fcd', 'fh', 'fhd', 'fmv', 'fs', 'ft10', 'ft11', 'ft9', 'ft8', 'gem', 'gl2', 'graffle', 'gsd', 'gsd', 'hpg', 'hpgl', 'hpgl2', 'hpl', 'hplj', 'hpp', 'hppcl', 'idw', 'ima', 'macdraw', 'mgcb', 'mgs', 'mvg', 'nap', 'naplps', 'odg', 'p10', 'pat', 'pct', 'pd', 'pdw', 'pgs', 'pic', 'pif', 'pix', 'plo', 'plot', 'plt', 'ps', 'psid', 'pws', 'rdl', 's57', 'sdw', 'sif', 'sk2', 'slddwg', 'sp', 'spa', 'svf', 'svg', 'svgb', 'svgz', 'sxd', 'tdr', 'tlc', 'tng', 'vbr', 'vec', 'vect', 'veh', 'vml', 'vss', 'web', 'web', 'web', 'yal'),
-            'mime-type-archive.png' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
+            'mime-type-psd.svg' => array('psd'),
+            'mime-type-png.svg' => array('png'),
+            'mime-type-image.svg' => 'image/',
+            'mime-type-video.svg' => 'video/',
+            'mime-type-audio.svg' => 'audio/',
+            'mime-type-presentation.svg' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
+            'mime-type-spreadsheet.svg' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
+            'mime-type-document.svg' => array('doc', 'docx', 'odt', 'ott', 'sxw', 'stw', 'rtf', 'sdw', 'txt', 'pdb', 'psw', 'pdf'),
+            'mime-type-vector.svg' => array('ac5', 'ac6', 'aff', 'agd1', 'ai', 'ait', 'art', 'awg', 'b2f', 'cag', 'cbd', 'cdl', 'cdr', 'cdr3', 'cdr4', 'cdr5', 'cdr6', 'cdrw', 'cdx', 'cgm', 'cht', 'cil', 'cit', 'cnv', 'csl', 'ctn', 'cv5', 'cvg', 'cvi', 'cvl', 'cvs', 'cvx', 'dcs', 'ddoc', 'ddrw', 'ded', 'design', 'dmw', 'do', 'dpp', 'dpr', 'draw', 'drw', 'dsf', 'dsf', 'dsx', 'dvg', 'dxb', 'emb', 'evf', 'fcd', 'fh', 'fhd', 'fmv', 'fs', 'ft10', 'ft11', 'ft9', 'ft8', 'gem', 'gl2', 'graffle', 'gsd', 'gsd', 'hpg', 'hpgl', 'hpgl2', 'hpl', 'hplj', 'hpp', 'hppcl', 'idw', 'ima', 'macdraw', 'mgcb', 'mgs', 'mvg', 'nap', 'naplps', 'odg', 'p10', 'pat', 'pct', 'pd', 'pdw', 'pgs', 'pic', 'pif', 'pix', 'plo', 'plot', 'plt', 'ps', 'psid', 'pws', 'rdl', 's57', 'sdw', 'sif', 'sk2', 'slddwg', 'sp', 'spa', 'svf', 'svg', 'svgb', 'svgz', 'sxd', 'tdr', 'tlc', 'tng', 'vbr', 'vec', 'vect', 'veh', 'vml', 'vss', 'web', 'web', 'web', 'yal'),
+            'mime-type-archive.svg' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
         );
 
         $f = fopen ($sFile, 'r');
