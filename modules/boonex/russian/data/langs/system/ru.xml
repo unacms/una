@@ -100,6 +100,7 @@
   <string name="_report_status_all"><![CDATA[Все]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
+        <string name="_report_do_report_with_sample"><![CDATA[Пожаловаться]]></string>
         <string name="_report_do_unreport"><![CDATA[Отменить жалобу]]></string>
         <string name="_report_do_unreport_confirm"><![CDATA[Вы уверены, что хотите отменить свою жалобу?]]></string>
 	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>

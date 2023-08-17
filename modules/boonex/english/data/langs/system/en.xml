@@ -100,6 +100,7 @@
         <string name="_report_status_all"><![CDATA[All]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Report]]></string>
+        <string name="_report_do_report_with_sample"><![CDATA[Report {0}]]></string>
         <string name="_report_do_unreport"><![CDATA[Cancel report]]></string>
         <string name="_report_do_unreport_confirm"><![CDATA[Are you sure, you want to cancel your report?]]></string>
 	<string name="_report_do_report_by"><![CDATA[Reported by]]></string>
