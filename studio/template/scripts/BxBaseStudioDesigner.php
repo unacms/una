@@ -193,6 +193,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                 'type' => 'files',
                 'name' => $sLogo,
                 'storage_object' => $aLogo['storage'],
+                'storage_private' => 0,
                 'images_transcoder' => $aLogo['transcoder'],
                 'uploaders' => ['sys_html5'],
                 'multiple' => false,

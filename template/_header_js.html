@@ -9,11 +9,9 @@
 
     (function(w) {
         var dpr = (w.devicePixelRatio === undefined ? 1 : Math.round(w.devicePixelRatio));
-        if ($.cookie('devicePixelRatio') == dpr || dpr < 2 || (typeof(bIgnorePixelRatio) != "undefined" && bIgnorePixelRatio) || !navigator.cookieEnabled || '#dpr' === window.location.hash) 
+        if ($.cookie('devicePixelRatio') == dpr || dpr < 2 || (typeof(bIgnorePixelRatio) != "undefined" && bIgnorePixelRatio) || !navigator.cookieEnabled) 
             return;
         $.cookie('devicePixelRatio', dpr, {expires: 365, path: '/'});
-        if (!window.location.hash.length)
-            window.location.hash = 'dpr';
         window.location.reload();
     })(window);
 

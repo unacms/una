@@ -243,43 +243,45 @@ class BxFilesModule extends BxBaseModTextModule
         if ($aFiles) foreach ($aFiles as $sFile) @unlink($sFile);
     }
 
-    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    protected function _getFilesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
-        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+        $CNF = &$this->_oConfig->CNF;
 
         $aFile = $this->getContentFile($aContentInfo);
-        if (!$aFile['is_image']) {
-            $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->CNF['OBJECT_STORAGE']);
-            $sIcon = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'far file';
+        if(!$aFile || $aFile['is_image'])
+            return [];
 
-            $aResult['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
-                'title' => $aResult['title'],
-                'title_attr' => bx_html_attribute($aResult['title']),
-                'url' => $aResult['url'],
-                'icon' => $sIcon,
-            ));
-            $aResult['title'] = '';
-        }
+        $sIconSrc = '';
+        if(($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])) !== false)
+            $sIconSrc = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
 
-        return $aResult;
+        return [[
+            'id' => $aFile['id'],
+            'src' => $sIconSrc,
+            'src_medium' => $sIconSrc,
+            'src_orig' => '',
+            'url' => $sUrl
+        ]];
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $aFile = $this->getContentFile($aContentInfo);
         if (!$aFile)
-            return array();
+            return [];
 
         if (!$aFile['is_image'])
-            return array();
+            return [];
 
         $sPhotoThumb = '';
         if ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
             $sPhotoThumb = $oImagesTranscoder->getFileUrl($aFile['id']);
 
-        return array(
-            array('id' => $aFile['id'], 'url' => $sUrl, 'src' => $sPhotoThumb),
-        );
+        return [[
+            'id' => $aFile['id'], 
+            'url' => $sUrl, 
+            'src' => $sPhotoThumb
+        ]];
     }
 
     public function actionBookmark($iContentId) {

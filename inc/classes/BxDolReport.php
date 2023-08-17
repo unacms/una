@@ -282,7 +282,14 @@ class BxDolReport extends BxDolObject
 
     protected function _getTitleDoReport($bPerformed)
     {
-    	return $bPerformed && $this->isUndo() ? '_report_do_unreport' : '_report_do_report';
+        if($bPerformed && $this->isUndo())
+            return ['_report_do_unreport'];
+
+        $sSample = '_' . $this->_sSystem . '_txt_sample_single';
+        if(($$sSample = _t($sSample)) && strcmp($sSample, $$sSample) != 0)
+            return ['_report_do_report_with_sample', $$sSample];
+
+    	return ['_report_do_report'];
     }
 
     protected function _getFormObject()

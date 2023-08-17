@@ -100,6 +100,7 @@
   <string name="_report_status_all"><![CDATA[Все]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
+        <string name="_report_do_report_with_sample"><![CDATA[Пожаловаться]]></string>
         <string name="_report_do_unreport"><![CDATA[Отменить жалобу]]></string>
         <string name="_report_do_unreport_confirm"><![CDATA[Вы уверены, что хотите отменить свою жалобу?]]></string>
 	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>
@@ -3559,6 +3560,8 @@
     <string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Ваш телефон не подтверждён. Пожалуйста, подтвердите его на  <a href="{0}">странице верификации</a>.]]></string>
     <string name="_sys_txt_account_profile_system"><![CDATA[Пожалуйста, <a href="{0}">создайте профиль</a>, чтобы начать пользоваться сайтом.]]></string>
     <string name="_sys_txt_account_need_to_change_password"><![CDATA[Ваш пароль устарел. Пожалуйста <a href="{0}">измените Ваш пароль</a>.]]></string>
+    <string name="_sys_txt_account_cannot_delete"><![CDATA[Невозможно удалить единственную учетную запись оператора.]]></string>
+
     <string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA недоступна]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Изменить картинку]]></string>
     <string name="_sys_txt_cmt_loading"><![CDATA[Загрузка...]]></string>

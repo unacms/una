@@ -232,7 +232,7 @@ class BxBaseReport extends BxDolReport
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['do_link'],
             'class' => $sClass,
-            'title' => bx_html_attribute(_t($this->_getTitleDoReport($bReported))),
+            'title' => bx_html_attribute(call_user_func_array('_t', $this->_getTitleDoReport($bReported))),
         	'bx_if:show_onclick' => array(
                     'condition' => !$bDisabled,
                     'content' => array(
@@ -264,7 +264,7 @@ class BxBaseReport extends BxDolReport
                 'condition' => isset($aParams['show_do_report_label']) && $aParams['show_do_report_label'] == true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'text' => _t($this->_getTitleDoReport($bReported))
+                    'text' => call_user_func_array('_t', $this->_getTitleDoReport($bReported))
                 )
             )
         ));
@@ -434,7 +434,7 @@ class BxBaseReport extends BxDolReport
             'count' => $aData['count'], 
             'countf' => (int)$aData['count'] > 0 ? $this->_getCounterLabel($aData['count']) : '',
             'label_icon' => $this->_getIconDoReport($bPerformed),
-            'label_title' => _t($this->_getTitleDoReport($bPerformed)),
+            'label_title' => call_user_func_array('_t', $this->_getTitleDoReport($bPerformed)),
             'disabled' => $bPerformed && !$bUndo,
         );
     }
