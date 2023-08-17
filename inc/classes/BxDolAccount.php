@@ -842,7 +842,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     {
         $iAccountId = (int)BxDolProfile::getInstance($iProfileId)->getAccountId();
         if(isAdmin($iAccountId) && $iAccountId == (int)$aContentInfo['id'])
-            return _t('_sys_txt_access_denied');
+            return _t('_sys_txt_account_cannot_delete');
 
         $aCheck = checkActionModule($iProfileId, 'delete account', 'system', $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
