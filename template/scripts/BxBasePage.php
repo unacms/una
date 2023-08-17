@@ -488,6 +488,12 @@ class BxBasePage extends BxDolPage
                 'status' => $o->getStatus(),
             ];
             
+            $oInformer = BxDolInformer::getInstance(BxDolTemplate::getInstance());
+            $sRet = $oInformer ? $oInformer->display() : '';
+            if ($sRet){
+                $a['user']['informer'] = $sRet;
+            }
+            
             $sModuleNotifications = 'bx_notifications';
             if(BxDolRequest::serviceExists($sModuleNotifications, 'get_unread_notifications_num'))
                 $a['user']['notifications'] = bx_srv($sModuleNotifications, 'get_unread_notifications_num', [$o->id()]);
