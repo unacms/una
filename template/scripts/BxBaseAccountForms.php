@@ -89,9 +89,6 @@ class BxBaseAccountForms extends BxDolProfileForms
         // perform action
         BxDolAccount::isAllowedCreate ($iProfileId, true);
 
-        if($bIsApi) 
-            return true;
-
         $this->_iProfileId = bx_get_logged_profile_id();
 
         $sRelocateCustom = $oForm->getCleanValue('relocate');
@@ -122,7 +119,7 @@ class BxBaseAccountForms extends BxDolProfileForms
             $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
 
             // in case of successful profile add redirect to the page after profile creation
-            if (0 == $a['code']) {
+            if (0 == $a['code'] && !$bIsApi) {
                 if($bRelocateCustom)
                     $this->_redirectAndExit($sRelocateCustom, false);
 
@@ -131,6 +128,9 @@ class BxBaseAccountForms extends BxDolProfileForms
             }
             // if creation failed, redirect to create profile form
         }
+        
+        if($bIsApi) 
+            return true;
 
         $sRelocate = !empty($sProfileModule) ? BxDolService::call($sProfileModule, 'profile_create_url', array(false)) : '';
         if(empty($sRelocate))

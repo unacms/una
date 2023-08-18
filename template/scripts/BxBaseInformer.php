@@ -50,6 +50,10 @@ class BxBaseInformer extends BxDolInformer
 
             $aTmplVarsMessages[] = $a;
         }
+        
+        if (bx_is_api()){
+            return $aTmplVarsMessages;
+        }
 
         $this->_addJsCss();
         return $this->_oTemplate->parseHtmlByName('informer.html', [
