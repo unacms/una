@@ -33,11 +33,15 @@ class BxTemplMenuSidebarSite extends BxTemplMenu
         $aTmplVarsSubmenu = array();
         $bTmplVarsSubmenu = !empty($aResult['submenu_object']);
         if($bTmplVarsSubmenu) {
-            $aResult['onclick'] = "javascript:return bx_sidebar_dropdown_toggle(this)";
+            $aResult['bx_if:onclick'] = [
+                'condition' => true,
+                'content' => [
+                    'onclick' => "javascript:return bx_sidebar_dropdown_toggle(this)"
+            ]];
             $aResult['class_add'] .= ' bx-si-dropdown-has';
 
             if(($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false)
-                $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems(); 
+                $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems();
         }
 
         $aResult['bx_if:show_arrow'] = array (

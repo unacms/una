@@ -556,7 +556,17 @@
     .bx-def-vanilla-html code {
         @apply relative rounded px-[0.3rem] py-[0.2rem] text-sm font-semibold;
     }
-    
+
+    /* Common elements: Icons. */
+    .bx-icon svg {
+        @apply w-5 h-5;
+    }
+    .bx-icon.bx-icon-small svg {
+        @apply w-4 h-4;
+    }
+    .bx-icon.bx-icon-close svg {
+        @apply w-7 h-7;
+    }
 
     /* Common elements: Pages. */
     .bx-layout-wrapper{
@@ -679,7 +689,8 @@
     }
 
     .bx-btn i, 
-    .bx-btn img {
+    .bx-btn img,
+    .bx-btn svg {
         @apply w-5 h-5 leading-5;
     }
     .bx-btn i:not(.sys-colored),
@@ -725,10 +736,10 @@
     }
 
     .bx-btn.bx-btn-small i, 
-    .bx-btn.bx-btn-small img {
+    .bx-btn.bx-btn-small img,
+    .bx-btn.bx-btn-small svg {
         @apply w-4 h-4 leading-4;
     }
-
 
     /* Common elements: Forms */
     .bx-artificer form {

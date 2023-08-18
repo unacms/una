@@ -63,7 +63,7 @@
 }
 
 .bx-sidebar-item.bx-si-dropdown-has .bx-si-dropdown-icon {
-    display: inline-block;
+    display: flex;
 }
 .bx-sidebar-item.bx-si-dropdown-open .bx-si-dropdown-icon {
     
