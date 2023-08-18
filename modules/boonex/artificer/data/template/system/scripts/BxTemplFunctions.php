@@ -199,10 +199,6 @@ class BxTemplFunctions extends BxBaseFunctions
         if(!$oProfile)
             return '';
 
-        $sSwitcher = '';
-        if(($aSwitcher = bx_srv('system', 'account_profile_switcher', [], 'TemplServiceProfiles')) !== false) 
-            $sSwitcher = $aSwitcher['content'];
-
         $aTmplVarsColorSchemeSwitcher = [];
         $bTmplVarsColorSchemeSwitcher = BxDolModule::getInstance($this->_sModule)->_oConfig->getColorScheme() == 'auto';
         if($bTmplVarsColorSchemeSwitcher) {
@@ -217,7 +213,7 @@ class BxTemplFunctions extends BxBaseFunctions
                 'popup' => BxTemplFunctions::getInstance()->transBox('bx-sb-theme-switcher-menu', $oMenu->getCode(), true)
             ];
         }
-        
+
         $sMenuAccountPopup = 'sys_account_popup';
         $oMenuAccountPopup = BxTemplMenu::getObjectInstance($sMenuAccountPopup);
 

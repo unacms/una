@@ -33,7 +33,7 @@ class BxBaseMenuToolbar extends BxTemplMenu
             if($r['name'] != 'account')
                 continue;
 
-            if($a[$k]['bx_if:image']['condition'])
+            if($a[$k]['bx_if:image']['condition'] || $a[$k]['bx_if:icon-html']['condition'])
                 break;
 
             $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id());

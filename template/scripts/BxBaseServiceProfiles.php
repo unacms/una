@@ -865,6 +865,11 @@ class BxBaseServiceProfiles extends BxDol
         );
     }
 
+    public function serviceAccountProfileSwitcherAll ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = true, $sButtonTitle = '', $sProfileTemplate = '')
+    {
+        return $this->serviceAccountProfileSwitcher($iAccountId, $iActiveProfileId, $sUrlProfileAction, $bShowAll, $sButtonTitle, $sProfileTemplate);
+    }
+
     public function serviceProfileSettingsCfilter($iProfileId = false)
     {
         if(!BxDolContentFilter::getInstance()->isEnabled()) {
