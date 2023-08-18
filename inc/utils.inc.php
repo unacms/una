@@ -988,7 +988,6 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         curl_setopt($rConnect, CURLOPT_USERAGENT, 'UNA ' . (defined('BX_DOL_VERSION') ? constant('BX_DOL_VERSION') : ''));
         curl_setopt($rConnect, CURLOPT_TIMEOUT, BxDolDb::getInstance() ? getParam('sys_default_curl_timeout') : 10);
         curl_setopt($rConnect, CURLOPT_URL, $sFileUrl);
-        curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);
         curl_setopt($rConnect, CURLOPT_RETURNTRANSFER, 1);
 
         if (0 !== $iTimeout) {
