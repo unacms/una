@@ -16,7 +16,7 @@
         },
         eventContent: function(oParams) {
             if(oParams.view.type != 'dayGridDay' || !oParams.event.extendedProps.card)
-                return oParams.event._def.title;
+                return {html: '<div class="fc-event-title">' + oParams.event._def.title + '</div>'};
 
             oParams.event.url = '';
             return {html: oParams.event.extendedProps.card};
