@@ -25,10 +25,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 -- CSS Loader
 
-UPDATE `sys_preloader` SET `active` = 0 WHERE `module` = 'system' AND `type` = 'css_system' AND `content` = 'icons.css';
+UPDATE `sys_options` SET `value` = 'modules/boonex/fontawesome/template/css/|icons.css' WHERE `name` = 'sys_css_icons_default';
 
 INSERT INTO `sys_preloader` (`module`, `type`, `content`, `active`) VALUES
-('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|icons.css', 1),
 ('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|fonts-all.css', 1),
 ('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|fonts-duotone.css', 0),
 ('bx_fontawesome', 'css_system', 'modules/boonex/fontawesome/template/css/|fonts-light.css', 0);

@@ -12,7 +12,7 @@ DELETE FROM `sys_alerts` WHERE `handler_id` =  @iHandlerId ;
 
 -- CSS Loader
 
-UPDATE `sys_preloader` SET `active` = 1 WHERE `module` = 'system' AND `type` = 'css_system' AND `content` = 'icons.css';
+UPDATE `sys_options` SET `value` = 'icons.css' WHERE `name` = 'sys_css_icons_default';
 
 DELETE FROM `sys_preloader` WHERE `module` = 'bx_fontawesome';
 
