@@ -25,11 +25,11 @@ class BxTemplMenuDropdownSite extends BxTemplMenu
 
         $aTmplVarsSubmenu = array();
         $bTmplVarsSubmenu = !empty($aResult['submenu_object']);
-        if($bTmplVarsSubmenu) {
+        if($bTmplVarsSubmenu && ($oSubmenu = BxDolMenu::getObjectInstance($aResult['submenu_object'])) !== false) {
             $aResult['onclick'] = '';
             $aResult['class_add'] .= ' has-children';
 
-            $aTmplVarsSubmenu['bx_repeat:submenu_items'] = BxDolMenu::getObjectInstance($aResult['submenu_object'])->getMenuItems(); 
+            $aTmplVarsSubmenu['bx_repeat:submenu_items'] = $oSubmenu->getMenuItems(); 
         }
 
         $aResult['bx_if:show_arrow'] = array (
