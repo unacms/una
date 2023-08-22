@@ -471,18 +471,11 @@ div.bx-tl-item-text div.bx-tl-content > p:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
 }
-div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 20%;
-
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
-    background: -o-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
-
-    content: '';
+div.bx-tl-item-text div.bx-tl-content .bx-tl-content-overflow {
+    display: none;
+}
+div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow .bx-tl-content-overflow {
+    display: block;
 }
 div.bx-tl-item-text div.bx-tl-content-show-more {
     position: relative;

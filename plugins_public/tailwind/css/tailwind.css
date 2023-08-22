@@ -602,6 +602,9 @@
     .bx-popup-color-bg {
         @apply bg-white dark:bg-gray-800 shadow-md;
     }
+    .bx-def-color-bg-box-overflow {
+        @apply bg-gradient-to-b from-transparent to-white dark:to-gray-800;
+    }
     .bx-def-border-block,
     .bx-def-box,
     .bx-popup-border {
@@ -1214,10 +1217,13 @@
         @apply text-gray-300 dark:text-gray-700;
     }
 
-    
+
     /* Modules: Timeline */
-    .bx-artificer .bx-tl-item-text .bx-tl-content.bx-tl-overflow:before {
-        @apply bg-gradient-to-b from-transparent to-white dark:to-gray-800;
+    .bx-artificer .group\/item:hover .bx-tl-item-text .bx-tl-content.bx-tl-overflow .bx-tl-content-overflow {
+        @apply to-gray-50;
+    }
+    .dark .bx-artificer .group\/item:hover .bx-tl-item-text .bx-tl-content.bx-tl-overflow .bx-tl-content-overflow {
+        @apply to-gray-900;
     }
     .bx-artificer .bx-tl-item-activity .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a,
     .bx-artificer .bx-menu-object-bx_timeline_menu_item_manage .bx-stl-mil-wo-gaps-sm .sys-action-element-holder > a {
