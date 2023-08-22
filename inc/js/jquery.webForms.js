@@ -29,6 +29,13 @@
     }
     
     $.fn.processWebForms = function() {
+        // move to the first error
+        var aErrors = $('.bx-form-warn:visible', this);
+        if(aErrors.length > 0)
+            $([document.documentElement, document.body]).animate({
+                scrollTop: aErrors.first().closest('.bx-form-element-wrapper').offset().top - 50
+            }, 200);
+
         // switchers
         $('.bx-switcher-cont', this).each(function() {
             var eSwitcher = $(this);

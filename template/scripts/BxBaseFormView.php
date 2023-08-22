@@ -388,10 +388,12 @@ class BxBaseFormView extends BxDolForm
 
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) window['" . $sJsObjName . "'] = new " . $sJsObjClass . "(" . json_encode(array(
             'sObjName' => $sJsObjName,
+            'sName' => $this->getName(),
             'sObject' => isset($this->aParams['object']) ? $this->aParams['object'] : '',
             'sDisplay' => isset($this->aParams['display']) ? $this->aParams['display'] : '',
             'sRootUrl' => BX_DOL_URL_ROOT,
             'aHtmlIds' => $this->_aHtmlIds,
+            'sTxtLeavePageConfirmation' => _t('_sys_leave_page_confirmation')
         )) . ");";
 
         return $bWrap ? $this->oTemplate->_wrapInTagJsCode($sCode) : $sCode;
@@ -462,7 +464,7 @@ BLAH;
         }
 
         if(!$this->_bDynamicMode)
-            $sForm = $this->getJsScript(true) . $sForm;
+            $sForm = $sForm . $this->getJsScript(true);
 
         return $sForm;
     }

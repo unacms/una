@@ -1017,7 +1017,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function getName ()
     {
-        return $this->aFormAttrs['name'];
+        return isset($this->aFormAttrs['name']) ? $this->aFormAttrs['name'] : '';
     }
 
     function setId ($sId)

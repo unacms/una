@@ -12,21 +12,91 @@ function BxDolForm(oOptions)
         return;
 
     this._sObjName = oOptions.sObjName === undefined ? 'oForm' : oOptions.sObjName; // javascript object name, to run current object instance from onTimer
+    this._sName = oOptions.sName; // form name
     this._sObject = oOptions.sObject; // form object
     this._sDisplay = oOptions.sDisplay; // form display
 
     this._sActionsUri = 'form.php';
     this._sActionsUrl = oOptions.sRootUrl + this._sActionsUri; // actions url address
+    this._sTxtLeavePageConfirmation = oOptions.sTxtLeavePageConfirmation === undefined ? _t('_sys_leave_page_confirmation') : oOptions.sTxtLeavePageConfirmation;
+
+    this._bChanged = false;
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
     this._aHtmlIds = oOptions.aHtmlIds;
-    
-    var $this = this;
-	$(document).ready(function () {
-		$this.checkError();
-	});
+
+    this.init();
 }
+
+BxDolForm.prototype.init = function()
+{
+    var $this = this;
+
+    var bName = this._sName != undefined && this._sName.length > 0;
+    var bObject = this._sObject != undefined && this._sObject.length > 0;
+    if(!bName && !bObject)
+        return;
+
+    var sForm = '';
+    var oForm = null;
+    if(bName) {
+        sForm = this._sName;
+        oForm = $('#' + sForm);
+    }
+    if(!oForm.length && bObject) {
+        sForm = this._sObject;
+        oForm = $('#' + sForm);
+    }
+    if(!oForm.length)
+        return;
+
+    if(oForm.find('.bx-form-warn:visible').length > 0) {
+        oForm.find(':text').each(function() {
+            if($(this).val() > 0)
+                $this._bChanged = true;
+        });
+    }
+
+    document.getElementById(sForm).addEventListener('input', () => {
+        $this._bChanged = true;
+    });
+
+    document.getElementById(sForm).addEventListener('submit', (event) => {
+        $this._bChanged = false;
+    });
+
+    window.addEventListener('beforeunload', (event) => {
+        if(!$this._bChanged) 
+            return;
+
+        event.preventDefault();
+        event.returnValue = '';
+    });
+    
+    $('a').bind('click', function() {
+        if(!$this._bChanged)
+            return;
+
+        var oLink = $(this);
+        var sHref = oLink.attr('href');
+        var sOnclick = oLink.attr('onclick');
+        if(!sHref || (sOnclick != undefined && sOnclick.trim().length > 0))
+            return;
+
+        sHref = sHref.trim();
+        if(!sHref || sHref == 'javascript:void(0)')
+            return;
+
+        event.preventDefault();
+
+        bx_confirm($this._sTxtLeavePageConfirmation, function() {
+            $this._bChanged = false;
+
+            oLink.get(0).click();
+        });
+    });
+};
 
 BxDolForm.prototype.showHelp = function(oLink, sInputName)
 {
@@ -86,17 +156,6 @@ BxDolForm.setCheckBoxValue = function (obj) {
         val = 1;
     }
     oHidden.val(val);
-}
-
-BxDolForm.prototype.checkError = function () {
-
-    var $aErr = $('form[name="' + this._sObject + '"]').find('.bx-form-warn:visible');
-    
-    if ($aErr.length > 0){
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $aErr.first().closest('.bx-form-element-wrapper').offset().top - 50
-        }, 200);
-    }
 }
 
 /** @} */
