@@ -290,6 +290,7 @@ abstract class BxDolUploader extends BxDolFactory
                     'is_init_reordering' => isset($aParams['is_init_reordering']) ? $aParams['is_init_reordering'] : 0,
                 ]
             ],
+            'on_upload_before' => 'false',
             'on_upload' => 'false',
             'on_restore_ghosts' => 'false'
         ], $aParams));

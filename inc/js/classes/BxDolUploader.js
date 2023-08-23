@@ -53,6 +53,7 @@ BxDolUploaderBase.prototype.init = function (sUploaderObject, sStorageObject, sU
 
     this._isErrorShown = false;
 
+    this._onUploadBefore = typeof options.on_upload_before === 'function' ? options.on_upload_before : function () {};
     this._onUpload = typeof options.on_upload === 'function' ? options.on_upload : function () {};
     this._onRestoreGhosts = typeof options.on_restore_ghosts === 'function' ? options.on_restore_ghosts : function () {};
 }
@@ -114,6 +115,9 @@ BxDolUploaderBase.prototype.onBeforeUpload = function (params) {
     this._isUploadsInProgress = true;
     this._lockPageFromLeaving();
     this._clearErrors();
+
+    if(typeof this._onUploadBefore === 'function')
+        this._onUploadBefore(this);
 }
 
 BxDolUploaderBase.prototype.onProgress = function (params) {
@@ -134,7 +138,7 @@ BxDolUploaderBase.prototype.onUploadCompleted = function (sErrorMsg) {
         $('#' + this._sPopupContainerId).dolPopupHide({});
 
         if(typeof this._onUpload === 'function')
-            this._onUpload(this._iContentId);
+            this._onUpload(this, this._iContentId);
     }
 }
 
@@ -148,7 +152,6 @@ BxDolUploaderBase.prototype.restoreGhosts = function (bInitReordering, onComplet
     var $this = this;
 
     bInitReordering = bInitReordering !== undefined ? bInitReordering : this._isReordering;
-    onComplete = typeof onComplete === 'function' ? onComplete : this._onRestoreGhosts;
 
     $.getJSON(sUrl, function (aData) {
 
@@ -197,7 +200,10 @@ BxDolUploaderBase.prototype.restoreGhosts = function (bInitReordering, onComplet
         }
 
         if(typeof onComplete === 'function')
-            return onComplete(aData);
+            onComplete(aData);
+
+        if(typeof this._onRestoreGhosts === 'function')
+            this._onRestoreGhosts($this, aData);
     });
 };
 
@@ -648,7 +654,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
             }
 
             if(typeof this._onUpload === 'function')
-                this._onUpload(this._iContentId);
+                this._onUpload(this, this._iContentId);
         }
     }
 
@@ -666,6 +672,9 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     this.onBeforeUpload = function (params) {
         this._isUploadsInProgress = true;
         this._clearErrors();
+
+        if(typeof this._onUploadBefore === 'function')
+            this._onUploadBefore(this);
     }
 
     this.onProgress = function (params) {

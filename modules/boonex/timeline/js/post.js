@@ -236,7 +236,12 @@ BxTimelinePost.prototype.showAttachLink = function(oLink, iEventId)
     return false;
 };
 
-BxTimelinePost.prototype.onAttachMediaUpload = function(iEventId)
+BxTimelinePost.prototype.onAttachMediaUploadBefore = function(oUploader)
+{
+    $('#' + oUploader._sResultContainerId).parents('form:first').find(":submit").prop('disabled', true).addClass('bx-btn-disabled');
+};
+
+BxTimelinePost.prototype.onAttachMediaUpload = function(oUploader, iEventId)
 {
     var $this = this;
     var oData = this._getDefaultData();
@@ -281,9 +286,11 @@ BxTimelinePost.prototype.onAttachMediaUpload = function(iEventId)
             );
         }
     }
+
+    $('#' + oUploader._sResultContainerId).parents('form:first').find(":submit").prop('disabled', false).removeClass('bx-btn-disabled');
 };
 
-BxTimelinePost.prototype.onAttachMediaRestoreGhosts = function(aData)
+BxTimelinePost.prototype.onAttachMediaRestoreGhosts = function(oUploader, aData)
 {
     //perform some action after attached media's ghosts restoration.
 };

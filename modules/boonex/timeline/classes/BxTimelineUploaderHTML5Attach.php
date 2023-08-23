@@ -29,8 +29,9 @@ class BxTimelineUploaderHTML5Attach extends BxTemplUploaderHTML5
         $sJsObject = $this->_oModule->_oConfig->getJsObject('post');
 
         $aParams = array_merge($aParams, [
-            'on_upload' => 'function(iContentId) {' . $sJsObject . '.onAttachMediaUpload(iContentId);}',
-            'on_restore_ghosts' => 'function(aData) {' . $sJsObject . '.onAttachMediaRestoreGhosts(aData);}',
+            'on_upload_before' => 'function(oUploader) {' . $sJsObject . '.onAttachMediaUploadBefore(oUploader);}',
+            'on_upload' => 'function(oUploader, iContentId) {' . $sJsObject . '.onAttachMediaUpload(oUploader, iContentId);}',
+            'on_restore_ghosts' => 'function(oUploader, aData) {' . $sJsObject . '.onAttachMediaRestoreGhosts(oUploader, aData);}',
         ]);
 
         return parent::getUploaderJs($mixedGhostTemplate, $isMultiple, $aParams, $bDynamic);
