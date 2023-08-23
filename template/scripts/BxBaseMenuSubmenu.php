@@ -52,6 +52,16 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $this->_iContentId = $iContentId;
     }
 
+    public function getDisplayAddons()
+    {
+        return $this->_oObjectSubmenu->getDisplayAddons();
+    }   
+
+    public function setDisplayAddons($b)
+    {
+        return $this->_oObjectSubmenu->setDisplayAddons($b);
+    }
+
     /**
      * Get current menu in submenu
      * @return menu object name

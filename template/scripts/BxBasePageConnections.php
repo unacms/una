@@ -16,7 +16,7 @@ class BxBasePageConnections extends BxTemplPage
         $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return;
-        
+
         if(($oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu')) !== false) {
             $sMenuSubmenu = 'sys_con_submenu';
             $oMenuSubmenu->setObjectSubmenu($sMenuSubmenu, [
@@ -24,6 +24,7 @@ class BxBasePageConnections extends BxTemplPage
                 'link' => '', 
                 'icon' => ''
             ]);
+            $oMenuSubmenu->setDisplayAddons(true);
         }
 
         $this->addMarkers([
