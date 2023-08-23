@@ -702,6 +702,15 @@ class BxBasePage extends BxDolPage
         elseif ($bBlockVisible && method_exists($this, $sFunc)) {
             $mixedContent = $this->$sFunc($aBlock);
 
+            if(!empty($aBlock['content_empty'])) {
+                $sEmpty = _t($aBlock['content_empty']);
+                $sRegExp = '/(<[A-Za-z0-9]+\b.[^<]*[\pPi\pPf]bx\-msg\-box\b.*[\pPi\pPf][^>]*>)(' . _t('_Empty') . ')(<\/[A-Za-z0-9]+>)/su';
+                if(is_string($mixedContent))
+                    $mixedContent = preg_replace($sRegExp, "\${1}" . $sEmpty . "\${3}", $mixedContent);
+                else if(is_array($mixedContent) && !empty($mixedContent['content']))
+                   $mixedContent['content'] = preg_replace($sRegExp, "\${1}" . $sEmpty . "\${3}", $mixedContent['content']);
+            }
+
             $this->_oQuery->setReadOnlyMode(true);
 
             if(is_array($mixedContent) && !empty($mixedContent['content'])) {
@@ -954,8 +963,7 @@ class BxBasePage extends BxDolPage
     protected function _getBlockService ($aBlock)
     {
         $aMarkers = array_merge($this->_aMarkers, [
-            'block_id' => $aBlock['id'],
-            'content_empty' => $aBlock['content_empty']
+            'block_id' => $aBlock['id']
         ]);
 
         return BxDolService::callSerialized($aBlock['content'], $aMarkers);
