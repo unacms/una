@@ -234,6 +234,26 @@ class BxBaseServiceProfiles extends BxDol
 
         return BxDolTemplate::getInstance()->parseLink(BxDolService::call($sModule, $sMethod, array($oProfile->getContentId())), $sCaption);
     }
+    
+    public function serviceGetMenuAddonProfileConnections($iProfileId = 0)
+    {
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return '';
+
+        $iCount = 0;
+
+        //--- Add friend requests.
+        $iCount += (int)bx_srv('system', 'get_unconfirmed_connections_num', ['sys_profiles_friends'], 'TemplServiceConnections');
+
+        //--- Add subscriptions.
+        $iCount += (int)bx_srv('system', 'get_connected_content_num', ['sys_profiles_subscriptions'], 'TemplServiceConnections');
+
+        //--- Add subscribed me.
+        $iCount += (int)bx_srv('system', 'get_connected_initiators_num', ['sys_profiles_subscriptions'], 'TemplServiceConnections');
+
+        return $iCount > 0 ? $iCount : '';
+    }   
 
     /**
      * @page service Service Calls

@@ -4653,7 +4653,6 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', '', '', '', 'home col-gray', '', 2147483647, 1, 1, 1),
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2),
 ('sys_site', 'system', 'search', '_sys_menu_item_title_system_search', '_sys_menu_item_title_search', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-search\', this, \'site\');', '', 'search', '', 2147483647, 1, 1, 3),
-('sys_site', 'system', 'friend-suggestions', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=friend-suggestions', '', '', 'users', '', 2147483646, 1, 1, 4),
 ('sys_site', 'system', 'more-auto', '_sys_menu_item_title_system_more_auto', '_sys_menu_item_title_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', 2147483647, 1, 0, 9999);
 
 -- panel menu
@@ -4785,7 +4784,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- profile stats
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'system', 'profile-stats-profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', 'user', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_profile_edit";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483646, 1, 0, 0);
+('sys_profile_stats', 'system', 'profile-stats-profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', 'user', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_profile_edit";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483646, 1, 0, 0),
+('sys_profile_stats', 'system', 'friend-suggestions', '_sys_menu_item_title_system_connections', '_sys_menu_item_title_connections', 'page.php?i=friend-suggestions', '', '', 'users', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:34:"get_menu_addon_profile_connections";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483646, 1, 1, 1);
 
 -- wiki menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
