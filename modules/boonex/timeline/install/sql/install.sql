@@ -501,11 +501,11 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_timeline_photos_preview', 'Resize', 'a:3:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_timeline_photos_view', 'Resize', 'a:1:{s:1:"w";s:3:"300";}', '0'),
 ('bx_timeline_photos_medium', 'Resize', 'a:1:{s:1:"w";s:3:"600";}', '0'),
-('bx_timeline_photos_big', 'Resize', 'a:2:{s:1:"w";s:4:"1200";s:1:"h";s:4:"1200";}', '0'),
+('bx_timeline_photos_big', 'Resize', 'a:2:{s:1:"w";s:4:"1000";s:1:"h";s:4:"1000";}', '0'),
 
 ('bx_timeline_videos_photo_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"300";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_timeline_videos_photo_view', 'Resize', 'a:1:{s:1:"w";s:3:"480";}', '0'),
-('bx_timeline_videos_photo_big', 'Resize', 'a:2:{s:1:"w";s:4:"1200";s:1:"h";s:4:"1200";}', '0'),
+('bx_timeline_videos_photo_big', 'Resize', 'a:2:{s:1:"w";s:4:"1000";s:1:"h";s:4:"1000";}', '0'),
 ('bx_timeline_videos_poster_preview', 'Poster', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_timeline_videos_poster_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"300";s:13:"square_resize";s:1:"1";}', 10),
 ('bx_timeline_videos_poster_view', 'Poster', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"jpg";}', 0),

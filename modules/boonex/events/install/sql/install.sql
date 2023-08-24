@@ -328,7 +328,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_events_avatar', 'Resize', 'a:3:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_events_avatar_big', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_events_picture', 'Resize', 'a:3:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"0";}', '0'),
-('bx_events_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0'),
+('bx_events_cover', 'Resize', 'a:1:{s:1:"w";s:4:"1200";}', '0'),
 ('bx_events_cover_thumb', 'Resize', 'a:3:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_events_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
