@@ -794,6 +794,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sWhereClause = $this->prepareAsString("AND `{$sTableAlias}`.`owner_id`=? ", $aParams['value']);
                 break;
 
+            case 'source':
+                $sWhereClause = $this->prepareAsString("AND `{$sTableAlias}`.`source`=? ", $aParams['value']);
+                break;
+
             case 'common_by_object':
                 $sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
                 $sWhereClause = $this->prepareAsString("AND `{$sTableAlias}`.`system`='0' AND `{$sTableAlias}`.`object_id`=? ", $aParams['value']);

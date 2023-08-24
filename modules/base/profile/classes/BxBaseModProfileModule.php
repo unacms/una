@@ -1936,6 +1936,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         $CNF = &$this->_oConfig->CNF;
 
+        if(!empty($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]))
+            $aParams['status'] = $aContentInfo[$CNF['FIELD_STATUS']];
+
+        if(!empty($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]))
+            $aParams['status_admin'] = $aContentInfo[$CNF['FIELD_STATUS_ADMIN']];
+
         if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
 

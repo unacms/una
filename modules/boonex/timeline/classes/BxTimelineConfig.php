@@ -103,6 +103,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_OBJECT_OWNER_ID' => 'object_owner_id',
             'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
             'FIELD_CF' => 'object_cf',
+            'FIELD_SOURCE' => 'source',
             'FIELD_ADDED' => 'date',
             'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',

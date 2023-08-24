@@ -5079,10 +5079,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function deleteCacheItem($iEventId)
     {
+        //--- Delete own item cache.
         $oCacheItem = $this->getCacheItemObject();
         $aCacheKeys = $this->_oConfig->getCacheItemKeys($iEventId);
         foreach($aCacheKeys as $sCacheKey)
             $oCacheItem->delData($sCacheKey);
+
+        //--- Delete item cache for reposts.
+        $aReposts = $this->_oDb->getReposts($iEventId);
+        foreach($aReposts as $aRepost)
+            $this->deleteCacheItem($aRepost['event_id']);
     }
 
     public function rebuildSlice()

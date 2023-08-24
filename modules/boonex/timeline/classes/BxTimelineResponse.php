@@ -107,9 +107,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if(!empty($oAlert->aExtras) && is_array($oAlert->aExtras))
                     $aContent = array_merge($aContent, bx_process_input($oAlert->aExtras));
 
-                $aParamsSet = [
-                    'content' => serialize($aContent)
-                ];
+                $aParamsSet = ['content' => serialize($aContent)];
+                $aParamsSetBySource = [];
+
+                foreach(['status', 'status_admin'] as $sStatusKey)
+                    if(!empty($aContent[$sStatusKey])) {
+                        $aParamsSet[$sStatusKey] = $aContent[$sStatusKey];
+                        $aParamsSetBySource[$sStatusKey] = $aContent[$sStatusKey];
+                    }
 
                 if($iObjectPrivacyView > 0)
                     $aParamsSet = array_merge($aParamsSet, [
@@ -125,12 +130,21 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->_oDb->updateEvent($aParamsSet, ['id' => $aEvent[$CNF['FIELD_ID']]]);
 
                 //--- Delete item cache.
-                $this->_oModule->deleteCacheItem($aEvent['id']);
+                $this->_oModule->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);              
 
-                //--- Delete item cache for repost.
-                $aReposts = $this->_oModule->_oDb->getReposts($aEvent[$CNF['FIELD_ID']]);
-                foreach($aReposts as $aRepost)
-                    $this->_oModule->deleteCacheItem($aRepost['event_id']);
+                //--- Update related events.
+                if(!empty($aParamsSetBySource)) {
+                    $aEventsBySource = $this->_oModule->_oDb->getEvents(['browse' => 'source', 'value' => $aEvent[$CNF['FIELD_SOURCE']]]);
+                    foreach($aEventsBySource as $aEventBySource) {
+                        if($aEventBySource[$CNF['FIELD_ID']] == $aEvent[$CNF['FIELD_ID']])
+                            continue;
+
+                        $this->_oModule->_oDb->updateEvent($aParamsSetBySource, ['id' => $aEventBySource[$CNF['FIELD_ID']]]);
+
+                        //--- Delete item cache.
+                        $this->_oModule->deleteCacheItem($aEventBySource[$CNF['FIELD_ID']]);
+                    }
+                }
 
                 $this->_oModule->rebuildSlice();
                 break;
