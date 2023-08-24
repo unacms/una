@@ -1306,12 +1306,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sJsObject = $this->_oConfig->getJsObject('repost');
 
             $sCode = "var " . $sJsObject . " = null; 
-            $.getScript('" . bx_js_string($this->getJsUrl('main.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-                $.getScript('" . bx_js_string($this->getJsUrl('repost.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-                    bx_get_style('" . bx_js_string($this->getCssUrl('repost.css'), BX_ESCAPE_STR_APOS) . "');
-                    " . $sCode . "
-                });
-            }); ";
+            if(typeof(window.BxTimelineRepost) === 'undefined')
+                $.getScript('" . bx_js_string($this->getJsUrl('main.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                    $.getScript('" . bx_js_string($this->getJsUrl('repost.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                        bx_get_style('" . bx_js_string($this->getCssUrl('repost.css'), BX_ESCAPE_STR_APOS) . "');
+                        " . $sCode . "
+                    });
+                }); ";
         }
         else {
             $sCode = "var " . $sCode;
