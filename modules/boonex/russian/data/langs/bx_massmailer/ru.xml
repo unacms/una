@@ -82,6 +82,7 @@
   <string name="_bx_massmailer_form_campaign_input_body"><![CDATA[Тело письма]]></string>
   <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Тело письма не может быть пустым и в нем должен обязательно присутствовать маркер {unsubscribe_url}]]></string>
   <string name="_bx_massmailer_form_campaign_input_is_one_per_account"><![CDATA[Одно письмо на один аккаунт]]></string>
+  <string name="_bx_massmailer_form_campaign_input_is_track_links"><![CDATA[Отслеживать клики]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_test_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_segments"><![CDATA[Сегменты]]></string>

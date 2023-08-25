@@ -479,11 +479,12 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $aTmp = $this->getDataForCampaign($iCampaignId);
         $aTemplate = $aTmp[0];
         $aCustomHeaders = $aTmp[1];
+        $aCampaign = $aTmp[2];
               
         if (!$aTemplate)
             return false;
         
-        return $this->sendLetter($sEmail, $iCampaignId, $aCustomHeaders, getLoggedId(), $aTemplate, false);
+        return $this->sendLetter($sEmail, $iCampaignId, $aCustomHeaders, getLoggedId(), $aTemplate, false, $aCampaign['is_track_links']);
     }
           
     public function sendAll($iCampaignId)
@@ -502,7 +503,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $this->_oDb->deleteCampaignData($iCampaignId);
         $aAccounts = $this->getEmailsBySegment($aCampaign['segments'], $aCampaign['is_one_per_account']);
         foreach ($aAccounts as $aAccountInfo){
-            $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['account_id'], $aTemplate, true);
+            $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['account_id'], $aTemplate, true, $aCampaign['is_track_links']);
             $this->_oDb->addEmailToSentListForCampaign($iCampaignId, $aAccountInfo['email']);
 
             if (1 == rand(1, 300)) {
@@ -515,27 +516,27 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         return true;
     }
     
-    private function sendLetter($sEmail, $iCampaignId, $aCustomHeaders, $iAccountId, $aTemplate, $bAddToQueue)
+    private function sendLetter($sEmail, $iCampaignId, $aCustomHeaders, $iAccountId, $aTemplate, $bAddToQueue, $bTrackKinks)
     {
         $sLetterCode = $this->_oDb->addLetter($iCampaignId, $sEmail);
         
         $aMarkers = $this->addMarkers($iAccountId, $sLetterCode);
         bx_alert($this->_aModule['name'], 'user_fields', $iCampaignId, $iAccountId, array('email' => $sEmail, 'markers' => &$aMarkers));
-        
-        $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
-        $aTemplate['Body'] = preg_replace_callback("/$regexp/siU",
-            function ($aMatch) use ($iCampaignId, $sLetterCode, $aMarkers) {
-                if ($aMatch[2] != '{unsubscribe_url}'){
-                    $sUrl = bx_replace_markers($aMatch[2], $aMarkers);
-                    $sLinkCode = $this->_oDb->addLink($sLetterCode, $sUrl, $aMatch[3], $iCampaignId);
-                    return str_replace($sUrl, BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/click/' . $sLinkCode . "/", $aMatch[0]);
-                }
-                else{
-                    return $aMatch[0];
-                }
-            },
-            $aTemplate['Body']);
-        
+        if ($bTrackKinks){
+            $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
+            $aTemplate['Body'] = preg_replace_callback("/$regexp/siU",
+                function ($aMatch) use ($iCampaignId, $sLetterCode, $aMarkers) {
+                    if ($aMatch[2] != '{unsubscribe_url}'){
+                        $sUrl = bx_replace_markers($aMatch[2], $aMarkers);
+                        $sLinkCode = $this->_oDb->addLink($sLetterCode, $sUrl, $aMatch[3], $iCampaignId);
+                        return str_replace($sUrl, BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/click/' . $sLinkCode . "/", $aMatch[0]);
+                    }
+                    else{
+                        return $aMatch[0];
+                    }
+                },
+                $aTemplate['Body']);
+        }
         $aMarkersInLetter = [];
         preg_match_all("/\{[^\}]*\}/i", $aTemplate['Body'], $aMarkersInLetter);
         if ($aMarkersInLetter[0]>0){
