@@ -36,7 +36,7 @@ class BxBaseUploaderServices extends BxDol
      * @api @ref bx_system_cmts-get_data_api "get_data_api"
      */
     
-    public function serviceGetDataApi($aParams)
+    public function serviceGetDataApi($aParams = [])
     {
         $sUploaderObject = bx_process_input(bx_get('uo'));
         $sStorageObject = bx_process_input(bx_get('so'));
