@@ -123,14 +123,44 @@ class BxBaseServiceAccount extends BxDol
     {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
-        return $this->_oAccountForms->editAccountEmailSettingsForm($iAccountId);
+        
+        $bApi = bx_is_api();
+        
+        $mixedResult =$this->_oAccountForms->editAccountEmailSettingsForm($iAccountId);
+        if($bApi) {
+            if(is_array($mixedResult))
+                return [bx_api_get_block('form', $mixedResult, [
+                    'ext' => [
+                        'request' => ['url' => '/api.php?r=system/account_settings_email/TemplServiceAccount', 'immutable' => true]
+                    ]
+                ])];
+            else
+                return bx_api_get_msg($mixedResult);
+        }
+        
+        return $mixedResult;
     }
 
     public function serviceAccountSettingsPassword ($iAccountId = false)
     {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
-        return $this->_oAccountForms->editAccountPasswordSettingsForm($iAccountId);
+        
+        $bApi = bx_is_api();
+        
+        $mixedResult =$this->_oAccountForms->editAccountPasswordSettingsForm($iAccountId);
+        if($bApi) {
+            if(is_array($mixedResult))
+                return [bx_api_get_block('form', $mixedResult, [
+                    'ext' => [
+                        'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
+                    ]
+                ])];
+            else
+                return bx_api_get_msg($mixedResult);
+        }
+        
+        return $mixedResult;
     }
 
     public function serviceAccountSettingsInfo ($iAccountId = false)
