@@ -370,6 +370,9 @@ EOF;
 
     public function processModules ($a)
     {
+        require_once(BX_INSTALL_PATH_HEADER);
+        require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+
         $aTypes = array (BX_DOL_MODULE_TYPE_LANGUAGE, BX_DOL_MODULE_TYPE_TEMPLATE, BX_DOL_MODULE_TYPE_MODULE);
         foreach ($aTypes as $sModuleType) {
             if (empty($a[$sModuleType]))
@@ -405,8 +408,6 @@ EOF;
         if (!file_exists(BX_INSTALL_PATH_HEADER))
             return _t('_sys_inst_msg_script_isnt_installed');
 
-        require_once(BX_INSTALL_PATH_HEADER);
-        require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
         bx_import('BxDolStudioInstallerUtils');
         bx_import('BxDolLanguages');
         BxDolLanguages::getInstance();
