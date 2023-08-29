@@ -1,4 +1,6 @@
 
+ALTER TABLE `sys_menu_items` CHANGE `icon` `icon` TEXT NOT NULL; -- should be in 13.0.0-A1
+
 CREATE TABLE IF NOT EXISTS `sys_iframely_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `url` varchar(255) DEFAULT NULL,
