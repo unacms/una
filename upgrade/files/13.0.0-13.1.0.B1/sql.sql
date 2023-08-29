@@ -212,6 +212,12 @@ DELETE FROM `sys_preloader` WHERE `module` = 'system' AND `type` = 'js_system' A
 INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALUES
 ('system', 'js_system', 'BxDolSockets.js', 1, 45);
 
+
+-- TRANSCODERS
+
+UPDATE `sys_objects_transcoder` SET `ts` = UNIX_TIMESTAMP() WHERE `object` IN('bx_ads_cover', 'bx_ads_view_photos', 'bx_channels_cover', 'bx_classes_cover', 'bx_classes_gallery_photos', 'bx_courses_cover', 'bx_events_cover', 'bx_forum_cover', 'bx_forum_view_photos', 'bx_glossary_cover', 'bx_groups_cover', 'bx_market_cover', 'bx_photos_cover', 'bx_polls_cover', 'bx_posts_cover', 'bx_posts_view_photos', 'bx_snipcart_cover', 'bx_spaces_cover', 'bx_stream_cover', 'bx_tasks_cover', 'bx_tasks_gallery_photos', 'bx_timeline_photos_big', 'bx_timeline_videos_photo_big', 'bx_videos_cover');
+
+
 -- Last step is to update current version
 
 UPDATE `sys_modules` SET `version` = '13.1.0-B1' WHERE `version` = '13.0.0' AND `name` = 'system';
