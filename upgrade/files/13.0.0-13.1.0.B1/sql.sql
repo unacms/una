@@ -79,10 +79,12 @@ CREATE TABLE IF NOT EXISTS `sys_recommendation_criteria` (
   UNIQUE KEY `criterion` (`object_id`, `name`)
 );
 
+TRUNCATE TABLE `sys_objects_recommendation`;
 INSERT INTO `sys_objects_recommendation` (`name`, `module`, `connection`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
 ('sys_friends', 'system', 'sys_profiles_friends', '', 1, 1, 'BxTemplRecommendationProfile', '');
 SET @iRecFriends = LAST_INSERT_ID();
 
+TRUNCATE TABLE `sys_recommendation_criteria`;
 INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `source`, `params`, `weight`, `active`) VALUES
 (@iRecFriends, 'mutual_friends', 'sql', 'SELECT `tff`.`initiator` AS `id`, SUM({points}) AS `value` FROM `sys_profiles_conn_friends` AS `tf` INNER JOIN `sys_profiles_conn_friends` AS `tff` ON `tf`.`content`=`tff`.`content` AND `tff`.`initiator`<>{profile_id} AND `tff`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tff`.`mutual`=''1'' WHERE `tf`.`initiator`={profile_id} AND `tf`.`mutual`=''1'' GROUP BY `id`', 'a:1:{s:6:"points";i:2;}', 0.5, 1),
 (@iRecFriends, 'shared_context', 'sql', 'SELECT `tm`.`initiator`AS `id`, SUM({points}) AS `value` FROM `{connection}` AS `tg` INNER JOIN `{connection}` AS `tm` ON `tg`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tm`.`mutual`=''1'' WHERE `tg`.`initiator`={profile_id} AND `tg`.`mutual`=''1'' GROUP BY `id`', 'a:2:{s:6:"points";i:1;s:10:"connection";s:14:"bx_groups_fans";}', 0.25, 1),
