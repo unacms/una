@@ -42,7 +42,7 @@ BxDolCmts.prototype.cmtInit = function()
 
     $(document).ready(function() {
         // init socket
-        if(oBxDolSockets && $this._sSocket)
+        if(window.oBxDolSockets !== undefined && $this._sSocket)
             oBxDolSockets.subscribe($this._sSocket, $this._iObjId, 'comment_added', function(oData) {
                 $this.cmtUpdateCounterAs(oData);
                 $this.showLiveUpdateForSocket(oData);

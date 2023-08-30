@@ -36,7 +36,7 @@ BxDolVote.prototype.init = function()
 {
     var $this = this; 
     $(document).ready(function() {
-        if(oBxDolSockets && $this._sSocket)
+        if(window.oBxDolSockets !== undefined && $this._sSocket)
             oBxDolSockets.subscribe($this._sSocket, $this._iObjId, 'voted', function(oData) {
                 $this.onVoteAs(oData);
             });
