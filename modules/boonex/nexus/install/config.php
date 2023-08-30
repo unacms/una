@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_nexus',
     'title' => 'Nexus',
     'note' => 'Nexus - Mobile Apps and Desktop apps connector.',
-    'version' => '13.0.5.DEV',
+    'version' => '13.0.6.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
