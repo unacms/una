@@ -51,7 +51,12 @@ class BxForumMenuCategories extends BxTemplMenu
             'name' => 'show-0',
             'title' => _t('_bx_forum_txt_all_categories'),
             'link' => BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
-            'onclick' => 'javascript:',
+            'bx_if:onclick' => [
+                'condition' => false,
+                'content' => [
+                    'onclick' => 'javascript:',
+                ]
+            ],
             'attrs' => '',
             'bx_if:image' => array (
                 'condition' => false,
@@ -96,7 +101,12 @@ class BxForumMenuCategories extends BxTemplMenu
                     'name' => 'show-' . $aCategories['bx_repeat:cats'][$sKey]['value'],
                     'title' => $aCategories['bx_repeat:cats'][$sKey]['name'],
                     'link' => $aCategories['bx_repeat:cats'][$sKey]['url'],
-                    'onclick' => 'javascript:',
+                    'bx_if:onclick' => [
+                        'condition' => false,
+                        'content' => [
+                            'onclick' => 'javascript:',
+                        ]
+                    ],
                     'attrs' => '',
                     'bx_if:image' => array (
                         'condition' => (bool)$sIconUrl,
@@ -151,7 +161,12 @@ class BxForumMenuCategories extends BxTemplMenu
                 'name' => 'show-' . $sLink,
                 'title' => _t($aLink['title']),
                 'link' => 'javascript:void(0)',
-                'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                'bx_if:onclick' => [
+                    'condition' => true,
+                    'content' => [
+                        'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                    ]
+                ],
                 'attrs' => '',
                 'bx_if:image' => [
                     'condition' => false,

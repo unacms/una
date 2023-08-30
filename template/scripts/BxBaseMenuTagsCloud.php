@@ -32,7 +32,12 @@ class BxBaseMenuTagsCloud extends BxTemplMenu
                 'name' => 'show-' . $sKeyword,
                 'title' => htmlspecialchars_adv($sKeyword),
                 'link' => $oMetaObject->keywordsGetHashTagUrl($sKeyword, 0, $mixedSection),
-                'onclick' => 'javascript:',
+                'bx_if:onclick' => [
+                    'condition' => false,
+                    'content' => [
+                        'onclick' => 'javascript:',
+                    ]
+                ],
                 'attrs' => '',
                 'bx_if:image' => array (
                     'condition' => false,
@@ -91,7 +96,12 @@ class BxBaseMenuTagsCloud extends BxTemplMenu
                 'name' => 'show-' . $sLink,
                 'title' => _t($aLink['title']),
                 'link' => 'javascript:void(0)',
-                'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                'bx_if:onclick' => [
+                    'condition' => false,
+                    'content' => [
+                        'onclick' => 'bx_menu_show_more_less(this, \'' . $this->_sObject . '\', \'.bx-menu-object-' . $this->_sObject . '\')',
+                    ]
+                ],
                 'attrs' => '',
                 'bx_if:image' => [
                     'condition' => false,
