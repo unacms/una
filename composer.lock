@@ -22,12 +22,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/s3.git",
-                "reference": "b65e74b176949c1e885b0a32a33a4c86d79e2c6d"
+                "reference": "59f0962b3f5ca1a5e1ec993a3855577f0da676c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/s3/zipball/b65e74b176949c1e885b0a32a33a4c86d79e2c6d",
-                "reference": "b65e74b176949c1e885b0a32a33a4c86d79e2c6d",
+                "url": "https://api.github.com/repos/akeeba/s3/zipball/59f0962b3f5ca1a5e1ec993a3855577f0da676c9",
+                "reference": "59f0962b3f5ca1a5e1ec993a3855577f0da676c9",
                 "shasum": ""
             },
             "require": {
@@ -38,8 +38,11 @@
             "default-branch": true,
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/aliasing.php"
+                ],
                 "psr-4": {
-                    "Akeeba\\Engine\\Postproc\\Connector\\S3v4\\": "src"
+                    "Akeeba\\S3\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -63,7 +66,7 @@
                 "issues": "https://github.com/akeeba/s3/issues",
                 "source": "https://github.com/akeeba/s3/tree/development"
             },
-            "time": "2023-07-04T07:01:54+00:00"
+            "time": "2023-08-30T08:55:41+00:00"
         },
         {
             "name": "avto-dev/composer-cleanup-plugin",
@@ -150,25 +153,24 @@
         },
         {
             "name": "bshaffer/oauth2-server-php",
-            "version": "v1.14.0",
+            "version": "v1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bshaffer/oauth2-server-php.git",
-                "reference": "894f6720c7605bc83ee7ac5634d74ea185f3099d"
+                "reference": "096db2c86a7d67a2ba45e72be7d208c342694542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/894f6720c7605bc83ee7ac5634d74ea185f3099d",
-                "reference": "894f6720c7605bc83ee7ac5634d74ea185f3099d",
+                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/096db2c86a7d67a2ba45e72be7d208c342694542",
+                "reference": "096db2c86a7d67a2ba45e72be7d208c342694542",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
             },
             "require-dev": {
                 "aws/aws-sdk-php": "^2.8",
-                "firebase/php-jwt": "^2.2",
-                "mongodb/mongodb": "^1.1",
+                "firebase/php-jwt": "^6.4",
                 "phpunit/phpunit": "^7.5||^8.0",
                 "predis/predis": "^1.1",
                 "thobbs/phpcassa": "dev-master",
@@ -176,7 +178,7 @@
             },
             "suggest": {
                 "aws/aws-sdk-php": "~2.8 is required to use DynamoDB storage",
-                "firebase/php-jwt": "~2.2 is required to use JWT features",
+                "firebase/php-jwt": "~v6.4 is required to use JWT features",
                 "mongodb/mongodb": "^1.1 is required to use MongoDB storage",
                 "predis/predis": "Required to use Redis storage",
                 "thobbs/phpcassa": "Required to use Cassandra storage"
@@ -207,22 +209,22 @@
             ],
             "support": {
                 "issues": "https://github.com/bshaffer/oauth2-server-php/issues",
-                "source": "https://github.com/bshaffer/oauth2-server-php/tree/v1.14.0"
+                "source": "https://github.com/bshaffer/oauth2-server-php/tree/v1.14.1"
             },
-            "time": "2023-06-12T18:36:55+00:00"
+            "time": "2023-07-07T17:53:54+00:00"
         },
         {
             "name": "chargebee/chargebee-php",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chargebee/chargebee-php.git",
-                "reference": "de9c4e33ee7afcccbc9feea5e6ebc5a71958f27b"
+                "reference": "58ee0c4ce0ffc5e7cca22d10fe9f2ec8cbe63afc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/de9c4e33ee7afcccbc9feea5e6ebc5a71958f27b",
-                "reference": "de9c4e33ee7afcccbc9feea5e6ebc5a71958f27b",
+                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/58ee0c4ce0ffc5e7cca22d10fe9f2ec8cbe63afc",
+                "reference": "58ee0c4ce0ffc5e7cca22d10fe9f2ec8cbe63afc",
                 "shasum": ""
             },
             "require": {
@@ -256,9 +258,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chargebee/chargebee-php/issues",
-                "source": "https://github.com/chargebee/chargebee-php/tree/v3.19.0"
+                "source": "https://github.com/chargebee/chargebee-php/tree/v3.20.0"
             },
-            "time": "2023-06-30T06:55:15+00:00"
+            "time": "2023-07-31T05:26:00+00:00"
         },
         {
             "name": "curl/cacert",
@@ -392,22 +394,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.7.0",
+            "version": "7.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "fb7566caccf22d74d1ab270de3551f72a58399f5"
+                "reference": "1110f66a6530a40fe7aea0378fe608ee2b2248f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/fb7566caccf22d74d1ab270de3551f72a58399f5",
-                "reference": "fb7566caccf22d74d1ab270de3551f72a58399f5",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/1110f66a6530a40fe7aea0378fe608ee2b2248f9",
+                "reference": "1110f66a6530a40fe7aea0378fe608ee2b2248f9",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^1.5.3 || ^2.0",
-                "guzzlehttp/psr7": "^1.9.1 || ^2.4.5",
+                "guzzlehttp/promises": "^1.5.3 || ^2.0.1",
+                "guzzlehttp/psr7": "^1.9.1 || ^2.5.1",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -498,7 +500,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.7.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.8.0"
             },
             "funding": [
                 {
@@ -514,20 +516,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-21T14:04:53+00:00"
+            "time": "2023-08-27T10:20:53+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "3a494dc7dc1d7d12e511890177ae2d0e6c107da6"
+                "reference": "111166291a0f8130081195ac4556a5587d7f1b5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/3a494dc7dc1d7d12e511890177ae2d0e6c107da6",
-                "reference": "3a494dc7dc1d7d12e511890177ae2d0e6c107da6",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/111166291a0f8130081195ac4556a5587d7f1b5d",
+                "reference": "111166291a0f8130081195ac4556a5587d7f1b5d",
                 "shasum": ""
             },
             "require": {
@@ -581,7 +583,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.0.0"
+                "source": "https://github.com/guzzle/promises/tree/2.0.1"
             },
             "funding": [
                 {
@@ -597,20 +599,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-21T13:50:22+00:00"
+            "time": "2023-08-03T15:11:55+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.5.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "b635f279edd83fc275f822a1188157ffea568ff6"
+                "reference": "be45764272e8873c72dbe3d2edcfdfcc3bc9f727"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/b635f279edd83fc275f822a1188157ffea568ff6",
-                "reference": "b635f279edd83fc275f822a1188157ffea568ff6",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/be45764272e8873c72dbe3d2edcfdfcc3bc9f727",
+                "reference": "be45764272e8873c72dbe3d2edcfdfcc3bc9f727",
                 "shasum": ""
             },
             "require": {
@@ -697,7 +699,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.5.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.6.1"
             },
             "funding": [
                 {
@@ -713,7 +715,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-17T16:11:26+00:00"
+            "time": "2023-08-27T10:13:57+00:00"
         },
         {
             "name": "intervention/image",
@@ -1298,16 +1300,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.8.0",
+            "version": "v6.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "df16b615e371d81fb79e506277faea67a1be18f1"
+                "reference": "e88da8d679acc3824ff231fdc553565b802ac016"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/df16b615e371d81fb79e506277faea67a1be18f1",
-                "reference": "df16b615e371d81fb79e506277faea67a1be18f1",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e88da8d679acc3824ff231fdc553565b802ac016",
+                "reference": "e88da8d679acc3824ff231fdc553565b802ac016",
                 "shasum": ""
             },
             "require": {
@@ -1317,13 +1319,13 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
                 "doctrine/annotations": "^1.2.6 || ^1.13.3",
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.3.5",
                 "roave/security-advisories": "dev-latest",
-                "squizlabs/php_codesniffer": "^3.7.1",
+                "squizlabs/php_codesniffer": "^3.7.2",
                 "yoast/phpunit-polyfills": "^1.0.4"
             },
             "suggest": {
@@ -1366,7 +1368,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.0"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.1"
             },
             "funding": [
                 {
@@ -1374,7 +1376,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-06T14:43:22+00:00"
+            "time": "2023-08-29T08:26:30+00:00"
         },
         {
             "name": "psr/http-client",
@@ -1538,30 +1540,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.4",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                    "Psr\\Log\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1582,9 +1584,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
+                "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
-            "time": "2021-05-03T11:20:27+00:00"
+            "time": "2021-07-14T16:46:02+00:00"
         },
         {
             "name": "pusher/pusher-php-server",
@@ -1746,26 +1748,26 @@
         },
         {
             "name": "spatie/calendar-links",
-            "version": "1.8.0",
+            "version": "1.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/calendar-links.git",
-                "reference": "654fc0174e6279539b9bf0abdc3339e34c5286d7"
+                "reference": "d6f6c5e7ff916e2a55e2160d4db4f15875cb6e07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/calendar-links/zipball/654fc0174e6279539b9bf0abdc3339e34c5286d7",
-                "reference": "654fc0174e6279539b9bf0abdc3339e34c5286d7",
+                "url": "https://api.github.com/repos/spatie/calendar-links/zipball/d6f6c5e7ff916e2a55e2160d4db4f15875cb6e07",
+                "reference": "d6f6c5e7ff916e2a55e2160d4db4f15875cb6e07",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpunit/phpunit": "^9.5",
-                "spatie/phpunit-snapshot-assertions": "^4.0",
-                "vimeo/psalm": "^4.20"
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "phpunit/phpunit": "^9.6 || ^10.0",
+                "spatie/phpunit-snapshot-assertions": "^4.2 || ^5.0",
+                "vimeo/psalm": "^5.6"
             },
             "type": "library",
             "autoload": {
@@ -1793,7 +1795,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/calendar-links/issues",
-                "source": "https://github.com/spatie/calendar-links/tree/1.8.0"
+                "source": "https://github.com/spatie/calendar-links/tree/1.8.5"
             },
             "funding": [
                 {
@@ -1801,7 +1803,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-08-20T12:59:17+00:00"
+            "time": "2023-03-02T16:05:13+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -1865,25 +1867,25 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.5.2",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66"
+                "reference": "7c3aff79d10325257a001fcf92d991f24fc967cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/7c3aff79d10325257a001fcf92d991f24fc967cf",
+                "reference": "7c3aff79d10325257a001fcf92d991f24fc967cf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=8.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.5-dev"
+                    "dev-main": "3.4-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -1912,7 +1914,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.2"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -1928,7 +1930,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:53:40+00:00"
+            "time": "2023-05-23T14:45:45+00:00"
         },
         {
             "name": "tpyo/amazon-s3-php-class",
@@ -2036,16 +2038,16 @@
         },
         {
             "name": "wikimedia/less.php",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/less.php.git",
-                "reference": "80694e356d0ea4237e7643d90e60a772b0fe4214"
+                "reference": "7c814ca156716e7b46ad84ac038bf298ff91cbb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/less.php/zipball/80694e356d0ea4237e7643d90e60a772b0fe4214",
-                "reference": "80694e356d0ea4237e7643d90e60a772b0fe4214",
+                "url": "https://api.github.com/repos/wikimedia/less.php/zipball/7c814ca156716e7b46ad84ac038bf298ff91cbb4",
+                "reference": "7c814ca156716e7b46ad84ac038bf298ff91cbb4",
                 "shasum": ""
             },
             "require": {
@@ -2053,7 +2055,7 @@
             },
             "require-dev": {
                 "mediawiki/mediawiki-codesniffer": "41.0.0",
-                "mediawiki/mediawiki-phan-config": "0.12.0",
+                "mediawiki/mediawiki-phan-config": "0.12.1",
                 "mediawiki/minus-x": "1.1.1",
                 "php-parallel-lint/php-console-highlighter": "1.0.0",
                 "php-parallel-lint/php-parallel-lint": "1.3.2",
@@ -2105,9 +2107,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wikimedia/less.php/issues",
-                "source": "https://github.com/wikimedia/less.php/tree/v4.1.0"
+                "source": "https://github.com/wikimedia/less.php/tree/v4.1.1"
             },
-            "time": "2023-04-10T22:43:59+00:00"
+            "time": "2023-08-01T14:54:27+00:00"
         }
     ],
     "packages-dev": [],
