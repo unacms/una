@@ -5519,7 +5519,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['media'] = '';
 
         if(empty($aParams['context']))
-            $aParams['context'] = 0;
+            $aParams['context'] = '';
 
         if(empty($aParams['blink']) || !is_array($aParams['blink']))
             $aParams['blink'] = array();
@@ -5559,8 +5559,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline']) : '';
         $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;
         $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : [];
-        $aParams['media'] = $aParams['media'] !== false ? bx_process_input($aParams['media'], BX_DATA_TEXT) : '';
-        $aParams['context'] = $aParams['context'] !== false ? bx_process_input($aParams['context'], BX_DATA_INT) : 0;
+        $aParams['media'] = $aParams['media'] !== false ? $this->_oConfig->processParam($aParams['media']) : '';
+        $aParams['context'] = $aParams['context'] !== false ? $this->_oConfig->processParam($aParams['context']) : '';
 
         if($aParams['blink'] !== false)
             $aParams['blink'] = bx_process_input(is_string($aParams['blink']) ? explode(',', $aParams['blink']) : $aParams['blink'], BX_DATA_TEXT);

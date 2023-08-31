@@ -1131,9 +1131,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedJoinSubclause['p1'] .= "INNER JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
                 $mixedWhereSubclause['p1'] = "1";
 
+                /*
+                 * Disabled because promoted posts from different contexts 
+                 * took a lot of space in the beginning of timeline.
+                 * 
                 //--- Select Promoted posts.
                 $mixedJoinSubclause['p2'] = "";
                 $mixedWhereSubclause['p2'] = "`{$sTableAlias}`.`promoted` <> '0'";
+                */
                 break;
 
             //--- Feed: Profile Connections to Channel contexts only
