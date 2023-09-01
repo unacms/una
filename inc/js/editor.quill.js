@@ -424,7 +424,7 @@ function bx_editor_init(oEditor, oParams){
     oEditor.clipboard.addMatcher (Node.TEXT_NODE, function (node, delta) {
         const Delta = Quill.import('delta')
         bx_editor_on_space_enter(node.data, oParams.selector, false);
-        return new Delta().insert(node.data); 
+        return delta; 
     });
     
     if (oParams.insert_as_plain_text){
@@ -444,8 +444,8 @@ function bx_editor_init(oEditor, oParams){
     else{
         oEditor.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
 			delta.forEach(e => {
-                if(typeof e.insert == 'string' && e.attributes == null)
-                    e.insert = e.insert.replace(/\n/g, '') + "\n";
+                //if(typeof e.insert == 'string' && e.attributes == null)
+                //    e.insert = e.insert.replace(/\n/g, '') + "\n";
 
                 if(e.attributes){
                     e.attributes.color = '';
