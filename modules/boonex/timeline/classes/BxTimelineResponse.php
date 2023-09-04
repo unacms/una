@@ -133,7 +133,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->deleteCacheItem($aEvent[$CNF['FIELD_ID']]);              
 
                 //--- Update related events.
-                if(!empty($aParamsSetBySource)) {
+                if(!empty($aEvent[$CNF['FIELD_SOURCE']]) && !empty($aParamsSetBySource)) {
                     $aEventsBySource = $this->_oModule->_oDb->getEvents(['browse' => 'source', 'value' => $aEvent[$CNF['FIELD_SOURCE']]]);
                     foreach($aEventsBySource as $aEventBySource) {
                         if($aEventBySource[$CNF['FIELD_ID']] == $aEvent[$CNF['FIELD_ID']])
