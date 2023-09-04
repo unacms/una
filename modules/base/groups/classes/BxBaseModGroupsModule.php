@@ -1262,7 +1262,19 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function serviceGetTimelineData()
     {
-        return BxBaseModGeneralModule::serviceGetTimelineData();
+        $aResult = BxBaseModGeneralModule::serviceGetTimelineData();
+
+        $sModule = $this->_aModule['name'];
+        $aResult['handlers'] = array_merge($aResult['handlers'], [
+            ['group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'context_cover_changed'],
+            ['group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'context_cover_deleted']
+        ]);
+        $aResult['alerts'] = array_merge($aResult['alerts'], [
+            ['unit' => $sModule, 'action' => 'context_cover_changed'],
+            ['unit' => $sModule, 'action' => 'context_cover_deleted']
+        ]);
+
+        return $aResult;
     }
 
     /**
@@ -1685,6 +1697,21 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
 
     // ====== COMMON METHODS
+    public function onUpdateImage($iContentId, $sFiledName, $sFiledValue, $iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $aField2Method = [
+            $CNF['FIELD_PICTURE'] => 'picture',
+            $CNF['FIELD_COVER'] => 'cover',
+        ];
+
+        if(!empty($aField2Method[$sFiledName]))
+            bx_alert($this->getName(), 'context_' . $aField2Method[$sFiledName] . '_changed', $iContentId, $iProfileId, $this->_alertParams($aContentInfo));
+    }
+
     protected function _alertParams($aContentInfo)
     {
         $aParams = parent::_alertParams($aContentInfo);
