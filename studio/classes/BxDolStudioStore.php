@@ -34,7 +34,7 @@ class BxDolStudioStore extends BxTemplStudioWidget
         $this->sBaseUrl = BX_DOL_URL_STUDIO . 'store.php';
 
         $this->sStoreDataUrlPublic = BxDolStudioInstallerUtils::getInstance()->getStoreDataUrl();
-        $this->bAuthAccessUpdates = false;
+        $this->bAuthAccessUpdates = true;
 
         $this->sSessionKeyNonOwnerNotified = 'str_non_owner_notified';
 
