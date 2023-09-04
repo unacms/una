@@ -78,6 +78,8 @@
 .bx-tasks-members{
 	flex-grow: 2;
 	text-align: right;
+    display: flex;
+    justify-content: flex-end;
 }
 .bx-tasks-task .bx-badge, .bx-tasks-task .bx-badges-list{
 	display: inline-block;

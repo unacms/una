@@ -541,7 +541,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 			$aTasks = $this->_oDb->getTasks($iContextId, $aList['id']);
 			$aTasksVars = array();
 			foreach($aTasks as $aTask) {
-				$aMembers = $oConn->getConnectedContent($aTask[$CNF['FIELD_ID']]);
+				$aMembers = $oConn->getConnectedInitiators($aTask[$CNF['FIELD_ID']]);
 				$aMembersVars = array();
 				foreach($aMembers as $iMember) {
 					$oProfile = BxDolProfile::getInstance($iMember);
