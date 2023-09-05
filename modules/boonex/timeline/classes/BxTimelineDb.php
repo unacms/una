@@ -633,9 +633,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams)
     {
-        bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, array(
+        bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, [
             'params' => &$aParams,
-        ));
+        ]);
 
         $sTable = isset($aParams['from_cache']) && $aParams['from_cache'] === true ? $this->_sTableSlice : $this->_sTable;
         $sTableAlias = $this->getTableAlias();
@@ -653,17 +653,18 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['browse']);
 
-        bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, array(
+        bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, [
             'browse' => $aParams['browse'],
             'params' => $aAlertParams,
             'table' => $sTable,
+            'table_alias' => $sTableAlias,
             'method' => &$sMethod,
             'select_clause' => &$sSelectClause,
             'join_clause' => &$mixedJoinClause,
             'where_clause' => &$mixedWhereClause,
             'order_clause' => &$sOrderClause,
             'limit_clause' => &$sLimitClause
-        ));
+        ]);
 
         $sSqlMask = "SELECT {select}
             FROM `{$sTable}` AS `{$sTableAlias}`
@@ -1294,11 +1295,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $aAlertParams = $aParams;
         unset($aAlertParams['type'], $aAlertParams['owner_id']);
 
-        bx_alert($this->_oConfig->getName(), 'get_list_by_type', 0, 0, array(
+        bx_alert($this->_oConfig->getName(), 'get_list_by_type', 0, 0, [
             'type' => $aParams['type'],
             'owner_id' => $aParams['owner_id'],
             'params' => $aAlertParams,
             'table' => isset($aParams['from_cache']) && $aParams['from_cache'] === true ? $this->_sTableSlice : $this->_sTable,
+            'table_alias' => $sTableAlias,
             'join_clause' => &$mixedJoinClause,
             'join_subclause' => &$mixedJoinSubclause,
             'where_clause' => &$mixedWhereClause,
@@ -1312,7 +1314,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'where_clause_unpublished' => &$sWhereClauseUnpublished,
             'where_clause_cf' => &$sWhereClauseCf,
             'where_subclause' => &$mixedWhereSubclause
-        ));
+        ]);
 
         $mixedWhereClause .= $sWhereClauseStatus;
         $mixedWhereClause .= $sWhereClauseFilter;
