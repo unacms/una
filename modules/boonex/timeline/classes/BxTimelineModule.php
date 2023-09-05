@@ -3690,10 +3690,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $this->_oDb->updateEvent(['content' => serialize($aContent), 'source' => $sSource], ['id' => $iId]);
 
                 //--- Process Meta ---//
-            	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-            	if($bText)
-                    $oMetatags->metaAdd($iId, $sText);
-                $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+                $this->_processMetas($iId, $sText);
 
                 //--- Process Link ---//
                 if($bLinkIds)
@@ -3857,10 +3854,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->isAllowedEdit($aEvent, true);
 
-            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-            if($bText)
-                $oMetatags->metaAdd($iId, $sText);
-            $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+            //--- Process Meta ---//
+            $this->_processMetas($iId, $sText);
 
             //--- Process Link ---//
             if($bLinkIds)
@@ -4708,10 +4703,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
             $aContent = unserialize($aEvent['content']);
 
-            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-            if(!empty($aContent['text']))
-                $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']], $aContent['text']);
-            $oMetatags->locationsAddFromForm($aEvent[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+            $this->_processMetas($aEvent[$CNF['FIELD_ID']], $aContent['text']);
         }
 
         //--- Rebuild cache table.
@@ -5437,6 +5429,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oStorage->deleteFile($aLink['media_id']);
 
         $this->_oDb->deleteLinks($iId);
+    }
+
+    protected function _processMetas($iId, $sText)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+
+        if(!empty($sText)) {
+            $oMetatags->metaAdd($iId, $sText);
+
+            $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+            if($oMetatags->keywordsIsEnabled() && !empty($aEvent[$CNF['FIELD_LABELS']])) {
+                $aLabels = unserialize($aEvent[$CNF['FIELD_LABELS']]);
+                if(!empty($aLabels) && is_array($aLabels))
+                    foreach ($aLabels as $sLabel) {
+                        if(!preg_match("/(\pL[\pL\pN_]+)/u", $sLabel)) 
+                            continue;
+
+                        $oMetatags->keywordsAddOne($iId, $sLabel, false);
+                    }
+            }
+        }
+
+        $oMetatags->locationsAddFromForm($iId, $CNF['FIELD_LOCATION_PREFIX']);
     }
 
     protected function _saveMedia($sType, $iContentId, $aItemIds, $iProfileId = 0, $isAssociateWithContent = false)
