@@ -17,6 +17,11 @@ class BxTimelineGridAdministration extends BxTimelineGridManageTools
     {
     	$this->MODULE = 'bx_timeline';
         parent::__construct ($aOptions, $oTemplate);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_sStatusField = $CNF['FIELD_STATUS_ADMIN'];
+        $this->_aStatusValues = array('active', 'hidden', 'pending');
     }
 
     protected function _getCellOwnerId($mixedValue, $sKey, $aField, $aRow)

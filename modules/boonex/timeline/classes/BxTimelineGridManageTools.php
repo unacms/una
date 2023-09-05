@@ -76,6 +76,21 @@ class BxTimelineGridManageTools extends BxBaseModGeneralGridAdministration
     {
         return 'active' == $mixedState ? true : false;
     }
+
+    protected function _enable ($mixedId, $isChecked)
+    {
+        $bResult = parent::_enable($mixedId, $isChecked);
+        if(!$bResult) 
+            return $bResult;
+        
+        $aEvent = $this->_oModule->_oDb->getEvents(['browse' => 'id', 'value' => (int)$mixedId]);
+        if(empty($aEvent) || !is_array($aEvent))
+            return $bResult;
+
+        $this->_oModule->{$isChecked ? 'onUnhide' : 'onHide'}($aEvent);
+
+        return $bResult;
+    }
 }
 
 /** @} */
