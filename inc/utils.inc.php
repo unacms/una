@@ -412,6 +412,9 @@ function _sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 
     if ($aAccountInfo && BX_EMAIL_NOTIFY == $iEmailType && (!$aAccountInfo['email_confirmed'] || !$aAccountInfo['receive_updates']))
         return false;
 
+    // decode HTML entities in the subj
+    $sMailSubject = html_entity_decode($sMailSubject, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
+
     if($bAddToQueue && BxDolQueueEmail::getInstance()->add($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders))
         return true;
 
