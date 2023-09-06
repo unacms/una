@@ -191,13 +191,13 @@ BxTimelineView.prototype.initSeeMore = function(oParent, bInItems)
     if(bInItems)
         oSubParent = oParent.find('.' + this.sClassItem);
 
-    oSubParent.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+    oSubParent.find('.bx-tl-item-text .bx-tl-content').bxCheckOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
     });
 
     if(oSubParent.find('.bx-tl-item-text .bx-tl-content .bx-embed-link').length != 0)
         setTimeout(function() {
-            oSubParent.find('.bx-tl-item-text .bx-tl-content:not(.' +  $this.sSP + '-overflow)').has('.bx-embed-link').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+            oSubParent.find('.bx-tl-item-text .bx-tl-content:not(.' +  $this.sSP + '-overflow)').has('.bx-embed-link').bxCheckOverflowHeight($this.sSP + '-overflow', function(oElement) {
                 $this.onFindOverflow(oElement);
             });
         }, 4000);
@@ -1377,7 +1377,7 @@ BxTimelineView.prototype._onGetPost = function(oData)
     var $this = this;
     var sItem = this._getHtmlId('item', this._oRequestParams, {whole:false}) + oData.id;
     this.oView.find(sItem).replaceWith($(oData.item).bxProcessHtml());
-    this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+    this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').bxCheckOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
     });
 

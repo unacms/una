@@ -897,6 +897,9 @@ svg .gray .outer .p2 {
     max-height: 250px;
     overflow: hidden;
 }
+.bx-overflow-ready.bx-or-cmt {
+    max-height: 80px;
+}
 .bx-overflow:before {
     position: absolute;
     bottom: 0;

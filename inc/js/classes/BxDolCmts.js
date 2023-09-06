@@ -58,6 +58,11 @@ BxDolCmts.prototype.cmtInit = function()
 
         // blink (highlight) necessary comments
         $this._cmtsBlink($($this._sRootId));
+        
+        // check content to show 'See More'
+        $($this._sRootId + ' .cmt-body.bx-overflow-ready').bxCheckOverflowHeight('', function(oElement) {
+            $this.cmtOnFindOverflow(oElement);
+        });
     });
 };
 
@@ -459,11 +464,6 @@ BxDolCmts.prototype.showReplacement = function(iCmtId)
     $('#cmt' + iCmtId + '-hidden').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function(){
         $(this).next('#cmt' + iCmtId).bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
     });
-};
-
-BxDolCmts.prototype.showMore = function(oLink)
-{
-	$(oLink).parent('span').next('span').show().prev('span').remove();
 };
 
 BxDolCmts.prototype.showImage = function(eve, oLink)
@@ -889,6 +889,18 @@ BxDolCmts.prototype.changeLiveUpdates = function(sAction, onLoad)
 				onLoad();
 	    }
 	);
+};
+
+BxDolCmts.prototype.cmtShowMore = function(oLink)
+{
+    var sClassOverflow = 'bx-overflow';
+
+    $(oLink).parents('.' + this._sSP + ':first').find('.' + sClassOverflow).css('max-height', 'none').removeClass(sClassOverflow);
+    $(oLink).parents('.' + this._sSP + '-body-show-more:first').remove();
+};
+
+BxDolCmts.prototype.cmtOnFindOverflow = function(oElement) {
+    $(oElement).after($(oElement).parents(this._sRootId + ':first').find('.' + this._sSP + '-body-show-more:hidden:first').clone().show());
 };
 
 /*----------------------------------*/

@@ -39,6 +39,16 @@ span.cmt-reply-to a .bx-base-pofile-unit-wo-info .bx-base-pofile-unit-online {
 }
 
 /*--- Comment Body ---*/
+div.cmt-cont .cmt-body {
+    position: relative;
+}
+div.cmt-cont .cmt-body .cmt-body-overflow {
+    display: none;
+}
+div.cmt-cont .cmt-body.bx-overflow .cmt-body-overflow {
+    display: block;
+}
+
 div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
     margin-top: 0.5rem;
 }

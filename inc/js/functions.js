@@ -1000,8 +1000,38 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
         }
         
         return this;
-    }
+    };
 
+    $.fn.bxCheckOverflowHeight = function(sClass, onFind) {
+    	if(!sClass)
+    		sClass = 'bx-overflow';
+
+        return this.each(function() {
+            var oElement = $(this);
+            if(oElement.hasClass(sClass) || oElement.css('overflow') != 'hidden')
+            	return;
+            
+            if (oElement.find('img').length > 0){
+                var oImg = oElement.find('img').first();
+                var iRelImgY = oImg.offset().top - oElement.offset().top;
+                
+                const img = new Image();
+                img.src = oImg.prop('src');
+                img.onload = function() {
+                    if (iRelImgY < oElement.height() && iRelImgY + this.height > oElement.height()){
+                        oElement.css('max-height', (iRelImgY + this.height) +  50 + 'px');
+                    }
+                }
+            }
+
+            if(oElement.prop('scrollHeight') <= Math.ceil(oElement.height()))
+            	return;
+
+            oElement.addClass(sClass);
+            if(typeof onFind === 'function')
+            	onFind(oElement);
+        });
+    };
 } (jQuery));
 
 

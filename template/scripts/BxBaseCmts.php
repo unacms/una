@@ -240,6 +240,8 @@ class BxBaseCmts extends BxDolCmts
         ]);
 
         $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', [
+            'style_prefix' => $this->_sStylePrefix,
+            'js_object' => $this->_sJsObjName,
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
@@ -1674,33 +1676,10 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getTmplVarsText($aCmt)
     {
-    	$sText = $aCmt['cmt_text'];
-        $sTextMore = '';
-
-        if(!$this->isHtml()) {
-            $iMaxLength = (int)$this->_aSystem['chars_display_max'];
-            if(strlen($sText) > $iMaxLength) {
-                $iLength = strpos($sText, ' ', $iMaxLength);
-    
-                $sTextMore = trim(substr($sText, $iLength));
-                $sText = trim(substr($sText, 0, $iLength));
-            }
-        }
-
-        $sText = $this->_prepareTextForOutput($sText, $aCmt['cmt_id']);
-        $sTextMore = $this->_prepareTextForOutput($sTextMore, $aCmt['cmt_id']);
-
-        return array(
-			'text' => $sText,
-            'bx_if:show_more' => array(
-                'condition' => !empty($sTextMore),
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'js_object' => $this->_sJsObjName,
-                    'text_more' => $sTextMore
-                )
-            ),
-        );
+        return [
+            'style_prefix' => $this->_sStylePrefix,
+            'text' => $this->_prepareTextForOutput($aCmt['cmt_text'], $aCmt['cmt_id'])
+        ];
     }
 
     protected function _getDoComment($aParams = [], $isAllowedComment = true)
