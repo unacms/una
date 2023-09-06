@@ -10,7 +10,7 @@
  */
 
 
-class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
+class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridTransactions
 {
     protected $_iNow;
     protected $_sManageType;

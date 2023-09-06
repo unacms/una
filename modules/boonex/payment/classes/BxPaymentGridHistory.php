@@ -10,7 +10,7 @@
  */
 
 
-class BxPaymentGridHistory extends BxBaseModPaymentGridOrders
+class BxPaymentGridHistory extends BxBaseModPaymentGridTransactions
 {
     public function __construct ($aOptions, $oTemplate = false)
     {
