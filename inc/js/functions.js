@@ -1457,11 +1457,14 @@ jQuery.bxGetCachedScript = function(sUrl, oOptions)
 
 function bx_is_selector_in_stylesheet(sSel)
 {
-    var o = [].slice.call(document.styleSheets)
-        .reduce( (prev, styleSheet) => { if (null===styleSheet.href || styleSheet.href.startsWith(sUrlRoot)) return [].slice.call(styleSheet.cssRules); else return [] } )
-        .reduce( (prev, cssRule) => prev + cssRule.cssText );
-
-    return jQuery.isFunction(o.includes) && o.includes(sSel);
+    var a = [];
+    var aSs = document.styleSheets;
+    for (var sSheet = 0; sSheet < aSs.length; sSheet++) {
+        var ruleList = document.styleSheets[sSheet].cssRules;
+        for (var rule = 0; rule < ruleList.length; rule++)
+           a.push(ruleList[rule].selectorText);
+    }
+    return -1 !== a.indexOf(sSel);
 }
 
 function bx_copy_to_clipboard(s, onSuccess, onFail)
