@@ -893,10 +893,14 @@ BxDolCmts.prototype.changeLiveUpdates = function(sAction, onLoad)
 
 BxDolCmts.prototype.cmtShowMore = function(oLink)
 {
+    var oShowMore = $(oLink).parents('.' + this._sSP + '-body-show-more:first');
+    if(!oShowMore.length)
+        return;
+
     var sClassOverflow = 'bx-overflow';
 
-    $(oLink).parents('.' + this._sSP + ':first').find('.' + sClassOverflow).css('max-height', 'none').removeClass(sClassOverflow);
-    $(oLink).parents('.' + this._sSP + '-body-show-more:first').remove();
+    oShowMore.siblings('.' + sClassOverflow).css('max-height', 'none').removeClass(sClassOverflow);
+    oShowMore.remove();
 };
 
 BxDolCmts.prototype.cmtOnFindOverflow = function(oElement) {
