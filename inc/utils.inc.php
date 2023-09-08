@@ -1075,6 +1075,19 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
     return $sResult;
 }
 
+function bx_make_utf8($s)
+{
+    // Test it and see if it is UTF-8 or not
+    if (false !== mb_detect_encoding($s, ["UTF-8"], true))
+        return $s;
+
+    $sEncoding = mb_detect_encoding($s, ['ASCII', 'BASE64', 'HTML-ENTITIES', 'Windows-1251', 'KOI8-R'], true);
+    if ($sEncoding === false)
+        return $s;
+
+    return mb_convert_encoding($s, "UTF-8", $sEncoding);
+}
+
 function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
 {
     $aResult = array();
@@ -1089,12 +1102,12 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
         $sContent = preg_replace("/<script[^>]*>(.*?)<\/script>/i", '', $sContent);
         $sContent = preg_replace("/<style[^>]*>(.*?)<\/style>/i", '', $sContent);
         if (preg_match("/<title[^>]*>(.*?)<\/title>/i", $sContent, $aMatch))
-            $aResult['title'] = strip_tags($aMatch[1]);
+            $aResult['title'] = bx_make_utf8(strip_tags($aMatch[1]), $sCharset);
         else
             $aResult['title'] = parse_url($sSourceUrl, PHP_URL_HOST);
 
-        $aResult['description'] = bx_parse_html_tag($sContent, 'meta', 'name', 'description', 'content', $sCharset);
-        $aResult['keywords'] = bx_parse_html_tag($sContent, 'meta', 'name', 'keywords', 'content', $sCharset);
+        $aResult['description'] = bx_make_utf8(bx_parse_html_tag($sContent, 'meta', 'name', 'description', 'content', $sCharset), $sCharset);
+        $aResult['keywords'] = bx_make_utf8(bx_parse_html_tag($sContent, 'meta', 'name', 'keywords', 'content', $sCharset), $sCharset);
 
         if ($aProcessAdditionalTags) {
 
