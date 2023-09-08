@@ -58,11 +58,9 @@ BxDolCmts.prototype.cmtInit = function()
 
         // blink (highlight) necessary comments
         $this._cmtsBlink($($this._sRootId));
-        
+
         // check content to show 'See More'
-        $($this._sRootId + ' .cmt-body.bx-overflow-ready').bxCheckOverflowHeight('', function(oElement) {
-            $this.cmtOnFindOverflow(oElement);
-        });
+        $this._cmtsInitSeeMore($($this._sRootId));
     });
 };
 
@@ -941,6 +939,8 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
                 //-- There is no comments at all ---//
                 else
                     $(this).hide().html(oData.content).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+
+                $this._cmtsInitSeeMore($(this));
             });
         },
         'json'
@@ -1013,28 +1013,32 @@ BxDolCmts.prototype._cmtsPrepend = function(sIdTo, sContent)
 
 BxDolCmts.prototype._cmtsReplace = function(oReplace, sContent, onLoad)
 {
-	var $this = this;
-	$(oReplace).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).after($(sContent).hide()).nextAll(':hidden').bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-			$this._cmtsBlink($(this));
+    var $this = this;
+    $(oReplace).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+        $(this).after($(sContent).hide()).nextAll(':hidden').bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+            $this._cmtsBlink($(this));
 
-			if(typeof onLoad == 'function')
-    			onLoad();
-		});
-		$(this).remove();
-	});
+            $this._cmtsInitSeeMore($(this));
+
+            if(typeof onLoad == 'function')
+                onLoad();
+        });
+        $(this).remove();
+    });
 };
 BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent, onLoad)
 {
-	var $this = this;
-	$(oParent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).html(sContent).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-			$this._cmtsBlink($(this));
+    var $this = this;
+    $(oParent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+        $(this).html(sContent).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+            $this._cmtsBlink($(this));
 
-			if(typeof onLoad == 'function')
-    			onLoad();
-		});
-	});
+            $this._cmtsInitSeeMore($(this));
+
+            if(typeof onLoad == 'function')
+            onLoad();
+        });
+    });
 };
 
 BxDolCmts.prototype._cmtsBlink = function(oParent)
@@ -1048,6 +1052,17 @@ BxDolCmts.prototype._cmtsBlink = function(oParent)
     });
 };
 
+BxDolCmts.prototype._cmtsInitSeeMore = function(oParent)
+{
+    var $this = this;
+
+    oParent.find('.cmt-body.bx-overflow-ready').bxCheckOverflowHeight('', function(oElement) {
+        $this.cmtOnFindOverflow(oElement);
+    });
+};
+        
+        
+        
 BxDolCmts.prototype._getCounter = function(oElement, bText)
 {
     var oCounter = null;
