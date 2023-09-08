@@ -440,6 +440,28 @@ class BxBaseModGeneralModule extends BxDolModule
         return $mixedResult;
     }
     
+    public function serviceGetLocation ($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_METATAGS']))
+            return [];
+
+        $mixedResult = $this->_getFieldValue('FIELD_LOCATION', $iContentId);
+        if(false === $mixedResult)
+            return [];
+
+        $oMeta = false;
+        if(!($oMeta = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) || !$oMeta->locationsIsEnabled())
+            return false;
+
+        $aLocation = $oMeta->locationGet($iContentId);
+        if(empty($aLocation) || !is_array($aLocation))
+            return false;
+
+        return array_values(array_slice($aLocation, 1));
+    }
+
     public function serviceGetEmbed ($iContentId)
     {
         $sTitle = $this->_getFieldValue('FIELD_TITLE', $iContentId);

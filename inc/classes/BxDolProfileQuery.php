@@ -90,6 +90,20 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
                     $sWhereClause .= " AND `tp`.`type` IN (" . $this->implode_escape($aParams['types']) . ")";
                 }
                 break;
+                
+            case 'id_by_module_content_id':
+                $sFieldsClause = "`tp`.`id`";
+                $sWhereClause = $this->prepareAsString(" AND `tp`.`type`=?", $aParams['module']);
+                
+                if(!is_array($aParams['content_id'])) {
+                    $aMethod['name'] = 'getOne';
+                    $sWhereClause .= $this->prepareAsString(" AND `tp`.`content_id`=?", $aParams['content_id']);
+                }
+                else {
+                    $aMethod['name'] = 'getColumn';
+                    $sWhereClause .= " AND `tp`.`content_id` IN (" . $this->implode_escape($aParams['content_id']) . ")";
+                }
+                break;
 
             case 'all':
                 break;

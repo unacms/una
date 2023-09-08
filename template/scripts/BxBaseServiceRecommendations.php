@@ -17,6 +17,14 @@ class BxBaseServiceRecommendations extends BxDol
         parent::__construct();
     }
 
+    public function serviceUpdateData($iProfileId)
+    {
+        $aObjects = BxDolRecommendationQuery::getObjects();
+        foreach($aObjects as $aObject)
+            if(($oRecommendation = BxDolRecommendation::getObjectInstance($aObject['name'])) !== false)
+                $oRecommendation->processCriteria($iProfileId);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -26,7 +34,7 @@ class BxBaseServiceRecommendations extends BxDol
      * @code bx_srv('system', 'perform', [[...]], 'TemplServiceRecommendations'); @endcode
      * @code {{~system:perform:TemplServiceRecommendations[[...]]~}} @endcode
      * 
-     * Performs Perform an action (add, remove, etc) with recommendations object.
+     * Performs an action (add, remove, etc) with recommendations object.
      * @param $aParams an array with necessary parameters 
      * 
      * @see BxBaseServiceRecommendations::servicePerform
@@ -65,6 +73,33 @@ class BxBaseServiceRecommendations extends BxDol
             'a' => $sFlipped,
             'title' => !empty($sFlipped) ? _t('_sys_menu_item_title_sm_' . $sFlipped) : '',
         ];
+    }
+
+    public function serviceGetFriendRecommendationsBySharedLocation($iProfileId, $iRadius, $iPoints)
+    {
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return [];
+
+        $sProfileModule = $oProfile->getModule();
+        $iProfileContentId = $oProfile->getContentId();
+
+        $aLocation = bx_srv($sProfileModule, 'get_location', [$iProfileContentId]);
+        if(empty($aLocation) || !is_array($aLocation))
+            return [];
+
+        $aIds = bx_srv('system', 'profiles_search_by_location', [$aLocation, $iRadius], 'TemplServiceProfiles');
+        if(empty($aIds) || !is_array($aIds))
+            return [];
+
+        /**
+         * Exclude friends and oneself
+         */
+        $aIdsExclude = BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContent($iProfileId);
+        $aIdsExclude[] = $iProfileId;
+
+        $aIds = array_diff($aIds, $aIdsExclude);
+        return array_combine($aIds, array_fill(0, count($aIds), $iPoints));
     }
 }
 
