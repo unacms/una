@@ -22,12 +22,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/s3.git",
-                "reference": "59f0962b3f5ca1a5e1ec993a3855577f0da676c9"
+                "reference": "a5dbdc2cc7d5aaaf30a69bdd3648baa45faf6d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/s3/zipball/59f0962b3f5ca1a5e1ec993a3855577f0da676c9",
-                "reference": "59f0962b3f5ca1a5e1ec993a3855577f0da676c9",
+                "url": "https://api.github.com/repos/akeeba/s3/zipball/a5dbdc2cc7d5aaaf30a69bdd3648baa45faf6d85",
+                "reference": "a5dbdc2cc7d5aaaf30a69bdd3648baa45faf6d85",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
                 "issues": "https://github.com/akeeba/s3/issues",
                 "source": "https://github.com/akeeba/s3/tree/development"
             },
-            "time": "2023-08-30T08:55:41+00:00"
+            "time": "2023-09-07T19:32:02+00:00"
         },
         {
             "name": "avto-dev/composer-cleanup-plugin",

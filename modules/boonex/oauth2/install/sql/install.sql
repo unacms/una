@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_authorization_codes` (
   `scope` varchar(255) DEFAULT NULL,
   `id_token` varchar(1000) DEFAULT NULL,
   `code_challenge` varchar(1000) DEFAULT NULL,
-  `code_challenge_method` varchar(20) DEFAULT NULL
+  `code_challenge_method` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`authorization_code`),
   KEY `user_id` (`user_id`)
 );
