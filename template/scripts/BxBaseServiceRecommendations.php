@@ -75,6 +75,26 @@ class BxBaseServiceRecommendations extends BxDol
         ];
     }
 
+    public function serviceGetFriendRecommendationsBySharedContext($iProfileId, $sConnection, $iPoints)
+    {
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return [];
+        
+        $oConnection = BxDolConnection::getObjectInstance($sConnection);
+        if(!$oConnection)
+            return [];
+
+        $sQuery = "SELECT `tm`.`initiator`AS `id`, SUM({points}) AS `value` FROM `{connection}` AS `tg` INNER JOIN `{connection}` AS `tm` ON `tg`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`='1') AND `tm`.`mutual`='1' WHERE `tg`.`initiator`={profile_id} AND `tg`.`mutual`='1' GROUP BY `id`";
+        $sQuery = bx_replace_markers($sQuery, [
+            'profile_id' => $iProfileId,
+            'connection' => $oConnection->getTable(),
+            'points' => $iPoints
+        ]);
+
+        return BxDolDb::getInstance()->getPairs($sQuery, 'id', 'value');
+    }
+
     public function serviceGetFriendRecommendationsBySharedLocation($iProfileId, $iRadius, $iPoints)
     {
         $oProfile = BxDolProfile::getInstance($iProfileId);
@@ -100,6 +120,26 @@ class BxBaseServiceRecommendations extends BxDol
 
         $aIds = array_diff($aIds, $aIdsExclude);
         return array_combine($aIds, array_fill(0, count($aIds), $iPoints));
+    }
+
+    public function serviceGetSubscriptionRecommendationsBySharedContext($iProfileId, $sConnection, $iPoints)
+    {
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return [];
+
+        $oConnection = BxDolConnection::getObjectInstance($sConnection);
+        if(!$oConnection)
+            return [];
+
+        $sQuery = "SELECT `tm`.`initiator`AS `id`, SUM({points}) AS `value` FROM `{connection}` AS `tg` INNER JOIN `{connection}` AS `tm` ON `tg`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_subscriptions` WHERE `initiator`={profile_id}) AND `tm`.`mutual`='1' WHERE `tg`.`initiator`={profile_id} AND `tg`.`mutual`='1' GROUP BY `id`";
+        $sQuery = bx_replace_markers($sQuery, [
+            'profile_id' => $iProfileId,
+            'connection' => $oConnection->getTable(),
+            'points' => $iPoints
+        ]);
+
+        return BxDolDb::getInstance()->getPairs($sQuery, 'id', 'value');
     }
 }
 
