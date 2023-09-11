@@ -2044,19 +2044,37 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
+        
+        $iImageId = 0;
+        $sImageMd = $sImageXl = '';
+        if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']])) {
+            $iImageId = (int)$aContentInfo[$CNF['FIELD_COVER']];
+            $sImageMd = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+            $sImageXl = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_COVER']);
+        }
 
-        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
+        if($sImageXl == '' && isset($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']])) {
+            $iImageId = (int)$aContentInfo[$CNF['FIELD_PICTURE']];
+            $sImageMd = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+            $sImageXl = $this->_oConfig->getImageUrl($iImageId, ['OBJECT_IMAGES_TRANSCODER_COVER']);
+        }
 
-        $sSrc = '';
-        if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']]))
-            $sSrc = $oGroupProfile->getCover();
+        if(empty($sImageXl))
+            return [];
 
-        if(empty($sSrc) && isset($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']]))
-            $sSrc = $oGroupProfile->getPicture();
+        $aImage = [
+            'id' => $iImageId, 
+            'url' => $sUrl, 
+            'src' => $sImageXl, 
+            'src_orig' => $sImageXl
+        ];
 
-        return empty($sSrc) ? array() : array(
-            array('id' => $aContentInfo[$CNF['FIELD_PICTURE']], 'url' => $sUrl, 'src' => $sSrc, 'src_orig' => $sSrc),
-        );
+        if(!empty($sImageMd))
+            $aImage['src_medium'] = $sImageMd;
+
+        return [
+            $aImage
+        ];
     }
 
     protected function _prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId)

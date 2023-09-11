@@ -2211,10 +2211,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             if(empty($sImageOrig))
                 $sImageOrig = $sImage;
 
-            $a = array('id' => $aFileInfo['id'], 'url' => $sUrl, 'src' => $sImage);
-            if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedView($aContentInfo))
+            //TODO: Do the same for Groups Cover.
+            $a = ['id' => $aFileInfo['id'], 'url' => $sUrl, 'src' => $sImage];
+            if(CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedView($aContentInfo)) {
                 $a['src_orig'] = $sImageOrig;
-            $aImages = array($a);
+
+                $sCnfKey = 'OBJECT_IMAGES_TRANSCODER_GALLERY';
+                if(!empty($CNF[$sCnfKey]) && ($sSrcMedium = $this->_oConfig->getImageUrl($aFileInfo['id'], [$sCnfKey])) != '')
+                    $a['src_medium'] = $sSrcMedium;
+            }
+            $aImages = [$a];
         }
 
     	return array(
