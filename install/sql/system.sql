@@ -1499,7 +1499,7 @@ CREATE TABLE `sys_objects_score` (
 );
 
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
-('sys_cmts', 'system', 'sys_cmts_scores', 'sys_cmts_scores_track', '604800', '0', 'sys_cmts_ids', 'id', 'author_id', 'score', 'sc_up', 'sc_down', '', '');
+('sys_cmts', 'system', 'sys_cmts_scores', 'sys_cmts_scores_track', '604800', '0', 'sys_cmts_ids', 'id', 'author_id', 'score', 'sc_up', 'sc_down', 'BxTemplCmtsScore', '');
 
 -- -------------------------------------------------------
 
