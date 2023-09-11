@@ -289,7 +289,7 @@ class BxDolVote extends BxDolObject
         if(empty($aObject) || !is_array($aObject))
             return false;
 
-        return bx_srv($this->_aSystem['module'], 'check_allowed_view_for_profile', [$aObject]) === CHECK_ACTION_RESULT_ALLOWED;
+        return $this->_isAllowedVoteByObject($aObject);
     }
 
     public function msgErrAllowedVote()
@@ -341,6 +341,11 @@ class BxDolVote extends BxDolObject
             $aVote = $this->_getVote();
 
         return isset($aVote['count']) && (int)$aVote['count'] != 0;
+    }
+
+    protected function _isAllowedVoteByObject($aObject)
+    {
+        return bx_srv($this->_aSystem['module'], 'check_allowed_view_for_profile', [$aObject]) === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     protected function _getVoteData()
