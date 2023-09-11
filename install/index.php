@@ -33,6 +33,10 @@ if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
     define('BX_DOL_MODULE_TYPE_TEMPLATE', 'template');
 }
 
+// needed for BxDolStorageS3v4alt
+if (!defined('AKEEBAENGINE'))
+    define('AKEEBAENGINE', 1);
+
 require_once(BX_INSTALL_DIR_ROOT . 'inc/utils.inc.php');
 require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDol.php');
 require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDolFactory.php');

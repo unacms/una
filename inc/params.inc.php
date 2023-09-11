@@ -104,6 +104,10 @@ define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
 define('BX_DOL_STUDIO_TEMPLATE_CODE_KEY', 'sskin');
 define('BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE', 'protean');
 
+// needed for BxDolStorageS3v4alt
+if (!defined('AKEEBAENGINE'))
+    define('AKEEBAENGINE', 1);
+
 //--- Include files needed for basic functionality ---//
 require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDol.php');
 require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
