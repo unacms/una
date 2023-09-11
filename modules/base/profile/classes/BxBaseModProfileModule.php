@@ -2211,7 +2211,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             if(empty($sImageOrig))
                 $sImageOrig = $sImage;
 
-            //TODO: Do the same for Groups Cover.
             $a = ['id' => $aFileInfo['id'], 'url' => $sUrl, 'src' => $sImage];
             if(CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedView($aContentInfo)) {
                 $a['src_orig'] = $sImageOrig;
