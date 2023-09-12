@@ -283,6 +283,10 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
 
+                    case 'icon_preview':
+                        $aForm['inputs'][$sKey]['content'] = $this->getFieldIconPreview($this->aField['id'], $this->aField['icon']);
+                        break;
+
                     case 'collapsed':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
@@ -524,6 +528,34 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         }
 
         return $mixedResult;
+    }
+
+    protected function getFieldIconPreview($iId, $sIcon)
+    {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $aIcons = BxTemplFunctions::getInstanceWithTemplate($oTemplate)->getIcon($sIcon);
+
+        $sIconHtml = $aIcons[2] . $aIcons[3] . $aIcons[4];
+        $bIconHtml = !empty($sIconHtml);
+
+        return $oTemplate->parseHtmlByName('item_icon_preview.html', [
+            'id' => $iId,
+            'bx_if:show_icon_empty' => [
+                'condition' => !$bIconHtml,
+                'content' => []
+            ],
+            'bx_if:show_icon_image' => [
+                'condition' => false,
+                'content' => []
+            ],
+            'bx_if:show_icon_html' => [
+                'condition' => $bIconHtml,
+                'content' => [
+                    'icon' => $sIconHtml
+                ]
+            ]
+        ]);
     }
 
     protected function getCheckerFields($bMandatory = false)
@@ -1047,7 +1079,7 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                     'caption' => _t('_adm_form_txt_field_rateable'),
                     'info' => _t('_adm_form_dsc_field_rateable'),
                     'values' => array(
-                		array('key' => '', 'value' => _t('_adm_form_txt_field_rateable_value_non')),
+                        array('key' => '', 'value' => _t('_adm_form_txt_field_rateable_value_non')),
                         array('key' => 'sys_form_fields_votes', 'value' => _t('_adm_form_txt_field_rateable_value_votes')),
                         array('key' => 'sys_form_fields_reaction', 'value' => _t('_adm_form_txt_field_rateable_value_reactions'))
                 	),
@@ -1058,6 +1090,25 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                     'db' => array (
                         'pass' => 'Xss',
                     )
+                ),
+                'icon' => array(
+                    'type' => 'textarea',
+                    'name' => 'icon',
+                    'caption' => _t('_adm_form_txt_field_icon'),
+                    'info' => _t('_adm_form_dsc_field_icon'),
+                    'value' => '',
+                    'code' => 1,
+                    'required' => '0',
+                    'attrs' => array('class' => 'bx-form-input-textarea-small'),
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'icon_preview' => array(
+                    'type' => 'custom',
+                    'name' => 'icon_preview',
+                    'caption' => _t('_adm_form_txt_field_icon_preview'),
+                    'content' => ''
                 ),
                 'controls' => array(
                     'name' => 'controls',

@@ -714,9 +714,33 @@ BLAH;
         $sClass = !empty($aParams['class']) ? $aParams['class'] : '';
         $sClassValue = !empty($aParams['class_value']) ? $aParams['class_value'] : '';
 
+        $aTmplVarsIcon = [];
+        if(!empty($aInput['icon'])) {
+            list ($sIcon, $sIconUrl, $sIconA, $sIconHtml) = BxTemplFunctions::getInstanceWithTemplate($this->oTemplate)->getIcon($aInput['icon']);
+
+            $aTmplVarsIcon = [
+                'bx_if:icon' => [
+                    'condition' => (bool)$sIcon,
+                    'content' => ['icon' => $sIcon],
+                ],
+                'bx_if:icon-html' => [
+                    'condition' => (bool)$sIconHtml,
+                    'content' => ['icon' => $sIconHtml],
+                ],
+                'bx_if:image_inline' => [
+                    'condition' => false,
+                    'content' => ['image' => ''],
+                ]
+            ];
+        }
+
         return $this->oTemplate->parseHtmlByName('form_view_row.html', [
             'type' => $aInput['type'], 
             'class' => $sClass,
+            'bx_if:show_icon' => [
+                'condition' => !empty($aTmplVarsIcon),
+                'content' => $aTmplVarsIcon
+            ],
             'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
             'class_value' => $sClassValue,
             'value' => $sValue

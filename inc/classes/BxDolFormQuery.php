@@ -135,6 +135,7 @@ class BxDolFormQuery extends BxDolDb
                 'info' => $a['info'] ? _t($a['info']) : '',
                 'help_src' => $a['help'] ? $a['help'] : '',
                 'help' => $a['help'] ? _t($a['help']) : '',
+                'icon' => $a['icon'],
                 'required' => $a['required'] ? true : false,
             	'unique' => $a['unique'] ? true : false,
                 'collapsed' => $a['collapsed'] ? true : false,
