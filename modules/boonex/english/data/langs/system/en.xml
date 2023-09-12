@@ -788,6 +788,7 @@
 	<string name="_adm_form_dsc_field_checker_params_preg"><![CDATA[Use standard <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>. Example: #^[A-Za-z0-9]{3,16}$#]]></string>
 	<string name="_adm_form_dsc_field_collapsed"><![CDATA[Pack down the group of this field by default]]></string>
 	<string name="_adm_form_dsc_field_html"><![CDATA[Select type of HTML editor]]></string>
+        <string name="_adm_form_dsc_field_icon"><![CDATA[You may use font icon, SVG or Emoji code here]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Enter field description (optional)]]></string>
         <string name="_adm_form_dsc_field_help"><![CDATA[Enter help information for the field (optional)]]></string>
   <string name="_adm_form_dsc_field_privacy"><![CDATA[Check it if privacy settings can be changed for the field]]></string>
@@ -935,18 +936,20 @@
 	<string name="_adm_form_txt_field_html_mini"><![CDATA[Mini]]></string>
 	<string name="_adm_form_txt_field_html_none"><![CDATA[No Editor]]></string>
 	<string name="_adm_form_txt_field_html_standard"><![CDATA[Standard]]></string>
+        <string name="_adm_form_txt_field_icon"><![CDATA[Icon]]></string>
+        <string name="_adm_form_txt_field_icon_preview"><![CDATA[Current Icon]]></string>
 	<string name="_adm_form_txt_field_info"><![CDATA[Description]]></string>
         <string name="_adm_form_txt_field_help"><![CDATA[Help]]></string>
 	<string name="_adm_form_txt_field_module"><![CDATA[Module]]></string>
 	<string name="_adm_form_txt_field_name"><![CDATA[Name]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Form]]></string>
-  <string name="_adm_form_txt_field_privacy"><![CDATA[Privacy]]></string>
-  <string name="_adm_form_txt_field_rateable"><![CDATA[Rateable]]></string>
-  <string name="_adm_form_txt_field_rateable_value_non"><![CDATA[Non-rateable]]></string>
-  <string name="_adm_form_txt_field_rateable_value_votes"><![CDATA[Use votes]]></string>
-  <string name="_adm_form_txt_field_rateable_value_reactions"><![CDATA[Use reactions]]></string>
-  <string name="_adm_form_txt_field_required"><![CDATA[Mandatory]]></string>
-  <string name="_adm_form_txt_field_select_nested_form"><![CDATA[Select nested form]]></string>
+        <string name="_adm_form_txt_field_privacy"><![CDATA[Privacy]]></string>
+        <string name="_adm_form_txt_field_rateable"><![CDATA[Rateable]]></string>
+        <string name="_adm_form_txt_field_rateable_value_non"><![CDATA[Non-rateable]]></string>
+        <string name="_adm_form_txt_field_rateable_value_votes"><![CDATA[Use votes]]></string>
+        <string name="_adm_form_txt_field_rateable_value_reactions"><![CDATA[Use reactions]]></string>
+        <string name="_adm_form_txt_field_required"><![CDATA[Mandatory]]></string>
+        <string name="_adm_form_txt_field_select_nested_form"><![CDATA[Select nested form]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Show "{0}" form field to: ]]></string>
         <string name="_adm_form_txt_field_type_block_end"><![CDATA[block end]]></string>
 	<string name="_adm_form_txt_field_type_block_header"><![CDATA[block header]]></string>

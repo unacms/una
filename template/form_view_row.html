@@ -1,4 +1,13 @@
 <div class="bx-form-row-view-wrapper bx-form-row-view-wrapper-__type__ __class__ bx-def-padding-sec-top">
-    <div class="bx-form-row-view-caption">__caption__:</div>
+    <div class="bx-form-row-view-caption">
+        <bx_if:show_icon>
+            <span class="bx-form-row-vc-icon">
+                <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
+                <bx_if:icon-html>__icon__</bx_if:icon-html>
+                <bx_if:image_inline>__image__</bx_if:image_inline>
+            </span>
+        </bx_if:show_icon>
+        <span class="bx-form-row-vc-text">__caption__:</span>
+    </div>
     <div class="bx-form-row-view-value __class_value__">__value__</div>
 </div>

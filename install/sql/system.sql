@@ -1467,8 +1467,8 @@ CREATE TABLE `sys_objects_vote` (
 );
 
 INSERT INTO `sys_objects_vote` (`Name`, `Module`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('sys_cmts', 'system', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
-('sys_cmts_reactions', 'system', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
+('sys_cmts', 'system', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'author_id', 'rate', 'votes', 'BxTemplCmtsVoteLikes', ''),
+('sys_cmts_reactions', 'system', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplCmtsVoteReactions', ''),
 ('sys_form_fields_votes', 'system', 'sys_form_fields_votes', 'sys_form_fields_votes_track', '604800', '1', '1', '0', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
 ('sys_form_fields_reaction', 'system', 'sys_form_fields_reaction', 'sys_form_fields_reaction_track', '604800', '1', '1', '1', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
@@ -1499,7 +1499,7 @@ CREATE TABLE `sys_objects_score` (
 );
 
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
-('sys_cmts', 'system', 'sys_cmts_scores', 'sys_cmts_scores_track', '604800', '0', 'sys_cmts_ids', 'id', 'author_id', 'score', 'sc_up', 'sc_down', '', '');
+('sys_cmts', 'system', 'sys_cmts_scores', 'sys_cmts_scores_track', '604800', '0', 'sys_cmts_ids', 'id', 'author_id', 'score', 'sc_up', 'sc_down', 'BxTemplCmtsScore', '');
 
 -- -------------------------------------------------------
 
@@ -2333,8 +2333,9 @@ SET @iRecFriends = LAST_INSERT_ID();
 
 INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `source`, `params`, `weight`, `active`) VALUES
 (@iRecFriends, 'mutual_friends', 'sql', 'SELECT `tff`.`initiator` AS `id`, SUM({points}) AS `value` FROM `sys_profiles_conn_friends` AS `tf` INNER JOIN `sys_profiles_conn_friends` AS `tff` ON `tf`.`content`=`tff`.`content` AND `tff`.`initiator`<>{profile_id} AND `tff`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tff`.`mutual`=''1'' WHERE `tf`.`initiator`={profile_id} AND `tf`.`mutual`=''1'' GROUP BY `id`', 'a:1:{s:6:"points";i:2;}', 0.5, 1),
-(@iRecFriends, 'shared_context', 'sql', 'SELECT `tm`.`initiator`AS `id`, SUM({points}) AS `value` FROM `{connection}` AS `tg` INNER JOIN `{connection}` AS `tm` ON `tg`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tm`.`mutual`=''1'' WHERE `tg`.`initiator`={profile_id} AND `tg`.`mutual`=''1'' GROUP BY `id`', 'a:2:{s:6:"points";i:1;s:10:"connection";s:14:"bx_groups_fans";}', 0.25, 1),
-(@iRecFriends, 'shared_location', 'sql', '', '', 0.25, 0);
+(@iRecFriends, 'shared_context', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_friend_recommendations_by_shared_context";s:6:"params";a:3:{i:0;s:12:"{profile_id}";i:1;s:12:"{connection}";i:2;s:8:"{points}";}s:5:"class";s:27:"TemplServiceRecommendations";}', 'a:2:{s:6:"points";i:1;s:10:"connection";s:14:"bx_groups_fans";}', 0.20, 1),
+(@iRecFriends, 'shared_location', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:45:"get_friend_recommendations_by_shared_location";s:6:"params";a:3:{i:0;s:12:"{profile_id}";i:1;s:8:"{radius}";i:2;s:8:"{points}";}s:5:"class";s:27:"TemplServiceRecommendations";}', 'a:2:{s:6:"radius";i:10;s:6:"points";i:1;}', 0.20, 1),
+(@iRecFriends, 'last_active', 'sql', 'SELECT `tp`.`id` AS `id`, {points} AS `value` FROM `sys_profiles` AS `tp` INNER JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` LEFT JOIN `sys_sessions` AS `ts` ON `tp`.`account_id`=`ts`.`user_id` WHERE `tp`.`id`<>{profile_id} AND `tp`.`id` NOT IN (SELECT `content` FROM `sys_profiles_conn_friends` WHERE `initiator`={profile_id} AND `mutual`=''1'') AND `tp`.`type` IN (''bx_persons'', ''bx_organizations'') ORDER BY `ts`.`date` DESC, `ta`.`logged` DESC, {order_by}', 'a:1:{s:6:"points";i:0;}', 0.1, 1);
 
 INSERT INTO `sys_objects_recommendation` (`name`, `module`, `connection`, `content_info`, `countable`, `active`, `class_name`, `class_file`) VALUES
 ('sys_subscriptions', 'system', 'sys_profiles_subscriptions', '', 1, 1, 'BxTemplRecommendationProfile', '');
@@ -2342,7 +2343,7 @@ SET @iRecSubscriptions = LAST_INSERT_ID();
 
 INSERT INTO `sys_recommendation_criteria` (`object_id`, `name`, `source_type`, `source`, `params`, `weight`, `active`) VALUES
 (@iRecSubscriptions, 'mutual_subscriptions', 'sql', 'SELECT `tff`.`content` AS `id`, SUM({points}) AS `value` FROM `sys_profiles_conn_subscriptions` AS `tf` INNER JOIN `sys_profiles_conn_subscriptions` AS `tff` ON `tf`.`content`=`tff`.`initiator` AND `tff`.`content`<>{profile_id} AND `tff`.`content` NOT IN (SELECT `content` FROM `sys_profiles_conn_subscriptions` WHERE `initiator`={profile_id}) WHERE `tf`.`initiator`={profile_id} GROUP BY `id`', 'a:1:{s:6:"points";i:2;}', 0.5, 1),
-(@iRecSubscriptions, 'shared_context', 'sql', 'SELECT `tm`.`initiator`AS `id`, SUM({points}) AS `value` FROM `{connection}` AS `tg` INNER JOIN `{connection}` AS `tm` ON `tg`.`content`=`tm`.`content` AND `tm`.`initiator`<>{profile_id} AND `tm`.`initiator` NOT IN (SELECT `content` FROM `sys_profiles_conn_subscriptions` WHERE `initiator`={profile_id}) AND `tm`.`mutual`=''1'' WHERE `tg`.`initiator`={profile_id} AND `tg`.`mutual`=''1'' GROUP BY `id`', 'a:2:{s:6:"points";i:1;s:10:"connection";s:14:"bx_groups_fans";}', 0.5, 1);
+(@iRecSubscriptions, 'shared_context', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:50:"get_subscription_recommendations_by_shared_context";s:6:"params";a:3:{i:0;s:12:"{profile_id}";i:1;s:12:"{connection}";i:2;s:8:"{points}";}s:5:"class";s:27:"TemplServiceRecommendations";}', 'a:2:{s:6:"points";i:1;s:10:"connection";s:14:"bx_groups_fans";}', 0.5, 1);
 
 CREATE TABLE `sys_recommendation_data` (
   `id` int(11) NOT NULL auto_increment,
@@ -3625,6 +3626,7 @@ CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
   `caption` varchar(255) NOT NULL,
   `info` varchar(255) NOT NULL,
   `help` varchar(255) NOT NULL,
+  `icon` text NOT NULL,
   `required` tinyint(4) NOT NULL DEFAULT '0',
   `unique` tinyint(4) NOT NULL DEFAULT '0',
   `collapsed` tinyint(4) NOT NULL DEFAULT '0',

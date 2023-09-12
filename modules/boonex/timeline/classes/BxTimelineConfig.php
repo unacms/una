@@ -30,6 +30,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_aCacheTableCheckFields;
 
     protected $_bInfScroll;
+    protected $_iInfScrollPerPreload;
     protected $_iInfScrollAutoPreloads;
 
     protected $_iRssLength;
@@ -122,6 +123,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_CONTROLS' => 'controls',
             'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELD_LABELS' => 'labels',
             'FIELDS_DELAYED_PROCESSING' => 'video', // can be array of fields or comma separated string of field names
 
             // page URIs
@@ -416,16 +418,25 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'sticked' => 'flag'
         ];
 
-        $this->_aPerPage = array(
+        $iPerPagePublic = (int)getParam($sOptionPrefix . 'events_per_page_home');
+        $iPerPageContext = (int)getParam($sOptionPrefix . 'events_per_page_profile');
+        $iPerPageFeed = (int)getParam($sOptionPrefix . 'events_per_page_account');
+
+        $this->_aPerPage = [
             'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
-            'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
-            'account' => (int)getParam($sOptionPrefix . 'events_per_page_account'),
-            'home' => (int)getParam($sOptionPrefix . 'events_per_page_home'),
-            'preload' => (int)getParam($sOptionPrefix . 'events_per_preload')
-    	);
+            BX_BASE_MOD_NTFS_TYPE_PUBLIC => $iPerPagePublic,
+            BX_TIMELINE_TYPE_HOT => $iPerPagePublic,
+            BX_BASE_MOD_NTFS_TYPE_OWNER => $iPerPageContext,
+            BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS => $iPerPageFeed,
+            BX_TIMELINE_TYPE_FEED => $iPerPageFeed,
+            BX_TIMELINE_TYPE_FEED_AND_HOT => $iPerPageFeed,
+            BX_TIMELINE_TYPE_CHANNELS => $iPerPageFeed,
+    	];
 
         $this->_bInfScroll = getParam($sOptionPrefix . 'enable_infinite_scroll') == 'on';
+        $this->_iInfScrollPerPreload = (int)getParam($sOptionPrefix . 'events_per_preload');
         $this->_iInfScrollAutoPreloads = (int)getParam($sOptionPrefix . 'auto_preloads');
+        
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iLiveUpdateLength = (int)getParam($sOptionPrefix . 'live_updates_length');
@@ -711,14 +722,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_aItemToUploader[$sMenuItem];
     }
 
-    public function getPerPage($sType = 'default')
-    {
-        if($this->isInfiniteScroll())
-            $sType = 'preload';
-
-        return parent::getPerPage($sType);
-    }
-
     public function getExtenalsEvery($sType = 'default')
     {
         if($this->isInfiniteScroll())
@@ -737,7 +740,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         return $iExtenalsEvery;
     }
-
+    public function getPerPreload()
+    {
+        return $this->_iInfScrollPerPreload;
+    }
     public function getAutoPreloads()
     {
         return $this->_iInfScrollAutoPreloads;

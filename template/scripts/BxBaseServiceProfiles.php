@@ -475,6 +475,45 @@ class BxBaseServiceProfiles extends BxDol
         return array_slice($a, 0, $iLimit);
     }
 
+    public function serviceProfilesSearchByLocation ($aLocation, $iRadius, $mixedParems = [])
+    {
+        $sModule = !empty($mixedParems['module']) ? $mixedParems['module'] : '';
+        $aModules = !empty($sModule) ? [BxDolModuleDb::getInstance()->getModuleByName($sModule)] : $this->serviceGetProfilesModules();
+
+        $iStart = 0;
+        $iLimit = 20;
+        if(is_int($mixedParems)) 
+            $iLimit = (int)$mixedParems;
+        else if(is_array($mixedParems) && isset($mixedParems['limit']))
+            $iLimit = (int)$mixedParems['limit'];
+
+        $aLocation[] = $iRadius;
+        $oProfileQuery = BxDolProfileQuery::getInstance();
+
+        $aResult = [];
+        foreach($aModules as $aModule) {
+            if(!bx_srv($aModule['name'], 'act_as_profile'))
+                continue;
+
+            $aContentIds = bx_srv($aModule['name'], 'get_search_result_extended', [[
+                'location' => ['type' => 'location_radius', 'operator' => 'locate', 'value' => [
+                    'array' => $aLocation
+                ]]
+            ], $iStart, $iLimit]);
+
+            $aResult = array_merge($aResult, $oProfileQuery->getProfiles(['type' => 'id_by_module_content_id', 'module' => $aModule['name'], 'content_id' => $aContentIds]));
+        }
+
+        bx_alert('system', 'profiles_search_by_location', 0, 0, [
+            'module' => $sModule,
+            'location' => $aLocation,
+            'radius' => $iRadius,
+            'result' => &$aResult
+        ]);
+
+        return array_slice($aResult, 0, $iLimit);
+    }
+
     public function serviceProfilesList ($iAccountId = 0)
     {
         $oProfilesQuery = BxDolProfileQuery::getInstance();
@@ -933,13 +972,6 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceIsEnabledCfilter()
     {
         return BxDolContentFilter::getInstance()->isEnabled();
-    }
-
-    public function serviceUpdateRecommendations($iProfileId)
-    {
-        $aObjects = BxDolRecommendationQuery::getObjects();
-        foreach($aObjects as $aObject)
-            BxDolRecommendation::getObjectInstance($aObject['name'])->processCriteria($iProfileId);
     }
 
     protected function _getIcon ($sIcon)

@@ -1661,7 +1661,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => -1, 
             'per_page' => -1, 
-            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_OWNER), 
             'timeline' => -1, 
             'filter' => '', 
             'modules' => array()
@@ -1693,7 +1693,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => -1, 
             'per_page' => -1, 
-            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_OWNER), 
             'timeline' => -1, 
             'filter' => '', 
             'modules' => array()
@@ -1731,7 +1731,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_OWNER), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1769,7 +1769,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_OWNER), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1795,7 +1795,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage(), 
+            'per_page_default' => $this->_oConfig->getPerPage($sType), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1810,7 +1810,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage(), 
+            'per_page_default' => $this->_oConfig->getPerPage($sType), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1848,7 +1848,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_PUBLIC), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1886,7 +1886,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_BASE_MOD_NTFS_TYPE_PUBLIC), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1924,7 +1924,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_TIMELINE_TYPE_HOT), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1962,7 +1962,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_TIMELINE_TYPE_HOT), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -2003,7 +2003,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('account'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_TIMELINE_TYPE_FEED), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -2044,7 +2044,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('account'), 
+            'per_page_default' => $this->_oConfig->getPerPage(BX_TIMELINE_TYPE_FEED), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -2075,12 +2075,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_block_view_custom "get_block_view_custom"
      */
-    public function serviceGetBlockViewCustom($aParams = array())
+    public function serviceGetBlockViewCustom($aParams = [])
     {
     	return $this->_serviceGetBlockViewByType($aParams);
     }
 
-    public function serviceGetBlockMenuDb($aParams = array())
+    public function serviceGetBlockMenuDb($aParams = [])
     {
         $aParams = $this->_prepareParams(array_merge([
             'name' => BX_TIMELINE_NAME_VIEWS_DB,
@@ -2090,7 +2090,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ], $aParams));
 
         if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
-            $aParams['type'] = $sType;
+            $this->_setParamsType($sType, $aParams);
 
         $sMenu = $this->_oConfig->getObject('menu_feeds');
         if(isset($aParams['menu_feeds'])) {
@@ -2122,7 +2122,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['owner_id'] = $this->getUserId();
 
         if(!isset($aParams['type']) && ($sType = $this->_oConfig->getUserChoice('type', $aParams['viewer_id'])) !== false)
-            $aParams['type'] = $sType;
+            $this->_setParamsType($sType, $aParams);
 
         $aParams = $this->_prepareParams(array_merge([
             'name' => BX_TIMELINE_NAME_VIEWS_DB,
@@ -3690,10 +3690,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $this->_oDb->updateEvent(['content' => serialize($aContent), 'source' => $sSource], ['id' => $iId]);
 
                 //--- Process Meta ---//
-            	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-            	if($bText)
-                    $oMetatags->metaAdd($iId, $sText);
-                $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+                $this->_processMetas($iId, $sText);
 
                 //--- Process Link ---//
                 if($bLinkIds)
@@ -3857,10 +3854,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->isAllowedEdit($aEvent, true);
 
-            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-            if($bText)
-                $oMetatags->metaAdd($iId, $sText);
-            $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+            //--- Process Meta ---//
+            $this->_processMetas($iId, $sText);
 
             //--- Process Link ---//
             if($bLinkIds)
@@ -4708,10 +4703,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
             $aContent = unserialize($aEvent['content']);
 
-            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-            if(!empty($aContent['text']))
-                $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']], $aContent['text']);
-            $oMetatags->locationsAddFromForm($aEvent[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+            $this->_processMetas($aEvent[$CNF['FIELD_ID']], $aContent['text']);
         }
 
         //--- Rebuild cache table.
@@ -5137,12 +5129,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_getBlockView($aBrowseParams);
     }
 
-    protected function _serviceGetBlockViews($aBrowseParams = array())
+    protected function _serviceGetBlockViews($aBrowseParams = [])
     {
         $aParams = $this->_prepareParams($aBrowseParams);
 
         if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
-            $aParams['type'] = $sType;
+            $this->_setParamsType($sType, $aParams);
 
         $this->_iOwnerId = $aParams['owner_id'];
 
@@ -5439,6 +5431,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_oDb->deleteLinks($iId);
     }
 
+    protected function _processMetas($iId, $sText)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+
+        if(!empty($sText)) {
+            $oMetatags->metaAdd($iId, $sText);
+
+            $aEvent = $this->_oDb->getEvents(['browse' => 'id', 'value' => $iId]);
+            if($oMetatags->keywordsIsEnabled() && !empty($aEvent[$CNF['FIELD_LABELS']])) {
+                $aLabels = unserialize($aEvent[$CNF['FIELD_LABELS']]);
+                if(!empty($aLabels) && is_array($aLabels))
+                    foreach ($aLabels as $sLabel) {
+                        if(!preg_match("/(\pL[\pL\pN_]+)/u", $sLabel)) 
+                            continue;
+
+                        $oMetatags->keywordsAddOne($iId, $sLabel, false);
+                    }
+            }
+        }
+
+        $oMetatags->locationsAddFromForm($iId, $CNF['FIELD_LOCATION_PREFIX']);
+    }
+
     protected function _saveMedia($sType, $iContentId, $aItemIds, $iProfileId = 0, $isAssociateWithContent = false)
     {
         if(empty($iContentId))
@@ -5486,6 +5503,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_oDb->deleteMedia($sType, $iContentId);
     }
 
+    protected function _setParamsType($sType, &$aParams)
+    {
+        if($aParams['type'] == $sType)
+            return;
+
+        $iPerPage = $this->_oConfig->getPerPage($sType);
+
+        $aParams = array_merge($aParams, [
+            'type' => $sType,
+            'per_page' => $iPerPage,
+            'per_page_default' => $iPerPage
+        ]);
+    }
+
     protected function _prepareParams($aParams)
     {
         if(empty($aParams['name']))
@@ -5504,7 +5535,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['start'] = 0;
 
         if(!isset($aParams['per_page']) || (int)$aParams['per_page'] <= 0)
-            $aParams['per_page'] = isset($aParams['per_page_default']) && (int)$aParams['per_page_default'] > 0 ? $aParams['per_page_default'] : $this->_oConfig->getPerPage();
+            $aParams['per_page'] = isset($aParams['per_page_default']) && (int)$aParams['per_page_default'] > 0 ? $aParams['per_page_default'] : $this->_oConfig->getPerPage($aParams['type']);
 
         if(empty($aParams['timeline']) || (int)$aParams['timeline'] < 0)
             $aParams['timeline'] = 0;
@@ -5540,7 +5571,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     protected function _prepareParamsGet($mParams = false)
     {
-        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'timeline', 'filter', 'modules', 'media', 'context', 'blink', 'viewer_id'];
+        $aKeys = ['name', 'view', 'type', 'owner_id', 'start', 'per_page', 'per_page_default', 'timeline', 'filter', 'modules', 'media', 'context', 'blink', 'viewer_id'];
 
         $aParams = [];
         if(!empty($mParams) && is_array($mParams))
@@ -5555,7 +5586,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['type'] = $this->_oConfig->processParamWithDefault($aParams['type'], BX_TIMELINE_TYPE_DEFAULT);
         $aParams['owner_id'] = $aParams['owner_id'] !== false ? bx_process_input($aParams['owner_id'], BX_DATA_INT) : $this->getUserId();
         $aParams['start'] = $aParams['start'] !== false ? bx_process_input($aParams['start'], BX_DATA_INT) : 0;
-        $aParams['per_page'] = $aParams['per_page'] !== false ? bx_process_input($aParams['per_page'], BX_DATA_INT) : $this->_oConfig->getPerPage();
+        $aParams['per_page'] = $aParams['per_page'] !== false ? bx_process_input($aParams['per_page'], BX_DATA_INT) : $this->_oConfig->getPerPage($aParams['type']);
+        $aParams['per_page_default'] = $aParams['per_page_default'] !== false ? bx_process_input($aParams['per_page_default'], BX_DATA_INT) : $this->_oConfig->getPerPage($aParams['type']);
         $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline']) : '';
         $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;
         $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : [];

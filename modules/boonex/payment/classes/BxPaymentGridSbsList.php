@@ -23,6 +23,14 @@ class BxPaymentGridSbsList extends BxPaymentGridSbsAdministration
         $this->_aProvidersAttached = array();
     }
 
+    public function getCode ($isDisplayHeader = true)
+    {
+        if(empty($this->_aQueryAppend['client_id']) || $this->_aQueryAppend['client_id'] != bx_get_logged_profile_id())
+            return '';
+
+        return parent::getCode($isDisplayHeader);
+    }
+
     protected function _getActionActions ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
     	$sJsCode = '';

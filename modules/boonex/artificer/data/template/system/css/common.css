@@ -297,6 +297,9 @@ button.bx-btn:focus .bx-loading-ajax-btn {
     max-height: 16rem;
     overflow: hidden;
 }
+.bx-overflow-ready.bx-or-cmt {
+    max-height: 5rem;
+}
 .bx-overflow:before {
     position: absolute;
     bottom: 0;

@@ -93,16 +93,57 @@ class BxDolRecommendationQuery extends BxDolDb
         ]) !== false;
     }
 
+    public function delete($iProfileId, $iObjectId, $iItemId)
+    {
+        return $this->query("DELETE FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND `item_id` = :item_id ", [
+            'profile_id' => $iProfileId,
+            'object_id' => $iObjectId,
+            'item_id' => $iItemId
+        ]) !== false;
+    }
+
     public function get($iProfileId, $iObjectId, $iStart = 0, $iPerPage = 0)
     {
         $sLimitClause = "";
         if($iPerPage)
             $sLimitClause = " LIMIT " . $iStart . ", " . $iPerPage;
 
-        return $this->getPairs("SELECT `item_id` AS `id`, (`item_value` - `item_reducer`) AS `value` FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) > 0 ORDER BY `value` DESC" . $sLimitClause, 'id', 'value', [
+        return $this->getPairs("SELECT `item_id` AS `id`, (`item_value` - `item_reducer`) AS `value` FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= 0 ORDER BY `value` DESC" . $sLimitClause, 'id', 'value', [
             'profile_id' => $iProfileId,
             'object_id' => $iObjectId
         ]);
+    }
+    
+    public function getBy($aParams)
+    {
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+    	$sFieldsClause = "*"; 
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sLimitClause = $sOrderClause = "";
+
+    	switch($aParams['type']) {              
+            case 'profile_object_ids':
+                $aMethod['params'][1] = [
+                    'profile_id' => $aParams['profile_id'],
+                    'object_id' => $aParams['object_id']
+                ];
+
+                $sWhereClause = " AND `profile_id`=:profile_id AND `object_id`=:object_id";
+                break;
+
+            case 'all':
+                break;
+    	}
+
+        $sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
+        $sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
+
+        $aMethod['params'][0] = "SELECT
+            " . $sFieldsClause . "
+            FROM `" . self::$sTableData . "` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
 
     public function getItem($iProfileId, $iObjectId, $iItemId)

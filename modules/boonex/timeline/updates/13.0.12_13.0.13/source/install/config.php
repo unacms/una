@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_timeline',
     'title' => 'Timeline',
     'note' => 'Timeline module.',
-    'version' => '13.0.14.DEV',
+    'version' => '13.0.13',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '13.0.x'
+        '13.1.0-B1'
     ),
 
     /**

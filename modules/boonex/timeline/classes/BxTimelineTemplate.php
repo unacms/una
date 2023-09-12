@@ -114,11 +114,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $mixedResult; 
     }
 
-    public function getJsCodeView($aParams = array(), $bWrap = true, $bDynamic = false)
+    public function getJsCodeView($aParams = [], $bWrap = true, $bDynamic = false)
     {
+        $bInfiniteScroll = $this->_oConfig->isInfiniteScroll();
+        if($bInfiniteScroll && isset($aParams['oRequestParams']['per_page']))
+            $aParams['oRequestParams']['per_page'] = $this->_oConfig->getPerPreload();
+
         $aParams = array_merge([
             'sObjNameMenuFeeds' => $this->_oConfig->getObject('menu_feeds'),
-            'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
+            'bInfScroll' => $bInfiniteScroll,
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
             'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
             'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),
@@ -868,12 +872,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sBack = $this->getBack($aParams);
 
-        $iPerPage = $this->_oConfig->getPerPage();
-        $iPreloads = $this->_oConfig->getAutoPreloads();
-        if(!$this->_oConfig->isInfiniteScroll() || (($aParams['start'] - $iPerPage * ($iPreloads - 1)) % ($iPerPage * $iPreloads) == 0))
-            $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
+        if($this->_oConfig->isInfiniteScroll()) {
+            $aParams['per_page'] = $this->_oConfig->getPerPreload();
+            $iAutoPreloads = $this->_oConfig->getAutoPreloads();
+
+            $bAuto = ($aParams['start'] - $aParams['per_page_default'] - $aParams['per_page'] * ($iAutoPreloads - 2)) % ($aParams['per_page'] * $iAutoPreloads) != 0;
+            $sLoadMore = $this->{'getLoadMore' . ($bAuto ? 'Auto' : '')}($aParams, $bNext, $iEvents > 0 && $bEvents);
+        }
         else
-            $sLoadMore = $this->getLoadMoreAuto($aParams, $bNext, $iEvents > 0 && $bEvents);
+            $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
 
         $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
 

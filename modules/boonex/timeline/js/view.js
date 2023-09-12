@@ -191,13 +191,13 @@ BxTimelineView.prototype.initSeeMore = function(oParent, bInItems)
     if(bInItems)
         oSubParent = oParent.find('.' + this.sClassItem);
 
-    oSubParent.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+    oSubParent.find('.bx-tl-item-text .bx-tl-content').bxCheckOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
     });
 
     if(oSubParent.find('.bx-tl-item-text .bx-tl-content .bx-embed-link').length != 0)
         setTimeout(function() {
-            oSubParent.find('.bx-tl-item-text .bx-tl-content:not(.' +  $this.sSP + '-overflow)').has('.bx-embed-link').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+            oSubParent.find('.bx-tl-item-text .bx-tl-content:not(.' +  $this.sSP + '-overflow)').has('.bx-embed-link').bxCheckOverflowHeight($this.sSP + '-overflow', function(oElement) {
                 $this.onFindOverflow(oElement);
             });
         }, 4000);
@@ -266,8 +266,10 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
                 return;
         }
 
+        var iStart = $this._oRequestParams.start + ($this._oRequestParams.start == 0 ? $this._oRequestParams.per_page_default : $this._oRequestParams.per_page);
+
         $this._bInfScrollBusy = true;
-        $this._getPage(undefined, $this._oRequestParams.start + $this._oRequestParams.per_page, $this._oRequestParams.per_page, function(oData) {
+        $this._getPage(undefined, iStart, $this._oRequestParams.per_page, function(oData) {
             $this._bEventsToLoad = oData.events_to_load;
             $this._iInfScrollPreloads += 1;
             $this._bInfScrollBusy = false;
@@ -545,6 +547,8 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
         this.pauseVideos(oViewBefore);
 
     this._oRequestParams.start = 0;
+    this._oRequestParams.per_page = undefined;
+    this._oRequestParams.per_page_default = undefined;
     this._oRequestParams.type = sType;
 
     var oTab = $(oLink);
@@ -1377,7 +1381,7 @@ BxTimelineView.prototype._onGetPost = function(oData)
     var $this = this;
     var sItem = this._getHtmlId('item', this._oRequestParams, {whole:false}) + oData.id;
     this.oView.find(sItem).replaceWith($(oData.item).bxProcessHtml());
-    this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+    this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').bxCheckOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
     });
 

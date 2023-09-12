@@ -370,7 +370,7 @@ BxTimelinePost.prototype._onGetPost = function(oData)
 
                     var oItem = bDivider ? oDivider.after(oContent).next('.' + $this.sClassItem + ':hidden') : oContent.prependTo(oItems);
                     oItem.bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                        $(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                        $(this).find('.bx-tl-item-text .bx-tl-content').bxCheckOverflowHeight($this.sSP + '-overflow', function(oElement) {
                             $this.onFindOverflow(oElement);
                         });
 
@@ -383,7 +383,7 @@ BxTimelinePost.prototype._onGetPost = function(oData)
 
                 case 'outline':
                     $this.prependMasonry(oContent, function(oItems) {
-                        $(oItems).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                        $(oItems).find('.bx-tl-item-text .bx-tl-content').bxCheckOverflowHeight($this.sSP + '-overflow', function(oElement) {
                             $this.onFindOverflow(oElement);
                         });
 

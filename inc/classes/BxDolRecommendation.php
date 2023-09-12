@@ -73,7 +73,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
         $sName = 'recommendations_for_' . $iProfileId;
         if(!$oCronQuery->isTransientJobService($sName))
-            $oCronQuery->addTransientJobService($sName, ['system', 'updateRecommendations', [$iProfileId], 'TemplServiceProfiles']);
+            $oCronQuery->addTransientJobService($sName, ['system', 'update_data', [$iProfileId], 'TemplServiceRecommendations']);
     }
 
     public function getConnection()
@@ -120,7 +120,9 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
 
         /**
          * Action 'add' moves the item to the end not so much as 'ignore'.
-         * For this purpose (+) is used instead of the (*).
+         * For this purpose (+) is used instead of the (*). Is needed to hide
+         * the recomended item. Isn't removed completely because friend request 
+         * can be rejected.
          */
         $iReducer = (int)$aItem['item_reducer'] + $this->_iReducerAdd;
 
@@ -158,15 +160,19 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
                         break;
 
                     $sQuery = bx_replace_markers($aCriterion['source'], $aCriterionParams);
-                    if($this->_aObject['countable'])
-                        $sQuery .= ' ORDER BY `value` DESC';
+                    if($this->_aObject['countable']) {
+                        if(strpos($sQuery, '{order_by}') !== false)
+                            $sQuery = bx_replace_markers($sQuery, ['order_by' => '`value` DESC']);
+                        else
+                            $sQuery .= ' ORDER BY `value` DESC';
+                    }
                     $sQuery .= ' LIMIT ' . $iLimit;
 
                     $aCriterionItems[$sCriterion] = $this->_oDb->getPairs($sQuery, 'id', 'value');
                     break;
 
                 case 'service':
-                    //TODO: Realize this!
+                    $aCriterionItems[$sCriterion] = BxDolService::callSerialized($aCriterion['source'], $aCriterionParams);
                     break;
             }
         }
@@ -186,6 +192,14 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         }
 
         $this->_oDb->clean($iProfileId, $this->_iObject);
+        
+        $oConnection = BxDolConnection::getObjectInstance($this->getConnection());
+        $bConnectionMutual = $oConnection->getType() == BX_CONNECTIONS_TYPE_MUTUAL;
+
+        $aItems = $this->_oDb->getBy(['type' => 'profile_object_ids', 'profile_id' => $iProfileId, 'object_id' => $this->_iObject]);
+        foreach($aItems as $aItem)
+            if($oConnection->isConnected($iProfileId, $aItem['item_id'], $bConnectionMutual))
+                $this->_oDb->delete($iProfileId, $this->_iObject, $aItem['item_id']);
 
         foreach($aResults as $iId => $iValue)
             $this->_oDb->add($iProfileId, $this->_iObject, $iId, $iValue);

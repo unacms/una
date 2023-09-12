@@ -17,11 +17,11 @@
     <string name="_bx_timeline_option_enable_count_all_views"><![CDATA[Считать просмотры для всех событий в хронике]]></string>
     <string name="_bx_timeline_option_enable_repost_own_actions"><![CDATA[Репост использует собственные действия (просмотры, голосование и тп.)]]></string>
     <string name="_bx_timeline_option_enable_hide_upon_delete"><![CDATA[Деактивировать сообщения при скрывании вместо удаления]]></string>
-    <string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-    <string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов на странице "панель аккаунта"]]></string>
-    <string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов на главной странице сайта]]></string>
+    <string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество элементов в ленте контекста (профиля)]]></string>
+    <string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов в ленте контекст (профиль) + подписки]]></string>
+    <string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов в публичной ленте]]></string>
     <string name="_bx_timeline_option_events_per_page"><![CDATA[Количество элементов на странице]]></string>
-    <string name="_bx_timeline_option_enable_infinite_scroll"><![CDATA[Включить 'Бесконечную прокрутку' (экспериментально)]]></string>
+    <string name="_bx_timeline_option_enable_infinite_scroll"><![CDATA[Включить 'Бесконечную прокрутку']]></string>
     <string name="_bx_timeline_option_events_per_preload"><![CDATA[Бесконечная прокрутка: Количество элементов, получаемых при авто-подгрузке]]></string>
     <string name="_bx_timeline_option_auto_preloads"><![CDATA[Бесконечная прокрутка: Количество авто-подгрузок]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>

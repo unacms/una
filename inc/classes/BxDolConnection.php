@@ -175,6 +175,15 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get connection table.
+     * return string with table name.
+     */ 
+    public function getTable()
+    {
+        return $this->_aObject['table'];
+    }
+
+    /**
      * Check whether connection between Initiator and Content can be established.
      */
     public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false, $isCheckExists = true)
