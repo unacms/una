@@ -266,8 +266,10 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
                 return;
         }
 
+        var iStart = $this._oRequestParams.start + ($this._oRequestParams.start == 0 ? $this._oRequestParams.per_page_default : $this._oRequestParams.per_page);
+
         $this._bInfScrollBusy = true;
-        $this._getPage(undefined, $this._oRequestParams.start + $this._oRequestParams.per_page, $this._oRequestParams.per_page, function(oData) {
+        $this._getPage(undefined, iStart, $this._oRequestParams.per_page, function(oData) {
             $this._bEventsToLoad = oData.events_to_load;
             $this._iInfScrollPreloads += 1;
             $this._bInfScrollBusy = false;
@@ -545,6 +547,8 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
         this.pauseVideos(oViewBefore);
 
     this._oRequestParams.start = 0;
+    this._oRequestParams.per_page = undefined;
+    this._oRequestParams.per_page_default = undefined;
     this._oRequestParams.type = sType;
 
     var oTab = $(oLink);
