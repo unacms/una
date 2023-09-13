@@ -201,7 +201,7 @@ class BxStrmEngineOvenMediaEngine extends BxDol
         if (!$sApiProtocol || !$sHost || !$iApiPort || !$sApiKey)
             return false;
 
-        $sUrl = "http://{$sHost}:$iApiPort/v1{$sUri}";
+        $sUrl = $sApiProtocol . "://{$sHost}:$iApiPort/v1{$sUri}";
         $s = bx_file_get_contents($sUrl, $aBody, $sMethod, ['Authorization: Basic ' . $sApiKey]);
         bx_log('bx_stream_ome_api', $sUrl . "\n" . $s);
         if (!$s)
