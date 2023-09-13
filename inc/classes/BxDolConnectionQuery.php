@@ -258,10 +258,12 @@ class BxDolConnectionQuery extends BxDolDb
         return $this->getOne($this->_getConnectionsQueryCount($sWhere, $sJoin, $isMutual, '`c`.`content`'), $aBindings);
     }
 
-    public function getConnectedContentCount ($iInitiator, $isMutual = false)
+    public function getConnectedContentCount ($iInitiator, $isMutual = false, $iFromDate = 0)
     {
         $sJoin = $this->_aObject['profile_initiator'] ? 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`status` = \'active\'' : ''; 
         $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ?", $iInitiator);
+        if ($iFromDate > 0)
+            $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ? AND `c`.`added` > ?", $iInitiator, $iFromDate);
         $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
         return $this->getOne($sQuery);
     }

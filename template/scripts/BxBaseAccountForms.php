@@ -230,6 +230,8 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     protected function _editAccountForm ($iAccountId, $sDisplayName)
     {
+        $bIsApi = bx_is_api();
+        
         $oAccount = BxDolAccount::getInstance($iAccountId);
         $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
         if (!$aAccountInfo)
@@ -250,14 +252,14 @@ class BxBaseAccountForms extends BxDolProfileForms
         $oForm->initChecker($aAccountInfo);
 
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $bIsApi ? $oForm->getCodeAPI() : $oForm->getCode();
 
         $aTrackTextFieldsChanges = array (); // track text fields changes, not-null(for example empty array) - means track, null - means don't track
 
         // update email and email setting in DB
         if (!$oForm->update ($aAccountInfo['id'], array(), $aTrackTextFieldsChanges)) {
             if (!$oForm->isValid())
-                return $oForm->getCode();
+                return $bIsApi ? $oForm->getCodeAPI() : $oForm->getCode();
             else
                 return MsgBox(_t('_sys_txt_error_account_update'));
         }
@@ -290,10 +292,13 @@ class BxBaseAccountForms extends BxDolProfileForms
         bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName));
 
         // display result message
+        if ($bIsApi){
+            return $oForm->getCodeAPI();
+        }
+            
         $sMsg = MsgBox(_t('_' . $sDisplayName . '_successfully_submitted'));
         return $sMsg . $oForm->getCode();
-    }    
-
+    }     
 }
 
 /** @} */

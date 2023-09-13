@@ -392,6 +392,16 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         return $this->getLinksBy(array('type' => 'content_id', 'content_id' => $iContentId));
     }
+    
+    public function getStatByProfile($iAuthorId)
+    {
+        $aBindings = array(
+            'author' => $iAuthorId
+        );
+        $CNF = &$this->_oConfig->CNF;
+        
+        return $this->getRow("SELECT COUNT(id) AS count, SUM(views) AS views, SUM(votes) AS votes, SUM(rvotes) AS rvotes FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `author`=:author", $aBindings);
+    }
 
     public function getLinksBy($aParams = array())
     {

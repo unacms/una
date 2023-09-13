@@ -55,6 +55,64 @@ class BxBaseDashboardServices extends BxDol
 
     }
     
+    public function serviceGetStatBlock()
+    {
+        $bEmpty = false;
+        if (defined('BX_API_PAGE'))
+           $bEmpty = true;
+        
+        $aData = [];
+        
+        $iStartDate = time() - 24*3600*31;
+
+        $iProfileId = (int)bx_get_logged_profile_id();
+        $iV1 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($iProfileId, true);
+        $iV2 =$bEmpty ? 0 :  BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($iProfileId, true, $iStartDate);
+        $aData['friends'] = ['title' => 'Friends', 'key' => 'friends', 'type' => 'growth', 'url' =>'/friends', 'current' => $iV1, 'prev' => $iV2, 'growth' => $iV2 > 0 ? ($iV1 - $iV2)/$iV2*100 : 0];
+       // echo $iV1.'----'.$iV2;
+        
+        $iV1 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($iProfileId, false);
+        $iV2 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($iProfileId, false, $iStartDate);
+        $aData['followers'] = ['title' =>'Followers', 'key' => 'followers', 'type' => 'growth', 'url' =>'/followers', 'current' => $iV1, 'prev' => $iV2, 'growth' =>  $iV2 > 0 ? ($iV1 - $iV2)/$iV2*100 : 0];
+        
+        $aModules = bx_srv('system', 'get_modules_by_type', ['content']);
+        foreach($aModules as $aModule) {
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            $CNF = &$oModule->_oConfig->CNF;
+            $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
+            $aIcon = explode($CNF['ICON'], ' ');
+            $aData[$aModule['name']] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $CNF['URL_HOME'], 'icon' => $CNF['ICON'], 'type' => 'simple'], $a);
+        }
+        
+        $aModules = bx_srv('system', 'get_modules_by_type', ['context']);
+        foreach($aModules as $aModule) {
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            $CNF = &$oModule->_oConfig->CNF;
+            $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
+            $aIcon = explode($CNF['ICON'], ' ');
+            
+            $aContexts = $oModule->_oDb->getEntriesBy(['type' => 'author', 'author' => $iProfileId]);
+            $iMembers = 0;
+            if (!$bEmpty){
+                foreach($aContexts as $aContext) {
+                    $oProfile = BxDolProfile::getInstanceByContentAndType($aContext[$CNF['FIELD_ID']], $aModule['name']);
+
+                    $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+                    if($oConnection){
+                        $iMembers += $oConnection->getConnectedInitiatorsCount($oProfile->id(), true);
+                    }
+                }
+            }    
+            $aData[$aModule['name']] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $CNF['URL_HOME'], 'icon' => $CNF['ICON'], 'type' => 'simple', 'members' => $iMembers], $a);
+        }
+        
+        $bApi = bx_is_api();
+        if($bApi)
+            return [bx_api_get_block('dashboard_stat', $aData)];
+
+
+    }
+    
     public function serviceManageAudit()
     {
         return bx_srv('system', 'manage_tools', array(), 'TemplAuditServices');
