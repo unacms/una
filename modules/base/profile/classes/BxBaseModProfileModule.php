@@ -2082,6 +2082,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'image' => $this->serviceGetThumb($iId),
             'cover' => $this->serviceGetCover($iId),
         ];
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if ($oConnection){
+            $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->_aModule['name']);
+            $aResult['friends_count'] = $oConnection->getConnectedContentCount($oProfile->id(), true);
+        }
 
         if($bExtended)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];

@@ -113,6 +113,22 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $sResult;
     }
+    
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $aResult = parent::decodeDataApi($aData, $bExtended);
+        
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if ($oConnection){
+            $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->_aModule['name']);
+            $aResult['members_count'] = $oConnection->getConnectedInitiatorsCount($oProfile->id(), false);
+        }
+        $aResult['visibility'] = $aData[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        return $aResult;
+    }
 
     public function serviceGetMenuAddonManageTools()
     {
