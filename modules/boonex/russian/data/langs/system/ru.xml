@@ -1112,6 +1112,7 @@
 	<string name="_adm_lmi_cpt_pre_values"><![CDATA[Элементы данных]]></string>
 	<string name="_adm_lmi_cpt_popular"><![CDATA[Популярные]]></string>
 	<string name="_adm_lmi_cpt_purchases"><![CDATA[Покупки]]></string>
+        <string name="_adm_lmi_cpt_pwa"><![CDATA[PWA]]></string>
         <string name="_adm_lmi_cpt_ractions"><![CDATA[Действия]]></string>
         <string name="_adm_lmi_cpt_rlevels"><![CDATA[Уровни]]></string>
 	<string name="_adm_lmi_cpt_sets"><![CDATA[Наборы]]></string>
@@ -1712,6 +1713,13 @@
     <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Искать в]]></string>
     <string name="_adm_stg_cpt_option_sys_api_extended_units"><![CDATA[Использовать расширенные юниты]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
+
+    <string name="_adm_stg_cpt_category_pwa"><![CDATA[Прогрессивные веб-приложения]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_name"><![CDATA[Имя]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_short_name"><![CDATA[Сокращенное имя]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_description"><![CDATA[Описание]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_background_color"><![CDATA[Цвет фона]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_theme_color"><![CDATA[Цвет темы]]></string>
 
     <string name="_adm_stg_cpt_category_sockets"><![CDATA[Сервер для сокетов]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type"><![CDATA[Тип]]></string>

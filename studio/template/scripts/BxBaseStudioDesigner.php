@@ -65,6 +65,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             BX_DOL_STUDIO_DSG_TYPE_COVER => array('icon' => 'far file-image'),
             BX_DOL_STUDIO_DSG_TYPE_SPLASH => array('icon' => 'far file-image'),
             BX_DOL_STUDIO_DSG_TYPE_INJECTIONS => array('icon' => 'object-group'),
+            BX_DOL_STUDIO_DSG_TYPE_PWA => array('icon' => 'cubes'),
             BX_DOL_STUDIO_DSG_TYPE_SETTINGS => array('icon' => 'cogs'),
         );
         foreach($aMenuItems as $sMenuItem => $aItem)
@@ -645,6 +646,18 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             'js_content' => $this->getPageJsCode(array(
                 'sCodeMirror' => 'textarea[name=sys_head],textarea[name=sys_body]'
             ))
+        ));
+    }
+
+    protected function getPwa()
+    {
+        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_SYSTEM, 'pwa');
+
+        $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
+        $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', array(
+            'content' => $oOptions->getCode(),
+            'js_content' => $this->getPageJsCode()
         ));
     }
 

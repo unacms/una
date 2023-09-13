@@ -221,6 +221,8 @@ blockquote {
 
 .bx-db-menu-tab {
     margin-left: 5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     text-align: right;
     overflow-x: auto;
 }

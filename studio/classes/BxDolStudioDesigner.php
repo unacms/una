@@ -13,6 +13,7 @@ define('BX_DOL_STUDIO_DSG_TYPE_ICON', 'icon');
 define('BX_DOL_STUDIO_DSG_TYPE_COVER', 'cover');
 define('BX_DOL_STUDIO_DSG_TYPE_SPLASH', 'splash');
 define('BX_DOL_STUDIO_DSG_TYPE_INJECTIONS', 'injections');
+define('BX_DOL_STUDIO_DSG_TYPE_PWA', 'pwa');
 define('BX_DOL_STUDIO_DSG_TYPE_SETTINGS', 'settings');
 
 define('BX_DOL_STUDIO_DSG_TYPE_DEFAULT', 'general');

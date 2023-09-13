@@ -1128,6 +1128,7 @@
 	<string name="_adm_lmi_cpt_pre_values"><![CDATA[Data Items]]></string>
 	<string name="_adm_lmi_cpt_popular"><![CDATA[Popular]]></string>
 	<string name="_adm_lmi_cpt_purchases"><![CDATA[Purchases]]></string>
+        <string name="_adm_lmi_cpt_pwa"><![CDATA[PWA]]></string>
         <string name="_adm_lmi_cpt_ractions"><![CDATA[Actions]]></string>
         <string name="_adm_lmi_cpt_rlevels"><![CDATA[Levels]]></string>
 	<string name="_adm_lmi_cpt_sets"><![CDATA[Sets]]></string>
@@ -1734,7 +1735,14 @@
     <string name="_adm_stg_cpt_option_sys_api_search_sections"><![CDATA[Search sections]]></string>
     <string name="_adm_stg_cpt_option_sys_api_extended_units"><![CDATA[Use extended units]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Viewport meta tag]]></string>
-    
+
+    <string name="_adm_stg_cpt_category_pwa"><![CDATA[Progressive Web Apps]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_name"><![CDATA[Name]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_short_name"><![CDATA[Short name]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_description"><![CDATA[Description]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_background_color"><![CDATA[Background color]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_theme_color"><![CDATA[Theme color]]></string>
+
     <string name="_adm_stg_cpt_category_sockets"><![CDATA[Sockets server]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type"><![CDATA[Type]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_url"><![CDATA[Url]]></string>
