@@ -449,7 +449,6 @@ class BxBaseCmts extends BxDolCmts
             }
         }
 
-        $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
         if($this->_isShowContent($aCmt)) {
             $sContent = $this->_getContent($aCmt, $aBp, $aDp);
         }
@@ -983,13 +982,9 @@ class BxBaseCmts extends BxDolCmts
         return self::$_sTmplContentCounter;
     }
 
-
-    /**
-     * private functions
-     */
-    private function _isShowContent($aCmt)
+    protected function _isShowContent($aCmt)
     {
-        $oProfileAuthor = BxDolProfile::getInstance($aCmt['cmt_author_id']);
+        $oProfileAuthor = BxDolProfile::getInstance(abs($aCmt['cmt_author_id']));
         return (int)$aCmt['cmt_author_id'] == 0 || ($oProfileAuthor && $oProfileAuthor->isActive()) || isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet([MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR]);
     }
 
