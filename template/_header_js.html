@@ -7,6 +7,10 @@
         bx_redirect_for_external_links($('.bx-def-vanilla-html'));
     });
 
+    if (navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.register('sw.js.php');
+    }
+
     (function(w) {
         var dpr = (w.devicePixelRatio === undefined ? 1 : Math.round(w.devicePixelRatio));
         if ($.cookie('devicePixelRatio') == dpr || dpr < 2 || (typeof(bIgnorePixelRatio) != "undefined" && bIgnorePixelRatio) || !navigator.cookieEnabled) 

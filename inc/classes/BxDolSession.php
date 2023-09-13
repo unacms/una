@@ -64,7 +64,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 
     function start()
     {
-        if (defined('BX_DOL_CRON_EXECUTE') || defined('BX_MANIFEST'))
+        if (defined('BX_DOL_CRON_EXECUTE') || defined('BX_MANIFEST') || defined('BX_SERVICE_WORKER'))
             return true;
 
         if (getParam('sys_session_auth')) {

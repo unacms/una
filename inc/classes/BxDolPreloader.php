@@ -32,15 +32,15 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 
         $this->_aEntries = $this->_oDb->getEntries();
 
-        $this->_aTypes = array(
-            BX_PRELOADER_TYPE_CSS => '',
-            BX_PRELOADER_TYPE_JS => '', 
-            BX_PRELOADER_TYPE_JS_OPTION => '',
-            BX_PRELOADER_TYPE_JS_TRANSLATION => '',
-            BX_PRELOADER_TYPE_JS_IMAGE => ''
-        );
+        $this->_aTypes = [
+            BX_PRELOADER_TYPE_CSS => ['get' => 'getCssUrl'],
+            BX_PRELOADER_TYPE_JS => ['get' => 'getJsUrl'],
+            BX_PRELOADER_TYPE_JS_OPTION => [],
+            BX_PRELOADER_TYPE_JS_TRANSLATION => [],
+            BX_PRELOADER_TYPE_JS_IMAGE => []
+        ];
         foreach($this->_aTypes as $sType => $sValue)
-            $this->_aTypes[$sType] = 'add' . bx_gen_method_name($sType);
+            $this->_aTypes[$sType]['add'] = 'add' . bx_gen_method_name($sType);
 
         $this->_aMarkers = array(
             'dir_plugins_public' => BX_DIRECTORY_PATH_PLUGINS_PUBLIC,
@@ -78,8 +78,33 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
             if(empty($sContent))
                 continue;
 
-            $oTemplateSystem->{$this->_aTypes[$sType]}($sContent);
+            $oTemplateSystem->{$this->_aTypes[$sType]['add']}($sContent);
         }
+    }
+
+    public function getSystemAssets($oTemplateSystem)
+    {
+        $aResults = [];
+
+        $aEntries = $this->_oDb->getEntriesSystem();
+        foreach($aEntries as $aEntry) {
+            $sType = $aEntry['type'];
+
+            if(BxDolService::isSerializedService($aEntry['content']))
+                $aEntry['content'] = BxDolService::callSerialized($aEntry['content']);
+
+            $sContent = bx_replace_markers($aEntry['content'], $this->_aMarkers);
+            if(empty($sContent))
+                continue;
+
+            $sEntry = $oTemplateSystem->{$this->_aTypes[$sType]['get']}($sContent);
+            if(empty($sEntry))
+                $sEntry = $sContent;
+
+            $aResults[] = str_replace([BX_DOL_URL_ROOT, BX_DIRECTORY_PATH_ROOT], '/', $sEntry);
+        }
+
+        return $aResults;
     }
 }
 
