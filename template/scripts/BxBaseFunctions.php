@@ -581,13 +581,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      */
     function getManifests()
     {
-        $aUrlRoot = parse_url(BX_DOL_URL_ROOT);
-
-        $sUrl = bx_append_url_params(BX_DOL_URL_ROOT .  'manifest.json.php', [
-            'bx_name' => $aUrlRoot['host']
-        ]);
-
-        return '<link rel="manifest" href="' . $sUrl . '" crossorigin="use-credentials" />';
+        return '<link rel="manifest" href="' . BX_DOL_URL_ROOT . 'manifest.json.php" crossorigin="use-credentials" />';
     }
 
     /**

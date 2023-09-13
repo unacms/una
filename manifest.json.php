@@ -14,28 +14,43 @@ require_once('./inc/header.inc.php');
 $aContent = [
     'name' => '',
     'short_name' => '',
+    'description' => getParam('sys_pwa_description'),
+    'orientation' => 'portrait',
     'start_url' => parse_url(BX_DOL_URL_ROOT, PHP_URL_PATH),
     'display' => 'standalone',
+    'scope' => '/',
+    'background_color' => getParam('sys_pwa_background_color'),
+    'theme_color' => getParam('sys_pwa_theme_color')
 ];
 
-$sPattern = '/^[A-Za-z0-9\.\-]+$/';
-
-if(!empty($_GET['bx_name']) && preg_match($sPattern, $_GET['bx_name']))
-    $aContent['name'] = $_GET['bx_name'];
-
-if(!empty($_GET['bx_short_name']) && preg_match($sPattern, $_GET['bx_short_name']))
-    $aContent['short_name'] = $_GET['bx_short_name'];
-else
-    $aContent['short_name'] = $aContent['name'];
+$aContent['name'] = ($sName = getParam('sys_pwa_name')) != '' ? $sName : parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST);
+$aContent['short_name'] = ($sShortName = getParam('sys_pwa_short_name')) != '' ? $sShortName : $aContent['name'];
 
 if(isLogged())
     $aContent['gcm_sender_id'] = '482941778795';
 
+$aAdi = [];
+
+/*
+ * Apple device icons
+ */
+if(($iId = (int)getParam('sys_site_icon_apple')) != 0) {
+    $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
+
+    $sSizes = '180x180';
+    if(($aTranscoderParams = $oTranscoder->getFilterParams('Resize')) !== false)
+        $sSizes = $aTranscoderParams['w'] . 'x' . $aTranscoderParams['h'];
+
+    $aAdi[] = [
+        'src' => $oTranscoder->getFileUrl($iId), 
+        'type' => $oTranscoder->getFileMimeType($iId), 
+        'sizes' => $sSizes
+    ];
+}
+
 /*
  * Android device icons
  */
-
-$aAdi = [];
 if(($iId = (int)getParam('sys_site_icon_android')) != 0) {
     $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_ANDROID);
 
