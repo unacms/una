@@ -134,6 +134,18 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         
         return $aContentInfo['date_start'] && $aContentInfo['date_end'];
     }
+    
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $aResult = parent::decodeDataApi($aData, $bExtended);
+        
+        $aResult['date_start'] = $aData[$CNF['FIELD_DATE_START']];
+        $aResult['date_end'] = $aData[$CNF['FIELD_DATE_END']];
+
+        return $aResult;
+    }
 
     public function serviceGetCalendarEntries($iProfileId)
     {
