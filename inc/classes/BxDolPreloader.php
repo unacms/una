@@ -33,8 +33,8 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
         $this->_aEntries = $this->_oDb->getEntries();
 
         $this->_aTypes = [
-            BX_PRELOADER_TYPE_CSS => ['get' => 'getCssUrl'],
-            BX_PRELOADER_TYPE_JS => ['get' => 'getJsUrl'],
+            BX_PRELOADER_TYPE_CSS => ['get' => 'getCssUrlWithRevision'],
+            BX_PRELOADER_TYPE_JS => ['get' => 'getJsUrlWithRevision'],
             BX_PRELOADER_TYPE_JS_OPTION => [],
             BX_PRELOADER_TYPE_JS_TRANSLATION => [],
             BX_PRELOADER_TYPE_JS_IMAGE => []
@@ -80,31 +80,6 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 
             $oTemplateSystem->{$this->_aTypes[$sType]['add']}($sContent);
         }
-    }
-
-    public function getSystemAssets($oTemplateSystem)
-    {
-        $aResults = [];
-
-        $aEntries = $this->_oDb->getEntriesSystem();
-        foreach($aEntries as $aEntry) {
-            $sType = $aEntry['type'];
-
-            if(BxDolService::isSerializedService($aEntry['content']))
-                $aEntry['content'] = BxDolService::callSerialized($aEntry['content']);
-
-            $sContent = bx_replace_markers($aEntry['content'], $this->_aMarkers);
-            if(empty($sContent))
-                continue;
-
-            $sEntry = $oTemplateSystem->{$this->_aTypes[$sType]['get']}($sContent);
-            if(empty($sEntry))
-                $sEntry = $sContent;
-
-            $aResults[] = str_replace([BX_DOL_URL_ROOT, BX_DIRECTORY_PATH_ROOT], '/', $sEntry);
-        }
-
-        return $aResults;
     }
 }
 

@@ -1519,8 +1519,20 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getCssUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
     {
+        if(($aFile = $this->_locateFile('css', $sName)) !== false)
+            return $aFile[0];
+
         return $this->_getAbsoluteLocation('url', $this->_sFolderCss, $sName, $sCheckIn);
     }
+    function getCssUrlWithRevision($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
+        $sUrl = $this->getCssUrl($sName, $sCheckIn);
+        if(!empty($sUrl))
+            $sUrl = $this->_addRevision($sUrl);
+
+        return $sUrl;
+    }
+
     /**
      * Get full Path of CSS file.
      *
@@ -1530,6 +1542,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getCssPath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
     {
+        if(($aFile = $this->_locateFile('css', $sName)) !== false)
+            return $aFile[1];
+
         return $this->_getAbsoluteLocation('path', $this->_sFolderCss, $sName, $sCheckIn);
     }
     /**
@@ -1540,7 +1555,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getJsUrl($sName)
     {
+        if(($aFile = $this->_locateFile('js', $sName)) !== false)
+            return $aFile[0];
+
         return $this->_getAbsoluteLocationJs('url', $sName);
+    }
+    function getJsUrlWithRevision($sName)
+    {
+        $sUrl = $this->getJsUrl($sName);
+        if(!empty($sUrl))
+            $sUrl = $this->_addRevision($sUrl);
+
+        return $sUrl;
     }
     /**
      * Get full Path of JS file.
@@ -1550,6 +1576,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function getJsPath($sName)
     {
+        if(($aFile = $this->_locateFile('js', $sName)) !== false)
+            return $aFile[1];
+
         return $this->_getAbsoluteLocationJs('path', $sName);
     }
     /**
@@ -1987,10 +2016,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function parseIcon($sName, $aAttrs = array())
     {
-		$aIcons = BxTemplFunctions::getInstance()->getIcon($sName, $aAttrs);
-        if ($aIcons[0] != '')
+        $aIcons = BxTemplFunctions::getInstance()->getIcon($sName, $aAttrs);
+        if($aIcons[0] != '')
             $aIcons[0] = '';
-		return implode($aIcons);
+
+        return implode($aIcons);
     }
 
     function getCacheFilePrefix($sType)
@@ -2127,8 +2157,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sMaskCondition = "if(%s) {%s}";
         $sMaskConditionWithElse = "if(%s) {%s} else {setTimeout(function() {%s}, 10);}";
 
-        $iRev = $this->_getRevision();
-
         $aFilesLocated = [];
         foreach($aFiles as $sFile) {
             $mixedFile = $this->_locateFile('js', $sFile);
@@ -2137,7 +2165,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             list($sUrl) = $mixedFile;
 
-            $aFilesLocated[] = bx_append_url_params($sUrl, ['rev' => $iRev]);
+            $aFilesLocated[] = $this->_addRevision($sUrl);
         }
         $sFilesLocated = json_encode($aFilesLocated);
 
@@ -2333,8 +2361,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $sMaskLoad = "bx_get_style(%s);";
 
-        $iRev = $this->_getRevision();
-
         $aFilesLocated = [];
         foreach($aFiles as $sFile) {
             $mixedFile = $this->_locateFile('css', $sFile);
@@ -2343,7 +2369,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             list($sUrl) = $mixedFile;
 
-            $aFilesLocated[] = bx_append_url_params($sUrl, ['rev' => $iRev]);
+            $aFilesLocated[] = $this->_addRevision($sUrl);
         }
         $sFilesLocated = json_encode($aFilesLocated);
 
@@ -2628,7 +2654,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * @param  string $sType the type of file('js' or 'css')
      * @return string the result CSS code.
      */
-    function includeFiles($sType, $bSystem = false)
+    function includeFiles($sType, $bSystem = false, $bWrap = true)
     {
         $sUpcaseType = ucfirst($sType);
 
@@ -2638,7 +2664,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             return "";
 
         if(!$this->{'_b' . $sUpcaseType . 'Cache'})
-            return $this->_includeFiles($sType, $aFiles);
+            return $this->_includeFiles($sType, $aFiles, $bWrap);
 
         //--- If cache already exists, return it ---//
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
@@ -2659,7 +2685,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             if($this->{'_b' . $sUpcaseType . 'Archive'})
                 $sCacheAbsoluteUrl = $this->_getLoaderUrl($sType, $sName);
 
-           return $this->$sMethodWrap($sCacheAbsoluteUrl);
+           return $bWrap ? $this->$sMethodWrap($sCacheAbsoluteUrl) : $sCacheAbsoluteUrl;
         }
 
         //--- Collect all attached CSS/JS in one file ---//
@@ -2687,12 +2713,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         if($mixedWriteResult === false)
-            return $this->_includeFiles($sType, $aFiles);
+            return $this->_includeFiles($sType, $aFiles, $bWrap);
 
         if($this->{'_b' . $sUpcaseType . 'Archive'})
             $sCacheAbsoluteUrl = $this->_getLoaderUrl($sType, $sName);
 
-        return $this->$sMethodWrap($sCacheAbsoluteUrl);
+        return $bWrap ? $this->$sMethodWrap($sCacheAbsoluteUrl) : $sCacheAbsoluteUrl;
     }
     /**
      * Include CSS/JS files without caching.
@@ -2701,29 +2727,29 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * @param  array  $aFiles CSS/JS files to be added to the page.
      * @return string result of operation.
      */
-    function _includeFiles($sType, &$aFiles)
+    function _includeFiles($sType, &$aFiles, $bWrap = true)
     {
-        $iRev = $this->_getRevision();
         $sUpcaseType = ucfirst($sType);
 
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
         $sMethodLess = '_less' . $sUpcaseType;
 
-        $sResult = "";
+        $mixedResult = $bWrap ? "" : [];
         foreach($aFiles as $aFile) {
             if($this->{'_b' . $sUpcaseType . 'Less'})
                 $aFile = $this->$sMethodLess($aFile);
 
             $sFileUrl = $aFile['url'];
             if(!$this->{'_b' . $sUpcaseType . 'Cache'})
-                $sFileUrl = bx_append_url_params($sFileUrl, array(
-                    'rev' => $iRev
-                ));
+                $sFileUrl = $this->_addRevision($sFileUrl);
 
-            $sResult .= $this->$sMethodWrap($sFileUrl);
+            if($bWrap)
+                $mixedResult .= $this->$sMethodWrap($sFileUrl);
+            else
+                $mixedResult[] = $sFileUrl;
         }
 
-        return $sResult;
+        return $mixedResult;
     }
     /**
      * Insert/Delete CSS file from output stack.
@@ -2740,8 +2766,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         if(is_string($mixedFiles))
             $mixedFiles = array($mixedFiles);
-
-        $iRev = $this->_getRevision();
 
         $sUpcaseType = ucfirst($sType);
         $sMethodLocate = '_getAbsoluteLocation' . $sUpcaseType;
@@ -2767,9 +2791,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     ]);
 
                     if($bDynamic)
-                        $sResult .= $this->$sMethodWrap(bx_append_url_params($sUrl, array(
-                            'rev' => $iRev
-                        )));
+                        $sResult .= $this->$sMethodWrap($this->_addRevision($sUrl));
                     else {
                         $bFound = false;
                         $aSearchIn = $bSystem ? $this->aPage[$sArrayKey] : array_merge($this->aPage[$sType . '_system'], $this->aPage[$sArrayKey]);
@@ -3398,6 +3420,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function _getRevision()
     {
         return (int)getParam('sys_revision');
+    }
+
+    /**
+     * Add current revision number to URL.
+     * 
+     * @return string with URL 
+     */
+    function _addRevision($sUrl)
+    {
+        return bx_append_url_params($sUrl, ['rev' => $this->_getRevision()]);
     }
 
     /**

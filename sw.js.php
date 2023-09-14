@@ -10,8 +10,19 @@
 define('BX_SERVICE_WORKER', true);
 
 require_once('./inc/header.inc.php');
+$oTemplate = BxDolTemplate::getInstance();
 
-$aAssets = BxDolPreloader::getInstance()->getSystemAssets(BxDolTemplate::getInstance());
+$aAssets = [];
+foreach(['css' , 'js'] as $sType) {
+    $aFiles = $oTemplate->includeFiles($sType, true, false);
+    if(!is_array($aFiles))
+        $aFiles = [$aFiles];
+
+    $aAssets = array_merge($aAssets, $aFiles);
+}
+
+foreach($aAssets as $iKey => $sAsset)
+    $aAssets[$iKey] = str_replace(BX_DOL_URL_ROOT, '/', $sAsset);
 
 header("Content-Type: text/javascript");
 ?>
