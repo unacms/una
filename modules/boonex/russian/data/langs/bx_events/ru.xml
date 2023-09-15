@@ -100,6 +100,8 @@
     <string name="_bx_events_page_title_joined"><![CDATA[События профиля]]></string>
     <string name="_bx_events_page_title_sys_joined_entries"><![CDATA[События профиля]]></string>
     <string name="_bx_events_page_title_joined_entries"><![CDATA[События профиля]]></string>
+     <string name="_bx_events_page_title_followed"><![CDATA[Подписанные События]]></string>
+    <string name="_bx_events_page_title_sys_followed"><![CDATA[Подписанные События]]></string>
     <string name="_bx_events_page_title_sys_entries_in_context"><![CDATA[События в контексте]]></string>
     <string name="_bx_events_page_title_entries_in_context"><![CDATA[События в {display_name}]]></string>
     <string name="_bx_events_page_title_sys_create_profile"><![CDATA[Создать событие]]></string>
@@ -165,6 +167,8 @@
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Избранные события]]></string>
     <string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Участие в событиях]]></string>
     <string name="_bx_events_page_block_title_joined_entries"><![CDATA[Участие в событиях]]></string>
+    <string name="_bx_events_page_block_title_sys_followed_entries"><![CDATA[Подписанные События]]></string>
+    <string name="_bx_events_page_block_title_followed_entries"><![CDATA[Подписанные События]]></string>
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Создать событие]]></string>
     <string name="_bx_events_page_block_title_edit_profile"><![CDATA[Редактировать событие]]></string>
     <string name="_bx_events_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
@@ -195,6 +199,7 @@
     <string name="_bx_events_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Популярные события]]></string>
     <string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Мои события]]></string>
+    <string name="_bx_events_page_block_title_followed_profiles"><![CDATA[Подписанные События]]></string>
     <string name="_bx_events_page_block_title_upcoming_profiles"><![CDATA[Предстоящие события]]></string>
     <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Прошедшие события]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
@@ -309,6 +314,8 @@
     <string name="_bx_events_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_events_menu_item_title_system_entries_joined"><![CDATA[Участие]]></string>
     <string name="_bx_events_menu_item_title_entries_joined"><![CDATA[Участие]]></string>
+    <string name="_bx_events_menu_item_title_entries_followed"><![CDATA[Подписанные]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_followed"><![CDATA[Подписанные]]></string>
     <string name="_bx_events_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[События]]></string>

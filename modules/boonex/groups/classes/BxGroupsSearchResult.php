@@ -113,6 +113,31 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['title'] = _t('_bx_groups_page_title_joined_entries');
                 $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $oJoinedProfile->id();
                 break;
+                
+                
+            case 'followed_entries':
+                $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['followed_profile']);
+                if (!$oJoinedProfile) {
+                    $this->isError = true;
+                    break;
+                }
+
+                $bProcessConditionsForPrivateContent = false;
+
+                $this->aCurrent['join']['followed'] = array(
+                    'type' => 'INNER',
+                    'table' => 'sys_profiles_conn_subscriptions',
+                    'mainField' => 'id',
+                    'onField' => 'content',
+                    'joinFields' => array('initiator'),
+                );
+
+                $this->aCurrent['restriction']['followed'] = array('value' => $oJoinedProfile->id(), 'field' => 'initiator', 'operator' => '=', 'table' => 'sys_profiles_conn_subscriptions');
+
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_FOLLOWED_ENTRIES'] . '&profile_id={profile_id}';
+                $this->aCurrent['title'] = _t('_bx_groups_page_title_followed_entries');
+                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $oJoinedProfile->id();
+                break;
 
             case 'connections':
                 if ($this->_setConnectionsConditions($aParams)) {
