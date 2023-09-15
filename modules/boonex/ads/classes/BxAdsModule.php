@@ -674,16 +674,19 @@ class BxAdsModule extends BxBaseModTextModule
     	$iContentId = (int)$aEvent['object_id'];
     	$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return array();
+            return [];
 
         $iInterestedId = (int)$aEvent['subobject_id'];
-        $aInterestedInfo = $this->_oDb->getInterested(array('type' => 'id', 'id' => $iInterestedId));
+        $aInterestedInfo = $this->_oDb->getInterested(['type' => 'id', 'id' => $iInterestedId]);
         if(empty($aInterestedInfo) || !is_array($aInterestedInfo))
-            return array();
+            return [];
 
-        $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId), '{bx_url_root}');
+        if(($oInterestedProfile = BxDolProfile::getInstance($aInterestedInfo['profile_id'])) !== false)
+            $sEntryUrl = $oInterestedProfile->getUrl();
+        else
+            $sEntryUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId), '{bx_url_root}');
 
-        return array(
+        return [
             'entry_sample' => $CNF['T']['txt_sample_single'],
             'entry_url' => $sEntryUrl,
             'entry_caption' => $aContentInfo[$CNF['FIELD_TITLE']],
@@ -691,7 +694,7 @@ class BxAdsModule extends BxBaseModTextModule
             'subentry_sample' => $CNF['T']['txt_sample_interest_single'],
             'subentry_url' => '',
             'lang_key' => '_bx_ads_txt_ntfs_subobject_interested', //may be empty or not specified. In this case the default one from Notification module will be used.
-        );
+        ];
     }
 
     public function serviceGetNotificationsLicenseRegister($aEvent)
