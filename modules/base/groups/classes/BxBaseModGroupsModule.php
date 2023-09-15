@@ -678,6 +678,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $this->_serviceBrowse ('joined_entries', array('joined_profile' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
+    
+    public function serviceBrowseFollowedEntries ($iProfileId = 0, $bDisplayEmptyMsg = false)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId)
+            return '';
+
+        return $this->_serviceBrowse ('followed_entries', array('followed_profile' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+    }
 
     public function serviceBrowseCreatedEntries ($iProfileId = 0, $bDisplayEmptyMsg = false)
     {

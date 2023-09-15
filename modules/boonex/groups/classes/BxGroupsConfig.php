@@ -71,6 +71,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_JOIN_ENTRY' => 'join-group-profile',
             'URI_JOINED_ENTRIES' => 'joined-groups',
+            'URI_FOLLOWED_ENTRIES' => 'followed-groups',
             'URI_ENTRIES_BY_CONTEXT' => 'groups-context',
             'URI_MANAGE_COMMON' => 'groups-manage',
             'URI_FAVORITES_LIST' => 'groups-favorites',

@@ -78,6 +78,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'URI_ENTRIES_BY_CONTEXT' => 'events-context',
             'URI_JOIN_ENTRY' => 'join-event-profile',
             'URI_JOINED_ENTRIES' => 'joined-events',
+            'URI_FOLLOWED_ENTRIES' => 'followed-events',
             'URI_MANAGE_COMMON' => 'events-manage',
             'URI_FAVORITES_LIST' => 'events-favorites',
 

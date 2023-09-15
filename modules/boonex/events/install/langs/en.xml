@@ -124,6 +124,8 @@
     <string name="_bx_events_page_title_sys_joined"><![CDATA[Profile Events]]></string>
     <string name="_bx_events_page_title_joined"><![CDATA[Profile Events]]></string>
     <string name="_bx_events_page_title_sys_joined_entries"><![CDATA[Profile Events]]></string>
+    <string name="_bx_events_page_title_followed"><![CDATA[Followed Events]]></string>
+    <string name="_bx_events_page_title_sys_followed"><![CDATA[Followed Events]]></string>
     <string name="_bx_events_page_title_joined_entries"><![CDATA[Profile Events]]></string>
     <string name="_bx_events_page_title_sys_entries_in_context"><![CDATA[Events in context]]></string>
     <string name="_bx_events_page_title_entries_in_context"><![CDATA[Events in {display_name}]]></string>
@@ -198,6 +200,8 @@
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Events]]></string>
     <string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Joined Events]]></string>
     <string name="_bx_events_page_block_title_joined_entries"><![CDATA[Joined Events]]></string>
+    <string name="_bx_events_page_block_title_sys_followed_entries"><![CDATA[Followed Events]]></string>
+    <string name="_bx_events_page_block_title_followed_entries"><![CDATA[Followed Events]]></string>
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Create Event]]></string>
     <string name="_bx_events_page_block_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
@@ -233,6 +237,7 @@
     <string name="_bx_events_page_block_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Top Events]]></string>
     <string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Joined Events]]></string>
+    <string name="_bx_events_page_block_title_followed_profiles"><![CDATA[Followed Events]]></string>
     <string name="_bx_events_page_block_title_upcoming_profiles"><![CDATA[Upcoming Events]]></string>
     <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Past Events]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
@@ -346,6 +351,8 @@
     <string name="_bx_events_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_events_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_events_menu_item_title_system_entries_joined"><![CDATA[Joined]]></string>
+    <string name="_bx_events_menu_item_title_entries_followed"><![CDATA[Followed]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_followed"><![CDATA[Followed]]></string>
     <string name="_bx_events_menu_item_title_entries_joined"><![CDATA[Joined]]></string>
     <string name="_bx_events_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
