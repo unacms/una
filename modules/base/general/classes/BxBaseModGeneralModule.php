@@ -817,6 +817,9 @@ class BxBaseModGeneralModule extends BxDolModule
                 //TODO: improve
                 $_GET['start'] = $aParams['params']['start'];
                 $_GET['per_page'] = $aParams['params']['per_page'];
+                if (isset($aParams['params']['type'])){
+                    $aParams['mode'] = $aParams['params']['type'];
+                }
             }
         }
         
