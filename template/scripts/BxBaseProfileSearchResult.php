@@ -42,6 +42,11 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
             'bx-def-margin-sec-neg'
         ));
 
+        $aProfileModules = bx_srv('system', 'get_modules_by_type', ['profile']);
+        $aProfileModulesNames = array_map(function($item) {
+            return $item['name'];
+        }, $aProfileModules);
+        
         $this->aCurrent = [
             'name' => 'sys_search',
             'module_name' => 'system',
@@ -52,7 +57,7 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
             'restriction' => [
                 'account_id' => ['value' => '', 'field' => 'account_id', 'operator' => '='],
                 'perofileStatus' => ['value' => 'active', 'field' => 'status', 'operator' => '='],
-                'perofileType' => ['value' => '', 'field' => 'type', 'operator' => '='],
+                'perofileType' => ['value' => $aProfileModulesNames, 'field' => 'type', 'operator' => 'in'],
             ],
             'join' => [
                 'account' => [

@@ -2083,10 +2083,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'cover' => $this->serviceGetCover($iId),
         ];
         
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->_aModule['name']);
+        
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
         if ($oConnection){
-            $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->_aModule['name']);
             $aResult['friends_count'] = $oConnection->getConnectedContentCount($oProfile->id(), true);
+            if(isLogged()){
+                $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($oProfile->id(), bx_get_logged_profile_id(), true);
+            }
+        }
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if ($oConnection){
+            $aResult['followers_count'] = $oConnection->getConnectedInitiatorsCount($oProfile->id());
         }
 
         if($bExtended)
