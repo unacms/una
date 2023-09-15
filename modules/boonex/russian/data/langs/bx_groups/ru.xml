@@ -87,6 +87,8 @@
         <string name="_bx_groups_page_title_sys_entries_in_context"><![CDATA[Группы в контексте]]></string>
         <string name="_bx_groups_page_title_entries_in_context"><![CDATA[Группы в {display_name}]]></string>
 	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Группы профиля]]></string>
+    <string name="_bx_groups_page_title_sys_followed"><![CDATA[Подписанные Группы]]></string>
+    <string name="_bx_groups_page_title_followed"><![CDATA[Подписанные Группы]]></string>
 	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Группы профиля]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_title_create_profile"><![CDATA[Создать группу]]></string>
@@ -144,6 +146,8 @@
     <string name="_bx_groups_page_block_title_sys_entries_in_context"><![CDATA[Группы в контексте]]></string>
 	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Участие в группах]]></string>
+     <string name="_bx_groups_page_block_title_sys_followed_entries"><![CDATA[Подписанные Группы]]></string>
+	<string name="_bx_groups_page_block_title_followed_entries"><![CDATA[Подписанные Группы]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Редактировать группу]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
@@ -296,6 +300,8 @@
     <string name="_bx_groups_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_joined"><![CDATA[Участие]]></string>
     <string name="_bx_groups_menu_item_title_entries_joined"><![CDATA[Участие]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_followed"><![CDATA[Подписанные]]></string>
+    <string name="_bx_groups_menu_item_title_entries_followed"><![CDATA[Подписанные]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Группы]]></string>
