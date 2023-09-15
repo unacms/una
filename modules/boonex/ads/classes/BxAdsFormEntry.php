@@ -118,7 +118,9 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         if($bDynamicMode)
             $sCode .= $sJs;
 
-        $sCode .= $this->_oModule->_oTemplate->getJsCode('form');
+        $sCode .= $this->_oModule->_oTemplate->getJsCode('form', [
+            'sObjNameForm' => $this->getJsObjectName()
+        ]);
         $sCode .= parent::getCode($bDynamicMode);
 
         return $sCode;
