@@ -479,11 +479,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      * @param type $sType - string with type.
      * @return array of modules.
      */
-    public function serviceGetModulesByType($sType)
+    public function serviceGetModulesByType($sType, $aParams = [])
     {
-        $aResults = array();
+        $aResults = [];
+        
+        $bIdAsKey = isset($aParams['id_as_key']) && $aParams['id_as_key'] === true;
+        $bNameAsKey = !$bIdAsKey && isset($aParams['name_as_key']) && $aParams['name_as_key'] === true;
 
-        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(['type' => 'modules', 'active' => 1]);
         foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
             if(!$oModule)
@@ -498,7 +501,12 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             if($sType == 'profile' && !$this->serviceIsModuleProfile($oModule))
                 continue;
 
-            $aResults[] = $aModule;
+            if($bIdAsKey)
+                $aResults[$aModule['id']] = $aModule;
+            else if($bNameAsKey)
+                $aResults[$aModule['name']] = $aModule;
+            else
+                $aResults[] = $aModule;
         }
 
         return $aResults;

@@ -2364,6 +2364,7 @@ CREATE TABLE `sys_recommendation_data` (
   `profile_id` int(11) NOT NULL default '0',
   `object_id` int(11) NOT NULL default '0',
   `item_id` int(11) NOT NULL default '0',
+  `item_type` varchar(64) NOT NULL default '',
   `item_value` int(11) NOT NULL default '0',
   `item_reducer` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),

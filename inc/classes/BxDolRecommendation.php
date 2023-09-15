@@ -201,8 +201,10 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
             if($oConnection->isConnected($iProfileId, $aItem['item_id'], $bConnectionMutual))
                 $this->_oDb->delete($iProfileId, $this->_iObject, $aItem['item_id']);
 
+        $aItemItt = $this->getItemsTypes(array_keys($aResults));
+
         foreach($aResults as $iId => $iValue)
-            $this->_oDb->add($iProfileId, $this->_iObject, $iId, $iValue);
+            $this->_oDb->add($iProfileId, $this->_iObject, $iId, (isset($aItemItt[$iId]) ? $aItemItt[$iId] : ''), $iValue);
     }
 
     public function outputActionResult ($mixed, $sFormat = 'json')
