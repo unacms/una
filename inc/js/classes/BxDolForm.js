@@ -54,16 +54,16 @@ BxDolForm.prototype.init = function()
     if(oForm.find('.bx-form-warn:visible').length > 0) {
         oForm.find(':text').each(function() {
             if($(this).val() > 0)
-                $this._bChanged = true;
+                $this.setChanged();
         });
     }
 
     document.getElementById(sForm).addEventListener('input', () => {
-        $this._bChanged = true;
+        $this.setChanged();
     });
 
     document.getElementById(sForm).addEventListener('submit', (event) => {
-        $this._bChanged = false;
+        $this.resetChanged();
     });
 
     window.addEventListener('beforeunload', (event) => {
@@ -91,11 +91,19 @@ BxDolForm.prototype.init = function()
         event.preventDefault();
 
         bx_confirm($this._sTxtLeavePageConfirmation, function() {
-            $this._bChanged = false;
+            $this.resetChanged();
 
             oLink.get(0).click();
         });
     });
+};
+
+BxDolForm.prototype.setChanged = function() {
+    this._bChanged = true;
+};
+
+BxDolForm.prototype.resetChanged = function() {
+    this._bChanged = false;
 };
 
 BxDolForm.prototype.showHelp = function(oLink, sInputName)

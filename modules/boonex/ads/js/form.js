@@ -11,6 +11,7 @@
 function BxAdsForm(oOptions) {
     this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
+    this._sObjNameForm = oOptions.sObjNameForm;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxAdsForm' : oOptions.sObjName;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
@@ -19,7 +20,7 @@ function BxAdsForm(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxAdsForm.prototype.selectCategory = function(oButton) {   
+BxAdsForm.prototype.selectCategory = function(oButton) {
     var oCategory = $(oButton).parents('form:first').find("[name='category_select']");
     if(!oCategory || oCategory.length == 0)
         return;
@@ -53,6 +54,9 @@ BxAdsForm.prototype.onSelectCategory = function(oData) {
         return;
 
     $('form#' + sFormId).replaceWith(oContent);
+
+    if(window[this._sObjNameForm] != undefined)
+        window[this._sObjNameForm].resetChanged();
 };
 
 BxAdsForm.prototype.checkName = function(oSource, sTitleId, sNameId, iId) {
