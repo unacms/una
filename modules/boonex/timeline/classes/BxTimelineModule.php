@@ -5534,9 +5534,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!isset($aParams['start']) || (int)$aParams['start'] < 0)
             $aParams['start'] = 0;
 
-        if(!isset($aParams['per_page']) || (int)$aParams['per_page'] <= 0)
-            $aParams['per_page'] = isset($aParams['per_page_default']) && (int)$aParams['per_page_default'] > 0 ? $aParams['per_page_default'] : $this->_oConfig->getPerPage($aParams['type']);
+        if(!isset($aParams['per_page_default']) || (int)$aParams['per_page_default'] <= 0)
+            $aParams['per_page_default'] = $this->_oConfig->getPerPage($aParams['type']);
 
+        if(!isset($aParams['per_page']) || (int)$aParams['per_page'] <= 0)
+            $aParams['per_page'] = $aParams['per_page_default'];
+        
         if(empty($aParams['timeline']) || (int)$aParams['timeline'] < 0)
             $aParams['timeline'] = 0;
 
