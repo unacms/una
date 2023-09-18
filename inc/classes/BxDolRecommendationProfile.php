@@ -30,6 +30,11 @@ class BxDolRecommendationProfile extends BxTemplRecommendation
 
         return ['code' => 0];
     }
+
+    public function getItemsTypes($aIds)
+    {
+        return BxDolProfileQuery::getInstance()->getProfiles(['type' => 'id_to_type', 'ids' => $aIds]);
+    }
 }
 
 /** @} */

@@ -728,7 +728,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         if($this->_bIsApi) {
-            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams);
             $aData = array_merge($aData, [
                 'module' => 'system',
                 'unit' => 'mixed', 
@@ -738,7 +738,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return [bx_api_get_block('browse', $aData)];
         }
 
-        $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        $sCode = $oRecommendation->getCode($iProfileId, $aParams);
         if(!$sCode && $aParams['empty_message'])
             $sCode = MsgBox(_t(!empty($aParams['empty_message_text']) ? $aParams['empty_message_text'] : '_Empty'));
 

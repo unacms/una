@@ -105,6 +105,13 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
                 }
                 break;
 
+            case 'id_to_type':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'type';
+                $sWhereClause = " AND `tp`.`id` IN (" . $this->implode_escape($aParams['ids']) . ")";
+                break;
+
             case 'all':
                 break;
     	}

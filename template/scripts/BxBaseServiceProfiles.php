@@ -737,7 +737,7 @@ class BxBaseServiceProfiles extends BxDol
             return false;
 
         if(bx_is_api()) {
-            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams);
             $aData = array_merge($aData, [
                 'module' => 'system',
                 'unit' => 'mixed', 
@@ -747,7 +747,7 @@ class BxBaseServiceProfiles extends BxDol
             return [bx_api_get_block('browse', $aData)];
         }
 
-        $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        $sCode = $oRecommendation->getCode($iProfileId, $aParams);
         if(!$sCode && $aParams['empty_message'])
             $sCode = MsgBox(_t('_Empty'));
 
@@ -764,8 +764,11 @@ class BxBaseServiceProfiles extends BxDol
         if(!$iProfileId)
             return '';
 
+        $aModules = bx_srv('system', 'get_modules_by_type', ['profile', ['name_as_key' => true]]);
+
         $aParams = array_merge([
             'empty_message' => false,
+            'type' => !empty($aModules) && is_array($aModules) ? array_keys($aModules) : '',
             'start' => 0,
             'per_page' => 0
         ], $aParams);
@@ -781,7 +784,7 @@ class BxBaseServiceProfiles extends BxDol
             return false;
 
         if(bx_is_api()) {
-            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams['start'], $aParams['per_page']);
+            $aData = $oRecommendation->getCodeAPI($iProfileId, $aParams);
             $aData = array_merge($aData, [
                 'module' => 'system',
                 'unit' => 'mixed',
@@ -791,7 +794,7 @@ class BxBaseServiceProfiles extends BxDol
             return [bx_api_get_block('browse', $aData)];
         }
 
-        $sCode = $oRecommendation->getCode($iProfileId, $aParams['start'], $aParams['per_page']);
+        $sCode = $oRecommendation->getCode($iProfileId, $aParams);
         if(!$sCode && $aParams['empty_message'])
             $sCode = MsgBox(_t('_Empty'));
 

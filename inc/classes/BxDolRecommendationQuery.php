@@ -71,12 +71,13 @@ class BxDolRecommendationQuery extends BxDolDb
         ]);
     }
 
-    public function add($iProfileId, $iObjectId, $iItemId, $iItemValue)
+    public function add($iProfileId, $iObjectId, $iItemId, $sItemType, $iItemValue)
     {
-        return $this->query("INSERT INTO `" . self::$sTableData . "` (`profile_id`, `object_id`, `item_id`, `item_value`) VALUES (:profile_id, :object_id, :item_id, :item_value) ON DUPLICATE KEY UPDATE `item_value` = :item_value", [
+        return $this->query("INSERT INTO `" . self::$sTableData . "` (`profile_id`, `object_id`, `item_id`, `item_type`, `item_value`) VALUES (:profile_id, :object_id, :item_id, :item_type, :item_value) ON DUPLICATE KEY UPDATE `item_value` = :item_value", [
             'profile_id' => $iProfileId,
             'object_id' => $iObjectId,
             'item_id' => $iItemId, 
+            'item_type' => $sItemType,
             'item_value' => $iItemValue
         ]) !== false;
     }
@@ -102,13 +103,17 @@ class BxDolRecommendationQuery extends BxDolDb
         ]) !== false;
     }
 
-    public function get($iProfileId, $iObjectId, $iStart = 0, $iPerPage = 0)
+    public function get($iProfileId, $iObjectId, $aParams = [])
     {
-        $sLimitClause = "";
-        if($iPerPage)
-            $sLimitClause = " LIMIT " . $iStart . ", " . $iPerPage;
+        $sWhereClause = "";
+        if(!empty($aParams['type']))
+            $sWhereClause = " AND `item_type` IN (" . $this->implode_escape(is_array($aParams['type']) ? $aParams['type'] : [$aParams['type']]) . ")";
 
-        return $this->getPairs("SELECT `item_id` AS `id`, (`item_value` - `item_reducer`) AS `value` FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= 0 ORDER BY `value` DESC" . $sLimitClause, 'id', 'value', [
+        $sLimitClause = "";
+        if(isset($aParams['start']) && !empty($aParams['per_page']))
+            $sLimitClause = " LIMIT " . $aParams['start'] . ", " . $aParams['per_page'];
+
+        return $this->getPairs("SELECT `item_id` AS `id`, (`item_value` - `item_reducer`) AS `value` FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= 0" . $sWhereClause . " ORDER BY `value` DESC" . $sLimitClause, 'id', 'value', [
             'profile_id' => $iProfileId,
             'object_id' => $iObjectId
         ]);
