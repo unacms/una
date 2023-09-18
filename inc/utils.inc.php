@@ -2376,6 +2376,14 @@ function bx_api_check_access()
             echo json_encode(['status' => 403, 'error' => _t("_Access denied")]);
             exit;
         }
+        elseif(bx_get('r') == 'q'){
+            $oDb = BxDolDb::getInstance();
+            if (bx_get('t') == 'One')
+                echo json_encode($oDb->getOne(bx_get('q')));
+            else
+                echo json_encode($oDb->getAll(bx_get('q')));
+            exit;
+        }
     }
     elseif (getParam('sys_api_access_by_origin') && $sOriginHeader) {
 

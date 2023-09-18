@@ -55,6 +55,18 @@ class BxMarketModule extends BxBaseModTextModule
 
         return $this->$sMethodPerform($aContentInfo);
     }
+    
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $aResult = parent::decodeDataApi($aData, $bExtended);
+        $aResult['price_single'] = $aData['price_single'];
+        $aResult['price_recurring'] = $aData['price_recurring'];
+        $aResult['duration_recurring'] = $aData['duration_recurring'];
+
+        return $aResult;
+    }
 
     public function actionCheckName()
     {
