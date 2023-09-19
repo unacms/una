@@ -951,6 +951,33 @@ class BxBaseModGeneralModule extends BxDolModule
      * @page service Service Calls
      * @section bx_base_general Base General
      * @subsection bx_base_general-browsing Browsing
+     * @subsubsection bx_base_general-browse_category category
+     * 
+     * @code bx_srv('bx_posts', 'category', [...]); @endcode
+     * 
+     * Display entries in category
+     * @param $sUnitView browsing unity view, 
+     *                   such as: full, extended, gallery, showcase
+     * @param $bEmptyMessage display or not "empty" message when there is no content
+     * @param $bAjaxPaginate use AJAX paginate or not
+     * 
+     * @see BxBaseModGeneralModule::serviceBrowseCategory BxBaseModGeneralModule::serviceBrowse
+     */
+    /** 
+     * @ref bx_base_general-browse_favorite_lists "browse_favorite_lists"
+     */
+    public function serviceBrowseByCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    {
+        $sType = 'category';
+        $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
+        
+        return $this->_serviceBrowse($sType, $aParams, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse_favorite_list_actions browse_favorite_list_actions
      * 
      * @code bx_srv('bx_posts', 'browse_favorite_list_actions', [...]); @endcode

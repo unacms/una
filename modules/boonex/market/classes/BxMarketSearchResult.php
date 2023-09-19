@@ -103,6 +103,20 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'top';
                 break;
+                
+             case 'category':
+                    $iCategory = (int)$aParams['category'];
+                    $this->addMarkers(array(
+                        'category_id' => $iCategory,
+                        'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
+                    ));
+
+                $this->aCurrent['restriction']['category']['value'] = $iCategory;
+
+                $this->sBrowseUrl = $CNF['URL_CATEGORY'] . '&category={category_id}';
+                $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_category');
+                $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode . '/' . $iCategory;
+                break;
 
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);

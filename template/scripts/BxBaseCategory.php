@@ -42,7 +42,11 @@ class BxBaseCategory extends BxDolCategory
 
     public function getCategoryUrl($sValue, $aParams = [])
     {
-        $s = BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
+        $sPageUrl = $this->_sBrowseUrl;
+        if (isset($aParams['page']))
+            $sPageUrl = $aParams['page'];
+        
+        $s = BX_DOL_URL_ROOT . bx_replace_markers($sPageUrl, array(
         	'category' => rawurlencode($this->getObjectName()),
         	'keyword' => rawurlencode($sValue),
     		'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : '',
@@ -83,8 +87,19 @@ class BxBaseCategory extends BxDolCategory
         $a = BxDolForm::getDataItems($this->_aObject['list_name']);
         if (!$a)
             return $bAsArray ? array() : '';
+        
+        $aParams = [];
+        if($this->_aObject['module']){
+            $oModule = BxDolModule::getInstance($this->_aObject['module']);
+            $CNF = $oModule->_oConfig->CNF;
+            if (isset($CNF['URL_CATEGORY'])){
+                $aParams['page'] = bx_append_url_params(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORY']), ['category' => '{keyword}'
+                ], true, ['{keyword}']);
+            }
+        }
 
-        $aVars = array('bx_repeat:cats' => array());
+        $aVars = ['bx_repeat:cats' => []];
+        
         foreach ($a as $sValue => $sName) {
             if (!is_numeric($sValue) && !$sValue)
                 continue;
@@ -94,10 +109,11 @@ class BxBaseCategory extends BxDolCategory
                 continue;
             
             $aVars['bx_repeat:cats'][] = array(
-                'url' => $mProfileContextId? $this->getCategoryUrl($sValue, ['context_id' => $mProfileContextId]) : $this->getCategoryUrl($sValue),
+                'url' => $mProfileContextId ? $this->getCategoryUrl($sValue, array_merge($aParams, ['context_id' => $mProfileContextId])) : $this->getCategoryUrl($sValue, $aParams),
                 'name' => $sName,
                 'value' => $sValue,
                 'num' => $iNum,
+                'selected_class' => $sValue == bx_get('category') ? 'bx-category-list-item-selected' : '',
             );
         }
         

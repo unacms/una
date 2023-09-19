@@ -104,6 +104,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URL_LICENSES_COMMON' => 'page.php?i=products-licenses',
             'URL_LICENSES_ADMINISTRATION' => 'page.php?i=products-licenses-administration',
             'URL_VIEW_ENTRY' => 'page.php?i=view-product&id=',
+            'URL_CATEGORY' => 'page.php?i=products-category',
 
             // some params
             'PARAM_AUTO_APPROVE' => 'bx_market_enable_auto_approve',
