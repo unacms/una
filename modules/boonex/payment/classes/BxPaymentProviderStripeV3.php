@@ -190,30 +190,27 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 $mixedResult = $this->_getSession(BX_PAYMENT_TYPE_SINGLE, $sSessionId);
                 if($mixedResult === false || $mixedResult['status'] != 'paid')
                     return $this->_sLangsPrefix . 'err_cannot_perform';
-
-                header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
-                    'mode' => $mixedResult['mode'],
-                    'order_id' => $mixedResult['order_id'],
-                    'customer_id' => $mixedResult['customer_id'], 
-                    'pending_id' => $aPending['id'],
-                    'redirect' => $sRedirect
-                )));
-                exit;
+                break;
 
             case BX_PAYMENT_TYPE_RECURRING:
                 $mixedResult = $this->_getSession(BX_PAYMENT_TYPE_RECURRING, $sSessionId);
                 if($mixedResult === false)
                     return $this->_sLangsPrefix . 'err_cannot_perform';
-
-                header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
-                    'mode' => $mixedResult['mode'],
-                    'order_id' => $mixedResult['order_id'],
-                    'customer_id' => $mixedResult['customer_id'],
-                    'pending_id' => $aPending['id'],
-                    'redirect' => $sRedirect
-                )));
-                exit;
+                break;
         }
+
+        $aProcessed = $this->_oModule->_oDb->getOrderPending(['type' => 'order', 'order' => $mixedResult['order_id']]);
+        if(!empty($aProcessed) && is_array($aProcessed) && (int)$aProcessed['processed'] != 0 && $aProcessed['id'] != $iPendingId)
+            return $this->_sLangsPrefix . 'err_already_processed';
+
+        header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
+            'mode' => $mixedResult['mode'],
+            'order_id' => $mixedResult['order_id'],
+            'customer_id' => $mixedResult['customer_id'], 
+            'pending_id' => $aPending['id'],
+            'redirect' => $sRedirect
+        )));
+        exit;
     }
 
     public function finalizeCheckout(&$aData)
