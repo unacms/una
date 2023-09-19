@@ -101,6 +101,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     	$CNF = &$oModule->_oConfig->CNF;
     	$aPhotos = $oModule->serviceGetScreenshots($aData[$CNF['FIELD_ID']]);
+        
+        if (bx_is_api()){
+            return $aPhotos;
+        }
+        
         if(empty($aPhotos) || !is_array($aPhotos))
             return '';
 

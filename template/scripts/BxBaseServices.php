@@ -963,9 +963,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $bKeyword = $sKeyword !== false;
 
         if(bx_is_api())
-            return $this->serviceGetDataSearchApi(['params' => [
+            return $this->serviceGetDataSearchApi(['params' => 
+                [
                     'keyword' => $sKeyword,
-                    'section' => bx_process_input(bx_get('section'))
+                    'section' => bx_process_input(bx_get('section')),
+                    'cat' => bx_process_input(bx_get('cat'))
                 ]
             ]);
 

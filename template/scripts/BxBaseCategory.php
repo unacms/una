@@ -42,12 +42,17 @@ class BxBaseCategory extends BxDolCategory
 
     public function getCategoryUrl($sValue, $aParams = [])
     {
-        return BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
+        $s = BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
         	'category' => rawurlencode($this->getObjectName()),
         	'keyword' => rawurlencode($sValue),
     		'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : '',
             'context' => isset($aParams['context_id']) ? '&context_id=' . $aParams['context_id'] : ''
         ));
+        
+        if (bx_is_api())
+            return bx_api_get_relative_url($s);
+        
+        return $s;
     }
 
     /**
@@ -94,6 +99,10 @@ class BxBaseCategory extends BxDolCategory
                 'value' => $sValue,
                 'num' => $iNum,
             );
+        }
+        
+        if(bx_is_api()) {
+            return [bx_api_get_block('categories_list',  $aVars['bx_repeat:cats'])];
         }
 
         if ($bAsArray)
