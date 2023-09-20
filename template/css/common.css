@@ -892,7 +892,9 @@ svg .gray .outer .p2 {
 .bx-category-list-item {
 	line-height: 1.5rem;
 }
-
+.bx-category-list-item-selected {
+	font-weight: bold;
+}
 
 /* --------------- Show More */
 .bx-overflow-ready {

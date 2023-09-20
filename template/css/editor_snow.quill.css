@@ -781,9 +781,6 @@
 .ql-snow a {
   color: #06c;
 }
-.ql-container.ql-snow {
-  border: 1px solid #ccc;
-}
 .ql-editor ol, .ql-editor ul{
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;

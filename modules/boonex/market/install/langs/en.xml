@@ -157,6 +157,10 @@
     <string name="_bx_market_page_title_browse_keyword"><![CDATA[Products by hashtag: {0}]]></string>
     <string name="_bx_market_page_title_sys_home"><![CDATA[Market Home]]></string>
     <string name="_bx_market_page_title_home"><![CDATA[Market]]></string>
+    <string name="_bx_market_page_title_sys_entries_by_category"><![CDATA[Products in category]]></string>
+    <string name="_bx_market_page_title_entries_by_category"><![CDATA[Products in {category_name}]]></string>
+    <string name="_bx_market_page_block_title_sys_entries_by_category"><![CDATA[Products in category]]></string>
+    <string name="_bx_market_page_block_title_entries_by_category"><![CDATA[{category_name}]]></string>
     <string name="_bx_market_page_block_title_featured_entries"><![CDATA[Featured Products]]></string>
     <string name="_bx_market_page_block_title_featured_entries_view_extended"><![CDATA[Featured Products (Extended View)]]></string>
     <string name="_bx_market_page_block_title_featured_entries_view_full"><![CDATA[Featured Products (Full View)]]></string>

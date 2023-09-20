@@ -9,6 +9,10 @@
 }
 .ql-container.ql-snow{
     border-radius: 0 0 0.3rem 0.3rem;
+    border: 1px solid #ccc;
+}
+.dark .ql-container.ql-snow{
+    border-color: rgb(55 65 81);
 }
 .ql-mention-list li{
     padding: 0.5rem;
