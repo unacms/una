@@ -26,11 +26,11 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
 
         switch($sType) {
             case 'head':
-                $this->addCss([
+                $this->addCssSystem([
                     'main.css'
                 ]);
 
-                $this->addJs([
+                $this->addJsSystem([
                     'utils.js'
                 ]);
                 $sResult .= $this->_oModule->_oTemplate->getJsCode('utils', [
@@ -45,7 +45,7 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
                 break;
 
             case 'footer':
-                $this->addJs([
+                $this->addJsSystem([
                     'sidebar.js'
                 ]);
                 break;

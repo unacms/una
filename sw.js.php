@@ -59,8 +59,6 @@ if(getParam('sys_css_icons_default') != '') {
     $aAssets[] = $sHomeUrl . 'template/fonts/fa-regular-400.woff2';
 }
 
-//$aAssets[] = 'https://ci.una.io/test/cache_public/bx_templ_css_61777a77ec925fa4b36db9699d01c960.css'; // some basic styles are included here instead of main css file, these styles need to be moved there then tis cache isn't needed
-
 header("Content-Type: text/javascript");
 ?>
 
