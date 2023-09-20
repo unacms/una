@@ -88,6 +88,7 @@ class BxBaseCategory extends BxDolCategory
         if (!$a)
             return $bAsArray ? array() : '';
         
+        $sAllCategoriesLink = '';
         $aParams = [];
         if($this->_aObject['module']){
             $oModule = BxDolModule::getInstance($this->_aObject['module']);
@@ -96,9 +97,19 @@ class BxBaseCategory extends BxDolCategory
                 $aParams['page'] = bx_append_url_params(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORY']), ['category' => '{keyword}'
                 ], true, ['{keyword}']);
             }
+            $sAllCategoriesLink = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
         }
 
-        $aVars = ['bx_repeat:cats' => []];
+        $aVars = [
+            'bx_repeat:cats' => [],
+            'bx_if:show_all' => [
+                'condition' => $sAllCategoriesLink != '',
+                'content' => [
+                    'url' => $sAllCategoriesLink,
+                    'name' => _t('all')
+                ]
+            ]
+        ];
         
         foreach ($a as $sValue => $sName) {
             if (!is_numeric($sValue) && !$sValue)

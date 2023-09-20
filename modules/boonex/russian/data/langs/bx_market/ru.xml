@@ -154,6 +154,10 @@
     <string name="_bx_market_page_title_browse_keyword"><![CDATA[Продукты с хэштегом: {0}]]></string>
     <string name="_bx_market_page_title_sys_home"><![CDATA[Рынок - Домой]]></string>
     <string name="_bx_market_page_title_home"><![CDATA[Рынок]]></string>
+    <string name="_bx_market_page_title_sys_entries_by_category"><![CDATA[Продукты в категории]]></string>
+    <string name="_bx_market_page_title_entries_by_category"><![CDATA[Продукты в {category_name}]]></string>
+    <string name="_bx_market_page_block_title_sys_entries_by_category"><![CDATA[Продукты в категории]]></string>
+    <string name="_bx_market_page_block_title_entries_by_category"><![CDATA[{category_name}]]></string>
     <string name="_bx_market_page_block_title_featured_entries"><![CDATA[Продвинутые продукты]]></string>
     <string name="_bx_market_page_block_title_featured_entries_view_extended"><![CDATA[Продвинутые продукты (Расширенный просмотр)]]></string>
     <string name="_bx_market_page_block_title_featured_entries_view_full"><![CDATA[Продвинутые продукты (Полный просмотр)]]></string>
