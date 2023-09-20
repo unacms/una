@@ -51,8 +51,12 @@ if(!empty($sIconUrl))
 
 //--- Fonts
 if(getParam('sys_css_icons_default') != '') {
-    $aAssets[] = BX_DOL_URL_BASE . 'fonts/fa-solid-900.woff2';
-    $aAssets[] = BX_DOL_URL_BASE . 'fonts/fa-regular-400.woff2';
+    $sHomeUrl = BX_DOL_URL_ROOT;
+    if(BxDolModuleQuery::getInstance()->isEnabledByName('bx_fontawesome'))
+        $sHomeUrl = BxDolModule::getInstance('bx_fontawesome')->_oConfig->getHomeUrl();
+
+    $aAssets[] = $sHomeUrl . 'template/fonts/fa-solid-900.woff2';
+    $aAssets[] = $sHomeUrl . 'template/fonts/fa-regular-400.woff2';
 }
 
 //$aAssets[] = 'https://ci.una.io/test/cache_public/bx_templ_css_61777a77ec925fa4b36db9699d01c960.css'; // some basic styles are included here instead of main css file, these styles need to be moved there then tis cache isn't needed

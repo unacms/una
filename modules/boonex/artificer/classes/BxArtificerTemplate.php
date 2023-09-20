@@ -45,7 +45,7 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
                 break;
 
             case 'footer':
-                $sResult .= $this->addJs([
+                $this->addJs([
                     'sidebar.js'
                 ]);
                 break;
