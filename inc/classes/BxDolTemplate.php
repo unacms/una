@@ -1528,7 +1528,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         $sUrl = $this->getCssUrl($sName, $sCheckIn);
         if(!empty($sUrl))
-            $sUrl = $this->_addRevision($sUrl);
+            $sUrl = $this->addRevision($sUrl);
 
         return $sUrl;
     }
@@ -1564,7 +1564,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         $sUrl = $this->getJsUrl($sName);
         if(!empty($sUrl))
-            $sUrl = $this->_addRevision($sUrl);
+            $sUrl = $this->addRevision($sUrl);
 
         return $sUrl;
     }
@@ -2165,7 +2165,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             list($sUrl) = $mixedFile;
 
-            $aFilesLocated[] = $this->_addRevision($sUrl);
+            $aFilesLocated[] = $this->addRevision($sUrl);
         }
         $sFilesLocated = json_encode($aFilesLocated);
 
@@ -2369,7 +2369,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             list($sUrl) = $mixedFile;
 
-            $aFilesLocated[] = $this->_addRevision($sUrl);
+            $aFilesLocated[] = $this->addRevision($sUrl);
         }
         $sFilesLocated = json_encode($aFilesLocated);
 
@@ -2741,7 +2741,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             $sFileUrl = $aFile['url'];
             if(!$this->{'_b' . $sUpcaseType . 'Cache'})
-                $sFileUrl = $this->_addRevision($sFileUrl);
+                $sFileUrl = $this->addRevision($sFileUrl);
 
             if($bWrap)
                 $mixedResult .= $this->$sMethodWrap($sFileUrl);
@@ -2791,7 +2791,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     ]);
 
                     if($bDynamic)
-                        $sResult .= $this->$sMethodWrap($this->_addRevision($sUrl));
+                        $sResult .= $this->$sMethodWrap($this->addRevision($sUrl));
                     else {
                         $bFound = false;
                         $aSearchIn = $bSystem ? $this->aPage[$sArrayKey] : array_merge($this->aPage[$sType . '_system'], $this->aPage[$sArrayKey]);
@@ -3417,7 +3417,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * 
      * @return integer number
      */
-    function _getRevision()
+    public function getRevision()
     {
         return (int)getParam('sys_revision');
     }
@@ -3427,9 +3427,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * 
      * @return string with URL 
      */
-    function _addRevision($sUrl)
+    public function addRevision($sUrl)
     {
-        return bx_append_url_params($sUrl, ['rev' => $this->_getRevision()]);
+        return bx_append_url_params($sUrl, ['rev' => $this->getRevision()]);
     }
 
     /**

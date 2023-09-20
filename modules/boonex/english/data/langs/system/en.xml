@@ -1736,12 +1736,16 @@
     <string name="_adm_stg_cpt_option_sys_api_extended_units"><![CDATA[Use extended units]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Viewport meta tag]]></string>
 
-    <string name="_adm_stg_cpt_category_pwa"><![CDATA[Progressive Web Apps]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_name"><![CDATA[Name]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_short_name"><![CDATA[Short name]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_description"><![CDATA[Description]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_background_color"><![CDATA[Background color]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_theme_color"><![CDATA[Theme color]]></string>
+    <string name="_adm_stg_cpt_category_pwa_manifest"><![CDATA[Manifest]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_name"><![CDATA[Name]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_short_name"><![CDATA[Short name]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_description"><![CDATA[Description]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_background_color"><![CDATA[Background color]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_theme_color"><![CDATA[Theme color]]></string>
+
+    <string name="_adm_stg_cpt_category_pwa_sw"><![CDATA[Service Worker]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_sw_cache"><![CDATA[URLs to cache on install (each in new line)]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_sw_offline"><![CDATA[Offline page]]></string>
 
     <string name="_adm_stg_cpt_category_sockets"><![CDATA[Sockets server]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type"><![CDATA[Type]]></string>

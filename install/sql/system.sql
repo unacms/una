@@ -753,18 +753,27 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 
 --
--- CATEGORY (HIDDEN): PWA
+-- CATEGORY (HIDDEN): PWA Manifest
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'pwa', '_adm_stg_cpt_category_pwa', 1, 2);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'pwa_manifest', '_adm_stg_cpt_category_pwa_manifest', 1, 2);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_pwa_name', '_adm_stg_cpt_option_sys_pwa_name', '', 'digit', '', '', '', 1),
-(@iCategoryId, 'sys_pwa_short_name', '_adm_stg_cpt_option_sys_pwa_short_name', '', 'digit', '', '', '', 2),
-(@iCategoryId, 'sys_pwa_description', '_adm_stg_cpt_option_sys_pwa_description', '', 'text', '', '', '', 3), 
-(@iCategoryId, 'sys_pwa_background_color', '_adm_stg_cpt_option_sys_pwa_background_color', '', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_pwa_theme_color', '_adm_stg_cpt_option_sys_pwa_theme_color', '', 'digit', '', '', '', 5);
+(@iCategoryId, 'sys_pwa_manifest_name', '_adm_stg_cpt_option_sys_pwa_manifest_name', '', 'digit', '', '', '', 1),
+(@iCategoryId, 'sys_pwa_manifest_short_name', '_adm_stg_cpt_option_sys_pwa_manifest_short_name', '', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_pwa_manifest_description', '_adm_stg_cpt_option_sys_pwa_manifest_description', '', 'text', '', '', '', 3), 
+(@iCategoryId, 'sys_pwa_manifest_background_color', '_adm_stg_cpt_option_sys_pwa_manifest_background_color', '', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_pwa_manifest_theme_color', '_adm_stg_cpt_option_sys_pwa_manifest_theme_color', '', 'digit', '', '', '', 5);
 
+--
+-- CATEGORY (HIDDEN): PWA Service Worker
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'pwa_sw', '_adm_stg_cpt_category_pwa_sw', 1, 2);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_pwa_sw_cache', '_adm_stg_cpt_option_sys_pwa_sw_cache', '', 'text', '', '', '', 1), 
+(@iCategoryId, 'sys_pwa_sw_offline', '_adm_stg_cpt_option_sys_pwa_sw_offline', '', 'digit', '', '', '', 2);
 
 --
 -- Table structure for table `sys_options_mixes`
