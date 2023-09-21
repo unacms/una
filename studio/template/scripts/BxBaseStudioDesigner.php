@@ -651,7 +651,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
     protected function getPwa()
     {
-        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_SYSTEM, 'pwa');
+        $oOptions = new BxTemplStudioOptions(BX_DOL_STUDIO_STG_TYPE_SYSTEM, ['pwa_manifest', 'pwa_sw']);
 
         $this->aPageCss = array_merge($this->aPageCss, $oOptions->getCss());
         $this->aPageJs = array_merge($this->aPageJs, $oOptions->getJs());

@@ -12,7 +12,11 @@ define('BX_SERVICE_WORKER', true);
 require_once('./inc/header.inc.php');
 $oTemplate = BxDolTemplate::getInstance();
 
+$sCacheName = 'app' . $oTemplate->getRevision();
+
 $aAssets = [];
+
+//--- CSS/JS files
 foreach(['css' , 'js'] as $sType) {
     $aFiles = $oTemplate->includeFiles($sType, true, false);
     if(!is_array($aFiles))
@@ -21,8 +25,39 @@ foreach(['css' , 'js'] as $sType) {
     $aAssets = array_merge($aAssets, $aFiles);
 }
 
-foreach($aAssets as $iKey => $sAsset)
-    $aAssets[$iKey] = str_replace(BX_DOL_URL_ROOT, '/', $sAsset);
+if(($sCache = getParam('sys_pwa_sw_cache')) != '') {
+    $aItems = preg_split("/\\r\\n|\\r|\\n/", $sCache);
+    if(!empty($aItems) && is_array($aItems))
+        foreach($aItems as $sItem) {
+            if(strpos($sItem, BX_DOL_URL_ROOT) === false)
+                $sItem = BX_DOL_URL_ROOT . $sItem;
+
+            $aAssets[] = $oTemplate->addRevision($sItem);
+        }
+}
+
+//--- Offline page
+if(($sOffline = getParam('sys_pwa_sw_offline')) != '')
+    $aAssets[] = BX_DOL_URL_ROOT . $sOffline;
+
+//--- Favicon or SVG icon
+$sIconUrl = '';
+if(($iId = (int)getParam('sys_site_icon')) != 0)
+    $sIconUrl = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_FILES)->getFileUrlById($iId);          
+if(!$sIconUrl && ($iId = (int)getParam('sys_site_icon_svg')) != 0)
+    $sIconUrl = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->getFileUrlById($iId);
+if(!empty($sIconUrl))
+    $aAssets[] = $sIconUrl;
+
+//--- Fonts
+if(getParam('sys_css_icons_default') != '') {
+    $sHomeUrl = BX_DOL_URL_ROOT;
+    if(BxDolModuleQuery::getInstance()->isEnabledByName('bx_fontawesome'))
+        $sHomeUrl = BxDolModule::getInstance('bx_fontawesome')->_oConfig->getHomeUrl();
+
+    $aAssets[] = $sHomeUrl . 'template/fonts/fa-solid-900.woff2';
+    $aAssets[] = $sHomeUrl . 'template/fonts/fa-regular-400.woff2';
+}
 
 header("Content-Type: text/javascript");
 ?>
@@ -32,13 +67,32 @@ let coreAssets = <?php echo json_encode($aAssets); ?>;
 
 // On install, cache core assets
 self.addEventListener('install', function (event) {
+    console.log("Service Worker: <?php echo $sCacheName; ?>");
     // Cache core assets
-    event.waitUntil(caches.open('app').then(function (cache) {
-        for (let asset of coreAssets) {
-            cache.add(new Request(asset));
-        }
-        return cache;
-    }));
+    event.waitUntil((async () => { 
+        caches.open('<?php echo $sCacheName; ?>').then(function (cache) {
+            for (let asset of coreAssets) {
+                cache.add(new Request(asset));
+            }
+            return cache;
+        });
+    })());
+});
+
+const deleteCache = async (key) => {
+  await caches.delete(key);
+};
+
+const deleteOldCaches = async () => {
+  const cacheKeepList = ["<?php echo $sCacheName; ?>"];
+  const keyList = await caches.keys();
+  const cachesToDelete = keyList.filter((key) => !cacheKeepList.includes(key));
+  await Promise.all(cachesToDelete.map(deleteCache));
+};
+
+// delete old cache on activate
+self.addEventListener("activate", (event) => {
+  event.waitUntil(deleteOldCaches());
 });
 
 // Listen for request events
@@ -51,58 +105,34 @@ self.addEventListener('fetch', function (event) {
     // https://stackoverflow.com/a/49719964
     if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') return;
 
-    // HTML files
-    // Network-first
-    if (request.headers.get('Accept').includes('text/html')) {
+    // regular pages and static assets
+    if (request.mode === 'navigate' || request.url.match(/\.(css|js|woff2|svg|png|jpg)$/)) {
+        const failedResponse = async (err) => {
+            let reponse = null;
+            if (request.mode === 'navigate') {
+                const cache = await caches.open('<?php echo $sCacheName; ?>');
+                reponse = await cache.match('<?php echo BX_DOL_URL_ROOT . 'offline'; ?>');
+            }
+            return reponse || new Response("Network error happened", {
+                status: 408,
+                headers: { "Content-Type": "text/plain" },
+            });
+        }
         event.respondWith(
-            fetch(request).then(function (response) {
-                // Create a copy of the response and save it to the cache
-                let copy = response.clone();
-                event.waitUntil(caches.open('app').then(function (cache) {
-                    return cache.put(request, copy);
-                }));
-
-                // Return the response
-                return response;
-            }).catch(function (error) {
-                // If there's no item in cache, respond with a fallback
-                return caches.match(request).then(function (response) {
-                    return response || caches.match('/offline.html');
-                });
+            caches.match(request).then((response) => {
+                try {
+                    return response || fetch(request)
+                        .then((response) => {
+                            return response;
+                        })
+                        .catch((err) => {
+                            return failedResponse(err);
+                        });
+                } catch (error) {
+                    return failedResponse(err);
+                }
             })
         );
     }
 
-    // CSS & JavaScript
-    // Offline-first
-    if (request.headers.get('Accept').includes('text/css') || request.headers.get('Accept').includes('text/javascript')) {
-        event.respondWith(
-            caches.match(request).then(function (response) {
-                return response || fetch(request).then(function (response) {
-                    // Return the response
-                    return response;
-                });
-            })
-        );
-        return;
-    }
-
-    // Images
-    // Offline-first
-    if (request.headers.get('Accept').includes('image')) {
-        event.respondWith(
-            caches.match(request).then(function (response) {
-                return response || fetch(request).then(function (response) {
-                    // Save a copy of it in cache
-                    let copy = response.clone();
-                    event.waitUntil(caches.open('app').then(function (cache) {
-                        return cache.put(request, copy);
-                    }));
-
-                    // Return the response
-                    return response;
-                });
-            })
-        );
-    }
 });

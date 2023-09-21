@@ -18,13 +18,15 @@ $aContent = [
     'orientation' => 'portrait',
     'start_url' => parse_url(BX_DOL_URL_ROOT, PHP_URL_PATH),
     'display' => 'standalone',
-    'scope' => '/',
-    'background_color' => getParam('sys_pwa_background_color'),
-    'theme_color' => getParam('sys_pwa_theme_color')
+    'scope' => '/'
 ];
 
 $aContent['name'] = ($sName = getParam('sys_pwa_name')) != '' ? $sName : parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST);
 $aContent['short_name'] = ($sShortName = getParam('sys_pwa_short_name')) != '' ? $sShortName : $aContent['name'];
+if(($sBackgroundColor = getParam('sys_pwa_background_color')) != '')
+    $aContent['background_color'] = $sBackgroundColor;
+if(($sThemeColor = getParam('sys_pwa_theme_color')) != '')
+    $aContent['theme_color'] = $sThemeColor;
 
 if(isLogged())
     $aContent['gcm_sender_id'] = '482941778795';

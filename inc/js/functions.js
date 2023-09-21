@@ -1505,6 +1505,18 @@ function bx_regexp_escape(s)
         .replace(/[|\\{}()[\]^$+*?.]/mg, '\\$&')
         .replace(/-/mg, '\\x2d');
 }
+
+function bx_get_regexp(sType) 
+{
+    var o = {
+        tag:"(<([^>]+bx-tag[^>]+)>)",
+        mention: "(<([^>]+bx-tag[^>]+)>)",
+        url: "(([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[\\-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9\\.\\-]+|(?:www\\.|[\\-;:&=\\+\\$,\\w]+@)[A-Za-z0-9\\.\\-]+)((?:\\/[\\+~%#\\/\\.\\w\\-_!\\(\\)]*)?\\??(?:[\\-\\+=&;%@\\.\\w_]*)#?(?:[\\.\\!\\/\\w]*))?"
+    };
+
+    return o[sType];
+}
+
 function bx_process_links()
 {
     // process links in container

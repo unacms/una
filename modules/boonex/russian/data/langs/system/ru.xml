@@ -1714,12 +1714,16 @@
     <string name="_adm_stg_cpt_option_sys_api_extended_units"><![CDATA[Использовать расширенные юниты]]></string>
     <string name="_adm_stg_cpt_option_sys_viewport_meta_tag"><![CDATA[Метатег области просмотра]]></string>
 
-    <string name="_adm_stg_cpt_category_pwa"><![CDATA[Прогрессивные веб-приложения]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_name"><![CDATA[Имя]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_short_name"><![CDATA[Сокращенное имя]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_description"><![CDATA[Описание]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_background_color"><![CDATA[Цвет фона]]></string>
-    <string name="_adm_stg_cpt_option_sys_pwa_theme_color"><![CDATA[Цвет темы]]></string>
+    <string name="_adm_stg_cpt_category_pwa_manifest"><![CDATA[Manifest]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_name"><![CDATA[Имя]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_short_name"><![CDATA[Сокращенное имя]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_description"><![CDATA[Описание]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_background_color"><![CDATA[Цвет фона]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_manifest_theme_color"><![CDATA[Цвет темы]]></string>
+
+    <string name="_adm_stg_cpt_category_pwa_sw"><![CDATA[Service Worker]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_sw_cache"><![CDATA[URL-адреса для кэширования при установке (каждый в новой строке)]]></string>
+    <string name="_adm_stg_cpt_option_sys_pwa_sw_offline"><![CDATA[Офлайн-страница]]></string>
 
     <string name="_adm_stg_cpt_category_sockets"><![CDATA[Сервер для сокетов]]></string>
     <string name="_adm_stg_cpt_option_sys_sockets_type"><![CDATA[Тип]]></string>

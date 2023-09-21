@@ -38,10 +38,6 @@ function BxTimelineMain() {
     this.bViewOutline = false;
     this.bViewItem = false;
 
-    this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
-    this._sPregMention = "(<([^>]+bx-mention[^>]+)>)";
-    this._sPregUrl = "(([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[\\-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9\\.\\-]+|(?:www\\.|[\\-;:&=\\+\\$,\\w]+@)[A-Za-z0-9\\.\\-]+)((?:\\/[\\+~%#\\/\\.\\w\\-_!\\(\\)]*)?\\??(?:[\\-\\+=&;%@\\.\\w_]*)#?(?:[\\.\\!\\/\\w]*))?";
-
     this._iLimitAttachLinks = 0;
     this._sLimitAttachLinksErr = '';
     this._oAttachedLinks = {};
@@ -324,13 +320,13 @@ BxTimelineMain.prototype.parseContent = function(oForm, iId, sData, bPerformAtta
 {
     var oExp, aMatch = null;
 
-    oExp = new RegExp(this._sPregTag , "ig");
+    oExp = new RegExp(bx_get_regexp('tag'), "ig");
     sData = sData.replace(oExp, '');
 
-    oExp = new RegExp(this._sPregMention , "ig");
+    oExp = new RegExp(bx_get_regexp('mention'), "ig");
     sData = sData.replace(oExp, '');
 
-    oExp = new RegExp(this._sPregUrl , "ig");
+    oExp = new RegExp(bx_get_regexp('url'), "ig");
     while(aMatch = oExp.exec(sData)) {
         var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');        
         if(!sUrl.length || this._oAttachedLinks[sUrl] != undefined || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length >= this._iLimitAttachLinks))

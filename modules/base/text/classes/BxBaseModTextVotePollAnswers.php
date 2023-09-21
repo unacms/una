@@ -17,6 +17,9 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
     protected $_aObjectInfo;
     protected $_aPollInfo;
 
+    protected $_bContentInfo;
+    protected $_aContentInfo;
+
     protected $_bHiddenResults;
     protected $_bAnonymousVoting;
 
@@ -37,6 +40,11 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
 
         $this->_aObjectInfo = $this->_oModule->_oDb->getPollAnswers(array('type' => 'id', 'id' => $iId));
         $this->_aPollInfo = $this->_oModule->_oDb->getPolls(array('type' => 'answer_id', 'answer_id' => $iId));
+
+        $this->_aContentInfo = [];
+        if(!empty($this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']]))
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']]);
+        $this->_bContentInfo = !empty($this->_aContentInfo) && is_array($this->_aContentInfo);
 
         $this->_bHiddenResults = $CNF['PARAM_POLL_HIDDEN_RESULTS'];
         $this->_bAnonymousVoting = $CNF['PARAM_POLL_ANONYMOUS_VOTING'];
@@ -97,17 +105,10 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
      */
     public function isAllowedVote($isPerformAction = false)
     {
-        if(!parent::isAllowedVote($isPerformAction))
+        if($this->_bContentInfo && $this->_oModule->checkAllowedView($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $iContentId = $this->_aPollInfo[$CNF['FIELD_POLL_CONTENT_ID']];
-        if(empty($iContentId))
-            return true;
-
-        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-        return $this->_oModule->checkAllowedView($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED;
+        return parent::isAllowedVote($isPerformAction);
     }
 
     public function isAllowedVoteViewVoters($isPerformAction = false)
@@ -121,6 +122,18 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
     /**
      * Internal functions
      */
+    protected function _isAllowedVoteByObject($aObject)
+    {
+        /**
+         * If a poll wasn't attached to any content yet, 
+         * then we cannot check content's visibility.
+         */
+        if(!$this->_bContentInfo)
+            return true;
+
+        return parent::_isAllowedVoteByObject($this->_aContentInfo);
+    }
+
     protected function _getIconDo($bVoted)
     {
     	return $bVoted ?  'far dot-circle' : 'far circle';

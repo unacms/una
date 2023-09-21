@@ -577,7 +577,7 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_category "browse_category"
      */
-    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $aParams = [])
     {
         $sType = 'category';
         $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
@@ -586,10 +586,11 @@ class BxForumModule extends BxBaseModTextModule
         if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
             return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
 
-        if($sUnitView != 'table')   {
-            $aParams = array('category' => $iCategory);
-            if ($sUnitView)
+        if($sUnitView != 'table') {
+            $aParams = array_merge(['category' => $iCategory], $aParams);
+            if($sUnitView)
                 $aParams['unit_view'] = $sUnitView;
+
             return $this->_serviceBrowse($sType, $aParams, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
         }
 
@@ -598,7 +599,7 @@ class BxForumModule extends BxBaseModTextModule
             'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '='),
             'empty_message' => $bEmptyMessage,
             'ajax_paginate' => $bAjaxPaginate
-        ), $bShowHeader);
+        ), !isset($aParams['show_header']) || (bool)$aParams['show_header'] === true);
     }
 
     /**
