@@ -527,33 +527,21 @@ class BxAdsModule extends BxBaseModTextModule
     /**
      * @ref bx_ads-browse_category "browse_category"
      */
-    public function serviceBrowseCategory($iCategoryId = 0, $aParams = array())
+    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $aParams = [])
     {
-        $sParamName = $sParamGet = 'category';
+        $mixedResult = parent::serviceBrowseCategory($sUnitView, $bEmptyMessage, $bAjaxPaginate, $aParams);
+        if(empty($mixedResult['content']))
+            return $mixedResult;
 
-        if(!$iCategoryId && bx_get($sParamGet) !== false)
-            $iCategoryId = bx_process_input(bx_get($sParamGet), BX_DATA_INT);
+        $aCategory = $this->_oDb->getCategories([
+            'type' => 'id', 
+            'id' => !empty($aParams['category']) ? (int)$aParams['category'] : bx_process_input(bx_get('category'), BX_DATA_INT)
+        ]);
 
-        $bEmptyMessage = true;
-        if(isset($aParams['empty_message'])) {
-            $bEmptyMessage = (bool)$aParams['empty_message'];
-            unset($aParams['empty_message']);
-        }
+        if(!empty($aCategory['title']))
+            $mixedResult['title'] = _t('_bx_ads_page_block_title_entries_by_category_mask', _t($aCategory['title']));
 
-        $bAjaxPaginate = true;
-        if(isset($aParams['ajax_paginate'])) {
-            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
-            unset($aParams['ajax_paginate']);
-        }
-
-        $aBlock = $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $iCategoryId), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
-        if(!empty($aBlock['content'])) {
-            $aCategory = $this->_oDb->getCategories(array('type' => 'id', 'id' => $iCategoryId));
-            if(!empty($aCategory['title']))
-                $aBlock['title'] = _t('_bx_ads_page_block_title_entries_by_category_mask', _t($aCategory['title']));
-        }
-
-        return $aBlock;
+        return $mixedResult;
     }
 
     public function serviceGetNotificationsData()

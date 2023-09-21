@@ -966,11 +966,11 @@ class BxBaseModGeneralModule extends BxDolModule
     /** 
      * @ref bx_base_general-browse_by_category "browse_by_category"
      */
-    public function serviceBrowseByCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $aParams = [])
     {
         $sType = 'category';
 
-        $aParams = ['category' => bx_process_input(bx_get('category'), BX_DATA_INT)];
+        $aParams = array_merge(['category' => bx_process_input(bx_get('category'), BX_DATA_INT)], $aParams);
         if($sUnitView)
             $aParams['unit_view'] = $sUnitView;
 
