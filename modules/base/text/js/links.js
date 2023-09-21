@@ -20,13 +20,9 @@ function BxBaseModTextLinks(oOptions) {
     this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
     this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
     this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
-    
-    this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
-    this._sPregMention = "(<([^>]+bx-mention[^>]+)>)";
-    this._sPregUrl = "(([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[\\-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9\\.\\-]+|(?:www\\.|[\\-;:&=\\+\\$,\\w]+@)[A-Za-z0-9\\.\\-]+)((?:\\/[\\+~%#\\/\\.\\w\\-_!\\(\\)]*)?\\??(?:[\\-\\+=&;%@\\.\\w_]*)#?(?:[\\.\\!\\/\\w]*))?";
-    
+
     var $this = this;
-    
+
     $(document).ready(function () {
         $this.initFormPost($this._sFormId);
     });
@@ -81,13 +77,13 @@ BxBaseModTextLinks.prototype.parseContent = function(oForm, sData, bPerformAttac
 {
     var oExp, aMatch = null;
 
-    oExp = new RegExp(this._sPregTag , "ig");
+    oExp = new RegExp(bx_get_regexp('tag'), "ig");
     sData = sData.replace(oExp, '');
 
-    oExp = new RegExp(this._sPregMention , "ig");
+    oExp = new RegExp(bx_get_regexp('mention'), "ig");
     sData = sData.replace(oExp, '');
 
-    oExp = new RegExp(this._sPregUrl , "ig");
+    oExp = new RegExp(bx_get_regexp('url'), "ig");
     while(aMatch = oExp.exec(sData)) {
         var sUrl = aMatch[0].replace(/^(\s|(&nbsp;))+|(\s|(&nbsp;))+$/gm,'');
         if(!sUrl.length || this._oAttachedLinks[sUrl] != undefined || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length >= this._iLimitAttachLinks))

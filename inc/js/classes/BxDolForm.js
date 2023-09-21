@@ -84,8 +84,8 @@ BxDolForm.prototype.init = function()
         if(!sHref || (sOnclick != undefined && sOnclick.trim().length > 0))
             return;
 
-        sHref = sHref.trim();
-        if(!sHref || sHref == 'javascript:void(0)')
+        var oRegExp = new RegExp('^' + bx_get_regexp('url') + '$', 'i');
+        if(!sHref.trim().match(oRegExp))
             return;
 
         event.preventDefault();
