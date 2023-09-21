@@ -25,6 +25,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+                'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
                 'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
                 'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
@@ -105,11 +106,11 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 break;
                 
              case 'category':
-                    $iCategory = (int)$aParams['category'];
-                    $this->addMarkers(array(
-                        'category_id' => $iCategory,
-                        'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
-                    ));
+                $iCategory = (int)$aParams['category'];
+                $this->addMarkers([
+                    'category_id' => $iCategory,
+                    'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
+                ]);
 
                 $this->aCurrent['restriction']['category']['value'] = $iCategory;
 
