@@ -2264,7 +2264,11 @@ class BxBaseModGeneralModule extends BxDolModule
         $iUserId = $this->getUserId();
         $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
         $iAuthorIdAbs = abs($iAuthorId);
-        if($iAuthorId < 0 && ((is_numeric($aEvent['owner_id']) && $iAuthorIdAbs == (int)$aEvent['owner_id']) || (is_array($aEvent['owner_id']) && in_array($iAuthorIdAbs, $aEvent['owner_id']))) && $iAuthorIdAbs != $iUserId)
+
+        /**
+         * Don't show anonymous posts on the post's owner timeline.
+         */
+        if($iAuthorId < 0 && $iAuthorIdAbs != $iUserId && ((is_numeric($aEvent['owner_id']) && $iAuthorIdAbs == (int)$aEvent['owner_id']) || (is_array($aEvent['owner_id']) && in_array($iAuthorIdAbs, $aEvent['owner_id']))))
             return false;
 
         //--- Views

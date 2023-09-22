@@ -309,44 +309,54 @@ class BxCnlModule extends BxBaseModGroupsModule
         return BxDolService::call($aEventContent['module_name'], 'get_timeline_post_allowed_view', array(array('id' => $aEvent['id'], 'owner_id' => $aEventContent['author_id'], 'object_id' => $aEventContent['content_id'])));
     }
 
-    public function serviceGetTimelinePostHashtag($aEvent, $aBrowseParams = array())
+    public function serviceGetTimelinePostHashtag($aEvent, $aBrowseParams = [])
     {
         if(empty($aEvent) || !is_array($aEvent))
             return false;
-        
+
         $aEventContent = $this->_oDb->getContentById($aEvent['object_id']);
         if(empty($aEventContent) || !is_array($aEventContent))
             return false;
-       
+
         $sModule = $aEventContent['module_name'];
         $sClass = 'Module';
-        if($sModule == 'sys_cmts'){
-            $sClass = 'TemplCmtsServices';
+        if($sModule == 'sys_cmts') {
             $sModule = 'system';
+            $sClass = 'TemplCmtsServices';
         }
-        
+
         if(!BxDolRequest::serviceExists($sModule, 'get_timeline_post', $sClass))
             return false;
+
+        $iContentId = (int)$aEventContent['content_id'];
+        $iContentAuthor = 0;
+        if(bx_is_srv($sModule, 'get_author', $sClass))
+            $iContentAuthor = bx_srv($sModule, 'get_author', [$iContentId], $sClass);
+
         /**
          * Prepare fake event array (only mandatory parameters) to get
          * necessary data (related to an 'original' event with hashtag/label) 
          * from associated content module.
          */
-        $iOwnerId = (int)$aEventContent['author_id'];
-        $iContentId = (int)$aEventContent['content_id'];
+        $iOwnerId = $aEvent['owner_id'];
         $mixedObjectPrivacyView = BX_DOL_PG_ALL;
-        if(BxDolRequest::serviceExists($sModule, 'get_privacy_view')) {
-            $mixedAllowViewTo = BxDolService::call($sModule, 'get_privacy_view', array($iContentId));
-            if($mixedAllowViewTo !== false)
-                $mixedObjectPrivacyView = $mixedAllowViewTo;
-            if(is_numeric($mixedAllowViewTo) && (int)$mixedAllowViewTo < 0)
-                $iOwnerId = abs($mixedAllowViewTo);
+        if($iContentAuthor > 0) {
+            $iOwnerId = (int)$aEventContent['author_id'];
+            if(bx_is_srv($sModule, 'get_privacy_view', $sClass)) {
+                $mixedAllowViewTo = bx_srv($sModule, 'get_privacy_view', [$iContentId]);
+                if($mixedAllowViewTo !== false)
+                    $mixedObjectPrivacyView = $mixedAllowViewTo;
+
+                if(is_numeric($mixedAllowViewTo) && (int)$mixedAllowViewTo < 0)
+                    $iOwnerId = abs($mixedAllowViewTo);
+            }
         }
-        $aResult = BxDolService::call($sModule, 'get_timeline_post', array(array(
+
+        $aResult = bx_srv($sModule, 'get_timeline_post', [[
             'owner_id' => $iOwnerId,
             'object_id' => $iContentId,
             'object_privacy_view' => $mixedObjectPrivacyView
-        ), $aBrowseParams), $sClass);
+        ], $aBrowseParams], $sClass);
 
         if(empty($aResult) || !is_array($aResult))
             return $aResult;
@@ -355,9 +365,9 @@ class BxCnlModule extends BxBaseModGroupsModule
          * Note. The context shouldn't be changed therefore 
          * use input event's context (owner_id) in returned results.
          */
-        return array_merge($aResult, array(
+        return array_merge($aResult, [
             'owner_id' => $aEvent['owner_id']
-        ));
+        ]);
     }
     
     /**

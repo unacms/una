@@ -17,6 +17,32 @@ class BxBaseCmtsServices extends BxDol
         parent::__construct();
     }
 
+    public function serviceGetAuthor($iCmtUniqId)
+    {
+        $oCmts = BxDolCmts::getObjectInstanceByUniqId($iCmtUniqId);
+        if(!$oCmts)
+            return [];
+
+        $aCmt = BxDolCmtsQuery::getCommentExtendedByUniqId($iCmtUniqId);
+        if(empty($aCmt) || !is_array($aCmt))
+            return [];
+
+        return $oCmts->serviceGetAuthor((int)$aCmt['cmt_id']);
+    }
+
+    public function serviceGetInfo($iCmtUniqId, $bSearchableFieldsOnly = true)
+    {
+        $oCmts = BxDolCmts::getObjectInstanceByUniqId($iCmtUniqId);
+        if(!$oCmts)
+            return [];
+
+        $aCmt = BxDolCmtsQuery::getCommentExtendedByUniqId($iCmtUniqId);
+        if(empty($aCmt) || !is_array($aCmt))
+            return [];
+
+        return $oCmts->serviceGetInfo((int)$aCmt['cmt_id'], $bSearchableFieldsOnly);
+    }
+
     public function serviceGetBlockView($sSystem = '', $iObjectId = 0, $iCommentId = 0)
     {
         if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
