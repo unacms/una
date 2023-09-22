@@ -331,6 +331,7 @@ class BxOAuthModule extends BxDolModule
             require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
             $o = json_decode($oResponse->getResponseBody());
             $this->_oTemplate->getPage(false, MsgBox($o->error_description));
+            return;
         }
 
         if (!isLogged()) {
