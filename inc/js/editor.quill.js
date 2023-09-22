@@ -456,6 +456,19 @@ function bx_editor_init(oEditor, oParams){
         });
     }
 
+    oEditor.keyboard.addBinding({
+        key: ' ',
+        handler: function(range, context) {
+            bx_editor_on_space_enter (oEditor.container.firstChild.innerHTML, oParams.selector);
+            return true;
+        }
+    });
+    
+   oEditor.container.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+             bx_editor_on_space_enter (oEditor.container.firstChild.innerHTML, oParams.selector);
+        }
+    });
     
     oEditor.on('editor-change', function(delta, oldDelta, source) {
         sVal = oEditor.container.firstChild.innerHTML;
@@ -490,8 +503,6 @@ function bx_editor_insert_html (sEditorId, sImgId, sHtml)
 
 function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) 
 {
-    console.log(888);
-
     if ('undefined' == typeof(sClasses))
         sClasses = '';
     

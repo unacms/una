@@ -479,6 +479,7 @@ class BxBasePage extends BxDolPage
             $o = BxDolProfile::getInstance();
             $a['user'] = [
                 'id' => $o->id(),
+                'email' => $o->getAccountObject()->getEmail(),
                 'display_name' => $o->getDisplayName(),
                 'url' => bx_api_get_relative_url($o->getUrl()),
                 'avatar' => $o->getAvatar(),
