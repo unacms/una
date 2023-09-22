@@ -772,8 +772,9 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_pwa_sw_cache', '_adm_stg_cpt_option_sys_pwa_sw_cache', '', 'text', '', '', '', 1), 
-(@iCategoryId, 'sys_pwa_sw_offline', '_adm_stg_cpt_option_sys_pwa_sw_offline', '', 'digit', '', '', '', 2);
+(@iCategoryId, 'sys_pwa_sw_enable', '_adm_stg_cpt_option_sys_pwa_sw_enable', '', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'sys_pwa_sw_cache', '_adm_stg_cpt_option_sys_pwa_sw_cache', '', 'text', '', '', '', 2), 
+(@iCategoryId, 'sys_pwa_sw_offline', '_adm_stg_cpt_option_sys_pwa_sw_offline', '', 'digit', '', '', '', 3);
 
 --
 -- Table structure for table `sys_options_mixes`

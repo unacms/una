@@ -1928,6 +1928,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 				$sKey = str_replace('css_media_', '', $sKey);
                 $sRet = $aData[$sKey];
                 break;
+            case 'service_worker':
+                if(getParam('sys_pwa_sw_enable') != 'on')
+                    break;
+                $sRet = "if(navigator && navigator.serviceWorker) navigator.serviceWorker.register('sw.js.php');";
+                break;
             case 'socket_engine':
                 $sRet = BxDolSockets::getInstance()->getJsCode();
                 break;
