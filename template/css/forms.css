@@ -564,10 +564,9 @@
     display:block;
     float:left;
     padding-right: 1.5em; 
-    margin-left:0.1em;
-    margin-right:0.1em;
+    margin:0.1em;
     font-weight:normal;
-	border-radius: 1.25rem;
+    border-radius: 1.25rem;
 }
 .bx-form-value .bx-form-input-autotoken b.val-wo-icon {
     padding-left: 1.5em;

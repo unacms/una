@@ -286,7 +286,7 @@ import url(../../../../../../../template/css/forms.css);
 .bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) b {
     display: block;
     float: left;
-    margin: 0 0.125rem;
+    margin: 0.125rem;
     padding-right: 1.5rem;
     border-radius: 1.25rem;
 
