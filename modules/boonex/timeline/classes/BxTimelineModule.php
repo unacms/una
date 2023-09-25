@@ -3834,8 +3834,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
             if($bVideoIds && ($mixedCheckResult = $this->_checkMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId)) !== false) {
-                list($bHasImage, $bHasVideo) = $mixedCheckResult;
-                if($bHasVideo)
+                list($bHasImage, $bHasVideo, $bIsVideoProcessed) = $mixedCheckResult;
+                if($bHasVideo && !$bIsVideoProcessed)
                     $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
             }
 
@@ -5475,18 +5475,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aGhostFiles) || !is_array($aGhostFiles))
             return false;
 
+        $oTranscoder = BxDolTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
+
         $bHasImage = $bHasVideo = false;
+        $bIsVideoProcessed = true;
         foreach($aGhostFiles as $aFile) {
             if(is_array($aItemIds) && !in_array($aFile['id'], $aItemIds))
                 continue;
 
-            if(strncmp('image/', $aFile['mime_type'], 6) === 0)
+            if(strncmp('image/', $aFile['mime_type'], 6) === 0) {
                 $bHasImage = true;
-            else if(strncmp('video/', $aFile['mime_type'], 6) === 0)
+                continue;
+            }
+
+            if(strncmp('video/', $aFile['mime_type'], 6) === 0) {
                 $bHasVideo = true;
+
+                if($oTranscoder && !$oTranscoder->isFileReady((int)$aFile['id']))
+                    $bIsVideoProcessed = false;
+
+                continue;
+            }
         }
 
-        return [$bHasImage, $bHasVideo];
+        return [$bHasImage, $bHasVideo, $bIsVideoProcessed];
     }
 
     protected function _saveMedia($sType, $iContentId, $aItemIds, $iProfileId = 0, $isAssociateWithContent = false)
