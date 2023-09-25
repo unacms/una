@@ -3833,8 +3833,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $aVideoIds = $oForm->getCleanValue($CNF['FIELD_VIDEO']);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
-            if($bVideoIds)
-                $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+            if($bVideoIds && ($mixedCheckResult = $this->_checkMedia($CNF['FIELD_VIDEO'], $iId, $aVideoIds, $iUserId)) !== false) {
+                list($bHasImage, $bHasVideo) = $mixedCheckResult;
+                if($bHasVideo)
+                    $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+            }
 
             $aFileIds = $oForm->getCleanValue($CNF['FIELD_FILE']);
             $bFileIds = !empty($aFileIds) && is_array($aFileIds);
@@ -5454,6 +5457,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         $oMetatags->locationsAddFromForm($iId, $CNF['FIELD_LOCATION_PREFIX']);
+    }
+
+    /**
+     * Check attached media for content type (photo, video). 
+     */
+    protected function _checkMedia($sType, $iContentId, $aItemIds, $iProfileId = 0)
+    {
+        if(empty($iContentId) || empty($aItemIds) || !is_array($aItemIds))
+            return false;
+
+        if(empty($iProfileId))
+            $iProfileId = $this->_iProfileId;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
+        $aGhostFiles = $oStorage->getGhosts ($iProfileId, $iContentId, true, $this->_isModerator());
+        if(empty($aGhostFiles) || !is_array($aGhostFiles))
+            return false;
+
+        $bHasImage = $bHasVideo = false;
+        foreach($aGhostFiles as $aFile) {
+            if(is_array($aItemIds) && !in_array($aFile['id'], $aItemIds))
+                continue;
+
+            if(strncmp('image/', $aFile['mime_type'], 6) === 0)
+                $bHasImage = true;
+            else if(strncmp('video/', $aFile['mime_type'], 6) === 0)
+                $bHasVideo = true;
+        }
+
+        return [$bHasImage, $bHasVideo];
     }
 
     protected function _saveMedia($sType, $iContentId, $aItemIds, $iProfileId = 0, $isAssociateWithContent = false)
