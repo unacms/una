@@ -37,8 +37,11 @@ if(($sCache = getParam('sys_pwa_sw_cache')) != '') {
 }
 
 //--- Offline page
-if(($sOffline = getParam('sys_pwa_sw_offline')) != '')
-    $aAssets[] = BX_DOL_URL_ROOT . $sOffline;
+$sOffline = '';
+if(($sOffline = getParam('sys_pwa_sw_offline')) != '') {
+    $sOffline = BX_DOL_URL_ROOT . $sOffline;
+    $aAssets[] = $sOffline;
+}
 
 //--- Favicon or SVG icon
 $sIconUrl = '';
@@ -67,7 +70,6 @@ let coreAssets = <?php echo json_encode($aAssets); ?>;
 
 // On install, cache core assets
 self.addEventListener('install', function (event) {
-    console.log("Service Worker: <?php echo $sCacheName; ?>");
     // Cache core assets
     event.waitUntil((async () => { 
         caches.open('<?php echo $sCacheName; ?>').then(function (cache) {
@@ -109,9 +111,10 @@ self.addEventListener('fetch', function (event) {
     if (request.mode === 'navigate' || request.url.match(/\.(css|js|woff2|svg|png|jpg)$/)) {
         const failedResponse = async (err) => {
             let reponse = null;
-            if (request.mode === 'navigate') {
+            const sOfflinePage = '<?php echo $sOffline; ?>';
+            if (request.mode === 'navigate' && sOfflinePage.length != 0) {
                 const cache = await caches.open('<?php echo $sCacheName; ?>');
-                reponse = await cache.match('<?php echo BX_DOL_URL_ROOT . 'offline'; ?>');
+                reponse = await cache.match(sOfflinePage);
             }
             return reponse || new Response("Network error happened", {
                 status: 408,
