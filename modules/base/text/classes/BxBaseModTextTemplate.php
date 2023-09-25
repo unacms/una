@@ -130,8 +130,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(!empty($CNF['OBJECT_CATEGORY']) && !empty($CNF['FIELD_CATEGORY'])) {
             $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
 
+            $aParams = [];
+            if(isset($CNF['URL_CATEGORY']))
+                $aParams['page'] = bx_append_url_params(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORY']), [
+                    'category' => '{keyword}'
+                ], true, ['{keyword}']);
+
             $aTmplVarsItems[] = array(
-                'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']]),
+                'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']], $aParams),
                 'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
             );
         }
