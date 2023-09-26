@@ -15,7 +15,7 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
     'name' => 'bx_decorous',
-    'title' => 'Decorous',
+    'title' => 'Decorous (discontinued)',
     'note' => 'Design template',
     'version' => '13.0.9.DEV',
     'vendor' => 'Boonex',
