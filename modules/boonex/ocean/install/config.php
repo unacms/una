@@ -15,7 +15,7 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
     'name' => 'bx_ocean',
-    'title' => 'Ocean',
+    'title' => 'Ocean (discontinued)',
     'note' => 'Design template',
     'version' => '13.0.9.DEV',
     'vendor' => 'BoonEx',
