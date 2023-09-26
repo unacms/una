@@ -26,13 +26,6 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
 
         switch($sType) {
             case 'head':
-                $this->addCssSystem([
-                    'main.css'
-                ]);
-
-                $this->addJsSystem([
-                    'utils.js'
-                ]);
                 $sResult .= $this->_oModule->_oTemplate->getJsCode('utils', [
                     'sColorScheme' => $this->_oConfig->getColorScheme()
                 ]);
@@ -40,14 +33,11 @@ class BxArtificerTemplate extends BxBaseModGeneralTemplate
                 $sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
                 if(!empty($sCss))
                     $sCss = $this->_wrapInTagCssCode($sCss);
-                
+
                 $sResult .= $sCss;
                 break;
 
             case 'footer':
-                $this->addJsSystem([
-                    'sidebar.js'
-                ]);
                 break;
         }
 

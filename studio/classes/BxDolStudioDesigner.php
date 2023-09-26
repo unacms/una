@@ -264,7 +264,7 @@ class BxDolStudioDesigner extends BxTemplStudioWidget
             if($bValue)
                 $iId = (int)bx_get($sIcon);
             else if($bFile) {
-                $iId = $oStorage->storeFileFromForm($_FILES[$sIcon], true, $iProfileId);
+                $iId = $oStorage->storeFileFromForm($_FILES[$sIcon], false, $iProfileId);
                 if($iId === false)
                     continue;
             }

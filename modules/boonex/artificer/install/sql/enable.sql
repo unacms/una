@@ -30,6 +30,13 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'unit', @iHandler);
 
 
+-- PRELOADER
+INSERT INTO `sys_preloader` (`module`, `type`, `content`, `active`) VALUES
+('bx_artificer', 'css_system', 'modules/boonex/artificer/template/css/|main.css', 1),
+('bx_artificer', 'js_system', 'modules/boonex/artificer/js/|utils.js', 1),
+('bx_artificer', 'js_system', 'modules/boonex/artificer/js/|sidebar.js', 1);
+
+
 -- INJECTIONS
 INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
 ('bx_artificer_head', 0, 'injection_head', 'service', 'a:3:{s:6:"module";s:12:"bx_artificer";s:6:"method";s:14:"include_css_js";s:6:"params";a:1:{i:0;s:4:"head";}}', 0, 1),

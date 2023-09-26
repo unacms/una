@@ -32,7 +32,7 @@ if(($sCache = getParam('sys_pwa_sw_cache')) != '') {
             if(strpos($sItem, BX_DOL_URL_ROOT) === false)
                 $sItem = BX_DOL_URL_ROOT . $sItem;
 
-            $aAssets[] = $oTemplate->addRevision($sItem);
+            $aAssets[] = $sItem;
         }
 }
 

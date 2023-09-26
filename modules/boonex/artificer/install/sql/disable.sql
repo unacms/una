@@ -18,5 +18,9 @@ DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 
+-- PRELOADER
+DELETE FROM `sys_preloader` WHERE `module` = @sName;
+
+
 -- INJECTIONS
 DELETE FROM `sys_injections` WHERE `name` LIKE 'bx_artificer_%';
