@@ -85,7 +85,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $aTmplVarsActions = array();
         if(!empty($mixedWidget['cnt_actions'])) {
             $aService = unserialize($mixedWidget['cnt_actions']);
-            $aActions = BxDolService::call($aService['module'], $aService['method'], array_merge(array($mixedWidget), $aService['params']), $aService['class']);
+            $aActions = bx_srv_ii($aService['module'], $aService['method'], array_merge(array($mixedWidget), $aService['params']), $aService['class']);
 
             foreach($aActions as $iIndex => $aAction) {
                 if(!empty($aAction['check_func'])) {

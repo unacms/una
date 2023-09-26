@@ -1866,6 +1866,7 @@
 	<string name="_adm_txt_modules_clear_template_cache"><![CDATA[Clear template cache:]]></string>
 	<string name="_adm_txt_modules_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_txt_modules_disable"><![CDATA[Disable]]></string>
+        <string name="_adm_txt_modules_discontinued"><![CDATA[The <a href="{0}">{1}</a> module is discontinued. We recommend you to uninstall it.]]></string>
 	<string name="_adm_txt_modules_enable"><![CDATA[Enable]]></string>
 	<string name="_adm_txt_modules_executable"><![CDATA[Executable]]></string>
 	<string name="_adm_txt_modules_execute_sql"><![CDATA[Changing database:]]></string>

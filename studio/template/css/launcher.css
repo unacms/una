@@ -397,15 +397,16 @@ div.bx-std-widget-caption a {
 
 #bx-informer{
     position: fixed;
+    z-index: 10;
     bottom: 0px;
     width: calc(100% - 2.5rem);
-    left: 0px
+    left: 1.25rem;
 }
 #bx-informer .bx-informer-msg{
-    background-color: rgba(255, 234, 193, 1);
+    background-color: rgba(255, 234, 193, 0.95);
     display: none;
-    z-index: 10;
 }
+#bx-informer #sys-module-discontinued.bx-informer-msg,
 #bx-informer #sys-account-need-to-change-password.bx-informer-msg{
-    display: block;
+    display: flex;
 }
