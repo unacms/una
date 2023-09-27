@@ -86,7 +86,7 @@ class BxDolSessionQuery extends BxDolDb
 
     function getLastActivityAccount($iUserId)
     {
-        $sSql = $this->prepare("SELECT `date` FROM `" . $this->sTable . "` WHERE `user_id`=? LIMIT 1", $iUserId);
+        $sSql = $this->prepare("SELECT `date` FROM `" . $this->sTable . "` WHERE `user_id`=? ORDER BY `date` DESC LIMIT 1", $iUserId);
         return $this->getOne($sSql);
     }
 
