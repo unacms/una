@@ -1,6 +1,7 @@
 <?php
 
 $aFilesDelete = array(
+    'plugins/guzzlehttp/promises/vendor-bin',
 
 //	'plugins/phpmailer/Exception.php',
 //	'plugins/phpmailer/LICENSE',
