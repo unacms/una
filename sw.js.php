@@ -70,6 +70,7 @@ let coreAssets = <?php echo json_encode($aAssets); ?>;
 
 // On install, cache core assets
 self.addEventListener('install', function (event) {
+    self.skipWaiting();
     // Cache core assets
     event.waitUntil((async () => { 
         caches.open('<?php echo $sCacheName; ?>').then(function (cache) {
