@@ -14,22 +14,22 @@ require_once('./inc/header.inc.php');
 $aContent = [
     'name' => '',
     'short_name' => '',
-    'description' => getParam('sys_pwa_description'),
+    'description' => getParam('sys_pwa_manifest_description'),
     'orientation' => 'portrait',
     'start_url' => parse_url(BX_DOL_URL_ROOT, PHP_URL_PATH),
     'display' => 'standalone',
-    'scope' => '/'
+    'scope' => '/',
+    'background_color' => getParam('sys_pwa_manifest_background_color'),
+    'theme_color' => getParam('sys_pwa_manifest_theme_color'),
+    'gcm_sender_id' => isLogged() ? '482941778795' : ''
 ];
 
-$aContent['name'] = ($sName = getParam('sys_pwa_name')) != '' ? $sName : parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST);
-$aContent['short_name'] = ($sShortName = getParam('sys_pwa_short_name')) != '' ? $sShortName : $aContent['name'];
-if(($sBackgroundColor = getParam('sys_pwa_background_color')) != '')
-    $aContent['background_color'] = $sBackgroundColor;
-if(($sThemeColor = getParam('sys_pwa_theme_color')) != '')
-    $aContent['theme_color'] = $sThemeColor;
+$aContent['name'] = ($sName = getParam('sys_pwa_manifest_name')) != '' ? $sName : parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST);
+$aContent['short_name'] = ($sShortName = getParam('sys_pwa_manifest_short_name')) != '' ? $sShortName : $aContent['name'];
 
-if(isLogged())
-    $aContent['gcm_sender_id'] = '482941778795';
+foreach($aContent as $sKey => $sValue)
+    if(empty($sValue))
+        unset($aContent[$sKey]);
 
 $aAdi = [];
 
