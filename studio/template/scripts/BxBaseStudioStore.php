@@ -1016,8 +1016,8 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'bx_if:show_download' => array(
                     'condition' => $bDownloadable && !$bQueued,
                     'content' => array(
-                        'caption' => _t($this->bAuthAccessUpdates ? '_adm_btn_download_submit' : '_adm_btn_install_submit'),
-                        'on_click' => $sJsObject . "." . ($this->bAuthAccessUpdates ? "getFile(" . $aItem['file_id'] . ", this)" : "getUpdateAndInstall('" . $aItem['name'] . "', this)")
+                        'caption' => _t('_adm_btn_install_submit'),
+                        'on_click' => $sJsObject . ".getUpdateAndInstall('" . $aItem['name'] . "', this)"
                     )
                 ),
                 'bx_if:show_queued_disabled' => array(
