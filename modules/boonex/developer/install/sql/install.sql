@@ -526,7 +526,10 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_nav_item', @sName, 'hidden_on_pt', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on_pt', '_bx_dev_nav_txt_items_hidden_on_pt', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'hidden_on_col', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on_col', '_bx_dev_nav_txt_items_hidden_on_col', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'hidden_on_cxt', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_hidden_on_cxt', '_bx_dev_nav_txt_items_hidden_on_cxt', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_nav_item', @sName, 'primary', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_primary', '_bx_dev_nav_txt_items_primary', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_developer_nav_item', @sName, 'collapsed', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_collapsed', '_bx_dev_nav_txt_items_collapsed', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_developer_nav_item', @sName, 'active_api', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_active_api', '_bx_dev_nav_txt_items_active_api', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'do_submit', '_bx_dev_nav_btn_items_add', '', 0, 'submit', '_bx_dev_nav_btn_sys_items_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'cancel', '_bx_dev_nav_btn_items_cancel', '', 0, 'button', '_bx_dev_nav_btn_sys_items_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -549,10 +552,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_add', 'hidden_on_pt', 2147483647, 1, 15),
 ('bx_developer_nav_item_add', 'hidden_on_col', 2147483647, 1, 16),
 ('bx_developer_nav_item_add', 'hidden_on_cxt', 2147483647, 1, 17),
-('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 18),
-('bx_developer_nav_item_add', 'controls', 2147483647, 1, 19),
-('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 20),
-('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 21),
+('bx_developer_nav_item_add', 'primary', 2147483647, 1, 18),
+('bx_developer_nav_item_add', 'collapsed', 2147483647, 1, 19),
+('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 20),
+('bx_developer_nav_item_add', 'active_api', 2147483647, 1, 21),
+('bx_developer_nav_item_add', 'controls', 2147483647, 1, 22),
+('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 23),
+('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 24),
 
 ('bx_developer_nav_item_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_nav_item_edit', 'module', 2147483647, 1, 2),
@@ -572,10 +578,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_edit', 'hidden_on_pt', 2147483647, 1, 16),
 ('bx_developer_nav_item_edit', 'hidden_on_col', 2147483647, 1, 17),
 ('bx_developer_nav_item_edit', 'hidden_on_cxt', 2147483647, 1, 18),
-('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 19),
-('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 20),
-('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 21),
-('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 22);
+('bx_developer_nav_item_edit', 'primary', 2147483647, 1, 19),
+('bx_developer_nav_item_edit', 'collapsed', 2147483647, 1, 20),
+('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 21),
+('bx_developer_nav_item_edit', 'active_api', 2147483647, 1, 22),
+('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 23),
+('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 24),
+('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 25);
 
 --
 -- Page Builder -> Page.
@@ -644,6 +653,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_bp_block', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_deletable', '_bx_dev_bp_txt_block_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_copyable', '_bx_dev_bp_txt_block_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'active', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_active', '_bx_dev_bp_txt_block_active', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_developer_bp_block', @sName, 'active_api', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_active_api', '_bx_dev_bp_txt_block_active_api', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'controls', '', 'do_submit,cancel,delete', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'do_submit', '_bx_dev_bp_btn_block_add', '', 0, 'submit', '_bx_dev_bp_btn_sys_block_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'cancel', '_bx_dev_bp_btn_block_cancel', '', 0, 'button', '_bx_dev_bp_btn_sys_block_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
@@ -666,10 +676,11 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_bp_block_edit', 'deletable', 2147483647, 1, 14),
 ('bx_developer_bp_block_edit', 'copyable', 2147483647, 1, 15),
 ('bx_developer_bp_block_edit', 'active', 2147483647, 1, 16),
-('bx_developer_bp_block_edit', 'controls', 2147483647, 1, 17),
-('bx_developer_bp_block_edit', 'do_submit', 2147483647, 1, 18),
-('bx_developer_bp_block_edit', 'cancel', 2147483647, 1, 19),
-('bx_developer_bp_block_edit', 'delete', 2147483647, 1, 20);
+('bx_developer_bp_block_edit', 'active_api', 2147483647, 1, 17),
+('bx_developer_bp_block_edit', 'controls', 2147483647, 1, 18),
+('bx_developer_bp_block_edit', 'do_submit', 2147483647, 1, 19),
+('bx_developer_bp_block_edit', 'cancel', 2147483647, 1, 20),
+('bx_developer_bp_block_edit', 'delete', 2147483647, 1, 21);
 
 --
 -- Polyglot -> Grid descriptors

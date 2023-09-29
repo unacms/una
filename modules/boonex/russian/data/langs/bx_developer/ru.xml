@@ -373,8 +373,14 @@
     <string name="_bx_dev_nav_txt_items_hidden_on_col_full"><![CDATA[Полная]]></string>
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_cxt"><![CDATA[Скрыть в контекстах]]></string>
     <string name="_bx_dev_nav_txt_items_hidden_on_cxt"><![CDATA[Скрыть в контекстах]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_primary"><![CDATA[Основной]]></string>
+    <string name="_bx_dev_nav_txt_items_primary"><![CDATA[Основной]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_collapsed"><![CDATA[Свёрнутый]]></string>
+    <string name="_bx_dev_nav_txt_items_collapsed"><![CDATA[Свёрнутый]]></string>
     <string name="_bx_dev_nav_txt_sys_items_copyable"><![CDATA[Можно копировать]]></string>
     <string name="_bx_dev_nav_txt_items_copyable"><![CDATA[Можно копировать]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_active_api"><![CDATA[Активный (для приложения)]]></string>
+    <string name="_bx_dev_nav_txt_items_active_api"><![CDATA[Активный (для приложения)]]></string>
     <string name="_bx_dev_nav_btn_sys_items_add"><![CDATA[Добавить]]></string>
     <string name="_bx_dev_nav_btn_items_add"><![CDATA[Добавить]]></string>
     <string name="_bx_dev_nav_btn_items_save"><![CDATA[Сохранить]]></string>
@@ -470,7 +476,9 @@
     <string name="_bx_dev_bp_txt_block_deletable"><![CDATA[Можно удалять]]></string>
     <string name="_bx_dev_bp_txt_sys_block_copyable"><![CDATA[Можно копировать]]></string>
     <string name="_bx_dev_bp_txt_block_copyable"><![CDATA[Можно копировать]]></string>
-    <string name="_bx_dev_bp_txt_sys_block_active"><![CDATA[Активно]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_active"><![CDATA[Активный]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_active_api"><![CDATA[Активный (для приложения)]]></string>
+    <string name="_bx_dev_bp_txt_block_active_api"><![CDATA[Активный (для приложения)]]></string>
     <string name="_bx_dev_bp_txt_block_active"><![CDATA[Активно]]></string>
     <string name="_bx_dev_bp_btn_sys_block_add"><![CDATA[Добавить]]></string>
     <string name="_bx_dev_bp_btn_block_add"><![CDATA[Добавить]]></string>
