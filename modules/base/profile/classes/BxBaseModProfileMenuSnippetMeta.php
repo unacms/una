@@ -67,7 +67,10 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemSubscribe($aItem)
     {
-        return $this->_getMenuItemConnection('sys_profiles_subscriptions', 'add', $aItem);
+        if($this->_sContext == 'recom_subscriptions')
+            return $this->_getMenuItemRecommendation('sys_subscriptions', 'add', $aItem);
+        else
+            return $this->_getMenuItemConnection('sys_profiles_subscriptions', 'add', $aItem);
     }
 
     protected function _getMenuItemUnsubscribe($aItem)
