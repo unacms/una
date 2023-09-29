@@ -65,6 +65,8 @@ class BxMarketModule extends BxBaseModTextModule
         $aResult['price_recurring'] = $aData['price_recurring'];
         $aResult['duration_recurring'] = $aData['duration_recurring'];
 
+        $aResult['cover_raw'] = $aData['cover_raw'];
+        $aResult['cover'] = $this->serviceGetCover($aData[$CNF['FIELD_COVER']]);  
         return $aResult;
     }
 
