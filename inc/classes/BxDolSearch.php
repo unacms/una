@@ -541,6 +541,8 @@ class BxDolSearchResult implements iBxDolReplaceable
         if(in_array($this->sUnitViewDefault, ['showcase', 'gallery']))
             $sUnit = 'card';
         
+        $aData = defined('BX_API_PAGE') ? [] : $this->decodeData($this->getSearchData());
+        
         $aParams =  [
             'per_page' => $this->aCurrent['paginate']['perPage'],
             'start' => $this->aCurrent['paginate']['start'],
@@ -555,7 +557,7 @@ class BxDolSearchResult implements iBxDolReplaceable
             'module' => $sModule,
             'unit' => 'general-' . $sUnitType . '-' . $sUnit,
             'request_url' => !empty($this->aCurrent['api_request_url']) ? $this->aCurrent['api_request_url'] : '/api.php?r=' . $sModule . '/browse/&params[]=',
-            'data' =>  defined('BX_API_PAGE') ? [] : $this->decodeData($this->getSearchData()),
+            'data' =>  $aData,
             'params' => $aParams
         ];
     }
