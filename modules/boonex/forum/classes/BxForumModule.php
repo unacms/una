@@ -579,6 +579,10 @@ class BxForumModule extends BxBaseModTextModule
      */
     public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $aParams = [])
     {
+        if (bx_is_api()){
+            return parent::serviceBrowseCategory($sUnitView, $bEmptyMessage, $bAjaxPaginate, []);
+        }
+        
         $sType = 'category';
         $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
 
