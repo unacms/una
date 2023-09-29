@@ -373,8 +373,14 @@
     <string name="_bx_dev_nav_txt_items_hidden_on_col_full"><![CDATA[Full]]></string>
     <string name="_bx_dev_nav_txt_sys_items_hidden_on_cxt"><![CDATA[Hidden in contexts]]></string>
     <string name="_bx_dev_nav_txt_items_hidden_on_cxt"><![CDATA[Hidden in contexts]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_primary"><![CDATA[Primary]]></string>
+    <string name="_bx_dev_nav_txt_items_primary"><![CDATA[Primary]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_collapsed"><![CDATA[Collapsed]]></string>
+    <string name="_bx_dev_nav_txt_items_collapsed"><![CDATA[Collapsed]]></string>
     <string name="_bx_dev_nav_txt_sys_items_copyable"><![CDATA[Copyable]]></string>
     <string name="_bx_dev_nav_txt_items_copyable"><![CDATA[Copyable]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_active_api"><![CDATA[Active (for App)]]></string>
+    <string name="_bx_dev_nav_txt_items_active_api"><![CDATA[Active (for App)]]></string>
     <string name="_bx_dev_nav_btn_sys_items_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_nav_btn_items_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_nav_btn_items_save"><![CDATA[Save]]></string>
@@ -472,6 +478,8 @@
     <string name="_bx_dev_bp_txt_block_copyable"><![CDATA[Copyable]]></string>
     <string name="_bx_dev_bp_txt_sys_block_active"><![CDATA[Active]]></string>
     <string name="_bx_dev_bp_txt_block_active"><![CDATA[Active]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_active_api"><![CDATA[Active (for App)]]></string>
+    <string name="_bx_dev_bp_txt_block_active_api"><![CDATA[Active (for App)]]></string>
     <string name="_bx_dev_bp_btn_sys_block_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_bp_btn_block_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_bp_btn_block_save"><![CDATA[Save]]></string>
