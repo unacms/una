@@ -213,12 +213,12 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return parent::displayResultBlock();
     }
 
-    function decodeData ($a)
+    function decodeDataAPI($a)
     {
         $bExtendedUnits = getParam('sys_api_extended_units') == 'on';
 
-        foreach ($a as $i => $r)
-            $a[$i] = $this->oModule->decodeDataApi($r, $bExtendedUnits);
+        foreach($a as $i => $r)
+            $a[$i] = $this->oModule->decodeDataAPI($r, ['extended' => $bExtendedUnits]);
 
         return $a;
     }

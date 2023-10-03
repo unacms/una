@@ -96,54 +96,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
     public function unitAPI($aData, $aParams = [])
     {
-        $CNF = &$this->_oConfig->CNF;
-
-        $iContentId = (int)$aData[$CNF['FIELD_ID']];
-
-        // get profile's url
-        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId));
-
-        $aResult = [
-            'id' => $iContentId,
-            'module' => $this->_oConfig->getName(),
-            'added' => $aData[$CNF['FIELD_ADDED']],
-            'title' => $aData[$CNF['FIELD_TITLE']],
-            'url' => bx_api_get_relative_url($sUrl),
-            'image' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_PICTURE']]),
-            'cover' => bx_api_get_image($CNF['OBJECT_STORAGE'], $aData[$CNF['FIELD_COVER']])
-        ];
-
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-        $bPrivacy = $oPrivacy !== false;
-    
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->getModule()->_aModule['name']);
-        
-        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
-        if ($oConnection){
-            $aResult['friends_count'] = $oConnection->getConnectedContentCount($oProfile->id(), true);
-            if(isLogged()){
-                $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($oProfile->id(), bx_get_logged_profile_id(), true);
-            }
-        }
-        
-        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        if ($oConnection){
-            $aResult['followers_count'] = $oConnection->getConnectedInitiatorsCount($oProfile->id());
-        }
-
-        $sKey = 'OBJECT_MENU_SNIPPET_META';
-        if(!empty($CNF[$sKey]) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF[$sKey], $this)) !== false) {
-            $bPublic = !$bPrivacy || $oPrivacy->check($iContentId) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
-            $oMetaMenu->setContentId($iContentId);
-            $oMetaMenu->setContentPublic($bPublic);
-            if(isset($aParams['context']))
-                $oMetaMenu->setContext($aParams['context']);
-
-            $aResult['meta'] = $oMetaMenu->getCodeAPI();
-        }
-
-        return $aResult;
+        return $this->getModule()->decodeDataAPI($aData, $aParams);
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = [])

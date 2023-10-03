@@ -135,15 +135,15 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         return $aContentInfo['date_start'] && $aContentInfo['date_end'];
     }
     
-    public function decodeDataApi ($aData, $bExtended = false)
+    public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
-        
-        $aResult = parent::decodeDataApi($aData, $bExtended);
-        
-        $aResult['date_start'] = $aData[$CNF['FIELD_DATE_START']];
-        $aResult['date_end'] = $aData[$CNF['FIELD_DATE_END']];
 
+        $aResult = parent::decodeDataAPI($aData, $aParams);
+        $aResult = array_merge($aResult, [
+            'date_start' => $aData[$CNF['FIELD_DATE_START']],
+            'date_end' => $aData[$CNF['FIELD_DATE_END']]
+        ]);
         return $aResult;
     }
 

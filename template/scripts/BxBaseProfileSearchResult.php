@@ -233,7 +233,7 @@ class BxBaseProfileSearchResult extends BxTemplSearchResult
         }
     }
 
-    function decodeData ($a)
+    function decodeDataAPI($a)
     {
         $aResult = [];
 

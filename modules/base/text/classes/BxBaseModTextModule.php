@@ -880,7 +880,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $mResult;
     }
     
-    public function decodeDataApi ($aData, $bExtended = false)
+    public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -903,7 +903,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             'summary_plain' => $sSummary
         ];
 
-        if($bExtended)
+        if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
 
         /**

@@ -114,11 +114,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $sResult;
     }
     
-    public function decodeDataApi ($aData, $bExtended = false)
+    public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
         
-        $aResult = parent::decodeDataApi($aData, $bExtended);
+        $aResult = parent::decodeDataAPI($aData, $aParams);
         
         $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
         if ($oConnection){

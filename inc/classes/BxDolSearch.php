@@ -119,7 +119,7 @@ class BxDolSearch extends BxDol
             if ($this->_bDataProcessing) {
                 if($this->_bIsApi) {
                     if($bSingle)
-                        $sCode = $oEx->decodeData($oEx->getSearchData());
+                        $sCode = $oEx->decodeDataAPI($oEx->getSearchData());
                     else
                         $sCode[$sKey] = $oEx->getSearchQuery(['for_union' => true]);
                 }
@@ -541,7 +541,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         if(in_array($this->sUnitViewDefault, ['showcase', 'gallery']))
             $sUnit = 'card';
         
-        $aData = defined('BX_API_PAGE') ? [] : $this->decodeData($this->getSearchData());
+        $aData = defined('BX_API_PAGE') ? [] : $this->decodeDataAPI($this->getSearchData());
         
         $aParams =  [
             'per_page' => $this->aCurrent['paginate']['perPage'],
@@ -562,7 +562,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         ];
     }
 
-    function decodeData ($a)
+    function decodeDataAPI ($a)
     {
         return $a;
     }

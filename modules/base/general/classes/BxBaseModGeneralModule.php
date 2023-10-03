@@ -501,7 +501,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $aData = $this->serviceGetInfo($iContentId, false);
         if($aData)
-            $aData = $this->decodeDataApi($aData, $bExtendedUnits);
+            $aData = $this->decodeDataAPI($aData, ['extended' => $bExtendedUnits]);
 
         return $aData;
     }
@@ -3340,7 +3340,7 @@ class BxBaseModGeneralModule extends BxDolModule
         return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_FAVORITES_LIST'] . '&profile_id=' . $iProfileId . '&list_id=' . $iListId));
     }
 
-    public function decodeDataApi ($aData, $bExtended = false)
+    public function decodeDataAPI($aData, $aParams = [])
     {
         return $aData;
     }

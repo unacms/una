@@ -2065,15 +2065,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return !empty($sAction) && !empty($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
     
-    public function decodeDataApi ($aData, $bExtended = false)
+    public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
 
+        $sModule = $this->getName();
         $iId = (int)$aData[$CNF['FIELD_ID']];
 
         $aResult = [
             'id' => $iId, 
-            'module' => $this->getName(),
+            'module' => $sModule,
             'added' => $aData[$CNF['FIELD_ADDED']],
             'author' => $aData[$CNF['FIELD_AUTHOR']],
             'title' => $aData[$CNF['FIELD_TITLE']],
@@ -2082,31 +2083,33 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'image' => $this->serviceGetThumb($iId),
             'cover' => $this->serviceGetCover($iId),
         ];
-        
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->_aModule['name']);
-        
-        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
-        if ($oConnection){
-            $aResult['friends_count'] = $oConnection->getConnectedContentCount($oProfile->id(), true);
-            if(isLogged()){
-                $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($oProfile->id(), bx_get_logged_profile_id(), true);
-            }
-        }
-        
-        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        if ($oConnection){
-            $aResult['followers_count'] = $oConnection->getConnectedInitiatorsCount($oProfile->id());
-        }
 
-        if($bExtended)
+        if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
 
-        if(!empty($CNF['OBJECT_MENU_SNIPPET_META']) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->_oTemplate)) !== false) {
+        if(($oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $sModule)) !== false) {
+            $iProfileId = $oProfile->id();
+
+            if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false) {
+                $aResult['friends_count'] = $oConnection->getConnectedContentCount($iProfileId, true);
+                if(isLogged())
+                    $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($iProfileId, bx_get_logged_profile_id(), true);
+            }
+
+            if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')) !== false)
+                $aResult['followers_count'] = $oConnection->getConnectedInitiatorsCount($iProfileId);
+        }
+
+        $sKey = 'OBJECT_MENU_SNIPPET_META';
+        if(!empty($CNF[$sKey]) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF[$sKey], $this->_oTemplate)) !== false) {
             $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
             $bPublic = !$oPrivacy || $oPrivacy->check($iId) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
             $oMetaMenu->setContentId($iId);
             $oMetaMenu->setContentPublic($bPublic);
+            if(isset($aParams['context']))
+                $oMetaMenu->setContext($aParams['context']);
+
             $aResult['meta'] = $oMetaMenu->getCodeAPI();
         }
 

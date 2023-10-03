@@ -90,7 +90,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
         return array();
     }
 
-    function decodeData ($a)
+    function decodeDataAPI ($a)
     {
         $oContentInfo = $this->getContentInfoObject();
 

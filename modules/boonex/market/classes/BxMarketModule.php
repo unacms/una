@@ -56,17 +56,18 @@ class BxMarketModule extends BxBaseModTextModule
         return $this->$sMethodPerform($aContentInfo);
     }
     
-    public function decodeDataApi ($aData, $bExtended = false)
+    public function decodeDataAPI($aData, $aParams = [])
     {
         $CNF = $this->_oConfig->CNF;
-        
-        $aResult = parent::decodeDataApi($aData, $bExtended);
-        $aResult['price_single'] = $aData['price_single'];
-        $aResult['price_recurring'] = $aData['price_recurring'];
-        $aResult['duration_recurring'] = $aData['duration_recurring'];
 
-        $aResult['cover_raw'] = $aData['cover_raw'];
-        $aResult['cover'] = $this->serviceGetCover($aData[$CNF['FIELD_COVER']]);  
+        $aResult = parent::decodeDataAPI($aData, $aParams);
+        $aResult = array_merge($aResult, [
+            'price_single' => $aData[$CNF['FIELD_PRICE_SINGLE']],
+            'price_recurring' => $aData[$CNF['FIELD_PRICE_RECURRING']],
+            'duration_recurring' => $aData[$CNF['FIELD_DURATION_RECURRING']],
+            'cover_raw' => $aData[$CNF['FIELD_COVER_RAW']],
+            'cover' => $this->serviceGetCover($aData[$CNF['FIELD_COVER']])
+        ]);
         return $aResult;
     }
 
