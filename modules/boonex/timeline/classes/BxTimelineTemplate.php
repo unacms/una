@@ -838,6 +838,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $mixedEvents = $bReturnArray ? array() : '';
         foreach($aEvents as $aEvent) {
             $iEvent = (int)$aEvent['id'];
+            $aEvent['index'] = $iEventIndex + 1;
 
             $sEvent = $this->getPost($aEvent, $aParams);
             if(empty($sEvent))
@@ -1884,6 +1885,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $aTmplVarsMenuItemMeta
             ),
             'comments' => '',
+            'line_number' => $aEvent['index']
         );
 
         $iPreloadComments = $this->_oConfig->getPreloadComments();
