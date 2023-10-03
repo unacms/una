@@ -458,6 +458,8 @@ class BxBaseServiceAccount extends BxDol
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
         }
+        
+        $bApi = bx_is_api();
 
         if (bx_get('key') !== false)
             return $this->resetPassword();
@@ -534,10 +536,25 @@ class BxBaseServiceAccount extends BxDol
 
                 $sForm = '';
             }
+            
+            if($bApi) {
+                return [
+                    bx_api_get_msg(strip_tags($sResultMsg)),
+                ];
+            }
         } 
         else {
             $sResultMsg = _t($sCaptionKey);
             $sForm = $oForm->getCode();
+            
+            if($bApi) {
+                return [
+                    bx_api_get_block('form', $oForm->getCodeAPI(), [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/forgot_password/TemplServiceAccount', 'immutable' => true]
+                        ]
+                ])];
+            }
         }
 
         return '<div class="bx-def-padding-sec-bottom">' . $sResultMsg . '</div>' . $sForm . ($bShowErrorEmptyBoth ? '<div class="bx-form-warn">' . _t("_sys_form_forgot_password_phone_and_email_empty_error") . '</div>' : '');
