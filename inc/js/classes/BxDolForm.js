@@ -58,7 +58,10 @@ BxDolForm.prototype.init = function()
         });
     }
 
-    document.getElementById(sForm).addEventListener('input', () => {
+    document.getElementById(sForm).addEventListener('input', (event) => {
+        if(!event?.inputType || !event.inputType.length)
+            return;
+
         $this.setChanged();
     });
 
