@@ -346,6 +346,8 @@ class BxBaseCmts extends BxDolCmts
         BxDolTemplate::getInstance()->addInjection ('injection_footer', 'text', $this->_oTemplate->parseHtmlByName('comments_photoswipe.html', []));
 
         return $this->_oTemplate->parseHtmlByName('comment_block.html', array(
+            'style_prefix' => $this->_sStylePrefix,
+            'js_object' => $this->_sJsObjName,
             'system' => $this->_sSystem,
             'id' => $this->getId(),
             'comment' => $sComment,
