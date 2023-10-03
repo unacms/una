@@ -57,16 +57,3 @@
 .bg-col-gray { background-color: #616161; }
 .col-gray-dark { color: #333333; } /* 26.13.13: prev val #575757; */
 .bg-col-gray-dark { background-color: #575757; }
-
-/* icons */
-.sys-icon-emoji{
-    font-weight: normal !important;
-}
-
-.sys-icon-image,
-.sys-icon-svg{
-    width: 1.5rem;
-    height: 1.5rem;
-    background-size: contain;
-    display: inline-block;
-}

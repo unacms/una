@@ -66,6 +66,9 @@ class BxBaseMenuProfileFollowings extends BxTemplMenu
         $iProfile = bx_get_logged_profile_id();
 
         foreach($aMenuItems as $iIndex => $aItem) {
+            if(bx_is_srv($aItem['module'], 'module_icon'))
+                $aMenuItems[$iIndex]['icon'] = bx_srv($aItem['module'], 'module_icon');
+
             if(empty($aItem['onclick']))
                 $aMenuItems[$iIndex]['onclick'] = "javascript:bx_menu_toggle(this, '" . $this->_sObject . "', '" . $aItem['name'] . "')";
 

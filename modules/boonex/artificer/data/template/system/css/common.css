@@ -26,6 +26,20 @@ import url(../../../../../../../template/css/common.css);
     font-weight: normal;
 }
 
+.sys-icon-emoji {
+    font-weight: normal !important;
+}
+
+.sys-icon-image,
+.sys-icon-svg {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 /*--- Application ---*/
 .bx-main.bx-pt-application .bx-menu-toolbar-padding {
     padding-top: 0;

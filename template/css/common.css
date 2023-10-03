@@ -157,6 +157,20 @@ blockquote {
     height:1.5rem;
 }
 
+.sys-icon-emoji{
+    font-weight: normal !important;
+}
+
+.sys-icon-image,
+.sys-icon-svg{
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .bx-search-site {
     width:20rem;
     margin-left:auto;
