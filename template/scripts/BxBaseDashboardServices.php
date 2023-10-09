@@ -68,12 +68,12 @@ class BxBaseDashboardServices extends BxDol
         $iProfileId = (int)bx_get_logged_profile_id();
         $iV1 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($iProfileId, true);
         $iV2 =$bEmpty ? 0 :  BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($iProfileId, true, $iStartDate);
-        $aData['friends'] = ['title' => 'Friends', 'key' => 'friends', 'type' => 'growth', 'url' =>'/friends', 'current' => $iV1, 'prev' => $iV2, 'growth' => $iV2 > 0 ? ($iV1 - $iV2)/$iV2*100 : 0];
+        $aData['friends'] = ['title' => 'Friends', 'key' => 'friends', 'type' => 'growth', 'url' =>'/friends', 'current' => $iV1, 'prev' => $iV2, 'growth' => $iV2 > 0 ? round(($iV1 - $iV2)/$iV2*100, 2) : 0];
        // echo $iV1.'----'.$iV2;
         
         $iV1 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($iProfileId, false);
         $iV2 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($iProfileId, false, $iStartDate);
-        $aData['followers'] = ['title' =>'Followers', 'key' => 'followers', 'type' => 'growth', 'url' =>'/followers', 'current' => $iV1, 'prev' => $iV2, 'growth' =>  $iV2 > 0 ? ($iV1 - $iV2)/$iV2*100 : 0];
+        $aData['followers'] = ['title' =>'Followers', 'key' => 'followers', 'type' => 'growth', 'url' =>'/followers', 'current' => $iV1, 'prev' => $iV2, 'growth' =>  $iV2 > 0 ? round(($iV1 - $iV2)/$iV2*100 ,2) : 0];
         
         $aModules = bx_srv('system', 'get_modules_by_type', ['content']);
         foreach($aModules as $aModule) {
