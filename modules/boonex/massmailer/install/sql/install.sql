@@ -103,8 +103,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 (@sName, @sName, 'email', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_test_email', '_bx_massmailer_form_campaign_input_email', '', 1, 0, 0, 2, '', '', '', 'Email', '', '_sys_form_account_input_email_error', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'campaign_info', '_bx_massmailer_form_campaign_input_from_name_info_value', '', 0, 'value', '_bx_massmailer_form_campaign_input_sys_campaign_info', '', '', 0, 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'cancel', '_bx_massmailer_form_entry_input_cancel', '', 0, 'button', '_bx_dev_bp_btn_sys_block_cancel', '', '', 0, 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', 'Avail', '', '', '', '', 0, 0),
-(@sName, @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-(@sName, @sName, 'controls2', '', 'do_send,cancel', 0, 'input_set', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+(@sName, @sName, 'controls', '', 'do_send,cancel', 0, 'input_set', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_massmailer_campaign_add', 'title', 2147483647, 1, 1),
@@ -115,9 +114,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_massmailer_campaign_add', 'body', 2147483647, 1, 6),
 ('bx_massmailer_campaign_add', 'is_one_per_account', 2147483647, 1, 7),
 ('bx_massmailer_campaign_add', 'is_track_links', 2147483647, 1, 8),
-('bx_massmailer_campaign_add', 'controls', 2147483647, 1, 9),
-('bx_massmailer_campaign_add', 'do_submit', 2147483647, 1, 10),
-('bx_massmailer_campaign_add', 'cancel', 2147483647, 1, 10),
+('bx_massmailer_campaign_add', 'do_submit', 2147483647, 1, 9),
+
 ('bx_massmailer_campaign_edit', 'title', 2147483647, 1, 1),
 ('bx_massmailer_campaign_edit', 'segments', 2147483647, 1, 2),
 ('bx_massmailer_campaign_edit', 'subject', 2147483647, 1, 3),
@@ -126,14 +124,14 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_massmailer_campaign_edit', 'body', 2147483647, 1, 6),
 ('bx_massmailer_campaign_edit', 'is_one_per_account', 2147483647, 1, 7),
 ('bx_massmailer_campaign_edit', 'is_track_links', 2147483647, 1, 8),
-('bx_massmailer_campaign_edit', 'controls', 2147483647, 1, 9),
-('bx_massmailer_campaign_edit', 'do_submit', 2147483647, 1, 10),
-('bx_massmailer_campaign_edit', 'cancel', 2147483647, 1, 11),
+('bx_massmailer_campaign_edit', 'do_submit', 2147483647, 1, 9),
+
 ('bx_massmailer_campaign_send_test', 'email', 2147483647, 1, 1),
-('bx_massmailer_campaign_send_test', 'controls2', 2147483647, 1, 2),
+('bx_massmailer_campaign_send_test', 'controls', 2147483647, 1, 2),
 ('bx_massmailer_campaign_send_test', 'do_send', 2147483647, 1, 3),
 ('bx_massmailer_campaign_send_test', 'cancel', 2147483647, 1, 4),
+
 ('bx_massmailer_campaign_send_all', 'campaign_info', 2147483647, 1, 1),
-('bx_massmailer_campaign_send_all', 'controls2', 2147483647, 1, 2),
+('bx_massmailer_campaign_send_all', 'controls', 2147483647, 1, 2),
 ('bx_massmailer_campaign_send_all', 'do_send', 2147483647, 1, 3),
 ('bx_massmailer_campaign_send_all', 'cancel', 2147483647, 1, 4);
