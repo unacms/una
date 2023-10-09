@@ -3043,8 +3043,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         switch($sType) {
             case BX_TIMELINE_PARSE_TYPE_POST:
-                if(!empty($aEvent['content']))
-                    $aResult['content'] = array_merge($aResult['content'], unserialize($aEvent['content']));
+                if(!empty($aEvent['content'])) {
+                    $aContent = @unserialize($aEvent['content']);
+                    if(!empty($aContent) && is_array($aContent))
+                        $aResult['content'] = array_merge($aResult['content'], $aContent);
+                }
 
                 $aResult['content']['links'] = $oModule->getEventLinks($aEvent['id']);
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
@@ -3054,9 +3057,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             case BX_TIMELINE_PARSE_TYPE_REPOST:
                 if(empty($aEvent['content']))
-                    return array();
+                    return [];
 
                 $aContent = unserialize($aEvent['content']);
+                if(empty($aContent) || !is_array($aContent))
+                    return [];
 
                 if(!$this->_oConfig->isSystem($aContent['type'] , $aContent['action'])) {
                     $aEventReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
