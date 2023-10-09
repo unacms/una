@@ -16,6 +16,8 @@ class BxTimelineMenuView extends BxTemplMenuCustom
 {
     protected $_oModule;
 
+    protected $_bShowDivider;
+
     public function __construct($aObject, $oTemplate = false)
     {
         $this->_oModule = BxDolModule::getInstance('bx_timeline');

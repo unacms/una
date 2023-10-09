@@ -9,10 +9,12 @@
 
 class BxDolLogsQuery extends BxDolDb
 {
+    protected $_aObject;
 
-    public function __construct($aObject = array())
+    public function __construct($aObject = [])
     {
         parent::__construct();
+
         $this->_aObject = $aObject;
     }
 

@@ -13,6 +13,7 @@
  */
 class BxBaseMenuCreatePost extends BxTemplMenuCustom
 {
+    protected $_bShowDivider;
     protected $_sJsObject;
 
     protected $_mixedContextId;

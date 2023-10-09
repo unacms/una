@@ -13,8 +13,6 @@ bx_import('BxDolInformer');
 
 class BxBaseModTextConfig extends BxBaseModGeneralConfig
 {
-    protected $_aHtmlIds;
-
     /**
      * Determine whether Timeline post will use common content (header image + text)
      * or content received from attachments (header image + text + images + videos + polls).

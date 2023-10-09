@@ -108,9 +108,12 @@ abstract class BxDolUploader extends BxDolFactory
 
     protected $_sUniqId; ///< uniq id used to generate UploaderJsInstance, ResultContainerId, UploadInProgressContainerId and PopupContainerId
     protected $_sUploaderJsInstance; ///< uplooader js object instance name
-    protected $_sResultContainerId; ///< uploading/uploaded objects container id
     protected $_sUploadInProgressContainerId; ///< container id where upload in progress element resides
     protected $_sPopupContainerId; ///< popup container id
+    
+    protected $_sResultContainerId; ///< uploading/uploaded objects container id
+    protected $_sErrorsContainerId;
+    protected $_sFormContainerId;
 
     protected $_sUploadErrorMessages; ///< upload error message
 

@@ -13,6 +13,8 @@ class BxBaseSearchResult extends BxDolSearchResult
 {
     public $isError;
 
+    protected $oFunctions;
+
     protected $sBrowseUrl; ///< currect browse url, used for paginate and other links in browsing
 
     protected $sUnitTemplate = 'unit.html'; ///< common template to try to use for displaying one item

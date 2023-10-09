@@ -13,8 +13,10 @@
  */
 class BxForumMenuCategories extends BxTemplMenu
 {
-    protected $_iMenuItemsMin;
+    protected $_sModule;
     protected $_oModule;
+
+    protected $_iMenuItemsMin;
 
     public function __construct ($aObject, $oTemplate)
     {

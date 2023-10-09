@@ -14,9 +14,10 @@
  */
 class BxBaseModGeneralMenuManageTools extends BxTemplMenu
 {
-	protected $_oModule;
-	protected $_iContentId;
-	protected $_aContentInfo;
+    protected $MODULE;
+    protected $_oModule;
+    protected $_iContentId;
+    protected $_aContentInfo;
 
     public function __construct($aObject, $oTemplate = false)
     {

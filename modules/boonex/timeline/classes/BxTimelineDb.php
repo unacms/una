@@ -1396,6 +1396,24 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'name' => $sName
         ]);
     }
+    
+    
+    /**
+     * TEMPORARY: to find the source of Duplicates.
+     */
+    public function insertEvent($aParamsSet)
+    {
+        if(!empty($aParamsSet['date']) && $aParamsSet['date'] < (time() - 86400)) {
+            $sTracks = '';
+            $aTracks = debug_backtrace();
+            foreach($aTracks as $aTrack)
+                $sTracks .= "{$aTrack['file']} ({$aTrack['line']})\n";
+
+            bx_log('bx_timeline_custom', $sTracks);
+        }
+            
+        return parent::insertEvent($aParamsSet);
+    }
 }
 
 /** @} */

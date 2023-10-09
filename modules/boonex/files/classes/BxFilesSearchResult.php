@@ -16,6 +16,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
     protected $sSortingParamName = 'sorting';
     protected $sCurrentFolderParamName = 'folder';
     protected $sCurrentView;
+    protected $aSortingOptions;
     protected $bFileManagerMode = false;
     protected $iFileManagerUploadTo = 0;
     protected $sMode = '';

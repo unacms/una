@@ -12,12 +12,11 @@
  * Create/Edit list entry form
  */
 class BxTasksFormListEntry extends BxTemplFormView
-{	
+{
     public function __construct($aInfo, $oTemplate = false)
     {
-        $this->MODULE = 'bx_tasks';
         parent::__construct($aInfo, $oTemplate);
-	}
+    }
 }
 
 /** @} */

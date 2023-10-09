@@ -11,26 +11,28 @@ define('BX_DOL_MANAGE_TOOLS_ADMINISTRATION', 'administration');
 
 class BxDolAuditGrid extends BxTemplGrid
 {
+    protected $oDb;
+
     protected $_sParamsDivider;
-    
+
     protected $_sFilter1Name;
-	protected $_sFilter1Value;
-	protected $_aFilter1Values;
-    
+    protected $_sFilter1Value;
+    protected $_aFilter1Values;
+
     protected $_sFilterProfileName;
-	protected $_sFilterProfileValue;
-	protected $_aFilterProfileValues;
-    
+    protected $_sFilterProfileValue;
+    protected $_aFilterProfileValues;
+
     protected $_sFilterActionName;
-	protected $_sFilterActionValue;
-	protected $_aFilterActionValues;
-    
+    protected $_sFilterActionValue;
+    protected $_aFilterActionValues;
+
     protected $_sFilterFromDateName;
-	protected $_sFilterFromDateValue;
-    
+    protected $_sFilterFromDateValue;
+
     protected $_sFilterToDateName;
-	protected $_sFilterToDateValue;
-    
+    protected $_sFilterToDateValue;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         $this->_sFilter1Name = 'module';

@@ -13,7 +13,9 @@ bx_import('BxDolModuleDb');
 
 class BxAttendantDb extends BxBaseModGeneralDb
 {
-    function __construct(&$oConfig)
+    protected $_sTableEntries;
+
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
 

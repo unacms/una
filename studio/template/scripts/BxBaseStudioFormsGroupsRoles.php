@@ -18,9 +18,12 @@ define('BX_DOL_MOD_GROUPS_ROLE_MODERATOR', 2);
 
 class BxBaseStudioFormsGroupsRoles extends BxDolStudioFormsGroupsRoles
 {
+    protected $sUrlPage;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
+
         $this->sUrlPage = BX_DOL_URL_STUDIO . 'builder_forms.php?page=groups_roles';
     }
     

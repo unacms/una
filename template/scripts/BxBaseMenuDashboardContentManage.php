@@ -14,6 +14,7 @@
 class BxBaseMenuDashboardContentManage extends BxTemplMenuCustom
 {
     protected $_aModulesList;
+    protected $_bShowDivider;
 
     public function __construct ($aObject, $oTemplate)
     {

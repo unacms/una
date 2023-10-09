@@ -39,8 +39,11 @@ class BxBaseModPaymentProvider extends BxDol
      * to internal one. 
      */
     protected $_aSbsStatuses;
+    
+    protected $_aIncludeJs;
+    protected $_aIncludeCss;
 
-    function __construct($aConfig)
+    public function __construct($aConfig)
     {
         parent::__construct();
 

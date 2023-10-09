@@ -70,6 +70,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sTranscoderObjectView;
     protected $_aPhotoUploaders;
     protected $_aVideoUploaders;
+    protected $_aFilesUploaders;
     protected $_aItemToUploader;
 
     protected $_sMenuItemManage;
@@ -292,7 +293,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'add-file-html5' => $this->CNF['OBJECT_UPLOADER_FILE_HTML5'],
         );
 
-        $this->_bJsMode = false;
         $this->_aJsClasses = array(
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',

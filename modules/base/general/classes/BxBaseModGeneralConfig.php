@@ -17,6 +17,7 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     protected $_aPrefixes;
     protected $_aJsClasses;
     protected $_aJsObjects;
+    protected $_aHtmlIds;
     protected $_aGridObjects;
 
     /**

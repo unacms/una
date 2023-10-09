@@ -23,6 +23,7 @@ class BxBaseModTemplateConfig extends BxBaseModGeneralConfig
     protected $_fLogoAspectRatio;
     protected $_fLogoAspectRatioDefault;
     
+    protected $_iMark;
     protected $_iMarkWidth;
     protected $_iMarkHeight;
     protected $_fMarkAspectRatio;

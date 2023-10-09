@@ -21,6 +21,10 @@ class BxBasePage extends BxDolPage
     protected $_oPageCacheObject = null;
     protected $_oBlockCacheObject = null;
     
+    protected $_sJsClassName = '';
+    protected $_sJsObjectName = '';
+    protected $_aHtmlIds = [];
+
     protected $_bStickyColumns = false;
 
     protected $_bSubPage = false;
@@ -34,7 +38,7 @@ class BxBasePage extends BxDolPage
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
-		$this->_sStorage = 'sys_images';
+        $this->_sStorage = 'sys_images';
         
         $this->_sJsClassName = 'BxDolPage';
         $this->_sJsObjectName = 'oBxDolPage';

@@ -13,6 +13,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 {
     protected $_sTableEvt2Usr;
     protected $_sTableQueue;
+    protected $_sTableRead;
 
     /*
      * Constructor.

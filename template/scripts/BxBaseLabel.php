@@ -18,6 +18,7 @@ class BxBaseLabel extends BxDolLabel
 
     protected $_sJsObjClass;
     protected $_sJsObjName;
+    protected $_aHtmlIds;
 
     public function __construct($oTemplate = false)
     {

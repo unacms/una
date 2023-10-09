@@ -14,9 +14,6 @@ define('STRP_MODE_TEST', 2);
 
 class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
 {
-    protected $_aIncludeJs;
-    protected $_aIncludeCss;
-
     protected $_sFormDetails;
     protected $_sFormDisplayDetailsEdit;
 

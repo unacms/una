@@ -12,6 +12,7 @@ class BxDolStudioFormsLabels extends BxTemplStudioGrid
     protected $_oLabel;
 
     protected $_iParent;
+    protected $_aParent;
 
     public function __construct ($aOptions, $oTemplate = false)
     {

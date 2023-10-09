@@ -29,28 +29,38 @@ bx_import('Config', $GLOBALS['bx_profiler_module']);
 
 class BxProfiler extends BxDol
 {
-    protected $oConfig, $oTemplate;
+    protected $oConfig, $oTemplate, $oTemplateAdmin;
 
-    protected $aConf = array ();
+    protected $aConf = [];
 
     protected $_iTimeStart = 0;
 
-    protected $_aQueries = array();
+    protected $_aQueries = [];
     protected $_sQueryIndex = 0;
 
-    protected $_aModules = array();
-    protected $_aModulesNames = array();
+    protected $_aModules = [];
+    protected $_aModulesNames = [];
     protected $_aModulesLevel = 0;
 
-    protected $_aAlerts = array();
+    protected $_aAlerts = [];
     protected $_iAlertsLevel = 0;
 
-    protected $_aInjections = array();
+    protected $_aInjections = [];
     protected $_sInjectionIndex = 0;
 
     protected $_sLogDateFormat = "Y-m-d H:i:s";
     protected $_sLogMaxArgLength = 64;
     protected $_sLogFilename = 64;
+
+    protected $_aTemplates = [];
+    protected $_aTemplateIndexes = [];
+
+    protected $_aPages = [];
+    protected $_sPageIndex = '';
+    protected $_sPageBlockIndex = 0;
+    protected $_aPagesBlocks = [];
+    
+    protected $_aMenus = [];   
 
     function __construct($iTimeStart)
     {

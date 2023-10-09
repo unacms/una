@@ -16,7 +16,6 @@ class BxMassMailerPageEntry extends BxTemplPage
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_massmailer';
         parent::__construct($aObject, $oTemplate);
     }
 }

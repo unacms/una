@@ -125,7 +125,6 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'orders' => 10,
             'history' => 10
         );
-        $this->_aHandlers = array();
 
         $this->_aJsClasses = array(
             'cart' => 'BxPaymentCart',

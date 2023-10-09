@@ -17,6 +17,8 @@ class BxBaseModConnectConfig extends BxBaseModGeneralConfig
     public $isAlwaysConfirmEmail = false;
     public $isAlwaysAutoApprove = false;
 
+    public $bAutoFriends = false;
+
     public $sSessionKey;
     public $sSessionUid;
     public $sSessionProfile;

@@ -19,7 +19,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     protected $_sModule;
     protected $_oModule;
 
-    protected $_oMenuAction;
+    protected $_oMenuActions;
     protected $_oMenuActionsMore;
     protected $_oMenuSocialSharing;
 

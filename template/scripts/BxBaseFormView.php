@@ -1921,7 +1921,7 @@ BLAH;
                         'condition' => true,
                         'content' => [
                             'opt_title' => bx_process_output($sOptTitle),
-                            'opt_value' => bx_html_attribute($sOptValue),
+                            'opt_value' => !empty($sOptValue) ? bx_html_attribute($sOptValue) : '',
                             'opt_attrs' => $sOptAttrs,
                             'bx_if:show_selected' => [
                                 'condition' => $this->$sIsSelectedFunc($sOptValue, $mixedCurrentVal),

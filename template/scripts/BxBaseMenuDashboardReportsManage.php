@@ -13,6 +13,8 @@
  */
 class BxBaseMenuDashboardReportsManage extends BxTemplMenuCustom
 {
+    protected $_bShowDivider;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject);

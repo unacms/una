@@ -12,6 +12,7 @@
  */
 class BxDolBadgesQuery extends BxDolDb
 {
+    protected $_sTableBadges;
     protected $_sTableCategories;
 
     public function __construct()

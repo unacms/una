@@ -14,6 +14,7 @@ define('BX_SYS_PER_PAGE_BROWSE_SHOWCASE', 32);
 class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 {
     protected $oModule;
+    protected $sFilterName;
     protected $bShowcaseView = false;
     protected $aUnitViews = array();
     protected $sUnitViewDefault = 'gallery';

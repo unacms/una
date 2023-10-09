@@ -17,6 +17,7 @@ class BxBasePrivacy extends BxDolPrivacy
 
     protected $_sJsObjClass;
     protected $_sJsObjName;
+    protected $_aHtmlIds;
 
     public function __construct ($aOptions, $oTemplate)
     {

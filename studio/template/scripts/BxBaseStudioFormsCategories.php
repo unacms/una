@@ -36,7 +36,9 @@ class BxStudioFormsCategoriesCheckerHelper extends BxDolFormCheckerHelper
 }
 
 class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
-{    
+{
+    protected $sUrlPage;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);

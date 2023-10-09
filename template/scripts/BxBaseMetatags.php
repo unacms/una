@@ -15,6 +15,7 @@
 class BxBaseMetatags extends BxDolMetatags
 {
     protected $_oTemplate;
+    protected $_sBrowseUrl;
 
     protected $_iKeywordsCloudFontSizeMin = 14;
     protected $_iKeywordsCloudFontSizeMax = 32;

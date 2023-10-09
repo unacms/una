@@ -11,8 +11,9 @@
 class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
 {
     protected $sUrlViewFields;
+    protected $sUrlViewSortableFields;
 
-    function __construct($aOptions, $oTemplate = false)
+    public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
 
