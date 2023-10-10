@@ -1885,7 +1885,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $aTmplVarsMenuItemMeta
             ),
             'comments' => '',
-            'line_number' => $aEvent['index']
+            'line_number' => isset($aEvent['index']) ? $aEvent['index'] : 0
         );
 
         $iPreloadComments = $this->_oConfig->getPreloadComments();
