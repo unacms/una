@@ -1012,10 +1012,14 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             	return;
 
             if(oElement.find('img').length > 0) {
-                oElement.find('img:first').get(0).onload = function() {
+                var oImg = oElement.find('img:first').get(0);
+
+                const oImgCopy = new Image();
+                oImgCopy.src = oImg.src;
+                oImgCopy.onload = function() {
                     var iHeightParent = oElement.height();
-                    var iHeightImg = this.clientHeight;
-                    var iOffsetTopImg = this.offsetTop;
+                    var iHeightImg = oImg.clientHeight;
+                    var iOffsetTopImg = oImg.offsetTop;
                     if(iOffsetTopImg < iHeightParent && iOffsetTopImg + iHeightImg > iHeightParent)
                         oElement.css('max-height', (iOffsetTopImg + iHeightImg +  50) + 'px');
 
