@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_payment',
     'title' => 'Payment',
     'note' => 'Payment module.',
-    'version' => '13.0.11.DEV',
+    'version' => '13.0.12.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
