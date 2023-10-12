@@ -162,12 +162,12 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 		return BxDolPrivacy::getObjectInstance($aHandler['privacy']);
     }
 
-	public function getPerPage($sType = 'default')
+    public function getPerPage($sType = 'default')
     {
     	if(empty($sType))
             return $this->_aPerPage;
 
-        return isset($this->_aPerPage[$sType]) ? $this->_aPerPage[$sType] : '';
+        return isset($this->_aPerPage[$sType]) ? $this->_aPerPage[$sType] : $this->_aPerPage['default'];
     }
 
     public function getHtmlIds($sType, $sKey = '')
