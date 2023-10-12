@@ -295,10 +295,10 @@ class BxBaseStudioOptions extends BxDolStudioOptions
             fclose($rHandle);
 
             $aContent = json_decode($sContents, true);
-            if(!is_array($aContent) || empty($aContent['meta']) || empty($aContent['types']))
+            if(!is_array($aContent) || empty($aContent['meta']) || empty($aContent['data']))
                 return ['code' => '3', 'message' => $sError];
 
-            foreach($aContent['types'] as $aType) {
+            foreach($aContent['data']['types'] as $aType) {
                 if(empty($aType['categories']) || !is_array($aType['categories']))
                     continue;
 

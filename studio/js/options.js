@@ -46,15 +46,15 @@ BxDolStudioOptions.prototype.onSubmitted = function(sFormId, sTocken, oData) {
 };
 
 BxDolStudioOptions.prototype.import = function(oButton) {
-    this.mixActionWithValue(oButton, 'import');
+    this.mixAction(oButton, 'import');
 };
 
 BxDolStudioOptions.prototype.onImport = function(oData) {
     document.location.href = document.location.href;
 };
 
-BxDolStudioOptions.prototype.export = function(oButton, iId) {
-    this.mixActionWithValue(oButton, 'export', iId);
+BxDolStudioOptions.prototype.export = function(oButton) {
+    this.mixAction(oButton, 'export');
 };
 
 BxDolStudioOptions.prototype.onExport = function(oData) {
@@ -117,7 +117,7 @@ BxDolStudioOptions.prototype.onMixDelete = function(oData) {
     document.location.href = document.location.href;
 };
 
-BxDolStudioOptions.prototype.mixAction = function(oSource, sAction) {
+BxDolStudioOptions.prototype.mixAction = function(oSource, sAction, bConfirm) {
     var $this = this;
     var oDate = new Date();
     var aParams = {
@@ -127,14 +127,21 @@ BxDolStudioOptions.prototype.mixAction = function(oSource, sAction) {
     };
     aParams[this.sParamPrefix + '_action'] = sAction;
 
-    $.post(
-        this.sActionsUrl,
-        aParams,
-        function (oData) {
-            processJsonData(oData);
-        },
-        'json'
-    );
+    var oPerform = function() {
+        $.post(
+            this.sActionsUrl,
+            aParams,
+            function (oData) {
+                processJsonData(oData);
+            },
+            'json'
+        );
+    };
+
+    if(bConfirm != undefined && parseInt(bConfirm) == 1)
+	bx_confirm('', oPerform);
+    else
+        oPerform();
 };
 
 BxDolStudioOptions.prototype.mixActionWithValue = function(oSource, sAction, mixedValue, bConfirm) {

@@ -219,7 +219,9 @@ class BxDolStudioOptions extends BxDol
                 'version' => bx_get_ver(),
                 'date' => date('D, d M Y H:i:s', $iNow)
             ],
-            'types' => $aListTypes
+            'date' => [
+                'types' => $aListTypes
+            ]
     	]);
 
     	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
