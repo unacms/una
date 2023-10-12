@@ -371,6 +371,7 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
 
     public function getOptions($aParams, &$aItems, $bReturnCount = true)
     {
+        $aBindings = [];
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
@@ -380,7 +381,7 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $aMethod['params'][1] = [
+                $aBindings = [
                     'id' => $aParams['value']
                 ];
 
@@ -390,7 +391,7 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
 
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $aMethod['params'][1] = [
+                $aBindings = [
                     'name' => $aParams['value']
                 ];
 
@@ -399,15 +400,23 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
                 break;
 
             case 'by_category_id':
-            	$aMethod['params'][1] = [
+            	$aBindings = [
                     'category_id' => $aParams['value']
                 ];
 
                 $sWhereClause .= "AND `to`.`category_id`=:category_id";
+
+                if(!empty($aParams['for_export'])) {
+                    $aMethod['name'] = 'getPairs';
+                    $aMethod['params'][1] = 'name';
+                    $aMethod['params'][2] = 'value';
+
+                    $sWhereClause .= " AND `to`.`type` NOT IN ('file', 'image')";
+                }
                 break;
 
             case 'by_category_name':
-            	$aMethod['params'][1] = [
+            	$aBindings = [
                     'name' => $aParams['value']
                 ];
 
@@ -416,7 +425,7 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
                 break;
 
             case 'by_category_name_full':
-            	$aMethod['params'][1] = [
+            	$aBindings = [
                     'name' => $aParams['value']
                 ];
 
@@ -440,6 +449,7 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
                 `to`.`order` AS `order`" . $sSelectClause . "
             FROM `sys_options` AS `to` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][] = $aBindings;
         $aItems = call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
 
         if(!$bReturnCount)

@@ -44,6 +44,7 @@ class BxDevStudioPage extends BxTemplStudioModule
     protected function getSettings()
     {
         $oOptions = new BxTemplStudioOptions('system', 'hidden');
+        $oOptions->enableManage(true);
 
         if(($mixedResult = $oOptions->checkAction()) !== false) {
             echoJson($mixedResult);

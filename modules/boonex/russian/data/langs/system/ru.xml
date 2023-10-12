@@ -613,6 +613,7 @@
 	<string name="_adm_btn_installed_submit"><![CDATA[Установленные]]></string>
 	<string name="_adm_btn_login_submit"><![CDATA[Вход в Студию]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[В очереди]]></string>
+        <string name="_adm_btn_settings_export"><![CDATA[Экспортировать]]></string>
 	<string name="_adm_btn_settings_import"><![CDATA[Импортировать]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Сохранить]]></string>
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string>
@@ -1740,6 +1741,7 @@
     <string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
     <string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
     <string name="_adm_stg_err_mix_already_exists"><![CDATA[Набор с таким именем уже существует.]]></string>
+    <string name="_adm_stg_txt_import_popup"><![CDATA[Импортировать настройки]]></string>
     <string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
     <string name="_adm_stg_txt_import_mix_popup"><![CDATA[Импортировать набор]]></string>
     <string name="_adm_stg_txt_mix_dark"><![CDATA[Темный]]></string>

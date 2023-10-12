@@ -34,7 +34,8 @@ class BxDolStudioOptions extends BxDol
     protected $aCategories;
     protected $aCustomCategories;
 
-    protected $bReadOnly;	//--- Enable/Disable ReadOnly mode for system settings. Note. It doesn't affect Editable mixes.
+    protected $bManage;     //--- Enable/Disable Manage panel for system settings.
+    protected $bReadOnly;   //--- Enable/Disable ReadOnly mode for system settings. Note. It doesn't affect Editable mixes.
 
     protected $bMixes;	//--- Enable/Disable mixes feature.
     protected $sMix;
@@ -69,6 +70,7 @@ class BxDolStudioOptions extends BxDol
             }
         }
 
+        $this->bManage = false;
         $this->bReadOnly = false;
 
         $this->bMixes = false;
@@ -95,6 +97,18 @@ class BxDolStudioOptions extends BxDol
 
         $aResult = ['code' => 0, 'message' => ''];
         switch($sAction) {
+            case 'import':
+                $aResult = array_merge($aResult, $this->getPopupCodeImport());
+                break;
+
+            case 'export':
+                $aResult = array_merge($aResult, $this->export());
+                break;
+
+            case 'download':
+                $aResult = array_merge($aResult, $this->download());
+                break;
+
             case 'select-mix':
                 $aResult = array_merge($aResult, $this->selectMix($sValue));
                 break;
@@ -141,6 +155,11 @@ class BxDolStudioOptions extends BxDol
         return $this->sType;
     }
 
+    public function enableManage($bManage = true)
+    {
+    	$this->bManage = $bManage;
+    }
+
     public function enableReadOnly($bReadOnly = true)
     {
     	$this->bReadOnly = $bReadOnly;
@@ -149,6 +168,67 @@ class BxDolStudioOptions extends BxDol
     public function enableMixes($bMixes = true)
     {
     	$this->bMixes = $bMixes;
+    }
+
+    public function export()
+    {
+        return [
+            'url' => bx_append_url_params($this->sBaseUrl, [
+                $this->sParamPrefix . '_action' => 'download',
+            ]),
+            'eval' => $this->getJsObject() . '.onExport(oData);'
+        ];
+    }
+
+    public function download()
+    {
+        $aTypes = [];
+        $this->oDb->getTypes(['type' => 'all'], $aTypes, false);
+        if(empty($aTypes) || !is_array($aTypes))
+            BxDolStudioTemplate::getInstance()->displayPageNotFound();
+
+        $aListTypes = [];
+        foreach($aTypes as $aType) {
+            $aCategories = [];
+            $this->oDb->getCategories(['type' => 'by_type_id_key_name', 'value' => $aType['id']], $aCategories, false);
+            if(empty($aCategories) || !is_array($aCategories))
+                continue;
+
+            $aListCategories = [];
+            foreach($aCategories as $aCategory) {
+                $aOptions = [];
+                $this->oDb->getOptions(['type' => 'by_category_id', 'value' => $aCategory['id'], 'for_export' => 1], $aOptions, false);
+                if(empty($aOptions) || !is_array($aOptions))
+                    continue;
+
+                $aListCategories[] = [
+                    'name' => $aCategory['name'],
+                    'options' => $aOptions
+                ];
+            }
+
+            $aListTypes[] = [
+                'name' => $aType['name'],
+                'categories' => $aListCategories
+            ];
+        }
+
+        $iNow = time();
+    	$sContent = json_encode([
+            'meta' => [
+                'version' => bx_get_ver(),
+                'date' => date('D, d M Y H:i:s', $iNow)
+            ],
+            'types' => $aListTypes
+    	]);
+
+    	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-type: application/json");
+        header("Content-Length: " . strlen($sContent));
+        header("Content-Disposition: attachment; filename=\"settings_". date('d_m_Y', $iNow) . ".json\"");
+
+        echo $sContent;
+        exit;
     }
 
     public function selectMix($sName)

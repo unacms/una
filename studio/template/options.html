@@ -7,9 +7,22 @@
         sMix: '__mix__',
     });
 </script>
+<bx_if:show_manage>
+    <div class="bx-stg-cells bx-stg-manage bx-def-margin-bottom">
+        <div class="bx-sc-cell bx-sc-left">&nbsp</div>
+        <div class="bx-sc-cell bx-sc-right">
+            <a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.import(this)">
+                <bx_text:_adm_btn_settings_import />
+            </a>
+            <a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.export(this)">
+                <bx_text:_adm_btn_settings_export />
+            </a>
+        </div>
+    </div>
+</bx_if:show_manage>
 <bx_if:show_mixes>
-    <div class="bx-stg-mixes bx-def-margin-bottom bx-clearfix">
-        <div class="bx-sm-cell bx-sm-select">
+    <div class="bx-stg-cells bx-stg-mixes bx-def-margin-bottom bx-clearfix">
+        <div class="bx-sc-cell bx-sc-select">
             <div class="bx-form-input-wrapper bx-form-input-wrapper-select">
                 <bx_if:show_select_mix>
                     <select class="bx-def-font-inputs bx-form-input-select" onchange="__js_object__.mixSelect(this)">
@@ -20,7 +33,7 @@
                 </bx_if:show_select_mix>
             </div>
         </div>
-        <div class="bx-sm-cell bx-sm-new">
+        <div class="bx-sc-cell bx-sc-new">
             <a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.mixCreate(this)">
                 <bx_text:_adm_btn_settings_mix_create />
             </a>

@@ -613,6 +613,7 @@
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
 	<string name="_adm_btn_login_submit"><![CDATA[Enter]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
+        <string name="_adm_btn_settings_export"><![CDATA[Export]]></string>
 	<string name="_adm_btn_settings_import"><![CDATA[Import]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Add New Mix]]></string>
@@ -1762,6 +1763,7 @@
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
 	<string name="_adm_stg_err_mix_already_exists"><![CDATA[Mix with the same name already exists.]]></string>
+        <string name="_adm_stg_txt_import_popup"><![CDATA[Import Settings]]></string>
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Import Mix]]></string>
         <string name="_adm_stg_txt_mix_dark"><![CDATA[Dark mode]]></string>

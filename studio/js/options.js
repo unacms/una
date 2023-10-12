@@ -45,6 +45,22 @@ BxDolStudioOptions.prototype.onSubmitted = function(sFormId, sTocken, oData) {
     this.bBusy = false;
 };
 
+BxDolStudioOptions.prototype.import = function(oButton) {
+    this.mixActionWithValue(oButton, 'import');
+};
+
+BxDolStudioOptions.prototype.onImport = function(oData) {
+    document.location.href = document.location.href;
+};
+
+BxDolStudioOptions.prototype.export = function(oButton, iId) {
+    this.mixActionWithValue(oButton, 'export', iId);
+};
+
+BxDolStudioOptions.prototype.onExport = function(oData) {
+    document.location.href = oData.url;
+};
+
 BxDolStudioOptions.prototype.mixCreate = function(oButton) {
     this.mixActionWithValue(oButton, 'create-mix');
 };

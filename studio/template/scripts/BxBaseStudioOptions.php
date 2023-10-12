@@ -193,6 +193,12 @@ class BxBaseStudioOptions extends BxDolStudioOptions
             'type' => $this->sType,
             'category' => is_array($this->sCategory) ? json_encode($this->sCategory) : $this->sCategory,
             'mix' => $this->sMix,
+            'bx_if:show_manage' => [
+                'condition' => $this->bManage,
+                'content' => [
+                    'js_object' => $sJsObject,
+                ]
+            ],
             'bx_if:show_mixes' => [
                 'condition' => $this->bMixes,
                 'content' => [
@@ -224,6 +230,98 @@ class BxBaseStudioOptions extends BxDolStudioOptions
             ], 
             'form' => $oForm->getCode()
         ]);
+    }
+
+    public function getPopupCodeImport()
+    {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+    	$sJsObject = $this->getJsObject();
+
+    	$sForm = 'adm-settings-import-form';
+    	$aForm = [
+            'form_attrs' => [
+                'id' => $sForm,
+                'name' => $sForm,
+                'action' => bx_append_url_params($this->sBaseUrl, [$this->sParamPrefix . '_action' => 'import']),
+                'method' => 'post',
+                'enctype' => 'multipart/form-data'
+            ],
+            'params' => [
+                'db' => [
+                    'submit_name' => 'save'
+                ],
+            ],
+            'inputs' => [
+            	'file' => [
+                    'type' => 'file',
+                    'name' => 'file',
+                    'caption' => '',
+                    'value' => '',
+                ],
+                'controls' => [
+                    'type' => 'input_set', [
+                        'type' => 'submit',
+                        'name' => 'save',
+                        'value' => _t('_adm_btn_settings_import'),
+                    ], [
+                        'type' => 'button',
+                        'name' => 'cancel',
+                        'value' => _t('_adm_txt_confirm_cancel'),
+                        'attrs' => [
+                            'class' => 'bx-def-margin-sec-left-auto',
+                            'onclick' => '$(".bx-popup-applied:visible").dolPopupHide()'
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm->initChecker();
+
+        if($oForm->isSubmittedAndValid()) {
+            $sError = _t('_adm_stg_err_cannot_perform');
+
+            $aFile = $_FILES['file'];
+            if(empty($aFile['tmp_name']))
+                return ['code' => '1', 'message' => $sError];
+
+            $sFile = $aFile['tmp_name'];
+            $rHandle = @fopen($sFile, "r");
+            if(!$rHandle)
+                return ['code' => '2', 'message' => $sError];
+
+            $sContents = fread($rHandle, filesize($sFile));
+            fclose($rHandle);
+
+            $aContent = json_decode($sContents, true);
+            if(!is_array($aContent) || empty($aContent['meta']) || empty($aContent['types']))
+                return ['code' => '3', 'message' => $sError];
+
+            foreach($aContent['types'] as $aType) {
+                if(empty($aType['categories']) || !is_array($aType['categories']))
+                    continue;
+
+                foreach($aType['categories'] as $aCategory) {
+                    if(empty($aCategory['options']) || !is_array($aCategory['options']))
+                        continue;
+
+                    foreach($aCategory['options'] as $sOptName => $sOptValue)
+                        setParam($sOptName, $sOptValue);
+                }
+            }
+
+            $this->clearCache();
+            return ['eval' => $sJsObject . '.onImport(oData);'];
+        }
+
+        return [
+            'popup' => BxTemplStudioFunctions::getInstance()->popupBox('adm-stg-import-popup', _t('_adm_stg_txt_import_popup'), $oTemplate->parseHtmlByName('options_manage_popup.html', [
+                'js_object' => $sJsObject,
+                'form_id' => $sForm,
+                'form' => $oForm->getCode(true),
+            ]))
+        ];
     }
 
     public function getPopupCodeCreateMix()
