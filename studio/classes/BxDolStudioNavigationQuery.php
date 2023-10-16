@@ -17,7 +17,18 @@ class BxDolStudioNavigationQuery extends BxDolDb
     function getMenus($aParams, &$aItems, $bReturnCount = true)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        $sSelectClause = "
+            `tm`.`id` AS `id`,
+            `tm`.`object` AS `object`,
+            `tm`.`title` AS `title`,
+            `tm`.`set_name` AS `set_name`,
+            `tm`.`module` AS `module`,
+            `tm`.`template_id` AS `template_id`,
+            `tm`.`deletable` AS `deletable`,
+            `tm`.`active` AS `active`,
+            `tm`.`override_class_name` AS `override_class_name`,
+            `tm`.`override_class_file` AS `override_class_file`";
+        $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
         if(!isset($aParams['order']) || empty($aParams['order']))
            $sOrderClause = "ORDER BY `tm`.`id` ASC";
@@ -26,7 +37,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
             case 'by_id':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
                 $sWhereClause = " AND `tm`.`id`=:id ";
@@ -35,7 +46,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
             case 'by_object':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'object' => $aParams['value']
+                    'object' => $aParams['value']
                 );
 
                 $sWhereClause = " AND `tm`.`object`=:object ";
@@ -43,7 +54,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
 
             case 'by_set_name':
             	$aMethod['params'][1] = array(
-                	'set_name' => $aParams['value']
+                    'set_name' => $aParams['value']
                 );
 
                 $sWhereClause = " AND `tm`.`set_name`=:set_name ";
@@ -53,25 +64,19 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
                 $aMethod['params'][2] = 'counter';
-                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sSelectClause .= ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tm`.`module`";
+                break;
+            
+            case 'export':
+                $sSelectClause = "`tm`.*";
                 break;
 
             case 'all':
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-                `tm`.`id` AS `id`,
-                `tm`.`object` AS `object`,
-                `tm`.`title` AS `title`,
-                `tm`.`set_name` AS `set_name`,
-                `tm`.`module` AS `module`,
-                `tm`.`template_id` AS `template_id`,
-                `tm`.`deletable` AS `deletable`,
-                `tm`.`active` AS `active`,
-                `tm`.`override_class_name` AS `override_class_name`,
-                `tm`.`override_class_file` AS `override_class_file`" . $sSelectClause . "
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . $sSelectClause . "
             FROM `sys_objects_menu` AS `tm` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
@@ -81,17 +86,37 @@ class BxDolStudioNavigationQuery extends BxDolDb
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
-
-    function isSetExists($sName)
+    
+    function isMenuExists($sObject)
     {
-        $sSql = $this->prepare("SELECT COUNT(*) FROM `sys_menu_sets` WHERE `set_name`=? LIMIT 1", $sName);
-        return (int)$this->getOne($sSql) == 1;
+        $aMenu = [];
+        $this->getMenus(['type' => 'by_object', 'value' => $sObject], $aMenu, false);
+
+        return !empty($aMenu) && is_array($aMenu);
+    }
+
+    function addMenu($aFields)
+    {
+        return $this->query("INSERT INTO `sys_objects_menu` SET " . $this->arrayToSQL($aFields));
+    }
+
+    function updateMenuByObject($sObject, $aFields)
+    {
+        return $this->query("UPDATE `sys_objects_menu` SET " . $this->arrayToSQL($aFields) . " WHERE `object`=:object", [
+            'object' => $sObject
+        ]);
     }
 
     function getSets($aParams, &$aItems, $bReturnCount = true)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        $sSelectClause = "
+            `tms`.`set_name` AS `name`,
+            `tms`.`set_name` AS `set_name`,
+            `tms`.`module` AS `module`,
+            `tms`.`title` AS `title`,
+            `tms`.`deletable` AS `deletable`";
+        $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
         if(!isset($aParams['order']) || empty($aParams['order']))
            $sOrderClause = "ORDER BY `tms`.`title` ASC";
@@ -103,7 +128,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 	'set_name' => $aParams['value']
                 );
 
-                $sSelectClause = ", COUNT(`tmi`.`id`) AS `items_count`";
+                $sSelectClause .= ", COUNT(`tmi`.`id`) AS `items_count`";
                 $sJoinClause = "LEFT JOIN `sys_menu_items` AS `tmi` ON `tms`.`set_name`=`tmi`.`set_name` AND `tmi`.`active`='1'";
                 $sWhereClause = " AND `tms`.`set_name`=:set_name ";
                 $sGroupClause = "GROUP BY `tms`.`set_name`";
@@ -121,36 +146,41 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
                 $aMethod['params'][2] = 'counter';
-                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sSelectClause .= ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tms`.`module`";
                 break;
 
             case 'dump_by_name':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'set_name' => $aParams['value']
+                    'set_name' => $aParams['value']
                 );
 
                 $sWhereClause = " AND `tms`.`set_name`=:set_name ";
                 break;
 
+            case 'export_by_name':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'set_name' => $aParams['value']
+                ];
+
+                $sSelectClause = "`tms`.*";
+                $sWhereClause = " AND `tms`.`set_name`=:set_name ";
+                break;
+            
             case 'all':
                 if(isset($aParams['except'])) {
-                	$aMethod['params'][1] = array(
-	                	'set_name' => $aParams['except']
-	                );
+                    $aMethod['params'][1] = array(
+                        'set_name' => $aParams['except']
+                    );
 
                     $sWhereClause = " AND `tms`.`set_name`<>:set_name ";
                 }
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-                `tms`.`set_name` AS `name`,
-                `tms`.`set_name` AS `set_name`,
-                `tms`.`module` AS `module`,
-                `tms`.`title` AS `title`,
-                `tms`.`deletable` AS `deletable`" . $sSelectClause . "
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . $sSelectClause . "
             FROM `sys_menu_sets` AS `tms` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
@@ -159,6 +189,14 @@ class BxDolStudioNavigationQuery extends BxDolDb
             return !empty($aItems);
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
+
+    function isSetExists($sName)
+    {
+        $aSet = [];
+        $this->getSets(['type' => 'by_name', 'value' => $sName], $aSet, false);
+
+        return !empty($aSet) && is_array($aSet);
     }
 
     function addSet($aFields)
@@ -214,7 +252,35 @@ class BxDolStudioNavigationQuery extends BxDolDb
     function getItems($aParams, &$aItems, $bReturnCount = true)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        $sSelectClause = "
+            `tmi`.`id` AS `id`,
+            `tmi`.`parent_id` AS `parent_id`,
+            `tmi`.`set_name` AS `set_name`,
+            `tmi`.`module` AS `module`,
+            `tmi`.`name` AS `name`,
+            `tmi`.`title_system` AS `title_system`,
+            `tmi`.`title` AS `title`,
+            `tmi`.`link` AS `link`,
+            `tmi`.`onclick` AS `onclick`,
+            `tmi`.`target` AS `target`,
+            `tmi`.`icon` AS `icon`,
+            `tmi`.`addon` AS `addon`,
+            `tmi`.`submenu_object` AS `submenu_object`,
+            `tmi`.`submenu_popup` AS `submenu_popup`,
+            `tmi`.`visible_for_levels` AS `visible_for_levels`,
+            `tmi`.`visibility_custom` AS `visibility_custom`,
+            `tmi`.`primary` AS `primary`,
+            `tmi`.`collapsed` AS `collapsed`,
+            `tmi`.`active` AS `active`,
+            `tmi`.`active_api` AS `active_api`,
+            `tmi`.`copyable` AS `copyable`,
+            `tmi`.`editable` AS `editable`,
+            `tmi`.`hidden_on` AS `hidden_on`,
+            `tmi`.`hidden_on_cxt` AS `hidden_on_cxt`,
+            `tmi`.`hidden_on_pt` AS `hidden_on_pt`,
+            `tmi`.`hidden_on_col` AS `hidden_on_col`,
+            `tmi`.`order` AS `order`";
+        $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
         if(!isset($aParams['order']) || empty($aParams['order']))
            $sOrderClause = "ORDER BY `tmi`.`order` ASC";
@@ -227,6 +293,16 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 );
 
                 $sWhereClause = " AND `tmi`.`id`=:id ";
+                break;
+
+            case 'by_set_and_name':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'set_name' => $aParams['set_name'],
+                    'name' => $aParams['name'],
+                );
+
+                $sWhereClause = " AND `tmi`.`set_name`=:set_name AND `tmi`.`name`=:name ";
                 break;
 
             case 'by_parent_id':
@@ -245,11 +321,20 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $sWhereClause = " AND `tmi`.`set_name`=:set_name ";
                 break;
 
+            case 'export_by_set_name':
+                $aMethod['params'][1] = [
+                    'set_name' => $aParams['value']
+                ];
+
+                $sSelectClause = "`tmi`.*";
+                $sWhereClause = " AND `tmi`.`set_name`=:set_name ";
+                break;
+
             case 'counter_by_sets':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'set_name';
                 $aMethod['params'][2] = 'counter';
-                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sSelectClause .= ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tmi`.`set_name`";
                 break;
 
@@ -257,7 +342,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
                 $aMethod['params'][2] = 'counter';
-                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sSelectClause .= ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tmi`.`module`";
                 break;
 
@@ -265,34 +350,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-                `tmi`.`id` AS `id`,
-                `tmi`.`parent_id` AS `parent_id`,
-                `tmi`.`set_name` AS `set_name`,
-                `tmi`.`module` AS `module`,
-                `tmi`.`name` AS `name`,
-                `tmi`.`title_system` AS `title_system`,
-                `tmi`.`title` AS `title`,
-                `tmi`.`link` AS `link`,
-                `tmi`.`onclick` AS `onclick`,
-                `tmi`.`target` AS `target`,
-                `tmi`.`icon` AS `icon`,
-                `tmi`.`addon` AS `addon`,
-                `tmi`.`submenu_object` AS `submenu_object`,
-                `tmi`.`submenu_popup` AS `submenu_popup`,
-                `tmi`.`visible_for_levels` AS `visible_for_levels`,
-                `tmi`.`visibility_custom` AS `visibility_custom`,
-                `tmi`.`primary` AS `primary`,
-                `tmi`.`collapsed` AS `collapsed`,
-                `tmi`.`active` AS `active`,
-                `tmi`.`active_api` AS `active_api`,
-                `tmi`.`copyable` AS `copyable`,
-                `tmi`.`editable` AS `editable`,
-                `tmi`.`hidden_on` AS `hidden_on`,
-                `tmi`.`hidden_on_cxt` AS `hidden_on_cxt`,
-                `tmi`.`hidden_on_pt` AS `hidden_on_pt`,
-                `tmi`.`hidden_on_col` AS `hidden_on_col`,
-                `tmi`.`order` AS `order`" . $sSelectClause . "
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . $sSelectClause . "
             FROM `sys_menu_items` AS `tmi` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
@@ -301,6 +359,14 @@ class BxDolStudioNavigationQuery extends BxDolDb
             return !empty($aItems);
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
+
+    function isItemExists($sSetName, $sName)
+    {
+        $aItem = [];
+        $this->getItems(['type' => 'by_set_and_name', 'set_name' => $sSetName, 'name' => $sName], $aItem, false);
+
+        return !empty($aItem) && is_array($aItem);
     }
 
     function deleteItemsBy($aParams)
@@ -343,6 +409,14 @@ class BxDolStudioNavigationQuery extends BxDolDb
     {
         $sSql = "UPDATE `sys_menu_items` SET " . $this->arrayToSQL($aFields) . " WHERE `id`=:id";
         return $this->query($sSql, ['id' => $iId]);
+    }
+
+    function updateItemBySetAndName($sSetName, $sName, $aFields)
+    {
+        return $this->query("UPDATE `sys_menu_items` SET " . $this->arrayToSQL($aFields) . " WHERE `set_name`=:set_name AND `name`=:name", [
+            'set_name' => $sSetName,
+            'name' => $sName
+        ]);
     }
 
     function getItemOrderMax($sSetName)

@@ -76,6 +76,11 @@ class BxDolStudioPage extends BxDol
         }
     }
 
+    public function getDb()
+    {
+        return $this->oDb;
+    }
+
     public function getPageUrl()
     {
         if(empty($this->sPageUrl) && !empty($this->aPage['wid_url']))
