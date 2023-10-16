@@ -448,7 +448,8 @@ class BxBasePage extends BxDolPage
                 ]),
                 'actions_menu' => '',
                 'meta_menu' => '',
-                'cover' => $oModule->serviceGetCover($this->_aProfileInfo['content_id'])
+                'cover' => $oModule->serviceGetCover($this->_aProfileInfo['content_id']),
+                'allow_edit' =>  $oModule->checkAllowedChangeCover($this->_aProfileInfo['id']) === CHECK_ACTION_RESULT_ALLOWED
             ];
             
             $CNF = $oModule->_oConfig->CNF;
@@ -528,6 +529,9 @@ class BxBasePage extends BxDolPage
                     $aContent = @unserialize($aBlock['content']);
                     if(isset($aContent['module'], $aContent['method']))
                         $sSource = $aContent['module'] . ':' . $aContent['method'];
+                }
+                else{
+                    $sSource = 'system:block_' . $aBlock['id'];
                 }
 
                 if($bBlocks && !in_array($sSource, $aBlocks)) {
@@ -901,7 +905,11 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockLang ($aBlock)
     {
-        $s = '<div class="bx-page-lang-container bx-def-vanilla-html max-w-none">' . _t(trim($aBlock['content'])) . '</div>';
+        if (bx_is_api()){
+            return [bx_api_get_block('lang', ['title' => _t($aBlock['title']), 'content' => bx_process_macros(_t(trim($aBlock['content'])))])];
+        }
+    
+        $s = '<div class="bx-page-lang-container">' . _t(trim($aBlock['content'])) . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;

@@ -330,6 +330,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'EntityCreate' => '',
             'EntityEdit' => '',
             'EntityDelete' => '',
+            'UpdateImage' => '',
             // page blocks
             'EntityTextBlock' => '',
             'EntityInfo' => '',

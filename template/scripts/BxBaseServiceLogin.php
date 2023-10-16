@@ -151,11 +151,6 @@ class BxBaseServiceLogin extends BxDol
                 header('Location: ' . BX_DOL_URL_ROOT);
                 exit;
             } 
-            else {
-                return [
-                    ['id' => 2, 'type' => 'redirect', 'data' => ['uri' => '/']],
-                ];
-            }
         }
 
         $oPemalink = BxDolPermalinks::getInstance();
@@ -179,6 +174,7 @@ class BxBaseServiceLogin extends BxDol
                 bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
                 return [
                     bx_api_get_block('redirect', ['uri' => '/']),
+                    bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['request' => ['url' => '/api.php?r=system/login_form/TemplServiceLogin', 'immutable' => true]]]),
                     bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
                 ];
             } 
