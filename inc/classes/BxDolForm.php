@@ -1464,7 +1464,7 @@ class BxDolFormChecker
         }
 
         // check CSRF token if it's needed.
-        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true) {
+        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true && !bx_is_api()) {
             $mixedCsrfTokenUsr = BxDolForm::getSubmittedValue('csrf_token', $this->_sFormMethod, $this->_aSpecificValues);
             unset($aInputs['csrf_token']);
 

@@ -2448,6 +2448,7 @@ function bx_api_get_image($sStorage, $iId)
     }
     if (!empty($sUrl)){
         return [
+            'storage' => $sStorage,
             'src' => $sUrl,
             'width' => $iWidth,
             'height' => $iHeight,
