@@ -9,13 +9,26 @@
  * @{
  */
 
-class BxDevTemplate extends BxDolModuleTemplate
+class BxDevTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
 
         $this->addStudioCss(['main.css']);
+        $this->addStudioJs(['main.js']);
+    }
+
+    public function getJsCode($sType, $aParams = [], $mixedWrap = true)
+    {
+        if(empty($aParams) || !is_array($aParams))
+            $aParams = [];
+
+        return parent::getJsCode($sType, array_merge($aParams, [
+            'sTxtExportType' => bx_js_string(_t('_bx_dev_txt_export_type')),
+            'sTxtBasic' => bx_js_string(_t('_bx_dev_btn_basic')),
+            'sTxtFull' => bx_js_string(_t('_bx_dev_btn_full'))
+        ]), $mixedWrap);
     }
 
     function displayPageSettings($sPage, $oContent, $sGetPageCodeMethod = 'getPageCode')

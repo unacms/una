@@ -526,4 +526,15 @@
     <string name="_bx_dev_hash_msg_reset_hash_modules"><![CDATA[Хэш успешно сброшен для следующих модулей:]]></string>
     <string name="_bx_dev_hash_txt_reset_hash_module"><![CDATA[Модуль]]></string>
     <string name="_bx_dev_hash_txt_reset_hash_files"><![CDATA[Файлов хэшировано]]></string>
+
+    <!-- Export/Import -->
+    <string name="_bx_dev_btn_basic"><![CDATA[Базовый]]></string>
+    <string name="_bx_dev_btn_full"><![CDATA[Полный]]></string>
+    <string name="_bx_dev_btn_import"><![CDATA[Импортировать]]></string>
+    <string name="_bx_dev_btn_export"><![CDATA[Экспортировать]]></string>
+    <string name="_bx_dev_btn_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_dev_txt_import_popup"><![CDATA[Импортировать]]></string>
+    <string name="_bx_dev_txt_export_type"><![CDATA[Какой вид экспорта вам нужен?]]></string>
+    <string name="_bx_dev_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
+    <string name="_bx_dev_msg_imported"><![CDATA[Импорт завершен. Обработано {0} элементов.]]></string>
 </resources>

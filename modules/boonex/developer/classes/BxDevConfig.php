@@ -79,8 +79,15 @@ class BxDevConfig extends BxBaseModGeneralConfig
             'form_display_pgt_keys_add' => $this->_sName . '_pgt_keys_add'
         );
 
-        $this->aJsClasses = array('polyglot' => 'BxDevPolyglot');
-        $this->aJsObjects = array('polyglot' => 'oBxDevPolyglot');
+        $this->aJsClasses = [
+            'main' => 'BxDevMain',
+            'polyglot' => 'BxDevPolyglot'
+        ];
+        $this->aJsObjects = [
+            'main' => 'oBxDevMain',
+            'polyglot' => 'oBxDevPolyglot'
+        ];
+
         $this->sAnimationEffect = 'fade';
         $this->iAnimationSpeed = 'slow';
     }

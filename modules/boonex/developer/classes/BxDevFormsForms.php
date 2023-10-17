@@ -23,6 +23,11 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         $this->_aOptions['actions_single']['export']['attr']['title'] = _t('_bx_dev_frm_btn_forms_gl_export');
     }
 
+    public function getCode($isDisplayHeader = true)
+    {
+        return $this->oModule->_oTemplate->getJsCode('main') . parent::getCode($isDisplayHeader);
+    }
+
     public function performActionAdd()
     {
         $sAction = 'add';
@@ -185,6 +190,72 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         )));
 
         echoJson(array('popup' => $sContent));
+    }
+
+    public function performActionExportFull()
+    {
+        echoJson([
+            'url' => BX_DOL_URL_ROOT . bx_append_url_params($this->oModule->_oConfig->getBaseUri() . 'download', [
+                'type' => 'forms',
+            ]),
+            'eval' => $this->oModule->_oConfig->getJsObject('main') . '.onExport(oData);'
+        ]);
+    }
+    
+    public function performActionImportFull()
+    {
+        $sAction = 'import_full';
+
+        $aResult = $this->oModule->getPopupCodeImport([
+            'form_name' => 'bx-dev-forms-import-full',
+            'form_action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction
+        ]);
+        
+        if(!isset($aResult['code']) || (int)$aResult['code'] != 0)
+            return echoJson($aResult);
+
+        $aContent = $aResult['content'];
+        $bModeFull = isset($aContent['meta']['full']) && (bool)$aContent['meta']['full'] === true;
+
+        $aMfForm = $aMfDisplay = $aMfInput = $aMfDisplayInput = false;
+        foreach($aContent['meta']['masks'] as $sMask => $aMask)
+            ${'aMf' . bx_gen_method_name($sMask)} = array_flip($aMask);
+
+        $iData = 0;
+        foreach($aContent['data'] as $aData) {
+            $iData += 1;
+
+            $sObject = $aData['form']['object'];
+            if($bModeFull && !$this->oDb->isForm($sObject))
+                $this->oDb->addForm($aData['form']);
+            else
+                $this->oDb->updateFormByObject($sObject, $aData['form']);
+            
+            foreach($aData['displays'] as $aDisplay)
+                if($bModeFull && !$this->oDb->isDisplay($sObject,  $aDisplay['display_name']))
+                    $this->oDb->addDisplay($aDisplay);
+                else
+                    $this->oDb->updateDisplayByObjectAndName($sObject, $aDisplay['display_name'], $aDisplay);
+
+            foreach($aData['inputs'] as $aInput)
+                if($bModeFull && !$this->oDb->isInput($sObject,  $aInput['name']))
+                    $this->oDb->addInput($aInput);
+                else
+                    $this->oDb->updateInputByObjectAndName($sObject, $aInput['name'], $aInput);
+                
+            foreach($aData['display_inputs'] as $aDisplayInput)
+                if($bModeFull && !$this->oDb->isDisplayInput($aDisplayInput['display_name'],  $aDisplayInput['input_name']))
+                    $this->oDb->addDisplayInput($aDisplayInput);
+                else
+                    $this->oDb->updateDisplayInputByDisplayAndInput($aDisplayInput['display_name'],  $aDisplayInput['input_name'], $aDisplayInput);
+        }
+
+        BxDolCacheUtilities::getInstance()->clear('db');
+
+        echoJson([
+            'msg' => _t('_bx_dev_msg_imported', $iData), 
+            'eval' => $this->oModule->_oConfig->getJsObject('main') . '.onImport(oData);'
+        ]);
     }
 }
 /** @} */

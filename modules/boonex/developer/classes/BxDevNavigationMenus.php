@@ -23,6 +23,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'module.php?name=' . $this->oModule->_oConfig->getName() . '&page=navigation&nav_page=items&nav_module=%s&nav_set=%s';
     }
 
+    public function getCode($isDisplayHeader = true)
+    {
+        return $this->oModule->_oTemplate->getJsCode('main') . parent::getCode($isDisplayHeader);
+    }
+
     public function performActionAdd()
     {
         $sAction = 'add';
@@ -148,6 +153,68 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         )));
 
         echoJson(array('popup' => $sContent));
+    }
+
+    public function performActionExportFull()
+    {
+        echoJson([
+            'url' => BX_DOL_URL_ROOT . bx_append_url_params($this->oModule->_oConfig->getBaseUri() . 'download', [
+                'type' => 'menus',
+            ]),
+            'eval' => $this->oModule->_oConfig->getJsObject('main') . '.onExport(oData);'
+        ]);
+    }
+    
+    public function performActionImportFull()
+    {
+        $sAction = 'import_full';
+
+        $aResult = $this->oModule->getPopupCodeImport([
+            'form_name' => 'bx-dev-menus-import-full',
+            'form_action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction
+        ]);
+        
+        if(!isset($aResult['code']) || (int)$aResult['code'] != 0)
+            return echoJson($aResult);
+
+        $aContent = $aResult['content'];
+        $bModeFull = isset($aContent['meta']['full']) && (bool)$aContent['meta']['full'] === true;
+
+        $aMfMenu = $aMfSet = $aMfItem = false;
+        foreach($aContent['meta']['masks'] as $sMask => $aMask)
+            ${'aMf' . bx_gen_method_name($sMask)} = array_flip($aMask);
+
+        $iData = 0;
+        foreach($aContent['data'] as $aData) {
+            $iData += 1;
+
+            $sObject = $aData['menu']['object'];
+            if($bModeFull && !$this->oDb->isMenuExists($sObject))
+                $this->oDb->addMenu($aData['menu']);
+            else
+                $this->oDb->updateMenuByObject($sObject, $aData['menu']);
+
+            $aSet = $aData['set'];
+            if(empty($aSet) || !is_array($aSet))
+                continue;
+
+            $sSetName = $aSet['set_name'];
+            if($bModeFull && !$this->oDb->isSetExists($sSetName))
+                $this->oDb->addSet($aSet);
+
+            foreach($aData['items'] as $aItem)
+                if($bModeFull && !$this->oDb->isItemExists($sObject,  $aItem['name']))
+                    $this->oDb->addItem($aItem);
+                else
+                    $this->oDb->updateItemBySetAndName($sSetName, $aItem['name'], $aItem);
+        }
+
+        BxDolCacheUtilities::getInstance()->clear('db');
+
+        echoJson([
+            'msg' => _t('_bx_dev_msg_imported', $iData), 
+            'eval' => $this->oModule->_oConfig->getJsObject('main') . '.onImport(oData);'
+        ]);
     }
 
     private function fillInSelects(&$aInputs)

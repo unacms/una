@@ -77,6 +77,8 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_developer_forms', 'independent', 'add', '_bx_dev_frm_btn_forms_gl_create', '', 0, 1),
+('bx_developer_forms', 'independent', 'import_full', '_bx_dev_btn_import_full', '', 0, 2),
+('bx_developer_forms', 'independent', 'export_full', '_bx_dev_btn_export_full', '', 0, 3),
 ('bx_developer_forms', 'single', 'export', '', 'download', 0, 1),
 ('bx_developer_forms', 'single', 'edit', '', 'pencil-alt', 0, 2),
 
@@ -401,12 +403,16 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_developer_nav_menus', 'independent', 'add', '_bx_dev_nav_btn_menus_gl_create', '', 0, 1),
+('bx_developer_nav_menus', 'independent', 'import_full', '_bx_dev_btn_import_full', '', 0, 2),
+('bx_developer_nav_menus', 'independent', 'export_full', '_bx_dev_btn_export_full', '', 0, 3),
 ('bx_developer_nav_menus', 'single', 'export', '', 'download', 0, 1),
 ('bx_developer_nav_menus', 'single', 'edit', '', 'pencil-alt', 0, 2),
 ('bx_developer_nav_menus', 'single', 'delete', '', 'remove', 1, 3),
+
 ('bx_developer_nav_sets', 'independent', 'add', '_bx_dev_nav_btn_sets_gl_create', '', 0, 1),
 ('bx_developer_nav_sets', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_developer_nav_sets', 'single', 'delete', '', 'remove', 1, 2),
+
 ('bx_developer_nav_items', 'independent', 'import', '_bx_dev_nav_btn_items_gl_import', '', 0, 1),
 ('bx_developer_nav_items', 'independent', 'add', '_bx_dev_nav_btn_items_gl_create', '', 0, 2),
 ('bx_developer_nav_items', 'single', 'edit', '', 'pencil-alt', 0, 1),

@@ -30,6 +30,11 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         $this->oModule->_oTemplate->addStudioCss(array('builder_page.css'));
     }
 
+    function getPageCode($sPage = '', $bWrap = true)
+    {
+        return $this->oModule->_oTemplate->getJsCode('main') . parent::getPageCode($sPage, $bWrap);
+    }
+
     function getBlockPanelTop($aBlock)
     {
          return BxBaseStudioWidget::getBlockPanelTop(
@@ -449,6 +454,22 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         $sValue = $oForm->getCleanValue('content');
         $sValue = BxDevFunctions::serializeString($sValue);
         BxDolForm::setSubmittedValue('content', $sValue, $oForm->aFormAttrs['method']);
+    }
+
+    protected function _getTmplVarsBlockPanelTop()
+    {
+        $aResult = parent::_getTmplVarsBlockPanelTop();
+
+        $aResult['bx_if:show_actions_global'] = [
+            'condition' => $this->sPage == '' || empty($this->aPageRebuild),
+            'content' => [
+                'js_object' => $this->oModule->_oConfig->getJsObject('main'),
+                'action_page_import' => 'import',
+                'action_page_export' => 'export'
+            ]
+        ];
+
+        return $aResult;
     }
 
     protected function _getTmplVarsBlockPanelTopActions()
