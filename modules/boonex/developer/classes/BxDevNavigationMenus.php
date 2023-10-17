@@ -184,6 +184,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         foreach($aContent['meta']['masks'] as $sMask => $aMask)
             ${'aMf' . bx_gen_method_name($sMask)} = array_flip($aMask);
 
+        if($aResult['disable'] != 0) {
+            $this->oDb->updateMenus(['active' => 0]);
+            $this->oDb->updateItems(['active' => 0, 'active_api' => 0]);
+        }
+            
         $iData = 0;
         foreach($aContent['data'] as $aData) {
             $iData += 1;

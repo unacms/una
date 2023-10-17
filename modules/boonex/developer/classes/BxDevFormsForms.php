@@ -221,6 +221,11 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         foreach($aContent['meta']['masks'] as $sMask => $aMask)
             ${'aMf' . bx_gen_method_name($sMask)} = array_flip($aMask);
 
+        if($aResult['disable'] != 0) {
+            $this->oDb->updateForms(['active' => 0]);
+            $this->oDb->updateDisplayInputs(['active' => 0]);
+        }
+
         $iData = 0;
         foreach($aContent['data'] as $aData) {
             $iData += 1;

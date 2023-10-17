@@ -171,7 +171,7 @@ class BxDevModule extends BxDolModule
         if(!method_exists($this, $sMethod))
             return echoJson([]);
 
-        echoJson($this->$sMethod($aResult['content']));
+        echoJson($this->$sMethod($aResult['content'], $aResult['disable'] != 0));
     }
 
     public function getPopupCodeImport($aParams)
@@ -198,6 +198,17 @@ class BxDevModule extends BxDolModule
                     'name' => 'file',
                     'caption' => '',
                     'value' => '',
+                ],
+                'disable' => [
+                    'type' => 'switcher',
+                    'name' => 'disable',
+                    'caption' => _t('_bx_dev_txt_disable_before_import'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => 0,
+                    'db' => [
+                        'pass' => 'Int',
+                    ],
                 ],
                 'controls' => [
                     'type' => 'input_set', [
@@ -239,7 +250,7 @@ class BxDevModule extends BxDolModule
             if(!is_array($aContent) || empty($aContent['meta']) || empty($aContent['data']))
                 return ['code' => 3, 'message' => $sError];
 
-            return ['code' => 0, 'content' => $aContent];
+            return ['code' => 0, 'content' => $aContent, 'disable' => $oForm->getCleanValue('disable')];
         }
 
         return [
@@ -437,7 +448,7 @@ class BxDevModule extends BxDolModule
         return [$aMeta, $aData];
     }
 
-    protected function _eiImportPages($aContent)
+    protected function _eiImportPages($aContent, $bDisable = false)
     {
         bx_import('BuilderPage', $this->_aModule);
         $oBuilderPage = new BxDevBuilderPage(['type' => '', 'page' => '', 'url' => '']);
@@ -451,6 +462,9 @@ class BxDevModule extends BxDolModule
         $aMfMenu = $aMfSet = $aMfItem = false;
         foreach($aContent['meta']['masks'] as $sMask => $aMask)
             ${'aMf' . bx_gen_method_name($sMask)} = array_flip($aMask);
+
+        if($bDisable)
+            $oBpDb->updateBlocks(['active' => 0, 'active_api' => 0]);
 
         $iData = 0;
         foreach($aContent['data'] as $aData) {

@@ -533,6 +533,7 @@
     <string name="_bx_dev_btn_import_full"><![CDATA[Import]]></string>
     <string name="_bx_dev_btn_export_full"><![CDATA[Export]]></string>
     <string name="_bx_dev_btn_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_dev_txt_disable_before_import"><![CDATA[Deactivate before import]]></string>
     <string name="_bx_dev_txt_import_full_popup"><![CDATA[Import]]></string>
     <string name="_bx_dev_txt_export_type"><![CDATA[What type of export do you need?]]></string>
     <string name="_bx_dev_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>

@@ -514,6 +514,18 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
     {
         return $this->query("UPDATE `sys_pages_blocks` SET " . $this->arrayToSQL($aData) . " WHERE " . $this->arrayToSQL($aFields, ' AND ')) ? true : false;
     }
+    
+    function updateBlocks($aParamsSet, $aParamsWhere = [])
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        $sWhereClause = "1";
+        if(!empty($aParamsWhere))
+            $sWhereClause = $this->arrayToSQL($aParamsWhere, " AND ");
+
+        return $this->query("UPDATE `sys_pages_blocks` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause);
+    }
 
     function deleteBlocks($aParams)
     {

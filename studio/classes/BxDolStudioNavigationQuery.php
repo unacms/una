@@ -100,6 +100,18 @@ class BxDolStudioNavigationQuery extends BxDolDb
         return $this->query("INSERT INTO `sys_objects_menu` SET " . $this->arrayToSQL($aFields));
     }
 
+    function updateMenus($aParamsSet, $aParamsWhere = [])
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        $sWhereClause = "1";
+        if(!empty($aParamsWhere))
+            $sWhereClause = $this->arrayToSQL($aParamsWhere, " AND ");
+
+        return $this->query("UPDATE `sys_objects_menu` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause);
+    }
+    
     function updateMenuByObject($sObject, $aFields)
     {
         return $this->query("UPDATE `sys_objects_menu` SET " . $this->arrayToSQL($aFields) . " WHERE `object`=:object", [
@@ -409,6 +421,18 @@ class BxDolStudioNavigationQuery extends BxDolDb
     {
         $sSql = "UPDATE `sys_menu_items` SET " . $this->arrayToSQL($aFields) . " WHERE `id`=:id";
         return $this->query($sSql, ['id' => $iId]);
+    }
+
+    function updateItems($aParamsSet, $aParamsWhere = [])
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        $sWhereClause = "1";
+        if(!empty($aParamsWhere))
+            $sWhereClause = $this->arrayToSQL($aParamsWhere, " AND ");
+
+        return $this->query("UPDATE `sys_menu_items` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause);
     }
 
     function updateItemBySetAndName($sSetName, $sName, $aFields)

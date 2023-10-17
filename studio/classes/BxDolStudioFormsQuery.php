@@ -131,6 +131,18 @@ class BxDolStudioFormsQuery extends BxDolDb
         return $this->query("INSERT INTO `sys_objects_form` SET " . $this->arrayToSQL($aFields));
     }
 
+    function updateForms($aParamsSet, $aParamsWhere = [])
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        $sWhereClause = "1";
+        if(!empty($aParamsWhere))
+            $sWhereClause = $this->arrayToSQL($aParamsWhere, " AND ");
+
+        return $this->query("UPDATE `sys_objects_form` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause);
+    }
+
     function updateFormByObject($sObject, $aFields)
     {
         return $this->query("UPDATE `sys_objects_form` SET " . $this->arrayToSQL($aFields) . " WHERE `object`=:object", [
@@ -444,6 +456,18 @@ class BxDolStudioFormsQuery extends BxDolDb
             'object' => $sObject,
             'name' => $sName
         ]);
+    }
+
+    public function updateDisplayInputs($aParamsSet, $aParamsWhere = [])
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        $sWhereClause = "1";
+        if(!empty($aParamsWhere))
+            $sWhereClause = $this->arrayToSQL($aParamsWhere, " AND ");
+
+        return $this->query("UPDATE `sys_form_display_inputs` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause);
     }
 
     function updateDisplayInputByDisplayAndInput($sDisplay, $sInput, $aFields)
