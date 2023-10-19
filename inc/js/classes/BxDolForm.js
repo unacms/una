@@ -89,6 +89,9 @@ BxDolForm.prototype.initLeavePageConfirmation = function()
         if(!sHref || (sOnclick != undefined && sOnclick.trim().length > 0))
             return;
 
+        if(sHref.indexOf(sUrlRoot) == -1)
+            sHref = sUrlRoot + sHref;
+ 
         var oRegExp = new RegExp('^' + bx_get_regexp('url') + '$', 'i');
         if(!sHref.trim().match(oRegExp))
             return;
