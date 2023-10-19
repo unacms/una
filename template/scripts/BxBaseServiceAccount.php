@@ -167,7 +167,22 @@ class BxBaseServiceAccount extends BxDol
     {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
-        return $this->_oAccountForms->editAccountInfoForm($iAccountId);
+        
+        $bApi = bx_is_api();
+        
+        $mixedResult =$this->_oAccountForms->editAccountInfoForm($iAccountId);
+        if($bApi) {
+            if(is_array($mixedResult))
+                return [bx_api_get_block('form', $mixedResult, [
+                    'ext' => [
+                        'request' => ['url' => '/api.php?r=system/account_settings_email/TemplServiceAccount', 'immutable' => true]
+                    ]
+                ])];
+            else
+                return bx_api_get_msg($mixedResult);
+        }
+        
+        return $mixedResult;
     }
 
     public function serviceAccountSettingsDelAccount ($iAccountId = false)

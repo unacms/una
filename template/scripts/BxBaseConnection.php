@@ -139,6 +139,17 @@ class BxBaseConnection extends BxDolConnection
             'countf' => _t(isset($aParams['caption']) ? $aParams['caption'] : '_view_counter', $iCount)
         ];
     }
+    
+    public function getConnectedListAPI($iProfileId, $bIsMutual, $sContentType)
+    {
+        $aProfiles = [];
+        $aIds = $this->{BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType ? 'getConnectedInitiators' : 'getConnectedContent'}($iProfileId, $bIsMutual, 0, BX_CONNECTIONS_LIST_COUNTER);
+        foreach($aIds as $iId)
+            if(($oProfile = BxDolProfile::getInstanceMagic($iId)) !== false)
+                $aProfiles[] = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
+        
+        return $aProfiles;
+    }
 
     protected function _getJsScript($iProfileId, $sContentType, $bIsMutual, $aHtmlIds, $bDynamicMode = false)
     {

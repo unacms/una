@@ -124,6 +124,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if ($oConnection){
             $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->_aModule['name']);
             $aResult['members_count'] = $oConnection->getConnectedInitiatorsCount($oProfile->id(), false);
+            $aResult['members_list'] = $oConnection->getConnectedListAPI($oProfile->id(), false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
         }
         $aResult['visibility'] = $aData[$CNF['FIELD_ALLOW_VIEW_TO']];
 
