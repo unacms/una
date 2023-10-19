@@ -151,6 +151,17 @@ class BxBaseConnection extends BxDolConnection
         return $aProfiles;
     }
 
+    public function getCommonListAPI($iProfileId1, $iProfileId2, $bIsMutual)
+    {
+        $aProfiles = [];
+        $aIds = $this->getCommonContent($iProfileId1, $iProfileId2, $bIsMutual, 0, BX_CONNECTIONS_LIST_COUNTER);
+        foreach($aIds as $iId)
+            if(($oProfile = BxDolProfile::getInstanceMagic($iId)) !== false)
+                $aProfiles[] = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
+        
+        return $aProfiles;
+    }
+
     protected function _getJsScript($iProfileId, $sContentType, $bIsMutual, $aHtmlIds, $bDynamicMode = false)
     {
         $sJsObject = $this->getJsObjectName($iProfileId);

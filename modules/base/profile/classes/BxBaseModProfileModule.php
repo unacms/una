@@ -2092,8 +2092,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false) {
                 $aResult['friends_count'] = $oConnection->getConnectedContentCount($iProfileId, true);
-                if(isLogged())
-                    $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($iProfileId, bx_get_logged_profile_id(), true);
+                if(isLogged()) {
+                    $iLoggedId = bx_get_logged_profile_id();
+                    $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($iProfileId, $iLoggedId, true);
+                    $aResult['mutual_friends_list'] = $oConnection->getCommonListAPI($iProfileId, $iLoggedId, true);
+                }
             }
 
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')) !== false)
