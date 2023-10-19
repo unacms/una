@@ -683,8 +683,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return echoJson([]);
         
         $sUrl = htmlspecialchars_decode($sUrl);
+        $oStreamContext = stream_context_create([
+            'http' => [
+                'timeout' => getParam('sys_default_socket_timeout'), 
+            ]
+        ]);
 
-        $aHeaders = @get_headers($sUrl, 1);
+        $aHeaders = @get_headers($sUrl, 1, $oStreamContext);
         if($aHeaders === false)
             return echoJson([]);
 

@@ -121,11 +121,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $sUrl = bx_process_input(bx_get('url'));
         if(empty($sUrl))
             return echoJson(array());
-        
+
         $sUrl = htmlspecialchars_decode($sUrl);
+        $oStreamContext = stream_context_create([
+            'http' => [
+                'timeout' => getParam('sys_default_socket_timeout'), 
+            ]
+        ]);
 
         $sHeader = 'Content-Type';
-        $aHeaders = @get_headers($sUrl, 1);
+        $aHeaders = @get_headers($sUrl, 1, $oStreamContext);
         if(!empty($aHeaders) && is_array($aHeaders) && !empty($aHeaders[$sHeader])) {
             $mixedContentType = $aHeaders[$sHeader];
             if(!is_array($mixedContentType))
