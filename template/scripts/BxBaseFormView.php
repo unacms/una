@@ -393,6 +393,7 @@ class BxBaseFormView extends BxDolForm
             'sDisplay' => isset($this->aParams['display']) ? $this->aParams['display'] : '',
             'sRootUrl' => BX_DOL_URL_ROOT,
             'aHtmlIds' => $this->_aHtmlIds,
+            'bLeavePageConfirmation' => getParam('sys_form_lpc_enable') == 'on',
             'sTxtLeavePageConfirmation' => _t('_sys_leave_page_confirmation')
         )) . ");";
 

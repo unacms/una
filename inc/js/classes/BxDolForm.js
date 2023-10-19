@@ -18,6 +18,7 @@ function BxDolForm(oOptions)
 
     this._sActionsUri = 'form.php';
     this._sActionsUrl = oOptions.sRootUrl + this._sActionsUri; // actions url address
+    this._bLeavePageConfirmation = oOptions.bLeavePageConfirmation == undefined ? false : oOptions.bLeavePageConfirmation;
     this._sTxtLeavePageConfirmation = oOptions.sTxtLeavePageConfirmation === undefined ? _t('_sys_leave_page_confirmation') : oOptions.sTxtLeavePageConfirmation;
 
     this._bChanged = false;
@@ -26,10 +27,11 @@ function BxDolForm(oOptions)
     this._iAnimationSpeed = 'slow';
     this._aHtmlIds = oOptions.aHtmlIds;
 
-    this.init();
+    if(this._bLeavePageConfirmation)
+        this.initLeavePageConfirmation();
 }
 
-BxDolForm.prototype.init = function()
+BxDolForm.prototype.initLeavePageConfirmation = function()
 {
     var $this = this;
 

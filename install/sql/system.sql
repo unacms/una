@@ -375,7 +375,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_files_ext_imagevideo', '_adm_stg_cpt_option_sys_files_ext_imagevideo', 'jpg,jpeg,jpe,gif,png,svg,webp,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc,ts', 'digit', '', '', '', '', 230),
 (@iCategoryId, 'sys_files_ext_dangerous', '_adm_stg_cpt_option_sys_files_ext_dangerous', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 'digit', '', '', '', '', 240),
 
-(@iCategoryId, 'sys_viewport_meta_tag', '_adm_stg_cpt_option_sys_viewport_meta_tag', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0', 'digit', '', '', '', '', 250);
+(@iCategoryId, 'sys_viewport_meta_tag', '_adm_stg_cpt_option_sys_viewport_meta_tag', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0', 'digit', '', '', '', '', 250),
+
+(@iCategoryId, 'sys_form_lpc_enable', '_adm_stg_cpt_option_sys_form_lpc_enable', 'on', 'checkbox', '', '', '', '', 260);
 
 --
 -- CATEGORY (HIDDEN): System

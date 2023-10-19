@@ -1582,12 +1582,12 @@
     <string name="_adm_stg_cpt_option_sys_player_default_quality"><![CDATA[Качество видео по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_pt_default_visitor"><![CDATA[Тип страницы, используемый по умолчанию для посетителя]]></string>
     <string name="_adm_stg_cpt_option_sys_pt_default_member"><![CDATA[Тип страницы, используемый по умолчанию для пользователя]]></string>
+    <string name="_adm_stg_cpt_option_sys_form_lpc_enable"><![CDATA[Включить подтверждение ухода со страницы для страниц с формами]]></string>
     <string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[<a target="_blank" href="https://momentjs.com/docs/#/displaying/format/">Формат даты</a>]]></string>
     <string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[<a target="_blank" href="https://momentjs.com/docs/#/displaying/format/">Формат даты и времени</a>]]></string>
     <string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[<a target="_blank" href="https://momentjs.com/docs/#/displaying/format/">Формат времени</a>]]></string>
     <string name="_adm_stg_cpt_option_sys_format_timeago"><![CDATA[Использовать формат 'времени назад' для дат, меньших чем данное количество секунд]]></string>
     <string name="_adm_stg_cpt_option_sys_format_input_24h"><![CDATA[Использовать 24ч формат времени в каледаре ввода времени]]></string>
-
     <string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Путь к скрипту на FTP-сервере]]></string>
     <string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP-сервер - Логин]]></string>
     <string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP-сервер - Пароль]]></string>
