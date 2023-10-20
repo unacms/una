@@ -140,10 +140,10 @@ class BxBaseConnection extends BxDolConnection
         ];
     }
     
-    public function getConnectedListAPI($iProfileId, $bIsMutual, $sContentType)
+    public function getConnectedListAPI($iProfileId, $bIsMutual, $sContentType, $iCount = BX_CONNECTIONS_LIST_COUNTER)
     {
         $aProfiles = [];
-        $aIds = $this->{BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType ? 'getConnectedInitiators' : 'getConnectedContent'}($iProfileId, $bIsMutual, 0, BX_CONNECTIONS_LIST_COUNTER);
+        $aIds = $this->{BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType ? 'getConnectedInitiators' : 'getConnectedContent'}($iProfileId, $bIsMutual, 0, $iCount);
         foreach($aIds as $iId)
             if(($oProfile = BxDolProfile::getInstanceMagic($iId)) !== false)
                 $aProfiles[] = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);
@@ -151,10 +151,10 @@ class BxBaseConnection extends BxDolConnection
         return $aProfiles;
     }
 
-    public function getCommonListAPI($iProfileId1, $iProfileId2, $bIsMutual)
+    public function getCommonListAPI($iProfileId1, $iProfileId2, $bIsMutual, $iCount = BX_CONNECTIONS_LIST_COUNTER)
     {
         $aProfiles = [];
-        $aIds = $this->getCommonContent($iProfileId1, $iProfileId2, $bIsMutual, 0, BX_CONNECTIONS_LIST_COUNTER);
+        $aIds = $this->getCommonContent($iProfileId1, $iProfileId2, $bIsMutual, 0, $iCount);
         foreach($aIds as $iId)
             if(($oProfile = BxDolProfile::getInstanceMagic($iId)) !== false)
                 $aProfiles[] = $oProfile->getUnitAPI(0, ['template' => 'unit_wo_info']);

@@ -2083,6 +2083,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'image' => $this->serviceGetThumb($iId),
             'cover' => $this->serviceGetCover($iId),
         ];
+        
+        if ($aParams['template'] == 'unit_wo_info')
+            return $aResult;
 
         if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
@@ -2092,6 +2095,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false) {
                 $aResult['friends_count'] = $oConnection->getConnectedContentCount($iProfileId, true);
+                $aResult['friends_list'] = $oConnection->getConnectedListAPI($iProfileId, true, BX_CONNECTIONS_CONTENT_TYPE_CONTENT);
                 if(isLogged()) {
                     $iLoggedId = bx_get_logged_profile_id();
                     $aResult['mutual_friends_count'] = $oConnection->getCommonContentCount($iProfileId, $iLoggedId, true);
@@ -2099,8 +2103,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
                 }
             }
 
-            if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')) !== false)
+            if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')) !== false){
                 $aResult['followers_count'] = $oConnection->getConnectedInitiatorsCount($iProfileId);
+                $aResult['followers_list'] = $oConnection->getConnectedListAPI($iProfileId, false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+            }
         }
 
         $sKey = 'OBJECT_MENU_SNIPPET_META';
