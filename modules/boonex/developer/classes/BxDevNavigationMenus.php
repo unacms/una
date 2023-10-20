@@ -208,7 +208,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
                 $this->oDb->addSet($aSet);
 
             foreach($aData['items'] as $aItem)
-                if($bModeFull && !$this->oDb->isItemExists($sObject,  $aItem['name']))
+                if($bModeFull && !$this->oDb->isItemExists($sSetName,  $aItem['name']))
                     $this->oDb->addItem($aItem);
                 else
                     $this->oDb->updateItemBySetAndName($sSetName, $aItem['name'], $aItem);
