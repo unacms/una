@@ -459,6 +459,11 @@ class BxBasePage extends BxDolPage
                 $a['cover_block']['meta_menu'] =  $oMetaMenu->getCodeAPI();
             }
             
+            $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+            if ($oConnection){
+                $a['cover_block']['members_list'] =  $oConnection->getConnectedListAPI($this->_aProfileInfo['id'], false, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 10);
+            }
+            
             if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])){
                 $oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
                 $a['cover_block']['actions_menu'] = $oActionMenu->getCodeAPI();
