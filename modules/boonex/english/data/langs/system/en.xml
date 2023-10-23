@@ -1766,6 +1766,8 @@
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
 	<string name="_adm_stg_err_mix_already_exists"><![CDATA[Mix with the same name already exists.]]></string>
         <string name="_adm_stg_txt_import_popup"><![CDATA[Import Settings]]></string>
+        <string name="_adm_stg_msg_imported"><![CDATA[Import finished. {0} items were processed.]]></string>
+        <string name="_adm_stg_err_import_wrong_format"><![CDATA[Wrong file format.]]></string>
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Import Mix]]></string>
         <string name="_adm_stg_txt_mix_dark"><![CDATA[Dark mode]]></string>

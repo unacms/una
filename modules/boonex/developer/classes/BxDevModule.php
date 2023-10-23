@@ -138,8 +138,9 @@ class BxDevModule extends BxDolModule
     	$sContent = json_encode([
             'meta' => array_merge([
                 'version' => bx_get_ver(),
+                'type' => $sType,
+                'full' => $mixedFull,
                 'date' => date('D, d M Y H:i:s', $iNow),
-                'full' => $mixedFull
             ], $aMeta),
             'data' => $aData
     	]);
@@ -159,7 +160,7 @@ class BxDevModule extends BxDolModule
         if(empty($sType))
             return echoJson([]);
 
-        $aResult = $this->getPopupCodeImport([
+        $aResult = $this->getPopupCodeImport($sType, [
             'form_name' => 'bx-dev-' . $sType . '-import-full',
             'form_action' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'import?type=' . $sType
         ]);
@@ -174,7 +175,7 @@ class BxDevModule extends BxDolModule
         echoJson($this->$sMethod($aResult['content'], $aResult['disable'] != 0));
     }
 
-    public function getPopupCodeImport($aParams)
+    public function getPopupCodeImport($sType, $aParams)
     {
     	$sJsObject = $this->_oConfig->getJsObject('main');
 
@@ -203,7 +204,7 @@ class BxDevModule extends BxDolModule
                     'type' => 'switcher',
                     'name' => 'disable',
                     'caption' => _t('_bx_dev_txt_disable_before_import'),
-                    'info' => '',
+                    'info' => _t('_bx_dev_txt_disable_before_import_note'),
                     'value' => '1',
                     'checked' => 0,
                     'db' => [
@@ -233,6 +234,7 @@ class BxDevModule extends BxDolModule
 
         if($oForm->isSubmittedAndValid()) {
             $sError = _t('_bx_dev_err_cannot_perform');
+            $sErrorWf = _t('_bx_dev_err_import_wrong_format');
 
             if(empty($_FILES['file']) || empty($_FILES['file']['tmp_name']))
                 return ['code' => 1, 'msg' => $sError];
@@ -248,7 +250,10 @@ class BxDevModule extends BxDolModule
 
             $aContent = json_decode($sContents, true);
             if(!is_array($aContent) || empty($aContent['meta']) || empty($aContent['data']))
-                return ['code' => 3, 'message' => $sError];
+                return ['code' => 3, 'message' => $sErrorWf];
+
+            if(empty($aContent['meta']['type']) || strcmp($aContent['meta']['type'], $sType) != 0)
+                return ['code' => 4, 'message' => $sErrorWf];
 
             return ['code' => 0, 'content' => $aContent, 'disable' => $oForm->getCleanValue('disable')];
         }

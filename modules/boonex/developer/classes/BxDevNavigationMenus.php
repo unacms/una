@@ -169,7 +169,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
     {
         $sAction = 'import_full';
 
-        $aResult = $this->oModule->getPopupCodeImport([
+        $aResult = $this->oModule->getPopupCodeImport('menus', [
             'form_name' => 'bx-dev-menus-import-full',
             'form_action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction
         ]);

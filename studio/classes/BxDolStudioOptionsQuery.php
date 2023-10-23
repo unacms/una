@@ -412,6 +412,8 @@ class BxDolStudioOptionsQuery extends BxDolDb implements iBxDolSingleton
                     $aMethod['params'][2] = 'value';
 
                     $sWhereClause .= " AND `to`.`type` NOT IN ('file', 'image')";
+                    if(!empty($aParams['exclude']) && is_array($aParams['exclude']))
+                        $sWhereClause .= " AND `to`.`name` NOT IN (" . $this->implode_escape($aParams['exclude']) . ")";
                 }
                 break;
 

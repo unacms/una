@@ -232,7 +232,7 @@ class BxBaseStudioOptions extends BxDolStudioOptions
         ]);
     }
 
-    public function getPopupCodeImport()
+    public function getPopupCodeImport($sType)
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
     	$sJsObject = $this->getJsObject();
@@ -281,6 +281,7 @@ class BxBaseStudioOptions extends BxDolStudioOptions
 
         if($oForm->isSubmittedAndValid()) {
             $sError = _t('_adm_stg_err_cannot_perform');
+            $sErrorWf = _t('_adm_stg_err_import_wrong_format');
 
             $aFile = $_FILES['file'];
             if(empty($aFile['tmp_name']))
@@ -296,8 +297,12 @@ class BxBaseStudioOptions extends BxDolStudioOptions
 
             $aContent = json_decode($sContents, true);
             if(!is_array($aContent) || empty($aContent['meta']) || empty($aContent['data']))
-                return ['code' => '3', 'message' => $sError];
+                return ['code' => '3', 'message' => $sErrorWf];
+            
+            if(empty($aContent['meta']['type']) || strcmp($aContent['meta']['type'], $sType) != 0)
+                return ['code' => '4', 'message' => $sErrorWf];
 
+            $iData = 0;
             foreach($aContent['data']['types'] as $aType) {
                 if(empty($aType['categories']) || !is_array($aType['categories']))
                     continue;
@@ -306,13 +311,18 @@ class BxBaseStudioOptions extends BxDolStudioOptions
                     if(empty($aCategory['options']) || !is_array($aCategory['options']))
                         continue;
 
-                    foreach($aCategory['options'] as $sOptName => $sOptValue)
+                    foreach($aCategory['options'] as $sOptName => $sOptValue) {
                         setParam($sOptName, $sOptValue);
+                        $iData += 1;
+                    }
                 }
             }
 
             $this->clearCache();
-            return ['eval' => $sJsObject . '.onImport(oData);'];
+            return [
+                'message' => _t('_adm_stg_msg_imported', $iData), 
+                'eval' => $sJsObject . '.onImport(oData);'
+            ];
         }
 
         return [

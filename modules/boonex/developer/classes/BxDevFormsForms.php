@@ -206,7 +206,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
     {
         $sAction = 'import_full';
 
-        $aResult = $this->oModule->getPopupCodeImport([
+        $aResult = $this->oModule->getPopupCodeImport('forms', [
             'form_name' => 'bx-dev-forms-import-full',
             'form_action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction
         ]);

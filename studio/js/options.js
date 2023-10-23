@@ -173,30 +173,6 @@ BxDolStudioOptions.prototype.mixActionWithValue = function(oSource, sAction, mix
 };
 
 BxDolStudioOptions.prototype.processResult = function(oData) {
-    var $this = this;
-
-    if(oData && oData.message != undefined && oData.message.length != 0)
-        $(document).dolPopupAlert({
-            message: oData.message
-        });
-
-    if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
-    	document.location = document.location;
-
-    if(oData && oData.popup != undefined) {
-    	var oPopup = $(oData.popup).hide(); 
-
-    	$('#' + oPopup.attr('id')).remove();
-        oPopup.prependTo('body').dolPopup({
-            fog: {
-                color: '#fff',
-                opacity: .7
-            },
-            closeOnOuterClick: false
-        });
-    }
-
-    if (oData && oData.eval != undefined)
-        eval(oData.eval);
+    processJsonData(oData);
 };
 /** @} */

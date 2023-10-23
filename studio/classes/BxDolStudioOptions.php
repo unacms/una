@@ -98,7 +98,7 @@ class BxDolStudioOptions extends BxDol
         $aResult = ['code' => 0, 'message' => ''];
         switch($sAction) {
             case 'import':
-                $aResult = array_merge($aResult, $this->getPopupCodeImport());
+                $aResult = array_merge($aResult, $this->getPopupCodeImport('settings'));
                 break;
 
             case 'export':
@@ -182,6 +182,10 @@ class BxDolStudioOptions extends BxDol
 
     public function download()
     {
+        $sType = 'settings';
+        $mixedFull = false;
+        $aOptionsExclude = ['sys_revision', 'sys_cron_time', 'sys_eq_time', 'sys_push_queue_time'];
+
         $aTypes = [];
         $this->oDb->getTypes(['type' => 'all'], $aTypes, false);
         if(empty($aTypes) || !is_array($aTypes))
@@ -197,7 +201,7 @@ class BxDolStudioOptions extends BxDol
             $aListCategories = [];
             foreach($aCategories as $aCategory) {
                 $aOptions = [];
-                $this->oDb->getOptions(['type' => 'by_category_id', 'value' => $aCategory['id'], 'for_export' => 1], $aOptions, false);
+                $this->oDb->getOptions(['type' => 'by_category_id', 'value' => $aCategory['id'], 'for_export' => 1, 'exclude' => $aOptionsExclude], $aOptions, false);
                 if(empty($aOptions) || !is_array($aOptions))
                     continue;
 
@@ -217,9 +221,11 @@ class BxDolStudioOptions extends BxDol
     	$sContent = json_encode([
             'meta' => [
                 'version' => bx_get_ver(),
-                'date' => date('D, d M Y H:i:s', $iNow)
+                'type' => $sType,
+                'full' => $mixedFull,
+                'date' => date('D, d M Y H:i:s', $iNow),
             ],
-            'date' => [
+            'data' => [
                 'types' => $aListTypes
             ]
     	]);
@@ -227,7 +233,7 @@ class BxDolStudioOptions extends BxDol
     	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Content-type: application/json");
         header("Content-Length: " . strlen($sContent));
-        header("Content-Disposition: attachment; filename=\"settings_". date('d_m_Y', $iNow) . ".json\"");
+        header("Content-Disposition: attachment; filename=\"" . $sType . ($mixedFull ? "_f" : "") . "_" . date('d_m_Y', $iNow) . ".json\"");
 
         echo $sContent;
         exit;
