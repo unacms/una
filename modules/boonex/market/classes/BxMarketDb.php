@@ -84,6 +84,10 @@ class BxMarketDb extends BxBaseModTextDb
         if(!empty($aParams['custom_or']) && is_array($aParams['custom_or']))
             $sWhereClause .= " AND (" . $this->arrayToSQL($aParams['custom_or'], ' OR ') . ") ";
 
+        //--- Exclude inactive authors
+        if(!empty($aParams['exclude_inactive_authors']))
+            $sJoinClause .= " INNER JOIN `sys_profiles` AS `tp` ON `te`.`author`=`tp`.`id` AND `tp`.`status`='active'";
+        
     	if(isset($aParams['start']) && !empty($aParams['per_page']))
             $sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
 
