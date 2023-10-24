@@ -229,7 +229,7 @@
     <string name="_bx_payment_form_processed_input_module_id"><![CDATA[Module]]></string>
     <string name="_bx_payment_form_processed_input_module_id_err"><![CDATA[You need to select a module here.]]></string>
     <string name="_bx_payment_form_processed_input_items_sys"><![CDATA[Items]]></string>
-    <string name="_bx_payment_form_processed_input_items"><![CDATA[Items]]></string>
+    <string name="_bx_payment_form_processed_input_items"><![CDATA[]]></string>
     <string name="_bx_payment_form_processed_input_items_err"><![CDATA[You need to select at least one item from the list here.]]></string>
     <string name="_bx_payment_form_processed_input_add"><![CDATA[Add]]></string>
     <string name="_bx_payment_form_processed_input_add_sys"><![CDATA[Add]]></string>
@@ -394,8 +394,11 @@
     <string name="_bx_payment_txt_license"><![CDATA[License]]></string>
     <string name="_bx_payment_txt_seller"><![CDATA[Seller]]></string>
     <string name="_bx_payment_txt_author"><![CDATA[Author]]></string>
+    <string name="_bx_payment_txt_item"><![CDATA[Product]]></string>
+    <string name="_bx_payment_txt_quantity"><![CDATA[Qt.]]></string>
     <string name="_bx_payment_txt_order"><![CDATA[Order ID]]></string>
     <string name="_bx_payment_txt_price"><![CDATA[Price]]></string>
+    <string name="_bx_payment_txt_price_sold"><![CDATA[Sold Price]]></string>
     <string name="_bx_payment_txt_processed_with"><![CDATA[Processed with]]></string>
     <string name="_bx_payment_txt_message"><![CDATA[Result]]></string>
     <string name="_bx_payment_txt_date"><![CDATA[Date]]></string>

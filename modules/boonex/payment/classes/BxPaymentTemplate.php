@@ -383,27 +383,35 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $oGrid->getCode();
     }
 
-    public function displayItems($sType, $aItems = array())
+    public function displayItems($iSellerId, $sType, $aItems = [], $aParams = [])
     {
-        $aTmplVarsItems = array();
+        $oModule = $this->getModule();
+        $oForm = new BxTemplFormView([]);
 
-        $oForm = new BxTemplFormView(array());
+        $sSign = !$this->_oConfig->isSingleSeller() ? $oModule->getVendorCurrencySign($iSellerId) : $this->_oConfig->getDefaultCurrencySign();
 
+        $bFilter = !empty($aParams['filter']);
+        $sFilter = $bFilter ? $aParams['filter'] : '';
+        
+        $aTmplVarsItems = [];
         if(!empty($aItems) && is_array($aItems))
             foreach($aItems as $aItem) {
+                if($bFilter && stripos($aItem['title'], $sFilter) === false)
+                    continue;
+
                 $fPrice = $this->_oConfig->getPrice($sType, $aItem);
 
-                $aInputHidden = array(
-                    'type' => 'hidden',
-                    'name' => 'item-price-' . $aItem['id'],
-                    'value' => $fPrice
-                );
                 $aInputCheckbox = array(
                     'type' => 'checkbox',
                     'name' => 'items[]',
                     'value' => $aItem['id']
                 );
-                $aInputText = array(
+                $aInputPrice = array(
+                    'type' => 'text',
+                    'name' => 'item-price-' . $aItem['id'],
+                    'value' => $fPrice
+                );
+                $aInputQuantity = array(
                     'type' => 'text',
                     'name' => 'item-quantity-' . $aItem['id'],
                     'value' => 1
@@ -412,6 +420,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                 $aTmplVarsItems[$aItem['name']] = array(
                     'id' => $aItem['id'],
                     'price' => $fPrice,
+                    'price_f' => _t_format_currency_ext($fPrice, ['sign' => $sSign]),
                     'bx_if:link' => array(
                         'condition' => !empty($aItem['url']),
                         'content' => array(
@@ -425,21 +434,40 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                             'title' => $aItem['title']
                         )
                     ),
-                    'input_hidden' => $oForm->genInput($aInputHidden),
                     'input_checkbox' => $oForm->genInput($aInputCheckbox),
-                    'input_text' => $oForm->genInput($aInputText),
+                    'input_price' => $oForm->genInput($aInputPrice),
+                    'input_quantity' => $oForm->genInput($aInputQuantity),
                 );
             }
 
-        if(!empty($aTmplVarsItems) && is_array($aTmplVarsItems)) {
+        
+        $bTmplVarsItems = !empty($aTmplVarsItems) && is_array($aTmplVarsItems);
+        if($bTmplVarsItems) {
             ksort($aTmplVarsItems);
             $aTmplVarsItems = array_values($aTmplVarsItems);
         }
         else 
             $aTmplVarsItems = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
+        $sInputFilter = '';
+        if($bFilter || $bTmplVarsItems) {
+            $sJsMethod = 'javascript:' . $this->_oModule->_oConfig->getJsObject('processed') . '.filterItems(event, this);';
+            $aInputFilter = [
+                'type' => 'text',
+                'name' => 'filter',
+                'value' => $sFilter,
+                'attrs' => [
+                    'placeholder' => _t('_sys_search_placeholder'),
+                    'onkeydown' => $sJsMethod,
+                    'onpaste' => $sJsMethod
+                ]
+            ];
+            $sInputFilter = $oForm->genInput($aInputFilter);
+        }       
+
         return $this->parseHtmlByName('items.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('processed', 'order_processed_items'),
+            'input_filter' => $sInputFilter,
             'bx_repeat:items' => $aTmplVarsItems
         ));
     }

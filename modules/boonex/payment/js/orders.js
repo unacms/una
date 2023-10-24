@@ -128,12 +128,44 @@ BxPaymentOrders.prototype.selectModule = function(oSelect) {
             _t:oDate.getTime()
         },
         function(oData) {
-        	oPopup.bx_loading(false);
+            oPopup.bx_loading(false);
 
-        	processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );
+};
+
+BxPaymentOrders.prototype.filterItems = function(e, oFilter) {
+    var $this = this;
+    var oDate = new Date();
+
+    var oPopup = $('#' + this._aHtmlIds['order_processed_add']);
+    oPopup.bx_loading(true);
+
+    if ('undefined' != typeof(glBxPaymentOrdersTimeoutHandler) && glBxPaymentOrdersTimeoutHandler)
+        clearTimeout(glBxPaymentOrdersTimeoutHandler);
+
+    glBxPaymentOrdersTimeoutHandler = setTimeout(function () {
+        $.get(
+            $this._sActionsUrl + 'get_items/single/' + parseInt(oPopup.find("[name = 'module_id']").val()) + '/',
+            {
+                filter: $(oFilter).val(),
+                _t:oDate.getTime()
+            },
+            function(oData) {
+                oPopup.bx_loading(false);
+
+                processJsonData(oData);
+
+                oFilter = oPopup.find("[name = 'filter']").focus().get(0);
+                oFilter.selectionStart = oFilter.selectionEnd = oFilter.value.length;
+            },
+            'json'
+        );
+    }, 500);
+
+    return true;
 };
 
 BxPaymentOrders.prototype.onSelectModule = function(oData) {

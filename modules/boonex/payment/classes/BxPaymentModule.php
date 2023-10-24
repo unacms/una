@@ -139,12 +139,15 @@ class BxPaymentModule extends BxBaseModPaymentModule
     {
     	$iSellerId = $this->getProfileId();
         $aItems = $this->callGetCartItems((int)$iModuleId, array($iSellerId));
+        $aParams = [
+            'filter' => bx_get('filter')
+        ];
 
-        echoJson(array(
+        echoJson([
             'code' => 0, 
             'eval' => $this->_oConfig->getJsObject('processed') . '.onSelectModule(oData);', 
-            'data' => $this->_oTemplate->displayItems($sType, $aItems)
-        ));
+            'data' => $this->_oTemplate->displayItems($iSellerId, $sType, $aItems, $aParams)
+        ]);
     }
 
     public function actionGetFilterValuesItem($iSellerId, $iModuleId)

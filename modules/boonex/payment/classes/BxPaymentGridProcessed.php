@@ -63,7 +63,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         foreach($aModules as $aModule)
            $oForm->aInputs['module_id']['values'][] = array('key' => $aModule['id'], 'value' => $aModule['title']);
 
-        $oForm->aInputs['items']['content'] = $this->_oModule->_oTemplate->displayItems($sType);
+        $oForm->aInputs['items']['content'] = $this->_oModule->_oTemplate->displayItems($this->_aQueryAppend['seller_id'], $sType);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -73,7 +73,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
             if(empty($aItemIds) || !is_array($aItemIds))
                 return echoJson(array('msg' => $this->_sLangsPrefix . 'err_empty_items'));
 
-            $aItems = array();
+            $aItems = [];
             $sPriceKey = $this->_oModule->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
             foreach($aItemIds as $iItemId) {
                 $iItemId = (int)$iItemId;
@@ -83,11 +83,11 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
                 if($iItemQuantity <= 0)
                     return echoJson(array('msg' => $this->_sLangsPrefix . 'err_wrong_quantity'));
 
-                $aItems[] = array(
+                $aItems[$iItemId] = [
                     'id' => $iItemId, 
                      $sPriceKey => $fItemPrice, 
                     'quantity' => $iItemQuantity
-                );
+                ];
             }
 
             $mixedResult = $this->_oModule->getObjectOrders()->addOrder(array(
@@ -99,7 +99,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
                 'error_code' => 0,
                 'error_msg' => 'Manually processed',        		
                 'module_id' => $oForm->getCleanValue('module_id'),
-                'items' => $aItems
+                'items' => array_values($aItems)
             ));
             if(is_array($mixedResult))
                 return echoJson($mixedResult);
@@ -108,8 +108,12 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
             if(!$this->_oModule->registerPayment($iPendingId))
                 return echoJson(array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform')));
 
-            $aOrders = $this->_oModule->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => $iPendingId, 'with_key' => 'id'));
-            return echoJson(array('grid' => $this->getCode(false), 'blink' => array_keys($aOrders)));
+            $aOrders = $this->_oModule->_oDb->getOrderProcessed(['type' => 'pending_id', 'pending_id' => $iPendingId, 'with_key' => 'id']);
+            foreach($aOrders as $iOrder => $aOrder)
+                if((float)$aOrder['amount'] != ($fAmount = $aItems[$aOrder['item_id']][$sPriceKey]))
+                    $this->_oModule->_oDb->updateOrderProcessed($iOrder, ['amount' => $fAmount]);
+
+            return echoJson(['grid' => $this->getCode(false), 'blink' => array_keys($aOrders)]);
         }
 
         $sKey = 'order_' . $this->_sOrdersType . '_add';

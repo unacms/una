@@ -230,7 +230,7 @@
     <string name="_bx_payment_form_processed_input_module_id"><![CDATA[Модуль]]></string>
     <string name="_bx_payment_form_processed_input_module_id_err"><![CDATA[Вам необходимо выбрать модуль.]]></string>
     <string name="_bx_payment_form_processed_input_items_sys"><![CDATA[Товары]]></string>
-    <string name="_bx_payment_form_processed_input_items"><![CDATA[Товары]]></string>
+    <string name="_bx_payment_form_processed_input_items"><![CDATA[]]></string>
     <string name="_bx_payment_form_processed_input_items_err"><![CDATA[Вам необходимо выбрать хотя бы один товар из списка.]]></string>
     <string name="_bx_payment_form_processed_input_add"><![CDATA[Добавить]]></string>
     <string name="_bx_payment_form_processed_input_add_sys"><![CDATA[Добавить]]></string>
@@ -396,8 +396,11 @@
     <string name="_bx_payment_txt_license"><![CDATA[Лицензия]]></string>
     <string name="_bx_payment_txt_seller"><![CDATA[Продавец]]></string>
     <string name="_bx_payment_txt_author"><![CDATA[Автор]]></string>
+    <string name="_bx_payment_txt_item"><![CDATA[Товар]]></string>
+    <string name="_bx_payment_txt_quantity"><![CDATA[Шт.]]></string>
     <string name="_bx_payment_txt_order"><![CDATA[ID заказа]]></string>
     <string name="_bx_payment_txt_price"><![CDATA[Цена]]></string>
+    <string name="_bx_payment_txt_price_sold"><![CDATA[Цена продажи]]></string>
     <string name="_bx_payment_txt_processed_with"><![CDATA[Обработан используя]]></string>
     <string name="_bx_payment_txt_message"><![CDATA[Результат]]></string>
     <string name="_bx_payment_txt_date"><![CDATA[Дата]]></string>

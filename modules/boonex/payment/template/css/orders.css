@@ -21,27 +21,35 @@ div.bx-payment-pa-item {
     -webkit-align-items: center;
     align-items: center;
 }
-div.bx-payment-pa-item-chb,
+div.bx-payment-pa-item.bx-payment-pai-filter .bx-form-input-text {
+    width: 40%;
+}
+
 div.bx-payment-pa-item-title,
 div.bx-payment-pa-item-quantity {
     position: relative;
 }
-div.bx-payment-pa-item-chb input {
-    display: block;
-    margin: 0px;
-    padding: 0px;
-}
 div.bx-payment-pa-item-title {
-    width: 80%;
+    width: 50%;
 }
 div.bx-payment-pa-item-title-cnt {
-	TEXT-OVERFLOW: ellipsis;
+    TEXT-OVERFLOW: ellipsis;
     -o-text-overflow: ellipsis;
     white-space: nowrap;
-	overflow: hidden;
+    overflow: hidden;
+}
+div.bx-payment-pa-item-title .bx-form-input-checkbox {
+    margin: 0px;
+    padding: 0px;
+    vertical-align: middle;
+}
+div.bx-payment-pa-item-price {
+    width: 20%;
+    box-sizing: border-box;
 }
 div.bx-payment-pa-item-quantity {
-    width: 16%;
+    width: 10%;
+    box-sizing: border-box;
 }
 
 /*--- View Order ---*/
