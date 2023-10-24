@@ -19,6 +19,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bAllowDelete;
     protected $_bShowAll;
     protected $_bCountAllViews;
+    protected $_bContentOwnActions;
     protected $_bRepostOwnActions;
     protected $_bHideUponDelete;
 
@@ -404,6 +405,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bAllowDelete = getParam($sOptionPrefix . 'enable_delete') == 'on';
         $this->_bShowAll = getParam($sOptionPrefix . 'enable_show_all') == 'on';
         $this->_bCountAllViews = getParam($sOptionPrefix . 'enable_count_all_views') == 'on';
+        $this->_bContentOwnActions = getParam($sOptionPrefix . 'enable_content_own_actions') == 'on';
         $this->_bRepostOwnActions = getParam($sOptionPrefix . 'enable_repost_own_actions') == 'on';
         $this->_bHideUponDelete = getParam($sOptionPrefix . 'enable_hide_upon_delete') == 'on';
 
@@ -548,6 +550,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isCountAllViews()
     {
         return $this->_bCountAllViews;
+    }
+
+    public function isContentOwnActions()
+    {
+        return $this->_bContentOwnActions;
     }
 
     public function isRepostOwnActions()

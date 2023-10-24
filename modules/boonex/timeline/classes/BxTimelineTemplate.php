@@ -2996,7 +2996,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($mixedResult === false)
             return '';
 
-        $this->_preparetDataActions($aEvent, $mixedResult);
+        $this->_preparetDataActions(false, $aEvent, $mixedResult);
         return $mixedResult;
     }
 
@@ -3112,7 +3112,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 break;
         }
 
-        $this->_preparetDataActions($aEvent, $aResult);
+        $this->_preparetDataActions(true, $aEvent, $aResult);
         return $aResult;
     }
 
@@ -3132,17 +3132,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return 0;
     }
 
-    protected function _preparetDataActions(&$aEvent, &$aResult)
+    protected function _preparetDataActions($bCommon, &$aEvent, &$aResult)
     {
         if(empty($aEvent) || !is_array($aEvent) || empty($aEvent['id']))
             return;
 
         $oModule = $this->getModule();
+        $bUpdateActions = $bCommon || !$this->_oConfig->isContentOwnActions();
 
         $sSystem = $this->_oConfig->getObject('view');
         if(empty($aResult['views'])) {
             $aResult['views'] = array();
-            if($oModule->getViewObject($sSystem, $aEvent['id']) !== false)
+            if($bUpdateActions && $oModule->getViewObject($sSystem, $aEvent['id']) !== false)
                 $aResult['views'] = array(
                     'system' => $sSystem,
                     'object_id' => $aEvent['id'],
@@ -3153,7 +3154,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSystem = $this->_oConfig->getObject('vote');
         if(empty($aResult['votes'])) {
             $aResult['votes'] = array();
-            if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
+            if($bUpdateActions && $oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
                 $aResult['votes'] = array(
                     'system' => $sSystem,
                     'object_id' => $aEvent['id'],
@@ -3164,7 +3165,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSystem = $this->_oConfig->getObject('reaction');
         if(empty($aResult['reactions'])) {
             $aResult['reactions'] = array();
-            if($oModule->getReactionObject($sSystem, $aEvent['id']) !== false)
+            if($bUpdateActions && $oModule->getReactionObject($sSystem, $aEvent['id']) !== false)
                 $aResult['reactions'] = array(
                     'system' => $sSystem,
                     'object_id' => $aEvent['id'],
@@ -3175,7 +3176,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSystem = $this->_oConfig->getObject('score');
         if(empty($aResult['scores'])) {
             $aResult['scores'] = array();
-            if($oModule->getScoreObject($sSystem, $aEvent['id']) !== false)
+            if($bUpdateActions && $oModule->getScoreObject($sSystem, $aEvent['id']) !== false)
                 $aResult['scores'] = array(
                     'system' => $sSystem,
                     'object_id' => $aEvent['id'],
@@ -3186,7 +3187,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSystem = $this->_oConfig->getObject('report');
         if(empty($aResult['reports'])) {
             $aResult['reports'] = array();
-            if($oModule->getReportObject($sSystem, $aEvent['id']) !== false)
+            if($bUpdateActions && $oModule->getReportObject($sSystem, $aEvent['id']) !== false)
                 $aResult['reports'] = array(
                     'system' => $sSystem,
                     'object_id' => $aEvent['id'],
@@ -3197,7 +3198,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSystem = $this->_oConfig->getObject('comment');
         if(empty($aResult['comments'])) {
             $aResult['comments'] = array();
-            if($oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
+            if($bUpdateActions && $oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
                 $aResult['comments'] = array(
                     'system' => $sSystem,
                     'object_id' => $aEvent['id'],

@@ -15,6 +15,7 @@
     <string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>
     <string name="_bx_timeline_option_enable_show_all"><![CDATA[Show all items in Public Feed including ones which were posted in personal Feeds]]></string>
     <string name="_bx_timeline_option_enable_count_all_views"><![CDATA[Count views for all items in the Feed]]></string>
+    <string name="_bx_timeline_option_enable_content_own_actions"><![CDATA[Event uses content's own actions (views, likes, etc)]]></string>
     <string name="_bx_timeline_option_enable_repost_own_actions"><![CDATA[Repost uses its own actions (views, likes, etc)]]></string>
     <string name="_bx_timeline_option_enable_hide_upon_delete"><![CDATA[Inactivate items upon hiding instead of deletion]]></string>
     <string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Number of items in context (profile) timeline]]></string>
