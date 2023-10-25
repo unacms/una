@@ -29,6 +29,24 @@ class BxBaseCmtsServices extends BxDol
 
         return $oCmts->serviceGetAuthor((int)$aCmt['cmt_id']);
     }
+    
+    public function serviceGetAuthorBlock()
+    {
+        if(bx_is_api()){
+            $iCommentId = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
+            $sSystem =  bx_process_input(bx_get('sys'));
+            $iObjectId = bx_process_input(bx_get('id'), BX_DATA_INT);
+            
+            $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
+            $aCmt = $oCmts->getCommentRow($iCommentId);
+
+            return [bx_api_get_block('entity_author', [
+                'author_data' => BxDolProfile::getData($aCmt['cmt_author_id']),
+                'entry_date' => $aCmt['cmt_time'],
+                'menu_manage' => []
+            ])];
+        }
+    }
 
     public function serviceGetInfo($iCmtUniqId, $bSearchableFieldsOnly = true)
     {
@@ -45,6 +63,16 @@ class BxBaseCmtsServices extends BxDol
 
     public function serviceGetBlockView($sSystem = '', $iObjectId = 0, $iCommentId = 0)
     {
+        if (bx_is_api()){
+            $aParams['comment_id'] = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
+            $aParams['module'] =  bx_process_input(bx_get('sys'));
+            $aParams['object_id'] = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+            $aRv = $this->serviceGetDataApi($aParams);
+            $aRv['browse']['data']['total_count'] = 0;
+            return [$aRv];
+        }
+        
         if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
             $sSystem = bx_process_input($sSystem);
 
