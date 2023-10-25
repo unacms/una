@@ -2083,8 +2083,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'image' => $this->serviceGetThumb($iId),
             'cover' => $this->serviceGetCover($iId),
         ];
-        
-        if ($aParams['template'] == 'unit_wo_info')
+
+        if(isset($aParams['template']) && $aParams['template'] == 'unit_wo_info')
             return $aResult;
 
         if(isset($aParams['extended']) && $aParams['extended'] === true)

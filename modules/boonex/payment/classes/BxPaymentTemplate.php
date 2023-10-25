@@ -11,7 +11,7 @@
 
 class BxPaymentTemplate extends BxBaseModPaymentTemplate
 {
-	protected $_sLangsPrefix;
+    protected $_sLangsPrefix;
 
     function __construct(&$oConfig, &$oDb)
     {
@@ -188,15 +188,18 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	return $this->_displaySubscriptionData('change_billing', $iId);
     }
 
-	public function displayBlockCarts($iClientId)
+    public function displayBlockCarts($iClientId)
     {
     	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_carts'));
         if(!$oGrid)
             return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
-		$oGrid->addQueryParam('client_id', $iClientId);
+        $oGrid->addQueryParam('client_id', $iClientId);
+        
+        if($this->_bIsApi)
+            return $oGrid->getCodeAPI();
 
-		$this->addJsCssCart(BX_PAYMENT_TYPE_SINGLE);
+        $this->addJsCssCart(BX_PAYMENT_TYPE_SINGLE);
         return $this->displayJsCode('cart') . $oGrid->getCode();
     }
 
@@ -208,6 +211,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
         $oGrid->addQueryParam('client_id', $iClientId);
         $oGrid->addQueryParam('seller_id', $iSellerId);
+
+        if($this->_bIsApi)
+            return $oGrid->getCodeAPI();
 
         $this->addJsCssCart(BX_PAYMENT_TYPE_SINGLE, $iSellerId);
         return $this->displayJsCode('cart') . $oGrid->getCode();

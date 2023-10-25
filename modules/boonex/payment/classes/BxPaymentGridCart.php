@@ -154,6 +154,57 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     	return $sActions . parent::_getActions ($sType, $sActionData, $isSmall, $isDisabled, $isPermanentState, $aRow);
     }
 
+    protected function _getActionsAPI($sType)
+    {
+        if($sType != 'bulk' || empty($this->_aQueryAppend['seller_id']))
+            return parent::_getActionsAPI($sType);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iClientId = (int)$this->_aQueryAppend['client_id'];
+        $iSellerId = (int)$this->_aQueryAppend['seller_id'];
+        $aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iSellerId);
+
+        $bCreditsOnly = $this->_oModule->_oConfig->isCreditsOnly();
+
+        $bPayForCredits = true;
+        if(!empty($aCartInfo['items']) && is_array($aCartInfo['items']))
+            foreach($aCartInfo['items'] as $aItem) {
+                $aModule = $this->_oModule->_oDb->getModuleById((int)$aItem['module_id']);
+                if($aModule['name'] != $CNF['MODULE_CREDITS']) {
+                    $bPayForCredits = false;
+                    break;
+                }
+            }
+
+        $aActions = [];
+        $aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($iSellerId);
+        foreach($aProviders as $aProvider) {
+            $bProviderCredits = $aProvider['name'] == $CNF['OBJECT_PP_CREDITS'];
+
+            /*
+             * Hide all non-Credits payment providers when 'credits only' mode is enabled 
+             * and purchasing items aren't credits.
+             */
+            if($bCreditsOnly && !$bProviderCredits && !$bPayForCredits)
+                continue;
+
+            /*
+             * Hide Credits payment provider when paying for credits.
+             */
+            if($bProviderCredits && $bPayForCredits)
+                continue;
+            
+            $aActions[] = [
+                'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
+                'icon' => '',
+                'icon_only' => 0,
+                'confirm' => 0,
+            ];
+        }
+        return $aActions;
+    }    
+
     protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(empty($this->_aQueryAppend['client_id']) || empty($this->_aQueryAppend['seller_id']))
