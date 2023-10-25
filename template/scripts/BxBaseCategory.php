@@ -119,13 +119,23 @@ class BxBaseCategory extends BxDolCategory
             if (!$bDisplayEmptyCats && !$iNum)
                 continue;
             
-            $aVars['bx_repeat:cats'][] = array(
+            $sIcon = '';
+            if($this->_aObject['module']){
+                $oModule = BxDolModule::getInstance($this->_aObject['module']);
+                $CNF = $oModule->_oConfig->CNF;
+                if (isset($CNF['OBJECT_GRID_CATEGORIES'])){
+                    $aCategoryData = $this->_oModule->_oDb->getCategories(['type' => 'by_category', 'category' => $sValue]);
+                    $sIcon =  $aCategoryData['icon'];
+                }
+            }
+            
+            $aVars['bx_repeat:cats'][] = [
                 'url' => $mProfileContextId ? $this->getCategoryUrl($sValue, array_merge($aParams, ['context_id' => $mProfileContextId])) : $this->getCategoryUrl($sValue, $aParams),
                 'name' => $sName,
                 'value' => $sValue,
                 'num' => $iNum,
                 'selected_class' => $sValue == bx_get('category') ? 'bx-category-list-item-selected' : '',
-            );
+            ];
         }
         
         if(bx_is_api()) {

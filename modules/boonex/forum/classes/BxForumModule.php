@@ -16,6 +16,21 @@ class BxForumModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $aResult = parent::decodeDataApi($aData, $bExtended);
+        
+        $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+        if(!$oCategory)
+            return false;
+
+        $aResult['category'] = $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]);
+
+        return $aResult;
+    }
+    
     public function sortParticipants ($aParticipants, $iProfileIdLastComment, $iProfileIdAuthor, $iProfileIdCurrent = 0)
     {
         if (!$iProfileIdCurrent)
