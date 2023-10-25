@@ -134,6 +134,7 @@ class BxBaseCategory extends BxDolCategory
                 'name' => $sName,
                 'value' => $sValue,
                 'num' => $iNum,
+                'icon' => $sIcon,
                 'selected_class' => $sValue == bx_get('category') ? 'bx-category-list-item-selected' : '',
             ];
         }
