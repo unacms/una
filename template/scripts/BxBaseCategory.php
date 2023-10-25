@@ -123,9 +123,9 @@ class BxBaseCategory extends BxDolCategory
             if($this->_aObject['module']){
                 $oModule = BxDolModule::getInstance($this->_aObject['module']);
                 $CNF = $oModule->_oConfig->CNF;
-                if (isset($CNF['OBJECT_GRID_CATEGORIES'])){
-                    $aCategoryData = $this->_oModule->_oDb->getCategories(['type' => 'by_category', 'category' => $sValue]);
-                    $sIcon =  $aCategoryData['icon'];
+                if (method_exists($oModule->_oDb, 'getCategories')){
+                    $aCategoryData = $oModule->_oDb->getCategories(['type' => 'by_category', 'category' => $sValue]);
+                    $sIcon = isset($aCategoryData['icon']) ? $aCategoryData['icon'] : '';
                 }
             }
             
