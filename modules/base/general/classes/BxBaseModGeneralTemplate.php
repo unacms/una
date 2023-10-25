@@ -15,12 +15,16 @@
 class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 {
     protected $MODULE;
-    
+
+    protected $_bIsApi;
+
     public $aMethodsToCallAddJsCss = array('entry', 'unit');
 
-    function __construct(&$oConfig, &$oDb)
+    public function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+
+        $this->_bIsApi = bx_is_api();
     }
 
     public function addLocationBase()

@@ -14,14 +14,18 @@ class BxBaseModPaymentCart extends BxDol
     protected $MODULE;
     protected $_oModule;
 
+    protected $_bIsApi;
+
     protected $_bSingleSeller;
     protected $_iSingleSeller;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_bSingleSeller = $this->_oModule->_oConfig->isSingleSeller();
 

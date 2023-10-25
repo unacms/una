@@ -286,6 +286,36 @@ class BxBaseGrid extends BxDolGrid
     }
 
     /**
+     * Get grid code API.
+     * @return array
+     */
+    public function getCodeAPI()
+    {
+        $sFilter = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
+        $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
+        $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
+
+        $iStart = 0;
+        if($this->_aOptions['paginate_get_start'] && ($iStartGet = (int)bx_get($this->_aOptions['paginate_get_start'])) >= 0)
+            $iStart = $iStartGet;
+
+        $iPerPage = 10;
+        if($this->_aOptions['paginate_get_per_page'] && ($iPerPageGet = (int)bx_get($this->_aOptions['paginate_get_per_page'])) > 0)
+            $iPerPage = $iPerPageGet;
+        else if($this->_aOptions['paginate_per_page'])
+            $iPerPage = (int)$this->_aOptions['paginate_per_page']; 
+
+        return [
+            'header' => $this->_getRowHeadAPI(),
+            'data' => $this->_getData($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage),
+            'actions' => [
+                'independent' => $this->_getActionsAPI('independent'), 
+                'bulk' => $this->_getActionsAPI('bulk'),
+            ]
+        ];
+    }
+
+    /**
      * Reset query params, like filter and page number
      */
     public function resetQueryParams()
@@ -296,7 +326,7 @@ class BxBaseGrid extends BxDolGrid
         }
     }
 
-    protected function _getRowHead ()
+    protected function _getRowHead()
     {
         $aRet = array();
         foreach ($this->_aOptions['fields'] as $sKey => $a) {
@@ -309,6 +339,17 @@ class BxBaseGrid extends BxDolGrid
             $aRet[] = array('header_cell' => $this->$sMethod($sKey, $a));
         }
         return $aRet;
+    }
+
+    protected function _getRowHeadAPI()
+    {
+        $aHeader = [];
+        foreach($this->_aOptions['fields'] as $sKey => $aField)
+            $aHeader[] = [
+                'title' => bx_process_output($aField['title'])
+            ];
+
+        return $aHeader;
     }
 
     protected function _getCellHeaderDefault ($sKey, $aField)
@@ -593,6 +634,15 @@ class BxBaseGrid extends BxDolGrid
             $sRet .= $this->$sFunc($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
         }
         return $sRet;
+    }
+
+    protected function _getActionsAPI ($sType)
+    {
+        $sActionsType = 'actions_' . $sType;
+        if(empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
+            return [];
+
+        return $this->_aOptions[$sActionsType];
     }
 
     protected function _getActionDefault ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

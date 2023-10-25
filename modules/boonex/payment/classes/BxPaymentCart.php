@@ -53,9 +53,16 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	if(bx_get('seller_id') !== false)
             return '';
 
-        return array(
-            'content' => $this->_oModule->_oTemplate->displayBlockCarts($iUserId)
-        );
+        $mixedContent = $this->_oModule->_oTemplate->displayBlockCarts($iUserId);
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('grid', $mixedContent)
+            ];
+
+        return [
+            'content' => $mixedContent
+        ];
     }
 
     /**
@@ -80,25 +87,32 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $CNF = &$this->_oModule->_oConfig->CNF;
 
     	if(!$this->_bSingleSeller && bx_get('seller_id') === false)
-            return '';
+            return $this->_bIsApi ? [bx_api_get_msg('')] : '';
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
-            return array(
+            return $this->_bIsApi ? [bx_api_get_msg(_t($CNF['T']['ERR_REQUIRED_LOGIN']))] : [
             	'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
-            );
+            ];
 
     	$iSellerId = !$this->_bSingleSeller ? bx_process_input(bx_get('seller_id'), BX_DATA_INT) : $this->_oModule->_oConfig->getSiteAdmin();
     	if(empty($iSellerId))
-            return array(
+            return $this->_bIsApi ? [bx_api_get_msg(_t($CNF['T']['ERR_UNKNOWN_VENDOR']))] : [
                 'content' => MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']))
-            );
+            ];
+
+        $mixedContent = $this->_oModule->_oTemplate->displayBlockCart($iUserId, $iSellerId);
+
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('grid', $mixedContent)
+            ];
 
         $aSeller = $this->_oModule->getProfileInfo($iSellerId);
-        return array(
+        return [
             'title' => _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']),
-            'content' => $this->_oModule->_oTemplate->displayBlockCart($iUserId, $iSellerId)
-        );
+            'content' => $mixedContent
+        ];
     }
 
     /**
