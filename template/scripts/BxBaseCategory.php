@@ -14,6 +14,11 @@
 class BxBaseCategory extends BxDolCategory
 {
     protected $_oTemplate;
+
+    protected $_oModule;
+    protected $_bModule;
+
+    protected $_sBrowseAllUrl;
     protected $_sBrowseUrl;
 
     public function __construct ($aObject, $oTemplate = null)
@@ -25,37 +30,56 @@ class BxBaseCategory extends BxDolCategory
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
-		$this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', array(
-			'cat' => '{category}',
-			'keyword' => '{keyword}'
-		), true, ['{category}', '{keyword}']) . '{sections}' . '{context}';
+        $this->_oModule = null;
+        if(!empty($this->_aObject['module']))
+            $this->_oModule = BxDolModule::getInstance($this->_aObject['module']);
+        $this->_bModule = $this->_oModule !== null;
+
+        $this->_sBrowseAllUrl = '';
+        $this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', [
+            'cat' => '{category}',
+            'keyword' => '{keyword}'
+        ], true, ['{category}', '{keyword}']) . '{sections}' . '{context}';
+
+        if($this->_bModule) {
+            $CNF = &$this->_oModule->_oConfig->CNF;
+            
+            if(!empty($CNF['URL_HOME']))
+                $this->_sBrowseAllUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+
+            if(!empty($CNF['URL_CATEGORY']))
+                $this->_sBrowseUrl = bx_append_url_params(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORY']), [
+                    'category' => '{keyword}'
+                ], true, ['{keyword}']);
+        }
     }
 
+    public function getCategoryIcon($sValue)
+    {
+        return 'star';
+    }
+            
     public function getCategoryTitle($sValue)
     {
     	$a = BxDolForm::getDataItems($this->_aObject['list_name']);
         if (!$a || !isset($a[$sValue]))
             return '';
 
-		return $a[$sValue];
+        return $a[$sValue];
     }
 
     public function getCategoryUrl($sValue, $aParams = [])
     {
-        $sPageUrl = $this->_sBrowseUrl;
-        if (isset($aParams['page']))
-            $sPageUrl = $aParams['page'];
-        
-        $s = BX_DOL_URL_ROOT . bx_replace_markers($sPageUrl, array(
-        	'category' => rawurlencode($this->getObjectName()),
-        	'keyword' => rawurlencode($sValue),
-    		'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : '',
+        $s = BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, [
+            'category' => rawurlencode($this->getObjectName()),
+            'keyword' => rawurlencode($sValue),
+            'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : '',
             'context' => isset($aParams['context_id']) ? '&context_id=' . $aParams['context_id'] : ''
-        ));
-        
+        ]);
+
         if (bx_is_api())
             return bx_api_get_relative_url($s);
-        
+
         return $s;
     }
 
@@ -83,34 +107,22 @@ class BxBaseCategory extends BxDolCategory
         $mProfileContextId = false;
         if ($aContextInfo !== false)
             $mProfileContextId = $aContextInfo['context_profile_id'];
-        
+
         $a = BxDolForm::getDataItems($this->_aObject['list_name']);
         if (!$a)
-            return $bAsArray ? array() : '';
-        
-        $sAllCategoriesLink = '';
-        $aParams = [];
-        if($this->_aObject['module']){
-            $oModule = BxDolModule::getInstance($this->_aObject['module']);
-            $CNF = $oModule->_oConfig->CNF;
-            if (isset($CNF['URL_CATEGORY'])){
-                $aParams['page'] = bx_append_url_params(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORY']), ['category' => '{keyword}'
-                ], true, ['{keyword}']);
-            }
-            $sAllCategoriesLink = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
-        }
+            return $bAsArray ? [] : '';
 
         $aVars = [
             'bx_repeat:cats' => [],
             'bx_if:show_all' => [
-                'condition' => $sAllCategoriesLink != '',
+                'condition' => $this->_sBrowseAllUrl != '',
                 'content' => [
-                    'url' => $sAllCategoriesLink,
+                    'url' => $this->_sBrowseAllUrl,
                     'name' => _t('all')
                 ]
             ]
         ];
-        
+
         foreach ($a as $sValue => $sName) {
             if (!is_numeric($sValue) && !$sValue)
                 continue;
@@ -119,29 +131,18 @@ class BxBaseCategory extends BxDolCategory
             if (!$bDisplayEmptyCats && !$iNum)
                 continue;
             
-            $sIcon = '';
-            if($this->_aObject['module']){
-                $oModule = BxDolModule::getInstance($this->_aObject['module']);
-                $CNF = $oModule->_oConfig->CNF;
-                if (method_exists($oModule->_oDb, 'getCategories')){
-                    $aCategoryData = $oModule->_oDb->getCategories(['type' => 'by_category', 'category' => $sValue]);
-                    $sIcon = isset($aCategoryData['icon']) ? $aCategoryData['icon'] : '';
-                }
-            }
-            
             $aVars['bx_repeat:cats'][] = [
-                'url' => $mProfileContextId ? $this->getCategoryUrl($sValue, array_merge($aParams, ['context_id' => $mProfileContextId])) : $this->getCategoryUrl($sValue, $aParams),
+                'url' => $this->getCategoryUrl($sValue, ($mProfileContextId ? ['context_id' => $mProfileContextId] : [])),
                 'name' => $sName,
                 'value' => $sValue,
                 'num' => $iNum,
-                'icon' => $sIcon,
+                'icon' => $this->getCategoryIcon($sValue),
                 'selected_class' => $sValue == bx_get('category') ? 'bx-category-list-item-selected' : '',
             ];
         }
-        
-        if(bx_is_api()) {
+
+        if(bx_is_api())
             return [bx_api_get_block('categories_list',  $aVars['bx_repeat:cats'])];
-        }
 
         if ($bAsArray)
             return $aVars;
