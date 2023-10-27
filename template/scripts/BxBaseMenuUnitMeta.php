@@ -231,6 +231,16 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         return $aItemData;
     }
 
+    protected function _getMenuItemElementAPI($aItem, $aElement)
+    {
+        return [
+            'id' => $aItem['id'],
+            'name' => $aItem['name'],
+            'display_type' => 'element',
+            'data' => $aElement
+        ];
+    }
+
     protected function _buttonsCounterReset()
     {
         if($this->_iButtonsMax === false)

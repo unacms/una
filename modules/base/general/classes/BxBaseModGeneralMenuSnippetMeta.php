@@ -207,7 +207,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
         if($this->_bIsApi)
-            return $oObject->getElementApi($aObjectOptions);
+            return $this->_getMenuItemElementAPI($aItem, $oObject->getElementApi($aObjectOptions));
 
         return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
     }
@@ -286,7 +286,10 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
         if($this->_bIsApi)
-            return $oObject->getElementApi($aObjectOptions);
+            return $this->_getMenuItemElementAPI([
+                'id' => $aItem['id'],
+                'name' => 'scores',
+            ], $oObject->getElementApi($aObjectOptions));
 
         return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
     }
@@ -339,7 +342,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
         if($this->_bIsApi)
-            return $oObject->getElementApi($aObjectOptions);
+            return $this->_getMenuItemElementAPI($aItem, $oObject->getElementApi($aObjectOptions));
 
         return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
     }
