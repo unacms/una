@@ -859,6 +859,10 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockRaw ($aBlock)
     {
+        if (bx_is_api()){
+            return [bx_api_get_block('raw', ['title' => _t($aBlock['title']), 'content' => BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array())])];
+        }
+        
         $s = '<div class="bx-page-raw-container">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
@@ -871,6 +875,10 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockCustom ($aBlock)
     {
+        if (bx_is_api()){
+            return [bx_api_get_block('custom', ['title' => _t($aBlock['title']), 'content' => BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array())])];
+        }
+        
         $s = '<div class="bx-page-custom-container">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
@@ -883,6 +891,10 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockHtml ($aBlock)
     {
+        if (bx_is_api()){
+            return [bx_api_get_block('html', ['title' => _t($aBlock['title']), 'content' => $aBlock['content']])];
+        }
+        
         $s = '<div class="bx-page-html-container bx-def-vanilla-html max-w-none">' . $aBlock['content'] . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);

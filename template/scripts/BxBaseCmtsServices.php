@@ -43,7 +43,9 @@ class BxBaseCmtsServices extends BxDol
             return [bx_api_get_block('entity_author', [
                 'author_data' => BxDolProfile::getData($aCmt['cmt_author_id']),
                 'entry_date' => $aCmt['cmt_time'],
-                'menu_manage' => []
+                'menu_manage' => [],
+                'text' => bx_process_output(strip_tags($oCmts->getObjectTitle($iObjectId))),
+                'url' => bx_api_get_relative_url($oCmts->getBaseUrl())
             ])];
         }
     }

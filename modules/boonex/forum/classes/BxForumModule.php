@@ -26,7 +26,9 @@ class BxForumModule extends BxBaseModTextModule
         if(!$oCategory)
             return false;
 
-        $aResult['category'] = $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]);
+        $aCategoryData = $this->_oDb->getCategories(['type' => 'by_category', 'category' => $aData[$CNF['FIELD_CATEGORY']]]);
+        
+        $aResult['category'] = ['name' => $oCategory->getCategoryTitle($aData[$CNF['FIELD_CATEGORY']]), 'icon' => $aCategoryData['icon']];
 
         return $aResult;
     }
