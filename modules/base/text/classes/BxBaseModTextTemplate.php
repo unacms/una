@@ -802,7 +802,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'condition' => true,
                 'content' => array(
                     'link' => BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id()),
-                    'content' => _t($CNF['T']['txt_all_entries_by'], $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()))
+                    'content' => _t($CNF['T']['txt_all_entries_by'], $this->getModule()->serviceGetMenuAddonManageToolsProfileStats($oProfile->id()))
                 )
             )));
 

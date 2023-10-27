@@ -783,7 +783,7 @@ class BxBaseModGeneralModule extends BxDolModule
     	return 0;
     }
 
-    public function serviceGetMenuAddonManageToolsProfileStats()
+    public function serviceGetMenuAddonManageToolsProfileStats($iProfileId = 0)
     {
     	return 0;
     }

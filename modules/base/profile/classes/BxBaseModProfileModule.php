@@ -257,8 +257,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_oDb->getContentInfoById((int)$iContentId);
     }
 
-	public function serviceGetMenuAddonManageTools()
-	{
+    public function serviceGetMenuAddonManageTools()
+    {
         $CNF = &$this->_oConfig->CNF;
         
 		$iNumTotal = $this->_oDb->getEntriesNumByParams();
@@ -284,21 +284,28 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         }
         
         return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default'));
-	}
+    }
 
-	public function serviceGetMenuAddonManageToolsProfileStats()
-	{
-		bx_import('SearchResult', $this->_aModule);
+    public function serviceGetMenuAddonManageToolsProfileStats($iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $aAccountInfo = BxDolProfileQuery::getInstance()->getAccountInfoByProfileId($iProfileId);
+        if(empty($aAccountInfo) || !is_array($aAccountInfo))
+            return 0;
+
+        bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
-        $o->fillFilters(array(
-			'account_id' => getLoggedId(),
-        	'perofileStatus' => ''
-        ));
+        $o->fillFilters([
+            'account_id' => $aAccountInfo['id'],
+            'perofileStatus' => ''
+        ]);
         $o->unsetPaginate();
 
         return $o->getNum();
-	}
+    }
 
     public function serviceGetMenuAddonFavoritesProfileStats()
     {

@@ -378,18 +378,21 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     /** 
      * @ref bx_base_text-get_menu_addon_manage_tools_profile_stats "get_menu_addon_manage_tools_profile_stats"
      */
-	public function serviceGetMenuAddonManageToolsProfileStats()
-	{
-		bx_import('SearchResult', $this->_aModule);
+    public function serviceGetMenuAddonManageToolsProfileStats($iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
-        $o->fillFilters(array(
-			'author' => bx_get_logged_profile_id()
-        ));
+        $o->fillFilters([
+            'author' => $iProfileId
+        ]);
         $o->unsetPaginate();
 
         return $o->getNum();
-	}
+    }
 
     /**
      * @page service Service Calls
