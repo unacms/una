@@ -3559,6 +3559,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_request_method_not_found_cnt"><![CDATA[Method({0}) was not found in module({1})]]></string>
 	<string name="_sys_score_counter"><![CDATA[{0}]]></string>
 	<string name="_sys_score_counter_empty"><![CDATA[Vote]]></string>
+        <string name="_sys_score_n_score"><![CDATA[{0} score]]></string>
 	<string name="_sys_score_do_up"><![CDATA[Up]]></string>
 	<string name="_sys_score_do_down"><![CDATA[Down]]></string>
 	<string name="_sys_score_do_by"><![CDATA[Voted by]]></string>

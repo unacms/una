@@ -68,6 +68,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_VIEWS' => 'views',
             'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
+            'FIELD_SCORE' => 'score',
             'FIELD_STICK' => 'stick',
             'FIELD_LOCK' => 'lock',
             'FIELD_RESOLVE' => 'resolved',

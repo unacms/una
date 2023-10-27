@@ -93,18 +93,24 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             return false;
 
         $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
+        $sLink = $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
 
         if($this->_bIsApi)
             return $this->_getMenuItemAPI($aItem, 'text', [
                 'title' => $sTitle,
-                'link' => $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']])
+                'link' => $sLink
             ]);
-        
-        return $this->getUnitMetaItemCustom($oCategory->getCategoryLink($sTitle, $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
+
+        return $this->getUnitMetaItemLink($sTitle, [
+            'href' => $sLink
+        ]);
     }
 
     protected function _getMenuItemTags($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_METATAGS']))
@@ -114,14 +120,16 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         if(!$oMetatags || !$oMetatags->keywordsIsEnabled())
             return false;
 
-        if($this->_bIsApi)
-            return false;
-
         return $this->getUnitMetaItemCustom($oMetatags->getKeywordsList($this->_aContentInfo[$CNF['FIELD_ID']], 3));
     }
 
-    protected function _getMenuItemViews($aItem)
+    protected function _getMenuItemViews($aItem, $aParams = [])
     {
+        $bShowAsObject = isset($aParams['show_as_object']) && (bool)$aParams['show_as_object'] === true;
+
+        if($bShowAsObject && !$this->_bIsApi) //--- API: Object based views aren't supported
+            return $this->_getMenuItemViewsObject($aItem, $aParams);
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
@@ -136,12 +144,39 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 
         return $this->getUnitMetaItemText($sTitle);
     }
-
-    protected function _getMenuItemVotes($aItem)
+    protected function _getMenuItemViewsObject($aItem, $aParams = []) 
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['OBJECT_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
+        if(empty($CNF['OBJECT_VIEWS']))
+            return false;
+
+        $oObject = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
+            return false;
+
+        $aObjectOptions = [
+            'show_counter' => true
+        ];
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return false;
+
+        return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
+    }
+
+    protected function _getMenuItemVotes($aItem, $aParams = [])
+    {
+        $bShowAsObject = isset($aParams['show_as_object']) && (bool)$aParams['show_as_object'] === true;
+
+        if($bShowAsObject || $this->_bIsApi)  //--- API: Object base votes are used by default
+            return $this->_getMenuItemVotesObject($aItem, $aParams);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['FIELD_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
             return false;
 
         $sTitle = _t('_vote_n_votes', $this->_aContentInfo[$CNF['FIELD_VOTES']]);
@@ -154,14 +189,37 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         return $this->getUnitMetaItemText($sTitle);
     }
 
-    protected function _getMenuItemRating($aItem)
+    protected function _getMenuItemVotesObject($aItem, $aParams = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['OBJECT_VOTES_STARS']))
+        if(empty($CNF['OBJECT_VOTES']))
             return false;
 
+        $oObject = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oObject || !$oObject->isEnabled())
+            return false;
+
+        $aObjectOptions = [
+            'show_counter' => true
+        ];
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
         if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
+        return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
+    }
+
+    protected function _getMenuItemRating($aItem)
+    {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_VOTES_STARS']))
             return false;
 
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
@@ -173,12 +231,12 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
     
     protected function _getMenuItemReactions($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_REACTIONS']))
-            return false;
-
-        if($this->_bIsApi)
             return false;
 
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
@@ -188,8 +246,58 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => false)));
     }
 
-    protected function _getMenuItemComments($aItem)
+    protected function _getMenuItemScore($aItem, $aParams = [])
     {
+        $bShowAsObject = isset($aParams['show_as_object']) && (bool)$aParams['show_as_object'] === true;
+
+        if($bShowAsObject || $this->_bIsApi)  //--- API: Object base scores are used by default
+            return $this->_getMenuItemScoreObject($aItem, $aParams);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['FIELD_SCORE']) || (empty($this->_aContentInfo[$CNF['FIELD_SCORE']]) && !$this->_bShowZeros))
+            return false;
+
+        $sTitle = _t('_sys_score_n_score', $this->_aContentInfo[$CNF['FIELD_SCORE']]);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => $sTitle
+            ]);
+
+        return $this->getUnitMetaItemText($sTitle);
+    }
+
+    protected function _getMenuItemScoreObject($aItem, $aParams = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_SCORES']))
+            return false;
+
+        $oObject = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $this->_aContentInfo[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate);
+        if(!$oObject || !$oObject->isEnabled())
+            return false;
+
+        $aObjectOptions = [
+            'show_counter' => true
+        ];
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
+        return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
+    }
+
+    protected function _getMenuItemComments($aItem, $aParams = [])
+    {
+        $bShowAsObject = isset($aParams['show_as_object']) && (bool)$aParams['show_as_object'] === true;
+
+        if($bShowAsObject || $this->_bIsApi)  //--- API: Object base comments are used by default
+            return $this->_getMenuItemCommentsObject($aItem, $aParams);
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || (empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]) && !$this->_bShowZeros))
@@ -200,17 +308,40 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             return false;
         
         $sTitle = _t('_cmt_txt_n_comments', $oComments->getCommentsCountAll(0, true));
-        $sUrl =  $oComments->getListUrl();
+        $sLink =  $oComments->getListUrl();
 
         if($this->_bIsApi)
             return $this->_getMenuItemAPI($aItem, 'text', [
                 'title' => $sTitle,
-                'link' => $sUrl
+                'link' => $sLink
             ]);
 
         return $this->getUnitMetaItemLink($sTitle, [
-            'href' => $sUrl
+            'href' => $sLink
         ]);
+    }
+
+    protected function _getMenuItemCommentsObject($aItem, $aParams = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_COMMENTS']))
+            return false;
+
+        $oObject = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate);
+        if(!$oObject || !$oObject->isEnabled())
+            return false;
+
+        $aObjectOptions = [
+            'show_counter' => true
+        ];
+        if(!empty($aParams['object_options']) && is_array($aParams['object_options']))
+            $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
+
+        if($this->_bIsApi)
+            return $oObject->getElementApi($aObjectOptions);
+
+        return $this->getUnitMetaItemCustom($oObject->getElementInline($aObjectOptions));
     }
 
     protected function _getMenuItemDefault($aItem)

@@ -18,47 +18,11 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         parent::__construct($aObject, $oTemplate);
     }
 
-    protected function _getMenuItemViews($aItem)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(empty($CNF['FIELD_VIEWS']) || empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
-            return false;
-
-        $oViews = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oViews || !$oViews->isEnabled())
-            return false;
-
-        return $this->getUnitMetaItemCustom($oViews->getElementInline(array('show_counter' => true)));
-    }
-
-    protected function _getMenuItemVotes($aItem)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(empty($CNF['OBJECT_VOTES']) || empty($CNF['FIELD_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
-            return false;
-
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $this->_aContentInfo[$CNF['FIELD_ID']]);
-        if(!$oVotes || !$oVotes->isEnabled())
-            return false;
-
-        return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
-    }
-    
-    protected function _getMenuItemScore($aItem)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        
-        $oVotes = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $this->_aContentInfo[$CNF['FIELD_ID']], true, $this->_oModule->_oTemplate);
-        if(!$oVotes || !$oVotes->isEnabled())
-            return 'zxczx';
-
-        return $this->getUnitMetaItemCustom($oVotes->getElementInline());
-    }
-
     protected function _getMenuItemReplyAuthor($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
         if(empty($this->_aContentInfo[$CNF['FIELD_LR_COMMENT_ID']]))
             return '';
@@ -72,6 +36,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
     protected function _getMenuItemReplyDate($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
         if(empty($this->_aContentInfo[$CNF['FIELD_LR_COMMENT_ID']]))
             return '';
@@ -81,6 +48,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
     protected function _getMenuItemReplyText($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
         if(empty($this->_aContentInfo[$CNF['FIELD_LR_COMMENT_ID']]))
             return '';
@@ -95,6 +65,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
     
     protected function _getMenuItemAuthor($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
         $oProfile = BxDolProfile::getInstanceMagic($this->_aContentInfo[$CNF['FIELD_AUTHOR']]);
         return $this->getUnitMetaItemExtended($oProfile->getDisplayName(), $oProfile->getThumb(), $oProfile->getUrl());
@@ -112,13 +85,34 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
             return false;
 
         $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
-        $aCategoryData = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
-        
-        return $this->getUnitMetaItemExtended($sTitle, (isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder'), $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
+        $sLink = $oCategory->getCategoryUrl($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemAPI($aItem, 'text', [
+                'title' => $sTitle,
+                'link' => $sLink
+            ]);
+
+        $aCategoryData = $this->_oModule->_oDb->getCategories([
+            'type' => 'by_category', 
+            'category' => $this->_aContentInfo[$CNF['FIELD_CATEGORY']]
+        ]);
+
+        return $this->getUnitMetaItemExtended($sTitle, (isset($aCategoryData['icon']) ? $aCategoryData['icon'] : 'folder'), $sLink);
     }
-    
-    protected function _getMenuItemComments($aItem)
+
+    protected function _getMenuItemScore($aItem, $aParams = [])
     {
+        return parent::_getMenuItemScore($aItem, [
+            'show_as_object' => true
+        ]);
+    }
+
+    protected function _getMenuItemComments($aItem, $aParams = [])
+    {
+        if($this->_bIsApi)  //--- API: Object base comments are used by default
+            return $this->_getMenuItemCommentsObject($aItem, $aParams);
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || (empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]) && !$this->_bShowZeros))
@@ -130,15 +124,21 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         return $this->getUnitMetaItemExtended(_t('_bx_forum_page_block_title_entry_comments', $oComments->getCommentsCountAll()), $aItem['icon'], '');
     }
-    
+
     protected function _getMenuItemBadges($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
         return $this->getUnitMetaItemExtended($this->_oModule->serviceGetBadges($this->_aContentInfo[$CNF['FIELD_ID']], false, true), '', '', false, true); 
     }
     
     protected function _getMenuItemSticked($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if((int)$this->_aContentInfo[$CNF['FIELD_STICK']] == 0)
@@ -149,6 +149,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
     protected function _getMenuItemLocked($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if((int)$this->_aContentInfo[$CNF['FIELD_LOCK']] == 0)
@@ -159,6 +162,9 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
     protected function _getMenuItemStatus($aItem)
     {
+        if($this->_bIsApi) //--- API: Isn't supported
+            return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sStatus = '';

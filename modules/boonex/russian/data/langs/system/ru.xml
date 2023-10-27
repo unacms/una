@@ -3489,6 +3489,7 @@
     <string name="_sys_request_method_not_found_cnt"><![CDATA[Метод ({0}) не найден в модуле ({1})]]></string>
     <string name="_sys_score_counter"><![CDATA[{0}]]></string>
     <string name="_sys_score_counter_empty"><![CDATA[Проголосовать]]></string>
+    <string name="_sys_score_n_score"><![CDATA[{0} очков]]></string>
     <string name="_sys_score_do_up"><![CDATA[За]]></string>
     <string name="_sys_score_do_down"><![CDATA[Против]]></string>
     <string name="_sys_score_do_by"><![CDATA[Проголосовали]]></string>

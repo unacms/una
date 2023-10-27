@@ -914,14 +914,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
 
-        /**
-         * Disabled for now, because Author is used only.
         if(!empty($CNF['OBJECT_MENU_SNIPPET_META']) && ($oMetaMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this->_oTemplate)) !== false) {
             $oMetaMenu->setContentId($iId);
 
             $aResult['meta'] = $oMetaMenu->getCodeAPI();
         }
-         */
 
         return $aResult;
     }
