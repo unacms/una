@@ -1870,6 +1870,27 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $oForm = new BxTemplStudioFormView(array());
 
+        $aPages = $this->oDb->getPages(array('type' => 'by_module', 'value' => $this->sType));
+
+        $aCounter = array();
+        $this->oDb->getBlocks(array('type' => 'counter_by_pages'), $aCounter, false);
+        
+        $aInputPagesValues = [];
+        foreach($aPages as $aPage) {
+            $sTitle = _t($aPage['title_system']);
+            if(empty($sTitle))
+                $sTitle = _t($aPage['title']);
+
+            $aInputPagesValues[] = array(
+                'key' => $aPage['object'], 
+                'value' => $sTitle . " (" . (isset($aCounter[$aPage['object']]) ? $aCounter[$aPage['object']] : "0") . ")"
+            );
+        }
+
+        usort($aInputPagesValues, function($aV1, $aV2) {
+            return strcmp($aV1['value'], $aV2['value']);
+        });
+
         $aInputPages = array(
             'type' => 'select',
             'name' => 'page',
@@ -1877,25 +1898,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 'onChange' => 'javascript:' . $this->getPageJsObject() . '.onChangePage(this)'
             ),
             'value' => $this->sPage,
-            'values' => array(
-                array('key' => '', 'value' => _t('_adm_bp_txt_select_page'))
-            )
-        );
-
-        $aPages = $this->oDb->getPages(array('type' => 'by_module', 'value' => $this->sType));
-
-        $aCounter = array();
-        $this->oDb->getBlocks(array('type' => 'counter_by_pages'), $aCounter, false);
-        foreach($aPages as $aPage) {
-            $sTitle = _t($aPage['title_system']);
-            if(empty($sTitle))
-                $sTitle = _t($aPage['title']);
-
-            $aInputPages['values'][] = array(
-                'key' => $aPage['object'], 
-                'value' => $sTitle . " (" . (isset($aCounter[$aPage['object']]) ? $aCounter[$aPage['object']] : "0") . ")"
-            );
-        }
+            'values' => array_merge([[
+                'key' => '', 
+                'value' => _t('_adm_bp_txt_select_page')]
+            ], $aInputPagesValues)
+        );       
 
         $aTmplVarsActions = array();
         if(($this->sPage != '' && !empty($this->aPageRebuild)) !== false)
