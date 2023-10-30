@@ -192,19 +192,24 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         }
 
         $this->_oDb->clean($iProfileId, $this->_iObject);
-        
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
         $oConnection = BxDolConnection::getObjectInstance($this->getConnection());
         $bConnectionMutual = $oConnection->getType() == BX_CONNECTIONS_TYPE_MUTUAL;
 
         $aItems = $this->_oDb->getBy(['type' => 'profile_object_ids', 'profile_id' => $iProfileId, 'object_id' => $this->_iObject]);
         foreach($aItems as $aItem)
-            if($oConnection->isConnected($iProfileId, $aItem['item_id'], $bConnectionMutual))
+            if(!$oProfile->isActive($aItem['item_id']) || $oConnection->isConnected($iProfileId, $aItem['item_id'], $bConnectionMutual))
                 $this->_oDb->delete($iProfileId, $this->_iObject, $aItem['item_id']);
 
         $aItemItt = $this->getItemsTypes(array_keys($aResults));
 
-        foreach($aResults as $iId => $iValue)
+        foreach($aResults as $iId => $iValue) {
+            if(!$oProfile->isActive($iId))
+                continue;
+
             $this->_oDb->add($iProfileId, $this->_iObject, $iId, (isset($aItemItt[$iId]) ? $aItemItt[$iId] : ''), $iValue);
+        }
     }
 
     public function outputActionResult ($mixed, $sFormat = 'json')

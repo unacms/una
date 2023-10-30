@@ -168,18 +168,18 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * Get account id associated with the profile
      */
-    public function getAccountId()
+    public function getAccountId($iProfileId = false)
     {
-        $aInfo = $this->getInfo();
+        $aInfo = $this->getInfo($iProfileId);
         return $aInfo['account_id'];
     }
 
     /**
      * Get account object associated with the profile
      */
-    public function getAccountObject()
+    public function getAccountObject($iProfileId = false)
     {
-        return BxDolAccount::getInstance($this->getAccountId());
+        return BxDolAccount::getInstance($this->getAccountId($iProfileId));
     }
 
     /**
@@ -199,7 +199,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         if($this->getStatus($iProfileId) != BX_PROFILE_STATUS_ACTIVE)
             return false;
 
-        return (($oAccount = $this->getAccountObject()) !== false && $oAccount->isConfirmed()) || !getParam('sys_account_hide_unconfirmed_accounts');
+        return (($oAccount = $this->getAccountObject($iProfileId)) !== false && $oAccount->isConfirmed()) || !getParam('sys_account_hide_unconfirmed_accounts');
     }
 
     /**
@@ -226,6 +226,9 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     public function getStatus($iProfileId = false)
     {
         $aInfo = $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        if(empty($aInfo) || !is_array($aInfo))
+            return false;
+
         return $aInfo['status'];
     }
 
