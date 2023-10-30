@@ -2030,7 +2030,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId = 0)
     {
-        $CNF = &$this->_oConfig->CNF;
+        $CNF = $this->_oConfig->getCNF();
 
         $aResult = parent::getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfileId, $iInitiatorProfileId);
         if(!empty($aResult))

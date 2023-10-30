@@ -42,6 +42,12 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         $this->_iDpnTime = 3600;
     }
 
+    public function getCNF()
+    {
+        bx_alert($this->getName(), 'get_cnf', 0, 0, ['override_result' => &$this->CNF]);
+        return $this->CNF;
+    }
+
     public function getObject($sType = '')
     {
     	if(empty($sType))

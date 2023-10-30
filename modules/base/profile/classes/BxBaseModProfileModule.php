@@ -2028,25 +2028,27 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     protected function _getMenuItemTitleProfilesFriends($sAction, $iContentProfileId, $iInitiatorProfileId, &$oConnection)
     {
+        $CNF = $this->_oConfig->getCNF();
+
         $aResult = [];
         if($oConnection->isConnectedNotMutual($iInitiatorProfileId, $iContentProfileId))
             $aResult = [
                 'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_unfriend_cancel'),
+                'remove' => _t(!empty($CNF['T']['menu_item_title_unfriend_cancel']) ? $CNF['T']['menu_item_title_unfriend_cancel'] : '_sys_menu_item_title_sm_unfriend_cancel'),
             ];
         else if($oConnection->isConnectedNotMutual($iContentProfileId, $iInitiatorProfileId))
             $aResult = [
-                'add' => _t('_sys_menu_item_title_sm_befriend_confirm'),
-                'remove' => _t('_sys_menu_item_title_sm_unfriend_reject'),
+                'add' => _t(!empty($CNF['T']['menu_item_title_befriend_confirm']) ? $CNF['T']['menu_item_title_befriend_confirm'] : '_sys_menu_item_title_sm_befriend_confirm'),
+                'remove' => _t(!empty($CNF['T']['menu_item_title_unfriend_reject']) ? $CNF['T']['menu_item_title_unfriend_reject'] : '_sys_menu_item_title_sm_unfriend_reject'),
             ];
         else if($oConnection->isConnected($iInitiatorProfileId, $iContentProfileId, true))
             $aResult = [
                 'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_unfriend'),
+                'remove' => _t(!empty($CNF['T']['menu_item_title_unfriend']) ? $CNF['T']['menu_item_title_unfriend'] : '_sys_menu_item_title_sm_unfriend'),
             ];
         else
             $aResult = [
-                'add' => _t('_sys_menu_item_title_sm_befriend'),
+                'add' => _t(!empty($CNF['T']['menu_item_title_befriend']) ? $CNF['T']['menu_item_title_befriend'] : '_sys_menu_item_title_sm_befriend'),
                 'remove' => '',
             ];
 
@@ -2055,7 +2057,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     protected function _getMenuItemTitleProfilesSubscriptions($sAction, $iContentProfileId, $iInitiatorProfileId, &$oConnection)
     {
-        $CNF = &$this->_oConfig->CNF;
+        $CNF = $this->_oConfig->getCNF();
 
         $aResult = [];
         if($oConnection->isConnected($iInitiatorProfileId, $iContentProfileId))
