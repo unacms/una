@@ -1729,7 +1729,7 @@ BLAH;
         ));
     }
 
-    protected function genCustomInputLabels ($aInput)
+    protected function genCustomInputLabels (&$aInput)
     {
         $oLabel = BxDolLabel::getInstance();
 

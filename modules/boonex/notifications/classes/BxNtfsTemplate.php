@@ -92,7 +92,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             if(empty($sEvent))
                 continue;
             if (bx_is_api()){
-                $sEvent['author_data'] = BxDolProfile::getData($sEvent['object_owner_id']);
+                $sEvent['author_data'] = BxDolProfile::getData($sEvent['owner_id']);
                 $aTmplVarsEvents[] = $sEvent;
             }
             else
