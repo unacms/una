@@ -251,9 +251,24 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $bClickedIndicator = $this->_oConfig->isClickedIndicator();
         $sJsObject = $this->_oConfig->getJsObject('view');
 
-        if (bx_is_api())
+        if(bx_is_api()) {
+            $aLinks = [
+                'owner_link' => $aEvent['content']['owner_link'],
+                'object_owner_link' => $aEvent['content']['object_owner_link']
+            ];
+            if(!empty($aEvent['content']['entry_url']))
+                $aLinks['entry_url'] = $this->_getLink($aEvent['content']['entry_url']);
+            if(!empty($aEvent['content']['subentry_url']))
+                $aLinks['subentry_url'] = $this->_getLink($aEvent['content']['subentry_url']);
+
+            array_walk($aLinks, function(&$sValue, $sKey) {
+                $sValue = bx_api_get_relative_url($sValue);
+            });
+
+            $aEvent['content'] = array_merge($aEvent['content'], $aLinks);
             return $aEvent;
-             
+        }
+
         return $this->parseHtmlByName('event.html', array (
             'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
             'style_prefix' => $this->_oConfig->getPrefix('style'),
@@ -442,6 +457,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(!empty($aEvent['subobject_id']) && !empty($aEvent['content']['subentry_url'])) 
             $sLink = $aEvent['content']['subentry_url'];
 
+        return $this->_getLink($sLink);
+    }
+
+    protected function _getLink($sLink)
+    {
         return bx_replace_markers($sLink, [
             'bx_url_root' => BX_DOL_URL_ROOT
         ]);

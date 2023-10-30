@@ -240,7 +240,8 @@ class BxNtfsModule extends BxBaseModNotificationsModule
                 $aParams['start'] = end($aContent)['id'];
             }
 
-            $this->markAsRead($iOwnerId, $aParams);
+            if($aParams['start'] == 0)
+                $this->markAsRead($iOwnerId, $aParams);
 
             return [bx_api_get_block('browse', [
                 'unit' => 'notifications',  
