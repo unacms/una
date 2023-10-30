@@ -2099,7 +2099,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(isset($aParams['extended']) && $aParams['extended'] === true)
             $aResult['text'] = $aData[$CNF['FIELD_TEXT']];
 
-        if(($oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $sModule)) !== false) {
+        if(getParam('sys_api_conn_in_prof_units') == 'on' && ($oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $sModule)) !== false) {
             $iProfileId = $oProfile->id();
 
             if(($oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends')) !== false) {
