@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_organizations',
     'title' => 'Organizations',
     'note' => 'Basic organization profiles functionality.',
-    'version' => '13.0.9.DEV',
+    'version' => '13.0.10.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
