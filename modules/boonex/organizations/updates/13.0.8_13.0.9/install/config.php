@@ -8,9 +8,9 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Russian',
-    'version_from' => '13.0.13',
-    'version_to' => '13.0.14',
+    'title' => 'Organizations',
+    'version_from' => '13.0.8',
+    'version_to' => '13.0.9',
     'vendor' => 'BoonEx',
 
     'compatible_with' => array(
@@ -20,14 +20,14 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/russian/updates/update_13.0.13_13.0.14/',
-    'home_uri' => 'ru_update_13013_13014',
+    'home_dir' => 'boonex/organizations/updates/update_13.0.8_13.0.9/',
+    'home_uri' => 'orgs_update_1308_1309',
 
-    'module_dir' => 'boonex/russian/',
-    'module_uri' => 'ru',
+    'module_dir' => 'boonex/organizations/',
+    'module_uri' => 'orgs',
 
-    'db_prefix' => 'bx_rsn_',
-    'class_prefix' => 'BxRsn',
+    'db_prefix' => 'bx_organizations_',
+    'class_prefix' => 'BxOrgs',
 
     /**
      * Installation/Uninstallation Section.
@@ -36,20 +36,13 @@ $aConfig = array(
         'execute_sql' => 0,
         'update_files' => 1,
         'update_languages' => 1,
-        'restore_languages' => 0,
         'clear_db_cache' => 0,
     ),
 
     /**
      * Category for language keys.
      */
-    'language_category' => array(
-        array('name' => 'BoonEx Developer', 'path' => 'bx_developer/'),
-        array('name' => 'Organizations', 'path' => 'bx_organizations/'),
-        array('name' => 'Payment', 'path' => 'bx_payment/'),
-        array('name' => 'Timeline', 'path' => 'bx_timeline/'),
-        array('name' => 'System', 'path' => 'system/'),
-    ),
+    'language_category' => 'Organizations',
 
     /**
      * Files Section
