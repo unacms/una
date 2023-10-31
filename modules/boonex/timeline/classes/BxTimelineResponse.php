@@ -118,7 +118,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
                 if($iObjectPrivacyView > 0)
                     $aParamsSet = array_merge($aParamsSet, [
-                        'owner_id' => $oAlert->iSender,
+                        'owner_id' => $iObjectAuthorId,
                         'object_privacy_view' => $iObjectPrivacyView
                     ]);
                 else if($iObjectPrivacyView < 0)
