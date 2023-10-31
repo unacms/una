@@ -481,6 +481,8 @@
     <string name="_bx_orgs_txt_ntfs_join_invitation"><![CDATA[Представитель организации <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> вступить в организацию]]></string>
     <string name="_bx_orgs_txt_ntfs_join_request"><![CDATA[В организацию <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_orgs_txt_ntfs_join_request_for_owner"><![CDATA[<b class="bx-ntfs-content-entry">{subentry_sample}</b> хочет вступить в вашу организацию]]></string>
+    <string name="_bx_orgs_txt_ntfs_accept_request"><![CDATA[В организацию <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_orgs_txt_ntfs_accept_request_for_owner"><![CDATA[<b class="bx-ntfs-content-entry">{subentry_sample}</b> был принят в вашу организацию]]></string>
     <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[В организации <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 
     <string name="_bx_orgs_txt_sample_single"><![CDATA[Организация]]></string>

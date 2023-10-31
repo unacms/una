@@ -487,6 +487,8 @@
     <string name="_bx_orgs_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> organization's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join organization]]></string>
     <string name="_bx_orgs_txt_ntfs_join_request"><![CDATA[Organization <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_orgs_txt_ntfs_join_request_for_owner"><![CDATA[<b class="bx-ntfs-content-entry">{subentry_sample}</b> sent a join request to your organization]]></string>
+    <string name="_bx_orgs_txt_ntfs_accept_request"><![CDATA[Organization <b class="bx-ntfs-content-profile">{owner_name}</b> accepted <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_orgs_txt_ntfs_accept_request_for_owner"><![CDATA[<b class="bx-ntfs-content-entry">{subentry_sample}</b> was accepted in your organization]]></string>
     <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> organization timeline]]></string>
 
     <string name="_bx_orgs_txt_sample_single"><![CDATA[organization]]></string>

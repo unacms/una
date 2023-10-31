@@ -105,10 +105,17 @@ class BxOrgsModule extends BxBaseModGroupsModule
 
     public function serviceGetNotificationsJoinRequest($aEvent)
     {
-        if($aEvent['owner_id'] == $aEvent['object_owner_id'])
-            return parent::serviceGetNotificationsJoinRequest($aEvent);
+        $CNF = &$this->_oConfig->CNF;
 
-        return $this->_serviceGetNotification($aEvent, $this->_oConfig->CNF['T']['txt_ntfs_join_request_for_owner']);
+        $sAction = 'join';
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if($oConnection !== false && $oConnection->isConnected($aEvent['object_owner_id'], $aEvent['owner_id'], true))
+            $sAction = 'accept';
+
+        if($aEvent['owner_id'] == $aEvent['object_owner_id'])
+            return $this->_serviceGetNotification($aEvent, $CNF['T']['txt_ntfs_' . $sAction . '_request']);
+
+        return $this->_serviceGetNotification($aEvent, $CNF['T']['txt_ntfs_' . $sAction . '_request_for_owner']);
     }
 
     public function onFanRemovedFromAdmins($iGroupProfileId, $iProfileId)
