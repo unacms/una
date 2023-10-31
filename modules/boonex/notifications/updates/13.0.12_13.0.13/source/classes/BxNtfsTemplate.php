@@ -304,6 +304,8 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $sSubject = $sContent;
         if(($iEmailSubjectMaxLen = $this->_oConfig->getEmailSubjectMaxLen()) !== 0)
             $sSubject = strmaxtextlen($sSubject, $iEmailSubjectMaxLen);
+        else 
+            $sSubject = trim(strip_tags($sSubject));
 
         $aContent = &$aEvent['content'];
         return array(
