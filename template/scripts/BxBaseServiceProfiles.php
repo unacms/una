@@ -439,7 +439,7 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceProfilesSearch ($sTerm, $mixedParems = [])
     {
-        $iLimit = 20;
+        $iLimit = (int)getParam('sys_profiles_search_limit');
         if(is_int($mixedParems)) 
             $iLimit = (int)$mixedParems;
         else if(is_array($mixedParems) && isset($mixedParems['limit']))

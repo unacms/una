@@ -1663,6 +1663,7 @@
     <string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
     <string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
     <string name="_adm_stg_cpt_option_sys_live_search_limit"><![CDATA[Количество реузьтатов в live поиске]]></string>
+    <string name="_adm_stg_cpt_option_sys_profiles_search_limit"><![CDATA[Количество реузьтатов в поиске профилей]]></string>
     <string name="_adm_stg_cpt_option_sys_session_auth"><![CDATA[Аутентификация через сессию]]></string>
     <string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[cURL - Таймаут по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_default_socket_timeout"><![CDATA[Таймаут чтения HTTP контекста (в секундах, -1 - неограниченно)]]></string>
