@@ -19,6 +19,7 @@ class BxBaseCategory extends BxDolCategory
     protected $_bModule;
 
     protected $_sBrowseAllUrl;
+    protected $_sBrowseAllTitle;
     protected $_sBrowseUrl;
 
     public function __construct ($aObject, $oTemplate = null)
@@ -36,6 +37,8 @@ class BxBaseCategory extends BxDolCategory
         $this->_bModule = $this->_oModule !== null;
 
         $this->_sBrowseAllUrl = '';
+        $this->_sBrowseAllTitle = '_all';
+
         $this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', [
             'cat' => '{category}',
             'keyword' => '{keyword}'
@@ -43,9 +46,17 @@ class BxBaseCategory extends BxDolCategory
 
         if($this->_bModule) {
             $CNF = &$this->_oModule->_oConfig->CNF;
-            
+
             if(!empty($CNF['URL_HOME']))
                 $this->_sBrowseAllUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+
+            if(!isset($CNF['T']['txt_all_categories'])) {
+                $sBrowseAllTitleKey = '_' . $this->_oModule->getName() . '_txt_all_categories';
+                if(strcmp($sBrowseAllTitleKey, _t($sBrowseAllTitleKey)) != 0)
+                    $this->_sBrowseAllTitle = $sBrowseAllTitleKey;
+            }
+            else
+                $this->_sBrowseAllTitle = $CNF['T']['txt_all_categories'];
 
             if(!empty($CNF['URL_CATEGORY']))
                 $this->_sBrowseUrl = bx_append_url_params(BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORY']), [
@@ -118,7 +129,7 @@ class BxBaseCategory extends BxDolCategory
                 'condition' => $this->_sBrowseAllUrl != '',
                 'content' => [
                     'url' => $this->_sBrowseAllUrl,
-                    'name' => _t('all')
+                    'name' => _t($this->_sBrowseAllTitle)
                 ]
             ]
         ];
