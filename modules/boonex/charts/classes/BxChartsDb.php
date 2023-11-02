@@ -15,14 +15,16 @@ class BxChartsDb extends BxBaseModGeneralDb
 {
     protected $_sTableTopByLikes;
     protected $_sTableMostActiveProfiles;
-    
-    function __construct(&$oConfig)
+    protected $_sTableMostFollowedProfiles;
+
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
         $this->_sTableTopByLikes = $this->_sPrefix . 'top_by_likes';
         $this->_sTableMostActiveProfiles = $this->_sPrefix . 'most_active_profiles';
         $this->_sTableMostFollowedProfiles = $this->_sPrefix . 'most_followed_profiles';
     }
+
     /* TopByLikes part */
     public function saveTopByLikes($sModuleName, $sTableName)
     {

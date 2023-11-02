@@ -13,9 +13,13 @@ bx_import('BxDolModuleConfig');
 
 class BxQuoteOfDayConfig extends BxDolModuleConfig
 {
-    function __construct($aModule)
+    public $CNF;
+    protected $_aGridObjects;
+
+    public function __construct($aModule)
     {
         parent::__construct($aModule);
+
         $this->CNF = array (
             'OBJECT_GRID' => 'bx_quoteofday_internal',
             'CACHEKEY' => 'bx_quoteofday',
