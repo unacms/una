@@ -89,6 +89,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
             'type' => 'INNER',
             'table' => 'sys_profiles',
             'mainField' => $CNF['FIELD_AUTHOR'],
+            'mainFieldFunc' => 'ABS',
             'onField' => 'id',
             'joinFields' => array(),
         ];
