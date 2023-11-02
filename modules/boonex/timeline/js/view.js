@@ -1224,15 +1224,22 @@ BxTimelineView.prototype.changeLiveUpdates = function(sAction, onLoad)
     );
 };
 
+BxTimelineView.prototype.copyToClipboard = function(oElement, sLink)
+{
+    bx_copy_to_clipboard(sLink, function() {
+        $('.bx-popup-applied:visible').dolPopupHide();
+    });
+};
+
 BxTimelineView.prototype.blink = function(oParent)
 {
-	oParent.find('.' + this.sClassBlink + '-plate:visible').animate({
-		opacity: 0
-	}, 
-	5000, 
-	function() {
-		oParent.find('.' + this.sClassBlink).removeClass(this.sClassBlink);
-	});
+    oParent.find('.' + this.sClassBlink + '-plate:visible').animate({
+        opacity: 0
+    }, 
+    5000, 
+    function() {
+        oParent.find('.' + this.sClassBlink).removeClass(this.sClassBlink);
+    });
 };
 
 

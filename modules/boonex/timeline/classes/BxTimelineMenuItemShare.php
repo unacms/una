@@ -80,9 +80,12 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             'content_id' => $this->_iEvent,
             'content_url' => $this->_aEvent['url'],
 
+            'view_js_object' => $this->_oModule->_oConfig->getJsObjectView($aBrowseParams),
+
             'repost_onclick' => $sRepostOnclick,
             'repost_with_onclick' => $sRepostWithOnclick,
             'repost_to_onclick' => $sRepostToOnclick,
+
             'et_send' => $sAetSend
     	));
     }
@@ -151,13 +154,8 @@ class BxTimelineMenuItemShare extends BxTemplMenu
                         ]);
                         break;
 
-                    /**
-                     * TODO: Update when Copy function will be added in Timeline.
-                     */
-                    case 'item-send':
+                    case 'item-copy':
                         $aItemsApi['item-copy'] = array_merge($aItem, [
-                            'name' => 'item-copy',
-                            'title' => _t('_bx_timeline_menu_item_title_item_copy'),
                             'link' => $aMarkers['url'],
                         ]);
                         break;

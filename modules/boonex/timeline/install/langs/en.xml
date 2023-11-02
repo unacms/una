@@ -263,7 +263,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Send]]></string>
     <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Send to Friend]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_copy"><![CDATA[Copy to clipboard]]></string>
-    <string name="_bx_timeline_menu_item_title_item_copy"><![CDATA[Copy]]></string>
+    <string name="_bx_timeline_menu_item_title_item_copy"><![CDATA[Copy to clipboard]]></string>
     <string name="_bx_timeline_menu_item_title_system_admt_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Timeline]]></string>
 
