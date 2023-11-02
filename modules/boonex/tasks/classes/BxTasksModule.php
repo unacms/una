@@ -503,7 +503,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         return $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), null, $aSQLPart);
 	}
 	
-	public function serviceBrowseContext ($iProfileId = 0, $aParams = array())
+    public function serviceBrowseContext ($iProfileId = 0, $aParams = array())
     {
 		if(!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
@@ -512,27 +512,25 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         return $this->serviceBrowseTasks (-$iProfileId, $aParams);
     }
 	
-	public function serviceBrowseTasks ($iContextId = 0, $aParams = array())
+    public function serviceBrowseTasks ($iContextId = 0, $aParams = array())
     {
-        if (!$this->isAllowView(-$iContextId))
+        if(!$this->isAllowView(-$iContextId))
             return;  
-        
-        $oProfileContext = BxDolProfile::getInstance(-$iContextId);
-        $mixedResult = $oProfileContext->checkAllowedProfileView(-$iContextId);
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+
+        if(!($oProfileContext = BxDolProfile::getInstance(-$iContextId)) || $oProfileContext->checkAllowedProfileView(-$iContextId) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
-        
-		$CNF = &$this->_oConfig->CNF;
-		
-		$this->_oTemplate->addCssJs();
-		$aVars = array();
-		$aLists = $this->_oDb->getLists($iContextId);
-		$aListsVars = array();
-		$oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
-		
-		$aFilterValues = array();
-		if (isset($_COOKIE[$CNF['COOKIE_SETTING_KEY']]))
-			$aFilterValues = json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        $this->_oTemplate->addCssJs();
+        $aVars = array();
+        $aLists = $this->_oDb->getLists($iContextId);
+        $aListsVars = array();
+        $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+
+        $aFilterValues = array();
+        if (isset($_COOKIE[$CNF['COOKIE_SETTING_KEY']]))
+                $aFilterValues = json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
 
         $bAllowAdd = $this->isAllowAdd(-$iContextId);
         $bAllowManage = $this->isAllowManageByContext(-$iContextId);
@@ -673,13 +671,12 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
     
     function isAllowView($iContextId)
     {
-        $oProfileContext = BxDolProfile::getInstance($iContextId);
-        $mixedResult = $oProfileContext->checkAllowedProfileView($iContextId);
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+        if(!($oProfileContext = BxDolProfile::getInstance($iContextId)) || $oProfileContext->checkAllowedProfileView($iContextId) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
+
         return true;
     }
-    
+
     function isAllowAdd($iContextId)
     {
         $oProfileContext = BxDolProfile::getInstance($iContextId);
