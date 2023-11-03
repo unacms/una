@@ -95,7 +95,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notifications_enable_group_events', 'on', @iCategId, '_bx_ntfs_option_enable_group_events', 'checkbox', '', '', '', '', 11), 
 ('bx_notifications_enable_clicked_indicator', '', @iCategId, '_bx_ntfs_option_enable_clicked_indicator', 'checkbox', '', '', '', '', 15),
 ('bx_notifications_delivery_timeout', '120', @iCategId, '_bx_ntfs_option_delivery_timeout', 'digit', '', '', '', '', 20),
-('bx_notifications_clear_interval', '0', @iCategId, '_bx_ntfs_option_clear_interval', 'digit', '', '', '', '', 30),
+('bx_notifications_clear_interval', '90', @iCategId, '_bx_ntfs_option_clear_interval', 'digit', '', '', '', '', 30),
 ('bx_notifications_enable_comment_post_ext', '', @iCategId, '_bx_ntfs_option_enable_comment_post_ext', 'checkbox', '', '', '', '', 40),
 ('bx_notifications_email_subject_chars', '30', @iCategId, '_bx_ntfs_option_email_subject_chars', 'digit', '', '', '', '', 50);
 
@@ -172,4 +172,4 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_notifications_queue', '* * * * *', 'BxNtfsCronQueue', 'modules/boonex/notifications/classes/BxNtfsCronQueue.php', ''),
 ('bx_notifications_notify', '* * * * *', 'BxNtfsCronNotify', 'modules/boonex/notifications/classes/BxNtfsCronNotify.php', ''),
-('bx_notifications_clean', '* * * * *', 'BxNtfsCronClean', 'modules/boonex/notifications/classes/BxNtfsCronClean.php', '');
+('bx_notifications_clean', '0 0 * * *', 'BxNtfsCronClean', 'modules/boonex/notifications/classes/BxNtfsCronClean.php', '');
