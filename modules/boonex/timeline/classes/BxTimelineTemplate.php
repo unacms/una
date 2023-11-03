@@ -377,6 +377,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
             foreach($aPosts as &$aPost)
+                $iPreloadedComments = getParam('bx_timeline_preload_comments');
+                if ($iPreloadedComments > 0){
+                    $mixedComments = $this->getModule()->getCommentsData($aPost['comments']);
+                    list($sSystem, $iObjectId) = $mixedComments;
+                    $aPost['comments']['data'] = [bx_srv('system', 'get_data_api', [['module' => $sSystem, 'object_id' => $iObjectId, 'is_form' => false, 'per_view' => $iPreloadedComments]], 'TemplCmtsServices')];
+                }
                 $aPost = $this->_getPostApi($aPost, $aParams, [
                     'menu_actions' => $oMenuActions,
                     'menu_manage' => $oMenuManage
