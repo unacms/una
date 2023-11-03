@@ -377,12 +377,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $aPosts = $this->getPosts(array_merge($aParams, ['return_data_type' => 'array']));
             foreach($aPosts as &$aPost)
-                $iPreloadedComments = getParam('bx_timeline_preload_comments');
-                if ($iPreloadedComments > 0){
-                    $mixedComments = $this->getModule()->getCommentsData($aPost['comments']);
-                    list($sSystem, $iObjectId) = $mixedComments;
-                    $aPost['comments']['data'] = [bx_srv('system', 'get_data_api', [['module' => $sSystem, 'object_id' => $iObjectId, 'is_form' => false, 'per_view' => $iPreloadedComments]], 'TemplCmtsServices')];
-                }
                 $aPost = $this->_getPostApi($aPost, $aParams, [
                     'menu_actions' => $oMenuActions,
                     'menu_manage' => $oMenuManage
@@ -1969,8 +1963,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aCmts = [];
         $oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id']);
         if($oCmts !== false) {
-            $aCmtsParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0, 'per_view' => 1];
-            $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aCmtsParams], 'TemplCmtsServices');
+            if (getParam('bx_timeline_preload_comments') > 0){
+                $aCmtsParams = ['mode' => 'feed', 'order_way' => 'desc', 'start_from' => 0,'is_form' => false, 'per_view' => getParam('bx_timeline_preload_comments')];
+                $aCmts = bx_srv('system', 'get_comments_api', [$oCmts, $aCmtsParams], 'TemplCmtsServices');
+            }
 
             $aEvent['cmts'] = $aCmts;
             $aEvent['cmts']['count'] = $aEvent['comments']['count'];
