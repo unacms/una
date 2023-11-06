@@ -14,6 +14,10 @@
 .dark .ql-container.ql-snow{
     border-color: rgb(55 65 81);
 }
+.ql-mention-list{
+    overflow-y: scroll !important;
+    max-height: 300px;
+}
 .ql-mention-list li{
     padding: 0.5rem;
     min-width: 200px;
