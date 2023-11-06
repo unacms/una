@@ -285,7 +285,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->addLocationJs('system_inc_js_classes', BX_DIRECTORY_PATH_INC . 'js/classes/' , BX_DOL_URL_ROOT . 'inc/js/classes/');
         $this->addLocationJs('system_plugins_public', BX_DIRECTORY_PATH_PLUGINS_PUBLIC, BX_DOL_URL_PLUGINS_PUBLIC);
 
-        $this->_bCacheEnable = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_enable') == 'on';
+        $this->_bCacheEnable = !bx_is_dbg() && !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_enable') == 'on';
         $this->_sCacheFolderUrl = '';
         $this->_sCachePublicFolderUrl = BX_DOL_URL_CACHE_PUBLIC;
         $this->_sCachePublicFolderPath = BX_DIRECTORY_PATH_CACHE_PUBLIC;
@@ -298,14 +298,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $bArchive = getParam('sys_template_cache_compress_enable') == 'on';
 
         $this->_bCssLess = true; //--- Less cannot be disabled for CSS.
-        $this->_bCssCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_css_enable') == 'on';
+        $this->_bCssCache = !bx_is_dbg() && !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_css_enable') == 'on';
         $this->_bCssMinify = $this->_bCssCache && getParam('sys_template_cache_minify_css_enable') == 'on';
         $this->_bCssArchive = $this->_bCssCache && $bArchive;
         $this->_sCssLessPrefix = $this->_sCacheFilePrefix . 'less_';
         $this->_sCssCachePrefix = $this->_sCacheFilePrefix . 'css_';
 
         $this->_bJsLess = false; //--- Less language isn't available for JS at all.
-        $this->_bJsCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_js_enable') == 'on';
+        $this->_bJsCache = !bx_is_dbg() && !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_js_enable') == 'on';
         $this->_bJsMinify = $this->_bJsCache && getParam('sys_template_cache_minify_js_enable') == 'on';
         $this->_bJsArchive = $this->_bJsCache && $bArchive;
         $this->_sJsCachePrefix = $this->_sCacheFilePrefix . 'js_';

@@ -204,7 +204,7 @@ class BxBasePage extends BxDolPage
             $this->_setSubmenu(array());
         }
 
-        if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'] || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')) {
+        if (bx_is_dbg() || !getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'] || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')) {
             $sPageCode = $this->_getPageCode();
         }
         else {
@@ -652,7 +652,7 @@ class BxBasePage extends BxDolPage
 
     protected function _getBlockCodeWithCache(&$aBlock, $iAsync = 0)
     {
-        if (!getParam('sys_pb_cache_enable') || !$aBlock['cache_lifetime'] || $iAsync || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')) {
+        if (bx_is_dbg() || !getParam('sys_pb_cache_enable') || !$aBlock['cache_lifetime'] || $iAsync || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST')) {
             $sBlockCode = $this->_getBlockCode($aBlock, $iAsync);
         }
         else {
