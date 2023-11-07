@@ -621,6 +621,11 @@ function echoDbgLog($mWhat, $sDesc = 'unused', $sFileName = 'unused')
     bx_log('sys_debug', $mWhat);
 }
 
+function bx_is_dbg()
+{
+    return defined('BX_DBG_PROFILES') && in_array(bx_get_logged_profile_id(), BX_DBG_PROFILES);
+}
+
 function dbgTiming($sStartMicrotime)
 {
     $i1 = explode(' ', microtime ());
@@ -1872,6 +1877,15 @@ function bx_get_ver ($bInvalidateCache = false)
     
     $sQuery = $oDb->prepare("SELECT `version` FROM `sys_modules` WHERE `name` = 'system'");
     return $oDb->fromMemory('sys_version', 'getOne', $sQuery);
+}
+
+function bx_check_debug_mode() 
+{
+    if(!bx_is_dbg()) 
+        return;
+
+    ini_set('display_errors', 'On');
+    error_reporting(E_ALL);
 }
 
 /**
