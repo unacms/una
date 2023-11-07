@@ -934,8 +934,20 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
 
             $(sListId).each(function() {
                 //--- Some number of comments already loaded ---//
-                if($(this).children('li.cmt').length)
-                    $(this).children('li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bxProcessHtml().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+                if($(this).children('li.cmt').length) {
+                    var oAdded = null;
+                    switch($this._sPostFormPosition) {
+                        case 'top':
+                            oAdded = $(this).children('li.cmt:first').before($(oData.content).hide()).prev('li.cmt:hidden');
+                            break;
+
+                        case 'bottom':
+                            oAdded = $(this).children('li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden');
+                            break;
+                    }
+
+                    oAdded.bxProcessHtml().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+                }
                 //-- There is no comments at all ---//
                 else
                     $(this).hide().html(oData.content).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
