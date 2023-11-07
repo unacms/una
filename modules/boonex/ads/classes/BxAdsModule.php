@@ -422,6 +422,10 @@ class BxAdsModule extends BxBaseModTextModule
 
             $sParams['display'] = $sDisplay;
         }
+        
+        if (is_int($sParams)){
+            $_GET['category'] = $sParams;
+        }
 
         return parent::serviceEntityCreate($sParams);
     }

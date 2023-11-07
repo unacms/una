@@ -48,9 +48,11 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         $oForm->initChecker($aContentInfo);
 
         if(!empty($CNF['FIELD_TEXT']) &&  !$oForm->isInputVisible($CNF['FIELD_TEXT']))
-            return '';
-
-        return $this->_oModule->_oTemplate->entryText($aContentInfo);
+            $s = '';
+        else
+            $s = $this->_oModule->_oTemplate->entryText($aContentInfo);
+        
+        return bx_is_api() ? [bx_api_get_block('entity_text', $s)] : $s;
     }
 
     public function onDataAddAfter($iAccountId, $iContentId)
