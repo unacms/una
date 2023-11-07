@@ -97,6 +97,17 @@ class BxInvDb extends BxDolModuleDb
                 $sWhereClause = "AND `{$this->_sTableInvites}`.`request_id` IN (SELECT `request_id` FROM `{$this->_sTableInvites}` WHERE `key`=:keyvalue ) ";
                 $sLimitClause = "";
                 break;
+
+            case 'by_key':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'key' => $aParams['key']
+                ];
+
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`key`=:key ";
+                $sLimitClause = "LIMIT 1";
+                break;
+
             case 'all':
                 $aMethod['name'] = 'getAll';
                 $aMethod['params'][1] = array(
@@ -162,18 +173,10 @@ class BxInvDb extends BxDolModuleDb
         $this->query("UPDATE `{$this->_sTableInvites}` SET `date_seen`=:date_seen WHERE `key`=:keyvalue", $aBindings);
         $this->updateRequestStatusByInviteCode(2, $sKey);
     }
-    
-    public function insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate)
+
+    public function insertInvite($aInvite)
     {
-        $aBindings = array(
-            'account_id' => $iAccountId,
-            'profile_id' => $iProfileId,
-            'keyvalue' => $sKey,
-            'email' => $sEmail,
-            'date' => $iDate
-        );
-        $this->query("INSERT `{$this->_sTableInvites}` (account_id, profile_id, `key`, email, date) VALUES (:account_id, :profile_id, :keyvalue, :email, :date)", $aBindings);
-        return (int)$this->lastId();
+        return $this->query("INSERT INTO `{$this->_sTableInvites}` SET " . $this->arrayToSQL($aInvite)) !== false ? (int)$this->lastId() : false;
     }
 
     public function getRequests($aParams, $bReturnCount = false)

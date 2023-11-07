@@ -16,6 +16,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
     protected $_iCountPerUser;
     protected $_sKeyCode;
     protected $_iKeyLifetime;
+    protected $_sRedirectCode;
     protected $_bRequestInvite;
     protected $_sRequestsEmail;
     protected $_bRegistrationByInvitation;
@@ -58,6 +59,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_iCountPerUser = 0;
         $this->_sKeyCode = 'icode';
         $this->_iKeyLifetime = 86400;
+        $this->_sRedirectCode = 'iredirect';
         $this->_bRequestInvite = true;
         $this->_sRequestsEmail = '';
         $this->_bRegistrationByInvitation = true;
@@ -102,6 +104,11 @@ class BxInvConfig extends BxBaseModGeneralConfig
     public function getKeyLifetime()
     {
         return $this->_iKeyLifetime;
+    }
+
+    public function getRedirectCode()
+    {
+        return $this->_sRedirectCode;
     }
 
     public function isRequestInvite()

@@ -38,8 +38,22 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAddForm($oAlert)
     {
-        $sCode = $this->_oModule->serviceAccountAddFormCheck();
-        if($sCode)
+        if(!($sCode = $this->_oModule->serviceAccountAddFormCheck())) {
+            $sKeyCode = $this->_oModule->_oConfig->getKeyCode();
+            $sKeyValue = BxDolSession::getInstance()->getValue($sKeyCode);
+
+            $aInvite = $this->_oModule->_oDb->getInvites(['type' => 'by_key', 'key' => $sKeyValue]);
+            if(!empty($aInvite) && is_array($aInvite) && !empty($aInvite['redirect'])) {
+                $oAlert->aExtras['form_object']->aInputs['relocate'] = [
+                    'name' => 'relocate',
+                    'type' => 'hidden',
+                    'value' => BxDolPermalinks::getInstance()->permalink($aInvite['redirect'])
+                ];
+
+                $oAlert->aExtras['form_code'] = $oAlert->aExtras['form_object']->getCode();
+            }
+        }
+        else
             $oAlert->aExtras['form_code'] = $sCode;
     }
 
@@ -49,6 +63,7 @@ class BxInvResponse extends BxDolAlertsResponse
         $sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
         if($sKey === false)
             return;
+
         $this->_oModule->attachAccountIdToInvite($oAlert->iObject, $sKey);
         
         $sKeysToRemove = $this->_oModule->_oDb->getInvites(array('type' => 'invites_code_by_single', 'value' => $sKey));

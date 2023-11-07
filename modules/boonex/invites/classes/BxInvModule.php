@@ -47,13 +47,19 @@ class BxInvModule extends BxDolModule
         if(!$oKeys)
             return  echoJson(array('message' => _t('_bx_invites_err_not_available')));
 
-        $sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());
+        $sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());       
+
+        $sRedirectUrl = '';
+        $sRedirectCode = $this->_oConfig->getRedirectCode();
+        if(($oSession = BxDolSession::getInstance()) && $oSession->isValue($sRedirectCode))
+            $sRedirectUrl = $oSession->getValue($sRedirectCode);
 
         $oForm = $this->getFormObjectInvite();
         $oForm->insert(array(
             'account_id' => $iAccountId,
             'profile_id' => $iProfileId,
             'key' => $sKey,
+            'redirect' => $sRedirectUrl,
             'email' => '',
             'date' => time()
         ));
@@ -123,7 +129,7 @@ class BxInvModule extends BxDolModule
     /** 
      * @ref bx_invites-get_block_invite "get_block_invite"
      */
-    public function serviceGetBlockInvite()
+    public function serviceGetBlockInvite($bRedirect = false)
     {
         $iProfileId = $this->getProfileId();
         $iAccountId = $this->getAccountId($iProfileId);
@@ -135,9 +141,9 @@ class BxInvModule extends BxDolModule
         if(!isAdmin($iAccountId) && $this->_oConfig->getCountPerUser() <= 0)
             return '';
 
-        return array(
-            'content' => $this->_oTemplate->getBlockInvite($iAccountId, $iProfileId)
-        );
+        return [
+            'content' => $this->_oTemplate->getBlockInvite($iAccountId, $iProfileId, (bool)$bRedirect)
+        ];
     }
 
     /**
@@ -379,6 +385,11 @@ class BxInvModule extends BxDolModule
 
         $iKeyLifetime = $this->_oConfig->getKeyLifetime();
 
+        $sRedirectUrl = '';
+        $sRedirectCode = $this->_oConfig->getRedirectCode();
+        if(($oSession = BxDolSession::getInstance()) && $oSession->isValue($sRedirectCode))
+            $sRedirectUrl = $oSession->getValue($sRedirectCode);
+
         $sEmailTemplate = '';
         switch($sType) {
             case BX_INV_TYPE_FROM_MEMBER:
@@ -408,7 +419,14 @@ class BxInvModule extends BxDolModule
 
             $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
             if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey), 'seen_image_url' => $this->getSeenImageUrl($sKey)), BX_EMAIL_SYSTEM)) {
-                $iInviteId = (int)$this->_oDb->insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate);
+                $iInviteId = (int)$this->_oDb->insertInvite([
+                    'account_id' => $iAccountId, 
+                    'profile_id' => $iProfileId, 
+                    'key' => $sKey, 
+                    'redirect' => $sRedirectUrl,
+                    'email' => $sEmail, 
+                    'date' => $iDate
+                ]);
 
                 $this->onInvite($iProfileId);
 

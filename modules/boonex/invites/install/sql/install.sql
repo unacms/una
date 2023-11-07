@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_inv_invites` (
   `account_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
   `key` varchar(128) NOT NULL,
+  `redirect` varchar(255) NOT NULL default '',
   `email` varchar(128) NOT NULL,
   `date` int(11) NOT NULL default '0',
   `date_seen` int(11) DEFAULT NULL,

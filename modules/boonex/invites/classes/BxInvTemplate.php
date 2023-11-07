@@ -60,22 +60,34 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName('invite_info.html', $aVars);
     }
     
-    public function getBlockInvite($iAccountId, $iProfileId)
+    public function getBlockInvite($iAccountId, $iProfileId, $bRedirect = false)
     {
         $mInvitesRemain = $this->_oConfig->getCountPerUser();
-		if ($mInvitesRemain === true)
-			$mInvitesRemain = _t('_bx_invites_txt_unlimited');
-           
+        if($mInvitesRemain === true)
+            $mInvitesRemain = _t('_bx_invites_txt_unlimited');
+
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']));
 
+        if($bRedirect) {
+            $sRedirectCode = $this->_oConfig->getRedirectCode();
+
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+            $sRedirectValue = bx_append_url_params($sPageLink, $aPageParams);
+
+            $oSession = BxDolSession::getInstance();
+            if($oSession->isValue($sRedirectCode))
+                $oSession->unsetValue($sRedirectCode);
+            $oSession->setValue($sRedirectCode, $sRedirectValue);
+        }
+
         $this->getCssJs();
-        return $this->parseHtmlByName('block_invite.html', array(
+        return $this->parseHtmlByName('block_invite.html', [
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('main'),
             'text' => _t('_bx_invites_txt_invite_block_text', $mInvitesRemain),
             'url' => $sUrl,
             'js_code' => $this->getJsCode('main')
-        ));
+        ]);
     }
 
     public function getBlockRequest()
