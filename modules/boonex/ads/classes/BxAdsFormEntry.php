@@ -24,7 +24,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_initCategoryFields();
+        $this->_initCategoryFields((int)BxDolSession::getInstance()->getValue($this->aParams['display'] . '_category'));
 
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
             $sJsObject = $this->_oModule->_oConfig->getJsObject('form');

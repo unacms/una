@@ -416,16 +416,17 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function serviceEntityCreate ($sParams = false)
     {
-        if(($sDisplay = $this->getCategoryDisplay('add')) !== false) {
+        $iCategory = is_numeric($sParams) ? (int)$sParams : 0;
+
+        if(($sDisplay = $this->getCategoryDisplay('add', $iCategory)) !== false) {
             if(empty($sParams) || !is_array($sParams))
                 $sParams = array();
 
             $sParams['display'] = $sDisplay;
         }
-        
-        if (is_int($sParams)){
-            $_GET['category'] = $sParams;
-        }
+
+        if($iCategory)
+            BxDolSession::getInstance()->setValue($sDisplay . '_category', $iCategory);
 
         return parent::serviceEntityCreate($sParams);
     }
