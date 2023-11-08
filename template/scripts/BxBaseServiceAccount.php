@@ -68,7 +68,7 @@ class BxBaseServiceAccount extends BxDol
                 ])];
             else if($mixedResult === true){
                 $sRedirectUrl = BxDolForm::getSubmittedValue('relocate','post');
-                if(trim($sRedirectUrl) == ''){
+                if(empty($sRedirectUrl)){
                     $RedirectUrl = '/';
                 }
                 else{
