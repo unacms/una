@@ -203,6 +203,8 @@
     <string name="_bx_timeline_page_block_title_system_views_db"><![CDATA[Dynamic Browsing: Views]]></string>
     <string name="_bx_timeline_page_block_title_views_db"><![CDATA[Feed]]></string>
     <string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Feeds' Comments]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_channels"><![CDATA[Channels (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_channels"><![CDATA[Channels]]></string>
     <string name="_bx_timeline_page_block_title_system_view_feed_and_hot"><![CDATA['For You' Feed (Timeline)]]></string>
     <string name="_bx_timeline_page_block_title_view_feed_and_hot"><![CDATA[For You]]></string>
     <string name="_bx_timeline_page_block_title_system_view_contexts_groups"><![CDATA[Followed groups (Timeline)]]></string>
