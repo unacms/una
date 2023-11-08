@@ -1960,6 +1960,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aEvent['menu_manage'] = $oMenuManage->getCodeAPI();
         }
 
+        $aEvent['owners'] = $this->_getTmplVarsTimelineOwner($aEvent);
+        
         $aCmts = [];
         $oCmts = $oModule->getCmtsObject($aEvent['comments']['system'], $aEvent['comments']['object_id']);
         if($oCmts !== false) {
@@ -2250,24 +2252,32 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'icon' => 'check'
                 );
             }
-
-            $aTmplVarsOwners[] =  array(
-                'style_prefix' => $sStylePrefix,
-                'owner_type' => _t('_' . $sToType),
-                'owner_url' => $sToUrl,
-                'owner_username' => $sToName,
-                'bx_if:show_timeline_owner_actions' => array(
-                    'condition' => !empty($aTmplVarsActions),
-                    'content' => array(
-                        'style_prefix' => $sStylePrefix,
-                        'bx_repeat:timeline_owner_actions' => $aTmplVarsActions
+            if(bx_is_api()) {
+                $aTmplVarsOwners[] = $oOwner->getUnitAPI(0, ['template' => 'unit_wo_info']);
+            }
+            else{
+                $aTmplVarsOwners[] =  array(
+                    'style_prefix' => $sStylePrefix,
+                    'owner_type' => _t('_' . $sToType),
+                    'owner_url' => $sToUrl,
+                    'owner_username' => $sToName,
+                    'bx_if:show_timeline_owner_actions' => array(
+                        'condition' => !empty($aTmplVarsActions),
+                        'content' => array(
+                            'style_prefix' => $sStylePrefix,
+                            'bx_repeat:timeline_owner_actions' => $aTmplVarsActions
+                        )
                     )
-                )
-            );
+                );
+            }
         }
 
         if(empty($aTmplVarsOwners))
             return array();
+        
+        if(bx_is_api()) {
+            return ($aTmplVarsOwners);
+        }
 
         return array(
             'style_prefix' => $sStylePrefix,
