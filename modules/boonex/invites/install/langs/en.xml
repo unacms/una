@@ -59,25 +59,26 @@
   <string name="_bx_invites_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
   <string name="_bx_invites_grid_txt_view_request"><![CDATA[View request]]></string>
 
-  <!-- Pages and Blocks -->
-	<string name="_bx_invites_page_title_sys_invite"><![CDATA[Invite]]></string>
-	<string name="_bx_invites_page_title_invite"><![CDATA[Invite]]></string>
-<string name="_bx_invites_page_block_title_system_invite_form"><![CDATA[Invite Form]]></string>
-	<string name="_bx_invites_page_block_title_invite_form"><![CDATA[Invite]]></string>
+    <!-- Pages and Blocks -->
+    <string name="_bx_invites_page_title_sys_invite"><![CDATA[Invite]]></string>
+    <string name="_bx_invites_page_title_invite"><![CDATA[Invite]]></string>
+    <string name="_bx_invites_page_block_title_system_invite_form"><![CDATA[Invite Form]]></string>
+    <string name="_bx_invites_page_block_title_invite_form"><![CDATA[Invite]]></string>
 
-	<string name="_bx_invites_page_title_sys_request"><![CDATA[Request Invitation]]></string>
-	<string name="_bx_invites_page_title_request"><![CDATA[Request Invitation]]></string>
-	<string name="_bx_invites_page_block_title_request_form"><![CDATA[Request Invitation]]></string>
+    <string name="_bx_invites_page_title_sys_request"><![CDATA[Request Invitation]]></string>
+    <string name="_bx_invites_page_title_request"><![CDATA[Request Invitation]]></string>
+    <string name="_bx_invites_page_block_title_request_form"><![CDATA[Request Invitation]]></string>
 
-	<string name="_bx_invites_page_title_sys_requests"><![CDATA[Manage Invites]]></string>
-	<string name="_bx_invites_page_title_invites"><![CDATA[Manage Invites]]></string>
-	<string name="_bx_invites_page_block_title_invites"><![CDATA[Manage Invites]]></string>
+    <string name="_bx_invites_page_title_sys_requests"><![CDATA[Manage Invites]]></string>
+    <string name="_bx_invites_page_title_invites"><![CDATA[Manage Invites]]></string>
+    <string name="_bx_invites_page_block_title_invites"><![CDATA[Manage Invites]]></string>
 
-	<string name="_bx_invites_page_block_title_invite"><![CDATA[Invite]]></string>
+    <string name="_bx_invites_page_block_title_system_invite_with_redirect"><![CDATA[Invite (with redirect)]]></string>
+    <string name="_bx_invites_page_block_title_invite"><![CDATA[Invite]]></string>
 
-  <string name="_bx_invites_page_title_sys_invites"><![CDATA[Manage Requests]]></string>
-  <string name="_bx_invites_page_title_requests"><![CDATA[Manage Requests]]></string>
-  <string name="_bx_invites_page_block_title_requests"><![CDATA[Manage Requests]]></string>
+    <string name="_bx_invites_page_title_sys_invites"><![CDATA[Manage Requests]]></string>
+    <string name="_bx_invites_page_title_requests"><![CDATA[Manage Requests]]></string>
+    <string name="_bx_invites_page_block_title_requests"><![CDATA[Manage Requests]]></string>
 
 	<!-- Menus -->
 	<string name="_bx_invites_menu_item_title_system_admt_requests"><![CDATA[Invitation requests]]></string>

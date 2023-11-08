@@ -60,24 +60,25 @@
   <string name="_bx_invites_grid_txt_view_request"><![CDATA[Просмотреть запрос]]></string>
 
 
-	<!-- Pages and Blocks -->
-	<string name="_bx_invites_page_title_sys_invite"><![CDATA[Пригласить]]></string>
-	<string name="_bx_invites_page_title_invite"><![CDATA[Пригласить]]></string>
-        <string name="_bx_invites_page_block_title_system_invite_form"><![CDATA[Пригласить - Форма]]></string>
-	<string name="_bx_invites_page_block_title_invite_form"><![CDATA[Пригласить]]></string>
+    <!-- Pages and Blocks -->
+    <string name="_bx_invites_page_title_sys_invite"><![CDATA[Пригласить]]></string>
+    <string name="_bx_invites_page_title_invite"><![CDATA[Пригласить]]></string>
+    <string name="_bx_invites_page_block_title_system_invite_form"><![CDATA[Пригласить - Форма]]></string>
+    <string name="_bx_invites_page_block_title_invite_form"><![CDATA[Пригласить]]></string>
 
-	<string name="_bx_invites_page_title_sys_request"><![CDATA[Запросить приглашение]]></string>
-	<string name="_bx_invites_page_title_request"><![CDATA[Запросить приглашение]]></string>
-	<string name="_bx_invites_page_block_title_request_form"><![CDATA[Запросить приглашение]]></string>
+    <string name="_bx_invites_page_title_sys_request"><![CDATA[Запросить приглашение]]></string>
+    <string name="_bx_invites_page_title_request"><![CDATA[Запросить приглашение]]></string>
+    <string name="_bx_invites_page_block_title_request_form"><![CDATA[Запросить приглашение]]></string>
 
-  <string name="_bx_invites_page_title_sys_requests"><![CDATA[Управление запросами]]></string>
-  <string name="_bx_invites_page_title_requests"><![CDATA[Управление запросами]]></string>
-  <string name="_bx_invites_page_block_title_requests"><![CDATA[Управление запросами]]></string>
+    <string name="_bx_invites_page_title_sys_requests"><![CDATA[Управление запросами]]></string>
+    <string name="_bx_invites_page_title_requests"><![CDATA[Управление запросами]]></string>
+    <string name="_bx_invites_page_block_title_requests"><![CDATA[Управление запросами]]></string>
 
-  <string name="_bx_invites_page_title_invites"><![CDATA[Управление приглашениями]]></string>
-  <string name="_bx_invites_page_block_title_invites"><![CDATA[Управление приглашениями]]></string>
-  <string name="_bx_invites_page_block_title_invite"><![CDATA[Пригласить]]></string>
-  <string name="_bx_invites_page_title_sys_invites"><![CDATA[Управление приглашениями]]></string>
+    <string name="_bx_invites_page_title_invites"><![CDATA[Управление приглашениями]]></string>
+    <string name="_bx_invites_page_block_title_invites"><![CDATA[Управление приглашениями]]></string>
+    <string name="_bx_invites_page_block_title_system_invite_with_redirect"><![CDATA[Пригласить (с перенаправлением)]]></string>
+    <string name="_bx_invites_page_block_title_invite"><![CDATA[Пригласить]]></string>
+    <string name="_bx_invites_page_title_sys_invites"><![CDATA[Управление приглашениями]]></string>
 
   
 	<!-- Menus -->
