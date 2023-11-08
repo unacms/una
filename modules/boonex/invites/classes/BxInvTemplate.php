@@ -66,6 +66,10 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         if($mInvitesRemain === true)
             $mInvitesRemain = _t('_bx_invites_txt_unlimited');
 
+        if(bx_is_api()){
+            return [bx_api_get_block('invite', ['remain' => $mInvitesRemain, 'request_url' => 'bx_invites/get_link/'])];
+        }
+        
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']));
 
         if($bRedirect) {
