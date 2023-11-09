@@ -471,7 +471,12 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             $aObjectOptions = array_merge($aObjectOptions, $aParams['object_options']);
 
         if($this->_bIsApi)
-            return $oObject->getElementApi($aObjectOptions);
+            return [
+                'id' => $aItem['id'],
+                'name' => $aItem['name'],
+                'display_type' => 'element',
+                'data' => $oObject->getElementApi($aObjectOptions)
+            ];
 
         $sResult = $oObject->getElementBlock($aObjectOptions);
         if(empty($sResult))

@@ -84,6 +84,8 @@ class BxDolReport extends BxDolObject
     protected $_sTypesPreList;
     protected $_aTypes;
 
+    protected $_aReport;
+
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit);
@@ -115,6 +117,8 @@ class BxDolReport extends BxDolObject
             $this->_aTypes = array_keys($aTypes);
         else
             $this->_aTypes = array('spam', 'scam', 'fraud', 'nude', 'other');
+
+        $this->_aReport = [];
     }
 
     /**
@@ -186,7 +190,7 @@ class BxDolReport extends BxDolObject
      */
     public function isUndo()
     {
-        return (int)$this->_bUndo;
+        return (int)$this->_bUndo == 1;
     }
 
     public function getBaseUrl()
@@ -204,20 +208,25 @@ class BxDolReport extends BxDolObject
     {
         return $this->_oQuery->getReportsCountByStatus($iStatus);
     }
-    
+
+    public function getSocketName()
+    {
+        return $this->_sSystem . '_reports';
+    }
+
     /**
      * Actions functions
      */
     public function actionReport()
     {
-        return echoJson($this->_getReport());
+        return echoJson($this->report());
     }
 
     public function actionClearReport()
     {
        $this->_oQuery->clearReports($this->getId());
     }
-    
+
     public function actionGetReportedBy()
     {
         if (!$this->isEnabled())
@@ -275,6 +284,38 @@ class BxDolReport extends BxDolObject
     /**
      * Internal functions
      */
+    protected function _isCount($aVote = array())
+    {
+        if(empty($aReport))
+            $aReport = $this->_getReport();
+
+        return isset($aReport['count']) && (int)$aReport['count'] != 0;
+    }
+
+    protected function _getReport($iObjectId = 0, $bForceGet = false)
+    {
+        if(!empty($this->_aReport) && !$bForceGet)
+            return $this->_aReport;
+
+        if(empty($iObjectId))
+            $iObjectId = $this->getId();
+
+        $this->_aReport = $this->_oQuery->getReport($iObjectId);
+        return $this->_aReport;
+    }
+
+    protected function _isReport($iObjectId = 0, $bForceGet = false)
+    {
+        $aReport = $this->_getReport($iObjectId, $bForceGet);
+
+        return (int)$aReport['count'] > 0;
+    }
+
+    protected function _getTrack($iObjectId, $iAuthorId)
+    {
+        return $this->_oQuery->getTrack($iObjectId, $iAuthorId);
+    }
+
     protected function _getIconDoReport($bPerformed)
     {
     	return $bPerformed && $this->isUndo() ? 'exclamation-circle' : 'exclamation-circle';

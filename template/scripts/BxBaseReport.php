@@ -21,6 +21,8 @@ class BxBaseReport extends BxDolReport
     protected $_aHtmlIds;
 
     protected $_aElementDefaults;
+    protected $_aElementDefaultsApi;
+    protected $_aElementParamsApi; //--- Params from DefaultsApi array to be passed to Api
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -50,11 +52,142 @@ class BxBaseReport extends BxDolReport
             'show_counter' => true,
             'show_counter_only' => true
         );
+        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+            'show_counter' => true,
+        ]);
+        $this->_aElementParamsApi = ['is_reported'];
 
         $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('report_element_block.html');
         $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('report_element_inline.html');
         $this->_sTmplContentDoAction = $this->_oTemplate->getHtml('report_do_report.html');
         $this->_sTmplContentDoActionLabel = $this->_oTemplate->getHtml('report_do_report_label.html');
+    }
+
+    public function report($aParams = [])
+    {
+        if (!$this->isEnabled())
+            return ['code' => 1, 'message' => _t('_report_err_not_enabled')];
+
+        if(!$this->isAllowedReport())
+            return ['code' => 2, 'message' => $this->msgErrAllowedReport()];
+
+        $iAuthorId = $this->_getAuthorId();
+        $iAuthorNip = bx_get_ip_hash($this->_getAuthorIp());
+
+        $iObjectId = $this->_iId;
+        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
+
+        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
+        if($bPerformed) {
+            if(!$this->isUndo())
+                return ['code' => 4, 'message' => _t('_report_err_duplicate_report')];
+
+            if(($iId = $this->_oQuery->putReport($iObjectId, $iAuthorId, true)) !== false) {
+                $this->_trigger();
+
+                bx_alert($this->_sSystem, 'undoReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+                bx_alert('report', 'undo', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+
+                $aReport = $this->_getReport($iObjectId, true);
+                $aResult = $this->_returnReportData($iObjectId, $iAuthorId, $iId, $aReport, !$bPerformed);
+
+                if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+                    $oSockets->sendEvent($this->getSocketName(), $iObjectId, 'reported', json_encode($this->_returnReportDataForSocket($aResult)));
+
+                return $aResult;
+            }
+        }
+
+        $oForm = $this->_getFormObject();
+        $oForm->setId($this->_aHtmlIds['do_form']);
+        $oForm->setName($this->_aHtmlIds['do_form']);
+        $oForm->aParams['db']['table'] = $this->_aSystem['table_track'];
+        $oForm->aInputs['sys']['value'] = $this->_sSystem;
+        $oForm->aInputs['object_id']['value'] = $this->_iId;
+        $oForm->aInputs['action']['value'] = 'Report';
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid() || ($this->_bApi && !empty($aParams) && is_array($aParams))) {
+            $iObjectId = $this->_bApi ? $this->_iId : $oForm->getCleanValue('object_id');
+            $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
+
+            if(!$this->isAllowedReport(true))
+                return ['code' => 2, 'message' => $this->msgErrAllowedReport()];
+
+            $sType = $this->_bApi ? $aParams['type'] : $oForm->getCleanValue('type');
+            if(!in_array($sType, $this->_aTypes)) 
+                return ['code' => 5, 'message' => _t('_report_err_wrong_type')];
+
+            $sText = $this->_bApi ? $aParams['text'] : $oForm->getCleanValue('text');
+            $sText = bx_process_input($sText, BX_DATA_TEXT_MULTILINE);
+
+            $iId = (int)$oForm->insert(['object_id' => $iObjectId, 'author_id' => $iAuthorId, 'author_nip' => $iAuthorNip, 'type' => $sType, 'text' => $sText,  'date' => time()]);
+            if($iId != 0 && $this->_oQuery->putReport($iObjectId, $iAuthorId)) {
+                if(!empty($this->_sObjectCmts) && ($oCmts = BxDolCmts::getObjectInstance($this->_sObjectCmts, $this->getId()))) {
+                    $sCmtText = '_report_comment';
+                    if(!empty($sText))
+                        $sCmtText = '_report_comment_with_note';
+
+                    $aTypes = BxDolForm::getDataItems('sys_report_types');
+
+                    $oCmts->add(array(
+                        'cmt_author_id' => $iAuthorId,
+                        'cmt_parent_id' => 0,
+                        'cmt_text' => _t($sCmtText, $aTypes[$sType], $sText)
+                    ));
+                }
+
+                $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Reported', array(
+                    'report_type' => $sType,
+                    'report_text' => $sText,
+                    'report_url' => $this->getBaseUrl(),
+                ));
+                if($aTemplate)
+                    sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
+
+                $mixedParams = $this->_prepareAuditParams($iObjectId, array('type' => $sType, 'text' => $sText));
+                if($mixedParams) {
+                    $sActionName = $mixedParams['action_name'];
+                    $iAuditObjectId = $mixedParams['object_id'];
+                    unset($mixedParams['action_name']);
+                    unset($mixedParams['object_id']);
+                    bx_audit($iAuditObjectId, $this->_sSystem, $sActionName, $mixedParams);
+                }
+
+                $aReport = $this->_getReport($iObjectId, true);
+                
+                $iBlockContentAfter = (int)getParam('sys_security_block_content_after_n_reports');
+                if ($iBlockContentAfter > 0 && $aReport['count'] >= $iBlockContentAfter){
+                    $oModule = BxDolModule::getInstance($this->_aSystem['module_name']);
+                    if($oModule)
+                        $oModule->_oDb->updateStatusAdmin($iObjectId, false);
+                }
+
+                $this->_trigger();
+
+                bx_alert($this->_sSystem, 'doReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
+                bx_alert('report', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
+
+                $aResult = $this->_returnReportData($iObjectId, $iAuthorId, $iId, $aReport, !$bPerformed);
+
+                if(($oSockets = BxDolSockets::getInstance()) && $oSockets->isEnabled())
+                    $oSockets->sendEvent($this->getSocketName(), $iObjectId, 'reported', json_encode($this->_returnReportDataForSocket($aResult)));
+
+                return $aResult;
+            }
+
+            return ['code' => 3, 'message' => _t('_report_err_cannot_perform_action')];
+        }
+
+        $sPopupId = $this->_aHtmlIds['do_popup'];
+        $sPopupContent = BxTemplFunctions::getInstance()->transBox($sPopupId, $this->_oTemplate->parseHtmlByName('report_do_report_form.html', array(
+            'style_prefix' => $this->_sStylePrefix,
+            'js_object' => $this->getJsObjectName(),
+            'form' => $oForm->getCode(),
+            'form_id' => $oForm->id,
+        )));
+
+        return ['popup' => $sPopupContent, 'popup_id' => $sPopupId];
     }
 
     public function getJsObjectName()
@@ -70,6 +203,7 @@ class BxBaseReport extends BxDolReport
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
             'sRootUrl' => BX_DOL_URL_ROOT,
+            'sSocket' => $this->getSocketName(),
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds,
             'sUnreportConfirm' => bx_js_string(_t('_report_do_unreport_confirm'))
@@ -91,7 +225,7 @@ class BxBaseReport extends BxDolReport
         $bShowDoReportAsButtonSmall = isset($aParams['show_do_report_as_button_small']) && $aParams['show_do_report_as_button_small'] == true;
         $bShowDoReportAsButton = !$bShowDoReportAsButtonSmall && isset($aParams['show_do_report_as_button']) && $aParams['show_do_report_as_button'] == true;
 
-        $aReport = $this->_oQuery->getReport($this->getId());
+        $aReport = $this->_getReport($this->getId());
 
         $sClass = 'sys-action-counter';
         if(isset($aParams['show_counter_only']) && (bool)$aParams['show_counter_only'] === true)
@@ -109,6 +243,13 @@ class BxBaseReport extends BxDolReport
             'title' => _t('_report_do_report_by'),
             'onclick' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)' 
         ));
+    }
+
+    public function getCounterAPI($aParams = [])
+    {
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        return $this->_getReport();
     }
 
     public function getElementBlock($aParams = array())
@@ -136,7 +277,7 @@ class BxBaseReport extends BxDolReport
 
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
-        $aReport = $this->_oQuery->getReport($iObjectId);
+        $aReport = $this->_getReport($iObjectId);
 
         if(!$this->isAllowedReport() && (!$this->isAllowedReportView() || (int)$aReport['count'] == 0))
             return '';
@@ -166,7 +307,50 @@ class BxBaseReport extends BxDolReport
             'script' => $this->getJsScript($bDynamicMode)
         ));
     }
-    
+
+    public function getElementAPI($aParams = [])
+    {
+        if(!$this->_bApi)
+            return;
+        
+        if(!$this->isEnabled())
+            return bx_api_get_msg('_report_err_not_enabled');
+
+        $aParams = array_merge($this->_aElementDefaultsApi, $aParams);
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+
+        $bCount = $this->_isCount();
+        $isAllowedReport = $this->isAllowedReport();
+        $isAllowedReportView = $this->isAllowedReportView();
+        $aParams['is_reported'] = $this->isPerformed($iObjectId, $iAuthorId);
+        $aParams['track'] = $aParams['is_reported'] ? $this->_getTrack($iObjectId, $iAuthorId) : [];
+
+        //--- Do Report
+        $bDoReport = $this->_isShowDoReport($aParams, $isAllowedReport, $bCount);
+        $aDoReport = $bDoReport ? $this->_getDoReport($aParams, $isAllowedReport) : [];
+
+        //--- Counter
+        $bCounter = $this->_isShowCounter($aParams, $isAllowedReport, $isAllowedReportView, $bCount);
+        $aCounter = $bCounter ? $this->getCounterAPI(array_merge($aParams, [
+            'show_counter_only' => false, 
+            'show_script' => false
+        ])) : [];
+
+        if(!$bDoReport && !$bCounter)
+            return bx_api_get_msg('');
+
+        return [
+            'type' => 'reports',
+            'system' => $this->_sSystem,
+            'object_id' => $this->_iId,
+            'params' => array_intersect_key($aParams, array_flip($this->_aElementParamsApi)),
+            'action' => $aDoReport,
+            'counter' => $aCounter
+        ];
+    }
+
     public function getReportedByWithComments($sObjectNotes)
     {
         $aTmplReports = array();
@@ -216,6 +400,16 @@ class BxBaseReport extends BxDolReport
         $bShowDoReportAsButton = !$bShowDoReportAsButtonSmall && isset($aParams['show_do_report_as_button']) && $aParams['show_do_report_as_button'] == true;
         $bDisabled = !$this->isAllowedReport() || ($bReported && !$this->isUndo());
 
+        $sTitle = call_user_func_array('_t', $this->_getTitleDoReport($bReported));
+
+        if($this->_bApi)
+            return [
+                'is_undo' => $this->isUndo(),
+                'is_reported' => $bReported,
+                'is_disabled' => $bDisabled,
+                'title' => $sTitle,
+            ];
+
         $sClass = '';
         if($bShowDoReportAsButton)
             $sClass = 'bx-btn';
@@ -232,7 +426,7 @@ class BxBaseReport extends BxDolReport
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['do_link'],
             'class' => $sClass,
-            'title' => bx_html_attribute(call_user_func_array('_t', $this->_getTitleDoReport($bReported))),
+            'title' => bx_html_attribute($sTitle),
         	'bx_if:show_onclick' => array(
                     'condition' => !$bDisabled,
                     'content' => array(
@@ -270,124 +464,6 @@ class BxBaseReport extends BxDolReport
         ));
     }
 
-    protected function _getReport()
-    {
-        if (!$this->isEnabled())
-            return array('code' => 1, 'message' => _t('_report_err_not_enabled'));
-
-        if(!$this->isAllowedReport())
-            return array('code' => 2, 'message' => $this->msgErrAllowedReport());
-
-        $iAuthorId = $this->_getAuthorId();
-        $iAuthorNip = bx_get_ip_hash($this->_getAuthorIp());
-
-        $iObjectId = $this->_iId;
-        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
-
-        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
-        if($bPerformed) {
-            if(!$this->isUndo())
-                return array('code' => 4, 'message' => _t('_report_err_duplicate_report'));
-
-            if(($iId = $this->_oQuery->putReport($iObjectId, $iAuthorId, true)) !== false) {
-                $this->_trigger();
-
-                bx_alert($this->_sSystem, 'undoReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-                bx_alert('report', 'undo', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
-
-                return $this->_returnReportData($iObjectId, $iId, !$bPerformed);
-            }
-        }
-        
-        
-        $oForm = $this->_getFormObject();
-        $oForm->setId($this->_aHtmlIds['do_form']);
-        $oForm->setName($this->_aHtmlIds['do_form']);
-        $oForm->aParams['db']['table'] = $this->_aSystem['table_track'];
-        $oForm->aInputs['sys']['value'] = $this->_sSystem;
-        $oForm->aInputs['object_id']['value'] = $this->_iId;
-        $oForm->aInputs['action']['value'] = 'Report';
-
-        $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-            $iObjectId = $oForm->getCleanValue('object_id');
-            $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
-
-            if(!$this->isAllowedReport(true))
-                return array('code' => 2, 'message' => $this->msgErrAllowedReport());               
-
-            $sType = $oForm->getCleanValue('type');
-            if(!in_array($sType, $this->_aTypes)) 
-                return array('code' => 5, 'message' => _t('_report_err_wrong_type'));
-
-            $sText = $oForm->getCleanValue('text');
-            $sText = bx_process_input($sText, BX_DATA_TEXT_MULTILINE);
-            $oForm->setSubmittedValue('text', $sText, $oForm->aFormAttrs['method']);
-
-            $iId = (int)$oForm->insert(array('author_id' => $iAuthorId, 'author_nip' => $iAuthorNip, 'date' => time()));
-            if($iId != 0 && $this->_oQuery->putReport($iObjectId, $iAuthorId)) {
-                if(!empty($this->_sObjectCmts) && ($oCmts = BxDolCmts::getObjectInstance($this->_sObjectCmts, $this->getId()))) {
-                    $sCmtText = '_report_comment';
-                    if(!empty($sText))
-                        $sCmtText = '_report_comment_with_note';
-
-                    $aTypes = BxDolForm::getDataItems('sys_report_types');
-
-                    $oCmts->add(array(
-                        'cmt_author_id' => $iAuthorId,
-                        'cmt_parent_id' => 0,
-                        'cmt_text' => _t($sCmtText, $aTypes[$sType], $sText)
-                    ));
-                }
-
-                $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Reported', array(
-                    'report_type' => $sType,
-                    'report_text' => $sText,
-                    'report_url' => $this->getBaseUrl(),
-                ));
-                if($aTemplate)
-                    sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
-
-                $mixedParams = $this->_prepareAuditParams($iObjectId, array('type' => $sType, 'text' => $sText));
-                if($mixedParams) {
-                    $sActionName = $mixedParams['action_name'];
-                    $iAuditObjectId = $mixedParams['object_id'];
-                    unset($mixedParams['action_name']);
-                    unset($mixedParams['object_id']);
-                    bx_audit($iAuditObjectId, $this->_sSystem, $sActionName, $mixedParams);
-                }
-
-                $aReport = $this->_oQuery->getReport($iObjectId);
-                
-                $iBlockContentAfter = (int)getParam('sys_security_block_content_after_n_reports');
-                if ($iBlockContentAfter > 0 && $aReport['count'] >= $iBlockContentAfter){
-                    $oModule = BxDolModule::getInstance($this->_aSystem['module_name']);
-                    if($oModule)
-                        $oModule->_oDb->updateStatusAdmin($iObjectId, false);
-                }
-
-                $this->_trigger();
-
-                bx_alert($this->_sSystem, 'doReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
-                bx_alert('report', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
-
-                return $this->_returnReportData($iObjectId, $iId, !$bPerformed, $aReport);
-            }
-
-            return array('code' => 3, 'message' => _t('_report_err_cannot_perform_action'));
-        }
-
-        $sPopupId = $this->_aHtmlIds['do_popup'];
-        $sPopupContent = BxTemplFunctions::getInstance()->transBox($sPopupId, $this->_oTemplate->parseHtmlByName('report_do_report_form.html', array(
-            'style_prefix' => $this->_sStylePrefix,
-            'js_object' => $this->getJsObjectName(),
-            'form' => $oForm->getCode(),
-            'form_id' => $oForm->id,
-        )));
-
-        return array('popup' => $sPopupContent, 'popup_id' => $sPopupId);
-    }
-
     protected function _getReportedBy()
     {
         $aTmplReports = array();
@@ -421,13 +497,13 @@ class BxBaseReport extends BxDolReport
         ));
     }
 
-    protected function _returnReportData($iObjectId, $iReportId, $bPerformed, $aData = array())
+    protected function _returnReportData($iObjectId, $iAuthorId, $iReportId, $aData, $bPerformed)
     {
         $bUndo = $this->isUndo();
         if(empty($aData) || !is_array($aData))
-            $aData = $this->_oQuery->getReport($iObjectId);
+            $aData = $this->_getReport($iObjectId);
 
-        return array(
+        $aResult = array(
             'eval' => $this->getJsObjectName() . '.onReport(oData, oElement)',
             'code' => 0,
             'id' => $iReportId, 
@@ -435,8 +511,28 @@ class BxBaseReport extends BxDolReport
             'countf' => (int)$aData['count'] > 0 ? $this->_getCounterLabel($aData['count']) : '',
             'label_icon' => $this->_getIconDoReport($bPerformed),
             'label_title' => call_user_func_array('_t', $this->_getTitleDoReport($bPerformed)),
+            'reported' => $bPerformed,
             'disabled' => $bPerformed && !$bUndo,
         );
+
+        $aResult['api'] = [
+            'performer_id' => $iAuthorId,
+            'is_reported' => $aResult['reported'],
+            'is_disabled' => $aResult['disabled'],
+            'icon' => $aResult['label_icon'],
+            'title' => $aResult['label_title'],
+            'counter' => $this->_getReport()
+        ];
+
+        return $aResult;
+    }
+
+    protected function _returnReportDataForSocket($aData, $aMask = [])
+    {
+        if(empty($aMask) || !is_array($aMask))
+            $aMask = ['code', 'count', 'countf', 'api'];
+
+        return array_intersect_key($aData, array_flip($aMask));
     }
 
     private function _prepareAuditParams($iObjectId, $aData)
@@ -477,6 +573,16 @@ class BxBaseReport extends BxDolReport
         }
         
         return false;
+    }
+
+    protected function _isShowDoReport($aParams, $isAllowedVote, $bCount)
+    {
+        return !isset($aParams['show_do_report']) || (bool)$aParams['show_do_report'] === true;
+    }
+
+    protected function _isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount)
+    {
+        return isset($aParams['show_counter']) && (bool)$aParams['show_counter'] === true && $isAllowedVoteView && ($isAllowedVote || $bCount);
     }
 }
 
