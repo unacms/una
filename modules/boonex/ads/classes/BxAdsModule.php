@@ -2110,14 +2110,20 @@ class BxAdsModule extends BxBaseModTextModule
         $sInclude = $this->_oTemplate->addCss(array('timeline.css'), $bDynamic);
 
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
-        $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', array(
-            'category_link' => $sCategoryLink,
-            'category_title' => $sCategory,
-            'category_title_attr' => bx_html_attribute($sCategory),
-            'price' => $sPrice,
-            'text' => $aResult['text']
-        )) . ($bDynamic ? $sInclude : '');
-
+        
+        if(bx_is_api()){
+            $aResult['price'] = $sPrice;
+            $aResult['category_title'] = $sCategory;
+        }
+        else{
+            $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', array(
+                'category_link' => $sCategoryLink,
+                'category_title' => $sCategory,
+                'category_title_attr' => bx_html_attribute($sCategory),
+                'price' => $sPrice,
+                'text' => $aResult['text']
+            )) . ($bDynamic ? $sInclude : '');
+        }
         
         return $aResult;
     }
