@@ -417,7 +417,7 @@ class BxBasePage extends BxDolPage
         if (isset(bx_get('params')[2]) && bx_get('params')[2] != ''){
             $array = json_decode(bx_get('params')[2], true);
             $query_string = http_build_query($array);
-
+            parse_str($query_string, $_GET);
         }
         $a = [
             'id' => $this->_aObject['id'],

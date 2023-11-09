@@ -59,15 +59,16 @@ class BxBaseAccountForms extends BxDolProfileForms
         ));
 
         if (!$oForm->isSubmittedAndValid()) {
-            if($bIsApi)
-                return $oForm->getCodeAPI();
-
+            
             $sCode = $oForm->getCode();
 
             bx_alert('account', 'add_form', 0, 0, array(
                     'form_object' => &$oForm,
                     'form_code' => &$sCode
             ));
+            
+            if($bIsApi)
+                return $oForm->getCodeAPI();
 
             return $sCode;
         }

@@ -66,11 +66,23 @@ class BxBaseServiceAccount extends BxDol
                         'request' => ['url' => '/api.php?r=system/create_account_form/TemplServiceAccount', 'immutable' => true]
                     ]
                 ])];
-            else if($mixedResult === true)
+            else if($mixedResult === true){
+                $sRedirectUrl = BxDolForm::getSubmittedValue('relocate','post');
+                if(empty($sRedirectUrl)){
+                    $RedirectUrl = '/';
+                }
+                else{
+                    $parts = parse_url($sRedirectUrl);
+                    parse_str($parts['query'], $query);
+                    unset($query['_q']);
+                    $parts['query'] = http_build_query($query);
+                    $sRedirectUrl = $parts['path'] . (!empty($parts['query']) ? '?' . $parts['query'] : '');
+                }
                 return [
-                    bx_api_get_block('redirect', ['uri' => '/']),
+                    bx_api_get_block('redirect', ['uri' => $sRedirectUrl]),
                     bx_api_get_block('login', ['session' => BxDolSession::getInstance()->getId()], ['id' => 2]),
                 ];
+            }
             else
                 return bx_api_get_msg($mixedResult);
         }

@@ -29,8 +29,9 @@ class BxInvModule extends BxDolModule
     /**
      * ACTION METHODS
      */
-    function actionGetLink()
+    function serviceGetLink()
     {
+        
         $iProfileId = $this->getProfileId();
         $iAccountId = $this->getAccountId($iProfileId);
 
@@ -40,12 +41,12 @@ class BxInvModule extends BxDolModule
 
         if(!isAdmin($iAccountId)) {
             if($this->_oConfig->getCountPerUser() <= 0)
-                return echoJson(array('message' => _t('_bx_invites_err_limit_reached')));
+                return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_limit_reached'))] : echoJson(array('message' => _t('_bx_invites_err_limit_reached')));
         }
 
         $oKeys = BxDolKey::getInstance();
         if(!$oKeys)
-            return  echoJson(array('message' => _t('_bx_invites_err_not_available')));
+            return bx_is_api() ? [bx_api_get_msg(_t('_bx_invites_err_not_available'))] : echoJson(array('message' => _t('_bx_invites_err_not_available')));
 
         $sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());       
 
@@ -65,9 +66,18 @@ class BxInvModule extends BxDolModule
         ));
         $this->onInvite($iProfileId);
 
+        if (bx_is_api()){
+            return ['link' => bx_api_get_relative_url($this->getJoinLink($sKey))];
+        }
+        
         echoJson(array('popup' => $this->_oTemplate->getLinkPopup(
             $this->getJoinLink($sKey)
         )));
+    }
+    
+    function actionGetLink()
+    {
+        $this->serviceGetLink();
     }
     
     public function actionSetSeenMark($Code)
@@ -87,6 +97,7 @@ class BxInvModule extends BxDolModule
             'GetBlockInvite' => '',
             'GetBlockFormInvite' => '',
             'GetBlockFormRequest' => '',
+            'GetLink' => '',
         );
     }
 

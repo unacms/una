@@ -65,7 +65,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         $mInvitesRemain = $this->_oConfig->getCountPerUser();
         if($mInvitesRemain === true)
             $mInvitesRemain = _t('_bx_invites_txt_unlimited');
-
+        
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']));
 
         if($bRedirect) {
@@ -73,11 +73,18 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
             list($sPageLink, $aPageParams) = bx_get_base_url_inline();
             $sRedirectValue = bx_append_url_params($sPageLink, $aPageParams);
+            if(bx_is_api()){
+                $sRedirectValue = $aPageParams['params'][0];
+            }
 
             $oSession = BxDolSession::getInstance();
             if($oSession->isValue($sRedirectCode))
                 $oSession->unsetValue($sRedirectCode);
             $oSession->setValue($sRedirectCode, $sRedirectValue);
+        }
+        
+        if(bx_is_api()){
+            return [bx_api_get_block('invite', ['remain' => $mInvitesRemain, 'request_url' => 'bx_invites/get_link/'])];
         }
 
         $this->getCssJs();
