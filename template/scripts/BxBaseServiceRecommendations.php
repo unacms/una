@@ -17,12 +17,20 @@ class BxBaseServiceRecommendations extends BxDol
         parent::__construct();
     }
 
-    public function serviceUpdateData($iProfileId)
+    public function serviceUpdateData($iProfileId, $bVerbose = false)
     {
+        $aResults = [];
+
         $aObjects = BxDolRecommendationQuery::getObjects();
         foreach($aObjects as $aObject)
             if(($oRecommendation = BxDolRecommendation::getObjectInstance($aObject['name'])) !== false)
-                $oRecommendation->processCriteria($iProfileId);
+                $aResults[] = [
+                    'object' => $aObject['name'],
+                    'items' => $oRecommendation->processCriteria($iProfileId)
+                ];
+
+        if($bVerbose)
+            return $aResults;
     }
 
     /**
