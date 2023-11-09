@@ -44,6 +44,19 @@ class BxAdsModule extends BxBaseModTextModule
             BX_ADS_OFFER_STATUS_DECLINED
         );
     }
+    
+    public function decodeDataApi ($aData, $bExtended = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $aResult = parent::decodeDataApi($aData, $bExtended);
+
+        $aResult[$CNF['FIELD_PRICE']] = $aData[$CNF['FIELD_PRICE']];
+        $aResult[$CNF['FIELD_QUANTITY']] = $aData[$CNF['FIELD_QUANTITY']];
+        $aResult[$CNF['FIELD_NOTES_PURCHASED']] = $aData[$CNF['FIELD_NOTES_PURCHASED']];
+
+        return $aResult;
+    }
 
     public function actionGetCategoryForm()
     {
