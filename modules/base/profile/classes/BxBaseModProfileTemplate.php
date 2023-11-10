@@ -96,7 +96,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
     public function unitAPI($aData, $aParams = [])
     {
-        return $this->getModule()->decodeDataAPI($aData, $aParams);
+        return $this->getModule()->getDataAPI($aData, $aParams);
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = [])

@@ -140,8 +140,10 @@ class BxDolSearch extends BxDol
             $aItems = BxDolDb::getInstance()->getAll('(' . implode(') UNION (', $aQueries) . ') ORDER BY `added` DESC ' . current($sCode)['limit']);
 
             $sCode = [];
-            foreach($aItems as $aItem)
-                $sCode[] = bx_srv($aItem['module'], 'get_info_api', [$aItem['id'], $bExtendedUnits]);
+            foreach($aItems as $aItem) {
+                if(($oContentInfo = BxDolContentInfo::getObjectInstance($aItem['content_info'])) !== false)
+                    $sCode[] = $oContentInfo->getContentInfoAPI($aItem['id'], $bExtendedUnits);
+            }
         }
 
         return $sCode;
@@ -377,6 +379,16 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setId($sId)
     {
         $this->id = $sId;
+    }
+
+    public function getModuleName()
+    {
+        return isset($this->aCurrent['module_name']) ? $this->aCurrent['module_name'] : '';
+    }
+
+    public function getContentInfoName()
+    {
+        return isset($this->aCurrent['name']) ? $this->aCurrent['name'] : '';
     }
 
     public function setAjaxPaginate($b = true)
@@ -721,7 +733,10 @@ class BxDolSearchResult implements iBxDolReplaceable
     
     function getSearchQuery($aParams = [])
     {
-        $this->aPseud = ['id' => 'id', 'added' => 'added'];
+        $this->aPseud = [
+            'id' => !empty($this->aCurrent['ident']) ? $this->aCurrent['ident'] : 'id', 
+            'added' => !empty($this->aCurrent['added']) ? $this->aCurrent['added'] : 'added'
+        ];
 
         $this->setConditionParams();
         return $this->getSearchDataByParams($aParams);
@@ -775,9 +790,9 @@ class BxDolSearchResult implements iBxDolReplaceable
         if($bForUnion) {
             $sTable = isset($this->aCurrent['tableSearch']) ? $this->aCurrent['tableSearch'] : $this->aCurrent['table'];
 
-            $aSql['ownFields'] .= $this->setFieldUnit('id', $sTable);
-            $aSql['ownFields'] .= $this->setFieldUnit('added', $sTable);
-            $aSql['ownFields'] .= "'" . $this->aCurrent['module_name']  . "' AS `module`";
+            $aSql['ownFields'] .= $this->setFieldUnit(!empty($this->aCurrent['ident']) ? $this->aCurrent['ident'] : 'id', $sTable);
+            $aSql['ownFields'] .= $this->setFieldUnit(!empty($this->aCurrent['added']) ? $this->aCurrent['added'] : 'added', $sTable);
+            $aSql['ownFields'] .= "'" . $this->getContentInfoName()  . "' AS `content_info`";
         }
         else
             foreach ($this->aCurrent['ownFields'] as $sValue)

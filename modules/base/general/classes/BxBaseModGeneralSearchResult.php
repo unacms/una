@@ -29,12 +29,15 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function getMain()
     {
-        return BxDolModule::getInstance($this->aCurrent['module_name']);
+        if(!$this->oModule)
+            $this->oModule = BxDolModule::getInstance($this->getModuleName());
+
+        return $this->oModule;
     }
 
     function getContentInfoObject()
     {
-        return BxDolContentInfo::getObjectInstance($this->aCurrent['name']);
+        return BxDolContentInfo::getObjectInstance($this->getContentInfoName());
     }
 
     function getRssUnitLink (&$a)
@@ -220,7 +223,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         $bExtendedUnits = getParam('sys_api_extended_units') == 'on';
 
         foreach($a as $i => $r)
-            $a[$i] = $this->oModule->decodeDataAPI($r, ['extended' => $bExtendedUnits]);
+            $a[$i] = $this->oModule->getDataAPI($r, ['extended' => $bExtendedUnits]);
 
         return $a;
     }

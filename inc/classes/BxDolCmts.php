@@ -1691,6 +1691,15 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return BxDolContentInfo::formatFields($aComment);
     }
 
+    public function serviceGetInfoApi ($iContentId, $bExtendedUnits = false)
+    {
+        $aData = $this->serviceGetInfo($iContentId, false);
+        if($aData)
+            $aData = $this->getDataAPI($aData, ['extended' => $bExtendedUnits]);
+
+        return $aData;
+    }
+
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
@@ -2273,9 +2282,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $oMenuManage->setCmtsData($this, $iCmtId, $aBp);
 
             $aData = $this->getCommentSimple($iCmtId);
-            $aData = array_merge($aData, [
-                'author_data' => BxDolProfile::getData($aData['cmt_author_id']),
-                'cmt_url' => '/' . $this->getViewUrl($aData['cmt_id'], false),
+            $aData = array_merge($this->getDataAPI($aData), [
                 'menu_actions' => $oMenuActions->getCodeAPI(),
                 'menu_manage' => $oMenuManage->getCodeAPI(),
             ]);
@@ -2317,6 +2324,27 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 $aStructure[$sCmtIndex]['items'] = $aPassStructure;
             }
         }
+    }
+
+    public function getDataAPI($aData, $aParams = [])
+    {
+        $aDataApi = array_merge($aData, [
+            'cmt_url' => '/' . $this->getViewUrl($aData['cmt_id'], false),
+            'author_data' => BxDolProfile::getData($aData['cmt_author_id']),
+        ]);
+
+        $sModule = $this->_aSystem['module'];
+        $aExtras = [
+            'module' => $sModule,
+            'data' => $aData,
+            'params' => $aParams,
+            'data_api' => &$aDataApi,
+        ];
+
+        bx_alert('system', 'decode_comment_data_api', 0, 0, $aExtras);
+        bx_alert($sModule, 'decode_comment_data_api', 0, 0, $aExtras);
+
+        return $aDataApi;
     }
 }
 

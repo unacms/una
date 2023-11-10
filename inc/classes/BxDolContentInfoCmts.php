@@ -55,7 +55,12 @@ class BxDolContentInfoCmts extends BxDolContentInfo
 
     public function getContentInfo ($iContentId, $bSearchableFieldsOnly = true)
     {
-        return $this->_oCmts->serviceGetInfo($iContentId);
+        return $this->_oCmts->serviceGetInfo($iContentId, $bSearchableFieldsOnly);
+    }
+    
+    public function getContentInfoAPI ($iContentId, $bExtendedUnits = false)
+    {
+        return $this->_oCmts->serviceGetInfoApi($iContentId, $bExtendedUnits);
     }
 
     public function getContentSearchResultUnit ($iContentId, $sUnitTemplate = '')

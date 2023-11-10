@@ -292,6 +292,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('get_info', $iContentId, $bSearchableFieldsOnly);
     }
 
+    public function getContentInfoAPI ($iContentId, $bExtendedUnits = false)
+    {
+        return $this->_call('get_info_api', $iContentId, $bExtendedUnits);
+    }    
+
     public function getContentSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         return $this->_call('get_search_result_unit', $iContentId, $sUnitTemplate);
