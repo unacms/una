@@ -972,7 +972,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $mixedCmtId = [$mixedCmtId];
 
         foreach($mixedCmtId as $iCmtId)
-            if(($oReport = $this->getVoteObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+            if(($oReport = $this->getVoteObject($this->getCommentUniqId($iCmtId))) !== false)
                 $oReport->onObjectDelete();
     }
 
@@ -982,7 +982,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $mixedCmtId = [$mixedCmtId];
 
         foreach($mixedCmtId as $iCmtId)
-            if(($oReport = $this->getReactionObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+            if(($oReport = $this->getReactionObject($this->getCommentUniqId($iCmtId))) !== false)
                 $oReport->onObjectDelete();
     }
 
@@ -992,7 +992,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $mixedCmtId = [$mixedCmtId];
 
         foreach($mixedCmtId as $iCmtId)
-            if(($oReport = $this->getScoreObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+            if(($oReport = $this->getScoreObject($this->getCommentUniqId($iCmtId))) !== false)
                 $oReport->onObjectDelete();
     }
 
@@ -1002,7 +1002,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $mixedCmtId = [$mixedCmtId];
 
         foreach($mixedCmtId as $iCmtId)
-            if(($oReport = $this->getReportObject($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId))) !== false)
+            if(($oReport = $this->getReportObject($this->getCommentUniqId($iCmtId))) !== false)
                 $oReport->onObjectDelete();
     }
 
@@ -1017,7 +1017,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         if($oMetatags)
             foreach($mixedCmtId as $iCmtId)
-                $oMetatags->onDeleteContent($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId));
+                $oMetatags->onDeleteContent($this->getCommentUniqId($iCmtId));
     }
 
     public function deleteUniqueIds ($mixedCmtId)
@@ -1067,7 +1067,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!$this->isRatable())
             return false;
 
-        $oVote = $this->getVoteObject($aCmt['cmt_id']);
+        $oVote = $this->getVoteObject($this->getCommentUniqId($aCmt['cmt_id']));
         if($oVote === false)
             return false;
 
@@ -1086,7 +1086,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!$this->isRatable())
             return false;
 
-        $oScore = $this->getScoreObject($aCmt['cmt_id']);
+        $oScore = $this->getScoreObject($this->getCommentUniqId($aCmt['cmt_id']));
         if($oScore === false)
             return false;
 
