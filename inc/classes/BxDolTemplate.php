@@ -630,6 +630,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'header_text' => '',
             'keywords' => array(),
             'location' => array(),
+            'title' => '',
             'description'  => '',
             'robots' => '',
             'base' => ['href' =>  BX_DOL_URL_ROOT],
@@ -806,6 +807,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $this->aPage;
     }
 
+    /**
+     * Set page meta title.
+     *
+     * @param string sTitle necessary page description.
+     */
+    function setPageMetaTitle($sTitle)
+    {
+        $this->aPage['title'] = $sTitle;
+    }
+    
     /**
      * Set page description.
      *
@@ -1796,7 +1807,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 $sRet = $this->getMetaInfo();
                 break;
             case 'page_header':
-                if(isset($this->aPage['header']))
+                if (isset($this->aPage['title']) && !empty($this->aPage['title']))
+                    $sRet = bx_process_output(strip_tags($this->aPage['title']));
+                if(empty($sRet) && isset($this->aPage['header']))
                     $sRet = bx_process_output(strip_tags($this->aPage['header']));
                 break;
             case 'page_header_text':
