@@ -51,12 +51,9 @@ class BxBaseSearchResult extends BxDolSearchResult
     function displayResultBlock ()
     {
         $sCode = '';
-        bx_alert('simple_search', 'before_get_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode));
 
         $aData = $this->getSearchData();
-        bx_alert('simple_search', 'get_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode, 'search_results' => &$aData));
-
-        if ($this->aCurrent['paginate']['num'] > 0) {
+        if($this->aCurrent['paginate']['num'] > 0) {
             $sCode .= $this->addCustomParts();
 
             foreach ($aData as $aValue)
@@ -85,7 +82,11 @@ class BxBaseSearchResult extends BxDolSearchResult
             ]);
         }
 
-        bx_alert('simple_search', 'show_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode, 'search_results' => &$sCode));
+        bx_alert('simple_search', 'show_data', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode, 
+            'search_results' => &$sCode
+        ]);
 
         return $sCode;
     }

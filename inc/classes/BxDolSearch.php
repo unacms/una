@@ -90,20 +90,21 @@ class BxDolSearch extends BxDol
         $sCode = $this->_bDataProcessing ? array() : '';
 
         $bSingle = count($this->aChoice) == 1;
-        foreach ($this->aChoice as $sKey => $aValue) {
-            if (!$this->_sMetaType && !$aValue['GlobalSearch'])
+        foreach($this->aChoice as $sKey => $aValue) {
+            if(!$this->_sMetaType && !$aValue['GlobalSearch'])
                 continue;
 
-        	$sClassName = 'BxTemplSearchResult';
-	        if(!empty($aValue['class'])) {
-	            $sClassName = $aValue['class'];
-	            if(!empty($aValue['file']))
-	                require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
-	        }
+            $sClassName = 'BxTemplSearchResult';
+            if(!empty($aValue['class'])) {
+                $sClassName = $aValue['class'];
+                if(!empty($aValue['file']))
+                    require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
+            }
 
             $oEx = new $sClassName();            
-            if ($this->_sMetaType && !$oEx->isMetaEnabled($this->_sMetaType))
+            if($this->_sMetaType && !$oEx->isMetaEnabled($this->_sMetaType))
                 continue;
+
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
             $oEx->setMetaType($this->_sMetaType);
@@ -113,15 +114,15 @@ class BxDolSearch extends BxDol
             $oEx->setCustomSearchCondition($this->_aCustomSearchCondition);
             
             $oEx->aCurrent = array_merge_recursive($oEx->aCurrent, $this->_aCustomCurrentCondition);
-            if ($this->_sUnitTemplate)
+            if($this->_sUnitTemplate)
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
 
-            if ($this->_bDataProcessing) {
+            if($this->_bDataProcessing) {
                 if($this->_bIsApi) {
                     if($bSingle)
                         $sCode = $oEx->decodeDataAPI($oEx->getSearchData());
                     else
-                        $sCode[$sKey] = $oEx->getSearchQuery(['for_union' => true]);
+                        $sCode[$sKey] = $oEx->getSearchQuery();
                 }
                 else
                     $sCode[$sKey] = $oEx->getSearchData();
@@ -140,10 +141,9 @@ class BxDolSearch extends BxDol
             $aItems = BxDolDb::getInstance()->getAll('(' . implode(') UNION (', $aQueries) . ') ORDER BY `added` DESC ' . current($sCode)['limit']);
 
             $sCode = [];
-            foreach($aItems as $aItem) {
+            foreach($aItems as $aItem)
                 if(($oContentInfo = BxDolContentInfo::getObjectInstance($aItem['content_info'])) !== false)
                     $sCode[] = $oContentInfo->getContentInfoAPI($aItem['id'], $bExtendedUnits);
-            }
         }
 
         return $sCode;
@@ -722,24 +722,50 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function getSearchData ()
     {
+        bx_alert('simple_search', 'before_get_data', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode
+        ]);
+
         $this->aPseud = $this->_getPseud();
         $this->setConditionParams();
-        if ($this->aCurrent['paginate']['num'] > 0) {
-            $aData = $this->getSearchDataByParams();
-            return $aData;
-        }
-        return array();
+        $aData = $this->aCurrent['paginate']['num'] > 0 ? $this->getSearchDataByParams() : [];
+
+        bx_alert('simple_search', 'get_data', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode, 
+            'search_results' => &$aData
+        ]);
+
+        return $aData;
     }
-    
+
+    /**
+     * Get query [query, limit] for search results. Is used for combined search from different sections.
+     * @param type $aParams array with params
+     * @return type array with query and limit
+     */
     function getSearchQuery($aParams = [])
     {
+        if(!is_array($aParams))
+            $aParams = [];
+        $aParams = array_merge($aParams, ['for_union' => true]);
+
         $this->aPseud = [
             'id' => !empty($this->aCurrent['ident']) ? $this->aCurrent['ident'] : 'id', 
             'added' => !empty($this->aCurrent['added']) ? $this->aCurrent['added'] : 'added'
         ];
 
         $this->setConditionParams();
-        return $this->getSearchDataByParams($aParams);
+        $aQuery = $this->getSearchDataByParams($aParams);
+
+        bx_alert('simple_search', 'get_query', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode, 
+            'search_query' => &$aQuery
+        ]);
+
+        return $aQuery;
     }
 
     /**
