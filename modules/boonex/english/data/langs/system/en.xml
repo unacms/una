@@ -587,6 +587,7 @@
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Select Layout...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Page (Meta) Description]]></string>
 	<string name="_adm_bp_txt_page_meta_keywords"><![CDATA[Keywords]]></string>
+    <string name="_adm_bp_txt_page_meta_title"><![CDATA[Page (Meta) Title]]></string>
 	<string name="_adm_bp_txt_page_meta_robots"><![CDATA[Meta Robots]]></string>
         <string name="_adm_bp_txt_page_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_bp_dsc_page_submenu"><![CDATA[Page submenu can be selected here]]></string>

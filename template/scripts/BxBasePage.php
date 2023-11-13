@@ -49,6 +49,7 @@ class BxBasePage extends BxDolPage
         $this->_aHtmlIds = array(
             'help_popup' => $sHtmlId . '-help-popup-',
         );
+        $this->addMarkers(array('site_title' => getParam('site_title')));
     }
 
     public function performActionGetHelp ()
@@ -813,6 +814,10 @@ class BxBasePage extends BxDolPage
         if ($sPageTitle)
             $oTemplate->setPageHeader ($sPageTitle);
 
+        $sMetaTitle = $this->_getPageMetaTitle();
+        if ($sMetaTitle)
+            $oTemplate->setPageMetaTitle ($sMetaTitle);
+        
         $sMetaDesc = $this->_getPageMetaDesc();
         if ($sMetaDesc)
             $oTemplate->setPageDescription ($sMetaDesc);
@@ -1022,6 +1027,15 @@ class BxBasePage extends BxDolPage
         return $this->_replaceMarkers(_t($this->_aObject['meta_description']));
     }
 
+    /**
+     * Get page meta title.
+     * @return string
+     */
+    protected function _getPageMetaTitle()
+    {
+        return $this->_replaceMarkers(_t($this->_aObject['meta_title']));
+    }
+    
     /**
      * Get page meta image.
      * @return string

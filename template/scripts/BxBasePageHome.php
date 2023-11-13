@@ -15,7 +15,7 @@ class BxBasePageHome extends BxTemplPage
     public function __construct($aObject, $oTemplate)
     {
         parent::__construct($aObject, $oTemplate);
-        $this->addMarkers(array('site_title' => getParam('site_title')));
+      
 
         $aCover = $this->getPageCoverImage();
 

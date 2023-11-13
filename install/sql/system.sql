@@ -5574,6 +5574,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `visible_for_levels_editable` tinyint(4) NOT NULL DEFAULT '1',
   `url` varchar(255) NOT NULL,
   `content_info` varchar(64) NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
   `meta_description` text NOT NULL,
   `meta_keywords` text NOT NULL,
   `meta_robots` varchar(255) NOT NULL,

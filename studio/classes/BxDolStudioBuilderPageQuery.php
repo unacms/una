@@ -74,6 +74,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
             `tp`.`visible_for_levels` AS `visible_for_levels`,
             `tp`.`visible_for_levels_editable` AS `visible_for_levels_editable`,
             `tp`.`url` AS `url`,
+            `tp`.`meta_title` AS `meta_title`,
             `tp`.`meta_description` AS `meta_description`,
             `tp`.`meta_keywords` AS `meta_keywords`,
             `tp`.`meta_robots` AS `meta_robots`,
