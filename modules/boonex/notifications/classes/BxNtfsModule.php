@@ -98,6 +98,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             'GetData' => '',
             'GetUnreadNotificationsNum' => '',
             'GetUnreadNotificationsNumEx' => '',
+            'MarkAsRead' => '',
         ];
     }
 
@@ -659,6 +660,13 @@ class BxNtfsModule extends BxBaseModNotificationsModule
                 if($iPriority != $iPriorityMax)
                     unset($aEvents[$iIndex]);
         }
+    }
+    
+    public function serviceMarkAsRead()
+    {
+        $iOwnerId = bx_get_logged_profile_id();
+        $aParams = $this->_prepareParams(BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS, $iOwnerId);
+        $this->markAsRead($iOwnerId, $aParams);
     }
 
     public function markAsRead($iOwnerId, $aParams)
