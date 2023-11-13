@@ -3202,7 +3202,6 @@ class BxBaseModGeneralModule extends BxDolModule
             'icon' => $oProfile->getIcon(),
             'thumb' => $oProfile->getThumb(),
             'avatar' => $oProfile->getAvatar(),
-            'unit' => $oProfile->{'getUnit' . ($this->_bIsApi ? 'API' : '')}(),
             'active' => $oProfile->isActive(),
         );
     }

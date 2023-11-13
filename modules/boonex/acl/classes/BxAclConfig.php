@@ -84,9 +84,8 @@ class BxAclConfig extends BxBaseModGeneralConfig
             'popup_price' => $sHtmlPrefix . '-popup-price'
         );
 
-        $oPayments = BxDolPayments::getInstance();
-        $this->_iOwner = (int)$oPayments->getOption('site_admin');
-        $this->_aCurrency = $oPayments->getCurrencyInfo($this->_iOwner);
+        $this->_iOwner = 0;
+        $this->_aCurrency = [];
 
         $this->_bExpireNotifyOnce = true;
         $this->_iExpireNotificationDays = 1;
@@ -129,11 +128,17 @@ class BxAclConfig extends BxBaseModGeneralConfig
 
     public function getOwner()
     {
+        if(empty($this->_iOwner))
+            $this->_iOwner = (int)BxDolPayments::getInstance()->getOption('site_admin');
+
     	return $this->_iOwner;
     }
 
     public function getCurrency()
     {
+        if(empty($this->_aCurrency) || !is_array($this->_aCurrency))
+            $this->_aCurrency = BxDolPayments::getInstance()->getCurrencyInfo($this->getOwner());
+
     	return $this->_aCurrency;
     }
 
