@@ -623,7 +623,7 @@ function echoDbgLog($mWhat, $sDesc = 'unused', $sFileName = 'unused')
 
 function bx_is_dbg()
 {
-    return defined('BX_DBG_PROFILES') && in_array(bx_get_logged_profile_id(), BX_DBG_PROFILES);
+    return (defined('BX_DBG_COOKIE') && !empty($_COOKIE[BX_DBG_COOKIE])) || (defined('BX_DBG_PROFILES') && in_array(bx_get_logged_profile_id(), BX_DBG_PROFILES));
 }
 
 function dbgTiming($sStartMicrotime)
