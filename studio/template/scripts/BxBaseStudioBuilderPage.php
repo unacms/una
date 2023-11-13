@@ -1391,7 +1391,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             ),
             'inputs' => array (
                 'meta_title' => array(
-                    'type' => 'textarea',
+                    'type' => 'text',
                     'name' => 'meta_title',
                     'caption' => _t('_adm_bp_txt_page_meta_title'),
                     'value' => isset($aPage['meta_title']) ? $aPage['meta_title'] : '',

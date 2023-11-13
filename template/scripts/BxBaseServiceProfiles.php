@@ -556,6 +556,110 @@ class BxBaseServiceProfiles extends BxDol
 
         return $this->_serviceBrowseConnections('friends', $aParamsBrowse, $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
+    
+    public function serviceProfileFriendsRequestsCount ($iProfileId = 0)
+    {
+        
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if(!$oConnection)
+            return false;
+
+        return $oConnection->getConnectedInitiatorsCount($iProfileId, false) - $oConnection->getConnectedInitiatorsCount($iProfileId, true);
+    }
+    
+    public function serviceProfileSentFriendsRequestsCount ($iProfileId = 0)
+    {
+        
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if(!$oConnection)
+            return false;
+
+        return $oConnection->getConnectedContentCount($iProfileId, false) - $oConnection->getConnectedContentCount($iProfileId, true);
+    }
+    
+    
+    public function serviceProfileFriendsCount ($iProfileId = 0)
+    {
+        
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if(!$oConnection)
+            return false;
+
+        return $oConnection->getConnectedInitiatorsCount($iProfileId, true);
+    }
+    
+    public function serviceProfileFollowersCount ($iProfileId = 0)
+    {
+        
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if(!$oConnection)
+            return false;
+
+        return $oConnection->getConnectedInitiatorsCount($iProfileId);
+    }
+
+    public function serviceProfileFollowingCount ($iProfileId = 0)
+    {
+        
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if(!$oConnection)
+            return false;
+
+        return $oConnection->getConnectedContentCount($iProfileId);
+    }
+    
+    public function serviceProfileRecommendationFollowingCount ($iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oRecommendation = BxDolRecommendation::getObjectInstance('sys_subscriptions');
+        if(!$oRecommendation)
+            return false;
+        // TODO GET COUNT ANTON
+        return '555';
+    }
+    
+    public function serviceProfileRecommendationFriendsCount ($iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        if(!$iProfileId)
+            return '';
+        
+        $oRecommendation = BxDolRecommendation::getObjectInstance('sys_friends');
+        if(!$oRecommendation)
+            return false;
+        // TODO GET COUNT ANTON
+        return '666';
+    }
 
     public function serviceBrowseFriendRequests ($iProfileId = 0, $aParams = [])
     {

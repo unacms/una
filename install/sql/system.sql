@@ -4600,7 +4600,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
 ('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', ''),
 ('sys_favorite_list', '_sys_menu_title_favorite_list', 'sys_favorite_list', 'system', 9, 0, 1, '', ''),
-('sys_con_submenu', '_sys_menu_title_con_submenu', 'sys_con_submenu', 'system', 8, 0, 1, '', ''),
+('sys_con_submenu', '_sys_menu_title_con_submenu', 'sys_con_submenu', 'system', 8, 0, 1, 'BxTemplMenuSubmenuWithAddons', ''),
 
 ('sys_studio_account_popup', '_sys_menu_title_studio_account_popup', 'sys_studio_account_popup', 'system', 4, 0, 1, 'BxTemplStudioMenuAccountPopup', '');
 
@@ -4834,13 +4834,13 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- connections submenu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
-('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', '', '', 2147483647, '', 1, 1, 1),
-('sys_con_submenu', 'system', 'friend-suggestions', '', '_sys_menu_item_title_recom_friends', 'page.php?i=friend-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 2),
-('sys_con_submenu', 'system', 'friend-requests', '', '_sys_menu_item_title_con_friend_requests', 'page.php?i=friend-requests', '', '', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:31:"get_unconfirmed_connections_num";s:6:"params";a:1:{i:0;s:20:"sys_profiles_friends";}s:5:"class";s:23:"TemplServiceConnections";}', '', 2147483647, '', 1, 1, 3),
-('sys_con_submenu', 'system', 'sent-friend-requests', '', '_sys_menu_item_title_con_friend_requested', 'page.php?i=sent-friend-requests', '', '', '', '', '', 2147483647, '', 1, 1, 4),
-('sys_con_submenu', 'system', 'follow-suggestions', '', '_sys_menu_item_title_recom_subscriptions', 'page.php?i=follow-suggestions', '', '', '', '', '', 2147483647, '', 1, 1, 5),
-('sys_con_submenu', 'system', 'followers', '', '_sys_menu_item_title_con_followers', 'page.php?i=followers', '', '', '', '', '', 2147483647, '', 1, 1, 6),
-('sys_con_submenu', 'system', 'following', '', '_sys_menu_item_title_con_following', 'page.php?i=following', '', '', '', '', '', 2147483647, '', 1, 1, 7);
+('sys_con_submenu', 'system', 'friends', '', '_sys_menu_item_title_con_friends', 'page.php?i=friends', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_friends_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 1),
+('sys_con_submenu', 'system', 'friend-suggestions', '', '_sys_menu_item_title_recom_friends', 'page.php?i=friend-suggestions', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:36:"profile_recommendation_friends_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 2),
+('sys_con_submenu', 'system', 'friend-requests', '', '_sys_menu_item_title_con_friend_requests', 'page.php?i=friend-requests', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:30:"profile_friends_requests_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 3),
+('sys_con_submenu', 'system', 'sent-friend-requests', '', '_sys_menu_item_title_con_friend_requested', 'page.php?i=sent-friend-requests', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:35:"profile_sent_friends_requests_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 4),
+('sys_con_submenu', 'system', 'follow-suggestions', '', '_sys_menu_item_title_recom_subscriptions', 'page.php?i=follow-suggestions', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:38:"profile_recommendation_following_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 5),
+('sys_con_submenu', 'system', 'followers', '', '_sys_menu_item_title_con_followers', 'page.php?i=followers', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"profile_followers_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 6),
+('sys_con_submenu', 'system', 'following', '', '_sys_menu_item_title_con_following', 'page.php?i=following', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"profile_following_count";s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483647, '', 1, 1, 7);
 
 -- studio: account menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES

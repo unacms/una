@@ -181,7 +181,8 @@ class BxBaseMenu extends BxDolMenu
                 'link' => isset($a['link']) ? $a['link'] : '',
                 'icon' => $sIcon ? $sIcon : '',
                 'image' => $sIconUrl ? $sIconUrl : '',
-                'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : ''
+                'submenu' => !empty($a['submenu_object']) ? $a['submenu_object'] : '',
+                'addon' => $this->_bDisplayAddons ? $this->_getMenuAddon($a) : ''
             ];
 
             if(($aMarkers = $this->_getMenuMarkers($a)) && is_array($aMarkers))
