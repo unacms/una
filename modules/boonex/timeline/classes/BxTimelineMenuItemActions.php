@@ -364,7 +364,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 break;
         }
 
-        return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->$sReportsMethod($aReportsParams);
+        $oObject = $this->_oModule->getReportObject($sReportsSystem, $iReportsObject);
+
+        if($this->_bIsApi)
+            return $this->_getMenuItemElementApi($aItem, $oObject->getElementApi(array_merge($aReportsParams, [
+                'show_counter' => true,
+            ])));
+
+        return $oObject->$sReportsMethod($aReportsParams);
     }
 
     protected function _getMenuItemItemRepost($aItem)

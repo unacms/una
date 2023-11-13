@@ -52,10 +52,17 @@ class BxBaseReport extends BxDolReport
             'show_counter' => true,
             'show_counter_only' => true
         );
-        $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
-            'show_counter' => true,
-        ]);
-        $this->_aElementParamsApi = ['is_reported'];
+        if($this->_bApi) {
+            $aTypes = BxDolFormQuery::getDataItems($this->_sTypesPreList);
+
+            $this->_aElementDefaultsApi = array_merge($this->_aElementDefaults, [
+                'show_counter' => true,
+                'types' => array_map(function($sType) use ($aTypes) {
+                    return ['name' => $sType, 'title' => $aTypes[$sType]];
+                }, $this->_aTypes)
+            ]);
+            $this->_aElementParamsApi = ['is_reported', 'types'];
+        }
 
         $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('report_element_block.html');
         $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('report_element_inline.html');

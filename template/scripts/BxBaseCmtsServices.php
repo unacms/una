@@ -110,7 +110,7 @@ class BxBaseCmtsServices extends BxDol
     {
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
 
-        $oVote = $oCmts->getVoteObject($iCmtId);
+        $oVote = $oCmts->getVoteObject($oCmts->getCommentUniqId($iCmtId));
         if($oVote !== false)
             return $oVote->getCounter();
 

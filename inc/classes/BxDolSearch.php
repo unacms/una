@@ -90,20 +90,21 @@ class BxDolSearch extends BxDol
         $sCode = $this->_bDataProcessing ? array() : '';
 
         $bSingle = count($this->aChoice) == 1;
-        foreach ($this->aChoice as $sKey => $aValue) {
-            if (!$this->_sMetaType && !$aValue['GlobalSearch'])
+        foreach($this->aChoice as $sKey => $aValue) {
+            if(!$this->_sMetaType && !$aValue['GlobalSearch'])
                 continue;
 
-        	$sClassName = 'BxTemplSearchResult';
-	        if(!empty($aValue['class'])) {
-	            $sClassName = $aValue['class'];
-	            if(!empty($aValue['file']))
-	                require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
-	        }
+            $sClassName = 'BxTemplSearchResult';
+            if(!empty($aValue['class'])) {
+                $sClassName = $aValue['class'];
+                if(!empty($aValue['file']))
+                    require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
+            }
 
             $oEx = new $sClassName();            
-            if ($this->_sMetaType && !$oEx->isMetaEnabled($this->_sMetaType))
+            if($this->_sMetaType && !$oEx->isMetaEnabled($this->_sMetaType))
                 continue;
+
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
             $oEx->setMetaType($this->_sMetaType);
@@ -113,15 +114,15 @@ class BxDolSearch extends BxDol
             $oEx->setCustomSearchCondition($this->_aCustomSearchCondition);
             
             $oEx->aCurrent = array_merge_recursive($oEx->aCurrent, $this->_aCustomCurrentCondition);
-            if ($this->_sUnitTemplate)
+            if($this->_sUnitTemplate)
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
 
-            if ($this->_bDataProcessing) {
+            if($this->_bDataProcessing) {
                 if($this->_bIsApi) {
                     if($bSingle)
                         $sCode = $oEx->decodeDataAPI($oEx->getSearchData());
                     else
-                        $sCode[$sKey] = $oEx->getSearchQuery(['for_union' => true]);
+                        $sCode[$sKey] = $oEx->getSearchQuery();
                 }
                 else
                     $sCode[$sKey] = $oEx->getSearchData();
@@ -141,7 +142,8 @@ class BxDolSearch extends BxDol
 
             $sCode = [];
             foreach($aItems as $aItem)
-                $sCode[] = bx_srv($aItem['module'], 'get_info_api', [$aItem['id'], $bExtendedUnits]);
+                if(($oContentInfo = BxDolContentInfo::getObjectInstance($aItem['content_info'])) !== false)
+                    $sCode[] = $oContentInfo->getContentInfoAPI($aItem['id'], $bExtendedUnits);
         }
 
         return $sCode;
@@ -377,6 +379,16 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setId($sId)
     {
         $this->id = $sId;
+    }
+
+    public function getModuleName()
+    {
+        return isset($this->aCurrent['module_name']) ? $this->aCurrent['module_name'] : '';
+    }
+
+    public function getContentInfoName()
+    {
+        return isset($this->aCurrent['name']) ? $this->aCurrent['name'] : '';
     }
 
     public function setAjaxPaginate($b = true)
@@ -710,21 +722,50 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function getSearchData ()
     {
+        bx_alert('simple_search', 'before_get_data', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode
+        ]);
+
         $this->aPseud = $this->_getPseud();
         $this->setConditionParams();
-        if ($this->aCurrent['paginate']['num'] > 0) {
-            $aData = $this->getSearchDataByParams();
-            return $aData;
-        }
-        return array();
+        $aData = $this->aCurrent['paginate']['num'] > 0 ? $this->getSearchDataByParams() : [];
+
+        bx_alert('simple_search', 'get_data', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode, 
+            'search_results' => &$aData
+        ]);
+
+        return $aData;
     }
-    
+
+    /**
+     * Get query [query, limit] for search results. Is used for combined search from different sections.
+     * @param type $aParams array with params
+     * @return type array with query and limit
+     */
     function getSearchQuery($aParams = [])
     {
-        $this->aPseud = ['id' => 'id', 'added' => 'added'];
+        if(!is_array($aParams))
+            $aParams = [];
+        $aParams = array_merge($aParams, ['for_union' => true]);
+
+        $this->aPseud = [
+            'id' => !empty($this->aCurrent['ident']) ? $this->aCurrent['ident'] : 'id', 
+            'added' => !empty($this->aCurrent['added']) ? $this->aCurrent['added'] : 'added'
+        ];
 
         $this->setConditionParams();
-        return $this->getSearchDataByParams($aParams);
+        $aQuery = $this->getSearchDataByParams($aParams);
+
+        bx_alert('simple_search', 'get_query', 0, false, [
+            'object' => &$this->aCurrent, 
+            'mode' => $this->_sMode, 
+            'search_query' => &$aQuery
+        ]);
+
+        return $aQuery;
     }
 
     /**
@@ -775,9 +816,9 @@ class BxDolSearchResult implements iBxDolReplaceable
         if($bForUnion) {
             $sTable = isset($this->aCurrent['tableSearch']) ? $this->aCurrent['tableSearch'] : $this->aCurrent['table'];
 
-            $aSql['ownFields'] .= $this->setFieldUnit('id', $sTable);
-            $aSql['ownFields'] .= $this->setFieldUnit('added', $sTable);
-            $aSql['ownFields'] .= "'" . $this->aCurrent['module_name']  . "' AS `module`";
+            $aSql['ownFields'] .= $this->setFieldUnit(!empty($this->aCurrent['ident']) ? $this->aCurrent['ident'] : 'id', $sTable);
+            $aSql['ownFields'] .= $this->setFieldUnit(!empty($this->aCurrent['added']) ? $this->aCurrent['added'] : 'added', $sTable);
+            $aSql['ownFields'] .= "'" . $this->getContentInfoName()  . "' AS `content_info`";
         }
         else
             foreach ($this->aCurrent['ownFields'] as $sValue)

@@ -19,13 +19,13 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
     {
         parent::__construct($sMode, $aParams);
 
-        $this->oModule = $this->getMain();
+        $this->oModule = BxDolModule::getInstance($this->sModule);
         $this->sModuleObjectComments = $this->oModule->_oConfig->CNF['OBJECT_COMMENTS'];
         $this->aCommentsAddons = array();        
 
         $this->aCurrent = array(
-            'name' => $this->oModule->_oConfig->getName() . '_cmts',
-            'module_name' => $this->oModule->_oConfig->getName(),
+            'name' => $this->sModule . '_cmts',
+            'module_name' => $this->sModule,
             'object_metatags' => 'sys_cmts',
             'title' => '',
             'table' => $this->oModule->_oConfig->getDbPrefix() . 'cmts',
@@ -36,17 +36,13 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             ),
             'paginate' => array('start' => 0),
             'sorting' => 'last',
-            'ident' => 'cmt_id'
+            'ident' => 'cmt_id',
+            'added' => 'cmt_time',
         );
 
         $this->_joinTableUniqueIds();
 
         $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
-    }
-
-    function getMain()
-    {
-        return BxDolModule::getInstance($this->sModule);
     }
 
     function displaySearchUnit($aData)
@@ -94,12 +90,8 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
     {
         $oContentInfo = $this->getContentInfoObject();
 
-        foreach($a as $i => $r) {
-            if(isset($r['author']))
-                $a[$i]['author_data'] = BxDolProfile::getData($r['author']);
-
-            $a[$i]['url'] = bx_api_get_relative_url($oContentInfo->getContentLink($r['id']));
-        }
+        foreach($a as $i => $r)
+            $a[$i] = $oContentInfo->getContentInfoAPI($r['id']);
 
         return $a;
     }
