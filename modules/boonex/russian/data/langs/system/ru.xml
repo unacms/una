@@ -587,6 +587,7 @@
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Выбрать отображение...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Мета-описание страницы]]></string>
 	<string name="_adm_bp_txt_page_meta_keywords"><![CDATA[Ключевые слова]]></string>
+        <string name="_adm_bp_txt_page_meta_title"><![CDATA[Мета-заголовок страницы]]></string>
 	<string name="_adm_bp_txt_page_meta_robots"><![CDATA[Мета-роботы]]></string>
         <string name="_adm_bp_txt_page_submenu"><![CDATA[Подменю]]></string>
 	<string name="_adm_bp_dsc_page_submenu"><![CDATA[В данном поле можно выбрать подменю страницы]]></string>
