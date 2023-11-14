@@ -13,14 +13,15 @@
  */
 class BxBaseCaptchaHCaptcha extends BxDolCaptcha
 {
-	protected $sApiUrl;
-	protected $sVerifyUrl;
+    protected $_sSkin;
+    protected $sApiUrl;
+    protected $sVerifyUrl;
 
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
 		
-		$this->_sSkin = 'light';
+        $this->_sSkin = 'light';
         $this->sApiUrl = 'https://js.hcaptcha.com/1/api.js';
         $this->sVerifyUrl = 'https://hcaptcha.com/siteverify';
     }

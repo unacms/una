@@ -13,8 +13,9 @@
  */
 class BxBaseCaptchaReCAPTCHANew extends BxDolCaptcha
 {
-	protected $sApiUrl;
-	protected $sVerifyUrl;
+    protected $_sSkin;
+    protected $sApiUrl;
+    protected $sVerifyUrl;
 
     public function __construct ($aObject, $oTemplate)
     {
