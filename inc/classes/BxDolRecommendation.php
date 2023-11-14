@@ -85,6 +85,14 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
     {
         return $this->_aObject['content_info'];
     }
+    
+    public function getCount($iProfileId = 0, $aParams = [])
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        return $this->_oDb->get($iProfileId, $this->_aObject['id'], array_merge($aParams, ['count_only' => true]));
+    }
 
     public function actionAdd($iProfileId = 0, $iItemId = 0)
     {

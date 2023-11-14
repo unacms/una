@@ -105,20 +105,36 @@ class BxDolRecommendationQuery extends BxDolDb
 
     public function get($iProfileId, $iObjectId, $aParams = [])
     {
+        $aMethod = ['name' => 'getPairs', 'params' => [0 => 'query', 1 => 'id', 2 => 'value']];
+
+        $sSelectClause = "`item_id` AS `id`, (`item_value` - `item_reducer`) AS `value`";
+
         $sWhereClause = "";
         if(!empty($aParams['type']))
             $sWhereClause = " AND `item_type` IN (" . $this->implode_escape(is_array($aParams['type']) ? $aParams['type'] : [$aParams['type']]) . ")";
+
+        $sOrderClause = "ORDER BY `value` DESC";
 
         $sLimitClause = "";
         if(isset($aParams['start']) && !empty($aParams['per_page']))
             $sLimitClause = " LIMIT " . $aParams['start'] . ", " . $aParams['per_page'];
 
-        return $this->getPairs("SELECT `item_id` AS `id`, (`item_value` - `item_reducer`) AS `value` FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= 0" . $sWhereClause . " ORDER BY `value` DESC" . $sLimitClause, 'id', 'value', [
+        if(isset($aParams['count_only']) && $aParams['count_only'] === true) {
+            $aMethod = ['name' => 'getOne', 'params' => [0 => 'query']];
+
+            $sSelectClause = "COUNT(`id`)";
+            $sOrderClause = "";
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . self::$sTableData . "` WHERE `profile_id` = :profile_id AND `object_id` = :object_id AND (`item_value` - `item_reducer`) >= 0" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][] = [
             'profile_id' => $iProfileId,
             'object_id' => $iObjectId
-        ]);
+        ];
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
-    
+
     public function getBy($aParams)
     {
         $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];

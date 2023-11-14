@@ -632,8 +632,8 @@ class BxBaseServiceProfiles extends BxDol
 
         return $oConnection->getConnectedContentCount($iProfileId);
     }
-    
-    public function serviceProfileRecommendationFollowingCount ($iProfileId = 0)
+
+    public function serviceProfileRecommendationFollowingCount ($iProfileId = 0, $aParams = [])
     {
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -643,22 +643,26 @@ class BxBaseServiceProfiles extends BxDol
         $oRecommendation = BxDolRecommendation::getObjectInstance('sys_subscriptions');
         if(!$oRecommendation)
             return false;
-        // TODO GET COUNT ANTON
-        return '555';
+
+        $aModules = bx_srv('system', 'get_modules_by_type', ['profile', ['name_as_key' => true]]);
+
+        return $oRecommendation->getCount($iProfileId, array_merge([
+            'type' => !empty($aModules) && is_array($aModules) ? array_keys($aModules) : '',
+        ], $aParams));
     }
     
-    public function serviceProfileRecommendationFriendsCount ($iProfileId = 0)
+    public function serviceProfileRecommendationFriendsCount ($iProfileId = 0, $aParams = [])
     {
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
         if(!$iProfileId)
             return '';
-        
+
         $oRecommendation = BxDolRecommendation::getObjectInstance('sys_friends');
         if(!$oRecommendation)
             return false;
-        // TODO GET COUNT ANTON
-        return '666';
+
+        return $oRecommendation->getCount($iProfileId, $aParams);
     }
 
     public function serviceBrowseFriendRequests ($iProfileId = 0, $aParams = [])
