@@ -17,10 +17,22 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
+        
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(isset($CNF['OBJECT_CONNECTIONS']))
+            $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = [
+                'add' => 'checkAllowedFanAdd', 
+                'remove' => 'checkAllowedFanRemove'
+            ];
     }
 
     protected function _getMenuItemProfileFanAdd($aItem)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if($this->_bIsApi && $CNF['OBJECT_CONNECTIONS'])
+            return $this->_getMenuItemConnectionApi($CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
         return $this->_getMenuItemByNameActions($aItem);
     }
 
@@ -31,6 +43,10 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
 
     protected function _getMenuItemProfileFanRemove($aItem)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if($this->_bIsApi && $CNF['OBJECT_CONNECTIONS'])
+            return $this->_getMenuItemConnectionApi($CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 }
