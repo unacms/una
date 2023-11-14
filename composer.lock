@@ -22,12 +22,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/s3.git",
-                "reference": "7f5b3e929c93eb02ba24472560c0cbbef735aed9"
+                "reference": "982d78d9f35c15bbfeff42a5f2a6e6ac4fd60f48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/s3/zipball/7f5b3e929c93eb02ba24472560c0cbbef735aed9",
-                "reference": "7f5b3e929c93eb02ba24472560c0cbbef735aed9",
+                "url": "https://api.github.com/repos/akeeba/s3/zipball/982d78d9f35c15bbfeff42a5f2a6e6ac4fd60f48",
+                "reference": "982d78d9f35c15bbfeff42a5f2a6e6ac4fd60f48",
                 "shasum": ""
             },
             "require": {
@@ -64,9 +64,9 @@
             ],
             "support": {
                 "issues": "https://github.com/akeeba/s3/issues",
-                "source": "https://github.com/akeeba/s3/tree/2.3.1"
+                "source": "https://github.com/akeeba/s3/tree/development"
             },
-            "time": "2023-09-26T11:40:10+00:00"
+            "time": "2023-10-30T15:02:15+00:00"
         },
         {
             "name": "avto-dev/composer-cleanup-plugin",
@@ -215,16 +215,16 @@
         },
         {
             "name": "chargebee/chargebee-php",
-            "version": "v3.22.0",
+            "version": "v3.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chargebee/chargebee-php.git",
-                "reference": "a64ddbdf51abc903efe881cf7a411f8ffd92193c"
+                "reference": "e821b81adf4b6334c0705f1e13471abbe41e94db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/a64ddbdf51abc903efe881cf7a411f8ffd92193c",
-                "reference": "a64ddbdf51abc903efe881cf7a411f8ffd92193c",
+                "url": "https://api.github.com/repos/chargebee/chargebee-php/zipball/e821b81adf4b6334c0705f1e13471abbe41e94db",
+                "reference": "e821b81adf4b6334c0705f1e13471abbe41e94db",
                 "shasum": ""
             },
             "require": {
@@ -258,9 +258,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chargebee/chargebee-php/issues",
-                "source": "https://github.com/chargebee/chargebee-php/tree/v3.22.0"
+                "source": "https://github.com/chargebee/chargebee-php/tree/v3.23.0"
             },
-            "time": "2023-09-26T07:58:55+00:00"
+            "time": "2023-10-31T09:19:32+00:00"
         },
         {
             "name": "curl/cacert",
@@ -277,12 +277,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "6598f3860c2698fe2f0f1bc98212fc01d0a1893c"
+                "reference": "77947eda2fdaf06b181c63a7db13e38968306aee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/6598f3860c2698fe2f0f1bc98212fc01d0a1893c",
-                "reference": "6598f3860c2698fe2f0f1bc98212fc01d0a1893c",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/77947eda2fdaf06b181c63a7db13e38968306aee",
+                "reference": "77947eda2fdaf06b181c63a7db13e38968306aee",
                 "shasum": ""
             },
             "require": {
@@ -320,7 +320,7 @@
                 "issues": "https://github.com/erusev/parsedown/issues",
                 "source": "https://github.com/erusev/parsedown/tree/master"
             },
-            "time": "2020-08-09T14:12:21+00:00"
+            "time": "2023-10-13T08:10:28+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -998,16 +998,16 @@
         },
         {
             "name": "mpratt/embera",
-            "version": "2.0.34",
+            "version": "2.0.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "7cee7dfd4e46cb45fd8f2f15195d90cf2442becc"
+                "reference": "840035cbccd938ede69858cd5c872f3c5e97401e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/7cee7dfd4e46cb45fd8f2f15195d90cf2442becc",
-                "reference": "7cee7dfd4e46cb45fd8f2f15195d90cf2442becc",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/840035cbccd938ede69858cd5c872f3c5e97401e",
+                "reference": "840035cbccd938ede69858cd5c872f3c5e97401e",
                 "shasum": ""
             },
             "require": {
@@ -1056,7 +1056,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mpratt/Embera/issues",
-                "source": "https://github.com/mpratt/Embera/tree/2.0.34"
+                "source": "https://github.com/mpratt/Embera/tree/2.0.35"
             },
             "funding": [
                 {
@@ -1064,7 +1064,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2023-06-21T04:06:34+00:00"
+            "time": "2023-11-09T06:38:50+00:00"
         },
         {
             "name": "paragonie/random_compat",
