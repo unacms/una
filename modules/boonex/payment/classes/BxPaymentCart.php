@@ -394,7 +394,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
             'vendor_icon' => $aSeller['icon'],
             'vendor_thumb' => $aSeller['thumb'],
             'vendor_avatar' => $aSeller['avatar'],
-            'vendor_unit' => $aSeller['unit'],
             'vendor_currency_code' => $aSeller['currency_code'],
             'vendor_currency_sign' => $aSeller['currency_sign'],
             'items_count' => $iItemsCount,
