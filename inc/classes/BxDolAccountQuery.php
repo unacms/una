@@ -217,8 +217,7 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function updateLoggedIn($iID)
     {
-        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `logged` = ?, `ip` = ?, `login_attempts` = 0 WHERE `id`= ?", time(), getVisitorIP(), $iID);
-        return $this->query($sQuery);
+        return $this->query("UPDATE `sys_accounts` SET `logged` = :ts, `ip` = :ip, `login_attempts` = 0, `lang_id` = :lang WHERE `id`= :id", ['ts' => time(), 'ip' => getVisitorIP(), 'lang' => BxDolLanguages::getInstance()->getCurrentLangId(), 'id' => $iID]);
     }
     
     /**
