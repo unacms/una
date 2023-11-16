@@ -119,4 +119,5 @@
     <string name="_bx_accnt_txt_field_changed"><![CDATA[Изменен]]></string>
     <string name="_bx_accnt_txt_field_logged"><![CDATA[Заходил]]></string>
     <string name="_bx_accnt_txt_field_ip"><![CDATA[IP]]></string>
+    <string name="_bx_accnt_txt_field_lang_id"><![CDATA[Язык]]></string>
 </resources>

@@ -771,6 +771,11 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return $this->__exportFieldConverterDateTime($mixedValue);
     }
 
+    protected function _exportFieldConverterLangId($mixedValue)
+    {
+        return $mixedValue ? BxDolLanguages::getInstance()->getLangName($mixedValue) : '';
+    }
+
     protected function __exportFieldConverterDate($mixedValue)
     {
         return date('Y.m.d', $mixedValue);

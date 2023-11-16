@@ -23,7 +23,7 @@ class BxAccntDb extends BxBaseModGeneralDb
 
     public function getAccountIds()
     {
-    	return $this->getColumn("SELECT `id` FROM `sys_accounts` WHERE 1", "id");
+    	return $this->getColumn("SELECT `id` FROM `sys_accounts` WHERE `name` != 'Robot'", "id");
     }
 
     public function updateAccount($aSet, $aWhere)
