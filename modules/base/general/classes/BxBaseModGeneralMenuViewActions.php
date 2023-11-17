@@ -58,8 +58,13 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     public function addMarkers($a)
     {
         $bResult = parent::addMarkers($a);
-        if($bResult && !empty($this->_oMenuSocialSharing))
+        if($bResult) {
+            if(empty($this->_oMenuSocialSharing))
+                $this->_initMenuSocialSharing();
+
             $this->_oMenuSocialSharing->addMarkers($a);
+            parent::addMarkers($this->_oMenuSocialSharing->getMarkers());
+        }
 
         return $bResult;
     }
@@ -106,16 +111,26 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS));
     }
 
+    protected function _initMenuSocialSharing()
+    {
+        $this->_oMenuSocialSharing = BxDolMenu::getObjectInstance('sys_social_sharing');
+        if(!$this->_oMenuSocialSharing)
+            return false;
+
+        /**
+         * Adding current markers to social sharing menu object to force it to generate its own markers.
+         * Getting generated social sharing markers back and adding all of them to current menu object. So, now these markers can be parsed for any menu item.
+         */
+        $this->_oMenuSocialSharing->addMarkers($this->_aMarkers); 
+        $this->addMarkers($this->_oMenuSocialSharing->getMarkers());
+
+        return true;
+    }
+
     protected function _getMenuItemDefault($aItem)
     {
-        if(empty($this->_oMenuSocialSharing)) {
-            $this->_oMenuSocialSharing = BxDolMenu::getObjectInstance('sys_social_sharing');
-            if($this->_oMenuSocialSharing) {
-                $this->_oMenuSocialSharing->addMarkers($this->_aMarkers);           // adding current markers to social sharing menu object to force it to generate its own markers
-                $aSocialSharingMarkers = $this->_oMenuSocialSharing->getMarkers();  // getting generated social sharing markers back
-                $this->addMarkers($aSocialSharingMarkers);                          // adding all of these to current menu object so now these markers can be parsed for any menu item
-            }
-        }
+        if(empty($this->_oMenuSocialSharing)) 
+            $this->_initMenuSocialSharing();
 
         $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
 
@@ -540,14 +555,8 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
 
     protected function _getMenuItemByNameSocialSharing($aItem, $aParams = array())
     {
-        if(empty($this->_oMenuSocialSharing)) {
-            $this->_oMenuSocialSharing = BxDolMenu::getObjectInstance('sys_social_sharing');
-            if(!$this->_oMenuSocialSharing)
-                return false;
-
-            $this->_oMenuSocialSharing->addMarkers($this->_aMarkers);
-            $this->addMarkers($this->_oMenuSocialSharing->getMarkers());
-        }
+        if(empty($this->_oMenuSocialSharing) && !$this->_initMenuSocialSharing())
+            return false;
 
         $aItem = $this->_oMenuSocialSharing->getMenuItem($aItem['name']);
         if(empty($aItem) || !is_array($aItem))
