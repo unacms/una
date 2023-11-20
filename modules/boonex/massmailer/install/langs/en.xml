@@ -70,6 +70,8 @@
   <string name="_bx_massmailer_form_campaign"><![CDATA[Campaign]]></string>
   <string name="_bx_massmailer_form_campaign_add_display"><![CDATA[Add]]></string>
   <string name="_bx_massmailer_form_campaign_edit_display"><![CDATA[Edit]]></string>
+  <string name="_bx_massmailer_form_campaign_send_all_display"><![CDATA[Send to all]]></string>
+  <string name="_bx_massmailer_form_campaign_send_test_display"><![CDATA[Send a test]]></string>
   <string name="_bx_massmailer_form_entry_input_do_submit"><![CDATA[Save]]></string>
   <string name="_bx_massmailer_form_entry_input_sys_do_submit"><![CDATA[Save]]></string>
   <string name="_bx_massmailer_form_entry_input_do_send"><![CDATA[Send]]></string>

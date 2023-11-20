@@ -71,6 +71,8 @@
   <string name="_bx_massmailer_form_campaign"><![CDATA[Кампания]]></string>
   <string name="_bx_massmailer_form_campaign_add_display"><![CDATA[Добавить]]></string>
   <string name="_bx_massmailer_form_campaign_edit_display"><![CDATA[Редактировать]]></string>
+  <string name="_bx_massmailer_form_campaign_send_all_display"><![CDATA[Отправить всем]]></string>
+  <string name="_bx_massmailer_form_campaign_send_test_display"><![CDATA[Протестировать отправку]]></string>
   <string name="_bx_massmailer_form_entry_input_do_submit"><![CDATA[Сохранить]]></string>
   <string name="_bx_massmailer_form_entry_input_sys_do_submit"><![CDATA[Сохранить]]></string>
   <string name="_bx_massmailer_form_entry_input_do_send"><![CDATA[Отправить]]></string>
