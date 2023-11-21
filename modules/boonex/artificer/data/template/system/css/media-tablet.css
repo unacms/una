@@ -23,8 +23,7 @@ html.bx-media-tablet {
 .bx-media-tablet .bx-def-constraint-list ol, .bx-def-constraint-list ul,
 .bx-media-tablet .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre,
 .bx-media-tablet .bx-def-constraint-object object,
-.bx-media-tablet .bx-def-constraint-iframe iframe,
-.bx-media-tablet .bx-def-constraint-img img {
+.bx-media-tablet .bx-def-constraint-iframe iframe {
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -35,6 +34,12 @@ html.bx-media-tablet {
 }
 .bx-media-tablet .bx-def-constraint-pre:not(.bx-def-vanilla-html) pre {
     overflow:scroll !important;
+}
+.bx-media-tablet .bx-def-constraint-img img {
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* default.css */
