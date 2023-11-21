@@ -167,6 +167,8 @@
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Избранные события]]></string>
     <string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Участие в событиях]]></string>
     <string name="_bx_events_page_block_title_joined_entries"><![CDATA[Участие в событиях]]></string>
+    <string name="_bx_events_page_block_title_sys_joined_calendar"><![CDATA[Календарь участия в событиях]]></string>
+    <string name="_bx_events_page_block_title_joined_calendar"><![CDATA[Календарь участия в событиях]]></string>
     <string name="_bx_events_page_block_title_sys_followed_entries"><![CDATA[Подписанные События]]></string>
     <string name="_bx_events_page_block_title_followed_entries"><![CDATA[Подписанные События]]></string>
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Создать событие]]></string>

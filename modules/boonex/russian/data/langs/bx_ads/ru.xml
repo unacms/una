@@ -16,6 +16,9 @@
     <string name="_bx_ads_option_offer_lifetime"><![CDATA[Автоматически отклонять предложения по истечении (в часах)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string>
     <string name="_bx_ads_option_enable_auction"><![CDATA[Включить режим аукциона]]></string>
+    <string name="_bx_ads_option_enable_promotion"><![CDATA[Включить платную рекламу]]></string>
+    <string name="_bx_ads_option_enable_source"><![CDATA[Внешний источник]]></string>
+    <string name="_bx_ads_option_source_shopify"><![CDATA[Shopify API]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Категория]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Добавить категорию]]></string>
@@ -50,6 +53,7 @@
 
     <string name="_bx_ads_form_entry"><![CDATA[Объявления]]></string>
     <string name="_bx_ads_form_entry_display_add"><![CDATA[Добавить объявление]]></string>
+    <string name="_bx_ads_form_entry_display_edit_budget"><![CDATA[Редактировать бюджет объявления]]></string>
     <string name="_bx_ads_form_entry_display_delete"><![CDATA[Удалить объявление]]></string>
 
     <string name="_bx_ads_form_entry_price_display_add"><![CDATA[С указанием цены: Добавить]]></string>
@@ -114,6 +118,13 @@
     <string name="_bx_ads_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_ads_form_entry_input_date_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_ads_form_entry_input_sys_attachments"><![CDATA[Вложения]]></string>
+    <string name="_bx_ads_form_entry_input_sys_source"><![CDATA[Источник]]></string>
+    <string name="_bx_ads_form_entry_input_source"><![CDATA[Источник]]></string>
+    <string name="_bx_ads_form_entry_input_sys_budget_total"><![CDATA[Бюджет рекламной кампании]]></string>
+    <string name="_bx_ads_form_entry_input_budget_total"><![CDATA[Бюджет рекламной кампании]]></string>
+    <string name="_bx_ads_form_entry_input_budget_total_err_decreased"><![CDATA[Бюджет рекламной кампании не может быть уменьшен.]]></string>
+    <string name="_bx_ads_form_entry_input_sys_budget_daily"><![CDATA[Максимальный дневной бюджет]]></string>
+    <string name="_bx_ads_form_entry_input_budget_daily"><![CDATA[Максимальный дневной бюджет]]></string>
 
     <string name="_bx_ads_form_poll"><![CDATA[Голосования]]></string>
     <string name="_bx_ads_form_poll_display_add"><![CDATA[Добавить голосование]]></string>
@@ -160,6 +171,9 @@
     <string name="_bx_ads_page_title_sys_edit_entry"><![CDATA[Редактировать объявление]]></string>
     <string name="_bx_ads_page_title_edit_entry"><![CDATA[Редактировать объявление]]></string>
     <string name="_bx_ads_page_block_title_edit_entry"><![CDATA[Редактировать]]></string>
+    <string name="_bx_ads_page_title_sys_edit_entry_budget"><![CDATA[Редактировать бюджет объявленя]]></string>
+    <string name="_bx_ads_page_title_edit_entry_budget"><![CDATA[Редактировать бюджет объявленя]]></string>
+    <string name="_bx_ads_page_block_title_edit_entry_budget"><![CDATA[Редактировать бюджет объявленя]]></string>
     <string name="_bx_ads_page_title_sys_delete_entry"><![CDATA[Удалить объявление]]></string>
     <string name="_bx_ads_page_title_delete_entry"><![CDATA[Удалить объявление]]></string>
     <string name="_bx_ads_page_block_title_delete_entry"><![CDATA[Удалить]]></string>
@@ -301,6 +315,8 @@
     <string name="_bx_ads_menu_item_title_view_offers"><![CDATA[Предложения]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string>
+    <string name="_bx_ads_menu_item_title_system_edit_entry_budget"><![CDATA[Редактировать бюджет]]></string>
+    <string name="_bx_ads_menu_item_title_edit_entry_budget"><![CDATA[Редактировать бюджет]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Отметить как 'отправлен']]></string>
@@ -374,6 +390,7 @@
     <string name="_bx_ads_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
+    <string name="_bx_ads_grid_filter_item_title_adm_unpaid"><![CDATA[Неоплаченные]]></string>
     <string name="_bx_ads_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_ads_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_ads_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>
@@ -552,6 +569,7 @@
     <string name="_bx_ads_txt_msg_offer_accepted"><![CDATA[Предложение было принято.]]></string>
     <string name="_bx_ads_txt_msg_offer_declined"><![CDATA[Предложение было отклонено.]]></string>
     <string name="_bx_ads_txt_msg_offer_canceled"><![CDATA[Предложение было отменено.]]></string>
+    <string name="_bx_ads_txt_msg_promotion_unpaid"><![CDATA[Рекламная кампания длф данного объявлению еще не оплачена.]]></string>
     <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[Вы уже сделали ваше предложение. Пожалуйста ожидайте результатов.]]></string>
     <string name="_bx_ads_txt_err_offer_wrong_quantity"><![CDATA[Предложенного количества нет в наличии. Доступно только {0} элементов.]]></string>
     <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Ваше предложение уже принято.]]></string>
