@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS `bx_payment_transactions`, `bx_payment_transactions_pending
 DROP TABLE IF EXISTS `bx_payment_subscriptions`, `bx_payment_subscriptions_deleted`;
 DROP TABLE IF EXISTS `bx_payment_modules`;
 DROP TABLE IF EXISTS `bx_payment_commissions`, `bx_payment_invoices`;
+DROP TABLE IF EXISTS `bx_payment_stripe_payments_pending`;
 
 
 -- GRIDS

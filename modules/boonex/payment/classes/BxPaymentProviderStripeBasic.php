@@ -500,23 +500,27 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
 
     protected function _processEventInvoicePaymentSucceeded(&$aEvent)
     {
-        $mixedResult = $this->_getData($aEvent);
+        $mixedResult = $this->_getDataInvoicePaymentSucceeded($aEvent);
         if($mixedResult === false)
             return false;
 
-        list($aPending, $oCharge) = $mixedResult;
-        if(empty($aPending) || !is_array($aPending) || empty($oCharge))
+        list($mixedPending, $oCharge) = $mixedResult;
+        if(empty($mixedPending) || empty($oCharge))
             return false;
 
         $fChargeAmount = (float)$oCharge->amount / 100;
         $sChargeCurrency = strtoupper($oCharge->currency);
-        if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
+
+        if(is_string($mixedPending))
+            return $this->_oModule->_oDb->insertStrpPaymentPending($mixedPending, $fChargeAmount, $sChargeCurrency);
+
+        if($this->_bCheckAmount && ((float)$mixedPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
             return false;
 
-        if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
-            $this->_oModule->getObjectSubscriptions()->prolong($aPending);
+        if($mixedPending['type'] == BX_PAYMENT_TYPE_RECURRING)
+            $this->_oModule->getObjectSubscriptions()->prolong($mixedPending);
 
-        return $this->_oModule->registerPayment($aPending);
+        return $this->_oModule->registerPayment($mixedPending);
     }
 
     protected function _processEventChargeRefunded(&$aEvent)
@@ -573,6 +577,24 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
         $oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
 
         return array($aPending, $oCharge);
+    }
+
+    protected function _getDataInvoicePaymentSucceeded(&$aEvent, $bRetrieve = true)
+    {
+        if($bRetrieve)
+            $oEvent = $this->_retrieveEvent($aEvent['id']);
+        else 
+            $oEvent = \Stripe\Util\Util::convertToStripeObject($aEvent, array());
+
+        if(empty($oEvent))
+            return false;
+
+        $sSubscriptionId = $oEvent->data->object->subscription;
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(['type' => 'order', 'order' => $sSubscriptionId]);
+        $oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
+
+        return [!empty($aPending) && is_array($aPending) ? $aPending : $sSubscriptionId, $oCharge];
     }
 
     protected function _getDataChangeDetailsRecurring($iPendingId)

@@ -301,13 +301,22 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 if(empty($aCustomer) || !is_array($aCustomer) || empty($aSubscription) || !is_array($aSubscription))
                     return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
-                $aResult = array_merge($aResult, array(
+                $aResult = array_merge($aResult, [
                     'message' => $this->_sLangsPrefix . 'strp_msg_subscribed',
                     'customer_id' => $sCustomerId,
                     'subscription_id' => $sOrderId,
                     'client_email' => $aCustomer['email'],
                     'trial' => $this->isSubscriptionStatus(BX_PAYMENT_SBS_STATUS_TRIAL, $aSubscription)
-                ));
+                ]);
+
+                $aPaymentPending = $this->_oModule->_oDb->getStrpPaymentPending($sOrderId);
+                if(empty($aPaymentPending) || !is_array($aPaymentPending)) 
+                    break;
+
+                if($this->_bCheckAmount && ((float)$aPending['amount'] != (float)$aPaymentPending['amount'] || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $aPaymentPending['currency']) !== 0))
+                    break;
+
+                $aResult['paid'] = true;
                 break;
         }
 

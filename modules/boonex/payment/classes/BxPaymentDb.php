@@ -803,6 +803,37 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
         return (int)$this->query("DELETE FROM `" . $CNF['TABLE_INVOICES'] . "` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
+    
+    /**
+     * For Stripe integration only
+     */
+    public function getStrpPaymentPending($sSubscriptionId)
+    {
+        $aResult = $this->getRow("SELECT * FROM `" . $this->_sPrefix . "stripe_payments_pending` WHERE `subscription_id`=:subscription_id", [
+            'subscription_id' => $sSubscriptionId
+        ]);
+
+        if(!empty($aResult) && is_array($aResult))
+            $this->deleteStrpPaymentPending($sSubscriptionId);
+
+        return $aResult;
+    }
+
+    public function insertStrpPaymentPending($sSubscriptionId, $fAmount, $sCurrency)
+    {
+        return $this->query("INSERT IGNORE INTO `" . $this->_sPrefix . "stripe_payments_pending` SET " . $this->arrayToSQL([
+            'subscription_id' => $sSubscriptionId,
+            'amount' => $fAmount,
+            'currency' => $sCurrency
+        ])) !== false;
+    }
+
+    public function deleteStrpPaymentPending($sSubscriptionId)
+    {
+        return $this->query("DELETE FROM `" . $this->_sPrefix . "stripe_payments_pending` WHERE `subscription_id`=:subscription_id", [
+            'subscription_id' => $sSubscriptionId
+        ]) !== false;
+    }
 }
 
 /** @} */
