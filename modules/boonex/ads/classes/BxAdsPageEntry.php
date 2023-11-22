@@ -23,13 +23,23 @@ class BxAdsPageEntry extends BxBaseModTextPageEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(($oInformer = BxDolInformer::getInstance($this->_oTemplate)) !== false) {
-            $aInformers = array();
+            $aInformers = [];
             $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
+            $sStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] : '';
 
             //--- Display 'auction' informer.
             if(!empty($CNF['INFORMERS']['auction']) && isset($CNF['INFORMERS']['auction']['map'][$sStatus])) {
                 $aInformer = $CNF['INFORMERS']['auction'];
-                $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']);
+                $aInformers[] = ['name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']];
+            }
+
+            if(($this->_bLoggedOwner || $this->_bLoggedModerator || $this->_bLoggedContextModerator)) {
+
+                //--- Display 'promotion' informer.
+                if(!empty($CNF['INFORMERS']['promotion']) && isset($CNF['INFORMERS']['promotion']['map'][$sStatusAdmin])) {
+                    $aInformer = $CNF['INFORMERS']['promotion'];
+                    $aInformers[] = ['name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatusAdmin]['msg']), 'type' => $aInformer['map'][$sStatusAdmin]['type']];
+                }
             }
 
             //--- Add informers

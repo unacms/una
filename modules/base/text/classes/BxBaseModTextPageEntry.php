@@ -14,6 +14,10 @@
  */
 class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 {
+    protected $_bLoggedOwner;
+    protected $_bLoggedModerator;
+    protected $_bLoggedContextModerator;
+
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
@@ -26,15 +30,15 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
         $iProfileId = bx_get_logged_profile_id();
 
-        $bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId;
-        $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
-        $bLoggedContextModerator = false;
+        $this->_bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId;
+        $this->_bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
+        $this->_bLoggedContextModerator = false;
         if($this->_aContentInfo && !empty($CNF['FIELD_ALLOW_VIEW_TO']) && (int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
             $iContextProfileId = abs((int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
             if(($oContextProfile = BxDolProfile::getInstance($iContextProfileId)) !== false) {
                 $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
                 if(in_array($iProfileId, $aAdmins))
-                    $bLoggedContextModerator = true;
+                    $this->_bLoggedContextModerator = true;
             }
         }
 
@@ -46,7 +50,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
         }
-        
+
         $this->addMarkers(array(
             'title' => $sTitle,
             'entry_link' => $sUrl,
@@ -58,10 +62,10 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             'link' => $sUrl,
             'icon' => $sIcon
         ));
-        
+
         $aInformers = array ();
         $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-        if($oInformer && ($bLoggedOwner || $bLoggedModerator || $bLoggedContextModerator)) {
+        if($oInformer && ($this->_bLoggedOwner || $this->_bLoggedModerator || $this->_bLoggedContextModerator)) {
             $iNow = time();
             $bFieldPublished = isset($CNF['FIELD_PUBLISHED']);
             $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';

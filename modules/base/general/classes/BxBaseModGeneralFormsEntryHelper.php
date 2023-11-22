@@ -408,11 +408,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $this->redirectAfterEdit($aContentInfo);
     }
 
-    protected function redirectAfterEdit($aContentInfo)
+    protected function redirectAfterEdit($aContentInfo, $sUrl = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+        if ($sUrl == '')
+            $sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+
         bx_alert($this->_oModule->getName(), 'redirect_after_edit', 0, false, array(
             'content' => $aContentInfo,
             'override_result' => &$sUrl,

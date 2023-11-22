@@ -16,6 +16,9 @@ class BxAdsConfig extends BxBaseModTextConfig
     protected $_oDb;
 
     protected $_bAuction;
+    protected $_bPromotion;
+
+    protected $_sSource;
 
     public function __construct($aModule)
     {
@@ -24,6 +27,7 @@ class BxAdsConfig extends BxBaseModTextConfig
         $aMenuItems2Methods = array (
             'approve' => 'checkAllowedApprove',
             'edit-ad' => 'checkAllowedEdit',
+            'edit-ad-budget' => 'checkAllowedEdit',
             'delete-ad' => 'checkAllowedDelete',
         );
 
@@ -38,8 +42,12 @@ class BxAdsConfig extends BxBaseModTextConfig
             'TABLE_CATEGORIES' => $aModule['db_prefix'] . 'categories',
             'TABLE_CATEGORIES_TYPES' => $aModule['db_prefix'] . 'categories_types',
             'TABLE_INTERESTED_TRACK' => $aModule['db_prefix'] . 'interested_track',
+            'TABLE_COMMODITIES' => $aModule['db_prefix'] . 'commodities',
             'TABLE_LICENSES' => $aModule['db_prefix'] . 'licenses',
             'TABLE_LICENSES_DELETED' => $aModule['db_prefix'] . 'licenses_deleted',
+            'TABLE_PROMO_LICENSES' => $aModule['db_prefix'] . 'promo_licenses',
+            'TABLE_PROMO_LICENSES_DELETED' => $aModule['db_prefix'] . 'promo_licenses_deleted',
+            'TABLE_PROMO_TRACKER' => $aModule['db_prefix'] . 'promo_tracker',
             'TABLE_OFFERS' => $aModule['db_prefix'] . 'offers',
 
             // database fields
@@ -50,6 +58,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_SOLD' => 'sold',
             'FIELD_SHIPPED' => 'shipped',
             'FIELD_RECEIVED' => 'received',
+            'FIELD_SOURCE' => 'source',
             'FIELD_TITLE' => 'title',
             'FIELD_NAME' => 'name',
             'FIELD_TEXT' => 'text',
@@ -73,6 +82,8 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
             'FIELD_ATTACHMENTS' => 'attachments',
+            'FIELD_BUDGET_TOTAL' => 'budget_total',
+            'FIELD_BUDGET_DAILY' => 'budget_daily',
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
@@ -117,6 +128,7 @@ class BxAdsConfig extends BxBaseModTextConfig
 
             // some params
             'PARAM_AUTO_APPROVE' => 'bx_ads_enable_auto_approve',
+            'PARAM_SOURCE' => 'bx_ads_enable_source',
             'PARAM_CHARS_SUMMARY' => 'bx_ads_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_ads_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_ads_rss_num',
@@ -128,6 +140,8 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_USE_IIN' => 'bx_ads_internal_interested_notification',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
             'PARAM_USE_AUCTION' => 'bx_ads_enable_auction',
+            'PARAM_USE_PROMOTION' => 'bx_ads_enable_promotion',
+            'PARAM_PROMOTION_CPM' => 'bx_ads_promotion_cpm',
 
             // objects
             'OBJECT_STORAGE' => 'bx_ads_covers',
@@ -171,6 +185,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => '',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_ads_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => '',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT_BUDGET' => 'bx_ads_entry_edit_budget',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_ads_entry_delete',
             'OBJECT_FORM_POLL' => 'bx_ads_poll',
             'OBJECT_FORM_POLL_DISPLAY_ADD' => 'bx_ads_poll_add',
@@ -226,7 +241,13 @@ class BxAdsConfig extends BxBaseModTextConfig
                         'offer' => array('msg' => '_bx_ads_txt_msg_auction_offer', 'type' => BX_INFORMER_INFO),
                         'sold' => array('msg' => '_bx_ads_txt_msg_auction_sold', 'type' => BX_INFORMER_INFO)
                     ),
-                )
+                ),
+                'promotion' => [
+                    'name' => 'bx-ads-promotion',
+                    'map' => [
+                        'unpaid' => ['msg' => '_bx_ads_txt_msg_promotion_unpaid', 'type' => BX_INFORMER_ALERT],
+                    ],
+                ]
             ),
 
             // email templates
@@ -257,6 +278,7 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'filter_item_active' => '_bx_ads_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_ads_grid_filter_item_title_adm_hidden',
                 'filter_item_pending' => '_bx_ads_grid_filter_item_title_adm_pending',
+                'filter_item_unpaid' => '_bx_ads_grid_filter_item_title_adm_unpaid',
             	'filter_item_select_one_filter1' => '_bx_ads_grid_filter_item_title_adm_select_one_filter1',
                 'filter_item_select_one_filter2' => '_bx_ads_grid_filter_item_title_adm_select_one_filter2',
             	'menu_item_manage_my' => '_bx_ads_menu_item_title_manage_my',
@@ -275,10 +297,13 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'txt_display_add' => '_bx_ads_txt_display_title_add',
                 'txt_display_edit' => '_bx_ads_txt_display_title_edit',
                 'txt_display_view' => '_bx_ads_txt_display_title_view',
+                'txt_cd_ct_product' => '_bx_ads_txt_cd_ct_product',
+                'txt_cd_ct_promotion' => '_bx_ads_txt_cd_ct_promotion',
             ),
         ));
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, [
+            'main' => 'BxAdsMain',
             'manage_tools' => 'BxAdsManageTools',
             'studio' => 'BxAdsStudio',
             'entry' => 'BxAdsEntry',
@@ -287,6 +312,7 @@ class BxAdsConfig extends BxBaseModTextConfig
         ]);
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, [
+            'main' => 'oBxAdsMain',
             'manage_tools' => 'oBxAdsManageTools',
             'studio' => 'oBxAdsStudio',
             'entry' => 'oBxAdsEntry',
@@ -302,6 +328,7 @@ class BxAdsConfig extends BxBaseModTextConfig
 
         $sPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
+            'unit' => $sPrefix . '-unit-',
             'offer_popup' =>  $sPrefix . '-offer-popup',
         ]);
 
@@ -313,6 +340,9 @@ class BxAdsConfig extends BxBaseModTextConfig
         $this->_oDb = &$oDb;
 
         $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
+        $this->_bPromotion = getParam($this->CNF['PARAM_USE_PROMOTION']) == 'on';
+
+        $this->_sSource = getParam($this->CNF['PARAM_SOURCE']);
     }
 
     public function getActiveStatus()
@@ -328,6 +358,16 @@ class BxAdsConfig extends BxBaseModTextConfig
     public function isAuction()
     {
         return $this->_bAuction;
+    }
+
+    public function isPromotion()
+    {
+        return $this->_bPromotion;
+    }
+
+    public function getSource()
+    {
+        return $this->_sSource;
     }
 
     public function getEntryName($sName)

@@ -87,6 +87,56 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 
         return '';
     }
+    
+    public function redirectAfterAdd($aContentInfo, $sUrl = '')
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_oModule->_oConfig->isPromotion() && (float)$aContentInfo[$CNF['FIELD_BUDGET_TOTAL']] > 0) {
+            $aCommodity = $this->_oModule->_oDb->getCommodity([
+                'sample' => 'entry_id', 
+                'entry_id' => $aContentInfo[$CNF['FIELD_ID']], 
+                'type' => BX_ADS_COMMODITY_TYPE_PROMOTION, 
+                'latest' => true
+            ]);
+
+            if(!empty($aCommodity) && is_array($aCommodity)) {
+                $oPayments = BxDolPayments::getInstance();
+
+                $iVendorId = (int)$oPayments->getOption('site_admin');
+                $aResult = $oPayments->addToCart($iVendorId, $this->_oModule->_oConfig->getId(), $aCommodity['id'], 1);
+                if(isset($aResult['code']) && (int)$aResult['code'] == 0)
+                    $sUrl = $oPayments->getCartUrl($iVendorId);
+            }
+        }
+
+        parent::redirectAfterAdd($aContentInfo, $sUrl);
+    }
+    
+    protected function redirectAfterEdit($aContentInfo, $sUrl = '')
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if($this->_oModule->_oConfig->isPromotion() && (float)$aContentInfo[$CNF['FIELD_BUDGET_TOTAL']] > 0) {
+            $aCommodity = $this->_oModule->_oDb->getCommodity([
+                'sample' => 'entry_id', 
+                'entry_id' => $aContentInfo[$CNF['FIELD_ID']], 
+                'type' => BX_ADS_COMMODITY_TYPE_PROMOTION, 
+                'unpaid' => true,
+            ]);
+
+            if(!empty($aCommodity) && is_array($aCommodity)) {
+                $oPayments = BxDolPayments::getInstance();
+
+                $iVendorId = (int)$oPayments->getOption('site_admin');
+                $aResult = $oPayments->addToCart($iVendorId, $this->_oModule->_oConfig->getId(), $aCommodity['id'], 1);
+                if(isset($aResult['code']) && (int)$aResult['code'] == 0)
+                    $sUrl = $oPayments->getCartUrl($iVendorId);
+            }
+        }
+
+        parent::redirectAfterEdit($aContentInfo, $sUrl);
+    }
 }
 
 /** @} */

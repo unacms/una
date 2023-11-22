@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_ads';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_ads' OR `object` IN ('bx_ads_create_entry', 'bx_ads_edit_entry', 'bx_ads_delete_entry', 'bx_ads_view_entry', 'bx_ads_view_entry_comments', 'bx_ads_home', 'bx_ads_popular', 'bx_ads_updated', 'bx_ads_categories', 'bx_ads_author', 'bx_ads_context', 'bx_ads_search', 'bx_ads_manage', 'bx_ads_administration', 'bx_ads_licenses', 'bx_ads_licenses_administration', 'bx_ads_offers', 'bx_ads_offers_all');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_ads' OR `object` IN ('bx_ads_create_entry', 'bx_ads_edit_entry', 'bx_ads_edit_entry_budget', 'bx_ads_delete_entry', 'bx_ads_view_entry', 'bx_ads_view_entry_comments', 'bx_ads_home', 'bx_ads_popular', 'bx_ads_updated', 'bx_ads_categories', 'bx_ads_author', 'bx_ads_context', 'bx_ads_search', 'bx_ads_manage', 'bx_ads_administration', 'bx_ads_licenses', 'bx_ads_licenses_administration', 'bx_ads_offers', 'bx_ads_offers_all');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_ads';

@@ -16,6 +16,10 @@
     <string name="_bx_ads_option_offer_lifetime"><![CDATA[Decline offers automatically after (in hours)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Use internal notification about Interested action]]></string>
     <string name="_bx_ads_option_enable_auction"><![CDATA[Enable Auction mode]]></string>
+    <string name="_bx_ads_option_enable_source"><![CDATA[External source]]></string>
+    <string name="_bx_ads_option_source_shopify"><![CDATA[Shopify API]]></string>
+    <string name="_bx_ads_option_enable_promotion"><![CDATA[Enable paid promotion]]></string>
+    <string name="_bx_ads_option_promotion_cpm"><![CDATA[Promotion price (CPM)]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Category]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Add Category]]></string>
@@ -50,6 +54,7 @@
 
     <string name="_bx_ads_form_entry"><![CDATA[Ads]]></string>
     <string name="_bx_ads_form_entry_display_add"><![CDATA[Add Ad]]></string>
+    <string name="_bx_ads_form_entry_display_edit_budget"><![CDATA[Edit Ad's Budget]]></string>
     <string name="_bx_ads_form_entry_display_delete"><![CDATA[Delete Ad]]></string>
 
     <string name="_bx_ads_form_entry_price_display_add"><![CDATA[With Price: Add]]></string>
@@ -114,6 +119,13 @@
     <string name="_bx_ads_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_ads_form_entry_input_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_ads_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
+    <string name="_bx_ads_form_entry_input_sys_source"><![CDATA[Source]]></string>
+    <string name="_bx_ads_form_entry_input_source"><![CDATA[Source]]></string>
+    <string name="_bx_ads_form_entry_input_sys_budget_total"><![CDATA[Campaign budget]]></string>
+    <string name="_bx_ads_form_entry_input_budget_total"><![CDATA[Campaign budget]]></string>
+    <string name="_bx_ads_form_entry_input_budget_total_err_decreased"><![CDATA[Campaign budget cannot be decreased.]]></string>
+    <string name="_bx_ads_form_entry_input_sys_budget_daily"><![CDATA[Max daily budget]]></string>
+    <string name="_bx_ads_form_entry_input_budget_daily"><![CDATA[Max daily budget]]></string>
 
     <string name="_bx_ads_form_poll"><![CDATA[Polls]]></string>
     <string name="_bx_ads_form_poll_display_add"><![CDATA[Add Poll]]></string>
@@ -160,6 +172,9 @@
     <string name="_bx_ads_page_title_sys_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_page_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_page_block_title_edit_entry"><![CDATA[Edit]]></string>
+    <string name="_bx_ads_page_title_sys_edit_entry_budget"><![CDATA[Edit Budget]]></string>
+    <string name="_bx_ads_page_title_edit_entry_budget"><![CDATA[Edit Budget]]></string>
+    <string name="_bx_ads_page_block_title_edit_entry_budget"><![CDATA[Edit Budget]]></string>
     <string name="_bx_ads_page_title_sys_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_page_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_page_block_title_delete_entry"><![CDATA[Delete]]></string>
@@ -301,6 +316,8 @@
     <string name="_bx_ads_menu_item_title_view_offers"><![CDATA[Оffers]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
+    <string name="_bx_ads_menu_item_title_system_edit_entry_budget"><![CDATA[Edit budget]]></string>
+    <string name="_bx_ads_menu_item_title_edit_entry_budget"><![CDATA[Edit budget]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Mark as shipped]]></string>
@@ -374,6 +391,7 @@
     <string name="_bx_ads_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
     <string name="_bx_ads_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
+    <string name="_bx_ads_grid_filter_item_title_adm_unpaid"><![CDATA[Unpaid]]></string>
     <string name="_bx_ads_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_ads_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_ads_grid_column_title_adm_added"><![CDATA[Added]]></string>
@@ -539,6 +557,8 @@
     <string name="_bx_ads_txt_processing_awaiting"><![CDATA[Ad will be published as soon as video is converted]]></string>
     <string name="_bx_ads_txt_processing_failed"><![CDATA[Ad isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_ads_txt_free"><![CDATA[Free]]></string>
+    <string name="_bx_ads_txt_cd_ct_product"><![CDATA[Payment for product]]></string>
+    <string name="_bx_ads_txt_cd_ct_promotion"><![CDATA[Payment for promotion]]></string>
     <string name="_bx_ads_txt_purchased_note"><![CDATA[Contact <a href="{0}">{1}</a> if you have any questions or need support.]]></string>
     <string name="_bx_ads_txt_offer_status_awaiting"><![CDATA[Awaiting]]></string>
     <string name="_bx_ads_txt_offer_status_accepted"><![CDATA[Accepted]]></string>
@@ -560,6 +580,7 @@
     <string name="_bx_ads_txt_msg_offer_accepted"><![CDATA[The offer was accepted.]]></string>
     <string name="_bx_ads_txt_msg_offer_declined"><![CDATA[The offer was declined.]]></string>
     <string name="_bx_ads_txt_msg_offer_canceled"><![CDATA[The offer was canceled.]]></string>
+    <string name="_bx_ads_txt_msg_promotion_unpaid"><![CDATA[Promotion campaign for the ad isn't still paid]]></string>
     <string name="_bx_ads_txt_err_offer_duplicate"><![CDATA[You already made an offer. Please wait for the results.]]></string>
     <string name="_bx_ads_txt_err_offer_wrong_quantity"><![CDATA[Offered quantity is out of stock. Only {0} items are available.]]></string>
     <string name="_bx_ads_txt_err_offer_accepted"><![CDATA[Your offer was already accepted.]]></string>

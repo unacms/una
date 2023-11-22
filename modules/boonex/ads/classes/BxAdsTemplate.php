@@ -97,6 +97,13 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         ));
     }
 
+    protected function getUnit($aData, $aParams = [])
+    {
+        return array_merge(parent::getUnit($aData, $aParams), [
+            'js_object' => $this->_oConfig->getJsObject('main')
+        ]);
+    }
+
     /**
      * Use Gallery image for both because currently there is no Unit types with small thumbnails.
      */

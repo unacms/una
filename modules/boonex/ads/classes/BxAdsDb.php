@@ -361,6 +361,114 @@ class BxAdsDb extends BxBaseModTextDb
         return (int)$this->lastId();
     }
 
+    public function getCommodity($aParams = [])
+    {
+    	$CNF = &$this->_oConfig->CNF;
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+    	$sSelectClause = "`tc`.*";
+    	$sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['sample']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `tc`.`id`=:id";
+                break;
+
+            case 'id_with_entry':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $aFields = $this->getFields($CNF['TABLE_ENTRIES']);
+                $sFields = implode(", ", array_map(function($sValue) {
+                    return "`te`.`{$sValue}` AS `entry_{$sValue}`";
+                }, $aFields['original']));
+
+                $sSelectClause = "`tc`.`id`, `tc`.`type`, `tc`.`amount`, `tc`.`added`, " . $sFields;
+                $sJoinClause = " INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `tc`.`entry_id`=`te`.`id`";
+                $sWhereClause = " AND `tc`.`id`=:id";
+                break;
+
+            case 'entry_id':
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sWhereClause = " AND `tc`.`entry_id`=:entry_id";
+                
+                if(!empty($aParams['type'])) {
+                    $aMethod['params'][1]['type'] = $aParams['type'];
+
+                    $sWhereClause .= " AND `tc`.`type`=:type";
+
+                    if(isset($aParams['latest']) && $aParams['latest'] === true) {
+                        $aMethod['name'] = 'getRow';
+
+                        $sOrderClause = "`tc`.`added` DESC";
+                        $sLimitClause = "1";
+                    }
+
+                    if(isset($aParams['unpaid']) && $aParams['unpaid'] === true) {
+                        $aMethod['name'] = 'getRow';
+
+                        $sJoinClause = " LEFT JOIN `" . $CNF['TABLE_PROMO_LICENSES'] . "` AS `tp` ON `tc`.`id`=`tp`.`commodity_id`";
+                        $sWhereClause .= " AND ISNULL(`tp`.`commodity_id`)";
+                        $sLimitClause = "1";
+                    }
+                }
+                break;
+                
+            case 'entry_author':
+                $aMethod['params'][1] = [
+                    'author' => $aParams['author']
+                ];
+                
+                $sJoinClause = " INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `tc`.`entry_id`=`te`.`id`";
+                $sWhereClause = " AND `te`.`" . $CNF['FIELD_AUTHOR'] . "`=:author";
+                if(!empty($aParams['type'])) {
+                    $aMethod['params'][1]['type'] = $aParams['type'];
+
+                    $sWhereClause .= " AND `tc`.`type`=:type";
+                }
+                break;
+        }
+
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+            " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_COMMODITIES'] . "` AS `tc`" . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function insertCommodity($iEntryId, $sType, $fAmount)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $aQueryParams = [
+            'entry_id' => $iEntryId,
+            'type' => $sType,
+            'amount' => $fAmount
+        ];
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_COMMODITIES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()") > 0;
+    }
+
+    public function deleteCommodity($aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_COMMODITIES'] . "` WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+
     public function registerLicense($iProfileId, $iEntryId, $iCount, $sOrder, $sLicense)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -478,6 +586,44 @@ class BxAdsDb extends BxBaseModTextDb
             'profile_id' => $iProfileId, 
             'entry_id' => $iEntryId
     	)) > 0;
+    }
+
+    public function registerPromotion($iProfileId, $iCommodityId, $iEntryId, $fAmount, $sOrder, $sLicense)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $aQueryParams = [
+            'profile_id' => $iProfileId,
+            'commodity_id' => $iCommodityId,
+            'entry_id' => $iEntryId,
+            'amount' => $fAmount,
+            'order' => $sOrder,
+            'license' => $sLicense
+        ];
+
+        return (int)$this->query("INSERT INTO `" . $CNF['TABLE_PROMO_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()") > 0;
+    }
+
+    public function unregisterPromotion($iProfileId, $iCommodityId, $iEntryId, $sOrder, $sLicense)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aWhereBindings = [
+            'profile_id' => $iProfileId,
+            'commodity_id' => $iCommodityId,
+            'entry_id' => $iEntryId,
+            'order' => $sOrder,
+            'license' => $sLicense
+    	];
+
+    	$sWhereClause = "`profile_id`=:profile_id AND `entry_id`=:entry_id AND `order`=:order AND `license`=:license";    	
+
+        //--- Move to Deleted Promotions table with 'refund' as reason.
+    	$sQuery = "INSERT IGNORE INTO `" . $CNF['TABLE_PROMO_LICENSES_DELETED'] . "` SELECT *, 'refund' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $CNF['TABLE_PROMO_LICENSES'] . "` WHERE " . $sWhereClause;
+            $this->query($sQuery, $aWhereBindings);
+
+    	$sQuery = "DELETE FROM `" . $CNF['TABLE_PROMO_LICENSES'] . "` WHERE " . $sWhereClause;
+        return $this->query($sQuery, $aWhereBindings) !== false;
     }
 
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
@@ -660,6 +806,17 @@ class BxAdsDb extends BxBaseModTextDb
             return false;
 
         return (int)$this->query("DELETE FROM `" . $CNF['TABLE_OFFERS'] . "` WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
+    }
+    
+    public function updatePromotionTracker($iEntryId, $sCounter)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iDate = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+        return $this->query("INSERT INTO `" . $CNF['TABLE_PROMO_TRACKER'] . "` (`entry_id`, `date`, `" . $sCounter . "`) VALUES (:entry_id, :date, 1) ON DUPLICATE KEY UPDATE `" . $sCounter . "`=`" . $sCounter . "`+1", [
+            'entry_id' => $iEntryId,
+            'date' => $iDate
+        ]) !== false;
     }
 }
 

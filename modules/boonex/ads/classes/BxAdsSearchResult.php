@@ -133,6 +133,13 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
         $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
     }
 
+    function displayResultBlock()
+    {
+        $this->oModule->_oTemplate->addJs(['main.js']);
+
+        return $this->oModule->_oTemplate->getJsCode('main') . parent::displayResultBlock();
+    }
+
     function getAlterOrder()
     {
         $CNF = &$this->oModule->_oConfig->CNF;

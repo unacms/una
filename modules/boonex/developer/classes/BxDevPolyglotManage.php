@@ -21,7 +21,7 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
     );
 
     protected $oModule;
-    protected $aLanguage;
+    protected $aLanguages;
 
     function __construct($aOptions, $oTemplate = false)
     {

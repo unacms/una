@@ -16,9 +16,10 @@
     <string name="_bx_ads_option_offer_lifetime"><![CDATA[Автоматически отклонять предложения по истечении (в часах)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string>
     <string name="_bx_ads_option_enable_auction"><![CDATA[Включить режим аукциона]]></string>
-    <string name="_bx_ads_option_enable_promotion"><![CDATA[Включить платную рекламу]]></string>
     <string name="_bx_ads_option_enable_source"><![CDATA[Внешний источник]]></string>
     <string name="_bx_ads_option_source_shopify"><![CDATA[Shopify API]]></string>
+    <string name="_bx_ads_option_enable_promotion"><![CDATA[Включить платную рекламу]]></string>
+    <string name="_bx_ads_option_promotion_cpm"><![CDATA[Цена за рекламу (цена за 1000 показов)]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Категория]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Добавить категорию]]></string>

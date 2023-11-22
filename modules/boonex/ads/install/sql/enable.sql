@@ -11,8 +11,9 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_ads_enable_auto_approve', 'on', @iCategId, '_bx_ads_option_enable_auto_approve', 'checkbox', '', '', '', 0),
+('bx_ads_enable_source', '', @iCategId, '_bx_ads_option_enable_source', 'select', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:18:"get_options_source";}', 1),
 ('bx_ads_enable_auction', '', @iCategId, '_bx_ads_option_enable_auction', 'checkbox', '', '', '', 2),
-('bx_ads_internal_interested_notification', '', @iCategId, '_bx_ads_option_internal_interested_notification', 'checkbox', '', '', '', 3),
+('bx_ads_internal_interested_notification', '', @iCategId, '_bx_ads_option_internal_interested_notification', 'checkbox', '', '', '', 4),
 
 ('bx_ads_summary_chars', '700', @iCategId, '_bx_ads_option_summary_chars', 'digit', '', '', '', 10),
 ('bx_ads_plain_summary_chars', '240', @iCategId, '_bx_ads_option_plain_summary_chars', 'digit', '', '', '', 12),
@@ -26,7 +27,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30),
 
 ('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40),
-('bx_ads_offer_lifetime', '72', @iCategId, '_bx_ads_option_offer_lifetime', 'digit', '', '', '', 41);
+('bx_ads_offer_lifetime', '72', @iCategId, '_bx_ads_option_offer_lifetime', 'digit', '', '', '', 41),
+
+('bx_ads_enable_promotion', '', @iCategId, '_bx_ads_option_enable_promotion', 'checkbox', '', '', '', 50),
+('bx_ads_promotion_cpm', '1', @iCategId, '_bx_ads_option_promotion_cpm', 'digit', '', '', '', 51);
 
 
 -- PAGE: create entry
@@ -42,6 +46,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_ads_edit_entry', 1, 'bx_ads', '_bx_ads_page_block_title_edit_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:11:"entity_edit";}', 0, 0, 0);
+
+-- PAGE: edit entry budget
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_edit_entry_budget', '_bx_ads_page_title_sys_edit_entry_budget', '_bx_ads_page_title_edit_entry_budget', 'bx_ads', 5, 2147483647, 1, 'edit-ad-budget', '', '', '', '', 0, 1, 0, 'BxAdsPageEntry', 'modules/boonex/ads/classes/BxAdsPageEntry.php');
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_ads_edit_entry_budget', 1, 'bx_ads', '_bx_ads_page_block_title_edit_entry_budget', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:18:"entity_edit_budget";}', 0, 0, 0);
+
 
 -- PAGE: delete entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -263,6 +275,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view', 'bx_ads', 'make-offer', '_bx_ads_menu_item_title_system_make_offer', '_bx_ads_menu_item_title_make_offer', 'javascript:void(0);', 'javascript:{js_object}.makeOffer(this, {content_id})', '', 'hand-holding-usd', '', 2147483647, 1, 0, 16),
 ('bx_ads_view', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '_bx_ads_menu_item_title_view_offers', 'page.php?i=view-ad-offers&id={content_id}', '', '', 'handshake', '', 2147483647, 1, 0, 17),
 ('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
+('bx_ads_view', 'bx_ads', 'edit-ad-budget', '_bx_ads_menu_item_title_system_edit_entry_budget', '_bx_ads_menu_item_title_edit_entry_budget', 'page.php?i=edit-ad-budget&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 21),
 ('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30),
 ('bx_ads_view', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this,  ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 40),
 ('bx_ads_view', 'bx_ads', 'shipped', '_bx_ads_menu_item_title_system_mark_shipped', '_bx_ads_menu_item_title_mark_shipped', 'javascript:void(0)', 'javascript:{js_object}.shipped(this, {content_id})', '', 'truck', '', 2147483647, 1, 0, 50),
@@ -281,6 +294,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view_actions', 'bx_ads', 'make-offer', '_bx_ads_menu_item_title_system_make_offer', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 16),
 ('bx_ads_view_actions', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 17),
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_ads_view_actions', 'bx_ads', 'edit-ad-budget', '_bx_ads_menu_item_title_system_edit_entry_budget', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 21),
 ('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_ads_view_actions', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 40),
 ('bx_ads_view_actions', 'bx_ads', 'shipped', '_bx_ads_menu_item_title_system_mark_shipped', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),

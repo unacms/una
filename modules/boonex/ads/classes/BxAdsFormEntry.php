@@ -16,6 +16,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 {
     protected $_iCategory;
     protected $_sGhostTemplateCover = 'form_ghost_template_cover.html';
+    protected $_bDisplayEditBudget;
 	
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -24,7 +25,12 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $this->_bDisplayEditBudget = $this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_BUDGET'];
+
         $this->_initCategoryFields((int)BxDolSession::getInstance()->getValue($this->aParams['display'] . '_category'));
+
+        if(isset($this->aInputs[$CNF['FIELD_SOURCE']]) && !$this->_oModule->_oConfig->getSource())
+            unset($this->aInputs[$CNF['FIELD_SOURCE']]);
 
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
             $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
@@ -40,8 +46,16 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         	$this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = $sOnBlur;
         }
 
-        if(isset($CNF['FIELD_AUCTION']) && isset($this->aInputs[$CNF['FIELD_AUCTION']]) && !$this->_oModule->_oConfig->isAuction())
+        if(isset($this->aInputs[$CNF['FIELD_AUCTION']]) && !$this->_oModule->_oConfig->isAuction())
             unset($this->aInputs[$CNF['FIELD_AUCTION']]);
+
+        if(!$this->_oModule->_oConfig->isPromotion()) {
+            if(isset($this->aInputs[$CNF['FIELD_BUDGET_TOTAL']]))
+                unset($this->aInputs[$CNF['FIELD_BUDGET_TOTAL']]);
+
+            if(isset($this->aInputs[$CNF['FIELD_BUDGET_DAILY']]))
+                unset($this->aInputs[$CNF['FIELD_BUDGET_DAILY']]);
+        }
 
     	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
@@ -146,17 +160,38 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         }
 
         parent::initChecker ($aValues, $aSpecificValues);
+
+        $sKeyBt = $CNF['FIELD_BUDGET_TOTAL'];
+        if($this->isSubmitted() && $this->_bDisplayEditBudget && isset($this->aInputs[$sKeyBt], $aValues[$sKeyBt])) {
+            if((float)$this->getCleanValue($sKeyBt) < (float)$aValues[$sKeyBt]) {
+                $this->aInputs[$CNF['FIELD_BUDGET_TOTAL']]['error'] = _t('_bx_ads_form_entry_input_budget_total_err_decreased');
+                $this->_isValid = false;
+            }
+        }
     }
 
     public function insert ($aValsToAdd = [], $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $bPromotion = $this->_oModule->_oConfig->isPromotion();
 
         $aValsToAdd[$CNF['FIELD_SINGLE']] = $this->_getSingleField();
 
-        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
-        if(!empty($iContentId))
+        if($bPromotion && isset($this->aInputs[$CNF['FIELD_BUDGET_TOTAL']]) && $this->getCleanValue($CNF['FIELD_BUDGET_TOTAL']) > 0)
+            $aValsToAdd[$CNF['FIELD_STATUS_ADMIN']] = BX_ADS_STATUS_ADMIN_UNPAID;
+
+        $iContentId = parent::insert($aValsToAdd, $isIgnore);
+        if(!empty($iContentId)) {
             $this->processFiles($CNF['FIELD_COVER'], $iContentId, true);
+            
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+            if(!empty($aContentInfo[$CNF['FIELD_PRICE']]))
+                $this->_oModule->_oDb->insertCommodity($iContentId, BX_ADS_COMMODITY_TYPE_PRODUCT, $aContentInfo[$CNF['FIELD_PRICE']]);
+
+            if($bPromotion && (float)$aContentInfo[$CNF['FIELD_BUDGET_TOTAL']] > 0)
+                $this->_oModule->_oDb->insertCommodity($iContentId, BX_ADS_COMMODITY_TYPE_PROMOTION, $aContentInfo[$CNF['FIELD_BUDGET_TOTAL']]);
+        }
 
         return $iContentId;
     }
@@ -165,9 +200,21 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aValsToAdd[$CNF['FIELD_SINGLE']] = $this->_getSingleField();
+        $bPromotion = $this->_oModule->_oConfig->isPromotion();
 
+        if(!$this->_bDisplayEditBudget)
+            $aValsToAdd[$CNF['FIELD_SINGLE']] = $this->_getSingleField();
+        
+        $aTrackTextFieldsChanges = [];
         $iResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        if($bPromotion && in_array($CNF['FIELD_BUDGET_TOTAL'], $aTrackTextFieldsChanges['changed_fields'])) {
+            $fBudgetTotalDiff = (float)$this->getCleanValue($CNF['FIELD_BUDGET_TOTAL']) - (float)$aTrackTextFieldsChanges['data'][$CNF['FIELD_BUDGET_TOTAL']];
+            if($fBudgetTotalDiff > 0) {
+                $this->_oModule->_oDb->insertCommodity($iContentId, BX_ADS_COMMODITY_TYPE_PROMOTION, $fBudgetTotalDiff);
+
+                $this->_oModule->_oDb->updateEntriesBy([$CNF['FIELD_STATUS_ADMIN'] => BX_ADS_STATUS_ADMIN_UNPAID], [$CNF['FIELD_ID'] => $iContentId]);
+            }
+        }
 
         $this->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
@@ -177,6 +224,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     public function delete ($iContentId, $aContentInfo = [])
     {
         $this->_oModule->_oDb->deleteOffer(['content_id' => $iContentId]);
+        $this->_oModule->_oDb->deleteCommodity(['entry_id' => $iContentId]);
         $this->_oModule->_oDb->deleteLicense(['entry_id' => $iContentId]);
 
         return parent::delete($iContentId, $aContentInfo);

@@ -12,6 +12,11 @@
 define('BX_ADS_STATUS_OFFER', 'offer');
 define('BX_ADS_STATUS_SOLD', 'sold');
 
+define('BX_ADS_STATUS_ADMIN_UNPAID', 'unpaid');
+
+define('BX_ADS_COMMODITY_TYPE_PRODUCT', 'product');
+define('BX_ADS_COMMODITY_TYPE_PROMOTION', 'promotion');
+
 define('BX_ADS_OFFER_STATUS_ACCEPTED', 'accepted');
 define('BX_ADS_OFFER_STATUS_AWAITING', 'awaiting');
 define('BX_ADS_OFFER_STATUS_DECLINED', 'declined');
@@ -281,15 +286,44 @@ class BxAdsModule extends BxBaseModTextModule
         return echoJson($this->_actionMarkAs('received'));
     }
 
+    public function actionRegisterImpression($iId)
+    {
+        echoJson($this->serviceRegisterImpression($iId));
+    }
+
+    public function actionRegisterClick($iId)
+    {
+        echoJson($this->serviceRegisterClick($iId));
+    }
+
     public function serviceGetSafeServices()
     {
-        $a = parent::serviceGetSafeServices();
-        return array_merge($a, array (
+        return array_merge(parent::serviceGetSafeServices(), [
             'EntityReviews' => '',
             'EntityReviewsRating' => '',
             'CategoriesList' => '',
             'BrowseCategory' => '',
-        ));
+            'RegisterImpression' => '',
+            'RegisterClick' => ''
+        ]);
+    }
+
+    public function serviceGetOptionsSource()
+    {
+        return [
+            ['key' => '', 'value' => _t('_Select_one')],
+            ['key' => 'shopify', 'value' => _t('_bx_ads_option_source_shopify')],
+        ];
+    }
+
+    public function serviceRegisterImpression($iId)
+    {
+        return ['code' => $this->_oDb->updatePromotionTracker($iId, 'impressions') ? 0 : 1];
+    }
+    
+    public function serviceRegisterClick($iId)
+    {
+        return ['code' => $this->_oDb->updatePromotionTracker($iId, 'clicks') ? 0 : 1];
     }
 
     public function serviceCheckName($sTitle, $iId = 0)
@@ -442,6 +476,13 @@ class BxAdsModule extends BxBaseModTextModule
             BxDolSession::getInstance()->setValue($sDisplay . '_category', $iCategory);
 
         return parent::serviceEntityCreate($sParams);
+    }
+    
+    public function serviceEntityEditBudget ($iContentId = 0, $sDisplay = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return parent::serviceEntityEdit($iContentId, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_BUDGET']);
     }
 
     /**
@@ -915,48 +956,57 @@ class BxAdsModule extends BxBaseModTextModule
     {
     	$CNF = &$this->_oConfig->CNF;
 
-        if(!$mixedItemId)
+        if(!$mixedItemId || !is_numeric($mixedItemId))
             return [];
 
-        if(is_numeric($mixedItemId))
-            $aItem = $this->_oDb->getContentInfoById((int)$mixedItemId);
-        else
-            $aItem = $this->_oDb->getContentInfoByName($mixedItemId);
-
-        if(empty($aItem) || !is_array($aItem))
+        $aCommodity = $this->_oDb->getCommodity(['sample' => 'id_with_entry', 'id' => (int)$mixedItemId]);
+        if(empty($aCommodity) || !is_array($aCommodity))
             return [];
+
+        $iItemId = (int)$aCommodity['id'];
+        $sItemType = $aCommodity['type'];
+
+        $iItemAuthor = 0;
+        $fItemPrice = 0;
+        switch($sItemType) {
+            case BX_ADS_COMMODITY_TYPE_PRODUCT:
+                $iItemAuthor = $aCommodity['entry_' . $CNF['FIELD_AUTHOR']];
+                $fItemPrice = (float)$aCommodity['entry_' . $CNF['FIELD_PRICE']];
+                if($this->_oConfig->isAuction() && (int)$aCommodity['entry_' . $CNF['FIELD_AUCTION']] != 0) {
+                    $aOffer = $this->_oDb->getOffersBy([
+                        'type' => 'content_and_author_ids', 
+                        'content_id' => $iItemId, 
+                        'author_id' => $iClientId,
+                        'status' => BX_ADS_OFFER_STATUS_ACCEPTED
+                    ]);
+
+                    if(!empty($aOffer) && is_array($aOffer))
+                        $fItemPrice = (float)$aOffer[$CNF['FIELD_OFR_AMOUNT']];
+                }
+                break;
+
+            case BX_ADS_COMMODITY_TYPE_PROMOTION:
+                $iItemAuthor = BxDolPayments::getInstance()->getOption('site_admin');
+                $fItemPrice = (float)$aCommodity['amount'];
+                break;
+        }
 
         if(!$iClientId)
             $iClientId = bx_get_logged_profile_id();
 
-        $iItemId = (int)$aItem[$CNF['FIELD_ID']];
-        $fItemPrice = (float)$aItem[$CNF['FIELD_PRICE']];
-
-        if($this->isAuction($aItem)) {
-            $aOffer = $this->_oDb->getOffersBy([
-                'type' => 'content_and_author_ids', 
-                'content_id' => $iItemId, 
-                'author_id' => $iClientId,
-                'status' => BX_ADS_OFFER_STATUS_ACCEPTED
-            ]);
-
-            if(!empty($aOffer) && is_array($aOffer))
-                $fItemPrice = (float)$aOffer[$CNF['FIELD_OFR_AMOUNT']];
-        }
-
-        return array (
+        return [
             'id' => $iItemId,
-            'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
-            'name' => $aItem[$CNF['FIELD_NAME']],
-            'title' => $aItem[$CNF['FIELD_TITLE']],
-            'description' => $aItem[$CNF['FIELD_TEXT']],
-            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aItem[$CNF['FIELD_ID']]))),
+            'author_id' => $iItemAuthor,
+            'name' => $aCommodity['entry_' . $CNF['FIELD_NAME']] . '-' . $sItemType,
+            'title' => $aCommodity['entry_' . $CNF['FIELD_TITLE']],
+            'description' => $sItemDescription = _t($CNF['T']['txt_cd_ct_' . $sItemType]),
+            'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $aCommodity['entry_' . $CNF['FIELD_ID']]])),
             'price_single' => $fItemPrice,
             'price_recurring' => '',
             'period_recurring' => 0,
             'period_unit_recurring' => '',
             'trial_recurring' => ''
-        );
+        ];
     }
 
     /**
@@ -983,28 +1033,17 @@ class BxAdsModule extends BxBaseModTextModule
 
         $iSellerId = (int)$iSellerId;
         if(empty($iSellerId))
-            return array();
+            return [];
 
-        $aItems = $this->_oDb->getEntriesByAuthor($iSellerId);
+        $aItems = $this->_oDb->getCommodity(['sample' => 'entry_author', 'author' => $iSellerId, 'type' => BX_ADS_COMMODITY_TYPE_PRODUCT]);
 
-        $aResult = array();
+        $aResult = [];
         foreach($aItems as $aItem) {
-            if($aItem[$CNF['FIELD_STATUS']] != BX_BASE_MOD_TEXT_STATUS_ACTIVE || empty($aItem[$CNF['FIELD_QUANTITY']]))
+            $aItemInfo = $this->_oDb->getContentInfoById((int)$aItem['entry_id']);
+            if(empty($aItemInfo) || !is_array($aItemInfo) || $aItemInfo[$CNF['FIELD_STATUS']] != BX_BASE_MOD_TEXT_STATUS_ACTIVE || empty($aItemInfo[$CNF['FIELD_QUANTITY']]))
                 continue;
 
-            $aResult[] = array(
-                'id' => $aItem[$CNF['FIELD_ID']],
-                'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
-                'name' => $aItem[$CNF['FIELD_NAME']],
-                'title' => $aItem[$CNF['FIELD_TITLE']],
-                'description' => $aItem[$CNF['FIELD_TEXT']],
-                'url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], array('id' => $aItem[$CNF['FIELD_ID']]))),
-                'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
-                'price_recurring' => '',
-                'period_recurring' => 0,
-                'period_unit_recurring' => '',
-                'trial_recurring' => ''
-            );
+            $aResult[] = $this->serviceGetCartItem($aItem['id']);
         }
 
         return $aResult;
@@ -1040,12 +1079,14 @@ class BxAdsModule extends BxBaseModTextModule
         if(empty($aItem) || !is_array($aItem))
             return [];
 
-        $aEntry = $this->_oDb->getContentInfoById($iItemId);
-        if(empty($aEntry) || !is_array($aEntry))
+        $aCommodity = $this->_oDb->getCommodity(['sample' => 'id_with_entry', 'id' => (int)$iItemId]);
+        if(empty($aCommodity) || !is_array($aCommodity))
             return [];
 
         bx_alert($this->getName(), 'order_authorize', 0, false, [
-            'product_id' => $iItemId,
+            'id' => $aCommodity['id'],
+            'type' => $aCommodity['type'],
+            'product_id' => $aCommodity['entry_id'],
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'count' => $iItemCount
@@ -1079,24 +1120,38 @@ class BxAdsModule extends BxBaseModTextModule
      */
     public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
+        $aCommodity = $this->_oDb->getCommodity(['sample' => 'id', 'id' => (int)$iItemId]);
+        if(empty($aCommodity) || !is_array($aCommodity))
+            return [];
+        
+        $sMethod = '_registerCartItem' . bx_gen_method_name($aCommodity['type']);
+        if(!method_exists($this, $sMethod))
+            return [];
+
+        return $this->$sMethod($iClientId, $iSellerId, $aCommodity, $iItemCount, $sOrder, $sLicense);
+    }
+
+    protected function _registerCartItemProduct($iClientId, $iSellerId, $aCommodity, $iItemCount, $sOrder, $sLicense)
+    {
         $CNF = &$this->_oConfig->CNF;
         $sModule = $this->getName();
 
-    	$aItem = $this->serviceGetCartItem($iItemId);
+    	$aItem = $this->serviceGetCartItem($aCommodity['id']);
         if(empty($aItem) || !is_array($aItem))
             return [];
 
-        $aEntry = $this->_oDb->getContentInfoById($iItemId);
-        $iEntryQnt = (int)$aEntry[$CNF['FIELD_QUANTITY']];
-        if(empty($aEntry) || !is_array($aEntry) || ($iEntryQnt - $iItemCount) < 0)
+        $aEntry = $this->_oDb->getContentInfoById($aCommodity['entry_id']);
+        if(empty($aEntry) || !is_array($aEntry))
             return [];
 
-        if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
+        $iEntryId = (int)$aCommodity['entry_id'];
+        $iEntryQnt = (int)$aEntry[$CNF['FIELD_QUANTITY']];
+        if(($iEntryQnt - $iItemCount) < 0 || !$this->_oDb->registerLicense($iClientId, $iEntryId, $iItemCount, $sOrder, $sLicense))
             return [];
 
         $aOffer = $this->_oDb->getOffersBy([
             'type' => 'content_and_author_ids', 
-            'content_id' => $iItemId, 
+            'content_id' => $iEntryId, 
             'author_id' => $iClientId,
             'status' => BX_ADS_OFFER_STATUS_ACCEPTED
         ]);
@@ -1116,10 +1171,12 @@ class BxAdsModule extends BxBaseModTextModule
                 $CNF['FIELD_SOLD'] => time()
             ]);
 
-        $this->_oDb->updateEntriesBy($aUpdate, [$CNF['FIELD_ID'] => $iItemId]);
+        $this->_oDb->updateEntriesBy($aUpdate, [$CNF['FIELD_ID'] => $iEntryId]);
 
         bx_alert($sModule, 'license_register', 0, false, [
-            'product_id' => $iItemId,
+            'id' => $aCommodity['id'],
+            'type' => $aCommodity['type'],
+            'product_id' => $iEntryId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'license' => $sLicense,
@@ -1128,7 +1185,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         if($bEntrySold) {
             $aParams = $this->_alertParams($aEntry);
-            bx_alert($sModule, 'sold', $iItemId, false, $aParams);
+            bx_alert($sModule, 'sold', $iEntryId, false, $aParams);
         }
 
         $oAuthor = BxDolProfile::getInstanceMagic($aEntry[$CNF['FIELD_AUTHOR']]);
@@ -1145,7 +1202,7 @@ class BxAdsModule extends BxBaseModTextModule
         $aEmailParams = [
             'client_name' => $oClient->getDisplayName(),
             'entry_name' => $aEntry[$CNF['FIELD_TITLE']],
-            'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $aEntry[$CNF['FIELD_ID']]])),
+            'entry_url' => bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'], ['id' => $iEntryId])),
             'author_url' => $oAuthor->getUrl(),
             'author_name' => $oAuthor->getDisplayName(),
             'vendor_url' => $sSellerUrl,
@@ -1157,7 +1214,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         $bCancel = false;
         bx_alert($sModule, 'license_register_notif', 0, false, [
-            'entry_id' => $iItemId,
+            'entry_id' => $iEntryId,
             'order' => $sOrder,
             'recipient_id' => &$iClientId,
             'email_template' => &$sEmailTemplate,
@@ -1167,6 +1224,43 @@ class BxAdsModule extends BxBaseModTextModule
 
         if(!$bCancel)
             sendMailTemplate($sEmailTemplate, 0, $iClientId, $aEmailParams);
+
+        return $aItem;
+    }
+    
+    protected function _registerCartItemPromotion($iClientId, $iSellerId, $aCommodity, $iItemCount, $sOrder, $sLicense)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aItem = $this->serviceGetCartItem($aCommodity['id']);
+        if(empty($aItem) || !is_array($aItem))
+            return [];
+
+        $aEntry = $this->_oDb->getContentInfoById($aCommodity['entry_id']);
+        if(empty($aEntry) || !is_array($aEntry))
+            return [];
+
+        $iEntryId = (int)$aCommodity['entry_id'];
+        if(!$this->_oDb->registerPromotion($aEntry[$CNF['FIELD_AUTHOR']], $aCommodity['id'], $iEntryId, $aCommodity['amount'], $sOrder, $sLicense))
+            return [];
+
+        if($aEntry[$CNF['FIELD_STATUS_ADMIN']] == BX_ADS_STATUS_ADMIN_UNPAID) {
+            $aUpdate[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_GENERAL_STATUS_ACTIVE;
+            if(!$this->_isModerator() && !$this->_oConfig->isAutoApproveEnabled())
+                $aUpdate[$CNF['FIELD_STATUS_ADMIN']] = BX_BASE_MOD_GENERAL_STATUS_PENDING;
+            
+            $this->_oDb->updateEntriesBy($aUpdate, [$CNF['FIELD_ID'] => $iEntryId]);
+        }
+
+        bx_alert($this->getName(), 'promotion_register', 0, false, [
+            'id' => $aCommodity['id'],
+            'type' => $aCommodity['type'],
+            'product_id' => $iEntryId,
+            'profile_id' => $iClientId,
+            'amount' => $aCommodity['amount'],
+            'order' => $sOrder,
+            'license' => $sLicense,
+        ]);
 
         return $aItem;
     }
@@ -1250,7 +1344,7 @@ class BxAdsModule extends BxBaseModTextModule
      */
     public function serviceReregisterCartItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -1277,7 +1371,7 @@ class BxAdsModule extends BxBaseModTextModule
      */
     public function serviceReregisterSubscriptionItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -1305,18 +1399,61 @@ class BxAdsModule extends BxBaseModTextModule
      */
     public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
-        if(!$this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense))
+        $aCommodity = $this->_oDb->getCommodity(['sample' => 'id', 'id' => (int)$iItemId]);
+        if(empty($aCommodity) || !is_array($aCommodity))
+            return [];
+        
+        $sMethod = '_unregisterCartItem' . bx_gen_method_name($aCommodity['type']);
+        if(!method_exists($this, $sMethod))
+            return [];
+
+        return $this->$sMethod($iClientId, $iSellerId, $aCommodity, $iItemCount, $sOrder, $sLicense);
+    }
+    
+    protected function _unregisterCartItemProduct($iClientId, $iSellerId, $aCommodity, $iItemCount, $sOrder, $sLicense)
+    {
+        $iEntryId = (int)$aCommodity['entry_id'];
+
+        if(!$this->_oDb->unregisterLicense($iClientId, $iEntryId, $sOrder, $sLicense))
             return false;
 
-        bx_alert($this->getName(), 'license_unregister', 0, false, array(
-            'product_id' => $iItemId,
+        bx_alert($this->getName(), 'license_unregister', 0, false, [
+            'id' => $aCommodity['id'],
+            'type' => $aCommodity['type'],
+            'product_id' => $iEntryId,
             'profile_id' => $iClientId,
             'order' => $sOrder,
             'license' => $sLicense,
             'count' => $iItemCount
-        ));
+        ]);
 
-    	return true;;
+    	return true;
+    }
+
+    protected function _unregisterCartItemPromotion($iClientId, $iSellerId, $aCommodity, $iItemCount, $sOrder, $sLicense)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aEntry = $this->_oDb->getContentInfoById($aCommodity['entry_id']);
+        if(empty($aEntry) || !is_array($aEntry))
+            return false;
+
+        $iEntryId = (int)$aCommodity['entry_id'];
+
+        if(!$this->_oDb->unregisterPromotion($aEntry[$CNF['FIELD_AUTHOR']], $aCommodity['id'], $iEntryId, $sOrder, $sLicense))
+            return false;
+
+        bx_alert($this->getName(), 'promotion_unregister', 0, false, [
+            'id' => $aCommodity['id'],
+            'type' => $aCommodity['type'],
+            'product_id' => $iEntryId,
+            'profile_id' => $iClientId,
+            'amount' => $aCommodity['amount'],
+            'order' => $sOrder,
+            'license' => $sLicense
+        ]);
+
+    	return true;
     }
 
     /**
@@ -2053,7 +2190,8 @@ class BxAdsModule extends BxBaseModTextModule
         $sDisplayType = false;
         switch($sFormMethod) {
             case 'editDataForm':
-                $sDisplayType = 'edit';
+                if($sDisplay === false)
+                    $sDisplayType = 'edit';
                 break;
             case 'viewDataForm':
             case 'viewDataEntry':
