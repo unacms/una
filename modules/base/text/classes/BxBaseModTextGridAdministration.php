@@ -137,16 +137,30 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         if ($sTitle == '')
             $sTitle = _t('_sys_txt_no_title');
         
+        if (bx_is_api()){
+            return ['type' => 'link', 'data' => [
+                'text' => $aRow[$CNF['FIELD_TITLE']],
+                'url' =>  $sUrl = bx_api_get_relative_url(bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']])))
+            ]];
+        }
+        
         return parent::_getCellDefault($this->_getEntryLink($sTitle, $aRow), $sKey, $aField, $aRow);
     }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
+        if (bx_is_api()){
+            return ['type' => 'time', 'data' => $mixedValue];
+        }
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
     
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
+        if (bx_is_api()){
+            return ['type' => 'profile', 'data' => BxDolProfile::getData($mixedValue)];
+        }
+        
     	$oProfile = $this->_getProfileObject($aRow['author']);
     	$sProfile = $oProfile->getDisplayName();
 
@@ -182,6 +196,13 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
         $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]));
 
+        if (bx_is_api()){
+            $a['type'] = 'link';
+            $a['name'] = $sKey;
+            $a['url'] = bx_api_get_relative_url($sUrl);
+            return $a;
+        }
+       
     	$a['attr'] = array_merge($a['attr'], array(
     		"onclick" => "window.open('" . $sUrl . "','_self');"
     	));

@@ -630,7 +630,6 @@ class BxBaseCmtsServices extends BxDol
             $aCmts = array_slice($aCmts, 0, $aBp['per_view']); 
             $aParams['start_from'] = $aBp['start'] + $aBp['per_view'];
         }
-        
         $aCmtsRv = [];
         foreach ($aCmts as $aCmt) {
             $oCmt = $oCmts->getCommentStructure($aCmt['cmt_id'], $aBp, $aDp);
@@ -650,7 +649,7 @@ class BxBaseCmtsServices extends BxDol
             'start' => $aParams['start_from'],
             'count' => count($aCmts),
             'per_view' => $aBp['per_view'],
-            'total_count' => $aBp['count'],
+            'total_count' => $oCmts->getCommentsCount(),
             'order' => $aParams['order_way'],
             'view' => $aDp['type'],
             'module' => $oCmts->getSystemName(), 

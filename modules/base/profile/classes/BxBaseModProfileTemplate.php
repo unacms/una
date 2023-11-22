@@ -622,7 +622,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     function urlAvatar ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
-        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR'], 'no-picture-preview.png', $aData, $bSubstituteNoImage);
+        $sDefault = bx_is_api() ? '' : 'no-picture-preview.png';
+        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR'], $sDefault, $aData, $bSubstituteNoImage);
     }
 
     /**
