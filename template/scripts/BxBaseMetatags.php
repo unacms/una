@@ -114,6 +114,10 @@ class BxBaseMetatags extends BxDolMetatags
         if(!$aLocation)
             return '';
 
+        if (bx_is_api()){
+            return [bx_api_get_block('map', ['location' => $aLocation, 'caption' => $this->locationsString($iId, false)])];
+        }
+        
         $sLocationHtml = $this->locationsString($iId);
         if(!$sLocationHtml)
 			return '';

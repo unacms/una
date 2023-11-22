@@ -441,7 +441,8 @@ class BxBasePage extends BxDolPage
         
         if (BxDolCover::getInstance($this)->isCover() && isset($this->_aProfileInfo)) {
             $oModule = BxDolModule::getInstance($this->getModule());
-
+            $aContentInfo = bx_srv($this->getModule(), 'get_info', [$this->_aProfileInfo['content_id'], false]);
+            
             $a['cover_block'] = [
                 'profile' => BxDolProfile::getData($this->_aProfileInfo['id'], [
                     'get_avatar' => 'getAvatarBig',
@@ -450,7 +451,7 @@ class BxBasePage extends BxDolPage
                 'actions_menu' => '',
                 'meta_menu' => '',
                 'cover' => $oModule->serviceGetCover($this->_aProfileInfo['content_id']),
-                'allow_edit' =>  $oModule->checkAllowedChangeCover($this->_aProfileInfo['id']) === CHECK_ACTION_RESULT_ALLOWED
+                'allow_edit' =>  $oModule->checkAllowedChangeCover($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED
             ];
             
             $CNF = $oModule->_oConfig->CNF;
@@ -515,6 +516,13 @@ class BxBasePage extends BxDolPage
             if($oPayments->isActive())
                 $a['user']['cart'] = $oPayments->getCartItemsCount();
         }
+        
+        $aExtras = [
+            'page' => $this,
+            'blocks' => $aBlocks,
+            'data' => &$a,
+        ];
+        bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $a;
     }

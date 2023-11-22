@@ -54,6 +54,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'AccountSettingsPassword' => 'BxBaseServiceAccount',
             'ForgotPassword' => 'BxBaseServiceAccount',
             'SwitchProfile' => 'BxBaseServiceAccount',
+            'AccountProfileSwitcher' => 'BxBaseServiceAccount',
             'EmailConfirmation' => 'BxBaseServiceAccount',
 
             'CategoriesList' => 'BxBaseServiceCategory',
@@ -96,6 +97,10 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetDataApi' => 'BxBaseCmtsServices',
 
             'GetDataApi' => 'BxBaseUploaderServices',
+            
+            'GetStatBlock' => 'BxBaseDashboardServices',
+            
+            'PerfomActionApi' => 'BxBaseServiceGrid',
         );
     }
 

@@ -3264,6 +3264,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetLiveUpdate($aBrowseParams, $iProfileId, $iValue = 0, $iInit = 0)
     {
         $CNF = &$this->_oConfig->CNF;
+        
+        if (!is_array($aBrowseParams)){
+            $aTmp = json_decode($aBrowseParams, true);
+            $aBrowseParams = $aTmp['params'];
+        }
 
         $sKey = $this->_oConfig->getLiveUpdateKey($aBrowseParams);
 
@@ -3296,6 +3301,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($iValueNew == $iValue)
             return false;
 
+        if(bx_is_api()){
+            return $iValueNew;
+        }
+        
         if((int)$iInit != 0)
             return array('count' => $iValueNew);
 

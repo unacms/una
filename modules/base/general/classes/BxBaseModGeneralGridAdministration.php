@@ -68,8 +68,11 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             $aIdsAffected[] = $iId;
             $iAffected++;
         }
-
-        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
+        $mRv = $iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete']));
+        if (bx_is_api()){
+            return $mRv;
+        }
+        echoJson($mRv);
     }
     
     public function performActionClearReports($aParams = array())
@@ -125,6 +128,12 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             $aContentInfo = $this->_getContentInfo($aRow[$CNF['FIELD_ID']]);
             if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
+        }
+        
+        if (bx_is_api()){
+            $a['name'] = $sKey;
+            $a['type'] = 'callback';
+            return $a;
         }
         
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -283,6 +292,9 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if (bx_is_api()){
+            return ['type' => 'switcher', 'data' => $aRow[$this->_sStatusField], 'fld' => $this->_sStatusField];
+        }
         if(isset($aRow[$this->_sStatusField]) && !in_array($aRow[$this->_sStatusField], $this->_aStatusValues)) {
             $sStatusKey = '_sys_status_' . $aRow[$this->_sStatusField];
             if(!empty($CNF['T']['txt_status_' . $aRow[$this->_sStatusField]]))
