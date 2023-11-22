@@ -200,6 +200,8 @@
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Events]]></string>
     <string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Joined Events]]></string>
     <string name="_bx_events_page_block_title_joined_entries"><![CDATA[Joined Events]]></string>
+    <string name="_bx_events_page_block_title_sys_joined_calendar"><![CDATA[Joined Events Calendar]]></string>
+    <string name="_bx_events_page_block_title_joined_calendar"><![CDATA[Joined Events Calendar]]></string>
     <string name="_bx_events_page_block_title_sys_followed_entries"><![CDATA[Following]]></string>
     <string name="_bx_events_page_block_title_followed_entries"><![CDATA[Following]]></string>
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Create Event]]></string>

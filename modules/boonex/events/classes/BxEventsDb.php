@@ -55,6 +55,8 @@ class BxEventsDb extends BxBaseModGroupsDb
 
     public function getEntriesByDate($sDateFrom, $sDateTo, $iEventId = 0, $aSQLPart = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         // validate input data
         if (false === ($oDateFrom = date_create($sDateFrom, new DateTimeZone('UTC'))))
             return array();
@@ -64,6 +66,7 @@ class BxEventsDb extends BxBaseModGroupsDb
             return array();
 
         $sModule = $this->_oConfig->getName();
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
 
         // increase start and end date to cover timezones
         $oDateFrom = $oDateFrom->sub(new DateInterval("P1D"));
@@ -103,7 +106,7 @@ class BxEventsDb extends BxBaseModGroupsDb
             }
 
             // search for regular events
-            $a = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 0 AS `repeating`
+            $a = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`event_desc` AS `description`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 0 AS `repeating`
                 FROM `bx_events_data` $sJoin 
                 WHERE `bx_events_data`.`date_start` >= :timestamp_min AND `bx_events_data`.`date_start` <= :timestamp_max $sWhere
             ", 'id', $aBindings);
@@ -111,7 +114,7 @@ class BxEventsDb extends BxBaseModGroupsDb
             if ($a)
                 $sWhere .= " AND `bx_events_data`.`id` NOT IN(" . $this->implode_escape(array_keys($a)) . ") ";
 
-            $aRepeating = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 1 AS `repeating`
+            $aRepeating = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`event_desc` AS `description`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 1 AS `repeating`
                 FROM `bx_events_data`
                 LEFT JOIN `bx_events_intervals` AS `i` ON (
                     `bx_events_data`.`id` = `i`.`event_id`
@@ -169,11 +172,17 @@ class BxEventsDb extends BxBaseModGroupsDb
                 $a[$k]['start_utc'] = $oDateStart ? $oDateStart->getTimestamp() : 0;
                 $a[$k]['end_utc'] = $oDateEnd ? $oDateEnd->getTimestamp() : 0;
                 $a[$k]['url'] = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']));
-                if(($oEvent = BxDolProfile::getInstanceByContentAndType($r['id'], $sModule)) !== false)
-                    $a[$k]['extendedProps'] = [
-                        'class' => 'bx-events-calendar-unit',
-                        'card' => $oEvent->getUnit()
-                    ];
+                if(bx_is_api()) {
+                    $a[$k]['url'] = bx_api_get_relative_url($a[$k]['url']);
+                    $a[$k]['location'] = $oMetatags->locationsString($r['id'], false);
+                }
+                else {
+                    if(($oEvent = BxDolProfile::getInstanceByContentAndType($r['id'], $sModule)) !== false)
+                        $a[$k]['extendedProps'] = [
+                            'class' => 'bx-events-calendar-unit',
+                            'card' => $oEvent->getUnit()
+                        ];
+                }
             }
 
             // merge with all other events

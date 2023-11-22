@@ -81,50 +81,102 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
 
     public function actionCalendarData()
     {
-        // check permissions
-        $aSQLPart = array();
-        $iContentId = (int)bx_get('event');
-        $iContextId = (int)bx_get('context_id');
-        
-        if ($iContentId) {
-            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-            if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aContentInfo)) {
-                $this->_oTemplate->displayAccessDenied();
-                exit;
-            }
-            $aSQLPart = array();
+        $aParams = [
+            'type' => ($sType = bx_get('type')) !== false ? $sType : 'browse',
+            'start' => bx_get('start'),
+            'end' => bx_get('end')
+        ];
+        if(($iEventId = bx_get('event')) !== false)
+            $aParams['event_id'] = (int)$iEventId;
+        if(($iProfileId = bx_get('profile_id')) !== false)
+            $aParams['profile_id'] = (int)$iProfileId;
+        if(($iContextId = bx_get('context_id')) !== false)
+            $aParams['context_id'] = (int)$iContextId;
+    
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($this->serviceCalendarData($aParams));
+    }
+    
+    public function serviceCalendarData($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($this->_bIsApi && is_string($aParams)) {
+            $aParams = json_decode($aParams, true);
+            if(!empty($aParams['params']))
+                $aParams = $aParams['params'];
         }
-        else {
-            $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
-            if($iContextId){
-                if (!$this->serviceIsEnableForContext($iContextId)){
-                    exit;
-                }
-                else{
-                    $aSQLPart = $oPrivacy ? $oPrivacy->getContentByGroupAsSQLPart(- $iContextId) : array();
-                }
-            }
-            else{
-                $aSQLPart = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart(0, $oPrivacy->getPartiallyVisiblePrivacyGroups()) : array();
-            }
+
+        $sModule = $this->getName();
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+
+        $iNow = time();
+        $sStart = !empty($aParams['start']) ? $aParams['start'] : date('d.m.Y', $iNow);
+        $sEnd = !empty($aParams['end']) ? $aParams['end'] : date('d.m.Y', $iNow + 3600 * 24 * 365);
+
+        $iContentId = 0;
+        $iContextId = 0;
+        $aSQLPart = [];
+        switch($aParams['type']) {
+            case 'event':
+                $iContentId = !empty($aParams['event_id']) ? (int)$aParams['event_id'] : 0;
+                $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+                if(CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aContentInfo))
+                    $this->_oTemplate->displayAccessDenied();
+                break;
+
+            case 'author':
+                $iProfileId = !empty($aParams['profile_id']) ? (int)$aParams['profile_id'] : 0;
+
+                $aSQLPart = [
+                    'where' => $this->_oDb->prepareAsString("AND `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}`=?", $iProfileId)
+                ];
+                break;
+
+            case 'joined':
+                $iProfileId = !empty($aParams['profile_id']) ? (int)$aParams['profile_id'] : 0;
+
+                $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+                if(!$oConnection)
+                    return [];
+
+                $aEventsJoined = $oConnection->getConnectedContent($iProfileId, true);
+                if(empty($aEventsJoined) || !is_array($aEventsJoined))
+                    return [];
+
+                $aSQLPart = [
+                    'join' => "INNER JOIN `sys_profiles` ON `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}`=`sys_profiles`.`content_id` AND `sys_profiles`.`type`='{$sModule}'",
+                    'where' => "AND `sys_profiles`.`id` IN (" . $this->_oDb->implode_escape($aEventsJoined) . ")"
+                ];
+                break;
+
+            case 'context':
+                $iContextId = !empty($aParams['context_id']) ? (int)$aParams['context_id'] : 0;
+                if(!$this->serviceIsEnableForContext($iContextId))
+                    return [];
+
+                $aSQLPart = $oPrivacy->getContentByGroupAsSQLPart(-$iContextId);
+                break;
+            
+            default:
+                $aSQLPart = $oPrivacy->getContentPublicAsSQLPart(0, $oPrivacy->getPartiallyVisiblePrivacyGroups());
         }
 
         // get entries
-        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), bx_get('event'), $aSQLPart);
-        
+        $aEntries = $this->_oDb->getEntriesByDate($sStart, $sEnd, $iContentId, $aSQLPart);
+
         bx_alert($this->getName(), 'calendar_data', 0, false, array(
             'event' => $iContentId,
             'context_id' => $iContextId,
-            'start' => bx_get('start'),
-            'end' =>  bx_get('end'),
+            'start' => $sStart,
+            'end' =>  $sEnd,
             'sql_part' => &$aSQLPart,
             'data' => &$aEntries,
         ));
-        
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($aEntries);
+
+        return $aEntries;
     }
-    
+
     public function serviceIsIcalExportAvaliable($iContentId)
     {
         return true;
@@ -167,6 +219,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         return array_merge($a, array (
             'BrowsePastProfiles' => '',
             'Calendar' => '',
+            'CalendarData' => ''
         ));
     }
 
@@ -324,10 +377,23 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
     /** 
      * @ref bx_events-calendar "calendar"
      */
-    public function serviceCalendar($aData = array(), $sTemplate = 'calendar.html')
+    public function serviceCalendar($aData = [], $sTemplate = 'calendar.html')
     {
-        if(isset($aData['context_id']) && !$this->serviceIsEnableForContext($aData['context_id']))
-            return '';
+        if(isset($aData['event']) && !isset($aData['type']))
+            $aData['type'] = 'event';
+
+        if(isset($aData['profile_id']) && !isset($aData['type']))
+            $aData['type'] = 'joined';
+
+        if(isset($aData['context_id'])) {
+            if(!$this->serviceIsEnableForContext($aData['context_id']))
+                return '';
+
+            $aData['type'] = 'context';
+        }
+
+        if(!isset($aData['type']))
+            $aData['type'] = 'browse';
 
         $oCalendar = new BxTemplCalendar([
             'eventSources' => [
@@ -335,6 +401,9 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             ],
         ], $this->_oTemplate);
 
+        if (bx_is_api())
+            return [bx_api_get_block('calendar', ['request_url' => $this->getName() . '/calendar_data&params[]=' . json_encode(['params' => $aData])])];
+        
         $this->_oTemplate->addCss(['main.css']);
         return $oCalendar->display($sTemplate);
     }

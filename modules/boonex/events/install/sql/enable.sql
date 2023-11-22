@@ -230,7 +230,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_entries_actions', '_bx_events_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
 ('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_entries_of_author', '_bx_events_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:22:"browse_created_entries";}', 0, 0, 0, 2),
 ('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_favorites_of_author', '_bx_events_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
-('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_joined_entries', '_bx_events_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 4);
+('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_joined_entries', '_bx_events_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 4),
+('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_joined_calendar', '_bx_events_page_block_title_joined_calendar', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";s:6:"params";a:1:{i:0;a:1:{s:10:"profile_id";s:12:"{profile_id}";}}}', 0, 0, 1, 5);
 
 
 -- PAGE: favorites by list
