@@ -39,8 +39,6 @@ BxAdsMain.prototype.registerTraker = function(iId) {
     });
 };
 
-
-
 BxAdsMain.prototype.registerImpression = function(oElement, iId) {
     jQuery.get (
         this._sActionsUrl + 'register_impression/' + iId,
@@ -50,6 +48,19 @@ BxAdsMain.prototype.registerImpression = function(oElement, iId) {
         },
         'json'
     );
+};
+
+BxAdsMain.prototype.registerClick = function(oElement, iId) {
+    jQuery.get (
+        this._sActionsUrl + 'register_click/' + iId,
+        this._getDefaultData(),
+        function(oData) {
+            processJsonData(oData);
+        },
+        'json'
+    );
+
+    return false;
 };
 
 BxAdsMain.prototype.isVisible = function(oElement) {

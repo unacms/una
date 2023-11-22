@@ -892,7 +892,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
         // get entry url
-        $sUrl = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]));
+        $sUrl = $this->_oConfig->getViewEntryUrl($aData[$CNF['FIELD_ID']]);
 
         $oProfile = BxDolProfile::getInstanceMagic($aData[$CNF['FIELD_AUTHOR']]);
         
@@ -929,6 +929,12 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
+            'bx_if:show_onclick' => [
+                'condition' => false,
+                'content' => [
+                    'content_onclick' => ''
+                ]
+            ],
             'title' => $sTitle,
             'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']], $bBadgesSingle, $bBadgesCompact),
             'title_attr' => bx_html_attribute($sTitle),

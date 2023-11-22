@@ -807,12 +807,12 @@ class BxAdsDb extends BxBaseModTextDb
 
         return (int)$this->query("DELETE FROM `" . $CNF['TABLE_OFFERS'] . "` WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
     }
-    
+
     public function updatePromotionTracker($iEntryId, $sCounter)
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $iDate = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+        $iDate = $this->_oConfig->getDay();
         return $this->query("INSERT INTO `" . $CNF['TABLE_PROMO_TRACKER'] . "` (`entry_id`, `date`, `" . $sCounter . "`) VALUES (:entry_id, :date, 1) ON DUPLICATE KEY UPDATE `" . $sCounter . "`=`" . $sCounter . "`+1", [
             'entry_id' => $iEntryId,
             'date' => $iDate

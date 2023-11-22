@@ -99,9 +99,31 @@ class BxAdsTemplate extends BxBaseModTextTemplate
 
     protected function getUnit($aData, $aParams = [])
     {
-        return array_merge(parent::getUnit($aData, $aParams), [
-            'js_object' => $this->_oConfig->getJsObject('main')
-        ]);
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::getUnit($aData, $aParams);
+
+        if($this->_oConfig->isPromotion()) {
+            $sJsObject = $this->_oConfig->getJsObject('main');
+
+            $aResult = array_merge($aResult, [
+                'content_url' => 'javascript:void(0)',
+                'bx_if:show_onclick' => [
+                    'condition' => true,
+                    'content' => [
+                        'content_onclick' => 'return ' . $sJsObject . '.registerClick(this, ' . $aData[$CNF['FIELD_ID']] . ')'
+                    ]
+                ],
+                'bx_if:show_tracker' => [
+                    'condition' => true,
+                    'content' => [
+                        'js_object' => $sJsObject,
+                        'id' => $aData[$CNF['FIELD_ID']]
+                    ]
+                ],
+            ]);
+        }
+        return $aResult;
     }
 
     /**

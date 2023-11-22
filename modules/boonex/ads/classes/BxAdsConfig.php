@@ -16,9 +16,11 @@ class BxAdsConfig extends BxBaseModTextConfig
     protected $_oDb;
 
     protected $_bAuction;
-    protected $_bPromotion;
 
     protected $_sSource;
+
+    protected $_bPromotion;
+    protected $_fPromotionCpm;
 
     public function __construct($aModule)
     {
@@ -333,6 +335,9 @@ class BxAdsConfig extends BxBaseModTextConfig
         ]);
 
         $this->_bAttachmentsInTimeline = true;
+
+        $this->_bPromotion = false;
+        $this->_fPromotionCpm = 0;
     }
 
     public function init(&$oDb)
@@ -340,9 +345,13 @@ class BxAdsConfig extends BxBaseModTextConfig
         $this->_oDb = &$oDb;
 
         $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
-        $this->_bPromotion = getParam($this->CNF['PARAM_USE_PROMOTION']) == 'on';
 
         $this->_sSource = getParam($this->CNF['PARAM_SOURCE']);
+
+        $this->_bPromotion = getParam($this->CNF['PARAM_USE_PROMOTION']) == 'on';
+        if($this->_bPromotion) {
+            $this->_fPromotionCpm = (float)getParam($this->CNF['PARAM_PROMOTION_CPM']);
+        }
     }
 
     public function getActiveStatus()
@@ -373,6 +382,16 @@ class BxAdsConfig extends BxBaseModTextConfig
     public function getEntryName($sName)
     {
         return uriGenerate($sName, $this->CNF['TABLE_ENTRIES'], $this->CNF['FIELD_NAME'], ['lowercase' => false]);
+    }
+
+    public function getDay($iTimestamp = null)
+    {
+        return mktime(0, 0, 0, date("m", $iTimestamp), date("d", $iTimestamp), date("Y", $iTimestamp));
+    }
+
+    public function getPromotionCpm()
+    {
+        return $this->_fPromotionCpm;
     }
 }
 

@@ -100,6 +100,22 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         return strncmp($sUrl1, $sUrl2, strlen($sUrl1)) === 0;
     }
 
+    public function getViewEntryUrl($mixedData)
+    {
+        if(!isset($this->CNF['URI_VIEW_ENTRY']))
+            return '';
+
+        $iId = 0;
+        if(is_numeric($mixedData))
+            $iId = (int)$mixedData;
+        else if(is_array($mixedData) && isset($this->CNF['FIELD_ID'], $mixedData[$this->CNF['FIELD_ID']]))
+            $iId = (int)$mixedData[$this->CNF['FIELD_ID']];
+        else
+            return '';
+
+        return bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'] . '&id=' . $iId));
+    }
+
     /*
      * Note. The first Transcoder in the array $aTranscoders has the highest priority. 
      */

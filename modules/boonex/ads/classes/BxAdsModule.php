@@ -323,7 +323,13 @@ class BxAdsModule extends BxBaseModTextModule
     
     public function serviceRegisterClick($iId)
     {
-        return ['code' => $this->_oDb->updatePromotionTracker($iId, 'clicks') ? 0 : 1];
+        if(!$this->_oDb->updatePromotionTracker($iId, 'clicks'))
+            return ['code' => 1];
+
+        return [
+            'code' => 0,
+            'redirect' => $this->_oConfig->getViewEntryUrl($iId)
+        ];
     }
 
     public function serviceCheckName($sTitle, $iId = 0)
