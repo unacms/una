@@ -187,7 +187,9 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
             'budget_total' => ['value' => 0, 'field' => 'budget_total', 'operator' => '<>'],
         ]);
 
-        $this->aCurrent['restriction_sql'] = " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_DAILY']}` > ({$fPromotionCpm} * `{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`)/1000";
+        $this->aCurrent['restriction_sql'] = "";
+        $this->aCurrent['restriction_sql'] .= " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_TOTAL']}` > ({$fPromotionCpm} * `{$this->aCurrent['table']}`.`impressions`)/1000";
+        $this->aCurrent['restriction_sql'] .= " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_DAILY']}` > ({$fPromotionCpm} * `{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`)/1000";
     }
 }
 

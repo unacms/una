@@ -808,14 +808,50 @@ class BxAdsDb extends BxBaseModTextDb
         return (int)$this->query("DELETE FROM `" . $CNF['TABLE_OFFERS'] . "` WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1")) > 0;
     }
 
-    public function updatePromotionTracker($iEntryId, $sCounter)
+    public function getFromPromotionTracker($aParams)
     {
         $CNF = &$this->_oConfig->CNF;
 
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query', 1 => []]];
+        $sSelectClause = "`tpt`.*";
+        $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";       
+
+        switch($aParams['sample']) {                
+            case 'impressions_by_entry_id':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1]['entry_id'] = (int)$aParams['entry_id'];
+
+                $sSelectClause = "SUM(`tpt`.`impressions`)";
+                $sWhereClause = "AND `tpt`.`entry_id`=:entry_id";
+                $sGroupClause = "`tpt`.`entry_id`";
+                break;
+        }
+
+        if(!empty($sGroupClause))
+            $sGroupClause = ' GROUP BY ' . $sGroupClause;
+    
+        if(!empty($sOrderClause))
+            $sOrderClause = ' ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = ' LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_PROMO_TRACKER'] . "` AS `tpt` " . $sJoinClause . " WHERE 1 " . $sWhereClause . $sGroupClause . $sOrderClause . $sLimitClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function updatePromotionTracker($iEntryId, $sCounter, $iCounter = 1)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `" . $sCounter . "`=`" . $sCounter . "`+:counter WHERE `" . $CNF['FIELD_ID'] ."`=:id", ['counter' => $iCounter, 'id' => $iEntryId]) === false)
+            return false;
+
         $iDate = $this->_oConfig->getDay();
-        return $this->query("INSERT INTO `" . $CNF['TABLE_PROMO_TRACKER'] . "` (`entry_id`, `date`, `" . $sCounter . "`) VALUES (:entry_id, :date, 1) ON DUPLICATE KEY UPDATE `" . $sCounter . "`=`" . $sCounter . "`+1", [
+        return $this->query("INSERT INTO `" . $CNF['TABLE_PROMO_TRACKER'] . "` (`entry_id`, `date`, `" . $sCounter . "`) VALUES (:entry_id, :date, :counter) ON DUPLICATE KEY UPDATE `" . $sCounter . "`=`" . $sCounter . "`+:counter", [
             'entry_id' => $iEntryId,
-            'date' => $iDate
+            'date' => $iDate,
+            'counter' => $iCounter
         ]) !== false;
     }
 }
