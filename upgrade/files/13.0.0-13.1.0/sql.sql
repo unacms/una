@@ -16,8 +16,6 @@ CREATE TABLE IF NOT EXISTS `sys_iframely_data` (
 
 -- OPTIONS
 
-UPDATE `sys_options` SET `value` = 'beta' WHERE `name` = 'sys_upgrade_channel' AND `value` = 'stable';
-
 
 SET @iCategoryHidden = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'hidden');
 

@@ -1279,10 +1279,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceRedirect($sUrl = false)
     {
+        if (!getParam('sys_confirmation_before_redirect')) {
+            BxDolTemplate::getInstance()->displayPageNotFound();
+            exit;
+        }
+
         if (false === $sUrl)
             $sUrl = bx_get('url');
 
         if (!$sUrl || !preg_match('@^https?://@', $sUrl)) {
+            http_response_code(500);
             return MsgBox(_t('_error occured'));
         }
         else {
@@ -1290,15 +1296,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             $bSpam = null;
             bx_alert('system', 'check_spam_url', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sUrl, 'where' => 'redirect'));
 
-            if (false === $bSpam) {
-                header('Location: ' . $sUrl);
-            } 
-            elseif (true === $bSpam || null === $bSpam) {
-                return BxDolTemplate::getInstance()->parseHtmlByName('redirect.html', [
-                    'text' => _t('_sys_redirect_confirmation', bx_process_output($sUrl), getParam('site_title')),
-                    'url' => bx_js_string($sUrl, BX_ESCAPE_STR_APOS),
-                ]);
-            }
+            $sLangKey = $bSpam ? '_sys_redirect_confirmation_harmful' : '_sys_redirect_confirmation';
+            return BxDolTemplate::getInstance()->parseHtmlByName('redirect.html', [
+                'text' => _t($sLangKey, bx_process_output($sUrl), getParam('site_title')),
+                'url' => bx_js_string($sUrl, BX_ESCAPE_STR_APOS),
+            ]);
         }
     }
 

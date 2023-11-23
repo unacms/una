@@ -3946,5 +3946,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_page_title_redirect"><![CDATA[Redirect Confirmation]]></string>
     <string name="_sys_page_block_title_redirect"><![CDATA[Confirm redirect]]></string>
     <string name="_sys_redirect_confirmation"><![CDATA[<div class="bx-def-font-h2 bx-def-margin-sec-bottom">You're going to a link outside {1}</div><div class="bx-def-font-small">Link: {0}</div><div class="bx-def-margin-sec-top">Are you sure you want to follow this link?</div>]]></string>
+    <string name="_sys_redirect_confirmation_harmful"><![CDATA[<div class="bx-def-font-h2 bx-def-margin-sec-bottom">You're going to a potentially <b>harmful</b> link {1}</div><div class="bx-def-font-small">Link: {0}</div><div class="bx-def-margin-sec-top">Are you sure you want to follow this link?</div>]]></string>
     <string name="_sys_leave_page_confirmation"><![CDATA[<div class="bx-def-font-h2">Leave the page?</div><div class="bx-def-margin-sec-top">If you do it, your changes will not be saved.</div>]]></string>
 </resources>
