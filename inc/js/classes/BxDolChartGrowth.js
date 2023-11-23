@@ -9,6 +9,7 @@
 function BxDolChartGrowth (oOptions) {
     this._sObjName = undefined == oOptions.sObjName ? 'oBxDolChartGrowth' : oOptions.sObjName;    // javascript object name, to run current object instance from onTimer
     this._sActionsUrl = oOptions.sRootUrl + 'chart.php'; // actions url address
+    this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
@@ -32,10 +33,10 @@ function BxDolChartGrowth (oOptions) {
 
 BxDolChartGrowth.prototype.loadData = function()
 {
-	var $this = this;
-	var oGraph = $('#' + this._sKeyGraph);
-	var oGraphWrp = oGraph.parents('div:first');
-	var oGraphErr = oGraphWrp.find('.bx-chart-growth-graph-error').hide();
+    var $this = this;
+    var oGraph = $('#' + this._sKeyGraph);
+    var oGraphWrp = oGraph.parents('div:first');
+    var oGraphErr = oGraphWrp.find('.bx-chart-growth-graph-error').hide();
 
     $('#' + this._sKeyObjects).attr('disabled', true);
 
@@ -43,20 +44,20 @@ BxDolChartGrowth.prototype.loadData = function()
 
     $.get(
     	this._sActionsUrl,
-    	{
-    		object: $('#' + this._sKeyObjects).val(),
-    		action: 'load_data_by_interval',
-    		from: $('#' + $this._sKeyDateFrom).val(),
+        jQuery.extend({}, {
+            object: $('#' + this._sKeyObjects).val(),
+            action: 'load_data_by_interval',
+            from: $('#' + $this._sKeyDateFrom).val(),
             to: $('#' + $this._sKeyDateTo).val()
-    	},
+    	}, this._oRequestParams),
     	function(oData) {
-    		$('#' + $this._sKeyObjects).attr('disabled', false);
+            $('#' + $this._sKeyObjects).attr('disabled', false);
 
             bx_loading(oGraphWrp, false);
 
             if(oData.error != undefined) {
             	if($this._oChart)
-                	$this._oChart.destroy();
+                    $this._oChart.destroy();
 
             	oGraphErr.html(oData.error).show();
                 return;
