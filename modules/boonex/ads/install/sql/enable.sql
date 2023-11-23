@@ -93,6 +93,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_ads_view_entry_comments', 1, 'bx_ads', '_bx_ads_page_block_title_entry_comments', '_bx_ads_page_block_title_entry_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:15:"entity_comments";}', 0, 0, 1);
 
+-- PAGE: view entry promotion
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_view_entry_promotion', '_bx_ads_page_title_sys_view_entry_promotion', '_bx_ads_page_title_view_entry_promotion', 'bx_ads', 2, 2147483647, 1, 'view-ad-promotion', '', '', '', '', 0, 1, 0, 'BxAdsPageEntry', 'modules/boonex/ads/classes/BxAdsPageEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_ads_view_entry_promotion', 1, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_growth', '_bx_ads_page_block_title_entry_promotion_growth', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:23:"entity_promotion_growth";}', 0, 0, 1),
+('bx_ads_view_entry_promotion', 2, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_summary', '_bx_ads_page_block_title_entry_promotion_summary', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:24:"entity_promotion_summary";}', 0, 0, 1);
+
 -- PAGE: popular entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_ads_popular', '_bx_ads_page_title_sys_entries_popular', '_bx_ads_page_title_entries_popular', 'bx_ads', 5, 2147483647, 1, 'ads-popular', 'page.php?i=ads-popular', '', '', '', 0, 1, 0, 'BxAdsPageBrowse', 'modules/boonex/ads/classes/BxAdsPageBrowse.php');
@@ -276,6 +284,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '_bx_ads_menu_item_title_view_offers', 'page.php?i=view-ad-offers&id={content_id}', '', '', 'handshake', '', 2147483647, 1, 0, 17),
 ('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
 ('bx_ads_view', 'bx_ads', 'edit-ad-budget', '_bx_ads_menu_item_title_system_edit_entry_budget', '_bx_ads_menu_item_title_edit_entry_budget', 'page.php?i=edit-ad-budget&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 21),
+('bx_ads_view', 'bx_ads', 'view-ad-promotion', '_bx_ads_menu_item_title_system_view_promotion', '_bx_ads_menu_item_title_view_promotion', 'page.php?i=view-ad-promotion&id={content_id}', '', '', 'chart-pie', '', 2147483647, 1, 0, 22),
 ('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30),
 ('bx_ads_view', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this,  ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 40),
 ('bx_ads_view', 'bx_ads', 'shipped', '_bx_ads_menu_item_title_system_mark_shipped', '_bx_ads_menu_item_title_mark_shipped', 'javascript:void(0)', 'javascript:{js_object}.shipped(this, {content_id})', '', 'truck', '', 2147483647, 1, 0, 50),
@@ -295,6 +304,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view_actions', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 17),
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad-budget', '_bx_ads_menu_item_title_system_edit_entry_budget', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 21),
+('bx_ads_view_actions', 'bx_ads', 'view-ad-promotion', '_bx_ads_menu_item_title_system_view_promotion', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
 ('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_ads_view_actions', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 40),
 ('bx_ads_view_actions', 'bx_ads', 'shipped', '_bx_ads_menu_item_title_system_mark_shipped', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
@@ -348,7 +358,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_ads_view_submenu', 'bx_ads', 'view-ad', '_bx_ads_menu_item_title_system_view_entry', '_bx_ads_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-ad&id={content_id}', '', '', '', '', 2147483647, 0, 0, 1),
-('bx_ads_view_submenu', 'bx_ads', 'view-ad-comments', '_bx_ads_menu_item_title_system_view_entry_comments', '_bx_ads_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-ad-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 2);
+('bx_ads_view_submenu', 'bx_ads', 'view-ad-comments', '_bx_ads_menu_item_title_system_view_entry_comments', '_bx_ads_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-ad-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 2),
+('bx_ads_view_submenu', 'bx_ads', 'view-ad-promotion', '_bx_ads_menu_item_title_system_view_entry_promotion', '_bx_ads_menu_item_title_view_entry_submenu_promotion', 'page.php?i=view-ad-promotion&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3);
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -525,6 +536,10 @@ SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`)
 INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
 ('bx_ads_growth', '_bx_ads_chart_growth', 'bx_ads_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
 ('bx_ads_growth_speed', '_bx_ads_chart_growth_speed', 'bx_ads_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
+
+INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
+('bx_ads_promotion_growth', '_bx_ads_chart_promotion_growth', 'bx_ads_promo_tracker', 'date', '', '', 'SELECT {field_date_formatted} AS `period`, SUM(`impressions`) AS {object} FROM {table} WHERE 1 AND `entry_id`=''{content_id}'' {where_inteval} GROUP BY `period` ORDER BY {field_date} ASC', 0, 0, 'BxAdsChartGrowth', 'modules/boonex/ads/classes/BxAdsChartGrowth.php'),
+('bx_ads_promotion_growth_speed', '_bx_ads_chart_promotion_growth_speed', 'bx_ads_promo_tracker', 'date', '', '', 'SELECT {field_date_formatted} AS `period`, SUM(`impressions`) AS {object} FROM {table} WHERE 1 AND `entry_id`=''{content_id}'' {where_inteval} GROUP BY `period` ORDER BY {field_date} ASC', 0, 0, 'BxAdsChartGrowthSpeed', 'modules/boonex/ads/classes/BxAdsChartGrowthSpeed.php');
 
 
 -- GRIDS: moderation tools

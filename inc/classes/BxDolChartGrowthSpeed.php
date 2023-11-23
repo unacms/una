@@ -18,17 +18,17 @@ class BxDolChartGrowthSpeed extends BxDolChart
     protected function _getDataByInterval($iFrom, $iTo)
     {
         $sFieldDate = $this->_aObject['field_date_dt'] ? $this->_aObject['field_date_dt'] : $this->_aObject['field_date_ts'];
-        $aMarkers = array (
-        	'field_date' => "`" . $sFieldDate . "`",
+        $this->addMarkers([
+            'field_date' => "`" . $sFieldDate . "`",
             'field_date_formatted' => "DATE_FORMAT(" . ($this->_aObject['field_date_dt'] ? "`{$this->_aObject['field_date_dt']}`" : "FROM_UNIXTIME(`{$this->_aObject['field_date_ts']}`)") . ", '%Y-%m-%d')",
             'object' => $this->_aObject['object'],
             'table' => "`{$this->_aObject['table']}`",
             'where_inteval' => "AND `" . $this->_aObject['table'] . "`.`" . $sFieldDate . "` >= :from AND `" . $this->_aObject['table'] . "`.`" . $sFieldDate . "` <= :to"
-        );
+        ]);
 
         // build query
         $sQuery = $this->_getQuery();
-        $sQuery = bx_replace_markers($sQuery, $aMarkers);
+        $sQuery = $this->replaceMarkers($sQuery);
 
         $aBindings = array(
             'from' => $this->_aObject['field_date_dt'] ? $this->_getDate($iFrom) . ' 00:00:00' : $iFrom,

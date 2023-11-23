@@ -23,6 +23,109 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $this->aMethodsToCallAddJsCss[] = 'categories';
     }
 
+    public function entryPromotionGrowth($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sDateFrom = date('Y-m-d', time() - 30*24*60*60);
+        $sDateTo = date('Y-m-d', time());
+
+        $aForm = [
+            'form_attrs' => [
+                'id' => 'bx_chart_controls',
+                'action' => ''
+            ],
+            'inputs' => [
+                'object' => [
+                    'type' => 'select',
+                    'name' => 'object',
+                    'caption' => _t('_sys_chart_growth_object'),
+                    'info' => '',
+                    'value' => '',
+                    'values' => [],
+                    'required' => '0',
+                    'attrs' => [
+                        'id' => 'bx_chart_growth_objects',
+                        'onchange' => 'oBxDolChartGrowth.loadData()'
+                    ],
+                ],
+                'date_from' => [
+                    'type' => 'datepicker',
+                    'name' => 'date_from',
+                    'caption' => _t('_sys_chart_growth_date_from'),
+                    'info' => '',
+                    'value' => $sDateFrom,
+                    'values' => [],
+                    'required' => '0',
+                    'attrs' => [
+                        'id' => 'bx_chart_growth_date_from',
+                        'onchange' => 'oBxDolChartGrowth.loadData()'
+                    ],
+                ],
+                'date_to' => [
+                    'type' => 'datepicker',
+                    'name' => 'date_to',
+                    'caption' => _t('_sys_chart_growth_date_to'),
+                    'info' => '',
+                    'value' => $sDateTo,
+                    'values' => [],
+                    'required' => '0',
+                    'attrs' => [
+                        'id' => 'bx_chart_growth_date_to',
+                        'onchange' => 'oBxDolChartGrowth.loadData()'
+                    ],
+                ]
+            ]
+        ];
+
+        foreach($CNF['OBJECT_PROMOTION_CHARTS'] as $sChart) {
+            $aChart = BxDolChartQuery::getChartObject($sChart);
+            if(!$aChart)
+                continue;
+
+            $aForm['inputs']['object']['values'][] = ['key' => $sChart, 'value' => _t($aChart['title'])];
+        }
+
+        $oForm = new BxTemplFormView($aForm);
+
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addJs(['chart.min.js', 'BxDolChartGrowth.js']);
+        $oTemplate->addCss(['chart.css']);
+
+        return $oTemplate->parseHtmlByName('chart_growth.html', [
+            'controls' => $oForm->getCode(),
+            'date_from' => $sDateFrom,
+            'date_to' => $sDateTo,
+            'request_params' => json_encode([
+                'content_id' => $aContentInfo[$CNF['FIELD_ID']]
+            ]),
+        ]);
+    }
+    
+    public function entryPromotionSummary($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aTmplVarsDataLabels = $aTmplVarsDataSet = [];
+        foreach(['impressions', 'clicks'] as $sItem) {
+            $sTitle = bx_html_attribute(_t($CNF['T']['chart_label_' . $sItem]));
+            $iValue = (int)$aContentInfo[$sItem];
+
+            $aTmplVarsDataLabels[] = $sTitle . ' - ' . $iValue;
+            $aTmplVarsDataSet['data'][] = $iValue;
+            $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
+        }
+
+        $this->addJs(['chart.min.js']);
+        $this->addCss(['chart.css']);
+        return $this->parseHtmlByName('chart_stats.html', [
+            'chart_data' => json_encode([
+                'labels' => $aTmplVarsDataLabels,
+                'datasets' => [$aTmplVarsDataSet]
+            ])
+        ]);
+    }
+
     public function entryOfferAccepted($iUserId, $aContent, $aOffer)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -99,9 +202,31 @@ class BxAdsTemplate extends BxBaseModTextTemplate
 
     protected function getUnit($aData, $aParams = [])
     {
-        return array_merge(parent::getUnit($aData, $aParams), [
-            'js_object' => $this->_oConfig->getJsObject('main')
-        ]);
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::getUnit($aData, $aParams);
+
+        if($this->_oConfig->isPromotion()) {
+            $sJsObject = $this->_oConfig->getJsObject('main');
+
+            $aResult = array_merge($aResult, [
+                'content_url' => 'javascript:void(0)',
+                'bx_if:show_onclick' => [
+                    'condition' => true,
+                    'content' => [
+                        'content_onclick' => 'return ' . $sJsObject . '.registerClick(this, ' . $aData[$CNF['FIELD_ID']] . ')'
+                    ]
+                ],
+                'bx_if:show_tracker' => [
+                    'condition' => true,
+                    'content' => [
+                        'js_object' => $sJsObject,
+                        'id' => $aData[$CNF['FIELD_ID']]
+                    ]
+                ],
+            ]);
+        }
+        return $aResult;
     }
 
     /**

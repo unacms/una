@@ -66,7 +66,13 @@ class BxBaseModTextPageAuthor extends BxTemplPage
         $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name 
         $this->addMarkers(array('profile_link' => $this->_oProfile->getUrl())); // profile link
     }
+    
+    public function getCode()
+    {
+        BxDolTemplate::getInstance()->setPageUrl('page.php?i=' . $this->_aObject['uri'] . '&profile_id=' . $this->_oProfile->id());
 
+        return parent::getCode();
+    }
 }
 
 /** @} */

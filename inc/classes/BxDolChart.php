@@ -14,6 +14,7 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
 
     protected $_sObject;
     protected $_aObject;
+    protected $_aMarkers;
 
     protected $_sStatusActive;
 
@@ -29,6 +30,7 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_sObject = $aObject['object'];
         $this->_aObject = $aObject;
+        $this->_aMarkers = [];
 
         $this->_sStatusActive = 'active';
     }
@@ -60,20 +62,25 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
 
     public function actionLoadDataByInterval()
     {
-        $mixedResult = $this->checkAllowedView();
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return array('error' => $mixedResult);
-
         $iFrom = $this->_getTimestamp(bx_get('from'));
         $iTo = $this->_getTimestamp(bx_get('to'), true);
+        return echoJson($this->getDataByInterval($iFrom, $iTo));
+    }
+
+    public function getDataByInterval($iFrom, $iTo)
+    {
         if(!$iFrom || !$iTo)
-            return echoJson(array('error' => _t('_Error Occured')));
+            return ['error' => _t('_Error Occured')];
+
+        $mixedResult = $this->checkAllowedView();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return ['error' => $mixedResult];
 
         $aData = $this->_getDataByInterval($iFrom, $iTo);
         if(empty($aData) || !is_array($aData))
-            return echoJson(array('error' => _t('_Empty')));
+            return ['error' => _t('_Empty')];
 
-        return echoJson(array (
+        return [
             'title' => _t($this->_aObject['title']),
             'data' => $aData,
             'hide_date_range' => $this->_aObject['field_date_dt'] || $this->_aObject['field_date_ts'] ? false : true,
@@ -81,12 +88,27 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
             'column_count' => $this->_aObject['column_count'] >= 0 ? $this->_aObject['column_count'] : false,
             'type' => $this->_aObject['type'] ? $this->_aObject['type'] : 'line',
             'options' => $this->_aObject['options'] ? unserialize($this->_aObject['options']) : false,
-        ));
+        ];
     }
 
     public function checkAllowedView($isPerformAction = false)
     {
         return BxDolService::call('system', 'check_allowed_view', array($isPerformAction), 'TemplChartServices');
+    }
+
+    public function addMarkers($a)
+    {
+        if(empty($a) || !is_array($a))
+            return false;
+
+        $this->_aMarkers = array_merge($this->_aMarkers, $a);
+
+        return true;
+    }
+
+    public function replaceMarkers($s)
+    {
+        return bx_replace_markers($s, $this->_aMarkers);
     }
 
     protected function _getQuery()

@@ -9,6 +9,9 @@
 
 class BxBaseCmtsPageView extends BxTemplPage
 {
+    protected $_oCmts;
+    protected $_iCmtId;
+
     public function __construct($aObject, $oTemplate)
     {
         parent::__construct($aObject, $oTemplate);
@@ -20,17 +23,17 @@ class BxBaseCmtsPageView extends BxTemplPage
         $iObjectId = $iObjectId !== false ? bx_process_input($iObjectId, BX_DATA_INT) : 0;
 
         $iCommentId = bx_get('cmt_id');
-        $iCommentId = $iCommentId !== false ? bx_process_input($iCommentId, BX_DATA_INT) : 0;
+        $this->_iCmtId = $iCommentId !== false ? bx_process_input($iCommentId, BX_DATA_INT) : 0;
 
         if(!$sSystem || !$iObjectId)
             return;
 
-        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
-        if(!$oCmts)
+        $this->_oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
+        if(!$this->_oCmts)
             return;
 
-        $sObjectTitle = bx_process_output(strip_tags($oCmts->getObjectTitle($iObjectId)));
-        $sObjectUrl = $oCmts->getBaseUrl();
+        $sObjectTitle = bx_process_output(strip_tags($this->_oCmts->getObjectTitle($iObjectId)));
+        $sObjectUrl = $this->_oCmts->getBaseUrl();
 
         $this->addMarkers(array(
             'system' => $sSystem,
@@ -39,6 +42,13 @@ class BxBaseCmtsPageView extends BxTemplPage
             'object_url' => $sObjectUrl,
             'comment_id' => $iCommentId
         ));
+    }
+
+    public function getCode()
+    {
+        BxDolTemplate::getInstance()->setPageUrl($this->_oCmts->getViewUrl($this->_iCmtId));
+
+        return parent::getCode();
     }
 }
 

@@ -323,7 +323,13 @@ class BxAdsModule extends BxBaseModTextModule
     
     public function serviceRegisterClick($iId)
     {
-        return ['code' => $this->_oDb->updatePromotionTracker($iId, 'clicks') ? 0 : 1];
+        if(!$this->_oDb->updatePromotionTracker($iId, 'clicks'))
+            return ['code' => 1];
+
+        return [
+            'code' => 0,
+            'redirect' => $this->_oConfig->getViewEntryUrl($iId)
+        ];
     }
 
     public function serviceCheckName($sTitle, $iId = 0)
@@ -543,6 +549,16 @@ class BxAdsModule extends BxBaseModTextModule
             return false;
 
         return $oCmts->getRatingBlock(array('in_designbox' => false));
+    }
+
+    public function serviceEntityPromotionGrowth($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryPromotionGrowth', $iContentId);
+    }
+
+    public function serviceEntityPromotionSummary($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryPromotionSummary', $iContentId);
     }
 
     /**

@@ -107,11 +107,12 @@ class BxBaseChartServices extends BxDol
         $oTemplate->addJs(array('chart.min.js', 'BxDolChartGrowth.js'));
         $oTemplate->addCss(array('chart.css'));
 
-        return $oTemplate->parseHtmlByName('chart_growth.html', array(
+        return $oTemplate->parseHtmlByName('chart_growth.html', [
             'date_from' => $sDateFrom,
             'date_to' => $sDateTo,
+            'request_params' => json_encode([]),
             'controls' => $oForm->getCode()
-        ));
+        ]);
     }
 
     /**
@@ -169,6 +170,15 @@ class BxBaseChartServices extends BxDol
                 'datasets' => array($aTmplVarsDataSet)
             ))
         ));
+    }
+
+    public function serviceGetDataByInterval($sObject, $iFrom, $iTo)
+    {
+        $oChart = BxDolChart::getObjectInstance($sObject);
+        if($oChart === false)
+            return [];
+
+        return $oChart->getDataByInterval($iFrom, $iTo);
     }
 }
 

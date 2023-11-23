@@ -16,9 +16,11 @@ class BxAdsConfig extends BxBaseModTextConfig
     protected $_oDb;
 
     protected $_bAuction;
-    protected $_bPromotion;
 
     protected $_sSource;
+
+    protected $_bPromotion;
+    protected $_fPromotionCpm;
 
     public function __construct($aModule)
     {
@@ -26,8 +28,11 @@ class BxAdsConfig extends BxBaseModTextConfig
 
         $aMenuItems2Methods = array (
             'approve' => 'checkAllowedApprove',
+
+            'view-ad-promotion' => 'checkAllowedEdit',
             'edit-ad' => 'checkAllowedEdit',
             'edit-ad-budget' => 'checkAllowedEdit',
+
             'delete-ad' => 'checkAllowedDelete',
         );
 
@@ -210,6 +215,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_GRID_OFFERS' => 'bx_ads_offers',
             'OBJECT_GRID_OFFERS_ALL' => 'bx_ads_offers_all',
             'OBJECT_UPLOADERS' => array('bx_ads_simple', 'bx_ads_html5'),
+            'OBJECT_PROMOTION_CHARTS' => ['bx_ads_promotion_growth', 'bx_ads_promotion_growth_speed'],
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -217,6 +223,7 @@ class BxAdsConfig extends BxBaseModTextConfig
                     'create-ad' => 'checkAllowedAdd',
                 ),
                 'bx_ads_view' => $aMenuItems2Methods,
+                'bx_ads_view_submenu' => $aMenuItems2Methods
             ),
 
             // informer messages
@@ -299,6 +306,8 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'txt_display_view' => '_bx_ads_txt_display_title_view',
                 'txt_cd_ct_product' => '_bx_ads_txt_cd_ct_product',
                 'txt_cd_ct_promotion' => '_bx_ads_txt_cd_ct_promotion',
+                'chart_label_impressions' => '_bx_ads_chart_label_impressions',
+                'chart_label_clicks' => '_bx_ads_chart_label_clicks'
             ),
         ));
         
@@ -333,6 +342,9 @@ class BxAdsConfig extends BxBaseModTextConfig
         ]);
 
         $this->_bAttachmentsInTimeline = true;
+
+        $this->_bPromotion = false;
+        $this->_fPromotionCpm = 0;
     }
 
     public function init(&$oDb)
@@ -340,9 +352,13 @@ class BxAdsConfig extends BxBaseModTextConfig
         $this->_oDb = &$oDb;
 
         $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
-        $this->_bPromotion = getParam($this->CNF['PARAM_USE_PROMOTION']) == 'on';
 
         $this->_sSource = getParam($this->CNF['PARAM_SOURCE']);
+
+        $this->_bPromotion = getParam($this->CNF['PARAM_USE_PROMOTION']) == 'on';
+        if($this->_bPromotion) {
+            $this->_fPromotionCpm = (float)getParam($this->CNF['PARAM_PROMOTION_CPM']);
+        }
     }
 
     public function getActiveStatus()
@@ -373,6 +389,16 @@ class BxAdsConfig extends BxBaseModTextConfig
     public function getEntryName($sName)
     {
         return uriGenerate($sName, $this->CNF['TABLE_ENTRIES'], $this->CNF['FIELD_NAME'], ['lowercase' => false]);
+    }
+
+    public function getDay($iTimestamp = null)
+    {
+        return mktime(0, 0, 0, date("m", $iTimestamp), date("d", $iTimestamp), date("Y", $iTimestamp));
+    }
+
+    public function getPromotionCpm()
+    {
+        return $this->_fPromotionCpm;
     }
 }
 

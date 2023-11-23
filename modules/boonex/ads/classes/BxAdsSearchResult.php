@@ -130,7 +130,10 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
         $this->processReplaceableMarkers($oProfileAuthor);
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
-        $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);
+        if($this->oModule->_oConfig->isPromotion())
+            $this->addConditionsForPromotion($CNF, $oProfileAuthor, $sMode, $aParams);
+
+        $this->addCustomConditions($CNF, $oProfileAuthor, $sMode, $aParams);        
     }
 
     function displayResultBlock()
@@ -160,6 +163,33 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
                 break;
         }
         return $aSql;
+    }
+
+    protected function addConditionsForPromotion($CNF, $oProfile, $sMode, $aParams)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $iDay = $this->oModule->_oConfig->getDay();
+        $fPromotionCpm = $this->oModule->_oConfig->getPromotionCpm();
+
+        if(!isset($this->aCurrent['join']))
+            $this->aCurrent['join'] = [];
+
+        $this->aCurrent['join'][] = [
+            'type' => 'LEFT',
+            'table' => $CNF['TABLE_PROMO_TRACKER'],
+            'mainField' => $CNF['FIELD_ID'],
+            'on_sql' => $this->oModule->_oDb->prepareAsString("`{$CNF['TABLE_PROMO_TRACKER']}`.`entry_id`=`{$this->aCurrent['table']}`.`{$CNF['FIELD_ID']}` AND `{$CNF['TABLE_PROMO_TRACKER']}`.`date`=?", $iDay),
+            'joinFields' => ['impressions', 'clicks'],
+        ];
+
+        $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], [
+            'budget_total' => ['value' => 0, 'field' => 'budget_total', 'operator' => '<>'],
+        ]);
+
+        $this->aCurrent['restriction_sql'] = "";
+        $this->aCurrent['restriction_sql'] .= " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_TOTAL']}` > ({$fPromotionCpm} * `{$this->aCurrent['table']}`.`impressions`)/1000";
+        $this->aCurrent['restriction_sql'] .= " AND (ISNULL(`{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`) OR `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_DAILY']}` > ({$fPromotionCpm} * `{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`)/1000)";
     }
 }
 

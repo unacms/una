@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `bx_ads_entries` (
   `location` text NOT NULL,
   `budget_total` float NOT NULL default '0',
   `budget_daily` float NOT NULL default '0',
+  `impressions` int(11) unsigned NOT NULL default '0',
+  `clicks` int(11) unsigned NOT NULL default '0',
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

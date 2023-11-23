@@ -744,6 +744,11 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$oGrid)
             return '';
 
+        if($this->_bIsApi)
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+
         $CNF = &$this->_oConfig->CNF;
 
         $mixedMenu = '';
