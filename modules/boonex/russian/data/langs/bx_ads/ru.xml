@@ -201,8 +201,12 @@
     <string name="_bx_ads_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_ads_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_ads_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
-	<string name="_bx_ads_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
+    <string name="_bx_ads_page_block_title_entry_reports"><![CDATA[Жалобы]]></string>
     <string name="_bx_ads_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
+    <string name="_bx_ads_page_block_title_sys_entry_promotion_growth"><![CDATA[Реклама (Развитие)]]></string>
+    <string name="_bx_ads_page_block_title_entry_promotion_growth"><![CDATA[Реклама <a href="{entry_link}">{title}</a> объявления]]></string>
+    <string name="_bx_ads_page_block_title_sys_entry_promotion_summary"><![CDATA[Реклама (Сводка)]]></string>
+    <string name="_bx_ads_page_block_title_entry_promotion_summary"><![CDATA[Сводка]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews"><![CDATA[Обзоры]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_link"><![CDATA[Обзоры к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_rating"><![CDATA[Рейтинг]]></string>
@@ -230,6 +234,8 @@
     <string name="_bx_ads_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
     <string name="_bx_ads_page_title_sys_view_entry_comments"><![CDATA[Комментарии к объявлению]]></string>
     <string name="_bx_ads_page_title_view_entry_comments"><![CDATA[Комментарии к  {title}]]></string>
+    <string name="_bx_ads_page_title_sys_view_entry_promotion"><![CDATA[Реклама объявления]]></string>
+    <string name="_bx_ads_page_title_view_entry_promotion"><![CDATA[Реклама {title} объявления]]></string>
     <string name="_bx_ads_page_title_sys_entries_of_author"><![CDATA[Объявления автора]]></string>
     <string name="_bx_ads_page_title_entries_of_author"><![CDATA[{display_name} - Объявления]]></string>
     <string name="_bx_ads_page_title_sys_entries_in_context"><![CDATA[Объявления в контексте]]></string>
@@ -318,6 +324,8 @@
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry_budget"><![CDATA[Редактировать бюджет]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry_budget"><![CDATA[Редактировать бюджет]]></string>
+    <string name="_bx_ads_menu_item_title_system_view_promotion"><![CDATA[Реклама]]></string>
+    <string name="_bx_ads_menu_item_title_view_promotion"><![CDATA[Реклама]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Удалить]]></string>
     <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Отметить как 'отправлен']]></string>
@@ -340,7 +348,9 @@
     <string name="_bx_ads_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть объявление - Подменю]]></string>
     <string name="_bx_ads_menu_item_title_view_entry_submenu_entry"><![CDATA[Объявление]]></string>
     <string name="_bx_ads_menu_item_title_view_entry_submenu_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_ads_menu_item_title_view_entry_submenu_promotion"><![CDATA[Реклама]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к объявлению]]></string>
+    <string name="_bx_ads_menu_item_title_system_view_entry_promotion"><![CDATA[Реклама объявления]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entries_author"><![CDATA[Объявления]]></string>
     <string name="_bx_ads_menu_item_title_view_entries_author"><![CDATA[Объявления]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entries_in_context"><![CDATA[Объявления]]></string>
@@ -427,6 +437,10 @@
 
     <string name="_bx_ads_chart_growth"><![CDATA[Объявления: Развитие]]></string>
     <string name="_bx_ads_chart_growth_speed"><![CDATA[Объявления: Скорость развития]]></string>
+    <string name="_bx_ads_chart_promotion_growth"><![CDATA[Реклама объявления: Развитие]]></string>
+    <string name="_bx_ads_chart_promotion_growth_speed"><![CDATA[Реклама объявления: Скорость развития]]></string>
+    <string name="_bx_ads_chart_label_impressions"><![CDATA[Показы]]></string>
+    <string name="_bx_ads_chart_label_clicks"><![CDATA[Клики]]></string>
 
     <string name="_bx_ads_search_extended"><![CDATA[Поиск объявлений]]></string>
     <string name="_bx_ads_search_extended_cmts"><![CDATA[Поиск комментариев к объявлениям]]></string>

@@ -201,8 +201,12 @@
     <string name="_bx_ads_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_ads_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_ads_page_block_title_entry_comments"><![CDATA[Comments]]></string>
-	<string name="_bx_ads_page_block_title_entry_reports"><![CDATA[Reports]]></string>
+    <string name="_bx_ads_page_block_title_entry_reports"><![CDATA[Reports]]></string>
     <string name="_bx_ads_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
+    <string name="_bx_ads_page_block_title_sys_entry_promotion_growth"><![CDATA[Promotion (Growth)]]></string>
+    <string name="_bx_ads_page_block_title_entry_promotion_growth"><![CDATA[Promotion for <a href="{entry_link}">{title}</a>]]></string>
+    <string name="_bx_ads_page_block_title_sys_entry_promotion_summary"><![CDATA[Promotion (Summary)]]></string>
+    <string name="_bx_ads_page_block_title_entry_promotion_summary"><![CDATA[Summary]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews"><![CDATA[Reviews]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_link"><![CDATA[Reviews to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_rating"><![CDATA[Rating]]></string>
@@ -230,6 +234,8 @@
     <string name="_bx_ads_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_ads_page_title_sys_view_entry_comments"><![CDATA[Ad Comments]]></string>
     <string name="_bx_ads_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
+    <string name="_bx_ads_page_title_sys_view_entry_promotion"><![CDATA[Ad Promotion]]></string>
+    <string name="_bx_ads_page_title_view_entry_promotion"><![CDATA[Promotion for {title}]]></string>
     <string name="_bx_ads_page_title_sys_entries_of_author"><![CDATA[Ads of author]]></string>
     <string name="_bx_ads_page_title_entries_of_author"><![CDATA[Ads by {display_name}]]></string>
     <string name="_bx_ads_page_title_sys_entries_in_context"><![CDATA[Ads in context]]></string>
@@ -318,6 +324,8 @@
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry_budget"><![CDATA[Edit budget]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry_budget"><![CDATA[Edit budget]]></string>
+    <string name="_bx_ads_menu_item_title_system_view_promotion"><![CDATA[Promotion]]></string>
+    <string name="_bx_ads_menu_item_title_view_promotion"><![CDATA[Promotion]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_system_mark_shipped"><![CDATA[Mark as shipped]]></string>
@@ -340,7 +348,9 @@
     <string name="_bx_ads_menu_set_title_view_entry_submenu"><![CDATA[View Ad Submenu]]></string>
     <string name="_bx_ads_menu_item_title_view_entry_submenu_entry"><![CDATA[Ad]]></string>
     <string name="_bx_ads_menu_item_title_view_entry_submenu_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_ads_menu_item_title_view_entry_submenu_promotion"><![CDATA[Promotion]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entry_comments"><![CDATA[Ad Comments]]></string>
+    <string name="_bx_ads_menu_item_title_system_view_entry_promotion"><![CDATA[Ad Promotion]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entries_author"><![CDATA[Ads]]></string>
     <string name="_bx_ads_menu_item_title_view_entries_author"><![CDATA[Ads]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entries_in_context"><![CDATA[Ads]]></string>
@@ -427,6 +437,10 @@
 
     <string name="_bx_ads_chart_growth"><![CDATA[Ads: Growth]]></string>
     <string name="_bx_ads_chart_growth_speed"><![CDATA[Ads: Growth Speed]]></string>
+    <string name="_bx_ads_chart_promotion_growth"><![CDATA[Ad Promotion: Growth]]></string>
+    <string name="_bx_ads_chart_promotion_growth_speed"><![CDATA[Ad Promotion: Growth Speed]]></string>
+    <string name="_bx_ads_chart_label_impressions"><![CDATA[Impressions]]></string>
+    <string name="_bx_ads_chart_label_clicks"><![CDATA[Clicks]]></string>
 
     <string name="_bx_ads_search_extended"><![CDATA[Ads Search]]></string>
     <string name="_bx_ads_search_extended_cmts"><![CDATA[Ads Comments Search]]></string>

@@ -176,7 +176,7 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
             $this->aCurrent['join'] = [];
 
         $this->aCurrent['join'][] = [
-            'type' => 'INNER',
+            'type' => 'LEFT',
             'table' => $CNF['TABLE_PROMO_TRACKER'],
             'mainField' => $CNF['FIELD_ID'],
             'on_sql' => $this->oModule->_oDb->prepareAsString("`{$CNF['TABLE_PROMO_TRACKER']}`.`entry_id`=`{$this->aCurrent['table']}`.`{$CNF['FIELD_ID']}` AND `{$CNF['TABLE_PROMO_TRACKER']}`.`date`=?", $iDay),
@@ -189,7 +189,7 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
 
         $this->aCurrent['restriction_sql'] = "";
         $this->aCurrent['restriction_sql'] .= " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_TOTAL']}` > ({$fPromotionCpm} * `{$this->aCurrent['table']}`.`impressions`)/1000";
-        $this->aCurrent['restriction_sql'] .= " AND `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_DAILY']}` > ({$fPromotionCpm} * `{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`)/1000";
+        $this->aCurrent['restriction_sql'] .= " AND (ISNULL(`{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`) OR `{$this->aCurrent['table']}`.`{$CNF['FIELD_BUDGET_DAILY']}` > ({$fPromotionCpm} * `{$CNF['TABLE_PROMO_TRACKER']}`.`impressions`)/1000)";
     }
 }
 

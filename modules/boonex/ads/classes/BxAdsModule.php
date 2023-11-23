@@ -551,6 +551,16 @@ class BxAdsModule extends BxBaseModTextModule
         return $oCmts->getRatingBlock(array('in_designbox' => false));
     }
 
+    public function serviceEntityPromotionGrowth($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryPromotionGrowth', $iContentId);
+    }
+
+    public function serviceEntityPromotionSummary($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryPromotionSummary', $iContentId);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_ads Ads 
