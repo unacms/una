@@ -101,6 +101,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'GetStatBlock' => 'BxBaseDashboardServices',
             
             'PerfomActionApi' => 'BxBaseServiceGrid',
+            
+            'GetDataByInterval' => 'BxBaseChartServices',
         );
     }
 
