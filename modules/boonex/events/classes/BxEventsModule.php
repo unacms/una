@@ -105,6 +105,9 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             $aParams = json_decode($aParams, true);
             if(!empty($aParams['params']))
                 $aParams = $aParams['params'];
+            
+             if (isset($aParams['profile_id']) && $aParams['profile_id'] == '{profile_id}')
+                $aParams['profile_id'] =  bx_get_logged_profile_id();
         }
 
         $sModule = $this->getName();
@@ -149,6 +152,23 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
                     'where' => "AND `sys_profiles`.`id` IN (" . $this->_oDb->implode_escape($aEventsJoined) . ")"
                 ];
                 break;
+                
+            case 'followed':
+                $iProfileId = !empty($aParams['profile_id']) ? (int)$aParams['profile_id'] : 0;
+
+                $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+                if(!$oConnection)
+                    return [];
+
+                $aEventsFollowed = $oConnection->getConnectedContent($iProfileId, false);
+                if(empty($aEventsFollowed) || !is_array($aEventsFollowed))
+                    return [];
+
+                $aSQLPart = [
+                    'join' => "INNER JOIN `sys_profiles` ON `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}`=`sys_profiles`.`content_id` AND `sys_profiles`.`type`='{$sModule}'",
+                    'where' => "AND `sys_profiles`.`id` IN (" . $this->_oDb->implode_escape($aEventsFollowed) . ")"
+                ];
+                break;
 
             case 'context':
                 $iContextId = !empty($aParams['context_id']) ? (int)$aParams['context_id'] : 0;
@@ -164,7 +184,11 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
 
         // get entries
         $aEntries = $this->_oDb->getEntriesByDate($sStart, $sEnd, $iContentId, $aSQLPart);
-
+        
+        foreach($aEntries as &$aEntry){
+            $aEntry['cover'] = $this->serviceGetCover($aEntry['id']);
+        }
+        
         bx_alert($this->getName(), 'calendar_data', 0, false, array(
             'event' => $iContentId,
             'context_id' => $iContextId,
@@ -561,8 +585,16 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $CNF = $this->_oConfig->CNF;
 
         $oDateStart = date_create('@' . $aContentInfo['date_start']);
-        if ($oDateStart)
+        if ($oDateStart){
             $oDateStart->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
+            $a['content']['date_start'] = $aContentInfo['date_start'];
+        }
+        
+        $oDateEnd = date_create('@' . $aContentInfo['date_end']);
+        if ($oDateEnd){
+            $oDateEnd->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
+            $a['content']['date_end'] = $aContentInfo['date_end'];
+        }
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $sLocationString = $oMetatags ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : false;
