@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxTimelinePageViewItem extends BxBaseModTextPageAuthor
+class BxTimelinePageViewItem extends BxTemplPage
 {
     protected $_sModule;
     protected $_oModule;
