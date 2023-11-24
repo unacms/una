@@ -508,7 +508,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         
         return $sDisplayName;
     }
-
+    
+    public function serviceProfileSettings ($iContentId)
+    {
+        if (!$iContentId)
+            return false;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+        
+       if (isset($aContentInfo['settings']))
+           return json_decode($aContentInfo['settings']);
+    }
+    
+    public function serviceProfileSettingsSet ($iContentId, $oValue)
+    {
+        $CNF = $this->_oConfig->CNF;
+        $this->_oDb->updateEntriesBy(['settings' => json_encode($oValue)], [$CNF['FIELD_ID'] => $iContentId]);
+    }
+  
     public function serviceProfileCreateUrl ($bAbsolute = true)
     {
     	$CNF = $this->_oConfig->CNF;

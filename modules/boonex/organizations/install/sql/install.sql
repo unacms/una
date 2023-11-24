@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `allow_post_to` varchar(16) NOT NULL DEFAULT '5',
   `allow_contact_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
+  `settings` text NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
 );

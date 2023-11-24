@@ -964,6 +964,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'Repost' => '',
             'Delete' => '',
             'GetEditForm' => '',
+            'GetLiveUpdate' => ''
         ));
     }
 

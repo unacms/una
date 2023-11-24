@@ -1085,6 +1085,23 @@ class BxBaseServiceProfiles extends BxDol
         return BxDolContentFilter::getInstance()->isEnabled();
     }
 
+    public function serviceUpdateSettings($iProfileId = false, $sSettings)
+    {
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return '';
+        
+        $sModule = $oProfile->getModule();
+        
+        $sMethod = 'profile_settings_set';
+        echo $sModule.BxDolRequest::serviceExists($sModule, $sMethod).$sMethod;
+        if(!BxDolRequest::serviceExists($sModule, $sMethod))
+            return 'aaa';
+        echo $sMethod;
+        BxDolService::call($sModule, $sMethod, array($oProfile->getContentId(), json_decode( $sSettings)));
+    }
+
+    
     protected function _getIcon ($sIcon)
     {
         return BxTemplFunctions::getInstance()->getIcon($sIcon);

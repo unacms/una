@@ -495,6 +495,7 @@ class BxBasePage extends BxDolPage
                 'display_name' => $o->getDisplayName(),
                 'url' => bx_api_get_relative_url($o->getUrl()),
                 'avatar' => $o->getAvatar(),
+                'settings' => $o->getSettings(),
                 'info' => $o->getInfo(),
                 'notifications' => 0,
                 'cart' => 0,

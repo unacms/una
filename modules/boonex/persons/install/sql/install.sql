@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '5',
   `allow_contact_to` varchar(16) NOT NULL DEFAULT '3',
+  `settings` text NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`fullname`,`description`)
 );
