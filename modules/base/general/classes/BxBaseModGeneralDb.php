@@ -409,6 +409,16 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     {
         return $this->escape("%" . preg_replace('/\s+/', '%', $sValue) . "%");
     }
+    
+    public function getStatByProfile($iAuthorId)
+    {
+        $aBindings = array(
+            'author' => $iAuthorId
+        );
+        $CNF = &$this->_oConfig->CNF;
+        
+        return $this->getRow("SELECT COUNT(id) AS count, SUM(views) AS views, SUM(votes) AS votes, SUM(score) AS score FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `author`=:author", $aBindings);
+    }
 }
 
 /** @} */

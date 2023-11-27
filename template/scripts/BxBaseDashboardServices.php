@@ -69,7 +69,6 @@ class BxBaseDashboardServices extends BxDol
         $iV1 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($iProfileId, true);
         $iV2 =$bEmpty ? 0 :  BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($iProfileId, true, $iStartDate);
         $aData['friends'] = ['title' => 'Friends', 'key' => 'friends', 'type' => 'growth', 'url' =>'/friends', 'current' => $iV1, 'prev' => $iV2, 'growth' => $iV2 > 0 ? round(($iV1 - $iV2)/$iV2*100, 2) : 0];
-       // echo $iV1.'----'.$iV2;
         
         $iV1 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($iProfileId, false);
         $iV2 = $bEmpty ? 0 : BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($iProfileId, false, $iStartDate);
@@ -79,38 +78,40 @@ class BxBaseDashboardServices extends BxDol
         foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
             $CNF = &$oModule->_oConfig->CNF;
-            $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
-            $aIcon = explode($CNF['ICON'], ' ');
-            $aData[$aModule['name']] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $CNF['URL_HOME'], 'icon' => $CNF['ICON'], 'type' => 'simple'], $a);
+            if (method_exists($oModule->_oDb, 'getStatByProfile')){
+                $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
+                $aIcon = explode($CNF['ICON'], ' ');
+                $aData[$aModule['name']] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $CNF['URL_HOME'], 'icon' => $CNF['ICON'], 'type' => 'simple'], $a);
+            }
         }
         
         $aModules = bx_srv('system', 'get_modules_by_type', ['context']);
         foreach($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
             $CNF = &$oModule->_oConfig->CNF;
-            $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
-            $aIcon = explode($CNF['ICON'], ' ');
-            
-            $aContexts = $oModule->_oDb->getEntriesBy(['type' => 'author', 'author' => $iProfileId]);
-            $iMembers = 0;
-            if (!$bEmpty){
-                foreach($aContexts as $aContext) {
-                    $oProfile = BxDolProfile::getInstanceByContentAndType($aContext[$CNF['FIELD_ID']], $aModule['name']);
+            if (method_exists($oModule->_oDb, 'getStatByProfile')){
+                $a = $bEmpty ? [] : $oModule->_oDb->getStatByProfile($iProfileId);
+                $aIcon = explode($CNF['ICON'], ' ');
 
-                    $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
-                    if($oConnection){
-                        $iMembers += $oConnection->getConnectedInitiatorsCount($oProfile->id(), true);
+                $aContexts = $oModule->_oDb->getEntriesBy(['type' => 'author', 'author' => $iProfileId]);
+                $iMembers = 0;
+                if (!$bEmpty){
+                    foreach($aContexts as $aContext) {
+                        $oProfile = BxDolProfile::getInstanceByContentAndType($aContext[$CNF['FIELD_ID']], $aModule['name']);
+
+                        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+                        if($oConnection){
+                            $iMembers += $oConnection->getConnectedInitiatorsCount($oProfile->id(), true);
+                        }
                     }
-                }
-            }    
-            $aData[$aModule['name']] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $CNF['URL_HOME'], 'icon' => $CNF['ICON'], 'type' => 'simple', 'members' => $iMembers], $a);
+                }    
+                $aData[$aModule['name']] = array_merge(['key' => $aModule['name'], 'title' => $aModule['title'], 'url' => $CNF['URL_HOME'], 'icon' => $CNF['ICON'], 'type' => 'simple', 'members' => $iMembers], $a);
+            }
         }
         
         $bApi = bx_is_api();
         if($bApi)
             return [bx_api_get_block('dashboard_stat', $aData)];
-
-
     }
     
     public function serviceManageAudit()
