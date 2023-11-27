@@ -153,7 +153,7 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         return '';
     }   
     
-    protected function redirectAfterEdit($aContentInfo)
+    protected function redirectAfterEdit($aContentInfo, $sUrl = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         $sUrl = '';
