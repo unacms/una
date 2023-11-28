@@ -14,6 +14,7 @@
  */
 class BxAdsFormEntry extends BxBaseModTextFormEntry
 {
+    protected $_bSources;
     protected $_iCategory;
     protected $_sGhostTemplateCover = 'form_ghost_template_cover.html';
     protected $_bDisplayEditBudget;
@@ -25,16 +26,29 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
+
+        $this->_bSources = $this->_oModule->_oConfig->isSources();
         $this->_bDisplayEditBudget = $this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_BUDGET'];
 
         $this->_initCategoryFields((int)BxDolSession::getInstance()->getValue($this->aParams['display'] . '_category'));
 
-        if(isset($this->aInputs[$CNF['FIELD_SOURCE']]) && !$this->_oModule->_oConfig->getSource())
-            unset($this->aInputs[$CNF['FIELD_SOURCE']]);
+        if(!$this->_bSources) {
+            if(isset($this->aInputs[$CNF['FIELD_SOURCE_TYPE']]))
+                unset($this->aInputs[$CNF['FIELD_SOURCE_TYPE']]);
+
+            if(isset($this->aInputs[$CNF['FIELD_SOURCE']]))
+                unset($this->aInputs[$CNF['FIELD_SOURCE']]);
+        }
+
+        if(isset($this->aInputs[$CNF['FIELD_SOURCE_TYPE']], $this->aInputs[$CNF['FIELD_SOURCE']])) {
+            $aMask = ["javascript:%s.loadFromSource(this, '%s', '%s');", $sJsObject, $CNF['FIELD_SOURCE_TYPE'], $CNF['FIELD_SOURCE']];
+            $sOnBlur = call_user_func_array('sprintf', $aMask);
+
+            $this->aInputs[$CNF['FIELD_SOURCE']]['attrs']['onblur'] = $sOnBlur;
+        }
 
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
-            $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
-
             $aMask = array('mask' => "javascript:%s.checkName(this, '%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
             if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && bx_get('id') !== false) {
                 $aMask['mask'] = "javascript:%s.checkName(this, '%s', '%s', %d);";
@@ -112,16 +126,13 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_POLL']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
 
-        if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'] && isset($this->aInputs['do_submit'])) {
-            $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
-
+        if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'] && isset($this->aInputs['do_submit']))
             $this->aInputs['do_submit'] = array_merge($this->aInputs['do_submit'], [
                 'type' => 'button',
                 'attrs' => [
                     'onclick' => $sJsObject . '.selectCategory(this);'
                 ]
             ]);
-        }
     }
 
     function getCode($bDynamicMode = false)
@@ -149,8 +160,27 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($aValues['id']);
         $bContentInfo = !empty($aContentInfo) && is_array($aContentInfo);
 
-        if($bContentInfo)
+        $iContentAuthorId = bx_get_logged_profile_id();
+        if($bContentInfo) {
+            $iContentAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+
             $this->_initCategoryFields($aContentInfo[$CNF['FIELD_CATEGORY']]);
+        }
+
+        if($this->_bSources) {
+            if(isset($this->aInputs[$CNF['FIELD_SOURCE_TYPE']]) && !empty($iContentAuthorId)) {
+                $aSource = $this->_oModule->serviceGetSource($iContentAuthorId);
+                if(!empty($aSource) && is_array($aSource))
+                    $this->aInputs[$CNF['FIELD_SOURCE_TYPE']]['value'] = $aSource['name'];
+            }
+
+            if(isset($this->aInputs[$CNF['FIELD_SOURCE']]) && $bContentInfo) {
+                if(!isset($this->aInputs[$CNF['FIELD_SOURCE']]['attrs']))
+                    $this->aInputs[$CNF['FIELD_SOURCE']]['attrs'] = [];
+
+                $this->aInputs[$CNF['FIELD_SOURCE']]['attrs']['readonly'] = 'readonly';
+            }
+        }
 
         if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($bContentInfo)

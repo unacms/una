@@ -718,14 +718,19 @@ div.bx-popup-chain-item .bx-loading-ajax {
 }
 
 @-moz-document url-prefix() {
-	button.bx-btn .bx-loading-ajax-btn {
-		top: -1px;
-	}
+    button.bx-btn .bx-loading-ajax-btn {
+        top: -1px;
+    }
 }
 
 button.bx-btn:focus,
 button.bx-btn:focus .bx-loading-ajax-btn {
     outline: 0;	
+}
+
+.bx-form-element-wrapper .bx-loading-ajax {
+    width: 4rem;
+    height: 4rem;
 }
 
 

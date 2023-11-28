@@ -17,10 +17,13 @@ class BxAdsConfig extends BxBaseModTextConfig
 
     protected $_bAuction;
 
-    protected $_sSource;
+    protected $_bSources;
 
     protected $_bPromotion;
     protected $_fPromotionCpm;
+
+    protected $_sCacheEngineShopify;
+    protected $_iCacheLifetimeShopify;
 
     public function __construct($aModule)
     {
@@ -42,6 +45,9 @@ class BxAdsConfig extends BxBaseModTextConfig
             'ICON' => 'ad col-green2',
 
             // database tables
+            'TABLE_SOURCES' => $aModule['db_prefix'] . 'sources',
+            'TABLE_SOURCES_OPTIONS' => $aModule['db_prefix'] . 'sources_options',
+            'TABLE_SOURCES_OPTIONS_VALUES' => $aModule['db_prefix'] . 'sources_options_values',
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
             'TABLE_ENTRIES_FULLTEXT' => 'title_text',
             'TABLE_CATEGORIES' => $aModule['db_prefix'] . 'categories',
@@ -63,8 +69,10 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_SOLD' => 'sold',
             'FIELD_SHIPPED' => 'shipped',
             'FIELD_RECEIVED' => 'received',
+            'FIELD_SOURCE_TYPE' => 'source_type',
             'FIELD_SOURCE' => 'source',
             'FIELD_TITLE' => 'title',
+            'FIELD_URL' => 'url',
             'FIELD_NAME' => 'name',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'ad-text',
@@ -125,6 +133,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'URL_CATEGORIES' => 'page.php?i=ads-categories',
             'URL_MANAGE_COMMON' => 'page.php?i=ads-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=ads-administration',
+            'URL_SOURCES' => 'page.php?i=ads-sources',
             'URI_FAVORITES_LIST' => 'ads-favorites',
             'URL_LICENSES_COMMON' => 'page.php?i=ads-licenses',
             'URL_LICENSES_ADMINISTRATION' => 'page.php?i=ads-licenses-administration',
@@ -133,7 +142,6 @@ class BxAdsConfig extends BxBaseModTextConfig
 
             // some params
             'PARAM_AUTO_APPROVE' => 'bx_ads_enable_auto_approve',
-            'PARAM_SOURCE' => 'bx_ads_enable_source',
             'PARAM_CHARS_SUMMARY' => 'bx_ads_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_ads_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_ads_rss_num',
@@ -145,6 +153,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_USE_IIN' => 'bx_ads_internal_interested_notification',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
             'PARAM_USE_AUCTION' => 'bx_ads_enable_auction',
+            'PARAM_USE_SOURCES' => 'bx_ads_enable_sources',
             'PARAM_USE_PROMOTION' => 'bx_ads_enable_promotion',
             'PARAM_PROMOTION_CPM' => 'bx_ads_promotion_cpm',
 
@@ -182,6 +191,8 @@ class BxAdsConfig extends BxBaseModTextConfig
             'OBJECT_CATEGORY' => '',
             'OBJECT_PRIVACY_VIEW' => 'bx_ads_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_ads_allow_view_favorite_list',
+            'OBJECT_FORM_SOURCES_DETAILS' => 'bx_ads_form_sources_details',
+            'OBJECT_FORM_SOURCES_DETAILS_DISPLAY_EDIT' => 'bx_ads_form_sources_details_edit',
             'OBJECT_FORM_CATEGORY' => 'bx_ads_category',
             'OBJECT_FORM_CATEGORY_DISPLAY_ADD' => 'bx_ads_category_add',
             'OBJECT_FORM_CATEGORY_DISPLAY_EDIT' => 'bx_ads_category_edit',
@@ -345,15 +356,18 @@ class BxAdsConfig extends BxBaseModTextConfig
 
         $this->_bPromotion = false;
         $this->_fPromotionCpm = 0;
+
+        $this->_sCacheEngineShopify = 'File';
+        $this->_iCacheLifetimeShopify = 2419200; //1 month
     }
 
     public function init(&$oDb)
     {
         $this->_oDb = &$oDb;
 
-        $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
+        $this->_bSources = getParam($this->CNF['PARAM_USE_SOURCES']) == 'on';
 
-        $this->_sSource = getParam($this->CNF['PARAM_SOURCE']);
+        $this->_bAuction = getParam($this->CNF['PARAM_USE_AUCTION']) == 'on';
 
         $this->_bPromotion = getParam($this->CNF['PARAM_USE_PROMOTION']) == 'on';
         if($this->_bPromotion) {
@@ -371,6 +385,11 @@ class BxAdsConfig extends BxBaseModTextConfig
         return [BX_BASE_MOD_TEXT_STATUS_ACTIVE];
     }
 
+    public function isSources()
+    {
+        return $this->_bSources;
+    }
+
     public function isAuction()
     {
         return $this->_bAuction;
@@ -379,11 +398,6 @@ class BxAdsConfig extends BxBaseModTextConfig
     public function isPromotion()
     {
         return $this->_bPromotion;
-    }
-
-    public function getSource()
-    {
-        return $this->_sSource;
     }
 
     public function getEntryName($sName)
@@ -399,6 +413,21 @@ class BxAdsConfig extends BxBaseModTextConfig
     public function getPromotionCpm()
     {
         return $this->_fPromotionCpm;
+    }
+    
+    public function getCacheEngineShopify()
+    {
+        return $this->_sCacheEngineShopify;
+    }
+
+    public function getCacheLifetimeShopify()
+    {
+        return $this->_iCacheLifetimeShopify;
+    }
+
+    public function getCacheKeyShopify()
+    {
+        return 'bx_ads_shopify_' . bx_site_hash() . '.php';
     }
 }
 

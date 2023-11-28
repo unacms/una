@@ -16,10 +16,22 @@
     <string name="_bx_ads_option_offer_lifetime"><![CDATA[Автоматически отклонять предложения по истечении (в часах)]]></string>
     <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string>
     <string name="_bx_ads_option_enable_auction"><![CDATA[Включить режим аукциона]]></string>
-    <string name="_bx_ads_option_enable_source"><![CDATA[Внешний источник]]></string>
-    <string name="_bx_ads_option_source_shopify"><![CDATA[Shopify API]]></string>
+    <string name="_bx_ads_option_enable_sources"><![CDATA[Включить внешние источники]]></string>
     <string name="_bx_ads_option_enable_promotion"><![CDATA[Включить платную рекламу]]></string>
     <string name="_bx_ads_option_promotion_cpm"><![CDATA[Цена за рекламу (цена за 1000 показов)]]></string>
+    
+    <string name="_bx_ads_src_cpt_shopify_admin"><![CDATA[Shopify (Admin API)]]></string>
+    <string name="_bx_ads_src_dsc_shopify_admin"><![CDATA[Для пользовательского приложения, созданного непосредственно в админ панеле Shopify.]]></string>
+    <string name="_bx_ads_src_opt_cpt_active"><![CDATA[Активировать]]></string>
+    <string name="_bx_ads_src_opt_dsc_active"><![CDATA[Активировать(деактивировать) источник.]]></string>
+    <string name="_bx_ads_src_opt_cpt_shop_domain"><![CDATA[Домен магазина]]></string>
+    <string name="_bx_ads_src_opt_dsc_shop_domain"><![CDATA[]]></string>
+    <string name="_bx_ads_src_opt_cpt_access_token"><![CDATA[Токен доступа]]></string>
+    <string name="_bx_ads_src_opt_dsc_access_token"><![CDATA[]]></string>
+
+    <string name="_bx_ads_form_sources_details"><![CDATA[Детали источников]]></string>
+    <string name="_bx_ads_form_sources_details_display_edit"><![CDATA[Редактировать детали источников]]></string>
+    <string name="_bx_ads_form_sources_details_input_do_submit"><![CDATA[Выполнить]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Категория]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Добавить категорию]]></string>
@@ -286,6 +298,10 @@
     <string name="_bx_ads_page_title_sys_offers_all"><![CDATA[Все предложения]]></string>
     <string name="_bx_ads_page_title_offers_all"><![CDATA[Все предложения]]></string>
     <string name="_bx_ads_page_block_title_offers_all"><![CDATA[Все предложения]]></string>
+    <string name="_bx_ads_page_title_sys_sources"><![CDATA[Источники]]></string>
+    <string name="_bx_ads_page_title_sources"><![CDATA[Источники]]></string>
+    <string name="_bx_ads_page_block_title_system_sources_details"><![CDATA[Детали источников]]></string>
+    <string name="_bx_ads_page_block_title_sources_details"><![CDATA[Детали источников]]></string>
 
     <string name="_bx_ads_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_ads_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
@@ -305,7 +321,6 @@
     <string name="_bx_ads_menu_item_title_cpa_file_html5"><![CDATA[Добавить файл]]></string>
     <string name="_bx_ads_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
     <string name="_bx_ads_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
-
     <string name="_bx_ads_menu_set_title_view_entry"><![CDATA[Объявление - Действия]]></string>
     <string name="_bx_ads_menu_title_view_entry"><![CDATA[Объявление - Действия]]></string>
     <string name="_bx_ads_menu_title_submenu"><![CDATA[Объявления - Подменю]]></string>
@@ -382,6 +397,8 @@
     <string name="_bx_ads_menu_item_title_licenses"><![CDATA[Лицензии к объявлениям]]></string>
     <string name="_bx_ads_menu_item_title_system_offers_all"><![CDATA[Предложения к объявлениям]]></string>
     <string name="_bx_ads_menu_item_title_offers_all"><![CDATA[Предложения]]></string>
+    <string name="_bx_ads_menu_item_title_system_sources"><![CDATA[Источники]]></string>
+    <string name="_bx_ads_menu_item_title_sources"><![CDATA[Источники]]></string>
 
     <string name="_bx_ads_grid_column_title_icon"><![CDATA[Иконка]]></string>
     <string name="_bx_ads_grid_column_title_title"><![CDATA[Заголовок]]></string>

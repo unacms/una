@@ -306,6 +306,11 @@ button.bx-btn:focus .bx-loading-ajax-btn {
     outline: 0;	
 }
 
+.bx-form-element-wrapper .bx-loading-ajax {
+    width: 4rem;
+    height: 4rem;
+}
+
 /*-- Show More --*/
 .bx-overflow-ready {
     max-height: 16rem;

@@ -14,9 +14,138 @@
  */
 class BxAdsDb extends BxBaseModTextDb
 {
-    function __construct(&$oConfig)
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+    }
+
+    public function getSourcesDetailsForm()
+    {
+        $sQuery = "SELECT
+                `ts`.`id` AS `source_id`,
+                `ts`.`name` AS `source_name`,
+                `ts`.`caption` AS `source_caption`,
+                `ts`.`description` AS `source_description`,
+                `ts`.`option_prefix` AS `source_option_prefix`,
+                `tso`.`id` AS `id`,
+                `tso`.`name` AS `name`,
+                `tso`.`type` AS `type`,
+                `tso`.`caption` AS `caption`,
+                `tso`.`description` AS `description`,
+                `tso`.`extra` AS `extra`,
+                `tso`.`check_type` AS `check_type`,
+                `tso`.`check_params` AS `check_params`,
+                `tso`.`check_error` AS `check_error`
+            FROM `" . $this->_sPrefix . "sources` AS `ts`
+            LEFT JOIN `" . $this->_sPrefix . "sources_options` AS `tso` ON `ts`.`id`=`tso`.`source_id`
+            WHERE `ts`.`active`='1' 
+            ORDER BY `ts`.`order` ASC, `tso`.`order` ASC";
+
+        return $this->getAll($sQuery);
+    }
+    
+    public function getSources($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => [0 => 'query']);
+
+        $sWhereClause = "";
+        switch($aParams['sample']) {
+            case 'by_name':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'name' => $aParams['name']
+                );
+
+                $sWhereClause = " AND `ts`.`name`=:name";
+                break;
+
+            case 'all':
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][1] = 'name';
+
+                if(!empty($aParams['active'])) 
+                    $sWhereClause = " AND `ts`.`active`='1'";
+                break;
+        }          
+
+        $aMethod['params'][0] = "SELECT
+                `ts`.`id` AS `id`,
+                `ts`.`name` AS `name`,
+                `ts`.`caption` AS `caption`,
+                `ts`.`description` AS `description`,
+                `ts`.`option_prefix` AS `option_prefix`,
+                `ts`.`class_name` AS `class_name`,
+                `ts`.`class_file` AS `class_file`
+            FROM `" . $CNF['TABLE_SOURCES'] . "` AS `ts`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function getOption($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+        $sSelectClause = "`tso`.*";
+        $sJoinClause = $sWhereClause = "";
+        switch($aParams['sample']) {
+            case 'by_pid_and_name':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'source_id' => $aParams['source_id'],
+                    'name' => $aParams['name'],
+                ];
+
+                $sWhereClause = " AND `tso`.`source_id`=:source_id AND `tso`.`name`=:name";
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_SOURCES_OPTIONS'] . "` AS `tso` " . $sJoinClause . " WHERE 1" . $sWhereClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function getSourcesOptions($iProfileId = 0, $iSourceId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aBinding = [
+            'profile_id' => $iProfileId
+    	];
+
+        if(empty($iProfileId) && empty($iSourceId))
+           return $this->getAll("SELECT `id`, `name`, `type` FROM `" . $CNF['TABLE_SOURCES_OPTIONS'] . "`");
+
+        $sWhereAddon = "";
+        if(!empty($iSourceId)) {
+            $aBinding['source_id'] = $iSourceId;
+
+            $sWhereAddon = " AND `tso`.`source_id`=:source_id";
+        }
+
+        $sQuery = "SELECT
+               `tso`.`name` AS `name`,
+               `tsov`.`value` AS `value`
+            FROM `" . $CNF['TABLE_SOURCES_OPTIONS'] . "` AS `tso`
+            LEFT JOIN `" . $CNF['TABLE_SOURCES_OPTIONS_VALUES'] . "` AS `tsov` ON `tso`.`id`=`tsov`.`option_id`
+            WHERE 1" . $sWhereAddon . " AND `tsov`.`profile_id`=:profile_id ORDER BY `tso`.`order`";
+
+        return $this->getAllWithKey($sQuery, 'name', $aBinding);
+    }
+
+    public function updateSourceOption($iProfileId, $iOptionId, $sValue)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("INSERT INTO `" . $CNF['TABLE_SOURCES_OPTIONS_VALUES'] . "` SET `profile_id`=:profile_id, `option_id`=:option_id, `value`=:value ON DUPLICATE KEY UPDATE `value`=:value", [
+            'profile_id' => $iProfileId, 
+            'option_id' => $iOptionId, 
+            'value' => $sValue
+        ]);
     }
 
     function getEntriesBy($aParams = array())

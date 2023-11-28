@@ -63,6 +63,34 @@ class BxAdsModule extends BxBaseModTextModule
         return $aResult;
     }
 
+    public function actionShopifyCall()
+    {
+        $iProfileId = bx_get_logged_profile_id();
+
+        bx_import('SourceShopifyAdmin', $this->_aModule);
+        $oShopify = new BxAdsSourceShopifyAdmin($iProfileId, $this);
+        
+        $aResponse = $oShopify->getProduct('7433957113996');
+        print_r($aResponse); exit;
+    }
+
+    public function actionLoadEntryFromSource()
+    {
+        $sSourceType = bx_process_url_param(bx_process_input(bx_get('source_type')));
+        $sSource = bx_process_url_param(bx_process_input(bx_get('source')));
+        if(empty($sSourceType) || empty($sSource))
+            return echoJson(['code' => 1]);
+
+        $aEntry = $this->serviceLoadEntryFromSource($sSourceType, $sSource);
+        if(empty($aEntry) || !is_array($aEntry))
+            return echoJson(['code' => 2]);
+
+        return echoJson([
+            'code' => 0,
+            'fields' => $aEntry
+        ]);
+    }
+
     public function actionGetCategoryForm()
     {
         if(($iCategory = bx_get('category')) === false || (int)$iCategory == 0)
@@ -299,6 +327,8 @@ class BxAdsModule extends BxBaseModTextModule
     public function serviceGetSafeServices()
     {
         return array_merge(parent::serviceGetSafeServices(), [
+            'IsSourcesAvaliable' => '',
+            'LoadEntryFromSource' => '',
             'EntityReviews' => '',
             'EntityReviewsRating' => '',
             'CategoriesList' => '',
@@ -308,14 +338,6 @@ class BxAdsModule extends BxBaseModTextModule
         ]);
     }
 
-    public function serviceGetOptionsSource()
-    {
-        return [
-            ['key' => '', 'value' => _t('_Select_one')],
-            ['key' => 'shopify', 'value' => _t('_bx_ads_option_source_shopify')],
-        ];
-    }
-
     public function serviceRegisterImpression($iId)
     {
         return ['code' => $this->_oDb->updatePromotionTracker($iId, 'impressions') ? 0 : 1];
@@ -323,12 +345,23 @@ class BxAdsModule extends BxBaseModTextModule
     
     public function serviceRegisterClick($iId)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if(!$this->_oDb->updatePromotionTracker($iId, 'clicks'))
             return ['code' => 1];
 
+        $sUrl = '';
+        if($this->_oConfig->isSources())  {
+            $aEntry = $this->_oDb->getContentInfoById($iId);
+            if(!empty($aEntry) && is_array($aEntry) && !empty($aEntry[$CNF['FIELD_URL']]))
+                $sUrl = $aEntry[$CNF['FIELD_URL']];
+        }
+        else
+            $sUrl = $this->_oConfig->getViewEntryUrl($iId);
+
         return [
             'code' => 0,
-            'redirect' => $this->_oConfig->getViewEntryUrl($iId)
+            'redirect' => $sUrl
         ];
     }
 
@@ -1623,6 +1656,98 @@ class BxAdsModule extends BxBaseModTextModule
         return $this->_oTemplate->entryOfferAccepted($iUserId, $aContent, $aOffer);
     }
 
+    public function serviceIsSourcesAvaliable()
+    {
+        return $this->_oConfig->isSources();
+    }
+    
+    public function serviceGetSources($iAuthorId)
+    {
+        $aSources = $this->_oDb->getSources(['sample' => 'all']);
+        $aOptions = $this->_oDb->getSourcesOptions($iAuthorId);
+
+        $aResult = [];
+        foreach($aSources as $sSource => $aSource) {
+            if(!isset($aOptions[$aSource['option_prefix'] . 'active']) || $aOptions[$aSource['option_prefix'] . 'active']['value'] != 'on') 
+                continue;
+
+            foreach($aOptions as $sName => $aOption)
+                if(strpos($sName, $aSource['option_prefix']) !== false)
+                    $aSource['options'][$sName] = $aOption;
+            $aResult[$sSource] = $aSource;
+        }
+
+        return $aResult; 
+    }
+
+    public function serviceGetSource($iAuthorId, $sAuthorSource = '')
+    {
+    	$aSourcesOptions = $this->serviceGetSources($iAuthorId);
+        if(empty($aSourcesOptions) || !is_array($aSourcesOptions))
+            return false;
+
+        $mixedResult = false;
+        if(!empty($sAuthorSource)) {
+            if(!empty($aSourcesOptions[$sAuthorSource]) && is_array($aSourcesOptions[$sAuthorSource]))
+                $mixedResult = $aSourcesOptions[$sAuthorSource];
+        }
+        else 
+            $mixedResult = array_shift($aSourcesOptions);
+
+    	return $mixedResult;
+    }
+
+    public function serviceLoadEntryFromSource($sSourceType, $sSource)
+    {
+        $iProfileId = bx_get_logged_profile_id();
+
+        $oSource = $this->getObjectSource($sSourceType, $iProfileId);
+        if(!$oSource)
+            return [];
+
+        return $oSource->getEntry($sSource);
+    }
+
+    public function serviceBlockSourcesDetails($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isLogged())
+            return [
+                'content' => MsgBox(_t('_Access denied'))
+            ];
+
+        $iProfileId = !empty($iProfileId) ? $iProfileId : bx_get_logged_profile_id();
+
+        $oForm = BxTemplFormView::getObjectInstance($CNF['OBJECT_FORM_SOURCES_DETAILS'], $CNF['OBJECT_FORM_SOURCES_DETAILS_DISPLAY_EDIT']);
+        $oForm->setProfileId($iProfileId);
+        $oForm->initChecker();
+
+        if($oForm->isSubmitted()) {
+            if($oForm->isValid()) {
+                $aOptions = $this->_oDb->getSourcesOptions();
+                foreach($aOptions as $aOption) {
+                    $sValue = bx_get($aOption['name']) !== false ? bx_get($aOption['name']) : '';
+                    $this->_oDb->updateSourceOption($iProfileId, $aOption['id'], bx_process_input($sValue));
+                }
+
+                header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES'])));
+                return;
+            }
+            else
+                foreach($oForm->aInputs as $aInput)
+                    if(!empty($aInput['error']) && !empty($aInput['attrs']['bx-data-source'])) {
+                        $sSourceBlock = 'source_' . (int)$aInput['attrs']['bx-data-source'] . '_begin';
+                        if(!empty($oForm->aInputs[$sSourceBlock]))
+                            $oForm->aInputs[$sSourceBlock]['collapsed'] = false;
+                    }
+        }
+
+        return [
+            'content' => $oForm->getCode()
+        ];
+    }
+
     public function isEntryActive($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1996,6 +2121,25 @@ class BxAdsModule extends BxBaseModTextModule
         ));
 
         bx_alert($this->getName(), 'received', $iContentId, false, $aParams);
+    }
+
+    public function getObjectSource($sSource, $iProfileId = 0)
+    {
+        $aSource = $this->_oDb->getSources(array('sample' => 'by_name', 'name' => $sSource));
+        if(empty($aSource) || !is_array($aSource) || empty($aSource['class_name']))
+            return false;
+
+        if(!empty($iProfileId)) {
+            $aSource['author'] = (int)$iProfileId;
+            $aSource['options'] = $this->_oDb->getSourcesOptions((int)$iProfileId, $aSource['id']);
+        }
+
+        $sClassPath = !empty($aSource['class_file']) ? BX_DIRECTORY_PATH_ROOT . $aSource['class_file'] : $this->_oConfig->getClassPath() . $aSource['class_name'] . '.php';
+        if(!file_exists($sClassPath))
+            return false;
+
+        require_once($sClassPath);
+        return new $aSource['class_name']($this->_iProfileId, $aSource, $this);
     }
 
     public function offerAccept($iId) 

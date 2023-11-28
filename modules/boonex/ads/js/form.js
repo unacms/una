@@ -59,6 +59,59 @@ BxAdsForm.prototype.onSelectCategory = function(oData) {
         window[this._sObjNameForm].resetChanged();
 };
 
+BxAdsForm.prototype.loadFromSource = function(oSource, sSourceTypeId, sSourceId) {
+    var $this = this;
+
+    var oDate = new Date();
+    var oForm = jQuery(oSource).parents('.bx-form-advanced:first');
+
+    var oSourceType = oForm.find("[name='" + sSourceTypeId + "']");
+    var sSourceType = oSourceType.val();
+    var bSourceType = sSourceType.length != 0;
+
+    var oSource = oForm.find("[name='" + sSourceId + "']");
+    var sSource = oSource.val();
+    var bSource = sSource.length != 0;
+
+    if(!bSourceType || !bSource)
+        return;
+
+    this.loadingInField(oSource, true);
+
+    jQuery.get(
+        this._sActionsUrl + 'load_entry_from_source',
+        {
+            source_type: sSourceType,
+            source: sSource,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            $this.loadingInField(oSource, false);
+
+            if(!oData || oData.code == undefined || parseInt(oData.code) != 0)
+                return;
+
+            Object.keys(oData.fields).forEach(sKey => {
+                var oField = oForm.find("[name='" + sKey + "']");
+                if(oField.lenght == 0)
+                    return;
+
+                switch (oData.fields[sKey].type) {
+                    case 'hidden':
+                    case 'text':
+                        oField.val(oData.fields[sKey].value);
+                        break;
+
+                    case 'text_html':
+                        bx_editor_insert_html(oField.attr('id'), '', oData.fields[sKey].value);
+                        break;
+                }
+            });
+        },
+        'json'
+    );
+};
+
 BxAdsForm.prototype.checkName = function(oSource, sTitleId, sNameId, iId) {
     var oDate = new Date();
     var oForm = jQuery(oSource).parents('.bx-form-advanced:first');
@@ -104,6 +157,11 @@ BxAdsForm.prototype.checkName = function(oSource, sTitleId, sNameId, iId) {
 
 BxAdsForm.prototype.loadingInBlock = function(e, bShow) {
     var oParent = $(e).length ? $(e).parents('.bx-db-container:first') : $('body'); 
+    bx_loading(oParent, bShow);
+};
+
+BxAdsForm.prototype.loadingInField = function(e, bShow) {
+    var oParent = $(e).length ? $(e).parents('.bx-form-element-wrapper:first') : $('body'); 
     bx_loading(oParent, bShow);
 };
 

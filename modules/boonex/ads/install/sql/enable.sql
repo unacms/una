@@ -11,7 +11,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_ads_enable_auto_approve', 'on', @iCategId, '_bx_ads_option_enable_auto_approve', 'checkbox', '', '', '', 0),
-('bx_ads_enable_source', '', @iCategId, '_bx_ads_option_enable_source', 'select', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:18:"get_options_source";}', 1),
+('bx_ads_enable_sources', '', @iCategId, '_bx_ads_option_enable_sources', 'checkbox', '', '', '', 1),
 ('bx_ads_enable_auction', '', @iCategId, '_bx_ads_option_enable_auction', 'checkbox', '', '', '', 2),
 ('bx_ads_internal_interested_notification', '', @iCategId, '_bx_ads_option_internal_interested_notification', 'checkbox', '', '', '', 4),
 
@@ -185,6 +185,13 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_ads_administration', 1, 'bx_ads', '_bx_ads_page_block_title_system_manage_administration', '_bx_ads_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:"module";s:6:"bx_ads";s:6:"method";s:12:"manage_tools";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 1, 0);
 
+-- PAGE: module sources
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_ads_sources', '_bx_ads_page_title_sys_sources', '_bx_ads_page_title_sources', 'bx_ads', 5, 2147483646, 1, 'ads-sources', 'page.php?i=ads-sources', '', '', '', 0, 1, 0, 'BxAdsPageBrowse', 'modules/boonex/ads/classes/BxAdsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_ads_sources', 1, 'bx_ads', '_bx_ads_page_block_title_system_sources_details', '_bx_ads_page_block_title_sources_details', 11, 2147483646, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"block_sources_details";}}', 0, 1, 0);
+
 -- PAGE: manage own licenses
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_ads_licenses', '_bx_ads_page_title_sys_licenses', '_bx_ads_page_title_licenses', 'bx_ads', 5, 2147483647, 1, 'ads-licenses', '', '', '', '', 0, 1, 0, 'BxAdsPageLicenses', 'modules/boonex/ads/classes/BxAdsPageLicenses.php');
@@ -342,12 +349,13 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_ads_submenu', 'bx_ads', '_bx_ads_menu_set_title_submenu', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_ads_submenu', 'bx_ads', 'ads-home', '_bx_ads_menu_item_title_system_entries_public', '_bx_ads_menu_item_title_entries_public', 'page.php?i=ads-home', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_ads_submenu', 'bx_ads', 'ads-popular', '_bx_ads_menu_item_title_system_entries_popular', '_bx_ads_menu_item_title_entries_popular', 'page.php?i=ads-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_ads_submenu', 'bx_ads', 'ads-categories', '_bx_ads_menu_item_title_system_entries_categories', '_bx_ads_menu_item_title_entries_categories', 'page.php?i=ads-categories', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_ads_submenu', 'bx_ads', 'ads-search', '_bx_ads_menu_item_title_system_entries_search', '_bx_ads_menu_item_title_entries_search', 'page.php?i=ads-search', '', '', '', '', 2147483647, 1, 1, 4),
-('bx_ads_submenu', 'bx_ads', 'ads-manage', '_bx_ads_menu_item_title_system_entries_manage', '_bx_ads_menu_item_title_entries_manage', 'page.php?i=ads-manage', '', '', '', '', 2147483646, 1, 1, 5);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_ads_submenu', 'bx_ads', 'ads-home', '_bx_ads_menu_item_title_system_entries_public', '_bx_ads_menu_item_title_entries_public', 'page.php?i=ads-home', '', '', '', '', 2147483647, '', 1, 1, 1),
+('bx_ads_submenu', 'bx_ads', 'ads-popular', '_bx_ads_menu_item_title_system_entries_popular', '_bx_ads_menu_item_title_entries_popular', 'page.php?i=ads-popular', '', '', '', '', 2147483647, '', 1, 1, 2),
+('bx_ads_submenu', 'bx_ads', 'ads-categories', '_bx_ads_menu_item_title_system_entries_categories', '_bx_ads_menu_item_title_entries_categories', 'page.php?i=ads-categories', '', '', '', '', 2147483647, '', 1, 1, 3),
+('bx_ads_submenu', 'bx_ads', 'ads-search', '_bx_ads_menu_item_title_system_entries_search', '_bx_ads_menu_item_title_entries_search', 'page.php?i=ads-search', '', '', '', '', 2147483647, '', 1, 1, 4),
+('bx_ads_submenu', 'bx_ads', 'ads-manage', '_bx_ads_menu_item_title_system_entries_manage', '_bx_ads_menu_item_title_entries_manage', 'page.php?i=ads-manage', '', '', '', '', 2147483646, '', 1, 1, 5),
+('bx_ads_submenu', 'bx_ads', 'ads-sources', '_bx_ads_menu_item_title_system_sources', '_bx_ads_menu_item_title_sources', 'page.php?i=ads-sources', '', '', '', '', 2147483646, 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:20:"is_sources_avaliable";}', 1, 1, 6);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

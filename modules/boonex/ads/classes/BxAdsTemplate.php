@@ -205,6 +205,11 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $aResult = parent::getUnit($aData, $aParams);
+        
+        if($this->_oConfig->isSources() && !empty($aData[$CNF['FIELD_URL']])) 
+            $aResult = array_merge($aResult, [
+                'content_url' => $aData[$CNF['FIELD_URL']],
+            ]);
 
         if($this->_oConfig->isPromotion()) {
             $sJsObject = $this->_oConfig->getJsObject('main');
