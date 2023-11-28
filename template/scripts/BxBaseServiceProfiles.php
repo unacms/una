@@ -152,10 +152,14 @@ class BxBaseServiceProfiles extends BxDol
     public function serviceBefriend ($iProfileId)
     {
         $oConnections = BxDolConnection::getObjectInstance('sys_profiles_friends'); 
-        $this->_oConnectionFriends->addConnection((int)bx_get_logged_profile_id(), $iProfileId);
-        $this->_oConnectionFriends->addConnection($iProfileId, (int)bx_get_logged_profile_id());
         $oProfile = BxDolProfile::getInstance($iProfileId);
-        return $oProfile->getUnitAPI($iProfileId);
+
+        if ($oProfile && $oConnections){
+            $oConnections->addConnection((int)bx_get_logged_profile_id(), $iProfileId);
+            $oConnections->addConnection($iProfileId, (int)bx_get_logged_profile_id());
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            return BxDolProfile::getData($iProfileId);
+        }
     }
 
     public function serviceProfileStats ($iProfileId = 0)
