@@ -218,7 +218,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     {
         list($fMilliSec, $iSec) = explode(' ', microtime());
         $fSeed = (float)$iSec + ((float)$fMilliSec * 100000);
-        srand($fSeed);
+        srand((int)$fSeed);
 
         $sResult = '';
         for($i=0; $i < 16; ++$i) {
