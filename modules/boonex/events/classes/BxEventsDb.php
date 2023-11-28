@@ -174,6 +174,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 $a[$k]['url'] = bx_absolute_url(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']));
                 if(bx_is_api()) {
                     $a[$k]['url'] = bx_api_get_relative_url($a[$k]['url']);
+                    $a[$k]['location_data'] = $oMetatags->locationGet($r['id']);
                     $a[$k]['location'] = $oMetatags->locationsString($r['id'], false);
                 }
                 else {

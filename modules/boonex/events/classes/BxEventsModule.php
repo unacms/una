@@ -114,8 +114,8 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
 
         $iNow = time();
-        $sStart = !empty($aParams['start']) ? $aParams['start'] : date('d.m.Y', $iNow);
-        $sEnd = !empty($aParams['end']) ? $aParams['end'] : date('d.m.Y', $iNow + 3600 * 24 * 365);
+        $sStart = !empty($aParams['start']) ? date('d.m.Y', $aParams['start']) : date('d.m.Y', $iNow);
+        $sEnd = !empty($aParams['end']) ? date('d.m.Y', $aParams['end']) : date('d.m.Y', $iNow + 3600 * 24 * 365);
 
         $iContentId = 0;
         $iContextId = 0;
