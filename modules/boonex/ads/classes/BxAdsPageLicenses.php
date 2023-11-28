@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxAdsPageLicenses extends BxBaseModTextPageAuthor
+class BxAdsPageLicenses extends BxTemplPage
 {
     protected $MODULE;
 

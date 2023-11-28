@@ -12,7 +12,7 @@
 /**
  * Profile's licenses page.
  */
-class BxMarketPageLicenses extends BxBaseModTextPageAuthor
+class BxMarketPageLicenses extends BxTemplPage
 {
     protected $MODULE;
 
