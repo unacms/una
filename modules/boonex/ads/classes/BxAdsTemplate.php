@@ -27,7 +27,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sDateFrom = date('Y-m-d', time() - 30*24*60*60);
+        $sDateFrom = date('Y-m-d', $aContentInfo[$CNF['FIELD_ADDED']]);
         $sDateTo = date('Y-m-d', time());
 
         $aForm = [
@@ -148,6 +148,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
 
         //--- Get income external (from source)
+        $iValueSource = 0;
         if($this->_oConfig->isSources()) {
             $oSource = $this->_oModule->getObjectSource($aContentInfo[$CNF['FIELD_SOURCE_TYPE']], $aContentInfo[$CNF['FIELD_AUTHOR']]);
             if($oSource !== false && !empty($aContentInfo[$CNF['FIELD_SOURCE']])) {
@@ -158,7 +159,6 @@ class BxAdsTemplate extends BxBaseModTextTemplate
                 ]);
 
                 $sTitleSource = bx_html_attribute(_t($CNF['T']['chart_label_roi_source']));
-                $iValueSource = 0;
                 foreach($aOrders as $aOrder)
                     $iValueSource += $aOrder['amount'];
 
@@ -176,20 +176,26 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $aTmplVarsDataSet['data'][] = $iValueInvestment;
         $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
 
+        $fRoi = 100 * ($iValueLocal + $iValueSource - $iValueInvestment)/$iValueInvestment;
+
         if($this->_bIsApi)
             return [
                 'labels' => $aTmplVarsDataLabels,
-                'dataset' => $aTmplVarsDataSet
+                'dataset' => $aTmplVarsDataSet,
+                'roi' => $fRoi
             ];
 
         $this->addJs(['chart.min.js']);
         $this->addCss(['chart.css']);
-        return $this->parseHtmlByName('chart_stats.html', [
-            'chart_id' => $this->MODULE . '_chart_roi',
-            'chart_data' => json_encode([
-                'labels' => $aTmplVarsDataLabels,
-                'datasets' => [$aTmplVarsDataSet]
-            ])
+        return $this->parseHtmlByName('entry-roi.html', [
+            'chart' => $this->parseHtmlByName('chart_stats.html', [
+                'chart_id' => $this->MODULE . '_chart_roi',
+                'chart_data' => json_encode([
+                    'labels' => $aTmplVarsDataLabels,
+                    'datasets' => [$aTmplVarsDataSet]
+                ])
+            ]),
+            'roi' => round($fRoi, 1)
         ]);
     }
 

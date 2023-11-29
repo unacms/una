@@ -345,12 +345,10 @@ class BxAdsModule extends BxBaseModTextModule
             if(!empty($aEntry) && is_array($aEntry) && !empty($aEntry[$CNF['FIELD_URL']]))
                 $sUrl = $aEntry[$CNF['FIELD_URL']];
         }
-        else
-            $sUrl = $this->_oConfig->getViewEntryUrl($iId);
 
         return [
             'code' => 0,
-            'redirect' => $sUrl
+            'redirect' => !empty($sUrl) ? $sUrl : $this->_oConfig->getViewEntryUrl($iId)
         ];
     }
 

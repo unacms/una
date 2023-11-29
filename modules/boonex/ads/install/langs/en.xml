@@ -464,9 +464,10 @@
     <string name="_bx_ads_chart_promotion_growth_speed"><![CDATA[Ad Promotion: Growth Speed]]></string>
     <string name="_bx_ads_chart_label_impressions"><![CDATA[Impressions]]></string>
     <string name="_bx_ads_chart_label_clicks"><![CDATA[Clicks]]></string>
+    <string name="_bx_ads_chart_label_roi"><![CDATA[ROI]]></string>
     <string name="_bx_ads_chart_label_roi_local"><![CDATA[Local income]]></string>
     <string name="_bx_ads_chart_label_roi_source"><![CDATA[External income]]></string>
-    <string name="_bx_ads_chart_label_roi_investment"><![CDATA[Investments]]></string>
+    <string name="_bx_ads_chart_label_roi_investment"><![CDATA[Investment]]></string>
 
     <string name="_bx_ads_search_extended"><![CDATA[Ads Search]]></string>
     <string name="_bx_ads_search_extended_cmts"><![CDATA[Ads Comments Search]]></string>

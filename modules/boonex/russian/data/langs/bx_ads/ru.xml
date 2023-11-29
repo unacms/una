@@ -460,6 +460,7 @@
     <string name="_bx_ads_chart_promotion_growth_speed"><![CDATA[Реклама объявления: Скорость развития]]></string>
     <string name="_bx_ads_chart_label_impressions"><![CDATA[Показы]]></string>
     <string name="_bx_ads_chart_label_clicks"><![CDATA[Клики]]></string>
+    <string name="_bx_ads_chart_label_roi"><![CDATA[Рентабельность инвестиций (ROI)]]></string>
     <string name="_bx_ads_chart_label_roi_local"><![CDATA[Локальный доход]]></string>
     <string name="_bx_ads_chart_label_roi_source"><![CDATA[Внешний доход]]></string>
     <string name="_bx_ads_chart_label_roi_investment"><![CDATA[Вложения]]></string>
