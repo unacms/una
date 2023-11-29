@@ -28,6 +28,9 @@ require_once('BxAdsSource.php');
  * 3. REST Admin API -> Product
  * https://shopify.dev/docs/api/admin-rest/2023-10/resources/product
  * 
+ * 4. REST Admin API -> Order
+ * https://shopify.dev/docs/api/admin-rest/2023-10/resources/order
+ * 
  */
 class BxAdsSourceShopifyAdmin extends BxAdsSource
 {
@@ -88,6 +91,60 @@ class BxAdsSourceShopifyAdmin extends BxAdsSource
         return $aResult;
     }
 
+    public function getOrders($aParams)
+    {
+        $sSample = $aParams['sample'];
+        $aRequest = [
+            'fields' => 'id,name,created_at,processed_at,current_total_price,current_total_tax,line_items',
+            'financial_status' => isset($aParams['status']) ? $aParams['status'] : 'paid'
+        ];
+
+        switch($sSample) {
+            case 'ids':
+                $aRequest = array_merge($aRequest, [
+                    'ids' => implode(',', $aParams['ids']),
+                ]);
+                break;
+
+            case 'sales_by_product_id':
+                $aRequest = array_merge($aRequest, [
+                    'processed_at_min' => $this->_dateI2S($aParams['date_from']),
+                ]);
+                break;
+        }
+
+        $sOrders = $this->_call('orders.json', $aRequest, 'get');
+        if(empty($sOrders))
+            return [];
+        
+        $aOrders = json_decode($sOrders, true);
+        if(empty($aOrders) || !is_array($aOrders) || empty($aOrders['orders']))
+            return [];
+
+        $aOrders = $aOrders['orders'];
+
+        $aResults = [];
+        foreach($aOrders as $aOrder) 
+            foreach($aOrder['line_items'] as $aLineItem) {
+                if($sSample == 'sales_by_product_id' && $aLineItem['product_id'] != $aParams['product_id'])
+                    continue;
+
+                $aResults[] = [
+                    'id' => $aOrder['id'],
+                    'created' => $aOrder['created_at'],
+                    'processed' => $aOrder['processed_at'],
+                    'name' => $aOrder['name'],
+                    'product_id' => $aLineItem['product_id'],
+                    'product_price' => (float)$aLineItem['price'],
+                    'product_discounted' => (float)$aLineItem['pre_tax_price'],
+                    'quantity' => (int)$aLineItem['quantity'],
+                    'amount' => (int)$aLineItem['quantity'] * (float)$aLineItem['pre_tax_price']
+                ];
+            }
+
+        return $aResults;
+    }
+
     /**
      * Internal methods.
      */
@@ -100,5 +157,10 @@ class BxAdsSourceShopifyAdmin extends BxAdsSource
             $aHeaders[] = 'Authorization: Basic ' . base64_encode($this->_sApiKey . ':' . $this->_sApiSecretKey);
 
         return bx_file_get_contents($this->_sEndpoint . $sRequest, $aParams, $sMethod, $aHeaders);
+    }
+    
+    protected function _dateI2S($iTimestamp)
+    {
+        return date("Y-m-d", $iTimestamp);
     }
 }

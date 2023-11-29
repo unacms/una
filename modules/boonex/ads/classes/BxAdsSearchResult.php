@@ -28,7 +28,7 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => $CNF['OBJECT_METATAGS'],
             'title' => _t('_bx_ads_page_title_browse'),
             'table' => $CNF['TABLE_ENTRIES'],
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'price', 'quantity', 'notes_purchased'),
+            'ownFields' => array('id', 'url', 'title', 'text', 'thumb', 'author', 'added', 'price', 'quantity', 'notes_purchased'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

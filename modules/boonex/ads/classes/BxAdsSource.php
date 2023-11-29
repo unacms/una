@@ -67,6 +67,11 @@ class BxAdsSource extends BxDol
         return [];
     }
 
+    public function getOrders($aParams)
+    {
+        return [];
+    }
+
     /**
      * Internal methods.
      */

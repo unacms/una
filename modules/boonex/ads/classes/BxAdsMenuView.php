@@ -61,8 +61,17 @@ class BxAdsMenuView extends BxBaseModTextMenuView
                 if((float)$this->_aContentInfo[$CNF['FIELD_PRICE']] == 0 || (int)$this->_aContentInfo[$CNF['FIELD_QUANTITY']] <= 0) 
                     break;
 
+                $aCommodity = $this->_oModule->_oDb->getCommodity([
+                    'sample' => 'entry_id', 
+                    'entry_id' => $this->_aContentInfo[$CNF['FIELD_ID']], 
+                    'type' => BX_ADS_COMMODITY_TYPE_PRODUCT, 
+                    'latest' => true
+                ]);
+                if(empty($aCommodity) || !is_array($aCommodity))
+                    break;
+
                 $iAuthorId = (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
-                $aJs = $oPayment->getAddToCartJs($iAuthorId, $this->MODULE, $this->_aContentInfo[$CNF['FIELD_ID']], 1, true);
+                $aJs = $oPayment->getAddToCartJs($iAuthorId, $this->MODULE, $aCommodity['id'], 1, true);
                 if(empty($aJs) || !is_array($aJs))
                     break;
 

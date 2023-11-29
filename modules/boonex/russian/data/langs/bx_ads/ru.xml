@@ -219,6 +219,8 @@
     <string name="_bx_ads_page_block_title_entry_promotion_growth"><![CDATA[Реклама <a href="{entry_link}">{title}</a> объявления]]></string>
     <string name="_bx_ads_page_block_title_sys_entry_promotion_summary"><![CDATA[Реклама (Сводка)]]></string>
     <string name="_bx_ads_page_block_title_entry_promotion_summary"><![CDATA[Сводка]]></string>
+    <string name="_bx_ads_page_block_title_sys_entry_promotion_roi"><![CDATA[Рентабельность инвестиций]]></string>
+    <string name="_bx_ads_page_block_title_entry_promotion_roi"><![CDATA[Рентабельность инвестиций]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews"><![CDATA[Обзоры]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_link"><![CDATA[Обзоры к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_rating"><![CDATA[Рейтинг]]></string>
@@ -458,6 +460,9 @@
     <string name="_bx_ads_chart_promotion_growth_speed"><![CDATA[Реклама объявления: Скорость развития]]></string>
     <string name="_bx_ads_chart_label_impressions"><![CDATA[Показы]]></string>
     <string name="_bx_ads_chart_label_clicks"><![CDATA[Клики]]></string>
+    <string name="_bx_ads_chart_label_roi_local"><![CDATA[Локальный доход]]></string>
+    <string name="_bx_ads_chart_label_roi_source"><![CDATA[Внешний доход]]></string>
+    <string name="_bx_ads_chart_label_roi_investment"><![CDATA[Вложения]]></string>
 
     <string name="_bx_ads_search_extended"><![CDATA[Поиск объявлений]]></string>
     <string name="_bx_ads_search_extended_cmts"><![CDATA[Поиск комментариев к объявлениям]]></string>

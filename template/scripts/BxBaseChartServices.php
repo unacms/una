@@ -165,6 +165,7 @@ class BxBaseChartServices extends BxDol
         $oTemplate->addCss(array('chart.css'));
 
         return $oTemplate->parseHtmlByName('chart_stats.html', array(
+            'chart_id' => 'bx_chart_stats_graph',
             'chart_data' => json_encode(array(
                 'labels' => $aTmplVarsDataLabels,
                 'datasets' => array($aTmplVarsDataSet)

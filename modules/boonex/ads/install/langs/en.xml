@@ -220,6 +220,8 @@
     <string name="_bx_ads_page_block_title_entry_promotion_growth"><![CDATA[Promotion for <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_ads_page_block_title_sys_entry_promotion_summary"><![CDATA[Promotion (Summary)]]></string>
     <string name="_bx_ads_page_block_title_entry_promotion_summary"><![CDATA[Summary]]></string>
+    <string name="_bx_ads_page_block_title_sys_entry_promotion_roi"><![CDATA[ROI]]></string>
+    <string name="_bx_ads_page_block_title_entry_promotion_roi"><![CDATA[ROI]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews"><![CDATA[Reviews]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_link"><![CDATA[Reviews to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_ads_page_block_title_entry_reviews_rating"><![CDATA[Rating]]></string>
@@ -462,6 +464,9 @@
     <string name="_bx_ads_chart_promotion_growth_speed"><![CDATA[Ad Promotion: Growth Speed]]></string>
     <string name="_bx_ads_chart_label_impressions"><![CDATA[Impressions]]></string>
     <string name="_bx_ads_chart_label_clicks"><![CDATA[Clicks]]></string>
+    <string name="_bx_ads_chart_label_roi_local"><![CDATA[Local income]]></string>
+    <string name="_bx_ads_chart_label_roi_source"><![CDATA[External income]]></string>
+    <string name="_bx_ads_chart_label_roi_investment"><![CDATA[Investments]]></string>
 
     <string name="_bx_ads_search_extended"><![CDATA[Ads Search]]></string>
     <string name="_bx_ads_search_extended_cmts"><![CDATA[Ads Comments Search]]></string>

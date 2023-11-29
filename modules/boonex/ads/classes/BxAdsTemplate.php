@@ -116,9 +116,76 @@ class BxAdsTemplate extends BxBaseModTextTemplate
             $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
         }
 
+        if($this->_bIsApi)
+            return [
+                'labels' => $aTmplVarsDataLabels,
+                'dataset' => $aTmplVarsDataSet
+            ];
+
         $this->addJs(['chart.min.js']);
         $this->addCss(['chart.css']);
         return $this->parseHtmlByName('chart_stats.html', [
+            'chart_id' => $this->MODULE . '_chart_summary',
+            'chart_data' => json_encode([
+                'labels' => $aTmplVarsDataLabels,
+                'datasets' => [$aTmplVarsDataSet]
+            ])
+        ]);
+    }
+
+    public function entryPromotionRoi($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aTmplVarsDataLabels = $aTmplVarsDataSet = [];
+        
+        //--- Get income local.
+        $sTitleLocal = bx_html_attribute(_t($CNF['T']['chart_label_roi_local']));
+        $iValueLocal = (int)$this->_oDb->getLicense(['type' => 'entry_id_income', 'entry_id' => $aContentInfo[$CNF['FIELD_ID']]]);
+
+        $aTmplVarsDataLabels[] = $sTitleLocal . ' - ' . $iValueLocal;
+        $aTmplVarsDataSet['data'][] = $iValueLocal;
+        $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
+
+        //--- Get income external (from source)
+        if($this->_oConfig->isSources()) {
+            $oSource = $this->_oModule->getObjectSource($aContentInfo[$CNF['FIELD_SOURCE_TYPE']], $aContentInfo[$CNF['FIELD_AUTHOR']]);
+            if($oSource !== false && !empty($aContentInfo[$CNF['FIELD_SOURCE']])) {
+                $aOrders = $oSource->getOrders([
+                    'sample' => 'sales_by_product_id', 
+                    'product_id' => $aContentInfo[$CNF['FIELD_SOURCE']], 
+                    'date_from' => $aContentInfo[$CNF['FIELD_ADDED']]
+                ]);
+
+                $sTitleSource = bx_html_attribute(_t($CNF['T']['chart_label_roi_source']));
+                $iValueSource = 0;
+                foreach($aOrders as $aOrder)
+                    $iValueSource += $aOrder['amount'];
+
+                $aTmplVarsDataLabels[] = $sTitleSource . ' - ' . $iValueSource;
+                $aTmplVarsDataSet['data'][] = $iValueSource;
+                $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
+            }
+        }
+
+        //--- Get investments
+        $sTitleInvestment = bx_html_attribute(_t($CNF['T']['chart_label_roi_investment']));
+        $iValueInvestment = (int)$this->_oDb->getPromotionLicense(['type' => 'entry_id_outcome', 'entry_id' => $aContentInfo[$CNF['FIELD_ID']]]);
+
+        $aTmplVarsDataLabels[] = $sTitleInvestment . ' - ' . $iValueInvestment;
+        $aTmplVarsDataSet['data'][] = $iValueInvestment;
+        $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
+
+        if($this->_bIsApi)
+            return [
+                'labels' => $aTmplVarsDataLabels,
+                'dataset' => $aTmplVarsDataSet
+            ];
+
+        $this->addJs(['chart.min.js']);
+        $this->addCss(['chart.css']);
+        return $this->parseHtmlByName('chart_stats.html', [
+            'chart_id' => $this->MODULE . '_chart_roi',
             'chart_data' => json_encode([
                 'labels' => $aTmplVarsDataLabels,
                 'datasets' => [$aTmplVarsDataSet]
@@ -206,31 +273,46 @@ class BxAdsTemplate extends BxBaseModTextTemplate
 
         $aResult = parent::getUnit($aData, $aParams);
         
-        if($this->_oConfig->isSources() && !empty($aData[$CNF['FIELD_URL']])) 
+        if($this->_oConfig->isSources() && !empty($aData[$CNF['FIELD_URL']])) {
             $aResult = array_merge($aResult, [
                 'content_url' => $aData[$CNF['FIELD_URL']],
             ]);
 
+            if($aResult['bx_if:thumb']['condition'])
+                $aResult['bx_if:thumb']['content'] = array_merge($aResult['bx_if:thumb']['content'], [
+                    'content_url' => $aData[$CNF['FIELD_URL']],
+                ]);
+        }
+
         if($this->_oConfig->isPromotion()) {
             $sJsObject = $this->_oConfig->getJsObject('main');
 
+            $sContentUrl = 'javascript:void(0)';
+            $sContentOnclick = 'return ' . $sJsObject . '.registerClick(this, ' . $aData[$CNF['FIELD_ID']] . ')';
+
             $aResult = array_merge($aResult, [
-                'content_url' => 'javascript:void(0)',
+                'content_url' => $sContentUrl,
                 'bx_if:show_onclick' => [
                     'condition' => true,
                     'content' => [
-                        'content_onclick' => 'return ' . $sJsObject . '.registerClick(this, ' . $aData[$CNF['FIELD_ID']] . ')'
+                        'content_onclick' => $sContentOnclick
                     ]
                 ],
-                'bx_if:show_tracker' => [
-                    'condition' => true,
-                    'content' => [
-                        'js_object' => $sJsObject,
-                        'id' => $aData[$CNF['FIELD_ID']]
-                    ]
-                ],
+                'unit_content_after' => $this->_wrapInTagJsCode($sJsObject . '.registerTraker(' . $aData[$CNF['FIELD_ID']] . ');'),
             ]);
+
+            if($aResult['bx_if:thumb']['condition'])
+                $aResult['bx_if:thumb']['content'] = array_merge($aResult['bx_if:thumb']['content'], [
+                    'content_url' => $sContentUrl,
+                    'bx_if:show_thumb_onclick' => [
+                        'condition' => true,
+                        'content' => [
+                            'content_onclick' => $sContentOnclick
+                        ]
+                    ],
+                ]);
         }
+
         return $aResult;
     }
 

@@ -95,11 +95,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 -- PAGE: view entry promotion
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_ads_view_entry_promotion', '_bx_ads_page_title_sys_view_entry_promotion', '_bx_ads_page_title_view_entry_promotion', 'bx_ads', 2, 2147483647, 1, 'view-ad-promotion', '', '', '', '', 0, 1, 0, 'BxAdsPageEntry', 'modules/boonex/ads/classes/BxAdsPageEntry.php');
+('bx_ads_view_entry_promotion', '_bx_ads_page_title_sys_view_entry_promotion', '_bx_ads_page_title_view_entry_promotion', 'bx_ads', 12, 2147483647, 1, 'view-ad-promotion', '', '', '', '', 0, 1, 0, 'BxAdsPageEntry', 'modules/boonex/ads/classes/BxAdsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_ads_view_entry_promotion', 1, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_growth', '_bx_ads_page_block_title_entry_promotion_growth', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:23:"entity_promotion_growth";}', 0, 0, 1),
-('bx_ads_view_entry_promotion', 2, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_summary', '_bx_ads_page_block_title_entry_promotion_summary', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:24:"entity_promotion_summary";}', 0, 0, 1);
+('bx_ads_view_entry_promotion', 2, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_growth', '_bx_ads_page_block_title_entry_promotion_growth', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:23:"entity_promotion_growth";}', 0, 0, 1),
+('bx_ads_view_entry_promotion', 3, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_summary', '_bx_ads_page_block_title_entry_promotion_summary', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:24:"entity_promotion_summary";}', 0, 0, 1),
+('bx_ads_view_entry_promotion', 3, 'bx_ads', '_bx_ads_page_block_title_sys_entry_promotion_roi', '_bx_ads_page_block_title_entry_promotion_roi', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:20:"entity_promotion_roi";}', 0, 0, 2);
 
 -- PAGE: popular entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
