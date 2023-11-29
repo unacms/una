@@ -120,8 +120,12 @@ function bx_login($iId, $bRememberMe = false)
 
     $oAccountQuery->updateLoggedIn($iId);
 
-    if(($iProfileId = BxDolProfileQuery::getInstance()->getCurrentProfileByAccount($iId, true)) !== false)
-        BxDolRecommendation::updateData($iProfileId);
+    $oProfileQuery = BxDolProfileQuery::getInstance();
+    if(($iProfileId = $oProfileQuery->getCurrentProfileByAccount($iId, true)) !== false) {
+        $aProfileInfo = $oProfileQuery->getInfoById($iProfileId);
+        if(!empty($aProfileInfo) && is_array($aProfileInfo) && $aProfileInfo['type'] != 'system')
+            BxDolRecommendation::updateData($iProfileId);
+    }
 
     bx_alert('account', 'login',  $iId);
 
