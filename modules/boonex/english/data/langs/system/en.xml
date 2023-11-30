@@ -2282,6 +2282,9 @@ If it is not enabled then please consider implement this optimization, since it 
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
+<p>or use the code:</p>
+<p><span class="h3">{conf_code}</span></p>
+<p> </p>
 {email_footer}]]></string>
     <string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
 <p>Module: <b>{Module}</b></p>
@@ -3653,7 +3656,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_account_profile_context_change_to_another_suggestion"><![CDATA[You can <a href="{0}">change your current profile</a> to this profile]]></string>
     <string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has been successfully changed to: <b>{0}</b>]]></string>
     <string name="_sys_txt_account_suspended"><![CDATA[Your account is suspended.]]></string>
-    <string name="_sys_txt_account_unconfirmed_email"><![CDATA[Your email address is unconfirmed. Please, check your email ({1}) for a confirmation letter and click email confirmation link. Can't find the letter? Check your SPAM folder or <a href="{0}">send the verification letter again</a>.]]></string>
+    <string name="_sys_txt_account_unconfirmed_email"><![CDATA[Your email address is unconfirmed. Please, check your email ({1}) for a confirmation letter and click email confirmation link or use confirmation code (6 digit) to <a href="{2}">confirm your email</a>. Can't find the letter? Check your SPAM folder or <a href="{0}">send the verification letter again</a>.]]></string>
     <string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Your phone is unconfirmed. Please, confirm it on <a href="{0}">verification page</a>.]]></string>
     <string name="_sys_txt_account_profile_system"><![CDATA[Please <a href="{0}">create a profile</a> to start using the site.]]></string>
     <string name="_sys_txt_account_need_to_change_password"><![CDATA[Your password has been expired. Please <a href="{0}">change your password</a>.]]></string>

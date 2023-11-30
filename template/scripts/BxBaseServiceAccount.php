@@ -390,34 +390,13 @@ class BxBaseServiceAccount extends BxDol
      */
     public function confirmEmail($sKey)
     {
-        // check if key exists
-        $oKey = BxDolKey::getInstance();
-        if (!$oKey || !$oKey->isKeyExists($sKey))
-            return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
-
-        // check if key data exists
-        $aData = $oKey->getKeyData($sKey);
-        if (!isset($aData['account_id']))
-            return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
-
-        // check if account exists
-        $oAccount = BxDolAccount::getInstance($aData['account_id']);
-        if (!$oAccount)
-            return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
-
-        // remove key
-        $oKey->removeKey($sKey);
-
-        // confirm email
-        if (!$oAccount->updateEmailConfirmed(true))
-            return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
-
-        // login to user's account automatically
-        bx_login($aData['account_id']);
+        $mixedAccountId = $this->_confirmEmail($sKey);
+        if(is_string($mixedAccountId) && !is_numeric($mixedAccountId))
+            return MsgBox($mixedAccountId);
 
         // redirect with success message
         $sUrl = getParam('sys_redirect_after_email_confirmation');
-        bx_alert('account', 'after_email_confirmation', $aData['account_id'], false, ['override_result' => &$sUrl]);
+        bx_alert('account', 'after_email_confirmation', $mixedAccountId, false, ['override_result' => &$sUrl]);
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
@@ -427,6 +406,12 @@ class BxBaseServiceAccount extends BxDol
 
         BxDolTemplate::getInstance()->getPageCode();
         exit;
+    }
+
+    public function serviceConfirmEmail($sKey)
+    {
+        $mixedAccountId = $this->_confirmEmail($sKey);
+        return is_int($mixedAccountId) || is_numeric($mixedAccountId);
     }
 
     public function serviceGetOptionsResetPasswordRedirect()
@@ -709,6 +694,35 @@ class BxBaseServiceAccount extends BxDol
         return $sPwd;
     }
 
+    protected function _confirmEmail($sKey)
+    {
+        // check if key exists
+        $oKey = BxDolKey::getInstance();
+        if (!$oKey || !$oKey->isKeyExists($sKey))
+            return _t("_sys_txt_confirm_email_error_occured");
+
+        // check if key data exists
+        $aData = $oKey->getKeyData($sKey);
+        if (!isset($aData['account_id']))
+            return _t("_sys_txt_confirm_email_error_occured");
+
+        // check if account exists
+        $oAccount = BxDolAccount::getInstance($aData['account_id']);
+        if (!$oAccount)
+            return _t("_sys_txt_confirm_email_error_occured");
+
+        // remove key
+        $oKey->removeKey($sKey);
+
+        // confirm email
+        if (!$oAccount->updateEmailConfirmed(true))
+            return _t("_sys_txt_confirm_email_error_occured");
+
+        // login to user's account automatically
+        bx_login($aData['account_id']);
+
+        return (int)$aData['account_id'];
+    }
 }
 
 /** @} */

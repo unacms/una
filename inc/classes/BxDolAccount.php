@@ -346,18 +346,19 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $oKey = BxDolKey::getInstance();
-        $sConfirmationCode = $oKey->getNewKey(array('account_id' => $iAccountId));
-        $sConfirmationLink = bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email'), array('code' => $sConfirmationCode));
+        $sConfirmationCode = $oKey->getNewKeyNumeric(['account_id' => $iAccountId]);
+        $sConfirmationLink = bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email'), ['code' => $sConfirmationCode]);
 
-        $aReplaceVars = array(
+        $sEmailTemplate = 't_Confirmation';
+        $aEmailReplaceVars = [
             'name' => $this->getDisplayName($iAccountId),
             'email' => $aAccountInfo['email'],
             'conf_code' => $sConfirmationCode,
             'conf_link' => $sConfirmationLink,
             'conf_form_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email')
-        );
+        ];
 
-        $bResult = sendMailTemplate('t_Confirmation', $iAccountId, (int)$aAccountInfo['profile_id'], $aReplaceVars, BX_EMAIL_SYSTEM);
+        $bResult = sendMailTemplate($sEmailTemplate, $iAccountId, (int)$aAccountInfo['profile_id'], $aEmailReplaceVars, BX_EMAIL_SYSTEM);
         if($bResult)
             $this->doAudit($iAccountId, '_sys_audit_action_account_resend_confirmation_email');
 
@@ -670,9 +671,9 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     {
         if (!$this->isConfirmed()) {
             if (!$this->isConfirmedEmail()) {
-                $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&resend=1';
+                $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email');
                 $aAccountInfo = $this->getInfo();
-                $oInformer->add('sys-account-unconfirmed-email', _t('_sys_txt_account_unconfirmed_email', $sUrl, $aAccountInfo['email']), BX_INFORMER_ALERT);
+                $oInformer->add('sys-account-unconfirmed-email', _t('_sys_txt_account_unconfirmed_email', $sUrl . '&resend=1', $aAccountInfo['email'], $sUrl), BX_INFORMER_ALERT);
             }
             if (!$this->isConfirmedPhone()) {
                 $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone') . '';

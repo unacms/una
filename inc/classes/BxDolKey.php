@@ -81,6 +81,27 @@ class BxDolKey extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get new key (numeric).
+     * @param $aData - some data to associate with the key
+     * @param $iExpire - number of seconds to generated key after, by default - 1 week
+     * @return newly generated key string
+     */
+    public function getNewKeyNumeric ($aData = false, $iExpire = 604800)
+    {
+        $sKey = '';
+        while(true) {
+            $sKey = mt_rand(100000, 999999);
+            if(!$this->isKeyExists($sKey))
+                break;
+        }
+
+        if($this->_oQuery->insert($sKey, $aData ? serialize($aData) : '', (int)$iExpire));
+            return $sKey;
+
+        return false;
+    }
+
+    /**
      * Check if provided key exists.
      * @param $sKey - key string
      * @return true if key exists or false if key is missing
