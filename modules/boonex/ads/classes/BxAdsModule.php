@@ -644,6 +644,22 @@ class BxAdsModule extends BxBaseModTextModule
         return $mixedResult;
     }
 
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedResult = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+        if(!$mixedResult)
+            return $mixedResult;
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+
+        if($this->_oConfig->isSources() && !empty($aContentInfo[$CNF['FIELD_URL']]))
+            $mixedResult['url'] = $aContentInfo[$CNF['FIELD_URL']];
+
+        return $mixedResult;
+    }
+
     public function serviceGetNotificationsData()
     {
         $sModule = $this->_aModule['name'];
@@ -2427,7 +2443,24 @@ class BxAdsModule extends BxBaseModTextModule
                 'text' => $aResult['text']
             )) . ($bDynamic ? $sInclude : '');
         }
-        
+
+        if($this->_oConfig->isSources() && !empty($aContentInfo[$CNF['FIELD_URL']]))
+            $aResult['url'] = $aContentInfo[$CNF['FIELD_URL']];
+
+        if($this->_oConfig->isPromotion()) {
+            $sJsObject = $this->_oConfig->getJsObject('main');
+            $sHtmlId = $this->_oConfig->getHtmlIds('unit') . $aContentInfo[$CNF['FIELD_ID']] . '-' . time() . '-' . mt_rand(0, 100);
+
+            $aResult = array_merge($aResult, [
+                'url' => 'javascript:void(0)',
+                'onclick' => 'return ' . $sJsObject . '.registerClick(this, ' . $aContentInfo[$CNF['FIELD_ID']] . ')',
+                'raw' => $this->_oTemplate->parseHtmlByName('timeline_post_promotion.html', [
+                    'html_id' => $sHtmlId,
+                    'js_code' => $this->_oTemplate->_wrapInTagJsCode($sJsObject . '.registerTrakerForTimeline(' . $aContentInfo[$CNF['FIELD_ID']] . ', \'' . $sHtmlId . '\');')
+                ])
+            ]);
+        }
+
         return $aResult;
     }
 

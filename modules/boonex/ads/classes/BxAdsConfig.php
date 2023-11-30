@@ -432,6 +432,14 @@ class BxAdsConfig extends BxBaseModTextConfig
     {
         return 'bx_ads_shopify_' . bx_site_hash() . '.php';
     }
+    
+    public function getRandomWeightedItem($aWeightedValues)
+    {
+        $iRand = mt_rand(1, (int)array_sum($aWeightedValues));
+        foreach($aWeightedValues as $iKey => $iValue)
+            if(($iRand -= $iValue) <= 0)
+                return $iKey;
+    }
 }
 
 /** @} */

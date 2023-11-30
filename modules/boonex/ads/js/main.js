@@ -39,6 +39,29 @@ BxAdsMain.prototype.registerTraker = function(iId) {
     });
 };
 
+BxAdsMain.prototype.registerTrakerForTimeline = function(iId, sHtmlId) {
+    var $this = this;
+
+    if(typeof window.glBxAdsTracked === 'undefined')
+        window.glBxAdsTracked = [];
+
+    $(window).on('load scroll', function() {
+        if(glBxAdsTracked[sHtmlId])
+            return;
+
+        var oEvent = $('#' + sHtmlId).parents('.bx-tl-item:first');
+        if(!oEvent || oEvent.length == 0)
+            return;
+
+        oEvent = oEvent.get(0);
+        if(oEvent && $this.isVisible(oEvent)) {
+            $this.registerImpression(oEvent, iId);
+
+            glBxAdsTracked[sHtmlId] = true;
+        }
+    });
+};
+
 BxAdsMain.prototype.registerImpression = function(oElement, iId) {
     jQuery.get (
         this._sActionsUrl + 'register_impression/' + iId,

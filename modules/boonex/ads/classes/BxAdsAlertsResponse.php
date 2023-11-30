@@ -73,6 +73,40 @@ class BxAdsAlertsResponse extends BxBaseModTextAlertsResponse
             foreach($aCategories as $iCategoryId)
                 $this->_oModule->serviceUpdateCategoriesStatsByCategory($iCategoryId);   
     }
+
+    protected function _processBxTimelineGetView($oAlert)
+    {
+        if(!$this->_oModule->_oConfig->isPromotion())
+            return;
+
+        $bDynamicMode = isset($oAlert->aExtras['params']['dynamic_mode']) && (bool)$oAlert->aExtras['params']['dynamic_mode'] === true;
+
+        $sJs = $this->_oModule->_oTemplate->addJs(['main.js'], $bDynamicMode);
+        $oAlert->aExtras['content_before'] .= ($bDynamicMode ? $sJs : '') . $this->_oModule->_oTemplate->getJsCode('main');
+    }
+
+    protected function _processBxTimelineGetExternalPost($oAlert)
+    {
+        if(!$this->_oModule->_oConfig->isPromotion())
+            return;
+
+        $aEntries = $this->_oModule->_oDb->getEntriesBy(['type' => 'promotion']);
+        if(empty($aEntries) || !is_array($aEntries))
+            return;
+
+        $iId = $this->_oModule->_oConfig->getRandomWeightedItem($aEntries);
+
+        $sModule = 'bx_timeline';
+        $aEvent = bx_srv($sModule, 'get_events_by_descriptor', [$this->MODULE, 'added', $iId]);
+        if(empty($aEvent) || !is_array($aEvent))
+            return;
+
+        $mixedEvent = bx_srv($sModule, 'get_post', [$aEvent, $oAlert->aExtras['params']]);
+        if(empty($mixedEvent))
+            return;
+
+        $oAlert->aExtras['override_result'] = $mixedEvent;
+    }
 }
 
 /** @} */

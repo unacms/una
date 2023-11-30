@@ -205,6 +205,24 @@ class BxAdsDb extends BxBaseModTextDb
                 $sWhereClause .= " AND UNIX_TIMESTAMP() - `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_CHANGED'] . "` > :days";
                 break;
 
+            case 'promotion':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'weight';
+                $aMethod['params'][3] = [
+                    'today' => $this->_oConfig->getDay(),
+                    'promotion_cpm' => $this->_oConfig->getPromotionCpm(),
+                ];
+
+                $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` AS `id`, CAST(`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_DAILY'] . "` AS UNSIGNED) AS `weight`";
+                $sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_PROMO_TRACKER'] . "` AS `tpt` ON `tpt`.`entry_id`=`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` AND `tpt`.`date` = :today";
+                //--- Check Total Budget
+                $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_TOTAL'] . "` <> 0 AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_TOTAL'] . "` > (:promotion_cpm * `" . $CNF['TABLE_ENTRIES'] . "`.`impressions`)/1000";
+                //--- Check Daily Budget
+                $sWhereClause .= " AND (ISNULL(`tpt`.`impressions`) OR `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_BUDGET_DAILY'] . "` > (:promotion_cpm * `tpt`.`impressions`)/1000)";
+                $sOrderClause = "";
+                break;
+
             default:
                 return parent::getEntriesBy($aParams);
         }
