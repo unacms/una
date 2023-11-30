@@ -318,7 +318,10 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'txt_cd_ct_product' => '_bx_ads_txt_cd_ct_product',
                 'txt_cd_ct_promotion' => '_bx_ads_txt_cd_ct_promotion',
                 'chart_label_impressions' => '_bx_ads_chart_label_impressions',
-                'chart_label_clicks' => '_bx_ads_chart_label_clicks'
+                'chart_label_clicks' => '_bx_ads_chart_label_clicks',
+                'chart_label_roi_local' => '_bx_ads_chart_label_roi_local',
+                'chart_label_roi_source' => '_bx_ads_chart_label_roi_source',
+                'chart_label_roi_investment' => '_bx_ads_chart_label_roi_investment',
             ),
         ));
         

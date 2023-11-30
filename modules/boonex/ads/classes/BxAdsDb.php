@@ -639,7 +639,7 @@ class BxAdsDb extends BxBaseModTextDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
     	$sSelectClause = "`tl`.*";
-    	$sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
         switch($aParams['type']) {
             case 'id':
             	$aMethod['name'] = 'getRow';
@@ -663,6 +663,18 @@ class BxAdsDb extends BxBaseModTextDb
                     $sLimitClause = "1";
                 }
                 break;
+                
+            case 'entry_id_income':
+                $aMethod['name'] = "getOne";
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sSelectClause = "SUM(`te`.`" . $CNF['FIELD_PRICE'] . "` * `tl`.`count`)";
+                $sWhereClause = " AND `tl`.`entry_id`=:entry_id";
+                $sJoinClause = " INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `tl`.`entry_id`=`te`.`" . $CNF['FIELD_ID'] . "`";
+                $sGroupClause = "`tl`.`entry_id`";
+                break;
 
             case 'has_by':
                 $aMethod['name'] = "getOne";
@@ -683,13 +695,14 @@ class BxAdsDb extends BxBaseModTextDb
                 break;
         }
 
+        $sGroupClause = !empty($sGroupClause) ? "GROUP BY " . $sGroupClause : $sGroupClause;
         $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
         $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
 
         $aMethod['params'][0] = "SELECT
             " . $sSelectClause . "
             FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
@@ -753,6 +766,47 @@ class BxAdsDb extends BxBaseModTextDb
 
     	$sQuery = "DELETE FROM `" . $CNF['TABLE_PROMO_LICENSES'] . "` WHERE " . $sWhereClause;
         return $this->query($sQuery, $aWhereBindings) !== false;
+    }
+
+    public function getPromotionLicense($aParams = [])
+    {
+    	$CNF = &$this->_oConfig->CNF;
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+    	$sSelectClause = "`tl`.*";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `tl`.`id`=:id";
+                break;
+
+            case 'entry_id_outcome':
+                $aMethod['name'] = "getOne";
+                $aMethod['params'][1] = [
+                    'entry_id' => $aParams['entry_id']
+                ];
+
+                $sSelectClause = "SUM(`tl`.`amount`)";
+                $sWhereClause = " AND `tl`.`entry_id`=:entry_id";
+                $sGroupClause = "`tl`.`entry_id`";
+                break;
+        }
+
+        $sGroupClause = !empty($sGroupClause) ? "GROUP BY " . $sGroupClause : $sGroupClause;
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+            " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_PROMO_LICENSES'] . "` AS `tl`" . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
     }
 
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)

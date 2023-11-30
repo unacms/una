@@ -924,9 +924,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $bBadgesCompact = isset($aParams['badges_compact']) ? $aParams['badges_compact'] : false;
 
         $sCoverData = isset($aData['thumb_data']) ? $aData['thumb_data'] : '';
-        
+
         $aTmplVars = array (
             'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
+            'html_id' => $this->_getUnitHtmlId($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'bx_if:show_onclick' => [
@@ -958,6 +959,12 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'title' => $sTitle,
                     'summary_attr' => bx_html_attribute($sSummaryPlain),
                     'content_url' => $sUrl,
+                    'bx_if:show_thumb_onclick' => [
+                        'condition' => false,
+                        'content' => [
+                            'content_onclick' => ''
+                        ]
+                    ],
                     'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
                     'gallery_url' => $sPhotoGallery ? $sPhotoGallery : '',
                     'image_settings' => $this->_getImageSettings($sCoverData),
@@ -969,10 +976,18 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'content' => array (
                     'module_icon' => $CNF['ICON'],
                     'content_url' => $sUrl,
+                    'bx_if:show_no_thumb_onclick' => [
+                        'condition' => false,
+                        'content' => [
+                            'content_onclick' => ''
+                        ]
+                    ],
                     'summary_plain' => $sSummaryPlain,
                     'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),
                 ),
             ),
+            'unit_content_before' => '',
+            'unit_content_after' => ''
         );
 
         if(isset($aParams['template_vars']) && is_array($aParams['template_vars']))
@@ -1025,6 +1040,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
         return $sResult;
+    }
+
+    protected function _getUnitHtmlId($aData, $sTemplateName = 'unit.html')
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return str_replace('_', '-', $this->MODULE . '_unit_' . $aData[$CNF['FIELD_ID']]);
     }
 
     protected function _getHeaderImage($aData)

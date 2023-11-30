@@ -63,17 +63,6 @@ class BxAdsModule extends BxBaseModTextModule
         return $aResult;
     }
 
-    public function actionShopifyCall()
-    {
-        $iProfileId = bx_get_logged_profile_id();
-
-        bx_import('SourceShopifyAdmin', $this->_aModule);
-        $oShopify = new BxAdsSourceShopifyAdmin($iProfileId, $this);
-        
-        $aResponse = $oShopify->getProduct('7433957113996');
-        print_r($aResponse); exit;
-    }
-
     public function actionLoadEntryFromSource()
     {
         $sSourceType = bx_process_url_param(bx_process_input(bx_get('source_type')));
@@ -356,12 +345,10 @@ class BxAdsModule extends BxBaseModTextModule
             if(!empty($aEntry) && is_array($aEntry) && !empty($aEntry[$CNF['FIELD_URL']]))
                 $sUrl = $aEntry[$CNF['FIELD_URL']];
         }
-        else
-            $sUrl = $this->_oConfig->getViewEntryUrl($iId);
 
         return [
             'code' => 0,
-            'redirect' => $sUrl
+            'redirect' => !empty($sUrl) ? $sUrl : $this->_oConfig->getViewEntryUrl($iId)
         ];
     }
 
@@ -592,6 +579,11 @@ class BxAdsModule extends BxBaseModTextModule
     public function serviceEntityPromotionSummary($iContentId = 0)
     {
         return $this->_serviceTemplateFunc('entryPromotionSummary', $iContentId);
+    }
+    
+    public function serviceEntityPromotionRoi($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryPromotionRoi', $iContentId);
     }
 
     /**

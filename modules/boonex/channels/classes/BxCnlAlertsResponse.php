@@ -53,8 +53,10 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
             if (isset($oAlert->aExtras['keyword'])){
                 $sName = $oAlert->aExtras['keyword'];
                 $iCnlId = $this->_oModule->_oDb->getChannelIdByName($sName);
-                if ($iCnlId > 0){
-                    $oAlert->aExtras['url'] = $this->_oModule->serviceProfileUrl($iCnlId);
+                if ($iCnlId > 0) {
+                    $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iCnlId);
+                    if($aContentInfo[$CNF['FIELD_STATUS']] == BX_BASE_MOD_GENERAL_STATUS_ACTIVE && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == BX_BASE_MOD_GENERAL_STATUS_ACTIVE)
+                        $oAlert->aExtras['url'] = $this->_oModule->serviceProfileUrl($iCnlId);
                 }
             }
         }

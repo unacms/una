@@ -195,10 +195,13 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if ($this->_oModule->serviceActAsProfile()) {
             $oAccount = BxDolAccount::getInstance($iAccountId);
             $oAccount->updateProfileContext($iProfileId);
-        }
 
-        // update content filters
-        BxDolContentFilter::getInstance()->updateValuesByProfile($oProfile->getInfo());
+            //update recomedations
+            BxDolRecommendation::updateData($iProfileId);
+
+            // update content filters
+            BxDolContentFilter::getInstance()->updateValuesByProfile($oProfile->getInfo());
+        }
 
         return '';
     }
