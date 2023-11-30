@@ -179,11 +179,20 @@ class BxInvModule extends BxDolModule
         $oForm = $this->getFormObjectInvite();
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
 
+       
+        
         $sResult = '';
         $oForm->initChecker();
-        if($oForm->isSubmittedAndValid())
+        if($oForm->isSubmittedAndValid()){
             $sResult = MsgBox($this->processFormObjectInvite($oForm));
+            if (bx_is_api()){
+                return [bx_api_get_msg($sResult)];
+            }
+        }
 
+        if (bx_is_api())
+            return [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->getName() . '/get_block_form_invite', 'immutable' => true]]])];
+        
         return [
             'content' => $sResult . $oForm->getCode()
         ];
@@ -209,6 +218,10 @@ class BxInvModule extends BxDolModule
     public function serviceGetBlockFormRequest()
     {
         $mixedResult = $this->_oTemplate->getBlockFormRequest();
+        
+        if (bx_is_api())
+            return $mixedResult;
+        
         if(is_array($mixedResult)) {
             echoJson($mixedResult);
             exit;
