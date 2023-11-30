@@ -355,31 +355,41 @@ class BxBaseFormView extends BxDolForm
             $this->genForm();
         
         // TODO: process inputs to translate titles, alerts, etc
+        $keysToRemove = [];
         
         foreach ($this->aInputs as &$aInput) {
-            if (isset($aInput['type']) && 'files' == $aInput['type']){
-                $oStorage = BxDolStorage::getObjectInstance($aInput['storage_object']);
-                $aInput['ext_allow'] = $oStorage->getObjectData()['ext_allow'];
-                $aInput['ext_deny'] = $oStorage->getObjectData()['ext_deny'];
-                $aInput['ghost_template'] = '';
-                $aInput['value'] = '';
-                $aInput['values'] = '';
-                $aInput['values_src'] = '';
-            }
-            
-            if (isset($aInput['type']) && 'location' == $aInput['type']){
-                $aLocationIndexes = BxDolForm::$LOCATION_INDEXES;
-                $aVars = [];
-                $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
-                foreach ($aLocationIndexes as $sKey)
-                    $aVars[$sKey] = $o->getLocationVal($aInput, $sKey, $this);
-                if ($aVars['country']) {
-                    $aCountries = BxDolFormQuery::getDataItems('Country');
-                    $sLocationString = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
-                    $aVars['location_string'] = $sLocationString;
+            if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput)) {
+                if (isset($aInput['type']) && 'files' == $aInput['type']){
+                    $oStorage = BxDolStorage::getObjectInstance($aInput['storage_object']);
+                    $aInput['ext_allow'] = $oStorage->getObjectData()['ext_allow'];
+                    $aInput['ext_deny'] = $oStorage->getObjectData()['ext_deny'];
+                    $aInput['ghost_template'] = '';
+                    $aInput['value'] = '';
+                    $aInput['values'] = '';
+                    $aInput['values_src'] = '';
                 }
-                $aInput['value'] = $aVars;
+
+                if (isset($aInput['type']) && 'location' == $aInput['type']){
+                    $aLocationIndexes = BxDolForm::$LOCATION_INDEXES;
+                    $aVars = [];
+                    $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
+                    foreach ($aLocationIndexes as $sKey)
+                        $aVars[$sKey] = $o->getLocationVal($aInput, $sKey, $this);
+                    if ($aVars['country']) {
+                        $aCountries = BxDolFormQuery::getDataItems('Country');
+                        $sLocationString = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
+                        $aVars['location_string'] = $sLocationString;
+                    }
+                    $aInput['value'] = $aVars;
+                }
             }
+            else{
+                $keysToRemove[] = $key;
+            }
+        }
+        
+        foreach ($keysToRemove as $key) {
+            unset($this->aInputs[$key]);
         }
     
         return ['inputs' => $this->aInputs, 'attrs' => $this->aFormAttrs, 'params' => $this->aParams];

@@ -72,7 +72,7 @@ class BxBaseEmbedIframely extends BxDolEmbed
     
     public function getDataFromApi ($sUrl, $sTheme)
     {
-        return bx_file_get_contents("https://iframe.ly/api/oembed?theme=" . $sTheme . "&url=" . $sUrl . "&api_key=" . getParam('sys_iframely_api_key'));
+        return bx_file_get_contents("https://iframe.ly/api/oembed?theme=" . $sTheme . "&url=" . $sUrl . "&api_key=" . getParam('sys_iframely_api_key') . "&card=small");
     }
     
     public function getDataHtml ($sUrl, $sTheme)
