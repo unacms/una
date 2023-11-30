@@ -334,7 +334,19 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_hot_threshold_age', '0', @iCategId, '_bx_timeline_option_hot_threshold_age', 'digit', '', '', '', '', 32),
 ('bx_timeline_hot_threshold_comment', '1', @iCategId, '_bx_timeline_option_hot_threshold_comment', 'digit', '', '', '', '', 33),
 ('bx_timeline_hot_threshold_vote', '2', @iCategId, '_bx_timeline_option_hot_threshold_vote', 'digit', '', '', '', '', 34),
-('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 35);
+('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 35), 
+
+('bx_timeline_extenals_every_public', '0', @iCategId, '_bx_timeline_option_extenals_every_public', 'digit', '', '', '', '', 40),
+('bx_timeline_extenals_every_owner', '0', @iCategId, '_bx_timeline_option_extenals_every_owner', 'digit', '', '', '', '', 41),
+('bx_timeline_extenals_every_feed', '0', @iCategId, '_bx_timeline_option_extenals_every_feed', 'digit', '', '', '', '', 42),
+('bx_timeline_extenals_every_hot', '0', @iCategId, '_bx_timeline_option_extenals_every_hot', 'digit', '', '', '', '', 43),
+('bx_timeline_extenals_every_feed_and_hot', '0', @iCategId, '_bx_timeline_option_extenals_every_feed_and_hot', 'digit', '', '', '', '', 44),
+('bx_timeline_extenals_every_public_preload', '0', @iCategId, '_bx_timeline_option_extenals_every_public_preload', 'digit', '', '', '', '', 45),
+('bx_timeline_extenals_every_owner_preload', '0', @iCategId, '_bx_timeline_option_extenals_every_owner_preload', 'digit', '', '', '', '', 46),
+('bx_timeline_extenals_every_feed_preload', '0', @iCategId, '_bx_timeline_option_extenals_every_feed_preload', 'digit', '', '', '', '', 47),
+('bx_timeline_extenals_every_hot_preload', '0', @iCategId, '_bx_timeline_option_extenals_every_hot_preload', 'digit', '', '', '', '', 48),
+('bx_timeline_extenals_every_feed_and_hot_preload', '0', @iCategId, '_bx_timeline_option_extenals_every_feed_and_hot_preload', 'digit', '', '', '', '', 49);
+
 
 -- Category: Card
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)

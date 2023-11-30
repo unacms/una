@@ -64,6 +64,16 @@
     <string name="_bx_timeline_option_editor_auto_attach_insertion"><![CDATA[Обрабатывать изображения, вставленные в редактор, как вложения]]></string>
     <string name="_bx_timeline_option_enable_media_priority"><![CDATA[Включить приоритет медиаконтента над ссылками во вложениях]]></string>
     <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Ограничить число присоединенных линок (0 - без ограничений)]]></string>
+    <string name="_bx_timeline_option_extenals_every_public"><![CDATA[Показывать внешнее событие как каждое N-е в публичной ленте.]]></string>
+    <string name="_bx_timeline_option_extenals_every_owner"><![CDATA[Показывать внешнее событие как каждое N-е в ленте контекста (профиля)]]></string>
+    <string name="_bx_timeline_option_extenals_every_feed"><![CDATA[Показывать внешнее событие как каждое N-е в ленте контекст (профиль) + подписки]]></string>
+    <string name="_bx_timeline_option_extenals_every_hot"><![CDATA[Показывать внешнее событие как каждое N-е в 'горячей' ленте]]></string>
+    <string name="_bx_timeline_option_extenals_every_feed_and_hot"><![CDATA[Показывать внешнее событие как каждое N-е в ленте 'Для тебя']]></string>
+    <string name="_bx_timeline_option_extenals_every_public_preload"><![CDATA[Показывать внешнее событие как каждое N-е в публичной ленте при включенной 'Бесконечной прокрутке']]></string>
+    <string name="_bx_timeline_option_extenals_every_owner_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте контекста (профиля) при включенной 'Бесконечной прокрутке']]></string>
+    <string name="_bx_timeline_option_extenals_every_feed_preload"><![CDATA[Показывать внешнее событие как каждое N-е в ленте контекст (профиль) + подписки при включенной 'Бесконечной прокрутке']]></string>
+    <string name="_bx_timeline_option_extenals_every_hot_preload"><![CDATA[Показывать внешнее событие как каждое N-е в hot timeline при включенной 'Бесконечной прокрутке']]></string>
+    <string name="_bx_timeline_option_extenals_every_feed_and_hot_preload"><![CDATA[CDATA[Показывать внешнее событие как каждое N-е в ленте 'Для тебя' при включенной 'Бесконечной прокрутке']]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
     <string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>

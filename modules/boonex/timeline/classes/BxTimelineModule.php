@@ -2236,7 +2236,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oGrid->getCode();
     }
 
-    public function serviceGetPost($mixedEvent, $aParams = array())
+    public function serviceGetPost($mixedEvent, $aParams = [])
     {
         if(!empty($mixedEvent) && !is_array($mixedEvent))
             $mixedEvent = $this->_oDb->getContentInfoById((int)$mixedEvent);
@@ -2244,12 +2244,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($mixedEvent) || !is_array($mixedEvent))
             return '';
 
-        $aParams = $this->_prepareParams(array_merge(array(
+        $sPost = $this->_oTemplate->getPost($mixedEvent, $this->_prepareParams(array_merge([
             'view' => BX_TIMELINE_VIEW_ITEM, 
             'type' => BX_TIMELINE_TYPE_ITEM
-        ), $aParams));
+        ], $aParams)));
 
-        return $this->_oTemplate->getPost($mixedEvent, $aParams);
+        return isset($aParams['return_data_type']) && $aParams['return_data_type'] == 'array' ? $mixedEvent : $sPost;
     }
 
     public function serviceGetTimelineRepostAllowedView($aEvent)
@@ -3472,6 +3472,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return _t('_bx_timeline_txt_err_cannot_perform_action');
 
         return '';
+    }
+
+    public function serviceGetEvents($aParams = [])
+    {
+        return $this->_oDb->getEvents($aParams);
+    }
+
+    public function serviceGetEventsByDescriptor($sType, $sAction, $iObjectId)
+    {
+        return $this->_oDb->getEvents([
+            'browse' => 'descriptor', 
+            'type' => $sType, 
+            'action' => $sAction, 
+            'object_id' => $iObjectId
+        ]);
     }
 
     /*

@@ -844,23 +844,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sEvent))
                 continue;
 
-            if($bReturnArray) {
+            if($bReturnArray)
                 $mixedEvents[] = $aEvent;
-                continue;
-            }
-
-            $mixedEvents .= $sEvent;
+            else
+                $mixedEvents .= $sEvent;
 
             $iEventIndex++;
             if($iExtenalsEvery > 0 && $iEventIndex % $iExtenalsEvery == 0) {
-                $sExternalPost = false;
-                bx_alert($this->_oConfig->getName(), 'get_external_post', 0, 0, array(
+                $mixedExternalPost = false;
+                bx_alert($this->_oConfig->getName(), 'get_external_post', 0, 0, [
                     'params' => $aParams,
-                    'override_result' => &$sExternalPost,
-                ));
+                    'override_result' => &$mixedExternalPost,
+                ]);
 
-                if($sExternalPost !== false)
-                    $mixedEvents .= $sExternalPost;
+                if($mixedExternalPost !== false) {
+                    if($bReturnArray)
+                        $mixedEvents[] = $mixedExternalPost;
+                    else
+                        $mixedEvents .= $mixedExternalPost;
+                }
             }
         }
 
@@ -2301,15 +2303,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         //--- Process Text ---//
         $sUrl = isset($aContent['url']) ? bx_html_attribute($aContent['url']) : '';
+        $OnClick = isset($aContent['onclick']) ? bx_html_attribute($aContent['onclick']) : '';
+
         $sTitle = '';
         if(isset($aContent['title']))
             $sTitle = bx_process_output($aContent['title']);
 
-        if(!empty($sUrl) && !empty($sTitle))
-            $sTitle = $this->parseLink($sUrl, $sTitle, array(
+        if(!empty($sUrl) && !empty($sTitle)) {
+            $aTitleParams = [
             	'class' => $sStylePrefix . '-title bx-lnk-src',
                 'title' => $sTitle
-            ));
+            ];
+            if(!empty($OnClick))
+                $aTitleParams['onclick'] = $OnClick;
+
+            $sTitle = $this->parseLink($sUrl, $sTitle, $aTitleParams);
+        }
 
         $sMethodPrepare = '_prepareTextForOutput';
         if($this->_oConfig->isBriefCards() && !$bViewItem)
