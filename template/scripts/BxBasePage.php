@@ -489,6 +489,7 @@ class BxBasePage extends BxDolPage
                 $a['menu_add'] = $oMenuAddContent->getCodeAPI();
             */
             $o = BxDolProfile::getInstance();
+            $oAccount = $o->getAccountObject();
             $a['user'] = [
                 'id' => $o->id(),
                 'email' => $o->getAccountObject()->getEmail(),
@@ -496,7 +497,8 @@ class BxBasePage extends BxDolPage
                 'url' => bx_api_get_relative_url($o->getUrl()),
                 'avatar' => $o->getAvatar(),
                 'settings' => $o->getSettings(),
-                'info' => $o->getInfo(),
+                //'info' => $o->getInfo(),
+                'confirmed' => $oAccount->isConfirmed(),
                 'notifications' => 0,
                 'cart' => 0,
                 'active' => $o->isActive(),
