@@ -81,6 +81,8 @@
     <string name="_bx_events_form_profile_input_time"><![CDATA[Time]]></string>
     <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Reminder (part of Internal Notifications)]]></string>
     <string name="_bx_events_form_profile_input_reminder"><![CDATA[Reminder]]></string>
+    <string name="_bx_events_form_profile_input_sys_threshold"><![CDATA[Threshold radius]]></string>
+    <string name="_bx_events_form_profile_input_threshold"><![CDATA[Threshold radius (in meters)]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Repeat year]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Repeat month]]></string>
