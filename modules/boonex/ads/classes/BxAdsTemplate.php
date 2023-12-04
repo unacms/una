@@ -304,7 +304,7 @@ class BxAdsTemplate extends BxBaseModTextTemplate
                         'content_onclick' => $sContentOnclick
                     ]
                 ],
-                'unit_content_after' => $this->_wrapInTagJsCode($sJsObject . '.registerTraker(' . $aData[$CNF['FIELD_ID']] . ');'),
+                'unit_content_after' => $this->_wrapInTagJsCode($sJsObject . '.registerTracker(' . $aData[$CNF['FIELD_ID']] . ');'),
             ]);
 
             if($aResult['bx_if:thumb']['condition'])

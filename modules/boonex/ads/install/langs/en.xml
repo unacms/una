@@ -132,8 +132,11 @@
     <string name="_bx_ads_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_ads_form_entry_input_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_ads_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
+    <string name="_bx_ads_form_entry_input_sys_source_type"><![CDATA[Source]]></string>
+    <string name="_bx_ads_form_entry_input_source_type"><![CDATA[Source]]></string>
     <string name="_bx_ads_form_entry_input_sys_source"><![CDATA[Source]]></string>
     <string name="_bx_ads_form_entry_input_source"><![CDATA[Source]]></string>
+    <string name="_bx_ads_form_entry_input_sys_url"><![CDATA[Link]]></string>
     <string name="_bx_ads_form_entry_input_sys_budget_total"><![CDATA[Campaign budget]]></string>
     <string name="_bx_ads_form_entry_input_budget_total"><![CDATA[Campaign budget]]></string>
     <string name="_bx_ads_form_entry_input_budget_total_err_decreased"><![CDATA[Campaign budget cannot be decreased.]]></string>

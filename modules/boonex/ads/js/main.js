@@ -18,25 +18,36 @@ function BxAdsMain(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxAdsMain.prototype.registerTraker = function(iId) {
+BxAdsMain.prototype.registerTracker = function(iId) {
     var $this = this;
+    var sIdAd = $this._aHtmlIds['unit'] + iId;
 
-    if(typeof window.glBxAdsTracked === 'undefined')
-        window.glBxAdsTracked = [];
+    var fRegister = function(bCheckOverlap) {
+        if(typeof window.glBxAdsTracked === 'undefined')
+            window.glBxAdsTracked = [];
 
-    $(window).on('load scroll', function() {
-        var sIdAd = $this._aHtmlIds['unit'] + iId;
+        $(window).on('load scroll', function() {
+            var sIdAd = $this._aHtmlIds['unit'] + iId;
 
-        if(glBxAdsTracked[sIdAd])
-            return;
+            if(glBxAdsTracked[sIdAd])
+                return;
 
-        var oElement = document.getElementById(sIdAd);
-        if(oElement && $this.isVisible(oElement)) {
-            $this.registerImpression(oElement, iId);
+            var oElement = document.getElementById(sIdAd);
+            if(oElement && $this.isVisible(oElement, bCheckOverlap)) {
+                $this.registerImpression(oElement, iId);
 
-            glBxAdsTracked[sIdAd] = true;
-        }
-    });
+                glBxAdsTracked[sIdAd] = true;
+            }
+        });
+    };
+
+    var oItem = $('#' + sIdAd);
+    if(oItem.has('img.bx-base-text-unit-cover').length != 0)
+        oItem.find('img.bx-base-text-unit-cover').load(function() {
+            fRegister(false);
+        });
+    else
+        fRegister(true);
 };
 
 BxAdsMain.prototype.registerTrakerForTimeline = function(iId, sHtmlId) {
@@ -54,7 +65,7 @@ BxAdsMain.prototype.registerTrakerForTimeline = function(iId, sHtmlId) {
             return;
 
         oEvent = oEvent.get(0);
-        if(oEvent && $this.isVisible(oEvent)) {
+        if(oEvent && $this.isVisible(oEvent, true)) {
             $this.registerImpression(oEvent, iId);
 
             glBxAdsTracked[sHtmlId] = true;
@@ -86,7 +97,7 @@ BxAdsMain.prototype.registerClick = function(oElement, iId) {
     return false;
 };
 
-BxAdsMain.prototype.isVisible = function(oElement) {
+BxAdsMain.prototype.isVisible = function(oElement, bCheckOverlap) {
     var rect = oElement.getBoundingClientRect();
     var vWidth = window.innerWidth || document.documentElement.clientWidth;
     var vHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -94,15 +105,13 @@ BxAdsMain.prototype.isVisible = function(oElement) {
         return document.elementFromPoint(x, y) 
     };
 
-    if (rect.right < 0 || rect.bottom < 0 || rect.left > vWidth || rect.top > vHeight)
+    if(rect.right < 0 || rect.bottom < 0 || rect.left > vWidth || rect.top > vHeight)
         return false;
 
-    return (
-          oElement.contains(fEfp(rect.left,  rect.top))
-      ||  oElement.contains(fEfp(rect.right, rect.top))
-      ||  oElement.contains(fEfp(rect.right, rect.bottom))
-      ||  oElement.contains(fEfp(rect.left,  rect.bottom))
-    );
+    if(!bCheckOverlap)
+        return true
+
+    return (oElement.contains(fEfp(rect.left,  rect.top)) || oElement.contains(fEfp(rect.right, rect.top)) || oElement.contains(fEfp(rect.right, rect.bottom)) || oElement.contains(fEfp(rect.left,  rect.bottom)));
 };
 
 BxAdsMain.prototype.loadingInBlock = function(e, bShow) {
