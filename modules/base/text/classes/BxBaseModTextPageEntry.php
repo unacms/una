@@ -37,7 +37,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             $iContextProfileId = abs((int)$this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
             if(($oContextProfile = BxDolProfile::getInstance($iContextProfileId)) !== false) {
                 $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
-                if(in_array($iProfileId, $aAdmins))
+                if(!empty($aAdmins) && in_array($iProfileId, $aAdmins))
                     $this->_bLoggedContextModerator = true;
             }
         }

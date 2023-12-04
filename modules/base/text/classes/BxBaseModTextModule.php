@@ -633,7 +633,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             $oContextProfile = BxDolProfile::getInstance($iContextProfileId);
 
             $aAdmins = bx_srv($oContextProfile->getModule(), 'get_admins_to_manage_content', [$iContextProfileId]);
-            if(in_array($iProfileId, $aAdmins))
+            if(!empty($aAdmins) && in_array($iProfileId, $aAdmins))
                 return CHECK_ACTION_RESULT_ALLOWED;
         }
         

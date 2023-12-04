@@ -49,6 +49,17 @@ class BxBaseModPaymentGridCarts extends BxTemplGrid
                 $this->_sCurrencySign = $this->_oModule->getVendorCurrencySign($iSellerId);
         }
     }
+    
+    protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {   
+        if (bx_is_api()){
+            $a['name'] = $sKey;
+            $a['type'] = 'callback';
+            return $a;
+        }
+        
+    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
 
     public function addQueryParam($sKey, $sValue)
     {

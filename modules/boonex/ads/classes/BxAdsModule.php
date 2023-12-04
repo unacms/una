@@ -341,7 +341,8 @@ class BxAdsModule extends BxBaseModTextModule
             'CategoriesList' => '',
             'BrowseCategory' => '',
             'RegisterImpression' => '',
-            'RegisterClick' => ''
+            'RegisterClick' => '',
+            'BlockSourcesDetails' => ''
         ]);
     }
 
@@ -1785,9 +1786,7 @@ class BxAdsModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
 
         if(!isLogged())
-            return [
-                'content' => MsgBox(_t('_Access denied'))
-            ];
+             return bx_is_api() ? [bx_api_get_msg(_t('_Access denied'))] : ['content' => MsgBox(_t('_Access denied'))];
 
         $iProfileId = !empty($iProfileId) ? $iProfileId : bx_get_logged_profile_id();
 
@@ -1802,9 +1801,16 @@ class BxAdsModule extends BxBaseModTextModule
                     $sValue = bx_get($aOption['name']) !== false ? bx_get($aOption['name']) : '';
                     $this->_oDb->updateSourceOption($iProfileId, $aOption['id'], bx_process_input($sValue));
                 }
-
-                header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES'])));
-                return;
+                if (bx_is_api()){
+                    return [
+                        bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->getName() . '/block_sources_details', 'immutable' => true]]]),
+                        bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES']), 'timeout' => 100])
+                        ];
+                }
+                else{
+                    header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES'])));
+                    return;
+                }
             }
             else
                 foreach($oForm->aInputs as $aInput)
@@ -1815,9 +1821,8 @@ class BxAdsModule extends BxBaseModTextModule
                     }
         }
 
-        return [
-            'content' => $oForm->getCode()
-        ];
+        return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->getName() . '/block_sources_details', 'immutable' => true]]])] : ['content' => $oForm->getCode()];
+        
     }
 
     public function isEntryActive($aContentInfo)
