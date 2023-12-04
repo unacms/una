@@ -1694,7 +1694,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         $aResult = [];
         foreach($aSources as $sSource => $aSource) {
-            if(!isset($aOptions[$aSource['option_prefix'] . 'active']) || $aOptions[$aSource['option_prefix'] . 'active']['value'] != 'on') 
+            if(!isset($aOptions[$aSource['option_prefix'] . 'active']) || (int)$aOptions[$aSource['option_prefix'] . 'active']['value'] != 1) 
                 continue;
 
             foreach($aOptions as $sName => $aOption)
