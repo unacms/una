@@ -136,6 +136,7 @@
     <string name="_bx_ads_form_entry_input_source_type"><![CDATA[Source]]></string>
     <string name="_bx_ads_form_entry_input_sys_source"><![CDATA[Source]]></string>
     <string name="_bx_ads_form_entry_input_source"><![CDATA[Source]]></string>
+    <string name="_bx_ads_form_entry_input_source_paceholder"><![CDATA[Type product title here...]]></string>
     <string name="_bx_ads_form_entry_input_sys_url"><![CDATA[Link]]></string>
     <string name="_bx_ads_form_entry_input_sys_budget_total"><![CDATA[Campaign budget]]></string>
     <string name="_bx_ads_form_entry_input_budget_total"><![CDATA[Campaign budget]]></string>

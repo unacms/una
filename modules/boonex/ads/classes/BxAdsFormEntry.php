@@ -260,6 +260,19 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         return parent::delete($iContentId, $aContentInfo);
     }
 
+    protected function genCustomInputSource ($aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aInput = array_merge($aInput, [
+            'ajax_get_suggestions' => BX_DOL_URL_ROOT . "modules/?r=" . $this->_oModule->_oConfig->getUri() . "/get_source&source_type=" . $this->aInputs[$CNF['FIELD_SOURCE_TYPE']]['value'], 
+            'placeholder' => _t('_bx_ads_form_entry_input_source_paceholder'),
+            'custom' => ['only_once' => true]
+        ]);
+
+        return $this->genCustomInputUsernamesSuggestions($aInput);
+    }
+
     public function genInputPrice(&$aInput)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
