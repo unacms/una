@@ -70,24 +70,89 @@ class BxAdsSourceShopifyAdmin extends BxAdsSource
         if(empty($aProduct) || !is_array($aProduct) || empty($aProduct['product']))
             return [];
 
-        $aProduct = $aProduct['product'];
+        return $this->_prepareProduct($aProduct['product']);
+    }
+    
+    public function getEntries($aParams)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sSample = $aParams['sample'];
+        $aRequest = [
+            'fields' => 'id,title,handle,body_html,variants',
+            'status' => isset($aParams['status']) ? $aParams['status'] : 'active'
+        ];
+
+        switch($sSample) {
+            case 'ids':
+                $aRequest = array_merge($aRequest, [
+                    'ids' => implode(',', $aParams['ids']),
+                ]);
+                break;
+
+            case 'title':
+                $aRequest = array_merge($aRequest, [
+                    'title' => $aParams['title'],
+                ]);
+                break;
+
+            case 'all_id_title_pairs':
+                $aRequest = array_merge($aRequest, [
+                    'fields' => 'id,title',
+                ]);
+                break;
+
+            case 'all':
+                break;
+        }
+
+        $sProducts = $this->_call('products.json', $aRequest, 'get');
+        if(empty($sProducts))
+            return [];
+        
+        $aProducts = json_decode($sProducts, true);
+        if(empty($aProducts) || !is_array($aProducts) || empty($aProducts['products']))
+            return [];
+
+        $aResults = [];
+        foreach($aProducts['products'] as $aProduct) {
+            switch($sSample) {
+                case 'all_id_title_pairs':
+                    $aResults[] = [
+                        $CNF['FIELD_SOURCE'] => $aProduct['id'],
+                        $CNF['FIELD_TITLE'] => $aProduct['title']
+                    ];
+                    break;
+                 
+                default:
+                    $aResults[] = $this->_prepareProduct($aProduct);
+            }
+        }
+
+        return $aResults;
+    }
+    
+    protected function _prepareProduct($aProduct)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aResult = [
-            $CNF['FIELD_TITLE'] => ['type' => 'text', 'value' => $aProduct['title']],
-            $CNF['FIELD_URL'] => ['type' => 'hidden', 'value' => $this->_sStorefront . 'products/' . $aProduct['handle']],
-            $CNF['FIELD_TEXT'] => ['type' => 'text_html', 'value' => $aProduct['body_html']],
+            $CNF['FIELD_SOURCE'] => $aProduct['id'],
+            $CNF['FIELD_TITLE'] => $aProduct['title'],
+            $CNF['FIELD_URL'] => $this->_sStorefront . 'products/' . $aProduct['handle'],
+            $CNF['FIELD_TEXT'] => $aProduct['body_html'],
         ];
 
         if(!empty($aProduct['variants']) && is_array($aProduct['variants'])) {
             $aVariant = array_shift($aProduct['variants']);
 
             if(isset($aVariant['price']))
-                $aResult[$CNF['FIELD_PRICE']] = ['type' => 'text', 'value' => (float)$aVariant['price']];
+                $aResult[$CNF['FIELD_PRICE']] = (float)$aVariant['price'];
 
             if(isset($aVariant['inventory_quantity']))
-                $aResult[$CNF['FIELD_QUANTITY']] = ['type' => 'text', 'value' => (int)$aVariant['inventory_quantity']];
+                $aResult[$CNF['FIELD_QUANTITY']] = (int)$aVariant['inventory_quantity'];
         }
-
+        
         return $aResult;
     }
 

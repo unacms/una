@@ -293,11 +293,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         if($this->_oConfig->isPromotion()) {
             $sJsObject = $this->_oConfig->getJsObject('main');
 
-            $sContentUrl = 'javascript:void(0)';
             $sContentOnclick = 'return ' . $sJsObject . '.registerClick(this, ' . $aData[$CNF['FIELD_ID']] . ')';
 
             $aResult = array_merge($aResult, [
-                'content_url' => $sContentUrl,
                 'bx_if:show_onclick' => [
                     'condition' => true,
                     'content' => [
@@ -309,7 +307,6 @@ class BxAdsTemplate extends BxBaseModTextTemplate
 
             if($aResult['bx_if:thumb']['condition'])
                 $aResult['bx_if:thumb']['content'] = array_merge($aResult['bx_if:thumb']['content'], [
-                    'content_url' => $sContentUrl,
                     'bx_if:show_thumb_onclick' => [
                         'condition' => true,
                         'content' => [

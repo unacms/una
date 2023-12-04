@@ -135,6 +135,7 @@
     <string name="_bx_ads_form_entry_input_source_type"><![CDATA[Тип источника]]></string>
     <string name="_bx_ads_form_entry_input_sys_source"><![CDATA[Источник]]></string>
     <string name="_bx_ads_form_entry_input_source"><![CDATA[Источник]]></string>
+    <string name="_bx_ads_form_entry_input_source_paceholder"><![CDATA[Введите название продукта...]]></string>
     <string name="_bx_ads_form_entry_input_sys_url"><![CDATA[Ссылка]]></string>
     <string name="_bx_ads_form_entry_input_sys_budget_total"><![CDATA[Бюджет рекламной кампании]]></string>
     <string name="_bx_ads_form_entry_input_budget_total"><![CDATA[Бюджет рекламной кампании]]></string>
