@@ -63,6 +63,23 @@ class BxAdsModule extends BxBaseModTextModule
         return $aResult;
     }
 
+    public function actionGetSource()
+    {
+        $sSourceType = bx_get('source_type');
+        if(empty($sSourceType)) {
+            $aSource = $this->serviceGetSource($this->_iProfileId);
+            if(!empty($aSource) && is_array($aSource))
+                $sSourceType = $aSource['name'];
+        }
+
+        $sTerm = bx_get('term');
+
+        $aEntries = $this->serviceLoadEntriesFromSourceByTerm($sSourceType, $sTerm);
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo(json_encode($aEntries));
+    }
+
     public function actionLoadEntryFromSource()
     {
         $sSourceType = bx_process_url_param(bx_process_input(bx_get('source_type')));
@@ -318,12 +335,14 @@ class BxAdsModule extends BxBaseModTextModule
         return array_merge(parent::serviceGetSafeServices(), [
             'IsSourcesAvaliable' => '',
             'LoadEntryFromSource' => '',
+            'LoadEntriesFromSourceByTerm' => '',
             'EntityReviews' => '',
             'EntityReviewsRating' => '',
             'CategoriesList' => '',
             'BrowseCategory' => '',
             'RegisterImpression' => '',
-            'RegisterClick' => ''
+            'RegisterClick' => '',
+            'BlockSourcesDetails' => ''
         ]);
     }
 
@@ -1705,15 +1724,61 @@ class BxAdsModule extends BxBaseModTextModule
     	return $mixedResult;
     }
 
-    public function serviceLoadEntryFromSource($sSourceType, $sSource)
+    public function serviceLoadEntriesFromSourceByTerm($sSourceType, $sTerm)
     {
-        $iProfileId = bx_get_logged_profile_id();
+        $CNF = &$this->_oConfig->CNF;
 
-        $oSource = $this->getObjectSource($sSourceType, $iProfileId);
+        $oSource = $this->getObjectSource($sSourceType, $this->_iProfileId);
         if(!$oSource)
             return [];
 
-        return $oSource->getEntry($sSource);
+        $aEntries = $oSource->getEntries(['sample' => 'all_id_title_pairs']);
+        if(empty($aEntries) || !is_array($aEntries))
+            return [];
+
+        $aResults = []; 
+        foreach($aEntries as $aEntry) {
+            if(stripos($aEntry[$CNF['FIELD_TITLE']], $sTerm) === false)
+                continue;
+
+            $aResults[] = [
+                'label' => $aEntry[$CNF['FIELD_TITLE']], 
+                'value' => $aEntry[$CNF['FIELD_SOURCE']], 
+            ];
+        }
+
+        return $aResults; 
+    }
+
+    public function serviceLoadEntryFromSource($sSourceType, $sSource)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = [];
+        $oSource = $this->getObjectSource($sSourceType, $this->_iProfileId);
+        if(!$oSource)
+            return $aResult;
+
+        $aEntry = $oSource->getEntry($sSource);
+        if(empty($aEntry) || !is_array($aEntry))
+            return $aResult;
+
+        $aName = $this->serviceCheckName($aEntry[$CNF['FIELD_TITLE']]);
+        if(!empty($aName) && is_array($aName))
+            $aResult[$CNF['FIELD_NAME']] = ['type' => 'text', 'value' => $aName['name']];
+
+        $aKey2Type = [
+            $CNF['FIELD_TITLE'] => 'text',
+            $CNF['FIELD_URL'] => 'hidden',
+            $CNF['FIELD_TEXT'] => 'text_html',
+            $CNF['FIELD_PRICE'] => 'text', 
+            $CNF['FIELD_QUANTITY'] => 'text'
+        ];
+        foreach($aEntry as $sKey => $sValue)
+            if(isset($aKey2Type[$sKey]))
+                $aResult[$sKey] = ['type' => $aKey2Type[$sKey], 'value' => $sValue];
+
+        return $aResult;
     }
 
     public function serviceBlockSourcesDetails($iProfileId = 0)
@@ -1721,9 +1786,7 @@ class BxAdsModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
 
         if(!isLogged())
-            return [
-                'content' => MsgBox(_t('_Access denied'))
-            ];
+             return bx_is_api() ? [bx_api_get_msg(_t('_Access denied'))] : ['content' => MsgBox(_t('_Access denied'))];
 
         $iProfileId = !empty($iProfileId) ? $iProfileId : bx_get_logged_profile_id();
 
@@ -1738,9 +1801,16 @@ class BxAdsModule extends BxBaseModTextModule
                     $sValue = bx_get($aOption['name']) !== false ? bx_get($aOption['name']) : '';
                     $this->_oDb->updateSourceOption($iProfileId, $aOption['id'], bx_process_input($sValue));
                 }
-
-                header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES'])));
-                return;
+                if (bx_is_api()){
+                    return [
+                        bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->getName() . '/block_sources_details', 'immutable' => true]]]),
+                        bx_api_get_block('redirect', ['uri' => '/' . BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES']), 'timeout' => 100])
+                        ];
+                }
+                else{
+                    header('Location: ' . bx_absolute_url(BxDolPermalinks::getInstance()->permalink($CNF['URL_SOURCES'])));
+                    return;
+                }
             }
             else
                 foreach($oForm->aInputs as $aInput)
@@ -1751,9 +1821,8 @@ class BxAdsModule extends BxBaseModTextModule
                     }
         }
 
-        return [
-            'content' => $oForm->getCode()
-        ];
+        return bx_is_api() ? [bx_api_get_block('form', $oForm->getCodeAPI(), ['ext' => ['name' => $this->getName(), 'request' => ['url' => '/api.php?r=' . $this->getName() . '/block_sources_details', 'immutable' => true]]])] : ['content' => $oForm->getCode()];
+        
     }
 
     public function isEntryActive($aContentInfo)
@@ -2452,7 +2521,6 @@ class BxAdsModule extends BxBaseModTextModule
             $sHtmlId = $this->_oConfig->getHtmlIds('unit') . $aContentInfo[$CNF['FIELD_ID']] . '-' . time() . '-' . mt_rand(0, 100);
 
             $aResult = array_merge($aResult, [
-                'url' => 'javascript:void(0)',
                 'onclick' => 'return ' . $sJsObject . '.registerClick(this, ' . $aContentInfo[$CNF['FIELD_ID']] . ')',
                 'raw' => $this->_oTemplate->parseHtmlByName('timeline_post_promotion.html', [
                     'html_id' => $sHtmlId,

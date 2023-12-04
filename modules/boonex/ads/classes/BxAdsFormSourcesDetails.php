@@ -108,19 +108,19 @@ class BxAdsFormSourcesDetails extends BxTemplFormView
                     break;
 
                 case 'checkbox':
-                    $this->aInputs[$aInput['name']]['value'] = 'on';
-                    $aAddon = array('checked' => $oSource->getOption($aInput['name']) == 'on');
+                   $this->aInputs[$aInput['name']]['value'] = '1';
+                    $aAddon = array('checked' => $oSource->getOption($aInput['name']) == '1');
                     break;
 
                 case 'value':
-                       $sName = str_replace($aInput['source_option_prefix'], '', $aInput['name']);
-                       if(!in_array($sName, array('return_data_url', 'notify_url')))
-                            break;
+                   $sName = str_replace($aInput['source_option_prefix'], '', $aInput['name']);
+                   if(!in_array($sName, array('return_data_url', 'notify_url')))
+                        break;
 
-                       $sMethod = 'get' . bx_gen_method_name($sName);
-                       if(method_exists($oSource, $sMethod))
-                            $this->aInputs[$aInput['name']]['value'] = $oSource->$sMethod($this->_iProfileId);
-                       break;
+                   $sMethod = 'get' . bx_gen_method_name($sName);
+                   if(method_exists($oSource, $sMethod))
+                        $this->aInputs[$aInput['name']]['value'] = $oSource->$sMethod($this->_iProfileId);
+                   break;
             }
 
             if(!empty($aAddon) && is_array($aAddon))
