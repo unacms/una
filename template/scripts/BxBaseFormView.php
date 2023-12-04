@@ -368,6 +368,10 @@ class BxBaseFormView extends BxDolForm
                     $aInput['values'] = '';
                     $aInput['values_src'] = '';
                 }
+                
+                if (isset($aInput['type']) && 'block_header' == $aInput['type']){
+                    $aInput['name'] = $key;
+                }
 
                 if (isset($aInput['type']) && 'location' == $aInput['type']){
                     $aLocationIndexes = BxDolForm::$LOCATION_INDEXES;

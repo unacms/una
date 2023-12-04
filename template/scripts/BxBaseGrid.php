@@ -322,7 +322,8 @@ class BxBaseGrid extends BxDolGrid
         $aFilter = [];
         $CNF = &$this->_oModule->_oConfig->CNF;
         $aFilter[''] = _t($CNF['T']['filter_item_select_one_' . $this->_sFilter1Name]);
-        $aFilter = array_merge($aFilter, $this->_aFilter1Values);
+        if (is_array($this->_aFilter1Values))
+            $aFilter = array_merge($aFilter, $this->_aFilter1Values);
         foreach($aFilter as $iKey => &$aRow) {
             $aRow = _t($aRow);
         }
@@ -360,6 +361,9 @@ class BxBaseGrid extends BxDolGrid
                     $sMethod = $sCustomMethod;
                     $s = $this->$sMethod($aData[$iKey][$sKey], $sKey, $aField, $aRow);
                     $aDataRv[$iKey][$sKey] = $s;
+                }
+                else{
+                    $aDataRv[$iKey][$sKey] = ['type' => 'text', 'value'=> $aData[$iKey][$sKey]];    
                 }
                
             }

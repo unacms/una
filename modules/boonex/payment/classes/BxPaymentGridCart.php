@@ -20,6 +20,19 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
         $this->_bSelectAll = true;
     }
+    
+    public function getCodeAPI()
+    {
+        $aData = parent::getCodeAPI();
+        $aData['settings']['field_id'] = 'id';
+        foreach ($aData['data'] as &$aRow){
+            $aRow['id'] = $aRow['checkbox']['data'];
+            $aRow['title']['value'] = strip_tags($aRow['title']['value']);
+            $aRow['price_single']['value'] = str_replace('&#36; ','$', $aRow['price_single']['value']);
+            
+        }
+        return $aData;
+    }
 
     public function performActionCheckout()
     {
@@ -149,8 +162,12 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
                 $sActions .= $sAction;
             }
-    	}
+    	}else{
+           if (bx_is_api())
+               return parent::_getActions ($sType, $sActionData, $isSmall, $isDisabled, $isPermanentState, $aRow);
+        }
 
+        
     	return $sActions . parent::_getActions ($sType, $sActionData, $isSmall, $isDisabled, $isPermanentState, $aRow);
     }
 
@@ -195,7 +212,7 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
             if($bProviderCredits && $bPayForCredits)
                 continue;
             
-            $aActions[] = [
+            $aActions[$aProvider['name']] = [
                 'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
                 'icon' => '',
                 'icon_only' => 0,

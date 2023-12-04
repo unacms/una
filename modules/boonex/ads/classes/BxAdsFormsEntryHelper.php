@@ -105,8 +105,11 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 
                 $iVendorId = (int)$oPayments->getOption('site_admin');
                 $aResult = $oPayments->addToCart($iVendorId, $this->_oModule->_oConfig->getId(), $aCommodity['id'], 1);
-                if(isset($aResult['code']) && (int)$aResult['code'] == 0)
+                if(isset($aResult['code']) && (int)$aResult['code'] == 0){
                     $sUrl = $oPayments->getCartUrl($iVendorId);
+                    if (bx_is_api())
+                        return bx_api_get_block('redirect', ['uri' => '/' . bx_api_get_relative_url($sUrl), 'timeout' => 1000]);
+                }
             }
         }
 
@@ -130,8 +133,11 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 
                 $iVendorId = (int)$oPayments->getOption('site_admin');
                 $aResult = $oPayments->addToCart($iVendorId, $this->_oModule->_oConfig->getId(), $aCommodity['id'], 1);
-                if(isset($aResult['code']) && (int)$aResult['code'] == 0)
+                if(isset($aResult['code']) && (int)$aResult['code'] == 0){
                     $sUrl = $oPayments->getCartUrl($iVendorId);
+                    if (bx_is_api())
+                        return bx_api_get_block('redirect', ['uri' => '/' . bx_api_get_relative_url($sUrl), 'timeout' => 1000]);
+                }
             }
         }
 
