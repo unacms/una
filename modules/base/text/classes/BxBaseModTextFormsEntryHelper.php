@@ -78,10 +78,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (isset($CNF['FIELD_LINK']))
             $oForm->processLinks($CNF['FIELD_LINK'], $iContentId);
 
-        // change profile to 'pending' only if profile is 'active'
-        if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
-            $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
-
         return '';
     }
 

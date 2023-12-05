@@ -1647,7 +1647,10 @@ BLAH;
         $aTmplVarsVals = [];
         $sValue = '';
         if(!empty($aInput['value'])) {
-            if(is_array($aInput['value']) || (is_numeric($aInput['value']))) {
+            $sCustomMethod = 'genCustomInput' . $this->_genMethodName($aInput['name']) . 'Value';
+            if(method_exists($this, $sCustomMethod))
+                $aTmplVarsVals = $this->$sCustomMethod($aInput);
+            else if(is_array($aInput['value']) || (is_numeric($aInput['value']))) {
                 if (!is_array($aInput['value']))
                     $aInput['value'] = [$aInput['value']];
                     

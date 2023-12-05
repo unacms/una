@@ -14,6 +14,8 @@
  */
 class BxAdsFormEntry extends BxBaseModTextFormEntry
 {
+    protected $_aContentInfo;
+
     protected $_bSources;
     protected $_iCategory;
     protected $_sGhostTemplateCover = 'form_ghost_template_cover.html';
@@ -155,16 +157,15 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aContentInfo = [];
         if($aValues && !empty($aValues['id']))
-            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($aValues['id']);
-        $bContentInfo = !empty($aContentInfo) && is_array($aContentInfo);
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($aValues['id']);
+        $bContentInfo = !empty($this->_aContentInfo) && is_array($this->_aContentInfo);
 
         $iContentAuthorId = bx_get_logged_profile_id();
         if($bContentInfo) {
-            $iContentAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+            $iContentAuthorId = (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
 
-            $this->_initCategoryFields($aContentInfo[$CNF['FIELD_CATEGORY']]);
+            $this->_initCategoryFields($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
         }
 
         if($this->_bSources) {
@@ -184,9 +185,9 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
         if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($bContentInfo)
-                $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = $aContentInfo[$CNF['FIELD_ID']];
+                $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = $this->_aContentInfo[$CNF['FIELD_ID']];
 
-            $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateCover, $this->_getCoverGhostTmplVars($aContentInfo));
+            $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateCover, $this->_getCoverGhostTmplVars($this->_aContentInfo));
         }
 
         parent::initChecker ($aValues, $aSpecificValues);
@@ -264,13 +265,47 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $sUrl = BX_DOL_URL_ROOT . 'modules/?r=' . $this->_oModule->_oConfig->getUri() . '/get_source';
+        if(isset($this->aInputs[$CNF['FIELD_SOURCE_TYPE']]) && !empty($this->aInputs[$CNF['FIELD_SOURCE_TYPE']]['value']))
+            $sUrl = bx_append_url_params($sUrl, ['source_type' => $this->aInputs[$CNF['FIELD_SOURCE_TYPE']]['value']]);
+
         $aInput = array_merge($aInput, [
-            'ajax_get_suggestions' => BX_DOL_URL_ROOT . "modules/?r=" . $this->_oModule->_oConfig->getUri() . "/get_source&source_type=" . $this->aInputs[$CNF['FIELD_SOURCE_TYPE']]['value'], 
+            'ajax_get_suggestions' => $sUrl, 
             'placeholder' => _t('_bx_ads_form_entry_input_source_paceholder'),
             'custom' => ['only_once' => true]
         ]);
 
         return $this->genCustomInputUsernamesSuggestions($aInput);
+    }
+    
+    protected function genCustomInputSourceValue($aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aValue = is_array($aInput['value']) ? $aInput['value'] : [$aInput['value']];
+
+        $iAuthorId = $this->_getAuthorId();
+        $sSourceType = $this->_getSourceType();
+
+        $oSource = $this->_oModule->getObjectSource($sSourceType, $iAuthorId);
+        if(!$oSource)
+            return [];
+
+        $aResults = [];
+        foreach($aValue as $sValue) {
+            $aEntry = $oSource->getEntry($sValue);
+            if(empty($aEntry) || !is_array($aEntry))
+                continue;
+
+            $aResults[] = [
+                'item_unit' => '',
+                'item_name' => $aEntry[$CNF['FIELD_TITLE']],
+                'name' => $aInput['name'] . (isset($aInput['custom']['only_once']) && $aInput['custom']['only_once'] == 1 ? '' : '[]'),
+                'value' => $sValue
+            ];
+        }
+
+        return $aResults;
     }
 
     public function genInputPrice(&$aInput)
@@ -278,15 +313,7 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(!isset($aInput['value_currency'])) {
-            $iAuthorId = 0;
-            if(!empty($this->_iContentId)) {
-                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
-                if(!empty($aContentInfo) || is_array($aContentInfo))
-                    $iAuthorId = $aContentInfo[$CNF['FIELD_AUTHOR']];
-            }
-            else
-                $iAuthorId = bx_get_logged_profile_id();
-
+            $iAuthorId = $this->_getAuthorId();
             $aInput['value_currency'] = BxDolPayments::getInstance()->getCurrencyCode($iAuthorId);
         }
 
@@ -339,19 +366,19 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         );
     }
 
-    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    protected function _getPhotoGhostTmplVars($aContentInfo = [])
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-    	return array (
+    	return [
             'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
             'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
             'bx_if:set_thumb' => [
-				'condition' => false,
-				'content' => []
-			],
-    	);
+                'condition' => false,
+                'content' => []
+            ],
+    	];
     }
 
     protected function _getSingleField()
@@ -401,6 +428,39 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
             return true;
 
         return false;
+    }
+    
+    protected function _getAuthorId()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!empty($this->_aContentInfo) && is_array($this->_aContentInfo))
+            return (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
+
+        if(!empty($this->_iContentId)) {
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
+            if(!empty($this->_aContentInfo) && is_array($this->_aContentInfo))
+                return (int)$this->_aContentInfo[$CNF['FIELD_AUTHOR']];
+        }
+
+        return bx_get_logged_profile_id();
+    }
+    
+    protected function _getSourceType()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!empty($this->_aContentInfo) && is_array($this->_aContentInfo))
+            return $this->_aContentInfo[$CNF['FIELD_SOURCE_TYPE']];
+        
+        if(!empty($this->_iContentId)) {
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
+            if(!empty($this->_aContentInfo) && is_array($this->_aContentInfo))
+                return $this->_aContentInfo[$CNF['FIELD_SOURCE_TYPE']];
+        }
+        
+        $iAuthorId = $this->_getAuthorId();
+        return $this->_oModule->serviceGetSource($iAuthorId);
     }
 }
 
