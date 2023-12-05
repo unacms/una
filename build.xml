@@ -279,7 +279,12 @@
         <if>
             <and>
                 <available file="${project.basedir}/modules/${vendor}/${module}/install/config.php" type="file" />
-                <not><equals arg1="${module}" arg2="attendant" /></not>
+                <not><equals arg1="${module}" arg2="anon_follow" /></not>
+                <not><equals arg1="${module}" arg2="azure_b2c_con" /></not>
+                <not><equals arg1="${module}" arg2="azure_connect" /></not>
+                <not><equals arg1="${module}" arg2="cas_connect" /></not>
+                <not><equals arg1="${module}" arg2="reviews" /></not>
+                <not><equals arg1="${module}" arg2="se_migration" /></not>
                 <not><equals arg1="${module}" arg2="mapshow" /></not>
                 <not><equals arg1="${module}" arg2="una_mods" /></not>
                 <not><equals arg1="${module}" arg2="hosting_api" /></not>
