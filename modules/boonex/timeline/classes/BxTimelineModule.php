@@ -2249,6 +2249,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_TIMELINE_TYPE_ITEM
         ], $aParams)));
 
+        if(empty($sPost))
+            return '';
+
         return isset($aParams['return_data_type']) && $aParams['return_data_type'] == 'array' ? $mixedEvent : $sPost;
     }
 
