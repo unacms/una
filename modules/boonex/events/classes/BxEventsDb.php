@@ -195,6 +195,26 @@ class BxEventsDb extends BxBaseModGroupsDb
 
         return $aEntries;
     }
+
+    public function checkIn($iProfileId, $iId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("INSERT INTO `" . $CNF['TABLE_CHECK_IN'] . "` SET `profile_id` = :profile_id, `event_id` = :event_id ON DUPLICATE KEY UPDATE `event_id` = :event_id", [
+            'profile_id' => $iProfileId,
+            'event_id' => $iId
+        ]) !== false;
+    }
+    
+    public function isCheckedIn($iProfileId, $iId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->getOne("SELECT `id` FROM `" . $CNF['TABLE_CHECK_IN'] . "` WHERE `profile_id` = :profile_id AND `event_id` = :event_id LIMIT 1", [
+            'profile_id' => $iProfileId,
+            'event_id' => $iId
+        ]) > 0;
+    }
 }
 
 /** @} */

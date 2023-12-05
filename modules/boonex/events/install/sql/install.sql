@@ -242,6 +242,15 @@ CREATE TABLE IF NOT EXISTS `bx_events_admins` (
   UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 );
 
+-- TABLE: check-in
+CREATE TABLE IF NOT EXISTS `bx_events_check_in` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `event_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: favorites
 CREATE TABLE `bx_events_favorites_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

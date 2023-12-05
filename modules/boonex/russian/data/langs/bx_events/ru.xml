@@ -300,6 +300,8 @@
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Заинтересован]]></string>
+    <string name="_bx_events_menu_item_title_system_check_in"><![CDATA[Зарегистрироваться]]></string>
+    <string name="_bx_events_menu_item_title_check_in"><![CDATA[Зарегистрироваться]]></string>
     <string name="_bx_events_menu_item_title_system_view_entries_in_context"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_view_entries_in_context"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>

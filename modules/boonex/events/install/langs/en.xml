@@ -333,11 +333,12 @@
     <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel]]></string>
     <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Decline]]></string>
 
-<string name="_bx_events_menu_item_title_system_pay_and_join"><![CDATA[Pay & Join]]></string>
+    <string name="_bx_events_menu_item_title_system_pay_and_join"><![CDATA[Pay & Join]]></string>
     <string name="_bx_events_menu_item_title_pay_and_join"><![CDATA[Pay & Join]]></string>
-
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Interested]]></string>
+    <string name="_bx_events_menu_item_title_system_check_in"><![CDATA[Check In]]></string>
+    <string name="_bx_events_menu_item_title_check_in"><![CDATA[Check In]]></string>
     <string name="_bx_events_menu_item_title_system_view_entries_in_context"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_view_entries_in_context"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>

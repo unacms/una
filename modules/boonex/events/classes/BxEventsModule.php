@@ -28,6 +28,18 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         ));
     }
 
+    public function actionCheckIn()
+    {
+    	$iId = (int)bx_get('id');
+    	if(empty($iId) || empty($this->_iProfileId))
+            return echoJson(['code' => 1]);
+
+        if(!$this->serviceCheckIn($iId, $this->_iProfileId))
+            return echoJson(['code' => 2]);
+
+        return echoJson(['code' => 0, 'reload' => 1]);
+    }
+
     public function actionCalendarSync($iContentId = 0)
     {
         $aContentInfo = (int)$iContentId ? $this->_oDb->getContentInfoById((int)$iContentId) : null;
@@ -96,7 +108,24 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($this->serviceCalendarData($aParams));
     }
-    
+
+    public function serviceCheckIn($iId, $iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+        if(!$iProfileId)
+            return false;
+        
+        $aDataEntry = $this->_oDb->getContentInfoById($iId);
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return false;
+
+        if($this->checkAllowedCheckIn($aDataEntry) !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+
+        return $this->_oDb->checkIn($iProfileId, $iId);
+    }
+
     public function serviceCalendarData($aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
@@ -239,12 +268,12 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
 
     public function serviceGetSafeServices()
     {
-        $a = parent::serviceGetSafeServices();
-        return array_merge($a, array (
+        return array_merge(parent::serviceGetSafeServices(), [
+            'CheckIn' => '',
             'BrowsePastProfiles' => '',
             'Calendar' => '',
             'CalendarData' => ''
-        ));
+        ]);
     }
 
     /**
@@ -677,6 +706,23 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         }
     }
 
+    public function checkAllowedCheckIn($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sError = _t('_sys_txt_access_denied');
+        if(!$this->_iProfileId || !$this->isFan($aDataEntry[$CNF['FIELD_ID']], $this->_iProfileId))
+            return $sError;
+
+        if(!$this->isOngoing($aDataEntry))
+            return $sError;
+
+        if($this->_oDb->isCheckedIn($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']]))
+            return $sError;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     public function checkAllowedIcalExport ($aDataEntry, $isPerformAction = false)
     {
         return $aDataEntry['date_start'] && $aDataEntry['date_end'] ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_access_denied');
@@ -729,6 +775,17 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
             $iCounter += $b ? 1 : 0;
         }
         return $iCounter;
+    }
+    
+    public function isOngoing($aDataEntry)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aDataEntry[$CNF['FIELD_DATE_START']]) || empty($aDataEntry[$CNF['FIELD_DATE_END']]))
+            return false;
+
+        $iTime = time();
+        return $iTime >= $aDataEntry[$CNF['FIELD_DATE_START']] && $iTime <= $aDataEntry[$CNF['FIELD_DATE_END']];
     }
 }
 

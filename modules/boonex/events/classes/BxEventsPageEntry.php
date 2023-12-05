@@ -17,7 +17,18 @@ class BxEventsPageEntry extends BxBaseModGroupsPageEntry
     public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_events';
+
         parent::__construct($aObject, $oTemplate);
+    }
+    
+    public function getCode ()
+    {
+        $sResult = parent::getCode();
+        if(!empty($sResult))
+            $sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
+
+        $this->_oModule->_oTemplate->addJs(['entry.js']);
+        return $sResult;
     }
 }
 

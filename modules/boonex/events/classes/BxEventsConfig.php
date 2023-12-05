@@ -22,6 +22,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'invite-to-event' => 'checkAllowedInvite',
             'delete-event-profile' => 'checkAllowedDelete',
             'approve-event-profile' => 'checkAllowedApprove',
+            'profile-check-in' =>  'checkAllowedCheckIn',
             'ical-export' => 'checkAllowedIcalExport',
         ));
 
@@ -34,6 +35,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_CHECK_IN' => $aModule['db_prefix'] . 'check_in',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
             'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
 
