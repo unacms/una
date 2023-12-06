@@ -173,13 +173,19 @@ class BxBaseChartServices extends BxDol
         ));
     }
 
-    public function serviceGetDataByInterval($sObject, $iFrom, $iTo)
+    public function serviceGetDataByInterval($sObject, $iFrom, $iTo, $iContentId = false)
     {
         $oChart = BxDolChart::getObjectInstance($sObject);
         if($oChart === false)
             return [];
+        
+        if($iContentId){
+            $oChart->addMarkers([
+                'content_id' => $iContentId
+            ]);
+        }
 
-        return $oChart->getDataByInterval($iFrom, $iTo);
+        return $oChart->getDataByInterval($oChart->getTimestamp($iFrom), $oChart->getTimestamp($iTo));
     }
 }
 

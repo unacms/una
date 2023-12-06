@@ -92,6 +92,10 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $oTemplate->addJs(['chart.min.js', 'BxDolChartGrowth.js']);
         $oTemplate->addCss(['chart.css']);
 
+        if($this->_bIsApi){
+            return [bx_api_get_block('chart', ['type' => 'line', 'title' => 'Promotion for ' . $aContentInfo[$CNF['FIELD_TITLE']], 'form' =>  $oForm->getCodeApi(), 'endpoint' => 'system/get_data_by_interval/TemplChartServices', 'params' =>['object' => $aForm['inputs']['object']['values'][0]['key'], 'date_from' => $sDateFrom, 'date_to' => $sDateTo, 'content_id' => $aContentInfo[$CNF['FIELD_ID']]]])];
+        }
+        
         return $oTemplate->parseHtmlByName('chart_growth.html', [
             'controls' => $oForm->getCode(),
             'date_from' => $sDateFrom,
@@ -116,11 +120,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
             $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
         }
 
-        if($this->_bIsApi)
-            return [
-                'labels' => $aTmplVarsDataLabels,
-                'dataset' => $aTmplVarsDataSet
-            ];
+        if($this->_bIsApi){
+            return [bx_api_get_block('chart', ['type' => 'pie', 'title' => 'Summary', 'labels' => $aTmplVarsDataLabels, 'data' => $aTmplVarsDataSet])];
+        }
 
         $this->addJs(['chart.min.js']);
         $this->addCss(['chart.css']);
@@ -178,12 +180,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
 
         $fRoi = 100 * ($iValueLocal + $iValueSource - $iValueInvestment)/$iValueInvestment;
 
-        if($this->_bIsApi)
-            return [
-                'labels' => $aTmplVarsDataLabels,
-                'dataset' => $aTmplVarsDataSet,
-                'roi' => $fRoi
-            ];
+        if($this->_bIsApi){
+            return [bx_api_get_block('chart', ['type' => 'pie', 'title' => 'Roi', 'labels' => $aTmplVarsDataLabels, 'data' => $aTmplVarsDataSet, 'text' => 'ROI: ' . $fRoi . '%'])];
+        }
 
         $this->addJs(['chart.min.js']);
         $this->addCss(['chart.css']);

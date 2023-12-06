@@ -65,6 +65,14 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function actionGetSource()
     {
+        $aEntries = $this->serviceGetSourceData();
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo(json_encode($aEntries));
+    }
+    
+    public function serviceGetSourceData()
+    {
         $sSourceType = bx_get('source_type');
         if(empty($sSourceType)) {
             $aSource = $this->serviceGetSource($this->_iProfileId);
@@ -76,8 +84,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         $aEntries = $this->serviceLoadEntriesFromSourceByTerm($sSourceType, $sTerm);
 
-        header('Content-Type:text/javascript; charset=utf-8');
-        echo(json_encode($aEntries));
+        return $aEntries;
     }
 
     public function actionLoadEntryFromSource()
@@ -342,7 +349,8 @@ class BxAdsModule extends BxBaseModTextModule
             'BrowseCategory' => '',
             'RegisterImpression' => '',
             'RegisterClick' => '',
-            'BlockSourcesDetails' => ''
+            'BlockSourcesDetails' => '',
+            'GetSourceData' => '',
         ]);
     }
 
@@ -2502,6 +2510,8 @@ class BxAdsModule extends BxBaseModTextModule
         if(bx_is_api()){
             $aResult['price'] = $sPrice;
             $aResult['category_title'] = $sCategory;
+            $aResult['register_click'] = $this->_oConfig->isPromotion() ? 'bx_ads/register_click&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false;
+            $aResult['register_impression'] = $this->_oConfig->isPromotion() ? 'bx_ads/register_impression&params[]=' . $aContentInfo[$CNF['FIELD_ID']] : false;
         }
         else{
             $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', array(

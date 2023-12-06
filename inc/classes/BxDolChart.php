@@ -126,6 +126,10 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
         return "SELECT {field_date_formatted} AS `period`, COUNT(*) AS {object} FROM {table} WHERE 1 " . $sWhereClause . " {where_inteval} GROUP BY `period` ORDER BY {field_date} ASC";
     }
 
+    public function getTimestamp($sDate, $isNowIfError = false)
+    {
+        return $this->_getTimestamp($sDate, $isNowIfError);
+    }
     protected function _getTimestamp($sDate, $isNowIfError = false)
     {
         $aDate = explode('-', $sDate); // YYYY-MM-DD

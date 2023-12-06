@@ -274,6 +274,13 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
             'placeholder' => _t('_bx_ads_form_entry_input_source_paceholder'),
             'custom' => ['only_once' => true]
         ]);
+        
+         if (bx_is_api()){
+             $aInput['ajax_get_suggestions'] = 'bx_ads/get_source_data&params[]=';
+             $aInput['type'] = 'suggestion';
+             $aInput['custom']['callback'] = 'bx_ads/load_entry_from_source&params[]=shopify_admin&params[]=';
+             return $aInput;
+        }
 
         return $this->genCustomInputUsernamesSuggestions($aInput);
     }

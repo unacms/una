@@ -85,7 +85,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             
             'GetChartGrowth' => 'BxBaseChartServices',
             'GetChartStats' => 'BxBaseChartServices',
-
+            'GetDataByInterval' => 'BxBaseChartServices',
+            
             'GetCartItemsCount' => 'BxBasePaymentsServices',
             'GetOrdersCount' => 'BxBasePaymentsServices',
 
@@ -105,7 +106,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             
             'PerfomActionApi' => 'BxBaseServiceGrid',
             
-            'GetDataByInterval' => 'BxBaseChartServices',
         );
     }
 
