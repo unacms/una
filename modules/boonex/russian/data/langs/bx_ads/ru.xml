@@ -429,7 +429,9 @@
     <string name="_bx_ads_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_ads_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>
     <string name="_bx_ads_grid_column_title_adm_author"><![CDATA[Автор]]></string>
+    <string name="_bx_ads_grid_action_title_adm_promotion"><![CDATA[Реклама]]></string>
     <string name="_bx_ads_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
+    <string name="_bx_ads_grid_action_title_adm_edit_budget"><![CDATA[Редактировать бюджет]]></string>
     <string name="_bx_ads_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_ads_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_ads_grid_action_title_adm_audit_content"><![CDATA[Аудит]]></string>

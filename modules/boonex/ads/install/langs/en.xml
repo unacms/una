@@ -433,7 +433,9 @@
     <string name="_bx_ads_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_ads_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_ads_grid_column_title_adm_author"><![CDATA[Author]]></string>
+    <string name="_bx_ads_grid_action_title_adm_promotion"><![CDATA[Promotion]]></string>
     <string name="_bx_ads_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_ads_grid_action_title_adm_edit_budget"><![CDATA[Edit budget]]></string>
     <string name="_bx_ads_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_ads_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_ads_grid_action_title_adm_audit_content"><![CDATA[Audit]]></string>

@@ -291,7 +291,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view', 'bx_ads', 'make-offer', '_bx_ads_menu_item_title_system_make_offer', '_bx_ads_menu_item_title_make_offer', 'javascript:void(0);', 'javascript:{js_object}.makeOffer(this, {content_id})', '', 'hand-holding-usd', '', 2147483647, 1, 0, 16),
 ('bx_ads_view', 'bx_ads', 'view-offers', '_bx_ads_menu_item_title_system_view_offers', '_bx_ads_menu_item_title_view_offers', 'page.php?i=view-ad-offers&id={content_id}', '', '', 'handshake', '', 2147483647, 1, 0, 17),
 ('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
-('bx_ads_view', 'bx_ads', 'edit-ad-budget', '_bx_ads_menu_item_title_system_edit_entry_budget', '_bx_ads_menu_item_title_edit_entry_budget', 'page.php?i=edit-ad-budget&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 21),
+('bx_ads_view', 'bx_ads', 'edit-ad-budget', '_bx_ads_menu_item_title_system_edit_entry_budget', '_bx_ads_menu_item_title_edit_entry_budget', 'page.php?i=edit-ad-budget&id={content_id}', '', '', 'pencil-ruler', '', 2147483647, 1, 0, 21),
 ('bx_ads_view', 'bx_ads', 'view-ad-promotion', '_bx_ads_menu_item_title_system_view_promotion', '_bx_ads_menu_item_title_view_promotion', 'page.php?i=view-ad-promotion&id={content_id}', '', '', 'chart-pie', '', 2147483647, 1, 0, 22),
 ('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30),
 ('bx_ads_view', 'bx_ads', 'approve', '_sys_menu_item_title_system_va_approve', '_sys_menu_item_title_va_approve', 'javascript:void(0)', 'javascript:bx_approve(this,  ''{module_uri}'', {content_id});', '', 'check', '', 2147483647, 1, 0, 40),
@@ -580,9 +580,11 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_ads_administration', 'single', 'audit_content', '_bx_ads_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
 
 ('bx_ads_common', 'bulk', 'delete', '_bx_ads_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_ads_common', 'single', 'edit', '_bx_ads_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_ads_common', 'single', 'delete', '_bx_ads_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_ads_common', 'single', 'settings', '_bx_ads_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+('bx_ads_common', 'single', 'promotion', '_bx_ads_grid_action_title_adm_promotion', 'chart-pie', 1, 0, 1),
+('bx_ads_common', 'single', 'edit', '_bx_ads_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 2),
+('bx_ads_common', 'single', 'edit_budget', '_bx_ads_grid_action_title_adm_edit_budget', 'pencil-ruler', 1, 0, 3),
+('bx_ads_common', 'single', 'delete', '_bx_ads_grid_action_title_adm_delete', 'remove', 1, 1, 4),
+('bx_ads_common', 'single', 'settings', '_bx_ads_grid_action_title_adm_more_actions', 'cog', 1, 0, 5);
 
 -- GRIDS: licenses
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
