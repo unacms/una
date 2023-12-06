@@ -121,10 +121,12 @@ class BxAdsConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-ad',
             'URI_VIEW_ENTRY_OFFERS' => 'view-ad-offers',
+            'URI_VIEW_ENTRY_PROMOTION' => 'view-ad-promotion',
             'URI_AUTHOR_ENTRIES' => 'ads-author',
             'URI_ENTRIES_BY_CONTEXT' => 'ads-context',
             'URI_ADD_ENTRY' => 'create-ad',
             'URI_EDIT_ENTRY' => 'edit-ad',
+            'URI_EDIT_ENTRY_BUDGET' => 'edit-ad-budget',
             'URI_MANAGE_COMMON' => 'ads-manage',
 
             'URL_HOME' => 'page.php?i=ads-home',
