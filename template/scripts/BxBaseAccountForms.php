@@ -292,12 +292,13 @@ class BxBaseAccountForms extends BxDolProfileForms
         // create an alert
         bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName));
 
-        // display result message
-        if ($bIsApi){
-            return $oForm->getCodeAPI();
-        }
-            
+        // display result message            
         $sMsg = MsgBox(_t('_' . $sDisplayName . '_successfully_submitted'));
+        
+        if ($bIsApi){
+            return ['form' => $oForm->getCodeAPI(), 'msg' => _t('_' . $sDisplayName . '_successfully_submitted')];
+        }
+        
         return $sMsg . $oForm->getCode();
     }     
 }

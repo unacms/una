@@ -162,12 +162,24 @@ class BxBaseServiceAccount extends BxDol
         
         $mixedResult =$this->_oAccountForms->editAccountPasswordSettingsForm($iAccountId);
         if($bApi) {
-            if(is_array($mixedResult))
-                return [bx_api_get_block('form', $mixedResult, [
-                    'ext' => [
-                        'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
-                    ]
-                ])];
+            if(is_array($mixedResult)){
+                if (isset($mixedResult['form'] )){
+                    return [
+                        bx_api_get_msg($mixedResult['msg']),
+                        bx_api_get_block('form', $mixedResult['form'], [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+                else{
+                    return [bx_api_get_block('form', $mixedResult, [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+            }
             else
                 return bx_api_get_msg($mixedResult);
         }
