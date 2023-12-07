@@ -568,9 +568,9 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_ads_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_ads_common', 'switcher', '_bx_ads_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_ads_common', 'title', '_bx_ads_grid_column_title_adm_title', '40%', 0, '35', '', 3),
-('bx_ads_common', 'added', '_bx_ads_grid_column_title_adm_added', '15%', 0, '25', '', 4),
-('bx_ads_common', 'status_admin', '_bx_ads_grid_column_title_adm_status_admin', '15%', 0, '16', '', 5),
-('bx_ads_common', 'actions', '', '20%', 0, '', '', 6);
+('bx_ads_common', 'added', '_bx_ads_grid_column_title_adm_added', '10%', 0, '25', '', 4),
+('bx_ads_common', 'status_admin', '_bx_ads_grid_column_title_adm_status_admin', '10%', 0, '16', '', 5),
+('bx_ads_common', 'actions', '', '30%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_ads_administration', 'bulk', 'delete', '_bx_ads_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -581,8 +581,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 ('bx_ads_common', 'bulk', 'delete', '_bx_ads_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_ads_common', 'single', 'promotion', '_bx_ads_grid_action_title_adm_promotion', 'chart-pie', 1, 0, 1),
-('bx_ads_common', 'single', 'edit', '_bx_ads_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 2),
-('bx_ads_common', 'single', 'edit_budget', '_bx_ads_grid_action_title_adm_edit_budget', 'pencil-ruler', 1, 0, 3),
+('bx_ads_common', 'single', 'edit_budget', '_bx_ads_grid_action_title_adm_edit_budget', 'pencil-ruler', 1, 0, 2),
+('bx_ads_common', 'single', 'edit', '_bx_ads_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 3),
 ('bx_ads_common', 'single', 'delete', '_bx_ads_grid_action_title_adm_delete', 'remove', 1, 1, 4),
 ('bx_ads_common', 'single', 'settings', '_bx_ads_grid_action_title_adm_more_actions', 'cog', 1, 0, 5);
 
