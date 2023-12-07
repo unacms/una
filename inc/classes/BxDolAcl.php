@@ -226,7 +226,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         $iPermissions = 0;
         if(is_array($mixedPermissions))
             foreach($mixedPermissions as $iPermissionId)
-                $iPermissions += pow(2, $iPermissionId - 1);
+                $iPermissions += pow(2, (int)$iPermissionId - 1);
         else if(is_numeric($mixedPermissions))
             $iPermissions = (int)$mixedPermissions;
 

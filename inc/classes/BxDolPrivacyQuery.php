@@ -244,8 +244,9 @@ class BxDolPrivacyQuery extends BxDolDb
             WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         $aResult = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
-        if(in_array($aParams['type'], array('id_ext', 'pcog_ext')) && !empty($aResult) && is_array($aResult))
-            $aResult['items'] = explode($sDiv, $aResult['items']);
+
+        if(in_array($aParams['type'], ['id_ext', 'pcog_ext']) && !empty($aResult) && is_array($aResult))
+            $aResult['items'] = !empty($aResult['items']) ? explode($sDiv, $aResult['items']) : [];
 
         return $aResult;
     }
