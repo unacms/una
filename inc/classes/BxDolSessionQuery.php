@@ -41,8 +41,6 @@ class BxDolSessionQuery extends BxDolDb
         if ($this->getOne("SELECT `date` FROM `" . $this->sTable . "` WHERE `id` = :id AND `data` = :data AND `user_id` = :user_id AND `date` > UNIX_TIMESTAMP() - " . BX_DOL_SESSION_SKIP_UPDATE, $aBind))
             return true;
 
-echoDbg("user: " . $aBind['user_id'] . " / " . $iLastActive . " / BX_DOL_SESSION_UPDATE_ACTIVE: " . BX_DOL_SESSION_UPDATE_ACTIVE); exit;
-
         $this->updateLastActivity($sId);
 
         return (int)$this->query("INSERT INTO `" . $this->sTable . "` SET " . $this->arrayToSQL($aSet) . " ON DUPLICATE KEY UPDATE " . $this->arrayToSQL($aUpdate)) > 0;
