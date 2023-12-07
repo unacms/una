@@ -178,9 +178,11 @@ class BxAdsTemplate extends BxBaseModTextTemplate
         $aTmplVarsDataSet['data'][] = $iValueInvestment;
         $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
 
-        $fRoi = 100 * ($iValueLocal + $iValueSource - $iValueInvestment)/$iValueInvestment;
+        $fRoi = 0;
+        if($iValueInvestment > 0)
+            $fRoi = 100 * ($iValueLocal + $iValueSource - $iValueInvestment)/$iValueInvestment;
 
-        if($this->_bIsApi){
+        if($this->_bIsApi) {
             return [bx_api_get_block('chart', ['type' => 'pie', 'title' => 'Roi', 'labels' => $aTmplVarsDataLabels, 'data' => $aTmplVarsDataSet, 'text' => 'ROI: ' . $fRoi . '%'])];
         }
 
