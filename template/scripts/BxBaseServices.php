@@ -52,12 +52,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'AccountSettingsEmail' => 'BxBaseServiceAccount',
             'AccountSettingsPassword' => 'BxBaseServiceAccount',
+            'AccountSettingsDelAccount' => 'BxBaseServiceAccount',
+            'AccountSettingsInfo' => 'BxBaseServiceAccount',
             'ForgotPassword' => 'BxBaseServiceAccount',
             'SwitchProfile' => 'BxBaseServiceAccount',
             'AccountProfileSwitcher' => 'BxBaseServiceAccount',
             'EmailConfirmation' => 'BxBaseServiceAccount',
             'ConfirmEmail' => 'BxBaseServiceAccount',
-
+            
             'CategoriesList' => 'BxBaseServiceCategory',
 
             'Test' => 'BxBaseServiceLogin',
