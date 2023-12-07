@@ -83,13 +83,32 @@
     <string name="_bx_events_form_profile_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     <string name="_bx_events_form_profile_input_sys_threshold"><![CDATA[Пороговый радиус]]></string>
     <string name="_bx_events_form_profile_input_threshold"><![CDATA[Пороговый радиус (в метрах)]]></string>
-    
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Повторять: месяц]]></string>
     <string name="_bx_events_form_input_repeat_week_of_month"><![CDATA[Повторять: неделя в месяце]]></string>
     <string name="_bx_events_form_input_repeat_day_of_month"><![CDATA[Повторять: число месяца]]></string>
     <string name="_bx_events_form_input_repeat_day_of_week"><![CDATA[Повторять: день недели]]></string>
     <string name="_bx_events_form_input_stop_repeating"><![CDATA[Отстановить повтор]]></string>
+
+    <string name="_bx_events_form_session"><![CDATA[Сессия]]></string>
+    <string name="_bx_events_form_session_display_add"><![CDATA[Добавление сессии]]></string>
+    <string name="_bx_events_form_session_display_edit"><![CDATA[Редактирование сессии]]></string>
+    <string name="_bx_events_form_session_input_sys_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_events_form_session_input_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_events_form_session_input_title_err"><![CDATA[Заголовок сессии обязателен.]]></string>
+    <string name="_bx_events_form_session_input_sys_description"><![CDATA[Описание]]></string>
+    <string name="_bx_events_form_session_input_description"><![CDATA[Описание]]></string>
+    <string name="_bx_events_form_session_input_sys_date_start"><![CDATA[Начало]]></string>
+    <string name="_bx_events_form_session_input_date_start"><![CDATA[Начало]]></string>
+    <string name="_bx_events_form_session_input_date_start_err"><![CDATA[Дата начала обязательна.]]></string>
+    <string name="_bx_events_form_session_input_sys_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_form_session_input_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_form_session_input_date_end_err"><![CDATA[Дата конца обязательна.]]></string>
+    <string name="_bx_events_form_session_input_sys_controls"><![CDATA[Элементы управления]]></string>
+    <string name="_bx_events_form_session_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_events_form_session_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_events_form_session_input_sys_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_events_form_session_input_do_cancel"><![CDATA[Отмена]]></string>
 
     <string name="_bx_events_acl_action_create_profile"><![CDATA[Создать событие]]></string>
     <string name="_bx_events_acl_action_delete_profile"><![CDATA[Удалить событие]]></string>
@@ -211,7 +230,8 @@
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Календарь событий]]></string>
-    <string name="_bx_events_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_events_page_block_title_profile_sessions"><![CDATA[Сессии]]></string>
+    <string name="_bx_events_page_block_title_sys_entry_context_bx_events_page_block_title_profile_calendar"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_events_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
@@ -364,6 +384,16 @@
     <string name="_bx_events_grid_action_err_delete"><![CDATA[Невозможно удалить выбранные события.]]></string>
     <string name="_bx_events_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_events_grid_column_title_sn_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_events_grid_column_title_sn_description"><![CDATA[Описание]]></string>
+    <string name="_bx_events_grid_column_title_sn_date_start"><![CDATA[Начало]]></string>
+    <string name="_bx_events_grid_column_title_sn_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_grid_action_title_sn_add"><![CDATA[Добавить]]></string>
+    <string name="_bx_events_grid_action_title_sn_edit"><![CDATA[Редактировать]]></string>
+    <string name="_bx_events_grid_action_title_sn_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_events_popup_title_sn_add"><![CDATA[Добавить сессию]]></string>
+    <string name="_bx_events_popup_title_sn_edit"><![CDATA[Редактировать сессию]]></string>
+
     <string name="_bx_events_chart_growth"><![CDATA[События: Развитие]]></string>
     <string name="_bx_events_chart_growth_speed"><![CDATA[События: Скорость развития]]></string>
 
@@ -500,18 +530,23 @@
     <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Присоединиться к курсу]]></string>
     <string name="_bx_events_page_title_join_profile"><![CDATA[Присоединиться к курсу]]></string>
     <string name="_bx_events_page_title_browse_upcoming"><![CDATA[Предстоящие События]]></string>
+    <string name="_bx_events_page_title_sys_profile_sessions"><![CDATA[Сессии]]></string>
+    <string name="_bx_events_page_title_profile_sessions"><![CDATA[Сессии]]></string>
     <string name="_bx_events_page_title_sys_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_page_title_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_page_block_title_join_profile"><![CDATA[Присоединиться к событию]]></string>
+    <string name="_bx_events_page_block_title_system_profile_sessions"><![CDATA[Сессии]]></string>
+    <string name="_bx_events_page_block_title_profile_sessions_link"><![CDATA[Сессии для <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_system_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Цены]]></string>
-    <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Цены на <a href="{profile_link}">{display_name
-}</a>]]></string>
+    <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Цены на <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_entry_reports"><![CDATA[Отчеты]]></string>
-    <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Редактировать Цены]]></string>
-    <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Редактировать Цены]]></string>
-    <string name="_bx_events_menu_item_title_system_pay_and_join"><![CDATA[Плати и Присоединяйся]]></string>
-    <string name="_bx_events_menu_item_title_pay_and_join"><![CDATA[Плати и Присоединяйся]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Редактировать сессии]]></string>
+    <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Редактировать сессии]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Редактировать цены]]></string>
+    <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Редактировать цены]]></string>
+    <string name="_bx_events_menu_item_title_system_pay_and_join"><![CDATA[Плати и присоединяйся]]></string>
+    <string name="_bx_events_menu_item_title_pay_and_join"><![CDATA[Плати и присоединяйся]]></string>
     <string name="_bx_events_grid_column_title_name"><![CDATA[Название]]></string>
     <string name="_bx_events_grid_column_title_role_id"><![CDATA[Роль]]></string>
     <string name="_bx_events_grid_column_title_period"><![CDATA[Период]]></string>

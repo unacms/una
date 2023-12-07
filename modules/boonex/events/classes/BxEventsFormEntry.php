@@ -230,6 +230,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     
     protected function genCustomRowTime (&$aInput)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         if (!$this->aParams['view_mode'])
             return '';
 
@@ -241,7 +243,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             $aInput['value'] = '';
         else {
             if ($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d'))
-                $aInput['value'] = _t('_bx_events_txt_from_time_to_time', date(getParam('bx_events_time_format'), $aStartEnd['start']->getTimestamp()), date(getParam('bx_events_time_format'), $aStartEnd['end']->getTimestamp()));
+                $aInput['value'] = _t('_bx_events_txt_from_time_to_time', date(getParam($CNF['PARAM_FORMAT_TIME']), $aStartEnd['start']->getTimestamp()), date(getParam($CNF['PARAM_FORMAT_TIME']), $aStartEnd['end']->getTimestamp()));
             else
                 $aInput['value'] = '';
         }
@@ -250,6 +252,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
  
     function genViewRowValue(&$aInput)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         if (in_array($aInput['name'], array('date_start', 'date_end'))) {
 
             $aStartEnd = $this->_getStartEnd();
@@ -259,7 +263,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             if(is_array($aStartEnd) && empty($aStartEnd))
                 return null;
 
-            $sFormat = getParam($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? 'bx_events_short_date_format' : 'bx_events_datetime_format');
+            $sFormat = getParam($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? $CNF['PARAM_FORMAT_DATE'] : $CNF['PARAM_FORMAT_DATETIME']);
             $oDate = 'date_start' == $aInput['name'] ? $aStartEnd['start'] : $aStartEnd['end'];
             return date($sFormat, $oDate->getTimestamp());
         }

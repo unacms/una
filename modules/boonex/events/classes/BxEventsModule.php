@@ -276,6 +276,33 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         ]);
     }
 
+    public function serviceEntitySessions($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+
+        $aProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iProfileId);
+        if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            return [];
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($aProfileInfo['content_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return [];
+
+        if($this->checkAllowedEdit($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox(_t('_Access denied'));
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_SESSIONS_MANAGE']);
+        if(!$oGrid)
+            return '';
+
+        return $oGrid->getCode();
+    }
+
     /**
      * @page service Service Calls
      * @section bx_events Events
@@ -459,6 +486,16 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         
         $this->_oTemplate->addCss(['main.css']);
         return $oCalendar->display($sTemplate);
+    }
+
+    public function serviceSessions($iContentId = 0)
+    {
+        if(!$iContentId)
+            $iContentId = (int)bx_get('id');
+        if(!$iContentId)
+            return '';
+        
+        return $this->_oTemplate->getBlockSessions($iContentId);
     }
 
     /**
@@ -753,7 +790,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oDateBegin->setTimestamp($aContentInfo['start_utc']);
         $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
         $sEntryBegin = $oDateBegin->format('r');
-        $sEntryBeginShort = date(getParam('bx_events_short_date_format'), $oDateBegin->getTimestamp());
+        $sEntryBeginShort = date(getParam($CNF['PARAM_FORMAT_DATE']), $oDateBegin->getTimestamp());
         $oDateBegin->setTimezone(new DateTimeZone('UTC'));
         $sEntryBeginUTC = $oDateBegin->format('c');
 

@@ -38,6 +38,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'TABLE_CHECK_IN' => $aModule['db_prefix'] . 'check_in',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
             'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
+            'TABLE_SESSIONS' => $aModule['db_prefix'] . 'sessions',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -97,6 +98,9 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'PARAM_PUBLIC_SBSD' => 'bx_events_public_subscribed_me',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
+            'PARAM_FORMAT_TIME' => 'bx_events_time_format',
+            'PARAM_FORMAT_DATE' => 'bx_events_short_date_format',
+            'PARAM_FORMAT_DATETIME' => 'bx_events_datetime_format',
             'PARAM_MMODE' => 'bx_events_members_mode',
             'PARAM_PAID_JOIN_ENABLED' => true,
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
@@ -133,6 +137,9 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_event_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_event_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_event_invite',
+            'OBJECT_FORM_SESSION' => 'bx_events_session',
+            'OBJECT_FORM_SESSION_DISPLAY_ADD' => 'bx_events_session_add',
+            'OBJECT_FORM_SESSION_DISPLAY_EDIT' => 'bx_events_session_edit',
             'OBJECT_FORM_PRICE' => 'bx_events_price',
             'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_events_price_add',
             'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_events_price_edit',
@@ -156,6 +163,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_COMMON' => 'bx_events_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_GRID_INVITES' => 'bx_events_invites',
+            'OBJECT_GRID_SESSIONS_MANAGE' => 'bx_events_sessions_manage',
             'OBJECT_GRID_PRICES_MANAGE' => 'bx_events_prices_manage',
             'OBJECT_GRID_PRICES_VIEW' => 'bx_events_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_events_fans',
@@ -298,6 +306,11 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'common' => $this->CNF['OBJECT_GRID_COMMON'],
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
+            'popup_session' => $sHtmlPrefix . '-popup-session'
+        ]);
     }
 
 }

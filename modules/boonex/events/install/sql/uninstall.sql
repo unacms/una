@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_events_data`, `bx_events_intervals`, `bx_events_pics`, `bx_events_pics_resized`, `bx_events_cmts`, `bx_events_cmts_notes`, `bx_events_views_track`, `bx_events_meta_keywords`, `bx_events_meta_locations`, `bx_events_meta_mentions`, `bx_events_fans`, `bx_events_admins`, `bx_events_check_in`, `bx_events_votes`, `bx_events_votes_track`, `bx_events_reports`, `bx_events_reports_track`, `bx_events_favorites_track`, `bx_events_favorites_lists`, `bx_events_scores`, `bx_events_scores_track`, `bx_events_invites`, `bx_events_prices`;
+DROP TABLE IF EXISTS `bx_events_data`, `bx_events_intervals`, `bx_events_sessions`, `bx_events_pics`, `bx_events_pics_resized`, `bx_events_cmts`, `bx_events_cmts_notes`, `bx_events_views_track`, `bx_events_meta_keywords`, `bx_events_meta_locations`, `bx_events_meta_mentions`, `bx_events_fans`, `bx_events_admins`, `bx_events_check_in`, `bx_events_votes`, `bx_events_votes_track`, `bx_events_reports`, `bx_events_reports_track`, `bx_events_favorites_track`, `bx_events_favorites_lists`, `bx_events_scores`, `bx_events_scores_track`, `bx_events_invites`, `bx_events_prices`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_events';

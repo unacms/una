@@ -20,6 +20,40 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function getBlockSessions($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aSessions = $this->_oDb->getSessions(['sample' => 'event_id', 'event_id' => $iContentId]);
+        if(empty($aSessions) || !is_array($aSessions))
+            return '';
+
+        $sFormatDateTime = getParam($CNF['PARAM_FORMAT_DATETIME']);
+        $sFormatDate = getParam($CNF['PARAM_FORMAT_DATE']);
+        $sFormatTime = getParam($CNF['PARAM_FORMAT_TIME']);
+
+        $aTmplVarsSession = [];
+        foreach($aSessions as $aSession) {
+            
+
+            $sDate = '';
+            if(date('d', $aSession['date_start']) == date('d', $aSession['date_end']))
+                $sDate = date($sFormatDate, $aSession['date_start']) . ' ' . date($sFormatTime, $aSession['date_start']) . ' - ' . date($sFormatTime, $aSession['date_end']);
+            else
+                $sDate = date($sFormatDateTime, $aSession['date_start']) . ' - ' . date($sFormatDateTime, $aSession['date_end']);
+
+            
+            $aTmplVarsSession[] = [
+                'title' => bx_process_output($aSession['title']),
+                'date_time' =>  $sDate,
+            ];
+        }
+        
+        return $this->parseHtmlByName('entry-sessions.html', [
+            'bx_repeat:sessions' => $aTmplVarsSession
+        ]);
+    }
+
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())
     {
         $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $mixedTemplate, $aParams);
@@ -40,7 +74,7 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
 
         $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);        
         if ($isPublic) {
-            $aVars['bx_if:info']['content']['members'] = $oDateStart->format(getParam('bx_events_short_date_format'));
+            $aVars['bx_if:info']['content']['members'] = $oDateStart->format(getParam($CNF['PARAM_FORMAT_DATE']));
         }
 
         return array_merge($aVars, array(

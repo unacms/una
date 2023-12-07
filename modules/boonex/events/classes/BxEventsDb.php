@@ -215,6 +215,54 @@ class BxEventsDb extends BxBaseModGroupsDb
             'event_id' => $iId
         ]) > 0;
     }
+    
+    public function getSessions($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+        $sSelectClause = "`ts`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['sample']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `ts`.`id`=:id";
+                break;
+            
+             case 'event_id':
+                $aMethod['params'][1] = [
+                    'event_id' => $aParams['event_id']
+                ];
+
+                $sWhereClause = " AND `ts`.`event_id`=:event_id";
+                $sOrderClause = "`ts`.`order` ASC";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_SESSIONS'] . "` AS `ts` " . $sJoinClause . " WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function getSessionOrderMax($iEventId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->getOne("SELECT MAX(`order`) FROM `" . $CNF['TABLE_SESSIONS'] . "` WHERE `event_id`=:event_id", [
+            'event_id' => $iEventId
+        ]);
+    }
 }
 
 /** @} */

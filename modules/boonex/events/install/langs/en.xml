@@ -83,13 +83,32 @@
     <string name="_bx_events_form_profile_input_reminder"><![CDATA[Reminder]]></string>
     <string name="_bx_events_form_profile_input_sys_threshold"><![CDATA[Threshold radius]]></string>
     <string name="_bx_events_form_profile_input_threshold"><![CDATA[Threshold radius (in meters)]]></string>
-
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Repeat year]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Repeat month]]></string>
     <string name="_bx_events_form_input_repeat_week_of_month"><![CDATA[Repeat week of month]]></string>
     <string name="_bx_events_form_input_repeat_day_of_month"><![CDATA[Repeat day of month]]></string>
     <string name="_bx_events_form_input_repeat_day_of_week"><![CDATA[Repeat day of week]]></string>
     <string name="_bx_events_form_input_stop_repeating"><![CDATA[Stop repeating]]></string>
+
+    <string name="_bx_events_form_session"><![CDATA[Session]]></string>
+    <string name="_bx_events_form_session_display_add"><![CDATA[Add Session]]></string>
+    <string name="_bx_events_form_session_display_edit"><![CDATA[Edit Session]]></string>
+    <string name="_bx_events_form_session_input_sys_title"><![CDATA[Title]]></string>
+    <string name="_bx_events_form_session_input_title"><![CDATA[Title]]></string>
+    <string name="_bx_events_form_session_input_title_err"><![CDATA[Session title is mandatory.]]></string>
+    <string name="_bx_events_form_session_input_sys_description"><![CDATA[Description]]></string>
+    <string name="_bx_events_form_session_input_description"><![CDATA[Description]]></string>
+    <string name="_bx_events_form_session_input_sys_date_start"><![CDATA[Date start]]></string>
+    <string name="_bx_events_form_session_input_date_start"><![CDATA[Date start]]></string>
+    <string name="_bx_events_form_session_input_date_start_err"><![CDATA[Start date is mandatory]]></string>
+    <string name="_bx_events_form_session_input_sys_date_end"><![CDATA[Date end]]></string>
+    <string name="_bx_events_form_session_input_date_end"><![CDATA[Date end]]></string>
+    <string name="_bx_events_form_session_input_date_end_err"><![CDATA[End date is mandatory]]></string>
+    <string name="_bx_events_form_session_input_sys_controls"><![CDATA[Controls]]></string>
+    <string name="_bx_events_form_session_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_events_form_session_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_events_form_session_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_events_form_session_input_do_cancel"><![CDATA[Cancel]]></string>
 
     <string name="_bx_events_form_price"><![CDATA[Price]]></string>
     <string name="_bx_events_form_price_display_add"><![CDATA[Add]]></string>
@@ -162,6 +181,8 @@
     <string name="_bx_events_page_title_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_events_page_title_sys_profile_info"><![CDATA[Event Info]]></string>
     <string name="_bx_events_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
+    <string name="_bx_events_page_title_sys_profile_sessions"><![CDATA[Sessions]]></string>
+    <string name="_bx_events_page_title_profile_sessions"><![CDATA[Sessions]]></string>
     <string name="_bx_events_page_title_sys_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_events_page_title_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_events_page_title_sys_recent"><![CDATA[New Events]]></string>
@@ -214,6 +235,8 @@
     <string name="_bx_events_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_events_page_block_title_system_profile_info"><![CDATA[Info]]></string>
+    <string name="_bx_events_page_block_title_system_profile_sessions"><![CDATA[Sessions]]></string>
+    <string name="_bx_events_page_block_title_profile_sessions_link"><![CDATA[Sessions for <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
     <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
@@ -249,6 +272,7 @@
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Calendar]]></string>
+    <string name="_bx_events_page_block_title_profile_sessions"><![CDATA[Sessions]]></string>
     <string name="_bx_events_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_events_page_block_title_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Location]]></string>
@@ -286,6 +310,8 @@
     <string name="_bx_events_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_events_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_events_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Edit Sessions]]></string>
+    <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Edit Sessions]]></string>
     <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_events_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_events_menu_item_title_system_edit_profile"><![CDATA[Edit Event]]></string>
@@ -400,6 +426,16 @@
     <string name="_bx_events_grid_action_title_adm_clear_reports"><![CDATA[Сlear reports]]></string>
     <string name="_bx_events_grid_action_err_delete"><![CDATA[Cannot delete the selected event(s).]]></string>
     <string name="_bx_events_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+    
+    <string name="_bx_events_grid_column_title_sn_title"><![CDATA[Title]]></string>
+    <string name="_bx_events_grid_column_title_sn_description"><![CDATA[Description]]></string>
+    <string name="_bx_events_grid_column_title_sn_date_start"><![CDATA[Date start]]></string>
+    <string name="_bx_events_grid_column_title_sn_date_end"><![CDATA[Date end]]></string>
+    <string name="_bx_events_grid_action_title_sn_add"><![CDATA[Add]]></string>
+    <string name="_bx_events_grid_action_title_sn_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_events_grid_action_title_sn_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_events_popup_title_sn_add"><![CDATA[Add Session]]></string>
+    <string name="_bx_events_popup_title_sn_edit"><![CDATA[Edit Session]]></string>
 
     <string name="_bx_events_grid_column_title_name"><![CDATA[Name]]></string>
     <string name="_bx_events_grid_column_title_role_id"><![CDATA[Role]]></string>

@@ -55,6 +55,19 @@ CREATE TABLE IF NOT EXISTS `bx_events_intervals` (
   KEY `event_id` (`event_id`)
 ) AUTO_INCREMENT=1000;
 
+-- TABLE: SESSIONS
+CREATE TABLE IF NOT EXISTS `bx_events_sessions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `event_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `added` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `date_start` int(11) DEFAULT NULL,
+  `date_end` int(11) DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
+
 -- TABLE: STORAGES & TRANSCODERS
 CREATE TABLE `bx_events_pics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -490,6 +503,40 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view_full', 'added', 192, 1, 16),
 ('bx_event_view_full', 'changed', 192, 1, 17),
 ('bx_event_view_full', 'published', 192, 1, 18);
+
+-- FORMS: Session
+INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_session', 'bx_events', '_bx_events_form_session', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_events_sessions', 'id', '', '', 'do_submit', '', 0, 1, 'BxEventsFormSession', 'modules/boonex/events/classes/BxEventsFormSession.php');
+
+INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
+('bx_events_session', 'bx_events_session_add', 'bx_events', 0, '_bx_events_form_session_display_add'),
+('bx_events_session', 'bx_events_session_edit', 'bx_events', 0, '_bx_events_form_session_display_edit');
+
+INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_events_session', 'bx_events', 'title', '', '', 0, 'text', '_bx_events_form_session_input_sys_title', '_bx_events_form_session_input_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:80;}', '_bx_events_form_session_input_title_err', 'Xss', '', 1, 0),
+('bx_events_session', 'bx_events', 'description', '', '', 0, 'textarea', '_bx_events_form_session_input_sys_description', '_bx_events_form_session_input_description', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 1),
+('bx_events_session', 'bx_events', 'date_start', 0, '', 0, 'datetime', '_bx_events_form_session_input_sys_date_start', '_bx_events_form_session_input_date_start', '', 1, 0, 0, '', '', '', 'DateTime', '', '_bx_events_form_session_input_date_start_err', 'DateTimeUtc', '', 1, 0),
+('bx_events_session', 'bx_events', 'date_end', 0, '', 0, 'datetime', '_bx_events_form_session_input_sys_date_end', '_bx_events_form_session_input_date_end', '', 1, 0, 0, '', '', '', 'DateTime', '', '_bx_events_form_session_input_date_end_err', 'DateTimeUtc', '', 1, 0),
+('bx_events_session', 'bx_events', 'controls', '_bx_events_form_session_input_sys_controls', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_events_session', 'bx_events', 'do_submit', '_bx_events_form_session_input_do_submit', '', 0, 'submit', '_bx_events_form_session_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_events_session', 'bx_events', 'do_cancel', '_bx_events_form_session_input_do_cancel', '', 0, 'button', '_bx_events_form_session_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
+
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
+('bx_events_session_add', 'title', 2147483647, 1, 1),
+('bx_events_session_add', 'description', 2147483647, 1, 2),
+('bx_events_session_add', 'date_start', 2147483647, 1, 3),
+('bx_events_session_add', 'date_end', 2147483647, 1, 4),
+('bx_events_session_add', 'controls', 2147483647, 1, 5),
+('bx_events_session_add', 'do_submit', 2147483647, 1, 6),
+('bx_events_session_add', 'do_cancel', 2147483647, 1, 7),
+
+('bx_events_session_edit', 'title', 2147483647, 1, 1),
+('bx_events_session_edit', 'description', 2147483647, 1, 2),
+('bx_events_session_edit', 'date_start', 2147483647, 1, 3),
+('bx_events_session_edit', 'date_end', 2147483647, 1, 4),
+('bx_events_session_edit', 'controls', 2147483647, 1, 5),
+('bx_events_session_edit', 'do_submit', 2147483647, 1, 6),
+('bx_events_session_edit', 'do_cancel', 2147483647, 1, 7);
 
 -- FORMS: Price
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
