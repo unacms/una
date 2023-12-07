@@ -41,12 +41,18 @@ class BxDolSessionQuery extends BxDolDb
         if ($this->getOne("SELECT `date` FROM `" . $this->sTable . "` WHERE `id` = :id AND `data` = :data AND `user_id` = :user_id AND `date` > UNIX_TIMESTAMP() - " . BX_DOL_SESSION_SKIP_UPDATE, $aBind))
             return true;
 
+echoDbg("user: " . $aBind['user_id'] . " / " . $iLastActive . " / BX_DOL_SESSION_UPDATE_ACTIVE: " . BX_DOL_SESSION_UPDATE_ACTIVE); exit;
+
+        $this->updateLastActivity($sId);
+
         return (int)$this->query("INSERT INTO `" . $this->sTable . "` SET " . $this->arrayToSQL($aSet) . " ON DUPLICATE KEY UPDATE " . $this->arrayToSQL($aUpdate)) > 0;
     }
 	function update($sId, $aSet = array())
     {
     	$sSet = !empty($aSet) ? $this->arrayToSQL($aSet) . ", " : "";
     	$sSet .= "`date`=UNIX_TIMESTAMP()";
+
+        $this->updateLastActivity($sId);
 
         $iRet = (int)$this->query("UPDATE `" . $this->sTable . "` SET " . $sSet . " WHERE `id`=:id", array('id' => $sId)) > 0;
         $this->setReadOnlyMode(true);
@@ -78,6 +84,13 @@ class BxDolSessionQuery extends BxDolDb
         return $iRet;
     }
     
+    function updateLastActivity($iId)
+    {
+        if (defined('BX_DOL_SESSION_UPDATE_ACTIVE') && ($aRow = $this->getRow("SELECT `date`, `user_id` FROM `" . $this->sTable . "` WHERE `id` = :id AND `date` < UNIX_TIMESTAMP() - " . BX_DOL_SESSION_UPDATE_ACTIVE, ['id' => $iId]))) {
+            $this->updateLastActivityAccount($aRow['user_id'], $aRow['date']);
+        }
+    }
+
     function updateLastActivityAccount($iId, $iDate)
     {
         if ($iDate > 0)
