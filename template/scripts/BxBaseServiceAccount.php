@@ -139,16 +139,29 @@ class BxBaseServiceAccount extends BxDol
         $bApi = bx_is_api();
         
         $mixedResult =$this->_oAccountForms->editAccountEmailSettingsForm($iAccountId);
+        
         if($bApi) {
-            if(is_array($mixedResult))
+            if(is_array($mixedResult)){
+                if (isset($mixedResult['form'] )){
+                    return [
+                        bx_api_get_msg($mixedResult['msg']),
+                        bx_api_get_block('form', $mixedResult['form'], [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_email/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+                else{
                 return [bx_api_get_block('form', $mixedResult, [
                     'ext' => [
                         'request' => ['url' => '/api.php?r=system/account_settings_email/TemplServiceAccount', 'immutable' => true]
                     ]
                 ])];
+                }
+            }
             else
-                return bx_api_get_msg($mixedResult);
-        }
+                return [bx_api_get_msg($mixedResult)];
+        }    
         
         return $mixedResult;
     }
@@ -162,14 +175,26 @@ class BxBaseServiceAccount extends BxDol
         
         $mixedResult =$this->_oAccountForms->editAccountPasswordSettingsForm($iAccountId);
         if($bApi) {
-            if(is_array($mixedResult))
-                return [bx_api_get_block('form', $mixedResult, [
-                    'ext' => [
-                        'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
-                    ]
-                ])];
+            if(is_array($mixedResult)){
+                if (isset($mixedResult['form'] )){
+                    return [
+                        bx_api_get_msg($mixedResult['msg']),
+                        bx_api_get_block('form', $mixedResult['form'], [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+                else{
+                    return [bx_api_get_block('form', $mixedResult, [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_password/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+            }
             else
-                return bx_api_get_msg($mixedResult);
+                return [bx_api_get_msg($mixedResult)];
         }
         
         return $mixedResult;
@@ -183,17 +208,29 @@ class BxBaseServiceAccount extends BxDol
         $bApi = bx_is_api();
         
         $mixedResult =$this->_oAccountForms->editAccountInfoForm($iAccountId);
+        
         if($bApi) {
-            if(is_array($mixedResult))
+            if(is_array($mixedResult)){
+                if (isset($mixedResult['form'] )){
+                    return [
+                        bx_api_get_msg($mixedResult['msg']),
+                        bx_api_get_block('form', $mixedResult['form'], [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_info/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+                else{
                 return [bx_api_get_block('form', $mixedResult, [
                     'ext' => [
-                        'request' => ['url' => '/api.php?r=system/account_settings_email/TemplServiceAccount', 'immutable' => true]
+                            'request' => ['url' => '/api.php?r=system/account_settings_info/TemplServiceAccount', 'immutable' => true]
                     ]
                 ])];
+                }
+            }
             else
-                return bx_api_get_msg($mixedResult);
-        }
-        
+                return [bx_api_get_msg($mixedResult)];
+        }    
         return $mixedResult;
     }
 
@@ -204,7 +241,34 @@ class BxBaseServiceAccount extends BxDol
         if (!$iAccountId)
             $iAccountId = getLoggedId();
 
-        return $this->_oAccountForms->deleteAccountForm($iAccountId);
+        $bApi = bx_is_api();
+        
+        $mixedResult = $this->_oAccountForms->deleteAccountForm($iAccountId);
+        
+        if($bApi) {
+            if(is_array($mixedResult)){
+                if (isset($mixedResult['form'] )){
+                    return [
+                        bx_api_get_msg($mixedResult['msg']),
+                        bx_api_get_block('form', $mixedResult['form'], [
+                        'ext' => [
+                            'request' => ['url' => '/api.php?r=system/account_settings_del_account/TemplServiceAccount', 'immutable' => true]
+                        ]
+                    ])];
+                }
+                else{
+                return [bx_api_get_block('form', $mixedResult, [
+                    'ext' => [
+                        'request' => ['url' => '/api.php?r=system/account_settings_del_account/TemplServiceAccount', 'immutable' => true]
+                    ]
+                ])];
+                }
+            }
+            else
+                return [];
+        }
+
+        return $mixedResult;
     }
 
     /**

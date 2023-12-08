@@ -191,14 +191,15 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     public function deleteAccountForm ($iAccountId)
     {
+        $bIsApi = bx_is_api();
         $oAccount = BxDolAccount::getInstance($iAccountId);
         $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
         if (!$aAccountInfo)
-            return MsgBox(_t('_sys_txt_error_account_is_not_defined'));
+            return $bIsApi ? _t('_sys_txt_error_account_is_not_defined') : MsgBox(_t('_sys_txt_error_account_is_not_defined'));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedDelete ($this->_iProfileId, $aAccountInfo)))
-            return MsgBox($sMsg);
+            return $bIsApi ? $sMsg : MsgBox($sMsg);
 
         // check and display form
         $oForm = $this->getObjectFormDelete();
@@ -206,7 +207,7 @@ class BxBaseAccountForms extends BxDolProfileForms
             $oForm->aInputs['delete_content']['value'] = (int)bx_get('content');
 
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return $bIsApi ? _t('_sys_txt_error_occured') : MsgBox(_t('_sys_txt_error_occured'));
 
         if (!$oForm->isSubmitted())
             unset($aAccountInfo['password']);
@@ -214,12 +215,12 @@ class BxBaseAccountForms extends BxDolProfileForms
         $oForm->initChecker($aAccountInfo);
 
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $bIsApi ? $oForm->getCodeAPI() : $oForm->getCode();
 
         // delete account
         $oAccount = BxDolAccount::getInstance($aAccountInfo['id']);
         if (!$oAccount->delete(false === bx_get('delete_content') ? true : (int)$oForm->getCleanValue('delete_content') != 0))
-            return MsgBox(_t('_sys_txt_error_account_delete'));
+            return $bIsApi ? _t('_sys_txt_error_account_delete') : MsgBox(_t('_sys_txt_error_account_delete'));
 
         // logout from deleted account
         if($iAccountId == getLoggedId())
@@ -292,12 +293,13 @@ class BxBaseAccountForms extends BxDolProfileForms
         // create an alert
         bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName));
 
-        // display result message
-        if ($bIsApi){
-            return $oForm->getCodeAPI();
-        }
-            
+        // display result message            
         $sMsg = MsgBox(_t('_' . $sDisplayName . '_successfully_submitted'));
+        
+        if ($bIsApi){
+            return ['form' => $oForm->getCodeAPI(), 'msg' => _t('_' . $sDisplayName . '_successfully_submitted')];
+        }
+        
         return $sMsg . $oForm->getCode();
     }     
 }
