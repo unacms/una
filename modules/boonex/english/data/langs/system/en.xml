@@ -7,6 +7,8 @@
 	<string name="_ATT_SUSPENDED_E"><![CDATA[Your profile is temporarily out of {0} system services. You can activate it <a target=_blank href="change_status.php">here</a>. If you have any questions, please <a target=_blank href="contact.php">contact the administrators</a>.]]></string>
 	<string name="_ATT_UNCONFIRMED_E"><![CDATA[You will need to follow the link supplied in the e-mail to get your account submitted for approval. <br />Send me <a target=_blank href="activation_email.php">confirmation e-mail</a>.]]></string>
 	<string name="_Access denied"><![CDATA[Access denied]]></string>
+    <string name="_access_denied_page_title"><![CDATA[Page Not Available]]></string>
+     <string name="_access_denied_page_content"><![CDATA[Sorry, this content is no longer available. It may have been removed or is not accessible due to violation of our terms of service.]]></string>
 	<string name="_Action"><![CDATA[Action]]></string>
 	<string name="_all"><![CDATA[All]]></string>
 	<string name="_Allowed Since"><![CDATA[Allowed Since]]></string>

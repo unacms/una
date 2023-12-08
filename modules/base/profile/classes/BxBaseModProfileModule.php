@@ -1017,10 +1017,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return false;
 
         list($iContentId, $aContentInfo) = $mixedContent;
-        
         if(bx_is_api()){
             $aContentInfo['cover'] = $this->serviceGetCover($iContentId);
             $aContentInfo['image'] = $this->serviceGetThumb($iContentId);
+            
+            $CNF = $this->_oConfig->CNF;
+            if(!empty($CNF['OBJECT_MENU_VIEW_ENTRY_META'])){
+                $oMetaMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_VIEW_ENTRY_META']);
+                $aContentInfo['meta_menu'] =  $oMetaMenu->getCodeAPI();
+            }
+            if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])){
+                $oActionMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
+                 $aContentInfo['actions_menu'] = $oActionMenu->getCodeAPI();
+            }  
+            $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
+            $aContentInfo['profile'] = BxDolProfile::getData($this->_aProfileInfo['id'], [
+                'get_avatar' => 'getAvatarBig',
+                'with_info' => false
+            ]);
+            
             return [bx_api_get_block('entity_cover', $aContentInfo)];
         }
         
