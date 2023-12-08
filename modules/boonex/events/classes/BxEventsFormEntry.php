@@ -337,7 +337,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     function addCssJs ()
     {
         if ((!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) && !self::$_isCssJsEventsAdded) {
-            $this->oTemplate->addJs(array('moment-timezone-with-data-1970-2030.min.js', 'entry.js', 'intervals.js'));
+            $this->oTemplate->addJs(array('moment-timezone-with-data-1970-2030.min.js', 'modules/base/groups/js/|entry.js', 'entry.js', 'intervals.js'));
             $this->oTemplate->addCss('informer.css');
             self::$_isCssJsEventsAdded = true;
         }  

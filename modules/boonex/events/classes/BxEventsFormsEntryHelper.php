@@ -18,6 +18,15 @@ class BxEventsFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+
+    public function onDataDeleteAfter($iContentId, $aContentInfo, $oProfile)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_oModule->_oDb->deleteSessions(['event_id' => $iContentId]);
+
+        return parent::onDataDeleteAfter($iContentId, $aContentInfo, $oProfile);
+    }
 }
 
 /** @} */

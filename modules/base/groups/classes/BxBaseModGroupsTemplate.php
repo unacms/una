@@ -86,6 +86,22 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
             'bx_repeat:roles' => $aTmplVarsRoles
         ));
     }
+    
+    public function getPopupQuestionnaire($iContentId, $iProfileId)
+    {
+        $aAnswers = $this->_oModule->_oDb->getQuestions(['sample' => 'answers', 'content_id' => $iContentId, 'profile_id' => $iProfileId]);
+        if(empty($aAnswers) || !is_array($aAnswers))
+            return '';
+
+        $aTmplVarsAnswers = [];
+        foreach($aAnswers as $aAnswer)
+            $aTmplVarsAnswers[] = [
+                'question' => $aAnswer['question'],
+                'answer' => $aAnswer['answer'],
+            ];
+
+        return $this->parseHtmlByName('popup_qnr_answers.html', ['bx_repeat:answers' => $aTmplVarsAnswers]);
+    }
 
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
     {

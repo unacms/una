@@ -28,26 +28,38 @@ class BxBaseModGroupsMenuViewActions extends BxBaseModProfileMenuViewActions
             return;
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(isset($CNF['OBJECT_CONNECTIONS']) && ($oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])) !== false) {
+            $iProfileId = bx_get_logged_profile_id();
+            $iGroupProfileId = $this->_oProfile->id();
+            $sOnclickAddFan = "bx_conn_action(this, 'bx_events_fans', 'add', '" . $iGroupProfileId . "')";
 
-        $oConn = isset($CNF['OBJECT_CONNECTIONS']) ? BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']) : false;
-        if ($oConn && $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id())) {
-            $this->addMarkers(array(
-                'title_add_fan' => _t($CNF['T']['menu_item_title_become_fan_sent']),
-                'title_remove_fan' => _t($CNF['T']['menu_item_title_leave_group_cancel_request']),
-            ));
-        } 
-        else {
-            if (isset($CNF['T']['menu_item_title_become_fan']) && isset($CNF['T']['menu_item_title_leave_group'])){
-                $this->addMarkers(array(
-                    'title_add_fan' => _t($CNF['T']['menu_item_title_become_fan']),
-                    'title_remove_fan' => _t($CNF['T']['menu_item_title_leave_group']),
-                ));
+            $aMarkers = [];
+            if($oConn->isConnectedNotMutual($iProfileId, $iGroupProfileId)) {
+                if(isset($CNF['T']['menu_item_title_become_fan_sent'], $CNF['T']['menu_item_title_leave_group_cancel_request']))
+                    $aMarkers = [
+                        'title_add_fan' => _t($CNF['T']['menu_item_title_become_fan_sent']),
+                        'onclick_add_fan' => $sOnclickAddFan,
+                        'title_remove_fan' => _t($CNF['T']['menu_item_title_leave_group_cancel_request']),
+                    ];
             }
-        }
+            else {
+                if(!empty($CNF['FIELD_JOIN_CONFIRMATION']) && (int)$this->_aContentInfo[$CNF['FIELD_JOIN_CONFIRMATION']] != 0)
+                    $sOnclickAddFan = $this->_oModule->_oConfig->getJsObject('entry') . ".connAction(this, 'bx_events_fans', 'add', '" . $iGroupProfileId . "')";
 
-        if ($oConn && $this->_oModule->isFan($this->_aContentInfo[$CNF['FIELD_ID']])) {
-            $a = $oConn->getConnectedInitiators($this->_oProfile->id());
-            $this->addMarkers(array('recipients' => implode(',', $a)));
+                if(isset($CNF['T']['menu_item_title_become_fan'], $CNF['T']['menu_item_title_leave_group']))
+                    $aMarkers = [
+                        'title_add_fan' => _t($CNF['T']['menu_item_title_become_fan']),
+                        'onclick_add_fan' => $sOnclickAddFan,
+                        'title_remove_fan' => _t($CNF['T']['menu_item_title_leave_group']),
+                    ];
+            }
+            $this->addMarkers($aMarkers);
+
+            if ($this->_oModule->isFan($this->_aContentInfo[$CNF['FIELD_ID']])) {
+                $a = $oConn->getConnectedInitiators($iGroupProfileId);
+                $this->addMarkers(array('recipients' => implode(',', $a)));
+            }
         }
     }
 }

@@ -215,7 +215,7 @@ class BxEventsDb extends BxBaseModGroupsDb
             'event_id' => $iId
         ]) > 0;
     }
-    
+
     public function getSessions($aParams = [])
     {
         $CNF = &$this->_oConfig->CNF;
@@ -262,6 +262,16 @@ class BxEventsDb extends BxBaseModGroupsDb
         return (int)$this->getOne("SELECT MAX(`order`) FROM `" . $CNF['TABLE_SESSIONS'] . "` WHERE `event_id`=:event_id", [
             'event_id' => $iEventId
         ]);
+    }
+    
+    public function deleteSessions($aWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aWhere) || !is_array($aWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_SESSIONS'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
     }
 }
 

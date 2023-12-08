@@ -462,6 +462,89 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         $CNF = $this->_oConfig->CNF; 
         return $this->query("DELETE FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `id` = :id", $aBindings);
     }
+
+    public function getQuestions($aParams = [])
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = ['name' => 'getAll', 'params' => [0 => 'query']];
+
+        $sSelectClause = "`tq`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['sample']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = [
+                    'id' => $aParams['id']
+                ];
+
+                $sWhereClause = " AND `tq`.`id`=:id";
+                break;
+            
+             case 'content_id':
+                $aMethod['params'][1] = [
+                    'content_id' => $aParams['content_id']
+                ];
+
+                $sWhereClause = " AND `tq`.`content_id`=:content_id";
+                $sOrderClause = "`tq`.`order` ASC";
+                break;
+            
+            case 'answers':
+                $aMethod['params'][1] = [
+                    'content_id' => $aParams['content_id'],
+                    'profile_id' => $aParams['profile_id']
+                ];
+
+                $sSelectClause .= ", `ta`.`answer`";
+                $sJoinClause = "INNER JOIN `" . $CNF['TABLE_ANSWERS'] . "` AS `ta` ON `tq`.`id`=`ta`.`question_id` AND `ta`.`profile_id`=:profile_id";
+                $sWhereClause = " AND `tq`.`content_id`=:content_id";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_QUESTIONS'] . "` AS `tq` " . $sJoinClause . " WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+
+    public function getQuestionOrderMax($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->getOne("SELECT MAX(`order`) FROM `" . $CNF['TABLE_QUESTIONS'] . "` WHERE `content_id`=:content_id", [
+            'content_id' => $iContentId
+        ]);
+    }
+
+    public function insertAnswer($iQuestionId, $iProfileId, $sAnswer)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sSetClause = $this->arrayToSQL([
+            'question_id' => $iQuestionId, 
+            'profile_id' => $iProfileId, 
+            'answer' => $sAnswer
+        ]);
+
+        return $this->query("INSERT INTO `" . $CNF['TABLE_ANSWERS'] . "` SET " . $sSetClause . ", `added`=UNIX_TIMESTAMP() ON DUPLICATE KEY UPDATE `answer`=:answer, `added`=UNIX_TIMESTAMP()", [
+            'answer' => $sAnswer
+        ]) !== false ? (int)$this->lastId() : false;
+    }
+
+    public function deleteQuestionnaires($iContentId) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $this->query("DELETE FROM `tq`, `ta` USING `" . $CNF['TABLE_QUESTIONS'] . "` AS `tq` LEFT JOIN `" . $CNF['TABLE_ANSWERS'] . "` AS `ta` ON `tq`.`id`=`ta`.`question_id` WHERE `tq`.`content_id`=:content_id", [
+            'content_id' => $iContentId
+        ]) !== false;
+    }
 }
 
 /** @} */

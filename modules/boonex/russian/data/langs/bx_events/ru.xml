@@ -90,6 +90,22 @@
     <string name="_bx_events_form_input_repeat_day_of_week"><![CDATA[Повторять: день недели]]></string>
     <string name="_bx_events_form_input_stop_repeating"><![CDATA[Отстановить повтор]]></string>
 
+    <string name="_bx_events_form_question"><![CDATA[Вопрос]]></string>
+    <string name="_bx_events_form_question_display_add"><![CDATA[Добавление вопроса]]></string>
+    <string name="_bx_events_form_question_display_edit"><![CDATA[Редактирование вопроса]]></string>
+    <string name="_bx_events_form_question_input_sys_action"><![CDATA[Действие]]></string>
+    <string name="_bx_events_form_question_input_sys_question"><![CDATA[Вопрос]]></string>
+    <string name="_bx_events_form_question_input_question"><![CDATA[Вопрос]]></string>
+    <string name="_bx_events_form_question_input_question_err"><![CDATA[Вопрос обязателен.]]></string>
+    <string name="_bx_events_form_question_input_sys_answer"><![CDATA[Ответ]]></string>
+    <string name="_bx_events_form_question_input_sys_controls"><![CDATA[Элементы управления]]></string>
+    <string name="_bx_events_form_question_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_events_form_question_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_events_form_question_input_sys_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_events_form_question_input_do_cancel"><![CDATA[Отмена]]></string>
+
+    <string name="_bx_events_form_questionnaire_input_question_err"><![CDATA[Пожалуйста, ответьте на вопрос.]]></string>
+
     <string name="_bx_events_form_session"><![CDATA[Сессия]]></string>
     <string name="_bx_events_form_session_display_add"><![CDATA[Добавление сессии]]></string>
     <string name="_bx_events_form_session_display_edit"><![CDATA[Редактирование сессии]]></string>
@@ -131,6 +147,8 @@
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Редактировать событие]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку события]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
+    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_page_title_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_page_title_sys_view_profile_closed"><![CDATA[Просмотр закрытого события]]></string>
@@ -195,6 +213,7 @@
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Создать событие]]></string>
     <string name="_bx_events_page_block_title_edit_profile"><![CDATA[Редактировать событие]]></string>
     <string name="_bx_events_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_events_page_block_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
     <string name="_bx_events_page_block_title_delete_profile"><![CDATA[Удалить событие]]></string>
     <string name="_bx_events_page_block_title_profile_info_link"><![CDATA["<a href="{profile_link}">{display_name}</a>" - инфо]]></string>
     <string name="_bx_events_page_block_title_profile_info"><![CDATA[Инфо]]></string>
@@ -384,6 +403,14 @@
     <string name="_bx_events_grid_action_err_delete"><![CDATA[Невозможно удалить выбранные события.]]></string>
     <string name="_bx_events_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_events_grid_column_title_qn_question"><![CDATA[Вопрос]]></string>
+    <string name="_bx_events_grid_action_title_qn_add"><![CDATA[Добавить]]></string>
+    <string name="_bx_events_grid_action_title_qn_edit"><![CDATA[Редактировать]]></string>
+    <string name="_bx_events_grid_action_title_qn_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_events_popup_title_qn_add"><![CDATA[Добавить вопрос]]></string>
+    <string name="_bx_events_popup_title_qn_edit"><![CDATA[Редактировать вопрос]]></string>
+    <string name="_bx_events_popup_title_questionnaire"><![CDATA[Анкета]]></string>
+
     <string name="_bx_events_grid_column_title_sn_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_events_grid_column_title_sn_description"><![CDATA[Описание]]></string>
     <string name="_bx_events_grid_column_title_sn_date_start"><![CDATA[Начало]]></string>
@@ -416,6 +443,7 @@
     <string name="_bx_events_txt_sample_score_up_single"><![CDATA[голос за событие]]></string>
     <string name="_bx_events_txt_sample_score_down_single"><![CDATA[голос против события]]></string>
     <string name="_bx_events_txt_set_role"><![CDATA[Задать роль]]></string>
+    <string name="_bx_events_txt_view_answers"><![CDATA[Посмотреть ответы на анкету]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
     <string name="_bx_events_txt_invite_popup_text"><![CDATA[Вы были приглашены на это собыите.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
@@ -541,6 +569,8 @@
     <string name="_bx_events_page_block_title_profile_pricing"><![CDATA[Цены]]></string>
     <string name="_bx_events_page_block_title_profile_pricing_link"><![CDATA[Цены на <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_entry_reports"><![CDATA[Отчеты]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
+    <string name="_bx_events_menu_item_title_edit_questionnaire"><![CDATA[Редактировать анкету]]></string>
     <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Редактировать сессии]]></string>
     <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Редактировать сессии]]></string>
     <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Редактировать цены]]></string>

@@ -41,7 +41,7 @@ class BxDolRecommendation extends BxDolFactory implements iBxDolFactoryObject
         $this->_iReducerAdd = 5;
         $this->_iReducerIgnore = 10;
 
-        $this->_iPerPageDefault = 6;
+        $this->_iPerPageDefault = 24;
     }
 
     public static function getObjectInstance($sObject)

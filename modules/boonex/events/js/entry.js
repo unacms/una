@@ -9,18 +9,18 @@
  */
 
 function BxEventsEntry(oOptions) {
-    this._sActionsUri = oOptions.sActionUri;
-    this._sActionsUrl = oOptions.sActionUrl;
+    BxBaseModGroupsEntry.call(this, oOptions);
+
     this._sObjName = oOptions.sObjName == undefined ? 'oBxEventsEntry' : oOptions.sObjName;
-    this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
-    this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
-    this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
 
     var $this = this;
     $(document).ready(function() {
         $this.init();
     });
 }
+
+BxEventsEntry.prototype = Object.create(BxBaseModGroupsEntry.prototype);
+BxEventsEntry.prototype.constructor = BxEventsEntry;
 
 BxEventsEntry.prototype.init = function() {
     if ('UTC' == $("[name = 'timezone']").val())
@@ -46,18 +46,6 @@ BxEventsEntry.prototype.checkIn = function(oElement, iId) {
         },
         'json'
     );
-};
-
-BxEventsEntry.prototype.loadingInButton = function(e, bShow) {
-    if($(e).length)
-        bx_loading_btn($(e), bShow);
-    else
-        bx_loading($('body'), bShow);	
-};
-
-BxEventsEntry.prototype._getDefaultData = function() {
-    var oDate = new Date();
-    return jQuery.extend({}, this._oRequestParams, {_t:oDate.getTime()});
 };
 
 /** @} */

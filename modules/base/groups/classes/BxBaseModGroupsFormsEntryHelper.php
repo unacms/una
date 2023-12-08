@@ -178,7 +178,11 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
     public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
+
+        if(isset($CNF['TABLE_QUESTIONS'], $CNF['TABLE_ANSWERS']))
+            $this->_oModule->_oDb->deleteQuestionnaires($iContentId);
 
         if ($oGroupProfile && isset($CNF['TABLE_ADMINS']))
             $this->_oModule->_oDb->deleteAdminsByGroupId($oGroupProfile->id());

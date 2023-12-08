@@ -46,6 +46,11 @@ class BxEventsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
+    protected function _getMenuItemEditEventQuestionnaire($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+
     protected function _getMenuItemEditEventSessions($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);

@@ -27,7 +27,7 @@ class BxEventsPageEntry extends BxBaseModGroupsPageEntry
         if(!empty($sResult))
             $sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
 
-        $this->_oModule->_oTemplate->addJs(['entry.js']);
+        $this->_oModule->_oTemplate->addJs(['modules/base/groups/js/|entry.js', 'entry.js']);
         return $sResult;
     }
 }

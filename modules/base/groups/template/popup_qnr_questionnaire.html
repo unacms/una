@@ -1,5 +1,5 @@
-<div class="bx-events-session-form">
-    <div class="bx-events-session-form-cnt">
+<div class="bx-base-group-questionnaire-form">
+    <div class="bx-base-group-questionnaire-form-cnt">
         __form__
         <script language="javascript">
             $(document).ready(function () {
@@ -10,7 +10,8 @@
                     },
                     success: function (data) {
                         $(".bx-popup-applied:visible").dolPopupHide();
-                        glGrids.__object__.processJson(data, '__action__');
+
+                        processJsonData(data);
                     }
                 });
             });

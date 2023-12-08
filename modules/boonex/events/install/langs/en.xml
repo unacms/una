@@ -90,6 +90,22 @@
     <string name="_bx_events_form_input_repeat_day_of_week"><![CDATA[Repeat day of week]]></string>
     <string name="_bx_events_form_input_stop_repeating"><![CDATA[Stop repeating]]></string>
 
+    <string name="_bx_events_form_question"><![CDATA[Question]]></string>
+    <string name="_bx_events_form_question_display_add"><![CDATA[Add Question]]></string>
+    <string name="_bx_events_form_question_display_edit"><![CDATA[Edit Question]]></string>
+    <string name="_bx_events_form_question_input_sys_action"><![CDATA[Action]]></string>
+    <string name="_bx_events_form_question_input_sys_question"><![CDATA[Question]]></string>
+    <string name="_bx_events_form_question_input_question"><![CDATA[Question]]></string>
+    <string name="_bx_events_form_question_input_question_err"><![CDATA[Question is mandatory.]]></string>
+    <string name="_bx_events_form_question_input_sys_answer"><![CDATA[Answer]]></string>
+    <string name="_bx_events_form_question_input_sys_controls"><![CDATA[Controls]]></string>
+    <string name="_bx_events_form_question_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_events_form_question_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_events_form_question_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_events_form_question_input_do_cancel"><![CDATA[Cancel]]></string>
+
+    <string name="_bx_events_form_questionnaire_input_question_err"><![CDATA[Please, answer the question.]]></string>
+
     <string name="_bx_events_form_session"><![CDATA[Session]]></string>
     <string name="_bx_events_form_session_display_add"><![CDATA[Add Session]]></string>
     <string name="_bx_events_form_session_display_edit"><![CDATA[Edit Session]]></string>
@@ -156,6 +172,8 @@
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Edit Event Cover]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
+    <string name="_bx_events_page_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
     <string name="_bx_events_page_title_sys_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_title_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_title_sys_join_profile"><![CDATA[Join Course]]></string>
@@ -230,6 +248,7 @@
     <string name="_bx_events_page_block_title_create_profile"><![CDATA[Create Event]]></string>
     <string name="_bx_events_page_block_title_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_events_page_block_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
     <string name="_bx_events_page_block_title_delete_profile"><![CDATA[Delete Event]]></string>
     <string name="_bx_events_page_block_title_join_profile"><![CDATA[Join Event]]></string>
     <string name="_bx_events_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
@@ -310,6 +329,8 @@
     <string name="_bx_events_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_events_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_events_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_events_menu_item_title_system_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
+    <string name="_bx_events_menu_item_title_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
     <string name="_bx_events_menu_item_title_system_edit_sessions"><![CDATA[Edit Sessions]]></string>
     <string name="_bx_events_menu_item_title_edit_sessions"><![CDATA[Edit Sessions]]></string>
     <string name="_bx_events_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
@@ -426,7 +447,15 @@
     <string name="_bx_events_grid_action_title_adm_clear_reports"><![CDATA[Сlear reports]]></string>
     <string name="_bx_events_grid_action_err_delete"><![CDATA[Cannot delete the selected event(s).]]></string>
     <string name="_bx_events_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
-    
+
+    <string name="_bx_events_grid_column_title_qn_question"><![CDATA[Question]]></string>
+    <string name="_bx_events_grid_action_title_qn_add"><![CDATA[Add]]></string>
+    <string name="_bx_events_grid_action_title_qn_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_events_grid_action_title_qn_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_events_popup_title_qn_add"><![CDATA[Add Question]]></string>
+    <string name="_bx_events_popup_title_qn_edit"><![CDATA[Edit Question]]></string>
+    <string name="_bx_events_popup_title_questionnaire"><![CDATA[Questionnaire]]></string>
+
     <string name="_bx_events_grid_column_title_sn_title"><![CDATA[Title]]></string>
     <string name="_bx_events_grid_column_title_sn_description"><![CDATA[Description]]></string>
     <string name="_bx_events_grid_column_title_sn_date_start"><![CDATA[Date start]]></string>
@@ -475,6 +504,7 @@
     <string name="_bx_events_txt_sample_score_up_single"><![CDATA[score up vote to event]]></string>
     <string name="_bx_events_txt_sample_score_down_single"><![CDATA[score down vote to event]]></string>
     <string name="_bx_events_txt_set_role"><![CDATA[Set Role]]></string>
+    <string name="_bx_events_txt_view_answers"><![CDATA[View questionnaire answers]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Private event]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
     <string name="_bx_events_txt_invite_popup_text"><![CDATA[You have been invited to a event. Click the button below to accept the invitation.]]></string>

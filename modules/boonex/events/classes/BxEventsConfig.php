@@ -38,6 +38,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'TABLE_CHECK_IN' => $aModule['db_prefix'] . 'check_in',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
             'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
+            'TABLE_QUESTIONS' => $aModule['db_prefix'] . 'qnr_questions',
+            'TABLE_ANSWERS' => $aModule['db_prefix'] . 'qnr_answers',
             'TABLE_SESSIONS' => $aModule['db_prefix'] . 'sessions',
 
             // database fields
@@ -137,6 +139,9 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_event_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_event_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_event_invite',
+            'OBJECT_FORM_QUESTION' => 'bx_events_question',
+            'OBJECT_FORM_QUESTION_DISPLAY_ADD' => 'bx_events_question_add',
+            'OBJECT_FORM_QUESTION_DISPLAY_EDIT' => 'bx_events_question_edit',
             'OBJECT_FORM_SESSION' => 'bx_events_session',
             'OBJECT_FORM_SESSION_DISPLAY_ADD' => 'bx_events_session_add',
             'OBJECT_FORM_SESSION_DISPLAY_EDIT' => 'bx_events_session_edit',
@@ -163,6 +168,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_COMMON' => 'bx_events_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_GRID_INVITES' => 'bx_events_invites',
+            'OBJECT_GRID_QUESTIONS_MANAGE' => 'bx_events_questions_manage',
             'OBJECT_GRID_SESSIONS_MANAGE' => 'bx_events_sessions_manage',
             'OBJECT_GRID_PRICES_MANAGE' => 'bx_events_prices_manage',
             'OBJECT_GRID_PRICES_VIEW' => 'bx_events_prices_view',
@@ -276,6 +282,10 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'txt_cart_item_title' => '_bx_events_txt_cart_item_title',
                 'txt_cart_item_title_lifetime' => '_bx_events_txt_cart_item_title_lifetime',
                 'txt_subscribe_title' => '_bx_events_grid_action_title_subscribe_title',
+                'form_qnr_field_qn_err' => '_bx_events_form_questionnaire_input_question_err',
+                'popup_title_questionnaire' => '_bx_events_popup_title_questionnaire',
+                'popup_title_question_add' => '_bx_events_popup_title_qn_add',
+                'popup_title_question_edit' => '_bx_events_popup_title_qn_edit',
                 'popup_title_price_add' => '_bx_events_popup_title_price_add',
                 'popup_title_price_edit' => '_bx_events_popup_title_price_edit',
                 'msg_performed' => '_bx_events_msg_performed',
@@ -309,6 +319,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
+            'popup_question' => $sHtmlPrefix . '-popup-question',
+            'popup_questionnaire' => $sHtmlPrefix . '-popup-questionnaire',
             'popup_session' => $sHtmlPrefix . '-popup-session'
         ]);
     }

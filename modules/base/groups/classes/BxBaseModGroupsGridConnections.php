@@ -72,6 +72,25 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         return $sResult;
     }
 
+    public function performActionQuestionnaire()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($mixedResult = $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(['msg' => $mixedResult]);
+
+        list($iId, $iViewedId) = $this->_prepareIds();
+        if(!$iId)
+            return echoJson(['msg' => _t('_sys_txt_error_occured')]);
+
+        $sPopupContent = $this->_oModule->_oTemplate->getPopupQuestionnaire($this->_aContentInfo[$CNF['FIELD_ID']], $iId);
+        if(!$sPopupContent)
+            return echoJson([]);
+
+        $oFunctions = BxTemplFunctions::getInstance();
+        return echoJson(['popup' => $oFunctions->transBox(str_replace('_', '-', $this->_sContentModule) . '-questionnaire-popup', $oFunctions->simpleBoxContent($sPopupContent))]);
+    }
+
     public function performActionSetRole()
     {
         if(!$this->_bRoles)
@@ -221,6 +240,14 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
     protected function _getActionSetRoleSubmit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         return '';
+    }
+
+    protected function _getActionQuestionnaire ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if($aRow['mutual'])
+            return '';
+
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

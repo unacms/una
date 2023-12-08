@@ -105,6 +105,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     	));
     }
 
+    public function actionGetQuestionnaire()
+    {
+        $sObject = '';
+        if(($sObject = bx_get('o')) !== false)
+            $sObject = bx_process_url_param($sObject);
+        
+        $sAction = '';
+        if(($sAction = bx_get('a')) !== false)
+            $sAction = bx_process_url_param($sAction);
+
+        $iContentProfileId = 0;
+        if(($iContentProfileId = bx_get('cpi')) !== false)
+            $iContentProfileId = (int)$iContentProfileId;
+
+        echoJson($this->serviceGetQuestionnaire($sObject, $sAction, $iContentProfileId));
+    }
+
     public function serviceManageTools($sType = 'common')
     {
         $sResult = parent::serviceManageTools($sType);
@@ -1107,6 +1124,93 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->unsetRole($aItemInfo['profile_id'], $iClientId);
     }
 
+    public function serviceGetQuestionnaire($sObject, $sAction, $iContentProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentProfileInfo = BxDolProfileQuery::getInstance()->getInfoById($iContentProfileId);
+        if(empty($aContentProfileInfo) || !is_array($aContentProfileInfo))
+            return ['code' => 1];
+
+        $aForm = [
+            'form_attrs' => [
+                'id' => $this->getName() . '_questionnaire',
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'get_questionnaire', [
+                    'o' => $sObject, 
+                    'a' => $sAction, 
+                    'cpi' => $iContentProfileId
+                ])
+            ],
+            'params' => [
+                'db' => [
+                    'table' => $CNF['TABLE_ANSWERS'],
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'do_submit'
+                ],
+            ],
+            'inputs' => []
+        ];
+
+        $aQuestions = $this->_oDb->getQuestions(['sample' => 'content_id', 'content_id' => $aContentProfileInfo['content_id']]);
+        if(empty($aQuestions) || !is_array($aQuestions))
+            return ['code' => 1];
+
+        foreach($aQuestions as $aQuestion) {
+            $aForm['inputs'][] = [
+                'type' => 'text',
+                'name' => 'question_' . $aQuestion['id'],
+                'caption' => $aQuestion['question'],
+                'value' => '',
+                'required' => '1',
+                'checker' => [
+                    'func' => 'Avail',
+                    'params' => [],
+                    'error' => _t($CNF['T']['form_qnr_field_qn_err']),
+                ],
+                'db' => [
+                    'pass' => 'Xss',
+                ],
+            ];
+        }
+
+        $aForm['inputs']['controls'] = [
+            'name' => 'controls',
+            'type' => 'input_set', [
+                'type' => 'submit',
+                'name' => 'do_submit',
+                'value' => _t('_Submit'),
+            ], [
+                'type' => 'reset',
+                'name' => 'close',
+                'value' => _t('_Cancel'),
+                'attrs' => [
+                    'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                    'class' => 'bx-def-margin-sec-left',
+                ],
+            ]
+        ];
+
+    	$oForm = new BxTemplFormView($aForm);
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+            $iProfileId = bx_get_logged_profile_id();
+
+            foreach($aQuestions as $aQuestion)
+                $this->_oDb->insertAnswer((int)$aQuestion['id'], $iProfileId, $oForm->getCleanValue('question_' . $aQuestion['id']));
+
+            return ['code' => 0, 'o' => $sObject, 'a' => $sAction, 'cpi' => $iContentProfileId, 'eval' => $this->_oConfig->getJsObject('entry') . '.connActionPerformed(oData)'];
+        }
+
+        bx_import('BxTemplFunctions');
+        $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oConfig->getHtmlIds('popup_questionnaire'), _t($CNF['T']['popup_title_questionnaire']), $this->_oTemplate->parseHtmlByName('popup_qnr_questionnaire.html', [
+            'form_id' => $oForm->getId(),
+            'form' => $oForm->getCode(true),
+        ]));
+
+        return ['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]];
+    }
 
     /**
      * Data for Notifications module
