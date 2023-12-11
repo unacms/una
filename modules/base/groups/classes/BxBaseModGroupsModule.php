@@ -107,6 +107,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function actionGetQuestionnaire()
     {
+        $sSource = '';
+        if(($sSource = bx_get('s')) !== false)
+            $sSource = bx_process_url_param($sSource);
+
         $sObject = '';
         if(($sObject = bx_get('o')) !== false)
             $sObject = bx_process_url_param($sObject);
@@ -119,7 +123,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(($iContentProfileId = bx_get('cpi')) !== false)
             $iContentProfileId = (int)$iContentProfileId;
 
-        echoJson($this->serviceGetQuestionnaire($sObject, $sAction, $iContentProfileId));
+        echoJson($this->serviceGetQuestionnaire($sSource, $sObject, $sAction, $iContentProfileId));
     }
 
     public function serviceManageTools($sType = 'common')
@@ -1124,7 +1128,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->unsetRole($aItemInfo['profile_id'], $iClientId);
     }
 
-    public function serviceGetQuestionnaire($sObject, $sAction, $iContentProfileId)
+    public function serviceGetQuestionnaire($sSource, $sObject, $sAction, $iContentProfileId)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1136,6 +1140,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'form_attrs' => [
                 'id' => $this->getName() . '_questionnaire',
                 'action' => BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'get_questionnaire', [
+                    's' => $sSource,
                     'o' => $sObject, 
                     'a' => $sAction, 
                     'cpi' => $iContentProfileId
@@ -1200,7 +1205,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             foreach($aQuestions as $aQuestion)
                 $this->_oDb->insertAnswer((int)$aQuestion['id'], $iProfileId, $oForm->getCleanValue('question_' . $aQuestion['id']));
 
-            return ['code' => 0, 'o' => $sObject, 'a' => $sAction, 'cpi' => $iContentProfileId, 'eval' => $this->_oConfig->getJsObject('entry') . '.connActionPerformed(oData)'];
+            return ['code' => 0, 'o' => $sObject, 'a' => $sAction, 'cpi' => $iContentProfileId, 'ci' => $aContentProfileInfo['content_id'], 'eval' => $this->_oConfig->getJsObject($sSource) . '.connActionPerformed(oData)'];
         }
 
         bx_import('BxTemplFunctions');

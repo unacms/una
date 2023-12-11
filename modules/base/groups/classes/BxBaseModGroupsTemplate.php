@@ -105,6 +105,8 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
 
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $sResult = '';
         
         switch($sTemplateName) {
@@ -116,7 +118,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
                 $sResult = parent::_getUnitClass($aData, $sTemplateName);
         }
 
-        return $sResult;
+        return $sResult . ' ' . str_replace('_', '-', $this->_oConfig->getName()) . '-unit-' . $aData[$CNF['FIELD_ID']];
     }
 
     protected function _getUnitSize($aData, $sTemplateName = 'unit.html')
