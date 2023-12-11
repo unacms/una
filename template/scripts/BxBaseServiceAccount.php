@@ -625,6 +625,7 @@ class BxBaseServiceAccount extends BxDol
             
             if($bApi) {
                 return [
+                    bx_api_get_msg($sResultMsg, ['ext' => ['msg_type' => 'caption']]),
                     bx_api_get_block('form', $oForm->getCodeAPI(), [
                         'ext' => [
                             'request' => ['url' => '/api.php?r=system/forgot_password/TemplServiceAccount', 'immutable' => true]
