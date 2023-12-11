@@ -24,6 +24,11 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
             ];
     }
 
+    protected function getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
+    {
+        return $this->_oModule->_oConfig->getJsObject('main') . ".connAction(this, '" . $sConnection . "', '" . $sAction . "', '" . $iContentProfile . "')";
+    }
+
     protected function _getMenuItemJoinPaid($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

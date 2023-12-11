@@ -20,6 +20,7 @@ function BxBaseModGroupsEntry(oOptions) {
 BxBaseModGroupsEntry.prototype.connAction = function(oElement, sObject, sAction, iContentId) {
     var $this = this;
     var oParams = this._getDefaultData();
+    oParams['s'] = 'entry';
     oParams['o'] = sObject;
     oParams['a'] = sAction;
     oParams['cpi'] = iContentId;
@@ -34,7 +35,6 @@ BxBaseModGroupsEntry.prototype.connAction = function(oElement, sObject, sAction,
             if(oElement)
                 $this.loadingInButton(oElement, false);
 
-            oData.element = oElement;
             processJsonData(oData);
         },
         'json'
@@ -42,7 +42,7 @@ BxBaseModGroupsEntry.prototype.connAction = function(oElement, sObject, sAction,
 };
 
 BxBaseModGroupsEntry.prototype.connActionPerformed = function(oData) {
-    bx_conn_action(oData.element, oData.o, oData.a, oData.cpi);
+    bx_conn_action($('.bx-menu-item-profile-fan-' + oData.a + ' .bx-btn'), oData.o, oData.a, oData.cpi);
 };
 
 BxBaseModGroupsEntry.prototype.loadingInButton = function(e, bShow) {
