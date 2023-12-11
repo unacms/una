@@ -45,17 +45,25 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         ));
     }
 
+    protected function getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfile, $iInitiatorProfile)
+    {
+        return '';
+    }
+
     protected function _getMenuItemConnectionApi($sConnection, $sAction, &$aItem)
     {
-        if(!isLogged() || $this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection][$sAction]}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+        if(!isLogged() || (isset($this->_aConnectionToFunctionCheck[$sConnection]) && $this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection][$sAction]}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED))
             return false;
 
         $iInitiatorProfile = bx_get_logged_profile_id();
         $iContentProfile = $this->_oProfile->id();
         $sTitle = $this->_oModule->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfile, $iInitiatorProfile);
+        
+        if(empty($sTitle))
+            $sTitle = $this->getMenuItemTitleByConnection($sConnection, $sAction, $iContentProfile, $iInitiatorProfile);
         if(empty($sTitle))
             return false;
-
+        
         return [
             'id' => $aItem['id'],
             'name' => $aItem['name'],

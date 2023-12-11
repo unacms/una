@@ -525,6 +525,10 @@ class BxBasePage extends BxDolPage
             'blocks' => $aBlocks,
             'data' => &$a,
         ];
+        
+        if (!$this->_isVisiblePage($this->_aObject))
+            $a['page_status'] = 403;
+        
         bx_alert('system', 'get_page_api', 0, 0, $aExtras);
 
         return $a;

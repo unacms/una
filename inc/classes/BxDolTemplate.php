@@ -3460,6 +3460,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         bx_import('BxDolLanguages');
         header('HTTP/1.0 403 Forbidden');
         header('Status: 403 Forbidden');
+        
+        $a = [
+            'title' => _t('_access_denied_page_title'),
+            'content' => _t('_access_denied_page_content'),
+        ];
+        
         $this->displayMsg($sMsg ? $sMsg : _t('_Access denied'), false, $iPage, $iDesignBox);
     }
 
@@ -3499,6 +3505,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sTitle = _t($sTitle);
             $sContent = _t($sContent);
         }
+        
+        if (bx_is_api())
+            return [bx_api_get_msg($sContent)];
 
         $sContent = MsgBox($sContent);
         if($iPage == BX_PAGE_DEFAULT)
