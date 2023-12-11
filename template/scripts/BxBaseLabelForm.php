@@ -42,10 +42,15 @@ class BxBaseLabelForm extends BxTemplFormView
 
         return $this->genCustomInputUsernamesSuggestions($aInput);
     }
-    
+
     protected function genCustomInputList($aInput)
     {
         return $this->_oObject->getLabelsList($aInput, $this);
+    }
+
+    protected function genCustomInputListContext($aInput)
+    {
+        return $this->_oObject->getLabelsListContext($aInput, $this);
     }
 }
 

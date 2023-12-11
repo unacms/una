@@ -2568,7 +2568,9 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_form_labels_input_caption_system_search"><![CDATA[Search]]></string>
         <string name="_sys_form_labels_input_caption_search"><![CDATA[Search]]></string>
         <string name="_sys_form_labels_input_caption_system_list"><![CDATA[List]]></string>
-        <string name="_sys_form_labels_input_caption_list"><![CDATA[or select]]></string>
+        <string name="_sys_form_labels_input_caption_list"><![CDATA[or select from general labels]]></string>
+        <string name="_sys_form_labels_input_caption_system_list_context"><![CDATA[List from contexts]]></string>
+        <string name="_sys_form_labels_input_caption_list_context"><![CDATA[from contexts' labels]]></string>
         <string name="_sys_form_labels_input_caption_do_submit"><![CDATA[Submit]]></string>
         <string name="_sys_form_labels_input_caption_system_do_submit"><![CDATA[Submit]]></string>
         <string name="_sys_form_labels_input_caption_do_cancel"><![CDATA[Cancel]]></string>

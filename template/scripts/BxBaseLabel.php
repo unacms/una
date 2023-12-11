@@ -98,6 +98,9 @@ class BxBaseLabel extends BxDolLabel
 
             if(($aLabelsList = $oForm->getCleanValue('list')) !== false)
                 $aLabels = array_merge($aLabels, $aLabelsList);
+            
+            if(($aLabelsList = $oForm->getCleanValue('list_context')) !== false)
+                $aLabels = array_merge($aLabels, $aLabelsList);
 
             $aLabels = array_unique($aLabels);
 
@@ -290,6 +293,76 @@ class BxBaseLabel extends BxDolLabel
             'bx_repeat:labels' => $aTmplVarsLabels
         ));
     }
+    
+    /**
+     * Get "Contexts' List" custom form element.
+     */
+    public function getLabelsListContext(&$aInput, &$oForm)
+    {
+        $iProfileId = bx_get_logged_profile_id();
+        $sJsObject = $this->getJsObjectName();
+
+        $bInputValue = !empty($aInput['value']) && is_array($aInput['value']);
+
+        $aCheckbox = $aInput;
+        $aCheckbox['type'] = 'checkbox';
+        $aCheckbox['name'] .= '[]';
+        
+        $aModules = bx_srv('system', 'get_modules_by_type', ['context']);
+
+        $aTmplVarsLabels = [];
+        foreach($aModules as $aModule) {
+            if(bx_srv($aModule['name'], 'act_as_profile'))
+                continue;
+
+            $aContextPids = bx_srv($aModule['name'], 'get_participating_profiles', [$iProfileId]);
+            if(empty($aContextPids) || !is_array($aContextPids))
+                continue;
+
+            foreach($aContextPids as $iContextPid) {
+                $aContextInfo = bx_srv($aModule['name'], 'get_content_info_by_profile_id', [$iContextPid]);
+                if(empty($aContextInfo['hashtag']))
+                    continue;
+
+                $sLabelValue = $aContextInfo['hashtag'];
+
+                $sHtmlId = 'sys_label_' . $sLabelValue;
+                $bChecked = $bInputValue && in_array($sLabelValue, $aInput['value']);
+
+                $aCheckbox['value'] = $sLabelValue;
+                $aCheckbox['checked'] = $bChecked ? 1 : 0;
+                $aCheckbox['attrs']['id'] = $sHtmlId;
+
+                $aTmplVarsLabels[] = [
+                    'checkbox' => $oForm->genInput($aCheckbox),
+                    'html_id_label' => $sHtmlId,
+                    'title' => $sLabelValue,
+                    'title_attr' => bx_html_attribute($sLabelValue),
+                    'bx_if:show_sublist_link' => [
+                        'condition' => false,
+                        'content' => []
+                    ],
+                    'bx_if:show_sublist' => [
+                        'condition' => false,
+                        'content' => [],
+                    ]
+                ];
+            }
+        }
+
+        $sContent = $this->_oTemplate->parseHtmlByName('label_select_list_level.html', [
+            'level' => 0,
+            'bx_repeat:labels' => $aTmplVarsLabels
+        ]);
+
+        if(empty($sContent))
+            $sContent = MsgBox(_t('_Empty'));
+
+        return $this->_oTemplate->parseHtmlByName('label_select_list.html', [
+            'content' => $sContent
+        ]);
+    }
+    
 
     public function addCssJs($sType, $bDynamicMode = false)
     {

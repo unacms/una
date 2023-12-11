@@ -40,10 +40,14 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
 
     public function actionSelectLabels()
     {
-        return echoJson($this->selectLabels(array(
-            'name' => bx_process_input(bx_get('name')),
-            'list' => bx_process_input(bx_get('value'))
-        )));
+        $sName = bx_process_input(bx_get('name'));
+        $aValue = bx_process_input(bx_get('value'));
+
+        return echoJson($this->selectLabels([
+            'name' => $sName,
+            'list' => $aValue,
+            'list_context' => $aValue,
+        ]));
     }
 
     public function actionLabelsList()

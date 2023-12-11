@@ -252,9 +252,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return MsgBox(_t('_sys_access_denied_to_private_content'));
     }
     
-	public function serviceGetContentInfoById($iContentId)
+    public function serviceGetContentInfoById($iContentId)
     {
         return $this->_oDb->getContentInfoById((int)$iContentId);
+    }
+    
+    public function serviceGetContentInfoByProfileId($iProfileId)
+    {
+        return $this->_oDb->getContentInfoByProfileId((int)$iProfileId);
     }
 
     public function serviceGetMenuAddonManageTools()

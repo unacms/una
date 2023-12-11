@@ -2539,7 +2539,9 @@
         <string name="_sys_form_labels_input_caption_system_search"><![CDATA[Поиск]]></string>
         <string name="_sys_form_labels_input_caption_search"><![CDATA[Найти]]></string>
         <string name="_sys_form_labels_input_caption_system_list"><![CDATA[Список]]></string>
-        <string name="_sys_form_labels_input_caption_list"><![CDATA[или выбрать]]></string>
+        <string name="_sys_form_labels_input_caption_list"><![CDATA[или выбрать из общих меток]]></string>
+        <string name="_sys_form_labels_input_caption_system_list_context"><![CDATA[Список из контекстов]]></string>
+        <string name="_sys_form_labels_input_caption_list_context"><![CDATA[из меток контекстов]]></string>
         <string name="_sys_form_labels_input_caption_do_submit"><![CDATA[Выполнить]]></string>
         <string name="_sys_form_labels_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
         <string name="_sys_form_labels_input_caption_do_cancel"><![CDATA[Отмена]]></string>
