@@ -78,7 +78,15 @@ class BxEventsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
 
     protected function _getMenuItemProfileCheckIn($aItem)
     {
-        return $this->_getMenuItemByNameActions($aItem);
+        $a = $this->_getMenuItemByNameActions($aItem);
+        if (bx_is_api()){
+
+          //  print_r($this );
+            $a['display_type'] = 'callback';
+            $a['data'] = ['request_url' => $this->_oModule->_aModule['name'] . '/check_in/&params[]=' . $this->_aMarkers['content_id'], 'on_callback' => 'hide'];
+            return $a;
+        }
+        return $a;
     }
 
     protected function _getMenuItemProfileSetBadges($aItem)

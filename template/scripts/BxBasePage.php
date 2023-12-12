@@ -424,7 +424,7 @@ class BxBasePage extends BxDolPage
             'id' => $this->_aObject['id'],
             'title' => $this->_getPageTitle(),
             'uri' => $this->_aObject['uri'],
-            'url' => bx_get('params')[0] . ($query_string != '' ? '?' . $query_string : ''),
+            'url' => $this->_aObject['uri'] . (bx_get('params')[0] . ($query_string != '' ? '?' . $query_string : '')),
             'author' => $this->_aObject['author'],
             'added' => $this->_aObject['added'],
             'module' => $this->getModule(),
