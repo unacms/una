@@ -18,7 +18,79 @@ function BxBaseModGroupsMain(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
+
+    this._oBrowsingFiltersPopupOptions = {};
+    this._oBrowsingFiltersPopupOptionsDefaults = {};
 }
+
+BxBaseModGroupsMain.prototype.changeBrowsingFilters = function(oElement, sSelector, oRequestParams) {
+    if($(sSelector).length)
+        return $(sSelector).dolPopup(this._oBrowsingFiltersPopupOptions);
+
+    var $this = this;
+    var oData = jQuery.extend({mode: ''}, this._getDefaultData());
+    if(oRequestParams != undefined)
+        oData = jQuery.extend({}, oData, oRequestParams);
+
+    this.loadingInButton(oElement, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'get_browsing_filters',
+        oData,
+        function(oResponse) {
+            if(oElement)
+                $this.loadingInButton(oElement, false);
+
+            if(oResponse && oResponse.popup != undefined) {
+                $this._oBrowsingFiltersPopupOptions = jQuery.extend($this._oBrowsingFiltersPopupOptionsDefaults, oResponse.popup.options, {
+                    pointer: { 
+                        el: $(oElement),
+                        align: 'right'
+                    }
+                });
+
+                oResponse.popup.options = $this._oBrowsingFiltersPopupOptions;
+            }
+
+            processJsonData(oResponse);
+        },
+        'json'
+    );
+};
+
+BxBaseModGroupsMain.prototype.applyBrowsingFilter = function(oElement, oRequestParams) {
+    var $this = this;
+
+    var oData = this._getDefaultData();
+    if(oRequestParams != undefined)
+        oData = jQuery.extend({}, oData, oRequestParams);
+
+    this.loadingInButton(oElement, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'apply_browsing_filters',
+        oData,
+        function(oResponse) {
+            $this.loadingInButton(oElement, false);
+
+            $(oElement).parents('.bx-popup-applied:visible:first').dolPopupHide();
+
+            processJsonData(oResponse);
+        },
+        'json'
+    );
+};
+
+BxBaseModGroupsMain.prototype.onApplyBrowsingFilter = function(oData) {
+    if(!oData.content)
+        return;
+
+    var oContainer = $('.bx-db-content').has('#' + $(oData.content).find('.bx-search-result-block:first').attr('id'));
+    if(!oContainer || oContainer.length == 0)
+        return;
+
+    oContainer.html(oData.content).bxProcessHtml();
+};
 
 BxBaseModGroupsMain.prototype.connAction = function(oElement, sObject, sAction, iContentId) {
     var $this = this;

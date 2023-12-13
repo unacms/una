@@ -218,6 +218,26 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return parent::displayResultBlock();
     }
 
+    function displaySearchBox ($sContent, $sPaginate = '')
+    {
+        $aResult = parent::displaySearchBox($sContent, $sPaginate = '');
+
+        if(isset($this->_aParams['filters']) && is_array($this->_aParams['filters']))
+            $aResult['buttons'] = [
+                ['title' => _t('_Filters'), 'href' => 'javascript:void(0)', 'onclick' => 'javascript:' . $this->_aParams['filters']['onclick']]
+            ];
+
+        return $aResult;
+    }
+
+    function applyContainerId()
+    {
+        if(empty($this->aCurrent['name']) || empty($this->_sMode))
+            return parent::applyContainerId();
+
+        return str_replace('_', '-', $this->aCurrent['name'] . '-search-result-block-' . $this->_sMode);
+    }
+
     function decodeDataAPI($a)
     {
         $bExtendedUnits = getParam('sys_api_extended_units') == 'on';

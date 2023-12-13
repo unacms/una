@@ -522,17 +522,19 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function processing ()
     {
-        if (defined('BX_API')) {
-            return $this->processingAPI ();
+        if (bx_is_api()) {
+            return $this->processingAPI();
         }
 
         $sCode = $this->displayResultBlock();
         if ($this->aCurrent['paginate']['num'] > 0) {
             $sPaginate = $this->showPagination();
             $sCode = $this->displaySearchBox($sCode, $sPaginate);
-        } else {
-            $sCode = $this->bDisplayEmptyMsg ? $this->displaySearchBox(MsgBox(_t($this->sDisplayEmptyMsgKey ? $this->sDisplayEmptyMsgKey : '_Empty'))) : '';
         }
+        else {
+            $sCode = $this->bDisplayEmptyMsg ? $this->displaySearchBox($this->displayResultBlockEmpty()) : '';
+        }
+
         return $sCode;
     }
 
@@ -597,6 +599,15 @@ class BxDolSearchResult implements iBxDolReplaceable
         return $sCode;
     }
 
+    /**
+     * Get html output of empty search result
+     * @return html code
+     */
+    function displayResultBlockEmpty ()
+    {
+        return MsgBox(_t($this->sDisplayEmptyMsgKey ? $this->sDisplayEmptyMsgKey : '_Empty'));
+    }
+            
     /**
      * Add different code before html output (usually redeclared)
      * no return result

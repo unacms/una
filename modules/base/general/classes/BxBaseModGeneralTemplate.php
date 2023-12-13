@@ -363,7 +363,23 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         
         return $this->parseHtmlByName('favorite-list-info.html', array('bx_repeat:items' => $aListsTmpl, 'author' => $oProfile->getUnit()));
     }
-    
+
+    public function getBrowsingFilters($aParams)
+    {
+        if(empty($aParams['mode']))
+            return '';
+
+        $sContent = $this->_getBrowsingFiltersContent($aParams);
+        if(empty($sContent))
+            return '';
+
+        $sPopupId = $this->_oConfig->getHtmlIds('popup_bfilters_' . $aParams['mode']);
+        $sPopupContent = $this->parseHtmlByName('browsing_filters.html', [
+            'content' => $sContent
+    	]);
+
+    	return BxTemplFunctions::getInstance()->transBox($sPopupId, $sPopupContent, true);
+    }
 
     function entryAllActions($sActions)
     {

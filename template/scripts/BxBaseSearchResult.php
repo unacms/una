@@ -59,7 +59,7 @@ class BxBaseSearchResult extends BxDolSearchResult
             foreach ($aData as $aValue)
                 $sCode .= $this->displaySearchUnit($aValue);
 
-            $sHtmlId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
+            $sHtmlId = $this->applyContainerId();
             $sClasses = $this->applyContainerClass();
 
             $sAttributes = '';
@@ -89,6 +89,20 @@ class BxBaseSearchResult extends BxDolSearchResult
         ]);
 
         return $sCode;
+    }
+
+    function displayResultBlockEmpty ()
+    {
+        return BxDolTemplate::getInstance()->parseHtmlByName('search_result_block.html', [
+            'html_id' => $this->applyContainerId(),
+            'class' => 'bx-search-result-block bx-search-result-block-empty',
+            'attrs' => '',
+            'content' => parent::displayResultBlockEmpty(),
+            'bx_if:do_center' => [
+                'condition' => false,
+                'content' => []
+            ]
+        ]);
     }
 
     function displaySearchBox ($sContent, $sPaginate = '')
@@ -367,6 +381,15 @@ class BxBaseSearchResult extends BxDolSearchResult
     function setCenterContentUnitSelector ($s)
     {
         $this->sCenterContentUnitSelector = $s;
+    }
+
+    /**
+     * Add ID to search result container 
+     * @param $string HTML ID
+     */
+    function applyContainerId()
+    {
+        return 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
     }
 
     /**
