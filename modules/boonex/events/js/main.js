@@ -15,6 +15,12 @@ function BxEventsMain(oOptions) {
 
     this._oBrowsingFiltersPopupOptionsDefaults = jQuery.extend(this._oBrowsingFiltersPopupOptionsDefaults,  {
         onShow: function(oPopup) {
+            var oTimezone = $(oPopup).find("[name = 'timezone']");
+            if(oTimezone && oTimezone.length != 0)
+                oTimezone.val(moment.tz.guess());
+    
+            console.log(oTimezone.val());
+    
             $(oPopup).find("[name = 'cancel']").focus();
         }
     });   
@@ -43,6 +49,7 @@ BxEventsMain.prototype.applyBrowsingFilter = function(oElement, oRequestParams)
         oRequestParams.date_start = oFilters.find("input[name='date_start']").val();
         oRequestParams.date_end = oFilters.find("input[name='date_end']").val();
     }
+    oRequestParams.timezone = oFilters.find("input[name='timezone']").val();
 
     BxBaseModGroupsMain.prototype.applyBrowsingFilter.call(this, oElement, oRequestParams);
 };

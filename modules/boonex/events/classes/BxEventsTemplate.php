@@ -95,8 +95,6 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
     {
         $sJsObject = $this->_oConfig->getJsObject('main');
 
-        $sMode = $aParams['mode'];
-
         $aForm = [
             'inputs' => [
                 'by_date' => [
@@ -128,6 +126,11 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
                     'type' => 'datepicker',
                     'tr_attrs' => ['class' => 'date-range date-end', 'style' => 'display:none']
                 ],
+                'timezone' => [
+                    'name' => 'timezone',
+                    'type' => 'hidden',
+                    'value' => ''
+                ],
                 'controls' => [
                     'name' => 'controls',
                     'type' => 'input_set',
@@ -152,7 +155,7 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
         ];
 
         $oForm = new BxTemplFormView($aForm);
-        return $oForm->getCode(true);
+        return $this->addJs(['moment-timezone-with-data-1970-2030.min.js'], true) . $oForm->getCode(true);
     }
 }
 
