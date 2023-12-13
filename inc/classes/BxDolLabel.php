@@ -66,9 +66,45 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         echoJson($aResult);
     }
 
-    public function getLabels($aParams = array())
+    public function getLabels($aParams = [])
     {
         return $this->_oDb->getLabels($aParams);
+    }
+    
+    public function getLabelsSystem()
+    {
+        $iParentId = $iLevel = 0;
+        return $this->_getLabelsSystem($iParentId, $iLevel);
+    }
+    
+    public function getLabelsContext($iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $aModules = bx_srv('system', 'get_modules_by_type', ['context']);
+
+        $aResults = [];
+        foreach($aModules as $aModule) {
+            if(bx_srv($aModule['name'], 'act_as_profile'))
+                continue;
+
+            $aContextPids = bx_srv($aModule['name'], 'get_participating_profiles', [$iProfileId]);
+            if(empty($aContextPids) || !is_array($aContextPids))
+                continue;
+
+            foreach($aContextPids as $iContextPid) {
+                $aContextInfo = bx_srv($aModule['name'], 'get_content_info_by_profile_id', [$iContextPid]);
+                if(empty($aContextInfo['hashtag']))
+                    continue;
+
+                $aResults[] = [
+                    'value' => $aContextInfo['hashtag']
+                ];
+            }
+        }
+
+        return $aResults;
     }
 
     public function getLabelUrl($sKeyword, $mixedSection = false) 
@@ -122,6 +158,28 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
             return;
 
         bx_alert('label', 'deleted', $iId, false, array('label' => $aLabel));
+    }
+
+    protected function _getLabelsSystem($iParentId, $iLevel)
+    {
+        $aLabels = $this->getLabels(['type' => 'parent', 'parent' => $iParentId]);
+        if(empty($aLabels) || !is_array($aLabels))
+            return [];
+
+        $aResults = [];
+        foreach($aLabels as $aLabel) {
+            $aResult = [
+                'value' => $aLabel['value']
+            ];
+
+            $aSubitems = $this->_getLabelsSystem($aLabel['id'], $iLevel + 1);
+            if(!empty($aSubitems) && is_array($aSubitems))
+                $aResult['subitems'] = $aSubitems;
+            
+            $aResults[] = $aResult;
+        }
+
+        return $aResults;
     }
 }
 
