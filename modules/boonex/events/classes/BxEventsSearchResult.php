@@ -43,7 +43,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                     'table' => 'bx_events_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'event_name', 'event_desc', 'picture', 'cover', 'cover_data', 'added', 'author', 'allow_view_to', 'date_start', 'date_end'),
+                    'joinFields' => array('id', 'event_name', 'event_desc', 'picture', 'cover', 'cover_data', 'added', 'author', 'allow_view_to', 'date_start', 'date_end', 'threshold'),
                 ),
                 'account' => array(
                     'type' => 'INNER',

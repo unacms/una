@@ -49,9 +49,15 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
             ];
         }
         
-        return $this->parseHtmlByName('entry-sessions.html', [
+        $s = $this->parseHtmlByName('entry-sessions.html', [
             'bx_repeat:sessions' => $aTmplVarsSession
         ]);
+        
+        if (bx_is_api()){
+            return [bx_api_get_block('event_sessions',  $aTmplVarsSession)];
+        }
+        
+        return $s;
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false, $aParams = array())

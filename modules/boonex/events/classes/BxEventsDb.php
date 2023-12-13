@@ -106,7 +106,8 @@ class BxEventsDb extends BxBaseModGroupsDb
             }
 
             // search for regular events
-            $a = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`event_desc` AS `description`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 0 AS `repeating`
+            $a = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`event_desc` AS `description`, 
+            `bx_events_data`.`threshold` AS `threshold`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 0 AS `repeating`
                 FROM `bx_events_data` $sJoin 
                 WHERE `bx_events_data`.`date_start` >= :timestamp_min AND `bx_events_data`.`date_start` <= :timestamp_max $sWhere
             ", 'id', $aBindings);
@@ -114,7 +115,7 @@ class BxEventsDb extends BxBaseModGroupsDb
             if ($a)
                 $sWhere .= " AND `bx_events_data`.`id` NOT IN(" . $this->implode_escape(array_keys($a)) . ") ";
 
-            $aRepeating = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`event_desc` AS `description`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 1 AS `repeating`
+            $aRepeating = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`event_desc` AS `description`, `bx_events_data`.`threshold` AS `threshold`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 1 AS `repeating`
                 FROM `bx_events_data`
                 LEFT JOIN `bx_events_intervals` AS `i` ON (
                     `bx_events_data`.`id` = `i`.`event_id`

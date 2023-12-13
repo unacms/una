@@ -639,6 +639,9 @@ class BxBaseGrid extends BxDolGrid
             'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
             isset($aField['width']) ? 'width:' . $aField['width'] : false  // add default styles
         );
+        if(bx_is_api()){
+            return ['type' => 'order', 'data'=> $mixedValue];    
+        }
         return '<td ' . $sAttr . '><div id="' . $this->_sObject . '_cell_' . $aRow[$this->_aOptions['field_id']] . '" class="bx-grid-drag-handle"><i class="sys-icon align-justify"></i></div></td>';
     }
 
@@ -737,6 +740,13 @@ class BxBaseGrid extends BxDolGrid
             elseif ($sIconUrl = $this->_oTemplate->getIconUrl($a['icon']))
                 $sImage = '<img style="background-image:url(' . $sIconUrl . ');" src="' . $this->_oTemplate->getIconUrl('spacer.gif') .'" />';
         }
+        
+        if (bx_is_api()){
+            $a['name'] = $sKey;
+            $a['type'] = 'callback';
+            return $a;
+        }
+        
         return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] || empty($a['title']) ? '' : '<u>' . $a['title'] . '</u>') . '</button>';
     }
 

@@ -252,7 +252,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $aResult = parent::decodeDataAPI($aData, $aParams);
         $aResult = array_merge($aResult, [
             'date_start' => $aData[$CNF['FIELD_DATE_START']],
-            'date_end' => $aData[$CNF['FIELD_DATE_END']]
+            'date_end' => $aData[$CNF['FIELD_DATE_END']],
         ]);
         return $aResult;
     }
@@ -304,6 +304,13 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_QUESTIONS_MANAGE']);
         if(!$oGrid)
             return '';
+        
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+            
+        }
 
         return $oGrid->getCode();
     }
@@ -332,6 +339,14 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         if(!$oGrid)
             return '';
 
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+            
+        }
+
+        
         return $oGrid->getCode();
     }
 

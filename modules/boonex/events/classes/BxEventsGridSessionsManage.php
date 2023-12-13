@@ -139,6 +139,9 @@ class BxEventsGridSessionsManage extends BxTemplGrid
 
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
+        if(bx_is_api()){
+            return ['type' => 'datetime', 'data'=> $mixedValue];    
+        }
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE_TIME, true), $sKey, $aField, $aRow);
     }
     
