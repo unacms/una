@@ -986,7 +986,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             $oRv =  $oChecker->get ($sName);
         
         // process comma separated string for api values
-        if (bx_is_api() && isset($this->aInputs[$sName]['type']) && !empty($oRv) && in_array($this->aInputs[$sName]['type'], ['checkbox_set', 'files', 'select_multiple']))
+        if (bx_is_api() && isset($this->aInputs[$sName]['type']) && !empty($oRv) && (in_array($this->aInputs[$sName]['type'], ['checkbox_set', 'files', 'select_multiple']) || in_array($sName, ['labels'])))
             $oRv = explode(',', $oRv);
             
         return $oRv;
