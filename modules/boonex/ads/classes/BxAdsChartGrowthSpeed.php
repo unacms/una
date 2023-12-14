@@ -11,8 +11,14 @@
 
 class BxAdsChartGrowthSpeed extends BxDolChartGrowthSpeed
 {
+    protected $_sModule;
+    protected $_oModule;
+
     protected function __construct($aObject)
     {
+        $this->_sModule = 'bx_ads';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
         parent::__construct($aObject);
     }
 
@@ -23,6 +29,11 @@ class BxAdsChartGrowthSpeed extends BxDolChartGrowthSpeed
         ]);
 
         return parent::actionLoadDataByInterval();
+    }
+
+    public function checkAllowedView($isPerformAction = false)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 }
 

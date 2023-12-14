@@ -27,6 +27,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if(($mixedResult = $this->_oModule->checkAllowedEdit($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox($mixedResult);
+
         $sDateFrom = date('Y-m-d', $aContentInfo[$CNF['FIELD_ADDED']]);
         $sDateTo = date('Y-m-d', time());
 
@@ -110,6 +113,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if(($mixedResult = $this->_oModule->checkAllowedEdit($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox($mixedResult);
+
         $aTmplVarsDataLabels = $aTmplVarsDataSet = [];
         foreach(['impressions', 'clicks'] as $sItem) {
             $sTitle = bx_html_attribute(_t($CNF['T']['chart_label_' . $sItem]));
@@ -138,6 +144,9 @@ class BxAdsTemplate extends BxBaseModTextTemplate
     public function entryPromotionRoi($aContentInfo)
     {
         $CNF = &$this->_oConfig->CNF;
+
+        if(($mixedResult = $this->_oModule->checkAllowedEdit($aContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox($mixedResult);
 
         $aTmplVarsDataLabels = $aTmplVarsDataSet = [];
         
