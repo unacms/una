@@ -25,6 +25,8 @@ class BxBaseModGeneralModule extends BxDolModule
     protected $_aSearchableNamesExcept;
     protected $_aFormParams;
 
+    protected $_aBrowsingFiltersKeys;
+
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
@@ -44,6 +46,8 @@ class BxBaseModGeneralModule extends BxDolModule
             'context_id' => 0,
             'custom' => array()
         );
+
+        $this->_aBrowsingFiltersKeys = ['mode'];
     }
 
     // ====== ACTIONS METHODS
@@ -296,6 +300,66 @@ class BxBaseModGeneralModule extends BxDolModule
 
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
+    }
+
+    public function actionGetBrowsingFilters()
+    {
+        $aParams = $this->_prepareBrowsingFiltersParamsGet();
+
+        $sContent = $this->_oTemplate->getBrowsingFilters($aParams);
+        if(empty($sContent))
+            return echoJson([]);
+
+        echoJson([
+            'code' => 0,
+            'popup' => [
+                'html' => $sContent,
+                'options' => [
+                    'closeOnOuterClick' => false,
+                    'removeOnClose' => false,
+                ]
+            ],
+        ]);
+    }
+
+    public function actionApplyBrowsingFilters()
+    {
+        $aParams = $this->_prepareBrowsingFiltersParamsGet();
+
+        $aBrowseParams = ['mode' => $aParams['mode'], 'empty_message' => true];
+        unset($aParams['mode']);
+        $aBrowseParams['params'] = $aParams;
+
+        $mixedResult = $this->serviceBrowse($aBrowseParams);
+        if(empty($mixedResult))
+            return echoJson([]);
+
+        if(is_array($mixedResult) && isset($mixedResult['content']))
+            $mixedResult = $mixedResult['content'];
+
+        return echoJson([
+            'code' => 0, 
+            'content' => $mixedResult, 
+            'eval' => $this->_oConfig->getJsObject('main') . '.onApplyBrowsingFilter(oData)'
+        ]);
+    }
+
+    protected function _prepareBrowsingFiltersParamsGet($mParams = false)
+    {
+        $aParams = [];
+        $bParams = !empty($mParams) && is_array($mParams);
+
+        foreach($this->_aBrowsingFiltersKeys as $sKey)
+            if($bParams) {
+                if(isset($mParams[$sKey]))
+                    $aParams[$sKey] = $mParams[$sKey];
+            }
+            else {
+                if(($sValue = bx_get($sKey)) !== false)
+                    $aParams[$sKey] = $sValue;
+            }
+
+        return $aParams;
     }
 
     // ====== SERVICE METHODS

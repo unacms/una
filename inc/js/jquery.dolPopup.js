@@ -245,21 +245,22 @@
                 }
 
                 setTimeout(function () {
-                	// Don't should popup with pointer if there is no parent. Checking after showing.
-                        if(typeof o.pointer.el == 'string')
-                            o.pointer.el = $(o.pointer.el);
+                    // Don't should popup with pointer if there is no parent. Checking after showing.
+                    if(typeof o.pointer.el == 'string')
+                        o.pointer.el = $(o.pointer.el);
 
-                	if($(o.pointer.el).length > 0 && !$.contains(document, o.pointer.el[0])) {
-                		$el.remove();
-                		return;
-                	}
+                    if($(o.pointer.el).length > 0 && !$.contains(document, o.pointer.el[0])) {
+                        $el.remove();
+                        return;
+                    }
 
-                	if(typeof(o.onShow) == 'function')
-                		o.onShow($el);
+                    if(typeof(o.onShow) == 'function')
+                        o.onShow($el);
                     else if(typeof(o.onShow) == 'string')
                     	eval(o.onShow);
+                    else
+                        $el.find('input[type=text]:first').focus(); //NOTE. Put cursor to the first input element, ONLY IF there is no any custom behaviour for onShow event.
 
-                    $el.find('input[type=text]:first').focus(); // put cursor to the first input element
                 }, o.speed);
 
             }, 100);

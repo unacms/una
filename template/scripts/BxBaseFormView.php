@@ -1778,11 +1778,8 @@ BLAH;
 
         $sKeyPlaceholder = $aInput['caption_src'] . '_placeholder';
         if(strcmp($sKeyPlaceholder, _t($sKeyPlaceholder)) != 0)
-            $sValue .= $oLabel->getLabelPlaceholder($sKeyPlaceholder);           
+            $sValue .= $oLabel->getLabelPlaceholder($sKeyPlaceholder);                   
 
-       // print_r($aInput);
-         
-        
         $aInputLabels = array(
             'type' => 'custom',
             'name' => $sName,
@@ -1801,8 +1798,9 @@ BLAH;
             $aInput['type'] = 'labels';
             //$aInput['ajax_get_suggestions'] = 'system/select_labels/TemplLabelsServices&params[]=';
             $aInput['values'] = bx_srv('system', 'get_labels', [], 'TemplLabelsServices');
+
         }
-        
+
         return $this->oTemplate->parseHtmlByName('label_select_field.html', array(
             'js_object' => $oLabel->getJsObjectName(),
             'js_code' => $oLabel->getJsCodeForm(),

@@ -307,47 +307,34 @@ class BxBaseLabel extends BxDolLabel
         $aCheckbox = $aInput;
         $aCheckbox['type'] = 'checkbox';
         $aCheckbox['name'] .= '[]';
-        
-        $aModules = bx_srv('system', 'get_modules_by_type', ['context']);
+
+        $aLabels = $this->getLabelsContext($iProfileId);
 
         $aTmplVarsLabels = [];
-        foreach($aModules as $aModule) {
-            if(bx_srv($aModule['name'], 'act_as_profile'))
-                continue;
+        foreach($aLabels as $aLabel) {
+            $sLabelValue = $aLabel['value'];
 
-            $aContextPids = bx_srv($aModule['name'], 'get_participating_profiles', [$iProfileId]);
-            if(empty($aContextPids) || !is_array($aContextPids))
-                continue;
+            $sHtmlId = 'sys_label_' . $sLabelValue;
+            $bChecked = $bInputValue && in_array($sLabelValue, $aInput['value']);
 
-            foreach($aContextPids as $iContextPid) {
-                $aContextInfo = bx_srv($aModule['name'], 'get_content_info_by_profile_id', [$iContextPid]);
-                if(empty($aContextInfo['hashtag']))
-                    continue;
+            $aCheckbox['value'] = $sLabelValue;
+            $aCheckbox['checked'] = $bChecked ? 1 : 0;
+            $aCheckbox['attrs']['id'] = $sHtmlId;
 
-                $sLabelValue = $aContextInfo['hashtag'];
-
-                $sHtmlId = 'sys_label_' . $sLabelValue;
-                $bChecked = $bInputValue && in_array($sLabelValue, $aInput['value']);
-
-                $aCheckbox['value'] = $sLabelValue;
-                $aCheckbox['checked'] = $bChecked ? 1 : 0;
-                $aCheckbox['attrs']['id'] = $sHtmlId;
-
-                $aTmplVarsLabels[] = [
-                    'checkbox' => $oForm->genInput($aCheckbox),
-                    'html_id_label' => $sHtmlId,
-                    'title' => $sLabelValue,
-                    'title_attr' => bx_html_attribute($sLabelValue),
-                    'bx_if:show_sublist_link' => [
-                        'condition' => false,
-                        'content' => []
-                    ],
-                    'bx_if:show_sublist' => [
-                        'condition' => false,
-                        'content' => [],
-                    ]
-                ];
-            }
+            $aTmplVarsLabels[] = [
+                'checkbox' => $oForm->genInput($aCheckbox),
+                'html_id_label' => $sHtmlId,
+                'title' => $sLabelValue,
+                'title_attr' => bx_html_attribute($sLabelValue),
+                'bx_if:show_sublist_link' => [
+                    'condition' => false,
+                    'content' => []
+                ],
+                'bx_if:show_sublist' => [
+                    'condition' => false,
+                    'content' => [],
+                ]
+            ];
         }
 
         $sContent = $this->_oTemplate->parseHtmlByName('label_select_list_level.html', [

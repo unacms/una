@@ -19,13 +19,18 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
-        
+
         $CNF = &$this->_oConfig->CNF;
-        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, [
             $CNF['FIELD_TIMEZONE'],
             $CNF['FIELD_JOIN_CONFIRMATION'],
             $CNF['FIELD_REMINDER']
-        ));
+        ]);
+
+        $this->_aBrowsingFiltersKeys = array_merge($this->_aBrowsingFiltersKeys, [
+            'by_date', 'date_start', 'date_end', 'timezone'
+        ]);
     }
 
     public function actionCheckIn()
@@ -422,6 +427,18 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         );
 
         return $this->_serviceBrowse ('upcoming_connected', array_merge($aDefaults, $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
+    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    {
+        $sMode = 'recent';
+
+        $sFilterSelector = '#' . $this->_oConfig->getHtmlIds('popup_bfilters_recent');
+        $aFilterParams = ['mode' => $sMode];
+
+        return $this->_serviceBrowse ($sMode, [
+            'filters' => ['onclick' => $this->_oConfig->getJsObject('main') . ".changeBrowsingFilters(this, '" . $sFilterSelector . "', " . json_encode($aFilterParams) . ")"]
+        ], BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     /**

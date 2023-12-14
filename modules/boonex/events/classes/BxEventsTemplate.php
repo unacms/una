@@ -90,6 +90,73 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
 			'date_end_f' => $oDateEnd ? bx_time_js($oDateEnd->getTimestamp(), BX_FORMAT_DATE_TIME, true) : '',
         ));
     }
+
+    protected function _getBrowsingFiltersContent($aParams)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('main');
+
+        $aForm = [
+            'inputs' => [
+                'by_date' => [
+                    'name' => 'by_date',
+                    'type' => 'radio_set',
+                    'caption' => _t('_bx_events_form_filters_input_by_date'),
+                    'values' => [
+                        ['key' => 'all', 'value' => _t('_bx_events_form_filters_input_by_date_all')],
+                        ['key' => 'today', 'value' => _t('_bx_events_form_filters_input_by_date_today')],
+                        ['key' => 'tomorrow', 'value' => _t('_bx_events_form_filters_input_by_date_tomorrow')],
+                        ['key' => 'weekend', 'value' => _t('_bx_events_form_filters_input_by_date_weekend')],
+                        ['key' => 'this_week', 'value' => _t('_bx_events_form_filters_input_by_date_this_week')],
+                        ['key' => 'next_week', 'value' => _t('_bx_events_form_filters_input_by_date_next_week')],
+                        ['key' => 'this_month', 'value' => _t('_bx_events_form_filters_input_by_date_this_month')],
+                        ['key' => 'date_range', 'value' => _t('_bx_events_form_filters_input_by_date_date_range')],
+                        
+                    ],
+                    'value' => 'all',
+                    'attrs' => ['onchange' => $sJsObject . '.onChangeBrowsingFiltersByDate(this)'],
+                    'dv_thd' => 1
+                ],
+                'date_start' => [
+                    'name' => 'date_start',
+                    'type' => 'datepicker',
+                    'tr_attrs' => ['class' => 'date-range date-start', 'style' => 'display:none']
+                ],
+                'date_end' => [
+                    'name' => 'date_end',
+                    'type' => 'datepicker',
+                    'tr_attrs' => ['class' => 'date-range date-end', 'style' => 'display:none']
+                ],
+                'timezone' => [
+                    'name' => 'timezone',
+                    'type' => 'hidden',
+                    'value' => ''
+                ],
+                'controls' => [
+                    'name' => 'controls',
+                    'type' => 'input_set',
+                    [
+                        'name' => 'apply',
+                        'type' => 'button',
+                        'value' => _t('_bx_events_form_filters_input_do_apply'),
+                        'attrs' => ['onclick' => $sJsObject . '.applyBrowsingFilter(this, ' . json_encode($aParams) . ')']
+                    ], [
+                        'name' => 'cancel',
+                        'type' => 'button',
+                        'value' => _t('_Cancel'),
+                        'attrs' => [
+                            'class' => 'bx-def-margin-sec-left',
+                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()"
+                        ]
+                    ],
+                    
+                ],
+                
+            ]
+        ];
+
+        $oForm = new BxTemplFormView($aForm);
+        return $this->addJs(['moment-timezone-with-data-1970-2030.min.js'], true) . $oForm->getCode(true);
+    }
 }
 
 /** @} */

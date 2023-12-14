@@ -62,8 +62,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             if(empty($this->_oMenuSocialSharing))
                 $this->_initMenuSocialSharing();
 
-            $this->_oMenuSocialSharing->addMarkers($a);
-            parent::addMarkers($this->_oMenuSocialSharing->getMarkers());
+            //it still may be false in case the sys_social_sharing menu is turned off
+            if (!empty($this->_oMenuSocialSharing)) {
+                $this->_oMenuSocialSharing->addMarkers($a);
+                parent::addMarkers($this->_oMenuSocialSharing->getMarkers());
+            }
         }
 
         return $bResult;

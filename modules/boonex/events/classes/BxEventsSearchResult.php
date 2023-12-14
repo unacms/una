@@ -83,6 +83,74 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
         $oJoinedProfile = null;
         $bProcessConditionsForPrivateContent = true;
 
+        $iDateStart = $iDateEnd = 0;
+        if(isset($this->_aParams['by_date'])) {
+            $iTimezoneOffset = 0;
+            if(!empty($this->_aParams['timezone']) && in_array($this->_aParams['timezone'], timezone_identifiers_list()))
+                $iTimezoneOffset = date_offset_get(date_create('now', timezone_open($this->_aParams['timezone'])));
+
+            switch($this->_aParams['by_date']) {
+                case 'today':
+                    $iDateStart = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+                    $iDateEnd = $iDateStart + 86399;
+                    break;
+
+                case 'tomorrow':
+                    $iDateStart = mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"));
+                    $iDateEnd = $iDateStart + 86399;
+                    break;
+
+                case 'weekend':
+                    $iDayOfWeek = date("w");
+                    $iDateStart = mktime(0, 0, 0, date("m"), date("d") + ($iDayOfWeek > 0 ? 6 - $iDayOfWeek : -1), date("Y"));
+                    $iDateEnd = $iDateStart + 2 * 86400 - 1;
+                    break;
+
+                case 'this_week':
+                    $iDayOfWeek = date("w");
+                    $iDateStart = mktime(0, 0, 0, date("m"), date("d") - ($iDayOfWeek > 0 ? $iDayOfWeek - 1 : 6), date("Y"));
+                    $iDateEnd = $iDateStart + 7 * 86400 - 1;
+                    break;
+
+                case 'next_week':
+                    $iDayOfWeek = date("w");
+                    $iDateStart = mktime(0, 0, 0, date("m"), date("d") + ($iDayOfWeek > 0 ? 8 - $iDayOfWeek : 1), date("Y"));
+                    $iDateEnd = $iDateStart + 7 * 86400 - 1;
+                    break;
+
+                case 'this_month':
+                    $iDateStart = mktime(0, 0, 0, date("m"), 1, date("Y"));
+                    $iDateEnd = mktime(23, 59, 59, date("m") + 1, 0, date("Y"));
+                    break;
+
+                case 'date_range':
+                    if(!empty($this->_aParams['date_start'])) {
+                        list($iDsy, $iDsm, $iDsd,) = explode('-', $this->_aParams['date_start']);
+                        $iDateStart = mktime(0, 0, 0, $iDsm, $iDsd, $iDsy);
+                    }
+                    else
+                        $iDateStart = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+
+                    if(!empty($this->_aParams['date_end'])) {
+                        list($iDey, $iDem, $iDed,) = explode('-', $this->_aParams['date_end']);
+                        $iDateEnd = mktime(23, 59, 59, $iDem, $iDed, $iDey);
+                    }
+                    else
+                        $iDateEnd = mktime(23, 59, 59, date("m"), date("d"), date("Y"));
+                    break;
+            }
+
+            if($iDateStart != 0 && $iDateEnd != 0) {
+                $iDateStart -= $iTimezoneOffset;
+                $iDateEnd -= $iTimezoneOffset;
+
+                //--- 1. already started or will start in selected date interval
+                $this->aCurrent['restriction']['filter_date_start'] = ['value' => $iDateEnd, 'field' => 'date_start', 'operator' => '<', 'table' => 'bx_events_data'];
+                //--- 2. and didn't finished to the beginning of selected date interval
+                $this->aCurrent['restriction']['filter_date_end'] = ['value' => $iDateStart, 'field' => 'date_end', 'operator' => '>', 'table' => 'bx_events_data'];
+            }
+        }
+
         switch ($sMode) {
             case 'created_entries':
                 if(!$this->_setAuthorConditions($sMode, $aParams, $oJoinedProfile)) {

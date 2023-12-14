@@ -319,6 +319,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array_merge($this->_aHtmlIds, [
+            'popup_bfilters_recent' => $sHtmlPrefix . '-popup-bfilters-recent',
             'popup_question' => $sHtmlPrefix . '-popup-question',
             'popup_questionnaire' => $sHtmlPrefix . '-popup-questionnaire',
             'popup_session' => $sHtmlPrefix . '-popup-session'
