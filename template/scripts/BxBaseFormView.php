@@ -1799,7 +1799,8 @@ BLAH;
         
         if (bx_is_api()){
             $aInput['type'] = 'labels';
-            $aInput['ajax_get_suggestions'] = 'system/select_labels/TemplLabelsServices&params[]=';
+            //$aInput['ajax_get_suggestions'] = 'system/select_labels/TemplLabelsServices&params[]=';
+            $aInput['values'] = bx_srv('system', 'get_labels', [], 'TemplLabelsServices');
         }
         
         return $this->oTemplate->parseHtmlByName('label_select_field.html', array(
