@@ -18,9 +18,7 @@ function BxEventsMain(oOptions) {
             var oTimezone = $(oPopup).find("[name = 'timezone']");
             if(oTimezone && oTimezone.length != 0)
                 oTimezone.val(moment.tz.guess());
-    
-            console.log(oTimezone.val());
-    
+        
             $(oPopup).find("[name = 'cancel']").focus();
         }
     });   

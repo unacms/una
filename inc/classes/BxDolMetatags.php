@@ -144,10 +144,12 @@
  */
 class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 {
+    protected static $_aLocationKeys = ['lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number'];
+    
     protected $_sObject;
     protected $_aObject;
     protected $_oQuery;
-    protected $_aMetas = array ();
+    protected $_aMetas = [];
 
     /**
      * Constructor
@@ -596,22 +598,22 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public static function locationsRetrieveFromForm($sPrefix = '', $oForm = null)
     {
-        if ($sPrefix)
+        if($sPrefix)
             $sPrefix .= '_';
 
-        if (!$oForm)
+        if(!$oForm)
             $oForm = new BxDolForm(array(), false);
 
-        return array(
-            $oForm->getCleanValue($sPrefix.'lat'), 
-            $oForm->getCleanValue($sPrefix.'lng'), 
-            $oForm->getCleanValue($sPrefix.'country'), 
-            $oForm->getCleanValue($sPrefix.'state'), 
-            $oForm->getCleanValue($sPrefix.'city'), 
-            $oForm->getCleanValue($sPrefix.'zip'), 
-            $oForm->getCleanValue($sPrefix.'street'), 
-            $oForm->getCleanValue($sPrefix.'street_number')
-        );
+        $aResults = [];
+        foreach(self::$_aLocationKeys as $sKey) {
+            $sValue = $oForm->getCleanValue($sPrefix . $sKey);
+            if(!$sValue || $sValue == 'null')
+                $sValue = '';
+
+            $aResults[] = $sValue;
+        }
+
+        return $aResults;
     }
 
     /**
@@ -620,16 +622,14 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */ 
     public static function locationsParseComponents($aAdress, $sPrefix = '')
     {
-        $aKeys = array('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
-
         if($sPrefix)
             $sPrefix .= '_';
 
         $aRet = array();
         $iAdress = count($aAdress);
         for($i = 0; $i < $iAdress; $i++)
-            if(isset($aKeys[$i]))
-                $aRet[$sPrefix . $aKeys[$i]] = $aAdress[$i];
+            if(isset(self::$_aLocationKeys[$i]))
+                $aRet[$sPrefix . self::$_aLocationKeys[$i]] = $aAdress[$i];
 
         return $aRet;
     }
