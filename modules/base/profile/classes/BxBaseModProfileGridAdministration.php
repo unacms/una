@@ -178,11 +178,6 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         return $isChecked ? 'active' : 'suspended';
     }
 
-    protected function _switcherState2Checked($mixedState)
-    {
-        return 'active' == $mixedState ? true : false;
-    }
-
     protected function _enable ($mixedId, $isChecked)
     {
     	$oProfile = $this->_getProfileObject($mixedId);
@@ -225,6 +220,15 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         parent::_getFilterControls();
 
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
+    }
+
+    protected function _getFilterControlsAPI($aFilters)
+    {
+        $aFilters = [
+            $this->_sFilter1Name => []
+        ];
+
+        return parent::_getFilterControlsAPI($aFilters);
     }
 
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)

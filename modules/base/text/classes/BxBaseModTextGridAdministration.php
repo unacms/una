@@ -59,11 +59,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         return $isChecked ? 'active' : 'hidden';
     }
 
-    protected function _switcherState2Checked($mixedState)
-    {
-        return 'active' == $mixedState ? true : false;
-    }
-
     protected function _enable ($mixedId, $isChecked)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -124,6 +119,16 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         $sContent .= $this->_getSearchInput();
 
         return $sContent;
+    }
+    
+    protected function _getFilterControlsAPI($aFilters = [])
+    {
+        $aFilters = [
+            $this->_sFilter1Name => [],
+            $this->_sFilter2Name => []
+        ];
+
+        return parent::_getFilterControlsAPI($aFilters);
     }
 
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)

@@ -51,11 +51,9 @@ class BxBaseGrid extends BxDolGrid
 
     public function performActionDisplay()
     {
-        
-        if (bx_is_api()){
+        if($this->_bIsApi)
             return $this->getCodeAPI();
-        }
-        
+
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
         echoJson(array(
@@ -79,24 +77,24 @@ class BxBaseGrid extends BxDolGrid
 
     public function performActionDelete()
     {
+        $aResult = [];
+
         $this->_replaceMarkers ();
 
         $iAffected = 0;
         $aIds = bx_get('ids');
-        if (!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        if (!$aIds || !is_array($aIds))
+            return echoJson($aResult);
 
         foreach ($aIds as $mixedId)
             $iAffected += $this->_delete($mixedId) ? 1 : 0;
 
-        echo echoJson(array_merge(
-            array(
-                'grid' => $this->getCode(false),
-            ),
-            $iAffected ? array() : array('msg' => _t("_sys_grid_delete_failed"))
-        ));
+        if($iAffected)
+            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false)] : [];
+        else
+            $aResult = ['msg' => _t("_sys_grid_delete_failed")];
+
+        return $this->_bIsApi ? $aResult : echoJson($aResult);
     }
 
     public function performActionEnable($mixedChecked = null)
@@ -117,11 +115,10 @@ class BxBaseGrid extends BxDolGrid
                 $aAffectedIds[] = preg_match("/^[\d\w]+$/", $mixedId) ? $mixedId : (int)$mixedId;
 
         $sAction = $iChecked ? 'enable' : 'disable';
-        
-        if (bx_is_api()){
+
+        if($this->_bIsApi)
             return $aAffectedIds;
-        }
-        
+
         echo echoJson(array($sAction => $aAffectedIds));
     }
 
@@ -319,30 +316,19 @@ class BxBaseGrid extends BxDolGrid
         if(!empty($aData) && is_array($aData))
             $aData = $this->decodeDataAPI($aData);
 
-        $aFilter = [];
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        $aFilter[''] = _t($CNF['T']['filter_item_select_one_' . $this->_sFilter1Name]);
-        if (is_array($this->_aFilter1Values))
-            $aFilter = array_merge($aFilter, $this->_aFilter1Values);
-        foreach($aFilter as $iKey => &$aRow) {
-            $aRow = _t($aRow);
-        }
-
-        
         return [
-            'header' => $this->_getRowHeadAPI(),
             'settings' => [
                 'object' => $this->_aOptions['object'], 
                 'field_id' => $this->_aOptions['field_id'], 
                 'start' => $iStart, 
                 'per_page' => $iPerPage,
-                'filter1' => $aFilter
+                'filters' => $this->_getFilterControlsAPI(),
             ],
+            'header' => $this->_getRowHeadAPI(),
             'data' => $aData,
             'actions' => [
                 'independent' => $this->_getActionsAPI('independent'), 
-                'bulk' => $this->_getActionsAPI('bulk'),
-                'single' => $this->_getActionsAPI('single'),
+                'bulk' => $this->_getActionsAPI('bulk')
             ]
         ];
     }
@@ -591,10 +577,9 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellCheckbox ($mixedValue, $sKey, $aField, $aRow)
     {
-        if (bx_is_api()){
+        if($this->_bIsApi)
             return ['type' => 'checkbox', 'data' => $aRow[$this->_aOptions['field_id']]];
-        }
-        
+
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',
             'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
@@ -608,6 +593,9 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'switcher', 'data' => $aRow[$this->_aOptions['field_active']], 'fld' => $this->_aOptions['field_active']];
+
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',
             'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
@@ -634,14 +622,15 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellOrder ($mixedValue, $sKey, $aField, $aRow)
     {
+        if($this->_bIsApi)
+            return ['type' => 'order', 'data'=> $mixedValue];    
+
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',
             'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
             isset($aField['width']) ? 'width:' . $aField['width'] : false  // add default styles
         );
-        if(bx_is_api()){
-            return ['type' => 'order', 'data'=> $mixedValue];    
-        }
+
         return '<td ' . $sAttr . '><div id="' . $this->_sObject . '_cell_' . $aRow[$this->_aOptions['field_id']] . '" class="bx-grid-drag-handle"><i class="sys-icon align-justify"></i></div></td>';
     }
 
@@ -654,21 +643,19 @@ class BxBaseGrid extends BxDolGrid
         );
 
         $mixedDisabledBehavior = $this->_getActionsDisabledBehavior($aRow);
-        $sActions = $this->_getActions('single', $aRow[$this->_aOptions['field_id']], false, null === $mixedDisabledBehavior ? $this->_isRowDisabled($aRow) : $mixedDisabledBehavior, null !== $mixedDisabledBehavior, $aRow);
-        
-        if (bx_is_api()){
-            $b = $sActions;
-            return ['type' => 'actions', 'data' => $b];
-        }
+        $mixedActions = $this->_getActions('single', $aRow[$this->_aOptions['field_id']], false, null === $mixedDisabledBehavior ? $this->_isRowDisabled($aRow) : $mixedDisabledBehavior, null !== $mixedDisabledBehavior, $aRow);
 
-        return '<td ' . $sAttr . '><div class="bx-grid-cell-single-actions-wrapper bx-def-margin-thd-neg">' . $sActions . '</div></td>';
+        if($this->_bIsApi)
+            return ['type' => 'actions', 'data' => $mixedActions];
+
+        return '<td ' . $sAttr . '><div class="bx-grid-cell-single-actions-wrapper bx-def-margin-thd-neg">' . $mixedActions . '</div></td>';
     }
 
     protected function _getCellDefault ($mixedValue, $sKey, $aField, $aRow)
     {
-        if(bx_is_api()){
+        if($this->_bIsApi)
             return ['type' => 'text', 'value'=> $mixedValue];    
-        }
+
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',
             'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
@@ -683,7 +670,7 @@ class BxBaseGrid extends BxDolGrid
         if (empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
             return '';
 
-        $sRet = '';
+        $mixedResult = $this->_bIsApi ? [] : '';
         foreach ($this->_aOptions[$sActionsType] as $sKey => $a) {
             if(!$a['active'] || (!$a['title'] && !$a['icon']))
                 continue;
@@ -703,14 +690,14 @@ class BxBaseGrid extends BxDolGrid
 
             if ($isPermanentState && !isset($a['attr']['bx_grid_permanent_state']))
                 $a['attr']['bx_grid_permanent_state'] = 1;
-            if (bx_is_api()){
-                $aRet[] = $this->$sFunc($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-            }
-            else{
-            $sRet .= $this->$sFunc($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-            }    
+
+            if ($this->_bIsApi)
+                $mixedResult[] = $this->$sFunc($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+            else
+                $mixedResult .= $this->$sFunc($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
         }
-        return bx_is_api() ? $aRet : $sRet;
+
+        return $mixedResult;
     }
 
     protected function _getActionsAPI ($sType)
@@ -722,10 +709,21 @@ class BxBaseGrid extends BxDolGrid
         return $this->_aOptions[$sActionsType];
     }
 
+    protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
+
+    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _getActionDefault ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if ($a['icon_only'] && empty($a['attr']['title']) && !empty($a['title']))
             $a['attr']['title'] = $a['title'];
+
+        if ($this->_bIsApi)
+            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
 
         $sAttr = $this->_convertAttrs(
             $a, 'attr',
@@ -740,13 +738,7 @@ class BxBaseGrid extends BxDolGrid
             elseif ($sIconUrl = $this->_oTemplate->getIconUrl($a['icon']))
                 $sImage = '<img style="background-image:url(' . $sIconUrl . ');" src="' . $this->_oTemplate->getIconUrl('spacer.gif') .'" />';
         }
-        
-        if (bx_is_api()){
-            $a['name'] = $sKey;
-            $a['type'] = 'callback';
-            return $a;
-        }
-        
+
         return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] || empty($a['title']) ? '' : '<u>' . $a['title'] . '</u>') . '</button>';
     }
 
@@ -769,6 +761,11 @@ class BxBaseGrid extends BxDolGrid
 
         $this->_oTemplate->addCss('forms.css');
         return $oForm->genRow($aInput);
+    }
+
+    protected function _getFilterControlsAPI($aFilters = [])
+    {
+        return [];
     }
 
     protected function _getCounter()

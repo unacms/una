@@ -241,6 +241,8 @@
 
 class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolReplaceable
 {
+    protected $_bIsApi;
+
     protected $_aMarkers = array ();
 
     protected $_sObject;
@@ -257,6 +259,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     protected function __construct($aOptions)
     {
         parent::__construct();
+
+        $this->_bIsApi = bx_is_api();
 
         $this->_sObject = $aOptions['object'];
         $this->_aOptions = $aOptions;

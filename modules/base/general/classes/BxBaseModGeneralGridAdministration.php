@@ -45,11 +45,11 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $iAffected = 0;
+        $aResult = [];
+
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            exit;
-        }
+        if(!$aIds || !is_array($aIds))
+            return echoJson($aResult);
 
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
@@ -68,11 +68,13 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             $aIdsAffected[] = $iId;
             $iAffected++;
         }
-        $mRv = $iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete']));
-        if (bx_is_api()){
-            return $mRv;
-        }
-        echoJson($mRv);
+
+        if($iAffected)
+            $aResult = !$this->_bIsApi ? ['grid' => $this->getCode(false), 'blink' => $aIdsAffected] : [];
+        else
+            $aResult = ['msg' => _t($CNF['T']['grid_action_err_delete'])];
+
+        return $this->_bIsApi ? $aResult : echoJson($aResult);
     }
     
     public function performActionClearReports($aParams = array())
@@ -129,13 +131,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
         }
-        
-        if (bx_is_api()){
-            $a['name'] = $sKey;
-            $a['type'] = 'callback';
-            return $a;
-        }
-        
+
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
@@ -157,6 +153,27 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     	));
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getFilterControlsAPI($aFilters = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(empty($aFilters) || !is_array($aFilters))
+            return [];
+
+        foreach($aFilters as $sName => &$aValues) {
+            $aValues[] = ['value' => '', 'title' => _t($CNF['T']['filter_item_select_one_' . $sName])];
+
+            $aFilterValues = $this->{'_a' . ucfirst($sName) . 'Values'};
+            if(empty($aFilterValues) || !is_array($aFilterValues))
+                continue;
+
+            foreach($aFilterValues as $sKey => $sValue) 
+                $aValues[] = ['value' => $sKey, 'title' => _t($sValue)];
+        }
+
+        return $aFilters;
     }
 
     protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues, $bAddSelectOne = true)
@@ -292,9 +309,9 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (bx_is_api()){
+        if($this->_bIsApi)
             return ['type' => 'switcher', 'data' => $aRow[$this->_sStatusField], 'fld' => $this->_sStatusField];
-        }
+
         if(isset($aRow[$this->_sStatusField]) && !in_array($aRow[$this->_sStatusField], $this->_aStatusValues)) {
             $sStatusKey = '_sys_status_' . $aRow[$this->_sStatusField];
             if(!empty($CNF['T']['txt_status_' . $aRow[$this->_sStatusField]]))
@@ -325,6 +342,11 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             }
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _switcherState2Checked($mixedState)
+    {
+        return 'active' == $mixedState ? true : false;
     }
 }
 

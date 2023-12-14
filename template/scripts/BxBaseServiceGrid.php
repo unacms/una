@@ -12,15 +12,27 @@ class BxBaseServiceGrid extends BxDol
 {
     public function servicePerfomActionApi($aParams = [])
     {
-        $sObject = bx_process_input(bx_get('o'));
-        $oTemplate = BxDolStudioTemplate::getInstance();
-        $oGrid = BxDolGrid::getObjectInstance($sObject, $oTemplate);
-        $sAction = 'performAction' . bx_gen_method_name(bx_process_input(bx_get('a')));
-        if (method_exists($oGrid, $sAction)) {
-            return $oGrid->$sAction();
-            exit();
-        }
-       
+        $sObject = '';
+        if(!empty($aParams['object']))
+            $sObject = $aParams['object'];
+        else if(($sO = bx_get('o')) !== false)
+            $sObject = bx_process_input($sO);
+
+        $oGrid = BxDolGrid::getObjectInstance($sObject);
+        if(!$oGrid)
+            return [];
+
+        $sAction = '';
+        if(!empty($aParams['action']))
+            $sAction = $aParams['action'];
+        else if(($sA = bx_get('a')) !== false)
+            $sAction = bx_process_input($sA);
+
+        $sMethod = 'performAction' . bx_gen_method_name($sAction);
+        if(!method_exists($oGrid, $sMethod)) 
+            return [];
+
+        return $oGrid->$sMethod();       
     }
 }
 
