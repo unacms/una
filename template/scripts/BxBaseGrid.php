@@ -17,6 +17,7 @@ class BxBaseGrid extends BxDolGrid
     protected $_aPopupOptions = false;
     protected $_aQueryAppend = [];
     protected $_aQueryAppendExclude = false; // an array of keys which shouldn't be pathed in http requests, but can be stored (used) in 'Query Append' array.
+    protected $_aQueryAppendExcludeApi = false;
     protected $_aQueryReset = false;
     protected $_aConfirmMessages = false;
     protected $_bSelectAll = false;
@@ -37,6 +38,7 @@ class BxBaseGrid extends BxDolGrid
             $this->_oTemplate->getCodeKey() => $this->_oTemplate->getCode()
         ];
         $this->_aQueryAppendExclude = [];
+        $this->_aQueryAppendExcludeApi = [$this->_oTemplate->getCodeKey()];
 
         $this->_aQueryReset = [
             $this->_aOptions['filter_get'], 
@@ -316,6 +318,14 @@ class BxBaseGrid extends BxDolGrid
         if(!empty($aData) && is_array($aData))
             $aData = $this->decodeDataAPI($aData);
 
+        $aQueryAppend = [];
+        if(!empty($this->_aQueryAppend) && is_array($this->_aQueryAppend))
+            $aQueryAppend = array_merge($aQueryAppend, $this->_aQueryAppend);
+        if(!empty($this->_aQueryAppendExclude) && is_array($this->_aQueryAppendExclude))
+            $aQueryAppend = array_diff_key($aQueryAppend, array_flip($this->_aQueryAppendExclude));
+        if(!empty($this->_aQueryAppendExcludeApi) && is_array($this->_aQueryAppendExcludeApi))
+            $aQueryAppend = array_diff_key($aQueryAppend, array_flip($this->_aQueryAppendExcludeApi));       
+
         return [
             'settings' => [
                 'object' => $this->_aOptions['object'], 
@@ -323,6 +333,7 @@ class BxBaseGrid extends BxDolGrid
                 'start' => $iStart, 
                 'per_page' => $iPerPage,
                 'filters' => $this->_getFilterControlsAPI(),
+                'query_append' => $aQueryAppend
             ],
             'header' => $this->_getRowHeadAPI(),
             'data' => $aData,
@@ -765,7 +776,10 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getFilterControlsAPI($aFilters = [])
     {
-        return [];
+        if(!empty($this->_aOptions['filter_fields']) || !empty($this->_aOptions['filter_fields_translatable']))
+            $aFilters['search'] = [];
+
+        return $aFilters;
     }
 
     protected function _getCounter()

@@ -158,22 +158,20 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     protected function _getFilterControlsAPI($aFilters = [])
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        
-        if(empty($aFilters) || !is_array($aFilters))
-            return [];
 
-        foreach($aFilters as $sName => &$aValues) {
-            $aValues[] = ['value' => '', 'title' => _t($CNF['T']['filter_item_select_one_' . $sName])];
+        if(!empty($aFilters) && is_array($aFilters))
+            foreach($aFilters as $sName => &$aValues) {
+                $aValues[] = ['value' => '', 'title' => _t($CNF['T']['filter_item_select_one_' . $sName])];
 
-            $aFilterValues = $this->{'_a' . ucfirst($sName) . 'Values'};
-            if(empty($aFilterValues) || !is_array($aFilterValues))
-                continue;
+                $aFilterValues = $this->{'_a' . ucfirst($sName) . 'Values'};
+                if(empty($aFilterValues) || !is_array($aFilterValues))
+                    continue;
 
-            foreach($aFilterValues as $sKey => $sValue) 
-                $aValues[] = ['value' => $sKey, 'title' => _t($sValue)];
-        }
+                foreach($aFilterValues as $sKey => $sValue) 
+                    $aValues[] = ['value' => $sKey, 'title' => _t($sValue)];
+            }
 
-        return $aFilters;
+        return parent::_getFilterControlsAPI($aFilters);
     }
 
     protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues, $bAddSelectOne = true)
