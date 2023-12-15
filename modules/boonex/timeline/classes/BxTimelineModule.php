@@ -2121,20 +2121,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockViewsDb($aParams = [])
     {
-        if(!isset($aParams['viewer_id']))
-            $aParams['viewer_id'] = $this->getUserId();
-
-        if(!isset($aParams['owner_id']))
-            $aParams['owner_id'] = $this->getUserId();
-
-        if(!isset($aParams['type']) && ($sType = $this->_oConfig->getUserChoice('type', $aParams['viewer_id'])) !== false)
-            $this->_setParamsType($sType, $aParams);
+        $iProfileId = $this->getProfileId();
 
         $aParams = $this->_prepareParams(array_merge([
             'name' => BX_TIMELINE_NAME_VIEWS_DB,
             'view' => BX_TIMELINE_VIEW_TIMELINE,
             'type' => BX_TIMELINE_TYPE_FEED,
+            'viewer_id' => $iProfileId,
+            'owner_id' => $iProfileId
         ], $aParams));
+
+        if(($sType = $this->_oConfig->getUserChoice('type', $aParams['viewer_id'])) !== false)
+            $this->_setParamsType($sType, $aParams);        
 
         $this->_iOwnerId = $aParams['owner_id'];
         return $this->_oTemplate->getViewsDbBlock($aParams);
@@ -5583,7 +5581,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     protected function _setParamsType($sType, &$aParams)
     {
-        if($aParams['type'] == $sType)
+        if(isset($aParams['type']) && $aParams['type'] == $sType)
             return;
 
         $iPerPage = $this->_oConfig->getPerPage($sType);
