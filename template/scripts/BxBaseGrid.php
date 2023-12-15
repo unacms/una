@@ -336,7 +336,7 @@ class BxBaseGrid extends BxDolGrid
                 'query_append' => $aQueryAppend
             ],
             'header' => $this->_getRowHeadAPI(),
-            'data' => $aData,
+            'data' => defined('BX_API_PAGE') ? [] : $aData,
             'actions' => [
                 'independent' => $this->_getActionsAPI('independent'), 
                 'bulk' => $this->_getActionsAPI('bulk')
@@ -366,6 +366,19 @@ class BxBaseGrid extends BxDolGrid
             }
         }
         return $aDataRv;
+    }
+    
+    function getFormBlockAPI($oForm, $sAction, $iId = 0){
+        return [
+            bx_api_get_block(
+                'form', 
+                $oForm->getCodeAPI(), 
+                ['ext' => [
+                    'name' => $this->_oModule->getName(), 
+                    'request' => ['url' => $this->getFormCallBackUrlAPI($sAction, $iId), 'immutable' => true]]
+                ]
+            )
+        ];
     }
 
     /**
@@ -717,6 +730,17 @@ class BxBaseGrid extends BxDolGrid
         if(empty($this->_aOptions[$sActionsType]) || !is_array($this->_aOptions[$sActionsType]))
             return [];
 
+        foreach ($this->_aOptions[$sActionsType] as $sKey => $aAction){
+            $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
+            if (method_exists($this, $sFunc)){
+                $this->_aOptions[$sActionsType][$sKey] = $this->$sFunc($aAction);
+            }
+            else{
+                $this->_aOptions[$sActionsType][$sKey]['type'] = 'modal';
+                $this->_aOptions[$sActionsType][$sKey]['action'] = $sKey;
+                $this->_aOptions[$sActionsType][$sKey]['params'] = '';
+            }
+        }
         return $this->_aOptions[$sActionsType];
     }
 
@@ -730,11 +754,20 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getActionDefault ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        
         if ($a['icon_only'] && empty($a['attr']['title']) && !empty($a['title']))
             $a['attr']['title'] = $a['title'];
 
-        if ($this->_bIsApi)
-            return array_merge($a, ['name' => $sKey, 'type' => 'callback']);
+        if ($this->_bIsApi){
+            $sFunc = '_getAction' . $this->_genMethodName($sType . '_' . $sKey);
+            if (method_exists($this, $sFunc)){
+                return array_merge($a, ['name' => $sKey], $this->$sFunc($a, ['id'=> $aRow[$this->_aOptions['field_id']]]));
+            }
+            else{
+                return array_merge($a, ['name' => $sKey, 'type' => 'modal', 'action' => $sKey, 'params' => '&id=' . $aRow[$this->_aOptions['field_id']] ]);
+            }
+            
+        }
 
         $sAttr = $this->_convertAttrs(
             $a, 'attr',

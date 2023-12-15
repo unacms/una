@@ -1657,9 +1657,16 @@ class BxDolFormCheckerHelper
     }
     static public function checkDateTime ($s)
     {
-        // remove unnecessary opera's input value;
-        $s = str_replace('T', ' ', $s);
-        $s = str_replace('Z', ':00', $s);
+        
+        if (!bx_is_api()){
+            // remove unnecessary opera's input value;
+            $s = str_replace('T', ' ', $s);
+            $s = str_replace('Z', ':00', $s);
+        }
+        else{
+            // remove unnecessary opera's input value;
+            $s = str_replace('Z', '+00:00', $s);
+        }
 
         return self::checkPreg ($s, '#^\d+\-\d+\-\d+[\sT]{1}\d+:\d+(:\d+)?(\+\d+:\d+)?$#');
     }

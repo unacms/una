@@ -20,7 +20,7 @@ class BxBaseServiceGrid extends BxDol
 
         $oGrid = BxDolGrid::getObjectInstance($sObject);
         if(!$oGrid)
-            return [];
+            return ['grid not found'];
 
         $sAction = '';
         if(!empty($aParams['action']))
@@ -30,7 +30,7 @@ class BxBaseServiceGrid extends BxDol
 
         $sMethod = 'performAction' . bx_gen_method_name($sAction);
         if(!method_exists($oGrid, $sMethod)) 
-            return [];
+            return ['method not found'];
 
         return $oGrid->$sMethod();       
     }

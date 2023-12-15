@@ -33,6 +33,10 @@ class BxEventsGridSessionsManage extends BxTemplGrid
         if(($iEventProfileId = bx_get('profile_id')) !== false)
             $this->setProfileId($iEventProfileId);
     }
+    
+    function getFormCallBackUrlAPI($sAction, $iId = 0){
+         return '/api.php?r=system/perfom_action_api/TemplServiceGrid/&params[]=&o=' . $this->_sObject . '&profile_id=' . $this->_iEventProfileId . '&a=' . $sAction . '&id=' . $iId;
+    }
 
     public function setProfileId($iProfileId)
     {
@@ -44,7 +48,7 @@ class BxEventsGridSessionsManage extends BxTemplGrid
             $this->_aEventContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iEventContentId);
         }
     }
-
+    
     public function performActionAdd()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -52,7 +56,7 @@ class BxEventsGridSessionsManage extends BxTemplGrid
     	$sAction = 'add';
 
         if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aEventContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(['msg' => $mixedResult]);
+             return bx_is_api() ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
 
         $sForm = $CNF['OBJECT_FORM_SESSION_DISPLAY_ADD'];
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_SESSION'], $CNF['OBJECT_FORM_SESSION_DISPLAY_ADD']);
@@ -68,9 +72,13 @@ class BxEventsGridSessionsManage extends BxTemplGrid
             else
                 $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return echoJson($aResult);
+            return bx_is_api() ? [] : echoJson($aResult);
+
         }
 
+        if (bx_is_api())
+            return $this->getFormBlockAPI($oForm, $sAction);
+        
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_session'), _t('_bx_events_popup_title_sn_add'), $this->_oModule->_oTemplate->parseHtmlByName('popup_session.html', [
             'form_id' => $oForm->getId(),
@@ -78,7 +86,7 @@ class BxEventsGridSessionsManage extends BxTemplGrid
             'object' => $this->_sObject,
             'action' => $sAction
         ]));
-
+        
         echoJson(['popup' => ['html' => $sContent, 'options' => ['closeOnOuterClick' => false]]]);
     }
 
@@ -89,7 +97,7 @@ class BxEventsGridSessionsManage extends BxTemplGrid
         $sAction = 'edit';
 
         if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aEventContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(['msg' => $mixedResult]);
+             return bx_is_api() ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
 
         $aIds = $this->_getIds();
         if($aIds === false)
@@ -113,8 +121,11 @@ class BxEventsGridSessionsManage extends BxTemplGrid
             else
                 $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return echoJson($aResult);
+            return bx_is_api() ? [] : echoJson($aResult);
         }
+        
+        if (bx_is_api())
+            return $this->getFormBlockAPI($oForm, $sAction, $iItem);
 
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_session'), _t('_bx_events_popup_title_sn_edit'), $this->_oModule->_oTemplate->parseHtmlByName('popup_session.html', [

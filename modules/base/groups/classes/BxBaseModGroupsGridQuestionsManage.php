@@ -33,6 +33,10 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
             $this->setProfileId($iGroupProfileId);
     }
 
+    function getFormCallBackUrlAPI($sAction, $iId = 0){
+         return '/api.php?r=system/perfom_action_api/TemplServiceGrid/&params[]=&o=' . $this->_sObject . '&profile_id=' . $this->_iGroupProfileId . '&a=' . $sAction . '&id=' . $iId;
+    }
+    
     public function setProfileId($iProfileId)
     {
         $this->_iGroupProfileId = (int)$iProfileId;
@@ -51,7 +55,7 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
     	$sAction = 'add';
 
         if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aGroupContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(['msg' => $mixedResult]);
+             return bx_is_api() ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
 
         $sForm = $CNF['OBJECT_FORM_QUESTION_DISPLAY_ADD'];
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_QUESTION'], $CNF['OBJECT_FORM_QUESTION_DISPLAY_ADD']);
@@ -67,9 +71,12 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
             else
                 $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return echoJson($aResult);
+            return bx_is_api() ? [] : echoJson($aResult);
         }
 
+        if (bx_is_api())
+            return $this->getFormBlockAPI($oForm, $sAction);
+        
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_question'), _t($CNF['T']['popup_title_question_add']), $this->_oModule->_oTemplate->parseHtmlByName('popup_qnr_question.html', [
             'form_id' => $oForm->getId(),
@@ -88,7 +95,7 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
         $sAction = 'edit';
 
         if(($mixedResult = $this->_oModule->checkAllowedEdit($this->_aGroupContentInfo)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return echoJson(['msg' => $mixedResult]);
+             return bx_is_api() ? [bx_api_get_msg($mixedResult)] : echoJson(['msg' => $mixedResult]);
 
         $aIds = $this->_getIds();
         if($aIds === false)
@@ -112,9 +119,12 @@ class BxBaseModGroupsGridQuestionsManage extends BxTemplGrid
             else
                 $aResult = ['msg' => _t($CNF['T']['err_cannot_perform'])];
 
-            return echoJson($aResult);
+            return bx_is_api() ? [] : echoJson($aResult);
         }
 
+        if (bx_is_api())
+            return $this->getFormBlockAPI($oForm, $sAction, $iItem);
+        
         bx_import('BxTemplFunctions');
         $sContent = BxTemplFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_question'), _t($CNF['T']['popup_title_question_edit']), $this->_oModule->_oTemplate->parseHtmlByName('popup_qnr_question.html', [
             'form_id' => $oForm->getId(),
