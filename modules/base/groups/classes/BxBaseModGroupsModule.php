@@ -554,20 +554,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(bx_is_api()) {
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-            if(!$iProfileId)
-                return [];
-
-            return bx_srv('system', 'browse_members', [
-                'profile_id' => $iProfileId,
-                'connection' => $CNF['OBJECT_CONNECTIONS'],
-            ], 'TemplServiceProfiles');
-        }
-
         $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_CONNECTIONS']);
         if(!$oGrid)
             return false;
+        
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+            
+        }
 
         return $oGrid->getCode();
     }
