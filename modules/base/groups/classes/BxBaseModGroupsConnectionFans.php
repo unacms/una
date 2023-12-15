@@ -95,6 +95,10 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
                     'uri_title' => '',
                     'submit_name' => 'do_submit'
                 ],
+                'module' => $this->_sModule,
+                'object' => $this->_sModule . '_questionnaire',
+                'display' => $this->_sModule . '_questionnaire_answer',
+                'view_mode' => 0,
             ],
             'inputs' => []
         ];
@@ -104,9 +108,11 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
             return false;
 
         foreach($aQuestions as $aQuestion) {
-            $aForm['inputs'][] = [
+            $sName = 'question_' . $aQuestion['id'];
+
+            $aForm['inputs'][$sName] = [
                 'type' => 'text',
-                'name' => 'question_' . $aQuestion['id'],
+                'name' => $sName,
                 'caption' => $aQuestion['question'],
                 'value' => '',
                 'required' => '1',
