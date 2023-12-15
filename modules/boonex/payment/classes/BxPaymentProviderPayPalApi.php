@@ -395,7 +395,7 @@ class BxPaymentProviderPayPalApi extends BxBaseModPaymentProvider implements iBx
         ], [], 'post-json', true);
 
         if($sCode != 204) {
-            $this->log($mixedResult, 'Cancel Subscription:');
+            $this->log($sResponse, 'Cancel Subscription:');
 
             return false;
         }
