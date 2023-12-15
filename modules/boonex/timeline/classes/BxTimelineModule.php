@@ -3772,7 +3772,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return [];
 
         if(($mixedCheck = $this->isAllowedEdit($aEvent)) !== true)
-            return bx_is_api() ? bx_api_get_msg($mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')) : ['message' => $mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')];
+            return $this->_bIsApi ? bx_api_get_msg($mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')) : ['message' => $mixedCheck !== false ? $mixedCheck : _t('_sys_txt_access_denied')];
         
         $aContent = unserialize($aEvent['content']);
         if(is_array($aContent) && !empty($aContent['text']))
@@ -3877,14 +3877,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-            	return bx_is_api ? ['form' => $oForm->getCodeAPI()] : $this->_prepareResponse([
+            	return $this->_bIsApi ? ['form' => $oForm->getCodeAPI()] : $this->_prepareResponse([
                     'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
                     'form_id' => $oForm->id
                 ], $bAjaxMode);
             }
 
             if($oForm->update($iId, $aValsToAdd) === false)
-                 return bx_is_api() ? bx_api_get_msg(_t('_bx_timeline_txt_err_cannot_perform_action')) : ['message' => _t('_bx_timeline_txt_err_cannot_perform_action')];
+                 return $this->_bIsApi ? bx_api_get_msg(_t('_bx_timeline_txt_err_cannot_perform_action')) : ['message' => _t('_bx_timeline_txt_err_cannot_perform_action')];
 
             $this->isAllowedEdit($aEvent, true);
 
@@ -3903,10 +3903,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
 
-            return bx_is_api() ? [ 'id' => $iId ] : [ 'id' => $iId ];
+            return $this->_bIsApi ? [ 'id' => $iId ] : [ 'id' => $iId ];
         }
 
-        return bx_is_api() ? ['form' => $oForm->getCodeAPI()] : [
+        return $this->_bIsApi ? ['form' => $oForm->getCodeAPI()] : [
             'id' => $iId, 
             'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
             'form_id' => $oForm->id,
