@@ -38,9 +38,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_events%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_events%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans', 'bx_events_invites', 'bx_events_sessions_manage', 'bx_events_prices_manage', 'bx_events_prices_view');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans', 'bx_events_invites', 'bx_events_sessions_manage', 'bx_events_prices_manage', 'bx_events_prices_view');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans', 'bx_events_invites', 'bx_events_sessions_manage', 'bx_events_prices_manage', 'bx_events_prices_view');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans', 'bx_events_invites', 'bx_events_sessions_manage', 'bx_events_prices_manage', 'bx_events_prices_view', 'bx_events_questions_manage');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans', 'bx_events_invites', 'bx_events_sessions_manage', 'bx_events_prices_manage', 'bx_events_prices_view', 'bx_events_questions_manage');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans', 'bx_events_invites', 'bx_events_sessions_manage', 'bx_events_prices_manage', 'bx_events_prices_view', 'bx_events_questions_manage');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_events' LIMIT 1);

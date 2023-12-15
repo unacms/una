@@ -184,6 +184,8 @@
     <string name="_bx_events_page_title_create_profile"><![CDATA[Create Event]]></string>
     <string name="_bx_events_page_title_sys_edit_profile"><![CDATA[Edit Event]]></string>
     <string name="_bx_events_page_title_edit_profile"><![CDATA[Edit Event]]></string>
+    <string name="_bx_events_page_title_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_events_page_title_sys_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_page_title_sys_edit_profile_cover"><![CDATA[Edit Event Cover]]></string>
     <string name="_bx_events_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_events_page_title_sys_edit_questionnaire"><![CDATA[Edit Questionnaire]]></string>
@@ -365,6 +367,8 @@
     <string name="_bx_events_menu_item_title_view_joined_groups"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_system_view_fans"><![CDATA[Guests]]></string>
     <string name="_bx_events_menu_item_title_view_fans"><![CDATA[Guests]]></string>
+    <string name="_bx_events_menu_item_title_system_view_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_events_menu_item_title_view_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_events_menu_item_title_view_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
