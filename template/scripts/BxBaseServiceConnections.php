@@ -52,12 +52,12 @@ class BxBaseServiceConnections extends BxDol
             $sModule = $oConnection->getModule();
 
             return [
-                'a' => $aParams['a'],
-                'block' => [
-                    'content' => [bx_api_get_block('form', $oConnection->getQuestionnaireForm('add', $aParams['cid'])->getCodeAPI(), ['ext' => [
+                'a' => 'questionnaire',
+                'data' => [
+                    bx_api_get_block('form', $oConnection->getQuestionnaireForm('add', $aParams['cid'])->getCodeAPI(), ['ext' => [
                         'name' => $sModule, 
                         'request' => ['url' => '/api.php?r=' . $sModule . '/get_questionnaire&params[]=main&params[]=' . $aParams['o'] . '&params[]=add&params[]=' . $aParams['cid'], 'immutable' => true]
-                    ]])]
+                    ]])
                 ]
             ];
         }
