@@ -284,6 +284,14 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
         ));
     }
 
+    protected function _getCellData($sKey, $aField, $aRow)
+    {
+        if($sKey == 'string')
+            $aRow[$sKey] = strip_tags($aRow[$sKey]);
+
+        return parent::_getCellData($sKey, $aField, $aRow);
+    }
+
     protected function _addJsCss()
     {
         parent::_addJsCss();
