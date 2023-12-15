@@ -44,7 +44,7 @@ class BxBaseModGroupsMenuViewActions extends BxBaseModProfileMenuViewActions
                     ];
             }
             else {
-                if(!empty($CNF['FIELD_JOIN_CONFIRMATION']) && (int)$this->_aContentInfo[$CNF['FIELD_JOIN_CONFIRMATION']] != 0)
+                if($oConn->hasQuestionnaire($iGroupProfileId))
                     $sOnclickAddFan = $this->_oModule->_oConfig->getJsObject('entry') . ".connAction(this, 'bx_events_fans', 'add', '" . $iGroupProfileId . "')";
 
                 if(isset($CNF['T']['menu_item_title_become_fan'], $CNF['T']['menu_item_title_leave_group']))
