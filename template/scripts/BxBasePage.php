@@ -883,7 +883,7 @@ class BxBasePage extends BxDolPage
             return [bx_api_get_block('raw', ['title' => _t($aBlock['title']), 'content' => BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array())])];
         }
         
-        $s = '<div class="bx-page-raw-container">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
+        $s = '<div class="bx-page-raw-container bx-def-vanilla-html max-w-none">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
@@ -951,7 +951,7 @@ class BxBasePage extends BxDolPage
             return [bx_api_get_block('lang', ['title' => _t($aBlock['title']), 'content' => bx_process_macros(_t(trim($aBlock['content'])))])];
         }
     
-        $s = '<div class="bx-page-lang-container">' . _t(trim($aBlock['content'])) . '</div>';
+        $s = '<div class="bx-page-lang-container bx-def-vanilla-html max-w-none">' . _t(trim($aBlock['content'])) . '</div>';
         $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
