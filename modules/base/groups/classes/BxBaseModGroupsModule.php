@@ -590,6 +590,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        
+        if (!$iContentId && bx_get('profile_id')){
+            $oProfile = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id')));
+            $iContentId = $oProfile->getContentId();
+        }
+        
         if (!$iContentId)
             return false;
 
@@ -609,6 +615,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         else
             $mixedResult = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true);
 
+        if(bx_is_api()) {
+            $CNF = &$this->_oConfig->CNF;
+            return bx_srv('system', 'browse_members', [
+                'profile_id' => $oGroupProfile->id(),
+                'connection' => $CNF['OBJECT_CONNECTIONS'],
+            ], 'TemplServiceProfiles');
+        }
+        
         return $mixedResult;
     }
     
