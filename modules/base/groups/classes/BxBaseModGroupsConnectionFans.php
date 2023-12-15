@@ -21,6 +21,11 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
 
+    public function getModule()
+    {
+        return $this->_sModule;
+    }
+
     public function getActionTitle ($sAction, $iInitiatorId, $iContentId, $bFlip = false)
     {
         $aResult = [];
@@ -50,6 +55,90 @@ class BxBaseModGroupsConnectionFans extends BxTemplConnection
             $sAction = $aFlip[$sAction];
 
         return !empty($aResult[$sAction]) ? _t($aResult[$sAction]) : '';
+    }
+
+    public function hasQuestionnaire($iContentProfileId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if(empty($CNF['FIELD_JOIN_CONFIRMATION']))
+            return false;
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoByProfileId($iContentProfileId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return false;
+
+        return (int)$aContentInfo[$CNF['FIELD_JOIN_CONFIRMATION']] != 0 && $this->_oModule->_oDb->hasQuestions($aContentInfo[$CNF['FIELD_ID']]);
+    }
+
+    public function getQuestionnaireForm($sAction, $iContentProfileId, $aParams = [])
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($aParams['request']) || !is_array($aParams['request']))
+            $aParams['request'] = [];
+
+        $aForm = [
+            'form_attrs' => [
+                'id' => $this->_oModule->getName() . '_questionnaire',
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params($this->_oModule->_oConfig->getBaseUri() . 'get_questionnaire', array_merge([
+                    'o' => $this->_sObject, 
+                    'a' => $sAction, 
+                    'cpi' => $iContentProfileId
+                ], $aParams['request']))
+            ],
+            'params' => [
+                'db' => [
+                    'table' => $CNF['TABLE_ANSWERS'],
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'do_submit'
+                ],
+            ],
+            'inputs' => []
+        ];
+
+        $aQuestions = $this->_oModule->_oDb->getQuestions(['sample' => 'content_pid', 'content_pid' => $iContentProfileId]);
+        if(empty($aQuestions) || !is_array($aQuestions))
+            return false;
+
+        foreach($aQuestions as $aQuestion) {
+            $aForm['inputs'][] = [
+                'type' => 'text',
+                'name' => 'question_' . $aQuestion['id'],
+                'caption' => $aQuestion['question'],
+                'value' => '',
+                'required' => '1',
+                'checker' => [
+                    'func' => 'Avail',
+                    'params' => [],
+                    'error' => _t($CNF['T']['form_qnr_field_qn_err']),
+                ],
+                'db' => [
+                    'pass' => 'Xss',
+                ],
+            ];
+        }
+
+        $aForm['inputs']['controls'] = [
+            'name' => 'controls',
+            'type' => 'input_set', [
+                'type' => 'submit',
+                'name' => 'do_submit',
+                'value' => _t('_Submit'),
+            ], [
+                'type' => 'reset',
+                'name' => 'close',
+                'value' => _t('_Cancel'),
+                'attrs' => [
+                    'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                    'class' => 'bx-def-margin-sec-left',
+                ],
+            ]
+        ];
+
+    	return new BxTemplFormView($aForm);
     }
 
     protected function _checkAllowedConnectInitiator ($oInitiator, $isPerformAction = false)

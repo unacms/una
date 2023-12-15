@@ -490,6 +490,17 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
                 $sOrderClause = "`tq`.`order` ASC";
                 break;
             
+            case 'content_pid':
+                $aMethod['params'][1] = [
+                    'module' => $this->_oConfig->getName(),
+                    'content_pid' => $aParams['content_pid']
+                ];
+
+                $sJoinClause = "INNER JOIN `sys_profiles` AS `tp` ON `tq`.`content_id`=`tp`.`content_id` AND `tp`.`type`=:module";
+                $sWhereClause = " AND `tp`.`id`=:content_pid";
+                $sOrderClause = "`tq`.`order` ASC";
+                break;
+
             case 'answers':
                 $aMethod['params'][1] = [
                     'content_id' => $aParams['content_id'],
@@ -511,6 +522,16 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_QUESTIONS'] . "` AS `tq` " . $sJoinClause . " WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array([$this, $aMethod['name']], $aMethod['params']);
+    }
+    
+    public function hasQuestions($iContentId)
+    {
+        $aQuestions = $this->getQuestions([
+            'sample' => 'content_id', 
+            'content_id' => $iContentId
+        ]);
+
+        return !empty($aQuestions) && is_array($aQuestions);
     }
 
     public function getQuestionOrderMax($iContentId)

@@ -47,6 +47,21 @@ class BxBaseServiceConnections extends BxDol
         if(!$oConnection)
             return ['code' => 2];
 
+        $sMethod = 'hasQuestionnaire';
+        if($aParams['a'] == 'add' && method_exists($oConnection, $sMethod) && $oConnection->$sMethod($aParams['cid'])) {
+            $sModule = $oConnection->getModule();
+
+            return [
+                'a' => $aParams['a'],
+                'block' => [
+                    'content' => [bx_api_get_block('form', $oConnection->getQuestionnaireForm('add', $aParams['cid'])->getCodeAPI(), ['ext' => [
+                        'name' => $sModule, 
+                        'request' => ['url' => '/api.php?r=' . $sModule . '/get_questionnaire&params[]=main&params[]=' . $aParams['o'] . '&params[]=add&params[]=' . $aParams['cid'], 'immutable' => true]
+                    ]])]
+                ]
+            ];
+        }
+
         $sMethod = 'action' . bx_gen_method_name($aParams['a']);
         if(!method_exists($oConnection, $sMethod))
             return ['code' => 2];

@@ -26,7 +26,12 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
 
     protected function getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
     {
-        return $this->_oModule->_oConfig->getJsObject('main') . ".connAction(this, '" . $sConnection . "', '" . $sAction . "', '" . $iContentProfile . "')";
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($sConnection == $CNF['OBJECT_CONNECTIONS'] && ($oConnection = BxDolConnection::getObjectInstance($sConnection)) !== false && $oConnection->hasQuestionnaire($iContentProfile))
+            return $this->_oModule->_oConfig->getJsObject('main') . ".connAction(this, '" . $sConnection . "', '" . $sAction . "', '" . $iContentProfile . "')";
+
+        return parent::getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem);
     }
 
     protected function _getMenuItemJoinPaid($aItem)
