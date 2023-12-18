@@ -554,20 +554,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(bx_is_api()) {
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-            if(!$iProfileId)
-                return [];
-
-            return bx_srv('system', 'browse_members', [
-                'profile_id' => $iProfileId,
-                'connection' => $CNF['OBJECT_CONNECTIONS'],
-            ], 'TemplServiceProfiles');
-        }
-
         $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_CONNECTIONS']);
         if(!$oGrid)
             return false;
+
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+        }
 
         return $oGrid->getCode();
     }
@@ -582,6 +577,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_INVITES']);
         if(!$oGrid)
             return false;
+
+        if($this->_bIsApi){
+            return [
+                bx_api_get_block('grid', $oGrid->getCodeAPI())
+            ];
+
+        }
 
         return $oGrid->getCode();
     }
@@ -1168,7 +1170,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         }
         else
             return ['code' => 2];
-        //TODO: Start from HERE. And grids for Fans Manage.
+
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
             $iProfileId = bx_get_logged_profile_id();
