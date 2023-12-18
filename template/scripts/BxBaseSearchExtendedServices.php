@@ -19,8 +19,13 @@ class BxBaseSearchExtendedServices extends BxDol
         parent::__construct();
     }
 
-    public function serviceGetForm($aParams)
+    public function serviceGetForm($mParams)
     {
+        $aParams = [];
+        if (is_string($mParams))
+            $aParams['object'] = $mParams;
+        else
+            $aParams = $mParams;
         $this->prepareParams($aParams);
         
         if(empty($aParams['object']))
@@ -30,11 +35,30 @@ class BxBaseSearchExtendedServices extends BxDol
         if(!$oSearch || !$oSearch->isEnabled())
             return '';
 
-        return $oSearch->getForm($aParams);
+        $mForm = $oSearch->getForm($aParams);
+        if (bx_is_api()){
+            $aRes =$this->serviceGetResults($aParams);
+            if ($aRes)
+                return [$mForm, $aRes];
+            else
+                return [$mForm];
+        }
+        return $mForm;
     }
 
-    public function serviceGetResults($aParams)
+    public function serviceGetResults($mParams)
     {
+        $aParams = [];
+        if (is_string($mParams)){
+            $aPa = json_decode($mParams, true);           
+            $aParams['object'] = $aPa['params']["moduleName"];
+            $aParams['search_params'] = $aPa['params']['search_params'];
+            unset($aPa['params']['search_params']);
+            $aParams['params'] = $aPa['params'];
+        }
+        else
+            $aParams = $mParams;
+        
         $this->prepareParams($aParams);
 
         if(empty($aParams['object']))
@@ -46,6 +70,10 @@ class BxBaseSearchExtendedServices extends BxDol
 
         $sResults = $oSearch->getResults($aParams);
 
+        if (bx_is_api()){
+            return $sResults;
+        }
+        
         return !empty($sResults) ? $sResults : (isset($aParams['show_empty']) && (bool)$aParams['show_empty'] ? MsgBox(_t('_Empty')) : ''); 
     }
     
