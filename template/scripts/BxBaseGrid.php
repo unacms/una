@@ -300,6 +300,8 @@ class BxBaseGrid extends BxDolGrid
      */
     public function getCodeAPI()
     {
+        $this->_replaceMarkers();
+
         $sFilter = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
         $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
         $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
